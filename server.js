@@ -9,12 +9,21 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const mongodbURL = config.MONGODB_URI
-mongoose.connect(mongodbURL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true
-}).catch(error => console.log(error.reason))
+// const mongodbURL = config.MONGODB_URI
+// mongoose.connect(mongodbURL, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useCreateIndex: true
+// }).catch(error => console.log(error.reason))
+
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  }
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
