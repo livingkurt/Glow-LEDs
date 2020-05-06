@@ -1,10 +1,7 @@
 // React
 import React from "react";
-import { Link } from 'react-router-dom'
 // Styles
 import './sort.css'
-// Components
-import { Label } from '../../UtilityComponents/index'
 
 
 function Sort(props) {

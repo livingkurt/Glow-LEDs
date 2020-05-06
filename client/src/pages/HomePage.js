@@ -1,51 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../actions/productActions';
-import { Product, Search, Sort } from '../components/SpecialtyComponents/index'
+import React from 'react';
+import { Title, Label, ButtonWord } from "../components/UtilityComponents/index"
+import { FlexContainer } from "../components/ContainerComponents/index"
 
 function HomePage(props) {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [sortOrder, setSortOrder] = useState('');
-  const category = props.match.params.id ? props.match.params.id : '';
-  const productList = useSelector(state => state.productList);
-  const { products, loading, error } = productList;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(listProducts(category));
 
-    return () => {
-      //
-    };
-  }, [category]);
+  return (
+    <FlexContainer styles={{ justifyContent: "center" }}>
+      <Title styles={{ fontSize: 50 }} >Welcome to Glow LEDs</Title>
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(listProducts(category, searchKeyword, sortOrder))
-  }
-  const sortHandler = (e) => {
-    setSortOrder(e.target.value);
-    dispatch(listProducts(category, searchKeyword, sortOrder))
-  }
+    </FlexContainer>
+  )
 
-  return <>
-    {category &&
-      <h2>{category}</h2>}
-
-    <ul className="filter">
-      <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
-      <Sort sortHandler={sortHandler} />
-    </ul>
-    {loading ? <div>Loading...</div> :
-      error ? <div>{error}</div> :
-        <ul className="products">
-          {
-            products.map(product =>
-              <Product product={product} />
-            )
-          }
-        </ul>
-    }
-  </>
 
 }
 export default HomePage;

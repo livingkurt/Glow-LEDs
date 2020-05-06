@@ -11,7 +11,7 @@ function ButtonWord(props) {
       <button
         index={props.index}
         id={props.id}
-        onClick={e => props.on_click_function(e)}
+        onClick={e => props ? "" : props.on_click_function(e)}
         style={props.styles}
         className="button_word">{props.children}</button>
     </div>
