@@ -47,7 +47,7 @@ button {
   display: grid;
   grid-template-areas: "header" "main" "footer";
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr 5rem;
+  grid-template-rows: 12rem 1fr 5rem;
   height: 100%;
 }
 
@@ -59,6 +59,7 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+  /* height: 103px; */
 }
 
 .brand a {
@@ -80,6 +81,8 @@ button {
 
 .main {
   grid-area: main;
+  padding: 20px;
+  background-color: #737373;
 }
 
 .footer {
@@ -93,6 +96,7 @@ button {
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 /* a:hover {

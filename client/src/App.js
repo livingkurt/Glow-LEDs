@@ -34,7 +34,7 @@ function App() {
             {/* <button onClick={openMenu}>
               &#9776;
         </button> */}
-            <Link to="/" >Glow LEDs</Link>
+            <Link to="/" ><img height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
           </div>
           <div className="header-links">
             <Link to="/cart">Cart</Link>
