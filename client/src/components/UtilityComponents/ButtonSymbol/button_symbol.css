@@ -1,0 +1,26 @@
+.button_symbol {
+  justify-content: center;
+  font-size: 21px;
+  /* padding-bottom: 29px;
+  padding-right: 8px; */
+  border-radius: 5px;
+  height: 30px;
+  width: 30px;
+  border: 0px;
+  color: silver;
+  transition: box-shadow 0.2s ease;
+  transition: color 0.2s ease;
+}
+
+.button_symbol:focus {
+  outline: 0;
+}
+
+.button_symbol:active {
+  background-color: rgb(224, 224, 224);
+}
+
+.button_symbol:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: rgb(83, 100, 135);
+}

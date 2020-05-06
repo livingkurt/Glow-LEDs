@@ -1,19 +1,23 @@
 import React from 'react';
 import { Route, Link, BrowserRouter } from "react-router-dom";
 import './App.css';
-import HomePage from './pages/HomePage'
-import ProductPage from './pages/ProductPage'
-import CartPage from './pages/CartPage'
-import SignInPage from './pages/SignInPage'
-import RegisterPage from './pages/RegisterPage'
+import { HomePage, ProductPage, CartPage, SignInPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage } from './pages/index'
+import { Header } from './components/ContainerComponents/index'
+// import HomePage from './pages/HomePage'
+// import ProductPage from './pages/ProductPage'
+// import CartPage from './pages/CartPage'
+// import SignInPage from './pages/SignInPage'
+// import RegisterPage from './pages/RegisterPage'
 import { useSelector } from 'react-redux';
-import ProductsPage from './pages/ProductsPage';
-import ShippingPage from './pages/ShippingPage';
-import PaymentPage from './pages/PaymentPage';
-import PlaceOrderPage from './pages/PlaceOrderPage';
-import OrderPage from './pages/OrderPage';
-import ProfilePage from './pages/ProfilePage';
-import OrdersPage from './pages/OrdersPage';
+// import ProductsPage from './pages/ProductsPage';
+// import ShippingPage from './pages/ShippingPage';
+// import PaymentPage from './pages/PaymentPage';
+// import PlaceOrderPage from './pages/PlaceOrderPage';
+// import OrderPage from './pages/OrderPage';
+// import ProfilePage from './pages/ProfilePage';
+// import OrdersPage from './pages/OrdersPage';
+
+
 
 function App() {
 
@@ -29,11 +33,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="grid-container">
-        <header className="header">
+        <Header userInfo={userInfo} />
+        {/* <header className="header">
           <div className="brand">
-            {/* <button onClick={openMenu}>
-              &#9776;
-        </button> */}
             <Link to="/" ><img height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
           </div>
           <div className="header-links">
@@ -46,15 +48,13 @@ function App() {
               <div className="dropdown">
                 <a href="#"  >Admin</a>
                 <ul className="dropdown-content">
-                  {/* <li> */}
                   <Link to="/orders">Orders</Link>
                   <Link to="/products">Products</Link>
-                  {/* </li> */}
                 </ul>
               </div>
             )}
           </div>
-        </header>
+        </header> */}
         <aside className="sidebar">
           <h3>Shopping Categories</h3>
           <button className="sidebar-close-button" onClick={closeMenu}>x</button>
@@ -62,11 +62,9 @@ function App() {
             <li>
               <Link to="/category/Pants">Pants</Link>
             </li>
-
             <li>
               <Link to="/category/Shirts">Shirts</Link>
             </li>
-
           </ul>
         </aside>
         <main className="main">
@@ -84,8 +82,6 @@ function App() {
             <Route path="/cart/:id?" component={CartPage} />
             <Route path="/category/:id?" component={HomePage} />
             <Route path="/" exact={true} component={HomePage} />
-
-
           </div>
 
         </main>
