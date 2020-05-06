@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-import { Product } from '../components/SpecialtyComponents/index'
+import { Product, Search } from '../components/SpecialtyComponents/index'
 
 function HomePage(props) {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -32,12 +32,7 @@ function HomePage(props) {
       <h2>{category}</h2>}
 
     <ul className="filter">
-      <li>
-        <form onSubmit={submitHandler}>
-          <input name="searchKeyword" onChange={(e) => setSearchKeyword(e.target.value)} />
-          <button type="submit">Search</button>
-        </form>
-      </li>
+      <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
       <li>
         Sort By {' '}
         <select name="sortOrder" onChange={sortHandler}>
