@@ -31,10 +31,10 @@ function App() {
       <div className="grid-container">
         <header className="header">
           <div className="brand">
-            <button onClick={openMenu}>
+            {/* <button onClick={openMenu}>
               &#9776;
-        </button>
-            <Link to="/" >amazona</Link>
+        </button> */}
+            <Link to="/" >Glow LEDs</Link>
           </div>
           <div className="header-links">
             <Link to="/cart">Cart</Link>
@@ -46,10 +46,10 @@ function App() {
               <div className="dropdown">
                 <a href="#"  >Admin</a>
                 <ul className="dropdown-content">
-                  <li>
-                    <Link to="/orders">Orders</Link>
-                    <Link to="/products">Products</Link>
-                  </li>
+                  {/* <li> */}
+                  <Link to="/orders">Orders</Link>
+                  <Link to="/products">Products</Link>
+                  {/* </li> */}
                 </ul>
               </div>
             )}
