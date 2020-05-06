@@ -3,7 +3,7 @@
 // import { getToken, isAuth } from '../util';
 
 const express = require('express')
-const User = require('../models/userModel')
+const User = require('../models/user')
 const { getToken, isAuth } = require('../util')
 
 const router = express.Router();

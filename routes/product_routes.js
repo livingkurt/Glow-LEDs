@@ -3,7 +3,7 @@
 // import { isAuth, isAdmin } from '../util';
 
 const express = require('express')
-const Product = require('../models/productModel')
+const Product = require('../models/product')
 const { isAuth, isAdmin } = require('../util')
 
 const router = express.Router();

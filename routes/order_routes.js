@@ -1,5 +1,5 @@
 const express = require('express')
-const Order = require('../models/orderModel')
+const Order = require('../models/order')
 const { isAuth, isAdmin } = require('../util')
 // import express from 'express';
 // import Order from '../models/orderModel';

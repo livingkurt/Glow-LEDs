@@ -15,14 +15,9 @@
   z-index: 999; */
 }
 
-/* 
-#logo {
-  transition
+.logo {
+  margin-right: 42px;
 }
-
-#logo:hover {
-
-} */
 
 .zoom {
   -webkit-transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);

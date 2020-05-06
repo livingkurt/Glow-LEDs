@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Users = require("./models/userModel");
+const db = require("./models/index");
 
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db",
@@ -12,16 +12,43 @@ mongoose.connect(
 
 const user_seed = [
   {
-    name: 'Kurt',
-    email: 'lavacquek@icloud.com',
-    password: '1234',
-    isAdmin: true
+    price: 15,
+    countInStock: 3,
+    rating: 0,
+    numReviews: 0,
+    name: "Coin Battery Holder",
+    image: "https://via.placeholder.com/150",
+    brand: "Glow",
+    category: "Accessories",
+    description: "Holds up to 60 coin batteries",
+  },
+  {
+    price: 15,
+    countInStock: 3,
+    rating: 0,
+    numReviews: 0,
+    name: "Coin Battery Holder",
+    image: "https://via.placeholder.com/150",
+    brand: "Glow",
+    category: "Accessories",
+    description: "Holds up to 60 coin batteries",
+  },
+  {
+    price: 15,
+    countInStock: 3,
+    rating: 0,
+    numReviews: 0,
+    name: "Coin Battery Holder",
+    image: "https://via.placeholder.com/150",
+    brand: "Glow",
+    category: "Accessories",
+    description: "Holds up to 60 coin batteries",
   }
 
 ];
 
 Users.deleteMany({})
-  .then(() => Users.insertMany(user_seed))
+  .then(() => db.Products.insertMany(user_seed))
   .then(data => {
     console.log(data.length + ' records inserted!')
     process.exit(0)

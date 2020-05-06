@@ -1,17 +1,19 @@
 import React from 'react'
 import './header.css'
 import { Link } from "react-router-dom";
+import { Title } from "../../UtilityComponents/index"
 
 
 const Header = (props) => {
 
   return (
     <header className="header">
+
       <div className="brand">
-        {/* <button onClick={openMenu}>
-        &#9776;
-  </button> */}
-        <Link to="/" ><img className="zoom" height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
+        <Link to="/" ><img className="zoom logo" height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
+      </div>
+      <div >
+        <Link to="/" ><Title styles={{ fontSize: "50px" }}>Glow LEDs</Title></Link>
       </div>
       <div className="header-links">
         <Link to="/cart">Cart</Link>

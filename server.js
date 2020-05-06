@@ -2,19 +2,10 @@ const express = require("express");
 const config = require('./config')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const userRoute = require('./routes/userRoute')
-const productRoute = require('./routes/productRoute')
-const orderRoute = require('./routes/orderRoute')
+const { user_routes, product_routes, order_routes } = require('./routes/index')
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
-
-// const mongodbURL = config.MONGODB_URI
-// mongoose.connect(mongodbURL, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-//   useCreateIndex: true
-// }).catch(error => console.log(error.reason))
 
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db",
@@ -28,9 +19,9 @@ mongoose.connect(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json())
-app.use("/api/users", userRoute)
-app.use("/api/products", productRoute)
-app.use("/api/orders", orderRoute)
+app.use("/api/users", user_routes)
+app.use("/api/products", product_routes)
+app.use("/api/orders", order_routes)
 app.use("/api/config/paypal", (req, res) => {
   res.send(config.PAYPAL_CLIENT_ID)
 })

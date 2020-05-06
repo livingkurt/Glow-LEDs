@@ -373,10 +373,15 @@ input {
 
 .table {
   width: 100%;
+  border-radius: 5px;
 }
 
 th {
   text-align: left;
+}
+
+td {
+  background-color: #626262;
 }
 
 tbody>tr:nth-child(odd) {
