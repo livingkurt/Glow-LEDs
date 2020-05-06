@@ -25,7 +25,7 @@ function OrdersPage(props) {
     dispatch(deleteOrder(order._id));
   }
   return loading ? <div>Loading...</div> :
-    <div className="content content-margined">
+    <div className="content-margined">
 
       <div className="order-header">
         <h3>Orders</h3>

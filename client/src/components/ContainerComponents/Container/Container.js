@@ -6,7 +6,7 @@ import './container.css'
 
 function Container({ children }) {
   return (
-    <div className="main fade_in">
+    <div className="grid-container fade_in">
       {children}
     </div>
   );

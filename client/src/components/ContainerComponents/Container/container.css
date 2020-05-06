@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-evenly;
   position: relative;
-  padding-top: 118px;
+  /* padding-top: 118px; */
 }
 
 .fade_in {
