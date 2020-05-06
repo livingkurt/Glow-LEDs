@@ -6,7 +6,7 @@ import './container.css'
 
 function Container({ children }) {
   return (
-    <div className="container fade_in">
+    <div className="main fade_in">
       {children}
     </div>
   );

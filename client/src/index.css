@@ -82,7 +82,9 @@ button {
 .main {
   grid-area: main;
   padding: 20px;
-  background-color: #737373;
+  /* margin */
+  /* background-color: #737373; */
+  background-color: #272727;
 }
 
 .footer {

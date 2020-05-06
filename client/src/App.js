@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Link, BrowserRouter } from "react-router-dom";
 import './App.css';
 import { HomePage, ProductPage, CartPage, SignInPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage } from './pages/index'
-import { Header } from './components/ContainerComponents/index'
+import { Header, Container, Section } from './components/ContainerComponents/index'
 // import HomePage from './pages/HomePage'
 // import ProductPage from './pages/ProductPage'
 // import CartPage from './pages/CartPage'
@@ -34,27 +34,6 @@ function App() {
     <BrowserRouter>
       <div className="grid-container">
         <Header userInfo={userInfo} />
-        {/* <header className="header">
-          <div className="brand">
-            <Link to="/" ><img height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
-          </div>
-          <div className="header-links">
-            <Link to="/cart">Cart</Link>
-            {
-              userInfo ? <Link to="/profile">{userInfo.name}</Link> :
-                <Link to="/signin">Sign In</Link>
-            }
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <a href="#"  >Admin</a>
-                <ul className="dropdown-content">
-                  <Link to="/orders">Orders</Link>
-                  <Link to="/products">Products</Link>
-                </ul>
-              </div>
-            )}
-          </div>
-        </header> */}
         <aside className="sidebar">
           <h3>Shopping Categories</h3>
           <button className="sidebar-close-button" onClick={closeMenu}>x</button>
@@ -67,8 +46,8 @@ function App() {
             </li>
           </ul>
         </aside>
-        <main className="main">
-          <div className="content">
+        <Container>
+          <Section className="content">
             <Route path="/orders" component={OrdersPage} />
             <Route path="/profile" component={ProfilePage} />
             <Route path="/order/:id" component={OrderPage} />
@@ -82,9 +61,9 @@ function App() {
             <Route path="/cart/:id?" component={CartPage} />
             <Route path="/category/:id?" component={HomePage} />
             <Route path="/" exact={true} component={HomePage} />
-          </div>
+          </Section>
 
-        </main>
+        </Container>
         <footer className="footer">
           All right reserved.
         </footer>

@@ -11,7 +11,7 @@ const Header = (props) => {
         {/* <button onClick={openMenu}>
         &#9776;
   </button> */}
-        <Link to="/" ><img height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
+        <Link to="/" ><img className="zoom" height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
       </div>
       <div className="header-links">
         <Link to="/cart">Cart</Link>
