@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-import { Product, Search } from '../components/SpecialtyComponents/index'
+import { Product, Search, Sort } from '../components/SpecialtyComponents/index'
 
 function HomePage(props) {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -33,14 +33,7 @@ function HomePage(props) {
 
     <ul className="filter">
       <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
-      <li>
-        Sort By {' '}
-        <select name="sortOrder" onChange={sortHandler}>
-          <option defaultValue="">Newest</option>
-          <option defaultValue="lowest">Lowest</option>
-          <option defaultValue="highest">Highest</option>
-        </select>
-      </li>
+      <Sort sortHandler={sortHandler} />
     </ul>
     {loading ? <div>Loading...</div> :
       error ? <div>{error}</div> :

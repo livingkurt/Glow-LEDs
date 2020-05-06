@@ -12,7 +12,7 @@ mongoose.connect(
 
 const user_seed = [
   {
-    price: 15,
+    price: 20,
     countInStock: 3,
     rating: 0,
     numReviews: 0,
@@ -23,7 +23,7 @@ const user_seed = [
     description: "Holds up to 60 coin batteries",
   },
   {
-    price: 15,
+    price: 5,
     countInStock: 10,
     rating: 0,
     numReviews: 0,
@@ -34,7 +34,7 @@ const user_seed = [
     description: "Holds up to 60 coin batteries",
   },
   {
-    price: 15,
+    price: 5,
     countInStock: 3,
     rating: 0,
     numReviews: 0,
@@ -56,7 +56,7 @@ const user_seed = [
     description: "Holds up to 60 coin batteries",
   },
   {
-    price: 15,
+    price: 30,
     countInStock: 10,
     rating: 0,
     numReviews: 0,
@@ -67,7 +67,7 @@ const user_seed = [
     description: "Holds up to 60 coin batteries",
   },
   {
-    price: 15,
+    price: 20,
     countInStock: 3,
     rating: 0,
     numReviews: 0,
@@ -78,7 +78,7 @@ const user_seed = [
     description: "Holds up to 60 coin batteries",
   },
   {
-    price: 15,
+    price: 25,
     countInStock: 3,
     rating: 0,
     numReviews: 0,
@@ -100,7 +100,7 @@ const user_seed = [
     description: "Holds up to 60 coin batteries",
   },
   {
-    price: 15,
+    price: 10,
     countInStock: 3,
     rating: 0,
     numReviews: 0,
