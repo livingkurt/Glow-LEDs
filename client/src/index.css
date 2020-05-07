@@ -10,13 +10,13 @@ html {
 } */
 
 @font-face {
-  font-family: "font_2";
+  font-family: "main_font";
   src: url("/fonts/Neou-Bold.otf");
 }
 
 body {
   font: 1.6rem Helvetica;
-  font-family: "font_2";
+  font-family: "main_font";
   height: 100vh;
   margin: 0;
   background-color: #272727;
@@ -480,7 +480,7 @@ tbody>tr:nth-child(odd) {
   padding: 1rem;
   list-style-type: none;
   z-index: 1;
-  background-color: #ff0000;
+  background-color: #333333;
   margin: 0;
   border-radius: 5px;
   /* margin-top: 0.4rem; */

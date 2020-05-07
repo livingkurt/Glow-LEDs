@@ -1,5 +1,5 @@
 /* @font-face {
-  font-family: "font_2";
+  font-family: "main_font";
   src: url("/fonts/Neou-Bold.otf");
 } */
 
@@ -7,9 +7,9 @@
   background-color: transparent;
   color: white;
   border: 0px;
-  font-family: "font_2";
+  font-family: "main_font";
   border-radius: 10px;
-  transition: all 1s ease;
+  transition: all .5s ease;
   padding: 10px;
 }
 
@@ -23,5 +23,6 @@
 
 .button_word:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: gray;
   /* color: rgb(83, 100, 135); */
 }
