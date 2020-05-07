@@ -38,11 +38,12 @@ const Header = (props) => {
 
       <FlexContainer styles={{ flexDirection: "column", justifyContent: "center", margin: "auto" }}>
         <Link to="/" ><Title styles={{ fontSize: "50px", margin: 0, textAlign: "center", width: "100%" }}>Glow LEDs</Title></Link>
-        <FlexContainer styles={{ flexDirection: "row", justifyContent: "space-between", width: "515px" }}>
+        <FlexContainer styles={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
           <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
           <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
           <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link>
+          <Link to="/contact"><ButtonWord>Contact</ButtonWord></Link>
         </FlexContainer>
         {/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} /> */}
       </FlexContainer>

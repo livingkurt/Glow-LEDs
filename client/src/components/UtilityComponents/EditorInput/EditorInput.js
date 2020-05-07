@@ -8,8 +8,7 @@ import { FlexContainer } from '../../ContainerComponents/index'
 const EditorInput = (props) => {
 
   return (
-    <FlexContainer  >
-      {/* <Label styles={{ marginBottom: "20px" }}>{props.label}</Label> */}
+    <FlexContainer styles={{ paddingBottom: "12px" }}>
       <input
         defaultValue={props.value}
         onChange={e => props.on_change_function(e.target.value)}
