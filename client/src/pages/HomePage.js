@@ -7,7 +7,6 @@ function HomePage(props) {
   return (
     <FlexContainer styles={{ justifyContent: "center" }}>
       <Title styles={{ fontSize: 50 }} >Welcome to Glow LEDs</Title>
-
     </FlexContainer>
   )
 

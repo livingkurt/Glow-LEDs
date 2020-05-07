@@ -7,9 +7,9 @@ import './sort.css'
 function Sort(props) {
 
   return (
-    <li>
+    <li className="sort_dropdown">
       Sort By {' '}
-      <select name="sortOrder" onChange={props.sortHandler}>
+      <select name="sortOrder" className="sort_dropdow" onChange={props.sortHandler}>
         <option defaultValue="">Newest</option>
         <option defaultValue="lowest">Lowest</option>
         <option defaultValue="highest">Highest</option>

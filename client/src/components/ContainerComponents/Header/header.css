@@ -3,7 +3,7 @@
   background-color: #333333;
   color: #ffffff;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   padding: 0.5rem;
   /* height: 103px; */
@@ -11,7 +11,7 @@
 }
 
 .logo {
-  margin-right: 42px;
+  margin-right: 80px;
 }
 
 .zoom {

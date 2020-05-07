@@ -43,11 +43,15 @@ button {
   height: 100%;
 }
 
+ul {
+  padding: 0;
+}
+
 .grid-container {
   display: grid;
   grid-template-areas: "header" "main" "footer";
   grid-template-columns: 1fr;
-  grid-template-rows: 12rem 1fr 5rem;
+  grid-template-rows: 16rem 1fr 5rem;
   height: 100%;
 }
 
@@ -497,13 +501,13 @@ tbody>tr:nth-child(odd) {
 
 /* filter */
 
-.filter {
+/* .filter {
   display: flex;
   list-style-type: none;
   padding: 0;
   margin: 1rem auto;
   max-width: 45rem;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -513,7 +517,7 @@ tbody>tr:nth-child(odd) {
   border: .1rem #c0c0c0 solid;
   font-size: 1.6rem;
   margin-right: 5px;
-}
+} */
 
 .categories {
   padding: 0;

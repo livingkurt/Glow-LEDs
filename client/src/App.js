@@ -29,7 +29,7 @@ function App() {
           <Route path="/product/:id" component={ProductPage} />
           <Route path="/cart/:id?" component={CartPage} />
           <Route path="/category/:id?" component={AllProductsPage} />
-          <Route path="/allproducts" exact={true} component={AllProductsPage} />
+          <Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
           <Route path="/" exact={true} component={HomePage} />
         </Content>
         <Footer />

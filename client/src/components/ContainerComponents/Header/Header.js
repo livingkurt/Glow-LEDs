@@ -1,20 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './header.css'
 import { Link } from "react-router-dom";
 import { Title, Label, ButtonWord } from "../../UtilityComponents/index"
 import { FlexContainer } from "../../ContainerComponents/index"
+import { Search } from "../../SpecialtyComponents/index"
 import { listProducts } from '../../../actions/productActions';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useParams } from "react-router";
 
 
 const Header = (props) => {
-
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
+  // const category = props.match.params.id ? props.match.params.id : '';
+  const productList = useSelector(state => state.productList);
+  const history = useHistory()
+  // const params = useParams()
   const dispatch = useDispatch();
+  // const search_key = history.location.search
+  // setSearchKeyword(params.id)
+  // console.log(search_key.slice(3))
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(listProducts(e.target.id))
+    // history.push("/allproducts/" + searchKeyword);
+    dispatch(listProducts("", searchKeyword, ""))
   }
+
 
 
   return (
@@ -22,21 +35,18 @@ const Header = (props) => {
       <div className="brand">
         <Link to="/" ><img className="zoom logo" height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
       </div>
-      <div >
-        <FlexContainer styles={{ flexDirection: "column", justifyContent: "center" }}>
-          <Link to="/" ><Title styles={{ fontSize: "50px", margin: 0, textAlign: "center", width: "100%" }}>Glow LEDs</Title></Link>
-          <FlexContainer styles={{ flexDirection: "row", justifyContent: "space-between", width: "515px" }}>
-            <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
-            <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
-            <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
-            <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link>
-            {/* <ButtonWord id="Diffusers" on_click_function={submitHandler}>Diffusers</ButtonWord>
-            <ButtonWord id="Accessories" on_click_function={submitHandler}>Accessories</ButtonWord>
-            <ButtonWord id="Infinity" on_click_function={submitHandler}>Infinity LEDs</ButtonWord> */}
-          </FlexContainer>
+
+      <FlexContainer styles={{ flexDirection: "column", justifyContent: "center", margin: "auto" }}>
+        <Link to="/" ><Title styles={{ fontSize: "50px", margin: 0, textAlign: "center", width: "100%" }}>Glow LEDs</Title></Link>
+        <FlexContainer styles={{ flexDirection: "row", justifyContent: "space-between", width: "515px" }}>
+          <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
+          <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
+          <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
+          <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link>
         </FlexContainer>
-      </div>
-      <FlexContainer>
+        {/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} /> */}
+      </FlexContainer>
+      <FlexContainer styles={{ marginTop: "18px" }}>
         <Link to="/cart"><ButtonWord>Cart</ButtonWord></Link>
         {
           props.userInfo ? <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link> :

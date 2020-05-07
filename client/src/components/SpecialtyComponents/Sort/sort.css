@@ -1,0 +1,15 @@
+/* filter */
+
+.sort_dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.sort_dropdown select {
+  font-size: 1.6rem;
+  margin-left: 5px;
+}
+
+.sort_dropdown_label {}

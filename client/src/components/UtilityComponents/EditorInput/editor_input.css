@@ -1,11 +1,12 @@
 .editor_input {
   border-radius: 5px;
   display: flex;
-  width: 100%;
+  width: 95%;
   border: 0px;
   font-size: 16px;
-  padding-left: 5px;
+  padding-left: 10px;
   /* margin-top: -4px; */
+  height: 10px;
   overflow: scroll;
   overflow-y: auto;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.19);
