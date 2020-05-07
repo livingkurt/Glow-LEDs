@@ -30,6 +30,14 @@ export default function Form() {
         <input className="zoom_f input_i" type="email" name="user_email" placeholder="Email" />
         <label>Order Number</label>
         <input className="zoom_f input_i" type="text" name="order_number" placeholder="Order Number" />
+        <label>Reason for Contact</label>
+        {/* <input className="zoom_f input_i" type="text" name="order_number" placeholder="Order Number" /> */}
+        <select className="input_i" name="reason_for_contact">
+          <option defaultValue="">-</option>
+          <option defaultValue="order_issues">Order Issues</option>
+          <option defaultValue="returns">Returns</option>
+          <option defaultValue="technical_support">Technical Support</option>
+        </select>
         <label>Message</label>
         <textarea className="zoom_f input_i" name="message" placeholder="Enter Message Here" />
         <input style={{ fontSize: "16px", width: "100px" }} className="zoom_b" id="button" type="submit" value="Send" />
