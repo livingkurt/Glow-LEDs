@@ -28,9 +28,11 @@ export default function Form() {
         <input className="zoom_f input_i" type="text" name="user_name" placeholder="Name" />
         <label>Email</label>
         <input className="zoom_f input_i" type="email" name="user_email" placeholder="Email" />
+        <label>Order Number</label>
+        <input className="zoom_f input_i" type="text" name="order_number" placeholder="Order Number" />
         <label>Message</label>
         <textarea className="zoom_f input_i" name="message" placeholder="Enter Message Here" />
-        <input className="zoom_b" id="button" type="submit" value="Send" />
+        <input style={{ fontSize: "16px", width: "100px" }} className="zoom_b" id="button" type="submit" value="Send" />
       </form>
     </BlockContainer>
   );
