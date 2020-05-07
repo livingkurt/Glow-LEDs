@@ -6,6 +6,7 @@
 .header {
   grid-area: header;
   background-color: #333333;
+  /* background: linear-gradient(180deg, rgba(39, 39, 39, 1) 100%, rgba(0, 0, 0, 1) 0%); */
   color: #ffffff;
   display: flex;
   /* justify-content: space-between; */
@@ -13,6 +14,20 @@
   padding: 0.5rem;
   /* height: 103px; */
   /* background: linear-gradient(90deg, #00ffbe, #0076ff, #7600ff, #ff00c8, #ff0000); */
+  list-style-type: none;
+  /* text-decoration: none; */
+  /* margin: 0px; */
+  /* padding: 0px; */
+  /* width: 100%; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* font-size: 50px; */
+  padding: 15px;
+  /* display: flex; */
+  /* color: white; */
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 999;
 }
 
 .logo {
