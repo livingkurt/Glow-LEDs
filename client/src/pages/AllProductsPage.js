@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { Product, Search, Sort } from '../components/SpecialtyComponents/index'
 import { FlexContainer } from '../components/ContainerComponents/index'
+import { Title, Label, ButtonWord } from "../components/UtilityComponents/index"
 
 function AllProductsPage(props) {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -31,7 +32,8 @@ function AllProductsPage(props) {
 
   return <>
     <FlexContainer styles={{ justifyContent: "center" }}>
-      <h2>{category || "All Products"}</h2>
+      {/* <h2>{category || "All Products"}</h2> */}
+      <Title styles={{ fontSize: 40, fontFamily: "logo_font" }} >{category || "All Products"}</Title>
     </FlexContainer>
     {/* <ul> */}
     <FlexContainer styles={{ justifyContent: "center" }}>
