@@ -18,11 +18,20 @@ function HomePage(props) {
   }
 
   return (
-    <BlockContainer>
+    <BlockContainer styles={{ padding: "30px" }}>
       <FlexContainer styles={{ justifyContent: "center" }}>
         <Title styles={{ fontSize: 50, fontFamily: "logo_font" }} >Welcome to Glow LEDs</Title>
       </FlexContainer>
-      <FlexContainer styles={{ justifyContent: "space-around" }}>
+      <p style={{ textAlign: "center" }}>
+        Hello to all my ravers out there!
+      </p>
+      <p style={{ textAlign: "center" }}>
+        My name is Kurt and I have some cool things that I have made that I want to share with you.
+      </p>
+      <p style={{ textAlign: "center" }}>
+        Using Fusion 360 to design and my Prusa i3 MK3s 3D Printer to print. I have created a line of Microlight Diffusers that will add new  dimmention to your lightshows
+      </p>
+      <FlexContainer styles={{ justifyContent: "space-between" }}>
         <Link to="/category/Diffusers">
           <FlexContainer styles={flex_styles}>
             <ButtonWord><Title styles={heading_styles} >Diffusers</Title></ButtonWord>
@@ -31,7 +40,7 @@ function HomePage(props) {
         </Link>
         <Link to="/category/Accessories">
           <FlexContainer styles={flex_styles}>
-            <ButtonWord><Title styles={heading_styles} >Accessories</Title></ButtonWord>
+            <ButtonWord><Title styles={heading_styles} >LED Accessories</Title></ButtonWord>
             <img className="home_page_img" src="/images/product_images/20mm_Frosted_Dome_Diffusers/IMG_9211.JPG" alt="diffusers" ></img>
           </FlexContainer>
         </Link>
