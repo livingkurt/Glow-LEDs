@@ -15,14 +15,16 @@ function Product(props) {
         <Link to={'/product/' + props.product._id}>
           <img className="product-image" src={props.product.image} alt="product" />
         </Link>
-        <div className="product-name">
+        <Label styles={{ fontSize: "13px" }}>{props.product.brand}</Label>
+        <Link to={'/product/' + props.product._id}><Label styles={{ fontSize: "16px" }}>{props.product.name}</Label></Link>
+        {/* <div className="product-name">
           <Link to={'/product/' + props.product._id}>{props.product.name}</Link>
-        </div>
-        <Label className="product-brand">{props.product.brand}</Label>
+        </div> */}
+
         <Label className="product-price">${props.product.price}</Label>
         {/* <Label className="product-rating">{props.product.rating} Stars ({props.product.numReiews} Reviews)</Label> */}
       </div>
-    </li>
+    </li >
   );
 }
 

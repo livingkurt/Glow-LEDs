@@ -32,15 +32,12 @@ function AllProductsPage(props) {
 
   return <>
     <FlexContainer styles={{ justifyContent: "center" }}>
-      {/* <h2>{category || "All Products"}</h2> */}
       <Title styles={{ fontSize: 40, fontFamily: "logo_font" }} >{category || "All Products"}</Title>
     </FlexContainer>
-    {/* <ul> */}
     <FlexContainer styles={{ justifyContent: "center" }}>
       <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
       <Sort sortHandler={sortHandler} />
     </FlexContainer>
-    {/* </ul> */}
     {loading ? <div>Loading...</div> :
       error ? <div>{error}</div> :
         <ul className="products">

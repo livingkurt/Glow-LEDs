@@ -33,7 +33,7 @@ const Header = (props) => {
   return (
     <header className="header" id="overlay">
       <div className="brand">
-        <Link to="/" ><img className="zoom logo" height="100px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
+        <Link to="/" ><img className="zoom logo" height="125px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
         {/* <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", fontFamily: "logo_font", marginBottom: "10px", marginTop: "17px" }}>G</Title></Link> */}
       </div>
 
