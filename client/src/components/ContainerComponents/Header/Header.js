@@ -21,6 +21,9 @@ const Header = (props) => {
   // const search_key = history.location.search
   // setSearchKeyword(params.id)
   // console.log(search_key.slice(3))
+  const cart = useSelector(state => state.cart);
+
+  const { cartItems } = cart;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -49,7 +52,7 @@ const Header = (props) => {
         {/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} /> */}
       </FlexContainer>
       <FlexContainer styles={{ marginTop: "18px" }}>
-        <Link to="/cart"><ButtonWord>Cart</ButtonWord></Link>
+        <Link to="/cart"><ButtonWord>Cart <i class="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         {
           props.userInfo ? <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link> :
             <Link to="/signin"><ButtonWord>Sign In</ButtonWord></Link>
