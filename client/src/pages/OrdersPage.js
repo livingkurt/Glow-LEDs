@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveOrder, listOrders, deleteOrder } from '../actions/orderActions';
+import { Title } from '../components/UtilityComponents';
 
 function OrdersPage(props) {
   console.log("dd")
@@ -28,7 +29,7 @@ function OrdersPage(props) {
     <div className="content-margined">
 
       <div className="order-header">
-        <h3>Orders</h3>
+        <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Orders</Title>
       </div>
       <div className="order-list">
 

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Title } from '../components/UtilityComponents';
 function CartPage(props) {
 
   const cart = useSelector(state => state.cart);
@@ -28,9 +29,7 @@ function CartPage(props) {
     <div className="cart-list">
       <ul className="cart-list-container">
         <li>
-          <h3>
-            Shopping Cart
-          </h3>
+          <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
           <div>
             Price
           </div>
@@ -76,7 +75,7 @@ function CartPage(props) {
     </div>
     <div className="cart-action">
       <h3>
-        Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items)
+        Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items )
         :
          $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
       </h3>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { Title } from '../components/UtilityComponents';
 
 function ProfilePage(props) {
   const [name, setName] = useState('');
@@ -44,7 +45,8 @@ function ProfilePage(props) {
         <form onSubmit={submitHandler} >
           <ul className="form-container">
             <li>
-              <h2>User Profile</h2>
+              {/* <h2>User Profile</h2> */}
+              <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >User Profile</Title>
             </li>
             <li>
               {loading && <div>Loading...</div>}

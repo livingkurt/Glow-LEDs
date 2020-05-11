@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { savePayment } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { Title } from '../components/UtilityComponents';
 
 function PaymentPage(props) {
 
@@ -21,7 +22,7 @@ function PaymentPage(props) {
       <form onSubmit={submitHandler} >
         <ul className="form-container">
           <li>
-            <h2>Payment</h2>
+            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
           </li>
 
           <li>
