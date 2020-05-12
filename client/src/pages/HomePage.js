@@ -11,6 +11,18 @@ function HomePage(props) {
     video.autoplay = true
   }, []);
 
+  const flex_styles = {
+    height: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
+    textAlign: "center"
+  }
+
+  const heading_styles = {
+    fontSize: 30,
+    fontFamily: "logo_font"
+  }
+
   return (
     <BlockContainer styles={{ padding: "30px" }}>
       <FlexContainer styles={{ justifyContent: "center" }}>
@@ -20,19 +32,39 @@ function HomePage(props) {
         <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Introducting Diffuser Caps</Title>
       </FlexContainer>
       <p style={{ textAlign: "center" }}>
-        To Take Gloving to New Heights!
+        Custom 3D Printed Caps that go over the Diffuser and Glove to bring your light shows to another dimmension
       </p>
       <p style={{ textAlign: "center" }}>
         Watch the Video Below to See Them in Action
       </p>
       <FlexContainer styles={{ justifyContent: "center" }}>
-        <video id="caps_vid" style={{ height: "auto", width: "100%", borderRadius: "20px" }} controls autoplay>
+        <video id="caps_vid" style={{ height: "auto", maxWidth: "100%", borderRadius: "20px" }} controls autoplay>
           <source src="videos/MVI_9237.MP4" type="video/mp4" />
         </video>
       </FlexContainer>
       <p style={{ textAlign: "center" }}>
         <Link to="/category/Caps"><ButtonWord>Shop Diffuser Caps Today!</ButtonWord></Link>
       </p>
+      <FlexContainer styles={{ justifyContent: "space-between" }}>
+        <Link to="/category/Diffusers">
+          <FlexContainer styles={flex_styles}>
+            <ButtonWord><Title styles={heading_styles} >Diffusers</Title></ButtonWord>
+            <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9223.JPG" alt="diffusers" ></img>
+          </FlexContainer>
+        </Link>
+        <Link to="/category/Accessories">
+          <FlexContainer styles={flex_styles}>
+            <ButtonWord><Title styles={heading_styles} >LED Accessories</Title></ButtonWord>
+            <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9234.JPG" alt="accessories" ></img>
+          </FlexContainer>
+        </Link>
+        <Link to="/category/Infinity">
+          <FlexContainer styles={flex_styles}>
+            <ButtonWord><Title styles={heading_styles} >Infinity LED</Title></ButtonWord>
+            <img className="home_page_img" src="/images/product_images/Infinity_Cube/IMG_9241.JPG" alt="infinity_leds" ></img>
+          </FlexContainer>
+        </Link>
+      </FlexContainer>
     </BlockContainer>
   )
 
