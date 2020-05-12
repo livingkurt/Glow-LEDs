@@ -49,8 +49,8 @@ function PlaceOrderPage(props) {
         <div>
           <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
           <div>
-            <div>{order.shipping.address}</div>
-            <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
+            <div>{shipping.address}</div>
+            <div>{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}</div>
           </div>
         </div>
         <div>
