@@ -10,8 +10,8 @@ const ButtonSymbol = (props) => {
     <div >
       <button
         style={props.styles}
-        id={props.id}
-        onClick={() => props.on_click_function(props.id, props.priority)}
+        arg={props.arg}
+        onClick={() => props.on_click_function(props.arg)}
         className="button_symbol">{props.children}</button>
     </div>
   );

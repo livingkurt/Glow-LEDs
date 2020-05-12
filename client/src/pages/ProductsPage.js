@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
-import { Title } from '../components/UtilityComponents';
+import { Title, ButtonSymbol } from '../components/UtilityComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 function ProductsPage(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -152,13 +153,14 @@ function ProductsPage(props) {
           {products.map(product => (<tr key={product._id}>
             <td>{product._id}</td>
             <td>{product.name}</td>
-            <td>{product.price}</td>
+            <td>${product.price.toFixed(2)}</td>
             <td>{product.category}</td>
             <td>{product.brand}</td>
             <td>
-              <button className="button" onClick={() => openModal(product)} >Edit</button>
-              {' '}
-              <button className="button" onClick={() => deleteHandler(product)} >Delete</button>
+              <FlexContainer styles={{ justifyContent: "space-between" }}>
+                <ButtonSymbol arg={product} on_click_function={openModal} ><i class="fas fa-edit"></i></ButtonSymbol>
+                <ButtonSymbol arg={product} on_click_function={deleteHandler} ><i class="fas fa-trash-alt"></i></ButtonSymbol>
+              </FlexContainer>
             </td>
           </tr>))}
         </tbody>
