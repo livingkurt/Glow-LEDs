@@ -47,10 +47,11 @@ const Header = (props) => {
           <div className="dropdown-nav">
             <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
             <ul style={{ width: 200 }} className="dropdown-nav-content">
-              <Link to="/category/Diffusers/Domes"><ButtonWord>Domes</ButtonWord></Link>
-              <Link to="/category/Diffusers/Caps"><ButtonWord>Caps</ButtonWord></Link>
-              <Link to="/category/Diffusers/Large"><ButtonWord>Large</ButtonWord></Link>
-              <Link to="/category/Diffusers/Experimental"><ButtonWord>Experimental Shapes</ButtonWord></Link>
+              {/* <Link to="/category/Domes"><ButtonWord>Domes</ButtonWord></Link> */}
+              <Link to="/category/Caps"><ButtonWord>Caps</ButtonWord></Link>
+              <Link to="/category/Adapters"><ButtonWord>Adapters</ButtonWord></Link>
+              {/* <Link to="/category/Large"><ButtonWord>Large</ButtonWord></Link> */}
+              {/* <Link to="/category/Experimental"><ButtonWord>Experimental Shapes</ButtonWord></Link> */}
             </ul>
           </div>
           <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>

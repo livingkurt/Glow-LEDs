@@ -106,7 +106,7 @@ function ProductsPage(props) {
             </li>
             <li>
               <label htmlFor="countInStock">
-                CountInStock
+                Count In Stock
           </label>
               <input type="text" name="countInStock" defaultValue={countInStock} id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>
               </input>
