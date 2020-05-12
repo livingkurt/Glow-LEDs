@@ -1,56 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Title, Label, ButtonWord } from "../components/UtilityComponents/index"
 import { FlexContainer, BlockContainer } from "../components/ContainerComponents/index"
 import { Link } from "react-router-dom";
 
 function HomePage(props) {
 
-  const flex_styles = {
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    textAlign: "center"
-  }
-
-  const heading_styles = {
-    fontSize: 30,
-    fontFamily: "logo_font"
-  }
+  useEffect(() => {
+    const video = document.getElementById("caps_vid")
+    video.muted = true
+    video.autoplay = true
+  }, []);
 
   return (
     <BlockContainer styles={{ padding: "30px" }}>
       <FlexContainer styles={{ justifyContent: "center" }}>
-        <Title styles={{ fontSize: 50, fontFamily: "logo_font" }} >Welcome to Glow LEDs</Title>
+        <Title styles={{ fontSize: 50, fontFamily: "logo_font", marginBottom: 0 }} >Welcome to Glow LEDs</Title>
+      </FlexContainer>
+      <FlexContainer styles={{ justifyContent: "center" }}>
+        <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Introducting Diffuser Caps</Title>
       </FlexContainer>
       <p style={{ textAlign: "center" }}>
-        Hello to all my ravers out there!
+        To Take Gloving to New Heights!
       </p>
       <p style={{ textAlign: "center" }}>
-        My name is Kurt and I have some cool things that I have made that I want to share with you.
+        Watch the Video Below to See Them in Action
       </p>
-      <p style={{ textAlign: "center" }}>
-        Using Fusion 360 to design and my Prusa i3 MK3s 3D Printer to print. I have created a line of Microlight Diffusers that will add new  dimmention to your lightshows
-      </p>
-      <FlexContainer styles={{ justifyContent: "space-between" }}>
-        <Link to="/category/Diffusers">
-          <FlexContainer styles={flex_styles}>
-            <ButtonWord><Title styles={heading_styles} >Diffusers</Title></ButtonWord>
-            <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9223.JPG" alt="diffusers" ></img>
-          </FlexContainer>
-        </Link>
-        <Link to="/category/Accessories">
-          <FlexContainer styles={flex_styles}>
-            <ButtonWord><Title styles={heading_styles} >LED Accessories</Title></ButtonWord>
-            <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9234.JPG" alt="accessories" ></img>
-          </FlexContainer>
-        </Link>
-        <Link to="/category/Infinity">
-          <FlexContainer styles={flex_styles}>
-            <ButtonWord><Title styles={heading_styles} >Infinity LED</Title></ButtonWord>
-            <img className="home_page_img" src="/images/product_images/Infinity_Cube/IMG_9241.JPG" alt="infinity_leds" ></img>
-          </FlexContainer>
-        </Link>
+      <FlexContainer styles={{ justifyContent: "center" }}>
+        <video id="caps_vid" style={{ height: "auto", width: "100%", borderRadius: "20px" }} controls autoplay>
+          <source src="videos/MVI_9237.MP4" type="video/mp4" />
+        </video>
       </FlexContainer>
+      <p style={{ textAlign: "center" }}>
+        <Link to="/category/Caps"><ButtonWord>Shop Diffuser Caps Today!</ButtonWord></Link>
+      </p>
     </BlockContainer>
   )
 
