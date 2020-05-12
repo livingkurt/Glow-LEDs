@@ -46,7 +46,7 @@ function ProfilePage(props) {
           <ul className="form-container">
             <li>
               {/* <h2>User Profile</h2> */}
-              <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >User Profile</Title>
+              <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >User Profile</Title>
             </li>
             <li>
               {loading && <div>Loading...</div>}
@@ -86,6 +86,7 @@ function ProfilePage(props) {
       </div>
     </div>
     <div className="profile-orders content-margined">
+      <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Orders</Title>
       {
         loadingOrders ? <div>Loading...</div> :
           errorOrders ? <div>{errorOrders} </div> :
@@ -103,7 +104,7 @@ function ProfilePage(props) {
                 {orders.map(order => <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{order.createdAt}</td>
-                  <td>{order.totalPrice}</td>
+                  <td>${order.totalPrice.toFixed(2)}</td>
                   <td>{order.isPaid}</td>
                   <td>
                     <Link to={"/order/" + order._id}>DETAILS</Link>
@@ -113,7 +114,7 @@ function ProfilePage(props) {
             </table>
       }
     </div>
-  </div>
+  </div >
 
 }
 

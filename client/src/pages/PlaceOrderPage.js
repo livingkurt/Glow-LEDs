@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
+import { Title } from '../components/UtilityComponents';
 function PlaceOrderPage(props) {
 
   const cart = useSelector(state => state.cart);
@@ -46,16 +47,14 @@ function PlaceOrderPage(props) {
     <div className="placeorder">
       <div className="placeorder-info">
         <div>
-          <h3>
-            Shipping
-          </h3>
+          <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
           <div>
             {cart.shipping.address}, {cart.shipping.city},
           {cart.shipping.postalCode}, {cart.shipping.country},
           </div>
         </div>
         <div>
-          <h3>Payment</h3>
+          <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
           <div>
             Payment Method: {cart.payment.paymentMethod}
           </div>
@@ -63,9 +62,7 @@ function PlaceOrderPage(props) {
         <div>
           <ul className="cart-list-container">
             <li>
-              <h3>
-                Shopping Cart
-          </h3>
+              <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
               <div>
                 Price
           </div>
@@ -93,7 +90,7 @@ function PlaceOrderPage(props) {
                       </div>
                     </div>
                     <div className="cart-price">
-                      ${item.price}
+                      ${item.price.toFixed(2)}
                     </div>
                   </li>
                 )
@@ -109,23 +106,23 @@ function PlaceOrderPage(props) {
             <button className="button primary full-width" onClick={placeOrderHandler} >Place Order</button>
           </li>
           <li>
-            <h3>Order Summary</h3>
+            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Order Summary</Title>
           </li>
           <li>
             <div>Items</div>
-            <div>${itemsPrice}</div>
+            <div>${itemsPrice.toFixed(2)}</div>
           </li>
           <li>
             <div>Shipping</div>
-            <div>${shippingPrice}</div>
+            <div>${shippingPrice.toFixed(2)}</div>
           </li>
           <li>
             <div>Tax</div>
-            <div>${taxPrice}</div>
+            <div>${taxPrice.toFixed(2)}</div>
           </li>
           <li>
             <div>Order Total</div>
-            <div>${totalPrice}</div>
+            <div>${totalPrice.toFixed(2)}</div>
           </li>
         </ul>
 

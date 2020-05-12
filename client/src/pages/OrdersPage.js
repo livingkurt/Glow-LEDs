@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveOrder, listOrders, deleteOrder } from '../actions/orderActions';
 import { Title } from '../components/UtilityComponents';
+import { format_date_display } from '../utils/helper_functions';
 
 function OrdersPage(props) {
   console.log("dd")
@@ -29,7 +30,7 @@ function OrdersPage(props) {
     <div className="content-margined">
 
       <div className="order-header">
-        <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Orders</Title>
+        <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Orders</Title>
       </div>
       <div className="order-list">
 
@@ -50,11 +51,11 @@ function OrdersPage(props) {
           <tbody>
             {orders.map(order => (<tr key={order._id}>
               <td>{order._id}</td>
-              <td>{order.createdAt}</td>
-              <td>{order.totalPrice}</td>
+              <td>{format_date_display(order.createdAt)}</td>
+              <td>${order.totalPrice.toFixed(2)}</td>
               <td>{order.user.name}</td>
               <td>{order.isPaid.toString()}</td>
-              <td>{order.paidAt}</td>
+              <td>{format_date_display(order.paidAt)}</td>
               <td>{order.isDelivered.toString()}</td>
               <td>{order.deliveredAt}</td>
               <td>

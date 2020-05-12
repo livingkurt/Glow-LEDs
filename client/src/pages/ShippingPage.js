@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { saveShipping } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { Title } from '../components/UtilityComponents';
 
 function ShippingPage(props) {
 
@@ -25,7 +26,7 @@ function ShippingPage(props) {
       <form onSubmit={submitHandler} >
         <ul className="form-container">
           <li>
-            <h2>Shipping</h2>
+            <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Shipping</Title>
           </li>
           <li>
             <label htmlFor="address">

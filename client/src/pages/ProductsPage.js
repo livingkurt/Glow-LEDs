@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
+import { Title } from '../components/UtilityComponents';
 
 function ProductsPage(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -59,7 +60,7 @@ function ProductsPage(props) {
   return <div className="content-margined">
 
     <div className="product-header">
-      <h3>Products</h3>
+      <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Products</Title>
       <button className="button primary" onClick={() => openModal({})}>Create Product</button>
     </div>
     {modalVisible &&

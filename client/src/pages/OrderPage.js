@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder, detailsOrder, payOrder } from '../actions/orderActions';
 import PaypalButton from '../components/PaypalButton';
+import { Title } from '../components/UtilityComponents';
+import { format_date_display } from "../utils/helper_functions"
 function OrderPage(props) {
 
   const orderPay = useSelector(state => state.orderPay);
@@ -35,9 +37,7 @@ function OrderPage(props) {
       <div className="placeorder">
         <div className="placeorder-info">
           <div>
-            <h3>
-              Shipping
-          </h3>
+            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
             <div>
               {order.shipping.address}, {order.shipping.city},
           {order.shipping.postalCode}, {order.shipping.country},
@@ -47,20 +47,18 @@ function OrderPage(props) {
             </div>
           </div>
           <div>
-            <h3>Payment</h3>
+            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
             <div>
               Payment Method: {order.payment.paymentMethod}
             </div>
             <div>
-              {order.isPaid ? "Paid at " + order.paidAt : "Not Paid."}
+              {order.isPaid ? "Paid at " + format_date_display(order.paidAt) : "Not Paid."}
             </div>
           </div>
           <div>
             <ul className="cart-list-container">
               <li>
-                <h3>
-                  Shopping Cart
-          </h3>
+                <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
                 <div>
                   Price
           </div>
@@ -109,23 +107,23 @@ function OrderPage(props) {
               }
             </li>
             <li>
-              <h3>Order Summary</h3>
+              <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Order Summary</Title>
             </li>
             <li>
               <div>Items</div>
-              <div>${order.itemsPrice}</div>
+              <div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div>
             </li>
             <li>
               <div>Shipping</div>
-              <div>${order.shippingPrice}</div>
+              <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
             </li>
             <li>
               <div>Tax</div>
-              <div>${order.taxPrice}</div>
+              <div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
             </li>
             <li>
               <div>Order Total</div>
-              <div>${order.totalPrice}</div>
+              <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
             </li>
           </ul>
 

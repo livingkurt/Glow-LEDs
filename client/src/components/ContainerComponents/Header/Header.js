@@ -51,7 +51,7 @@ const Header = (props) => {
         </FlexContainer>
         {/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} /> */}
       </FlexContainer>
-      <FlexContainer styles={{ marginTop: "18px" }}>
+      <FlexContainer>
         <Link to="/cart"><ButtonWord>Cart <i class="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         {
           props.userInfo ? <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link> :
