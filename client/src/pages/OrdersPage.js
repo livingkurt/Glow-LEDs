@@ -53,7 +53,7 @@ function OrdersPage(props) {
               <td>{order.user.name}</td>
               <td>{order.isPaid ? <i class="fas fa-check-circle"></i> : <i class="fas fa-times-circle"></i>}</td>
               <td>{!order.paidAt ? "" : format_date_display(order.paidAt)}</td>
-              <td>{order.isDelivered.toString()}</td>
+              <td>{order.isDelivered ? <i class="fas fa-check-circle"></i> : <i class="fas fa-times-circle"></i>}</td>
               <td>{!order.deliveredAt ? "" : format_date_display(order.deliveredAt)}</td>
               <td>
                 <FlexContainer styles={{ justifyContent: "space-between" }}>
