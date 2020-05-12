@@ -276,6 +276,8 @@ a {
 .cart-list-container li img {
   max-width: 10rem;
   max-height: 10rem;
+  border-radius: 8px;
+  margin-right: 10px;
 }
 
 .cart-list-container li:first-child {
