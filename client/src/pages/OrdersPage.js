@@ -51,7 +51,7 @@ function OrdersPage(props) {
               <td>{format_date_display(order.createdAt)}</td>
               <td>${order.totalPrice.toFixed(2)}</td>
               <td>{order.user.name}</td>
-              <td>{order.isPaid.toString()}</td>
+              <td>{order.isPaid ? <i class="fas fa-check-circle"></i> : <i class="fas fa-times-circle"></i>}</td>
               <td>{!order.paidAt ? "" : format_date_display(order.paidAt)}</td>
               <td>{order.isDelivered.toString()}</td>
               <td>{!order.deliveredAt ? "" : format_date_display(order.deliveredAt)}</td>
