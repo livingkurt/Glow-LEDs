@@ -72,7 +72,7 @@ function ProductsPage(props) {
               <h2>Create Product</h2>
             </li>
             <li>
-              {loadingSave && <div>Loading...</div>}
+              {loadingSave && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
               {errorSave && <div>{errorSave}</div>}
             </li>
 

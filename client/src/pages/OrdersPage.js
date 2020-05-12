@@ -23,7 +23,7 @@ function OrdersPage(props) {
   const deleteHandler = (order) => {
     dispatch(deleteOrder(order._id));
   }
-  return loading ? <div>Loading...</div> :
+  return loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
     <div className="content-margined">
 
       <div className="order-header">

@@ -50,7 +50,7 @@ function ProfilePage(props) {
               <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >User Profile</Title>
             </li>
             <li>
-              {loading && <div>Loading...</div>}
+              {loading && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
               {error && <div>{error}</div>}
               {success && <div>Profile Saved Successfully.</div>}
             </li>
@@ -89,7 +89,7 @@ function ProfilePage(props) {
     <div className="profile-orders content-margined">
       <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Orders</Title>
       {
-        loadingOrders ? <div>Loading...</div> :
+        loadingOrders ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
           errorOrders ? <div>{errorOrders} </div> :
             <table className="table">
               <thead>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
+import { Title } from '../components/UtilityComponents';
 
 function RegisterPage(props) {
 
@@ -35,7 +36,7 @@ function RegisterPage(props) {
           <h2>Create Account</h2>
         </li>
         <li>
-          {loading && <div>Loading...</div>}
+          {loading && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
           {error && <div>{error}</div>}
         </li>
         <li>

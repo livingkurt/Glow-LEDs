@@ -38,7 +38,7 @@ function AllProductsPage(props) {
       <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
       <Sort sortHandler={sortHandler} />
     </FlexContainer>
-    {loading ? <div>Loading...</div> :
+    {loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
       error ? <div>{error}</div> :
         <ul className="products">
           {

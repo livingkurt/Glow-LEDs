@@ -31,7 +31,7 @@ function OrderPage(props) {
   const payHandler = () => { };
   console.log(orderDetails)
 
-  return loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
+  return loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> : error ? <div>{error}</div> :
 
     <div>
       <div className="placeorder">

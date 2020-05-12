@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
+import { Title } from '../components/UtilityComponents';
 
 function SigninPage(props) {
 
@@ -32,7 +33,7 @@ function SigninPage(props) {
           <h2>Sign-In</h2>
         </li>
         <li>
-          {loading && <div>Loading...</div>}
+          {loading && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
           {error && <div>{error}</div>}
         </li>
         <li>

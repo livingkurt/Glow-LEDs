@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../actions/productActions';
+import { Title } from '../components/UtilityComponents';
 
 function ProductPage(props) {
   const [qty, setQty] = useState(1);
@@ -22,9 +23,9 @@ function ProductPage(props) {
 
   return <div>
     <div className="back-to-result">
-      <Link to="/allproducts">Back to Results</Link>
+      <Link to="/allproducts"><Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Back to Results</Title></Link>
     </div>
-    {loading ? <div>Loading...</div> :
+    {loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
       error ? <div>{error} </div> :
         (
           <div className="details">
