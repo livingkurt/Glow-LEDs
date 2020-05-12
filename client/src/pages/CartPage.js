@@ -10,12 +10,15 @@ function CartPage(props) {
 
   const { cartItems } = cart;
 
+  console.log(cartItems)
   const productId = props.match.params.id;
   const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
+
   const removeFromCartHandler = (productId) => {
     dispatch(removeFromCart(productId));
   }
+
   useEffect(() => {
     if (productId) {
       dispatch(addToCart(productId, qty));
@@ -60,10 +63,6 @@ function CartPage(props) {
                         <option key={x + 1} defaultValue={x + 1}>{x + 1}</option>
                       )}
                     </select>
-                    {/* <button type="button" className="button" onClick={() => removeFromCartHandler(item.product)} >
-                      Delete
-                    </button> */}
-
                   </div>
                 </div>
 

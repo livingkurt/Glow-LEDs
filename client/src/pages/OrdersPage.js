@@ -8,7 +8,6 @@ import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 
 function OrdersPage(props) {
-  console.log("dd")
   const orderList = useSelector(state => state.orderList);
   const { loading, orders, error } = orderList;
 

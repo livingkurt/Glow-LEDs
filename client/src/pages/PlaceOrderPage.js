@@ -12,6 +12,7 @@ function PlaceOrderPage(props) {
   const { loading, success, error, order } = orderCreate;
 
   const { cartItems, shipping, payment } = cart;
+
   if (!shipping.address) {
     props.history.push("/shipping");
   } else if (!payment.paymentMethod) {
@@ -30,7 +31,13 @@ function PlaceOrderPage(props) {
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
       taxPrice, totalPrice
     }));
+    console.log(cartItems)
+    // cartItems.forEach(product => {
+    //   dispatch(removeFromCart(product._id));
+    // })
+
   }
+
   useEffect(() => {
     if (success) {
       props.history.push("/order/" + order._id);

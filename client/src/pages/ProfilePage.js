@@ -106,7 +106,7 @@ function ProfilePage(props) {
                   <td>{order._id}</td>
                   <td>{format_date_display(order.createdAt)}</td>
                   <td>${order.totalPrice.toFixed(2)}</td>
-                  <td>{order.isPaid}</td>
+                  <td>{order.isPaid.toString()}</td>
                   <td>
                     <Link to={"/order/" + order._id}>DETAILS</Link>
                   </td>
