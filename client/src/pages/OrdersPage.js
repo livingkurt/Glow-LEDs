@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveOrder, listOrders, deleteOrder } from '../actions/orderActions';
-import { Title, ButtonWord } from '../components/UtilityComponents';
+import { Title, ButtonWord, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
+import { FlexContainer } from '../components/ContainerComponents';
 
 function OrdersPage(props) {
   console.log("dd")
@@ -56,10 +57,10 @@ function OrdersPage(props) {
               <td>{order.isDelivered.toString()}</td>
               <td>{!order.deliveredAt ? "" : format_date_display(order.deliveredAt)}</td>
               <td>
-                <Link to={"/order/" + order._id} className="button secondary" >Details</Link>
-                {' '}
-                <button type="button" onClick={() => deleteHandler(order)} className="button secondary">Delete</button>
-                {/* <ButtonWord on_click_function={deleteHandler}>Delete</ButtonWord> */}
+                <FlexContainer styles={{ justifyContent: "space-between" }}>
+                  <Link to={"/order/" + order._id}  ><ButtonSymbol ><i class="fas fa-info-circle"></i></ButtonSymbol></Link>
+                  <ButtonSymbol arg={order} on_click_function={deleteHandler} ><i class="fas fa-trash-alt"></i></ButtonSymbol>
+                </FlexContainer>
               </td>
             </tr>))}
           </tbody>
