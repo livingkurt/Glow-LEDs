@@ -57,7 +57,7 @@ function OrdersPage(props) {
               <td>{order.isPaid.toString()}</td>
               <td>{format_date_display(order.paidAt)}</td>
               <td>{order.isDelivered.toString()}</td>
-              <td>{order.deliveredAt}</td>
+              <td>{format_date_display(order.deliveredAt)}</td>
               <td>
                 <Link to={"/order/" + order._id} className="button secondary" >Details</Link>
                 {' '}

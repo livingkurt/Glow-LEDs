@@ -39,9 +39,9 @@ function OrderPage(props) {
           <div>
             <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
             <div>
-              {order.shipping.address}, {order.shipping.city},
-          {order.shipping.postalCode}, {order.shipping.country},
-          </div>
+              <div>{order.shipping.address}</div>
+              <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
+            </div>
             <div>
               {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
             </div>
@@ -56,8 +56,8 @@ function OrderPage(props) {
             </div>
           </div>
           <div>
-            <ul className="cart-list-container">
-              <li>
+            <ul style={{ marginTop: 0 }} className="cart-list-container">
+              <li >
                 <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
                 <div>
                   Price
@@ -107,7 +107,7 @@ function OrderPage(props) {
               }
             </li>
             <li>
-              <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Order Summary</Title>
+              <Title styles={{ fontSize: 30, fontFamily: "logo_font", margin: 0 }} >Order Summary</Title>
             </li>
             <li>
               <div>Items</div>

@@ -4,6 +4,7 @@ import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Title } from '../components/UtilityComponents';
+import { format_date_display } from '../utils/helper_functions';
 
 function ProfilePage(props) {
   const [name, setName] = useState('');
@@ -103,7 +104,7 @@ function ProfilePage(props) {
               <tbody>
                 {orders.map(order => <tr key={order._id}>
                   <td>{order._id}</td>
-                  <td>{order.createdAt}</td>
+                  <td>{format_date_display(order.createdAt)}</td>
                   <td>${order.totalPrice.toFixed(2)}</td>
                   <td>{order.isPaid}</td>
                   <td>

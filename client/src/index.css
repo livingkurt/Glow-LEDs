@@ -381,7 +381,8 @@ th {
 
 td {
   background-color: #626262;
-  padding-left: 12px;
+  /* padding-left: 12px; */
+  padding: 10px;
 }
 
 tbody>tr:nth-child(odd) {
@@ -431,6 +432,7 @@ tbody>tr:nth-child(odd) {
   background-color: #fcfcfc;
   padding: 1rem;
   background-color: #5a5a5a;
+  height: 553px;
 }
 
 .placeorder-info>div {
