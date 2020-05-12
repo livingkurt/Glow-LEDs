@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Title } from '../components/UtilityComponents';
+import { Title, ButtonSymbol } from '../components/UtilityComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 function CartPage(props) {
 
   const cart = useSelector(state => state.cart);
@@ -59,14 +60,23 @@ function CartPage(props) {
                         <option key={x + 1} defaultValue={x + 1}>{x + 1}</option>
                       )}
                     </select>
-                    <button type="button" className="button" onClick={() => removeFromCartHandler(item.product)} >
+                    {/* <button type="button" className="button" onClick={() => removeFromCartHandler(item.product)} >
                       Delete
-                    </button>
+                    </button> */}
+
                   </div>
                 </div>
-                <div className="cart-price">
-                  ${item.price.toFixed(2)}
-                </div>
+
+
+
+                <FlexContainer styles={{ flexDirection: "column" }}>
+                  <div className="cart-price">
+                    ${item.price.toFixed(2)}
+                  </div>
+                  <div style={{ textAlign: "right", width: "100%" }}>
+                    <ButtonSymbol arg={item.product} on_click_function={removeFromCartHandler} ><i class="fas fa-trash-alt"></i></ButtonSymbol>
+                  </div>
+                </FlexContainer>
               </li>
             )
         }
@@ -85,7 +95,7 @@ function CartPage(props) {
 
     </div>
 
-  </div>
+  </div >
 }
 
 export default CartPage;
