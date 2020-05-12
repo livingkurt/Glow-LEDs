@@ -10,6 +10,7 @@
 .sort_dropdown select {
   font-size: 1.6rem;
   margin-left: 5px;
+  margin-top: -4px;
 }
 
 .sort_dropdown_label {}

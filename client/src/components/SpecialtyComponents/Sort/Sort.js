@@ -2,13 +2,14 @@
 import React from "react";
 // Styles
 import './sort.css'
+import { Label } from "../../UtilityComponents";
 
 
 function Sort(props) {
 
   return (
     <li className="sort_dropdown">
-      Sort By {' '}
+      <Label>Sort By</Label>
       <select name="sortOrder" className="sort_dropdow" onChange={props.sortHandler}>
         <option defaultValue="">Newest</option>
         <option defaultValue="lowest">Lowest</option>
