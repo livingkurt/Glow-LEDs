@@ -51,14 +51,14 @@ function OrdersPage(props) {
               <td>{format_date_display(order.createdAt)}</td>
               <td>${order.totalPrice.toFixed(2)}</td>
               <td>{order.user.name}</td>
-              <td>{order.isPaid ? <i class="fas fa-check-circle"></i> : <i class="fas fa-times-circle"></i>}</td>
+              <td>{order.isPaid ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
               <td>{!order.paidAt ? "" : format_date_display(order.paidAt)}</td>
-              <td>{order.isDelivered ? <i class="fas fa-check-circle"></i> : <i class="fas fa-times-circle"></i>}</td>
+              <td>{order.isDelivered ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
               <td>{!order.deliveredAt ? "" : format_date_display(order.deliveredAt)}</td>
               <td>
                 <FlexContainer styles={{ justifyContent: "space-between" }}>
-                  <Link to={"/order/" + order._id}  ><ButtonSymbol ><i class="fas fa-info-circle"></i></ButtonSymbol></Link>
-                  <ButtonSymbol arg={order} on_click_function={deleteHandler} ><i class="fas fa-trash-alt"></i></ButtonSymbol>
+                  <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>
+                  <ButtonSymbol arg={order} on_click_function={deleteHandler} ><i className="fas fa-trash-alt"></i></ButtonSymbol>
                 </FlexContainer>
               </td>
             </tr>))}

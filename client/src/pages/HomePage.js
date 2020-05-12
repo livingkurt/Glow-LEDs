@@ -46,24 +46,25 @@ function HomePage(props) {
         <Link to="/category/Caps"><ButtonWord>Shop Diffuser Caps Today!</ButtonWord></Link>
       </p>
       <FlexContainer styles={{ justifyContent: "space-between" }}>
+        <Link to="/category/Caps">
+          <FlexContainer styles={flex_styles}>
+            <ButtonWord><Title styles={heading_styles} >Diffuser Caps</Title></ButtonWord>
+            <img className="home_page_img" src="/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps" ></img>
+          </FlexContainer>
+        </Link>
         <Link to="/category/Diffusers">
           <FlexContainer styles={flex_styles}>
             <ButtonWord><Title styles={heading_styles} >Diffusers</Title></ButtonWord>
-            <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9223.JPG" alt="diffusers" ></img>
+            <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG" alt="diffusers" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Accessories">
           <FlexContainer styles={flex_styles}>
             <ButtonWord><Title styles={heading_styles} >LED Accessories</Title></ButtonWord>
-            <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9234.JPG" alt="accessories" ></img>
+            <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG" alt="accessories" ></img>
           </FlexContainer>
         </Link>
-        <Link to="/category/Infinity">
-          <FlexContainer styles={flex_styles}>
-            <ButtonWord><Title styles={heading_styles} >Infinity LED</Title></ButtonWord>
-            <img className="home_page_img" src="/images/product_images/Infinity_Cube/IMG_9241.JPG" alt="infinity_leds" ></img>
-          </FlexContainer>
-        </Link>
+
       </FlexContainer>
     </BlockContainer>
   )

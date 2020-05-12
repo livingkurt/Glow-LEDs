@@ -158,8 +158,8 @@ function ProductsPage(props) {
             <td>{product.brand}</td>
             <td>
               <FlexContainer styles={{ justifyContent: "space-between" }}>
-                <ButtonSymbol arg={product} on_click_function={openModal} ><i class="fas fa-edit"></i></ButtonSymbol>
-                <ButtonSymbol arg={product} on_click_function={deleteHandler} ><i class="fas fa-trash-alt"></i></ButtonSymbol>
+                <ButtonSymbol arg={product} on_click_function={openModal} ><i className="fas fa-edit"></i></ButtonSymbol>
+                <ButtonSymbol arg={product} on_click_function={deleteHandler} ><i className="fas fa-trash-alt"></i></ButtonSymbol>
               </FlexContainer>
             </td>
           </tr>))}
