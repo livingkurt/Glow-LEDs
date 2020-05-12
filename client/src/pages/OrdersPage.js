@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { saveOrder, listOrders, deleteOrder } from '../actions/orderActions';
-import { Title } from '../components/UtilityComponents';
+import { Title, ButtonWord } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
 
 function OrdersPage(props) {
@@ -18,9 +18,6 @@ function OrdersPage(props) {
 
   useEffect(() => {
     dispatch(listOrders());
-    return () => {
-      //
-    };
   }, [successDelete]);
 
   const deleteHandler = (order) => {
@@ -55,13 +52,14 @@ function OrdersPage(props) {
               <td>${order.totalPrice.toFixed(2)}</td>
               <td>{order.user.name}</td>
               <td>{order.isPaid.toString()}</td>
-              <td>{format_date_display(order.paidAt)}</td>
+              <td>{!order.paidAt ? "" : format_date_display(order.paidAt)}</td>
               <td>{order.isDelivered.toString()}</td>
-              <td>{format_date_display(order.deliveredAt)}</td>
+              <td>{!order.deliveredAt ? "" : format_date_display(order.deliveredAt)}</td>
               <td>
                 <Link to={"/order/" + order._id} className="button secondary" >Details</Link>
                 {' '}
                 <button type="button" onClick={() => deleteHandler(order)} className="button secondary">Delete</button>
+                {/* <ButtonWord on_click_function={deleteHandler}>Delete</ButtonWord> */}
               </td>
             </tr>))}
           </tbody>

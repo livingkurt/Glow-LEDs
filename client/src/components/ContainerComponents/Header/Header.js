@@ -44,8 +44,22 @@ const Header = (props) => {
         <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", fontFamily: "logo_font", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
         <FlexContainer styles={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
-          <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
-          <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
+          <div className="dropdown-nav">
+            <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
+            <ul className="dropdown-nav-content">
+              <Link to="/category/Diffusers"><ButtonWord>Frosted</ButtonWord></Link>
+              <Link to="/category/Diffusers"><ButtonWord>Caps</ButtonWord></Link>
+              <Link to="/category/Diffusers"><ButtonWord>Large</ButtonWord></Link>
+            </ul>
+          </div>
+          <div className="dropdown-nav">
+            <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
+            <ul style={{ width: 200 }} className="dropdown-nav-content">
+              <Link to="/category/Infinity"><ButtonWord style={{ width: "100%" }}>Infinity Mirrors</ButtonWord></Link>
+              <Link to="/category/Accessories"><ButtonWord style={{ width: "100%" }}>Glove Accessories</ButtonWord></Link>
+              <Link to="/category/Accessories"><ButtonWord style={{ width: "100%" }}>Other Products</ButtonWord></Link>
+            </ul>
+          </div>
           <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link>
           <Link to="/contact"><ButtonWord>Contact</ButtonWord></Link>
         </FlexContainer>
