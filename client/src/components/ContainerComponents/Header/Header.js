@@ -46,27 +46,29 @@ const Header = (props) => {
           <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
           <div className="dropdown-nav">
             <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
-            <ul className="dropdown-nav-content">
-              <Link to="/category/Diffusers"><ButtonWord>Frosted</ButtonWord></Link>
-              <Link to="/category/Diffusers"><ButtonWord>Caps</ButtonWord></Link>
-              <Link to="/category/Diffusers"><ButtonWord>Large</ButtonWord></Link>
+            <ul style={{ width: 200 }} className="dropdown-nav-content">
+              <Link to="/category/Diffusers/Domes"><ButtonWord>Domes</ButtonWord></Link>
+              <Link to="/category/Diffusers/Caps"><ButtonWord>Caps</ButtonWord></Link>
+              <Link to="/category/Diffusers/Large"><ButtonWord>Large</ButtonWord></Link>
+              <Link to="/category/Diffusers/Experimental"><ButtonWord>Experimental Shapes</ButtonWord></Link>
             </ul>
           </div>
-          <div className="dropdown-nav">
+          <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
+          {/* <div className="dropdown-nav">
             <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
             <ul style={{ width: 200 }} className="dropdown-nav-content">
               <Link to="/category/Infinity"><ButtonWord style={{ width: "100%" }}>Infinity Mirrors</ButtonWord></Link>
               <Link to="/category/Accessories"><ButtonWord style={{ width: "100%" }}>Glove Accessories</ButtonWord></Link>
               <Link to="/category/Accessories"><ButtonWord style={{ width: "100%" }}>Other Products</ButtonWord></Link>
             </ul>
-          </div>
-          <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link>
+          </div> */}
+          {/* <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link> */}
           <Link to="/contact"><ButtonWord>Contact</ButtonWord></Link>
         </FlexContainer>
         {/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} /> */}
       </FlexContainer>
       <FlexContainer>
-        <Link to="/cart"><ButtonWord>Cart <i class="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
+        <Link to="/cart"><ButtonWord>Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         {
           props.userInfo ? <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link> :
             <Link to="/signin"><ButtonWord>Sign In</ButtonWord></Link>

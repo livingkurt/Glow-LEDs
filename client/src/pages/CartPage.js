@@ -73,7 +73,7 @@ function CartPage(props) {
                     ${item.price.toFixed(2)}
                   </div>
                   <div style={{ textAlign: "right", width: "100%" }}>
-                    <ButtonSymbol arg={item.product} on_click_function={removeFromCartHandler} ><i class="fas fa-trash-alt"></i></ButtonSymbol>
+                    <ButtonSymbol arg={item.product} on_click_function={removeFromCartHandler} ><i className="fas fa-trash-alt"></i></ButtonSymbol>
                   </div>
                 </FlexContainer>
               </li>
