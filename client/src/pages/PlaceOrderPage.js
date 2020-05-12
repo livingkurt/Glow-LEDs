@@ -31,11 +31,7 @@ function PlaceOrderPage(props) {
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
       taxPrice, totalPrice
     }));
-    console.log(cartItems)
-    // cartItems.forEach(product => {
-    //   dispatch(removeFromCart(product._id));
-    // })
-
+    // empty_cart();
   }
 
   useEffect(() => {

@@ -8,22 +8,37 @@ import PaypalButton from '../components/PaypalButton';
 import { Title } from '../components/UtilityComponents';
 import { format_date_display } from "../utils/helper_functions"
 function OrderPage(props) {
+  const cart = useSelector(state => state.cart);
+  const { cartItems } = cart;
 
   const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (successPay) {
       props.history.push("/profile");
     } else {
       dispatch(detailsOrder(props.match.params.id));
     }
-    return () => {
-    };
   }, [successPay]);
+
+  useEffect(() => {
+    empty_cart();
+  }, [])
 
   const handleSuccessPayment = (paymentResult) => {
     dispatch(payOrder(order, paymentResult));
+  }
+
+  const empty_cart = () => {
+    console.log(cartItems)
+    for (let item of cartItems) {
+      dispatch(removeFromCart(item.product));
+    }
+    // cartItems.forEach(item => {
+    //   dispatch(removeFromCart(item.product));
+    // })
   }
 
   const orderDetails = useSelector(state => state.orderDetails);
