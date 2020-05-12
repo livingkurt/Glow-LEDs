@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title } from '../components/UtilityComponents';
+import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
 
 function ProfilePage(props) {
@@ -108,7 +108,7 @@ function ProfilePage(props) {
                   <td>${order.totalPrice.toFixed(2)}</td>
                   <td>{order.isPaid ? <i class="fas fa-check-circle"></i> : <i class="fas fa-times-circle"></i>}</td>
                   <td>
-                    <Link to={"/order/" + order._id}>DETAILS</Link>
+                    <Link to={"/order/" + order._id}  ><ButtonSymbol ><i class="fas fa-info-circle"></i></ButtonSymbol></Link>
                   </td>
                 </tr>)}
               </tbody>
