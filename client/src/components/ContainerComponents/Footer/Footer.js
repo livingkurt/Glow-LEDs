@@ -6,7 +6,7 @@ const Footer = (props) => {
 
   return (
     <footer className="footer">
-      All right reserved.
+      © 2020 Glow LEDs. All Rights Reserved
     </footer>
   );
 }
