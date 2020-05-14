@@ -38,7 +38,7 @@ function HomePage(props) {
         Watch the Video Below to See Them in Action
       </p>
       <FlexContainer styles={{ justifyContent: "center" }}>
-        <video id="caps_vid" style={{ height: "auto", maxWidth: "100%", borderRadius: "20px" }} controls autoplay>
+        <video id="caps_vid" style={{ height: "auto", maxWidth: "100%", borderRadius: "20px" }} controls>
           <source src="videos/MVI_9237.MP4" type="video/mp4" />
         </video>
       </FlexContainer>
