@@ -42,8 +42,8 @@ function AllProductsPage(props) {
       error ? <div>{error}</div> :
         <ul className="products">
           {
-            products.map(product =>
-              <Product product={product} />
+            products.map((product, index) =>
+              <Product key={index} product={product} />
             )
           }
         </ul>
