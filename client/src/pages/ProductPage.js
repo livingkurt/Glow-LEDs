@@ -46,10 +46,19 @@ function ProductPage(props) {
                 <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
               </FlexContainer>
               <FlexContainer styles={{ flexDirection: "column", alignContent: "space-between" }}>
-                <FlexContainer styles={{ flexDirection: "column", height: "220px" }}>
-                  <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
+                <FlexContainer styles={{ flexDirection: "column", height: "100%" }}>
+                  <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5, marginBottom: "10px" }} > Description: </Label>
                   <div>
-                    {product.description}
+                    <ul style={{ marginLeft: "10px" }}>
+                      {product.description ? product.description.split("\n").map(line => {
+                        return (
+                          <li style={{ listStyleType: "disc" }}>
+                            {line}
+                          </li>
+                        )
+                      })
+                        : product.description}
+                    </ul>
                   </div>
                 </FlexContainer>
                 <div className="details-image">
