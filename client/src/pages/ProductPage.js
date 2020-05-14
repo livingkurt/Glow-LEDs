@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../actions/productActions';
 import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 function ProductPage(props) {
   const [qty, setQty] = useState(1);
@@ -40,24 +41,30 @@ function ProductPage(props) {
             </div>
             <div className="details-info">
               <Title styles={{ fontSize: 30, fontFamily: "logo_font", marginTop: 0 }} >{product.name}</Title>
-              <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} >Price:</Label>
-              <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
-              <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} > Description:</Label>
-              <div>
-                {product.description}
-              </div>
-              <div className="details-image">
-                {
-                  [product.image_1, product.image_2, product.image_3, product.image_4].map((image, index) => {
-                    return (
-                      <div className="column" key={index}>
-                        <img src={image} alt="" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
-                      </div>
+              <FlexContainer styles={{ marginBottom: "10px" }}>
+                <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} >Price: </Label>
+                <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
+              </FlexContainer>
+              <FlexContainer styles={{ flexDirection: "column", alignContent: "space-between" }}>
+                <FlexContainer styles={{ flexDirection: "column", height: "220px" }}>
+                  <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
+                  <div>
+                    {product.description}
+                  </div>
+                </FlexContainer>
+                <div className="details-image">
+                  {
+                    [product.image_1, product.image_2, product.image_3, product.image_4].map((image, index) => {
+                      return (
+                        <div className="column" key={index}>
+                          <img src={image} alt="" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
+                        </div>
+                      )
+                    }
                     )
                   }
-                  )
-                }
-              </div>
+                </div>
+              </FlexContainer>
             </div>
             <div className="details-action">
               <ul>
