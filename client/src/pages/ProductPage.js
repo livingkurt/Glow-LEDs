@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../actions/productActions';
-import { Title } from '../components/UtilityComponents';
+import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
 
 function ProductPage(props) {
   const [qty, setQty] = useState(1);
@@ -21,31 +21,52 @@ function ProductPage(props) {
     props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
   }
 
+  const slide_to_the_left = () => {
+    console.log("left")
+  }
+
+  const slide_to_the_right = () => {
+    console.log("right")
+  }
+
   return <div>
     <div className="back-to-result">
-      <Link to="/allproducts"><Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Back to Results</Title></Link>
+      <Link to="/allproducts"><ButtonWord styles={{ fontSize: 20, fontFamily: "logo_font" }} >Back to Results</ButtonWord></Link>
     </div>
     {loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
       error ? <div>{error} </div> :
         (
           <div className="details">
             <div className="details-image">
-              <img src={product.image} alt="product" ></img>
+              {/* <img src={product.image} alt="product" ></img> */}
+              {
+                [product.image, product.image].map((image, index) => {
+                  return (<div>
+                    <img key={index} id={index} src={image} alt={image} />
+
+                  </div>
+                  )
+                }
+                )
+              }
+              <ButtonSymbol on_click_function={slide_to_the_left} ><i class="fas fa-arrow-circle-left"></i></ButtonSymbol>
+              <ButtonSymbol on_click_function={slide_to_the_right} ><i class="fas fa-arrow-circle-right"></i></ButtonSymbol>
+              {/* <Slideshow images={product.image} /> */}
             </div>
             <div className="details-info">
               <ul>
                 <li>
-                  <h4>{product.name}</h4>
+                  <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >{product.name}</Title>
                 </li>
-                <li>
+                {/* <li>
                   {product.rating} Stars ({product.numReviews} Reviews)
-          </li>
+          </li> */}
                 <li>
-                  Price: <b>${product.price ? product.price.toFixed(2) : product.price}</b>
+                  <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} >Price:</Label> <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
                 </li>
                 <li>
-                  Description:
-            <div>
+                  <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} > Description:</Label>
+                  <div>
                     {product.description}
                   </div>
                 </li>
