@@ -45,7 +45,7 @@ function HomePage(props) {
       <p style={{ textAlign: "center" }}>
         <Link to="/category/Caps"><ButtonWord>Shop Diffuser Caps Today!</ButtonWord></Link>
       </p>
-      <FlexContainer styles={{ justifyContent: "space-between" }}>
+      <FlexContainer styles={{ justifyContent: "space-between", flexWrap: "wrap" }}>
         <Link to="/category/Caps">
           <FlexContainer styles={flex_styles}>
             <ButtonWord><Title styles={heading_styles} >Diffuser Caps</Title></ButtonWord>
