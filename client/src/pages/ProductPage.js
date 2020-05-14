@@ -20,22 +20,6 @@ function ProductPage(props) {
   const handleAddToCart = () => {
     props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
   }
-
-  // const slide_to_the_left = () => {
-  //   console.log("left")
-  //   let image_id = document.getElementById(slideshow_state)
-  //   console.log(image_id)
-  //   // image_id.display = "block"
-  //   set_slideshow_state(parseInt(slideshow_state) - 1)
-  //   console.log(slideshow_state)
-  // }
-
-  // const slide_to_the_right = () => {
-  //   console.log("right")
-  //   let image_id = document.getElementById(slideshow_state)
-  //   image_id.display = "block"
-  //   set_slideshow_state(parseInt(slideshow_state) + 1)
-  // }
   function myFunction(e) {
     console.log(e.target.src)
     var expandImg = document.getElementById("expandedImg");
@@ -53,7 +37,7 @@ function ProductPage(props) {
         (
           <div className="details">
             <div className="details-image">
-              <img id="expandedImg" src={product.image} style={{ width: "500px", height: "500px" }} />
+              <img id="expandedImg" alt="" src={product.image} style={{ width: "500px", height: "500px" }} />
             </div>
             <div className="details-info">
               <ul>
@@ -75,9 +59,8 @@ function ProductPage(props) {
                     {
                       [product.image, product.image, product.image, product.image].map((image, index) => {
                         return (<div>
-
                           <div class="column">
-                            <img src={image} alt="image" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
+                            <img src={image} alt="" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
                           </div>
                         </div>
                         )
