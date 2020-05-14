@@ -27,6 +27,7 @@ function ProfilePage(props) {
 
   const myOrderList = useSelector(state => state.myOrderList);
   const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
+
   useEffect(() => {
     if (userInfo) {
       console.log(userInfo.name)
@@ -39,6 +40,7 @@ function ProfilePage(props) {
 
     };
   }, [userInfo])
+
 
   return <div className="profile">
     <div className="profile-info">

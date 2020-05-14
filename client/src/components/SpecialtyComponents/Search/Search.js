@@ -1,10 +1,9 @@
 // React
 import React from "react";
-import { Link } from 'react-router-dom'
 // Styles
 import './search.css'
 // Components
-import { Label, ButtonWord, EditorInput } from '../../UtilityComponents/index'
+import { ButtonWord, EditorInput } from '../../UtilityComponents/index'
 
 
 function Search(props) {

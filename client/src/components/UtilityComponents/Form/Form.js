@@ -1,6 +1,6 @@
 // React
-import React, { useState } from "react";
-import { Redirect } from 'react-router-dom';
+// import React from "react";
+// import { Redirect } from 'react-router-dom';
 // Styles
 import './form.css'
 // import { EditorInput, Title, ButtonWord } from '../index'

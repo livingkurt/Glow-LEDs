@@ -1,6 +1,6 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
-import { EditorInput, Label, ButtonWord, Title } from '../components/UtilityComponents';
+import { Title } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 // import "./form.css";
 
