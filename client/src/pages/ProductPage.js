@@ -37,7 +37,7 @@ function ProductPage(props) {
         (
           <div className="details">
             <div className="details-image">
-              <img id="expandedImg" alt="" src={product.image_1} style={{ width: "400px", height: "400px" }} />
+              <img id="expandedImg" alt="" src={product.image_1} style={{ maxWidth: "400px", maxHeight: "400px", height: "100%", width: "100%" }} />
             </div>
             <div className="details-info">
               <Title styles={{ fontSize: 30, fontFamily: "logo_font", marginTop: 0 }} >{product.name}</Title>
