@@ -44,10 +44,12 @@ function CartPage(props) {
               Cart is empty
           </div>
             :
-            cartItems.map(item =>
-              <li>
+            cartItems.map((item, index) =>
+
+              < li key={index} >
+                {console.log({ item })}
                 <div className="cart-image">
-                  <img src={item.image} alt="product" />
+                  <img src={item.image_1} alt="product" />
                 </div>
                 <div className="cart-name">
                   <div>

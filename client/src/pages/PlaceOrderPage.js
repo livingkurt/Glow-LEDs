@@ -78,7 +78,7 @@ function PlaceOrderPage(props) {
                 cartItems.map((item, index) =>
                   <li key={index} >
                     <div className="cart-image">
-                      <img src={item.image} alt="product" />
+                      <img src={item.image_1} alt="product" />
                     </div>
                     <div className="cart-name">
                       <div>
