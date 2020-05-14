@@ -41,7 +41,7 @@ function ProductPage(props) {
                   {product.rating} Stars ({product.numReviews} Reviews)
           </li>
                 <li>
-                  Price: <b>${product.price.toFixed(2)}</b>
+                  Price: <b>${product.price ? product.price.toFixed(2) : product.price}</b>
                 </li>
                 <li>
                   Description:
