@@ -47,7 +47,7 @@ function ProductPage(props) {
               </FlexContainer>
               <FlexContainer styles={{ flexDirection: "column", alignContent: "space-between" }}>
                 <FlexContainer styles={{ flexDirection: "column", height: "100%" }}>
-                  <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5, marginBottom: "10px" }} > Description: </Label>
+                  <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
                   <div>
                     <ul style={{ marginLeft: "10px" }}>
                       {product.description ? product.description.split("\n").map(line => {
