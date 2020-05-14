@@ -155,7 +155,9 @@ a {
 }
 
 .details-image {
-  flex: 2 1 60rem;
+  /* flex: 2 1 60rem; */
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 /* .details-image {

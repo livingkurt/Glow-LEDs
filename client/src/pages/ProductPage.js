@@ -36,38 +36,28 @@ function ProductPage(props) {
         (
           <div className="details">
             <div className="details-image">
-              <img id="expandedImg" alt="" src={product.image_1} style={{ width: "500px", height: "500px" }} />
+              <img id="expandedImg" alt="" src={product.image_1} style={{ width: "400px", height: "400px" }} />
             </div>
             <div className="details-info">
-              <ul>
-                <li>
-                  <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >{product.name}</Title>
-                </li>
-                {/* <li>
-                  {product.rating} Stars ({product.numReviews} Reviews)
-          </li> */}
-                <li>
-                  <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} >Price:</Label> <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
-                </li>
-                <li>
-                  <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} > Description:</Label>
-                  <div>
-                    {product.description}
-                  </div>
-                  <div className="details-image">
-                    {
-                      [product.image_1, product.image_2, product.image_3, product.image_4].map((image, index) => {
-                        return (
-                          <div className="column" key={index}>
-                            <img src={image} alt="" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
-                          </div>
-                        )
-                      }
-                      )
-                    }
-                  </div>
-                </li>
-              </ul>
+              <Title styles={{ fontSize: 30, fontFamily: "logo_font", marginTop: 0 }} >{product.name}</Title>
+              <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} >Price:</Label>
+              <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
+              <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} > Description:</Label>
+              <div>
+                {product.description}
+              </div>
+              <div className="details-image">
+                {
+                  [product.image_1, product.image_2, product.image_3, product.image_4].map((image, index) => {
+                    return (
+                      <div className="column" key={index}>
+                        <img src={image} alt="" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
+                      </div>
+                    )
+                  }
+                  )
+                }
+              </div>
             </div>
             <div className="details-action">
               <ul>
