@@ -9,24 +9,39 @@ function ProductPage(props) {
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
   const dispatch = useDispatch();
+  const [slideshow_state, set_slideshow_state] = useState("0")
 
   useEffect(() => {
     dispatch(detailsProduct(props.match.params.id));
-    return () => {
-      //
-    };
+
   }, []);
+
 
   const handleAddToCart = () => {
     props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
   }
 
-  const slide_to_the_left = () => {
-    console.log("left")
-  }
+  // const slide_to_the_left = () => {
+  //   console.log("left")
+  //   let image_id = document.getElementById(slideshow_state)
+  //   console.log(image_id)
+  //   // image_id.display = "block"
+  //   set_slideshow_state(parseInt(slideshow_state) - 1)
+  //   console.log(slideshow_state)
+  // }
 
-  const slide_to_the_right = () => {
-    console.log("right")
+  // const slide_to_the_right = () => {
+  //   console.log("right")
+  //   let image_id = document.getElementById(slideshow_state)
+  //   image_id.display = "block"
+  //   set_slideshow_state(parseInt(slideshow_state) + 1)
+  // }
+  function myFunction(e) {
+    console.log(e.target.src)
+    var expandImg = document.getElementById("expandedImg");
+    expandImg.src = e.target.src;
+    // expandImg.setAttribute("src", [imgs.src])
+    expandImg.parentElement.style.display = "block";
   }
 
   return <div>
@@ -38,20 +53,7 @@ function ProductPage(props) {
         (
           <div className="details">
             <div className="details-image">
-              {/* <img src={product.image} alt="product" ></img> */}
-              {
-                [product.image, product.image].map((image, index) => {
-                  return (<div>
-                    <img key={index} id={index} src={image} alt={image} />
-
-                  </div>
-                  )
-                }
-                )
-              }
-              <ButtonSymbol on_click_function={slide_to_the_left} ><i class="fas fa-arrow-circle-left"></i></ButtonSymbol>
-              <ButtonSymbol on_click_function={slide_to_the_right} ><i class="fas fa-arrow-circle-right"></i></ButtonSymbol>
-              {/* <Slideshow images={product.image} /> */}
+              <img id="expandedImg" src={product.image} style={{ width: "500px", height: "500px" }} />
             </div>
             <div className="details-info">
               <ul>
@@ -68,6 +70,20 @@ function ProductPage(props) {
                   <Label styles={{ fontSize: 20, fontFamily: "logo_font" }} > Description:</Label>
                   <div>
                     {product.description}
+                  </div>
+                  <div className="details-image">
+                    {
+                      [product.image, product.image, product.image, product.image].map((image, index) => {
+                        return (<div>
+
+                          <div class="column">
+                            <img src={image} alt="image" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
+                          </div>
+                        </div>
+                        )
+                      }
+                      )
+                    }
                   </div>
                 </li>
               </ul>
