@@ -36,10 +36,14 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
+  console.log({ "router.put": req.body })
   if (product) {
     product.name = req.body.name;
     product.price = req.body.price;
-    product.image = req.body.image;
+    product.image_1 = req.body.image_1;
+    product.image_2 = req.body.image_2;
+    product.image_3 = req.body.image_3;
+    product.image_4 = req.body.image_4;
     product.brand = req.body.brand;
     product.category = req.body.category;
     product.countInStock = req.body.countInStock;
@@ -65,10 +69,14 @@ router.delete("/:id", isAuth, isAdmin, async (req, res) => {
 
 
 router.post("/", isAuth, isAdmin, async (req, res) => {
+  console.log({ "router.post": req.body })
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
-    image: req.body.image,
+    image_1: req.body.image_1,
+    image_2: req.body.image_2,
+    image_3: req.body.image_3,
+    image_4: req.body.image_4,
     brand: req.body.brand,
     category: req.body.category,
     countInStock: req.body.countInStock,

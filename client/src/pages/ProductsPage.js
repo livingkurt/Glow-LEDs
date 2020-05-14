@@ -9,7 +9,10 @@ function ProductsPage(props) {
   const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setImage] = useState('');
+  const [image_1, setImage_1] = useState('');
+  const [image_2, setImage_2] = useState('');
+  const [image_3, setImage_3] = useState('');
+  const [image_4, setImage_4] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
@@ -40,7 +43,10 @@ function ProductsPage(props) {
     setName(product.name);
     setPrice(product.price);
     setDescription(product.description);
-    setImage(product.image);
+    setImage_1(product.image_1);
+    setImage_2(product.image_2);
+    setImage_3(product.image_3);
+    setImage_4(product.image_4);
     setBrand(product.brand);
     setCategory(product.category);
     setCountInStock(product.countInStock);
@@ -49,7 +55,7 @@ function ProductsPage(props) {
     e.preventDefault();
     dispatch(saveProduct({
       _id: id,
-      name, price, image, brand, category,
+      name, price, image_1, image_2, image_3, image_4, brand, category,
       countInStock, description
     }));
   }
@@ -92,7 +98,13 @@ function ProductsPage(props) {
               <label htmlFor="image">
                 Image
           </label>
-              <input type="text" name="image" defaultValue={image} id="image" onChange={(e) => setImage(e.target.value)}>
+              <input type="text" name="image_1" defaultValue={image_1} id="image_1" onChange={(e) => setImage_1(e.target.value)}>
+              </input>
+              <input type="text" name="image_2" defaultValue={image_2} id="image_2" onChange={(e) => setImage_2(e.target.value)}>
+              </input>
+              <input type="text" name="image_3" defaultValue={image_3} id="image_3" onChange={(e) => setImage_3(e.target.value)}>
+              </input>
+              <input type="text" name="image_4" defaultValue={image_4} id="image_4" onChange={(e) => setImage_4(e.target.value)}>
               </input>
             </li>
             <li>

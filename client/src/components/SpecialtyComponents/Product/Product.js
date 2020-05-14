@@ -13,7 +13,7 @@ function Product(props) {
     <li key={props.product._id}>
       <div className="product">
         <Link to={'/product/' + props.product._id}>
-          <img className="product-image" src={props.product.image} alt="product" />
+          <img className="product-image" src={props.product.image_1} alt="product" />
         </Link>
         <Label styles={{ fontSize: "13px" }}>{props.product.brand}</Label>
         <Link to={'/product/' + props.product._id}><Label styles={{ fontSize: "16px" }}>{props.product.name}</Label></Link>

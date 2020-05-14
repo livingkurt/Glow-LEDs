@@ -9,7 +9,6 @@ function ProductPage(props) {
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
   const dispatch = useDispatch();
-  const [slideshow_state, set_slideshow_state] = useState("0")
 
   useEffect(() => {
     dispatch(detailsProduct(props.match.params.id));
@@ -37,7 +36,7 @@ function ProductPage(props) {
         (
           <div className="details">
             <div className="details-image">
-              <img id="expandedImg" alt="" src={product.image} style={{ width: "500px", height: "500px" }} />
+              <img id="expandedImg" alt="" src={product.image_1} style={{ width: "500px", height: "500px" }} />
             </div>
             <div className="details-info">
               <ul>
@@ -57,12 +56,11 @@ function ProductPage(props) {
                   </div>
                   <div className="details-image">
                     {
-                      [product.image, product.image, product.image, product.image].map((image, index) => {
-                        return (<div>
-                          <div class="column">
+                      [product.image_1, product.image_2, product.image_3, product.image_4].map((image, index) => {
+                        return (
+                          <div className="column" key={index}>
                             <img src={image} alt="" style={{ width: "100%" }} onClick={(e) => myFunction(e)} />
                           </div>
-                        </div>
                         )
                       }
                       )
