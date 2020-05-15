@@ -72,9 +72,17 @@ router.put("/:id/pay", isAuth, async (req, res) => {
   }
 });
 router.put("/:id/shipping", isAuth, async (req, res) => {
+  console.log(Object.keys(req.body).join(""))
+  const shippingResult = Object.keys(req.body).join("")
+  // if (shippingResult === "true") {
+  //   shippingResult = true
+  // }
+  // else {
+  //   shippingResult = false
+  // }
   const order = await Order.findById(req.params.id);
   if (order) {
-    order.isShipped = true;
+    order.isShipped = shippingResult === "true" ? true : false;
     order.shippedAt = Date.now();
     const updatedOrder = await order.save();
     res.send({ message: 'Order Shipped.', order: updatedOrder });

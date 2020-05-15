@@ -76,11 +76,12 @@ const payOrder = (order, paymentResult) => async (dispatch, getState) => {
   }
 }
 
-const shipOrder = (order, paymentResult) => async (dispatch, getState) => {
+const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
+  console.log(shippingResult)
   try {
-    dispatch({ type: ORDER_PAY_REQUEST, payload: paymentResult });
+    dispatch({ type: ORDER_PAY_REQUEST, payload: shippingResult });
     const { userSignin: { userInfo } } = getState();
-    const { data } = await Axios.put("/api/orders/" + order._id + "/shipping", paymentResult, {
+    const { data } = await Axios.put("/api/orders/" + order._id + "/shipping", shippingResult, {
       headers:
         { Authorization: 'Bearer ' + userInfo.token }
     });

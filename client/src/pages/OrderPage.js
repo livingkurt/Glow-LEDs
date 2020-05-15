@@ -41,16 +41,16 @@ function OrderPage(props) {
     }
   }
 
-  const [shipping_state, set_shipping_state] = useState({ state: false, text: "Mark As Shipped" })
+  const [shipping_state, set_shipping_state] = useState()
 
 
   const update_shipping_state = () => {
-    if (shipping_state.state) {
-      set_shipping_state({ ...shipping_state, state: false, text: "Mark As Shipped" })
+    if (shipping_state) {
+      set_shipping_state(false)
       dispatch(shipOrder(order, false));
     }
     else {
-      set_shipping_state({ ...shipping_state, state: true, text: "Mark As Not Shipped" })
+      set_shipping_state(true)
       dispatch(shipOrder(order, true));
     }
 
@@ -70,7 +70,7 @@ function OrderPage(props) {
             <FlexContainer styles={{ alignItems: "center" }}>
               <Label styles={{ marginRight: "10px" }}>{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
               {/* <ButtonSymbol on_click_function={update_shipping_state} styles={{ backgroundColor: "#9e9e9e" }}>Mark As shipping</ButtonSymbol> */}
-              <button className="button primary" onClick={update_shipping_state} >{shipping_state.text}</button>
+              <button className="button primary" onClick={update_shipping_state} >{order.isShipped ? "Mark As Not Shipped" : "Mark As Shipped"}</button>
             </FlexContainer>
           </div>
           <div>
