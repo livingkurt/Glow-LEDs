@@ -70,7 +70,7 @@ function CartPage(props) {
 
 
 
-                <FlexContainer styles={{ flexDirection: "column" }}>
+                <FlexContainer column>
                   <div className="cart-price">
                     ${item.price.toFixed(2)}
                   </div>

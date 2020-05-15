@@ -31,10 +31,10 @@ function AllProductsPage(props) {
   }
 
   return <>
-    <FlexContainer styles={{ justifyContent: "center" }}>
+    <FlexContainer h_center>
       <Title styles={{ fontSize: 40, fontFamily: "logo_font" }} >{category || "All Products"}</Title>
     </FlexContainer>
-    <FlexContainer styles={{ justifyContent: "center" }}>
+    <FlexContainer h_center>
       <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
       <Sort sortHandler={sortHandler} />
     </FlexContainer>

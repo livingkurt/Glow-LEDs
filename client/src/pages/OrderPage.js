@@ -79,8 +79,8 @@ function OrderPage(props) {
       <div className="placeorder">
         <div className="placeorder-info">
           <div>
-            <FlexContainer styles={{ justifyContent: "space-between" }}>
-              <FlexContainer styles={{ flexDirection: "column" }}>
+            <FlexContainer h_between>
+              <FlexContainer column>
                 <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
                 <div>
                   <div>{order.shipping.address}</div>
@@ -88,15 +88,15 @@ function OrderPage(props) {
                 </div>
               </FlexContainer>
 
-              <FlexContainer styles={{ flexDirection: "column", marginTop: "auto", width: "373px" }}>
-                <FlexContainer styles={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <FlexContainer column styles={{ marginTop: "auto", width: "373px" }}>
+                <FlexContainer row v_center h_between >
                   <Label >{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
                   {props.userInfo && props.userInfo.isAdmin && (<div>
                     <button style={{ width: "176px" }} className="button primary" onClick={update_shipping_state} >{order.isShipped ? "Mark As Not Shipped" : "Mark As Shipped"}</button>
                   </div>
                   )}
                 </FlexContainer>
-                <FlexContainer styles={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <FlexContainer row v_center h_between >
                   <Label >{order.isDelivered ? "Delivered at " + format_date_display(order.deliveredAt) : "Not Delivered"}</Label>
                   {props.userInfo && props.userInfo.isAdmin && (<div>
                     <button style={{ width: "176px" }} className="button primary" onClick={update_delivered_state} >{order.isDelivered ? "Mark As Not Delivered" : "Mark As Delivered"}</button>
