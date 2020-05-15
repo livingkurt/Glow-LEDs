@@ -8,6 +8,8 @@ import { Title, ButtonWord, Label, ButtonSymbol } from '../components/UtilityCom
 import { format_date_display } from "../utils/helper_functions"
 import { FlexContainer } from '../components/ContainerComponents';
 function OrderPage(props) {
+
+  console.log(props.userInfo)
   const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
 
@@ -77,18 +79,32 @@ function OrderPage(props) {
       <div className="placeorder">
         <div className="placeorder-info">
           <div>
-            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
-            <div>
-              <div>{order.shipping.address}</div>
-              <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
-            </div>
-            <FlexContainer styles={{ alignItems: "center", justifyContent: "space-between" }}>
-              <Label styles={{ marginRight: "10px" }}>{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
-              <button className="button primary" onClick={update_shipping_state} >{order.isShipped ? "Mark As Not Shipped" : "Mark As Shipped"}</button>
-            </FlexContainer>
-            <FlexContainer styles={{ alignItems: "center", justifyContent: "space-between" }}>
-              <Label styles={{ marginRight: "10px" }}>{order.isDelivered ? "Delivered at " + format_date_display(order.deliveredAt) : "Not Delivered"}</Label>
-              <button className="button primary" onClick={update_delivered_state} >{order.isDelivered ? "Mark As Not Delivered" : "Mark As Delivered"}</button>
+            <FlexContainer styles={{ justifyContent: "space-between" }}>
+              <FlexContainer styles={{ flexDirection: "column" }}>
+                <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
+                <div>
+                  <div>{order.shipping.address}</div>
+                  <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
+                </div>
+              </FlexContainer>
+
+              <FlexContainer styles={{ flexDirection: "column", marginTop: "auto", width: "373px" }}>
+                <FlexContainer styles={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <Label >{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
+                  {props.userInfo && props.userInfo.isAdmin && (<div>
+                    <button style={{ width: "176px" }} className="button primary" onClick={update_shipping_state} >{order.isShipped ? "Mark As Not Shipped" : "Mark As Shipped"}</button>
+                  </div>
+                  )}
+                </FlexContainer>
+                <FlexContainer styles={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <Label >{order.isDelivered ? "Delivered at " + format_date_display(order.deliveredAt) : "Not Delivered"}</Label>
+                  {props.userInfo && props.userInfo.isAdmin && (<div>
+                    <button style={{ width: "176px" }} className="button primary" onClick={update_delivered_state} >{order.isDelivered ? "Mark As Not Delivered" : "Mark As Delivered"}</button>
+                  </div>
+                  )}
+                </FlexContainer>
+              </FlexContainer>
+
             </FlexContainer>
           </div>
           <div>
@@ -177,7 +193,7 @@ function OrderPage(props) {
         </div>
 
       </div>
-    </div>
+    </div >
 
 }
 
