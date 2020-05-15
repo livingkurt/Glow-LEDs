@@ -66,6 +66,8 @@ function ProductsPage(props) {
   const deleteHandler = (product) => {
     dispatch(deleteProduct(product._id));
   }
+
+
   return <div className="content-margined">
 
     <div className="product-header">
