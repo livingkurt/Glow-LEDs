@@ -17,6 +17,7 @@ function ProductsPage(props) {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
+  const [facts, setFacts] = useState('');
   const productList = useSelector(state => state.productList);
   const { loading, products, error } = productList;
 
@@ -43,6 +44,7 @@ function ProductsPage(props) {
     setName(product.name);
     setPrice(product.price);
     setDescription(product.description);
+    setFacts(product.facts);
     setImage_1(product.image_1);
     setImage_2(product.image_2);
     setImage_3(product.image_3);
@@ -56,7 +58,7 @@ function ProductsPage(props) {
     dispatch(saveProduct({
       _id: id,
       name, price, image_1, image_2, image_3, image_4, brand, category,
-      countInStock, description
+      countInStock, facts, description
     }));
   }
   const deleteHandler = (product) => {
@@ -127,6 +129,12 @@ function ProductsPage(props) {
           </label>
               <input type="text" name="category" defaultValue={category} id="category" onChange={(e) => setCategory(e.target.value)}>
               </input>
+            </li>
+            <li>
+              <label htmlFor="facts">
+                Facts
+          </label>
+              <textarea name="facts" defaultValue={facts} id="facts" onChange={(e) => setFacts(e.target.value)}></textarea>
             </li>
             <li>
               <label htmlFor="description">
