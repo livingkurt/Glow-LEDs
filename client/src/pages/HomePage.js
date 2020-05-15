@@ -11,6 +11,7 @@ function HomePage(props) {
     video.autoplay = true
   }, []);
 
+
   const flex_styles = {
     height: "100%",
     flexDirection: "column",

@@ -13,8 +13,16 @@ function ProductPage(props) {
 
   useEffect(() => {
     dispatch(detailsProduct(props.match.params.id));
-
+    const video = document.getElementsByClassName("product_video")
+    video.muted = true
+    video.autoplay = true
   }, []);
+
+  // useEffect(() => {
+  //   const video = document.getElementById("caps_vid")
+  //   video.muted = true
+  //   video.autoplay = true
+  // }, []);
 
 
   const handleAddToCart = () => {
@@ -52,9 +60,9 @@ function ProductPage(props) {
                     {/* <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label> */}
                     <div>
                       <ul style={{ marginLeft: "10px" }}>
-                        {product.facts ? product.facts.split("\n").map(line => {
+                        {product.facts ? product.facts.split("\n").map((line, index) => {
                           return (
-                            <li style={{ listStyleType: "disc" }}>
+                            <li key={index} style={{ listStyleType: "disc" }}>
                               {line}
                             </li>
                           )
@@ -104,7 +112,21 @@ function ProductPage(props) {
               <FlexContainer styles={{ flexDirection: "column", padding: "1rem" }}>
                 <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
                 <p>{product.description}</p>
+
+                {!product.video ?
+
+                  <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Video Coming Soon!</Title>
+                  : <FlexContainer styles={{ justifyContent: "center" }}>
+                    <p style={{ textAlign: "center" }}>
+                      Watch the Video Below to Learn More
+                  </p>
+                    <video className="product_video" style={{ height: "auto", maxWidth: "100%", borderRadius: "20px" }} controls>
+                      <source src={product.video} type="video/mp4" />
+                    </video>
+                  </FlexContainer>}
+                {/* <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >{product.name}</Title> */}
               </FlexContainer>
+
             </div>
           </div>
 
