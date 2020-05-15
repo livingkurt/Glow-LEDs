@@ -42,19 +42,19 @@ function HomePage(props) {
       </FlexContainer>
       <FlexContainer h_between wrap>
         <Link to="/category/Caps">
-          <FlexContainer column h_center styles={{ height: "100%", textAlign: "center" }}>
+          <FlexContainer column h_center t_center styles={{ height: "100%" }}>
             <ButtonWord><Title styles={heading_styles} >Diffuser Caps</Title></ButtonWord>
             <img className="home_page_img" src="/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Diffusers">
-          <FlexContainer column h_center styles={{ height: "100%", textAlign: "center" }}>
+          <FlexContainer column h_center t_center styles={{ height: "100%" }}>
             <ButtonWord><Title styles={heading_styles} >Diffusers</Title></ButtonWord>
             <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG" alt="diffusers" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Accessories">
-          <FlexContainer column h_center styles={{ height: "100%", textAlign: "center" }}>
+          <FlexContainer column h_center t_center styles={{ height: "100%" }}>
             <ButtonWord><Title styles={heading_styles} >LED Accessories</Title></ButtonWord>
             <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG" alt="accessories" ></img>
           </FlexContainer>
