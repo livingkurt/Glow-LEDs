@@ -52,8 +52,8 @@ function OrdersPage(props) {
               <td>{order.user.name}</td>
               <td>{order.isPaid ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
               <td>{!order.paidAt ? "" : format_date_display(order.paidAt)}</td>
-              <td>{order.isDelivered ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
-              <td>{!order.deliveredAt ? "" : format_date_display(order.deliveredAt)}</td>
+              <td>{order.isShipped ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
+              <td>{!order.shippedAt ? "" : format_date_display(order.shippedAt)}</td>
               <td>
                 <FlexContainer styles={{ justifyContent: "space-between" }}>
                   <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>

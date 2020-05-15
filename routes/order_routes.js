@@ -71,6 +71,17 @@ router.put("/:id/pay", isAuth, async (req, res) => {
     res.status(404).send({ message: 'Order not found.' })
   }
 });
+router.put("/:id/shipping", isAuth, async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isShipped = true;
+    order.shippedAt = Date.now();
+    const updatedOrder = await order.save();
+    res.send({ message: 'Order Shipped.', order: updatedOrder });
+  } else {
+    res.status(404).send({ message: 'Order not found.' })
+  }
+});
 
 // export default router;
 

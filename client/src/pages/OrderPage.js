@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, payOrder } from '../actions/orderActions';
+import { detailsOrder, payOrder, shipOrder } from '../actions/orderActions';
 import PaypalButton from '../components/PaypalButton';
-import { Title } from '../components/UtilityComponents';
+import { Title, ButtonWord, Label, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from "../utils/helper_functions"
+import { FlexContainer } from '../components/ContainerComponents';
 function OrderPage(props) {
   const cart = useSelector(state => state.cart);
   const { cartItems } = cart;
@@ -14,9 +15,12 @@ function OrderPage(props) {
   const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
   const dispatch = useDispatch();
 
+  const orderDetails = useSelector(state => state.orderDetails);
+  const { loading, order, error } = orderDetails;
+
   useEffect(() => {
     if (successPay) {
-      props.history.push("/profile");
+      // props.history.push("/profile");
     } else {
       dispatch(detailsOrder(props.match.params.id));
     }
@@ -35,14 +39,22 @@ function OrderPage(props) {
     for (let item of cartItems) {
       dispatch(removeFromCart(item.product));
     }
-    // cartItems.forEach(item => {
-    //   dispatch(removeFromCart(item.product));
-    // })
   }
 
-  const orderDetails = useSelector(state => state.orderDetails);
-  const { loading, order, error } = orderDetails;
-  console.log(orderDetails)
+  const [shipping_state, set_shipping_state] = useState({ state: false, text: "Mark As Shipped" })
+
+
+  const update_shipping_state = () => {
+    if (shipping_state.state) {
+      set_shipping_state({ ...shipping_state, state: false, text: "Mark As Shipped" })
+      dispatch(shipOrder(order, false));
+    }
+    else {
+      set_shipping_state({ ...shipping_state, state: true, text: "Mark As Not Shipped" })
+      dispatch(shipOrder(order, true));
+    }
+
+  }
 
   return loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> : error ? <div>{error}</div> :
 
@@ -55,9 +67,11 @@ function OrderPage(props) {
               <div>{order.shipping.address}</div>
               <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
             </div>
-            <div>
-              {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
-            </div>
+            <FlexContainer styles={{ alignItems: "center" }}>
+              <Label styles={{ marginRight: "10px" }}>{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
+              {/* <ButtonSymbol on_click_function={update_shipping_state} styles={{ backgroundColor: "#9e9e9e" }}>Mark As shipping</ButtonSymbol> */}
+              <button className="button primary" onClick={update_shipping_state} >{shipping_state.text}</button>
+            </FlexContainer>
           </div>
           <div>
             <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
@@ -65,7 +79,7 @@ function OrderPage(props) {
               Payment Method: {order.payment.paymentMethod}
             </div>
             <div>
-              {order.isPaid ? "Paid at " + format_date_display(order.paidAt) : "Not Paid."}
+              {order.isPaid ? "Paid at " + format_date_display(order.paidAt) : "Not Paid"}
             </div>
           </div>
           <div>
