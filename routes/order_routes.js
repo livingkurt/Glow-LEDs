@@ -74,18 +74,26 @@ router.put("/:id/pay", isAuth, async (req, res) => {
 router.put("/:id/shipping", isAuth, async (req, res) => {
   console.log(Object.keys(req.body).join(""))
   const shippingResult = Object.keys(req.body).join("")
-  // if (shippingResult === "true") {
-  //   shippingResult = true
-  // }
-  // else {
-  //   shippingResult = false
-  // }
   const order = await Order.findById(req.params.id);
   if (order) {
     order.isShipped = shippingResult === "true" ? true : false;
     order.shippedAt = Date.now();
     const updatedOrder = await order.save();
     res.send({ message: 'Order Shipped.', order: updatedOrder });
+  } else {
+    res.status(404).send({ message: 'Order not found.' })
+  }
+});
+
+router.put("/:id/delivery", isAuth, async (req, res) => {
+  console.log(Object.keys(req.body).join(""))
+  const deliveryResult = Object.keys(req.body).join("")
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isDelivered = deliveryResult === "true" ? true : false;
+    order.deliveredAt = Date.now();
+    const updatedOrder = await order.save();
+    res.send({ message: 'Order Delivered.', order: updatedOrder });
   } else {
     res.status(404).send({ message: 'Order not found.' })
   }

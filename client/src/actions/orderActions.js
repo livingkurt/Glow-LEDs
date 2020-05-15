@@ -91,6 +91,22 @@ const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
   }
 }
 
+
+const deliverOrder = (order, deliveryResult) => async (dispatch, getState) => {
+  console.log(deliveryResult)
+  try {
+    dispatch({ type: ORDER_PAY_REQUEST, payload: deliveryResult });
+    const { userSignin: { userInfo } } = getState();
+    const { data } = await Axios.put("/api/orders/" + order._id + "/delivery", deliveryResult, {
+      headers:
+        { Authorization: 'Bearer ' + userInfo.token }
+    });
+    dispatch({ type: ORDER_PAY_SUCCESS, payload: data })
+  } catch (error) {
+    dispatch({ type: ORDER_PAY_FAIL, payload: error.message });
+  }
+}
+
 const deleteOrder = (orderId) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
@@ -104,4 +120,4 @@ const deleteOrder = (orderId) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DELETE_FAIL, payload: error.message });
   }
 }
-export { createOrder, detailsOrder, payOrder, shipOrder, listMyOrders, listOrders, deleteOrder };
+export { createOrder, detailsOrder, payOrder, shipOrder, deliverOrder, listMyOrders, listOrders, deleteOrder };

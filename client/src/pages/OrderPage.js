@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, payOrder, shipOrder } from '../actions/orderActions';
+import { detailsOrder, payOrder, shipOrder, deliverOrder } from '../actions/orderActions';
 import PaypalButton from '../components/PaypalButton';
 import { Title, ButtonWord, Label, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from "../utils/helper_functions"
@@ -56,6 +56,21 @@ function OrderPage(props) {
 
   }
 
+  const [delivered_state, set_delivered_state] = useState()
+
+
+  const update_delivered_state = () => {
+    if (delivered_state) {
+      set_delivered_state(false)
+      dispatch(deliverOrder(order, false));
+    }
+    else {
+      set_delivered_state(true)
+      dispatch(deliverOrder(order, true));
+    }
+
+  }
+
   return loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> : error ? <div>{error}</div> :
 
     <div>
@@ -67,10 +82,13 @@ function OrderPage(props) {
               <div>{order.shipping.address}</div>
               <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
             </div>
-            <FlexContainer styles={{ alignItems: "center" }}>
+            <FlexContainer styles={{ alignItems: "center", justifyContent: "space-between" }}>
               <Label styles={{ marginRight: "10px" }}>{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
-              {/* <ButtonSymbol on_click_function={update_shipping_state} styles={{ backgroundColor: "#9e9e9e" }}>Mark As shipping</ButtonSymbol> */}
               <button className="button primary" onClick={update_shipping_state} >{order.isShipped ? "Mark As Not Shipped" : "Mark As Shipped"}</button>
+            </FlexContainer>
+            <FlexContainer styles={{ alignItems: "center", justifyContent: "space-between" }}>
+              <Label styles={{ marginRight: "10px" }}>{order.isDelivered ? "Delivered at " + format_date_display(order.deliveredAt) : "Not Delivered"}</Label>
+              <button className="button primary" onClick={update_delivered_state} >{order.isDelivered ? "Mark As Not Delivered" : "Mark As Delivered"}</button>
             </FlexContainer>
           </div>
           <div>
