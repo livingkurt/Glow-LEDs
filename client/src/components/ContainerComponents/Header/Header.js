@@ -15,9 +15,9 @@ const Header = (props) => {
         {/* <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", fontFamily: "logo_font", marginBottom: "10px", marginTop: "17px" }}>G</Title></Link> */}
       </div>
 
-      <FlexContainer styles={{ flexDirection: "column", justifyContent: "center", margin: "auto" }}>
+      <FlexContainer column h_center>
         <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", fontFamily: "logo_font", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
-        <FlexContainer styles={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <FlexContainer row h_between >
           <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
           <div className="dropdown-nav">
             <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
