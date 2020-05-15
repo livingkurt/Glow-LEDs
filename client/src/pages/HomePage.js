@@ -43,9 +43,9 @@ function HomePage(props) {
           <source src="videos/MVI_9237.MP4" type="video/mp4" />
         </video>
       </FlexContainer>
-      <p style={{ textAlign: "center" }}>
+      <FlexContainer styles={{ justifyContent: "center" }}>
         <Link to="/category/Caps"><ButtonWord>Shop Diffuser Caps Today!</ButtonWord></Link>
-      </p>
+      </FlexContainer>
       <FlexContainer styles={{ justifyContent: "space-between", flexWrap: "wrap" }}>
         <Link to="/category/Caps">
           <FlexContainer styles={flex_styles}>

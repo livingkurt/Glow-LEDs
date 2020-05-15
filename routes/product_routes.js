@@ -44,6 +44,7 @@ router.put("/:id", isAuth, isAdmin, async (req, res) => {
     product.image_2 = req.body.image_2;
     product.image_3 = req.body.image_3;
     product.image_4 = req.body.image_4;
+    product.video = req.body.video;
     product.brand = req.body.brand;
     product.category = req.body.category;
     product.countInStock = req.body.countInStock;
@@ -78,6 +79,7 @@ router.post("/", isAuth, isAdmin, async (req, res) => {
     image_2: req.body.image_2,
     image_3: req.body.image_3,
     image_4: req.body.image_4,
+    video: req.body.video,
     brand: req.body.brand,
     category: req.body.category,
     countInStock: req.body.countInStock,

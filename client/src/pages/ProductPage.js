@@ -116,7 +116,7 @@ function ProductPage(props) {
                 {!product.video ?
 
                   <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Video Coming Soon!</Title>
-                  : <FlexContainer styles={{ justifyContent: "center" }}>
+                  : <FlexContainer styles={{ justifyContent: "center", flexDirection: "column" }}>
                     <p style={{ textAlign: "center" }}>
                       Watch the Video Below to Learn More
                   </p>

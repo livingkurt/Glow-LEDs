@@ -13,6 +13,7 @@ function ProductsPage(props) {
   const [image_2, setImage_2] = useState('');
   const [image_3, setImage_3] = useState('');
   const [image_4, setImage_4] = useState('');
+  const [video, setVideo] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
@@ -49,6 +50,7 @@ function ProductsPage(props) {
     setImage_2(product.image_2);
     setImage_3(product.image_3);
     setImage_4(product.image_4);
+    setVideo(product.video);
     setBrand(product.brand);
     setCategory(product.category);
     setCountInStock(product.countInStock);
@@ -57,7 +59,7 @@ function ProductsPage(props) {
     e.preventDefault();
     dispatch(saveProduct({
       _id: id,
-      name, price, image_1, image_2, image_3, image_4, brand, category,
+      name, price, image_1, image_2, image_3, image_4, video, brand, category,
       countInStock, facts, description
     }));
   }
@@ -110,6 +112,14 @@ function ProductsPage(props) {
               </input>
             </li>
             <li>
+              <label htmlFor="video">
+                Video
+          </label>
+              <input type="text" name="video" defaultValue={video} id="video" onChange={(e) => setVideo(e.target.value)}>
+              </input>
+            </li>
+            <li>
+
               <label htmlFor="brand">
                 Brand
           </label>
