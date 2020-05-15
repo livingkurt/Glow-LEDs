@@ -77,7 +77,6 @@ const payOrder = (order, paymentResult) => async (dispatch, getState) => {
 }
 
 const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
-  console.log(shippingResult)
   try {
     dispatch({ type: ORDER_PAY_REQUEST, payload: shippingResult });
     const { userSignin: { userInfo } } = getState();
@@ -93,7 +92,6 @@ const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
 
 
 const deliverOrder = (order, deliveryResult) => async (dispatch, getState) => {
-  console.log(deliveryResult)
   try {
     dispatch({ type: ORDER_PAY_REQUEST, payload: deliveryResult });
     const { userSignin: { userInfo } } = getState();
