@@ -101,7 +101,7 @@ function ProductPage(props) {
 
             </div>
             <div>
-              <FlexContainer styles={{ flexDirection: "column" }}>
+              <FlexContainer styles={{ flexDirection: "column", padding: "1rem" }}>
                 <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
                 <p>{product.description}</p>
               </FlexContainer>
