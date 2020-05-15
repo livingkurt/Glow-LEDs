@@ -55,7 +55,7 @@ function OrdersPage(props) {
               <td>{order.isShipped ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
               <td>{!order.shippedAt ? "" : format_date_display(order.shippedAt)}</td>
               <td>
-                <FlexContainer styles={{ justifyContent: "space-between" }}>
+                <FlexContainer h_between>
                   <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>
                   <ButtonSymbol arg={order} on_click_function={deleteHandler} ><i className="fas fa-trash-alt"></i></ButtonSymbol>
                 </FlexContainer>

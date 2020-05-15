@@ -55,8 +55,8 @@ function ProductPage(props) {
                   <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} >Price: </Label>
                   <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
                 </FlexContainer>
-                <FlexContainer styles={{ flexDirection: "column", alignContent: "space-between" }}>
-                  <FlexContainer styles={{ flexDirection: "column", height: "100%" }}>
+                <FlexContainer column  >
+                  <FlexContainer column styles={{ height: "100%" }}>
                     {/* <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label> */}
                     <div>
                       <ul style={{ marginLeft: "10px" }}>
@@ -109,14 +109,14 @@ function ProductPage(props) {
 
             </div>
             <div>
-              <FlexContainer styles={{ flexDirection: "column", padding: "1rem" }}>
+              <FlexContainer column styles={{ padding: "1rem" }}>
                 <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
                 <p>{product.description}</p>
 
                 {!product.video ?
 
                   <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Video Coming Soon!</Title>
-                  : <FlexContainer styles={{ justifyContent: "center", flexDirection: "column" }}>
+                  : <FlexContainer h_center column >
                     <p style={{ textAlign: "center" }}>
                       Watch the Video Below to Learn More
                   </p>
