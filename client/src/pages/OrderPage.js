@@ -152,8 +152,6 @@ function OrderPage(props) {
               }
             </ul>
           </div>
-
-
         </div>
         <div className="placeorder-action">
           <ul>
@@ -185,11 +183,7 @@ function OrderPage(props) {
               <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
             </li>
           </ul>
-
-
-
         </div>
-
       </div>
     </div >
 

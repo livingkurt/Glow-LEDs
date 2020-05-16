@@ -15,7 +15,16 @@ function HomePage(props) {
 
   const heading_styles = {
     fontSize: 30,
-    fontFamily: "logo_font"
+    fontFamily: "logo_font",
+    justifyContent: "center",
+    margin: "20px auto"
+  }
+
+  const flex_styles = {
+    height: "100%",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    borderRadius: "20px",
+    padding: "10px"
   }
 
   return (
@@ -42,20 +51,20 @@ function HomePage(props) {
       </FlexContainer>
       <FlexContainer h_between wrap>
         <Link to="/category/Caps">
-          <FlexContainer column h_center t_center styles={{ height: "100%" }}>
-            <ButtonWord><Title styles={heading_styles} >Diffuser Caps</Title></ButtonWord>
+          <FlexContainer column h_center t_center styles={flex_styles}>
+            <Title styles={heading_styles} >Diffuser Caps</Title>
             <img className="home_page_img" src="/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Diffusers">
-          <FlexContainer column h_center t_center styles={{ height: "100%" }}>
-            <ButtonWord><Title styles={heading_styles} >Diffusers</Title></ButtonWord>
+          <FlexContainer column h_center t_center styles={flex_styles}>
+            <Title styles={heading_styles} >Diffusers</Title>
             <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG" alt="diffusers" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Accessories">
-          <FlexContainer column h_center t_center styles={{ height: "100%" }}>
-            <ButtonWord><Title styles={heading_styles} >LED Accessories</Title></ButtonWord>
+          <FlexContainer column h_center t_center styles={flex_styles}>
+            <Title styles={heading_styles} >LED Accessories</Title>
             <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG" alt="accessories" ></img>
           </FlexContainer>
         </Link>
