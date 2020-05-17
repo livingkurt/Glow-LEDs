@@ -88,7 +88,7 @@ function ProductPage(props) {
               <div className="details-action">
                 <ul>
                   <li>
-                    Price: {product.price}
+                    Price: ${product.price ? product.price.toFixed(2) : product.price}
                   </li>
                   <li>
                     Status: {product.countInStock > 0 ? "In Stock" : "Unavailable."}
