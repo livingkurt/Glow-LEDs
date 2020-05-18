@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 import { Title } from '../components/UtilityComponents';
+import { email_order } from '../actions/emailActions';
 function PlaceOrderPage(props) {
 
+  const user_data = props.userInfo
   const cart = useSelector(state => state.cart);
   const orderCreate = useSelector(state => state.orderCreate);
   const { loading, success, error, order } = orderCreate;
@@ -30,6 +32,11 @@ function PlaceOrderPage(props) {
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
       taxPrice, totalPrice
     }));
+    dispatch(email_order({
+      orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
+      taxPrice, totalPrice, user_data
+    }));
+
     // empty_cart();
   }
 

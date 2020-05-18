@@ -19,7 +19,7 @@ function PaymentPage(props) {
     <CheckoutSteps step1 step2 step3 ></CheckoutSteps>
     <div className="form">
       <form onSubmit={submitHandler} >
-        <ul className="form-container">
+        <ul className="form-container" style={{ width: "32rem" }}>
           <li>
             <Title styles={{ fontSize: 30, fontFamily: "" }} >Payment</Title>
           </li>

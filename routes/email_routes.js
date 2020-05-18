@@ -16,6 +16,7 @@ let transporter = nodemailer.createTransport({
 
 
 router.post("/register", async (req, res) => {
+
   let mailOptions = {
     from: process.env.EMAIL,
     to: req.body.email,
@@ -26,18 +27,21 @@ router.post("/register", async (req, res) => {
   transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
       console.log('Error Occurs', err)
+      res.send(err)
     }
     else {
-      console.log('It Works')
+      console.log('Registration Email Sent to ' + req.body.name)
+      res.send("Email Successfully Sent")
     }
   })
 
 })
 
 router.post("/order", async (req, res) => {
+  let user = {}
   let mailOptions = {
     from: process.env.EMAIL,
-    to: req.body.email,
+    to: req.body.user_data.email,
     subject: 'Glow LEDs Order Confirmation',
     text: 'It Works'
   }
@@ -45,33 +49,23 @@ router.post("/order", async (req, res) => {
   transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
       console.log('Error Occurs', err)
+      res.send(err)
     }
     else {
-      console.log('It Works')
+      console.log('Order Email Sent to ' + user.name)
+      res.send("Email Successfully Sent")
     }
   })
 
 })
 
 router.post("/shipping", async (req, res) => {
-  // console.log(req.body.user)
   let user = {}
   try {
     user = await User.findOne({ _id: req.body.user })
   } catch (error) {
     res.send({ msg: error.message });
   }
-  console.log({ user })
-
-  // try {
-  //   const user = await axios.get("/api/users/" + req.body.user);
-  //   console.log(user)
-  //   res.json(user);
-  // }
-  // catch (error) {
-  //   console.log(error)
-  // }
-
 
   let mailOptions = {
     from: process.env.EMAIL,
@@ -83,9 +77,39 @@ router.post("/shipping", async (req, res) => {
   transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
       console.log('Error Occurs', err)
+      res.send(err)
     }
     else {
-      console.log('It Works')
+      console.log('Shipping Email Sent to ' + user.name)
+      res.send("Email Successfully Sent")
+    }
+  })
+
+})
+
+router.post("/delivery", async (req, res) => {
+  let user = {}
+  try {
+    user = await User.findOne({ _id: req.body.user })
+  } catch (error) {
+    res.send({ msg: error.message });
+  }
+
+  let mailOptions = {
+    from: process.env.EMAIL,
+    to: user.email,
+    subject: 'Glow LEDs Delivery Confirmation',
+    text: 'It Works'
+  }
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log('Error Occurs', err)
+      res.send(err)
+    }
+    else {
+      console.log('Delivery Email Sent to ' + user.name)
+      res.send("Email Successfully Sent")
     }
   })
 

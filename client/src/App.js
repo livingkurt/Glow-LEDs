@@ -25,7 +25,7 @@ function App() {
           <Route path="/products" component={ProductsPage} />
           <Route path="/shipping" component={ShippingPage} />
           <Route path="/payment" component={PaymentPage} />
-          <Route path="/placeorder" component={PlaceOrderPage} />
+          <Route path="/placeorder" component={props => <PlaceOrderPage userInfo={userInfo}  {...props} />} />
           <Route path="/signin" component={SignInPage} />
           <Route path="/register" component={RegisterPage} />
           <Route path="/product/:id" component={ProductPage} />

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
+import { email_registration } from '../actions/emailActions';
 
 function RegisterPage(props) {
 
@@ -27,6 +28,7 @@ function RegisterPage(props) {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(register(name, email, password));
+    dispatch(email_registration(name, email, password));
 
   }
   return <div className="form">
