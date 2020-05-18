@@ -2,10 +2,12 @@ const express = require("express");
 const config = require('./config')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const { user_routes, product_routes, order_routes } = require('./routes/index')
+const { user_routes, product_routes, order_routes, email_routes } = require('./routes/index')
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
+require("dotenv").config()
+
 
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db",
@@ -22,6 +24,7 @@ app.use(bodyParser.json())
 app.use("/api/users", user_routes)
 app.use("/api/products", product_routes)
 app.use("/api/orders", order_routes)
+app.use("/api/emails", email_routes)
 app.use("/api/config/paypal", (req, res) => {
   res.send(config.PAYPAL_CLIENT_ID)
 })

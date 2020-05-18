@@ -8,8 +8,8 @@ const { getToken, isAuth } = require('../util')
 
 const router = express.Router();
 
+
 router.put('/:id', isAuth, async (req, res) => {
-  console.log("Hello")
   const userId = req.params.id;
   const user = await User.findById(userId);
   if (user) {
@@ -37,6 +37,7 @@ router.post('/signin', async (req, res) => {
     password: req.body.password
   });
   if (signinUser) {
+    // if (signinUser.confirmed) {
     res.send({
       _id: signinUser.id,
       name: signinUser.name,
@@ -44,7 +45,10 @@ router.post('/signin', async (req, res) => {
       isAdmin: signinUser.isAdmin,
       token: getToken(signinUser)
     });
-
+    // }
+    // else {
+    // res.status(401).send({ msg: 'Please confirm your email to login' });
+    // }
   } else {
     res.status(401).send({ msg: 'Invalid Email or Password.' });
   }
@@ -78,6 +82,7 @@ router.get("/createadmin", async (req, res) => {
       name: 'Kurt',
       email: 'lavacquek@icloud.com',
       password: '1234',
+      confirmed: true,
       isAdmin: true
     });
     const newUser = await user.save();
