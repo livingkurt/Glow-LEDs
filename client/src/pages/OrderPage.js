@@ -73,15 +73,15 @@ function OrderPage(props) {
 
   }
 
-  return loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> : error ? <div>{error}</div> :
+  return loading ? <Title styles={{ fontSize: 20 }} >Loading...</Title> : error ? <div>{error}</div> :
 
     <div>
       <div className="placeorder">
         <div className="placeorder-info">
           <div>
-            <FlexContainer h_between>
+            <FlexContainer h_between >
               <FlexContainer column>
-                <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
+                <Title styles={{ fontSize: 30 }} >Shipping</Title>
                 <div>
                   <div>{order.shipping.address}</div>
                   <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
@@ -106,7 +106,7 @@ function OrderPage(props) {
             </FlexContainer>
           </div>
           <div>
-            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
+            <Title styles={{ fontSize: 30 }} >Payment</Title>
             <div>
               Payment Method: {order.payment.paymentMethod}
             </div>
@@ -117,7 +117,7 @@ function OrderPage(props) {
           <div>
             <ul style={{ marginTop: 0 }} className="cart-list-container">
               <li >
-                <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
+                <Title styles={{ fontSize: 30 }} >Shopping Cart</Title>
                 <div>
                   Price
           </div>
@@ -164,7 +164,7 @@ function OrderPage(props) {
               }
             </li>
             <li>
-              <Title styles={{ fontSize: 30, fontFamily: "logo_font", margin: 0 }} >Order Summary</Title>
+              <Title styles={{ fontSize: 30, marginTop: 0 }} >Order Summary</Title>
             </li>
             <li>
               <div>Items</div>

@@ -15,7 +15,7 @@ function Product(props) {
         <Link to={'/product/' + props.product._id}>
           <img className="product-image" src={props.product.image_1} alt="product" />
         </Link>
-        <Label styles={{ fontSize: "13px" }}>{props.product.brand}</Label>
+        <Label styles={{ fontSize: "13" }}>{props.product.brand}</Label>
         <Link to={'/product/' + props.product._id}><Label styles={{ fontSize: "16px" }}>{props.product.name}</Label></Link>
         <Label className="product-price">${props.product.price.toFixed(2)}</Label>
       </div>

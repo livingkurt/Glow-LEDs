@@ -10,13 +10,23 @@ html {
 } */
 
 @font-face {
-  font-family: "main_font";
+  font-family: "button_font";
   src: url("/fonts/Neou-Bold.otf");
+}
+
+@font-face {
+  font-family: "button_font";
+  src: url("/fonts/Neou-Bold.otf");
+}
+
+@font-face {
+  font-family: "heading_font";
+  src: url("/fonts/beyond_the_mountains.otf");
 }
 
 body {
   font: 1.6rem Helvetica;
-  font-family: "main_font";
+  font-family: "button_font";
   height: 100vh;
   margin: 0;
   background-color: #272727;
@@ -25,10 +35,6 @@ body {
 
 input, textarea, button:focus {
   outline: none;
-}
-
-main {
-  margin: 0px 252px;
 }
 
 button {
@@ -53,7 +59,6 @@ ul {
   object-position: 50% 50%;
   max-width: 300px;
   max-height: 300px;
-  width: 100%;
   height: auto;
   margin: 10px;
 }
@@ -81,14 +86,6 @@ ul {
 
 .header-links a:hover {
   background-color: #626262;
-}
-
-.main {
-  grid-area: main;
-  padding: 20px;
-  /* margin */
-  /* background-color: #5a5a5a; */
-  background-color: #272727;
 }
 
 .footer {
@@ -268,7 +265,6 @@ a {
 .cart-list-container {
   padding: 0;
   list-style-type: none;
-  padding: 1rem;
 }
 
 .cart-list-container li {
@@ -442,7 +438,7 @@ tbody>tr:nth-child(odd) {
   border: .1rem #c0c0c0 solid;
   border-radius: .5rem;
   background-color: #fcfcfc;
-  padding: 1rem;
+  padding: 2rem;
   background-color: #5a5a5a;
   height: 553px;
 }
@@ -451,7 +447,7 @@ tbody>tr:nth-child(odd) {
   border: .1rem #c0c0c0 solid;
   border-radius: .5rem;
   background-color: #fcfcfc;
-  padding: 1rem;
+  padding: 2rem;
   margin: 1rem;
   background-color: #5a5a5a;
 }

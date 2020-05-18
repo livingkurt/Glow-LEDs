@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
-import { FlexContainer } from '../components/ContainerComponents';
+import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
 function ProductsPage(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -68,10 +68,9 @@ function ProductsPage(props) {
   }
 
 
-  return <div className="content-margined">
-
+  return <BlockContainer styles={{ padding: "20px" }}>
     <div className="product-header">
-      <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Products</Title>
+      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Products</Title>
       <button className="button primary" onClick={() => openModal({})}>Create Product</button>
     </div>
     {modalVisible &&
@@ -82,7 +81,7 @@ function ProductsPage(props) {
               <h2>Create Product</h2>
             </li>
             <li>
-              {loadingSave && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
+              {loadingSave && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
               {errorSave && <div>{errorSave}</div>}
             </li>
 
@@ -197,6 +196,6 @@ function ProductsPage(props) {
       </table>
 
     </div>
-  </div>
+  </BlockContainer>
 }
 export default ProductsPage;

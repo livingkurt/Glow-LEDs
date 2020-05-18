@@ -33,7 +33,7 @@ function SigninPage(props) {
           <h2>Sign-In</h2>
         </li>
         <li>
-          {loading && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
+          {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
           {error && <div>{error}</div>}
         </li>
         <li>

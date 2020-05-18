@@ -39,9 +39,9 @@ function ProductPage(props) {
   return <div>
 
     <div className="back-to-result">
-      <Link to="/allproducts"><ButtonWord styles={{ fontSize: 20, fontFamily: "logo_font" }} >Back to Results</ButtonWord></Link>
+      <Link to="/allproducts"><Title styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
     </div>
-    {loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
+    {loading ? <Title styles={{ fontSize: "2rem" }} >Loading...</Title> :
       error ? <div>{error} </div> :
         (
           <div>
@@ -50,14 +50,14 @@ function ProductPage(props) {
                 <img id="expandedImg" alt="" src={product.image_1} style={{ maxWidth: "400px", maxHeight: "400px", height: "100%", width: "100%" }} />
               </div>
               <div className="details-info">
-                <Title styles={{ fontSize: 30, fontFamily: "logo_font", marginTop: 0 }} >{product.name}</Title>
-                <FlexContainer styles={{ marginBottom: "10px" }}>
-                  <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} >Price: </Label>
-                  <Label>${product.price ? product.price.toFixed(2) : product.price}</Label>
+                <Title styles={{ fontSize: "3rem", marginBottom: 20 }} >{product.name}</Title>
+                <FlexContainer>
+                  <Title styles={{ fontSize: "2rem", marginRight: 5 }} >Price: </Title>
+                  <Label styles={{ fontSize: "2rem" }} >${product.price ? product.price.toFixed(2) : product.price}</Label>
                 </FlexContainer>
                 <FlexContainer column  >
                   <FlexContainer column styles={{ height: "100%" }}>
-                    {/* <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label> */}
+                    {/* <Label styles={{ fontSize: 20, marginRight: 5 }} > Description: </Label> */}
                     <div>
                       <ul style={{ marginLeft: "10px" }}>
                         {product.facts ? product.facts.split("\n").map((line, index) => {
@@ -110,12 +110,12 @@ function ProductPage(props) {
             </div>
             <div>
               <FlexContainer column styles={{ padding: "1rem" }}>
-                <Label styles={{ fontSize: 20, fontFamily: "logo_font", marginRight: 5 }} > Description: </Label>
+                <Title styles={{ fontSize: 20, marginRight: 5 }} > Description: </Title>
                 <p>{product.description}</p>
 
                 {!product.video ?
 
-                  <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Video Coming Soon!</Title>
+                  <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Video Coming Soon!</Title>
                   : <FlexContainer h_center column >
                     <p style={{ textAlign: "center" }}>
                       Watch the Video Below to Learn More
@@ -124,7 +124,7 @@ function ProductPage(props) {
                       <source src={product.video} type="video/mp4" />
                     </video>
                   </FlexContainer>}
-                {/* <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >{product.name}</Title> */}
+                {/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
               </FlexContainer>
 
             </div>

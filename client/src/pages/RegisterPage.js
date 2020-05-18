@@ -36,7 +36,7 @@ function RegisterPage(props) {
           <h2>Create Account</h2>
         </li>
         <li>
-          {loading && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
+          {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
           {error && <div>{error}</div>}
         </li>
         <li>

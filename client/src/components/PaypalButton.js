@@ -44,7 +44,7 @@ function PaypalButton(props) {
   }, []);
 
   if (!sdkReady) {
-    return <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>
+    return <Title styles={{ fontSize: 20 }} >Loading...</Title>
   }
 
   const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });

@@ -33,7 +33,7 @@ function CartPage(props) {
     <div className="cart-list">
       <ul className="cart-list-container">
         <li>
-          <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
+          <Title styles={{ fontSize: 30 }} >Shopping Cart</Title>
           <div>
             Price
           </div>

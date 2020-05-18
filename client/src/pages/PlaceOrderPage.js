@@ -49,14 +49,14 @@ function PlaceOrderPage(props) {
     <div className="placeorder">
       <div className="placeorder-info">
         <div>
-          <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shipping</Title>
+          <Title styles={{ fontSize: 30 }} >Shipping</Title>
           <div>
             <div>{shipping.address}</div>
             <div>{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}</div>
           </div>
         </div>
         <div>
-          <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
+          <Title styles={{ fontSize: 30 }} >Payment</Title>
           <div>
             Payment Method: {cart.payment.paymentMethod}
           </div>
@@ -64,7 +64,7 @@ function PlaceOrderPage(props) {
         <div>
           <ul className="cart-list-container">
             <li>
-              <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Shopping Cart</Title>
+              <Title styles={{ fontSize: 30 }} >Shopping Cart</Title>
               <div>
                 Price
           </div>
@@ -108,7 +108,7 @@ function PlaceOrderPage(props) {
             <button className="button primary full-width" onClick={placeOrderHandler} >Place Order</button>
           </li>
           <li>
-            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Order Summary</Title>
+            <Title styles={{ fontSize: 30 }} >Order Summary</Title>
           </li>
           <li>
             <div>Items</div>

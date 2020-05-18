@@ -12,11 +12,11 @@ const Header = (props) => {
     <header className="header" id="overlay">
       <div className="brand">
         <Link to="/" ><img className="zoom logo" height="125px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
-        {/* <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", fontFamily: "logo_font", marginBottom: "10px", marginTop: "17px" }}>G</Title></Link> */}
+        {/* <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", marginBottom: "10px", marginTop: "17px" }}>G</Title></Link> */}
       </div>
 
       <FlexContainer column h_center>
-        <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", fontFamily: "logo_font", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
+        <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
         <FlexContainer row h_between >
           <Link to="/allproducts"><ButtonWord>All Products</ButtonWord></Link>
           <div className="dropdown-nav">

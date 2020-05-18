@@ -18,9 +18,9 @@ export default function Form() {
   }
 
   return (
-    <BlockContainer>
-      <FlexContainer center>
-        <Title styles={{ fontSize: 40, fontFamily: "logo_font" }} >Contact</Title>
+    <BlockContainer styles={{ padding: "20px" }}>
+      <FlexContainer h_center>
+        <Title styles={{ fontSize: 40 }} >Contact</Title>
       </FlexContainer>
       <form style={{ display: "flex", flexDirection: "column" }} className="contact-form" onSubmit={sendEmail}>
         <input className="zoom_f input_i" type="hidden" name="contact_number" />

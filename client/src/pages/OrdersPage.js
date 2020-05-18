@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../actions/orderActions';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
-import { FlexContainer } from '../components/ContainerComponents';
+import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
 function OrdersPage(props) {
   const orderList = useSelector(state => state.orderList);
@@ -22,14 +22,13 @@ function OrdersPage(props) {
   const deleteHandler = (order) => {
     dispatch(deleteOrder(order._id));
   }
-  return loading ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
-    <div className="content-margined">
+  return loading ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
+    <BlockContainer styles={{ padding: "20px" }}>
 
       <div className="order-header">
-        <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Orders</Title>
+        <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Orders</Title>
       </div>
       <div className="order-list">
-
         <table className="table">
           <thead>
             <tr>
@@ -65,6 +64,6 @@ function OrdersPage(props) {
         </table>
 
       </div>
-    </div>
+    </BlockContainer>
 }
 export default OrdersPage;

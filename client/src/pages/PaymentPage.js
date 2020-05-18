@@ -21,7 +21,7 @@ function PaymentPage(props) {
       <form onSubmit={submitHandler} >
         <ul className="form-container">
           <li>
-            <Title styles={{ fontSize: 30, fontFamily: "logo_font" }} >Payment</Title>
+            <Title styles={{ fontSize: 30, fontFamily: "" }} >Payment</Title>
           </li>
 
           <li>

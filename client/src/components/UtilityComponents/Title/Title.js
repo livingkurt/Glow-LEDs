@@ -8,7 +8,7 @@ const Title = (props) => {
 
   return (
     <div className="title">
-      <h2 style={props.styles}>{props.children}</h2>
+      <h1 style={props.styles}>{props.children}</h1>
     </div >
   );
 }

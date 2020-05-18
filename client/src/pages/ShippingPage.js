@@ -25,7 +25,7 @@ function ShippingPage(props) {
       <form onSubmit={submitHandler} >
         <ul className="form-container">
           <li>
-            <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Shipping</Title>
+            <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Shipping</Title>
           </li>
           <li>
             <label htmlFor="address">

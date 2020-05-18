@@ -5,6 +5,7 @@ import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
+import { FlexContainer } from '../components/ContainerComponents';
 
 function ProfilePage(props) {
   const [name, setName] = useState('');
@@ -42,17 +43,17 @@ function ProfilePage(props) {
   }, [userInfo])
 
 
-  return <div className="profile">
+  return <FlexContainer styles={{ padding: "20px" }}>
     <div className="profile-info">
       <div className="form">
         <form onSubmit={submitHandler} >
           <ul className="form-container">
             <li>
               {/* <h2>User Profile</h2> */}
-              <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >User Profile</Title>
+              <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >User Profile</Title>
             </li>
             <li>
-              {loading && <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title>}
+              {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
               {error && <div>{error}</div>}
               {success && <div>Profile Saved Successfully.</div>}
             </li>
@@ -89,9 +90,9 @@ function ProfilePage(props) {
       </div>
     </div>
     <div className="profile-orders content-margined">
-      <Title styles={{ fontSize: 30, fontFamily: "logo_font", textAlign: "center", width: "100%" }} >Orders</Title>
+      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Orders</Title>
       {
-        loadingOrders ? <Title styles={{ fontSize: 20, fontFamily: "logo_font" }} >Loading...</Title> :
+        loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
           errorOrders ? <div>{errorOrders} </div> :
             <table className="table">
               <thead>
@@ -117,7 +118,7 @@ function ProfilePage(props) {
             </table>
       }
     </div>
-  </div >
+  </FlexContainer >
 
 }
 
