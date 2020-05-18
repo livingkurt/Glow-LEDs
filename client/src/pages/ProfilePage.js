@@ -46,7 +46,7 @@ function ProfilePage(props) {
   return <FlexContainer styles={{ padding: "20px" }}>
     <div className="profile-info">
       <div className="form">
-        <form onSubmit={submitHandler} >
+        <form onSubmit={submitHandler} style={{ width: "100%" }}>
           <ul className="form-container">
             <li>
               {/* <h2>User Profile</h2> */}

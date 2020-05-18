@@ -7,6 +7,7 @@ import PaypalButton from '../components/PaypalButton';
 import { Title, ButtonWord, Label, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from "../utils/helper_functions"
 import { FlexContainer } from '../components/ContainerComponents';
+import { email_delivery, email_shipping } from '../actions/emailActions';
 function OrderPage(props) {
 
   console.log(props.userInfo)
@@ -50,10 +51,12 @@ function OrderPage(props) {
     if (shipping_state) {
       set_shipping_state(false)
       dispatch(shipOrder(order, false));
+      dispatch(email_shipping(order));
     }
     else {
       set_shipping_state(true)
       dispatch(shipOrder(order, true));
+      // dispatch(email_shipping(order));
     }
 
   }
@@ -65,10 +68,12 @@ function OrderPage(props) {
     if (delivered_state) {
       set_delivered_state(false)
       dispatch(deliverOrder(order, false));
+      dispatch(email_delivery(order));
     }
     else {
       set_delivered_state(true)
       dispatch(deliverOrder(order, true));
+      // dispatch(email_delivery(order));
     }
 
   }

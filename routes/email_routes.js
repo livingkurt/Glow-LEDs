@@ -1,9 +1,10 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config()
-const Order = require('../models/order')
 const { isAuth, isAdmin } = require('../util')
 const express = require('express')
 const router = express.Router();
+const axios = require('axios')
+const User = require('../models/user')
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -14,7 +15,7 @@ let transporter = nodemailer.createTransport({
 })
 
 
-router.get("/register", isAuth, async (req, res) => {
+router.post("/register", async (req, res) => {
   let mailOptions = {
     from: process.env.EMAIL,
     to: req.body.email,
@@ -33,7 +34,7 @@ router.get("/register", isAuth, async (req, res) => {
 
 })
 
-router.get("/order", isAuth, async (req, res) => {
+router.post("/order", async (req, res) => {
   let mailOptions = {
     from: process.env.EMAIL,
     to: req.body.email,
@@ -52,10 +53,29 @@ router.get("/order", isAuth, async (req, res) => {
 
 })
 
-router.get("/shipping", isAuth, async (req, res) => {
+router.post("/shipping", async (req, res) => {
+  // console.log(req.body.user)
+  let user = {}
+  try {
+    user = await User.findOne({ _id: req.body.user })
+  } catch (error) {
+    res.send({ msg: error.message });
+  }
+  console.log({ user })
+
+  // try {
+  //   const user = await axios.get("/api/users/" + req.body.user);
+  //   console.log(user)
+  //   res.json(user);
+  // }
+  // catch (error) {
+  //   console.log(error)
+  // }
+
+
   let mailOptions = {
     from: process.env.EMAIL,
-    to: req.body.email,
+    to: user.email,
     subject: 'Glow LEDs Shipping Confirmation',
     text: 'It Works'
   }

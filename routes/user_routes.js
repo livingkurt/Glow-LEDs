@@ -92,5 +92,15 @@ router.get("/createadmin", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  console.log("userRoute")
+  try {
+    const user = await User.findOne({ _id: req.params.id })
+    res.send(user);
+  } catch (error) {
+    res.send({ msg: error.message });
+  }
+});
+
 // export default router;
 module.exports = router;
