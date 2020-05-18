@@ -19,6 +19,8 @@ function App() {
         <Content>
           <Route path="/orders" component={OrdersPage} />
           <Route path="/profile" component={ProfilePage} />
+          {/* <Route path="/profile/orders" component={UserOrdersPage} /> */}
+          {/* <Route path="/profile/account" component={UserAccountPage} /> */}
           <Route path="/order/:id" component={props => <OrderPage userInfo={userInfo}  {...props} />} />
           <Route path="/products" component={ProductsPage} />
           <Route path="/shipping" component={ShippingPage} />

@@ -75,84 +75,77 @@ function ProductsPage(props) {
     </div>
     {modalVisible &&
       <div className="form">
-        <form onSubmit={submitHandler} >
+        <form onSubmit={submitHandler} style={{ width: "100%" }} >
           <ul className="form-container">
+            <Title styles={{ fontSize: 30, fontFamily: "heading_font" }} >Create Product</Title>
             <li>
-              <h2>Create Product</h2>
-            </li>
-            <li>
-              {loadingSave && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
+              {loadingSave && <Title styles={{ fontSize: 20, fontFamily: "heading_font" }} >Loading...</Title>}
               {errorSave && <div>{errorSave}</div>}
             </li>
-
-            <li>
-              <label htmlFor="name">
-                Name
-          </label>
-              <input type="text" name="name" defaultValue={name} id="name" onChange={(e) => setName(e.target.value)}>
-              </input>
-            </li>
-            <li>
-              <label htmlFor="price">
-                Price
-          </label>
-              <input type="text" name="price" defaultValue={price} id="price" onChange={(e) => setPrice(e.target.value)}>
-              </input>
-            </li>
-            <li>
-              <label htmlFor="image">
-                Image
-          </label>
-              <input type="text" name="image_1" defaultValue={image_1} id="image_1" onChange={(e) => setImage_1(e.target.value)}>
-              </input>
-              <input type="text" name="image_2" defaultValue={image_2} id="image_2" onChange={(e) => setImage_2(e.target.value)}>
-              </input>
-              <input type="text" name="image_3" defaultValue={image_3} id="image_3" onChange={(e) => setImage_3(e.target.value)}>
-              </input>
-              <input type="text" name="image_4" defaultValue={image_4} id="image_4" onChange={(e) => setImage_4(e.target.value)}>
-              </input>
-            </li>
-            <li>
-              <label htmlFor="video">
-                Video
-          </label>
-              <input type="text" name="video" defaultValue={video} id="video" onChange={(e) => setVideo(e.target.value)}>
-              </input>
-            </li>
-            <li>
-
-              <label htmlFor="brand">
-                Brand
-          </label>
-              <input type="text" name="brand" defaultValue={brand} id="brand" onChange={(e) => setBrand(e.target.value)}>
-              </input>
-            </li>
-            <li>
-              <label htmlFor="countInStock">
-                Count In Stock
-          </label>
-              <input type="text" name="countInStock" defaultValue={countInStock} id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>
-              </input>
-            </li>
-            <li>
-              <label htmlFor="name">
-                Category
-          </label>
-              <input type="text" name="category" defaultValue={category} id="category" onChange={(e) => setCategory(e.target.value)}>
-              </input>
-            </li>
-            <li>
-              <label htmlFor="facts">
-                Facts
-          </label>
-              <textarea name="facts" defaultValue={facts} id="facts" onChange={(e) => setFacts(e.target.value)}></textarea>
-            </li>
-            <li>
-              <label htmlFor="description">
-                Description
-          </label>
-              <textarea name="description" defaultValue={description} id="description" onChange={(e) => setDescription(e.target.value)}></textarea>
-            </li>
+            <FlexContainer row>
+              <FlexContainer column styles={{ width: "50%", marginRight: "10px" }}>
+                <li>
+                  <label htmlFor="name">Name</label>
+                  <input type="text" name="name" defaultValue={name} id="name" onChange={(e) => setName(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="price">Price</label>
+                  <input type="text" name="price" defaultValue={price} id="price" onChange={(e) => setPrice(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="image">Image 1</label>
+                  <input type="text" name="image_1" defaultValue={image_1} id="image_1" onChange={(e) => setImage_1(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="image">Image 2</label>
+                  <input type="text" name="image_2" defaultValue={image_2} id="image_2" onChange={(e) => setImage_2(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="image">Image 3</label>
+                  <input type="text" name="image_3" defaultValue={image_3} id="image_3" onChange={(e) => setImage_3(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="image">Image 4</label>
+                  <input type="text" name="image_4" defaultValue={image_4} id="image_4" onChange={(e) => setImage_4(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="video">Video</label>
+                  <input type="text" name="video" defaultValue={video} id="video" onChange={(e) => setVideo(e.target.value)}>
+                  </input>
+                </li>
+              </FlexContainer>
+              <FlexContainer column styles={{ width: "50%", marginLeft: "10px" }}>
+                <li>
+                  <label htmlFor="brand">Brand</label>
+                  <input type="text" name="brand" defaultValue={brand} id="brand" onChange={(e) => setBrand(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="countInStock">Count In Stock</label>
+                  <input type="text" name="countInStock" defaultValue={countInStock} id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="name">Category</label>
+                  <input type="text" name="category" defaultValue={category} id="category" onChange={(e) => setCategory(e.target.value)}>
+                  </input>
+                </li>
+                <li>
+                  <label htmlFor="facts">Facts</label>
+                  <textarea name="facts" defaultValue={facts} id="facts" onChange={(e) => setFacts(e.target.value)}></textarea>
+                </li>
+                <li>
+                  <label htmlFor="description">Description</label>
+                  <textarea name="description" defaultValue={description} style={{ height: "118px" }} id="description" onChange={(e) => setDescription(e.target.value)}></textarea>
+                </li>
+              </FlexContainer>
+            </FlexContainer>
             <li>
               <button type="submit" className="button primary">{id ? "Update" : "Create"}</button>
             </li>

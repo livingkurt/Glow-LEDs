@@ -52,7 +52,7 @@ function ProductPage(props) {
               <div className="details-info">
                 <Title styles={{ fontSize: "3rem", marginBottom: 20 }} >{product.name}</Title>
                 <FlexContainer>
-                  <Title styles={{ fontSize: "2rem", marginRight: 5 }} >Price: </Title>
+                  <Title styles={{ fontSize: "2rem", margin: 0, marginRight: 5, }} >Price: </Title>
                   <Label styles={{ fontSize: "2rem" }} >${product.price ? product.price.toFixed(2) : product.price}</Label>
                 </FlexContainer>
                 <FlexContainer column  >
@@ -110,7 +110,7 @@ function ProductPage(props) {
             </div>
             <div>
               <FlexContainer column styles={{ padding: "1rem" }}>
-                <Title styles={{ fontSize: 20, marginRight: 5 }} > Description: </Title>
+                <Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }} > Description: </Title>
                 <p>{product.description}</p>
 
                 {!product.video ?
