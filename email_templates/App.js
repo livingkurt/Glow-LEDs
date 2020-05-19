@@ -1,4 +1,5 @@
-module.exports = function (props) {
+module.exports = function (body) {
+
   return `
   <html lang="en" style="box-sizing:border-box; font-size:62.5%">
 
@@ -224,109 +225,9 @@ module.exports = function (props) {
           </div>
         </header>
   
-        <div class="content"
-          style="background:linear-gradient(180deg, rgba(138, 138, 138, 1) 0%, rgba(39, 39, 39, 1) 100%); background-color:#737373; border-radius:20px; box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); grid-area:main; margin:20px auto; padding:2rem; width:75%"
-          bgcolor="#737373" width="75%">
-          <div>
-            <div class="placeorder"
-              style="color:white; display:flex; flex-grow:wrap; justify-content:space-between; padding:1rem">
-              <div class="placeorder-info" style="flex:3 1 60rem">
-                <div
-                  style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; margin:1rem; padding:2rem; margin-top:0"
-                  bgcolor="#5a5a5a">
-                  <div style="display: flex; justify-content: space-between;">
-                    <div style="display: flex; flex-direction: column;">
-                      <div class="title" style='display:flex; font-family:"heading_font"; margin:0'>
-                        <h1 style="font-size: 30px;">Shipping</h1>
-                      </div>
-                      <div>
-                        <div>${props.shippingAddress}</div>
-                      </div>
-                    </div>
-                    <div style="display: flex; flex-direction: column; margin-top: auto; width: 373px;">
-                      <div
-                        style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                        <label class="label" style="font-size:16px; margin-top:5px">Not Shipped</label>
-  
-                      </div>
-                      <div
-                        style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                        <label class="label" style="font-size:16px; margin-top:5px">Not Delivered</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; margin:1rem; padding:2rem"
-                  bgcolor="#5a5a5a">
-                  <div class="title" style='display:flex; font-family:"heading_font"; margin:0'>
-                    <h1 style="font-size: 30px;">Payment</h1>
-                  </div>
-                  <div style='font-size: 16px;'>Payment Method: paypal</div>
-                  <div>${props.isPaid}</div>
-                </div>
-                <div
-                  style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; margin:1rem; padding:2rem"
-                  bgcolor="#5a5a5a">
-                  <ul class="cart-list-container" style="padding:0; list-style-type:none; margin-top:0">
-                    <li
-                      style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem; align-items:flex-end; margin-right:20px">
-                      <div class="title" style='display:flex; font-family:"heading_font"; margin:0'>
-                        <h1 style="font-size: 30px;">Shopping Cart</h1>
-                      </div>
-                      <div>Price</div>
-                    </li>
-                    <li
-                      style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem">
-                      <div class="cart-image" style="flex:1 1"><img
-                          src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG" alt="product"
-                          style="border-radius:8px; margin-right:10px; max-height:10rem; max-width:10rem"></div>
-                      <div class="cart-name" style="flex:8 1">
-                        <div><a href="/product/5ebdbbde016e5044066a4270" style="color:white; text-decoration:none">Coin
-                            Battery Storage</a></div>
-                        <div>Qty: 1</div>
-                      </div>
-                      <div class="cart-price" style="flex:1 1; font-size:2.5rem; text-align:right" align="right">$5</div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="placeorder-action"
-                style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; flex:1 1 20rem; margin-bottom:10px; padding:2rem"
-                bgcolor="#5a5a5a">
-                <ul style="padding:0; list-style-type:none">
-                  <li class="placeorder-actions-payment"
-                    style="display:flex; justify-content:space-between; margin-bottom:1rem">
-                  </li>
-                  <li style="display:flex; justify-content:space-between; margin-bottom:1rem">
-                    <div class="title" style='display:flex; font-family:"heading_font"; margin:0'>
-                      <h1 style="font-size: 30px; margin-top: 0px;">Order Summary</h1>
-                    </div>
-                  </li>
-                  <li style="display:flex; justify-content:space-between; margin-bottom:1rem">
-                    <div>Items</div>
-                    <div>${props.items_total}</div>
-                  </li>
-                  <li style="display:flex; justify-content:space-between; margin-bottom:1rem">
-                    <div>Shipping</div>
-                    <div>${props.shipping_total}</div>
-                  </li>
-                  <li style="display:flex; justify-content:space-between; margin-bottom:1rem">
-                    <div>Tax</div>
-                    <div>${props.tax_total}</div>
-                  </li>
-                  <li
-                    style="display:flex; justify-content:space-between; margin-bottom:1rem; color:white; font-size:2rem; font-weight:bold">
-                    <div>Order Total</div>
-                    <div>${props.total_price}</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        ${body}
+       
+
   </body>
   
   </html>

@@ -57,7 +57,7 @@ function OrderPage(props) {
     else {
       set_shipping_state(true)
       dispatch(shipOrder(order, true));
-      // dispatch(email_shipping(order));
+      dispatch(email_shipping(order));
     }
 
   }
@@ -74,7 +74,7 @@ function OrderPage(props) {
     else {
       set_delivered_state(true)
       dispatch(deliverOrder(order, true));
-      // dispatch(email_delivery(order));
+      dispatch(email_delivery(order));
     }
 
   }
