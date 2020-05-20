@@ -1,20 +1,34 @@
 import React from 'react'
-import './header.css'
 import { Link } from "react-router-dom";
-import { Title, ButtonWord } from "../../UtilityComponents/index"
-import { FlexContainer } from "../../ContainerComponents/index"
+import { Title, ButtonWord } from "../UtilityComponents/index"
+import { FlexContainer } from "./index"
 import { useSelector } from 'react-redux';
+
 const Header = (props) => {
+
+  const header_styles = {
+    gridArea: "header",
+    backgroundColor: "#333333",
+    color: "#ffffff",
+    display: "flex",
+    alignItems: "center",
+    padding: "15px",
+    listStyleType: "none",
+    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+    position: "fixed",
+    right: "0",
+    left: "0",
+    zIndex: "999"
+  }
+
   const cart = useSelector(state => state.cart);
 
   const { cartItems } = cart;
   return (
-    <header className="header" id="overlay">
+    <header style={header_styles} id="overlay">
       <div className="brand">
-        <Link to="/" ><img className="zoom logo" height="125px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
-        {/* <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", marginBottom: "10px", marginTop: "17px" }}>G</Title></Link> */}
+        <Link to="/" ><img className="zoom" style={{ marginRight: "130px" }} height="125px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
       </div>
-
       <FlexContainer column h_center>
         <Link to="/" ><Title styles={{ fontSize: "67px", margin: 0, textAlign: "center", width: "100%", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
         <FlexContainer row h_between >
@@ -22,26 +36,13 @@ const Header = (props) => {
           <div className="dropdown-nav">
             <Link to="/category/Diffusers"><ButtonWord>Diffusers</ButtonWord></Link>
             <ul style={{ width: 200 }} className="dropdown-nav-content">
-              {/* <Link to="/category/Domes"><ButtonWord>Domes</ButtonWord></Link> */}
               <Link to="/category/Caps"><ButtonWord>Caps</ButtonWord></Link>
               <Link to="/category/Adapters"><ButtonWord>Adapters</ButtonWord></Link>
-              {/* <Link to="/category/Large"><ButtonWord>Large</ButtonWord></Link> */}
-              {/* <Link to="/category/Experimental"><ButtonWord>Experimental Shapes</ButtonWord></Link> */}
             </ul>
           </div>
           <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
-          {/* <div className="dropdown-nav">
-            <Link to="/category/Accessories"><ButtonWord>Accessories</ButtonWord></Link>
-            <ul style={{ width: 200 }} className="dropdown-nav-content">
-              <Link to="/category/Infinity"><ButtonWord style={{ width: "100%" }}>Infinity Mirrors</ButtonWord></Link>
-              <Link to="/category/Accessories"><ButtonWord style={{ width: "100%" }}>Glove Accessories</ButtonWord></Link>
-              <Link to="/category/Accessories"><ButtonWord style={{ width: "100%" }}>Other Products</ButtonWord></Link>
-            </ul>
-          </div> */}
-          {/* <Link to="/category/Infinity"><ButtonWord>Infinity LED</ButtonWord></Link> */}
           <Link to="/contact"><ButtonWord>Contact</ButtonWord></Link>
         </FlexContainer>
-        {/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} /> */}
       </FlexContainer>
       <FlexContainer>
         <Link to="/cart"><ButtonWord>Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
