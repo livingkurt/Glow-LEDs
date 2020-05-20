@@ -7,7 +7,6 @@ const Title = (props) => {
   const title_styles = {
     display: "flex",
     fontFamily: "heading_font",
-    margin: "0px"
   }
 
   return (

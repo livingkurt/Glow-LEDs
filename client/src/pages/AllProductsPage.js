@@ -33,7 +33,6 @@ function AllProductsPage(props) {
   return <>
     <FlexContainer h_center>
       <Title styles={{ fontSize: 40 }} >{category || "All Products"}</Title>
-      <h2></h2>
     </FlexContainer>
     <FlexContainer h_center>
       <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />

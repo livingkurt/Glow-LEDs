@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import store from './store'
 import './index.css';
 import './media_queries.css';
+import './animations.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
