@@ -27,7 +27,7 @@ function FlexContainer(props) {
     textAlign: props.t_center ? "center" : props.t_left ? "left" : props.t_right ? "right" : ''
   }
   return (
-    <div style={{ ...styles, ...props.styles }}>
+    <div style={{ ...styles, ...props.styles }} className={props.class}>
       {props.children}
 
     </div >

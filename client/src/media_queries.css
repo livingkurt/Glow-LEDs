@@ -1,0 +1,29 @@
+@media only screen and (max-width: 1468px) {
+  .home_links {
+    justify-content: center !important;
+  }
+}
+
+@media only screen and (max-width: 1032px) {
+  .home_links {
+    justify-content: center !important;
+  }
+}
+
+@media only screen and (max-width: 704px) {
+  .h1_title {
+    font-size: 35px !important;
+  }
+  .h2_title {
+    font-size: 25px !important;
+  }
+}
+
+@media only screen and (max-width: 528px) {
+  .h1_title {
+    font-size: 25px !important;
+  }
+  .h2_title {
+    font-size: 15px !important;
+  }
+}

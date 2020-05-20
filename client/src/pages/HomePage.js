@@ -28,10 +28,10 @@ function HomePage(props) {
   return (
     <BlockContainer styles={{ padding: "20px" }}>
       <FlexContainer h_center>
-        <Title styles={{ fontSize: 50, marginBottom: "3vh" }} >Welcome to Glow LEDs</Title>
+        <Title class="h1_title" styles={{ fontSize: 50, marginBottom: "3vh" }} >Welcome to Glow LEDs</Title>
       </FlexContainer>
       <FlexContainer h_center>
-        <Title styles={{ fontSize: 30 }} >Introducting Diffuser Caps</Title>
+        <Title class="h2_title" styles={{ fontSize: 30 }} >Introducting Diffuser Caps</Title>
       </FlexContainer>
       <p style={{ textAlign: "center" }}>
         Custom 3D Printed Caps that go over the Diffuser and Glove to bring your light shows to another dimmension
@@ -47,7 +47,7 @@ function HomePage(props) {
       <FlexContainer h_center>
         <Link to="/category/Caps"><ButtonWord styles={{ fontSize: "2rem", margin: 20 }}>Shop Diffuser Caps Today!</ButtonWord></Link>
       </FlexContainer>
-      <FlexContainer h_between wrap>
+      <FlexContainer h_between wrap class="home_links">
         <Link to="/category/Caps" style={{ marginBottom: "16px" }}>
           <FlexContainer column h_center t_center styles={flex_styles}>
             <Title styles={heading_styles} >Diffuser Caps</Title>
