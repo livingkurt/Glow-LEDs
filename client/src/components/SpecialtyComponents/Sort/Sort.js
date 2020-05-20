@@ -10,7 +10,7 @@ function Sort(props) {
   return (
     <li className="sort_dropdown">
       <Label>Sort By</Label>
-      <select name="sortOrder" className="sort_dropdow" onChange={props.sortHandler}>
+      <select name="sortOrder" className="sort_dropdown" onChange={props.sortHandler}>
         <option defaultValue="">Newest</option>
         <option defaultValue="lowest">Lowest</option>
         <option defaultValue="highest">Highest</option>

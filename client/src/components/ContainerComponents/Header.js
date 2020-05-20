@@ -27,26 +27,27 @@ const Header = (props) => {
   const { cartItems } = cart;
 
   function openLeftMenu() {
-    document.getElementById("leftMenu").style.display = "block";
+    document.getElementById("sidebar").setAttribute("style", "display: flex;")
+    // document.querySelector(".sidebar").classList.add("open");
+
   }
 
-  function closeLeftMenu() {
-    document.getElementById("leftMenu").style.display = "none";
-  }
 
   function openRightMenu() {
-    document.getElementById("rightMenu").style.display = "block";
+    document.getElementById("rightMenu").setAttribute("style", "display: block;")
   }
 
-  function closeRightMenu() {
-    document.getElementById("rightMenu").style.display = "none";
+  const openMenu = () => {
+    document.querySelector(".sidebar").classList.add("open");
   }
+
+
 
   return (
     <header style={header_styles} id="overlay">
       <div className="brand" >
         <Link to="/" ><img className="zoom logo" style={{ marginRight: "130px" }} height="125px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
-        <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontSize: "30px", height: "50px", width: "50px" }}><i class="fas fa-bars"></i></ButtonSymbol>
+        <ButtonSymbol class="mobile_buttons" on_click_function={openMenu} styles={{ display: "none", fontSize: "30px", height: "50px", width: "50px" }}><i class="fas fa-bars"></i></ButtonSymbol>
       </div>
       <FlexContainer column h_center >
         <FlexContainer h_center v_i_center class="logo_text">
@@ -60,7 +61,7 @@ const Header = (props) => {
             <Link to="/category/Diffusers"><ButtonWord class="nav_buttons">Diffusers</ButtonWord></Link>
             <ul style={{ width: 200 }} className="dropdown-nav-content">
               <Link to="/category/Caps"><ButtonWord class="nav_buttons">Caps</ButtonWord></Link>
-              <Link to="/category/Adapters"><ButtonWord> class="nav_buttons"Adapters</ButtonWord></Link>
+              <Link to="/category/Adapters"><ButtonWord class="nav_buttons"> Adapters</ButtonWord></Link>
             </ul>
           </div>
           <Link to="/category/Accessories"><ButtonWord class="nav_buttons">Accessories</ButtonWord></Link>

@@ -27,7 +27,7 @@ html {
 body {
   font: 1.6rem Helvetica;
   font-family: "button_font";
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0;
   background-color: #272727;
   color: white;
@@ -88,16 +88,6 @@ ul {
   background-color: #626262;
 }
 
-.footer {
-  /* grid-area: footer; */
-  background-color: #333333;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
 a {
   text-decoration: none;
   color: white;
@@ -116,33 +106,6 @@ a {
   border: none;
   color: #ffffff;
   cursor: pointer;
-}
-
-.sidebar {
-  position: fixed;
-  transition: all .5s;
-  transform: translateX(-30rem);
-  width: 30rem;
-  background-color: #f0f0f0;
-  height: 100%;
-}
-
-.sidebar.open {
-  transform: translateX(0);
-}
-
-.sidebar-close-button {
-  border-radius: 50%;
-  border: .1rem #000000 solid;
-  width: 3rem;
-  height: 3rem;
-  padding: .5rem;
-  font-size: 2rem;
-  padding-top: 0;
-  cursor: pointer;
-  position: absolute;
-  right: .5rem;
-  top: 1.5rem
 }
 
 /* Product Details */

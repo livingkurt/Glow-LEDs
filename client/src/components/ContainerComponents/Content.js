@@ -11,9 +11,9 @@ const Content = (props) => {
     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
     background: "linear-gradient(180deg, rgba(138, 138, 138, 1) 0%, rgba(39, 39, 39, 1) 100%)",
     borderRadius: "20px",
-    margin: "20px auto",
+    margin: "180px auto 20px",
     padding: "2rem",
-    marginTop: "180px"
+    minHeight: "72vh"
 
   }
 

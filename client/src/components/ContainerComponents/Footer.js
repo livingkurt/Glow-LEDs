@@ -10,7 +10,13 @@ const Footer = (props) => {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
-    height: "50px"
+    height: "66px",
+    // position: "fixed",
+    left: "0",
+    bottom: "0",
+    width: "100%",
+    textAlign: "center"
+
   }
 
   return (

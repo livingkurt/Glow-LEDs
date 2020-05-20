@@ -26,7 +26,7 @@ function HomePage(props) {
   }
 
   return (
-    <BlockContainer styles={{ padding: "20px" }}>
+    <BlockContainer class="home_container" styles={{ padding: "20px" }}>
       <FlexContainer h_center>
         <Title class="h1_title" styles={{ fontSize: 50, marginBottom: "3vh" }} >Welcome to Glow LEDs</Title>
       </FlexContainer>
@@ -50,19 +50,19 @@ function HomePage(props) {
       <FlexContainer h_between wrap class="home_links">
         <Link to="/category/Caps" style={{ marginBottom: "16px" }}>
           <FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
-            <Title class="h2_title" styles={heading_styles} >Diffuser Caps</Title>
+            <Title class="h3_title" styles={heading_styles} >Diffuser Caps</Title>
             <img className="home_page_img" src="/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Diffusers" style={{ marginBottom: "16px" }}>
           <FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
-            <Title class="h2_title" styles={heading_styles} >Diffusers</Title>
+            <Title class="h3_title" styles={heading_styles} >Diffusers</Title>
             <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG" alt="diffusers" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Accessories" style={{ marginBottom: "16px" }}>
           <FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
-            <Title class="h2_title" styles={heading_styles} >LED Accessories</Title>
+            <Title class="h3_title" styles={heading_styles} >LED Accessories</Title>
             <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG" alt="accessories" ></img>
           </FlexContainer>
         </Link>

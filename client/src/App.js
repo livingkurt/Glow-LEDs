@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import './App.css';
 import { HomePage, AllProductsPage, ProductPage, CartPage, SignInPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage, ContactPage } from './pages/index'
-import { Header, Container, Content, Footer } from './components/ContainerComponents/index'
+import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index'
 import { useSelector } from 'react-redux';
 
 
@@ -16,7 +16,9 @@ function App() {
     <Router>
       <Container>
         <Header userInfo={userInfo} />
+        <Sidebar />
         <Content>
+
           <Route path="/orders" component={OrdersPage} />
           <Route path="/profile" component={ProfilePage} />
           {/* <Route path="/profile/orders" component={UserOrdersPage} /> */}

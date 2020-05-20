@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Title, ButtonWord } from "../../UtilityComponents/index"
 import { FlexContainer } from "../index"
 import { useSelector } from 'react-redux';
+import "./sidebar.css"
 
 const Sidebar = (props) => {
 
@@ -25,61 +26,89 @@ const Sidebar = (props) => {
 
   const { cartItems } = cart;
 
-  const [sidebar_state, set_sidebar_state] = useState(false)
+  // const [sidebar_state, set_sidebar_state] = useState(false)
 
-  const [show_hide_notes_state, set_show_hide_notes_state] = useState({
-    name: "Show Notes",
-    display: "block"
-  })
+  // const [show_hide_notes_state, set_show_hide_notes_state] = useState({
+  //   name: "Show Notes",
+  //   display: "block"
+  // })
 
-  const show_hide_notes = () => {
-    if (sidebar_state) {
-      document.querySelector(".sidebar").classList.remove("open");
-      set_sidebar_state(false)
-      set_show_hide_notes_state({ ...show_hide_notes_state, name: "Show Notes", display: "none" })
+  // const show_hide_notes = () => {
+  //   if (sidebar_state) {
+  //     document.querySelector(".sidebar").classList.remove("open");
+  //     set_sidebar_state(false)
+  //     set_show_hide_notes_state({ ...show_hide_notes_state, name: "Show Notes", display: "none" })
 
-    }
-    else {
-      document.querySelector(".sidebar").classList.add("open");
-      set_sidebar_state(true)
-      set_show_hide_notes_state({ ...show_hide_notes_state, name: "Hide Notes", display: "block" })
-    }
+  //   }
+  //   else {
+  //     document.querySelector(".sidebar").classList.add("open");
+  //     set_sidebar_state(true)
+  //     set_show_hide_notes_state({ ...show_hide_notes_state, name: "Hide Notes", display: "block" })
+  //   }
+  // }
+  function closeLeftMenu() {
+    document.getElementById("sidebar").setAttribute("style", "display: none;")
+    // document.querySelector(".sidebar").classList.add("open");
+    // document.querySelector(".sidebar").classList.remove("open");
+    // set_sidebar_state(true)
+    // set_show_hide_notes_state({ ...show_hide_notes_state, name: "Hide Notes", display: "block" })
   }
 
+  function closeRightMenu() {
+    // document.getElementById("rightMenu").setAttribute("style", "display: none;")
+    // document.querySelector(".sidebar").classList.remove("open");
+    // set_sidebar_state(false)
+    // set_show_hide_notes_state({ ...show_hide_notes_state, name: "Show Notes", display: "none" })
+
+  }
+  const closeMenu = () => {
+    document.querySelector(".sidebar").classList.remove("open")
+  }
 
   return (
-    <aside className="mySidebar" id="overlay">
-      <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="leftMenu">
-        <button onclick="closeLeftMenu()" class="w3-bar-item w3-button w3-large">Close &times;</button>
-        <a href="#" class="w3-bar-item w3-button">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button">Link 3</a>
-      </div>
+    // <div className="sidebar" style={{ display: "none" }} id="sidebar">
+    //   <button onClick={() => closeLeftMenu()} >Close &times;</button>
+    //   <a href="#" >Link 1</a>
+    //   <a href="#" >Link 2</a>
+    //   <a href="#" >Link 3</a>
+    // </div>
+    <aside className="sidebar">
+      <h3>Shopping Categories</h3>
+      <button className="sidebar-close-button" onClick={closeMenu}>x</button>
+      <ul className="categories">
+        <li>
+          <Link to="/category/Pants">Pants</Link>
+        </li>
 
-      <div class="w3-sidebar w3-bar-block w3-card w3-animate-right" style="display:none;right:0;" id="rightMenu">
-        <button onclick="closeRightMenu()" class="w3-bar-item w3-button w3-large">Close &times;</button>
-        <a href="#" class="w3-bar-item w3-button">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button">Link 3</a>
-      </div>
+        <li>
+          <Link to="/category/Shirts">Shirts</Link>
+        </li>
 
-      <div class="w3-teal">
-        <button class="w3-button w3-teal w3-xlarge w3-left" onclick="openLeftMenu()">&#9776;</button>
-        <button class="w3-button w3-teal w3-xlarge w3-right" onclick="openRightMenu()">&#9776;</button>
-        <div class="w3-container">
-          <h1>My Page</h1>
-        </div>
-      </div>
+      </ul>
+    </aside>
 
-      <div class="w3-container">
-        <p>In this example, we demonstrate how to use two side navigations.</p>
-        <p>We have created two "menu" buttons: one to open the side navigation from the left and one to open it from the right.</p>
-      </div>
-    </aside >
   );
 }
 
+
+
 export default Sidebar;
+
+// <aside className="s" id="overlay">
+//       <div className="w3-sidebar w3-bar-block w3-card w3-animate-left" style={{ display: "none" }} id="leftMenu">
+//         <button onClick={() => closeLeftMenu()} className="w3-bar-item w3-button w3-large">Close &times;</button>
+//         <a href="#" className="w3-bar-item w3-button">Link 1</a>
+//         <a href="#" className="w3-bar-item w3-button">Link 2</a>
+//         <a href="#" className="w3-bar-item w3-button">Link 3</a>
+//       </div>
+
+//       <div className="w3-sidebar w3-bar-block w3-card w3-animate-right" style={{ display: "none", right: "0" }} id="rightMenu">
+//         <button onClick={() => closeRightMenu()} className="w3-bar-item w3-button w3-large">Close &times;</button>
+//         <a href="#" className="w3-bar-item w3-button">Link 1</a>
+//         <a href="#" className="w3-bar-item w3-button">Link 2</a>
+//         <a href="#" className="w3-bar-item w3-button">Link 3</a>
+//       </div>
+//     </aside >
 
 {/* <aside style={header_styles} id="overlay">
 <div className="brand" >
