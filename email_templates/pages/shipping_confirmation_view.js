@@ -61,14 +61,14 @@ module.exports = function (props) {
                     <h1 style="font-size: 30px;">Payment</h1>
                   </div>
                   <div style='font-size: 16px;'>Payment Method: paypal</div>
-                  <div>${props.isPaid ? "Paid at " + props.paidAt : " Not Paid"}</div>
+                  <div>${props.isPaid ? "Paid at " + format_date_display(props.paidAt) : " Not Paid"}</div>
                 </div>
                 <div
                   style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; margin:1rem; padding:2rem"
                   bgcolor="#5a5a5a">
                   <ul class="cart-list-container" style="padding:0; list-style-type:none; margin-top:0">
                     <li
-                      style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem; align-items:flex-end; margin-right:20px">
+                      style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem; align-items:flex-end">
                       <div class="title" style='display:flex; font-family:"heading_font"; margin:0'>
                         <h1 style="font-size: 30px;">Shopping Cart</h1>
                       </div>

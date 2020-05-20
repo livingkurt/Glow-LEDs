@@ -70,7 +70,8 @@ router.post("/shipping", async (req, res) => {
   }
 
   let mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.DISPLAY_EMAIL,
+    // from: 'Kurt LaVacque <lavacquek@gmail.com>',
     to: user.email,
     subject: 'Glow LEDs Shipping Confirmation',
     html: main_layout(shipping_confirmation_view({ ...req.body, title: "Your Item has Shipped!" }))

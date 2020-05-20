@@ -61,7 +61,7 @@ module.exports = function (props) {
                     <h1 style="font-size: 30px;">Payment</h1>
                   </div>
                   <div style='font-size: 16px;'>Payment Method: paypal</div>
-                  <div>${props.isPaid ? "Paid at " + props.paidAt : " Not Paid"}</div>
+                  <div>${props.isPaid ? "Paid at " + format_date_display(props.paidAt) : " Not Paid"}</div>
                 </div>
                 <div
                   style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; margin:1rem; padding:2rem"

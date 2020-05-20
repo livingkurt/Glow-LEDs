@@ -8,6 +8,33 @@ module.exports = function (body) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#000000">
     <meta name="description" content="Web site created using create-react-app">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+      content="3D Printed LED toys, by a glover that just wants to light up the world">
+    <link rel="canonical" href="https://glow-leds.herokuapp.com">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Glow LEDs | Diffusers | Accessories | GlowLEDS.com">
+    <meta property="og:description"
+      content="3D Printed LED toys, by a glover that just wants to light up the world">
+    <meta property="og:url" content="https://glow-leds.herokuapp.com">
+    <meta property="og:site_name" content="LED Gloves">
+    <meta property="og:image" content="https://glow-leds.herokuapp.com/images/Glow_Logo.png">
+    <meta property="og:image:secure_url"
+      content="https://glow-leds.herokuapp.com/images/Glow_Logo.png">
+    <meta property="og:image:width" content="1080">
+    <meta property="og:image:height" content="1080">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:description"
+      content="3D Printed LED toys, by a glover that just wants to light up the world">
+    <meta name="twitter:title" content="Glow LEDs | Diffusers | Accessories | GlowLEDS.com">
+    <meta name="twitter:site" content="@glowleds">
+    <meta name="twitter:image" content="https://glow-leds.herokuapp.com/images/Glow_Logo.png">
+    <meta name="twitter:creator" content="@glowleds">
+    <meta property="DC.date.issued" content="2015-04-28T07:34:45+00:00">
+    <link rel="shortlink" href="https://glow-leds.herokuapp.com">
+    <meta name="referrer" content="always">
     <script src="https://kit.fontawesome.com/cc10a71280.js" crossorigin="anonymous"></script>
     <style type="text/css">
     </style>

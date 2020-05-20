@@ -61,7 +61,15 @@ module.exports = function (props) {
                     <h1 style="font-size: 30px;">Payment</h1>
                   </div>
                   <div style='font-size: 16px;'>Payment Method: paypal</div>
-                  <div>${props.isPaid ? "Paid at " + props.paidAt : " Not Paid"}</div>
+                  <div>
+                    ${props.isPaid
+      ?
+      "Paid at " + format_date_display(props.paidAt)
+      :
+      "Not Paid"
+    }
+
+                  </div>
                 </div>
                 <div
                   style="background-color:#5a5a5a; border:0.1rem #c0c0c0 solid; border-radius:0.5rem; margin:1rem; padding:2rem"
@@ -75,7 +83,7 @@ module.exports = function (props) {
                       <div>Price</div>
                     </li>
                     ${props.orderItems.map(item => {
-    let item_item = `<li
+      let item_item = `<li
                         style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem">
                         <div class="cart-image" style="flex:1 1"><img
                         src="https://glow-leds.herokuapp.com${item.image_1}" alt="product"
@@ -86,8 +94,8 @@ module.exports = function (props) {
                         </div>
                         <div class="cart-price" style="flex:1 1; font-size:2.5rem; text-align:right" align="right">$${item.price}</div>
                       </li>`
-    return item_item
-  })}
+      return item_item
+    })}
                     
                   </ul>
                 </div>
