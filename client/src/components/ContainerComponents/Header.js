@@ -38,8 +38,6 @@ const Header = (props) => {
 
   }
 
-
-
   return (
     <header style={header_styles} id="overlay">
       <div className="brand" >

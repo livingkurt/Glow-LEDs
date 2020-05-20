@@ -34,16 +34,15 @@ const Sidebar = (props) => {
     <aside className="sidebar">
       <h3>Shopping Categories</h3>
       {/* <button className="sidebar-close-button" onClick={closeMenu}>x</button> */}
-      <ul className="categories">
-        <li>
-          <Link to="/category/Pants">Pants</Link>
-        </li>
+      <FlexContainer column>
+        <Link to="/allproducts"><ButtonWord >All Products</ButtonWord></Link>
 
-        <li>
-          <Link to="/category/Shirts">Shirts</Link>
-        </li>
+        <Link to="/category/Diffusers"><ButtonWord >Diffusers</ButtonWord></Link>
+        <Link to="/category/Accessories"><ButtonWord >Accessories</ButtonWord></Link>
+        <Link to="/contact"><ButtonWord >Contact</ButtonWord></Link>
 
-      </ul>
+
+      </FlexContainer>
     </aside>
 
   );
