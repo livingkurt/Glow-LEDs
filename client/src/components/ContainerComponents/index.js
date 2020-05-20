@@ -1,5 +1,5 @@
 export { default as Background } from './Background/Background'
-export { default as BlockContainer } from './BlockContainer/BlockContainer'
+export { default as BlockContainer } from './BlockContainer'
 export { default as Container } from './Container'
 export { default as FlexContainer } from './FlexContainer'
 export { default as Header } from './Header/Header'
