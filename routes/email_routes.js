@@ -21,7 +21,7 @@ let transporter = nodemailer.createTransport({
 router.post("/register", async (req, res) => {
 
   let mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.DISPLAY_EMAIL,
     to: req.body.email,
     subject: 'Glow LEDs Account Confirmation',
     html: main_layout(verified_account_view({ ...req.body, title: "Thank you For Joining Glow LEDs" }))
@@ -43,7 +43,7 @@ router.post("/register", async (req, res) => {
 router.post("/order", async (req, res) => {
   let user = {}
   let mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.DISPLAY_EMAIL,
     to: req.body.user_data.email,
     subject: 'Glow LEDs Order Confirmation',
     html: main_layout(order_confirmation_view({ ...req.body, title: "Your Order Has Been Placed" }))
@@ -101,7 +101,7 @@ router.post("/delivery", async (req, res) => {
   }
 
   let mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.DISPLAY_EMAIL,
     to: user.email,
     subject: 'Glow LEDs Delivery Confirmation',
     html: main_layout(delivery_confirmation_view({ ...req.body, title: "Your Item has Been Delivered!" }))
