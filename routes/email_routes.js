@@ -8,6 +8,7 @@ const main_layout = require("../email_templates/App");
 const shipping_confirmation_view = require("../email_templates/pages/shipping_confirmation_view");
 const delivery_confirmation_view = require("../email_templates/pages/delivery_confirmation_view");
 const order_confirmation_view = require("../email_templates/pages/order_confirmation_view");
+const verified_account_view = require("../email_templates/pages/verified_account_view");
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -23,7 +24,7 @@ router.post("/register", async (req, res) => {
     from: process.env.EMAIL,
     to: req.body.email,
     subject: 'Glow LEDs Account Confirmation',
-    html: main_layout({ ...req.body, title: "Thank you For Joining Glow LEDs" })
+    html: main_layout(verified_account_view({ ...req.body, title: "Thank you For Joining Glow LEDs" }))
   }
 
   transporter.sendMail(mailOptions, (err, data) => {
