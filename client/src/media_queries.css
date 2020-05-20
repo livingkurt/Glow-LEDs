@@ -4,6 +4,12 @@
   }
 }
 
+@media only screen and (max-width: 1468px) and (min-width: 1032px) {
+  .sidebar {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 1032px) {
   .home_links {
     justify-content: center !important;
@@ -57,6 +63,9 @@
   .home_container {
     padding: 0px !important;
   }
+  .sidebar {
+    top: 100px !important;
+  }
 }
 
 @media only screen and (max-width: 528px) {
@@ -87,11 +96,17 @@
   .logo_2 {
     height: 60px !important;
   }
+  .sidebar {
+    top: 92px !important;
+  }
 }
 
 @media only screen and (max-width: 350px) {
   .glow_leds_text {
     display: none !important;
+  }
+  .sidebar {
+    top: 90px !important;
   }
   /* .logo_text {
     flex-direction: column !important;

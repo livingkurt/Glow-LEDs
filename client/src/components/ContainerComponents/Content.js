@@ -13,7 +13,7 @@ const Content = (props) => {
     borderRadius: "20px",
     margin: "180px auto 20px",
     padding: "2rem",
-    minHeight: "72vh"
+    minHeight: "81vh"
 
   }
 
