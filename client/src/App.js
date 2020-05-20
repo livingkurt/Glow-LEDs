@@ -18,7 +18,6 @@ function App() {
         <Header userInfo={userInfo} />
         <Sidebar />
         <Content>
-
           <Route path="/orders" component={OrdersPage} />
           <Route path="/profile" component={ProfilePage} />
           {/* <Route path="/profile/orders" component={UserOrdersPage} /> */}

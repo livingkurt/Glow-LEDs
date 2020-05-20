@@ -26,19 +26,16 @@ const Header = (props) => {
 
   const { cartItems } = cart;
 
-  function openLeftMenu() {
-    document.getElementById("sidebar").setAttribute("style", "display: flex;")
-    // document.querySelector(".sidebar").classList.add("open");
-
-  }
-
-
-  function openRightMenu() {
-    document.getElementById("rightMenu").setAttribute("style", "display: block;")
-  }
-
   const openMenu = () => {
-    document.querySelector(".sidebar").classList.add("open");
+    const sidebar = document.querySelector(".sidebar")
+    console.log(sidebar.classList.value)
+    if (sidebar.classList.value === "sidebar open") {
+      document.querySelector(".sidebar").classList.remove("open");
+    }
+    else if (sidebar.classList.value === "sidebar") {
+      document.querySelector(".sidebar").classList.add("open");
+    }
+
   }
 
 
