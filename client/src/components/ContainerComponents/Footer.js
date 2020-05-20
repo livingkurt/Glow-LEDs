@@ -9,7 +9,8 @@ const Footer = (props) => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center"
+    textAlign: "center",
+    height: "50px"
   }
 
   return (

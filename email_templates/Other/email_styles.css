@@ -63,13 +63,13 @@ ul {
   margin: 10px;
 }
 
-.grid-container {
+/* .grid-container {
   display: grid;
   grid-template-areas: "header" "main" "footer";
   grid-template-columns: 1fr;
   grid-template-rows: 16rem 1fr 5rem;
   height: 100%;
-}
+} */
 
 .brand a {
   color: #ffffff;

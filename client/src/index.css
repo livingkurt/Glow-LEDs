@@ -64,10 +64,10 @@ ul {
 }
 
 .grid-container {
-  display: grid;
-  grid-template-areas: "header" "main" "footer";
+  display: flex;
+  /* grid-template-areas: "header" "main" "footer";
   grid-template-columns: 1fr;
-  grid-template-rows: 16rem 1fr 5rem;
+  grid-template-rows: 16rem 1fr 5rem; */
   height: 100%;
 }
 
@@ -89,7 +89,7 @@ ul {
 }
 
 .footer {
-  grid-area: footer;
+  /* grid-area: footer; */
   background-color: #333333;
   color: #ffffff;
   display: flex;
