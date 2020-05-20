@@ -1,7 +1,5 @@
 // React
 import React from "react";
-// Styles
-import './flex_container.css'
 
 
 function FlexContainer(props) {
