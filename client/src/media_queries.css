@@ -17,6 +17,13 @@
   .h2_title {
     font-size: 25px !important;
   }
+  .p_descriptions {
+    font-size: 13px !important;
+  }
+  .content {
+    margin: 0px !important;
+    width: 100% !important;
+  }
 }
 
 @media only screen and (max-width: 528px) {
@@ -25,5 +32,13 @@
   }
   .h2_title {
     font-size: 15px !important;
+  }
+  .p_descriptions {
+    font-size: 12px !important;
+  }
+  .home_page_img {
+    width: 150px !important;
+    height: 150px !important;
+    margin: 0px;
   }
 }

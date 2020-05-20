@@ -33,10 +33,10 @@ function HomePage(props) {
       <FlexContainer h_center>
         <Title class="h2_title" styles={{ fontSize: 30 }} >Introducting Diffuser Caps</Title>
       </FlexContainer>
-      <p style={{ textAlign: "center" }}>
+      <p className="p_descriptions" style={{ textAlign: "center" }}>
         Custom 3D Printed Caps that go over the Diffuser and Glove to bring your light shows to another dimmension
       </p>
-      <p style={{ textAlign: "center" }}>
+      <p className="p_descriptions" style={{ textAlign: "center" }}>
         Watch the Video Below to See Them in Action
       </p>
       <FlexContainer h_center>
@@ -45,24 +45,24 @@ function HomePage(props) {
         </video>
       </FlexContainer>
       <FlexContainer h_center>
-        <Link to="/category/Caps"><ButtonWord styles={{ fontSize: "2rem", margin: 20 }}>Shop Diffuser Caps Today!</ButtonWord></Link>
+        <Link to="/category/Caps"><ButtonWord styles={{ fontSize: "2rem", margin: 20 }}><Title class="h2_title" styles={{ fontSize: 30 }} >Shop Diffuser Caps Today!</Title></ButtonWord></Link>
       </FlexContainer>
       <FlexContainer h_between wrap class="home_links">
         <Link to="/category/Caps" style={{ marginBottom: "16px" }}>
-          <FlexContainer column h_center t_center styles={flex_styles}>
-            <Title styles={heading_styles} >Diffuser Caps</Title>
+          <FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
+            <Title class="h2_title" styles={heading_styles} >Diffuser Caps</Title>
             <img className="home_page_img" src="/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Diffusers" style={{ marginBottom: "16px" }}>
-          <FlexContainer column h_center t_center styles={flex_styles}>
-            <Title styles={heading_styles} >Diffusers</Title>
+          <FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
+            <Title class="h2_title" styles={heading_styles} >Diffusers</Title>
             <img className="home_page_img" src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG" alt="diffusers" ></img>
           </FlexContainer>
         </Link>
         <Link to="/category/Accessories" style={{ marginBottom: "16px" }}>
-          <FlexContainer column h_center t_center styles={flex_styles}>
-            <Title styles={heading_styles} >LED Accessories</Title>
+          <FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
+            <Title class="h2_title" styles={heading_styles} >LED Accessories</Title>
             <img className="home_page_img" src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG" alt="accessories" ></img>
           </FlexContainer>
         </Link>
