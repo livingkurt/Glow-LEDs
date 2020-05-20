@@ -12,7 +12,9 @@ const Content = (props) => {
     background: "linear-gradient(180deg, rgba(138, 138, 138, 1) 0%, rgba(39, 39, 39, 1) 100%)",
     borderRadius: "20px",
     margin: "20px auto",
-    padding: "2rem"
+    padding: "2rem",
+    marginTop: "180px"
+
   }
 
   return (
