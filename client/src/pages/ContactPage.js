@@ -18,7 +18,7 @@ export default function Form() {
   }
 
   return (
-    <BlockContainer styles={{ padding: "20px" }}>
+    <BlockContainer class="main_container">
       <FlexContainer h_center>
         <Title styles={{ fontSize: 40 }} >Contact</Title>
       </FlexContainer>

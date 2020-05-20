@@ -26,7 +26,7 @@ function HomePage(props) {
   }
 
   return (
-    <BlockContainer class="home_container" styles={{ padding: "20px" }}>
+    <BlockContainer class="main_container">
       <FlexContainer h_center>
         <Title class="h1_title" styles={{ fontSize: 50, marginBottom: "3vh" }} >Welcome to Glow LEDs</Title>
       </FlexContainer>

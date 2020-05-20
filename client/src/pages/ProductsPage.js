@@ -68,7 +68,7 @@ function ProductsPage(props) {
   }
 
 
-  return <BlockContainer styles={{ padding: "20px" }}>
+  return <BlockContainer class="main_container">
     <div className="product-header">
       <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Products</Title>
       <button className="button primary" onClick={() => openModal({})}>Create Product</button>

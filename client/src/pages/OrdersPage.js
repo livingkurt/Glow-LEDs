@@ -23,7 +23,7 @@ function OrdersPage(props) {
     dispatch(deleteOrder(order._id));
   }
   return loading ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
-    <BlockContainer styles={{ padding: "20px" }}>
+    <BlockContainer class="main_container">
 
       <div className="order-header">
         <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Orders</Title>

@@ -32,14 +32,20 @@ const Sidebar = (props) => {
 
   return (
     <aside className="sidebar">
-      <h3>Shopping Categories</h3>
+      <Title>Shopping Categories</Title>
       {/* <button className="sidebar-close-button" onClick={closeMenu}>x</button> */}
       <FlexContainer column>
-        <Link to="/allproducts"><ButtonWord >All Products</ButtonWord></Link>
-
-        <Link to="/category/Diffusers"><ButtonWord >Diffusers</ButtonWord></Link>
-        <Link to="/category/Accessories"><ButtonWord >Accessories</ButtonWord></Link>
-        <Link to="/contact"><ButtonWord >Contact</ButtonWord></Link>
+        <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons">All Products</ButtonWord></Link>
+        <div className="dropdown-sidebar-nav">
+          <ButtonWord class="sidebar_nav_buttons">Diffusers</ButtonWord>
+          <ul className="dropdown-sidebar-nav-content">
+            <Link to="/category/Diffusers"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Diffusers</ButtonWord></Link>
+            <Link to="/category/Caps"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Caps</ButtonWord></Link>
+            <Link to="/category/Adapters"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Adapters</ButtonWord></Link>
+          </ul>
+        </div>
+        <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons">Accessories</ButtonWord></Link>
+        <Link to="/contact"><ButtonWord class="sidebar_nav_buttons">Contact</ButtonWord></Link>
 
 
       </FlexContainer>
