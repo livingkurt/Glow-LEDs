@@ -461,6 +461,7 @@ tbody>tr:nth-child(odd) {
 .dropdown {
   display: inline-block;
   position: relative;
+  margin: auto;
 }
 
 .dropdown-content {

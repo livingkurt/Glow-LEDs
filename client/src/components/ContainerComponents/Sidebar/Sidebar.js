@@ -32,9 +32,10 @@ const Sidebar = (props) => {
 
   return (
     <aside className="sidebar">
-      <Title>Shopping Categories</Title>
+      <Title class="h2_title">Shopping Categories</Title>
       <button className="sidebar-close-button" onClick={closeMenu}><i class="fas fa-times"></i></button>
       <FlexContainer column>
+        <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
         <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons">All Products</ButtonWord></Link>
         <div className="dropdown-sidebar-nav">
           <ButtonWord class="sidebar_nav_buttons">Diffusers</ButtonWord>

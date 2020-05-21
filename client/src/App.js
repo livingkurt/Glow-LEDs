@@ -16,7 +16,7 @@ function App() {
     <Router>
       <Container>
         <Header userInfo={userInfo} />
-        <Sidebar />
+        <Sidebar userInfo={userInfo} />
         <Content>
           <Route path="/orders" component={OrdersPage} />
           <Route path="/profile" component={ProfilePage} />

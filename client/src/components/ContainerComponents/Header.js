@@ -70,20 +70,21 @@ const Header = (props) => {
             ?
             <>
               <Link to="/profile"><ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord></Link>
-              <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>{props.userInfo.name}</ButtonSymbol>
+              {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>{props.userInfo.name}</ButtonSymbol> */}
+
             </>
             :
             <>
               <Link to="/signin"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
-              <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>Sign In</ButtonSymbol>
+              {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>Sign In</ButtonSymbol> */}
             </>
         }
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown">
-            <ButtonWord class="nav_buttons">Admin</ButtonWord>
+            <ButtonWord class="mobile_buttons">Admin</ButtonWord>
             <ul className="dropdown-content">
-              <Link to="/orders"><ButtonWord class="nav_buttons">Orders</ButtonWord></Link>
-              <Link to="/products"><ButtonWord class="nav_buttons" > Products</ButtonWord></Link>
+              <Link to="/orders"><ButtonWord >Orders</ButtonWord></Link>
+              <Link to="/products"><ButtonWord  > Products</ButtonWord></Link>
             </ul>
           </div>
         )}
