@@ -56,22 +56,22 @@ function PlaceOrderPage(props) {
     <div className="placeorder">
       <div className="placeorder-info">
         <div>
-          <Title styles={{ fontSize: 30 }} >Shipping</Title>
-          <div>
+          <Title class="h2_title" styles={{ fontSize: 30 }} >Shipping</Title>
+          <div class="label">
             <div>{shipping.address}</div>
             <div>{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}</div>
           </div>
         </div>
         <div>
-          <Title styles={{ fontSize: 30 }} >Payment</Title>
-          <div>
+          <Title class="h2_title" styles={{ fontSize: 30 }} >Payment</Title>
+          <div className="label">
             Payment Method: {cart.payment.paymentMethod}
           </div>
         </div>
         <div>
           <ul className="cart-list-container">
             <li>
-              <Title styles={{ fontSize: 30 }} >Shopping Cart</Title>
+              <Title class="h2_title" styles={{ fontSize: 30 }} >Shopping Cart</Title>
               <div>
                 Price
           </div>
@@ -87,7 +87,7 @@ function PlaceOrderPage(props) {
                     <div className="cart-image">
                       <img src={item.image_1} alt="product" />
                     </div>
-                    <div className="cart-name">
+                    <div className=" label cart-name">
                       <div>
                         <Link to={"/product/" + item.product}>
                           {item.name}
@@ -109,13 +109,13 @@ function PlaceOrderPage(props) {
 
 
       </div>
-      <div className="placeorder-action">
+      <div className="placeorder-action" >
         <ul>
+          {/* <li> */}
+          {/* <button className="button primary full-width nav_buttons" onClick={placeOrderHandler} >Place Order</button> */}
+          {/* </li> */}
           <li>
-            <button className="button primary full-width" onClick={placeOrderHandler} >Place Order</button>
-          </li>
-          <li>
-            <Title styles={{ fontSize: 30 }} >Order Summary</Title>
+            <Title class="h2_title" styles={{ fontSize: 30 }} >Order Summary</Title>
           </li>
           <li>
             <div>Items</div>
@@ -132,6 +132,9 @@ function PlaceOrderPage(props) {
           <li>
             <div>Order Total</div>
             <div>${totalPrice.toFixed(2)}</div>
+          </li>
+          <li>
+            <button className="button primary full-width" onClick={placeOrderHandler} >Place Order</button>
           </li>
         </ul>
 
