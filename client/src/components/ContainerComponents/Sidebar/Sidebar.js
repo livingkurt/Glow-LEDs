@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Title, ButtonWord } from "../../UtilityComponents/index"
 import { FlexContainer } from "../index"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import "./sidebar.css"
+import { logout } from '../../../actions/userActions';
 
 const Sidebar = (props) => {
+
+  const history = useHistory()
 
   const header_styles = {
     gridArea: "header",
@@ -29,6 +32,12 @@ const Sidebar = (props) => {
   const closeMenu = () => {
     document.querySelector(".sidebar").classList.remove("open")
   }
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/signin");
+  }
 
   return (
     <aside className="sidebar">
@@ -38,11 +47,28 @@ const Sidebar = (props) => {
         {
           props.userInfo
             ?
-            <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
+            // <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
+            <div className="dropdown-sidebar-nav">
+              <ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord>
+              <ul className="dropdown-sidebar-nav-content">
+                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Profile</ButtonWord></Link>
+                {/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
+                <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Logout</ButtonWord>
+              </ul>
+            </div>
 
             :
             <Link to="/signin"><ButtonWord class="sidebar_nav_buttons">Sign In</ButtonWord></Link>
         }
+        {props.userInfo && props.userInfo.isAdmin && (
+          <div className="dropdown-sidebar-nav">
+            <ButtonWord class="sidebar_nav_buttons">Admin</ButtonWord>
+            <ul className="dropdown-sidebar-nav-content">
+              <Link to="/orders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link>
+              <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Products</ButtonWord></Link>
+            </ul>
+          </div>
+        )}
         <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons">All Products</ButtonWord></Link>
         <div className="dropdown-sidebar-nav">
           <ButtonWord class="sidebar_nav_buttons">Diffusers</ButtonWord>

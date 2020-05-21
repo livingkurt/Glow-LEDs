@@ -1,10 +1,13 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Title, ButtonWord, ButtonSymbol } from "../UtilityComponents/index"
 import { FlexContainer } from "./index"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/userActions';
 
 const Header = (props) => {
+
+  const history = useHistory()
 
   const header_styles = {
     gridArea: "header",
@@ -37,6 +40,12 @@ const Header = (props) => {
     }
 
   }
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/signin");
+  }
 
   return (
     <header style={header_styles} id="overlay">
@@ -50,7 +59,7 @@ const Header = (props) => {
           <Link to="/" ><Title class="glow_leds_text" styles={{ fontSize: "67px", margin: 0, textAlign: "center", justifyContent: "center", width: "100%", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
 
         </FlexContainer>
-        <FlexContainer row h_between class="nav_bar" >
+        <FlexContainer row h_between class="nav_bar">
           <Link to="/allproducts"><ButtonWord class="nav_buttons">All Products</ButtonWord></Link>
           <div className="dropdown-nav">
             <Link to="/category/Diffusers"><ButtonWord class="nav_buttons">Diffusers</ButtonWord></Link>
@@ -63,13 +72,22 @@ const Header = (props) => {
           <Link to="/contact"><ButtonWord class="nav_buttons">Contact</ButtonWord></Link>
         </FlexContainer>
       </FlexContainer>
-      <FlexContainer class="nav_bar">
-        <Link to="/cart"><ButtonWord class="nav_buttons">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
+      <FlexContainer class="nav_bar"  >
+        <Link to="/cart"><ButtonWord class="mobile_nav_buttons cart_text">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
+        <Link to="/cart"><ButtonWord styles={{ display: "none" }} class="mobile_nav_buttons cart_icon"><i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         {
           props.userInfo
             ?
             <>
-              <Link to="/profile"><ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord></Link>
+              {/* <Link to="/profile"><ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord></Link> */}
+              <div className="dropdown">
+                <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
+                <ul className="dropdown-content">
+                  <Link to="/orders"><ButtonWord >Profile</ButtonWord></Link>
+                  <Link to="/products"><ButtonWord  > Orders</ButtonWord></Link>
+                  <ButtonWord on_click_function={handleLogout}> Logout</ButtonWord>
+                </ul>
+              </div>
               {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>{props.userInfo.name}</ButtonSymbol> */}
 
             </>
@@ -79,11 +97,11 @@ const Header = (props) => {
               {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>Sign In</ButtonSymbol> */}
             </>
         }
-        <Link to="/cart"><ButtonWord class="mobile_van_buttons cart_text">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
-        <Link to="/cart"><ButtonWord styles={{ display: "none" }} class="mobile_van_buttons cart_icon"><i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
+        {/* <Link to="/cart"><ButtonWord class="nav_buttons">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link> */}
+
         {props.userInfo && props.userInfo.isAdmin && (
-          <div className="dropdown">
-            <ButtonWord class="mobile_van_buttons">Admin</ButtonWord>
+          <div className="dropdown nav_buttons">
+            <ButtonWord class="mobile_nav_buttons">Admin</ButtonWord>
             <ul className="dropdown-content">
               <Link to="/orders"><ButtonWord >Orders</ButtonWord></Link>
               <Link to="/products"><ButtonWord  > Products</ButtonWord></Link>

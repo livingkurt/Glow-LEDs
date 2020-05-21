@@ -30,7 +30,8 @@ function SigninPage(props) {
     <form onSubmit={submitHandler} >
       <ul className="form-container">
         <li>
-          <h2>Sign-In</h2>
+          {/* <h2>Sign-In</h2> */}
+          <Title class="h1_title">Sign-In</Title>
         </li>
         <li>
           {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
@@ -55,7 +56,7 @@ function SigninPage(props) {
           New to amazona?
         </li>
         <li>
-          <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button secondary text-center" >Create your amazona account</Link>
+          <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button secondary text-center" >Create your Glow LED account</Link>
         </li>
       </ul>
     </form>
