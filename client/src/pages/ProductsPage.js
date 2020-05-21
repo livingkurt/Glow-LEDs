@@ -158,7 +158,7 @@ function ProductsPage(props) {
     }
 
 
-    <div className="product-list">
+    <div className="product-list" style={{ overflowX: "auto" }}>
 
       <table className="table responsive_table">
         <thead>
