@@ -84,18 +84,19 @@ function CartPage(props) {
       </ul>
 
     </div>
-    <div className="cart-action">
-      <h3>
-        Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items )
+    <FlexContainer h_center>
+      <div className="cart-action">
+        <h3 className="subtotal_h3">
+          Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items )
         :
          $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
-      </h3>
-      <button onClick={checkoutHandler} className="button primary full-width" disabled={cartItems.length === 0}>
-        Proceed to Checkout
+        </h3>
+        <button onClick={checkoutHandler} className="button primary full-width" disabled={cartItems.length === 0}>
+          Proceed to Checkout
       </button>
 
-    </div>
-
+      </div>
+    </FlexContainer>
   </div >
 }
 
