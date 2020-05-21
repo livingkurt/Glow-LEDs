@@ -26,7 +26,7 @@ function OrdersPage(props) {
     <BlockContainer class="main_container">
 
       <div className="order-header">
-        <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Orders</Title>
+        <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto", justifyContent: "center" }} >Orders</Title>
       </div>
       <div className="order-list responsive_table">
         <table className="table">

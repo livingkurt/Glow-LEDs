@@ -36,7 +36,9 @@ const Sidebar = (props) => {
 
   const handleLogout = () => {
     dispatch(logout());
+    closeMenu()
     history.push("/signin");
+
   }
 
   return (
@@ -53,7 +55,7 @@ const Sidebar = (props) => {
               <ul className="dropdown-sidebar-nav-content">
                 <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Profile</ButtonWord></Link>
                 {/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
-                <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}> Logout</ButtonWord>
+                <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Logout</ButtonWord>
               </ul>
             </div>
 

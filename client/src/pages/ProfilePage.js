@@ -90,7 +90,7 @@ function ProfilePage(props) {
       </div>
     </div>
     <div className="profile-orders content-margined profile_orders_container" style={{ overflowX: "auto" }} >
-      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Orders</Title>
+      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", justifyContent: "center" }} >Orders</Title>
       {
         loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
           errorOrders ? <div>{errorOrders} </div> :
