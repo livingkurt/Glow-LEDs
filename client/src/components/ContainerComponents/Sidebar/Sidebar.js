@@ -51,35 +51,35 @@ const Sidebar = (props) => {
             <div className="dropdown-sidebar-nav">
               <ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord>
               <ul className="dropdown-sidebar-nav-content">
-                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Profile</ButtonWord></Link>
+                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Profile</ButtonWord></Link>
                 {/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
-                <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Logout</ButtonWord>
+                <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}> Logout</ButtonWord>
               </ul>
             </div>
 
             :
-            <Link to="/signin"><ButtonWord class="sidebar_nav_buttons">Sign In</ButtonWord></Link>
+            <Link to="/signin"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Sign In</ButtonWord></Link>
         }
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown-sidebar-nav">
             <ButtonWord class="sidebar_nav_buttons">Admin</ButtonWord>
             <ul className="dropdown-sidebar-nav-content">
-              <Link to="/orders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link>
-              <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Products</ButtonWord></Link>
+              <Link to="/orders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>
+              <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Products</ButtonWord></Link>
             </ul>
           </div>
         )}
-        <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons">All Products</ButtonWord></Link>
+        <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>All Products</ButtonWord></Link>
         <div className="dropdown-sidebar-nav">
           <ButtonWord class="sidebar_nav_buttons">Diffusers</ButtonWord>
           <ul className="dropdown-sidebar-nav-content">
-            <Link to="/category/Diffusers"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Diffusers</ButtonWord></Link>
-            <Link to="/category/Caps"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Caps</ButtonWord></Link>
-            <Link to="/category/Adapters"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Adapters</ButtonWord></Link>
+            <Link to="/category/Diffusers"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Diffusers</ButtonWord></Link>
+            <Link to="/category/Caps"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Caps</ButtonWord></Link>
+            <Link to="/category/Adapters"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}> Adapters</ButtonWord></Link>
           </ul>
         </div>
-        <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons">Accessories</ButtonWord></Link>
-        <Link to="/contact"><ButtonWord class="sidebar_nav_buttons">Contact</ButtonWord></Link>
+        <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Accessories</ButtonWord></Link>
+        <Link to="/contact"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Contact</ButtonWord></Link>
         {/* {
           props.userInfo
             ?
