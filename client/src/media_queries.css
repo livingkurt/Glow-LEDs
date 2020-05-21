@@ -94,11 +94,14 @@
   .logo_2 {
     height: 70px !important;
   }
-  .main_container {
+  .main_container, .profile_container, .table_container {
     padding: 0px !important;
   }
   .sidebar {
     top: 100px !important;
+  }
+  .profile_orders_container {
+    margin: 0;
   }
 }
 

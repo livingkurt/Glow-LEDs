@@ -160,7 +160,7 @@ function ProductsPage(props) {
 
     <div className="product-list">
 
-      <table className="table">
+      <table className="table responsive_table">
         <thead>
           <tr>
             <th>ID</th>

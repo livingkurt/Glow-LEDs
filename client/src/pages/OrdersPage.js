@@ -28,7 +28,7 @@ function OrdersPage(props) {
       <div className="order-header">
         <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Orders</Title>
       </div>
-      <div className="order-list">
+      <div className="order-list responsive_table">
         <table className="table">
           <thead>
             <tr>

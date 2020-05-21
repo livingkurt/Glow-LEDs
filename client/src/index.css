@@ -226,6 +226,10 @@ a {
   padding: 1rem;
 }
 
+.responsive_table {
+  overflow-x: auto;
+}
+
 .cart-list-container {
   padding: 0;
   list-style-type: none;
@@ -342,6 +346,7 @@ input, textarea {
 .table {
   width: 100%;
   border-radius: 5px;
+  /* overflow-x: auto; */
 }
 
 th {

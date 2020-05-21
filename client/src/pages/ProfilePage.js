@@ -5,7 +5,7 @@ import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
-import { FlexContainer } from '../components/ContainerComponents';
+import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
 function ProfilePage(props) {
   const [name, setName] = useState('');
@@ -43,7 +43,7 @@ function ProfilePage(props) {
   }, [userInfo])
 
 
-  return <FlexContainer styles={{ padding: "20px" }}>
+  return <FlexContainer class="profile_container" wrap styles={{ padding: "20px" }}>
     <div className="profile-info">
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -89,33 +89,35 @@ function ProfilePage(props) {
         </form>
       </div>
     </div>
-    <div className="profile-orders content-margined">
+    <div className="profile-orders content-margined profile_orders_container" style={{ overflowX: "auto" }} >
       <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Orders</Title>
       {
         loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
           errorOrders ? <div>{errorOrders} </div> :
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>DATE</th>
-                  <th>TOTAL</th>
-                  <th>PAID</th>
-                  <th>ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map(order => <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{format_date_display(order.createdAt)}</td>
-                  <td>${order.totalPrice.toFixed(2)}</td>
-                  <td>{order.isPaid ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
-                  <td>
-                    <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>
-                  </td>
-                </tr>)}
-              </tbody>
-            </table>
+            <BlockContainer class="table_container" styles={{ padding: "0" }}>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                    <th>PAID</th>
+                    <th>ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map(order => <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>{format_date_display(order.createdAt)}</td>
+                    <td>${order.totalPrice.toFixed(2)}</td>
+                    <td>{order.isPaid ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
+                    <td>
+                      <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>
+                    </td>
+                  </tr>)}
+                </tbody>
+              </table>
+            </BlockContainer>
       }
     </div>
   </FlexContainer >
