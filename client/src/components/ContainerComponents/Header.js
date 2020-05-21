@@ -83,7 +83,7 @@ const Header = (props) => {
               <div className="dropdown">
                 <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
                 <ul className="dropdown-content">
-                  <Link to="/orders"><ButtonWord >Profile</ButtonWord></Link>
+                  <Link to="/profile"><ButtonWord >Profile</ButtonWord></Link>
                   <ButtonWord on_click_function={handleLogout}> Logout</ButtonWord>
                 </ul>
               </div>
