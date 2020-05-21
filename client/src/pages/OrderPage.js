@@ -85,7 +85,7 @@ function OrderPage(props) {
       <div className="placeorder">
         <div className="placeorder-info">
           <div>
-            <FlexContainer h_between >
+            <FlexContainer h_between wrap>
               <FlexContainer column>
                 <Title styles={{ fontSize: 30 }} >Shipping</Title>
                 <div>
@@ -93,7 +93,7 @@ function OrderPage(props) {
                   <div>{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} {order.shipping.country}</div>
                 </div>
               </FlexContainer>
-              <FlexContainer column styles={{ marginTop: "auto", width: "373px" }}>
+              <FlexContainer column styles={{ marginTop: "auto", width: "373px" }} class="ship_deliver">
                 <FlexContainer row v_i_center h_between >
                   <Label styles={{ marginTop: "5px" }} >{order.isShipped ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
                   {props.userInfo && props.userInfo.isAdmin && (<div>
@@ -161,14 +161,7 @@ function OrderPage(props) {
         </div>
         <div className="placeorder-action">
           <ul>
-            <li className="placeorder-actions-payment">
-              {loadingPay && <div>Finishing Payment...</div>}
-              {!order.isPaid &&
-                <PaypalButton
-                  amount={order.totalPrice}
-                  onSuccess={handleSuccessPayment} />
-              }
-            </li>
+
             <li>
               <Title styles={{ fontSize: 30, marginTop: 0 }} >Order Summary</Title>
             </li>
@@ -187,6 +180,14 @@ function OrderPage(props) {
             <li>
               <div>Order Total</div>
               <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
+            </li>
+            <li className="placeorder-actions-payment">
+              {loadingPay && <div>Finishing Payment...</div>}
+              {!order.isPaid &&
+                <PaypalButton
+                  amount={order.totalPrice}
+                  onSuccess={handleSuccessPayment} />
+              }
             </li>
           </ul>
         </div>

@@ -22,8 +22,8 @@ function ShippingPage(props) {
   return <div>
     <CheckoutSteps step1 step2 />
     <div className="form">
-      <form onSubmit={submitHandler} >
-        <ul className="form-container" style={{ width: "32rem" }}>
+      <form onSubmit={submitHandler} style={{ width: "100%" }}>
+        <ul className="form-container" >
           <li>
             <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Shipping</Title>
           </li>

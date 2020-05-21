@@ -310,12 +310,13 @@ textarea {
 .form-container {
   display: flex;
   flex-direction: column;
-  /* width: 32rem; */
+  max-width: 32rem;
   padding: 2rem;
   border: .1rem #c0c0c0 solid;
   background-color: #5a5a5a;
   border-radius: .5rem;
   list-style-type: none;
+  margin: 0 auto;
 }
 
 .form-container li {

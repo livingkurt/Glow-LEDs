@@ -7,6 +7,13 @@
   }
 }
 
+@media only screen and (max-width: 1330px) {
+  .ship_deliver {
+    /* justify-content: space-between !important; */
+    width: 100% !important;
+  }
+}
+
 @media only screen and (max-width: 1468px) and (min-width: 1032px) {
   .sidebar {
     display: none;
@@ -195,8 +202,8 @@
   .placeorder-action, .cart-list-container, .placeorder-info>div {
     background-color: unset;
     border: 0;
-    max-width: 28rem !important;
-    margin: 0;
+    max-width: 32rem !important;
+    margin: 0 auto;
     padding: 0;
   }
   .placeorder-info>div, .placeorder-action {
@@ -227,7 +234,7 @@
   .form-container, .placeorder-action, .cart-list-container, .placeorder-info>div {
     background-color: unset;
     border: 0;
-    max-width: 28rem !important;
+    max-width: 32rem !important;
     margin: 0 auto;
     padding: 0;
   }
