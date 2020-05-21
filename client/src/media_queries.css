@@ -60,6 +60,15 @@
     margin: 0;
     margin-bottom: 20px;
   }
+  .cart-action-container {
+    flex: 1 1 100rem !important;
+  }
+  .cart-action {
+    flex: 1 1 100rem !important;
+  }
+  .cart {
+    margin: 0rem;
+  }
 }
 
 @media only screen and (max-width: 704px) {

@@ -3,7 +3,7 @@ import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
-import { FlexContainer } from '../components/ContainerComponents';
+import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 function CartPage(props) {
 
   const cart = useSelector(state => state.cart);
@@ -84,7 +84,7 @@ function CartPage(props) {
       </ul>
 
     </div>
-    <FlexContainer h_center>
+    <FlexContainer h_center class="cart-action-container">
       <div className="cart-action">
         <h3 className="subtotal_h3">
           Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items )
