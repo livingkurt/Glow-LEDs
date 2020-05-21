@@ -41,6 +41,13 @@ const Sidebar = (props) => {
 
   }
 
+  const icon_styles = {
+    position: "absolute",
+    right: "10px",
+    top: "8px",
+    "-webkitTransform": "rotate(-180deg)"
+  }
+
   return (
     <aside className="sidebar">
       <Title class="h2_title">Shopping Categories</Title>
@@ -50,14 +57,15 @@ const Sidebar = (props) => {
           props.userInfo
             ?
             // <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
-            <div className="dropdown-sidebar-nav">
+            <div className="dropdown-sidebar-nav" >
               <ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord>
               <ul className="dropdown-sidebar-nav-content">
-                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Profile</ButtonWord></Link>
+                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Edit Profile</ButtonWord></Link>
                 <Link to="/userorders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>
                 {/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
                 <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Logout</ButtonWord>
               </ul>
+              <i style={icon_styles} class="fas fa-sort-up"></i>
             </div>
 
             :
@@ -70,6 +78,7 @@ const Sidebar = (props) => {
               <Link to="/orders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>
               <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Products</ButtonWord></Link>
             </ul>
+            <i style={icon_styles} class="fas fa-sort-up"></i>
           </div>
         )}
         <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>All Products</ButtonWord></Link>
@@ -80,6 +89,7 @@ const Sidebar = (props) => {
             <Link to="/category/Caps"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Caps</ButtonWord></Link>
             <Link to="/category/Adapters"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}> Adapters</ButtonWord></Link>
           </ul>
+          <i style={icon_styles} class="fas fa-sort-up"></i>
         </div>
         <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Accessories</ButtonWord></Link>
         <Link to="/contact"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Contact</ButtonWord></Link>
