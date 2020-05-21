@@ -26,14 +26,14 @@ const Sidebar = (props) => {
 
   const { cartItems } = cart;
 
-  // const closeMenu = () => {
-  //   document.querySelector(".sidebar").classList.remove("open")
-  // }
+  const closeMenu = () => {
+    document.querySelector(".sidebar").classList.remove("open")
+  }
 
   return (
     <aside className="sidebar">
       <Title>Shopping Categories</Title>
-      {/* <button className="sidebar-close-button" onClick={closeMenu}>x</button> */}
+      <button className="sidebar-close-button" onClick={closeMenu}><i class="fas fa-times"></i></button>
       <FlexContainer column>
         <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons">All Products</ButtonWord></Link>
         <div className="dropdown-sidebar-nav">

@@ -87,7 +87,7 @@
   .p_descriptions {
     font-size: 14px !important;
   }
-  .home_page_img {
+  .home_page_img, .product-image {
     max-width: 250px !important;
     max-height: 250px !important;
     margin: 0px;
