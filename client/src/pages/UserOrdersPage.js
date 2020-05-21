@@ -44,12 +44,11 @@ function ProfilePage(props) {
 
 
   return <FlexContainer class="profile_container" wrap styles={{ padding: "20px" }}>
-    <div className="profile-info">
+    {/* <div className="profile-info">
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
           <ul className="form-container">
             <li>
-              {/* <h2>User Profile</h2> */}
               <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >User Profile</Title>
             </li>
             <li>
@@ -80,16 +79,16 @@ function ProfilePage(props) {
             <li>
               <button type="submit" className="button primary">Update</button>
             </li>
-            {/* <li>
+            <li>
 
               <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button>
-            </li> */}
+            </li>
 
           </ul>
         </form>
       </div>
-    </div>
-    {/* <div className="profile-orders content-margined profile_orders_container" style={{ overflowX: "auto" }} >
+    </div> */}
+    <div className="profile-orders profile_orders_container" style={{ overflowX: "auto" }} >
       <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", justifyContent: "center" }} >Orders</Title>
       {
         loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
@@ -119,7 +118,7 @@ function ProfilePage(props) {
               </table>
             </BlockContainer>
       }
-    </div> */}
+    </div>
   </FlexContainer >
 
 }

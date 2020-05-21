@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import './App.css';
-import { HomePage, AllProductsPage, ProductPage, CartPage, SignInPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage, ContactPage } from './pages/index'
+import { HomePage, AllProductsPage, ProductPage, CartPage, SignInPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage, ContactPage, UserOrdersPage } from './pages/index'
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index'
 import { useSelector } from 'react-redux';
 
@@ -20,8 +20,7 @@ function App() {
         <Content>
           <Route path="/orders" component={OrdersPage} />
           <Route path="/profile" component={ProfilePage} />
-          {/* <Route path="/profile/orders" component={UserOrdersPage} /> */}
-          {/* <Route path="/profile/account" component={UserAccountPage} /> */}
+          <Route path="/userorders" component={UserOrdersPage} />
           <Route path="/order/:id" component={props => <OrderPage userInfo={userInfo}  {...props} />} />
           <Route path="/products" component={ProductsPage} />
           <Route path="/shipping" component={ShippingPage} />

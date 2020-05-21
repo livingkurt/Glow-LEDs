@@ -80,11 +80,12 @@ const Header = (props) => {
             ?
             <>
               {/* <Link to="/profile"><ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord></Link> */}
-              <div className="dropdown">
+              <div className="dropdown" >
                 <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
-                <ul className="dropdown-content">
-                  <Link to="/profile"><ButtonWord >Profile</ButtonWord></Link>
-                  <ButtonWord on_click_function={handleLogout}> Logout</ButtonWord>
+                <ul className="dropdown-content" style={{ width: "150px" }}>
+                  <Link to="/profile"><ButtonWord >Edit Profile</ButtonWord></Link>
+                  <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>
+                  <ButtonWord on_click_function={handleLogout} styles={{ textAlign: "left" }}> Logout</ButtonWord>
                 </ul>
               </div>
               {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>{props.userInfo.name}</ButtonSymbol> */}
