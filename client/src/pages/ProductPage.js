@@ -18,12 +18,6 @@ function ProductPage(props) {
     video.autoplay = true
   }, []);
 
-  // useEffect(() => {
-  //   const video = document.getElementById("caps_vid")
-  //   video.muted = true
-  //   video.autoplay = true
-  // }, []);
-
 
   const handleAddToCart = () => {
     props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
@@ -46,18 +40,20 @@ function ProductPage(props) {
         (
           <div>
             <div className="details">
-              <div className="details-image">
-                <img id="expandedImg" alt="" src={product.image_1} style={{ maxWidth: "400px", maxHeight: "400px", height: "100%", width: "100%" }} />
-              </div>
+              <FlexContainer column>
+                <Title class="product_title_top" styles={{ display: "none", fontSize: "4rem", marginBottom: 20 }} >{product.name}</Title>
+                <div className="details-image">
+                  <img id="expandedImg" alt="" src={product.image_1} style={{ maxWidth: "400px", maxHeight: "400px", height: "100%", width: "100%" }} />
+                </div>
+              </FlexContainer>
               <div className="details-info">
-                <Title styles={{ fontSize: "3rem", marginBottom: 20 }} >{product.name}</Title>
+                <Title class="product_title_side" styles={{ display: "flex", fontSize: "3rem", marginBottom: 20 }} >{product.name}</Title>
                 <FlexContainer>
                   <Title styles={{ fontSize: "2rem", margin: 0, marginRight: 5, }} >Price: </Title>
                   <Label styles={{ fontSize: "2rem" }} >${product.price ? product.price.toFixed(2) : product.price}</Label>
                 </FlexContainer>
                 <FlexContainer column  >
                   <FlexContainer column styles={{ height: "100%" }}>
-                    {/* <Label styles={{ fontSize: 20, marginRight: 5 }} > Description: </Label> */}
                     <div>
                       <ul style={{ marginLeft: "10px" }}>
                         {product.facts ? product.facts.split("\n").map((line, index) => {

@@ -79,15 +79,18 @@ const Header = (props) => {
               {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>Sign In</ButtonSymbol> */}
             </>
         }
+        <Link to="/cart"><ButtonWord class="mobile_van_buttons cart_text">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
+        <Link to="/cart"><ButtonWord styles={{ display: "none" }} class="mobile_van_buttons cart_icon"><i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown">
-            <ButtonWord class="mobile_buttons">Admin</ButtonWord>
+            <ButtonWord class="mobile_van_buttons">Admin</ButtonWord>
             <ul className="dropdown-content">
               <Link to="/orders"><ButtonWord >Orders</ButtonWord></Link>
               <Link to="/products"><ButtonWord  > Products</ButtonWord></Link>
             </ul>
           </div>
         )}
+
 
       </FlexContainer>
     </header >

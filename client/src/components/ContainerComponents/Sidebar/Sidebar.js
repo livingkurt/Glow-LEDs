@@ -35,7 +35,14 @@ const Sidebar = (props) => {
       <Title class="h2_title">Shopping Categories</Title>
       <button className="sidebar-close-button" onClick={closeMenu}><i class="fas fa-times"></i></button>
       <FlexContainer column>
-        <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
+        {
+          props.userInfo
+            ?
+            <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
+
+            :
+            <Link to="/signin"><ButtonWord class="sidebar_nav_buttons">Sign In</ButtonWord></Link>
+        }
         <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons">All Products</ButtonWord></Link>
         <div className="dropdown-sidebar-nav">
           <ButtonWord class="sidebar_nav_buttons">Diffusers</ButtonWord>
@@ -47,6 +54,14 @@ const Sidebar = (props) => {
         </div>
         <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons">Accessories</ButtonWord></Link>
         <Link to="/contact"><ButtonWord class="sidebar_nav_buttons">Contact</ButtonWord></Link>
+        {/* {
+          props.userInfo
+            ?
+            <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link>
+
+            :
+            <Link to="/signin"><ButtonWord >Sign In</ButtonWord></Link>
+        } */}
 
 
       </FlexContainer>
