@@ -34,9 +34,10 @@ function AllProductsPage(props) {
     <FlexContainer h_center>
       <Title styles={{ fontSize: 40 }} >{category || "All Products"}</Title>
     </FlexContainer>
+    <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
     <FlexContainer h_center>
-      <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
-      <Sort sortHandler={sortHandler} />
+
+      {/* <Sort sortHandler={sortHandler} /> */}
     </FlexContainer>
     {loading ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
       error ? <div>{error}</div> :

@@ -108,6 +108,9 @@
   .main_container {
     padding: 0px !important;
   }
+  .search_container {
+    max-width: 250px !important;
+  }
 }
 
 @media only screen and (max-width: 350px) {
