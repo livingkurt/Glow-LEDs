@@ -77,10 +77,12 @@ function ProductsPage(props) {
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }} >
           <ul className="form-container">
-            <Title styles={{ fontSize: 30, fontFamily: "heading_font" }} >Create Product</Title>
+            <Title styles={{ fontSize: 30 }} >Create Product</Title>
             <li>
-              {loadingSave && <Title styles={{ fontSize: 20, fontFamily: "heading_font" }} >Loading...</Title>}
-              {errorSave && <div>{errorSave}</div>}
+              <FlexContainer h_center>
+                {loadingSave && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
+                {errorSave && <Title styles={{ fontSize: 20 }} >{errorSave}</Title>}
+              </FlexContainer>
             </li>
             <FlexContainer row>
               <FlexContainer column styles={{ width: "50%", marginRight: "10px" }}>

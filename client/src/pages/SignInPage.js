@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 function SigninPage(props) {
 
@@ -34,8 +35,10 @@ function SigninPage(props) {
           <Title class="h1_title">Sign-In</Title>
         </li>
         <li>
-          {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
-          {error && <div>{error}</div>}
+          <FlexContainer h_center>
+            {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
+            {error && <Title styles={{ fontSize: 20 }} >{error}</Title>}
+          </FlexContainer>
         </li>
         <li>
           <label htmlFor="email">
@@ -50,10 +53,10 @@ function SigninPage(props) {
           </input>
         </li>
         <li>
-          <button type="submit" className="button primary">Signin</button>
+          <button type="submit" className="button primary">Sign-in</button>
         </li>
         <li>
-          New to amazona?
+          New to Glow LEDs?
         </li>
         <li>
           <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button secondary text-center" >Create your Glow LED account</Link>

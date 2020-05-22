@@ -53,9 +53,11 @@ function ProfilePage(props) {
               <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >User Profile</Title>
             </li>
             <li>
-              {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
-              {error && <div>{error}</div>}
-              {success && <div>Profile Saved Successfully.</div>}
+              <FlexContainer h_center>
+                {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
+                {error && <Title styles={{ fontSize: 20 }} >{error}</Title>}
+                {success && <Title styles={{ fontSize: 20 }} >Profile Saved Successfully</Title>}
+              </FlexContainer>
             </li>
             <li>
               <label htmlFor="name">

@@ -181,8 +181,12 @@ function OrderPage(props) {
               <div>Order Total</div>
               <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
             </li>
-            <li className="placeorder-actions-payment">
-              {loadingPay && <div>Finishing Payment...</div>}
+            <li className="placeorder-actions-payment" style={{ display: "flex", justifyContent: "center" }}>
+              {loadingPay &&
+                <FlexContainer h_center>
+                  <Title styles={{ fontSize: 20 }} >Finishing Payment..</Title>
+                </FlexContainer>
+              }
               {!order.isPaid &&
                 <PaypalButton
                   amount={order.totalPrice}

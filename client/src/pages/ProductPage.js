@@ -35,8 +35,16 @@ function ProductPage(props) {
     <div className="back-to-result">
       <Link to="/allproducts"><Title styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
     </div>
-    {loading ? <Title styles={{ fontSize: "2rem" }} >Loading...</Title> :
-      error ? <div>{error} </div> :
+    {loading ?
+      <FlexContainer h_center>
+        <Title styles={{ fontSize: 20 }} >Loading...</Title>
+      </FlexContainer>
+      :
+      error ?
+        <FlexContainer h_center>
+          <Title styles={{ fontSize: 20 }} >{error} </Title>
+        </FlexContainer>
+        :
         (
           <div>
             <div className="details">

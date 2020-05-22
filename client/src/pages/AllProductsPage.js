@@ -39,8 +39,16 @@ function AllProductsPage(props) {
 
       {/* <Sort sortHandler={sortHandler} /> */}
     </FlexContainer>
-    {loading ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
-      error ? <div>{error}</div> :
+    {loading ?
+      <FlexContainer h_center>
+        <Title styles={{ fontSize: 20 }} >Loading...</Title>
+      </FlexContainer>
+      :
+      error ?
+        <FlexContainer h_center>
+          <Title styles={{ fontSize: 20 }} >{error}</Title>
+        </FlexContainer>
+        :
         <ul className="products">
           {
             products.map((product, index) =>

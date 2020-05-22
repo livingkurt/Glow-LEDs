@@ -26,6 +26,7 @@ const Header = (props) => {
   }
 
   const cart = useSelector(state => state.cart);
+  console.log(props.userInfo)
 
   const { cartItems } = cart;
 
@@ -79,7 +80,6 @@ const Header = (props) => {
           props.userInfo
             ?
             <>
-              {/* <Link to="/profile"><ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord></Link> */}
               <div className="dropdown" >
                 <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
                 <ul className="dropdown-content" style={{ width: "150px" }}>
@@ -88,16 +88,34 @@ const Header = (props) => {
                   <ButtonWord on_click_function={handleLogout} styles={{ textAlign: "left" }}> Logout</ButtonWord>
                 </ul>
               </div>
-              {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>{props.userInfo.name}</ButtonSymbol> */}
 
             </>
             :
             <>
               <Link to="/signin"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
-              {/* <ButtonSymbol class="mobile_buttons" styles={{ display: "none", fontFamily: "button_font", height: "50px", width: "50px" }}>Sign In</ButtonSymbol> */}
             </>
         }
-        {/* <Link to="/cart"><ButtonWord class="nav_buttons">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link> */}
+
+        {/* {
+          props.userInfo.length === 0
+            ?
+            <>
+              <Link to="/signin"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
+            </>
+            :
+            <>
+              <div className="dropdown" >
+                <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
+                <ul className="dropdown-content" style={{ width: "150px" }}>
+                  <Link to="/profile"><ButtonWord >Edit Profile</ButtonWord></Link>
+                  <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>
+                  <ButtonWord on_click_function={handleLogout} styles={{ textAlign: "left" }}> Logout</ButtonWord>
+                </ul>
+              </div>
+
+            </>
+
+        } */}
 
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown nav_buttons">

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
 import { email_registration } from '../actions/emailActions';
+import { FlexContainer } from '../components/ContainerComponents';
 
 function RegisterPage(props) {
 
@@ -38,8 +39,10 @@ function RegisterPage(props) {
           <h2>Create Account</h2>
         </li>
         <li>
-          {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
-          {error && <div>{error}</div>}
+          <FlexContainer h_center>
+            {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
+            {error && <Title styles={{ fontSize: 20 }} >{error}</Title>}
+          </FlexContainer>
         </li>
         <li>
           <label htmlFor="name">
