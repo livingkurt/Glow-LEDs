@@ -70,8 +70,8 @@ function ProductsPage(props) {
 
   return <BlockContainer class="main_container">
     <div className="product-header">
-      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", margin: "20px auto" }} >Products</Title>
-      <button className="button primary" onClick={() => openModal({})}>Create Product</button>
+      <Title styles={{ fontSize: 30, textAlign: "center", width: "89%", marginRight: "auto" }} >Products</Title>
+      <button className="button primary" style={{ width: "156px" }} onClick={() => openModal({})}>Create Product</button>
     </div>
     {modalVisible &&
       <div className="form">
