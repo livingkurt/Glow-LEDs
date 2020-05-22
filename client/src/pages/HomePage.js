@@ -9,6 +9,7 @@ function HomePage(props) {
     const video = document.getElementById("caps_vid")
     video.muted = true
     video.autoplay = true
+    video.playsinline = true
   }, []);
 
   const heading_styles = {
@@ -25,6 +26,23 @@ function HomePage(props) {
     marginBottom: "10px"
   }
 
+  const homepage_video = {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    left: "0",
+    top: "0",
+    right: "0",
+    bottom: "0",
+    borderRadius: "20px"
+  }
+  const video_wrapper = {
+    position: "relative",
+    padding: "56.25% 0 0"
+  }
+
+
+
   return (
     <BlockContainer class="main_container">
       <FlexContainer h_center>
@@ -39,8 +57,8 @@ function HomePage(props) {
       <p className="p_descriptions" style={{ textAlign: "center" }}>
         Watch the Video Below to See Them in Action
       </p>
-      <FlexContainer h_center>
-        <video id="caps_vid" style={{ height: "auto", maxWidth: "100%", borderRadius: "20px" }} controls>
+      <FlexContainer h_center styles={video_wrapper}>
+        <video id="caps_vid" style={homepage_video} controls>
           <source src="videos/MVI_9237.MP4" type="video/mp4" />
         </video>
       </FlexContainer>
