@@ -21,13 +21,18 @@ function OrderPage(props) {
   const orderDetails = useSelector(state => state.orderDetails);
   const { loading, order, error } = orderDetails;
 
+  const [paypal_state, set_paypal_state] = useState("block")
+
   useEffect(() => {
     if (successPay) {
+      set_paypal_state("none")
       // props.history.push("/profile");
     } else {
       dispatch(detailsOrder(props.match.params.id));
     }
   }, [successPay]);
+
+
 
   useEffect(() => {
     empty_cart();
@@ -46,6 +51,7 @@ function OrderPage(props) {
   }
 
   const [shipping_state, set_shipping_state] = useState()
+
 
 
   const update_shipping_state = () => {
@@ -187,11 +193,13 @@ function OrderPage(props) {
                   <Title styles={{ fontSize: 20 }} >Finishing Payment..</Title>
                 </FlexContainer>
               }
-              {!order.isPaid &&
-                <PaypalButton
-                  amount={order.totalPrice}
-                  onSuccess={handleSuccessPayment} />
-              }
+              <div style={{ display: paypal_state }}>
+                {!order.isPaid &&
+                  <PaypalButton
+                    amount={order.totalPrice}
+                    onSuccess={handleSuccessPayment} />
+                }
+              </div>
             </li>
           </ul>
         </div>

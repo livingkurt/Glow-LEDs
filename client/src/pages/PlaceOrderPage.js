@@ -57,7 +57,7 @@ function PlaceOrderPage(props) {
       <div className="placeorder-info">
         <div>
           <Title class="h2_title" styles={{ fontSize: 30 }} >Shipping</Title>
-          <div class="label">
+          <div className="label">
             <div>{shipping.address}</div>
             <div>{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}</div>
           </div>
