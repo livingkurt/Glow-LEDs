@@ -89,6 +89,7 @@ function ProfilePage(props) {
       </div>
     </div> */}
     <div className="profile-orders profile_orders_container" style={{ overflowX: "auto" }} >
+      {/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
       <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", justifyContent: "center" }} >Orders</Title>
       {
         loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :

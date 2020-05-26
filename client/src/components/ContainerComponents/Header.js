@@ -83,7 +83,7 @@ const Header = (props) => {
               <div className="dropdown" >
                 <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
                 <ul className="dropdown-content" style={{ width: "150px" }}>
-                  <Link to="/profile"><ButtonWord >Edit Profile</ButtonWord></Link>
+                  <Link to="/profile"><ButtonWord >Profile</ButtonWord></Link>
                   <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>
                   <ButtonWord on_click_function={handleLogout} styles={{ textAlign: "left" }}> Logout</ButtonWord>
                 </ul>

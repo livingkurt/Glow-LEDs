@@ -60,7 +60,7 @@ const Sidebar = (props) => {
             <div className="dropdown-sidebar-nav" >
               <ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord>
               <ul className="dropdown-sidebar-nav-content">
-                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Edit Profile</ButtonWord></Link>
+                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Profile</ButtonWord></Link>
                 <Link to="/userorders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>
                 {/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
                 <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Logout</ButtonWord>

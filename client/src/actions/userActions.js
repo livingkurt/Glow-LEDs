@@ -7,6 +7,7 @@ import {
 } from "../constants/userConstants";
 
 const update = ({ userId, name, email, password }) => async (dispatch, getState) => {
+  console.log({ userId, name, email, password })
   const { userSignin: { userInfo } } = getState();
   dispatch({ type: USER_UPDATE_REQUEST, payload: { userId, name, email, password } });
   try {

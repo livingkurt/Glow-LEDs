@@ -34,9 +34,7 @@ function ProductsPage(props) {
       setModalVisible(false);
     }
     dispatch(listProducts());
-    return () => {
-      //
-    };
+
   }, [successSave, successDelete]);
 
   const openModal = (product) => {
@@ -76,7 +74,7 @@ function ProductsPage(props) {
     {modalVisible &&
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }} >
-          <ul className="form-container">
+          <ul className="form-container" style={{ maxWidth: "64rem", marginBottom: "20px" }}>
             <Title styles={{ fontSize: 30 }} >Create Product</Title>
             <li>
               <FlexContainer h_center>
