@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin } from '../actions/userActions';
+import { login } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 
-function SigninPage(props) {
+function LoginPage(props) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const userSignin = useSelector(state => state.userSignin);
-  const { loading, userInfo, error } = userSignin;
+  const userLogin = useSelector(state => state.userLogin);
+  const { loading, userInfo, error } = userLogin;
   const dispatch = useDispatch();
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
   useEffect(() => {
@@ -24,15 +24,15 @@ function SigninPage(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(signin(email, password));
+    dispatch(login(email, password));
 
   }
   return <div className="form">
     <form onSubmit={submitHandler} >
       <ul className="form-container">
         <li>
-          {/* <h2>Sign-In</h2> */}
-          <Title class="h1_title">Sign-In</Title>
+          {/* <h2>Login</h2> */}
+          <Title class="h1_title">Login</Title>
         </li>
         <li>
           <FlexContainer h_center>
@@ -53,7 +53,7 @@ function SigninPage(props) {
           </input>
         </li>
         <li>
-          <button type="submit" className="button primary">Sign-in</button>
+          <button type="submit" className="button primary">Login</button>
         </li>
         <li>
           New to Glow LEDs?
@@ -65,4 +65,4 @@ function SigninPage(props) {
     </form>
   </div>
 }
-export default SigninPage;
+export default LoginPage;

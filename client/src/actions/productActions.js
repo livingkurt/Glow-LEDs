@@ -21,7 +21,7 @@ const listProducts = (category = '', searchKeyword = '', sortOrder = '') => asyn
 const saveProduct = (product) => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
-    const { userSignin: { userInfo } } = getState();
+    const { userLogin: { userInfo } } = getState();
     if (!product._id) {
       const { data } = await axios.post('/api/products', product, {
         headers: {
@@ -57,7 +57,7 @@ const detailsProduct = (productId) => async (dispatch) => {
 
 const deleteProduct = (productId) => async (dispatch, getState) => {
   try {
-    const { userSignin: { userInfo } } = getState();
+    const { userLogin: { userInfo } } = getState();
     dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
     const { data } = await axios.delete("/api/products/" + productId, {
       headers: {

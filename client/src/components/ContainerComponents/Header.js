@@ -45,7 +45,7 @@ const Header = (props) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    history.push("/signin");
+    history.push("/login");
   }
 
   return (
@@ -92,7 +92,7 @@ const Header = (props) => {
             </>
             :
             <>
-              <Link to="/signin"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
+              <Link to="/login"><ButtonWord class="nav_buttons">Login</ButtonWord></Link>
             </>
         }
 
@@ -100,7 +100,7 @@ const Header = (props) => {
           props.userInfo.length === 0
             ?
             <>
-              <Link to="/signin"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
+              <Link to="/login"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
             </>
             :
             <>

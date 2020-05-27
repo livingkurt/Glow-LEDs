@@ -30,20 +30,20 @@ router.put('/:id', isAuth, async (req, res) => {
 
 });
 
-router.post('/signin', async (req, res) => {
+router.post('/login', async (req, res) => {
 
-  const signinUser = await User.findOne({
+  const login_user = await User.findOne({
     email: req.body.email,
     password: req.body.password
   });
-  if (signinUser) {
-    // if (signinUser.confirmed) {
+  if (login_user) {
+    // if (login_user.confirmed) {
     res.send({
-      _id: signinUser.id,
-      name: signinUser.name,
-      email: signinUser.email,
-      isAdmin: signinUser.isAdmin,
-      token: getToken(signinUser)
+      _id: login_user.id,
+      name: login_user.name,
+      email: login_user.email,
+      isAdmin: login_user.isAdmin,
+      token: getToken(login_user)
     });
     // }
     // else {

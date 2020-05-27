@@ -3,19 +3,19 @@ import thunk from 'redux-thunk';
 import Cookie from 'js-cookie'
 import { productListReducer, productDetailsReducer, productSaveReducer, productDeleteReducer } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
-import { userSigninReducer, userRegisterReducer, userUpdateReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer, userUpdateReducer } from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, myOrderListReducer, orderListReducer, orderDeleteReducer } from './reducers/orderReducers';
 import { email_registration_reducer, email_order_reducer, email_shipping_reducer, email_delivery_reducer } from './reducers/emailReducers';
 
 const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON("userInfo") || [];
 
-const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userSignin: { userInfo } };
+const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo } };
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
-  userSignin: userSigninReducer,
+  userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   productSave: productSaveReducer,
   productDelete: productDeleteReducer,

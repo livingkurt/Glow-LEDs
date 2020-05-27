@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import './App.css';
-import { HomePage, AllProductsPage, ProductPage, CartPage, SignInPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage, ContactPage, UserOrdersPage, Four04Page, EditProfilePage } from './pages/index'
+import { HomePage, AllProductsPage, ProductPage, CartPage, LoginPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage, ContactPage, UserOrdersPage, Four04Page, EditProfilePage } from './pages/index'
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index'
 import { useSelector } from 'react-redux';
 
@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 
 function App() {
 
-  const userSignin = useSelector(state => state.userSignin);
-  const { userInfo } = userSignin;
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
 
   return (
     <Router>
@@ -28,7 +28,7 @@ function App() {
             <Route path="/shipping" component={ShippingPage} />
             <Route path="/payment" component={PaymentPage} />
             <Route path="/placeorder" component={props => <PlaceOrderPage userInfo={userInfo}  {...props} />} />
-            <Route path="/signin" component={SignInPage} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
             <Route path="/product/:id" component={ProductPage} />
             <Route path="/cart/:id?" component={CartPage} />

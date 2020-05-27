@@ -37,7 +37,7 @@ const Sidebar = (props) => {
   const handleLogout = () => {
     dispatch(logout());
     closeMenu()
-    history.push("/signin");
+    history.push("/login");
 
   }
 
@@ -69,7 +69,7 @@ const Sidebar = (props) => {
             </div>
 
             :
-            <Link to="/signin"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Sign In</ButtonWord></Link>
+            <Link to="/login"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Sign In</ButtonWord></Link>
         }
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown-sidebar-nav">
@@ -99,7 +99,7 @@ const Sidebar = (props) => {
             <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link>
 
             :
-            <Link to="/signin"><ButtonWord >Sign In</ButtonWord></Link>
+            <Link to="/login"><ButtonWord >Login</ButtonWord></Link>
         } */}
 
 

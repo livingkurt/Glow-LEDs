@@ -13,8 +13,8 @@ function ProfilePage(props) {
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
 
-  const userSignin = useSelector(state => state.userSignin);
-  const { userInfo } = userSignin;
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
 
   const userUpdate = useSelector(state => state.userUpdate);
   const { loading, success, error } = userUpdate;

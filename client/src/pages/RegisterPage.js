@@ -73,7 +73,7 @@ function RegisterPage(props) {
         </li>
         <li>
           Already have an account?
-          <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="button secondary text-center" >Sign In Here</Link>
+          <Link to={redirect === "/" ? "login" : "login?redirect=" + redirect} className="button secondary text-center" >Sign In Here</Link>
 
         </li>
 
