@@ -10,7 +10,9 @@ import { useSelector } from 'react-redux';
 function App() {
 
   const userLogin = useSelector(state => state.userLogin);
+
   const { userInfo } = userLogin;
+  console.log({ "App.js": userInfo })
 
   return (
     <Router>

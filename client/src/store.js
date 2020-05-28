@@ -9,6 +9,7 @@ import { email_registration_reducer, email_order_reducer, email_shipping_reducer
 
 const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON("userInfo") || [];
+// console.log({ "store": userInfo })
 
 const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo } };
 const reducer = combineReducers({

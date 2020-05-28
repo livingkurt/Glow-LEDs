@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const { user_routes, product_routes, order_routes, email_routes } = require('./routes/index')
 const path = require("path");
 const PORT = process.env.PORT || 3001;
+// const passport = require("passport");
 const app = express();
 require("dotenv").config()
 
@@ -21,6 +22,9 @@ mongoose.connect(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json())
+
+// require("./passport")(passport);
+
 app.use("/api/users", user_routes)
 app.use("/api/products", product_routes)
 app.use("/api/orders", order_routes)

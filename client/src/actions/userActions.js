@@ -47,6 +47,7 @@ const register = (name, email, password) => async (dispatch) => {
 }
 
 const logout = () => (dispatch) => {
+  console.log("delete cookies")
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
 }

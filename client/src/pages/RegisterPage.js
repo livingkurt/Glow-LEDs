@@ -17,19 +17,18 @@ function RegisterPage(props) {
   const dispatch = useDispatch();
 
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
-  useEffect(() => {
-    if (userInfo) {
-      props.history.push(redirect);
-    }
-    return () => {
-      //
-    };
-  }, [userInfo]);
+  // useEffect(() => {
+  //   console.log(userInfo)
+  //   if (userInfo) {
+  //     props.history.push(redirect);
+  //   }
+  // }, [userInfo]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(register(name, email, password));
     dispatch(email_registration(name, email, password));
+    props.history.push(redirect);
 
   }
   return <div className="form">
