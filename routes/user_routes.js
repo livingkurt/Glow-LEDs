@@ -6,7 +6,7 @@ const express = require('express')
 const User = require('../models/user')
 const { getToken, isAuth } = require('../util')
 const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
+const { validate_login, validate_registration } = require("../validations");
 require("dotenv")
 
 const router = express.Router();
@@ -34,6 +34,12 @@ router.put('/:id', isAuth, async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+  // Form validation
+  const { errors, isValid } = validate_login(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const email = req.body.email;
   const password = req.body.password;
 
@@ -62,6 +68,12 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
+  // Form validation
+  const { errors, isValid } = validate_registration(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
   const newUser = new User({
     name: req.body.name,
     email: req.body.email,

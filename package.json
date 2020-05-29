@@ -28,10 +28,12 @@
     "express": "^4.16.3",
     "http-proxy-middleware": "^1.0.3",
     "if-env": "^1.0.4",
+    "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.12",
     "nodemailer": "^6.4.6",
     "passport": "^0.4.1",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.0.0"
   }
 }
