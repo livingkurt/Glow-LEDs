@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import { Title, ButtonWord, ButtonSymbol } from "../UtilityComponents/index"
 import { FlexContainer } from "./index"
@@ -24,9 +24,25 @@ const Header = (props) => {
     zIndex: "999",
     top: "0"
   }
+  const [name, setName] = useState('');
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+  // console.log({ "Header": userInfo })
+  // if (!userInfo === undefined) {
+  //   console.log({ "Header": userInfo })
+  //   setName(userInfo.name);
+  // }
+
+
+  // useEffect(() => {
+  //   if (!userInfo === undefined) {
+  //     console.log({ "Header": userInfo })
+  //     setName(userInfo.name);
+  //   }
+  // }, [userInfo])
 
   const cart = useSelector(state => state.cart);
-  console.log(props.userInfo)
+  console.log({ "Header": userInfo })
 
   const { cartItems } = cart;
 
@@ -81,7 +97,7 @@ const Header = (props) => {
             ?
             <>
               <div className="dropdown" >
-                <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
+                <ButtonWord class="nav_buttons">{userInfo.name}</ButtonWord>
                 <ul className="dropdown-content" style={{ width: "150px" }}>
                   <Link to="/profile"><ButtonWord >Profile</ButtonWord></Link>
                   <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>

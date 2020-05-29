@@ -15,6 +15,7 @@ function ProfilePage(props) {
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
+  console.log({ "Profile": userInfo })
 
   const userUpdate = useSelector(state => state.userUpdate);
   const { loading, success, error } = userUpdate;
