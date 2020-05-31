@@ -8,7 +8,7 @@ import { orderCreateReducer, orderDetailsReducer, orderPayReducer, myOrderListRe
 import { email_registration_reducer, email_order_reducer, email_shipping_reducer, email_delivery_reducer } from './reducers/emailReducers';
 
 const cartItems = Cookie.getJSON("cartItems") || [];
-const userInfo = Cookie.getJSON("userInfo") || [];
+const userInfo = Cookie.getJSON("userInfo") || null;
 console.log({ "store": userInfo })
 
 const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo } };

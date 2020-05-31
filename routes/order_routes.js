@@ -27,6 +27,7 @@ router.get("/:id", isAuth, async (req, res) => {
     res.status(404).send("Order Not Found.")
   }
 });
+
 router.delete("/:id", isAuth, isAdmin, async (req, res) => {
   const order = await Order.findOne({ _id: req.params.id });
   if (order) {

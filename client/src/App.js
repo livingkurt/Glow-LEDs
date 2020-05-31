@@ -4,15 +4,25 @@ import './App.css';
 import { HomePage, AllProductsPage, ProductPage, CartPage, LoginPage, RegisterPage, ProductsPage, ShippingPage, PaymentPage, PlaceOrderPage, OrderPage, ProfilePage, OrdersPage, ContactPage, UserOrdersPage, Four04Page, EditProfilePage } from './pages/index'
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index'
 import { useSelector } from 'react-redux';
+import Cookie from 'js-cookie'
 
 
 
 function App() {
 
+
+
+
   const userLogin = useSelector(state => state.userLogin);
 
-  const { userInfo } = userLogin;
+  let { userInfo } = userLogin;
   console.log({ "App.js": userInfo })
+
+  console.log(Cookie.getJSON("userInfo"))
+
+  // if (!userInfo) {
+  //   userInfo = Cookie.getJSON("userInfo");
+  // }
 
   return (
     <Router>
