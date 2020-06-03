@@ -89,7 +89,7 @@ const Header = (props) => {
           <Link to="/contact"><ButtonWord class="nav_buttons">Contact</ButtonWord></Link>
         </FlexContainer>
       </FlexContainer>
-      <FlexContainer class="nav_bar"  >
+      <FlexContainer class="nav_bar" styles={{ width: "270px", justifyContent: "flex-end" }}>
         <Link to="/cart"><ButtonWord class="mobile_nav_buttons cart_text">Cart <i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         <Link to="/cart"><ButtonWord styles={{ display: "none" }} class="mobile_nav_buttons cart_icon"><i className="fas fa-shopping-cart"></i> {cartItems.reduce((a, c) => a + c.qty, 0)} </ButtonWord></Link>
         {
@@ -97,11 +97,11 @@ const Header = (props) => {
             ?
             <>
               <div className="dropdown" >
-                <ButtonWord class="nav_buttons">{userInfo.name}</ButtonWord>
+                <ButtonWord class="nav_buttons" >{userInfo.name}</ButtonWord>
                 <ul className="dropdown-content" style={{ width: "150px" }}>
                   <Link to="/profile"><ButtonWord >Profile</ButtonWord></Link>
                   <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>
-                  <ButtonWord on_click_function={handleLogout} styles={{ textAlign: "left" }}> Logout</ButtonWord>
+                  <ButtonWord on_click_function={handleLogout} styles={{ marginRight: "auto" }}> Logout</ButtonWord>
                 </ul>
               </div>
 
