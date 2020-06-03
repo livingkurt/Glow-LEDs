@@ -142,6 +142,7 @@ router.post("/logout", async (req, res) => {
   res.status(200).json({ "token": "Removed Token" });
 });
 
+
 router.get("/:id", async (req, res) => {
   console.log("userRoute")
   try {
