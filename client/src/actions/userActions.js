@@ -46,8 +46,14 @@ const register = (name, email, password) => async (dispatch) => {
   }
 }
 
-const logout = () => (dispatch) => {
+const logout = () => async (dispatch, getState) => {
   console.log("delete cookies")
+  const { userLogin: { userInfo } } = getState();
+  const { data } = await Axios.post("/api/users/logout", {
+    headers: {
+      Authorization: 'Bearer ' + userInfo.token
+    }
+  });
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
 }

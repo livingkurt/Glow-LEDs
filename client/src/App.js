@@ -18,7 +18,7 @@ function App() {
   let { userInfo } = userLogin;
   console.log({ "App.js": userInfo })
 
-  console.log(Cookie.getJSON("userInfo"))
+  // console.log(Cookie.getJSON("userInfo"))
 
   // if (!userInfo) {
   //   userInfo = Cookie.getJSON("userInfo");

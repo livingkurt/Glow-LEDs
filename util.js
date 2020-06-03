@@ -16,6 +16,13 @@ const getToken = (user) => {
   })
 }
 
+const removeToken = (req, res) => {
+  // console.log({ headers: req.headers.authorization })
+  // console.log("hello")
+  // jwt.destroy(req.headers.authorization)
+  return jwt.sign({}, config.JWT_SECRET)
+}
+
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
 
@@ -47,5 +54,5 @@ const isAdmin = (req, res, next) => {
 // }
 
 module.exports = {
-  getToken, isAuth, isAdmin
+  getToken, isAuth, isAdmin, removeToken
 }

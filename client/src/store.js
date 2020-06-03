@@ -12,6 +12,7 @@ const userInfo = Cookie.getJSON("userInfo") || null;
 console.log({ "store": userInfo })
 
 const initialState = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo } };
+
 const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   email_shipping: email_shipping_reducer,
   email_delivery: email_delivery_reducer
 })
+
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));
 export default store;

@@ -4,7 +4,7 @@
 
 const express = require('express')
 const User = require('../models/user')
-const { getToken, isAuth } = require('../util')
+const { getToken, isAuth, removeToken } = require('../util')
 const bcrypt = require("bcryptjs");
 const { validate_login, validate_registration } = require("../validations");
 require("dotenv")
@@ -136,6 +136,12 @@ router.get("/createadmin", async (req, res) => {
   }
 });
 
+router.post("/logout", async (req, res) => {
+  console.log("logout")
+  removeToken(req)
+  res.status(200).json({ "token": "Removed Token" });
+});
+
 router.get("/:id", async (req, res) => {
   console.log("userRoute")
   try {
@@ -145,6 +151,8 @@ router.get("/:id", async (req, res) => {
     res.send({ msg: error.message });
   }
 });
+
+
 
 // export default router;
 module.exports = router;
