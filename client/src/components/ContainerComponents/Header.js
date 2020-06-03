@@ -111,28 +111,6 @@ const Header = (props) => {
               <Link to="/login"><ButtonWord class="nav_buttons">Login</ButtonWord></Link>
             </>
         }
-
-        {/* {
-          props.userInfo.length === 0
-            ?
-            <>
-              <Link to="/login"><ButtonWord class="nav_buttons">Sign In</ButtonWord></Link>
-            </>
-            :
-            <>
-              <div className="dropdown" >
-                <ButtonWord class="nav_buttons">{props.userInfo.name}</ButtonWord>
-                <ul className="dropdown-content" style={{ width: "150px" }}>
-                  <Link to="/profile"><ButtonWord >Edit Profile</ButtonWord></Link>
-                  <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>
-                  <ButtonWord on_click_function={handleLogout} styles={{ textAlign: "left" }}> Logout</ButtonWord>
-                </ul>
-              </div>
-
-            </>
-
-        } */}
-
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown nav_buttons">
             <ButtonWord class="mobile_nav_buttons">Admin</ButtonWord>

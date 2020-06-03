@@ -69,7 +69,7 @@ const Sidebar = (props) => {
             </div>
 
             :
-            <Link to="/login"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Sign In</ButtonWord></Link>
+            <Link to="/login"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Login</ButtonWord></Link>
         }
         {props.userInfo && props.userInfo.isAdmin && (
           <div className="dropdown-sidebar-nav">
