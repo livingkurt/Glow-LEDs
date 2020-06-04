@@ -1,7 +1,3 @@
-// import express from 'express';
-// import User from '../models/userModel';
-// import { getToken, isAuth } from '../util';
-
 const express = require('express')
 const User = require('../models/user')
 const RefreshToken = require('../models/refresh_token')
@@ -21,13 +17,22 @@ router.put('/:id', isAuth, async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.password = req.body.password || user.password;
+
     const updatedUser = await user.save();
+    // Generate Access Toke and Refresh Token
+    const name = updatedUser.name
+    const user = { name: name }
+    const accessToken = generateAccessToken(user)
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+
+
     res.send({
       _id: updatedUser.id,
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
-      token: getToken(updatedUser)
+      accessToken: accessToken,
+      refreshToken: refreshToken
     });
   } else {
     res.status(404).send({ msg: 'User Not Found' });
@@ -53,20 +58,12 @@ router.post('/login', async (req, res) => {
   const accessToken = generateAccessToken(user)
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 
-  console.log(refreshToken)
+  // console.log(refreshToken)
 
   // Check password
   bcrypt.compare(password, login_user.password).then(isMatch => {
     if (isMatch) {
-      // Update user with refresh token
       RefreshToken.create({ refreshToken: refreshToken });
-      // const updated_user = User.updateOne({ _id: req.body.id }, {
-      //   name: login_user.name,
-      //   email: login_user.email,
-      //   isAdmin: login_user.isAdmin,
-      //   refreshToken: refreshToken
-      // })
-      // console.log(updated_user)
       res.send({
         _id: login_user.id,
         name: login_user.name,
@@ -87,21 +84,33 @@ router.post('/login', async (req, res) => {
 });
 
 const generateAccessToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '48h' })
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
 
 }
 
 router.post('/token', async (req, res) => {
-  const refreshToken = req.body
-  // console.log({ user_routes: refreshToken })
+
+  const refreshToken = req.body.refreshToken
+  console.log({ user_routes_token: req.body })
   if (refreshToken === null) return res.sendStatus(401)
 
   // const tokens = await RefreshToken.find({ refreshToken: refreshToken });
   // if (!tokens) return res.sendStatus(403)
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+
     if (err) return res.sendStatus(403)
     const accessToken = generateAccessToken({ name: user.name })
-    res.json({ accessToken: accessToken })
+    console.log({ accessToken })
+    const updatedUser = {
+      _id: req.body.id,
+      name: req.body.name,
+      email: req.body.email,
+      refreshToken: refreshToken,
+      accessToken: accessToken,
+      isAdmin: req.body.isAdmin
+    };
+    console.log({ user_routes: updatedUser })
+    res.json(updatedUser)
   })
 })
 
@@ -112,7 +121,6 @@ router.post('/register', async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    // refreshToken: refreshToken
   });
 
   // Generate Access Toke and Refresh Token
@@ -121,7 +129,7 @@ router.post('/register', async (req, res) => {
   const accessToken = generateAccessToken(username)
   const refreshToken = jwt.sign(username, process.env.REFRESH_TOKEN_SECRET)
 
-  console.log(refreshToken)
+  // console.log(refreshToken)
 
   const user = await User.findOne({ email: req.body.email });
   if (user) {
@@ -156,13 +164,9 @@ router.post('/register', async (req, res) => {
 //   res.status(200).json({ "token": "Removed Token" });
 // });
 
-router.delete('/logout', async (req, res) => {
-  const tokens = await RefreshToken.find({ refreshToken: req.body.refreshToken });
-  tokens.filter(token => token !== req.body.token)
-  // if (user) {
-  //   return res.status(400).json({ email: "Email already exists" });
-  // }
-  // refreshTokens = refreshTokens.filter(token => token !== req.body.token)
+router.post('/logout', async (req, res) => {
+  const token = req.body;
+  const tokens = await RefreshToken.deleteOne({ refreshToken: token.token });
   res.sendStatus(204)
 })
 

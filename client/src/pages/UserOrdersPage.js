@@ -8,23 +8,24 @@ import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
 function ProfilePage(props) {
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  // const [name, setName] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [email, setEmail] = useState('');
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  const handleLogout = () => {
-    dispatch(logout());
-    props.history.push("/login");
-  }
-  const submitHandler = (e) => {
-    e.preventDefault();
-    dispatch(update({ userId: userInfo._id, email, name, password }))
-  }
-  const userUpdate = useSelector(state => state.userUpdate);
-  const { loading, success, error } = userUpdate;
+  console.log({ user_orders_page: userInfo })
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  //   props.history.push("/login");
+  // }
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   dispatch(update({ userId: userInfo._id, email, name, password }))
+  // }
+  // const userUpdate = useSelector(state => state.userUpdate);
+  // const { loading, success, error } = userUpdate;
 
   const myOrderList = useSelector(state => state.myOrderList);
   const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
@@ -34,22 +35,19 @@ function ProfilePage(props) {
   // console.log({ userToken })
 
 
-  // useEffect(() => {
-  //   dispatch(token(userInfo.refreshToken));
-  // }, [error]);
+  useEffect(() => {
+    dispatch(token());
+  }, [errorOrders]);
 
 
   useEffect(() => {
-    if (userInfo) {
-      console.log(userInfo.name)
-      setEmail(userInfo.email);
-      setName(userInfo.name);
-      setPassword(userInfo.password);
-    }
+    // if (userInfo) {
+    //   console.log(userInfo.name)
+    //   setEmail(userInfo.email);
+    //   setName(userInfo.name);
+    //   setPassword(userInfo.password);
+    // }
     dispatch(listMyOrders());
-    return () => {
-
-    };
   }, [userInfo])
 
 

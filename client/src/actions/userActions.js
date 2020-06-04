@@ -52,21 +52,40 @@ const register = (name, email, password) => async (dispatch) => {
 const logout = () => async (dispatch, getState) => {
   console.log("delete cookies")
   const { userLogin: { userInfo } } = getState();
-  const { data } = await axios.delete("/api/users/logout", {
-    headers: {
-      Authorization: 'Bearer ' + userInfo.refreshToken
-    }
-  });
+  // console.log(userInfo.refreshToken)
+  const token = userInfo.refreshToken.toString()
+  const { data } = await axios.post("/api/users/logout", { token });
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
 }
 
-const token = (refreshToken) => async (dispatch) => {
+const token2 = (refreshToken) => async (dispatch) => {
   dispatch({ type: USER_TOKEN_REQUEST, payload: refreshToken });
   try {
     const { data } = await axios.post("/api/users/token", refreshToken);
     console.log({ userActions: data })
     dispatch({ type: USER_TOKEN_SUCCESS, payload: data });
+    Cookie.set('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({ type: USER_TOKEN_FAIL, payload: error.message });
+  }
+}
+
+const token = () => async (dispatch, getState) => {
+  // console.log({ userActions_info: info })
+  const { userLogin: { userInfo } } = getState();
+  console.log({ userActions_userInfo: userInfo })
+  dispatch({ type: USER_TOKEN_REQUEST, payload: userInfo });
+  try {
+    const { data } = await axios.post("/api/users/token", userInfo, {
+      headers: {
+        Authorization: 'Bearer ' + userInfo.accessToken
+      }
+    });
+    // const { data } = await axios.post("/api/users/token", userInfo);
+    console.log({ userActions: data })
+    dispatch({ type: USER_TOKEN_SUCCESS, payload: data });
+    Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_TOKEN_FAIL, payload: error.message });
   }
