@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   // confirmed: { type: Boolean, requried: true, default: false },
   isAdmin: { type: Boolean, required: true, default: false },
+  // refreshToken: { type: String },
   shipping: shippingSchema,
 })
 

@@ -23,7 +23,7 @@ const removeToken = (req, res) => {
   return jwt.sign({}, config.JWT_SECRET)
 }
 
-const isAuth = (req, res, next) => {
+const isAuth2 = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token) {
@@ -49,7 +49,7 @@ const isAdmin = (req, res, next) => {
   return res.status(401).send({ msg: 'Admin Token is not valid.' })
 }
 
-const authenticateToken = (req, res, next) => {
+const isAuth = (req, res, next) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
   if (token == null) return res.sendStatus(401);
@@ -65,5 +65,5 @@ const authenticateToken = (req, res, next) => {
 // }
 
 module.exports = {
-  getToken, isAuth, isAdmin, removeToken, authenticateToken
+  getToken, isAuth, isAdmin, removeToken
 }

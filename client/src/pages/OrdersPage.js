@@ -5,6 +5,7 @@ import { listOrders, deleteOrder } from '../actions/orderActions';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { token } from '../actions/userActions'
 
 function OrdersPage(props) {
   const orderList = useSelector(state => state.orderList);
@@ -13,7 +14,19 @@ function OrdersPage(props) {
   const orderDelete = useSelector(state => state.orderDelete);
   const { loading: loadingDelete, success: successDelete, error: errorDelete } = orderDelete;
 
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+  console.log({ orderspage: userInfo })
+
+  // const userToken = useSelector(state => state.userToken);
+  // // const { to } = userToken;
+  // console.log({ userToken })
+
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   // dispatch(token(userInfo.refreshToken));
+  // }, [error]);
 
   useEffect(() => {
     dispatch(listOrders());

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { logout, update } from '../actions/userActions';
+import { logout, update, token } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
@@ -28,6 +28,16 @@ function ProfilePage(props) {
 
   const myOrderList = useSelector(state => state.myOrderList);
   const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
+
+  // const userToken = useSelector(state => state.userToken);
+  // const { to } = userToken;
+  // console.log({ userToken })
+
+
+  // useEffect(() => {
+  //   dispatch(token(userInfo.refreshToken));
+  // }, [error]);
+
 
   useEffect(() => {
     if (userInfo) {
