@@ -33,7 +33,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", isAuth, isAdmin, async (req, res) => {
+router.put("/:id", isAuth, async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
   console.log({ "router.put": req.body })
@@ -59,7 +59,7 @@ router.put("/:id", isAuth, isAdmin, async (req, res) => {
 
 });
 
-router.delete("/:id", isAuth, isAdmin, async (req, res) => {
+router.delete("/:id", isAuth, async (req, res) => {
   const deletedProduct = await Product.findById(req.params.id);
   if (deletedProduct) {
     await deletedProduct.remove();
@@ -70,7 +70,7 @@ router.delete("/:id", isAuth, isAdmin, async (req, res) => {
 });
 
 
-router.post("/", isAuth, isAdmin, async (req, res) => {
+router.post("/", isAuth, async (req, res) => {
   console.log({ "router.post": req.body })
   const product = new Product({
     name: req.body.name,

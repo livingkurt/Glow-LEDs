@@ -52,7 +52,6 @@ const register = (name, email, password) => async (dispatch) => {
 const logout = () => async (dispatch, getState) => {
   console.log("delete cookies")
   const { userLogin: { userInfo } } = getState();
-  // console.log(userInfo.refreshToken)
   const token = userInfo.refreshToken.toString()
   const { data } = await axios.post("/api/users/logout", { token });
   Cookie.remove("userInfo");

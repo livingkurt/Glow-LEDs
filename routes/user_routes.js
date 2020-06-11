@@ -22,7 +22,8 @@ router.put('/:id', isAuth, async (req, res) => {
     // Generate Access Toke and Refresh Token
     const name = updatedUser.name
     const user = { name: name }
-    const accessToken = generateAccessToken(user)
+    // const accessToken = generateAccessToken(user)
+    const accessToken = getToken(user)
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 
 
@@ -55,7 +56,8 @@ router.post('/login', async (req, res) => {
   // Generate Access Toke and Refresh Token
   const name = login_user.name
   const user = { name: name }
-  const accessToken = generateAccessToken(user)
+  // const accessToken = generateAccessToken(login_user)
+  const accessToken = getToken(login_user)
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
 
   // console.log(refreshToken)
@@ -99,7 +101,10 @@ router.post('/token', async (req, res) => {
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
 
     if (err) return res.sendStatus(403)
-    const accessToken = generateAccessToken({ name: user.name })
+    // console.log({user})
+    console.log({ user_routes_token: user })
+    // const accessToken = generateAccessToken(user)
+    const accessToken = getToken(user)
     console.log({ accessToken })
     const updatedUser = {
       _id: req.body.id,
@@ -125,14 +130,16 @@ router.post('/register', async (req, res) => {
 
   // Generate Access Toke and Refresh Token
   const name = req.body.name
+  const user = req.body
   const username = { name: name }
-  const accessToken = generateAccessToken(username)
+  // const accessToken = generateAccessToken(user)
+  const accessToken = getToken(user)
   const refreshToken = jwt.sign(username, process.env.REFRESH_TOKEN_SECRET)
 
   // console.log(refreshToken)
 
-  const user = await User.findOne({ email: req.body.email });
-  if (user) {
+  const existing_user = await User.findOne({ email: req.body.email });
+  if (existing_user) {
     return res.status(400).json({ email: "Email already exists" });
   }
   else {
@@ -167,7 +174,7 @@ router.post('/register', async (req, res) => {
 router.post('/logout', async (req, res) => {
   const token = req.body;
   const tokens = await RefreshToken.deleteOne({ refreshToken: token.token });
-  res.sendStatus(204)
+  res.sendStatus(204).json({ "token": "Removed Token" })
 })
 
 
