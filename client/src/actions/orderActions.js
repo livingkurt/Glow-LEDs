@@ -92,16 +92,16 @@ const deleteOrder = (orderId) => async (dispatch, getState) => {
 }
 
 const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
-  console.log({ shipOrder: order })
+  console.log({ shipOrder: shippingResult })
   try {
     dispatch({ type: ORDER_SHIPPING_REQUEST, payload: shippingResult });
     const { userLogin: { userInfo } } = getState();
-    const { data } = await axios.put("/api/orders/" + order._id + "/shipping", shippingResult, {
+    const { data } = await axios.put("/api/orders/" + order._id + "/shipping", order, {
       headers:
         { Authorization: 'Bearer ' + userInfo.accessToken }
     });
     dispatch({ type: ORDER_SHIPPING_SUCCESS, payload: data })
-    axios.post("/api/emails/shipping", order);
+    axios.post("/api/emails/shipping", data);
   } catch (error) {
     dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
   }
@@ -109,16 +109,16 @@ const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
 
 
 const deliverOrder = (order, deliveryResult) => async (dispatch, getState) => {
-  console.log({ deliverOrder: order })
+  console.log({ deliverOrder: deliveryResult })
   try {
     dispatch({ type: ORDER_DELIVERY_REQUEST, payload: deliveryResult });
     const { userLogin: { userInfo } } = getState();
-    const { data } = await axios.put("/api/orders/" + order._id + "/delivery", deliveryResult, {
+    const { data } = await axios.put("/api/orders/" + order._id + "/delivery", order, {
       headers:
         { Authorization: 'Bearer ' + userInfo.accessToken }
     });
     dispatch({ type: ORDER_DELIVERY_SUCCESS, payload: data })
-    axios.post("/api/emails/delivery", order);
+    axios.post("/api/emails/delivery", data);
   } catch (error) {
     dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
   }

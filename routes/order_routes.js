@@ -72,33 +72,43 @@ router.put("/:id/pay", isAuth, async (req, res) => {
 });
 
 router.put("/:id/shipping", async (req, res) => {
-  console.log({ "shipping": req.body })
-  console.log(Object.keys(req.body).join(""))
-  const shippingResult = Object.keys(req.body).join("")
-  const order = await Order.findById(req.params.id);
-  if (order) {
-    order.isShipped = shippingResult === "true" ? true : false;
-    order.shippedAt = Date.now();
-    const updatedOrder = await order.save();
-    res.send({ message: 'Order Shipped.', order: updatedOrder });
-  } else {
-    res.status(404).send({ message: 'Order not found.' })
+  try {
+    console.log({ "shipping": req.body })
+    const updated_order = {
+      ...req.body,
+      isShipped: req.body.isShipped ? false : true,
+      shippedAt: Date.now()
+    }
+    const updated = await Order.updateOne({ _id: req.params.id }, updated_order)
+    console.log({ "shipping": updated_order })
+    // Send the request back to the front end
+    res.send(updated_order)
+
+  }
+  catch (err) {
+    console.log(err);
   }
 });
 
+
 router.put("/:id/delivery", async (req, res) => {
-  console.log({ "delivery": req.body })
-  console.log(Object.keys(req.body).join(""))
-  const deliveryResult = Object.keys(req.body).join("")
-  const order = await Order.findById(req.params.id);
-  if (order) {
-    order.isDelivered = deliveryResult === "true" ? true : false;
-    order.deliveredAt = Date.now();
-    const updatedOrder = await order.save();
-    res.send({ message: 'Order Delivered.', order: updatedOrder });
-  } else {
-    res.status(404).send({ message: 'Order not found.' })
+  try {
+    console.log({ "delivery": req.body })
+    const updated_order = {
+      ...req.body,
+      isDelivered: req.body.isDelivered ? false : true,
+      deliveredAt: Date.now()
+    }
+    const updated = await Order.updateOne({ _id: req.params.id }, updated_order)
+    console.log({ "delivery": updated_order })
+    // Send the request back to the front end
+    res.send(updated_order)
+
   }
+  catch (err) {
+    console.log(err);
+  }
+
 });
 
 // export default router;

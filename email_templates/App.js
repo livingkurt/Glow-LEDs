@@ -315,7 +315,6 @@ module.exports = function (body) {
     }
 
     .cart-price {
-      
       font-size: 2.5rem;
       text-align: right;
     }

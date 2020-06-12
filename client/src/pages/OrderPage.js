@@ -20,6 +20,7 @@ function OrderPage(props) {
 
   const orderDetails = useSelector(state => state.orderDetails);
   const { loading, order, error } = orderDetails;
+  console.log({ OrderPage: order })
 
 
   const [paypal_state, set_paypal_state] = useState("block")
@@ -32,6 +33,10 @@ function OrderPage(props) {
       dispatch(detailsOrder(props.match.params.id));
     }
   }, [successPay]);
+
+  useEffect(() => {
+    set_order_state(order)
+  }, [order]);
 
 
 
@@ -51,37 +56,31 @@ function OrderPage(props) {
     }
   }
 
-  const [shipping_state, set_shipping_state] = useState(true)
-
+  const [order_state, set_order_state] = useState(order)
 
 
   const update_shipping_state = () => {
-    if (shipping_state) {
-      set_shipping_state(false)
+    console.log(order_state.isShipped)
+    if (order_state.isShipped) {
+      set_order_state({ ...order_state, isShipped: false })
       dispatch(shipOrder(order, false));
-      // dispatch(email_shipping(order));
     }
     else {
-      set_shipping_state(true)
+      set_order_state({ ...order_state, isShipped: true })
       dispatch(shipOrder(order, true));
-      // dispatch(email_shipping(order));
     }
 
   }
 
-  const [delivered_state, set_delivered_state] = useState(true)
-
-
   const update_delivered_state = () => {
-    if (delivered_state) {
-      set_delivered_state(false)
+    console.log(order_state.isDelivered)
+    if (order_state.isDelivered) {
+      set_order_state({ ...order_state, isDelivered: false })
       dispatch(deliverOrder(order, false));
-      // dispatch(email_delivery(order));
     }
     else {
-      set_delivered_state(true)
+      set_order_state({ ...order_state, isDelivered: true })
       dispatch(deliverOrder(order, true));
-      // dispatch(email_delivery(order));
     }
 
   }
