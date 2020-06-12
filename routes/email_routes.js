@@ -5,9 +5,9 @@ const express = require('express')
 const router = express.Router();
 const User = require('../models/user')
 const main_layout = require("../email_templates/App");
-const shipping_confirmation_view = require("../email_templates/pages/shipping_confirmation_view");
-const delivery_confirmation_view = require("../email_templates/pages/delivery_confirmation_view");
-const order_confirmation_view = require("../email_templates/pages/order_confirmation_view");
+// const shipping_confirmation_view = require("../email_templates/pages/shipping_confirmation_view");
+// const delivery_confirmation_view = require("../email_templates/pages/delivery_confirmation_view");
+const order_view = require("../email_templates/pages/order_view");
 const verified_account_view = require("../email_templates/pages/verified_account_view");
 
 let transporter = nodemailer.createTransport({
@@ -48,7 +48,7 @@ router.post("/order", async (req, res) => {
     from: process.env.DISPLAY_EMAIL,
     to: req.body.user_data.email,
     subject: 'Glow LEDs Order Confirmation',
-    html: main_layout(order_confirmation_view({ ...req.body, title: "Your Order Has Been Placed" }))
+    html: main_layout(order_view({ ...req.body, title: "Your Order Has Been Placed" }))
   }
 
   transporter.sendMail(mailOptions, (err, data) => {
@@ -78,7 +78,7 @@ router.post("/shipping", async (req, res) => {
     // from: 'Kurt LaVacque <lavacquek@gmail.com>',
     to: user.email,
     subject: 'Glow LEDs Shipping Confirmation',
-    html: main_layout(shipping_confirmation_view({ ...req.body, title: "Your Item has Shipped!" }))
+    html: main_layout(order_view({ ...req.body, title: "Your Item has Shipped!" }))
   }
   console.log(req.body)
 
@@ -108,7 +108,7 @@ router.post("/delivery", async (req, res) => {
     from: process.env.DISPLAY_EMAIL,
     to: user.email,
     subject: 'Glow LEDs Delivery Confirmation',
-    html: main_layout(delivery_confirmation_view({ ...req.body, title: "Your Item has Been Delivered!" }))
+    html: main_layout(order_view({ ...req.body, title: "Your Item has Been Delivered!" }))
   }
 
   transporter.sendMail(mailOptions, (err, data) => {

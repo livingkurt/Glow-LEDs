@@ -86,7 +86,7 @@ module.exports = function (props) {
           </li>
           <li>
             <div>Order Total</div>
-            <div>${props.totalPrice.toFixed(2)}</div>
+            <div>$${props.totalPrice.toFixed(2)}</div>
           </li>
         </ul>
       </div>

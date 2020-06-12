@@ -315,7 +315,7 @@ module.exports = function (body) {
     }
 
     .cart-price {
-      flex: 1 1;
+      
       font-size: 2.5rem;
       text-align: right;
     }
