@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
-import { BlockContainer, FlexContainer } from '../components/ContainerComponents';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
+import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
-function ProductsScreen(props) {
+function ProductsPage(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -19,7 +19,6 @@ function ProductsScreen(props) {
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
   const [facts, setFacts] = useState('');
-
   const productList = useSelector(state => state.productList);
   const { loading, products, error } = productList;
 
@@ -35,9 +34,7 @@ function ProductsScreen(props) {
       setModalVisible(false);
     }
     dispatch(listProducts());
-    return () => {
-      //
-    };
+
   }, [successSave, successDelete]);
 
   const openModal = (product) => {
@@ -67,6 +64,8 @@ function ProductsScreen(props) {
   const deleteHandler = (product) => {
     dispatch(deleteProduct(product._id));
   }
+
+
   return <BlockContainer class="main_container">
     <div className="product-header">
       <Title styles={{ fontSize: 30, textAlign: "center", width: "89%", marginRight: "auto" }} >Products</Title>
@@ -86,24 +85,18 @@ function ProductsScreen(props) {
             <FlexContainer row>
               <FlexContainer column styles={{ width: "50%", marginRight: "10px" }}>
                 <li>
-                  <label htmlFor="name">
-                    Name
-          </label>
-                  <input type="text" name="name" value={name} id="name" onChange={(e) => setName(e.target.value)}>
+                  <label htmlFor="name">Name</label>
+                  <input type="text" name="name" defaultValue={name} id="name" onChange={(e) => setName(e.target.value)}>
                   </input>
                 </li>
                 <li>
-                  <label htmlFor="price">
-                    Price
-          </label>
-                  <input type="text" name="price" value={price} id="price" onChange={(e) => setPrice(e.target.value)}>
+                  <label htmlFor="price">Price</label>
+                  <input type="text" name="price" defaultValue={price} id="price" onChange={(e) => setPrice(e.target.value)}>
                   </input>
                 </li>
                 <li>
-                  <label htmlFor="image_1">
-                    Image 1
-          </label>
-                  <input type="text" name="image_1" value={image_1} id="image_1" onChange={(e) => setImage_1(e.target.value)}>
+                  <label htmlFor="image">Image 1</label>
+                  <input type="text" name="image_1" defaultValue={image_1} id="image_1" onChange={(e) => setImage_1(e.target.value)}>
                   </input>
                 </li>
                 <li>
@@ -129,24 +122,18 @@ function ProductsScreen(props) {
               </FlexContainer>
               <FlexContainer column styles={{ width: "50%", marginLeft: "10px" }}>
                 <li>
-                  <label htmlFor="brand">
-                    Brand
-          </label>
-                  <input type="text" name="brand" value={brand} id="brand" onChange={(e) => setBrand(e.target.value)}>
+                  <label htmlFor="brand">Brand</label>
+                  <input type="text" name="brand" defaultValue={brand} id="brand" onChange={(e) => setBrand(e.target.value)}>
                   </input>
                 </li>
                 <li>
-                  <label htmlFor="countInStock">
-                    CountInStock
-          </label>
-                  <input type="text" name="countInStock" value={countInStock} id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>
+                  <label htmlFor="countInStock">Count In Stock</label>
+                  <input type="text" name="countInStock" defaultValue={countInStock} id="countInStock" onChange={(e) => setCountInStock(e.target.value)}>
                   </input>
                 </li>
                 <li>
-                  <label htmlFor="name">
-                    Category
-          </label>
-                  <input type="text" name="category" value={category} id="category" onChange={(e) => setCategory(e.target.value)}>
+                  <label htmlFor="name">Category</label>
+                  <input type="text" name="category" defaultValue={category} id="category" onChange={(e) => setCategory(e.target.value)}>
                   </input>
                 </li>
                 <li>
@@ -154,10 +141,8 @@ function ProductsScreen(props) {
                   <textarea name="facts" defaultValue={facts} id="facts" onChange={(e) => setFacts(e.target.value)}></textarea>
                 </li>
                 <li>
-                  <label htmlFor="description">
-                    Description
-          </label>
-                  <textarea name="description" value={description} id="description" onChange={(e) => setDescription(e.target.value)}></textarea>
+                  <label htmlFor="description">Description</label>
+                  <textarea name="description" defaultValue={description} style={{ height: "118px" }} id="description" onChange={(e) => setDescription(e.target.value)}></textarea>
                 </li>
               </FlexContainer>
             </FlexContainer>
@@ -173,9 +158,9 @@ function ProductsScreen(props) {
     }
 
 
-    <div className="product-list">
+    <div className="product-list" style={{ overflowX: "auto" }}>
 
-      <table className="table">
+      <table className="table responsive_table">
         <thead>
           <tr>
             <th>ID</th>
@@ -190,7 +175,7 @@ function ProductsScreen(props) {
           {products.map(product => (<tr key={product._id}>
             <td>{product._id}</td>
             <td>{product.name}</td>
-            <td>{product.price}</td>
+            <td>${product.price.toFixed(2)}</td>
             <td>{product.category}</td>
             <td>{product.brand}</td>
             <td>
@@ -203,8 +188,7 @@ function ProductsScreen(props) {
         </tbody>
       </table>
 
-
     </div>
   </BlockContainer>
 }
-export default ProductsScreen;
+export default ProductsPage;

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 import { Title } from '../components/UtilityComponents';
-import { email_order } from '../actions/emailActions';
+// import { email_order } from '../actions/emailActions';
 function PlaceOrderPage(props) {
 
   const user_data = props.userInfo
@@ -32,10 +32,10 @@ function PlaceOrderPage(props) {
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
       taxPrice, totalPrice
     }));
-    dispatch(email_order({
-      orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
-      taxPrice, totalPrice, user_data
-    }));
+    // dispatch(email_order({
+    //   orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
+    //   taxPrice, totalPrice, user_data
+    // }));
 
     // empty_cart();
   }

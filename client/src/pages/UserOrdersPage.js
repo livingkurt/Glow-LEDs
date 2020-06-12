@@ -35,9 +35,9 @@ function ProfilePage(props) {
   // console.log({ userToken })
 
 
-  useEffect(() => {
-    dispatch(token());
-  }, [errorOrders]);
+  // useEffect(() => {
+  //   dispatch(token());
+  // }, [errorOrders]);
 
 
   useEffect(() => {

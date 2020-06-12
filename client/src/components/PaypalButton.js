@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { Title } from './UtilityComponents';
 function PaypalButton(props) {
   const [sdkReady, setSdkReady] = useState(false);
 
@@ -44,7 +43,7 @@ function PaypalButton(props) {
   }, []);
 
   if (!sdkReady) {
-    return <Title styles={{ fontSize: 20 }} >Loading...</Title>
+    return <div>Loading...</div>
   }
 
   const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });

@@ -1,25 +1,17 @@
 // import mongoose from 'mongoose';
-const mongoose = require('mongoose')
-
-const shippingSchema = {
-  address: { type: String },
-  city: { type: String },
-  state: { type: String },
-  postalCode: { type: String },
-  country: { type: String },
-};
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true, unique: true, dropDups: true },
+  email: {
+    type: String, required: true, unique: true, index: true, dropDups: true,
+  },
   password: { type: String, required: true },
-  // confirmed: { type: Boolean, requried: true, default: false },
   isAdmin: { type: Boolean, required: true, default: false },
-  // refreshToken: { type: String },
-  shipping: shippingSchema,
-})
+});
 
-const userModel = mongoose.model("User", userSchema)
+const userModel = mongoose.model('User', userSchema);
 
 // export default userModel;
+
 module.exports = userModel;

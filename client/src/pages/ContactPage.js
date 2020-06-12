@@ -1,5 +1,5 @@
 import React from 'react';
-import emailjs from 'emailjs-com';
+// import emailjs from 'emailjs-com';
 import { Title } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 // import "./form.css";
@@ -9,12 +9,12 @@ export default function Form() {
   function sendEmail(e) {
     e.preventDefault();
 
-    emailjs.sendForm('default_service', 'portfolio_email_template', e.target, 'user_9nPtsTdb3HAOWUZJUb04Q')
-      .then((result) => {
-        console.log(result.text);
-      }, (error) => {
-        console.log(error.text);
-      });
+    // emailjs.sendForm('default_service', 'portfolio_email_template', e.target, 'user_9nPtsTdb3HAOWUZJUb04Q')
+    //   .then((result) => {
+    //     console.log(result.text);
+    //   }, (error) => {
+    //     console.log(error.text);
+    //   });
   }
 
   return (

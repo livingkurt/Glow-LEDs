@@ -2,9 +2,9 @@
 // import Product from '../models/productModel';
 // import { isAuth, isAdmin } from '../util';
 
-const express = require('express')
-const Product = require('../models/product')
-const { isAuth, isAdmin } = require('../util')
+const express = require('express');
+const Product = require('../models/product');
+const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
@@ -33,10 +33,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", isAuth, async (req, res) => {
+router.put("/:id", isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
-  console.log({ "router.put": req.body })
   if (product) {
     product.name = req.body.name;
     product.price = req.body.price;
@@ -59,7 +58,7 @@ router.put("/:id", isAuth, async (req, res) => {
 
 });
 
-router.delete("/:id", isAuth, async (req, res) => {
+router.delete("/:id", isAuth, isAdmin, async (req, res) => {
   const deletedProduct = await Product.findById(req.params.id);
   if (deletedProduct) {
     await deletedProduct.remove();
@@ -70,8 +69,7 @@ router.delete("/:id", isAuth, async (req, res) => {
 });
 
 
-router.post("/", isAuth, async (req, res) => {
-  console.log({ "router.post": req.body })
+router.post("/", isAuth, isAdmin, async (req, res) => {
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -97,4 +95,5 @@ router.post("/", isAuth, async (req, res) => {
 
 
 // export default router;
+
 module.exports = router;

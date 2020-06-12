@@ -1,23 +1,21 @@
-const express = require('express')
-const Order = require('../models/order')
-const { isAuth, isAdmin } = require('../util')
 // import express from 'express';
 // import Order from '../models/orderModel';
 // import { isAuth, isAdmin } from '../util';
 
+const express = require('express');
+const Order = require('../models/order');
+const { isAuth, isAdmin } = require('../util');
+
 const router = express.Router();
-
-
 
 router.get("/", isAuth, async (req, res) => {
   const orders = await Order.find({}).populate('user');
   res.send(orders);
-})
-
+});
 router.get("/mine", isAuth, async (req, res) => {
   const orders = await Order.find({ user: req.user._id });
   res.send(orders);
-})
+});
 
 router.get("/:id", isAuth, async (req, res) => {
   const order = await Order.findOne({ _id: req.params.id });
@@ -31,7 +29,7 @@ router.get("/:id", isAuth, async (req, res) => {
 router.delete("/:id", isAuth, isAdmin, async (req, res) => {
   const order = await Order.findOne({ _id: req.params.id });
   if (order) {
-    const deletedOrder = await order.remove()
+    const deletedOrder = await order.remove();
     res.send(deletedOrder);
   } else {
     res.status(404).send("Order Not Found.")
@@ -72,7 +70,9 @@ router.put("/:id/pay", isAuth, async (req, res) => {
     res.status(404).send({ message: 'Order not found.' })
   }
 });
-router.put("/:id/shipping", isAuth, async (req, res) => {
+
+router.put("/:id/shipping", async (req, res) => {
+  console.log({ "shipping": req.body })
   console.log(Object.keys(req.body).join(""))
   const shippingResult = Object.keys(req.body).join("")
   const order = await Order.findById(req.params.id);
@@ -86,7 +86,8 @@ router.put("/:id/shipping", isAuth, async (req, res) => {
   }
 });
 
-router.put("/:id/delivery", isAuth, async (req, res) => {
+router.put("/:id/delivery", async (req, res) => {
+  console.log({ "delivery": req.body })
   console.log(Object.keys(req.body).join(""))
   const deliveryResult = Object.keys(req.body).join("")
   const order = await Order.findById(req.params.id);

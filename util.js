@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken')
-const config = require('./config')
-
 // import jwt from 'jsonwebtoken';
 // import config from './config';
+const jwt = require('jsonwebtoken')
+const config = require('./config')
 
 const getToken = (user) => {
   return jwt.sign({
@@ -12,18 +11,11 @@ const getToken = (user) => {
     isAdmin: user.isAdmin,
 
   }, config.JWT_SECRET, {
-    expiresIn: '15s'
+    expiresIn: '48h'
   })
 }
 
-const removeToken = (req, res) => {
-  // console.log({ headers: req.headers.authorization })
-  // console.log("hello")
-  // jwt.destroy(req.headers.authorization)
-  return jwt.sign({}, config.JWT_SECRET)
-}
-
-const isAuth2 = (req, res, next) => {
+const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token) {
@@ -42,25 +34,11 @@ const isAuth2 = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  console.log({ isAdmin: req.user.isAdmin })
+  console.log(req.user)
   if (req.user && req.user.isAdmin) {
     return next();
   }
   return res.status(401).send({ msg: 'Admin Token is not valid.' })
-}
-
-const isAuth = (req, res, next) => {
-  const authHeader = req.headers['authorization']
-  // console.log({ authHeader: authHeader })
-
-  const token = authHeader && authHeader.split(' ')[1]
-  console.log({ utils: token })
-  if (token == null) return res.sendStatus(401);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403)
-    req.user = user
-    next()
-  })
 }
 
 // export {
@@ -68,5 +46,5 @@ const isAuth = (req, res, next) => {
 // }
 
 module.exports = {
-  getToken, isAuth, isAdmin, removeToken
+  getToken, isAuth, isAdmin
 }
