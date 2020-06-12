@@ -38,10 +38,13 @@ app.get('/api/config/paypal', (req, res) => {
 // app.use(express.static(path.join(__dirname, '/client/build')));
 
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("client/build"));
+// }
 
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'client/build')));
+}
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function (req, res) {
