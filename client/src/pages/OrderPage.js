@@ -42,7 +42,6 @@ function OrderPage(props) {
 
   useEffect(() => {
     empty_cart();
-    // dispatch(email_order(order))
   }, [])
 
   const handleSuccessPayment = (paymentResult) => {

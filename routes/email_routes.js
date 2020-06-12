@@ -9,6 +9,7 @@ const main_layout = require("../email_templates/App");
 // const delivery_confirmation_view = require("../email_templates/pages/delivery_confirmation_view");
 const order_view = require("../email_templates/pages/order_view");
 const verified_account_view = require("../email_templates/pages/verified_account_view");
+const contact_view = require("../email_templates/pages/contact_view");
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -16,6 +17,31 @@ let transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD
   }
+})
+
+router.post("/contact", async (req, res) => {
+
+  const data = req.body.user_name
+  console.log(data)
+
+  let mailOptions = {
+    from: data.email,
+    to: process.env.DISPLAY_EMAIL,
+    subject: `New message from ${data.user_name} - ${data.order_number} - ${data.reason_for_contact}`,
+    html: main_layout(contact_view(data))
+  }
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log('Error Occurs', err)
+      res.send(err)
+    }
+    else {
+      console.log('Contact Email Sent to ' + data.user_name)
+      res.send("Email Successfully Sent")
+    }
+  })
+
 })
 
 router.post("/register", async (req, res) => {
@@ -40,6 +66,7 @@ router.post("/register", async (req, res) => {
   })
 
 })
+
 
 router.post("/order", async (req, res) => {
   console.log({ order: req.body })
