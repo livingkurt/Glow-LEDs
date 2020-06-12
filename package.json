@@ -10,7 +10,8 @@
 		"express": "^4.17.1",
 		"if-env": "^1.0.4",
 		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^5.8.11"
+		"mongoose": "^5.8.11",
+		"nodemailer": "^6.4.8"
 	},
 	"devDependencies": {
 		"concurrently": "^5.2.0",

@@ -49,7 +49,7 @@ function HomePage(props) {
         <Title class="h1_title" styles={{ fontSize: 50, marginBottom: "3vh" }} >Welcome to Glow LEDs</Title>
       </FlexContainer>
       <FlexContainer h_center>
-        <Title class="h2_title" styles={{ fontSize: 30 }} >Introducting Diffuser Caps</Title>
+        <Title class="h2_title" styles={{ fontSize: 30 }} >Introducing Diffuser Caps</Title>
       </FlexContainer>
       <p className="p_descriptions" style={{ textAlign: "center" }}>
         Custom 3D Printed Caps that go over the Diffuser and Glove to bring your light shows to another dimmension

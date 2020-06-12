@@ -14,6 +14,7 @@ const createOrder = (order) => async (dispatch, getState) => {
       }
     });
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+    axios.post("/api/emails/order", order);
   } catch (error) {
     dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
   }
@@ -100,6 +101,7 @@ const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
         { Authorization: 'Bearer ' + userInfo.accessToken }
     });
     dispatch({ type: ORDER_SHIPPING_SUCCESS, payload: data })
+    axios.post("/api/emails/shipping", order);
   } catch (error) {
     dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
   }
@@ -116,6 +118,7 @@ const deliverOrder = (order, deliveryResult) => async (dispatch, getState) => {
         { Authorization: 'Bearer ' + userInfo.accessToken }
     });
     dispatch({ type: ORDER_DELIVERY_SUCCESS, payload: data })
+    axios.post("/api/emails/delivery", order);
   } catch (error) {
     dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
   }

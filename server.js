@@ -15,7 +15,7 @@ const config = require('./config');
 // const userRoute = require('./routes/userRoute');
 // const productRoute = require('./routes/productRoute');
 // const orderRoute = require('./routes/orderRoute');
-const { user_routes, product_routes, order_routes } = require('./routes/index')
+const { user_routes, product_routes, order_routes, email_routes } = require('./routes/index')
 
 const mongodbUrl = config.MONGODB_URL;
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db", {
@@ -31,6 +31,7 @@ app.use(bodyParser.json());
 app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
+app.use("/api/emails", email_routes)
 app.get('/api/config/paypal', (req, res) => {
   res.send(config.PAYPAL_CLIENT_ID);
 });
