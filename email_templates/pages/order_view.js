@@ -15,8 +15,8 @@ module.exports = function (props) {
         <div>
           <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div style="display: flex; flex-direction: column;">
-              <h1 style="display: flex; font-size: 30px;">${props.title}</h1>
-              <h1 style="display: flex; font-size: 20px; margin: 0px;">Order Number: ${props._id}</h1>
+              <h1 style="display: flex; font-size: 30px; margin-top: 0px;">${props.title}</h1>
+              <h1 style="display: flex; font-size: 20px; margin: 0px;">Order Number: <a href="https://glow-leds.herokuapp.com/order/${props._id}" style="color:white; text-decoration:none">${props._id}</a></h1>
               <h1 style="display: flex; font-size: 30px;">Shipping</h1>
               <div>
                 <div>${props.shipping.address}</div>
@@ -94,6 +94,14 @@ module.exports = function (props) {
       </div>
     </div>
   </div>
+  <div style="display: flex; flex-direction: column; justify-content: center;">
+
+          <div style="margin-top: 10px; font-size: 16px; margin: 0px auto;">If something doesn't seem right about this
+            order
+            leave us a message here <button class="button primary" style="width: 176px;">Contact</button>
+          </div>
+
+        </div>
 </div>
 </div>
 	`;
