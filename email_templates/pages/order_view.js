@@ -15,27 +15,29 @@ module.exports = function (props) {
         <div>
           <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div style="display: flex; flex-direction: column;">
-              <h1 style="display: flex; font-family: Helvetica; font-size: 30px;">${props.title}</h1>
+              <h1 style="display: flex; font-size: 30px;">${props.title}</h1>
+              <h1 style="display: flex; font-size: 20px; margin: 0px;">Order Number: ${props._id}</h1>
+              <h1 style="display: flex; font-size: 30px;">Shipping</h1>
               <div>
-              <div>${props.shipping.address}</div>
-              <div>${props.shipping.city}, ${props.shipping.state} ${props.shipping.postalCode} ${props.shipping.country}</div>
+                <div>${props.shipping.address}</div>
+                <div>${props.shipping.city}, ${props.shipping.state} ${props.shipping.postalCode} ${props.shipping.country}</div>
               </div>
             </div>
             <div class="ship_deliver"
               style="display: flex; flex-direction: column; margin-top: auto; width: 373px;">
               <div
                 style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                <label class="label" style="margin-top: 5px; font-size: 16px;">${props.isShipped ? "Shipped at " + format_date_display(props.shippedAt) : " Not Shipped"}</label>
+                <label class="label" style="margin-top: 5px; ">${props.isShipped ? "Shipped at " + format_date_display(props.shippedAt) : " Not Shipped"}</label>
               </div>
               <div
                 style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                <label class="label" style="font-size:16px; margin-top:5px">${props.isDelivered ? "Delivered at " + format_date_display(props.deliveredAt) : " Not Delivered"}</label>
+                <label class="label" style=" margin-top:5px">${props.isDelivered ? "Delivered at " + format_date_display(props.deliveredAt) : " Not Delivered"}</label>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <h1 style="display: flex; font-family: Helvetica; font-size: 30px;">Payment</h1>
+          <h1 style="display: flex; font-size: 30px;">Payment</h1>
           <div>Payment Method: paypal</div>
           <div>${props.isPaid
       ?
@@ -47,7 +49,7 @@ module.exports = function (props) {
         <div>
           <ul class="cart-list-container" style="margin-top: 0px;">
             <li>
-              <h1 style="display: flex; font-family: Helvetica; font-size: 30px;">Shopping Cart</h1>
+              <h1 style="display: flex; font-size: 30px;">Shopping Cart</h1>
               <div>Price</div>
             </li>
     ${props.orderItems.map(item => {
@@ -69,7 +71,7 @@ module.exports = function (props) {
       <div class="placeorder-action">
         <ul>
           <li>
-            <h1 style="display: flex; font-family: Helvetica; font-size: 30px; margin-top: 0px;">Order Summary
+            <h1 style="display: flex; font-size: 30px; margin-top: 0px;">Order Summary
             </h1>
           </li>
           <li>
