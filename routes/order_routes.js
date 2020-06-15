@@ -77,7 +77,7 @@ router.put("/:id/shipping", async (req, res) => {
     const updated_order = {
       ...req.body,
       isShipped: req.body.isShipped ? false : true,
-      shippedAt: Date.now()
+      shippedAt: req.body.isShipped ? "" : Date.now()
     }
     const updated = await Order.updateOne({ _id: req.params.id }, updated_order)
     console.log({ "shipping": updated_order })
@@ -97,7 +97,7 @@ router.put("/:id/delivery", async (req, res) => {
     const updated_order = {
       ...req.body,
       isDelivered: req.body.isDelivered ? false : true,
-      deliveredAt: Date.now()
+      deliveredAt: req.body.isDelivered ? "" : Date.now()
     }
     const updated = await Order.updateOne({ _id: req.params.id }, updated_order)
     console.log({ "delivery": updated_order })

@@ -5,6 +5,7 @@ import {
 } from "../constants/orderConstants";
 
 const createOrder = (order) => async (dispatch, getState) => {
+  console.log({ createOrder: order })
   try {
     dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
     const { userLogin: { userInfo } } = getState();

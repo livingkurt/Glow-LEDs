@@ -30,7 +30,7 @@ function PlaceOrderPage(props) {
     // create an order
     dispatch(createOrder({
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
-      taxPrice, totalPrice
+      taxPrice, totalPrice, user_data
     }));
     // dispatch(email_order({
     //   orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,

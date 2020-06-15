@@ -84,7 +84,7 @@ router.post("/order", async (req, res) => {
       res.send(err)
     }
     else {
-      console.log('Order Email Sent to ' + user.name)
+      console.log('Order Email Sent to ' + req.body.user_data.name)
       res.send("Email Successfully Sent")
     }
   })

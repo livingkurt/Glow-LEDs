@@ -55,7 +55,7 @@ module.exports = function (props) {
     ${props.orderItems.map(item => {
       let item_item = `<li style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem">
                         <div class="cart-image">
-                          <img src="https://glow-leds.herokuapp.com${item.image_1}" alt="product"style="border-radius:8px; margin-right:10px; max-height:10rem; max-width:10rem">
+                          <img src="https://glow-leds.herokuapp.com/${item.image_1}" alt="product"style="border-radius:8px; margin-right:10px; max-height:10rem; max-width:10rem">
                         </div>
                         <div class="cart-name">
                           <div><a href="https://glow-leds.herokuapp.com/product/${item.product}" style="color:white; text-decoration:none">${item.name}</a></div>
