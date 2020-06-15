@@ -15,15 +15,11 @@ function ProfilePage(props) {
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  // console.log({ "Profile": userInfo })
 
   const userUpdate = useSelector(state => state.userUpdate);
-  const { loading, success, error } = userUpdate;
-  console.log({ "Profile": userUpdate.userInfo })
 
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo.name)
       setEmail(userInfo.email);
       setName(userInfo.name);
       setPassword(userInfo.password);
@@ -40,7 +36,6 @@ function ProfilePage(props) {
       setName(userUpdate.userInfo.name);
       setPassword(userUpdate.userInfo.password);
     }
-
     return () => {
 
     };
@@ -57,11 +52,6 @@ function ProfilePage(props) {
     </FlexContainer>
     <FlexContainer class="profile_container" row h_between wrap >
       <FlexContainer column>
-        <FlexContainer h_center>
-          {loading && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
-          {error && <Title styles={{ fontSize: 20 }} >{error}</Title>}
-          {success && <Title styles={{ fontSize: 20 }} >Profile Saved Successfully</Title>}
-        </FlexContainer>
         <FlexContainer column styles={container_styles}>
           <Title styles={{ fontSize: 20 }}>Name</Title>
           <Label>{name}</Label>

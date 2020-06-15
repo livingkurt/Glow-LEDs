@@ -53,23 +53,17 @@ const Sidebar = (props) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    // if (!userInfo === undefined) {
-    // console.log({ "Header": userInfo })
     setName(userInfo.name);
     // }
   }, [])
 
   const userUpdate = useSelector(state => state.userUpdate);
-  const { loading, success, error } = userUpdate;
-  console.log({ "Profile": userUpdate.userInfo })
 
   useEffect(() => {
     if (userUpdate.userInfo) {
       setName(userUpdate.userInfo.name);
     }
-
     return () => {
-
     };
   }, [userUpdate.userInfo])
 

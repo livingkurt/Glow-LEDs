@@ -27,18 +27,9 @@ const Header = (props) => {
   const [name, setName] = useState('');
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  // console.log({ "Header": userInfo })
-  // if (!userInfo === undefined) {
-  //   console.log({ "Header": userInfo })
-  //   setName(userInfo.name);
-  // }
-
 
   useEffect(() => {
-    // if (!userInfo === undefined) {
-    // console.log({ "Header": userInfo })
     setName(userInfo.name);
-    // }
   }, [])
 
   const cart = useSelector(state => state.cart);
@@ -65,14 +56,11 @@ const Header = (props) => {
   }
 
   const userUpdate = useSelector(state => state.userUpdate);
-  const { loading, success, error } = userUpdate;
-  console.log({ "Profile": userUpdate.userInfo })
 
   useEffect(() => {
     if (userUpdate.userInfo) {
       setName(userUpdate.userInfo.name);
     }
-
     return () => {
 
     };
