@@ -51,7 +51,9 @@ function ProfilePage(props) {
   }, [userInfo])
 
 
-  return <FlexContainer class="profile_container" wrap styles={{ padding: "20px" }}>
+  return <FlexContainer class="profile_container" column styles={{ padding: "20px" }}>
+
+    <Link to="/profile"><Title class="back_button" styles={{ fontSize: "2rem", alignItem: "flex-start" }} >Back to Profile</Title></Link>
     <div className="profile-info">
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
