@@ -15,13 +15,11 @@ function ProfilePage(props) {
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  console.log({ "Profile": userInfo })
+  // console.log({ "Profile": userInfo })
 
   const userUpdate = useSelector(state => state.userUpdate);
   const { loading, success, error } = userUpdate;
-
-  const myOrderList = useSelector(state => state.myOrderList);
-  const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
+  console.log({ "Profile": userUpdate.userInfo })
 
   useEffect(() => {
     if (userInfo) {
@@ -35,6 +33,18 @@ function ProfilePage(props) {
 
     };
   }, [userInfo])
+
+  useEffect(() => {
+    if (userUpdate.userInfo) {
+      setEmail(userUpdate.userInfo.email);
+      setName(userUpdate.userInfo.name);
+      setPassword(userUpdate.userInfo.password);
+    }
+
+    return () => {
+
+    };
+  }, [userUpdate.userInfo])
 
   const container_styles = {
     marginBottom: "20px"
@@ -74,40 +84,6 @@ function ProfilePage(props) {
         </div>
       </FlexContainer>
     </FlexContainer>
-
-    {/* </div> */}
-    {/* </div> */}
-    {/* <div className="profile-orders content-margined profile_orders_container" style={{ overflowX: "auto" }} >
-      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", justifyContent: "center" }} >Orders</Title>
-      {
-        loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
-          errorOrders ? <div>{errorOrders} </div> :
-            <BlockContainer class="table_container" styles={{ padding: "0" }}>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                    <th>PAID</th>
-                    <th>ACTIONS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map(order => <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{format_date_display(order.createdAt)}</td>
-                    <td>${order.totalPrice.toFixed(2)}</td>
-                    <td>{order.isPaid ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
-                    <td>
-                      <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>
-                    </td>
-                  </tr>)}
-                </tbody>
-              </table>
-            </BlockContainer>
-      }
-    </div> */}
   </FlexContainer >
 
 }

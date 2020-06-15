@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from "react-router-dom";
 import { Title, ButtonWord } from "../../UtilityComponents/index"
 import { FlexContainer } from "../index"
@@ -48,6 +48,31 @@ const Sidebar = (props) => {
     "-webkitTransform": "rotate(-180deg)"
   }
 
+  const [name, setName] = useState('');
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    // if (!userInfo === undefined) {
+    // console.log({ "Header": userInfo })
+    setName(userInfo.name);
+    // }
+  }, [])
+
+  const userUpdate = useSelector(state => state.userUpdate);
+  const { loading, success, error } = userUpdate;
+  console.log({ "Profile": userUpdate.userInfo })
+
+  useEffect(() => {
+    if (userUpdate.userInfo) {
+      setName(userUpdate.userInfo.name);
+    }
+
+    return () => {
+
+    };
+  }, [userUpdate.userInfo])
+
   return (
     <aside className="sidebar">
       <Title class="h2_title">Shopping Categories</Title>
@@ -58,7 +83,7 @@ const Sidebar = (props) => {
             ?
             // <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
             <div className="dropdown-sidebar-nav" >
-              <ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord>
+              <ButtonWord class="sidebar_nav_buttons">{name}</ButtonWord>
               <ul className="dropdown-sidebar-nav-content">
                 <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Profile</ButtonWord></Link>
                 <Link to="/userorders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>

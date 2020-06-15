@@ -34,12 +34,12 @@ const Header = (props) => {
   // }
 
 
-  // useEffect(() => {
-  //   if (!userInfo === undefined) {
-  //     console.log({ "Header": userInfo })
-  //     setName(userInfo.name);
-  //   }
-  // }, [userInfo])
+  useEffect(() => {
+    // if (!userInfo === undefined) {
+    // console.log({ "Header": userInfo })
+    setName(userInfo.name);
+    // }
+  }, [])
 
   const cart = useSelector(state => state.cart);
   console.log({ "Header": userInfo })
@@ -63,6 +63,20 @@ const Header = (props) => {
     dispatch(logout());
     history.push("/login");
   }
+
+  const userUpdate = useSelector(state => state.userUpdate);
+  const { loading, success, error } = userUpdate;
+  console.log({ "Profile": userUpdate.userInfo })
+
+  useEffect(() => {
+    if (userUpdate.userInfo) {
+      setName(userUpdate.userInfo.name);
+    }
+
+    return () => {
+
+    };
+  }, [userUpdate.userInfo])
 
   return (
     <header style={header_styles} id="overlay">
@@ -97,7 +111,7 @@ const Header = (props) => {
             ?
             <>
               <div className="dropdown" >
-                <ButtonWord class="nav_buttons" >{userInfo.name}</ButtonWord>
+                <ButtonWord class="nav_buttons" >{name}</ButtonWord>
                 <ul className="dropdown-content" style={{ width: "150px" }}>
                   <Link to="/profile"><ButtonWord >Profile</ButtonWord></Link>
                   <Link to="/userorders"><ButtonWord >Orders</ButtonWord></Link>
