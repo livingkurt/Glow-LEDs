@@ -81,11 +81,11 @@ function ProfilePage(props) {
               <input defaultValue={email} type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
               </input>
             </li>
-            <li>
+            {/* <li>
               <label htmlFor="password">Password</label>
               <input defaultValue={password} type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
               </input>
-            </li>
+            </li> */}
 
             <li>
               <button type="submit" className="button primary">Update</button>
