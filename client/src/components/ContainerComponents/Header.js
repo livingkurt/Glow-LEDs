@@ -29,8 +29,10 @@ const Header = (props) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    setName(userInfo.name);
-  }, [])
+    if (userInfo) {
+      setName(userInfo.name);
+    }
+  }, [userInfo])
 
   const cart = useSelector(state => state.cart);
   console.log({ "Header": userInfo })

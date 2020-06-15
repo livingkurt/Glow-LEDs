@@ -22,6 +22,14 @@ function OrderPage(props) {
   const { loading, order, error } = orderDetails;
   console.log({ OrderPage: order })
 
+  const orderShipping = useSelector(state => state.orderShipping);
+  const { loading: load_shipping, shipping, error: error_shipping } = orderShipping;
+  console.log({ OrderPage: order })
+
+  const orderDelivery = useSelector(state => state.orderDelivery);
+  const { loading: load_deliverey, delivery, error: error_deliverey } = orderDelivery;
+  console.log({ OrderPage: order })
+
 
   const [paypal_state, set_paypal_state] = useState("block")
 

@@ -53,9 +53,12 @@ const Sidebar = (props) => {
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    setName(userInfo.name);
+    if (userInfo) {
+      setName(userInfo.name);
+    }
+
     // }
-  }, [])
+  }, [userInfo])
 
   const userUpdate = useSelector(state => state.userUpdate);
 
