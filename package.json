@@ -4,6 +4,7 @@
 	"description": "Demo : https://amazonaapp.herokuapp.com/",
 	"main": "server.js",
 	"dependencies": {
+		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.19.0",
 		"dotenv": "^8.2.0",
 		"eslint-plugin-react": "^7.19.0",

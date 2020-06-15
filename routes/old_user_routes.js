@@ -2,13 +2,15 @@
 // import User from '../models/userModel';
 // import { getToken, isAuth } from '../util';
 
-const express = require('express');
-const User = require('../models/user');
-const { getToken, isAuth } = require('../util');
+const express = require('express')
+const User = require('../models/user')
+const { getToken, isAuth } = require('../util')
 const bcrypt = require("bcryptjs");
+// const jwt = require("jsonwebtoken");
 require("dotenv")
 
 const router = express.Router();
+
 
 router.put('/:id', isAuth, async (req, res) => {
   const userId = req.params.id;
@@ -65,7 +67,7 @@ router.post('/register', async (req, res) => {
     email: req.body.email,
     password: req.body.password
   });
-  const user = await User.findOne({ email: newUser.email });
+  const user = await User.findOne({ email: req.body.email });
   if (user) {
     return res.status(400).json({ email: "Email already exists" });
   }
@@ -87,6 +89,7 @@ router.post('/register', async (req, res) => {
       });
     });
   }
+
 })
 
 router.get("/createadmin", async (req, res) => {
@@ -97,7 +100,7 @@ router.get("/createadmin", async (req, res) => {
     confirmed: true,
     isAdmin: true
   });
-  const user = await User.findOne({ email: admin.email });
+  const user = await User.findOne({ email: req.body.email });
   if (user) {
     return res.status(400).json({ email: "Email already exists" });
   }
@@ -118,6 +121,29 @@ router.get("/createadmin", async (req, res) => {
           .catch(err => console.log(err));
       });
     });
+  }
+  // try {
+  //   const user = new User({
+  //     name: 'Kurt',
+  //     email: 'lavacquek@icloud.com',
+  //     password: '1234',
+  //     confirmed: true,
+  //     isAdmin: true
+  //   });
+  //   const newUser = await user.save();
+  //   res.send(newUser);
+  // } catch (error) {
+  //   res.send({ msg: error.message });
+  // }
+});
+
+router.get("/:id", async (req, res) => {
+  console.log("userRoute")
+  try {
+    const user = await User.findOne({ _id: req.params.id })
+    res.send(user);
+  } catch (error) {
+    res.send({ msg: error.message });
   }
 });
 
