@@ -33,7 +33,7 @@ function ProductPage(props) {
   return <div>
 
     <div className="back-to-result">
-      <Link to="/allproducts"><Title styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
+      <Link to="/allproducts"><Title class="back_button" styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
     </div>
     {loading ?
       <FlexContainer h_center>

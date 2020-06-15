@@ -66,7 +66,8 @@ function ProfilePage(props) {
         </FlexContainer >
       </FlexContainer>
       <FlexContainer>
-        <Link to={"/editprofile"}><button type="submit" className="button primary">Edit Profile</button></Link>
+        <Link to={"/editprofile"}><button style={{ marginRight: "10px", width: "110px" }} className="button primary">Edit Profile</button></Link>
+        <Link to={"/userorders"}><button style={{ width: "110px" }} className="button primary">View Orders</button></Link>
       </FlexContainer>
     </FlexContainer>
 

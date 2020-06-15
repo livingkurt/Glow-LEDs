@@ -51,7 +51,8 @@ function ProfilePage(props) {
   }, [userInfo])
 
 
-  return <FlexContainer class="profile_container" wrap styles={{ padding: "20px" }}>
+  return <FlexContainer class="profile_container" wrap column styles={{ padding: "20px" }}>
+
     {/* <div className="profile-info">
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -98,6 +99,8 @@ function ProfilePage(props) {
     </div> */}
     <div className="profile-orders profile_orders_container" style={{ overflowX: "auto" }} >
       {/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
+      <Link to="/profile"><Title class="back_button" styles={{ fontSize: "2rem", alignItem: "flex-start" }} >Back to Profile</Title></Link>
+
       <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", justifyContent: "center" }} >Orders</Title>
       {
         loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
