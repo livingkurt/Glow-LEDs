@@ -32,15 +32,16 @@ router.put('/:id', isAuth, async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
 
-  const login_user = await User.findOne({ email });
-  if (!login_user) {
-    return res.status(404).json({ emailnotfound: "Email not found" });
-  }
-  // Check password
-  bcrypt.compare(password, login_user.password).then(isMatch => {
+    const login_user = await User.findOne({ email });
+    if (!login_user) {
+      return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+    // Check password
+    const isMatch = await bcrypt.compare(password, login_user.password)
     if (isMatch) {
       res.send({
         _id: login_user.id,
@@ -55,70 +56,82 @@ router.post('/login', async (req, res) => {
         .status(400)
         .json({ passwordincorrect: "Password incorrect" });
     }
-  });
+  } catch (error) {
+    console.log(error)
+    res.send(error)
+  }
+
 
 });
 
 router.post('/register', async (req, res) => {
-  const newUser = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  });
-  const user = await User.findOne({ email: newUser.email });
-  if (user) {
-    return res.status(400).json({ email: "Email already exists" });
-  }
-  else {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser
-          .save()
-          .then(user => res.json({
+  try {
+    const newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    });
+    const user = await User.findOne({ email: newUser.email });
+    if (user) {
+      return res.status(400).json({ email: "Email already exists" });
+    }
+    else {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, async (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          await newUser.save()
+          res.json({
             _id: newUser.id,
             name: newUser.name,
             email: newUser.email,
             isAdmin: newUser.isAdmin,
             token: getToken(newUser)
-          }))
-          .catch(err => console.log(err));
+          })
+        });
       });
-    });
+    }
+  } catch (error) {
+    console.log(error)
+    res.send(error)
   }
+
 })
 
 router.get("/createadmin", async (req, res) => {
-  const admin = new User({
-    name: 'Kurt',
-    email: 'lavacquek@icloud.com',
-    password: "admin",
-    confirmed: true,
-    isAdmin: true
-  });
-  const user = await User.findOne({ email: admin.email });
-  if (user) {
-    return res.status(400).json({ email: "Email already exists" });
-  }
-  else {
-    bcrypt.genSalt(10, (err, salt) => {
-      bcrypt.hash(admin.password, salt, (err, hash) => {
-        if (err) throw err;
-        admin.password = hash;
-        admin
-          .save()
-          .then(admin => res.json({
+  try {
+    const admin = new User({
+      name: 'Kurt',
+      email: 'lavacquek@icloud.com',
+      password: "admin",
+      confirmed: true,
+      isAdmin: true
+    });
+    const user = await User.findOne({ email: admin.email });
+    if (user) {
+      return res.status(400).json({ email: "Email already exists" });
+    }
+    else {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(admin.password, salt, async (err, hash) => {
+          if (err) throw err;
+          admin.password = hash;
+          await admin.save()
+          res.json({
             _id: admin.id,
             name: admin.name,
             email: admin.email,
             isAdmin: admin.isAdmin,
             token: getToken(admin)
-          }))
-          .catch(err => console.log(err));
+          })
+        });
       });
-    });
+    }
+  } catch (error) {
+    console.log(error)
+    res.send(error)
   }
+
 });
 
 // export default router;
