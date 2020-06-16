@@ -35,7 +35,10 @@ function RegisterPage(props) {
     <form onSubmit={submitHandler} >
       <ul className="form-container">
         <li>
-          <h2>Create Account</h2>
+          {/* <h2>Create Account</h2> */}
+          <FlexContainer>
+            <Title styles={{ width: "100%", marginRight: "-40px" }} >Create</Title> <Title styles={{ width: "100%" }} >Account</Title>
+          </FlexContainer>
         </li>
         <li>
           <FlexContainer h_center>
