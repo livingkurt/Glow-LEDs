@@ -121,9 +121,7 @@ function ProductPage(props) {
 
                   <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >Video Coming Soon!</Title>
                   : <FlexContainer h_center column >
-                    <p style={{ textAlign: "center" }}>
-                      Watch the Video Below to Learn More
-                  </p>
+                    <Title styles={{ fontSize: 20, textAlign: "center", width: "100%" }} >Watch the Video Below to Learn More</Title>
                     <video className="product_video" style={{ height: "auto", maxWidth: "100%", borderRadius: "20px" }} controls>
                       <source src={product.video} type="video/mp4" />
                     </video>
