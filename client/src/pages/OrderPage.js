@@ -23,42 +23,66 @@ function OrderPage(props) {
   console.log({ OrderPage: order })
 
   const orderShipping = useSelector(state => state.orderShipping);
-  const { loading: load_shipping, shipping, error: error_shipping } = orderShipping;
-  console.log({ OrderPage: order })
+  const { loading: load_shipping, order: shipping, error: error_shipping } = orderShipping;
+  console.log({ shipping })
 
   const orderDelivery = useSelector(state => state.orderDelivery);
-  const { loading: load_deliverey, delivery, error: error_deliverey } = orderDelivery;
-  console.log({ OrderPage: order })
+  const { loading: load_deliverey, order: delivery, error: error_deliverey } = orderDelivery;
+  console.log({ delivery })
 
   const [shipping_state, set_shipping_state] = useState({})
   const [delivery_state, set_delivery_state] = useState({})
 
+  const [order_state, set_order_state] = useState({})
+
+  useEffect(() => {
+    if (order) {
+      set_order_state(order)
+      console.log({ order })
+      set_shipping_state(order.isShipped)
+      set_delivery_state(order.isDelivered)
+    }
+  }, [order])
+
   useEffect(() => {
     if (shipping) {
       set_shipping_state(shipping.isShipped)
+      // set_order_state({
+      //   ...order_state,
+      //   isShipped: shipping.isShipped,
+      //   shippedAt: shipping.isShipped ? Date.now() : ""
+
+      // })
+      set_order_state(shipping)
+      console.log({ shipping: shipping.isShipped })
     }
   }, [shipping])
 
   useEffect(() => {
     if (delivery) {
       set_delivery_state(delivery.isDelivered)
+      set_order_state(delivery)
+      // set_order_state({
+      //   ...order_state,
+      //   isDelivered: delivery.isDelivered,
+      //   deliveredAt: delivery.isDelivered ? Date.now() : ""
+      // })
+      console.log({ delivery: delivery.isShipped })
     }
   }, [delivery])
 
 
 
 
-  const [order_state, set_order_state] = useState(order)
+
 
 
   const update_shipping_state = () => {
-    if (shipping_state) {
-      // set_order_state({ ...order_state, isShipped: false })
+    if (order_state.isShipped) {
       set_shipping_state(false)
       dispatch(shipOrder(order, false));
     }
     else {
-      // set_order_state({ ...order_state, isShipped: true })
       set_shipping_state(true)
       dispatch(shipOrder(order, true));
     }
@@ -66,13 +90,11 @@ function OrderPage(props) {
   }
 
   const update_delivered_state = () => {
-    if (delivery_state) {
-      // set_order_state({ ...order_state, isDelivered: false })
+    if (order_state.isDelivered) {
       set_delivery_state(false)
       dispatch(deliverOrder(order, false));
     }
     else {
-      // set_order_state({ ...order_state, isDelivered: true })
       set_delivery_state(true)
       dispatch(deliverOrder(order, true));
     }
@@ -127,14 +149,16 @@ function OrderPage(props) {
               </FlexContainer>
               <FlexContainer column styles={{ marginTop: "auto", width: "373px" }} class="ship_deliver">
                 <FlexContainer row v_i_center h_between >
-                  <Label styles={{ marginTop: "5px" }} >{shipping_state ? "Shipped at " + format_date_display(order.shippedAt) : "Not Shipped"}</Label>
+                  {console.log({ shipping_state })}
+                  <Label styles={{ marginTop: "5px" }} >{shipping_state ? "Shipped at " + format_date_display(order_state.shippedAt) : "Not Shipped"}</Label>
                   {props.userInfo && props.userInfo.isAdmin && (<div>
                     <button style={{ width: "176px" }} className="button primary" onClick={update_shipping_state} >{shipping_state ? "Mark As Not Shipped" : "Mark As Shipped"}</button>
                   </div>
                   )}
                 </FlexContainer>
                 <FlexContainer row v_i_center h_between >
-                  <Label styles={{ marginTop: "5px" }}>{delivery_state ? "Delivered at " + format_date_display(order.deliveredAt) : "Not Delivered"}</Label>
+                  {console.log({ delivery_state })}
+                  <Label styles={{ marginTop: "5px" }}>{delivery_state ? "Delivered at " + format_date_display(order_state.deliveredAt) : "Not Delivered"}</Label>
                   {props.userInfo && props.userInfo.isAdmin && (<div>
                     <button style={{ width: "176px" }} className="button primary" onClick={update_delivered_state} >{delivery_state ? "Mark As Not Delivered" : "Mark As Delivered"}</button>
                   </div>

@@ -93,16 +93,21 @@ const deleteOrder = (orderId) => async (dispatch, getState) => {
 }
 
 const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
-  console.log({ shipOrder: shippingResult })
+  console.log({ ...order, isShipped: shippingResult })
   try {
     dispatch({ type: ORDER_SHIPPING_REQUEST, payload: shippingResult });
     const { userLogin: { userInfo } } = getState();
-    const { data } = await axios.put("/api/orders/" + order._id + "/shipping", order, {
+    const { data } = await axios.put("/api/orders/" + order._id + "/shipping", {
+      ...order,
+      isShipped: shippingResult,
+      shippedAt: shippingResult ? Date.now() : ""
+    }, {
       headers:
         { Authorization: 'Bearer ' + userInfo.accessToken }
     });
+    console.log({ data })
     dispatch({ type: ORDER_SHIPPING_SUCCESS, payload: data })
-    axios.post("/api/emails/shipping", data);
+    // axios.post("/api/emails/shipping", data);
   } catch (error) {
     dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
   }
@@ -110,16 +115,21 @@ const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
 
 
 const deliverOrder = (order, deliveryResult) => async (dispatch, getState) => {
-  console.log({ deliverOrder: deliveryResult })
+  console.log({ ...order, isDelivered: deliveryResult })
   try {
     dispatch({ type: ORDER_DELIVERY_REQUEST, payload: deliveryResult });
     const { userLogin: { userInfo } } = getState();
-    const { data } = await axios.put("/api/orders/" + order._id + "/delivery", order, {
+    const { data } = await axios.put("/api/orders/" + order._id + "/delivery", {
+      ...order,
+      isDelivered: deliveryResult,
+      deliveredAt: deliveryResult ? Date.now() : ""
+    }, {
       headers:
         { Authorization: 'Bearer ' + userInfo.accessToken }
     });
+    console.log({ data })
     dispatch({ type: ORDER_DELIVERY_SUCCESS, payload: data })
-    axios.post("/api/emails/delivery", data);
+    // axios.post("/api/emails/delivery", data);
   } catch (error) {
     dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
   }

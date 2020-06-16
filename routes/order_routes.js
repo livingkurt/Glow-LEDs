@@ -74,11 +74,14 @@ router.put("/:id/pay", isAuth, async (req, res) => {
 router.put("/:id/shipping", async (req, res) => {
   try {
     console.log({ "shipping": req.body })
-    const updated_order = {
-      ...req.body,
-      isShipped: req.body.isShipped ? false : true,
-      shippedAt: req.body.isShipped ? "" : Date.now()
-    }
+    const updated_order = req.body
+    // const order = req.body.order
+    // const result = req.body.shippingResult
+    // const updated_order = {
+    //   ...req.body,
+    //   isShipped: result,
+    //   shippedAt: result ? Date.now() : ""
+    // }
     const updated = await Order.updateOne({ _id: req.params.id }, updated_order)
     console.log({ "shipping": updated_order })
     // Send the request back to the front end
@@ -94,11 +97,14 @@ router.put("/:id/shipping", async (req, res) => {
 router.put("/:id/delivery", async (req, res) => {
   try {
     console.log({ "delivery": req.body })
-    const updated_order = {
-      ...req.body,
-      isDelivered: req.body.isDelivered ? false : true,
-      deliveredAt: req.body.isDelivered ? "" : Date.now()
-    }
+    const updated_order = req.body
+    // const order = req.body.order
+    // const result = req.body.deliveryResult
+    // const updated_order = {
+    //   ...req.body,
+    //   isDelivered: result,
+    //   deliveredAt: result ? "" : Date.now()
+    // }
     const updated = await Order.updateOne({ _id: req.params.id }, updated_order)
     console.log({ "delivery": updated_order })
     // Send the request back to the front end
