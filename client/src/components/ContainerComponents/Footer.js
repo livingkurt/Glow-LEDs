@@ -16,7 +16,7 @@ const Footer = (props) => {
     bottom: "0",
     width: "100%",
     textAlign: "center",
-    marginBottom: "90px"
+    marginTop: "90px"
 
   }
 
