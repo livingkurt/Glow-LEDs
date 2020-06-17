@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, listProducts, deleteProduct, detailsProduct } from '../actions/productActions';
 import { BlockContainer, FlexContainer } from '../components/ContainerComponents';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 function ProductsScreen(props) {
   // const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +20,8 @@ function ProductsScreen(props) {
   const [countInStock, setCountInStock] = useState('');
   const [description, setDescription] = useState('');
   const [facts, setFacts] = useState('');
+
+  const history = useHistory()
 
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
@@ -84,6 +86,8 @@ function ProductsScreen(props) {
       name, price, image_1, image_2, image_3, image_4, video, brand, category,
       countInStock, facts, description
     }));
+    history.push("/product/" + id);
+
   }
 
   const deleteHandler = (product) => {

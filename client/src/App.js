@@ -44,7 +44,7 @@ function App() {
             <Route path="/register" component={RegisterPage} />
             <Route path="/product/:id" component={ProductPage} />
             <Route path="/editproduct/:id?" component={EditProductPage} />
-            <Route path="/createproduct" component={CreateProductPage} />
+            {/* <Route path="/createproduct" component={CreateProductPage} /> */}
             <Route path="/cart/:id?" component={CartPage} />
             <Route path="/category/:id?" component={AllProductsPage} />
             <Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
