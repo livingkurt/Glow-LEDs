@@ -34,7 +34,7 @@ function ProductsPage(props) {
       {/* <button className="button primary" style={{ width: "156px" }} >Create Product</button> */}
       <Link to="/editproduct"><button className="button primary" style={{ width: "156px" }}>Create Product</button></Link>
     </div>
-    <div className="product-list">
+    <div className="product-list responsive_table" >
 
       <table className="table">
         <thead>
