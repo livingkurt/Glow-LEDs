@@ -6,6 +6,12 @@ import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components
 import { FlexContainer } from '../components/ContainerComponents';
 
 function ProductPage(props) {
+
+
+  const userLogin = useSelector(state => state.userLogin);
+
+  let { userInfo } = userLogin;
+  console.log(userInfo)
   const [qty, setQty] = useState(1);
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
@@ -33,7 +39,12 @@ function ProductPage(props) {
   return <div>
 
     <div className="back-to-result">
-      <Link to="/allproducts"><Title class="back_button" styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
+      <FlexContainer h_between>
+        <Link to="/allproducts"><Title class="back_button" styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
+        {userInfo && userInfo.isAdmin && (
+          <button className="button primary" style={{ width: "156px" }}>Edit Product</button>
+        )}
+      </FlexContainer>
     </div>
     {loading ?
       <FlexContainer h_center>
