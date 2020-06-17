@@ -30,13 +30,11 @@ function ProductsScreen(props) {
   const productDelete = useSelector(state => state.productDelete);
   const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
   const dispatch = useDispatch();
-  const product_id = props.match.params.id ? props.match.params.id : ""
 
-  // console.log({ ID: props.match.params.id })
+  console.log({ ID: props.match.params.id })
 
   useEffect(() => {
-
-    dispatch(detailsProduct(product_id));
+    dispatch(detailsProduct(props.match.params.id));
     if (product) {
       setId(product._id);
       setName(product.name);
@@ -190,12 +188,7 @@ function ProductsScreen(props) {
             <button type="submit" className="button primary">{id ? "Update" : "Create"}</button>
           </li>
           <li>
-            {!product_id ?
-              <Link to={"/product/" + props.match.params.id}><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
-              :
-              <Link to="/products"><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
-            }
-
+            <Link to={"/product/" + props.match.params.id}><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
           </li>
         </ul>
       </form>
