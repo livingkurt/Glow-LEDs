@@ -39,8 +39,8 @@ function ProductsScreen(props) {
   useEffect(() => {
 
     dispatch(detailsProduct(product_id));
-    if (product) {
-      console.log({ product })
+    if (product.constructor === Array) {
+      // console.log({ product })
       setId(product._id);
       setName(product.name);
       setPrice(product.price);
@@ -231,9 +231,9 @@ function ProductsScreen(props) {
           </li>
           <li>
             {id ?
-              <Link to={"/product/" + props.match.params.id}><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
+              <Link to={"/product/" + props.match.params.id}><button style={{ width: "100%" }} type="button" className="button secondary">Back to Product</button></Link>
               :
-              <Link to="/products"><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
+              <Link to="/products"><button style={{ width: "100%" }} type="button" className="button secondary">Back to Products</button></Link>
             }
 
           </li>
