@@ -63,7 +63,7 @@ function HomePage(props) {
         </video>
       </FlexContainer>
       <FlexContainer h_center>
-        <Link to="/category/Caps"><ButtonWord styles={{ fontSize: "2rem", margin: 20 }}><Title class="h2_title" styles={{ fontSize: 30 }} >Shop Diffuser Caps Today!</Title></ButtonWord></Link>
+        <Link to="/category/Caps"><ButtonWord styles={{ fontSize: "2rem", margin: 20 }}><Title class="h2_title" styles={{ fontSize: 30, justifyContent: "center" }} >Shop Diffuser Caps Today!</Title></ButtonWord></Link>
       </FlexContainer>
       <FlexContainer h_between wrap class="home_links">
         <Link to="/category/Caps" style={{ marginBottom: "16px" }}>
