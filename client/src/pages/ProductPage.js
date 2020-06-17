@@ -42,7 +42,7 @@ function ProductPage(props) {
       <FlexContainer h_between>
         <Link to="/allproducts"><Title class="back_button" styles={{ fontSize: "2rem" }} >Back to Results</Title></Link>
         {userInfo && userInfo.isAdmin && (
-          <button className="button primary" style={{ width: "156px" }}>Edit Product</button>
+          <Link to={"/editproduct/" + props.match.params.id}><button className="button primary" style={{ width: "156px" }}>Edit Product</button></Link>
         )}
       </FlexContainer>
     </div>
