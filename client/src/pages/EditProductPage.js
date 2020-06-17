@@ -40,6 +40,7 @@ function ProductsScreen(props) {
 
     dispatch(detailsProduct(product_id));
     if (product) {
+      console.log({ product })
       setId(product._id);
       setName(product.name);
       setPrice(product.price);
@@ -53,6 +54,21 @@ function ProductsScreen(props) {
       setBrand(product.brand);
       setCategory(product.category);
       setCountInStock(product.countInStock);
+    }
+    else {
+      setId('');
+      setName('');
+      setPrice('');
+      setDescription('');
+      setFacts('');
+      setImage_1('');
+      setImage_2('');
+      setImage_3('');
+      setImage_4('');
+      setVideo('');
+      setBrand('');
+      setCategory('');
+      setCountInStock('');
     }
     return () => {
 
@@ -86,7 +102,27 @@ function ProductsScreen(props) {
       name, price, image_1, image_2, image_3, image_4, video, brand, category,
       countInStock, facts, description
     }));
-    history.push("/product/" + id);
+    e.target.reset();
+    setId('');
+    setName('');
+    setPrice('');
+    setDescription('');
+    setFacts('');
+    setImage_1('');
+    setImage_2('');
+    setImage_3('');
+    setImage_4('');
+    setVideo('');
+    setBrand('');
+    setCategory('');
+    setCountInStock('');
+    if (id) {
+      history.push("/product/" + id);
+    }
+    else {
+      history.push("/products");
+    }
+
 
   }
 
@@ -105,7 +141,7 @@ function ProductsScreen(props) {
     <div className="form">
       <form onSubmit={submitHandler} style={{ width: "100%" }} >
         <ul className="form-container" style={{ maxWidth: "64rem", marginBottom: "20px" }}>
-          <Title styles={{ fontSize: 30 }} >Edit Product</Title>
+          <Title styles={{ fontSize: 30 }} >{product_id ? "Edit Product" : "Create Product"}</Title>
           <li>
             <FlexContainer h_center>
               {loadingSave && <Title styles={{ fontSize: 20 }} >Loading...</Title>}
@@ -194,7 +230,7 @@ function ProductsScreen(props) {
             <button type="submit" className="button primary">{id ? "Update" : "Create"}</button>
           </li>
           <li>
-            {!product_id ?
+            {id ?
               <Link to={"/product/" + props.match.params.id}><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
               :
               <Link to="/products"><button style={{ width: "100%" }} type="button" className="button secondary">Back</button></Link>
