@@ -33,7 +33,8 @@ function HomePage(props) {
 		top: '0',
 		right: '0',
 		bottom: '0',
-		borderRadius: '20px'
+		borderRadius: '20px',
+		outline: 'none'
 	};
 	const video_wrapper = {
 		position: 'relative',
