@@ -25,7 +25,8 @@ function ProductPage(props) {
 	const handleAddToCart = () => {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
 	};
-	function myFunction(e) {
+
+	function change_image(e) {
 		console.log(e.target.src);
 		var expandImg = document.getElementById('expandedImg');
 		expandImg.src = e.target.src;
@@ -126,7 +127,7 @@ function ProductPage(props) {
 													src={image}
 													alt=""
 													style={{ width: '100%' }}
-													onClick={(e) => myFunction(e)}
+													onClick={(e) => change_image(e)}
 												/>
 											</div>
 										);
