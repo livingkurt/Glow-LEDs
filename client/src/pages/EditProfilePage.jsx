@@ -71,9 +71,12 @@ function EditProfilePage(props) {
 							<li>
 								<FlexContainer h_center>
 									{loading && (
-										<Title styles={{ fontSize: 20 }}>
-											Loading... If pages doesn't show in 5 seconds, refresh the page.
-										</Title>
+										<FlexContainer h_center column>
+											<Title styles={{ fontSize: 20 }}>Loading...</Title>
+											<Title styles={{ fontSize: 20 }}>
+												If pages doesn't show in 5 seconds, refresh the page.
+											</Title>
+										</FlexContainer>
 									)}
 									{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
 									{success && <Title styles={{ fontSize: 20 }}>Profile Saved Successfully</Title>}

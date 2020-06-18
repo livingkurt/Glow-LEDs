@@ -136,7 +136,12 @@ function OrderPage(props) {
 	};
 
 	return loading ? (
-		<Title styles={{ fontSize: 20 }}>Loading... If pages doesn't show in 5 seconds, refresh the page.</Title>
+		<FlexContainer h_center column>
+			<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+			<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+				If pages doesn't show in 5 seconds, refresh the page.
+			</Title>
+		</FlexContainer>
 	) : error ? (
 		<div>{error}</div>
 	) : (
