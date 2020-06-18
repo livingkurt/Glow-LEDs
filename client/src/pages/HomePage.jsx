@@ -58,7 +58,7 @@ function HomePage(props) {
 				dimmension
 			</p>
 
-			<Title class="h2_title" styles={{ fontSize: 20, justifyContent: 'center' }}>
+			<Title class="h2_title" styles={{ fontSize: 20, justifyContent: 'center', textAlign: 'center' }}>
 				Watch the Video Below to See Them in Action
 			</Title>
 			<FlexContainer h_center styles={video_wrapper}>
