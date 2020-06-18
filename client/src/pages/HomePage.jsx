@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function HomePage(props) {
 	useEffect(() => {
 		const video = document.getElementById('caps_vid');
-		video.muted = true;
+		// video.muted = true;
 		video.autoplay = true;
 		video.playsinline = true;
 	}, []);
