@@ -1,7 +1,7 @@
 # GlowLEDs
 
 <p align="center">
-  <img style="text-align: center;" src="./client/public/images/Glow_Logo.png">
+  <img style="text-align: center;" src="./client/public/images/optimized_images/logo_images/glow_logo_optimized.png">
   <h1 style="text-align: center;">3D Printed LED toys and accessories, by a glover that just wants to light up the world</h1>
 </p>
 
@@ -71,24 +71,23 @@ npm start
 - email.js
 - Axios
 
-Or if you can run it in the [Browser](https://livingkurt.github.io/Work-Break-Timer/)
 
 # Pictures
 
 <div align="center" style="display:flex; flex-wrap: wrap; width:1500px;">
   <h2>Home</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Home_Top.png">
-  <img style="text-align: center;" src="client/public/images/readme_images/Home_Bottom.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/home_top_optimized.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/home_bottom_optimized.png">
   <h2>View Products</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Products.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/products_optimized.png">
   <h2>Cart</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Cart.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/cart_optimized.png">
   <h2>Contact Form</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Contact.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/contact_optimized.png">
   <h2>User Profile</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Profile.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/profile_optimized.png">
   <h2>Admin Products</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Admin_Products.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/admin_products_optimized.png">
   <h2>Admin Orders</h2>
-  <img style="text-align: center;" src="client/public/images/readme_images/Admin_Orders.png">
+  <img style="text-align: center;" src="client/public/images/optimized_images/readme_images/admin_orders_optimized.png">
 </div>

@@ -71,12 +71,12 @@ const Header = (props) => {
   return (
     <header style={header_styles} id="overlay">
       <div className="brand" >
-        <Link to="/" ><img className="zoom logo" style={{ marginRight: "130px" }} height="125px" src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
+        <Link to="/" ><img className="zoom logo" style={{ marginRight: "130px" }} height="125px" src="/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"></img></Link>
         <ButtonSymbol class="mobile_buttons" on_click_function={openMenu} styles={{ display: "none", fontSize: "30px", height: "50px", width: "50px" }}><i class="fas fa-bars"></i></ButtonSymbol>
       </div>
       <FlexContainer column h_center >
         <FlexContainer h_center v_i_center class="logo_text">
-          <Link to="/" ><img className="logo_2" style={{ display: "none", height: "80px" }} src="/images/Glow_Logo.png" alt="Glow LEDs"></img></Link>
+          <Link to="/" ><img className="logo_2" style={{ display: "none", height: "80px" }} src="/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"></img></Link>
           <Link to="/" ><Title class="glow_leds_text" styles={{ fontSize: "67px", margin: 0, textAlign: "center", justifyContent: "center", width: "100%", marginBottom: "10px", marginTop: "17px" }}>Glow LEDs</Title></Link>
 
         </FlexContainer>
