@@ -64,7 +64,7 @@ function HomePage(props) {
 			<FlexContainer h_center styles={video_wrapper}>
 				<video id="caps_vid" style={homepage_video} controls>
 					<source
-						src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force_Infinity_Mirror.mp4"
+						src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 						type="video/mp4"
 					/>
 				</video>
