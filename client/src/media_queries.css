@@ -228,6 +228,9 @@
     margin: auto;
     margin-bottom: 20px;
   }
+  .glow_leds_text {
+    font-size: 30px !important;
+  }
 }
 
 @media only screen and (max-width: 355px) {
