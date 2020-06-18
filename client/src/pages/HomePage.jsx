@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 function HomePage(props) {
 	useEffect(() => {
 		const video = document.getElementById('caps_vid');
-		// video.muted = true;
+		video.muted = true;
 		video.autoplay = true;
 		video.playsinline = true;
 	}, []);
@@ -57,9 +57,10 @@ function HomePage(props) {
 				Custom 3D Printed Caps that go over the Diffuser and Glove to bring your light shows to another
 				dimmension
 			</p>
-			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+
+			<Title class="h2_title" styles={{ fontSize: 20, justifyContent: 'center' }}>
 				Watch the Video Below to See Them in Action
-			</p>
+			</Title>
 			<FlexContainer h_center styles={video_wrapper}>
 				<video id="caps_vid" style={homepage_video} controls>
 					<source
@@ -85,7 +86,7 @@ function HomePage(props) {
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/product_images/Caps/IMG_9322.JPG"
+							src="/images/optimized_images/product_images/Caps/img_9322_optimized.jpg"
 							alt="diffuser_caps"
 						/>
 					</FlexContainer>
@@ -97,7 +98,7 @@ function HomePage(props) {
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG"
+							src="/images/optimized_images/product_images/15mm_Frosted_Dome_Diffusers/img_9301_optimized.jpg"
 							alt="diffusers"
 						/>
 					</FlexContainer>
@@ -109,7 +110,7 @@ function HomePage(props) {
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/product_images/Coin_Battery_Storage/IMG_9318.JPG"
+							src="/images/optimized_images/product_images/Coin_Battery_Storage/img_9318_optimized.jpg"
 							alt="accessories"
 						/>
 					</FlexContainer>
