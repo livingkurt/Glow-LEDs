@@ -153,7 +153,18 @@ function ProductPage(props) {
 								</FlexContainer>
 								<div className="details-image">
 									{loadingImages ? (
-										''
+										<FlexContainer h_center column>
+											<Title styles={{ fontSize: 25, justifyContent: 'center' }}>
+												Loading...
+											</Title>
+											<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+												If pages doesn't show in 5 seconds, refresh the page.
+											</Title>
+										</FlexContainer>
+									) : errorImages ? (
+										<FlexContainer h_center>
+											<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
+										</FlexContainer>
 									) : (
 										images.map((image, index) => {
 											return (
