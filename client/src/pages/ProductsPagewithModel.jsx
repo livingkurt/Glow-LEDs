@@ -10,7 +10,7 @@ function ProductsScreen(props) {
 	const [ id, setId ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ price, setPrice ] = useState('');
-	const [ image_1, setImage_1 ] = useState('');
+	const [ display_image, setDisplayImage ] = useState('');
 	const [ image_2, setImage_2 ] = useState('');
 	const [ image_3, setImage_3 ] = useState('');
 	const [ image_4, setImage_4 ] = useState('');
@@ -51,7 +51,7 @@ function ProductsScreen(props) {
 		setPrice(product.price);
 		setDescription(product.description);
 		setFacts(product.facts);
-		setImage_1(product.image_1);
+		setDisplayImage(product.display_image);
 		setImage_2(product.image_2);
 		setImage_3(product.image_3);
 		setImage_4(product.image_4);
@@ -67,7 +67,7 @@ function ProductsScreen(props) {
 				_id: id,
 				name,
 				price,
-				image_1,
+				display_image,
 				image_2,
 				image_3,
 				image_4,
@@ -136,13 +136,13 @@ function ProductsScreen(props) {
 										/>
 									</li>
 									<li>
-										<label htmlFor="image_1">Image 1</label>
+										<label htmlFor="display_image">Image 1</label>
 										<input
 											type="text"
-											name="image_1"
-											value={image_1}
-											id="image_1"
-											onChange={(e) => setImage_1(e.target.value)}
+											name="display_image"
+											value={display_image}
+											id="display_image"
+											onChange={(e) => setDisplayImage(e.target.value)}
 										/>
 									</li>
 									<li>

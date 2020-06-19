@@ -225,7 +225,7 @@ function OrderPage(props) {
 								order.orderItems.map((item) => (
 									<li key={item._id}>
 										<div className="cart-image">
-											<img src={item.image_1} alt="product" />
+											<img src={item.display_image} alt="product" />
 										</div>
 										<div className="cart-name">
 											<div>

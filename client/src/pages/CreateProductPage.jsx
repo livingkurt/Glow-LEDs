@@ -10,10 +10,7 @@ function ProductsScreen(props) {
 	const [ id, setId ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ price, setPrice ] = useState('');
-	const [ image_1, setImage_1 ] = useState('');
-	const [ image_2, setImage_2 ] = useState('');
-	const [ image_3, setImage_3 ] = useState('');
-	const [ image_4, setImage_4 ] = useState('');
+	const [ display_image, setDisplayImage ] = useState('');
 	const [ video, setVideo ] = useState('');
 	const [ brand, setBrand ] = useState('');
 	const [ category, setCategory ] = useState('');
@@ -41,10 +38,7 @@ function ProductsScreen(props) {
 			setPrice(product.price);
 			setDescription(product.description);
 			setFacts(product.facts);
-			setImage_1(product.image_1);
-			setImage_2(product.image_2);
-			setImage_3(product.image_3);
-			setImage_4(product.image_4);
+			setDisplayImage(product.display_image);
 			setVideo(product.video);
 			setBrand(product.brand);
 			setCategory(product.category);
@@ -60,10 +54,7 @@ function ProductsScreen(props) {
 			setPrice(product.price);
 			setDescription(product.description);
 			setFacts(product.facts);
-			setImage_1(product.image_1);
-			setImage_2(product.image_2);
-			setImage_3(product.image_3);
-			setImage_4(product.image_4);
+			setDisplayImage(product.display_image);
 			setVideo(product.video);
 			setBrand(product.brand);
 			setCategory(product.category);
@@ -82,10 +73,7 @@ function ProductsScreen(props) {
 				_id: id,
 				name,
 				price,
-				image_1,
-				image_2,
-				image_3,
-				image_4,
+				display_image,
 				video,
 				brand,
 				category,
@@ -158,43 +146,13 @@ function ProductsScreen(props) {
 									/>
 								</li>
 								<li>
-									<label htmlFor="image_1">Image 1</label>
+									<label htmlFor="display_image">Display Image</label>
 									<input
 										type="text"
-										name="image_1"
-										value={image_1}
-										id="image_1"
-										onChange={(e) => setImage_1(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="image">Image 2</label>
-									<input
-										type="text"
-										name="image_2"
-										defaultValue={image_2}
-										id="image_2"
-										onChange={(e) => setImage_2(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="image">Image 3</label>
-									<input
-										type="text"
-										name="image_3"
-										defaultValue={image_3}
-										id="image_3"
-										onChange={(e) => setImage_3(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="image">Image 4</label>
-									<input
-										type="text"
-										name="image_4"
-										defaultValue={image_4}
-										id="image_4"
-										onChange={(e) => setImage_4(e.target.value)}
+										name="display_image"
+										value={display_image}
+										id="display_image"
+										onChange={(e) => setDisplayImage(e.target.value)}
 									/>
 								</li>
 								<li>

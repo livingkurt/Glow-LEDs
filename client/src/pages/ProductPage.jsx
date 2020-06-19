@@ -9,7 +9,7 @@ import API from '../utils/API';
 function ProductPage(props) {
 	const userLogin = useSelector((state) => state.userLogin);
 
-	const [ images_state, set_images_state ] = useState([]);
+	// const [ images_state, set_images_state ] = useState([]);
 
 	// const get_images = async () => {
 	// 	try {
@@ -35,9 +35,9 @@ function ProductPage(props) {
 		video.autoplay = true;
 
 		// if (!loading) {
-		// 	console.log(product.image_1);
+		// 	console.log(product.display_image);
 		// 	console.log(product);
-		// 	// dispatch(imagesProduct(product.image_1));
+		// 	// dispatch(imagesProduct(product.display_image));
 		// }
 
 		// get_images();
@@ -46,9 +46,9 @@ function ProductPage(props) {
 	useEffect(
 		() => {
 			if (product) {
-				console.log(product.image_1);
-				console.log(product);
-				dispatch(imagesProduct(product.image_1));
+				// console.log(product.display_image);
+				// console.log(product);
+				dispatch(imagesProduct(product.display_image));
 			}
 			return () => {};
 		},
