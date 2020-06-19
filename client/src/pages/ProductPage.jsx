@@ -115,7 +115,7 @@ function ProductPage(props) {
 								<img
 									id="expandedImg"
 									alt=""
-									src={loadingImages ? 'Loading...' : errorImages ? { errorImages } : images[0]}
+									src={product.display_image}
 									style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
 								/>
 							</div>
