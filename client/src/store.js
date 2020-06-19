@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import Cookie from 'js-cookie';
-import { productListReducer, productDetailsReducer, productSaveReducer, productDeleteReducer } from './reducers/productReducers';
+import { productListReducer, productDetailsReducer, productSaveReducer, productDeleteReducer, productImagesReducer } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers'
 import { userLoginReducer, userRegisterReducer, userUpdateReducer, userContactReducer } from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, myOrderListReducer, orderListReducer, orderDeleteReducer, orderShippingReducer, orderDeliveryReducer } from './reducers/orderReducers';
@@ -17,6 +17,7 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   productSave: productSaveReducer,
+  productImages: productImagesReducer,
   productDelete: productDeleteReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,

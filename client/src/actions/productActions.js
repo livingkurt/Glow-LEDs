@@ -1,6 +1,6 @@
 import {
   PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL,
-  PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_SAVE_REQUEST, PRODUCT_SAVE_SUCCESS, PRODUCT_SAVE_FAIL, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST
+  PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_SAVE_REQUEST, PRODUCT_SAVE_SUCCESS, PRODUCT_SAVE_FAIL, PRODUCT_DELETE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_IMAGES_REQUEST, PRODUCT_IMAGES_SUCCESS, PRODUCT_IMAGES_FAIL
 } from "../constants/productConstants"
 import axios from 'axios';
 import Axios from "axios";
@@ -72,4 +72,16 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
   }
 }
 
-export { listProducts, detailsProduct, saveProduct, deleteProduct }
+const imagesProduct = (folder_dir) => async (dispatch) => {
+  console.log({ folder_dir })
+  try {
+    dispatch({ type: PRODUCT_IMAGES_REQUEST, payload: folder_dir });
+    const { data } = await axios.post("/api/products/images", folder_dir);
+    dispatch({ type: PRODUCT_IMAGES_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_IMAGES_FAIL, payload: error.message });
+
+  }
+}
+
+export { listProducts, detailsProduct, saveProduct, deleteProduct, imagesProduct }

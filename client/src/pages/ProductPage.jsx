@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct } from '../actions/productActions';
+import { detailsProduct, imagesProduct } from '../actions/productActions';
 import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
+import API from '../utils/API';
 
 function ProductPage(props) {
 	const userLogin = useSelector((state) => state.userLogin);
 
+	const [ images_state, set_images_state ] = useState([]);
+
+	// const get_images = async () => {
+	// 	try {
+	// 		const res = await API.get_images('/images/optimized_images/product_images/Custom_Infinity_Mirrors');
+	// 		// set_images_state(res.data);
+	// 		// console.log(res.data);
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// };
+
 	let { userInfo } = userLogin;
-	console.log(userInfo);
+	// console.log(userInfo);
 	const [ qty, setQty ] = useState(1);
 	const productDetails = useSelector((state) => state.productDetails);
 	const { product, loading, error } = productDetails;
@@ -20,7 +33,31 @@ function ProductPage(props) {
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
+
+		// if (!loading) {
+		// 	console.log(product.image_1);
+		// 	console.log(product);
+		// 	// dispatch(imagesProduct(product.image_1));
+		// }
+
+		// get_images();
 	}, []);
+
+	useEffect(
+		() => {
+			if (product) {
+				console.log(product.image_1);
+				console.log(product);
+				dispatch(imagesProduct(product.image_1));
+			}
+			return () => {};
+		},
+		[ product ]
+	);
+
+	const productImages = useSelector((state) => state.productImages);
+	const { images, loading: loadingImages, error: errorImages } = productImages;
+	console.log({ images });
 
 	const handleAddToCart = () => {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
@@ -78,7 +115,7 @@ function ProductPage(props) {
 								<img
 									id="expandedImg"
 									alt=""
-									src={product.image_1}
+									src={loadingImages ? 'Image' : images[0]}
 									style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
 								/>
 							</div>
@@ -115,23 +152,22 @@ function ProductPage(props) {
 									</div>
 								</FlexContainer>
 								<div className="details-image">
-									{[
-										product.image_1,
-										product.image_2,
-										product.image_3,
-										product.image_4
-									].map((image, index) => {
-										return (
-											<div className="column" key={index}>
-												<img
-													src={image}
-													alt=""
-													style={{ width: '100%' }}
-													onClick={(e) => change_image(e)}
-												/>
-											</div>
-										);
-									})}
+									{loadingImages ? (
+										''
+									) : (
+										images.map((image, index) => {
+											return (
+												<div className="column" key={index}>
+													<img
+														src={image}
+														alt=""
+														style={{ width: '100%' }}
+														onClick={(e) => change_image(e)}
+													/>
+												</div>
+											);
+										})
+									)}
 								</div>
 							</FlexContainer>
 						</div>
