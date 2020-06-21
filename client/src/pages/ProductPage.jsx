@@ -37,7 +37,7 @@ function ProductPage(props) {
 		// if (!loading) {
 		// 	console.log(product.display_image);
 		// 	console.log(product);
-		// 	// dispatch(imagesProduct(product.display_image));
+		// dispatch(imagesProduct(product.display_image));
 		// }
 
 		// get_images();
@@ -151,35 +151,6 @@ function ProductPage(props) {
 										</ul>
 									</div>
 								</FlexContainer>
-								<div className="details-image">
-									{loadingImages ? (
-										<FlexContainer h_center column>
-											<Title styles={{ fontSize: 25, justifyContent: 'center' }}>
-												Loading...
-											</Title>
-											<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-												If pages doesn't show in 5 seconds, refresh the page.
-											</Title>
-										</FlexContainer>
-									) : errorImages ? (
-										<FlexContainer h_center>
-											<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
-										</FlexContainer>
-									) : (
-										images.map((image, index) => {
-											return (
-												<div className="column" key={index}>
-													<img
-														src={image}
-														alt=""
-														style={{ width: '100%' }}
-														onClick={(e) => change_image(e)}
-													/>
-												</div>
-											);
-										})
-									)}
-								</div>
 							</FlexContainer>
 						</div>
 						<div className="details-action">
@@ -211,7 +182,31 @@ function ProductPage(props) {
 							</ul>
 						</div>
 					</div>
-					<div>
+					<FlexContainer column>
+						<div className="details-image">
+							{loadingImages ? (
+								<FlexContainer h_center column>
+									<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+								</FlexContainer>
+							) : errorImages ? (
+								<FlexContainer h_center>
+									<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
+								</FlexContainer>
+							) : (
+								images.map((image, index) => {
+									return (
+										<div className="column" key={index}>
+											<img
+												src={image}
+												alt=""
+												style={{ width: '100%' }}
+												onClick={(e) => change_image(e)}
+											/>
+										</div>
+									);
+								})
+							)}
+						</div>
 						<FlexContainer column styles={{ padding: '1rem' }}>
 							<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
 							<p>{product.description}</p>
@@ -250,7 +245,7 @@ function ProductPage(props) {
 							)}
 							{/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
 						</FlexContainer>
-					</div>
+					</FlexContainer>
 				</div>
 			)}
 		</div>
