@@ -111,18 +111,22 @@ router.post('/images', async (req, res) => {
     let home_directory = path.join(__dirname, '..')
     // let full_directory = home_directory + `/client/public` + Object.keys(req.body).join('') 
     let full_directory = path.join(home_directory, `/client/public`, Object.keys(req.body).join(''))
-    console.log("home_directory = " + home_directory)
+
     let image_directory = path.join(home_directory, `/client/public`, Object.keys(req.body).join(''))
 
-    console.log("full_directory = " + full_directory)
+
     var relative_directory_array = relative_directory.split('/');
     relative_directory_array.pop()
     relative_directory = relative_directory_array.join('/')
-    console.log("relative_directory = " + relative_directory)
+
     var full_directory_array = full_directory.split('/');
     full_directory_array.pop()
     full_directory = full_directory_array.join('/')
+    console.log("home_directory = " + home_directory)
+    console.log("relative_directory = " + relative_directory)
+    console.log("full_directory = " + full_directory)
     if (full_directory === './client/public') {
+
 
     }
     else {

@@ -240,6 +240,7 @@ function ProductPage(props) {
 										className="product_video"
 										style={{ height: 'auto', maxWidth: '100%', borderRadius: '20px' }}
 										controls
+										poster={product.display_image}
 									>
 										<source src={product.video} type="video/mp4" />
 									</video>
