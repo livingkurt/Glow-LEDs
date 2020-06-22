@@ -17,7 +17,7 @@ const paymentSchema = {
 const orderItemSchema = new mongoose.Schema({
   name: { type: String, required: true },
   qty: { type: Number, required: true },
-  image_1: { type: String, required: true },
+  display_image: { type: String, required: true },
   price: { type: String, required: true },
   product: {
     type: mongoose.Schema.Types.ObjectId,

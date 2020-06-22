@@ -27,6 +27,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db", 
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 
 app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
@@ -43,13 +45,21 @@ app.get('/api/config/paypal', (req, res) => {
 //   app.use(express.static("client/build"));
 // }
 
+// if (process.env.NODE_ENV === 'production') {
+//   app.use(express.static(path.join(__dirname, 'client/build')));
+// }
+
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
+  app.use(express.static('client/build'));
 }
 // Send every request to the React app
 // Define any API routes before this runs
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// app.get("*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
+
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 app.listen(config.PORT, () => { console.log('Server started at http://localhost:5000'); });
