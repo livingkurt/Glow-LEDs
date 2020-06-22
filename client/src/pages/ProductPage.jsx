@@ -121,7 +121,10 @@ function ProductPage(props) {
 									style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
 								/>
 							</div>
+							{/* <FlexContainer class="alt_pictures_hidden" styles={{ diplay: 'none' }}> */}
 						</FlexContainer>
+						{/* </FlexContainer> */}
+
 						<div className="details-info">
 							<Title
 								class="product_title_side"
@@ -154,7 +157,32 @@ function ProductPage(props) {
 									</div>
 								</FlexContainer>
 							</FlexContainer>
+							<div className="details-image alt_pictures_hidden">
+								{loadingImages ? (
+									<FlexContainer h_center column>
+										<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+									</FlexContainer>
+								) : errorImages ? (
+									<FlexContainer h_center>
+										<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
+									</FlexContainer>
+								) : (
+									images.map((image, index) => {
+										return (
+											<div className="column" key={index}>
+												<img
+													src={image}
+													alt=""
+													style={{ width: '100%' }}
+													onClick={(e) => change_image(e)}
+												/>
+											</div>
+										);
+									})
+								)}
+							</div>
 						</div>
+
 						<div className="details-action">
 							<ul>
 								<li>Price: ${product.price ? product.price.toFixed(2) : product.price}</li>
@@ -184,8 +212,8 @@ function ProductPage(props) {
 							</ul>
 						</div>
 					</div>
-					{/* <FlexContainer column> */}
-					<div className="details-image">
+					{/* <FlexContainer class="alt_pictures_shown"> */}
+					<div className="details-image alt_pictures_shown">
 						{loadingImages ? (
 							<FlexContainer h_center column>
 								<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
@@ -209,6 +237,7 @@ function ProductPage(props) {
 							})
 						)}
 					</div>
+					{/* </FlexContainer> */}
 					<FlexContainer column styles={{ padding: '1rem' }}>
 						<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
 						<p>{product.description}</p>

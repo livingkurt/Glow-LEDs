@@ -573,6 +573,7 @@ body {
   opacity: 0.8;
   cursor: pointer;
   height: unset;
+  border-radius: 10px;
 }
 
 .column img:hover {
@@ -633,4 +634,14 @@ body {
 
 video {
   object-fit: cover;
+}
+
+.alt_pictures_hidden {
+  display: none;
+  flex-wrap: wrap;
+}
+
+.alt_pictures_shown {
+  display: flex;
+  flex-wrap: wrap;
 }
