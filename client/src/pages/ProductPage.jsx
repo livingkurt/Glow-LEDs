@@ -72,7 +72,7 @@ function ProductPage(props) {
 	}
 
 	return (
-		<div>
+		<FlexContainer column>
 			<div className="back-to-result">
 				<FlexContainer h_between>
 					<FlexContainer>
@@ -104,7 +104,7 @@ function ProductPage(props) {
 					<Title styles={{ fontSize: 20 }}>{error} </Title>
 				</FlexContainer>
 			) : (
-				<div>
+				<FlexContainer column>
 					<div className="details">
 						<FlexContainer column>
 							<Title
@@ -184,74 +184,74 @@ function ProductPage(props) {
 							</ul>
 						</div>
 					</div>
-					<FlexContainer column>
-						<div className="details-image">
-							{loadingImages ? (
-								<FlexContainer h_center column>
-									<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-								</FlexContainer>
-							) : errorImages ? (
-								<FlexContainer h_center>
-									<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
-								</FlexContainer>
-							) : (
-								images.map((image, index) => {
-									return (
-										<div className="column" key={index}>
-											<img
-												src={image}
-												alt=""
-												style={{ width: '100%' }}
-												onClick={(e) => change_image(e)}
-											/>
-										</div>
-									);
-								})
-							)}
-						</div>
-						<FlexContainer column styles={{ padding: '1rem' }}>
-							<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
-							<p>{product.description}</p>
+					{/* <FlexContainer column> */}
+					<div className="details-image">
+						{loadingImages ? (
+							<FlexContainer h_center column>
+								<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+							</FlexContainer>
+						) : errorImages ? (
+							<FlexContainer h_center>
+								<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
+							</FlexContainer>
+						) : (
+							images.map((image, index) => {
+								return (
+									<div className="column" key={index}>
+										<img
+											src={image}
+											alt=""
+											style={{ width: '100%' }}
+											onClick={(e) => change_image(e)}
+										/>
+									</div>
+								);
+							})
+						)}
+					</div>
+					<FlexContainer column styles={{ padding: '1rem' }}>
+						<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
+						<p>{product.description}</p>
 
-							{!product.video ? (
+						{!product.video ? (
+							<Title
+								styles={{
+									fontSize: 30,
+									textAlign: 'center',
+									width: '100%',
+									justifyContent: 'center'
+								}}
+							>
+								Video Coming Soon!
+							</Title>
+						) : (
+							<FlexContainer h_center column>
 								<Title
 									styles={{
-										fontSize: 30,
+										fontSize: 20,
 										textAlign: 'center',
 										width: '100%',
 										justifyContent: 'center'
 									}}
 								>
-									Video Coming Soon!
+									Watch the Video Below to Learn More
 								</Title>
-							) : (
-								<FlexContainer h_center column>
-									<Title
-										styles={{
-											fontSize: 20,
-											textAlign: 'center',
-											width: '100%',
-											justifyContent: 'center'
-										}}
-									>
-										Watch the Video Below to Learn More
-									</Title>
-									<video
-										className="product_video"
-										style={{ height: 'auto', maxWidth: '100%', borderRadius: '20px' }}
-										controls
-										poster={product.display_image}
-									>
-										<source src={product.video} type="video/mp4" />
-									</video>
-								</FlexContainer>
-							)}
-							{/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
-						</FlexContainer>
+								<video
+									className="product_video"
+									style={{ height: 'auto', maxWidth: '100%', borderRadius: '20px' }}
+									controls
+									poster={product.display_image}
+								>
+									<source src={product.video} type="video/mp4" />
+								</video>
+							</FlexContainer>
+						)}
+						{/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
 					</FlexContainer>
-				</div>
+					{/* </FlexContainer> */}
+				</FlexContainer>
 			)}
-		</div>
+		</FlexContainer>
 	);
 }
 export default ProductPage;
