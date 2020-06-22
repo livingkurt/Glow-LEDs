@@ -99,12 +99,16 @@ function ProfilePage(props) {
     </div> */}
 			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
-				<Link to="/profile">
-					<Title class="back_button" styles={{ fontSize: '2rem', alignItem: 'flex-start' }}>
-						Back to Profile
-					</Title>
-				</Link>
-
+				<FlexContainer>
+					<Link to="/profile">
+						<Title
+							class="back_button"
+							styles={{ fontSize: '2rem', alignItem: 'flex-start', margin: '5px' }}
+						>
+							Back to Profile
+						</Title>
+					</Link>
+				</FlexContainer>
 				<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%', justifyContent: 'center' }}>
 					Orders
 				</Title>

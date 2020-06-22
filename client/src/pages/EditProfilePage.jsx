@@ -53,11 +53,13 @@ function EditProfilePage(props) {
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
-			<Link to="/profile">
-				<Title class="back_button" styles={{ fontSize: '2rem', alignItem: 'flex-start' }}>
-					Back to Profile
-				</Title>
-			</Link>
+			<FlexContainer>
+				<Link to="/profile">
+					<Title class="back_button" styles={{ fontSize: '2rem', alignItem: 'flex-start', margin: '5px' }}>
+						Back to Profile
+					</Title>
+				</Link>
+			</FlexContainer>
 			<div className="profile-info">
 				<div className="form">
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>
