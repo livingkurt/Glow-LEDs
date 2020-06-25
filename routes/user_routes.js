@@ -10,7 +10,44 @@ require("dotenv")
 
 const router = express.Router();
 
-router.put('/:id', isAuth, async (req, res) => {
+router.put('/resetpassword', async (req, res) => {
+  console.log({ resetpassword: req.body })
+  try {
+    const user = await User.findOne({ _id: req.body.user_id });
+    if (!user) {
+      return res.status(400).json({ email: "User Does Not Exist" });
+    }
+    else {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt, async (err, hash) => {
+          if (err) throw err;
+          user.password = hash;
+          await user.save()
+          res.status(202).send({ msg: 'Password Saved' });
+        });
+      });
+    }
+  } catch (error) {
+    console.log(error)
+    res.send(error)
+  }
+
+})
+
+router.post('/passwordreset', async (req, res) => {
+  const email = req.body.email;
+  const user = await User.findOne({ email });
+  console.log({ user })
+  if (user) {
+    res.send(user)
+  } else {
+    res.status(404).send({ msg: 'User Not Found' });
+  }
+});
+
+
+
+router.put('/update/:id', isAuth, async (req, res) => {
   const userId = req.params.id;
   const user = await User.findById(userId);
   if (user) {
@@ -30,6 +67,8 @@ router.put('/:id', isAuth, async (req, res) => {
   }
 
 });
+
+
 
 router.post('/login', async (req, res) => {
   try {
@@ -60,8 +99,6 @@ router.post('/login', async (req, res) => {
     console.log(error)
     res.send(error)
   }
-
-
 });
 
 router.post('/register', async (req, res) => {

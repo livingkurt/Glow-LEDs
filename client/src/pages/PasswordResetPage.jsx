@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../actions/userActions';
+import { password_reset } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 
-function LoginPage(props) {
+function PasswordResetPage(props) {
 	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { loading, userInfo, error } = userLogin;
 	const dispatch = useDispatch();
-	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
-	useEffect(
-		() => {
-			if (userInfo) {
-				props.history.push(redirect);
-			}
-			return () => {
-				//
-			};
-		},
-		[ userInfo ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (userInfo) {
+	// 			props.history.push(redirect);
+	// 		}
+	// 		return () => {
+	// 			//
+	// 		};
+	// 	},
+	// 	[ userInfo ]
+	// );
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(login(email, password));
+		dispatch(password_reset(email));
+		// props.history.push(redirect);
 	};
 	return (
 		<div className="form">
@@ -34,7 +33,7 @@ function LoginPage(props) {
 				<ul className="form-container">
 					<li>
 						{/* <h2>Login</h2> */}
-						<Title class="h1_title">Login</Title>
+						<Title class="h1_title">Password Reset</Title>
 					</li>
 					<li>
 						<FlexContainer h_center>
@@ -53,37 +52,15 @@ function LoginPage(props) {
 						<label htmlFor="email">Email</label>
 						<input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
 					</li>
-					<li>
-						<label htmlFor="password">Password</label>
-						<input
-							type="password"
-							id="password"
-							name="password"
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</li>
-					<li>
-						<Link to="/passwordreset" style={{ fontFamily: 'heading_font' }}>
-							Forgot Password?
-						</Link>
-					</li>
+
 					<li>
 						<button type="submit" className="button primary">
-							Login
+							Reset Password
 						</button>
-					</li>
-					<li style={{ fontFamily: 'heading_font' }}>New to Glow LEDs?</li>
-					<li>
-						<Link
-							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-							className="button secondary text-center"
-						>
-							Create your Glow LED account
-						</Link>
 					</li>
 				</ul>
 			</form>
 		</div>
 	);
 }
-export default LoginPage;
+export default PasswordResetPage;

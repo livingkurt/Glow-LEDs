@@ -53,10 +53,10 @@ module.exports = function (props) {
             ${props.orderItems.map(item => {
       let item_item = `<li
               <div class="cart-image"><img
-                  src="https://glow-leds.com${item.display_image}
+                  src="https://www.glow-leds.com${item.display_image}
                   alt="product"></div>
               <div class="cart-name">
-                <div><a href="https://glow-leds.com/product/${item.product}">${item.name}</a></div>
+                <div><a href="https://www.glow-leds.com/product/${item.product}">${item.name}</a></div>
                 <div>Qty: ${item.qty}</div>
               </div>
               <div class="cart-price">$5</div>

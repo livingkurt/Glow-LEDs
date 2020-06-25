@@ -5,11 +5,7 @@ const express = require('express')
 const router = express.Router();
 const User = require('../models/user')
 const main_layout = require("../email_templates/App");
-// const shipping_confirmation_view = require("../email_templates/pages/shipping_confirmation_view");
-// const delivery_confirmation_view = require("../email_templates/pages/delivery_confirmation_view");
-const order_view = require("../email_templates/pages/order_view");
-const verified_account_view = require("../email_templates/pages/verified_account_view");
-const contact_view = require("../email_templates/pages/contact_view");
+const { contact_view, reset_password_view, verified_account_view, verify_account_view, order_view } = require("../email_templates/pages/index");
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -38,6 +34,29 @@ router.post("/contact", async (req, res) => {
     }
     else {
       console.log('Contact Email Sent to ' + data.user_name)
+      res.send("Email Successfully Sent")
+    }
+  })
+
+})
+
+router.post("/passwordreset", async (req, res) => {
+  console.log({ passwordreset: req.body })
+
+  let mailOptions = {
+    from: process.env.DISPLAY_EMAIL,
+    to: req.body.email,
+    subject: 'Glow LEDs Password Reset',
+    html: main_layout(reset_password_view(req.body))
+  }
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log('Error Occurs', err)
+      res.send(err)
+    }
+    else {
+      console.log('Password Reset Email Sent to ' + req.body.name)
       res.send("Email Successfully Sent")
     }
   })
