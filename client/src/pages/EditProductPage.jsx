@@ -65,25 +65,25 @@ function ProductsScreen(props) {
 		return () => {};
 	}, []);
 
-	useEffect(
-		() => {
-			setId(product._id);
-			setName(product.name);
-			setPrice(product.price);
-			setDescription(product.description);
-			setFacts(product.facts);
-			setIncludedItems(product.included_items);
-			setDisplayImage(product.display_image);
-			setVideo(product.video);
-			setBrand(product.brand);
-			setCategory(product.category);
-			setCountInStock(product.countInStock);
-			return () => {
-				//
-			};
-		},
-		[ successSave, successDelete ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		setId(product._id);
+	// 		setName(product.name);
+	// 		setPrice(product.price);
+	// 		setDescription(product.description);
+	// 		setFacts(product.facts);
+	// 		setIncludedItems(product.included_items);
+	// 		setDisplayImage(product.display_image);
+	// 		setVideo(product.video);
+	// 		setBrand(product.brand);
+	// 		setCategory(product.category);
+	// 		setCountInStock(product.countInStock);
+	// 		return () => {
+	// 			//
+	// 		};
+	// 	},
+	// 	[ successSave, successDelete ]
+	// );
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -153,7 +153,7 @@ function ProductsScreen(props) {
 							>
 								{loading ? 'Product' : product.name}
 							</Title>
-							<li>
+							{/* <li>
 								<FlexContainer h_center>
 									{loadingSave && (
 										<FlexContainer h_center column>
@@ -165,7 +165,7 @@ function ProductsScreen(props) {
 									)}
 									{errorSave && <Title styles={{ fontSize: 20 }}>{errorSave}</Title>}
 								</FlexContainer>
-							</li>
+							</li> */}
 
 							<FlexContainer row>
 								<FlexContainer column styles={{ width: '50%', marginRight: '10px' }}>
