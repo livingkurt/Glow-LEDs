@@ -10,29 +10,29 @@ module.exports = function (body) {
   <meta name="theme-color" content="#000000">
   <meta name="description" content="Web site created using create-react-app">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <meta name="description" content="3D Printed LED toys, by a glover that just wants to light up the world">
-  <link rel="canonical" href="https://glow-leds.herokuapp.com">
+  <meta name="description" content="3D Printed LED toys, by a glover that wants the world to stay lit">
+  <link rel="canonical" href="https://glow-leds.com">
   <meta property="og:locale" content="en_US">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Glow LEDs | Diffusers | Accessories | GlowLEDS.com">
-  <meta property="og:description" content="3D Printed LED toys, by a glover that just wants to light up the world">
-  <meta property="og:url" content="https://glow-leds.herokuapp.com">
+  <meta property="og:title" content="Glow LEDs | Diffusers | Accessories | Glow-LEDS.com">
+  <meta property="og:description" content="3D Printed LED toys, by a glover that wants the world to stay lit">
+  <meta property="og:url" content="https://glow-leds.com">
   <meta property="og:site_name" content="LED Gloves">
   <meta property="og:image"
-    content="https://glow-leds.herokuapp.comhttps://glow-leds.herokuapp.com/images/glow_leds_link_logo_optimized.png">
+    content="https://glow-leds.comhttps://glow-leds.com/images/glow_leds_link_logo_optimized.png">
   <meta property="og:image:secure_url"
-    content="https://glow-leds.herokuapp.comhttps://glow-leds.herokuapp.com/images/glow_leds_link_logo_optimized.png">
+    content="https://glow-leds.comhttps://glow-leds.com/images/glow_leds_link_logo_optimized.png">
   <meta property="og:image:width" content="1080">
   <meta property="og:image:height" content="1080">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:description" content="3D Printed LED toys, by a glover that just wants to light up the world">
-  <meta name="twitter:title" content="Glow LEDs | Diffusers | Accessories | GlowLEDS.com">
+  <meta name="twitter:description" content="3D Printed LED toys, by a glover that wants the world to stay lit">
+  <meta name="twitter:title" content="Glow LEDs | Diffusers | Accessories | Glow-LEDS.com">
   <meta name="twitter:site" content="@glowleds">
   <meta name="twitter:image"
-    content="https://glow-leds.herokuapp.comhttps://glow-leds.herokuapp.com/images/glow_leds_link_logo_optimized.png">
+    content="https://glow-leds.comhttps://glow-leds.com/images/glow_leds_link_logo_optimized.png">
   <meta name="twitter:creator" content="@glowleds">
   <meta property="DC.date.issued" content="2015-04-28T07:34:45+00:00">
-  <link rel="shortlink" href="https://glow-leds.herokuapp.com">
+  <link rel="shortlink" href="https://glow-leds.com">
   <meta name="referrer" content="always">
   <script src="https://kit.fontawesome.com/cc10a71280.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
@@ -615,7 +615,7 @@ module.exports = function (body) {
       padding: 10px;
     }
 
-    /* Style thehttps://glow-leds.herokuapp.com images inside the grid */
+    /* Style thehttps://glow-leds.com images inside the grid */
 
     .column img {
       opacity: 0.8;
@@ -1139,12 +1139,12 @@ module.exports = function (body) {
       <header id="overlay"
         style="grid-area: header / header / header / header; background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); display: flex; align-items: center; padding: 15px; list-style-type: none; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px; flex-direction: column;">
         <div class="brand"><a href="/"><img class="zoom logo" height="125px"
-              src="https://glow-leds.herokuapp.com/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"></a><button
+              src="https://glow-leds.com/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"></a><button
             class="button_symbol mobile_buttons" style="display: none; font-size: 30px; height: 50px; width: 50px;"><i
               cl ass="fas fa-bars" aria-hidden="true"></i></button></div>
         <div style="display: flex; justify-content: center; margin: 0px auto; flex-direction: column;">
           <div class="logo_text" style="display: flex; justify-content: center; margin: 0px auto; align-items: center;">
-            <a href="/"><img class="logo_2" src="https://glow-leds.herokuapp.com/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"
+            <a href="/"><img class="logo_2" src="https://glow-leds.com/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"
                 style="display: none; height: 80px;"></a><a href="/">
               <h1 class="glow_leds_text"
                 style="display: flex; font-family: Helvetica; font-size: 67px; margin: 17px 0px 10px; text-align: center; justify-content: center; width: 100%;">

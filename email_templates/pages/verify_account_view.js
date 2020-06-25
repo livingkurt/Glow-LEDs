@@ -25,7 +25,7 @@ module.exports = function (props) {
         <button
           style=" border-radius: 5px; background-color:#737373;  font-weight: bold; border: 0px; color: white; text-decoration: none; box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 20px; width: 200px;">
           <a style="font-size: 25px; color: white; text-decoration: none;"
-            href="https://glow-leds.herokuapp.com/activate/${props._id}">Verify</a></button>
+            href="https://glow-leds.com/activate/${props._id}">Verify</a></button>
       </div>
 
     </div>
