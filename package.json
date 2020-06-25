@@ -12,7 +12,7 @@
 		"if-env": "^1.0.4",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.8.11",
-		"nodemailer": "^6.4.8"
+		"nodemailer": "^6.4.10"
 	},
 	"devDependencies": {
 		"@types/node": "^14.0.13",
