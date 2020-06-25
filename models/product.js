@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   countInStock: { type: Number, default: 0, required: true },
   facts: { type: String },
+  included_items: { type: String },
   description: { type: String },
   rating: { type: Number, default: 0 },
   numReviews: { type: Number, default: 0 },

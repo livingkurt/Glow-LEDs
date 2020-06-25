@@ -17,6 +17,7 @@ function ProductsScreen(props) {
 	const [ countInStock, setCountInStock ] = useState('');
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
+	const [ included_items, setIncludedItems ] = useState('');
 
 	const history = useHistory();
 
@@ -33,37 +34,36 @@ function ProductsScreen(props) {
 
 	// console.log({ ID: props.match.params.id })
 
-	useEffect(
-		() => {
-			dispatch(detailsProduct(product_id));
-			if (props.match.params.id) {
-				// console.log({ product })
-				setId(product._id);
-				setName(product.name);
-				setPrice(product.price);
-				setDescription(product.description);
-				setFacts(product.facts);
-				setDisplayImage(product.display_image);
-				setVideo(product.video);
-				setBrand(product.brand);
-				setCategory(product.category);
-				setCountInStock(product.countInStock);
-			} else {
-				setId('');
-				setName('');
-				setPrice('');
-				setDescription('');
-				setFacts('');
-				setDisplayImage('');
-				setVideo('');
-				setBrand('');
-				setCategory('');
-				setCountInStock('');
-			}
-			return () => {};
-		},
-		[ product_id ]
-	);
+	useEffect(() => {
+		dispatch(detailsProduct(product_id));
+		if (props.match.params.id) {
+			// console.log({ product })
+			setId(product._id);
+			setName(product.name);
+			setPrice(product.price);
+			setDescription(product.description);
+			setFacts(product.facts);
+			setIncludedItems(product.included_items);
+			setDisplayImage(product.display_image);
+			setVideo(product.video);
+			setBrand(product.brand);
+			setCategory(product.category);
+			setCountInStock(product.countInStock);
+		} else {
+			setId('');
+			setName('');
+			setPrice('');
+			setDescription('');
+			setFacts('');
+			setIncludedItems('');
+			setDisplayImage('');
+			setVideo('');
+			setBrand('');
+			setCategory('');
+			setCountInStock('');
+		}
+		return () => {};
+	}, []);
 
 	useEffect(
 		() => {
@@ -72,6 +72,7 @@ function ProductsScreen(props) {
 			setPrice(product.price);
 			setDescription(product.description);
 			setFacts(product.facts);
+			setIncludedItems(product.included_items);
 			setDisplayImage(product.display_image);
 			setVideo(product.video);
 			setBrand(product.brand);
@@ -97,6 +98,7 @@ function ProductsScreen(props) {
 				category,
 				countInStock,
 				facts,
+				included_items,
 				description
 			})
 		);
@@ -106,6 +108,7 @@ function ProductsScreen(props) {
 		setPrice('');
 		setDescription('');
 		setFacts('');
+		setIncludedItems('');
 		setDisplayImage('');
 		setVideo('');
 		setBrand('');
@@ -116,10 +119,6 @@ function ProductsScreen(props) {
 		} else {
 			history.push('/products');
 		}
-	};
-
-	const deleteHandler = (product) => {
-		dispatch(deleteProduct(product._id));
 	};
 
 	return (
@@ -133,147 +132,166 @@ function ProductsScreen(props) {
 			{/* </div> */}
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					<ul className="form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>
-						<Title
-							styles={{
-								fontSize: 30,
-								textAlign: 'center',
-								width: '100%',
-								marginRight: 'auto',
-								justifyContent: 'center'
-							}}
-						>
-							{loading ? 'Product' : product.name}
-						</Title>
-						<li>
-							<FlexContainer h_center>
-								{loadingSave && (
-									<FlexContainer h_center column>
-										<Title styles={{ fontSize: 20 }}>Loading...</Title>
-										<Title styles={{ fontSize: 20 }}>
-											If pages doesn't show in 5 seconds, refresh the page.
-										</Title>
-									</FlexContainer>
-								)}
-								{errorSave && <Title styles={{ fontSize: 20 }}>{errorSave}</Title>}
-							</FlexContainer>
-						</li>
-						<FlexContainer row>
-							<FlexContainer column styles={{ width: '50%', marginRight: '10px' }}>
-								<li>
-									<label htmlFor="name">Name</label>
-									<input
-										type="text"
-										name="name"
-										value={name}
-										id="name"
-										onChange={(e) => setName(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="price">Price</label>
-									<input
-										type="text"
-										name="price"
-										value={price}
-										id="price"
-										onChange={(e) => setPrice(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="name">Category</label>
-									<input
-										type="text"
-										name="category"
-										value={category}
-										id="category"
-										onChange={(e) => setCategory(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="brand">Brand</label>
-									<input
-										type="text"
-										name="brand"
-										value={brand}
-										id="brand"
-										onChange={(e) => setBrand(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="display_image">Display Image</label>
-									<input
-										type="text"
-										name="display_image"
-										value={display_image}
-										id="display_image"
-										onChange={(e) => setDisplayImage(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="video">Video</label>
-									<input
-										type="text"
-										name="video"
-										defaultValue={video}
-										id="video"
-										onChange={(e) => setVideo(e.target.value)}
-									/>
-								</li>
-							</FlexContainer>
-							<FlexContainer column styles={{ width: '50%', marginLeft: '10px' }}>
-								<li>
-									<label htmlFor="countInStock">Count In Stock</label>
-									<input
-										type="text"
-										name="countInStock"
-										value={countInStock}
-										id="countInStock"
-										onChange={(e) => setCountInStock(e.target.value)}
-									/>
-								</li>
-
-								<li>
-									<label htmlFor="facts">Facts</label>
-									<textarea
-										name="facts"
-										defaultValue={facts}
-										id="facts"
-										onChange={(e) => setFacts(e.target.value)}
-									/>
-								</li>
-								<li>
-									<label htmlFor="description">Description</label>
-									<textarea
-										name="description"
-										value={description}
-										id="description"
-										onChange={(e) => setDescription(e.target.value)}
-									/>
-								</li>
-							</FlexContainer>
+					{loading ? (
+						<FlexContainer h_center column>
+							<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
 						</FlexContainer>
-						<li>
-							<button type="submit" className="button primary">
-								{id ? 'Update' : 'Create'}
-							</button>
-						</li>
-						<li>
-							{id ? (
-								<Link to={'/product/' + props.match.params.id}>
-									<button style={{ width: '100%' }} type="button" className="button secondary">
-										Back to Product
-									</button>
-								</Link>
-							) : (
-								<Link to="/products">
-									<button style={{ width: '100%' }} type="button" className="button secondary">
-										Back to Products
-									</button>
-								</Link>
-							)}
-						</li>
-					</ul>
+					) : error ? (
+						<FlexContainer h_center>
+							<Title styles={{ fontSize: 20 }}>{error} </Title>
+						</FlexContainer>
+					) : (
+						<ul className="form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>
+							<Title
+								styles={{
+									fontSize: 30,
+									textAlign: 'center',
+									width: '100%',
+									marginRight: 'auto',
+									justifyContent: 'center'
+								}}
+							>
+								{loading ? 'Product' : product.name}
+							</Title>
+							<li>
+								<FlexContainer h_center>
+									{loadingSave && (
+										<FlexContainer h_center column>
+											<Title styles={{ fontSize: 20 }}>Loading...</Title>
+											<Title styles={{ fontSize: 20 }}>
+												If pages doesn't show in 5 seconds, refresh the page.
+											</Title>
+										</FlexContainer>
+									)}
+									{errorSave && <Title styles={{ fontSize: 20 }}>{errorSave}</Title>}
+								</FlexContainer>
+							</li>
+
+							<FlexContainer row>
+								<FlexContainer column styles={{ width: '50%', marginRight: '10px' }}>
+									<li>
+										<label htmlFor="name">Name</label>
+										<input
+											type="text"
+											name="name"
+											value={name}
+											id="name"
+											onChange={(e) => setName(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="price">Price</label>
+										<input
+											type="text"
+											name="price"
+											value={price}
+											id="price"
+											onChange={(e) => setPrice(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="name">Category</label>
+										<input
+											type="text"
+											name="category"
+											value={category}
+											id="category"
+											onChange={(e) => setCategory(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="brand">Brand</label>
+										<input
+											type="text"
+											name="brand"
+											value={brand}
+											id="brand"
+											onChange={(e) => setBrand(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="display_image">Display Image</label>
+										<input
+											type="text"
+											name="display_image"
+											value={display_image}
+											id="display_image"
+											onChange={(e) => setDisplayImage(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="video">Video</label>
+										<input
+											type="text"
+											name="video"
+											defaultValue={video}
+											id="video"
+											onChange={(e) => setVideo(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="countInStock">Count In Stock</label>
+										<input
+											type="text"
+											name="countInStock"
+											value={countInStock}
+											id="countInStock"
+											onChange={(e) => setCountInStock(e.target.value)}
+										/>
+									</li>
+								</FlexContainer>
+								<FlexContainer column styles={{ width: '50%', marginLeft: '10px' }}>
+									<li>
+										<label htmlFor="facts">Facts</label>
+										<textarea
+											name="facts"
+											defaultValue={facts}
+											id="facts"
+											onChange={(e) => setFacts(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="included_items">Included Items</label>
+										<textarea
+											name="included_items"
+											defaultValue={included_items}
+											id="included_items"
+											onChange={(e) => setIncludedItems(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="description">Description</label>
+										<textarea
+											name="description"
+											value={description}
+											id="description"
+											onChange={(e) => setDescription(e.target.value)}
+										/>
+									</li>
+								</FlexContainer>
+							</FlexContainer>
+							<li>
+								<button type="submit" className="button primary">
+									{id ? 'Update' : 'Create'}
+								</button>
+							</li>
+							<li>
+								{id ? (
+									<Link to={'/product/' + props.match.params.id}>
+										<button style={{ width: '100%' }} type="button" className="button secondary">
+											Back to Product
+										</button>
+									</Link>
+								) : (
+									<Link to="/products">
+										<button style={{ width: '100%' }} type="button" className="button secondary">
+											Back to Products
+										</button>
+									</Link>
+								)}
+							</li>
+						</ul>
+					)}
 				</form>
 			</div>
 

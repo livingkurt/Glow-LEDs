@@ -241,7 +241,24 @@ function ProductPage(props) {
 					<FlexContainer column styles={{ padding: '1rem' }}>
 						<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
 						<p>{product.description}</p>
-
+						<FlexContainer column>
+							<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Included Items: </Title>
+							<FlexContainer column styles={{ height: '100%' }}>
+								<ul style={{ marginLeft: '10px' }}>
+									{product.included_items ? (
+										product.included_items.split('\n').map((line, index) => {
+											return (
+												<li key={index} style={{ listStyleType: 'disc' }}>
+													{line}
+												</li>
+											);
+										})
+									) : (
+										product.included_items
+									)}
+								</ul>
+							</FlexContainer>
+						</FlexContainer>
 						{!product.video ? (
 							<Title
 								styles={{
