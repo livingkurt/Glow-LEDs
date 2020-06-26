@@ -1,5 +1,5 @@
 
-module.exports = function (props) {
+module.exports = (props) => {
   const format_date_display = unformatted_date => {
     const date = new Date(unformatted_date)
     const day = date.getDate();
@@ -16,7 +16,7 @@ module.exports = function (props) {
           <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
             <div style="display: flex; flex-direction: column;">
               <h1 style="display: flex; font-size: 30px; margin-top: 0px;">${props.title}</h1>
-              <h1 style="display: flex; font-size: 20px; margin: 0px;">Order Number: <a href="http://www.glow-leds.com/order/${props._id}" style="color:white; text-decoration:none">${props._id}</a></h1>
+              <h1 style="display: flex; font-size: 20px; margin: 0px;">Order Number: <a href="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/order/${props._id}" style="color:white; text-decoration:none">${props._id}</a></h1>
               <h1 style="display: flex; font-size: 30px;">Shipping</h1>
               <div>
                 <div>${props.shipping.address}</div>
@@ -55,10 +55,10 @@ module.exports = function (props) {
     ${props.orderItems.map(item => {
       let item_item = `<li style="border-bottom:0.1rem #c0c0c0 solid; display:flex; justify-content:space-between; margin-bottom:1rem; padding-bottom:1rem">
                         <div class="cart-image">
-                          <img src="http://www.glow-leds.com/${item.display_image}" alt="product"style="border-radius:8px; margin-right:10px; max-height:10rem; max-width:10rem">
+                          <img src="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/${item.display_image}" alt="product"style="border-radius:8px; margin-right:10px; max-height:10rem; max-width:10rem">
                         </div>
                         <div class="cart-name">
-                          <div><a href="http://www.glow-leds.com/product/${item.product}" style="color:white; text-decoration:none">${item.name}</a></div>
+                          <div><a href="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/product/${item.product}" style="color:white; text-decoration:none">${item.name}</a></div>
                           <div>Qty: ${item.qty}</div>
                         </div>
                         <div class="cart-price" style="width: 50px;">$${item.price}</div>

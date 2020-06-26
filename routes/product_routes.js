@@ -110,14 +110,14 @@ router.post('/images', async (req, res) => {
     full_directory = full_directory_array.join('/')
     if (full_directory === './client/public') { }
     else {
-      fs.readdir(full_directory, function (err, files) {
+      fs.readdir(full_directory, (err, files) => {
         if (err) {
           return console.log('Unable to scan directory: ' + err);
         }
         let image_path = ''
         let images = []
 
-        files.forEach(function (file) {
+        files.forEach((file) => {
           image_path = "./" + relative_directory + '/' + file
           var array = image_path.split('/');
           var lastsegment = array[array.length - 1];

@@ -17,13 +17,13 @@ let transporter = nodemailer.createTransport({
 
 router.post("/contact", async (req, res) => {
 
-  const data = req.body.user_name
+  const data = req.body.name
   console.log(data)
 
   let mailOptions = {
     from: data.email,
     to: process.env.DISPLAY_EMAIL,
-    subject: `New message from ${data.user_name} - ${data.order_number} - ${data.reason_for_contact}`,
+    subject: `New message from ${data.name} - ${data.order_number} - ${data.reason_for_contact}`,
     html: main_layout(contact_view(data))
   }
 
@@ -33,7 +33,7 @@ router.post("/contact", async (req, res) => {
       res.send(err)
     }
     else {
-      console.log('Contact Email Sent to ' + data.user_name)
+      console.log('Contact Email Sent to ' + data.name)
       res.send("Email Successfully Sent")
     }
   })

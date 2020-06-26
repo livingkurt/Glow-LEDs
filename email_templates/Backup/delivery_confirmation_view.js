@@ -1,5 +1,5 @@
 
-module.exports = function (props) {
+module.exports = (props) => {
   const format_date_display = unformatted_date => {
     const date = new Date(unformatted_date)
     const day = date.getDate();

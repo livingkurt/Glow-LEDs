@@ -50,6 +50,13 @@ router.put('/update/:id', isAuth, async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.password = req.body.password || user.password;
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, async (err, hash) => {
+        if (err) throw err;
+        user.password = hash;
+        await user.save()
+      });
+    });
     user.isVerified = req.body.isVerified || user.isVerified;
     const updatedUser = await user.save();
     res.send({
@@ -62,7 +69,6 @@ router.put('/update/:id', isAuth, async (req, res) => {
   } else {
     res.status(404).send({ msg: 'User Not Found' });
   }
-
 });
 
 router.put('/verify/:id', async (req, res) => {
@@ -76,11 +82,17 @@ router.put('/verify/:id', async (req, res) => {
     user.password = req.body.password || user.password;
     user.isVerified = true;
     const updatedUser = await user.save();
-    res.status(202).send({ msg: 'Verified Account' });
+    res.send({
+      _id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      // isVerified: updatedUser.isVerified,
+      // token: getToken(updatedUser)
+    });
+    // res.status(202).send({ msg: 'Verified Account' });
   } else {
     res.status(404).send({ msg: 'User Not Found' });
   }
-
 });
 
 
@@ -153,6 +165,35 @@ router.post('/register', async (req, res) => {
   }
 
 })
+
+router.post("/getuser/:id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) {
+      return res.status(400).json({ email: "User Doesn't Exist" });
+    }
+    // Check password
+    const isMatch = await bcrypt.compare(req.body.current_password, user.password)
+    if (isMatch) {
+      // console.log({ user })
+      res.send({
+        _id: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        isAdmin: user.isAdmin,
+        token: getToken(user)
+      });
+    }
+    else {
+      return res.send(false);
+    }
+  } catch (error) {
+    console.log(error)
+    res.send(error)
+  }
+
+});
 
 router.get("/createadmin", async (req, res) => {
   try {

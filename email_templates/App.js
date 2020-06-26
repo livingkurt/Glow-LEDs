@@ -1,4 +1,4 @@
-module.exports = function (body) {
+module.exports = (body) => {
 
   return `
   <html lang="en">
@@ -35,10 +35,10 @@ module.exports = function (body) {
   <link rel="shortlink" href="http://www.glow-leds.com">
   <meta name="referrer" content="always">
   <script src="https://kit.fontawesome.com/cc10a71280.js" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="http://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
-  <link rel="stylesheet" href="http://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
+  <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
+  <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
     media="all">
-  <link rel="stylesheet" href="http://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
+  <link rel="stylesheet" href="https://kit-free.fontawesome.com/releases/latest/css/free-v4-shims.min.css" media="all">
   <link rel="apple-touch-icon" href="/logo192.png">
   <link rel="manifest" href="/manifest.json">
   <title>Glow LEDs</title>
@@ -615,7 +615,7 @@ module.exports = function (body) {
       padding: 10px;
     }
 
-    /* Style thehttp://www.glow-leds.com images inside the grid */
+    /* Style the images inside the grid */
 
     .column img {
       opacity: 0.8;

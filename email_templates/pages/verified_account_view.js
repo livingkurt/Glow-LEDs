@@ -1,4 +1,4 @@
-module.exports = function (props) {
+module.exports = (props) => {
   return `
   <div class="main_container" style="padding: 20px;">
           <div style="display: flex; justify-content: center; margin: 0px auto;">
@@ -24,33 +24,33 @@ module.exports = function (props) {
             <button
               style=" border-radius: 5px; background-color:#73737300;  font-weight: bold; border: 0px; color: white; text-decoration: none; box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 20px; width: 403px;     margin: 20px;     padding: 20px;">
               <a style="font-size: 25px; color: white; text-decoration: none;"
-                href="http://www.glow-leds.com/category/Caps">Shop Diffuser Caps Today!</a></button>
+                href="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/category/Caps">Shop Diffuser Caps Today!</a></button>
           </div>
           <div class="home_links" style="display: flex; justify-content: space-between; flex-wrap: wrap;"><a
-              href="http://www.glow-leds.com/category/Caps" style="margin-bottom: 16px;">
+              href="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/category/Caps" style="margin-bottom: 16px;">
               <div class="link_containers"
                 style="display: flex; justify-content: center; margin: 0px auto 10px; flex-direction: column; text-align: center; height: 100%; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px; border-radius: 20px; padding: 10px;">
                 <h1 class="h3_title"
                   style="display: flex; font-size: 30px; justify-content: center; margin: 20px auto;">
                   Diffuser Caps</h1><img class="home_page_img"
-                  src="http://www.glow-leds.com/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps">
+                  src="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/images/product_images/Caps/IMG_9322.JPG" alt="diffuser_caps">
               </div>
-            </a><a href="http://www.glow-leds.com/category/Diffusers" style="margin-bottom: 16px;">
+            </a><a href="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/category/Diffusers" style="margin-bottom: 16px;">
               <div class="link_containers"
                 style="display: flex; justify-content: center; margin: 0px auto 10px; flex-direction: column; text-align: center; height: 100%; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px; border-radius: 20px; padding: 10px;">
                 <h1 class="h3_title"
                   style="display: flex; font-size: 30px; justify-content: center; margin: 20px auto;">
                   Diffusers</h1><img class="home_page_img"
-                  src="http://www.glow-leds.com/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG"
+                  src="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/images/product_images/15mm_Frosted_Dome_Diffusers/IMG_9301.JPG"
                   alt="diffusers">
               </div>
-            </a><a href="http://www.glow-leds.com/category/Accessories" style="margin-bottom: 16px;">
+            </a><a href="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/category/Accessories" style="margin-bottom: 16px;">
               <div class="link_containers"
                 style="display: flex; justify-content: center; margin: 0px auto 10px; flex-direction: column; text-align: center; height: 100%; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px; border-radius: 20px; padding: 10px;">
                 <h1 class="h3_title"
                   style="display: flex; font-size: 30px; justify-content: center; margin: 20px auto;">
                   LED Accessories</h1><img class="home_page_img"
-                  src="http://www.glow-leds.com/images/product_images/Coin_Battery_Storage/IMG_9318.JPG"
+                  src="${process.env.NODE_ENV === 'production' ? "http://www.glow-leds.com" : "http://localhost:3000"}/images/product_images/Coin_Battery_Storage/IMG_9318.JPG"
                   alt="accessories">
               </div>
             </a></div>
