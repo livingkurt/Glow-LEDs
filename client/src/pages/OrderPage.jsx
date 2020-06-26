@@ -8,7 +8,7 @@ import { Title, ButtonWord, Label, ButtonSymbol } from '../components/UtilityCom
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 // import { email_delivery, email_shipping } from '../actions/emailActions';
-function OrderPage(props) {
+const OrderPage = (props) => {
 	console.log(props.userInfo);
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
@@ -281,6 +281,6 @@ function OrderPage(props) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default OrderPage;

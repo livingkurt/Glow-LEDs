@@ -6,7 +6,7 @@ import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components
 import { FlexContainer } from '../components/ContainerComponents';
 import API from '../utils/API';
 
-function ProductPage(props) {
+const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 
 	// const [ images_state, set_images_state ] = useState([]);
@@ -63,13 +63,13 @@ function ProductPage(props) {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
 	};
 
-	function change_image(e) {
+	const change_image = (e) => {
 		console.log(e.target.src);
 		var expandImg = document.getElementById('expandedImg');
 		expandImg.src = e.target.src;
 		// expandImg.setAttribute("src", [imgs.src])
 		expandImg.parentElement.style.display = 'block';
-	}
+	};
 
 	return (
 		<FlexContainer column>
@@ -299,5 +299,5 @@ function ProductPage(props) {
 			)}
 		</FlexContainer>
 	);
-}
+};
 export default ProductPage;

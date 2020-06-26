@@ -3,7 +3,7 @@ import { Title, ButtonWord } from '../components/UtilityComponents/index';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 
-function HomePage(props) {
+const HomePage = (props) => {
 	useEffect(() => {
 		const video = document.getElementById('caps_vid');
 		video.muted = true;
@@ -118,5 +118,5 @@ function HomePage(props) {
 			</FlexContainer>
 		</BlockContainer>
 	);
-}
+};
 export default HomePage;

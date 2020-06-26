@@ -5,7 +5,7 @@ import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 import { Title } from '../components/UtilityComponents';
 // import { email_order } from '../actions/emailActions';
-function PlaceOrderPage(props) {
+const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const orderCreate = useSelector((state) => state.orderCreate);
@@ -147,6 +147,6 @@ function PlaceOrderPage(props) {
 			</div>
 		</div>
 	);
-}
+};
 
 export default PlaceOrderPage;

@@ -20,7 +20,6 @@ import {
 	Four04Page,
 	EditProfilePage,
 	EditProductPage,
-	CreateProductPage,
 	PasswordResetPage,
 	ResetPasswordPage,
 	VerifiedPage,
@@ -31,7 +30,7 @@ import { Header, Container, Content, Footer, Sidebar } from './components/Contai
 import { useSelector } from 'react-redux';
 import Cookie from 'js-cookie';
 
-function App() {
+const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 
 	let { userInfo } = userLogin;
@@ -83,6 +82,6 @@ function App() {
 			</Container>
 		</Router>
 	);
-}
+};
 
 export default App;

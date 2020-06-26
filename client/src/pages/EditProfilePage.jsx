@@ -7,7 +7,7 @@ import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display, validate_profile } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
-function EditProfilePage(props) {
+const EditProfilePage = (props) => {
 	const history = useHistory();
 	const [ name, setName ] = useState('');
 	const [ email, setEmail ] = useState('');
@@ -151,6 +151,6 @@ function EditProfilePage(props) {
 			</div>
 		</FlexContainer>
 	);
-}
+};
 
 export default EditProfilePage;

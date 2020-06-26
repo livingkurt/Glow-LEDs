@@ -5,7 +5,7 @@ import { BlockContainer, FlexContainer } from '../components/ContainerComponents
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { Link } from 'react-router-dom';
 
-function ProductsScreen(props) {
+const ProductsScreen = (props) => {
 	const [ modalVisible, setModalVisible ] = useState(false);
 	const [ id, setId ] = useState('');
 	const [ name, setName ] = useState('');
@@ -293,5 +293,5 @@ function ProductsScreen(props) {
 			</div>
 		</BlockContainer>
 	);
-}
+};
 export default ProductsScreen;

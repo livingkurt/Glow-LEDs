@@ -7,7 +7,7 @@ import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { validate_password_change } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
-function ChangePasswordPage(props) {
+const ChangePasswordPage = (props) => {
 	const history = useHistory();
 	const [ current_password, setCurrentPassword ] = useState('');
 	const [ password, setPassword ] = useState('');
@@ -157,6 +157,6 @@ function ChangePasswordPage(props) {
 			</div>
 		</FlexContainer>
 	);
-}
+};
 
 export default ChangePasswordPage;

@@ -6,7 +6,7 @@ import { Title } from '../components/UtilityComponents';
 // import { email_registration } from '../actions/emailActions';
 import { FlexContainer } from '../components/ContainerComponents';
 
-function RegisterPage(props) {
+const RegisterPage = (props) => {
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 	// const userRegister = useSelector((state) => state.userRegister);
@@ -72,5 +72,5 @@ function RegisterPage(props) {
 			</form>
 		</div>
 	);
-}
+};
 export default RegisterPage;

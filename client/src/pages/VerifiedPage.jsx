@@ -4,7 +4,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { verify } from '../actions/userActions';
 
-function VerifiedPage(props) {
+const VerifiedPage = (props) => {
 	const dispatch = useDispatch();
 	const userVerify = useSelector((state) => state.userVerify);
 	const { loading, userInfo, error } = userVerify;
@@ -39,5 +39,5 @@ function VerifiedPage(props) {
 			</FlexContainer>
 		</FlexContainer>
 	);
-}
+};
 export default VerifiedPage;

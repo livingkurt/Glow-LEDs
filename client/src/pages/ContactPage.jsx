@@ -7,7 +7,7 @@ import { contact } from '../actions/userActions';
 import { validate_contact } from '../utils/helper_functions';
 // import "./form.css";
 
-export default function Form() {
+const ContactPage = () => {
 	const dispatch = useDispatch();
 
 	const [ name, set_name ] = useState('');
@@ -24,25 +24,6 @@ export default function Form() {
 
 	const userContact = useSelector((state) => state.userContact);
 	const { loading, completed, error } = userContact;
-
-	// function sendEmail(e) {
-	// 	e.preventDefault();
-	// 	dispatch(
-	// 		contact({
-	// 			name,
-	// 			email,
-	// 			order_number,
-	// 			reason_for_contact,
-	// 			message
-	// 		})
-	// 	);
-	// 	e.target.reset();
-	// 	set_name('');
-	// 	set_email('');
-	// 	set_order_number('');
-	// 	set_reason_for_contact('');
-	// 	set_message('');
-	// }
 
 	const sendEmail = (e) => {
 		e.preventDefault();
@@ -158,4 +139,6 @@ export default function Form() {
 			</form>
 		</BlockContainer>
 	);
-}
+};
+
+export default ContactPage;

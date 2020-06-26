@@ -7,7 +7,7 @@ import {
 } from "../constants/orderConstants";
 
 
-function orderCreateReducer(state = {}, action) {
+const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
       return { loading: true };
@@ -20,13 +20,13 @@ function orderCreateReducer(state = {}, action) {
 }
 
 
-function orderDetailsReducer(state = {
+const orderDetailsReducer = (state = {
   order: {
     orderItems: [],
     shipping: {},
     payment: {}
   }
-}, action) {
+}, action) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
       return { loading: true };
@@ -39,9 +39,9 @@ function orderDetailsReducer(state = {
 }
 
 
-function myOrderListReducer(state = {
+const myOrderListReducer = (state = {
   orders: []
-}, action) {
+}, action) => {
   switch (action.type) {
     case MY_ORDER_LIST_REQUEST:
       return { loading: true };
@@ -53,9 +53,9 @@ function myOrderListReducer(state = {
   }
 }
 
-function orderListReducer(state = {
+const orderListReducer = (state = {
   orders: []
-}, action) {
+}, action) => {
   switch (action.type) {
     case ORDER_LIST_REQUEST:
       return { loading: true };
@@ -67,13 +67,13 @@ function orderListReducer(state = {
   }
 }
 
-function orderPayReducer(state = {
+const orderPayReducer = (state = {
   order: {
     orderItems: [],
     shipping: {},
     payment: {}
   }
-}, action) {
+}, action) => {
   switch (action.type) {
     case ORDER_PAY_REQUEST:
       return { loading: true };
@@ -85,13 +85,13 @@ function orderPayReducer(state = {
   }
 }
 
-function orderDeleteReducer(state = {
+const orderDeleteReducer = (state = {
   order: {
     orderItems: [],
     shipping: {},
     payment: {}
   }
-}, action) {
+}, action) => {
   switch (action.type) {
     case ORDER_DELETE_REQUEST:
       return { loading: true };
@@ -103,7 +103,7 @@ function orderDeleteReducer(state = {
   }
 }
 
-function orderShippingReducer(state = {}, action) {
+const orderShippingReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_SHIPPING_REQUEST:
       return { loading: true };
@@ -115,7 +115,7 @@ function orderShippingReducer(state = {}, action) {
   }
 }
 
-function orderDeliveryReducer(state = {}, action) {
+const orderDeliveryReducer = (state = {}, action) => {
   switch (action.type) {
     case ORDER_DELIVERY_REQUEST:
       return { loading: true };

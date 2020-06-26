@@ -7,7 +7,7 @@ import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import { validate_registration } from '../utils/helper_functions';
 
-function RegisterPage(props) {
+const RegisterPage = (props) => {
 	const [ name, setName ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
@@ -133,5 +133,5 @@ function RegisterPage(props) {
 			</form>
 		</div>
 	);
-}
+};
 export default RegisterPage;

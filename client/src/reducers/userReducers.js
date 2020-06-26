@@ -1,6 +1,6 @@
 import { USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_CONTACT_REQUEST, USER_CONTACT_SUCCESS, USER_CONTACT_FAIL, USER_PASSWORD_RESET_REQUEST, USER_PASSWORD_RESET_SUCCESS, USER_PASSWORD_RESET_FAIL, USER_RESET_PASSWORD_REQUEST, USER_RESET_PASSWORD_SUCCESS, USER_RESET_PASSWORD_FAIL, USER_VERIFY_REQUEST, USER_VERIFY_SUCCESS, USER_VERIFY_FAIL } from "../constants/userConstants";
 
-function userLoginReducer(state = {}, action) {
+const userLoginReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
@@ -14,7 +14,7 @@ function userLoginReducer(state = {}, action) {
   }
 }
 
-function userPasswordResetReducer(state = {}, action) {
+const userPasswordResetReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_PASSWORD_RESET_REQUEST:
       return { loading: true };
@@ -26,7 +26,7 @@ function userPasswordResetReducer(state = {}, action) {
   }
 }
 
-function userResetPasswordReducer(state = {}, action) {
+const userResetPasswordReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_RESET_PASSWORD_REQUEST:
       return { loading: true };
@@ -39,7 +39,7 @@ function userResetPasswordReducer(state = {}, action) {
 }
 
 
-function userVerifyReducer(state = {}, action) {
+const userVerifyReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_VERIFY_REQUEST:
       return { loading: true };
@@ -51,7 +51,7 @@ function userVerifyReducer(state = {}, action) {
   }
 }
 
-function userUpdateReducer(state = {}, action) {
+const userUpdateReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_UPDATE_REQUEST:
       return { loading: true };
@@ -63,7 +63,7 @@ function userUpdateReducer(state = {}, action) {
   }
 }
 
-function userRegisterReducer(state = {}, action) {
+const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
@@ -75,7 +75,7 @@ function userRegisterReducer(state = {}, action) {
   }
 }
 
-function userContactReducer(state = {}, action) {
+const userContactReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_CONTACT_REQUEST:
       return { loading: true };

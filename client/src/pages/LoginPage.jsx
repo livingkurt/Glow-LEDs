@@ -6,7 +6,7 @@ import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import { validate_login } from '../utils/helper_functions';
 
-function LoginPage(props) {
+const LoginPage = (props) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 
@@ -107,5 +107,5 @@ function LoginPage(props) {
 			</form>
 		</div>
 	);
-}
+};
 export default LoginPage;

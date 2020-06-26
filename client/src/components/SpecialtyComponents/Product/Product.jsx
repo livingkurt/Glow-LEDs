@@ -6,7 +6,7 @@ import './product.css';
 // Components
 import { Label } from '../../UtilityComponents/index';
 
-function Product(props) {
+const Product = (props) => {
 	return (
 		<li key={props.product._id}>
 			<div className="product">
@@ -21,6 +21,6 @@ function Product(props) {
 			</div>
 		</li>
 	);
-}
+};
 
 export default Product;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
-function CartPage(props) {
+const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 
 	const { cartItems } = cart;
@@ -94,6 +94,6 @@ function CartPage(props) {
 			</FlexContainer>
 		</div>
 	);
-}
+};
 
 export default CartPage;

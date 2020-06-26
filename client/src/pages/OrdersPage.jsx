@@ -7,7 +7,7 @@ import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 import { token } from '../actions/userActions';
 
-function OrdersPage(props) {
+const OrdersPage = (props) => {
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, error } = orderList;
 
@@ -117,5 +117,5 @@ function OrdersPage(props) {
 			</div>
 		</BlockContainer>
 	);
-}
+};
 export default OrdersPage;

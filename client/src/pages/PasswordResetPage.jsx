@@ -5,7 +5,7 @@ import { password_reset } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 
-function PasswordResetPage(props) {
+const PasswordResetPage = (props) => {
 	const [ email, setEmail ] = useState('');
 	const userPasswordReset = useSelector((state) => state.userPasswordReset);
 	const { loading, userInfo, error } = userPasswordReset;
@@ -57,5 +57,5 @@ function PasswordResetPage(props) {
 			</form>
 		</div>
 	);
-}
+};
 export default PasswordResetPage;

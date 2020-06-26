@@ -7,7 +7,7 @@ import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
-function ProfilePage(props) {
+const ProfilePage = (props) => {
 	// const [name, setName] = useState('');
 	// const [password, setPassword] = useState('');
 	// const [email, setEmail] = useState('');
@@ -162,6 +162,6 @@ function ProfilePage(props) {
 			</div>
 		</FlexContainer>
 	);
-}
+};
 
 export default ProfilePage;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-function PaypalButton(props) {
+const PaypalButton = (props) => {
 	const [ sdkReady, setSdkReady ] = useState(false);
 
 	const addPaypalSdk = async () => {
@@ -54,6 +54,6 @@ function PaypalButton(props) {
 			onApprove={(data, actions) => onApprove(data, actions)}
 		/>
 	);
-}
+};
 
 export default PaypalButton;
