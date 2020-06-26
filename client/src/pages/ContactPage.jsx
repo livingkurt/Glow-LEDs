@@ -4,38 +4,77 @@ import { Title } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../actions/userActions';
+import { validate_contact } from '../utils/helper_functions';
 // import "./form.css";
 
 export default function Form() {
 	const dispatch = useDispatch();
 
-	const [ user_name, set_user_name ] = useState('');
-	const [ user_email, set_user_email ] = useState('');
+	const [ name, set_name ] = useState('');
+	const [ email, set_email ] = useState('');
 	const [ order_number, set_order_number ] = useState('');
 	const [ reason_for_contact, set_reason_for_contact ] = useState('');
 	const [ message, set_message ] = useState('');
 
+	const [ name_validations, set_name_Validations ] = useState('');
+	const [ email_validations, set_email_validations ] = useState('');
+	const [ order_number_validations, set_order_number_validations ] = useState('');
+	const [ reason_for_contact_validations, set_reason_for_contact_validations ] = useState('');
+	const [ message_validations, set_message_validations ] = useState('');
+
 	const userContact = useSelector((state) => state.userContact);
 	const { loading, completed, error } = userContact;
 
-	function sendEmail(e) {
+	// function sendEmail(e) {
+	// 	e.preventDefault();
+	// 	dispatch(
+	// 		contact({
+	// 			name,
+	// 			email,
+	// 			order_number,
+	// 			reason_for_contact,
+	// 			message
+	// 		})
+	// 	);
+	// 	e.target.reset();
+	// 	set_name('');
+	// 	set_email('');
+	// 	set_order_number('');
+	// 	set_reason_for_contact('');
+	// 	set_message('');
+	// }
+
+	const sendEmail = (e) => {
 		e.preventDefault();
-		dispatch(
-			contact({
-				user_name,
-				user_email,
-				order_number,
-				reason_for_contact,
-				message
-			})
-		);
-		e.target.reset();
-		set_user_name('');
-		set_user_email('');
-		set_order_number('');
-		set_reason_for_contact('');
-		set_message('');
-	}
+		const data = {
+			name,
+			email,
+			order_number,
+			reason_for_contact,
+			message
+		};
+		const request = validate_contact(data);
+
+		set_name_Validations(request.errors.name);
+		set_email_validations(request.errors.email);
+		set_order_number_validations(request.errors.order_number);
+		set_reason_for_contact_validations(request.errors.reason_for_contact);
+		set_message_validations(request.errors.message);
+
+		console.log(request);
+		if (request.isValid) {
+			dispatch(
+				contact({
+					name,
+					email,
+					order_number,
+					reason_for_contact,
+					message
+				})
+			);
+			e.target.reset();
+		}
+	};
 
 	return (
 		<BlockContainer class="main_container">
@@ -58,22 +97,24 @@ export default function Form() {
 				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" name="contact_number" /> */}
 				<label>Name</label>
 				<input
-					onChange={(e) => set_user_name(e.target.value)}
-					defaultValue={user_name}
+					onChange={(e) => set_name(e.target.value)}
+					defaultValue={name}
 					className="zoom_f input_i"
 					type="text"
-					name="user_name"
+					name="name"
 					placeholder="Name"
 				/>
+				<label className="validation_text">{name_validations}</label>
 				<label>Email</label>
 				<input
-					onChange={(e) => set_user_email(e.target.value)}
-					defaultValue={user_email}
+					onChange={(e) => set_email(e.target.value)}
+					defaultValue={email}
 					className="zoom_f input_i"
-					type="email"
-					name="user_email"
+					type="text"
+					name="email"
 					placeholder="Email"
 				/>
+				<label className="validation_text">{email_validations}</label>
 				<label>Order Number</label>
 				<input
 					onChange={(e) => set_order_number(e.target.value)}
@@ -83,6 +124,7 @@ export default function Form() {
 					name="order_number"
 					placeholder="Order Number"
 				/>
+				<label className="validation_text">{order_number_validations}</label>
 				<label>Reason for Contact</label>
 				{/* <input onChange={(e) => set_}defaultValue={} className="zoom_f input_i" type="text" name="order_number" placeholder="Order Number" /> */}
 				<select
@@ -96,6 +138,7 @@ export default function Form() {
 					<option defaultValue="returns">Returns</option>
 					<option defaultValue="technical_support">Technical Support</option>
 				</select>
+				<label className="validation_text">{reason_for_contact_validations}</label>
 				<label>Message</label>
 				<textarea
 					onChange={(e) => set_message(e.target.value)}
@@ -104,6 +147,7 @@ export default function Form() {
 					name="message"
 					placeholder="Enter Message Here"
 				/>
+				<label className="validation_text">{message_validations}</label>
 				<input
 					style={{ fontSize: '16px', width: '100px' }}
 					className="zoom_b"

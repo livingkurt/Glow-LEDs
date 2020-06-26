@@ -68,7 +68,9 @@ function LoginPage(props) {
 						<label htmlFor="email">Email</label>
 						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
 					</li>
-					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{email_validations}</label>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{email_validations}
+					</label>
 					<li>
 						<label htmlFor="password">Password</label>
 						<input
@@ -78,7 +80,9 @@ function LoginPage(props) {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</li>
-					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{password_validations}</label>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{password_validations}
+					</label>
 
 					<li>
 						<Link to="/passwordreset" style={{ fontFamily: 'heading_font' }}>

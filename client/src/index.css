@@ -645,3 +645,9 @@ video {
   display: flex;
   flex-wrap: wrap;
 }
+
+.validation_text {
+  font-size: 14px;
+  justify-content: center;
+  color: #ff4a4a;
+}

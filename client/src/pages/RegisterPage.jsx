@@ -81,12 +81,16 @@ function RegisterPage(props) {
 						<label htmlFor="name">Name</label>
 						<input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)} />
 					</li>
-					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{name_validations}</label>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{name_validations}
+					</label>
 					<li>
 						<label htmlFor="email">Email</label>
 						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
 					</li>
-					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{email_validations}</label>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{email_validations}
+					</label>
 					<li>
 						<label htmlFor="password">Password</label>
 						<input
@@ -96,7 +100,9 @@ function RegisterPage(props) {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</li>
-					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{password_validations}</label>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{password_validations}
+					</label>
 					<li>
 						<label htmlFor="rePassword">Re-Enter Password</label>
 						<input
@@ -106,7 +112,9 @@ function RegisterPage(props) {
 							onChange={(e) => setRePassword(e.target.value)}
 						/>
 					</li>
-					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{re_password_validations}</label>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{re_password_validations}
+					</label>
 					<li>
 						<button type="submit" className="button primary">
 							Register
