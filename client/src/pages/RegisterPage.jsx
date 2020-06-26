@@ -5,12 +5,19 @@ import { register } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
 // import { email_registration } from '../actions/emailActions';
 import { FlexContainer } from '../components/ContainerComponents';
+import { validate_registration } from '../utils/helper_functions';
 
 function RegisterPage(props) {
 	const [ name, setName ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
+
+	const [ name_validations, setNameValidations ] = useState('');
+	const [ email_validations, setEmailValidations ] = useState('');
+	const [ password_validations, setPasswordValidations ] = useState('');
+	const [ re_password_validations, setRePasswordValidations ] = useState('');
+
 	const userRegister = useSelector((state) => state.userRegister);
 	const { loading, userInfo, error } = userRegister;
 	const dispatch = useDispatch();
@@ -23,12 +30,29 @@ function RegisterPage(props) {
 	//   }
 	// }, [userInfo]);
 
+	// const submitHandler = (e) => {
+	// 	e.preventDefault();
+	// 	dispatch(register(name, email, password));
+	// 	// dispatch(email_registration(name, email, password));
+	// 	props.history.push(redirect);
+	// };
+
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(register(name, email, password));
-		// dispatch(email_registration(name, email, password));
-		props.history.push(redirect);
+		const data = { name, email, password, rePassword };
+		const request = validate_registration(data);
+
+		setNameValidations(request.errors.name);
+		setEmailValidations(request.errors.email);
+		setPasswordValidations(request.errors.password);
+		setRePasswordValidations(request.errors.rePassword);
+		console.log(request);
+		if (request.isValid) {
+			dispatch(register(name, email, password));
+			props.history.push('/checkemail');
+		}
 	};
+
 	return (
 		<div className="form">
 			<form onSubmit={submitHandler}>
@@ -57,10 +81,12 @@ function RegisterPage(props) {
 						<label htmlFor="name">Name</label>
 						<input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)} />
 					</li>
+					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{name_validations}</label>
 					<li>
 						<label htmlFor="email">Email</label>
-						<input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
 					</li>
+					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{email_validations}</label>
 					<li>
 						<label htmlFor="password">Password</label>
 						<input
@@ -70,6 +96,7 @@ function RegisterPage(props) {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</li>
+					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{password_validations}</label>
 					<li>
 						<label htmlFor="rePassword">Re-Enter Password</label>
 						<input
@@ -79,6 +106,7 @@ function RegisterPage(props) {
 							onChange={(e) => setRePassword(e.target.value)}
 						/>
 					</li>
+					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{re_password_validations}</label>
 					<li>
 						<button type="submit" className="button primary">
 							Register

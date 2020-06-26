@@ -4,14 +4,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../actions/userActions';
 import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
+import { validate_login } from '../utils/helper_functions';
 
 function LoginPage(props) {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+
+	const [ email_validations, setEmailValidations ] = useState('');
+	const [ password_validations, setPasswordValidations ] = useState('');
+
 	const userLogin = useSelector((state) => state.userLogin);
 	const { loading, userInfo, error } = userLogin;
 	const dispatch = useDispatch();
 	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
+
 	useEffect(
 		() => {
 			if (userInfo) {
@@ -26,8 +32,17 @@ function LoginPage(props) {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(login(email, password));
+		const data = { email, password };
+		const request = validate_login(data);
+
+		setEmailValidations(request.errors.email);
+		setPasswordValidations(request.errors.password);
+
+		if (request.isValid) {
+			dispatch(login(email, password));
+		}
 	};
+
 	return (
 		<div className="form">
 			<form onSubmit={submitHandler}>
@@ -51,8 +66,9 @@ function LoginPage(props) {
 					</li>
 					<li>
 						<label htmlFor="email">Email</label>
-						<input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
 					</li>
+					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{email_validations}</label>
 					<li>
 						<label htmlFor="password">Password</label>
 						<input
@@ -62,6 +78,8 @@ function LoginPage(props) {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</li>
+					<label styles={{ fontSize: 16, justifyContent: 'center' }}>{password_validations}</label>
+
 					<li>
 						<Link to="/passwordreset" style={{ fontFamily: 'heading_font' }}>
 							Forgot Password?

@@ -23,7 +23,8 @@ import {
 	CreateProductPage,
 	PasswordResetPage,
 	ResetPasswordPage,
-	VerifiedPage
+	VerifiedPage,
+	CheckEmailPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -62,6 +63,7 @@ function App() {
 						/>
 						<Route path="/login" component={LoginPage} />
 						<Route path="/verified/:id" component={VerifiedPage} />
+						<Route path="/checkemail" component={CheckEmailPage} />
 						<Route path="/register" component={RegisterPage} />
 						<Route path="/product/:id" component={ProductPage} />
 						<Route path="/editproduct/:id?" component={EditProductPage} />
