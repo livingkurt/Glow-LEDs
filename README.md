@@ -28,6 +28,8 @@ I have been facinated with LEDs ever since I saw my first light show back in ear
 - Pay with Paypal
 - View Orders
 - Recieve Email Notifications based on order and account status
+- Account Verification via Email Link
+- Forgot your Password Flow
 
 
 # Installation
@@ -44,7 +46,7 @@ Install Dependancies
 npm install
 ```
 
-Run Electron App
+Run App
 
 ```shell
 npm start
