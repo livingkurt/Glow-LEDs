@@ -77,6 +77,7 @@ const verify = (user_id) => async (dispatch) => {
   try {
     const { data } = await axios.put("/api/users/verify/" + user_id);
     dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
+    console.log({ verify: data })
     axios.post("/api/emails/verified", data);
     Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
