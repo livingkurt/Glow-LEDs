@@ -105,3 +105,55 @@ export const validate_contact = data => {
     isValid: isEmpty(errors)
   };
 }
+
+export const validate_profile = data => {
+  let errors = {};
+  // Convert empty fields to an empty string so we can use validator functions
+  data.name = !isEmpty(data.name) ? data.name : "";
+  data.email = !isEmpty(data.email) ? data.email : "";
+  // Name checks
+  if (Validator.isEmpty(data.name)) {
+    errors.name = "Name field is required";
+  }
+  // Email checks
+  if (Validator.isEmpty(data.email)) {
+    errors.email = "Email field is required";
+  } else if (!Validator.isEmail(data.email)) {
+    errors.email = "Email must include an @ symbol to be valid";
+  }
+
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
+}
+
+export const validate_password_change = data => {
+  let errors = {};
+  // Convert empty fields to an empty string so we can use validator functions
+  data.current_password = !isEmpty(data.current_password) ? data.current_password : "";
+  data.password = !isEmpty(data.password) ? data.password : "";
+  data.rePassword = !isEmpty(data.rePassword) ? data.rePassword : "";
+
+  // Password checks
+  if (Validator.isEmpty(data.current_password)) {
+    errors.password = "Password field is required";
+  }
+  // Password checks
+  if (Validator.isEmpty(data.password)) {
+    errors.password = "Password field is required";
+  }
+  if (Validator.isEmpty(data.rePassword)) {
+    errors.rePassword = "Confirm password field is required";
+  }
+  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+    errors.password = "Password must be at least 6 characters";
+  }
+  if (!Validator.equals(data.password, data.rePassword)) {
+    errors.rePassword = "Passwords must match";
+  }
+  return {
+    errors,
+    isValid: isEmpty(errors)
+  };
+}

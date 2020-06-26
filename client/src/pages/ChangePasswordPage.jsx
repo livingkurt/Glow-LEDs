@@ -4,17 +4,20 @@ import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Title, ButtonSymbol } from '../components/UtilityComponents';
-import { format_date_display, validate_profile } from '../utils/helper_functions';
+import { validate_password_change } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
-function EditProfilePage(props) {
+function ChangePasswordPage(props) {
 	const history = useHistory();
-	const [ name, setName ] = useState('');
-	const [ email, setEmail ] = useState('');
+	const [ current_password, setCurrentPassword ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const [ rePassword, setRePassword ] = useState('');
 
-	const [ name_validations, setNameValidations ] = useState('');
-	const [ email_validations, setEmailValidations ] = useState('');
 	const dispatch = useDispatch();
+
+	const [ current_password_validations, setCurrentPasswordValidations ] = useState('');
+	const [ password_validations, setPasswordValidations ] = useState('');
+	const [ re_password_validations, setRePasswordValidations ] = useState('');
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -27,27 +30,27 @@ function EditProfilePage(props) {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { name, email };
-		const request = validate_profile(data);
+		const data = { current_password, password, rePassword };
+		const request = validate_password_change(data);
 
-		setNameValidations(request.errors.name);
-		setEmailValidations(request.errors.email);
+		setCurrentPasswordValidations(request.errors.current_password);
+		setPasswordValidations(request.errors.password);
+		setRePasswordValidations(request.errors.rePassword);
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(update({ userId: userInfo._id, email, name }));
+			dispatch(update({ userId: userInfo._id, password }));
 			history.push('/profile');
 		}
 	};
+
 	const userUpdate = useSelector((state) => state.userUpdate);
 	const { loading, success, error } = userUpdate;
 
 	useEffect(
 		() => {
 			if (userInfo) {
-				setEmail(userInfo.email);
-				setName(userInfo.name);
-				// setPassword(userInfo.password);
+				setPassword(userInfo.password);
 			}
 			dispatch(listMyOrders());
 			return () => {};
@@ -58,9 +61,7 @@ function EditProfilePage(props) {
 	useEffect(
 		() => {
 			if (userUpdate.userInfo) {
-				setEmail(userUpdate.userInfo.email);
-				setName(userUpdate.userInfo.name);
-				// setPassword(userUpdate.userInfo.password);
+				setPassword(userUpdate.userInfo.password);
 			}
 
 			return () => {};
@@ -84,7 +85,7 @@ function EditProfilePage(props) {
 							<li>
 								{/* <h2>User Profile</h2> */}
 								<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%' }}>
-									User Profile
+									Change Password
 								</Title>
 							</li>
 							<li>
@@ -102,37 +103,42 @@ function EditProfilePage(props) {
 								</FlexContainer>
 							</li>
 							<li>
-								<label htmlFor="name">Name</label>
+								<label htmlFor="current_password">Current Password</label>
 								<input
-									defaultValue={name}
-									type="name"
-									name="name"
-									id="name"
-									onChange={(e) => setName(e.target.value)}
+									defaultValue={current_password}
+									type="password"
+									id="current_password"
+									name="current_password"
+									onChange={(e) => setCurrentPassword(e.target.value)}
 								/>
 							</li>
 							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-								{name_validations}
+								{current_password_validations}
 							</label>
 							<li>
-								<label htmlFor="email">Email</label>
+								<label htmlFor="password">Password</label>
 								<input
-									defaultValue={email}
-									type="text"
-									name="email"
-									id="email"
-									onChange={(e) => setEmail(e.target.value)}
+									type="password"
+									id="password"
+									name="password"
+									onChange={(e) => setPassword(e.target.value)}
 								/>
 							</li>
 							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-								{email_validations}
+								{password_validations}
 							</label>
-							{/* <li>
-              <label htmlFor="password">Password</label>
-              <input defaultValue={password} type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
-              </input>
-            </li> */}
-
+							<li>
+								<label htmlFor="rePassword">Re-Enter Password</label>
+								<input
+									type="password"
+									id="rePassword"
+									name="rePassword"
+									onChange={(e) => setRePassword(e.target.value)}
+								/>
+							</li>
+							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+								{re_password_validations}
+							</label>
 							<li>
 								<button type="submit" className="button primary">
 									Update
@@ -153,4 +159,4 @@ function EditProfilePage(props) {
 	);
 }
 
-export default EditProfilePage;
+export default ChangePasswordPage;
