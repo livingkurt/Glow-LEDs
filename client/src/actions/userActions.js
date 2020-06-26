@@ -94,6 +94,7 @@ const contact = (user_name, user_email, order_number, reason_for_contact, messag
   }
 }
 
+
 const logout = () => (dispatch) => {
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })

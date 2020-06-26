@@ -1,6 +1,7 @@
 
 import isEmpty from "is-empty";
 import Validator from "validator";
+import axios from "axios";
 
 export const format_date_display = unformatted_date => {
   const date = new Date(unformatted_date)
@@ -128,16 +129,28 @@ export const validate_profile = data => {
   };
 }
 
-export const validate_password_change = data => {
+export const validate_password_change = async (data) => {
+  // console.log({ data })
+  // console.log({ data: data.current_password })
   let errors = {};
+  let request;
+  if (data.current_password) {
+    request = await axios.post("/api/users/getuser/" + data.id, { current_password: data.current_password });
+    console.log({ request: request.data })
+  }
+
   // Convert empty fields to an empty string so we can use validator functions
   data.current_password = !isEmpty(data.current_password) ? data.current_password : "";
   data.password = !isEmpty(data.password) ? data.password : "";
   data.rePassword = !isEmpty(data.rePassword) ? data.rePassword : "";
 
   // Password checks
+  if (!request.data) {
+    errors.current_password = "Current Password is Incorrect";
+  }
+  // Password checks
   if (Validator.isEmpty(data.current_password)) {
-    errors.password = "Password field is required";
+    errors.current_password = "Current Password field is required";
   }
   // Password checks
   if (Validator.isEmpty(data.password)) {

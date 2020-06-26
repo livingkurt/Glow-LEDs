@@ -28,16 +28,16 @@ function ChangePasswordPage(props) {
 	// 	history.push('/profile');
 	// };
 
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		e.preventDefault();
-		const data = { current_password, password, rePassword };
-		const request = validate_password_change(data);
-
+		const validation_data = { id: userInfo._id, current_password, password, rePassword };
+		// console.log({ data });
+		const request = await validate_password_change(validation_data);
+		console.log({ request });
 		setCurrentPasswordValidations(request.errors.current_password);
 		setPasswordValidations(request.errors.password);
 		setRePasswordValidations(request.errors.rePassword);
 
-		console.log(request);
 		if (request.isValid) {
 			dispatch(update({ userId: userInfo._id, password }));
 			history.push('/profile');
