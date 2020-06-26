@@ -63,14 +63,14 @@ router.post("/passwordreset", async (req, res) => {
 
 })
 
-router.post("/register", async (req, res) => {
+router.post("/verified", async (req, res) => {
   console.log({ register: req.body })
 
   let mailOptions = {
     from: process.env.DISPLAY_EMAIL,
     to: req.body.email,
     subject: 'Glow LEDs Account Confirmation',
-    html: main_layout(verified_account_view({ ...req.body, title: "Thank you For Joining Glow LEDs" }))
+    html: main_layout(verified_account_view(req.body))
   }
 
   transporter.sendMail(mailOptions, (err, data) => {

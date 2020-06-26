@@ -7,24 +7,16 @@ import { FlexContainer } from '../components/ContainerComponents';
 
 function PasswordResetPage(props) {
 	const [ email, setEmail ] = useState('');
-	const userLogin = useSelector((state) => state.userLogin);
-	const { loading, userInfo, error } = userLogin;
+	const userPasswordReset = useSelector((state) => state.userPasswordReset);
+	const { loading, userInfo, error } = userPasswordReset;
 	const dispatch = useDispatch();
-	// useEffect(
-	// 	() => {
-	// 		if (userInfo) {
-	// 			props.history.push(redirect);
-	// 		}
-	// 		return () => {
-	// 			//
-	// 		};
-	// 	},
-	// 	[ userInfo ]
-	// );
+
+	const [ words, setWords ] = useState('');
 
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(password_reset(email));
+		setWords('Check your Email to Change your Password');
 		// props.history.push(redirect);
 	};
 	return (
@@ -36,17 +28,20 @@ function PasswordResetPage(props) {
 						<Title class="h1_title">Password Reset</Title>
 					</li>
 					<li>
-						<FlexContainer h_center>
-							{loading && (
-								<div>
-									<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-									<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-										If pages doesn't show in 5 seconds, refresh the page.
-									</Title>
-								</div>
-							)}
-							{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
-						</FlexContainer>
+						{loading ? (
+							<FlexContainer h_center column>
+								<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+								<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+									If pages doesn't show in 5 seconds, refresh the page.
+								</Title>
+							</FlexContainer>
+						) : error ? (
+							<FlexContainer h_center>
+								<Title styles={{ fontSize: 20 }}>{error} </Title>
+							</FlexContainer>
+						) : (
+							<Title styles={{ fontSize: 20, justifyContent: 'center' }}>{words}</Title>
+						)}
 					</li>
 					<li>
 						<label htmlFor="email">Email</label>

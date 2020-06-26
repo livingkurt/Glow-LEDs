@@ -12,7 +12,9 @@ function VerifiedPage(props) {
 		console.log(props.match.params.id);
 		dispatch(verify(props.match.params.id));
 		if (!loading) {
-			props.history.push('/login');
+			setTimeout(function() {
+				props.history.push('/login');
+			}, 3000);
 		}
 
 		return () => {};

@@ -1,7 +1,3 @@
-// import express from 'express';
-// import User from '../models/userModel';
-// import { getToken, isAuth } from '../util';
-
 const express = require('express');
 const User = require('../models/user');
 const { getToken, isAuth } = require('../util');
@@ -56,7 +52,13 @@ router.put('/update/:id', isAuth, async (req, res) => {
     user.password = req.body.password || user.password;
     user.isVerified = req.body.isVerified || user.isVerified;
     const updatedUser = await user.save();
-    res.status(202).send({ msg: 'Verified Account' });
+    res.send({
+      _id: updatedUser.id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      isVerified: updatedUser.isVerified,
+      token: getToken(updatedUser)
+    });
   } else {
     res.status(404).send({ msg: 'User Not Found' });
   }
@@ -74,14 +76,7 @@ router.put('/verify/:id', async (req, res) => {
     user.password = req.body.password || user.password;
     user.isVerified = true;
     const updatedUser = await user.save();
-    res.send({
-      _id: updatedUser.id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-      isVerified: updatedUser.isVerified,
-      token: getToken(updatedUser)
-    });
+    res.status(202).send({ msg: 'Verified Account' });
   } else {
     res.status(404).send({ msg: 'User Not Found' });
   }
