@@ -54,12 +54,32 @@ router.put('/update/:id', isAuth, async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.password = req.body.password || user.password;
+    user.isVerified = req.body.isVerified || user.isVerified;
+    const updatedUser = await user.save();
+    res.status(202).send({ msg: 'Verified Account' });
+  } else {
+    res.status(404).send({ msg: 'User Not Found' });
+  }
+
+});
+
+router.put('/verify/:id', async (req, res) => {
+
+  const userId = req.params.id;
+  console.log({ verify: userId })
+  const user = await User.findById(userId);
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.password = req.body.password || user.password;
+    user.isVerified = true;
     const updatedUser = await user.save();
     res.send({
       _id: updatedUser.id,
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isVerified: updatedUser.isVerified,
       token: getToken(updatedUser)
     });
   } else {
@@ -78,6 +98,9 @@ router.post('/login', async (req, res) => {
     const login_user = await User.findOne({ email });
     if (!login_user) {
       return res.status(404).json({ emailnotfound: "Email not found" });
+    }
+    if (!login_user.isVerified) {
+      return res.status(404).json({ emailnotfound: "Account not Verified" });
     }
     // Check password
     const isMatch = await bcrypt.compare(password, login_user.password)
@@ -123,6 +146,7 @@ router.post('/register', async (req, res) => {
             name: newUser.name,
             email: newUser.email,
             isAdmin: newUser.isAdmin,
+            isVerified: newUser.isVerified,
             token: getToken(newUser)
           })
         });
@@ -141,7 +165,7 @@ router.get("/createadmin", async (req, res) => {
       name: 'Kurt',
       email: 'lavacquek@icloud.com',
       password: "admin",
-      confirmed: true,
+      isVerified: true,
       isAdmin: true
     });
     const user = await User.findOne({ email: admin.email });
@@ -159,6 +183,7 @@ router.get("/createadmin", async (req, res) => {
             name: admin.name,
             email: admin.email,
             isAdmin: admin.isAdmin,
+            isVerified: admin.isVerified,
             token: getToken(admin)
           })
         });

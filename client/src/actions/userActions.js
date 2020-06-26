@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 import {
   USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS,
   USER_LOGIN_FAIL, USER_REGISTER_REQUEST,
-  USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_CONTACT_REQUEST, USER_CONTACT_SUCCESS, USER_CONTACT_FAIL, USER_PASSWORD_RESET_SUCCESS, USER_PASSWORD_RESET_FAIL, USER_PASSWORD_RESET_REQUEST, USER_RESET_PASSWORD_REQUEST, USER_RESET_PASSWORD_SUCCESS, USER_RESET_PASSWORD_FAIL
+  USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, USER_CONTACT_REQUEST, USER_CONTACT_SUCCESS, USER_CONTACT_FAIL, USER_PASSWORD_RESET_SUCCESS, USER_PASSWORD_RESET_FAIL, USER_PASSWORD_RESET_REQUEST, USER_RESET_PASSWORD_REQUEST, USER_RESET_PASSWORD_SUCCESS, USER_RESET_PASSWORD_FAIL, USER_VERIFY_REQUEST, USER_VERIFY_SUCCESS, USER_VERIFY_FAIL
 } from "../constants/userConstants";
 
 const update = ({ userId, name, email, password }) => async (dispatch, getState) => {
@@ -63,10 +63,24 @@ const register = (name, email, password) => async (dispatch) => {
   try {
     const { data } = await axios.post("/api/users/register", { name, email, password });
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    axios.post("/api/emails/register", { name, email, password });
+    axios.post("/api/emails/verify", data);
     Cookie.set('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
+  }
+}
+
+
+const verify = (user_id) => async (dispatch) => {
+  console.log({ user_id })
+  dispatch({ type: USER_VERIFY_REQUEST, payload: { user_id } });
+  try {
+    const { data } = await axios.put("/api/users/verify/" + user_id);
+    dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
+    // axios.post("/api/emails/verified", data);
+    Cookie.set('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({ type: USER_VERIFY_FAIL, payload: error.message });
   }
 }
 
@@ -84,4 +98,4 @@ const logout = () => (dispatch) => {
   Cookie.remove("userInfo");
   dispatch({ type: USER_LOGOUT })
 }
-export { login, register, logout, update, contact, password_reset, reset_password };
+export { login, register, logout, update, contact, password_reset, reset_password, verify };

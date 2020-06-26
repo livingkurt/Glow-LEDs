@@ -86,6 +86,29 @@ router.post("/register", async (req, res) => {
 
 })
 
+router.post("/verify", async (req, res) => {
+  console.log({ register: req.body })
+
+  let mailOptions = {
+    from: process.env.DISPLAY_EMAIL,
+    to: req.body.email,
+    subject: 'Glow LEDs Account Verification',
+    html: main_layout(verify_account_view(req.body))
+  }
+
+  transporter.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      console.log('Error Occurs', err)
+      res.send(err)
+    }
+    else {
+      console.log('Verification Email Sent to ' + req.body.name)
+      res.send("Email Successfully Sent")
+    }
+  })
+
+})
+
 
 router.post("/order", async (req, res) => {
   console.log({ order: req.body })

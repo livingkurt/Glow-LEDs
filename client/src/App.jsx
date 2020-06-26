@@ -22,7 +22,8 @@ import {
 	EditProductPage,
 	CreateProductPage,
 	PasswordResetPage,
-	ResetPasswordPage
+	ResetPasswordPage,
+	VerifiedPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -60,6 +61,7 @@ function App() {
 							component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 						/>
 						<Route path="/login" component={LoginPage} />
+						<Route path="/verified/:id" component={VerifiedPage} />
 						<Route path="/register" component={RegisterPage} />
 						<Route path="/product/:id" component={ProductPage} />
 						<Route path="/editproduct/:id?" component={EditProductPage} />
