@@ -34,7 +34,7 @@ module.exports = function (body) {
   <meta property="DC.date.issued" content="2015-04-28T07:34:45+00:00">
   <link rel="shortlink" href="http://www.glow-leds.com">
   <meta name="referrer" content="always">
-  <script src="http://kit.fontawesome.com/cc10a71280.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/cc10a71280.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="http://kit-free.fontawesome.com/releases/latest/css/free.min.css" media="all">
   <link rel="stylesheet" href="http://kit-free.fontawesome.com/releases/latest/css/free-v4-font-face.min.css"
     media="all">
