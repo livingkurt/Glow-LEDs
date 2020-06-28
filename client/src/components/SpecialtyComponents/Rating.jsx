@@ -54,7 +54,7 @@ const Rating = (props) => {
 				/>
 				<i style={icon_style} className="fa fa-star-o" />
 			</span>
-			<span>{props.text ? props.text : '0'}</span>
+			<span>{props.text ? props.text : ''}</span>
 		</div>
 	);
 };

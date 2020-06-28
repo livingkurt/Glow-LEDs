@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct, imagesProduct } from '../actions/productActions';
+import { detailsProduct, imagesProduct, saveProductReview } from '../actions/productActions';
 import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import API from '../utils/API';
 import { Rating } from '../components/SpecialtyComponents';
+import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
+import { format_date_display } from '../utils/helper_functions';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -14,8 +16,12 @@ const ProductPage = (props) => {
 
 	const [ qty, setQty ] = useState(1);
 	const productDetails = useSelector((state) => state.productDetails);
+
 	const { product, loading, error } = productDetails;
 	const dispatch = useDispatch();
+
+	const productReviewSave = useSelector((state) => state.productReviewSave);
+	const { success: productSaveSuccess } = productReviewSave;
 
 	useEffect(() => {
 		dispatch(detailsProduct(props.match.params.id));
@@ -23,6 +29,17 @@ const ProductPage = (props) => {
 		video.muted = true;
 		video.autoplay = true;
 	}, []);
+
+	useEffect(
+		() => {
+			if (productSaveSuccess) {
+				setRating(0);
+				setComment('');
+				dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+			}
+		},
+		[ productSaveSuccess ]
+	);
 
 	useEffect(
 		() => {
@@ -48,6 +65,21 @@ const ProductPage = (props) => {
 		expandImg.src = e.target.src;
 		expandImg.parentElement.style.display = 'block';
 	};
+
+	const [ rating, setRating ] = useState(5);
+	const [ comment, setComment ] = useState('');
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(
+			saveProductReview(props.match.params.id, {
+				name: userInfo.name,
+				rating: rating,
+				comment: comment
+			})
+		);
+	};
+	console.log({ rating });
 
 	return (
 		<FlexContainer column>
@@ -190,7 +222,6 @@ const ProductPage = (props) => {
 							</ul>
 						</div>
 					</div>
-					{/* <FlexContainer class="alt_pictures_shown"> */}
 					<div className="details-image alt_pictures_shown">
 						{loadingImages ? (
 							<FlexContainer h_center column>
@@ -215,7 +246,6 @@ const ProductPage = (props) => {
 							})
 						)}
 					</div>
-					{/* </FlexContainer> */}
 					<FlexContainer column styles={{ padding: '1rem' }}>
 						<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
 						<p>{product.description}</p>
@@ -239,6 +269,7 @@ const ProductPage = (props) => {
 						</FlexContainer>
 						{!product.video ? (
 							<Title
+								class="h2_title"
 								styles={{
 									fontSize: 30,
 									textAlign: 'center',
@@ -251,6 +282,7 @@ const ProductPage = (props) => {
 						) : (
 							<FlexContainer h_center column>
 								<Title
+									class="h2_title"
 									styles={{
 										fontSize: 20,
 										textAlign: 'center',
@@ -272,7 +304,102 @@ const ProductPage = (props) => {
 						)}
 						{/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
 					</FlexContainer>
-					{/* </FlexContainer> */}
+					<div className="content-margined">
+						<Title
+							class="h3_title"
+							styles={{
+								fontSize: 30,
+								textAlign: 'center',
+								width: '100%',
+								justifyContent: 'center'
+							}}
+						>
+							Reviews
+						</Title>
+						{!product.reviews.length && <div>Be the First to Review this Product</div>}
+						<div className="review" id="reviews">
+							{product.reviews.map((review) => (
+								<li
+									key={review._id}
+									style={{
+										listStyleType: 'none',
+										background: 'gray',
+										padding: '5px',
+										borderRadius: '15px'
+									}}
+								>
+									<div>{review.name}</div>
+									<div>
+										<Rating value={review.rating} />
+									</div>
+									<div>{format_date_display(review.createdAt.substring(0, 10))}</div>
+									<div>{review.comment}</div>
+								</li>
+							))}
+							<Title
+								class="h2_title"
+								styles={{
+									fontSize: 30,
+									textAlign: 'center',
+									width: '100%',
+									justifyContent: 'center'
+								}}
+							>
+								Write a customer review
+							</Title>
+
+							<li style={{ listStyleType: 'none' }}>
+								{userInfo ? (
+									<form onSubmit={submitHandler}>
+										<div className="form-container">
+											<li>
+												<Title
+													styles={{
+														fontSize: 30,
+														textAlign: 'center',
+														width: '100%',
+														justifyContent: 'center'
+													}}
+												>
+													{productSaveSuccess ? 'Review Saved Successfully' : ''}
+												</Title>
+												<label htmlFor="rating">Rating</label>
+												<select
+													name="rating"
+													id="rating"
+													defaultValue={rating}
+													onChange={(e) => setRating(e.target.value)}
+												>
+													<option value="5">5 - Excellent </option>
+													<option value="4">4 - Very Good</option>
+													<option value="3">3 - Good</option>
+													<option value="2">2 - Fair</option>
+													<option value="1">1 - Poor</option>
+												</select>
+											</li>
+											<li>
+												<label htmlFor="comment" id="comment" />
+												<textarea
+													htmlFor="comment"
+													value={comment}
+													onChange={(e) => setComment(e.target.value)}
+												/>
+											</li>
+											<li>
+												<button type="submit" className="button primary">
+													Submit
+												</button>
+											</li>
+										</div>
+									</form>
+								) : (
+									<div>
+										Please <Link to="/login">Login</Link> to Write a Review
+									</div>
+								)}
+							</li>
+						</div>
+					</div>
 				</FlexContainer>
 			)}
 		</FlexContainer>
