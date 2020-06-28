@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import './product.css';
 // Components
 import { Label } from '../../UtilityComponents/index';
+import { Rating } from '..';
 
 const Product = (props) => {
+	console.log(props.product);
 	return (
 		<li key={props.product._id}>
 			<div className="product">
@@ -18,6 +20,7 @@ const Product = (props) => {
 					<Label styles={{ fontSize: '16px' }}>{props.product.name}</Label>
 				</Link>
 				<Label className="product-price">${props.product.price.toFixed(2)}</Label>
+				<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
 			</div>
 		</li>
 	);
