@@ -5,24 +5,13 @@ import { detailsProduct, imagesProduct } from '../actions/productActions';
 import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import API from '../utils/API';
+import { Rating } from '../components/SpecialtyComponents';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 
-	// const [ images_state, set_images_state ] = useState([]);
-
-	// const get_images = async () => {
-	// 	try {
-	// 		const res = await API.get_images('/images/optimized_images/product_images/Custom_Infinity_Mirrors');
-	// 		// set_images_state(res.data);
-	// 		// console.log(res.data);
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// };
-
 	let { userInfo } = userLogin;
-	// console.log(userInfo);
+
 	const [ qty, setQty ] = useState(1);
 	const productDetails = useSelector((state) => state.productDetails);
 	const { product, loading, error } = productDetails;
@@ -33,21 +22,11 @@ const ProductPage = (props) => {
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
-
-		// if (!loading) {
-		// 	console.log(product.display_image);
-		// 	console.log(product);
-		// dispatch(imagesProduct(product.display_image));
-		// }
-
-		// get_images();
 	}, []);
 
 	useEffect(
 		() => {
 			if (product) {
-				// console.log(product.display_image);
-				// console.log(product);
 				dispatch(imagesProduct(product.display_image));
 			}
 			return () => {};
@@ -67,7 +46,6 @@ const ProductPage = (props) => {
 		console.log(e.target.src);
 		var expandImg = document.getElementById('expandedImg');
 		expandImg.src = e.target.src;
-		// expandImg.setAttribute("src", [imgs.src])
 		expandImg.parentElement.style.display = 'block';
 	};
 
@@ -121,10 +99,7 @@ const ProductPage = (props) => {
 									style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
 								/>
 							</div>
-							{/* <FlexContainer class="alt_pictures_hidden" styles={{ diplay: 'none' }}> */}
 						</FlexContainer>
-						{/* </FlexContainer> */}
-
 						<div className="details-info">
 							<Title
 								class="product_title_side"
@@ -132,6 +107,9 @@ const ProductPage = (props) => {
 							>
 								{product.name}
 							</Title>
+							<a href="#reviews">
+								<Rating value={product.rating} text={product.numReviews + ' reviews'} />
+							</a>
 							<FlexContainer>
 								<Title styles={{ fontSize: '2rem', margin: 0, marginRight: 5 }}>Price: </Title>
 								<Label styles={{ fontSize: '2rem' }}>
