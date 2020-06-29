@@ -139,9 +139,11 @@ const ProductPage = (props) => {
 							>
 								{product.name}
 							</Title>
-							<a href="#reviews">
-								<Rating value={product.rating} text={product.numReviews + ' reviews'} />
-							</a>
+							<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
+								<a href="#reviews">
+									<Rating value={product.rating} text={product.numReviews + ' reviews'} />
+								</a>
+							</div>
 							<FlexContainer>
 								<Title styles={{ fontSize: '2rem', margin: 0, marginRight: 5 }}>Price: </Title>
 								<Label styles={{ fontSize: '2rem' }}>
