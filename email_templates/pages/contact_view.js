@@ -1,7 +1,7 @@
-
 module.exports = (props) => {
+	console.log({ props });
 
-  return `
+	return `
     <h1>
       Hello Kurt,
     </h1>
@@ -21,4 +21,4 @@ module.exports = (props) => {
       <div>Reason For Contact: ${props.reason_for_contact}</div>
     </p>
 	`;
-}
+};
