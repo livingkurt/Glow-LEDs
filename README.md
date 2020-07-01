@@ -2,7 +2,8 @@
 
 <p align="center">
   <img style="text-align: center;" src="./client/public/images/optimized_images/logo_images/glow_logo_optimized.png">
-  <h1 style="text-align: center;">3D Printed LED toys and accessories, by a glover that just wants to light up the world</h1>
+  <h1 style="text-align: center;">3D Printed LED toys, by a glover that wants the world to stay lit</h1>
+  <!-- <h1 style="text-align: center;">3D Printed LED toys and accessories, by a glover that just wants to light up the world</h1> -->
 </p>
 
 
