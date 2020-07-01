@@ -23,23 +23,32 @@ const ProductPage = (props) => {
 	const productReviewSave = useSelector((state) => state.productReviewSave);
 	const { success: productSaveSuccess } = productReviewSave;
 
-	useEffect(() => {
-		dispatch(detailsProduct(props.match.params.id));
-		const video = document.getElementsByClassName('product_video');
-		video.muted = true;
-		video.autoplay = true;
-	}, []);
-
 	useEffect(
 		() => {
 			if (productSaveSuccess) {
 				setRating(0);
 				setComment('');
 				dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+				dispatch(detailsProduct(props.match.params.id));
 			}
+			dispatch(detailsProduct(props.match.params.id));
+			const video = document.getElementsByClassName('product_video');
+			video.muted = true;
+			video.autoplay = true;
 		},
 		[ productSaveSuccess ]
 	);
+
+	// useEffect(
+	// 	() => {
+	// 		if (productSaveSuccess) {
+	// 			setRating(0);
+	// 			setComment('');
+	// 			dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+	// 		}
+	// 	},
+	// 	[ productSaveSuccess ]
+	// );
 
 	useEffect(
 		() => {
