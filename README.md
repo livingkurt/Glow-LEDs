@@ -84,8 +84,6 @@ Run App
 npm start
 ```
 
-# How it works
-
 # Technologies
 
 ## Front End
