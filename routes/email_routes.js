@@ -28,7 +28,7 @@ router.post('/contact', async (req, res) => {
 	let mailOptions = {
 		from: data.email,
 		to: process.env.DISPLAY_EMAIL,
-		subject: `New message from ${data.name} - ${data.order_number} - ${data.reason_for_contact}`,
+		subject: `New message from ${data.name} - ${data.order_number} - ${sdata.reason_for_contact}`,
 		html: main_layout(contact_view(data))
 	};
 

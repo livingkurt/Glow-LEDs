@@ -46,6 +46,37 @@ Install Dependancies
 npm install
 ```
 
+## .env Set Up
+
+Copy .env example and name it .env
+
+#### MONGODB_URI
+
+Local Mongodb URI
+
+#### JWT_SECRET
+
+Create secret key that is unsed to create your jwt tokens
+
+#### PAYPAL_CLIENT_ID
+
+Set up your paypal developer account and paste in your client ID
+
+#### PASSWORD
+
+Gmail Password
+
+#### EMAIL
+
+Gmail Email
+
+#### DISPLAY_EMAIL
+
+So that the display email will be formatted correctly
+
+DISPLAY_EMAIL='"Name" <email@email.com>'
+
+
 Run App
 
 ```shell
@@ -54,24 +85,37 @@ npm start
 
 # How it works
 
-- Press the play button to start the timer
-- Press the pause button to pause the timer and snooze the ending sound
-- Press Stop to reset the timer
-- You can switch back and forth between Work and Break timers manually with the toggle switch
-- There are number inputs at the bottom that allow you to customize the amount of time you would like to work and break for
-
 # Technologies
 
+## Front End
+
 - Javascript
+- HTML5
+- CSS3
+- React.js
+- Redux
+- Paypal API
+- axios
+- http-proxy-middleware
+- is-empty
+- js-cookie
+- react-redux
+- react-router-dom
+- redux
+- redux-thunk
+- validator
+
+
+## Back End
+
+- Node.js
+- Nodemailer
 - MongoDB
   - mongoose.js
 - Express.js
-- React.js
-- Node.js
-- Redux
-- Nodemailer
-- email.js
-- Axios
+- bcryptjs
+- body-parser
+- jsonwebtoken
 
 
 # Pictures
