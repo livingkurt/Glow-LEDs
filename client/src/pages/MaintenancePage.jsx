@@ -3,7 +3,7 @@ import { Title, Label, ButtonSymbol, ButtonWord } from '../components/UtilityCom
 import { FlexContainer, BlockContainer, Content } from '../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 
-const Four04Page = (props) => {
+const MaintenancePage = (props) => {
 	const header_styles = {
 		gridArea: 'header',
 		backgroundColor: '#333333',
@@ -12,12 +12,12 @@ const Four04Page = (props) => {
 		alignItems: 'center',
 		padding: '15px',
 		listStyleType: 'none',
-		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-		position: 'fixed',
-		right: '0',
-		left: '0',
-		zIndex: '999',
-		top: '0'
+		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+		// position: 'fixed',
+		// right: '0',
+		// left: '0',
+		// zIndex: '999',
+		// top: '0'
 	};
 
 	const homepage_video = {
@@ -36,8 +36,21 @@ const Four04Page = (props) => {
 		padding: '56.25% 0 0'
 	};
 
+	const content_styles = {
+		// width: '75%',
+		// gridArea: 'main',
+		backgroundColor: '#737373',
+		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+		background: 'linear-gradient(180deg, rgba(138, 138, 138, 1) 0%, rgba(39, 39, 39, 1) 100%)',
+		// borderRadius: '20px',
+		// margin: '20px auto 20px',
+		padding: '2rem',
+		// padding: '2rem 10rem',
+		minHeight: '81vh'
+	};
+
 	return (
-		<BlockContainer>
+		<div style={{ padding: 0 }}>
 			<header style={header_styles} id="overlay">
 				<FlexContainer h_center column t_center>
 					<div className="brand">
@@ -48,6 +61,14 @@ const Four04Page = (props) => {
 							alt="Glow LEDs"
 						/>
 					</div>
+					<FlexContainer h_center v_i_center class="logo_text">
+						<img
+							className="logo_2"
+							style={{ display: 'none', height: '80px' }}
+							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+							alt="Glow LEDs"
+						/>
+					</FlexContainer>
 					<Title
 						class="glow_leds_text"
 						styles={{
@@ -64,7 +85,7 @@ const Four04Page = (props) => {
 					</Title>
 				</FlexContainer>
 			</header>
-			<Content styles={{ margin: '250px auto 20px' }}>
+			<div style={content_styles}>
 				<FlexContainer h_center column t_center>
 					<Title styles={{ margin: '20px auto' }}>Glow LEDs Coming Soon!</Title>
 					<Label>Check out the video below for a sneak peak of what we have to offer</Label>
@@ -77,8 +98,8 @@ const Four04Page = (props) => {
 						/>
 					</video>
 				</FlexContainer>
-			</Content>
-		</BlockContainer>
+			</div>
+		</div>
 	);
 };
-export default Four04Page;
+export default MaintenancePage;

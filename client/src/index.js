@@ -9,7 +9,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { MaintenancePage } from './pages';
 
-const maintenance = false;
+const maintenance = true;
 
 ReactDOM.render(
 	<Provider store={store}>
