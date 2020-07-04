@@ -28,19 +28,12 @@ import {
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
-import Cookie from 'js-cookie';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
 
 	let { userInfo } = userLogin;
-	console.log({ 'App.js': userInfo });
-
-	// console.log(Cookie.getJSON("userInfo"))
-
-	// if (!userInfo) {
-	//   userInfo = Cookie.getJSON("userInfo");
-	// }
 
 	return (
 		<Router>
@@ -49,25 +42,13 @@ const App = () => {
 				<Sidebar userInfo={userInfo} />
 				<Content>
 					<Switch>
-						<Route path="/orders" component={OrdersPage} />
-						<Route path="/profile" component={ProfilePage} />
-						<Route path="/editprofile" component={EditProfilePage} />
-						<Route path="/userorders" component={UserOrdersPage} />
-						<Route path="/order/:id" component={(props) => <OrderPage userInfo={userInfo} {...props} />} />
-						<Route path="/products" component={ProductsPage} />
-						<Route path="/shipping" component={ShippingPage} />
-						<Route path="/payment" component={PaymentPage} />
-						<Route
-							path="/placeorder"
-							component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
-						/>
+						{/* Public Routes */}
 						<Route path="/login" component={LoginPage} />
 						<Route path="/verified/:id" component={VerifiedPage} />
 						<Route path="/checkemail" component={CheckEmailPage} />
 						<Route path="/changepassword" component={ChangePasswordPage} />
 						<Route path="/register" component={RegisterPage} />
 						<Route path="/product/:id" component={ProductPage} />
-						<Route path="/editproduct/:id?" component={EditProductPage} />
 						<Route path="/passwordreset" component={PasswordResetPage} />
 						<Route path="/resetpassword/:id" component={ResetPasswordPage} />
 						<Route path="/cart/:id?" component={CartPage} />
@@ -76,6 +57,23 @@ const App = () => {
 						<Route path="/" exact={true} component={HomePage} />
 						<Route path="/contact" exact={true} component={ContactPage} />
 						<Route component={Four04Page} />
+						{/* Private Routes */}
+						<PrivateRoute path="/orders" component={OrdersPage} />
+						<PrivateRoute path="/profile" component={ProfilePage} />
+						<PrivateRoute path="/editprofile" component={EditProfilePage} />
+						<PrivateRoute path="/userorders" component={UserOrdersPage} />
+						<PrivateRoute
+							path="/order/:id"
+							component={(props) => <OrderPage userInfo={userInfo} {...props} />}
+						/>
+						<PrivateRoute path="/products" component={ProductsPage} />
+						<PrivateRoute path="/shipping" component={ShippingPage} />
+						<PrivateRoute path="/payment" component={PaymentPage} />
+						<PrivateRoute
+							path="/placeorder"
+							component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
+						/>
+						<PrivateRoute path="/editproduct/:id?" component={EditProductPage} />
 					</Switch>
 				</Content>
 				<Footer />
