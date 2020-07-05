@@ -59,23 +59,20 @@ const App = () => {
 						<Route path="/contact" exact={true} component={ContactPage} />
 						<Route component={Four04Page} />
 						{/* Private Routes */}
-						<PrivateRoute path="/profile" component={ProfilePage} />
-						<PrivateRoute path="/editprofile" component={EditProfilePage} />
-						<PrivateRoute path="/userorders" component={UserOrdersPage} />
-						<PrivateRoute path="/products" component={ProductsPage} />
-						<PrivateRoute path="/shipping" component={ShippingPage} />
-						<PrivateRoute path="/payment" component={PaymentPage} />
-						<PrivateRoute
-							path="/order/:id"
-							component={(props) => <OrderPage userInfo={userInfo} {...props} />}
-						/>
-						<PrivateRoute
+						<Route path="/profile" component={ProfilePage} />
+						<Route path="/editprofile" component={EditProfilePage} />
+						<Route path="/userorders" component={UserOrdersPage} />
+						<Route path="/products" component={ProductsPage} />
+						<Route path="/shipping" component={ShippingPage} />
+						<Route path="/payment" component={PaymentPage} />
+						<Route path="/order/:id" component={(props) => <OrderPage userInfo={userInfo} {...props} />} />
+						<Route
 							path="/placeorder"
 							component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 						/>
 						{/* Admin Routes */}
-						<PrivateRoute path="/editproduct/:id?" component={EditProductPage} />
-						<PrivateRoute path="/orders" component={OrdersPage} />
+						<Route path="/editproduct/:id?" component={EditProductPage} />
+						<Route path="/orders" component={OrdersPage} />
 					</Switch>
 				</Content>
 				<Footer />
