@@ -86,7 +86,7 @@ const HomePage = (props) => {
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/optimized_images/product_images/Caps/img_9322_optimized.jpg"
+							src="images/optimized_images/product_images/Diffuser_Caps/Seed_of_Life/img_9866_optimized.jpg"
 							alt="diffuser_caps"
 						/>
 					</FlexContainer>
