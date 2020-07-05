@@ -1,121 +1,223 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from "react-router-dom";
-import { Title, ButtonWord } from "../../UtilityComponents/index"
-import { FlexContainer } from "../index"
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { Title, ButtonWord } from '../../UtilityComponents/index';
+import { FlexContainer } from '../index';
 import { useDispatch, useSelector } from 'react-redux';
-import "./sidebar.css"
+import './sidebar.css';
 import { logout } from '../../../actions/userActions';
 
 const Sidebar = (props) => {
+	const history = useHistory();
 
-  const history = useHistory()
+	const header_styles = {
+		gridArea: 'header',
+		backgroundColor: '#333333',
+		color: '#ffffff',
+		display: 'flex',
+		alignItems: 'center',
+		padding: '15px',
+		listStyleType: 'none',
+		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+		position: 'fixed',
+		right: '0',
+		left: '0',
+		zIndex: '999'
+	};
 
-  const header_styles = {
-    gridArea: "header",
-    backgroundColor: "#333333",
-    color: "#ffffff",
-    display: "flex",
-    alignItems: "center",
-    padding: "15px",
-    listStyleType: "none",
-    boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    position: "fixed",
-    right: "0",
-    left: "0",
-    zIndex: "999"
-  }
+	const cart = useSelector((state) => state.cart);
 
-  const cart = useSelector(state => state.cart);
+	const { cartItems } = cart;
 
-  const { cartItems } = cart;
+	const closeMenu = () => {
+		document.querySelector('.sidebar').classList.remove('open');
+	};
+	const dispatch = useDispatch();
 
-  const closeMenu = () => {
-    document.querySelector(".sidebar").classList.remove("open")
-  }
-  const dispatch = useDispatch();
+	const handleLogout = () => {
+		dispatch(logout());
+		closeMenu();
+		history.push('/login');
+	};
 
-  const handleLogout = () => {
-    dispatch(logout());
-    closeMenu()
-    history.push("/login");
+	const icon_styles = {
+		position: 'absolute',
+		right: '10px',
+		top: '8px',
+		'-webkitTransform': 'rotate(-180deg)'
+	};
 
-  }
+	const [ name, setName ] = useState('');
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
-  const icon_styles = {
-    position: "absolute",
-    right: "10px",
-    top: "8px",
-    "-webkitTransform": "rotate(-180deg)"
-  }
+	useEffect(
+		() => {
+			if (userInfo) {
+				setName(userInfo.name);
+			}
 
-  const [name, setName] = useState('');
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+			// }
+		},
+		[ userInfo ]
+	);
 
-  useEffect(() => {
-    if (userInfo) {
-      setName(userInfo.name);
-    }
+	const userUpdate = useSelector((state) => state.userUpdate);
 
-    // }
-  }, [userInfo])
+	useEffect(
+		() => {
+			if (userUpdate.userInfo) {
+				setName(userUpdate.userInfo.name);
+			}
+			return () => {};
+		},
+		[ userUpdate.userInfo ]
+	);
 
-  const userUpdate = useSelector(state => state.userUpdate);
-
-  useEffect(() => {
-    if (userUpdate.userInfo) {
-      setName(userUpdate.userInfo.name);
-    }
-    return () => {
-    };
-  }, [userUpdate.userInfo])
-
-  return (
-    <aside className="sidebar">
-      <Title class="h2_title">Shopping Categories</Title>
-      <button className="sidebar-close-button" onClick={closeMenu}><i class="fas fa-times"></i></button>
-      <FlexContainer column>
-        {
-          props.userInfo
-            ?
-            // <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
-            <div className="dropdown-sidebar-nav" >
-              <ButtonWord class="sidebar_nav_buttons">{name}</ButtonWord>
-              <ul className="dropdown-sidebar-nav-content">
-                <Link to="/profile"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Profile</ButtonWord></Link>
-                <Link to="/userorders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>
-                {/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
-                <ButtonWord on_click_function={handleLogout} class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"> Logout</ButtonWord>
-              </ul>
-              <i style={icon_styles} class="fas fa-sort-up"></i>
-            </div>
-
-            :
-            <Link to="/login"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Login</ButtonWord></Link>
-        }
-        {props.userInfo && props.userInfo.isAdmin && (
-          <div className="dropdown-sidebar-nav">
-            <ButtonWord class="sidebar_nav_buttons">Admin</ButtonWord>
-            <ul className="dropdown-sidebar-nav-content">
-              <Link to="/orders"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Orders</ButtonWord></Link>
-              <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Products</ButtonWord></Link>
-            </ul>
-            <i style={icon_styles} class="fas fa-sort-up"></i>
-          </div>
-        )}
-        <Link to="/allproducts"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>All Products</ButtonWord></Link>
-        <div className="dropdown-sidebar-nav">
-          <ButtonWord class="sidebar_nav_buttons">Diffusers</ButtonWord>
-          <ul className="dropdown-sidebar-nav-content">
-            <Link to="/category/Diffusers"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Diffusers</ButtonWord></Link>
-            <Link to="/category/Caps"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}>Caps</ButtonWord></Link>
-            <Link to="/category/Adapters"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons" on_click_function={closeMenu}> Adapters</ButtonWord></Link>
-          </ul>
-          <i style={icon_styles} class="fas fa-sort-up"></i>
-        </div>
-        <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Accessories</ButtonWord></Link>
-        <Link to="/contact"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Contact</ButtonWord></Link>
-        {/* {
+	return (
+		<aside className="sidebar">
+			<Title class="h2_title">Shopping Categories</Title>
+			<button className="sidebar-close-button" onClick={closeMenu}>
+				<i class="fas fa-times" />
+			</button>
+			<FlexContainer column>
+				{props.userInfo ? (
+					// <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
+					<div className="dropdown-sidebar-nav">
+						<ButtonWord class="sidebar_nav_buttons">{name}</ButtonWord>
+						<ul className="dropdown-sidebar-nav-content">
+							<Link to="/profile">
+								<ButtonWord
+									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+									on_click_function={closeMenu}
+								>
+									Profile
+								</ButtonWord>
+							</Link>
+							<Link to="/userorders">
+								<ButtonWord
+									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+									on_click_function={closeMenu}
+								>
+									Orders
+								</ButtonWord>
+							</Link>
+							{/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
+							<ButtonWord
+								on_click_function={handleLogout}
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+							>
+								{' '}
+								Logout
+							</ButtonWord>
+						</ul>
+						<i style={icon_styles} class="fas fa-sort-up" />
+					</div>
+				) : (
+					<Link to="/login">
+						<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
+							Login
+						</ButtonWord>
+					</Link>
+				)}
+				{props.userInfo &&
+				props.userInfo.isAdmin && (
+					<div className="dropdown-sidebar-nav">
+						<ButtonWord class="sidebar_nav_buttons">Admin</ButtonWord>
+						<ul className="dropdown-sidebar-nav-content">
+							<Link to="/orders">
+								<ButtonWord
+									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+									on_click_function={closeMenu}
+								>
+									Orders
+								</ButtonWord>
+							</Link>
+							<Link to="/products">
+								<ButtonWord
+									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+									on_click_function={closeMenu}
+								>
+									Products
+								</ButtonWord>
+							</Link>
+						</ul>
+						<i style={icon_styles} class="fas fa-sort-up" />
+					</div>
+				)}
+				<Link to="/allproducts">
+					<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
+						All Products
+					</ButtonWord>
+				</Link>
+				<div className="dropdown-sidebar-nav">
+					<ButtonWord class="sidebar_nav_buttons">Gloving</ButtonWord>
+					<ul className="dropdown-sidebar-nav-content">
+						<Link to="/category/Diffusers">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								Domes
+							</ButtonWord>
+						</Link>
+						<Link to="/category/Caps">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								Caps
+							</ButtonWord>
+						</Link>
+						<Link to="/category/Adapters">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								{' '}
+								Adapters
+							</ButtonWord>
+						</Link>
+						<Link to="/category/Accessories">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								{' '}
+								Accessories
+							</ButtonWord>
+						</Link>
+					</ul>
+					<i style={icon_styles} class="fas fa-sort-up" />
+				</div>
+				<div className="dropdown-sidebar-nav">
+					<ButtonWord class="sidebar_nav_buttons">Decor</ButtonWord>
+					<ul className="dropdown-sidebar-nav-content">
+						<Link to="/category/StringLights">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								String Lights
+							</ButtonWord>
+						</Link>
+						<Link to="/category/Infinity">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								Infinity Mirrors
+							</ButtonWord>
+						</Link>
+					</ul>
+					<i style={icon_styles} class="fas fa-sort-up" />
+				</div>
+				{/* <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Accessories</ButtonWord></Link> */}
+				<Link to="/contact">
+					<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
+						Contact
+					</ButtonWord>
+				</Link>
+				{/* {
           props.userInfo
             ?
             <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link>
@@ -123,12 +225,9 @@ const Sidebar = (props) => {
             :
             <Link to="/login"><ButtonWord >Login</ButtonWord></Link>
         } */}
-
-
-      </FlexContainer>
-    </aside>
-
-  );
-}
+			</FlexContainer>
+		</aside>
+	);
+};
 
 export default Sidebar;
