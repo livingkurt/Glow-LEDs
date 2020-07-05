@@ -28,8 +28,8 @@ import {
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
-import PrivateRoute from './components/PrivateRoute';
-import AdminRoute from './components/AdminRoute';
+// import PrivateRoute from './components/PrivateRoute';
+// import AdminRoute from './components/AdminRoute';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
