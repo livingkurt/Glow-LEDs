@@ -152,7 +152,7 @@ const Sidebar = (props) => {
 				<div className="dropdown-sidebar-nav">
 					<ButtonWord class="sidebar_nav_buttons">Gloving</ButtonWord>
 					<ul className="dropdown-sidebar-nav-content">
-						<Link to="/category/Diffusers">
+						<Link to="/category/Domes">
 							<ButtonWord
 								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
 								on_click_function={closeMenu}

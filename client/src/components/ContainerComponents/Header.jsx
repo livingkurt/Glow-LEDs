@@ -121,9 +121,9 @@ const Header = (props) => {
 						<ButtonWord class="nav_buttons">All Products</ButtonWord>
 					</Link>
 					<div className="dropdown-nav">
-						<Link to="/category/Diffusers">
-							<ButtonWord class="nav_buttons">Gloving</ButtonWord>
-						</Link>
+						{/* <Link to="/category/Diffusers"> */}
+						<ButtonWord class="nav_buttons">Gloving</ButtonWord>
+						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content">
 							<Link to="/category/Domes">
 								<ButtonWord class="nav_buttons">Domes</ButtonWord>
@@ -140,9 +140,9 @@ const Header = (props) => {
 						</ul>
 					</div>
 					<div className="dropdown-nav">
-						<Link to="/category/Diffusers">
-							<ButtonWord class="nav_buttons">Decor</ButtonWord>
-						</Link>
+						{/* <Link to="/category/Diffusers"> */}
+						<ButtonWord class="nav_buttons">Decor</ButtonWord>
+						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content">
 							<Link to="/category/StringLights">
 								<ButtonWord class="nav_buttons">String Lights</ButtonWord>
