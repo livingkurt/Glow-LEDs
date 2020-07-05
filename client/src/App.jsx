@@ -29,6 +29,7 @@ import {
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -58,22 +59,23 @@ const App = () => {
 						<Route path="/contact" exact={true} component={ContactPage} />
 						<Route component={Four04Page} />
 						{/* Private Routes */}
-						<PrivateRoute path="/orders" component={OrdersPage} />
 						<PrivateRoute path="/profile" component={ProfilePage} />
 						<PrivateRoute path="/editprofile" component={EditProfilePage} />
 						<PrivateRoute path="/userorders" component={UserOrdersPage} />
-						<PrivateRoute
-							path="/order/:id"
-							component={(props) => <OrderPage userInfo={userInfo} {...props} />}
-						/>
 						<PrivateRoute path="/products" component={ProductsPage} />
 						<PrivateRoute path="/shipping" component={ShippingPage} />
 						<PrivateRoute path="/payment" component={PaymentPage} />
 						<PrivateRoute
+							path="/order/:id"
+							component={(props) => <OrderPage userInfo={userInfo} {...props} />}
+						/>
+						<PrivateRoute
 							path="/placeorder"
 							component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 						/>
+						{/* Admin Routes */}
 						<PrivateRoute path="/editproduct/:id?" component={EditProductPage} />
+						<PrivateRoute path="/orders" component={OrdersPage} />
 					</Switch>
 				</Content>
 				<Footer />
