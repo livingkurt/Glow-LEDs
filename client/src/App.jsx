@@ -57,7 +57,7 @@ const App = () => {
 						<Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
 						<Route path="/" exact={true} component={HomePage} />
 						<Route path="/contact" exact={true} component={ContactPage} />
-						<Route component={Four04Page} />
+
 						{/* Private Routes */}
 						<Route path="/profile" component={ProfilePage} />
 						<Route path="/editprofile" component={EditProfilePage} />
@@ -73,6 +73,7 @@ const App = () => {
 						{/* Admin Routes */}
 						<Route path="/editproduct/:id?" component={EditProductPage} />
 						<Route path="/orders" component={OrdersPage} />
+						<Route component={Four04Page} />
 					</Switch>
 				</Content>
 				<Footer />
