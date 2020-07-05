@@ -46,6 +46,7 @@ const ProductsPage = (props) => {
 					<thead>
 						<tr>
 							<th>ID</th>
+							<th>Hidden</th>
 							<th>Name</th>
 							<th>Price</th>
 							<th>Category</th>
@@ -57,6 +58,9 @@ const ProductsPage = (props) => {
 						{products.map((product) => (
 							<tr key={product._id}>
 								<td>{product._id}</td>
+								<td>
+									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+								</td>
 								<td>{product.name}</td>
 								<td>{product.price}</td>
 								<td>{product.category}</td>

@@ -110,7 +110,7 @@ const HomePage = (props) => {
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/optimized_images/product_images/Custom_Infinity_Mirrors/1---img_9338_optimized.jpg"
+							src="/images/optimized_images/product_images/Custom_Infinity_Mirrors/3---img_9366_optimized.jpg"
 							alt="accessories"
 						/>
 					</FlexContainer>
