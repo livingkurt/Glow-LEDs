@@ -54,7 +54,9 @@ const AllProductsPage = (props) => {
 				</FlexContainer>
 			) : (
 				<ul className="products">
-					{products.map((product, index) => <Product key={index} product={product} />)}
+					{products.map(
+						(product, index) => (!product.hidden ? <Product key={index} product={product} /> : <div />)
+					)}
 				</ul>
 			)}
 		</div>

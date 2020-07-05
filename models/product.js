@@ -25,7 +25,8 @@ const productSchema = new mongoose.Schema({
 	description: { type: String },
 	rating: { type: Number, default: 0 },
 	numReviews: { type: Number, default: 0 },
-	reviews: [ reviewSchema ]
+	reviews: [ reviewSchema ],
+	hidden: { type: Boolean, default: false }
 });
 
 const productModel = mongoose.model('Product', productSchema);

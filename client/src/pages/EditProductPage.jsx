@@ -18,6 +18,7 @@ const EditProductPage = (props) => {
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
 	const [ included_items, setIncludedItems ] = useState('');
+	const [ hidden, setHidden ] = useState();
 
 	const history = useHistory();
 
@@ -44,6 +45,7 @@ const EditProductPage = (props) => {
 			setDescription(product.description);
 			setFacts(product.facts);
 			setIncludedItems(product.included_items);
+			setHidden(product.hidden);
 			setDisplayImage(product.display_image);
 			setVideo(product.video);
 			setBrand(product.brand);
@@ -61,6 +63,7 @@ const EditProductPage = (props) => {
 			setBrand('');
 			setCategory('');
 			setCountInStock('');
+			setHidden();
 		}
 		return () => {};
 	}, []);
@@ -86,6 +89,7 @@ const EditProductPage = (props) => {
 	// );
 
 	const submitHandler = (e) => {
+		console.log({ hidden });
 		e.preventDefault();
 		dispatch(
 			saveProduct({
@@ -99,7 +103,8 @@ const EditProductPage = (props) => {
 				countInStock,
 				facts,
 				included_items,
-				description
+				description,
+				hidden
 			})
 		);
 		e.target.reset();
@@ -114,6 +119,7 @@ const EditProductPage = (props) => {
 		setBrand('');
 		setCategory('');
 		setCountInStock('');
+		setHidden();
 		if (id) {
 			history.push('/product/' + id);
 		} else {
@@ -239,6 +245,21 @@ const EditProductPage = (props) => {
 											onChange={(e) => setCountInStock(e.target.value)}
 										/>
 									</li>
+									<li>
+										<label htmlFor="hidden">Hide Product</label>
+										<input
+											type="checkbox"
+											name="hidden"
+											// defaultChecked={hidden ? 'checked' : 'unchecked'}
+											// defaultValue={hidden}
+											defaultChecked={hidden}
+											// value={hidden ? '1' : '0'}
+											id="hidden"
+											onChange={(e) => {
+												setHidden(e.target.checked);
+											}}
+										/>
+									</li>
 								</FlexContainer>
 								<FlexContainer column styles={{ width: '50%', marginLeft: '10px' }}>
 									<li>
@@ -294,39 +315,6 @@ const EditProductPage = (props) => {
 					)}
 				</form>
 			</div>
-
-			{/* <div className="product-list">
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(product => (<tr key={product._id}>
-            <td>{product._id}</td>
-            <td>{product.name}</td>
-            <td>{product.price}</td>
-            <td>{product.category}</td>
-            <td>{product.brand}</td>
-            <td>
-              <FlexContainer h_between>
-                <ButtonSymbol arg={product} on_click_function={openModal} ><i className="fas fa-edit"></i></ButtonSymbol>
-                <ButtonSymbol arg={product} on_click_function={deleteHandler} ><i className="fas fa-trash-alt"></i></ButtonSymbol>
-              </FlexContainer>
-            </td>
-          </tr>))}
-        </tbody>
-      </table>
-
-
-    </div> */}
 		</BlockContainer>
 	);
 };

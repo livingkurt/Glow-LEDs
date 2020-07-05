@@ -82,7 +82,7 @@ const HomePage = (props) => {
 				<Link to="/category/Caps" style={{ marginBottom: '16px' }}>
 					<FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
 						<Title class="h3_title" styles={heading_styles}>
-							Diffuser Caps
+							Diffusers
 						</Title>
 						<img
 							className="home_page_img"
@@ -91,26 +91,26 @@ const HomePage = (props) => {
 						/>
 					</FlexContainer>
 				</Link>
-				<Link to="/category/Diffusers" style={{ marginBottom: '16px' }}>
+				<Link to="/category/StringLights" style={{ marginBottom: '16px' }}>
 					<FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
 						<Title class="h3_title" styles={heading_styles}>
-							Diffusers
+							String Lights
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/optimized_images/product_images/15mm_Frosted_Dome_Diffusers/img_9301_optimized.jpg"
-							alt="diffusers"
+							src="/images/optimized_images/product_images/String_Lights/String_Lights_50/img_0155_optimized.jpg"
+							alt="string_lights"
 						/>
 					</FlexContainer>
 				</Link>
 				<Link to="/category/Accessories" style={{ marginBottom: '16px' }}>
 					<FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
 						<Title class="h3_title" styles={heading_styles}>
-							LED Accessories
+							Infinity Mirrors
 						</Title>
 						<img
 							className="home_page_img"
-							src="/images/optimized_images/product_images/Coin_Battery_Storage/img_9318_optimized.jpg"
+							src="/images/optimized_images/product_images/Custom_Infinity_Mirrors/1---img_9338_optimized.jpg"
 							alt="accessories"
 						/>
 					</FlexContainer>

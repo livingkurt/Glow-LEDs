@@ -51,6 +51,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 		product.facts = req.body.facts;
 		product.included_items = req.body.included_items;
 		product.description = req.body.description;
+		product.hidden = req.body.hidden;
 		const updatedProduct = await product.save();
 		console.log({ product_routes_post: updatedProduct });
 		if (updatedProduct) {
@@ -83,7 +84,8 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		included_items: req.body.included_items,
 		description: req.body.description,
 		rating: req.body.rating,
-		numReviews: req.body.numReviews
+		numReviews: req.body.numReviews,
+		hidden: req.body.hidden
 	});
 	console.log({ product_routes_post: product });
 	const newProduct = await product.save();
