@@ -32,6 +32,7 @@ import { Header, Container, Content, Footer, Sidebar } from './components/Contai
 import { useSelector } from 'react-redux';
 import PrivateRoute from './components/PrivateRoute';
 import AdminRoute from './components/AdminRoute';
+import ScrollToTop from './components/ScrollToTop';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -45,40 +46,43 @@ const App = () => {
 				<Sidebar userInfo={userInfo} />
 				<Content>
 					<Switch>
-						{/* Public Routes */}
-						<Route path="/login" component={LoginPage} />
-						<Route path="/verified/:id" component={VerifiedPage} />
-						<Route path="/checkemail" component={CheckEmailPage} />
-						<Route path="/changepassword" component={ChangePasswordPage} />
-						<Route path="/register" component={RegisterPage} />
-						<Route path="/product/:id" component={ProductPage} />
-						<Route path="/passwordreset" component={PasswordResetPage} />
-						<Route path="/resetpassword/:id" component={ResetPasswordPage} />
-						<Route path="/cart/:id?" component={CartPage} />
-						<Route path="/category/:id?" component={AllProductsPage} />
-						<Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
-						<Route path="/" exact={true} component={HomePage} />
-						<Route path="/contact" exact={true} component={ContactPage} />
-						<Route path="/terms" exact={true} component={TermsPage} />
-						<Route path="/faq" exact={true} component={FAQPage} />
-						{/* Private Routes */}
-						<PrivateRoute path="/profile" component={ProfilePage} />
-						<PrivateRoute path="/editprofile" component={EditProfilePage} />
-						<PrivateRoute path="/userorders" component={UserOrdersPage} />
-						<PrivateRoute path="/shipping" component={ShippingPage} />
-						<PrivateRoute path="/payment" component={PaymentPage} />
-						<PrivateRoute
-							path="/order/:id"
-							component={(props) => <OrderPage userInfo={userInfo} {...props} />}
-						/>
-						<PrivateRoute
-							path="/placeorder"
-							component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
-						/>
-						{/* Admin Routes */}
-						<AdminRoute path="/editproduct/:id?" component={EditProductPage} />
-						<AdminRoute path="/products" component={ProductsPage} />
-						<AdminRoute path="/orders" component={OrdersPage} />
+						<ScrollToTop>
+							{/* Public Routes */}
+							<Route path="/login" component={LoginPage} />
+							<Route path="/verified/:id" component={VerifiedPage} />
+							<Route path="/checkemail" component={CheckEmailPage} />
+							<Route path="/changepassword" component={ChangePasswordPage} />
+							<Route path="/register" component={RegisterPage} />
+							<Route path="/product/:id" component={ProductPage} />
+							<Route path="/passwordreset" component={PasswordResetPage} />
+							<Route path="/resetpassword/:id" component={ResetPasswordPage} />
+							<Route path="/cart/:id?" component={CartPage} />
+							<Route path="/category/:id?" component={AllProductsPage} />
+							<Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
+							<Route path="/" exact={true} component={HomePage} />
+							<Route path="/contact" exact={true} component={ContactPage} />
+							<Route path="/terms" exact={true} component={TermsPage} />
+							<Route path="/faq" exact={true} component={FAQPage} />
+
+							{/* Private Routes */}
+							<PrivateRoute path="/profile" component={ProfilePage} />
+							<PrivateRoute path="/editprofile" component={EditProfilePage} />
+							<PrivateRoute path="/userorders" component={UserOrdersPage} />
+							<PrivateRoute path="/shipping" component={ShippingPage} />
+							<PrivateRoute path="/payment" component={PaymentPage} />
+							<PrivateRoute
+								path="/order/:id"
+								component={(props) => <OrderPage userInfo={userInfo} {...props} />}
+							/>
+							<PrivateRoute
+								path="/placeorder"
+								component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
+							/>
+							{/* Admin Routes */}
+							<AdminRoute path="/editproduct/:id?" component={EditProductPage} />
+							<AdminRoute path="/products" component={ProductsPage} />
+							<AdminRoute path="/orders" component={OrdersPage} />
+						</ScrollToTop>
 						<Route component={Four04Page} />
 					</Switch>
 				</Content>
