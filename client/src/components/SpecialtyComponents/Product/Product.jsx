@@ -10,7 +10,7 @@ import { Rating } from '..';
 const Product = (props) => {
 	console.log(props.product);
 	return (
-		<li key={props.product._id}>
+		<li key={props.product._id} style={props.styles}>
 			<div className="product">
 				<Link to={'/product/' + props.product._id}>
 					<img className="product-image" src={props.product.display_image} alt="product" />

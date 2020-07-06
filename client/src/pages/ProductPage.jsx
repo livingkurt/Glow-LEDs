@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct, imagesProduct, saveProductReview } from '../actions/productActions';
+import { detailsProduct, imagesProduct, saveProductReview, listProducts } from '../actions/productActions';
 import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import API from '../utils/API';
-import { Rating } from '../components/SpecialtyComponents';
+import { Rating, Product } from '../components/SpecialtyComponents';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
 import { format_date_display } from '../utils/helper_functions';
 
@@ -23,6 +23,10 @@ const ProductPage = (props) => {
 	const productReviewSave = useSelector((state) => state.productReviewSave);
 	const { success: productSaveSuccess } = productReviewSave;
 
+	const productList = useSelector((state) => state.productList);
+	console.log({ productList });
+	const { products, loading: loadingProducts, error: errorProducts } = productList;
+
 	useEffect(
 		() => {
 			if (productSaveSuccess) {
@@ -38,6 +42,10 @@ const ProductPage = (props) => {
 		},
 		[ productSaveSuccess ]
 	);
+
+	useEffect(() => {
+		dispatch(listProducts(''));
+	}, []);
 
 	// useEffect(
 	// 	() => {
@@ -412,6 +420,46 @@ const ProductPage = (props) => {
 					</div>
 				</FlexContainer>
 			)}
+			<FlexContainer column>
+				<Title
+					class="h2_title"
+					styles={{
+						fontSize: 30,
+						textAlign: 'center',
+						width: '100%',
+						justifyContent: 'center'
+					}}
+				>
+					Related Products
+				</Title>
+				{loadingProducts ? (
+					<FlexContainer h_center column>
+						<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+						<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+							If pages doesn't show in 5 seconds, refresh the page.
+						</Title>
+					</FlexContainer>
+				) : errorProducts ? (
+					<FlexContainer h_center>
+						<Title styles={{ fontSize: 20 }}>{errorProducts}</Title>
+					</FlexContainer>
+				) : (
+					<FlexContainer row styles={{ overflowX: 'scroll' }}>
+						{products.map(
+							(product, index) =>
+								!product.hidden ? (
+									<Product
+										key={index}
+										product={product}
+										styles={{ marginRight: 20, listStyleType: 'none' }}
+									/>
+								) : (
+									<div />
+								)
+						)}
+					</FlexContainer>
+				)}
+			</FlexContainer>
 		</FlexContainer>
 	);
 };
