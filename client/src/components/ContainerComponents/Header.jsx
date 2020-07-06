@@ -6,22 +6,6 @@ import { logout } from '../../actions/userActions';
 
 const Header = (props) => {
 	const history = useHistory();
-
-	const header_styles = {
-		gridArea: 'header',
-		backgroundColor: '#333333',
-		color: '#ffffff',
-		display: 'flex',
-		alignItems: 'center',
-		padding: '15px',
-		listStyleType: 'none',
-		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-		position: 'fixed',
-		right: '0',
-		left: '0',
-		zIndex: '999',
-		top: '0'
-	};
 	const [ name, setName ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -69,7 +53,7 @@ const Header = (props) => {
 	);
 
 	return (
-		<header style={header_styles} id="overlay">
+		<header id="overlay">
 			<div className="brand">
 				<Link to="/">
 					<img

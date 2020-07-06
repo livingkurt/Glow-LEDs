@@ -735,3 +735,18 @@ video {
   display: flex;
   font-family: heading_font;
 }
+
+header {
+  background-color: #333333;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  list-style-type: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  top: 0;
+}
