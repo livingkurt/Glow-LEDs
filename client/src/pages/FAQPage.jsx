@@ -22,6 +22,24 @@ const TermsPage = () => {
 					</Title>
 					<Title styles={{ fontSize: 40, justifyContent: 'center', letterSpacing: '10px' }}>AQ</Title>
 				</FlexContainer>
+				<Title styles={{ fontSize: 30, justifyContent: 'center' }}>Frequently Asked Question</Title>
+				<Title styles={{ fontSize: 20, justifyContent: 'center' }}>How do properly use diffuser caps?</Title>
+				<p>
+					With you microlights outside of your gloves. Place the Diffuser Adapters onto your microlight bulbs.
+					Then place them inside of the glove. So now you have flat top domes in your gloves. Next, grip the
+					diffuser adapter from in the glove, do not only hold by microlight or you risk causing extra stress
+					to the bulb. Then take you cap, and place it over top of your glove and adapter and screw in the cap
+					like you would a jar. The threads should catch and only needs a single turn to become snug. Do not
+					over tighten or push the cap on. Let the threads do the work.
+				</p>
+				<Title styles={{ fontSize: 20, justifyContent: 'center' }}>How to order a custom product?</Title>
+				<p>
+					At Glow-LEDS.com we offer many premade and predesigned products, as well as the ability to get a
+					customized version of the products, or even if you just want to make a dream happen. We are here to
+					help. Before ordering anything send us a message to explain your vision and we will create a
+					detailed invoice and design. The price may vary depending on the size and hardware used.
+				</p>
+
 				<Title styles={{ fontSize: 30, justifyContent: 'center' }}>Processing/Shipping</Title>
 				<p>
 					Glow-LEDs.com is headquartered in Austin, Texas and orders are processed as they are recieved.
