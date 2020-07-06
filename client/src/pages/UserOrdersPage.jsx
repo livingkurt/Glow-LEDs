@@ -54,7 +54,7 @@ const ProfilePage = (props) => {
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<Link to="/profile">
-				<button className="button_main">Back to Profile</button>
+				<button className="button primary">Back to Profile</button>
 			</Link>
 			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}

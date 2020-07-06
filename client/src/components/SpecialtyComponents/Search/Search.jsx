@@ -24,7 +24,7 @@ const Search = (props) => {
 					on_change_function={props.setSearchKeyword}
 					styles={{ marginRight: '5px', maxWidth: '200px' }}
 				/>
-				<button type="submit" className="button_main">
+				<button type="submit" className="button primary">
 					Search
 				</button>
 			</FlexContainer>

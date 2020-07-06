@@ -65,7 +65,7 @@ const Header = (props) => {
 					/>
 				</Link>
 				<button
-					className="mobile_buttons"
+					className="button mobile nav"
 					onClick={openMenu}
 					style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px' }}
 				>
@@ -88,53 +88,53 @@ const Header = (props) => {
 				</FlexContainer>
 				<FlexContainer row h_between class="nav_bar">
 					<Link to="/allproducts">
-						<button className="nav_buttons">All Products</button>
+						<button className="button nav">All Products</button>
 					</Link>
 					<div className="dropdown-nav">
 						{/* <Link to="/category/Diffusers"> */}
-						<button className="nav_buttons">Gloving</button>
+						<button className="button nav">Gloving</button>
 						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content">
 							<Link to="/category/Domes">
-								<button className="nav_buttons">Domes</button>
+								<button className="button nav">Domes</button>
 							</Link>
 							<Link to="/category/Caps">
-								<button className="nav_buttons">Caps</button>
+								<button className="button nav">Caps</button>
 							</Link>
 							<Link to="/category/Adapters">
-								<button className="nav_buttons"> Adapters</button>
+								<button className="button nav"> Adapters</button>
 							</Link>
 							<Link to="/category/Accessories">
-								<button className="nav_buttons">Accessories</button>
+								<button className="button nav">Accessories</button>
 							</Link>
 						</ul>
 					</div>
 					<div className="dropdown-nav">
 						{/* <Link to="/category/Diffusers"> */}
-						<button className="nav_buttons">Decor</button>
+						<button className="button nav">Decor</button>
 						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content">
 							<Link to="/category/StringLights">
-								<button className="nav_buttons">String Lights</button>
+								<button className="button nav">String Lights</button>
 							</Link>
 							<Link to="/category/Infinity">
-								<button className="nav_buttons"> Infinity Mirrors</button>
+								<button className="button nav"> Infinity Mirrors</button>
 							</Link>
 						</ul>
 					</div>
 					<div className="dropdown-nav">
 						{/* <Link to="/category/Diffusers"> */}
-						<button className="nav_buttons">Support</button>
+						<button className="button nav">Support</button>
 						{/* </Link> */}
 						<ul style={{ width: 230 }} className="dropdown-nav-content">
 							<Link to="/contact">
-								<button className="nav_buttons">Contact</button>
+								<button className="button nav">Contact</button>
 							</Link>
 							<Link to="/faq">
-								<button className="nav_buttons">FAQ</button>
+								<button className="button nav">FAQ</button>
 							</Link>
 							<Link to="/terms">
-								<button className="nav_buttons">Term and Conditions</button>
+								<button className="button nav">Term and Conditions</button>
 							</Link>
 						</ul>
 					</div>
@@ -142,26 +142,26 @@ const Header = (props) => {
 			</FlexContainer>
 			<FlexContainer class="nav_bar" styles={{ width: '270px', justifyContent: 'flex-end' }}>
 				<Link to="/cart">
-					<button className="mobile_nav_buttons cart_text">
+					<button className=" button nav cart_text">
 						Cart <i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => a + c.qty, 0)}{' '}
 					</button>
 				</Link>
 				<Link to="/cart">
-					<button style={{ display: 'none' }} className="mobile_nav_buttons cart_icon">
+					<button style={{ display: 'none' }} className=" button mobile nav cart_icon">
 						<i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => a + c.qty, 0)}{' '}
 					</button>
 				</Link>
 				{props.userInfo ? (
 					<div className="dropdown">
-						<button className="nav_buttons">{name}</button>
+						<button className="button nav">{name}</button>
 						<ul className="dropdown-content" style={{ width: '150px' }}>
 							<Link to="/profile">
-								<button className="nav_buttons">Profile</button>
+								<button className="button nav">Profile</button>
 							</Link>
 							<Link to="/userorders">
-								<button className="nav_buttons">Orders</button>
+								<button className="button nav">Orders</button>
 							</Link>
-							<button className="nav_buttons" onClick={handleLogout} style={{ marginRight: 'auto' }}>
+							<button className="button nav" onClick={handleLogout} style={{ marginRight: 'auto' }}>
 								{' '}
 								Logout
 							</button>
@@ -170,20 +170,20 @@ const Header = (props) => {
 				) : (
 					<div>
 						<Link to="/login">
-							<button className="nav_buttons">Login</button>
+							<button className="button nav">Login</button>
 						</Link>
 					</div>
 				)}
 				{props.userInfo &&
 				props.userInfo.isAdmin && (
 					<div className="dropdown">
-						<button className="nav_buttons">Admin</button>
+						<button className="button nav">Admin</button>
 						<ul className="dropdown-content">
 							<Link to="/orders">
-								<button className="nav_buttons">Orders</button>
+								<button className="button nav">Orders</button>
 							</Link>
 							<Link to="/products">
-								<button className="nav_buttons"> Products</button>
+								<button className="button nav"> Products</button>
 							</Link>
 						</ul>
 					</div>

@@ -55,11 +55,11 @@
   .home_links {
     justify-content: center !important;
   }
-  .nav_buttons {
+  .button.nav {
     font-size: 14px;
     display: none;
   }
-  .mobile_buttons {
+  .button.mobile.nav {
     display: block !important;
   }
   .logo {
@@ -157,7 +157,7 @@
   .p_descriptions {
     font-size: 14px !important;
   }
-  .mobile_nav_buttons {
+  .mobile_button.nav {
     font-size: 14px !important;
   }
   .home_page_img, .product-image {

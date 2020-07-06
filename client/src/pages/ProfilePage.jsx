@@ -72,21 +72,21 @@ const ProfilePage = (props) => {
 				<FlexContainer>
 					<div style={{ height: 50 }}>
 						<Link to={'/editprofile'}>
-							<button style={{ marginRight: '10px', maxWidth: '150px' }} className="button_main">
+							<button style={{ marginRight: '10px', maxWidth: '150px' }} className="button primary">
 								Edit Profile
 							</button>
 						</Link>
 					</div>
 					<div style={{ height: 50 }}>
 						<Link to={'/changepassword'}>
-							<button style={{ marginRight: '10px', maxWidth: '210px' }} className="button_main">
+							<button style={{ marginRight: '10px', maxWidth: '210px' }} className="button primary">
 								Change Password
 							</button>
 						</Link>
 					</div>
 					<div style={{ height: 50 }}>
 						<Link to={'/userorders'}>
-							<button style={{ maxWidth: '150px' }} className="button_main">
+							<button style={{ maxWidth: '150px' }} className="button primary">
 								View Orders
 							</button>
 						</Link>
