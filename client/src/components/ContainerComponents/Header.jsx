@@ -67,7 +67,7 @@ const Header = (props) => {
 				<button
 					className="button mobile nav"
 					onClick={openMenu}
-					style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px' }}
+					style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px', padding: '10px' }}
 				>
 					<i className="fas fa-bars" />
 				</button>

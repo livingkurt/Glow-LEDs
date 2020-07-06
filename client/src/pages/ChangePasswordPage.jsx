@@ -71,7 +71,7 @@ const ChangePasswordPage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
-			<FlexContainer>
+			<FlexContainer styles={{ marginBottom: 10 }}>
 				<Link to="/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
