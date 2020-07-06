@@ -29,34 +29,22 @@ const ProductPage = (props) => {
 
 	useEffect(
 		() => {
-			if (productSaveSuccess) {
-				setRating(0);
-				setComment('');
-				dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-				dispatch(detailsProduct(props.match.params.id));
-			}
+			setRating(0);
+			setComment('');
+			dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
 			dispatch(detailsProduct(props.match.params.id));
-			const video = document.getElementsByClassName('product_video');
-			video.muted = true;
-			video.autoplay = true;
+			setReviewModal('none');
 		},
 		[ productSaveSuccess ]
 	);
 
 	useEffect(() => {
 		dispatch(listProducts(''));
+		dispatch(detailsProduct(props.match.params.id));
+		const video = document.getElementsByClassName('product_video');
+		video.muted = true;
+		video.autoplay = true;
 	}, []);
-
-	// useEffect(
-	// 	() => {
-	// 		if (productSaveSuccess) {
-	// 			setRating(0);
-	// 			setComment('');
-	// 			dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-	// 		}
-	// 	},
-	// 	[ productSaveSuccess ]
-	// );
 
 	useEffect(
 		() => {
@@ -97,6 +85,16 @@ const ProductPage = (props) => {
 		);
 	};
 	console.log({ rating });
+
+	const [ review_modal, setReviewModal ] = useState('none');
+
+	const show_write_review = () => {
+		setReviewModal('block');
+	};
+	const hide_write_review = (e) => {
+		e.preventDefault();
+		setReviewModal('none');
+	};
 
 	return (
 		<FlexContainer column>
@@ -333,7 +331,9 @@ const ProductPage = (props) => {
 						>
 							Reviews
 						</Title>
-						{!product.reviews.length && <div>Be the First to Review this Product</div>}
+						{!product.reviews.length && (
+							<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
+						)}
 						<div className="review" id="reviews">
 							{product.reviews.map((review) => (
 								<li
@@ -354,21 +354,25 @@ const ProductPage = (props) => {
 									<div>{review.comment}</div>
 								</li>
 							))}
-							<Title
-								class="h2_title"
-								styles={{
-									fontSize: 30,
-									textAlign: 'center',
-									width: '100%',
-									justifyContent: 'center'
-								}}
-							>
-								Write a customer review
-							</Title>
 
-							<li style={{ listStyleType: 'none' }}>
+							<button className="button primary" onClick={show_write_review}>
+								Write a customer review
+							</button>
+
+							<li style={{ listStyleType: 'none', display: review_modal }}>
+								<Title
+									class="h2_title"
+									styles={{
+										fontSize: 30,
+										textAlign: 'center',
+										width: '100%',
+										justifyContent: 'center'
+									}}
+								>
+									Write a customer review
+								</Title>
 								{userInfo ? (
-									<form onSubmit={submitHandler}>
+									<form>
 										<div className="form-container">
 											<li>
 												<Title
@@ -404,8 +408,16 @@ const ProductPage = (props) => {
 												/>
 											</li>
 											<li>
-												<button type="submit" className="button primary">
+												<button
+													style={{ marginBottom: '10px' }}
+													onClick={submitHandler}
+													className="button primary"
+												>
 													Submit
+												</button>
+
+												<button onClick={hide_write_review} className="button secondary">
+													Cancel
 												</button>
 											</li>
 										</div>
@@ -420,7 +432,7 @@ const ProductPage = (props) => {
 					</div>
 				</FlexContainer>
 			)}
-			<FlexContainer column>
+			<FlexContainer column styles={{ margin: '0 10px' }}>
 				<Title
 					class="h2_title"
 					styles={{
