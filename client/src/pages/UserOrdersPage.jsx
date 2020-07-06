@@ -56,11 +56,11 @@ const ProfilePage = (props) => {
 			<Link to="/profile">
 				<button className="button primary">Back to Profile</button>
 			</Link>
-			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto' }}>
+			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto', width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
 				<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%', justifyContent: 'center' }}>
-					Orders
+					Your Orders
 				</Title>
 				{loadingOrders ? (
 					<FlexContainer h_center column>
@@ -72,7 +72,7 @@ const ProfilePage = (props) => {
 				) : errorOrders ? (
 					<div>{errorOrders} </div>
 				) : (
-					<BlockContainer class="table_container" styles={{ padding: '0' }}>
+					<div className="order-list responsive_table">
 						<table className="table">
 							<thead>
 								<tr>
@@ -107,7 +107,7 @@ const ProfilePage = (props) => {
 								))}
 							</tbody>
 						</table>
-					</BlockContainer>
+					</div>
 				)}
 			</div>
 		</FlexContainer>
