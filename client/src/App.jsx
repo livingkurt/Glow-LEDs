@@ -24,7 +24,9 @@ import {
 	ResetPasswordPage,
 	VerifiedPage,
 	CheckEmailPage,
-	ChangePasswordPage
+	ChangePasswordPage,
+	TermsPage,
+	FAQPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -57,6 +59,8 @@ const App = () => {
 						<Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
 						<Route path="/" exact={true} component={HomePage} />
 						<Route path="/contact" exact={true} component={ContactPage} />
+						<Route path="/terms" exact={true} component={TermsPage} />
+						<Route path="/faq" exact={true} component={FAQPage} />
 						{/* Private Routes */}
 						<PrivateRoute path="/profile" component={ProfilePage} />
 						<PrivateRoute path="/editprofile" component={EditProfilePage} />

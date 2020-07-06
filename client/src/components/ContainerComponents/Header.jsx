@@ -153,9 +153,25 @@ const Header = (props) => {
 						</ul>
 					</div>
 
-					<Link to="/contact">
+					{/* <Link to="/contact">
 						<ButtonWord class="nav_buttons">Contact</ButtonWord>
-					</Link>
+					</Link> */}
+					<div className="dropdown-nav">
+						{/* <Link to="/category/Diffusers"> */}
+						<ButtonWord class="nav_buttons">Support</ButtonWord>
+						{/* </Link> */}
+						<ul style={{ width: 230 }} className="dropdown-nav-content">
+							<Link to="/contact">
+								<ButtonWord class="nav_buttons">Contact</ButtonWord>
+							</Link>
+							<Link to="/faq">
+								<ButtonWord class="nav_buttons">FAQ</ButtonWord>
+							</Link>
+							<Link to="/terms">
+								<ButtonWord class="nav_buttons">Term and Conditions</ButtonWord>
+							</Link>
+						</ul>
+					</div>
 				</FlexContainer>
 			</FlexContainer>
 			<FlexContainer class="nav_bar" styles={{ width: '270px', justifyContent: 'flex-end' }}>

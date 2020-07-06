@@ -5,10 +5,20 @@ import { Link } from 'react-router-dom';
 
 const HomePage = (props) => {
 	useEffect(() => {
-		const video = document.getElementById('caps_vid');
-		video.muted = true;
-		video.autoplay = true;
-		video.playsinline = true;
+		const diffuser_caps_video = document.getElementById('diffuser_caps_video');
+		diffuser_caps_video.muted = true;
+		diffuser_caps_video.autoplay = true;
+		diffuser_caps_video.playsinline = true;
+
+		const infinity_mirror_video = document.getElementById('infinity_mirror_video');
+		infinity_mirror_video.muted = true;
+		infinity_mirror_video.autoplay = true;
+		infinity_mirror_video.playsinline = true;
+
+		const string_lights_video = document.getElementById('string_lights_video');
+		string_lights_video.muted = true;
+		string_lights_video.autoplay = true;
+		string_lights_video.playsinline = true;
 	}, []);
 
 	const heading_styles = {
@@ -67,7 +77,7 @@ const HomePage = (props) => {
 					</Title>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="caps_vid" style={homepage_video} controls>
+					<video id="diffuser_caps_video" style={homepage_video} controls>
 						<source
 							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 							type="video/mp4"
@@ -95,7 +105,7 @@ const HomePage = (props) => {
 					</Title>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="caps_vid" style={homepage_video} controls>
+					<video id="infinity_mirror_video" style={homepage_video} controls>
 						<source
 							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 							type="video/mp4"
@@ -125,7 +135,7 @@ const HomePage = (props) => {
 					</Title>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="caps_vid" style={homepage_video} controls>
+					<video id="string_lights_video" style={homepage_video} controls>
 						<source
 							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 							type="video/mp4"
@@ -148,53 +158,6 @@ const HomePage = (props) => {
 					</Link>
 				</FlexContainer>
 			</div>
-			{/* <FlexContainer h_center>
-				<Link to="/category/Caps">
-					<ButtonWord styles={{ fontSize: '2rem', margin: 20 }}>
-						<Title class="h2_title" styles={{ fontSize: 30 }}>
-							Shop Diffuser Caps Today!
-						</Title>
-					</ButtonWord>
-				</Link>
-			</FlexContainer>
-			<FlexContainer h_between wrap class="home_links">
-				<Link to="/category/Caps" style={{ marginBottom: '16px' }}>
-					<FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
-						<Title class="h3_title" styles={heading_styles}>
-							Diffusers
-						</Title>
-						<img
-							className="home_page_img"
-							src="images/optimized_images/product_images/Diffuser_Caps/Seed_of_Life/img_9866_optimized.jpg"
-							alt="diffuser_caps"
-						/>
-					</FlexContainer>
-				</Link>
-				<Link to="/category/StringLights" style={{ marginBottom: '16px' }}>
-					<FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
-						<Title class="h3_title" styles={heading_styles}>
-							String Lights
-						</Title>
-						<img
-							className="home_page_img"
-							src="/images/optimized_images/product_images/String_Lights/String_Lights_50/img_0155_optimized.jpg"
-							alt="string_lights"
-						/>
-					</FlexContainer>
-				</Link>
-				<Link to="/category/Accessories" style={{ marginBottom: '16px' }}>
-					<FlexContainer class="link_containers" column h_center t_center styles={flex_styles}>
-						<Title class="h3_title" styles={heading_styles}>
-							Infinity Mirrors
-						</Title>
-						<img
-							className="home_page_img"
-							src="/images/optimized_images/product_images/Custom_Infinity_Mirrors/3---img_9366_optimized.jpg"
-							alt="accessories"
-						/>
-					</FlexContainer>
-				</Link>
-			</FlexContainer> */}
 		</BlockContainer>
 	);
 };

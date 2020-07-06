@@ -23,3 +23,5 @@ export { default as VerifiedPage } from './VerifiedPage';
 export { default as CheckEmailPage } from './CheckEmailPage';
 export { default as ChangePasswordPage } from './ChangePasswordPage';
 export { default as MaintenancePage } from './MaintenancePage';
+export { default as TermsPage } from './TermsPage';
+export { default as FAQPage } from './FAQPage';
