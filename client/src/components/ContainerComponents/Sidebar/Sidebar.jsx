@@ -212,11 +212,41 @@ const Sidebar = (props) => {
 					<i style={icon_styles} class="fas fa-sort-up" />
 				</div>
 				{/* <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Accessories</ButtonWord></Link> */}
-				<Link to="/contact">
+				{/* <Link to="/contact">
 					<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
 						Contact
 					</ButtonWord>
-				</Link>
+				</Link> */}
+				<div className="dropdown-sidebar-nav">
+					<ButtonWord class="sidebar_nav_buttons">Support</ButtonWord>
+					<ul className="dropdown-sidebar-nav-content">
+						<Link to="/contact">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								Contact
+							</ButtonWord>
+						</Link>
+						<Link to="/faq">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								FAQ
+							</ButtonWord>
+						</Link>
+						<Link to="/terms">
+							<ButtonWord
+								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
+								on_click_function={closeMenu}
+							>
+								Terms and Conditions
+							</ButtonWord>
+						</Link>
+					</ul>
+					<i style={icon_styles} class="fas fa-sort-up" />
+				</div>
 				{/* {
           props.userInfo
             ?

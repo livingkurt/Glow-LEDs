@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Title, ButtonWord, ButtonSymbol } from '../UtilityComponents/index';
 import { FlexContainer } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
@@ -81,13 +80,13 @@ const Header = (props) => {
 						alt="Glow LEDs"
 					/>
 				</Link>
-				<ButtonSymbol
-					class="mobile_buttons"
-					on_click_function={openMenu}
-					styles={{ display: 'none', fontSize: '30px', height: '50px', width: '50px' }}
+				<button
+					className="mobile_buttons"
+					onClick={openMenu}
+					style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px' }}
 				>
-					<i class="fas fa-bars" />
-				</ButtonSymbol>
+					<i className="fas fa-bars" />
+				</button>
 			</div>
 			<FlexContainer column h_center>
 				<FlexContainer h_center v_i_center class="logo_text">
@@ -100,75 +99,58 @@ const Header = (props) => {
 						/>
 					</Link>
 					<Link to="/">
-						<Title
-							class="glow_leds_text"
-							styles={{
-								fontSize: '67px',
-								margin: 0,
-								textAlign: 'center',
-								justifyContent: 'center',
-								width: '100%',
-								marginBottom: '10px',
-								marginTop: '17px'
-							}}
-						>
-							Glow LEDs
-						</Title>
+						<h1 className="glow_leds_text">Glow LEDs</h1>
 					</Link>
 				</FlexContainer>
 				<FlexContainer row h_between class="nav_bar">
 					<Link to="/allproducts">
-						<ButtonWord class="nav_buttons">All Products</ButtonWord>
+						<button className="nav_buttons">All Products</button>
 					</Link>
 					<div className="dropdown-nav">
 						{/* <Link to="/category/Diffusers"> */}
-						<ButtonWord class="nav_buttons">Gloving</ButtonWord>
+						<button className="nav_buttons">Gloving</button>
 						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content">
 							<Link to="/category/Domes">
-								<ButtonWord class="nav_buttons">Domes</ButtonWord>
+								<button className="nav_buttons">Domes</button>
 							</Link>
 							<Link to="/category/Caps">
-								<ButtonWord class="nav_buttons">Caps</ButtonWord>
+								<button className="nav_buttons">Caps</button>
 							</Link>
 							<Link to="/category/Adapters">
-								<ButtonWord class="nav_buttons"> Adapters</ButtonWord>
+								<button className="nav_buttons"> Adapters</button>
 							</Link>
 							<Link to="/category/Accessories">
-								<ButtonWord class="nav_buttons">Accessories</ButtonWord>
+								<button className="nav_buttons">Accessories</button>
 							</Link>
 						</ul>
 					</div>
 					<div className="dropdown-nav">
 						{/* <Link to="/category/Diffusers"> */}
-						<ButtonWord class="nav_buttons">Decor</ButtonWord>
+						<button className="nav_buttons">Decor</button>
 						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content">
 							<Link to="/category/StringLights">
-								<ButtonWord class="nav_buttons">String Lights</ButtonWord>
+								<button className="nav_buttons">String Lights</button>
 							</Link>
 							<Link to="/category/Infinity">
-								<ButtonWord class="nav_buttons"> Infinity Mirrors</ButtonWord>
+								<button className="nav_buttons"> Infinity Mirrors</button>
 							</Link>
 						</ul>
 					</div>
-
-					{/* <Link to="/contact">
-						<ButtonWord class="nav_buttons">Contact</ButtonWord>
-					</Link> */}
 					<div className="dropdown-nav">
 						{/* <Link to="/category/Diffusers"> */}
-						<ButtonWord class="nav_buttons">Support</ButtonWord>
+						<button className="nav_buttons">Support</button>
 						{/* </Link> */}
 						<ul style={{ width: 230 }} className="dropdown-nav-content">
 							<Link to="/contact">
-								<ButtonWord class="nav_buttons">Contact</ButtonWord>
+								<button className="nav_buttons">Contact</button>
 							</Link>
 							<Link to="/faq">
-								<ButtonWord class="nav_buttons">FAQ</ButtonWord>
+								<button className="nav_buttons">FAQ</button>
 							</Link>
 							<Link to="/terms">
-								<ButtonWord class="nav_buttons">Term and Conditions</ButtonWord>
+								<button className="nav_buttons">Term and Conditions</button>
 							</Link>
 						</ul>
 					</div>
@@ -176,50 +158,48 @@ const Header = (props) => {
 			</FlexContainer>
 			<FlexContainer class="nav_bar" styles={{ width: '270px', justifyContent: 'flex-end' }}>
 				<Link to="/cart">
-					<ButtonWord class="mobile_nav_buttons cart_text">
+					<button className="mobile_nav_buttons cart_text">
 						Cart <i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => a + c.qty, 0)}{' '}
-					</ButtonWord>
+					</button>
 				</Link>
 				<Link to="/cart">
-					<ButtonWord styles={{ display: 'none' }} class="mobile_nav_buttons cart_icon">
+					<button style={{ display: 'none' }} className="mobile_nav_buttons cart_icon">
 						<i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => a + c.qty, 0)}{' '}
-					</ButtonWord>
+					</button>
 				</Link>
 				{props.userInfo ? (
-					<div>
-						<div className="dropdown">
-							<ButtonWord class="nav_buttons">{name}</ButtonWord>
-							<ul className="dropdown-content" style={{ width: '150px' }}>
-								<Link to="/profile">
-									<ButtonWord>Profile</ButtonWord>
-								</Link>
-								<Link to="/userorders">
-									<ButtonWord>Orders</ButtonWord>
-								</Link>
-								<ButtonWord on_click_function={handleLogout} styles={{ marginRight: 'auto' }}>
-									{' '}
-									Logout
-								</ButtonWord>
-							</ul>
-						</div>
+					<div className="dropdown">
+						<button className="nav_buttons">{name}</button>
+						<ul className="dropdown-content" style={{ width: '150px' }}>
+							<Link to="/profile">
+								<button className="nav_buttons">Profile</button>
+							</Link>
+							<Link to="/userorders">
+								<button className="nav_buttons">Orders</button>
+							</Link>
+							<button className="nav_buttons" onClick={handleLogout} style={{ marginRight: 'auto' }}>
+								{' '}
+								Logout
+							</button>
+						</ul>
 					</div>
 				) : (
 					<div>
 						<Link to="/login">
-							<ButtonWord class="nav_buttons">Login</ButtonWord>
+							<button className="nav_buttons">Login</button>
 						</Link>
 					</div>
 				)}
 				{props.userInfo &&
 				props.userInfo.isAdmin && (
-					<div className="dropdown nav_buttons">
-						<ButtonWord class="mobile_nav_buttons">Admin</ButtonWord>
+					<div className="dropdown">
+						<button className="nav_buttons">Admin</button>
 						<ul className="dropdown-content">
 							<Link to="/orders">
-								<ButtonWord>Orders</ButtonWord>
+								<button className="nav_buttons">Orders</button>
 							</Link>
 							<Link to="/products">
-								<ButtonWord> Products</ButtonWord>
+								<button className="nav_buttons"> Products</button>
 							</Link>
 						</ul>
 					</div>
