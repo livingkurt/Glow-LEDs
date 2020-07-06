@@ -67,9 +67,20 @@ const HomePage = (props) => {
 		<BlockContainer class="main_container">
 			<FlexContainer h_center>
 				<Title class="h1_title" styles={{ fontSize: 50, marginBottom: '3vh' }}>
-					Welcome to Glow LEDs
+					Welcome to Glow-LEDs
 				</Title>
 			</FlexContainer>
+			<FlexContainer h_center>
+				<Title class="h2_title" styles={{ fontSize: '30px' }}>
+					From a Glover that just wants the world to stay lit
+				</Title>
+			</FlexContainer>
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				Here at Glow-LEDs.com, we strive to bring as much light in to as many lives as possible. All items are
+				handmade in my apartment in Austin, TX, spanning a wide variety of flow arts, including Infinity
+				Mirrors, String Lights, and Gloving Accessories. We pride ourselves on more than just the quality of our
+				EDM products; Glow-LEDs.com is here to make your viby dreams happen.
+			</p>
 			<div style={div_styles}>
 				<FlexContainer h_center>
 					<Title class="h2_title" styles={{ fontSize: '30px' }}>
@@ -86,7 +97,10 @@ const HomePage = (props) => {
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					It's been too long since a truly new element has been introduced to gloving. This new technology
-					puts the designs on the outside of your glove for ultimate definition. 100% facemelt guarantee.
+					puts the designs on the outside of your glove for ultimate definition. Using a propriety design, you
+					will be able to simply screw on the caps through the gloves to the diffuser and start throwing heat
+					right away. Mix and match the cap designs create truely ridiculous light shows. 100% facemelt
+					guarantee.
 				</p>
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
