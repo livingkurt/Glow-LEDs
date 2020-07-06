@@ -223,6 +223,9 @@
   .back-to-result {
     padding: 0 !important;
   }
+  .inner_content {
+    padding: 0 !important;
+  }
   .checkout-steps {
     width: 30rem;
   }

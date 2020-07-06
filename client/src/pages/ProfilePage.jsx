@@ -48,7 +48,7 @@ const ProfilePage = (props) => {
 	};
 
 	return (
-		<FlexContainer column styles={{ padding: '20px' }}>
+		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
 			<FlexContainer>
 				<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%', justifyContent: 'center' }}>
 					User Profile
