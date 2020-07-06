@@ -73,9 +73,7 @@ const ChangePasswordPage = (props) => {
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
 			<FlexContainer>
 				<Link to="/profile">
-					<Title class="back_button" styles={{ fontSize: '2rem', alignItem: 'flex-start', margin: '5px' }}>
-						Back to Profile
-					</Title>
+					<button className="button_main">Back to Profile</button>
 				</Link>
 			</FlexContainer>
 			<div className="profile-info">

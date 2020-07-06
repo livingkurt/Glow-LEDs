@@ -24,12 +24,9 @@ const Search = (props) => {
 					on_change_function={props.setSearchKeyword}
 					styles={{ marginRight: '5px', maxWidth: '200px' }}
 				/>
-				<ButtonWord
-					styles={{ boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }}
-					type="submit"
-				>
+				<button type="submit" className="button_main">
 					Search
-				</ButtonWord>
+				</button>
 			</FlexContainer>
 		</form>
 	);

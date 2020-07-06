@@ -96,9 +96,7 @@ const ProductPage = (props) => {
 				<FlexContainer h_between>
 					<FlexContainer>
 						<Link to="/allproducts">
-							<Title class="back_button" styles={{ fontSize: '2rem', margin: '5px' }}>
-								Back to Results
-							</Title>
+							<button class="button_main">Back to Results</button>
 						</Link>
 					</FlexContainer>
 					{userInfo &&
