@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Title, ButtonWord } from '../components/UtilityComponents/index';
+import { Title, button } from '../components/UtilityComponents/index';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 
@@ -104,11 +104,11 @@ const HomePage = (props) => {
 				</p>
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
-						<ButtonWord styles={{ fontSize: '2rem' }}>
+						<button className="button primary" style={{ fontSize: '2rem', background: 'transparent' }}>
 							<Title class="h2_title" styles={{ fontSize: 20 }}>
 								Shop Diffuser Caps
 							</Title>
-						</ButtonWord>
+						</button>
 					</Link>
 				</FlexContainer>
 			</div>
@@ -134,11 +134,11 @@ const HomePage = (props) => {
 				</p>
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
-						<ButtonWord styles={{ fontSize: '2rem' }}>
+						<button className="button primary" style={{ fontSize: '2rem', background: 'transparent' }}>
 							<Title class="h2_title" styles={{ fontSize: 20 }}>
 								Shop Infinity Mirrors
 							</Title>
-						</ButtonWord>
+						</button>
 					</Link>
 				</FlexContainer>
 			</div>
@@ -164,11 +164,11 @@ const HomePage = (props) => {
 
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
-						<ButtonWord styles={{ fontSize: '2rem' }}>
+						<button className="button primary" style={{ fontSize: '2rem', background: 'transparent' }}>
 							<Title class="h2_title" styles={{ fontSize: 20 }}>
 								Shop String Lights
 							</Title>
-						</ButtonWord>
+						</button>
 					</Link>
 				</FlexContainer>
 			</div>
