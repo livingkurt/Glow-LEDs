@@ -43,12 +43,6 @@ const PlaceOrderPage = (props) => {
 				order_note
 			})
 		);
-		// dispatch(email_order({
-		//   orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
-		//   taxPrice, totalPrice, user_data
-		// }));
-
-		// empty_cart();
 	};
 
 	useEffect(

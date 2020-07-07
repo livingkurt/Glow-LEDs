@@ -94,7 +94,7 @@ const Header = (props) => {
 						{/* <Link to="/category/Diffusers"> */}
 						<button className="button nav">Gloving</button>
 						{/* </Link> */}
-						<ul style={{ width: 200 }} className="dropdown-nav-content">
+						<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
 							<Link to="/category/Domes">
 								<button className="button nav">Domes</button>
 							</Link>
@@ -113,7 +113,7 @@ const Header = (props) => {
 						{/* <Link to="/category/Diffusers"> */}
 						<button className="button nav">Decor</button>
 						{/* </Link> */}
-						<ul style={{ width: 200 }} className="dropdown-nav-content">
+						<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
 							<Link to="/category/StringLights">
 								<button className="button nav">String Lights</button>
 							</Link>
@@ -126,7 +126,7 @@ const Header = (props) => {
 						{/* <Link to="/category/Diffusers"> */}
 						<button className="button nav">Support</button>
 						{/* </Link> */}
-						<ul style={{ width: 230 }} className="dropdown-nav-content">
+						<ul style={{ width: 230 }} className="dropdown-nav-content hover_fade_in">
 							<Link to="/contact">
 								<button className="button nav">Contact</button>
 							</Link>
@@ -154,7 +154,7 @@ const Header = (props) => {
 				{props.userInfo ? (
 					<div className="dropdown">
 						<button className="button nav">{name}</button>
-						<ul className="dropdown-content" style={{ width: '150px' }}>
+						<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
 							<Link to="/profile">
 								<button className="button nav">Profile</button>
 							</Link>
@@ -176,9 +176,9 @@ const Header = (props) => {
 				)}
 				{props.userInfo &&
 				props.userInfo.isAdmin && (
-					<div className="dropdown">
+					<div className="dropdown ">
 						<button className="button nav">Admin</button>
-						<ul className="dropdown-content">
+						<ul className="dropdown-content hover_fade_in">
 							<Link to="/orders">
 								<button className="button nav">Orders</button>
 							</Link>

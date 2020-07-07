@@ -1,0 +1,139 @@
+.sidebar {
+  position: fixed;
+  transition: all .5s;
+  transform: translateX(-32rem);
+  width: 30rem;
+  background-color: #2d2d2de6;
+  height: 100%;
+  top: 110px;
+  padding: 10px;
+  z-index: 99;
+}
+
+.sidebar.open {
+  transform: translateX(0px);
+}
+
+.sidebar_close_button {
+  border-radius: 50%;
+  font-size: 2rem;
+  padding-top: 0;
+  cursor: pointer;
+  position: absolute;
+  right: .5rem;
+  top: 1.5rem;
+  background-color: transparent;
+  border: 0;
+  color: white;
+}
+
+.dropdown-sidebar {
+  display: inline-block;
+  position: relative;
+}
+
+.sidebar.nav.primary {
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+}
+
+.sidebar.nav.secondary {
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+  padding-left: 20px;
+}
+
+.sidebar_primary {
+  border-bottom: 1px white solid;
+  width: 100%;
+  text-align: start;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background-color: transparent;
+  color: white;
+  border: 0px;
+  font-family: "button_font";
+  transition: all .5s ease;
+  padding: 10px;
+}
+
+.sidebar_secondary {
+  border-bottom: 1px white solid;
+  width: 100%;
+  text-align: start;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background-color: #969696;
+  color: white;
+  border: 0px;
+  font-family: "button_font";
+  transition: all .5s ease;
+  padding: 10px;
+}
+
+.sidebar_button_secondary {
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+  padding-left: 20px;
+}
+
+.dropdown-sidebar-content {
+  /* position: absolute; */
+  display: none;
+  right: 0;
+  max-height: 0;
+  /* padding: 1rem; */
+  list-style-type: none;
+  z-index: 1;
+  /* background-color: #333333; */
+  margin: 0;
+  /* border-radius: 5px; */
+  /* margin-top: 0.4rem; */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+.dropdown-sidebar:hover .dropdown-sidebar-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar_dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.sidebar_dropdown_container {
+  /* position: absolute; */
+  /* display: none; */
+  transition: max-height 2s ease-out;
+  /* max-height: 0px; */
+  /* left: 0; */
+  height: 0px;
+  /* padding: 1rem; */
+  /* list-style-type: none; */
+  /* z-index: 1; */
+  /* background-color: #969696; */
+  margin: 0;
+  /* width: 100%; */
+  /* border-radius: 5px; */
+  /* padding-left: 20px; */
+  /* margin-top: 0.4rem; */
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+}
+
+/* .sidebar_dropdown:hover .sidebar_dropdown_container:hover {
+  flex-direction: column;
+  max-height: 200px;
+} */
+
+.side_bar_buttons {
+  transition: max-height 2s ease-out;
+}
+
+.sidebar_dropdown_container:hover, .dropdown_button:hover {
+  max-height: 200px;
+}

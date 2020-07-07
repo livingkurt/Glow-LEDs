@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Title, ButtonWord } from '../../UtilityComponents/index';
 import { FlexContainer } from '../index';
 import { useDispatch, useSelector } from 'react-redux';
-import './sidebar.css';
+// import './sidebar.css';
 import { logout } from '../../../actions/userActions';
 
 const Sidebar = (props) => {
@@ -76,67 +76,50 @@ const Sidebar = (props) => {
 	return (
 		<aside className="sidebar">
 			<Title class="h2_title">Shopping Categories</Title>
-			<button className="sidebar-close-button" onClick={closeMenu}>
+			<button className="sidebar_close_button" onClick={closeMenu}>
 				<i class="fas fa-times" />
 			</button>
 			<FlexContainer column>
 				{props.userInfo ? (
-					// <Link to="/profile"><ButtonWord class="sidebar_nav_buttons">{props.userInfo.name}</ButtonWord></Link>
-					<div className="dropdown-sidebar-nav">
-						<ButtonWord class="sidebar_nav_buttons">{name}</ButtonWord>
-						<ul className="dropdown-sidebar-nav-content">
+					<div className="sidebar_dropdown">
+						<button class="sidebar_button primary">{name}</button>
+						<ul className="sidebar_dropdown_container">
 							<Link to="/profile">
-								<ButtonWord
-									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-									on_click_function={closeMenu}
-								>
+								<button class=" sidebar_button secondary" on_click_function={closeMenu}>
 									Profile
-								</ButtonWord>
+								</button>
 							</Link>
 							<Link to="/userorders">
-								<ButtonWord
-									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-									on_click_function={closeMenu}
-								>
+								<button class=" sidebar_button secondary" on_click_function={closeMenu}>
 									Orders
-								</ButtonWord>
+								</button>
 							</Link>
-							{/* <Link to="/products"><ButtonWord class="sidebar_nav_buttons sidebar_nav_dropdown_buttons">Orders</ButtonWord></Link> */}
-							<ButtonWord
-								on_click_function={handleLogout}
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-							>
+							<button on_click_function={handleLogout} class=" sidebar_button secondary">
 								{' '}
 								Logout
-							</ButtonWord>
+							</button>
 						</ul>
 						<i style={icon_styles} class="fas fa-sort-up" />
 					</div>
 				) : (
 					<Link to="/login">
-						<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
+						<ButtonWord class="sidebar_button primary" on_click_function={closeMenu}>
 							Login
 						</ButtonWord>
 					</Link>
 				)}
 				{props.userInfo &&
 				props.userInfo.isAdmin && (
-					<div className="dropdown-sidebar-nav">
-						<ButtonWord class="sidebar_nav_buttons">Admin</ButtonWord>
-						<ul className="dropdown-sidebar-nav-content">
+					<div className="sidebar_dropdown">
+						<ButtonWord class="sidebar_button primary">Admin</ButtonWord>
+						<ul className="sidebar_dropdown_container">
 							<Link to="/orders">
-								<ButtonWord
-									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-									on_click_function={closeMenu}
-								>
+								<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 									Orders
 								</ButtonWord>
 							</Link>
 							<Link to="/products">
-								<ButtonWord
-									class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-									on_click_function={closeMenu}
-								>
+								<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 									Products
 								</ButtonWord>
 							</Link>
@@ -145,43 +128,31 @@ const Sidebar = (props) => {
 					</div>
 				)}
 				<Link to="/allproducts">
-					<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
+					<ButtonWord class="sidebar_button primary" on_click_function={closeMenu}>
 						All Products
 					</ButtonWord>
 				</Link>
-				<div className="dropdown-sidebar-nav">
-					<ButtonWord class="sidebar_nav_buttons">Gloving</ButtonWord>
-					<ul className="dropdown-sidebar-nav-content">
+				<div className="sidebar_dropdown">
+					<ButtonWord class="sidebar_button primary">Gloving</ButtonWord>
+					<ul className="sidebar_dropdown_container">
 						<Link to="/category/Domes">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								Domes
 							</ButtonWord>
 						</Link>
 						<Link to="/category/Caps">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								Caps
 							</ButtonWord>
 						</Link>
 						<Link to="/category/Adapters">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								{' '}
 								Adapters
 							</ButtonWord>
 						</Link>
 						<Link to="/category/Accessories">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								{' '}
 								Accessories
 							</ButtonWord>
@@ -189,58 +160,37 @@ const Sidebar = (props) => {
 					</ul>
 					<i style={icon_styles} class="fas fa-sort-up" />
 				</div>
-				<div className="dropdown-sidebar-nav">
-					<ButtonWord class="sidebar_nav_buttons">Decor</ButtonWord>
-					<ul className="dropdown-sidebar-nav-content">
+				<div className="sidebar_dropdown">
+					<ButtonWord class="sidebar_button primary">Decor</ButtonWord>
+					<ul className="sidebar_dropdown_container">
 						<Link to="/category/StringLights">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								String Lights
 							</ButtonWord>
 						</Link>
 						<Link to="/category/Infinity">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								Infinity Mirrors
 							</ButtonWord>
 						</Link>
 					</ul>
 					<i style={icon_styles} class="fas fa-sort-up" />
 				</div>
-				{/* <Link to="/category/Accessories"><ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>Accessories</ButtonWord></Link> */}
-				{/* <Link to="/contact">
-					<ButtonWord class="sidebar_nav_buttons" on_click_function={closeMenu}>
-						Contact
-					</ButtonWord>
-				</Link> */}
-				<div className="dropdown-sidebar-nav">
-					<ButtonWord class="sidebar_nav_buttons">Support</ButtonWord>
-					<ul className="dropdown-sidebar-nav-content">
+				<div className="sidebar_dropdown">
+					<ButtonWord class="sidebar_button primary">Support</ButtonWord>
+					<ul className="sidebar_dropdown_container">
 						<Link to="/contact">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								Contact
 							</ButtonWord>
 						</Link>
 						<Link to="/faq">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								FAQ
 							</ButtonWord>
 						</Link>
 						<Link to="/terms">
-							<ButtonWord
-								class="sidebar_nav_buttons sidebar_nav_dropdown_buttons"
-								on_click_function={closeMenu}
-							>
+							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
 								Terms and Conditions
 							</ButtonWord>
 						</Link>
