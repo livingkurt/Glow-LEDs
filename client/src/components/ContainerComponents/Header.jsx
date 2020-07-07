@@ -76,7 +76,7 @@ const Header = (props) => {
 				<FlexContainer h_center v_i_center class="logo_text">
 					<Link to="/">
 						<img
-							className="logo_2"
+							className="logo_2 zoom "
 							style={{ display: 'none', height: '80px' }}
 							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 							alt="Glow LEDs"

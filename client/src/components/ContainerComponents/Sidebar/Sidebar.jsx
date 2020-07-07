@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Title, ButtonWord } from '../../UtilityComponents/index';
+import { Title, button } from '../../UtilityComponents/index';
 import { FlexContainer } from '../index';
 import { useDispatch, useSelector } from 'react-redux';
 // import './sidebar.css';
@@ -75,135 +75,135 @@ const Sidebar = (props) => {
 
 	return (
 		<aside className="sidebar">
-			<Title class="h2_title">Shopping Categories</Title>
+			<Title className="h2_title">Shopping Categories</Title>
 			<button className="sidebar_close_button" onClick={closeMenu}>
-				<i class="fas fa-times" />
+				<i className="fas fa-times" />
 			</button>
 			<FlexContainer column>
 				{props.userInfo ? (
 					<div className="sidebar_dropdown">
-						<button class="sidebar_button primary">{name}</button>
+						<button className="sidebar_button primary">{name}</button>
 						<ul className="sidebar_dropdown_container">
 							<Link to="/profile">
-								<button class=" sidebar_button secondary" on_click_function={closeMenu}>
+								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Profile
 								</button>
 							</Link>
 							<Link to="/userorders">
-								<button class=" sidebar_button secondary" on_click_function={closeMenu}>
+								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Orders
 								</button>
 							</Link>
-							<button on_click_function={handleLogout} class=" sidebar_button secondary">
+							<button onClick={handleLogout} className=" sidebar_button secondary">
 								{' '}
 								Logout
 							</button>
 						</ul>
-						<i style={icon_styles} class="fas fa-sort-up" />
+						<i style={icon_styles} className="fas fa-sort-up" />
 					</div>
 				) : (
 					<Link to="/login">
-						<ButtonWord class="sidebar_button primary" on_click_function={closeMenu}>
+						<button className="sidebar_button primary" onClick={closeMenu}>
 							Login
-						</ButtonWord>
+						</button>
 					</Link>
 				)}
 				{props.userInfo &&
 				props.userInfo.isAdmin && (
 					<div className="sidebar_dropdown">
-						<ButtonWord class="sidebar_button primary">Admin</ButtonWord>
+						<button className="sidebar_button primary">Admin</button>
 						<ul className="sidebar_dropdown_container">
 							<Link to="/orders">
-								<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Orders
-								</ButtonWord>
+								</button>
 							</Link>
 							<Link to="/products">
-								<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Products
-								</ButtonWord>
+								</button>
 							</Link>
 						</ul>
-						<i style={icon_styles} class="fas fa-sort-up" />
+						<i style={icon_styles} className="fas fa-sort-up" />
 					</div>
 				)}
 				<Link to="/allproducts">
-					<ButtonWord class="sidebar_button primary" on_click_function={closeMenu}>
+					<button className="sidebar_button primary" onClick={closeMenu}>
 						All Products
-					</ButtonWord>
+					</button>
 				</Link>
 				<div className="sidebar_dropdown">
-					<ButtonWord class="sidebar_button primary">Gloving</ButtonWord>
+					<button className="sidebar_button primary">Gloving</button>
 					<ul className="sidebar_dropdown_container">
 						<Link to="/category/Domes">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Domes
-							</ButtonWord>
+							</button>
 						</Link>
 						<Link to="/category/Caps">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Caps
-							</ButtonWord>
+							</button>
 						</Link>
 						<Link to="/category/Adapters">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
 								Adapters
-							</ButtonWord>
+							</button>
 						</Link>
 						<Link to="/category/Accessories">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
 								Accessories
-							</ButtonWord>
+							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} class="fas fa-sort-up" />
+					<i style={icon_styles} className="fas fa-sort-up" />
 				</div>
 				<div className="sidebar_dropdown">
-					<ButtonWord class="sidebar_button primary">Decor</ButtonWord>
+					<button className="sidebar_button primary">Decor</button>
 					<ul className="sidebar_dropdown_container">
 						<Link to="/category/StringLights">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								String Lights
-							</ButtonWord>
+							</button>
 						</Link>
 						<Link to="/category/Infinity">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Infinity Mirrors
-							</ButtonWord>
+							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} class="fas fa-sort-up" />
+					<i style={icon_styles} className="fas fa-sort-up" />
 				</div>
 				<div className="sidebar_dropdown">
-					<ButtonWord class="sidebar_button primary">Support</ButtonWord>
+					<button className="sidebar_button primary">Support</button>
 					<ul className="sidebar_dropdown_container">
 						<Link to="/contact">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Contact
-							</ButtonWord>
+							</button>
 						</Link>
 						<Link to="/faq">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								FAQ
-							</ButtonWord>
+							</button>
 						</Link>
 						<Link to="/terms">
-							<ButtonWord class="sidebar_button secondary" on_click_function={closeMenu}>
+							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Terms and Conditions
-							</ButtonWord>
+							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} class="fas fa-sort-up" />
+					<i style={icon_styles} className="fas fa-sort-up" />
 				</div>
 				{/* {
           props.userInfo
             ?
-            <Link to="/profile"><ButtonWord >{props.userInfo.name}</ButtonWord></Link>
+            <Link to="/profile"><button >{props.userInfo.name}</button></Link>
 
             :
-            <Link to="/login"><ButtonWord >Login</ButtonWord></Link>
+            <Link to="/login"><button >Login</button></Link>
         } */}
 			</FlexContainer>
 		</aside>
