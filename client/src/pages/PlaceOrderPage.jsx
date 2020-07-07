@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 import { Title } from '../components/UtilityComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 // import { email_order } from '../actions/emailActions';
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -23,6 +24,8 @@ const PlaceOrderPage = (props) => {
 	const taxPrice = 0.15 * itemsPrice;
 	const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
+	const [ order_note, set_order_note ] = useState('');
+
 	const dispatch = useDispatch();
 
 	const placeOrderHandler = () => {
@@ -36,7 +39,8 @@ const PlaceOrderPage = (props) => {
 				shippingPrice,
 				taxPrice,
 				totalPrice,
-				user_data
+				user_data,
+				order_note
 			})
 		);
 		// dispatch(email_order({
@@ -113,11 +117,8 @@ const PlaceOrderPage = (props) => {
 				</div>
 				<div className="placeorder-action">
 					<ul>
-						{/* <li> */}
-						{/* <button className="button primary full-width nav_buttons" onClick={placeOrderHandler} >Place Order</button> */}
-						{/* </li> */}
 						<li>
-							<Title class="h2_title" styles={{ fontSize: 30 }}>
+							<Title class="h2_title" styles={{ fontSize: 30, marginTop: '0px' }}>
 								Order Summary
 							</Title>
 						</li>
@@ -142,6 +143,19 @@ const PlaceOrderPage = (props) => {
 								Place Order
 							</button>
 						</li>
+						<FlexContainer column>
+							{/* <label htmlFor="order_note">Add a note about order</label> */}
+							<div style={{ fontSize: '16px' }} htmlFor="order_note">
+								Add a note
+							</div>
+							<textarea
+								name="order_note"
+								value={order_note}
+								id="order_note"
+								style={{ width: '100%', height: '100px' }}
+								onChange={(e) => set_order_note(e.target.value)}
+							/>
+						</FlexContainer>
 					</ul>
 				</div>
 			</div>

@@ -139,7 +139,7 @@ const OrderPage = (props) => {
 		<FlexContainer h_center column>
 			<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
 			<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-				If pages doesn't show in 5 seconds, refresh the page.
+				If payment element doesn't show in 5 seconds, refresh the page.
 			</Title>
 		</FlexContainer>
 	) : error ? (
@@ -276,6 +276,18 @@ const OrderPage = (props) => {
 								)}
 							</div>
 						</li>
+						<FlexContainer column>
+							{/* <label htmlFor="order_note">Add a note about order</label> */}
+							<div style={{ fontSize: '16px' }} htmlFor="order_note">
+								Order Note
+							</div>
+							<textarea
+								name="order_note"
+								value={order.order_note}
+								id="order_note"
+								style={{ width: '100%', height: '100px' }}
+							/>
+						</FlexContainer>
 					</ul>
 				</div>
 			</div>
