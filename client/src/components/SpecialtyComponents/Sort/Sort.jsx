@@ -9,7 +9,7 @@ const Sort = (props) => {
 		<div className="">
 			<Label>Sort By</Label>
 			<select name="sortOrder" className="select-css" onChange={props.sortHandler}>
-				<option defaultValue="">Newest</option>
+				{/* <option defaultValue="">Newest</option> */}
 				<option defaultValue="lowest">Lowest</option>
 				<option defaultValue="highest">Highest</option>
 			</select>

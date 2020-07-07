@@ -8,7 +8,7 @@ import { Label } from '../../UtilityComponents/index';
 import { Rating } from '..';
 
 const Product = (props) => {
-	console.log(props.product);
+	// console.log(props.product);
 	return (
 		<li key={props.product._id} style={props.styles}>
 			<div className="product">

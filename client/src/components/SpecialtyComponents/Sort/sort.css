@@ -50,11 +50,12 @@ select {
   font-size: inherit;
   margin: 0;
   overflow: hidden;
-  padding-top: 5px;
+  padding-top: 9px;
   padding-bottom: 5px;
-  padding-left: 6px;
+  padding-left: 10px;
   padding-right: 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 10px;
+  font-family: button_font;
 }
