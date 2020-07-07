@@ -127,6 +127,27 @@ router.post('/order', async (req, res) => {
 	});
 });
 
+router.post('/sale', async (req, res) => {
+	console.log({ order: req.body });
+	let user = {};
+	let mailOptions = {
+		from: process.env.DISPLAY_EMAIL,
+		to: process.env.EMAIL,
+		subject: 'New Order from ' + req.body.user_data.name,
+		html: main_layout(order_view({ ...req.body, title: 'New Order from ' + req.body.user_data.name }))
+	};
+
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.send(err);
+		} else {
+			console.log('Order Email Sent to ' + req.body.user_data.name);
+			res.send('Email Successfully Sent');
+		}
+	});
+});
+
 router.post('/shipping', async (req, res) => {
 	console.log({ shipping: req.body });
 	let user = {};

@@ -10,7 +10,7 @@ import { validate_contact } from '../utils/helper_functions';
 const TermsPage = () => {
 	return (
 		<BlockContainer class="main_container">
-			<BlockContainer class="inner_content">
+			<div class="inner_content">
 				<FlexContainer h_center>
 					<Title styles={{ fontSize: 40, justifyContent: 'center', marginRight: '20px' }}>
 						Glow-LEDs.com{' '}
@@ -22,7 +22,7 @@ const TermsPage = () => {
 					</Title>
 					<Title styles={{ fontSize: 40, justifyContent: 'center', letterSpacing: '10px' }}>AQ</Title>
 				</FlexContainer>
-				<BlockContainer class="inner_content">
+				<div>
 					<Title styles={{ fontSize: 30, justifyContent: 'center' }}>Frequently Asked Question</Title>
 					<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
 						How do properly use diffuser caps?
@@ -65,8 +65,8 @@ const TermsPage = () => {
 						ship you out a replacement product- all we need from you is to cover shipping. If you have
 						questions about your product qualifying for warranty replacement, please use our contact form.
 					</p>
-				</BlockContainer>
-			</BlockContainer>
+				</div>
+			</div>
 		</BlockContainer>
 	);
 };

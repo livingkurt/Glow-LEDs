@@ -173,11 +173,7 @@ const OrderPage = (props) => {
 									{props.userInfo &&
 									props.userInfo.isAdmin && (
 										<div>
-											<button
-												style={{ width: '176px' }}
-												className="button primary"
-												onClick={update_shipping_state}
-											>
+											<button className="button primary" onClick={update_shipping_state}>
 												{shipping_state ? 'Mark As Not Shipped' : 'Mark As Shipped'}
 											</button>
 										</div>
@@ -195,11 +191,7 @@ const OrderPage = (props) => {
 									{props.userInfo &&
 									props.userInfo.isAdmin && (
 										<div>
-											<button
-												style={{ width: '176px' }}
-												className="button primary"
-												onClick={update_delivered_state}
-											>
+											<button className="button primary" onClick={update_delivered_state}>
 												{delivery_state ? 'Mark As Not Delivered' : 'Mark As Delivered'}
 											</button>
 										</div>
