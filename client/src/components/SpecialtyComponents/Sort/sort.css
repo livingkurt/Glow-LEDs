@@ -11,6 +11,50 @@
   font-size: 1.6rem;
   margin-left: 5px;
   margin-top: -4px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  border: 0;
+  color: white;
+  padding: 5px;
+  height: 28px;
+  border-radius: 9px;
+  width: 95px;
+  font-family: button_font;
 }
 
 .sort_dropdown_label {}
+
+/* .sort_dropdown_button {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  border: 0;
+  color: white;
+  padding: 5px;
+  height: 28px;
+  border-radius: 9px;
+  width: 95px;
+  font-family: button_font;
+} */
+
+select {
+  -webkit-appearance: button;
+  /* background-color: #F07575; */
+  background: transparent;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  /* Standard syntax; must be last */
+  background-position: center right;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  border: 0;
+  color: white;
+  font-size: inherit;
+  margin: 0;
+  overflow: hidden;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 6px;
+  padding-right: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 10px;
+}

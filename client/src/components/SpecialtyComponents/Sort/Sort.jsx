@@ -6,14 +6,14 @@ import { Label } from '../../UtilityComponents';
 
 const Sort = (props) => {
 	return (
-		<li className="sort_dropdown">
+		<div className="">
 			<Label>Sort By</Label>
-			<select name="sortOrder" className="sort_dropdown" onChange={props.sortHandler}>
+			<select name="sortOrder" className="select-css" onChange={props.sortHandler}>
 				<option defaultValue="">Newest</option>
 				<option defaultValue="lowest">Lowest</option>
 				<option defaultValue="highest">Highest</option>
 			</select>
-		</li>
+		</div>
 	);
 };
 

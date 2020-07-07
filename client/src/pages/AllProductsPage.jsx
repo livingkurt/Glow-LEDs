@@ -39,13 +39,16 @@ const AllProductsPage = (props) => {
 					{category || 'All Products'}
 				</Title>
 			</FlexContainer>
-			<FlexContainer h_center>
-				<Title styles={{ fontSize: 25 }} class="h1_title">
-					Free Shipping on Everything!
-				</Title>
-			</FlexContainer>
+
 			<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
-			<FlexContainer h_center>{/* <Sort sortHandler={sortHandler} /> */}</FlexContainer>
+			<FlexContainer h_center>
+				<Sort sortHandler={sortHandler} />
+			</FlexContainer>
+			<FlexContainer h_center styles={{ marginBottom: 0 }}>
+				<h4 class="h3_title" style={{ margin: 0 }}>
+					Free Shipping on all Orders!
+				</h4>
+			</FlexContainer>
 			{loading ? (
 				<FlexContainer h_center column>
 					<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
@@ -58,7 +61,7 @@ const AllProductsPage = (props) => {
 					<Title styles={{ fontSize: 20 }}>{error}</Title>
 				</FlexContainer>
 			) : (
-				<ul className="products">
+				<ul className="products" style={{ marginTop: 0 }}>
 					{products.map(
 						(product, index) => (!product.hidden ? <Product key={index} product={product} /> : <div />)
 					)}
