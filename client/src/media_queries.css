@@ -32,6 +32,13 @@
   }
 }
 
+@media only screen and (max-width: 1177px) {
+  .content {
+    margin: 0 20px !important;
+    margin-top: 185px !important;
+  }
+}
+
 @media only screen and (max-width: 1040px) {
   .product_title_top {
     display: flex !important;
@@ -49,6 +56,9 @@
   .brand {
     margin-right: 20px !important;
   }
+  /* .content {
+    margin: 0 20px !important;
+  } */
 }
 
 @media only screen and (max-width: 1032px) {
@@ -75,7 +85,7 @@
     font-size: 50px !important;
   }
   .content {
-    margin-top: 120px !important;
+    margin-top: 128px !important;
     min-height: 76vh !important;
   }
   .details-info {
@@ -266,6 +276,12 @@
   }
   .checkout-steps>div {
     font-size: 12px;
+  }
+  .home_page_divs {
+    padding: 0px;
+    background-color: unset;
+    border: 0;
+    box-shadow: unset;
   }
   .form-container, .placeorder-action, .cart-list-container, .placeorder-info>div {
     background-color: unset;

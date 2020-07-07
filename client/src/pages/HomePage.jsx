@@ -81,7 +81,7 @@ const HomePage = (props) => {
 				Mirrors, String Lights, and Gloving Accessories. We pride ourselves on more than just the quality of our
 				EDM products; Glow-LEDs.com is here to make your viby dreams happen.
 			</p>
-			<div style={div_styles}>
+			<div className="home_page_divs">
 				<FlexContainer h_center>
 					<Title class="h2_title" styles={{ fontSize: '30px' }}>
 						Diffuser Caps
@@ -112,7 +112,7 @@ const HomePage = (props) => {
 					</Link>
 				</FlexContainer>
 			</div>
-			<div style={div_styles}>
+			<div className="home_page_divs">
 				<FlexContainer h_center>
 					<Title class="h2_title" styles={{ fontSize: '30px' }}>
 						Infinity Mirrors
@@ -142,7 +142,7 @@ const HomePage = (props) => {
 					</Link>
 				</FlexContainer>
 			</div>
-			<div style={div_styles}>
+			<div className="home_page_divs">
 				<FlexContainer h_center>
 					<Title class="h2_title" styles={{ fontSize: '30px' }}>
 						String Lights
