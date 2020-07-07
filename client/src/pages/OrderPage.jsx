@@ -10,6 +10,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 // import { email_delivery, email_shipping } from '../actions/emailActions';
 const OrderPage = (props) => {
 	console.log(props.userInfo);
+	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
 
@@ -125,7 +126,7 @@ const OrderPage = (props) => {
 	}, []);
 
 	const handleSuccessPayment = (paymentResult) => {
-		dispatch(payOrder(order, paymentResult));
+		dispatch(payOrder(order, paymentResult, user_data));
 	};
 
 	const empty_cart = () => {

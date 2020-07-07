@@ -27,18 +27,19 @@ import {
 } from '../constants/orderConstants';
 
 const createOrder = (order) => async (dispatch, getState) => {
-	console.log({ createOrder: order });
+	console.log({ createOrder_order: order });
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-		const { userLogin: { userInfo } } = getState();
+		const { userLogin: { userInfo: user_data } } = getState();
 		const { data: { data: newOrder } } = await axios.post('/api/orders', order, {
 			headers: {
-				Authorization: ' Bearer ' + userInfo.token
+				Authorization: ' Bearer ' + user_data.token
 			}
 		});
+		console.log({ createOrder_newOrder: newOrder });
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-		axios.post('/api/emails/order', order);
-		axios.post('/api/emails/sale', order);
+		axios.post('/api/emails/order', { ...newOrder, user_data });
+		axios.post('/api/emails/sale', { ...newOrder, user_data });
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
 	}
@@ -83,14 +84,19 @@ const detailsOrder = (orderId) => async (dispatch, getState) => {
 	}
 };
 
-const payOrder = (order, paymentResult) => async (dispatch, getState) => {
+const payOrder = (order, paymentResult, user_data) => async (dispatch, getState) => {
 	try {
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentResult });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.put('/api/orders/' + order._id + '/pay', paymentResult, {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
-		});
+		const { data } = await axios.put(
+			'/api/orders/' + order._id + '/pay',
+			{ paymentResult, user_data },
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.token }
+			}
+		);
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+		axios.post('/api/emails/paid', { ...order, user_data });
 	} catch (error) {
 		dispatch({ type: ORDER_PAY_FAIL, payload: error.message });
 	}
