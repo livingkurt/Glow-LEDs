@@ -456,7 +456,7 @@ const ProductPage = (props) => {
 						<Title styles={{ fontSize: 20 }}>{errorProducts}</Title>
 					</FlexContainer>
 				) : (
-					<FlexContainer row styles={{ overflowX: 'scroll' }}>
+					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
 						{products.map(
 							(product, index) =>
 								!product.hidden ? (

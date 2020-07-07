@@ -20,9 +20,10 @@ const PlaceOrderPage = (props) => {
 		props.history.push('/payment');
 	}
 	const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-	const shippingPrice = itemsPrice > 100 ? 0 : 5;
+	// const shippingPrice = itemsPrice > 100 ? 0 : 5;
 	const taxPrice = 0.15 * itemsPrice;
-	const totalPrice = itemsPrice + shippingPrice + taxPrice;
+	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
+	const totalPrice = itemsPrice + taxPrice;
 
 	const [ order_note, set_order_note ] = useState('');
 
@@ -36,7 +37,7 @@ const PlaceOrderPage = (props) => {
 				shipping,
 				payment,
 				itemsPrice,
-				shippingPrice,
+				// shippingPrice,
 				taxPrice,
 				totalPrice,
 				user_data,
@@ -122,7 +123,8 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<li>
 							<div>Shipping</div>
-							<div>${shippingPrice.toFixed(2)}</div>
+							{/* <div>${shippingPrice.toFixed(2)}</div> */}
+							<div>Free Shipping</div>
 						</li>
 						<li>
 							<div>Tax</div>

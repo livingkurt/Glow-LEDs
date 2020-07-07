@@ -244,7 +244,8 @@ const OrderPage = (props) => {
 						</li>
 						<li>
 							<div>Shipping</div>
-							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
+							{/* <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div> */}
+							<div>Free Shipping</div>
 						</li>
 						<li>
 							<div>Tax</div>

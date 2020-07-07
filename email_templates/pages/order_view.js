@@ -86,7 +86,8 @@ module.exports = (props) => {
           </li>
           <li>
             <div>Shipping</div>
-            <div>$${props.shippingPrice.toFixed(2)}</div>
+            // <div>$${props.shippingPrice.toFixed(2)}</div>
+            <div>Free Shipping</div>
           </li>
           <li>
             <div>Tax</div>

@@ -39,6 +39,11 @@ const AllProductsPage = (props) => {
 					{category || 'All Products'}
 				</Title>
 			</FlexContainer>
+			<FlexContainer h_center>
+				<Title styles={{ fontSize: 25 }} class="h1_title">
+					Free Shipping on Everything!
+				</Title>
+			</FlexContainer>
 			<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 			<FlexContainer h_center>{/* <Sort sortHandler={sortHandler} /> */}</FlexContainer>
 			{loading ? (

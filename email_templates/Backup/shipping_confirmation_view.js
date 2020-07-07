@@ -1,14 +1,13 @@
-
 module.exports = (props) => {
-  const format_date_display = unformatted_date => {
-    const date = new Date(unformatted_date)
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const formatted_date = `${month}/${day}/${year}`
-    return formatted_date;
-  }
-  return `
+	const format_date_display = (unformatted_date) => {
+		const date = new Date(unformatted_date);
+		const day = date.getDate();
+		const month = date.getMonth() + 1;
+		const year = date.getFullYear();
+		const formatted_date = `${month}/${day}/${year}`;
+		return formatted_date;
+	};
+	return `
  
     <div class="placeorder">
       <div class="placeorder-info">
@@ -18,18 +17,23 @@ module.exports = (props) => {
               <h1 style="display: flex; font-family: Helvetica; font-size: 30px;">${props.title}</h1>
               <div>
               <div>${props.shipping.address}</div>
-              <div>${props.shipping.city}, ${props.shipping.state} ${props.shipping.postalCode} ${props.shipping.country}</div>
+              <div>${props.shipping.city}, ${props.shipping.state} ${props.shipping.postalCode} ${props.shipping
+		.country}</div>
               </div>
             </div>
             <div class="ship_deliver"
               style="display: flex; flex-direction: column; margin-top: auto; width: 373px;">
               <div
                 style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                <label class="label" style="margin-top: 5px; font-size: 16px;">${props.isShipped ? "Shipped at " + format_date_display(props.shippedAt) : " Not Shipped"}</label>
+                <label class="label" style="margin-top: 5px; font-size: 16px;">${props.isShipped
+					? 'Shipped at ' + format_date_display(props.shippedAt)
+					: ' Not Shipped'}</label>
               </div>
               <div
                 style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                <label class="label" style="font-size:16px; margin-top:5px">${props.isDelivered ? "Delivered at " + format_date_display(props.deliveredAt) : " Not Delivered"}</label>
+                <label class="label" style="font-size:16px; margin-top:5px">${props.isDelivered
+					? 'Delivered at ' + format_date_display(props.deliveredAt)
+					: ' Not Delivered'}</label>
               </div>
             </div>
           </div>
@@ -37,12 +41,7 @@ module.exports = (props) => {
         <div>
           <h1 style="display: flex; font-family: Helvetica; font-size: 30px;">Payment</h1>
           <div>Payment Method: paypal</div>
-          <div>${props.isPaid
-      ?
-      "Paid at " + format_date_display(props.paidAt)
-      :
-      "Not Paid"
-    }</div>
+          <div>${props.isPaid ? 'Paid at ' + format_date_display(props.paidAt) : 'Not Paid'}</div>
         </div>
         <div>
           <ul class="cart-list-container" style="margin-top: 0px;">
@@ -50,8 +49,8 @@ module.exports = (props) => {
               <h1 style="display: flex; font-family: Helvetica; font-size: 30px;">Shopping Cart</h1>
               <div>Price</div>
             </li>
-            ${props.orderItems.map(item => {
-      let item_item = `<li
+            ${props.orderItems.map((item) => {
+				let item_item = `<li
               <div class="cart-image"><img
                   src="http://www.glow-leds.com/${item.display_image}
                   alt="product"></div>
@@ -60,9 +59,9 @@ module.exports = (props) => {
                 <div>Qty: ${item.qty}</div>
               </div>
               <div class="cart-price">${item.price}</div>
-            </li>`
-      return item_item
-    })}
+            </li>`;
+				return item_item;
+			})}
           </ul>
         </div>
       </div>
@@ -78,7 +77,8 @@ module.exports = (props) => {
           </li>
           <li>
             <div>Shipping</div>
-            <div>$${props.shippingPrice.toFixed(2)}</div>
+            // <div>$${props.shippingPrice.toFixed(2)}</div>
+            <div>Free Shipping</div>
           </li>
           <li>
             <div>Tax</div>
@@ -95,4 +95,4 @@ module.exports = (props) => {
 </div>
 </div>
 	`;
-}
+};
