@@ -75,7 +75,7 @@ const Sidebar = (props) => {
 
 	return (
 		<aside className="sidebar">
-			<Title className="h2_title">Shopping Categories</Title>
+			<h2 className="h2_title">Shopping Categories</h2>
 			<button className="sidebar_close_button" onClick={closeMenu}>
 				<i className="fas fa-times" />
 			</button>

@@ -863,3 +863,11 @@ header {
 .sidebar_button:focus+.sidebar_dropdown_container {
   max-height: 600px;
 }
+
+.h1_title, .h2_title, .h3_title {
+  font-family: heading_font;
+}
+
+h1, h2, h3 {
+  font-family: heading_font;
+}

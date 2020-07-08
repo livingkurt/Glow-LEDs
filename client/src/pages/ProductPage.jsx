@@ -117,25 +117,20 @@ const ProductPage = (props) => {
 			</div>
 			{loading ? (
 				<FlexContainer h_center column>
-					<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-					<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-						If pages doesn't show in 5 seconds, refresh the page.
-					</Title>
+					<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
+					<h3 styles={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 				</FlexContainer>
 			) : error ? (
 				<FlexContainer h_center>
-					<Title styles={{ fontSize: 20 }}>{error} </Title>
+					<h2 styles={{ fontSize: 20 }}>{error} </h2>
 				</FlexContainer>
 			) : (
 				<FlexContainer column>
 					<div className="details">
 						<FlexContainer column>
-							<Title
-								class="product_title_top"
-								styles={{ display: 'none', fontSize: '4rem', marginBottom: 20 }}
-							>
+							<h1 class="product_title_top" style={{ display: 'none' }}>
 								{product.name}
-							</Title>
+							</h1>
 							<div className="details-image">
 								<img
 									id="expandedImg"
@@ -146,22 +141,17 @@ const ProductPage = (props) => {
 							</div>
 						</FlexContainer>
 						<div className="details-info">
-							<Title
-								class="product_title_side"
-								styles={{ display: 'flex', fontSize: '3rem', marginBottom: 20 }}
-							>
+							<h1 class="product_title_side" styles={{ display: 'flex' }}>
 								{product.name}
-							</Title>
+							</h1>
 							<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
 								<a href="#reviews">
 									<Rating value={product.rating} text={product.numReviews + ' reviews'} />
 								</a>
 							</div>
 							<FlexContainer>
-								<Title styles={{ fontSize: '2rem', margin: 0, marginRight: 5 }}>Price: </Title>
-								<Label styles={{ fontSize: '2rem' }}>
-									${product.price ? product.price.toFixed(2) : product.price}
-								</Label>
+								<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
+								<label>${product.price ? product.price.toFixed(2) : product.price}</label>
 							</FlexContainer>
 							<FlexContainer column>
 								<FlexContainer column styles={{ height: '100%' }}>
@@ -185,11 +175,11 @@ const ProductPage = (props) => {
 							<div className="details-image alt_pictures_hidden">
 								{loadingImages ? (
 									<FlexContainer h_center column>
-										<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+										<h2 style={{ textAlign: 'center' }}>Loading...</h2>
 									</FlexContainer>
 								) : errorImages ? (
 									<FlexContainer h_center>
-										<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
+										<h3 style={{ textAlign: 'center' }}>{errorImages} </h3>
 									</FlexContainer>
 								) : (
 									images.map((image, index) => {
@@ -247,11 +237,11 @@ const ProductPage = (props) => {
 					<div className="details-image alt_pictures_shown">
 						{loadingImages ? (
 							<FlexContainer h_center column>
-								<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+								<h2 style={{ textAlign: 'center' }}>Loading...</h2>
 							</FlexContainer>
 						) : errorImages ? (
 							<FlexContainer h_center>
-								<Title styles={{ fontSize: 20 }}>{errorImages} </Title>
+								<h3 style={{ textAlign: 'center' }}>{errorImages} </h3>
 							</FlexContainer>
 						) : (
 							images.map((image, index) => {
@@ -269,10 +259,10 @@ const ProductPage = (props) => {
 						)}
 					</div>
 					<FlexContainer column styles={{ padding: '1rem' }}>
-						<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Description: </Title>
+						<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 						<p>{product.description}</p>
 						<FlexContainer column>
-							<Title styles={{ fontSize: 20, margin: 0, marginRight: 5 }}> Included Items: </Title>
+							<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 							<FlexContainer column styles={{ height: '100%' }}>
 								<ul style={{ marginLeft: '10px' }}>
 									{product.included_items ? (
@@ -290,30 +280,28 @@ const ProductPage = (props) => {
 							</FlexContainer>
 						</FlexContainer>
 						{!product.video ? (
-							<Title
-								class="h2_title"
-								styles={{
-									fontSize: 30,
+							<h1
+								class="h1_title"
+								style={{
 									textAlign: 'center',
 									width: '100%',
 									justifyContent: 'center'
 								}}
 							>
 								Video Coming Soon!
-							</Title>
+							</h1>
 						) : (
 							<FlexContainer h_center column>
-								<Title
+								<h2
 									class="h2_title"
-									styles={{
-										fontSize: 20,
+									style={{
 										textAlign: 'center',
 										width: '100%',
 										justifyContent: 'center'
 									}}
 								>
 									Watch the Video Below to Learn More
-								</Title>
+								</h2>
 								<video
 									className="product_video"
 									style={{ height: 'auto', maxWidth: '100%', borderRadius: '20px' }}
@@ -327,17 +315,16 @@ const ProductPage = (props) => {
 						{/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
 					</FlexContainer>
 					<div className="content-margined">
-						<Title
-							class="h3_title"
-							styles={{
-								fontSize: 30,
+						<h1
+							class="h1_title"
+							style={{
 								textAlign: 'center',
 								width: '100%',
 								justifyContent: 'center'
 							}}
 						>
 							Reviews
-						</Title>
+						</h1>
 						{!product.reviews.length && (
 							<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 						)}
@@ -367,44 +354,49 @@ const ProductPage = (props) => {
 							</button>
 
 							<li style={{ listStyleType: 'none', display: review_modal }}>
-								<Title
+								<h2
 									class="h2_title"
-									styles={{
-										fontSize: 30,
+									style={{
 										textAlign: 'center',
 										width: '100%',
 										justifyContent: 'center'
 									}}
 								>
 									Write a customer review
-								</Title>
+								</h2>
 								{userInfo ? (
 									<form>
 										<div className="form-container">
-											<li>
-												<Title
-													styles={{
-														fontSize: 30,
+											<li style={{ marginBottom: 0 }}>
+												<h3
+													style={{
 														textAlign: 'center',
 														width: '100%',
-														justifyContent: 'center'
+														justifyContent: 'center',
+														marginTop: '-35px'
 													}}
 												>
 													{productSaveSuccess ? 'Review Saved Successfully' : ''}
-												</Title>
-												<label htmlFor="rating">Rating</label>
-												<select
-													name="rating"
-													id="rating"
-													defaultValue={rating}
-													onChange={(e) => setRating(e.target.value)}
-												>
-													<option value="5">5 - Excellent </option>
-													<option value="4">4 - Very Good</option>
-													<option value="3">3 - Good</option>
-													<option value="2">2 - Fair</option>
-													<option value="1">1 - Poor</option>
-												</select>
+												</h3>
+												<FlexContainer v_i_center>
+													<h3 htmlFor="rating">Rating</h3>
+													<div className="review_select_dropdown_container">
+														<select
+															name="rating"
+															id="rating"
+															className="review_select_dropdown"
+															defaultValue={rating}
+															onChange={(e) => setRating(e.target.value)}
+														>
+															<option value="5">5 - Excellent </option>
+															<option value="4">4 - Very Good</option>
+															<option value="3">3 - Good</option>
+															<option value="2">2 - Fair</option>
+															<option value="1">1 - Poor</option>
+														</select>
+														<i className="fas fa-sort-up review_icon_styles" />
+													</div>
+												</FlexContainer>
 											</li>
 											<li>
 												<label htmlFor="comment" id="comment" />
@@ -440,27 +432,24 @@ const ProductPage = (props) => {
 				</FlexContainer>
 			)}
 			<FlexContainer column styles={{ margin: '0 10px' }}>
-				<Title
-					class="h2_title"
-					styles={{
-						fontSize: 30,
+				<h1
+					class="h1_title"
+					style={{
 						textAlign: 'center',
 						width: '100%',
 						justifyContent: 'center'
 					}}
 				>
 					Related Products
-				</Title>
+				</h1>
 				{loadingProducts ? (
 					<FlexContainer h_center column>
-						<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-						<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-							If pages doesn't show in 5 seconds, refresh the page.
-						</Title>
+						<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
+						<h3 styles={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</FlexContainer>
 				) : errorProducts ? (
 					<FlexContainer h_center>
-						<Title styles={{ fontSize: 20 }}>{errorProducts}</Title>
+						<h2 styles={{ fontSize: 20 }}>{errorProducts}</h2>
 					</FlexContainer>
 				) : (
 					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>

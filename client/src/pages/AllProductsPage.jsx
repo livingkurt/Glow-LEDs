@@ -42,28 +42,26 @@ const AllProductsPage = (props) => {
 	return (
 		<div>
 			<FlexContainer h_center>
-				<Title styles={{ fontSize: 40 }} class="h1_title">
-					{category || 'All Products'}
-				</Title>
+				<h1 className="h1_title">{category || 'All Products'}</h1>
 			</FlexContainer>
 
 			<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 			<FlexContainer h_center>
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>
-			<FlexContainer h_center styles={{ marginBottom: 0 }}>
+			<FlexContainer h_center styles={{ marginBottom: -12 }}>
 				<h4 style={{ margin: 0 }}>Free Shipping on all Orders!</h4>
 			</FlexContainer>
 			{loading ? (
 				<FlexContainer h_center column>
-					<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-					<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+					<h2 style={{ fontSize: 25, textAlign: 'center' }}>Loading...</h2>
+					<h2 style={{ fontSize: 20, textAlign: 'center' }}>
 						If pages doesn't show in 5 seconds, refresh the page.
-					</Title>
+					</h2>
 				</FlexContainer>
 			) : error ? (
 				<FlexContainer h_center>
-					<Title styles={{ fontSize: 20 }}>{error}</Title>
+					<h2 style={{ fontSize: 20 }}>{error}</h2>
 				</FlexContainer>
 			) : (
 				<ul className="products" style={{ marginTop: 0 }}>

@@ -110,6 +110,41 @@
   transform: rotate(-180deg);
 }
 
+.review_select_dropdown_container {
+  position: relative;
+  margin-left: 15px;
+}
+
+.review_select_dropdown {
+  /* Standard syntax; must be last */
+  -webkit-appearance: button;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  background-position: center right;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  border: 0;
+  color: white;
+  padding-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 8px;
+  font-size: 16px;
+  margin: 0;
+  width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: button_font;
+}
+
+.review_icon_styles {
+  position: absolute;
+  right: 9px;
+  top: 6px;
+  transform: rotate(-180deg);
+}
+
 option {
   -webkit-appearance: button;
 }
