@@ -49,7 +49,7 @@ const LoginPage = (props) => {
 				<ul className="form-container">
 					<li>
 						{/* <h2>Login</h2> */}
-						<Title class="h1_title">Login</Title>
+						<h1>Login</h1>
 					</li>
 					<li>
 						<FlexContainer h_center>

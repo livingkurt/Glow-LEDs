@@ -25,22 +25,22 @@ const PasswordResetPage = (props) => {
 				<ul className="form-container">
 					<li>
 						{/* <h2>Login</h2> */}
-						<Title class="h1_title">Password Reset</Title>
+						<h1>Password Reset</h1>
 					</li>
 					<li>
 						{loading ? (
 							<FlexContainer h_center column>
-								<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-								<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+								<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
+								<h1 styles={{ textAlign: 'center' }}>
 									If pages doesn't show in 5 seconds, refresh the page.
-								</Title>
+								</h1>
 							</FlexContainer>
 						) : error ? (
 							<FlexContainer h_center>
-								<Title styles={{ fontSize: 20 }}>{error} </Title>
+								<h2 styles={{ textAlign: 'center' }}>{error} </h2>
 							</FlexContainer>
 						) : (
-							<Title styles={{ fontSize: 20, justifyContent: 'center' }}>{words}</Title>
+							<h3 styles={{ textAlign: 'center' }}>{words}</h3>
 						)}
 					</li>
 					<li>

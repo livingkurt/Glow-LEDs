@@ -281,7 +281,6 @@ const ProductPage = (props) => {
 						</FlexContainer>
 						{!product.video ? (
 							<h1
-								class="h1_title"
 								style={{
 									textAlign: 'center',
 									width: '100%',
@@ -316,7 +315,6 @@ const ProductPage = (props) => {
 					</FlexContainer>
 					<div className="content-margined">
 						<h1
-							class="h1_title"
 							style={{
 								textAlign: 'center',
 								width: '100%',
@@ -433,7 +431,6 @@ const ProductPage = (props) => {
 			)}
 			<FlexContainer column styles={{ margin: '0 10px' }}>
 				<h1
-					class="h1_title"
 					style={{
 						textAlign: 'center',
 						width: '100%',

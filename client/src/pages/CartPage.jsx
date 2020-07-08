@@ -33,7 +33,7 @@ const CartPage = (props) => {
 			<div className="cart-list">
 				<ul className="cart-list-container">
 					<li>
-						<Title styles={{ fontSize: 30 }}>Shopping Cart</Title>
+						<h2>Shopping Cart</h2>
 						<div>Price</div>
 					</li>
 					{cartItems.length === 0 ? (

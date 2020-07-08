@@ -65,9 +65,7 @@ const PlaceOrderPage = (props) => {
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
-						<Title class="h2_title" styles={{ fontSize: 30 }}>
-							Shipping
-						</Title>
+						<h1>Shipping</h1>
 						<div className="label">
 							<div>{shipping.address}</div>
 							<div>
@@ -76,17 +74,13 @@ const PlaceOrderPage = (props) => {
 						</div>
 					</div>
 					<div>
-						<Title class="h2_title" styles={{ fontSize: 30 }}>
-							Payment
-						</Title>
+						<h1>Payment</h1>
 						<div className="label">Payment Method: {cart.payment.paymentMethod}</div>
 					</div>
 					<div>
 						<ul className="cart-list-container">
 							<li>
-								<Title class="h2_title" styles={{ fontSize: 30 }}>
-									Shopping Cart
-								</Title>
+								<h1>Shopping Cart</h1>
 								<div>Price</div>
 							</li>
 							{cartItems.length === 0 ? (
@@ -113,9 +107,7 @@ const PlaceOrderPage = (props) => {
 				<div className="placeorder-action">
 					<ul>
 						<li>
-							<Title class="h2_title" styles={{ fontSize: 30, marginTop: '0px' }}>
-								Order Summary
-							</Title>
+							<h1 style={{ marginTop: '0px' }}>Order Summary</h1>
 						</li>
 						<li>
 							<div>Items</div>

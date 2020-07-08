@@ -66,14 +66,12 @@ const HomePage = (props) => {
 	return (
 		<BlockContainer class="main_container">
 			<FlexContainer h_center>
-				<Title class="h1_title" styles={{ fontSize: 50, marginBottom: '3vh' }}>
+				<h1 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
 					Welcome to Glow-LEDs
-				</Title>
+				</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
-				<Title class="h2_title" styles={{ fontSize: '30px' }}>
-					From a Glover that just wants the world to stay lit
-				</Title>
+				<h1>From a Glover that just wants the world to stay lit</h1>
 			</FlexContainer>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here at Glow-LEDs.com, we strive to bring as much light in to as many lives as possible. All items are
@@ -83,9 +81,7 @@ const HomePage = (props) => {
 			</p>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<Title class="h2_title" styles={{ fontSize: '30px' }}>
-						Diffuser Caps
-					</Title>
+					<h1>Diffuser Caps</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
 					<video id="diffuser_caps_video" style={homepage_video} controls>
@@ -104,19 +100,15 @@ const HomePage = (props) => {
 				</p>
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
-						<button className="button primary" style={{ fontSize: '2rem', background: 'transparent' }}>
-							<Title class="h2_title" styles={{ fontSize: 20 }}>
-								Shop Diffuser Caps
-							</Title>
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Diffuser Caps</h2>
 						</button>
 					</Link>
 				</FlexContainer>
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<Title class="h2_title" styles={{ fontSize: '30px' }}>
-						Infinity Mirrors
-					</Title>
+					<h1>Infinity Mirrors</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
 					<video id="infinity_mirror_video" style={homepage_video} controls>
@@ -134,19 +126,15 @@ const HomePage = (props) => {
 				</p>
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
-						<button className="button primary" style={{ fontSize: '2rem', background: 'transparent' }}>
-							<Title class="h2_title" styles={{ fontSize: 20 }}>
-								Shop Infinity Mirrors
-							</Title>
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Infinity Mirrors</h2>
 						</button>
 					</Link>
 				</FlexContainer>
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<Title class="h2_title" styles={{ fontSize: '30px' }}>
-						String Lights
-					</Title>
+					<h1>String Lights</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
 					<video id="string_lights_video" style={homepage_video} controls>
@@ -164,10 +152,8 @@ const HomePage = (props) => {
 
 				<FlexContainer h_center>
 					<Link to="/category/Caps">
-						<button className="button primary" style={{ fontSize: '2rem', background: 'transparent' }}>
-							<Title class="h2_title" styles={{ fontSize: 20 }}>
-								Shop String Lights
-							</Title>
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop String Lights</h2>
 						</button>
 					</Link>
 				</FlexContainer>

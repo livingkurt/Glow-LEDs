@@ -42,7 +42,7 @@ const AllProductsPage = (props) => {
 	return (
 		<div>
 			<FlexContainer h_center>
-				<h1 className="h1_title">{category || 'All Products'}</h1>
+				<h1>{category || 'All Products'}</h1>
 			</FlexContainer>
 
 			<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />

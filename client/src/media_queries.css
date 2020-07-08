@@ -114,11 +114,11 @@
 }
 
 @media only screen and (max-width: 704px) {
-  .h1_title {
-    font-size: 35px !important;
+  h1 {
+    font-size: 1.9em !important;
   }
-  .h2_title {
-    font-size: 25px !important;
+  h2 {
+    font-size: 1.5em !important;
   }
   .back_button {
     font-size: 20px !important;
@@ -136,6 +136,9 @@
   .glow_leds_text {
     font-size: 40px !important;
   }
+  .welcome_text {
+    font-size: 40px !important;
+  }
   .logo_2 {
     height: 70px !important;
   }
@@ -151,15 +154,15 @@
 }
 
 @media only screen and (max-width: 528px) {
-  .h1_title {
-    font-size: 30px !important;
+  h1 {
+    font-size: 1.6em !important;
     margin-bottom: 10px !important;
   }
-  .h2_title {
-    font-size: 20px !important;
+  h2 {
+    font-size: 1.25em !important;
   }
-  .h3_title {
-    font-size: 25px !important;
+  h3 {
+    font-size: 1em !important;
   }
   .back_button {
     font-size: 16px !important;
@@ -176,6 +179,9 @@
     margin: 0px;
   }
   .glow_leds_text {
+    font-size: 35px !important;
+  }
+  .welcome_text {
     font-size: 35px !important;
   }
   .content {
@@ -248,12 +254,16 @@
     max-width: 32rem !important;
     margin: 0 auto;
     padding: 0;
+    box-shadow: unset;
   }
   .placeorder-info>div, .placeorder-action {
     margin: auto;
     margin-bottom: 20px;
   }
   .glow_leds_text {
+    font-size: 30px !important;
+  }
+  .welcome_text {
     font-size: 30px !important;
   }
 }
