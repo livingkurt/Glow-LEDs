@@ -1,6 +1,6 @@
 /* filter */
 
-.sort_dropdown {
+/* .sort_dropdown {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,9 +20,9 @@
   border-radius: 9px;
   width: 95px;
   font-family: button_font;
-}
+} */
 
-.sort_dropdown_label {}
+/* .sort_dropdown_label {} */
 
 /* .sort_dropdown_button {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -36,26 +36,76 @@
   font-family: button_font;
 } */
 
-select {
+/* .sort_dropdown_container {
   -webkit-appearance: button;
-  /* background-color: #F07575; */
   background: transparent;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  padding-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 8px;
+} */
+
+.select_dropdown_container {
+  position: relative;
+}
+
+.select_dropdown {
   /* Standard syntax; must be last */
+  -webkit-appearance: button;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
   background-position: center right;
   background-repeat: no-repeat;
   border-radius: 9px;
   border: 0;
   color: white;
-  font-size: inherit;
-  margin: 0;
-  overflow: hidden;
   padding-top: 9px;
   padding-bottom: 5px;
   padding-left: 10px;
   padding-right: 8px;
+  font-size: 16px;
+  margin: 0;
+  width: 100px;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 10px;
   font-family: button_font;
+}
+
+.qty_select_dropdown_container {
+  position: relative;
+  width: 65px;
+}
+
+.qty_select_dropdown {
+  /* Standard syntax; must be last */
+  -webkit-appearance: button;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  background-position: center right;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  border: 0;
+  color: white;
+  padding-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 8px;
+  font-size: 16px;
+  margin: 0;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 10px;
+  font-family: button_font;
+}
+
+.icon_styles {
+  position: absolute;
+  right: 17px;
+  top: 16px;
+  transform: rotate(-180deg);
 }

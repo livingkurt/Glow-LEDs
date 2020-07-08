@@ -213,19 +213,25 @@ const ProductPage = (props) => {
 								<li>Price: ${product.price ? product.price.toFixed(2) : product.price}</li>
 								<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Unavailable.'}</li>
 								<li>
-									Qty:{' '}
-									<select
-										defaultValue={qty}
-										onChange={(e) => {
-											setQty(e.target.value);
-										}}
-									>
-										{[ ...Array(product.countInStock).keys() ].map((x) => (
-											<option key={x + 1} defaultValue={x + 1}>
-												{x + 1}
-											</option>
-										))}
-									</select>
+									<FlexContainer v_i_center styles={{ height: '25px' }}>
+										Qty:{' '}
+										<div className="qty_select_dropdown_container">
+											<select
+												defaultValue={qty}
+												className="qty_select_dropdown"
+												onChange={(e) => {
+													setQty(e.target.value);
+												}}
+											>
+												{[ ...Array(product.countInStock).keys() ].map((x) => (
+													<option key={x + 1} defaultValue={x + 1}>
+														{x + 1}
+													</option>
+												))}
+											</select>
+											<i className="fas fa-sort-up icon_styles" />
+										</div>
+									</FlexContainer>
 								</li>
 								<li>
 									{product.countInStock > 0 && (

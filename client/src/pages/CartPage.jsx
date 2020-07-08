@@ -50,17 +50,23 @@ const CartPage = (props) => {
 										<Link to={'/product/' + item.product}>{item.name}</Link>
 									</div>
 									<div>
-										Qty:
-										<select
-											defaultValue={item.qty}
-											onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
-										>
-											{[ ...Array(item.countInStock).keys() ].map((x) => (
-												<option key={x + 1} defaultValue={x + 1}>
-													{x + 1}
-												</option>
-											))}
-										</select>
+										<FlexContainer v_i_center styles={{ height: '25px' }}>
+											Qty:{' '}
+											<div className="qty_select_dropdown_container">
+												<select
+													defaultValue={item.qty}
+													className="qty_select_dropdown"
+													onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
+												>
+													{[ ...Array(item.countInStock).keys() ].map((x) => (
+														<option key={x + 1} defaultValue={x + 1}>
+															{x + 1}
+														</option>
+													))}
+												</select>
+												<i className="fas fa-sort-up icon_styles" />
+											</div>
+										</FlexContainer>
 									</div>
 								</div>
 
