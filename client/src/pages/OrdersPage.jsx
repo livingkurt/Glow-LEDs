@@ -40,17 +40,14 @@ const OrdersPage = (props) => {
 	};
 	return loading ? (
 		<FlexContainer h_center column>
-			<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-			<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-				If pages doesn't show in 5 seconds, refresh the page.
-			</Title>
+			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+			<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 		</FlexContainer>
 	) : (
 		<BlockContainer class="main_container">
 			<div className="order-header">
-				<Title
+				<h1
 					styles={{
-						fontSize: 30,
 						textAlign: 'center',
 						width: '100%',
 						margin: '20px auto',
@@ -58,7 +55,7 @@ const OrdersPage = (props) => {
 					}}
 				>
 					Orders
-				</Title>
+				</h1>
 			</div>
 			<div className="order-list responsive_table">
 				<table className="table">

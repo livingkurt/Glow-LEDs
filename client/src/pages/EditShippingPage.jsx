@@ -58,25 +58,20 @@ const ProfilePage = (props) => {
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>
 						<ul className="form-container">
 							<li>
-								{/* <h2>User Profile</h2> */}
-								<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%' }}>
-									User Profile
-								</Title>
+								<h1 style={{ textAlign: 'center' }}>User Profile</h1>
 							</li>
 							<li>
 								<FlexContainer h_center>
 									{loading && (
 										<FlexContainer h_center column>
-											<Title styles={{ fontSize: 25, justifyContent: 'center' }}>
-												Loading...
-											</Title>
-											<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+											<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
+											<h3 styles={{ textAlign: 'center' }}>
 												If pages doesn't show in 5 seconds, refresh the page.
-											</Title>
+											</h3>
 										</FlexContainer>
 									)}
-									{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
-									{success && <Title styles={{ fontSize: 20 }}>Profile Saved Successfully</Title>}
+									{error && <h3>{error}</h3>}
+									{success && <h3>Profile Saved Successfully</h3>}
 								</FlexContainer>
 							</li>
 							<li>
@@ -126,37 +121,6 @@ const ProfilePage = (props) => {
 					</form>
 				</div>
 			</div>
-			{/* <div className="profile-orders content-margined profile_orders_container" style={{ overflowX: "auto" }} >
-      <Title styles={{ fontSize: 30, textAlign: "center", width: "100%", justifyContent: "center" }} >Orders</Title>
-      {
-        loadingOrders ? <Title styles={{ fontSize: 20 }} >Loading...</Title> :
-          errorOrders ? <div>{errorOrders} </div> :
-            <BlockContainer class="table_container" styles={{ padding: "0" }}>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>TOTAL</th>
-                    <th>PAID</th>
-                    <th>ACTIONS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map(order => <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{format_date_display(order.createdAt)}</td>
-                    <td>${order.totalPrice.toFixed(2)}</td>
-                    <td>{order.isPaid ? <i className="fas fa-check-circle"></i> : <i className="fas fa-times-circle"></i>}</td>
-                    <td>
-                      <Link to={"/order/" + order._id}  ><ButtonSymbol ><i className="fas fa-info-circle"></i></ButtonSymbol></Link>
-                    </td>
-                  </tr>)}
-                </tbody>
-              </table>
-            </BlockContainer>
-      }
-    </div> */}
 		</FlexContainer>
 	);
 };

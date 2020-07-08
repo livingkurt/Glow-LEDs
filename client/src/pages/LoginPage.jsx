@@ -48,27 +48,26 @@ const LoginPage = (props) => {
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>
-						{/* <h2>Login</h2> */}
 						<h1>Login</h1>
 					</li>
 					<li>
 						<FlexContainer h_center>
 							{loading && (
 								<div>
-									<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-									<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+									<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+									<h3 style={{ textAlign: 'center' }}>
 										If pages doesn't show in 5 seconds, refresh the page.
-									</Title>
+									</h3>
 								</div>
 							)}
-							{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
+							{error && <h2>{error}</h2>}
 						</FlexContainer>
 					</li>
 					<li>
 						<label htmlFor="email">Email</label>
 						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
 					</li>
-					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+					<label className="validation_text" style={{ textAlign: 'center' }}>
 						{email_validations}
 					</label>
 					<li>
@@ -80,7 +79,7 @@ const LoginPage = (props) => {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</li>
-					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+					<label className="validation_text" style={{ textAlign: 'center' }}>
 						{password_validations}
 					</label>
 

@@ -69,7 +69,7 @@ const MaintenancePage = (props) => {
 							alt="Glow LEDs"
 						/>
 					</FlexContainer>
-					<Title
+					<h1
 						class="glow_leds_text"
 						styles={{
 							fontSize: '67px',
@@ -82,13 +82,13 @@ const MaintenancePage = (props) => {
 						}}
 					>
 						Glow LEDs
-					</Title>
+					</h1>
 				</FlexContainer>
 			</header>
 			<div style={content_styles}>
 				<FlexContainer h_center column t_center>
-					<Title styles={{ margin: '20px auto' }}>Glow LEDs Coming Soon!</Title>
-					<Label>Check out the video below for a sneak peak of what we have to offer</Label>
+					<h2 styles={{ margin: '20px auto' }}>Glow LEDs Coming Soon!</h2>
+					<label>Check out the video below for a sneak peak of what we have to offer</label>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
 					<video id="caps_vid" style={homepage_video} controls>

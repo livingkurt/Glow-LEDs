@@ -31,10 +31,7 @@ const ProductsPage = (props) => {
 	return (
 		<BlockContainer class="main_container">
 			<div className="product-header">
-				<Title styles={{ fontSize: 30, textAlign: 'center', width: '89%', marginRight: 'auto' }}>
-					Products
-				</Title>
-				{/* <button className="button primary" style={{ width: "156px" }} >Create Product</button> */}
+				<h1 style={{ textAlign: 'center', marginRight: 'auto' }}>Products</h1>
 				<Link to="/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
@@ -68,13 +65,13 @@ const ProductsPage = (props) => {
 								<td>
 									<FlexContainer h_between>
 										<Link to={'/editproduct/' + product._id}>
-											<ButtonSymbol>
+											<button className="button icon">
 												<i className="fas fa-edit" />
-											</ButtonSymbol>
+											</button>
 										</Link>
-										<ButtonSymbol arg={product} on_click_function={deleteHandler}>
+										<button className="button icon" onClick={() => deleteHandler(product)}>
 											<i className="fas fa-trash-alt" />
-										</ButtonSymbol>
+										</button>
 									</FlexContainer>
 								</td>
 							</tr>

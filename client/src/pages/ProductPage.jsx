@@ -292,7 +292,6 @@ const ProductPage = (props) => {
 						) : (
 							<FlexContainer h_center column>
 								<h2
-									class="h2_title"
 									style={{
 										textAlign: 'center',
 										width: '100%',
@@ -353,7 +352,6 @@ const ProductPage = (props) => {
 
 							<li style={{ listStyleType: 'none', display: review_modal }}>
 								<h2
-									class="h2_title"
 									style={{
 										textAlign: 'center',
 										width: '100%',

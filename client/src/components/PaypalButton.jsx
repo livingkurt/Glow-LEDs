@@ -42,7 +42,7 @@ const PaypalButton = (props) => {
 	}, []);
 
 	if (!sdkReady) {
-		return <div>Loading... If pages doesn't show in 5 seconds, refresh the page.</div>;
+		return <h3>Loading... If payment method doesn't show in 5 seconds, refresh the page.</h3>;
 	}
 
 	const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });

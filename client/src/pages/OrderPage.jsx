@@ -138,10 +138,8 @@ const OrderPage = (props) => {
 
 	return loading ? (
 		<FlexContainer h_center column>
-			<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-			<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-				If payment element doesn't show in 5 seconds, refresh the page.
-			</Title>
+			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+			<h3 style={{ textAlign: 'center' }}>If payment element doesn't show in 5 seconds, refresh the page.</h3>
 		</FlexContainer>
 	) : error ? (
 		<div>{error}</div>
@@ -152,7 +150,7 @@ const OrderPage = (props) => {
 					<div>
 						<FlexContainer h_between wrap>
 							<FlexContainer column>
-								<Title styles={{ fontSize: 30 }}>Shipping</Title>
+								<h1>Shipping</h1>
 								<div>
 									<div>{order.shipping.address}</div>
 									<div>
@@ -164,13 +162,13 @@ const OrderPage = (props) => {
 							<FlexContainer column styles={{ marginTop: 'auto', width: '373px' }} class="ship_deliver">
 								<FlexContainer row v_i_center h_between>
 									{console.log({ shipping_state })}
-									<Label styles={{ marginTop: '5px' }}>
+									<label style={{ marginTop: '5px' }}>
 										{shipping_state ? (
 											'Shipped at ' + format_date_display(order_state.shippedAt)
 										) : (
 											'Not Shipped'
 										)}
-									</Label>
+									</label>
 									{props.userInfo &&
 									props.userInfo.isAdmin && (
 										<div>
@@ -182,13 +180,13 @@ const OrderPage = (props) => {
 								</FlexContainer>
 								<FlexContainer row v_i_center h_between>
 									{console.log({ delivery_state })}
-									<Label styles={{ marginTop: '5px' }}>
+									<label style={{ marginTop: '5px' }}>
 										{delivery_state ? (
 											'Delivered at ' + format_date_display(order_state.deliveredAt)
 										) : (
 											'Not Delivered'
 										)}
-									</Label>
+									</label>
 									{props.userInfo &&
 									props.userInfo.isAdmin && (
 										<div>
@@ -202,14 +200,14 @@ const OrderPage = (props) => {
 						</FlexContainer>
 					</div>
 					<div>
-						<Title styles={{ fontSize: 30 }}>Payment</Title>
+						<h1>Payment</h1>
 						<div>Payment Method: {order.payment.paymentMethod}</div>
 						<div>{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}</div>
 					</div>
 					<div>
 						<ul style={{ marginTop: 0 }} className="cart-list-container">
 							<li>
-								<Title styles={{ fontSize: 30 }}>Shopping Cart</Title>
+								<h1>Shopping Cart</h1>
 								<div>Price</div>
 							</li>
 							{order.orderItems.length === 0 ? (
@@ -236,7 +234,7 @@ const OrderPage = (props) => {
 				<div className="placeorder-action">
 					<ul>
 						<li>
-							<Title styles={{ fontSize: 30, marginTop: 0 }}>Order Summary</Title>
+							<h1 style={{ marginTop: 0 }}>Order Summary</h1>
 						</li>
 						<li>
 							<div>Items</div>
@@ -261,7 +259,7 @@ const OrderPage = (props) => {
 						>
 							{loadingPay && (
 								<FlexContainer h_center>
-									<Title styles={{ fontSize: 20 }}>Finishing Payment..</Title>
+									<h2>Finishing Payment..</h2>
 								</FlexContainer>
 							)}
 							<div style={{ display: paypal_state }}>

@@ -80,23 +80,18 @@ const EditProfilePage = (props) => {
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>
 						<ul className="form-container">
 							<li>
-								{/* <h2>User Profile</h2> */}
-								<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%' }}>
-									User Profile
-								</Title>
+								<h1 style={{ textAlign: 'center' }}>User Profile</h1>
 							</li>
 							<li>
 								<FlexContainer h_center>
 									{loading && (
 										<FlexContainer h_center column>
-											<Title styles={{ fontSize: 20 }}>Loading...</Title>
-											<Title styles={{ fontSize: 20 }}>
-												If pages doesn't show in 5 seconds, refresh the page.
-											</Title>
+											<h2>Loading...</h2>
+											<h3>If pages doesn't show in 5 seconds, refresh the page.</h3>
 										</FlexContainer>
 									)}
-									{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
-									{success && <Title styles={{ fontSize: 20 }}>Profile Saved Successfully</Title>}
+									{error && <h3>{error}</h3>}
+									{success && <h3>Profile Saved Successfully</h3>}
 								</FlexContainer>
 							</li>
 							<li>
@@ -125,11 +120,6 @@ const EditProfilePage = (props) => {
 							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
 								{email_validations}
 							</label>
-							{/* <li>
-              <label htmlFor="password">Password</label>
-              <input defaultValue={password} type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
-              </input>
-            </li> */}
 
 							<li>
 								<button type="submit" className="button primary">

@@ -21,7 +21,7 @@ const PaymentPage = (props) => {
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					<ul className="form-container">
 						<li>
-							<Title styles={{ fontSize: 30 }}>Payment</Title>
+							<h1>Payment</h1>
 						</li>
 
 						<li>

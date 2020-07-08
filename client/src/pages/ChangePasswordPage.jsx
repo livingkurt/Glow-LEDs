@@ -82,22 +82,18 @@ const ChangePasswordPage = (props) => {
 						<ul className="form-container">
 							<li>
 								{/* <h2>User Profile</h2> */}
-								<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%' }}>
-									Change Password
-								</Title>
+								<h1 style={{ textAlign: 'center' }}>Change Password</h1>
 							</li>
 							<li>
 								<FlexContainer h_center>
 									{loading && (
 										<FlexContainer h_center column>
-											<Title styles={{ fontSize: 20 }}>Loading...</Title>
-											<Title styles={{ fontSize: 20 }}>
-												If pages doesn't show in 5 seconds, refresh the page.
-											</Title>
+											<h1>Loading...</h1>
+											<h2>If pages doesn't show in 5 seconds, refresh the page.</h2>
 										</FlexContainer>
 									)}
-									{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
-									{success && <Title styles={{ fontSize: 20 }}>Profile Saved Successfully</Title>}
+									{error && <h3>{error}</h3>}
+									{success && <h3>Profile Saved Successfully</h3>}
 								</FlexContainer>
 							</li>
 							<li>

@@ -60,19 +60,17 @@ const ContactPage = () => {
 	return (
 		<BlockContainer class="main_container">
 			<FlexContainer h_center>
-				<Title styles={{ fontSize: 40 }}>Contact</Title>
+				<h1>Contact</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
 				{loading && (
 					<FlexContainer h_center column>
-						<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-						<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-							If pages doesn't show in 5 seconds, refresh the page.
-						</Title>
+						<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</FlexContainer>
 				)}
-				{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
-				{completed && <Title styles={{ fontSize: 20 }}>{completed}</Title>}
+				{error && <h3>{error}</h3>}
+				{completed && <h3>{completed}</h3>}
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
 				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" name="contact_number" /> */}

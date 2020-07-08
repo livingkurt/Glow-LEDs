@@ -5,10 +5,8 @@ import { FlexContainer } from '../components/ContainerComponents';
 const CheckEmailPage = (props) => {
 	return (
 		<FlexContainer h_center column>
-			<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Thank You for Registering your Account.</Title>
-			<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-				Check your Email for a Link to Verifiy your Account
-			</Title>
+			<h1 style={{ textAlign: 'center' }}>Thank You for Registering your Account.</h1>
+			<h2 style={{ textAlign: 'center' }}>Check your Email for a Link to Verifiy your Account</h2>
 		</FlexContainer>
 	);
 };

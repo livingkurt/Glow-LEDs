@@ -129,28 +129,22 @@ const EditProductPage = (props) => {
 
 	return (
 		<BlockContainer class="main_container">
-			{/* <div className="product-header"> */}
-			{/* <Link to={"/product/" + props.match.params.id}><Title class="back_button" styles={{ fontSize: "2rem" }} >Back to Results</Title></Link> */}
-			<Title styles={{ fontSize: 30, justifyContent: 'center' }}>
-				{product_id ? 'Edit Product' : 'Create Product'}
-			</Title>
-			{/* <button className="button primary" style={{ width: "156px" }} >Create Product</button> */}
-			{/* </div> */}
+			<h1 style={{ textAlign: 'center' }}>{product_id ? 'Edit Product' : 'Create Product'}</h1>
+
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					{loading ? (
 						<FlexContainer h_center column>
-							<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
+							<h2 style={{ textAlign: 'center' }}>Loading...</h2>
 						</FlexContainer>
 					) : error ? (
 						<FlexContainer h_center>
-							<Title styles={{ fontSize: 20 }}>{error} </Title>
+							<h3>{error} </h3>
 						</FlexContainer>
 					) : (
 						<ul className="form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>
-							<Title
-								styles={{
-									fontSize: 30,
+							<h1
+								style={{
 									textAlign: 'center',
 									width: '100%',
 									marginRight: 'auto',
@@ -158,20 +152,7 @@ const EditProductPage = (props) => {
 								}}
 							>
 								{loading ? 'Product' : product.name}
-							</Title>
-							{/* <li>
-								<FlexContainer h_center>
-									{loadingSave && (
-										<FlexContainer h_center column>
-											<Title styles={{ fontSize: 20 }}>Loading...</Title>
-											<Title styles={{ fontSize: 20 }}>
-												If pages doesn't show in 5 seconds, refresh the page.
-											</Title>
-										</FlexContainer>
-									)}
-									{errorSave && <Title styles={{ fontSize: 20 }}>{errorSave}</Title>}
-								</FlexContainer>
-							</li> */}
+							</h1>
 
 							<FlexContainer row>
 								<FlexContainer column styles={{ width: '50%', marginRight: '10px' }}>
