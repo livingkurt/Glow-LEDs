@@ -18,7 +18,7 @@ const config = require('./config');
 const { user_routes, product_routes, order_routes, email_routes } = require('./routes/index');
 
 // const mongodbUrl = config.MONGODB_URL;
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/glow_leds_db", {
+// mongoose.connect(process.env.RESTORED_MONGODB_URI || "mongodb://localhost/glow_leds_db", {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 //   useCreateIndex: true,

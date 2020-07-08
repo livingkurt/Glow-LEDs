@@ -60,8 +60,8 @@ const RegisterPage = (props) => {
 					<li>
 						{/* <h2>Create Account</h2> */}
 						<FlexContainer>
-							<Title styles={{ width: '100%', marginRight: '-40px' }}>Create</Title>{' '}
-							<Title styles={{ width: '100%' }}>Account</Title>
+							<h1 style={{ width: '100%', marginRight: '-40px' }}>Create</h1>{' '}
+							<h1 style={{ width: '100%' }}>Account</h1>
 						</FlexContainer>
 					</li>
 					<li>

@@ -50,23 +50,21 @@ const ProfilePage = (props) => {
 	return (
 		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
 			<FlexContainer>
-				<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%', justifyContent: 'center' }}>
-					User Profile
-				</Title>
+				<h1 style={{ textAlign: 'center', width: '100%' }}>User Profile</h1>
 			</FlexContainer>
 			<FlexContainer class="profile_container" row h_between wrap>
 				<FlexContainer column>
 					<FlexContainer column styles={container_styles}>
-						<Title styles={{ fontSize: 20 }}>Name</Title>
-						<Label>{name}</Label>
+						<h3>Name</h3>
+						<label>{name}</label>
 					</FlexContainer>
 					<FlexContainer column styles={container_styles}>
-						<Title styles={{ fontSize: 20 }}>Email</Title>
-						<Label>{email}</Label>
+						<h3>Email</h3>
+						<label>{email}</label>
 					</FlexContainer>
 					<FlexContainer column styles={container_styles}>
-						<Title styles={{ fontSize: 20 }}>Password</Title>
-						<Label>**********</Label>
+						<h3>Password</h3>
+						<label>**********</label>
 					</FlexContainer>
 				</FlexContainer>
 				<FlexContainer>
