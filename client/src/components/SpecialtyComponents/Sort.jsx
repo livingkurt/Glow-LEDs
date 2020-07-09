@@ -1,8 +1,6 @@
 // React
 import React, { useState } from 'react';
-// Styles
-import './sort.css';
-import { FlexContainer } from '../../ContainerComponents';
+import { FlexContainer } from '../ContainerComponents';
 
 const Sort = (props) => {
 	return (

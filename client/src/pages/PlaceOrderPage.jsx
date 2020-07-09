@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
 import { FlexContainer } from '../components/ContainerComponents';
+import { CheckoutSteps } from '../components/SpecialtyComponents';
 // import { email_order } from '../actions/emailActions';
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;

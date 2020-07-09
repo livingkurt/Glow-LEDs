@@ -1,9 +1,8 @@
 import React from 'react';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
 const TermsPage = () => {
 	return (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
 			<p>
 				Prior to using this website- I fully agree to the terms set forth here: Under no circumstances will the
@@ -39,7 +38,7 @@ const TermsPage = () => {
 				to use the site after we have posted changes to the terms, you have then inherently accepted those
 				terms. If you need to contact us, please use our contact form.
 			</p>
-		</BlockContainer>
+		</div>
 	);
 };
 

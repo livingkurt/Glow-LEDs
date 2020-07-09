@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveProduct, listProducts, deleteProduct, detailsProduct } from '../actions/productActions';
-import { BlockContainer, FlexContainer } from '../components/ContainerComponents';
+import { saveProduct, detailsProduct } from '../actions/productActions';
+import { FlexContainer } from '../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 
 const EditProductPage = (props) => {
@@ -127,7 +127,7 @@ const EditProductPage = (props) => {
 	};
 
 	return (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<h1 style={{ textAlign: 'center' }}>{product_id ? 'Edit Product' : 'Create Product'}</h1>
 
 			<div className="form">
@@ -295,7 +295,7 @@ const EditProductPage = (props) => {
 					)}
 				</form>
 			</div>
-		</BlockContainer>
+		</div>
 	);
 };
 export default EditProductPage;

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FlexContainer } from '../index';
 import { useDispatch, useSelector } from 'react-redux';
-// import './sidebar.css';
-import { logout } from '../../../actions/userActions';
+import { logout } from '../../actions/userActions';
+import FlexContainer from './FlexContainer';
 
 const Sidebar = (props) => {
 	const history = useHistory();

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../actions/userActions';
 import { validate_contact } from '../utils/helper_functions';
@@ -56,7 +56,7 @@ const ContactPage = () => {
 	};
 
 	return (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<FlexContainer h_center>
 				<h1>Contact</h1>
 			</FlexContainer>
@@ -133,7 +133,7 @@ const ContactPage = () => {
 					value="Send"
 				/>
 			</form>
-		</BlockContainer>
+		</div>
 	);
 };
 

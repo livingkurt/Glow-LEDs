@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../actions/orderActions';
 import { format_date_display } from '../utils/helper_functions';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 const OrdersPage = (props) => {
 	const orderList = useSelector((state) => state.orderList);
@@ -42,7 +42,7 @@ const OrdersPage = (props) => {
 			<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 		</FlexContainer>
 	) : (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<div className="order-header">
 				<h1
 					styles={{
@@ -110,7 +110,7 @@ const OrdersPage = (props) => {
 					</tbody>
 				</table>
 			</div>
-		</BlockContainer>
+		</div>
 	);
 };
 export default OrdersPage;

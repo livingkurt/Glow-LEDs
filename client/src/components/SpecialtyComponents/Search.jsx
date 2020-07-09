@@ -1,9 +1,6 @@
 // React
 import React from 'react';
-// Styles
-import './search.css';
-// Components
-import { FlexContainer } from '../../ContainerComponents';
+import { FlexContainer } from '../ContainerComponents';
 
 const Search = (props) => {
 	return (

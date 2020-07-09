@@ -4,7 +4,7 @@ import { logout, update, token } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { format_date_display } from '../utils/helper_functions';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();

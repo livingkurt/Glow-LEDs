@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexContainer, BlockContainer, Content } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 const MaintenancePage = (props) => {
 	const header_styles = {

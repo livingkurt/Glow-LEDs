@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 // import emailjs from 'emailjs-com';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 // import "./form.css";
 
 const TermsPage = () => {
 	return (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<div class="inner_content">
 				<FlexContainer h_center>
 					<h1 style={{ fontSize: 40, textAlign: 'center', marginRight: '20px' }}>Glow-LEDs.com </h1>
@@ -55,7 +55,7 @@ const TermsPage = () => {
 					</p>
 				</div>
 			</div>
-		</BlockContainer>
+		</div>
 	);
 };
 

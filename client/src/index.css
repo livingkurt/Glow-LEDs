@@ -57,6 +57,10 @@ ul {
   padding: 0;
 }
 
+.main_container {
+  padding: 20px;
+}
+
 .home_page_img {
   border-radius: 15px;
   object-fit: cover;
@@ -882,3 +886,226 @@ header {
 h1, h2, h3 {
   font-family: heading_font;
 }
+
+/* Dropdowns */
+
+.select_dropdown_container {
+  position: relative;
+}
+
+.select_dropdown {
+  /* Standard syntax; must be last */
+  -webkit-appearance: button;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  background-position: center right;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  border: 0;
+  color: white;
+  padding-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 8px;
+  font-size: 16px;
+  margin: 0;
+  width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 10px;
+  font-family: button_font;
+  transition: all .5s ease-out;
+}
+
+.qty_select_dropdown_container {
+  position: relative;
+  width: 65px;
+}
+
+.qty_select_dropdown {
+  /* Standard syntax; must be last */
+  -webkit-appearance: button;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  background-position: center right;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  border: 0;
+  color: white;
+  padding-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 8px;
+  font-size: 16px;
+  margin: 0;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 10px;
+  font-family: button_font;
+  transition: all .5s ease-out;
+}
+
+.icon_styles {
+  position: absolute;
+  right: 17px;
+  top: 16px;
+  transform: rotate(-180deg);
+}
+
+.review_select_dropdown_container {
+  position: relative;
+  margin-left: 15px;
+}
+
+.review_select_dropdown {
+  /* Standard syntax; must be last */
+  -webkit-appearance: button;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  background: transparent;
+  background-position: center right;
+  background-repeat: no-repeat;
+  border-radius: 9px;
+  border: 0;
+  color: white;
+  padding-top: 9px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 8px;
+  font-size: 16px;
+  margin: 0;
+  width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: button_font;
+  transition: all .5s ease-out;
+}
+
+.review_icon_styles {
+  position: absolute;
+  right: 9px;
+  top: 6px;
+  transform: rotate(-180deg);
+}
+
+.select_dropdown:hover, .qty_select_dropdown:hover, .review_select_dropdown:hover {
+  background: darkgray;
+}
+
+/* Search */
+
+.search_input {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem auto;
+  max-width: 45rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: .1rem #c0c0c0 solid;
+  font-size: 1.6rem;
+  margin-right: 5px;
+}
+
+.search_input {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: .1rem #c0c0c0 solid;
+  font-size: 1.3rem;
+  margin-right: 5px;
+  height: 10px;
+  width: 250px;
+}
+
+.search_button {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem auto;
+  max-width: 45rem;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: .1rem #c0c0c0 solid;
+  font-size: 1.6rem;
+  margin-right: 5px;
+}
+
+.search_button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: .1rem #c0c0c0 solid;
+  font-size: 1.6rem;
+  margin-right: 5px;
+}
+
+/* Product */
+
+.products {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.products li {
+  list-style-type: none;
+  padding: 0;
+  flex: 0 1 34rem;
+  margin: 1rem;
+  /* height: 41rem; */
+  /* border-bottom: .1rem #c0c0c0 solid; */
+}
+
+.product {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0;
+  transition: box-shadow 0.5s ease-out;
+  padding: 15px;
+}
+
+.product:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.product-name {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.product-brand {
+  font-size: 1.2rem;
+  color: #808080;
+}
+
+.product-price {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.product-image {
+  max-width: 34rem;
+  max-height: 34rem;
+  border-radius: 15px;
+  object-fit: cover;
+  object-position: 50% 50%;
+  width: 300px;
+  height: 300px;
+}
+
+.product-rating {
+  margin-bottom: 1rem;
+}
+
+/* Sidebar */

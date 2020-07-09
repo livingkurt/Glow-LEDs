@@ -4,7 +4,7 @@ import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../utils/helper_functions';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 const ChangePasswordPage = (props) => {
 	const history = useHistory();

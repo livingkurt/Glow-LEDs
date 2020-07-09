@@ -1,10 +1,8 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-// Styles
-import './product.css';
+import Rating from './Rating';
 // Components
-import { Rating } from '..';
 
 const Product = (props) => {
 	// console.log(props.product);

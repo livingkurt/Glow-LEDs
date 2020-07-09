@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents/index';
+import { FlexContainer } from '../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 
 const HomePage = (props) => {
@@ -63,7 +63,7 @@ const HomePage = (props) => {
 	};
 
 	return (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<FlexContainer h_center>
 				<h1 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
 					Welcome to Glow-LEDs
@@ -157,7 +157,7 @@ const HomePage = (props) => {
 					</Link>
 				</FlexContainer>
 			</div>
-		</BlockContainer>
+		</div>
 	);
 };
 export default HomePage;

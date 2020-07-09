@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 const ProfilePage = (props) => {
 	const history = useHistory();

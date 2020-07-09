@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, deleteProduct } from '../actions/productActions';
-import { BlockContainer, FlexContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 
 const ProductsPage = (props) => {
@@ -28,7 +28,7 @@ const ProductsPage = (props) => {
 		dispatch(deleteProduct(product._id));
 	};
 	return (
-		<BlockContainer class="main_container">
+		<div class="main_container">
 			<div className="product-header">
 				<h1 style={{ textAlign: 'center', marginRight: 'auto' }}>Products</h1>
 				<Link to="/editproduct">
@@ -78,7 +78,7 @@ const ProductsPage = (props) => {
 					</tbody>
 				</table>
 			</div>
-		</BlockContainer>
+		</div>
 	);
 };
 export default ProductsPage;

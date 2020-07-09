@@ -3,9 +3,9 @@ import { removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsOrder, payOrder, shipOrder, deliverOrder } from '../actions/orderActions';
-import PaypalButton from '../components/PaypalButton';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
+import { PaypalButton } from '../components/SpecialtyComponents';
 // import { email_delivery, email_shipping } from '../actions/emailActions';
 const OrderPage = (props) => {
 	console.log(props.userInfo);
