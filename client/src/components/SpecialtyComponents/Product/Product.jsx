@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 // Styles
 import './product.css';
 // Components
-import { Label } from '../../UtilityComponents/index';
 import { Rating } from '..';
 
 const Product = (props) => {
@@ -15,11 +14,11 @@ const Product = (props) => {
 				<Link to={'/product/' + props.product._id}>
 					<img className="product-image" src={props.product.display_image} alt="product" />
 				</Link>
-				<Label styles={{ fontSize: '13' }}>{props.product.brand}</Label>
+				<label styles={{ fontSize: '13' }}>{props.product.brand}</label>
 				<Link to={'/product/' + props.product._id}>
-					<Label styles={{ fontSize: '16px' }}>{props.product.name}</Label>
+					<labe styles={{ fontSize: '16px' }}>{props.product.name}</label>
 				</Link>
-				<Label className="product-price">${props.product.price.toFixed(2)}</Label>
+				<label className="product-price">${props.product.price.toFixed(2)}</label>
 				<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
 			</div>
 		</li>

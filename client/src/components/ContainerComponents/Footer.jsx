@@ -1,5 +1,4 @@
 import React from 'react';
-import { Label } from '../UtilityComponents';
 import FlexContainer from './FlexContainer';
 
 const Footer = (props) => {
@@ -24,7 +23,7 @@ const Footer = (props) => {
 		<footer style={{ ...footer_styles, ...props.styles }}>
 			<FlexContainer h_between styles={{ width: '100%' }}>
 				<div style={{ marginLeft: '10px' }} />
-				<Label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</Label>
+				<label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label>
 				<FlexContainer styles={{ marginTop: '8px' }}>
 					<div style={{ marginLeft: '10px', fontSize: '30px' }}>
 						<a href="https://www.facebook.com/Glow-LEDscom-100365571740684" target="_blank">

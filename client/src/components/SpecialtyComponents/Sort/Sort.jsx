@@ -2,13 +2,12 @@
 import React, { useState } from 'react';
 // Styles
 import './sort.css';
-import { Label } from '../../UtilityComponents';
 import { FlexContainer } from '../../ContainerComponents';
 
 const Sort = (props) => {
 	return (
 		<FlexContainer v_i_center>
-			<Label>Sort By</Label>
+			<label>Sort By</label>
 			<div className="select_dropdown_container">
 				<select name="sortOrder" className="select_dropdown" onChange={props.sortHandler}>
 					<option defaultValue="">-----</option>

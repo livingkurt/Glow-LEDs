@@ -1,8 +1,5 @@
-export { default as ButtonSymbol } from './ButtonSymbol/ButtonSymbol'
-export { default as ButtonWord } from './ButtonWord/ButtonWord'
-export { default as Checkbox } from './Checkbox/Checkbox'
-export { default as Label } from './Label'
-export { default as Title } from './Title'
-export { default as EditorInput } from './EditorInput/EditorInput'
-export { default as Form } from './Form/Form'
-export { default as Slideshow } from './Slideshow/Slideshow'
+export { default as ButtonSymbol } from './ButtonSymbol/ButtonSymbol';
+export { default as ButtonWord } from './ButtonWord/ButtonWord';
+export { default as Checkbox } from './Checkbox/Checkbox';
+export { default as EditorInput } from './EditorInput/EditorInput';
+export { default as Slideshow } from './Slideshow/Slideshow';
