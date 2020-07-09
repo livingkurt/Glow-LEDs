@@ -26,7 +26,9 @@ const productSchema = new mongoose.Schema({
 	rating: { type: Number, default: 0 },
 	numReviews: { type: Number, default: 0 },
 	reviews: [ reviewSchema ],
-	hidden: { type: Boolean, default: false }
+	hidden: { type: Boolean, default: false },
+	sale_price: { type: Number, default: 0 },
+	shipping_price: { type: Number, default: 5 }
 });
 
 const productModel = mongoose.model('Product', productSchema);

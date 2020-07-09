@@ -18,6 +18,8 @@ const EditProductPage = (props) => {
 	const [ facts, setFacts ] = useState('');
 	const [ included_items, setIncludedItems ] = useState('');
 	const [ hidden, setHidden ] = useState();
+	const [ sale_price, setSalePrice ] = useState();
+	const [ shipping_price, setShippingPrice ] = useState();
 
 	const history = useHistory();
 
@@ -45,6 +47,8 @@ const EditProductPage = (props) => {
 			setFacts(product.facts);
 			setIncludedItems(product.included_items);
 			setHidden(product.hidden);
+			setSalePrice(product.sale_price);
+			setShippingPrice(product.shipping_price);
 			setDisplayImage(product.display_image);
 			setVideo(product.video);
 			setBrand(product.brand);
@@ -63,6 +67,8 @@ const EditProductPage = (props) => {
 			setCategory('');
 			setCountInStock('');
 			setHidden();
+			setSalePrice('');
+			setShippingPrice('');
 		}
 		return () => {};
 	}, []);
@@ -103,7 +109,9 @@ const EditProductPage = (props) => {
 				facts,
 				included_items,
 				description,
-				hidden
+				hidden,
+				sale_price,
+				shipping_price
 			})
 		);
 		e.target.reset();
@@ -119,6 +127,8 @@ const EditProductPage = (props) => {
 		setCategory('');
 		setCountInStock('');
 		setHidden();
+		setSalePrice('');
+		setShippingPrice('');
 		if (id) {
 			history.push('/product/' + id);
 		} else {
@@ -173,6 +183,26 @@ const EditProductPage = (props) => {
 											value={price}
 											id="price"
 											onChange={(e) => setPrice(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="sale_price">Sale Price</label>
+										<input
+											type="text"
+											name="sale_price"
+											value={sale_price}
+											id="sale_price"
+											onChange={(e) => setSalePrice(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="shipping_price">Shipping Price</label>
+										<input
+											type="text"
+											name="shipping_price"
+											value={shipping_price}
+											id="shipping_price"
+											onChange={(e) => setShippingPrice(e.target.value)}
 										/>
 									</li>
 									<li>

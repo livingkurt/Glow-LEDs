@@ -44,8 +44,8 @@ const AllProductsPage = (props) => {
 				<h1>{category || 'All Products'}</h1>
 			</FlexContainer>
 
-			<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 			<FlexContainer h_center>
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>
 			<FlexContainer h_center styles={{ marginBottom: -12 }}>

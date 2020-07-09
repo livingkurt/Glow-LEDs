@@ -9,7 +9,6 @@ const Search = (props) => {
 			style={{
 				display: 'flex',
 				flexDirection: 'row',
-				width: '100%',
 				justifyContent: 'center',
 				marginRight: '20px'
 			}}
