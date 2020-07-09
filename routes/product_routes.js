@@ -158,4 +158,12 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 	}
 });
 
+router.put('/updateall', isAuth, async (req, res) => {
+	// const product = await Product.updateMany({ $set: { shipping_price: 5 } });
+	const product = await Product.updateMany({
+		$set: { shipping_price: 5 }
+	});
+	res.send(product);
+});
+
 module.exports = router;
