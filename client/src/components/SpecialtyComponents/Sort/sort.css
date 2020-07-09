@@ -72,6 +72,7 @@
   white-space: nowrap;
   margin: 10px;
   font-family: button_font;
+  transition: all .5s ease-out;
 }
 
 .qty_select_dropdown_container {
@@ -101,6 +102,7 @@
   white-space: nowrap;
   margin: 10px;
   font-family: button_font;
+  transition: all .5s ease-out;
 }
 
 .icon_styles {
@@ -136,6 +138,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: button_font;
+  transition: all .5s ease-out;
 }
 
 .review_icon_styles {
@@ -145,6 +148,10 @@
   transform: rotate(-180deg);
 }
 
-option {
+/* option {
   -webkit-appearance: button;
+} */
+
+.select_dropdown:hover, .qty_select_dropdown:hover, .review_select_dropdown:hover {
+  background: darkgray;
 }
