@@ -448,7 +448,21 @@ const ProductPage = (props) => {
 					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
 						{products.map(
 							(item, index) =>
-								!item.hidden ? item.category === product.category && item._id !== product._id ? (
+								!item.hidden ? (
+									<Product
+										key={index}
+										product={item}
+										styles={{ marginRight: 20, listStyleType: 'none' }}
+									/>
+								) : (
+									<div />
+								)
+						)}
+						{/* {products.map(
+							(item, index) =>
+								!item.hidden ? !product.category ? (
+									<div />
+								) : item.category === product.category && item._id !== product._id ? (
 									<Product
 										key={index}
 										product={item}
@@ -459,7 +473,7 @@ const ProductPage = (props) => {
 								) : (
 									<div />
 								)
-						)}
+						)} */}
 					</FlexContainer>
 				)}
 			</FlexContainer>
