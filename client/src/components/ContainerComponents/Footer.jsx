@@ -21,7 +21,7 @@ const Footer = (props) => {
 
 	return (
 		<footer style={{ ...footer_styles, ...props.styles }}>
-			<FlexContainer h_between styles={{ width: '100%' }}>
+			<FlexContainer h_between v_i_center styles={{ width: '100%' }}>
 				<div style={{ marginLeft: '10px' }} />
 				<label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label>
 				<FlexContainer styles={{ marginTop: '8px' }}>
