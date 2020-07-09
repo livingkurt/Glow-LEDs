@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
 app.put('/api/all', async (req, res) => {
 	const product = await Product.updateMany({
 		// $rename: { shipping_price: 'volume' }
-		$set: { volume: 0.0312789405 }
+		$set: { deleted: false }
 		// $unset: { shipping_price: 1 }
 	});
 	res.send(product);

@@ -28,7 +28,8 @@ const productSchema = new mongoose.Schema({
 	reviews: [ reviewSchema ],
 	hidden: { type: Boolean, default: false },
 	sale_price: { type: Number, default: 0 },
-	volume: { type: Number, required: true }
+	volume: { type: Number, required: 0 },
+	deleted: { type: Boolean, required: false }
 });
 
 const productModel = mongoose.model('Product', productSchema);

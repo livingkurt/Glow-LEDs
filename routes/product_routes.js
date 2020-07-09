@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 	const sortOrder = req.query.sortOrder
 		? req.query.sortOrder === 'lowest' ? { price: 1 } : { price: -1 }
 		: { _id: -1 };
-	const products = await Product.find({ ...category, ...searchKeyword }).sort(sortOrder);
+	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
 	res.send(products);
 });
 
@@ -54,6 +54,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 		product.hidden = req.body.hidden;
 		product.sale_price = req.body.sale_price;
 		product.volume = req.body.volume;
+		product.deleted = req.body.deleted || false;
 		const updatedProduct = await product.save();
 		console.log({ product_routes_post: updatedProduct });
 		if (updatedProduct) {
@@ -64,9 +65,12 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 });
 
 router.delete('/:id', isAuth, isAdmin, async (req, res) => {
-	const deletedProduct = await Product.findById(req.params.id);
-	if (deletedProduct) {
-		await deletedProduct.remove();
+	const product = await Product.findById(req.params.id);
+	const updated_product = { ...product, deleted: true };
+	// const deleted_product = await updated_product.save();
+	const deleted_product = await Product.updateOne({ _id: req.params.id }, { deleted: true });
+	if (deleted_product) {
+		// await deletedProduct.remove();
 		res.send({ message: 'Product Deleted' });
 	} else {
 		res.send('Error in Deletion.');
@@ -89,7 +93,8 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		numReviews: req.body.numReviews,
 		hidden: req.body.hidden,
 		sale_price: req.body.sale_price,
-		volume: req.body.volume
+		volume: req.body.volume,
+		deleted: req.body.deleted || false
 	});
 	console.log({ product_routes_post: product });
 	const newProduct = await product.save();
