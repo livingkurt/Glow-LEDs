@@ -3,7 +3,6 @@ import React from 'react';
 // Styles
 import './search.css';
 // Components
-import { ButtonWord, EditorInput } from '../../UtilityComponents/index';
 import { FlexContainer } from '../../ContainerComponents';
 
 const Search = (props) => {
@@ -19,10 +18,10 @@ const Search = (props) => {
 			}}
 		>
 			<FlexContainer h_between v_i_center class="search_container" styles={{ width: '300px' }}>
-				<EditorInput
+				<input
 					name="searchKeyword"
-					on_change_function={props.setSearchKeyword}
-					styles={{ marginRight: '5px', maxWidth: '200px' }}
+					onChange={(e) => props.setSearchKeyword(e.target.value)}
+					style={{ marginRight: '5px', width: '200px' }}
 				/>
 				<button type="submit" className="button primary">
 					Search
