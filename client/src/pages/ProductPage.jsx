@@ -450,7 +450,7 @@ const ProductPage = (props) => {
 					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
 						{products.map(
 							(item, index) =>
-								!item.hidden ? item.category === product.category ? (
+								!item.hidden ? item.category === product.category && item._id !== product._id ? (
 									<Product
 										key={index}
 										product={item}
