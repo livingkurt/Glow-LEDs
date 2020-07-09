@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveShipping } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
-import { Title } from '../components/UtilityComponents';
 
 const ShippingPage = (props) => {
 	const [ address, setAddress ] = useState('');
@@ -24,7 +23,7 @@ const ShippingPage = (props) => {
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					<ul className="form-container">
 						<li>
-							<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%' }}>Shipping</Title>
+							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
 						<li>
 							<label htmlFor="address">Address</label>

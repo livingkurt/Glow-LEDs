@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, listProducts, deleteProduct, detailsProduct } from '../actions/productActions';
 import { BlockContainer, FlexContainer } from '../components/ContainerComponents';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { Link, useHistory } from 'react-router-dom';
 
 const EditProductPage = (props) => {

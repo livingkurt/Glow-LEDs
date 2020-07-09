@@ -1,7 +1,5 @@
 import React from 'react';
-import { Title, Label, ButtonSymbol, ButtonWord } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer, Content } from '../components/ContainerComponents';
-import { Link } from 'react-router-dom';
 
 const MaintenancePage = (props) => {
 	const header_styles = {

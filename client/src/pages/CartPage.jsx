@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -73,9 +72,12 @@ const CartPage = (props) => {
 								<FlexContainer column>
 									<div className="cart-price">${item.price.toFixed(2)}</div>
 									<div style={{ textAlign: 'right', width: '100%' }}>
-										<ButtonSymbol arg={item.product} on_click_function={removeFromCartHandler}>
+										<button
+											className="button icon"
+											onClick={() => removeFromCartHandler(item.product)}
+										>
 											<i className="fas fa-trash-alt" />
-										</ButtonSymbol>
+										</button>
 									</div>
 								</FlexContainer>
 							</li>

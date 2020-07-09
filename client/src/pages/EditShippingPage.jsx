@@ -3,8 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
-import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
 const ProfilePage = (props) => {

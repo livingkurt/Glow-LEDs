@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { Product, Search, Sort } from '../components/SpecialtyComponents/index';
 import { FlexContainer } from '../components/ContainerComponents/index';
-import { Title } from '../components/UtilityComponents/index';
 
 const AllProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');

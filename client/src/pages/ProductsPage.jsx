@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
+import { listProducts, deleteProduct } from '../actions/productActions';
 import { BlockContainer, FlexContainer } from '../components/ContainerComponents';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { Link } from 'react-router-dom';
 
 const ProductsPage = (props) => {

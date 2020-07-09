@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Title, button } from '../components/UtilityComponents/index';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 

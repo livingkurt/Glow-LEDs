@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display, validate_profile } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 

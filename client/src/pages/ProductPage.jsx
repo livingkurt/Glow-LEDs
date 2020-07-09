@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, imagesProduct, saveProductReview, listProducts } from '../actions/productActions';
-import { Title, Slideshow, ButtonSymbol, Label, ButtonWord } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import API from '../utils/API';
 import { Rating, Product } from '../components/SpecialtyComponents';
@@ -310,7 +309,6 @@ const ProductPage = (props) => {
 								</video>
 							</FlexContainer>
 						)}
-						{/* <Title styles={{ fontSize: 30, textAlign: "center", width: "100%" }} >{product.name}</Title> */}
 					</FlexContainer>
 					<div className="content-margined">
 						<h1

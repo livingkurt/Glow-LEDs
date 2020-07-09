@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { logout, update } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title, ButtonSymbol, ButtonWord, Label } from '../components/UtilityComponents';
-import { format_date_display } from '../utils/helper_functions';
-import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
+import { FlexContainer } from '../components/ContainerComponents';
 
 const ProfilePage = (props) => {
 	const [ name, setName ] = useState('');

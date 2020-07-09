@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../actions/orderActions';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
-import { token } from '../actions/userActions';
 
 const OrdersPage = (props) => {
 	const orderList = useSelector((state) => state.orderList);
@@ -98,13 +96,13 @@ const OrdersPage = (props) => {
 								<td>
 									<FlexContainer h_between>
 										<Link to={'/order/' + order._id}>
-											<ButtonSymbol>
+											<button className="button icon">
 												<i className="fas fa-info-circle" />
-											</ButtonSymbol>
+											</button>
 										</Link>
-										<ButtonSymbol arg={order} on_click_function={deleteHandler}>
+										<button className="button icon" onClick={() => deleteHandler(order)}>
 											<i className="fas fa-trash-alt" />
-										</ButtonSymbol>
+										</button>
 									</FlexContainer>
 								</td>
 							</tr>

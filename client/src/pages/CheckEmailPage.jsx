@@ -1,5 +1,4 @@
 import React from 'react';
-import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 
 const CheckEmailPage = (props) => {

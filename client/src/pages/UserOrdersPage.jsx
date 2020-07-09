@@ -3,49 +3,21 @@ import { Link } from 'react-router-dom';
 import { logout, update, token } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title, ButtonSymbol } from '../components/UtilityComponents';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
 
-const ProfilePage = (props) => {
-	// const [name, setName] = useState('');
-	// const [password, setPassword] = useState('');
-	// const [email, setEmail] = useState('');
+const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	console.log({ user_orders_page: userInfo });
-	// const handleLogout = () => {
-	//   dispatch(logout());
-	//   props.history.push("/login");
-	// }
-	// const submitHandler = (e) => {
-	//   e.preventDefault();
-	//   dispatch(update({ userId: userInfo._id, email, name, password }))
-	// }
-	// const userUpdate = useSelector(state => state.userUpdate);
-	// const { loading, success, error } = userUpdate;
 
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
 
-	// const userToken = useSelector(state => state.userToken);
-	// const { to } = userToken;
-	// console.log({ userToken })
-
-	// useEffect(() => {
-	//   dispatch(token());
-	// }, [errorOrders]);
-
 	useEffect(
 		() => {
-			// if (userInfo) {
-			//   console.log(userInfo.name)
-			//   setEmail(userInfo.email);
-			//   setName(userInfo.name);
-			//   setPassword(userInfo.password);
-			// }
 			dispatch(listMyOrders());
 		},
 		[ userInfo ]
@@ -59,18 +31,14 @@ const ProfilePage = (props) => {
 			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto', width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
-				<Title styles={{ fontSize: 30, textAlign: 'center', width: '100%', justifyContent: 'center' }}>
-					Your Orders
-				</Title>
+				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Your Orders</h1>
 				{loadingOrders ? (
 					<FlexContainer h_center column>
-						<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-						<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-							If pages doesn't show in 5 seconds, refresh the page.
-						</Title>
+						<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</FlexContainer>
 				) : errorOrders ? (
-					<div>{errorOrders} </div>
+					<h3 style={{ textAlign: 'center' }}>{errorOrders} </h3>
 				) : (
 					<div className="order-list responsive_table">
 						<table className="table">
@@ -98,9 +66,9 @@ const ProfilePage = (props) => {
 										</td>
 										<td>
 											<Link to={'/order/' + order._id}>
-												<ButtonSymbol>
+												<button className="button icon">
 													<i className="fas fa-info-circle" />
-												</ButtonSymbol>
+												</button>
 											</Link>
 										</td>
 									</tr>
@@ -114,4 +82,4 @@ const ProfilePage = (props) => {
 	);
 };
 
-export default ProfilePage;
+export default UserOrderPage;

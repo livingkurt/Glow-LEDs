@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-// import emailjs from 'emailjs-com';
-import { Title } from '../components/UtilityComponents';
+import React from 'react';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
-import { useSelector, useDispatch } from 'react-redux';
-import { contact } from '../actions/userActions';
-import { validate_contact } from '../utils/helper_functions';
-// import "./form.css";
 
 const TermsPage = () => {
 	return (
 		<BlockContainer class="main_container">
-			<Title styles={{ fontSize: 30, justifyContent: 'center' }}>Terms & Conditions</Title>
+			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
 			<p>
 				Prior to using this website- I fully agree to the terms set forth here: Under no circumstances will the
 				seller (Glow-LEDs.com LLC hereby referred to as “Glow-LEDs.com” & all affiliates) be liable for any

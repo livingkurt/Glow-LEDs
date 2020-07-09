@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../actions/userActions';
-import { Title } from '../components/UtilityComponents';
-// import { email_registration } from '../actions/emailActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { validate_registration } from '../utils/helper_functions';
 
@@ -68,13 +66,13 @@ const RegisterPage = (props) => {
 						<FlexContainer h_center>
 							{loading && (
 								<FlexContainer h_center column>
-									<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-									<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
+									<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+									<h3 style={{ textAlign: 'center' }}>
 										If pages doesn't show in 5 seconds, refresh the page.
-									</Title>
+									</h3>
 								</FlexContainer>
 							)}
-							{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
+							{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
 						</FlexContainer>
 					</li>
 					<li>

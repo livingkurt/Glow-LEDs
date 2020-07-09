@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 // import emailjs from 'emailjs-com';
-import { Title } from '../components/UtilityComponents';
 import { FlexContainer, BlockContainer } from '../components/ContainerComponents';
-import { useSelector, useDispatch } from 'react-redux';
-import { contact } from '../actions/userActions';
-import { validate_contact } from '../utils/helper_functions';
 // import "./form.css";
 
 const TermsPage = () => {

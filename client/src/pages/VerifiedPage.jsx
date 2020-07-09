@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Title, Label } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { verify } from '../actions/userActions';
@@ -22,20 +21,16 @@ const VerifiedPage = (props) => {
 
 	return (
 		<FlexContainer h_center column>
-			<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Thank You for Verifing your Account.</Title>
-			<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-				You will be redirected to the login screen shortly.
-			</Title>
+			<h1 style={{ textAlign: 'center' }}>Thank You for Verifing your Account.</h1>
+			<h2 style={{ textAlign: 'center' }}>You will be redirected to the login screen shortly.</h2>
 			<FlexContainer h_center>
 				{loading && (
 					<div>
-						<Title styles={{ fontSize: 25, justifyContent: 'center' }}>Loading...</Title>
-						<Title styles={{ fontSize: 20, justifyContent: 'center' }}>
-							If pages doesn't show in 5 seconds, refresh the page.
-						</Title>
+						<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</div>
 				)}
-				{error && <Title styles={{ fontSize: 20 }}>{error}</Title>}
+				{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
 			</FlexContainer>
 		</FlexContainer>
 	);

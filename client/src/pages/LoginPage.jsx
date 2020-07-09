@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../actions/userActions';
-import { Title } from '../components/UtilityComponents';
 import { FlexContainer } from '../components/ContainerComponents';
 import { validate_login } from '../utils/helper_functions';
 
