@@ -16,7 +16,7 @@ const Product = (props) => {
 				</Link>
 				<label styles={{ fontSize: '13' }}>{props.product.brand}</label>
 				<Link to={'/product/' + props.product._id}>
-					<labe styles={{ fontSize: '16px' }}>{props.product.name}</label>
+					<label styles={{ fontSize: '16px' }}>{props.product.name}</label>
 				</Link>
 				<label className="product-price">${props.product.price.toFixed(2)}</label>
 				<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
