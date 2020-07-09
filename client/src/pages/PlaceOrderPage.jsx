@@ -132,9 +132,7 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<FlexContainer column>
 							{/* <label htmlFor="order_note">Add a note about order</label> */}
-							<div style={{ fontSize: '16px' }} htmlFor="order_note">
-								Add a note
-							</div>
+							<div htmlFor="order_note">Add a note</div>
 							<textarea
 								name="order_note"
 								value={order_note}

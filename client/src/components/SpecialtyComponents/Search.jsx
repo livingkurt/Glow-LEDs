@@ -19,6 +19,7 @@ const Search = (props) => {
 					name="searchKeyword"
 					onChange={(e) => props.setSearchKeyword(e.target.value)}
 					style={{ marginRight: '5px', width: '200px' }}
+					className="form_input"
 				/>
 				<button type="submit" className="button primary">
 					Search

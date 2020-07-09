@@ -245,6 +245,7 @@ const EditProductPage = (props) => {
 									<li>
 										<label htmlFor="facts">Facts</label>
 										<textarea
+											className="edit_product_textarea"
 											name="facts"
 											defaultValue={facts}
 											id="facts"
@@ -254,6 +255,7 @@ const EditProductPage = (props) => {
 									<li>
 										<label htmlFor="included_items">Included Items</label>
 										<textarea
+											className="edit_product_textarea"
 											name="included_items"
 											defaultValue={included_items}
 											id="included_items"
@@ -263,6 +265,7 @@ const EditProductPage = (props) => {
 									<li>
 										<label htmlFor="description">Description</label>
 										<textarea
+											className="edit_product_textarea"
 											name="description"
 											value={description}
 											id="description"

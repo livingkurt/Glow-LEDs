@@ -45,7 +45,7 @@ const OrdersPage = (props) => {
 		<div class="main_container">
 			<div className="order-header">
 				<h1
-					styles={{
+					style={{
 						textAlign: 'center',
 						width: '100%',
 						margin: '20px auto',

@@ -54,7 +54,7 @@ const Header = (props) => {
 
 	return (
 		<header id="overlay">
-			<div className="brand">
+			<div>
 				<Link to="/">
 					<img
 						className="zoom logo"

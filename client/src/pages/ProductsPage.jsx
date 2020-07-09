@@ -29,14 +29,14 @@ const ProductsPage = (props) => {
 	};
 	return (
 		<div class="main_container">
-			<div className="product-header">
+			<FlexContainer>
 				<h1 style={{ textAlign: 'center', marginRight: 'auto' }}>Products</h1>
 				<Link to="/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
 					</button>
 				</Link>
-			</div>
+			</FlexContainer>
 			<div className="product-list responsive_table">
 				<table className="table">
 					<thead>
@@ -60,7 +60,7 @@ const ProductsPage = (props) => {
 								<td>{product.name}</td>
 								<td>{product.price}</td>
 								<td>{product.category}</td>
-								<td>{product.brand}</td>
+								<td style={{ minWidth: '111px' }}>{product.brand}</td>
 								<td>
 									<FlexContainer h_between>
 										<Link to={'/editproduct/' + product._id}>

@@ -76,7 +76,7 @@ const ContactPage = () => {
 				<input
 					onChange={(e) => set_name(e.target.value)}
 					defaultValue={name}
-					className="zoom_f input_i"
+					className="zoom_f form_input"
 					type="text"
 					name="name"
 					placeholder="Name"
@@ -86,7 +86,7 @@ const ContactPage = () => {
 				<input
 					onChange={(e) => set_email(e.target.value)}
 					defaultValue={email}
-					className="zoom_f input_i"
+					className="zoom_f form_input"
 					type="text"
 					name="email"
 					placeholder="Email"
@@ -96,18 +96,18 @@ const ContactPage = () => {
 				<input
 					onChange={(e) => set_order_number(e.target.value)}
 					defaultValue={order_number}
-					className="zoom_f input_i"
+					className="zoom_f form_input"
 					type="text"
 					name="order_number"
 					placeholder="Order Number"
 				/>
 				<label className="validation_text">{order_number_validations}</label>
 				<label>Reason for Contact</label>
-				{/* <input onChange={(e) => set_}defaultValue={} className="zoom_f input_i" type="text" name="order_number" placeholder="Order Number" /> */}
+				{/* <input onChange={(e) => set_}defaultValue={} className="zoom_f form_input" type="text" name="order_number" placeholder="Order Number" /> */}
 				<select
 					onChange={(e) => set_reason_for_contact(e.target.value)}
 					defaultValue={reason_for_contact}
-					className="input_i"
+					className="form_input"
 					name="reason_for_contact"
 				>
 					<option defaultValue="">-</option>
@@ -120,18 +120,19 @@ const ContactPage = () => {
 				<textarea
 					onChange={(e) => set_message(e.target.value)}
 					defaultValue={message}
-					className="zoom_f input_i"
+					className="zoom_f form_input"
 					name="message"
 					placeholder="Enter Message Here"
 				/>
 				<label className="validation_text">{message_validations}</label>
-				<input
-					style={{ fontSize: '16px', width: '100px' }}
-					className="zoom_b"
+				<button
+					style={{ width: '100px' }}
+					className="zoom_b button primary"
 					id="button"
-					type="submit"
-					value="Send"
-				/>
+					onClick={(e) => sendEmail(e)}
+				>
+					Send
+				</button>
 			</form>
 		</div>
 	);

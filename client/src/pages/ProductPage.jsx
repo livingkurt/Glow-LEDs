@@ -396,6 +396,7 @@ const ProductPage = (props) => {
 												<label htmlFor="comment" id="comment" />
 												<textarea
 													htmlFor="comment"
+													className="rating_textarea"
 													value={comment}
 													onChange={(e) => setComment(e.target.value)}
 												/>

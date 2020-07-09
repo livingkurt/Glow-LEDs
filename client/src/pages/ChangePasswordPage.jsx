@@ -98,6 +98,7 @@ const ChangePasswordPage = (props) => {
 							<li>
 								<label htmlFor="current_password">Current Password</label>
 								<input
+									className="form_input"
 									defaultValue={current_password}
 									type="password"
 									id="current_password"
@@ -111,6 +112,7 @@ const ChangePasswordPage = (props) => {
 							<li>
 								<label htmlFor="password">Password</label>
 								<input
+									className="form_input"
 									type="password"
 									id="password"
 									name="password"
@@ -123,6 +125,7 @@ const ChangePasswordPage = (props) => {
 							<li>
 								<label htmlFor="rePassword">Re-Enter Password</label>
 								<input
+									className="form_input"
 									type="password"
 									id="rePassword"
 									name="rePassword"
