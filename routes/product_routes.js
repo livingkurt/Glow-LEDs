@@ -53,7 +53,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 		product.description = req.body.description;
 		product.hidden = req.body.hidden;
 		product.sale_price = req.body.sale_price;
-		product.shipping_price = req.body.shipping_price;
+		product.volume = req.body.volume;
 		const updatedProduct = await product.save();
 		console.log({ product_routes_post: updatedProduct });
 		if (updatedProduct) {
@@ -89,7 +89,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		numReviews: req.body.numReviews,
 		hidden: req.body.hidden,
 		sale_price: req.body.sale_price,
-		shipping_price: req.body.shipping_price
+		volume: req.body.volume
 	});
 	console.log({ product_routes_post: product });
 	const newProduct = await product.save();
@@ -158,10 +158,10 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 	}
 });
 
-router.put('/updateall', isAuth, async (req, res) => {
-	// const product = await Product.updateMany({ $set: { shipping_price: 5 } });
+router.put('/all', isAuth, async (req, res) => {
+	// const product = await Product.updateMany({ $set: { volume: 5 } });
 	const product = await Product.updateMany({
-		$set: { shipping_price: 5 }
+		$set: { volume: 5 }
 	});
 	res.send(product);
 });

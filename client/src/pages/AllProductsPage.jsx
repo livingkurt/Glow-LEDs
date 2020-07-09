@@ -48,9 +48,9 @@ const AllProductsPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>
-			<FlexContainer h_center styles={{ marginBottom: -12 }}>
+			{/* <FlexContainer h_center styles={{ marginBottom: -12 }}>
 				<h4 style={{ margin: 0 }}>Free Shipping on all Orders!</h4>
-			</FlexContainer>
+			</FlexContainer> */}
 			{loading ? (
 				<FlexContainer h_center column>
 					<h2 style={{ fontSize: 25, textAlign: 'center' }}>Loading...</h2>

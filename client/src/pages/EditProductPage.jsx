@@ -19,7 +19,7 @@ const EditProductPage = (props) => {
 	const [ included_items, setIncludedItems ] = useState('');
 	const [ hidden, setHidden ] = useState();
 	const [ sale_price, setSalePrice ] = useState();
-	const [ shipping_price, setShippingPrice ] = useState();
+	const [ volume, setVolume ] = useState();
 
 	const history = useHistory();
 
@@ -48,7 +48,7 @@ const EditProductPage = (props) => {
 			setIncludedItems(product.included_items);
 			setHidden(product.hidden);
 			setSalePrice(product.sale_price);
-			setShippingPrice(product.shipping_price);
+			setVolume(product.volume);
 			setDisplayImage(product.display_image);
 			setVideo(product.video);
 			setBrand(product.brand);
@@ -68,7 +68,7 @@ const EditProductPage = (props) => {
 			setCountInStock('');
 			setHidden();
 			setSalePrice('');
-			setShippingPrice('');
+			setVolume('');
 		}
 		return () => {};
 	}, []);
@@ -111,7 +111,7 @@ const EditProductPage = (props) => {
 				description,
 				hidden,
 				sale_price,
-				shipping_price
+				volume
 			})
 		);
 		e.target.reset();
@@ -128,7 +128,7 @@ const EditProductPage = (props) => {
 		setCountInStock('');
 		setHidden();
 		setSalePrice('');
-		setShippingPrice('');
+		setVolume('');
 		if (id) {
 			history.push('/product/' + id);
 		} else {
@@ -196,13 +196,13 @@ const EditProductPage = (props) => {
 										/>
 									</li>
 									<li>
-										<label htmlFor="shipping_price">Shipping Price</label>
+										<label htmlFor="volume">Product Volume</label>
 										<input
 											type="text"
-											name="shipping_price"
-											value={shipping_price}
-											id="shipping_price"
-											onChange={(e) => setShippingPrice(e.target.value)}
+											name="volume"
+											value={volume}
+											id="volume"
+											onChange={(e) => setVolume(e.target.value)}
 										/>
 									</li>
 									<li>

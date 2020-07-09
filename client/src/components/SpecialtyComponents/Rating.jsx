@@ -3,7 +3,7 @@ import React from 'react';
 const Rating = (props) => {
 	const icon_style = {
 		position: 'relative',
-		left: '-18px'
+		left: '-20px'
 	};
 
 	const span_style = {

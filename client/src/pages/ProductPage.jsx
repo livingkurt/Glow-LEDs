@@ -221,7 +221,7 @@ const ProductPage = (props) => {
 											<i className="fas fa-sort-up icon_styles" />
 										</div>
 									</FlexContainer>
-									{/* <h4 style={{ marginBottom: 0, marginTop: 11 }}>Free Shipping</h4> */}
+									<h4 style={{ marginBottom: 0, marginTop: 11 }}>Shipping Calculated at Checkout</h4>
 								</li>
 								<li>
 									{product.countInStock > 0 && (
