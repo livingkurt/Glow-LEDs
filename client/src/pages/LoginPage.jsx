@@ -52,14 +52,14 @@ const LoginPage = (props) => {
 					<li>
 						<FlexContainer h_center>
 							{loading && (
-								<div>
-									<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+								<FlexContainer h_center>
+									<img src="loading.gif" className="loading_gif" alt="loading" />
 									<h3 style={{ textAlign: 'center' }}>
 										If pages doesn't show in 5 seconds, refresh the page.
 									</h3>
-								</div>
+								</FlexContainer>
 							)}
-							{error && <h2>{error}</h2>}
+							{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
 						</FlexContainer>
 					</li>
 					<li>

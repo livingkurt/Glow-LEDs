@@ -28,10 +28,10 @@ const PasswordResetPage = (props) => {
 					<li>
 						{loading ? (
 							<FlexContainer h_center column>
-								<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
-								<h1 styles={{ textAlign: 'center' }}>
+								<img src="loading.gif" className="loading_gif" alt="loading" />
+								<h3 style={{ textAlign: 'center' }}>
 									If pages doesn't show in 5 seconds, refresh the page.
-								</h1>
+								</h3>
 							</FlexContainer>
 						) : error ? (
 							<FlexContainer h_center>

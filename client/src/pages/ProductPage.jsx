@@ -120,12 +120,12 @@ const ProductPage = (props) => {
 			</div>
 			{loading ? (
 				<FlexContainer h_center column>
-					<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
-					<h3 styles={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
+					<img src="loading.gif" className="loading_gif" alt="loading" />
+					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 				</FlexContainer>
 			) : error ? (
 				<FlexContainer h_center>
-					<h2 styles={{ fontSize: 20 }}>{error} </h2>
+					<h3 style={{ textAlign: 'center' }}>{error} </h3>
 				</FlexContainer>
 			) : (
 				<FlexContainer column>
@@ -178,7 +178,7 @@ const ProductPage = (props) => {
 							<div className="details-image alt_pictures_hidden">
 								{loadingImages ? (
 									<FlexContainer h_center column>
-										<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+										<img src="loading.gif" className="loading_gif" alt="loading" />
 									</FlexContainer>
 								) : errorImages ? (
 									<FlexContainer h_center>
@@ -240,7 +240,7 @@ const ProductPage = (props) => {
 					<div className="details-image alt_pictures_shown">
 						{loadingImages ? (
 							<FlexContainer h_center column>
-								<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+								<img src="loading.gif" className="loading_gif" alt="loading" />
 							</FlexContainer>
 						) : errorImages ? (
 							<FlexContainer h_center>
@@ -442,12 +442,12 @@ const ProductPage = (props) => {
 				</h1>
 				{loadingProducts ? (
 					<FlexContainer h_center column>
-						<h2 styles={{ textAlign: 'center' }}>Loading...</h2>
-						<h3 styles={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
+						<img src="loading.gif" className="loading_gif" alt="loading" />
+						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</FlexContainer>
 				) : errorProducts ? (
 					<FlexContainer h_center>
-						<h2 styles={{ textAlign: 'center' }}>{errorProducts}</h2>
+						<h3 styles={{ textAlign: 'center' }}>{errorProducts}</h3>
 					</FlexContainer>
 				) : (
 					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>

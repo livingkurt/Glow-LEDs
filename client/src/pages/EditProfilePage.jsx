@@ -85,12 +85,14 @@ const EditProfilePage = (props) => {
 								<FlexContainer h_center>
 									{loading && (
 										<FlexContainer h_center column>
-											<h2>Loading...</h2>
-											<h3>If pages doesn't show in 5 seconds, refresh the page.</h3>
+											<img src="loading.gif" className="loading_gif" alt="loading" />
+											<h3 style={{ textAlign: 'center' }}>
+												If pages doesn't show in 5 seconds, refresh the page.
+											</h3>
 										</FlexContainer>
 									)}
-									{error && <h3>{error}</h3>}
-									{success && <h3>Profile Saved Successfully</h3>}
+									{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
+									{success && <h3 style={{ textAlign: 'center' }}>Profile Saved Successfully</h3>}
 								</FlexContainer>
 							</li>
 							<li>

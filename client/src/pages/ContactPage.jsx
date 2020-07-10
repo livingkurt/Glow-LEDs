@@ -63,12 +63,12 @@ const ContactPage = () => {
 			<FlexContainer h_center>
 				{loading && (
 					<FlexContainer h_center column>
-						<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+						<img src="loading.gif" className="loading_gif" alt="loading" />
 						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</FlexContainer>
 				)}
-				{error && <h3>{error}</h3>}
-				{completed && <h3>{completed}</h3>}
+				{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
+				{completed && <h3 style={{ textAlign: 'center' }}>{completed}</h3>}
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
 				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" name="contact_number" /> */}

@@ -34,7 +34,7 @@ const UserOrderPage = (props) => {
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Your Orders</h1>
 				{loadingOrders ? (
 					<FlexContainer h_center column>
-						<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+						<img src="loading.gif" className="loading_gif" alt="loading" />
 						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 					</FlexContainer>
 				) : errorOrders ? (

@@ -143,12 +143,15 @@ const EditProductPage = (props) => {
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					{loading ? (
-						<FlexContainer h_center column>
-							<h2 style={{ textAlign: 'center' }}>Loading...</h2>
+						<FlexContainer h_center>
+							<img src="loading.gif" className="loading_gif" alt="loading" />
+							<h3 style={{ textAlign: 'center' }}>
+								If pages doesn't show in 5 seconds, refresh the page.
+							</h3>
 						</FlexContainer>
 					) : error ? (
 						<FlexContainer h_center>
-							<h3>{error} </h3>
+							<h2 style={{ textAlign: 'center' }}>{error}</h2>
 						</FlexContainer>
 					) : (
 						<ul className="form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>

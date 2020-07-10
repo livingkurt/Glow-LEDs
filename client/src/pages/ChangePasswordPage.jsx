@@ -87,8 +87,10 @@ const ChangePasswordPage = (props) => {
 								<FlexContainer h_center>
 									{loading && (
 										<FlexContainer h_center column>
-											<h1>Loading...</h1>
-											<h2>If pages doesn't show in 5 seconds, refresh the page.</h2>
+											<img src="loading.gif" className="loading_gif" alt="loading" />
+											<h3 style={{ textAlign: 'center' }}>
+												If pages doesn't show in 5 seconds, refresh the page.
+											</h3>
 										</FlexContainer>
 									)}
 									{error && <h3>{error}</h3>}

@@ -37,47 +37,62 @@ const ProductsPage = (props) => {
 					</button>
 				</Link>
 			</FlexContainer>
-			<div className="product-list responsive_table">
-				<table className="table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Hidden</th>
-							<th>Name</th>
-							<th>Price</th>
-							<th>Category</th>
-							<th>Brand</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						{products.map((product) => (
-							<tr key={product._id}>
-								<td>{product._id}</td>
-								<td>
-									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
-								</td>
-								<td style={{ minWidth: '420px' }}>{product.name}</td>
-								<td>{product.price}</td>
-								<td>{product.category}</td>
-								<td style={{ minWidth: '111px' }}>{product.brand}</td>
-								<td>
-									<FlexContainer h_between>
-										<Link to={'/editproduct/' + product._id}>
-											<button className="button icon">
-												<i className="fas fa-edit" />
-											</button>
-										</Link>
-										<button className="button icon" onClick={() => deleteHandler(product)}>
-											<i className="fas fa-trash-alt" />
-										</button>
-									</FlexContainer>
-								</td>
+			{loading ? (
+				<FlexContainer h_center>
+					<img src="loading.gif" className="loading_gif" alt="loading" />
+					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
+				</FlexContainer>
+			) : error ? (
+				<FlexContainer h_center>
+					<h3 style={{ textAlign: 'center' }}>{error}</h3>
+				</FlexContainer>
+			) : (
+				<div className="product-list responsive_table">
+					<table className="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Hidden</th>
+								<th>Name</th>
+								<th>Price</th>
+								<th>Category</th>
+								<th>Brand</th>
+								<th>Action</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							{products.map((product) => (
+								<tr key={product._id}>
+									<td>{product._id}</td>
+									<td>
+										{product.hidden ? (
+											<i className="fas fa-eye-slash" />
+										) : (
+											<i className="fas fa-eye" />
+										)}
+									</td>
+									<td style={{ minWidth: '420px' }}>{product.name}</td>
+									<td>{product.price}</td>
+									<td>{product.category}</td>
+									<td style={{ minWidth: '111px' }}>{product.brand}</td>
+									<td>
+										<FlexContainer h_between>
+											<Link to={'/editproduct/' + product._id}>
+												<button className="button icon">
+													<i className="fas fa-edit" />
+												</button>
+											</Link>
+											<button className="button icon" onClick={() => deleteHandler(product)}>
+												<i className="fas fa-trash-alt" />
+											</button>
+										</FlexContainer>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			)}
 		</div>
 	);
 };

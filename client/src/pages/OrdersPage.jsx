@@ -36,12 +36,7 @@ const OrdersPage = (props) => {
 	const deleteHandler = (order) => {
 		dispatch(deleteOrder(order._id));
 	};
-	return loading ? (
-		<FlexContainer h_center column>
-			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
-			<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
-		</FlexContainer>
-	) : (
+	return (
 		<div class="main_container">
 			<div className="order-header">
 				<h1
@@ -55,61 +50,72 @@ const OrdersPage = (props) => {
 					Orders
 				</h1>
 			</div>
-			<div className="order-list responsive_table">
-				<table className="table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>DATE</th>
-							<th>TOTAL</th>
-							<th>USER</th>
-							<th>PAID</th>
-							<th>PAID AT</th>
-							<th>DELIVERED</th>
-							<th>DELIVERED AT</th>
-							<th>ACTIONS</th>
-						</tr>
-					</thead>
-					<tbody>
-						{orders.map((order) => (
-							<tr key={order._id}>
-								<td>{order._id}</td>
-								<td>{format_date_display(order.createdAt)}</td>
-								<td>${order.totalPrice.toFixed(2)}</td>
-								<td>{order.user.name}</td>
-								<td>
-									{order.isPaid ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</td>
-								<td>{!order.paidAt ? '' : format_date_display(order.paidAt)}</td>
-								<td>
-									{order.isShipped ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</td>
-								<td>{!order.shippedAt ? '' : format_date_display(order.shippedAt)}</td>
-								<td>
-									<FlexContainer h_between>
-										<Link to={'/order/' + order._id}>
-											<button className="button icon">
-												<i className="fas fa-info-circle" />
-											</button>
-										</Link>
-										<button className="button icon" onClick={() => deleteHandler(order)}>
-											<i className="fas fa-trash-alt" />
-										</button>
-									</FlexContainer>
-								</td>
+			{loading ? (
+				<FlexContainer h_center column>
+					<img src="loading.gif" className="loading_gif" alt="loading" />
+					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
+				</FlexContainer>
+			) : error ? (
+				<FlexContainer h_center>
+					<h3 style={{ textAlign: 'center' }}>{error}</h3>
+				</FlexContainer>
+			) : (
+				<div className="order-list responsive_table">
+					<table className="table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>DATE</th>
+								<th>TOTAL</th>
+								<th>USER</th>
+								<th>PAID</th>
+								<th>PAID AT</th>
+								<th>DELIVERED</th>
+								<th>DELIVERED AT</th>
+								<th>ACTIONS</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+						</thead>
+						<tbody>
+							{orders.map((order) => (
+								<tr key={order._id}>
+									<td>{order._id}</td>
+									<td>{format_date_display(order.createdAt)}</td>
+									<td>${order.totalPrice.toFixed(2)}</td>
+									<td>{order.user.name}</td>
+									<td>
+										{order.isPaid ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
+									</td>
+									<td>{!order.paidAt ? '' : format_date_display(order.paidAt)}</td>
+									<td>
+										{order.isShipped ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
+									</td>
+									<td>{!order.shippedAt ? '' : format_date_display(order.shippedAt)}</td>
+									<td>
+										<FlexContainer h_between>
+											<Link to={'/order/' + order._id}>
+												<button className="button icon">
+													<i className="fas fa-info-circle" />
+												</button>
+											</Link>
+											<button className="button icon" onClick={() => deleteHandler(order)}>
+												<i className="fas fa-trash-alt" />
+											</button>
+										</FlexContainer>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			)}
 		</div>
 	);
 };

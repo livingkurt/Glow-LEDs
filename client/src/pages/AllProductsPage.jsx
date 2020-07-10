@@ -48,19 +48,14 @@ const AllProductsPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>
-			{/* <FlexContainer h_center styles={{ marginBottom: -12 }}>
-				<h4 style={{ margin: 0 }}>Free Shipping on all Orders!</h4>
-			</FlexContainer> */}
 			{loading ? (
-				<FlexContainer h_center column>
-					<h2 style={{ fontSize: 25, textAlign: 'center' }}>Loading...</h2>
-					<h2 style={{ fontSize: 20, textAlign: 'center' }}>
-						If pages doesn't show in 5 seconds, refresh the page.
-					</h2>
+				<FlexContainer h_center>
+					<img src="loading.gif" className="loading_gif" alt="loading" />
+					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 				</FlexContainer>
 			) : error ? (
 				<FlexContainer h_center>
-					<h2 style={{ fontSize: 20 }}>{error}</h2>
+					<h3 style={{ textAlign: 'center' }}>{error}</h3>
 				</FlexContainer>
 			) : (
 				<ul className="products" style={{ marginTop: 0 }}>

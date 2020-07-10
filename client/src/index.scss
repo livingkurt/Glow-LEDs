@@ -951,3 +951,13 @@ video {
 	font-size: $font_size;
 	margin-right: 5px;
 }
+
+// Loading Gif
+
+.loading_gif {
+	height: 100px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -50px 0px 0px -50px;
+}
