@@ -20,7 +20,6 @@ const Header = (props) => {
 	);
 
 	const cart = useSelector((state) => state.cart);
-	console.log({ Header: userInfo });
 
 	const { cartItems } = cart;
 

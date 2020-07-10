@@ -7,7 +7,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	console.log({ userInfo });
+	// console.log({ userInfo });
 
 	return (
 		// Show the component only when the user is logged in

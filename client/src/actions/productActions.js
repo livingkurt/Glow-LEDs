@@ -21,15 +21,6 @@ import {
 import axios from 'axios';
 
 const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (dispatch) => {
-	console.log({
-		listProducts:
-			'/api/products?category=' +
-			category +
-			'&searchKeyword=' +
-			searchKeyword +
-			'&sortOrder=' +
-			sortOrder.toLowerCase()
-	});
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 		const { data } = await axios.get(
@@ -97,7 +88,7 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
 };
 
 const imagesProduct = (folder_dir) => async (dispatch) => {
-	console.log({ folder_dir });
+	// console.log({ folder_dir });
 	try {
 		dispatch({ type: PRODUCT_IMAGES_REQUEST, payload: folder_dir });
 		const { data } = await axios.post('/api/products/images', folder_dir);

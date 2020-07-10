@@ -23,7 +23,6 @@ const ProductPage = (props) => {
 	const { success: productSaveSuccess } = productReviewSave;
 
 	const productList = useSelector((state) => state.productList);
-	console.log({ productList });
 	const { products, loading: loadingProducts, error: errorProducts } = productList;
 
 	useEffect(
@@ -65,14 +64,12 @@ const ProductPage = (props) => {
 
 	const productImages = useSelector((state) => state.productImages);
 	const { images, loading: loadingImages, error: errorImages } = productImages;
-	console.log({ images });
 
 	const handleAddToCart = () => {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
 	};
 
 	const change_image = (e) => {
-		console.log(e.target.src);
 		var expandImg = document.getElementById('expandedImg');
 		expandImg.src = e.target.src;
 		expandImg.parentElement.style.display = 'block';
@@ -91,7 +88,6 @@ const ProductPage = (props) => {
 			})
 		);
 	};
-	console.log({ rating });
 
 	const [ review_modal, setReviewModal ] = useState('none');
 
@@ -451,11 +447,11 @@ const ProductPage = (props) => {
 					</FlexContainer>
 				) : errorProducts ? (
 					<FlexContainer h_center>
-						<h2 styles={{ fontSize: 20 }}>{errorProducts}</h2>
+						<h2 styles={{ textAlign: 'center' }}>{errorProducts}</h2>
 					</FlexContainer>
 				) : (
 					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
-						{products.map(
+						{/* {products.map(
 							(item, index) =>
 								!item.hidden ? (
 									<Product
@@ -466,7 +462,7 @@ const ProductPage = (props) => {
 								) : (
 									<div />
 								)
-						)}
+						)} */}
 						{/* {products.map(
 							(item, index) =>
 								!item.hidden ? !product.category ? (
@@ -483,6 +479,34 @@ const ProductPage = (props) => {
 									<div />
 								)
 						)} */}
+						{/* {products.map(
+							(item, index) => (!item.category ? console.log('Loading') : console.log(item.category))
+							item.category === undefined ? (
+								<div>Loading...</div>
+							) : item.category === product.category && item._id !== product._id && !item.hidden ? (
+								<Product
+									key={index}
+									product={item}
+									styles={{ marginRight: 20, listStyleType: 'none' }}
+								/>
+							) : (
+								<div />
+							)
+						)} */}
+						{products.map(
+							(item, index) =>
+								!item.hidden ? item._id !== product._id ? (
+									<Product
+										key={index}
+										product={item}
+										styles={{ marginRight: 20, listStyleType: 'none' }}
+									/>
+								) : (
+									<div />
+								) : (
+									<div />
+								)
+						)}
 					</FlexContainer>
 				)}
 			</FlexContainer>
