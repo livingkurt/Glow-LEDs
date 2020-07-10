@@ -50,8 +50,8 @@ const AllProductsPage = (props) => {
 			</FlexContainer>
 			{loading ? (
 				<FlexContainer h_center>
-					<img src="loading.gif" className="loading_gif" alt="loading" />
 					<img src="loading_overlay.png" className="loading_png" alt="loading" />
+					<img src="loading.gif" className="loading_gif" alt="loading" />
 					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
 				</FlexContainer>
 			) : error ? (
