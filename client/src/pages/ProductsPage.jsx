@@ -57,7 +57,7 @@ const ProductsPage = (props) => {
 								<td>
 									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
 								</td>
-								<td>{product.name}</td>
+								<td style={{ minWidth: '420px' }}>{product.name}</td>
 								<td>{product.price}</td>
 								<td>{product.category}</td>
 								<td style={{ minWidth: '111px' }}>{product.brand}</td>

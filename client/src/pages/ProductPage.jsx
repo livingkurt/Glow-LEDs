@@ -55,6 +55,14 @@ const ProductPage = (props) => {
 		[ product ]
 	);
 
+	useEffect(
+		() => {
+			dispatch(detailsProduct(props.match.params.id));
+			return () => {};
+		},
+		[ props.match.params.id ]
+	);
+
 	const productImages = useSelector((state) => state.productImages);
 	const { images, loading: loadingImages, error: errorImages } = productImages;
 	console.log({ images });

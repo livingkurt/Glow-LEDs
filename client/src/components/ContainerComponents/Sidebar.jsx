@@ -177,14 +177,14 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Support</button>
 					<ul className="sidebar_dropdown_container">
+						<Link to="/about">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								About
+							</button>
+						</Link>
 						<Link to="/contact">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Contact
-							</button>
-						</Link>
-						<Link to="/faq">
-							<button className="sidebar_button secondary" onClick={closeMenu}>
-								FAQ
 							</button>
 						</Link>
 						<Link to="/terms">
@@ -195,14 +195,6 @@ const Sidebar = (props) => {
 					</ul>
 					<i style={icon_styles} className="fas fa-sort-up" />
 				</div>
-				{/* {
-          props.userInfo
-            ?
-            <Link to="/profile"><button >{props.userInfo.name}</button></Link>
-
-            :
-            <Link to="/login"><button >Login</button></Link>
-        } */}
 			</FlexContainer>
 		</aside>
 	);

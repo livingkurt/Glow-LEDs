@@ -7,11 +7,16 @@ const TermsPage = () => {
 	return (
 		<div class="main_container">
 			<div class="inner_content">
-				<FlexContainer h_center>
-					<h1 style={{ fontSize: 40, textAlign: 'center', marginRight: '20px' }}>Glow-LEDs.com </h1>
-					<h1 style={{ fontSize: 40, textAlign: 'center', letterSpacing: '20px', marginRight: '5px' }}>F</h1>
-					<h1 style={{ fontSize: 40, textAlign: 'center', letterSpacing: '10px' }}>AQ</h1>
-				</FlexContainer>
+				<h1 style={{ fontSize: 40, textAlign: 'center' }}>About Glow-LEDs</h1>
+				<p>
+					Glow-LEDs was created by Kurt LaVacque in partner with Destanye Salinas with a vision to make the
+					world glow in 16 million colors. I (Kurt) had a dream to innovate what glovers call diffusers to
+					bring them into another dimmension. Our hope is that diffuser caps will change the way we think of
+					what a diffuser can be and how gloving is viewed forever. Along with the Diffuser Caps we decided to
+					create Custom and Premade Infinity Mirrors that using WS2812B Individually Addressable LEDs. The
+					majority of infinity mirrors you will find will not have the ability to perform light shows like
+					Glow LEDs Infinity Mirrors.
+				</p>
 				<div>
 					<h2 style={{ fontSize: 30, textAlign: 'center' }}>Frequently Asked Question</h2>
 					<h3 style={{ fontSize: 20, textAlign: 'center' }}>How do properly use diffuser caps?</h3>
