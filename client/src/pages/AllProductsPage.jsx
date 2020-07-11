@@ -44,7 +44,7 @@ const AllProductsPage = (props) => {
 				<h1>{category || 'All Products'}</h1>
 			</FlexContainer>
 
-			<FlexContainer h_center>
+			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>

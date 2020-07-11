@@ -4,7 +4,7 @@ import { FlexContainer } from '../ContainerComponents';
 
 const Sort = (props) => {
 	return (
-		<FlexContainer v_i_center>
+		<FlexContainer v_i_center styles={{ marginLeft: '13px' }}>
 			<label>Sort By</label>
 			<div className="select_dropdown_container">
 				<select name="sortOrder" className="select_dropdown" onChange={props.sortHandler}>
