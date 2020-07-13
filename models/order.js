@@ -18,7 +18,8 @@ const orderItemSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	qty: { type: Number, required: true },
 	display_image: { type: String, required: true },
-	price: { type: String, required: true },
+	price: { type: Number, required: true },
+	sale_price: { type: Number },
 	product: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Product',
@@ -34,7 +35,7 @@ const orderSchema = new mongoose.Schema(
 		payment: paymentSchema,
 		itemsPrice: { type: Number },
 		taxPrice: { type: Number },
-		// shippingPrice: { type: Number },
+		shippingPrice: { type: Number },
 		totalPrice: { type: Number },
 		isPaid: { type: Boolean, default: false },
 		paidAt: { type: Date },

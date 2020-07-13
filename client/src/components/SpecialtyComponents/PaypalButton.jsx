@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-const PaypalButton = (props) => {
+function PaypalButton(props) {
 	const [ sdkReady, setSdkReady ] = useState(false);
 
 	const addPaypalSdk = async () => {
@@ -42,7 +42,7 @@ const PaypalButton = (props) => {
 	}, []);
 
 	if (!sdkReady) {
-		return <h3>Loading... If payment method doesn't show in 5 seconds, refresh the page.</h3>;
+		return <div>Loading...</div>;
 	}
 
 	const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });
@@ -54,6 +54,6 @@ const PaypalButton = (props) => {
 			onApprove={(data, actions) => onApprove(data, actions)}
 		/>
 	);
-};
+}
 
 export default PaypalButton;

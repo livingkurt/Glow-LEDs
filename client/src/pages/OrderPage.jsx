@@ -223,7 +223,21 @@ const OrderPage = (props) => {
 											</div>
 											<div>Qty: {item.qty}</div>
 										</div>
-										<div className="cart-price">${item.price}</div>
+										<div className="cart-price">
+											{item.sale_price !== 0 ? (
+												<div style={{ width: '230px' }}>
+													<del style={{ color: 'red' }}>
+														<label style={{ color: 'white' }}>
+															${item.price ? item.price : item.price}
+														</label>
+													</del>{' '}
+													<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+													On Sale!
+												</div>
+											) : (
+												<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+											)}
+										</div>
 									</li>
 								))
 							)}
@@ -242,7 +256,7 @@ const OrderPage = (props) => {
 						<li>
 							<div>Shipping</div>
 							{/* <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div> */}
-							<div>Free Shipping</div>
+							<div>${order.shippingPrice}</div>
 						</li>
 						<li>
 							<div>Tax</div>

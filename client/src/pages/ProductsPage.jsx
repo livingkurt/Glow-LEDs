@@ -73,7 +73,21 @@ const ProductsPage = (props) => {
 										)}
 									</td>
 									<td style={{ minWidth: '420px' }}>{product.name}</td>
-									<td>{product.price}</td>
+									<td style={{ minWidth: '225px' }}>
+										{product.sale_price !== 0 ? (
+											<label>
+												<del style={{ color: 'red' }}>
+													<label style={{ color: 'white' }}>
+														${product.price ? product.price.toFixed(2) : product.price}
+													</label>
+												</del>{' '}
+												<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
+												On Sale!
+											</label>
+										) : (
+											<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+										)}
+									</td>
 									<td>{product.category}</td>
 									<td style={{ minWidth: '111px' }}>{product.brand}</td>
 									<td>
