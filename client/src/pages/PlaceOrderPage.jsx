@@ -18,7 +18,7 @@ const PlaceOrderPage = (props) => {
 	} else if (!payment.paymentMethod) {
 		props.history.push('/payment');
 	}
-	const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
+	const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	useEffect(() => {
 		calculate_shipping();
@@ -118,7 +118,21 @@ const PlaceOrderPage = (props) => {
 											</div>
 											<div>Qty: {item.qty}</div>
 										</div>
-										<div className="cart-price">${item.price.toFixed(2)}</div>
+										<div className="cart-price">
+											{item.sale_price !== 0 ? (
+												<div style={{ width: '230px' }}>
+													<del style={{ color: 'red' }}>
+														<label style={{ color: 'white' }}>
+															${item.price ? item.price.toFixed(2) : item.price}
+														</label>
+													</del>{' '}
+													<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+													On Sale!
+												</div>
+											) : (
+												<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+											)}
+										</div>
 									</li>
 								))
 							)}

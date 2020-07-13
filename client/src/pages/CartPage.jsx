@@ -70,7 +70,21 @@ const CartPage = (props) => {
 								</div>
 
 								<FlexContainer column>
-									<div className="cart-price">${item.price.toFixed(2)}</div>
+									<div className="cart-price">
+										{item.sale_price !== 0 ? (
+											<label>
+												<del style={{ color: 'red' }}>
+													<label style={{ color: 'white' }}>
+														${item.price ? item.price.toFixed(2) : item.price}
+													</label>
+												</del>{' '}
+												<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+												On Sale!
+											</label>
+										) : (
+											<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+										)}
+									</div>
 									<div style={{ textAlign: 'right', width: '100%' }}>
 										<button
 											className="button icon"
@@ -89,7 +103,9 @@ const CartPage = (props) => {
 				<div className="cart-action">
 					<h3 className="subtotal_h3">
 						Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items ) : ${' '}
-						{cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
+						{cartItems
+							.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0)
+							.toFixed(2)}
 					</h3>
 					<button
 						onClick={checkoutHandler}
