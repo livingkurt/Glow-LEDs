@@ -264,9 +264,17 @@ const ProductPage = (props) => {
 							})
 						)}
 					</div>
+
 					<FlexContainer column styles={{ padding: '1rem' }}>
 						<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 						<p>{product.description}</p>
+						{/* <FlexContainer h_center>
+							<img
+								src="/gifs/product_gifs/BTSM/BTSM.gif"
+								style={{ width: '100%', height: 'auto', borderRadius: '20px' }}
+								alt="loading"
+							/>
+						</FlexContainer> */}
 						<FlexContainer column>
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 							<FlexContainer column styles={{ height: '100%' }}>
@@ -285,6 +293,7 @@ const ProductPage = (props) => {
 								</ul>
 							</FlexContainer>
 						</FlexContainer>
+
 						{!product.video ? (
 							<h1
 								style={{
