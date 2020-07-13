@@ -155,7 +155,19 @@ const ProductPage = (props) => {
 							</div>
 							<FlexContainer>
 								<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
-								<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+								{product.sale_price !== 0 ? (
+									<label>
+										<del style={{ color: 'red' }}>
+											<label style={{ color: 'white' }}>
+												${product.price ? product.price.toFixed(2) : product.price}
+											</label>
+										</del>{' '}
+										<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
+										On Sale!
+									</label>
+								) : (
+									<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+								)}
 							</FlexContainer>
 							<FlexContainer column>
 								<FlexContainer column styles={{ height: '100%' }}>
@@ -205,7 +217,19 @@ const ProductPage = (props) => {
 
 						<div className="details-action">
 							<ul>
-								<li>Price: ${product.price ? product.price.toFixed(2) : product.price}</li>
+								{product.sale_price !== 0 ? (
+									<label>
+										<del style={{ color: 'red' }}>
+											<label style={{ color: 'white' }}>
+												${product.price ? product.price.toFixed(2) : product.price}
+											</label>
+										</del>{' '}
+										<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
+										On Sale!
+									</label>
+								) : (
+									<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+								)}
 								<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Unavailable.'}</li>
 								<li>
 									<FlexContainer v_i_center styles={{ height: '25px' }}>

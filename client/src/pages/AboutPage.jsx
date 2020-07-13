@@ -74,13 +74,36 @@ const TermsPage = () => {
 					<h3 style={{ clear: 'both', fontSize: 20, textAlign: 'center' }}>
 						How do properly use diffuser caps?
 					</h3>
+					<img
+						style={{
+							float: 'left',
+							height: '200px',
+							borderRadius: '15px',
+							margin: '0px 25px 25px 0'
+						}}
+						src="/images/optimized_images/about_me_images/2_img_9862_optimized.jpg"
+					/>
 					<p style={{ lineHeight: '25px' }}>
 						With you microlights outside of your gloves. Place the Diffuser Adapters onto your microlight
-						bulbs. Then place them inside of the glove. So now you have flat top domes in your gloves. Next,
-						grip the diffuser adapter from in the glove, do not only hold by microlight or you risk causing
-						extra stress to the bulb. Then take you cap, and place it over top of your glove and adapter and
-						screw in the cap like you would a jar. The threads should catch and only needs a single turn to
-						become snug. Do not over tighten or push the cap on. Let the threads do the work.
+						bulbs. Then place them inside of the glove. So now you have flat top domes in your gloves.
+					</p>
+					<p style={{ lineHeight: '25px' }}>
+						Next, grip the diffuser adapter from in the glove, do not only hold by microlight or you risk
+						causing extra stress to the bulb.
+					</p>
+					<p style={{ lineHeight: '25px' }}>
+						Then take you cap, and place it over top of your glove and adapter and screw in the cap like you
+						would a jar.
+					</p>
+					<p style={{ lineHeight: '25px' }}>
+						The threads should catch and only needs a single turn to become snug. Do not over tighten or
+						push the cap on. Let the threads do the work.
+					</p>
+					<p style={{ lineHeight: '25px' }}>
+						The threads should catch and only needs a single turn to become snug.
+					</p>
+					<p style={{ lineHeight: '25px' }}>
+						Do not over tighten or push the cap on. Let the threads do the work.
 					</p>
 					<h3 style={{ fontSize: 20, textAlign: 'center' }}>How to order a custom product?</h3>
 					<p style={{ lineHeight: '25px' }}>
