@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
@@ -7,20 +7,29 @@ import FlexContainer from './FlexContainer';
 const Sidebar = (props) => {
 	const history = useHistory();
 
-	const header_styles = {
-		gridArea: 'header',
-		backgroundColor: '#333333',
-		color: '#ffffff',
-		display: 'flex',
-		alignItems: 'center',
-		padding: '15px',
-		listStyleType: 'none',
-		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-		position: 'fixed',
-		right: '0',
-		left: '0',
-		zIndex: '999'
-	};
+	function useOutsideAlerter(ref) {
+		useEffect(
+			() => {
+				/**
+         * Alert if clicked on outside of element
+         */
+				function handleClickOutside(event) {
+					if (ref.current && !ref.current.contains(event.target)) {
+						// alert('You clicked outside of me!');
+						document.querySelector('.sidebar').classList.remove('open');
+					}
+				}
+
+				// Bind the event listener
+				document.addEventListener('mousedown', handleClickOutside);
+				return () => {
+					// Unbind the event listener on clean up
+					document.removeEventListener('mousedown', handleClickOutside);
+				};
+			},
+			[ ref ]
+		);
+	}
 
 	const cart = useSelector((state) => state.cart);
 
@@ -70,9 +79,10 @@ const Sidebar = (props) => {
 		},
 		[ userUpdate.userInfo ]
 	);
-
+	const wrapperRef = useRef(null);
+	useOutsideAlerter(wrapperRef);
 	return (
-		<aside className="sidebar">
+		<aside ref={wrapperRef} className="sidebar">
 			<h2>Shopping Categories</h2>
 			<button className="sidebar_close_button" onClick={closeMenu}>
 				<i className="fas fa-times" />
