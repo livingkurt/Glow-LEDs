@@ -219,6 +219,7 @@ const ProductPage = (props) => {
 							<ul>
 								{product.sale_price !== 0 ? (
 									<label>
+										Price: {' '}
 										<del style={{ color: 'red' }}>
 											<label style={{ color: 'white' }}>
 												${product.price ? product.price.toFixed(2) : product.price}
@@ -228,7 +229,7 @@ const ProductPage = (props) => {
 										On Sale!
 									</label>
 								) : (
-									<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+									<label>Price: ${product.price ? product.price.toFixed(2) : product.price}</label>
 								)}
 								<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Unavailable.'}</li>
 								<li>
