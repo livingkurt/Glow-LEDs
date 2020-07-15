@@ -21,6 +21,14 @@ const RelatedProducts = (props) => {
 		[ props.product ]
 	);
 
+	useEffect(
+		() => {
+			dispatch(detailsProduct(props.product_id));
+			return () => {};
+		},
+		[ props.product_id ]
+	);
+
 	return (
 		<FlexContainer column styles={{ margin: '0 10px' }}>
 			<h1
