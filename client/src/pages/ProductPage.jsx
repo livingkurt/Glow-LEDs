@@ -257,7 +257,7 @@ const ProductPage = (props) => {
 					</div>
 				</FlexContainer>
 			)}
-			<RelatedProducts />
+			<RelatedProducts product={product} />
 		</FlexContainer>
 	);
 };
