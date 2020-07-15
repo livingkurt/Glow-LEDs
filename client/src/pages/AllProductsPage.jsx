@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { Product, Search, Sort } from '../components/SpecialtyComponents/index';
 import { FlexContainer } from '../components/ContainerComponents/index';
+import { Loading } from '../components/UtilityComponents';
 
 const AllProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -44,29 +45,20 @@ const AllProductsPage = (props) => {
 			<FlexContainer h_center>
 				<h1>{category || 'All Products'}</h1>
 			</FlexContainer>
-
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>
-			{loading ? (
-				<FlexContainer h_center>
-					<img src="loading_overlay.png" className="loading_png" alt="loading" />
-					<img src="loading.gif" className="loading_gif" alt="loading" />
-					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
-				</FlexContainer>
-			) : error ? (
-				<FlexContainer h_center>
-					<h3 style={{ textAlign: 'center' }}>{error}</h3>
-				</FlexContainer>
-			) : (
-				<ul className="products" style={{ marginTop: 0 }}>
-					{products.map(
-						(product, index) =>
-							!product.hidden ? <Product key={index} product={product} /> : <div key={index} />
-					)}
-				</ul>
-			)}
+			<Loading loading={loading} error={error}>
+				{products && (
+					<ul className="products" style={{ marginTop: 0 }}>
+						{products.map(
+							(product, index) =>
+								!product.hidden ? <Product key={index} product={product} /> : <div key={index} />
+						)}
+					</ul>
+				)}
+			</Loading>
 		</div>
 	);
 };

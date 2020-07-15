@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { password_reset } from '../actions/userActions';
 import { FlexContainer } from '../components/ContainerComponents';
+import { Loading } from '../components/UtilityComponents';
 
 const PasswordResetPage = (props) => {
 	const [ email, setEmail ] = useState('');
@@ -26,21 +27,9 @@ const PasswordResetPage = (props) => {
 						<h1>Password Reset</h1>
 					</li>
 					<li>
-						{loading ? (
-							<FlexContainer h_center column>
-								<img src="loading.gif" className="loading_gif" alt="loading" />
-								<img src="loading_overlay.png" className="loading_png" alt="loading" />
-								<h3 style={{ textAlign: 'center' }}>
-									If pages doesn't show in 5 seconds, refresh the page.
-								</h3>
-							</FlexContainer>
-						) : error ? (
-							<FlexContainer h_center>
-								<h2 styles={{ textAlign: 'center' }}>{error} </h2>
-							</FlexContainer>
-						) : (
-							<h3 styles={{ textAlign: 'center' }}>{words}</h3>
-						)}
+						<Loading loading={loading} error={error}>
+							{words && <h3 styles={{ textAlign: 'center' }}>{words}</h3>}
+						</Loading>
 					</li>
 					<li>
 						<label htmlFor="email">Email</label>

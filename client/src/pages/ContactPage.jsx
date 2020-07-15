@@ -3,6 +3,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../actions/userActions';
 import { validate_contact } from '../utils/helper_functions';
+import { Loading } from '../components/UtilityComponents';
 // import "./form.css";
 
 const ContactPage = () => {
@@ -61,15 +62,9 @@ const ContactPage = () => {
 				<h1>Contact</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
-				{loading && (
-					<FlexContainer h_center column>
-						<img src="loading_overlay.png" className="loading_png" alt="loading" />
-						<img src="loading.gif" className="loading_gif" alt="loading" />
-						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
-					</FlexContainer>
-				)}
-				{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
-				{completed && <h3 style={{ textAlign: 'center' }}>{completed}</h3>}
+				<Loading loading={loading} error={error}>
+					{completed && <h3 style={{ textAlign: 'center' }}>{completed}</h3>}
+				</Loading>
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
 				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" name="contact_number" /> */}

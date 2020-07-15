@@ -5,6 +5,7 @@ import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_profile } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
+import { Loading } from '../components/UtilityComponents';
 
 const EditProfilePage = (props) => {
 	const history = useHistory();
@@ -83,17 +84,9 @@ const EditProfilePage = (props) => {
 							</li>
 							<li>
 								<FlexContainer h_center>
-									{loading && (
-										<FlexContainer h_center column>
-											<img src="loading.gif" className="loading_gif" alt="loading" />
-											<img src="loading_overlay.png" className="loading_png" alt="loading" />
-											<h3 style={{ textAlign: 'center' }}>
-												If pages doesn't show in 5 seconds, refresh the page.
-											</h3>
-										</FlexContainer>
-									)}
-									{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
-									{success && <h3 style={{ textAlign: 'center' }}>Profile Saved Successfully</h3>}
+									<Loading loading={loading} error={error}>
+										{success && <h3 style={{ textAlign: 'center' }}>Profile Saved Successfully</h3>}
+									</Loading>
 								</FlexContainer>
 							</li>
 							<li>

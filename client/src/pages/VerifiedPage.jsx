@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FlexContainer } from '../components/ContainerComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { verify } from '../actions/userActions';
+import { Loading } from '../components/UtilityComponents';
 
 const VerifiedPage = (props) => {
 	const dispatch = useDispatch();
@@ -24,14 +25,7 @@ const VerifiedPage = (props) => {
 			<h1 style={{ textAlign: 'center' }}>Thank You for Verifing your Account.</h1>
 			<h2 style={{ textAlign: 'center' }}>You will be redirected to the login screen shortly.</h2>
 			<FlexContainer h_center>
-				{loading && (
-					<FlexContainer h_center>
-						<img src="loading_overlay.png" className="loading_png" alt="loading" />
-						<img src="loading.gif" className="loading_gif" alt="loading" />
-						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
-					</FlexContainer>
-				)}
-				{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
+				<Loading loading={loading} error={error} />
 			</FlexContainer>
 		</FlexContainer>
 	);

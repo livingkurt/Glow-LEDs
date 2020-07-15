@@ -70,32 +70,23 @@ const RelatedProducts = (props) => {
 			>
 				Related Products
 			</h1>
-			{loadingProducts ? (
-				<FlexContainer h_center column>
-					<img src="loading_overlay.png" className="loading_png" alt="loading" />
-					<img src="loading.gif" className="loading_gif" alt="loading" />
-					<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
-				</FlexContainer>
-			) : errorProducts ? (
-				<FlexContainer h_center>
-					<h3 styles={{ textAlign: 'center' }}>{errorProducts}</h3>
-				</FlexContainer>
-			) : (
-				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
-					{/* {products.length > 0 && render_related_products()} */}
-					{products.map(
-						(item, index) =>
-							!item.hidden ? (
-								<Product
-									key={index}
-									product={item}
-									styles={{ marginRight: 20, listStyleType: 'none' }}
-								/>
-							) : (
-								<div />
-							)
-					)}
-					{/* {products.map(
+			<Loading loading={loadingProducts} error={errorProducts}>
+				{products && (
+					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
+						{/* {products.length > 0 && render_related_products()} */}
+						{products.map(
+							(item, index) =>
+								!item.hidden ? (
+									<Product
+										key={index}
+										product={item}
+										styles={{ marginRight: 20, listStyleType: 'none' }}
+									/>
+								) : (
+									<div />
+								)
+						)}
+						{/* {products.map(
 							(item, index) =>
 								!item.hidden ? !product.category ? (
 									<div />
@@ -111,7 +102,7 @@ const RelatedProducts = (props) => {
 									<div />
 								)
 						)} */}
-					{/* {products.map(
+						{/* {products.map(
 							(item, index) => (!item.category ? console.log('Loading') : console.log(item.category))
 							item.category === undefined ? (
 								<div>Loading...</div>
@@ -125,7 +116,7 @@ const RelatedProducts = (props) => {
 								<div />
 							)
 						)} */}
-					{/* {products.map(
+						{/* {products.map(
 							(item, index) =>
 								!item.hidden ? item._id !== product._id ? (
 									<Product
@@ -139,8 +130,9 @@ const RelatedProducts = (props) => {
 									<div />
 								)
 						)} */}
-				</FlexContainer>
-			)}
+					</FlexContainer>
+				)}
+			</Loading>
 		</FlexContainer>
 	);
 };

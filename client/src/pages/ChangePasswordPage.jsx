@@ -5,6 +5,7 @@ import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
+import { Loading } from '../components/UtilityComponents';
 
 const ChangePasswordPage = (props) => {
 	const history = useHistory();
@@ -80,23 +81,14 @@ const ChangePasswordPage = (props) => {
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>
 						<ul className="form-container">
 							<li>
-								{/* <h2>User Profile</h2> */}
 								<h1 style={{ textAlign: 'center' }}>Change Password</h1>
 							</li>
 							<li>
-								<FlexContainer h_center>
-									{loading && (
-										<FlexContainer h_center column>
-											<img src="loading_overlay.png" className="loading_png" alt="loading" />
-											<img src="loading.gif" className="loading_gif" alt="loading" />
-											<h3 style={{ textAlign: 'center' }}>
-												If pages doesn't show in 5 seconds, refresh the page.
-											</h3>
-										</FlexContainer>
-									)}
-									{error && <h3>{error}</h3>}
-									{success && <h3>Profile Saved Successfully</h3>}
-								</FlexContainer>
+								<Loading loading={loading} error={error}>
+									<FlexContainer h_center>
+										{success && <h3>Profile Saved Successfully</h3>}
+									</FlexContainer>
+								</Loading>
 							</li>
 							<li>
 								<label htmlFor="current_password">Current Password</label>
