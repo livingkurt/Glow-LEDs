@@ -35,7 +35,13 @@ const Product = (props) => {
 						<label>${props.product.price ? props.product.price.toFixed(2) : props.product.price}</label>
 					)}
 				</label>
-				<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
+				{props.product.rating ? (
+					<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
+				) : (
+					<span className="rating" style={{ textAlign: 'center', visibility: 'hidden' }}>
+						No Reviews
+					</span>
+				)}
 			</div>
 		</li>
 	);

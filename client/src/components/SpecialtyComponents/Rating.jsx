@@ -3,7 +3,7 @@ import React from 'react';
 const Rating = (props) => {
 	const icon_style = {
 		position: 'relative',
-		left: '-20px'
+		left: '-18px'
 	};
 
 	const span_style = {
@@ -54,7 +54,7 @@ const Rating = (props) => {
 				/>
 				<i style={icon_style} className="fa fa-star-o" />
 			</span>
-			<span>{props.text ? props.text : ''}</span>
+			<span className="rating">{props.text ? props.text : ''}</span>
 		</div>
 	);
 };

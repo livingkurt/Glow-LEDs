@@ -52,10 +52,7 @@ const AllProductsPage = (props) => {
 			<Loading loading={loading} error={error}>
 				{products && (
 					<ul className="products" style={{ marginTop: 0 }}>
-						{products.map(
-							(product, index) =>
-								!product.hidden ? <Product key={index} product={product} /> : <div key={index} />
-						)}
+						{products.map((product, index) => !product.hidden && <Product key={index} product={product} />)}
 					</ul>
 				)}
 			</Loading>
