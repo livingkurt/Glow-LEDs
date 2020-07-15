@@ -6,3 +6,4 @@ export { default as CheckoutSteps } from './CheckoutSteps';
 export { default as PaypalButton } from './PaypalButton';
 export { default as Reviews } from './Reviews';
 export { default as Slideshow } from './Slideshow';
+export { default as RelatedProducts } from './RelatedProducts';

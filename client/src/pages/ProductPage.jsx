@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, imagesProduct, saveProductReview, listProducts } from '../actions/productActions';
 import { FlexContainer } from '../components/ContainerComponents';
-import API from '../utils/API';
-import { Rating, Product, Reviews, Slideshow } from '../components/SpecialtyComponents';
+import { Rating, Product, Reviews, Slideshow, RelatedProducts } from '../components/SpecialtyComponents';
 // import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
 
 const ProductPage = (props) => {
@@ -18,43 +17,12 @@ const ProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 	const dispatch = useDispatch();
 
-	// const productReviewSave = useSelector((state) => state.productReviewSave);
-	// const { success: productSaveSuccess } = productReviewSave;
-
-	const productList = useSelector((state) => state.productList);
-	const { products, loading: loadingProducts, error: errorProducts } = productList;
-
-	// useEffect(
-	// 	() => {
-	// 		// setRating(0);
-	// 		// setComment('');
-	// 		// dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-	// 		dispatch(detailsProduct(props.match.params.id));
-	// 		// setReviewModal('none');
-	// 	},
-	// 	[ productSaveSuccess ]
-	// );
-
 	useEffect(() => {
-		dispatch(listProducts(''));
 		dispatch(detailsProduct(props.match.params.id));
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
-		// if (product) {
-		// dispatch(imagesProduct(product.display_image));
-		// }
 	}, []);
-
-	// useEffect(
-	// 	() => {
-	// 		if (product) {
-	// 			dispatch(imagesProduct(product.display_image));
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ product ]
-	// );
 
 	useEffect(
 		() => {
@@ -64,82 +32,8 @@ const ProductPage = (props) => {
 		[ props.match.params.id ]
 	);
 
-	// const productImages = useSelector((state) => state.productImages);
-	// const { images, loading: loadingImages, error: errorImages } = productImages;
-
 	const handleAddToCart = () => {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
-	};
-
-	// const change_image = (e) => {
-	// 	var expandImg = document.getElementById('expandedImg');
-	// 	expandImg.src = e.target.src;
-	// 	expandImg.parentElement.style.display = 'block';
-	// };
-
-	// const [ rating, setRating ] = useState(5);
-	// const [ comment, setComment ] = useState('');
-
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(
-	// 		saveProductReview(props.match.params.id, {
-	// 			name: userInfo.name,
-	// 			rating: rating,
-	// 			comment: comment
-	// 		})
-	// 	);
-	// };
-
-	// const [ review_modal, setReviewModal ] = useState('none');
-
-	// const show_write_review = () => {
-	// 	setReviewModal('block');
-	// };
-	// const hide_write_review = (e) => {
-	// 	e.preventDefault();
-	// 	setReviewModal('none');
-	// };
-
-	const render_related_products = () => {
-		console.log({ products });
-		console.log({ products: products[0] });
-		console.log({ products: products[1] });
-		// return products.map((item, index) => {
-		// 	console.log({ item });
-		// 	if (!item.hidden && item.category && item.category === product.category && item._id !== product._id) {
-		// 		return <Product key={index} product={item} styles={{ marginRight: 20, listStyleType: 'none' }} />;
-		// 	}
-		// 	// item.category === product.category && item._id !== product._id &&
-		// });
-		// item.category === undefined ? (
-		//   <div>Loading...</div>
-		// ) : item.category === product.category && item._id !== product._id && !item.hidden ? (
-		//   <Product
-		//     key={index}
-		//     product={item}
-		//     styles={{ marginRight: 20, listStyleType: 'none' }}
-		//   />
-		// ) : (
-		//   <div />
-		// )
-
-		// {products.map(
-		//   (item, index) =>
-		//     !item.hidden ? !product.category ? (
-		//       <div />
-		//     ) : item.category === product.category && item._id !== product._id ? (
-		//       <Product
-		//         key={index}
-		//         product={item}
-		//         styles={{ marginRight: 20, listStyleType: 'none' }}
-		//       />
-		//     ) : (
-		//       <div />
-		//     ) : (
-		//       <div />
-		//     )
-		// )}
 	};
 
 	return (
@@ -232,31 +126,6 @@ const ProductPage = (props) => {
 								</FlexContainer>
 							</FlexContainer>
 							<Slideshow product={product} show_hide="alt_pictures_hidden" />
-							{/* <div className="details-image alt_pictures_hidden">
-								{loadingImages ? (
-									<FlexContainer h_center column>
-										<img src="loading.gif" className="loading_gif" alt="loading" />
-										<img src="loading_overlay.png" className="loading_png" alt="loading" />
-									</FlexContainer>
-								) : errorImages ? (
-									<FlexContainer h_center>
-										<h3 style={{ textAlign: 'center' }}>{errorImages} </h3>
-									</FlexContainer>
-								) : (
-									images.map((image, index) => {
-										return (
-											<div className="column" key={index}>
-												<img
-													src={image}
-													alt=""
-													style={{ width: '100%' }}
-													onClick={(e) => change_image(e)}
-												/>
-											</div>
-										);
-									})
-								)}
-							</div> */}
 						</div>
 
 						<div className="details-action">
@@ -309,31 +178,6 @@ const ProductPage = (props) => {
 						</div>
 					</div>
 					<Slideshow product={product} show_hide="alt_pictures_shown" />
-					{/* <div className="details-image alt_pictures_shown">
-						{loadingImages ? (
-							<FlexContainer h_center column>
-								<img src="loading.gif" className="loading_gif" alt="loading" />
-								<img src="loading_overlay.png" className="loading_png" alt="loading" />
-							</FlexContainer>
-						) : errorImages ? (
-							<FlexContainer h_center>
-								<h3 style={{ textAlign: 'center' }}>{errorImages} </h3>
-							</FlexContainer>
-						) : (
-							images.map((image, index) => {
-								return (
-									<div className="column" key={index}>
-										<img
-											src={image}
-											alt=""
-											style={{ width: '100%' }}
-											onClick={(e) => change_image(e)}
-										/>
-									</div>
-								);
-							})
-						)}
-					</div> */}
 
 					<FlexContainer column styles={{ padding: '1rem' }}>
 						<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
@@ -410,191 +254,10 @@ const ProductPage = (props) => {
 							<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 						)}
 						<Reviews product={product} product_id={props.match.params.id} />
-						{/* <div className="review" id="reviews">
-							{product.reviews.map((review) => (
-								<li
-									key={review._id}
-									style={{
-										listStyleType: 'none',
-										background: '#616161',
-										padding: '5px',
-										borderRadius: '15px',
-										boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
-									}}
-								>
-									<div>{review.name}</div>
-									<div>
-										<Rating value={review.rating} />
-									</div>
-									<div>{format_date_display(review.createdAt.substring(0, 10))}</div>
-									<div>{review.comment}</div>
-								</li>
-							))}
-
-							<button className="button primary" onClick={show_write_review}>
-								Write a customer review
-							</button>
-
-							<li style={{ listStyleType: 'none', display: review_modal }}>
-								<h2
-									style={{
-										textAlign: 'center',
-										width: '100%',
-										justifyContent: 'center'
-									}}
-								>
-									Write a customer review
-								</h2>
-								{userInfo ? (
-									<form>
-										<div className="form-container">
-											<li style={{ marginBottom: 0 }}>
-												<h3
-													style={{
-														textAlign: 'center',
-														width: '100%',
-														justifyContent: 'center',
-														marginTop: '-35px'
-													}}
-												>
-													{productSaveSuccess ? 'Review Saved Successfully' : ''}
-												</h3>
-												<FlexContainer v_i_center>
-													<h3 htmlFor="rating">Rating</h3>
-													<div className="review_select_dropdown_container">
-														<select
-															name="rating"
-															id="rating"
-															className="review_select_dropdown"
-															defaultValue={rating}
-															onChange={(e) => setRating(e.target.value)}
-														>
-															<option value="5">5 - Excellent </option>
-															<option value="4">4 - Very Good</option>
-															<option value="3">3 - Good</option>
-															<option value="2">2 - Fair</option>
-															<option value="1">1 - Poor</option>
-														</select>
-														<i className="fas fa-sort-up review_icon_styles" />
-													</div>
-												</FlexContainer>
-											</li>
-											<li>
-												<label htmlFor="comment" id="comment" />
-												<textarea
-													htmlFor="comment"
-													className="rating_textarea"
-													value={comment}
-													onChange={(e) => setComment(e.target.value)}
-												/>
-											</li>
-											<li>
-												<button
-													style={{ marginBottom: '10px' }}
-													onClick={submitHandler}
-													className="button primary"
-												>
-													Submit
-												</button>
-
-												<button onClick={hide_write_review} className="button secondary">
-													Cancel
-												</button>
-											</li>
-										</div>
-									</form>
-								) : (
-									<div>
-										Please <Link to="/login">Login</Link> to Write a Review
-									</div>
-								)}
-							</li>
-						</div> */}
 					</div>
 				</FlexContainer>
 			)}
-			<FlexContainer column styles={{ margin: '0 10px' }}>
-				<h1
-					style={{
-						textAlign: 'center',
-						width: '100%',
-						justifyContent: 'center'
-					}}
-				>
-					Related Products
-				</h1>
-				{loadingProducts ? (
-					<FlexContainer h_center column>
-						<img src="loading_overlay.png" className="loading_png" alt="loading" />
-						<img src="loading.gif" className="loading_gif" alt="loading" />
-						<h3 style={{ textAlign: 'center' }}>If pages doesn't show in 5 seconds, refresh the page.</h3>
-					</FlexContainer>
-				) : errorProducts ? (
-					<FlexContainer h_center>
-						<h3 styles={{ textAlign: 'center' }}>{errorProducts}</h3>
-					</FlexContainer>
-				) : (
-					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
-						{products.length > 0 && render_related_products()}
-						{/* {products.map(
-							(item, index) =>
-								!item.hidden ? (
-									<Product
-										key={index}
-										product={item}
-										styles={{ marginRight: 20, listStyleType: 'none' }}
-									/>
-								) : (
-									<div />
-								)
-						)} */}
-						{/* {products.map(
-							(item, index) =>
-								!item.hidden ? !product.category ? (
-									<div />
-								) : item.category === product.category && item._id !== product._id ? (
-									<Product
-										key={index}
-										product={item}
-										styles={{ marginRight: 20, listStyleType: 'none' }}
-									/>
-								) : (
-									<div />
-								) : (
-									<div />
-								)
-						)} */}
-						{/* {products.map(
-							(item, index) => (!item.category ? console.log('Loading') : console.log(item.category))
-							item.category === undefined ? (
-								<div>Loading...</div>
-							) : item.category === product.category && item._id !== product._id && !item.hidden ? (
-								<Product
-									key={index}
-									product={item}
-									styles={{ marginRight: 20, listStyleType: 'none' }}
-								/>
-							) : (
-								<div />
-							)
-						)} */}
-						{/* {products.map(
-							(item, index) =>
-								!item.hidden ? item._id !== product._id ? (
-									<Product
-										key={index}
-										product={item}
-										styles={{ marginRight: 20, listStyleType: 'none' }}
-									/>
-								) : (
-									<div />
-								) : (
-									<div />
-								)
-						)} */}
-					</FlexContainer>
-				)}
-			</FlexContainer>
+			<RelatedProducts />
 		</FlexContainer>
 	);
 };
