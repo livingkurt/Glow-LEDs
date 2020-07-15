@@ -10,16 +10,13 @@ const Sidebar = (props) => {
 	function useOutsideAlerter(ref) {
 		useEffect(
 			() => {
-				/**
-         * Alert if clicked on outside of element
-         */
+				/** Alert if clicked on outside of element */
 				function handleClickOutside(event) {
 					if (ref.current && !ref.current.contains(event.target)) {
 						// alert('You clicked outside of me!');
 						document.querySelector('.sidebar').classList.remove('open');
 					}
 				}
-
 				// Bind the event listener
 				document.addEventListener('mousedown', handleClickOutside);
 				return () => {
@@ -30,6 +27,8 @@ const Sidebar = (props) => {
 			[ ref ]
 		);
 	}
+	const wrapperRef = useRef(null);
+	useOutsideAlerter(wrapperRef);
 
 	const cart = useSelector((state) => state.cart);
 
@@ -79,8 +78,7 @@ const Sidebar = (props) => {
 		},
 		[ userUpdate.userInfo ]
 	);
-	const wrapperRef = useRef(null);
-	useOutsideAlerter(wrapperRef);
+
 	return (
 		<aside ref={wrapperRef} className="sidebar">
 			<h2>Shopping Categories</h2>

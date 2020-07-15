@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-import './App.css';
 import {
 	HomePage,
 	AllProductsPage,
@@ -63,7 +62,6 @@ const App = () => {
 							<Route path="/contact" exact={true} component={ContactPage} />
 							<Route path="/terms" exact={true} component={TermsPage} />
 							<Route path="/about" exact={true} component={AboutPage} />
-
 							{/* Private Routes */}
 							<PrivateRoute path="/profile" component={ProfilePage} />
 							<PrivateRoute path="/editprofile" component={EditProfilePage} />
