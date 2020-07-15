@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, imagesProduct, saveProductReview, listProducts } from '../actions/productActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import API from '../utils/API';
-import { Rating, Product, Reviews, Slideshow } from '../components/SpecialtyComponents';
-// import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
+import { Rating, Product } from '../components/SpecialtyComponents';
+import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
+import { format_date_display } from '../utils/helper_functions';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -18,22 +19,22 @@ const ProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 	const dispatch = useDispatch();
 
-	// const productReviewSave = useSelector((state) => state.productReviewSave);
-	// const { success: productSaveSuccess } = productReviewSave;
+	const productReviewSave = useSelector((state) => state.productReviewSave);
+	const { success: productSaveSuccess } = productReviewSave;
 
 	const productList = useSelector((state) => state.productList);
 	const { products, loading: loadingProducts, error: errorProducts } = productList;
 
-	// useEffect(
-	// 	() => {
-	// 		// setRating(0);
-	// 		// setComment('');
-	// 		// dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-	// 		dispatch(detailsProduct(props.match.params.id));
-	// 		// setReviewModal('none');
-	// 	},
-	// 	[ productSaveSuccess ]
-	// );
+	useEffect(
+		() => {
+			setRating(0);
+			setComment('');
+			dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+			dispatch(detailsProduct(props.match.params.id));
+			setReviewModal('none');
+		},
+		[ productSaveSuccess ]
+	);
 
 	useEffect(() => {
 		dispatch(listProducts(''));
@@ -46,15 +47,15 @@ const ProductPage = (props) => {
 		// }
 	}, []);
 
-	// useEffect(
-	// 	() => {
-	// 		if (product) {
-	// 			dispatch(imagesProduct(product.display_image));
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ product ]
-	// );
+	useEffect(
+		() => {
+			if (product) {
+				dispatch(imagesProduct(product.display_image));
+			}
+			return () => {};
+		},
+		[ product ]
+	);
 
 	useEffect(
 		() => {
@@ -64,42 +65,42 @@ const ProductPage = (props) => {
 		[ props.match.params.id ]
 	);
 
-	// const productImages = useSelector((state) => state.productImages);
-	// const { images, loading: loadingImages, error: errorImages } = productImages;
+	const productImages = useSelector((state) => state.productImages);
+	const { images, loading: loadingImages, error: errorImages } = productImages;
 
 	const handleAddToCart = () => {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
 	};
 
-	// const change_image = (e) => {
-	// 	var expandImg = document.getElementById('expandedImg');
-	// 	expandImg.src = e.target.src;
-	// 	expandImg.parentElement.style.display = 'block';
-	// };
+	const change_image = (e) => {
+		var expandImg = document.getElementById('expandedImg');
+		expandImg.src = e.target.src;
+		expandImg.parentElement.style.display = 'block';
+	};
 
-	// const [ rating, setRating ] = useState(5);
-	// const [ comment, setComment ] = useState('');
+	const [ rating, setRating ] = useState(5);
+	const [ comment, setComment ] = useState('');
 
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(
-	// 		saveProductReview(props.match.params.id, {
-	// 			name: userInfo.name,
-	// 			rating: rating,
-	// 			comment: comment
-	// 		})
-	// 	);
-	// };
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(
+			saveProductReview(props.match.params.id, {
+				name: userInfo.name,
+				rating: rating,
+				comment: comment
+			})
+		);
+	};
 
-	// const [ review_modal, setReviewModal ] = useState('none');
+	const [ review_modal, setReviewModal ] = useState('none');
 
-	// const show_write_review = () => {
-	// 	setReviewModal('block');
-	// };
-	// const hide_write_review = (e) => {
-	// 	e.preventDefault();
-	// 	setReviewModal('none');
-	// };
+	const show_write_review = () => {
+		setReviewModal('block');
+	};
+	const hide_write_review = (e) => {
+		e.preventDefault();
+		setReviewModal('none');
+	};
 
 	const render_related_products = () => {
 		console.log({ products });
@@ -231,8 +232,7 @@ const ProductPage = (props) => {
 									</div>
 								</FlexContainer>
 							</FlexContainer>
-							<Slideshow product={product} show_hide="alt_pictures_hidden" />
-							{/* <div className="details-image alt_pictures_hidden">
+							<div className="details-image alt_pictures_hidden">
 								{loadingImages ? (
 									<FlexContainer h_center column>
 										<img src="loading.gif" className="loading_gif" alt="loading" />
@@ -256,7 +256,7 @@ const ProductPage = (props) => {
 										);
 									})
 								)}
-							</div> */}
+							</div>
 						</div>
 
 						<div className="details-action">
@@ -308,8 +308,7 @@ const ProductPage = (props) => {
 							</ul>
 						</div>
 					</div>
-					<Slideshow product={product} show_hide="alt_pictures_shown" />
-					{/* <div className="details-image alt_pictures_shown">
+					<div className="details-image alt_pictures_shown">
 						{loadingImages ? (
 							<FlexContainer h_center column>
 								<img src="loading.gif" className="loading_gif" alt="loading" />
@@ -333,7 +332,7 @@ const ProductPage = (props) => {
 								);
 							})
 						)}
-					</div> */}
+					</div>
 
 					<FlexContainer column styles={{ padding: '1rem' }}>
 						<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
@@ -409,8 +408,7 @@ const ProductPage = (props) => {
 						{!product.reviews.length && (
 							<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 						)}
-						<Reviews product={product} product_id={props.match.params.id} />
-						{/* <div className="review" id="reviews">
+						<div className="review" id="reviews">
 							{product.reviews.map((review) => (
 								<li
 									key={review._id}
@@ -509,7 +507,7 @@ const ProductPage = (props) => {
 									</div>
 								)}
 							</li>
-						</div> */}
+						</div>
 					</div>
 				</FlexContainer>
 			)}

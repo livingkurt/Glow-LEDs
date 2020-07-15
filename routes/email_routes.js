@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const main_layout = require('../email_templates/App');
+const styles = require('../email_templates/styles');
 const {
 	contact_view,
 	reset_password_view,
@@ -29,7 +30,7 @@ router.post('/contact', async (req, res) => {
 		from: data.email,
 		to: process.env.DISPLAY_EMAIL,
 		subject: `New message from ${data.name} - ${data.order_number} - ${data.reason_for_contact}`,
-		html: main_layout(contact_view(data))
+		html: main_layout(contact_view(data), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -50,7 +51,7 @@ router.post('/passwordreset', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Password Reset',
-		html: main_layout(reset_password_view(req.body))
+		html: main_layout(reset_password_view(req.body), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -71,7 +72,7 @@ router.post('/verified', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Account Confirmation',
-		html: main_layout(verified_account_view(req.body))
+		html: main_layout(verified_account_view(req.body), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -92,7 +93,7 @@ router.post('/verify', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Account Verification',
-		html: main_layout(verify_account_view(req.body))
+		html: main_layout(verify_account_view(req.body), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -107,13 +108,13 @@ router.post('/verify', async (req, res) => {
 });
 
 router.post('/order', async (req, res) => {
-	console.log({ order: req.body });
+	console.log({ order: req.body.orderItems });
 	let user = {};
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.user_data.email,
 		subject: 'Glow LEDs Order Confirmation',
-		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed' }))
+		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed' }), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -134,7 +135,7 @@ router.post('/sale', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: process.env.EMAIL,
 		subject: 'New Order from ' + req.body.user_data.name,
-		html: main_layout(order_view({ ...req.body, title: 'New Order from ' + req.body.user_data.name }))
+		html: main_layout(order_view({ ...req.body, title: 'New Order from ' + req.body.user_data.name }), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -155,7 +156,7 @@ router.post('/paid', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: process.env.EMAIL,
 		subject: 'Order Paid by ' + req.body.user_data.name,
-		html: main_layout(order_view({ ...req.body, title: 'Order Paid by ' + req.body.user_data.name }))
+		html: main_layout(order_view({ ...req.body, title: 'Order Paid by ' + req.body.user_data.name }), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -183,7 +184,7 @@ router.post('/shipping', async (req, res) => {
 		// from: 'Kurt LaVacque <lavacquek@gmail.com>',
 		to: user.email,
 		subject: 'Glow LEDs Shipping Confirmation',
-		html: main_layout(order_view({ ...req.body, title: 'Your Item has Shipped!' }))
+		html: main_layout(order_view({ ...req.body, title: 'Your Item has Shipped!' }), styles())
 	};
 	console.log(req.body);
 
@@ -211,7 +212,7 @@ router.post('/delivery', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: user.email,
 		subject: 'Glow LEDs Delivery Confirmation',
-		html: main_layout(order_view({ ...req.body, title: 'Your Item has Been Delivered!' }))
+		html: main_layout(order_view({ ...req.body, title: 'Your Item has Been Delivered!' }), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
