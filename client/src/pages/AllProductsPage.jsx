@@ -33,6 +33,7 @@ const AllProductsPage = (props) => {
 		e.preventDefault();
 		dispatch(listProducts(category, searchKeyword, sortOrder));
 	};
+
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
 		dispatch(listProducts(category, searchKeyword, e.target.value));
