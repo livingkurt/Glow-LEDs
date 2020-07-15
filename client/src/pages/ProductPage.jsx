@@ -257,7 +257,7 @@ const ProductPage = (props) => {
 					</div>
 				</FlexContainer>
 			)}
-			<RelatedProducts product={product} />
+			<RelatedProducts product={product} product_id={props.match.params.id} />
 		</FlexContainer>
 	);
 };

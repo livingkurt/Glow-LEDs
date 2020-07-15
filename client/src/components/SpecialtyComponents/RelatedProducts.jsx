@@ -1,19 +1,16 @@
 // React
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Rating from './Rating';
 import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, detailsProduct } from '../../actions/productActions';
 import Product from './Product';
 import { Loading } from '../UtilityComponents';
-// Components
 
 const RelatedProducts = (props) => {
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
-	const { products, loading: loadingProducts, error: errorProducts } = productList;
+	const { products, loading, error } = productList;
 
 	useEffect(
 		() => {
@@ -35,12 +32,14 @@ const RelatedProducts = (props) => {
 			>
 				Related Products
 			</h1>
-			<Loading loading={loadingProducts} error={errorProducts}>
+			<Loading loading={loading} error={error}>
 				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
 					{products &&
 						products.map(
 							(item, index) =>
-								!item.hidden && (
+								!item.hidden &&
+								props.product_id &&
+								item._id !== props.product_id && (
 									<Product
 										key={index}
 										product={item}
