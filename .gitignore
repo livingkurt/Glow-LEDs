@@ -118,21 +118,22 @@ util.js
 server.js
 config.js
 
-./routes/user_routes.js
-./routes/product_routes.js
-./routes/index.js
-./routes/email_routes.js
-./routes/order_routes.js
+routes/user_routes.js
+routes/product_routes.js
+routes/index.js
+routes/email_routes.js
+routes/order_routes.js
 
-./models/user.js
-./models/product.js
-./models/index.js
-./models/order.js
+models/user.js
+models/product.js
+models/index.js
+models/order.js
 
 email_templates/HTML
 email_templates/pages/verify_account_view.js
 email_templates/pages/verified_account_view.js
 email_templates/pages/reset_password_view.js
+email_templates/pages/password_reset_view.js
 email_templates/pages/order_view.js
 email_templates/pages/index.js
 email_templates/pages/contact_view.js
