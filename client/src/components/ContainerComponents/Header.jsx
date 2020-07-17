@@ -142,12 +142,14 @@ const Header = (props) => {
 			<FlexContainer class="nav_bar" styles={{ width: '270px', justifyContent: 'flex-end' }}>
 				<Link to="/cart">
 					<button className=" button nav cart_text">
-						Cart <i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => a + c.qty, 0)}{' '}
+						Cart <i className="fas fa-shopping-cart" />{' '}
+						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 					</button>
 				</Link>
 				<Link to="/cart">
 					<button style={{ display: 'none' }} className=" button mobile nav cart_icon">
-						<i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => a + c.qty, 0)}{' '}
+						<i className="fas fa-shopping-cart" />{' '}
+						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 					</button>
 				</Link>
 				{props.userInfo ? (

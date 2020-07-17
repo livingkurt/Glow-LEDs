@@ -102,7 +102,7 @@ const CartPage = (props) => {
 			<FlexContainer h_center class="cart-action-container">
 				<div className="cart-action">
 					<h3 className="subtotal_h3">
-						Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items ) : ${' '}
+						Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
 						{cartItems
 							.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0)
 							.toFixed(2)}
