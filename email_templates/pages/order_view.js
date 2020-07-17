@@ -32,7 +32,7 @@ module.exports = (props) => {
                       style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
                       <label style="margin-top: 5px;">${props.isShipped
 							? 'Shipped at ' + format_date_display(props.shippedAt)
-							: ' Not Shipped'}/label>
+							: ' Not Shipped'}</label>
                     </div>
                   </div>
                 </div>

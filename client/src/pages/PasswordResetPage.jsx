@@ -38,7 +38,7 @@ const PasswordResetPage = (props) => {
 
 					<li>
 						<button type="submit" className="button primary">
-							Reset Password
+							Verify Email
 						</button>
 					</li>
 				</ul>
