@@ -17,7 +17,7 @@ module.exports = (props) => {
               <a style="font-size: 25px; color: white; text-decoration: none;"
                 href="${process.env.NODE_ENV === 'production'
 					? 'http://www.glow-leds.com'
-					: 'http://localhost:3000'}/category/Caps">Shop with Glow LEDs Today!</a></button>
+					: 'http://localhost:3000'}">Shop with Glow LEDs Today!</a></button>
           </div>
         </div>
 	`;

@@ -52,7 +52,17 @@ const ContactPage = () => {
 					message
 				})
 			);
-			e.target.reset();
+			set_name_Validations('');
+			set_email_validations('');
+			set_order_number_validations('');
+			set_reason_for_contact_validations('');
+			set_message_validations('');
+			// e.target.reset();
+			document.getElementsByName('name').value = '';
+			document.getElementsByName('email').value = '';
+			document.getElementsByName('order_number').value = '';
+			document.getElementsByName('reason_for_contact').value = '';
+			document.getElementsByName('message').value = '';
 		}
 	};
 
