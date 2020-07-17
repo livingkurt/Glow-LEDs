@@ -1,5 +1,5 @@
 // import mongoose from 'mongoose';
-
+export {};
 const mongoose = require('mongoose');
 
 const shippingSchema = {

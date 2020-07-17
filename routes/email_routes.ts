@@ -1,3 +1,4 @@
+export {};
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const { isAuth, isAdmin } = require('../util');
@@ -182,7 +183,7 @@ router.post('/shipping', async (req, res) => {
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		// from: 'Kurt LaVacque <lavacquek@gmail.com>',
-		to: user.email,
+		to: req.body.email,
 		subject: 'Glow LEDs Shipping Confirmation',
 		html: main_layout(order_view({ ...req.body, title: 'Your Item has Shipped!' }), styles())
 	};
@@ -193,7 +194,7 @@ router.post('/shipping', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('Shipping Email Sent to ' + user.name);
+			console.log('Shipping Email Sent to ' + req.body.name);
 			res.send('Email Successfully Sent');
 		}
 	});
@@ -210,7 +211,7 @@ router.post('/delivery', async (req, res) => {
 
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
-		to: user.email,
+		to: req.body.email,
 		subject: 'Glow LEDs Delivery Confirmation',
 		html: main_layout(order_view({ ...req.body, title: 'Your Item has Been Delivered!' }), styles())
 	};
@@ -220,7 +221,7 @@ router.post('/delivery', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('Delivery Email Sent to ' + user.name);
+			console.log('Delivery Email Sent to ' + req.body.name);
 			res.send('Email Successfully Sent');
 		}
 	});

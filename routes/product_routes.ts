@@ -1,7 +1,4 @@
-// import express from 'express';
-// import Product from '../models/productModel';
-// import { isAuth, isAdmin } from '../util';
-
+export {};
 const express = require('express');
 const Product = require('../models/product');
 const { isAuth, isAdmin } = require('../util');
