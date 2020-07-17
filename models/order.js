@@ -14,18 +14,23 @@ const paymentSchema = {
 	paymentMethod: { type: String, required: true }
 };
 
-const orderItemSchema = new mongoose.Schema({
-	name: { type: String, required: true },
-	qty: { type: Number, required: true },
-	display_image: { type: String, required: true },
-	price: { type: Number, required: true },
-	sale_price: { type: Number },
-	product: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Product',
-		required: true
+const orderItemSchema = new mongoose.Schema(
+	{
+		name: { type: String, required: true },
+		qty: { type: Number, required: true },
+		display_image: { type: String, required: true },
+		price: { type: Number, required: true },
+		sale_price: { type: Number },
+		product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product',
+			required: true
+		}
+	},
+	{
+		timestamps: true
 	}
-});
+);
 
 const orderSchema = new mongoose.Schema(
 	{
