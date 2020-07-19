@@ -32,6 +32,6 @@
 		"build": "tsc && cd client && npm run build",
 		"build-ts": "tsc",
 		"watch-ts": "tsc -w",
-		"heroku-postbuild": "npm run build"
+		"heroku-postbuild": "tsc && npm run build"
 	}
 }
