@@ -4,20 +4,18 @@ import { Link } from 'react-router-dom';
 
 const HomePage = (props) => {
 	useEffect(() => {
-		const diffuser_caps_video = document.getElementById('diffuser_caps_video');
-		diffuser_caps_video.muted = true;
-		diffuser_caps_video.autoplay = true;
-		diffuser_caps_video.playsinline = true;
-
-		const infinity_mirror_video = document.getElementById('infinity_mirror_video');
-		infinity_mirror_video.muted = true;
-		infinity_mirror_video.autoplay = true;
-		infinity_mirror_video.playsinline = true;
-
-		const string_lights_video = document.getElementById('string_lights_video');
-		string_lights_video.muted = true;
-		string_lights_video.autoplay = true;
-		string_lights_video.playsinline = true;
+		// const diffuser_caps_video = document.getElementById('diffuser_caps_video');
+		// diffuser_caps_video.muted = true;
+		// diffuser_caps_video.autoplay = true;
+		// diffuser_caps_video.playsinline = true;
+		// const infinity_mirror_video = document.getElementById('infinity_mirror_video');
+		// infinity_mirror_video.muted = true;
+		// infinity_mirror_video.autoplay = true;
+		// infinity_mirror_video.playsinline = true;
+		// const string_lights_video = document.getElementById('string_lights_video');
+		// string_lights_video.muted = true;
+		// string_lights_video.autoplay = true;
+		// string_lights_video.playsinline = true;
 	}, []);
 
 	const heading_styles = {
@@ -46,8 +44,8 @@ const HomePage = (props) => {
 		outline: 'none'
 	};
 	const video_wrapper = {
-		position: 'relative',
-		padding: '56.25% 0 0'
+		position: 'relative'
+		// padding: '56.25% 0 0'
 	};
 
 	const div_styles = {
@@ -61,6 +59,22 @@ const HomePage = (props) => {
 		padding: '25px',
 		marginBottom: '25px'
 	};
+
+	// $(document).ready(function() {
+	// 	var inner = $('.inner');
+	// 	var elementPosTop = inner.position().top;
+	// 	var viewportHeight = $(window).height();
+	// 	$(window).on('scroll', function() {
+	// 		var scrollPos = $(window).scrollTop();
+	// 		var elementFromTop = elementPosTop - scrollPos;
+
+	// 		if (elementFromTop > 0 && elementFromTop < elementPosTop + viewportHeight) {
+	// 			inner.addClass('active');
+	// 		} else {
+	// 			inner.removeClass('active');
+	// 		}
+	// 	});
+	// });
 
 	return (
 		<div class="main_container">
@@ -83,12 +97,23 @@ const HomePage = (props) => {
 					<h1>Diffuser Caps</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="diffuser_caps_video" style={homepage_video} controls>
+					{/* <video id="diffuser_caps_video" style={homepage_video} controls>
 						<source
 							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 							type="video/mp4"
 						/>
-					</video>
+					</video> */}
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/VAFdEVftaGw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						/>
+					</div>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					It's been too long since a truly new element has been introduced to gloving. This new technology
@@ -110,12 +135,23 @@ const HomePage = (props) => {
 					<h1>Infinity Mirrors</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="infinity_mirror_video" style={homepage_video} controls>
+					{/* <video id="infinity_mirror_video" style={homepage_video} controls>
 						<source
 							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 							type="video/mp4"
 						/>
-					</video>
+					</video> */}
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/kDZVkghXxRs?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						/>
+					</div>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity mirrors
@@ -136,12 +172,20 @@ const HomePage = (props) => {
 					<h1>String Lights</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="string_lights_video" style={homepage_video} controls>
-						<source
-							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
-							type="video/mp4"
+					{/* <video id="string_lights_video" style={homepage_video} controls>
+						<source src="https://youtu.be/kDZVkghXxRs" type="video/mp4" />
+					</video> */}
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/VAFdEVftaGw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
 						/>
-					</video>
+					</div>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your
