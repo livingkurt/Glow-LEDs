@@ -49,7 +49,7 @@ const MaintenancePage = (props) => {
 
 	return (
 		<div style={{ padding: 0 }}>
-			<header style={header_styles} id="overlay">
+			<div style={header_styles}>
 				<FlexContainer h_center column t_center>
 					<div className="brand">
 						<img
@@ -82,7 +82,7 @@ const MaintenancePage = (props) => {
 						Glow LEDs
 					</h1>
 				</FlexContainer>
-			</header>
+			</div>
 			<div style={content_styles}>
 				<FlexContainer h_center column t_center>
 					<h2 styles={{ margin: '20px auto' }}>Glow LEDs Coming Soon!</h2>
