@@ -224,7 +224,14 @@ const ProductPage = (props) => {
 									>
 										<source src={product.video} type="video/mp4" />
 									</video> */}
-									<div className="iframe-container">
+									<div class="embed-container">
+										<iframe
+											src="https://www.youtube.com/embed/undefined"
+											frameborder="0"
+											allowfullscreen
+										/>
+									</div>
+									{/* <div className="iframe-container">
 										<iframe
 											width="996"
 											height="560"
@@ -234,7 +241,7 @@ const ProductPage = (props) => {
 											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 											allowfullscreen="1"
 										/>
-									</div>
+									</div> */}
 								</FlexContainer>
 							)}
 						</FlexContainer>

@@ -30,8 +30,8 @@ const MaintenancePage = (props) => {
 		outline: 'none'
 	};
 	const video_wrapper = {
-		position: 'relative',
-		padding: '56.25% 0 0'
+		position: 'relative'
+		// padding: '56.25% 0 0'
 	};
 
 	const content_styles = {
@@ -89,12 +89,23 @@ const MaintenancePage = (props) => {
 					<label>Check out the video below for a sneak peak of what we have to offer</label>
 				</FlexContainer>
 				<FlexContainer h_center styles={video_wrapper}>
-					<video id="caps_vid" style={homepage_video} controls>
+					{/* <video id="caps_vid" style={homepage_video} controls>
 						<source
 							src="videos/optimized_videos/Custom_Infinity_Mirror/Tri-Force-Product-Video.mp4"
 							type="video/mp4"
 						/>
-					</video>
+					</video> */}
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/kDZVkghXxRs?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
 				</FlexContainer>
 			</div>
 		</div>
