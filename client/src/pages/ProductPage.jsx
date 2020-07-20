@@ -216,14 +216,25 @@ const ProductPage = (props) => {
 									>
 										Watch the Video Below to Learn More
 									</h2>
-									<video
+									{/* <video
 										className="product_video"
 										style={{ height: 'auto', maxWidth: '100%', borderRadius: '20px' }}
 										controls
 										poster={product.display_image}
 									>
 										<source src={product.video} type="video/mp4" />
-									</video>
+									</video> */}
+									<div className="iframe-container">
+										<iframe
+											width="996"
+											height="560"
+											style={{ borderRadius: '20px' }}
+											src={`${product.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+											frameborder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen="1"
+										/>
+									</div>
 								</FlexContainer>
 							)}
 						</FlexContainer>
