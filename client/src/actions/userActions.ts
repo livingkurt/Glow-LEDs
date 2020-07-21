@@ -51,7 +51,7 @@ const update = (userdata: any) => async (
 	}
 };
 
-const login = (email: any, password: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+const login = (email: string, password: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
 	try {
 		const { data } = await axios.post('/api/users/login', { email, password });
@@ -62,7 +62,7 @@ const login = (email: any, password: any) => async (dispatch: (arg0: { type: str
 	}
 };
 
-const password_reset = (email: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+const password_reset = (email: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ password_reset: email });
 	dispatch({ type: USER_PASSWORD_RESET_REQUEST, payload: { email } });
 	try {
@@ -74,7 +74,7 @@ const password_reset = (email: any) => async (dispatch: (arg0: { type: string; p
 	}
 };
 
-const reset_password = (user_id: any, password: any, repassword: any) => async (
+const reset_password = (user_id: string, password: string, repassword: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	console.log({ user_id, password, repassword });
@@ -88,7 +88,7 @@ const reset_password = (user_id: any, password: any, repassword: any) => async (
 	}
 };
 
-const register = (name: any, email: any, password: any) => async (
+const register = (name: string, email: string, password: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
@@ -117,7 +117,7 @@ const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payl
 };
 
 const contact = (
-	user_name: { name: any; email: any; order_number: any; reason_for_contact: any; message: any },
+	user_name: { name: string; email: string; order_number: string; reason_for_contact: string; message: string },
 	user_email: undefined,
 	order_number: undefined,
 	reason_for_contact: undefined,

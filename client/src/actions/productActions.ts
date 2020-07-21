@@ -40,20 +40,20 @@ const listProducts = (category = '', searchKeyword = '', sortOrder = '') => asyn
 };
 
 const saveProduct = (product: {
-	_id: any;
-	name?: any;
-	price?: any;
-	display_image?: any;
-	video?: any;
-	brand?: any;
-	category?: any;
-	countInStock?: any;
-	facts?: any;
-	included_items?: any;
-	description?: any;
-	hidden?: any;
-	sale_price?: any;
-	volume?: any;
+	_id: string;
+	name?: string;
+	price?: number;
+	display_image?: string;
+	video?: string;
+	brand?: string;
+	category?: string;
+	countInStock?: number;
+	facts?: string;
+	included_items?: string;
+	description?: string;
+	hidden?: boolean;
+	sale_price?: number;
+	volume?: number;
 }) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -110,7 +110,7 @@ const deleteProduct = (productId: string) => async (
 	}
 };
 
-const imagesProduct = (folder_dir: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+const imagesProduct = (folder_dir: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	// console.log({ folder_dir });
 	try {
 		dispatch({ type: PRODUCT_IMAGES_REQUEST, payload: folder_dir });
@@ -121,7 +121,7 @@ const imagesProduct = (folder_dir: any) => async (dispatch: (arg0: { type: strin
 	}
 };
 
-const saveProductReview = (product_id: any, review: { name: any; rating: any; comment: any }) => async (
+const saveProductReview = (product_id: string, review: { name: string; rating: number; comment: string }) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: { token: any } } }
 ) => {

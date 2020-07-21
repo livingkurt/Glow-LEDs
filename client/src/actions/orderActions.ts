@@ -27,15 +27,15 @@ import {
 } from '../constants/orderConstants';
 
 const createOrder = (order: {
-	orderItems: any;
-	shipping: any;
+	orderItems: object;
+	shipping: object;
 	payment: any;
-	itemsPrice: any;
-	shippingPrice: any;
+	itemsPrice: number;
+	shippingPrice: number;
 	taxPrice: number;
-	totalPrice: any;
-	user_data: any;
-	order_note: any;
+	totalPrice: number;
+	user_data: object;
+	order_note: string;
 }) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }

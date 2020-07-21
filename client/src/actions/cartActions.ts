@@ -7,18 +7,18 @@ const addToCart = (productId: string, qty: number) => async (
 		arg0: {
 			type: string;
 			payload: {
-				product: any;
-				name: any;
-				display_image: any;
-				price: any;
-				sale_price: any;
-				countInStock: any;
-				volume: any;
+				product: object;
+				name: string;
+				display_image: string;
+				price: number;
+				sale_price: number;
+				countInStock: number;
+				volume: number;
 				qty: number;
 			};
 		}
 	) => void,
-	getState: () => { cart: { cartItems: any } }
+	getState: () => { cart: { cartItems: object } }
 ) => {
 	try {
 		const { data } = await Axios.get('/api/products/' + productId);
@@ -39,16 +39,16 @@ const addToCart = (productId: string, qty: number) => async (
 		Cookie.set('cartItems', JSON.stringify(cartItems));
 	} catch (error) {}
 };
-const removeFromCart = (productId: any) => (
+const removeFromCart = (productId: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { cart: { cartItems: any } }
+	getState: () => { cart: { cartItems: object } }
 ) => {
 	dispatch({ type: CART_REMOVE_ITEM, payload: productId });
 
 	const { cart: { cartItems } } = getState();
 	Cookie.set('cartItems', JSON.stringify(cartItems));
 };
-const saveShipping = (data: { address: any; city: any; state: any; postalCode: any; country: any }) => (
+const saveShipping = (data: { address: string; city: string; state: string; postalCode: string; country: string }) => (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
