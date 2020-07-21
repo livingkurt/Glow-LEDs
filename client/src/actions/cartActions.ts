@@ -2,7 +2,24 @@ import Axios from 'axios';
 import Cookie from 'js-cookie';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_PAYMENT } from '../constants/cartConstants';
 
-const addToCart = (productId, qty) => async (dispatch, getState) => {
+const addToCart = (productId: string, qty: number) => async (
+	dispatch: (
+		arg0: {
+			type: string;
+			payload: {
+				product: any;
+				name: any;
+				display_image: any;
+				price: any;
+				sale_price: any;
+				countInStock: any;
+				volume: any;
+				qty: number;
+			};
+		}
+	) => void,
+	getState: () => { cart: { cartItems: any } }
+) => {
 	try {
 		const { data } = await Axios.get('/api/products/' + productId);
 		dispatch({
@@ -22,16 +39,21 @@ const addToCart = (productId, qty) => async (dispatch, getState) => {
 		Cookie.set('cartItems', JSON.stringify(cartItems));
 	} catch (error) {}
 };
-const removeFromCart = (productId) => (dispatch, getState) => {
+const removeFromCart = (productId: any) => (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { cart: { cartItems: any } }
+) => {
 	dispatch({ type: CART_REMOVE_ITEM, payload: productId });
 
 	const { cart: { cartItems } } = getState();
 	Cookie.set('cartItems', JSON.stringify(cartItems));
 };
-const saveShipping = (data) => (dispatch) => {
+const saveShipping = (data: { address: any; city: any; state: any; postalCode: any; country: any }) => (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
 };
-const savePayment = (data) => (dispatch) => {
+const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_PAYMENT, payload: data });
 };
 export { addToCart, removeFromCart, saveShipping, savePayment };

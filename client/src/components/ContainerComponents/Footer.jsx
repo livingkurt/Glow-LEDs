@@ -22,17 +22,22 @@ const Footer = (props) => {
 	return (
 		<footer style={{ ...footer_styles, ...props.styles }}>
 			<FlexContainer h_between v_i_center styles={{ width: '100%' }}>
-				<div style={{ marginLeft: '10px' }} />
+				<div style={{ marginLeft: '96px' }} />
 				<label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label>
 				<FlexContainer styles={{ marginTop: '8px' }}>
 					<div style={{ marginLeft: '10px', fontSize: '30px' }}>
 						<a href="https://www.facebook.com/Glow-LEDscom-100365571740684" target="_blank">
-							<i class="fab fa-facebook" />
+							<i class="fab fa-facebook zoom" />
+						</a>
+					</div>
+					<div style={{ marginLeft: '10px', fontSize: '30px' }}>
+						<a href="https://www.instagram.com/glow_leds/" target="_blank">
+							<i class="fab fa-instagram zoom" />
 						</a>
 					</div>
 					<div style={{ marginLeft: '10px', fontSize: '30px', marginRight: '10px' }}>
-						<a href="https://www.instagram.com/glow_leds/" target="_blank">
-							<i class="fab fa-instagram" />
+						<a href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw" target="_blank">
+							<i class="fab fa-youtube zoom" />
 						</a>
 					</div>
 				</FlexContainer>

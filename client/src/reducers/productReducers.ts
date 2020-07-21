@@ -20,7 +20,7 @@ import {
 	PRODUCT_REVIEW_SAVE_RESET
 } from '../constants/productConstants';
 
-const productListReducer = (state = { products: [] }, action) => {
+const productListReducer = (state = { products: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_LIST_REQUEST:
 			return { loading: true, products: [] };
@@ -33,7 +33,7 @@ const productListReducer = (state = { products: [] }, action) => {
 	}
 };
 
-const productDetailsReducer = (state = { product: { reviews: [] } }, action) => {
+const productDetailsReducer = (state = { product: { reviews: [] } }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_DETAILS_REQUEST:
 			return { loading: true };
@@ -46,7 +46,7 @@ const productDetailsReducer = (state = { product: { reviews: [] } }, action) => 
 	}
 };
 
-const productDeleteReducer = (state = { product: {} }, action) => {
+const productDeleteReducer = (state = { product: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_DELETE_REQUEST:
 			return { loading: true };
@@ -59,7 +59,7 @@ const productDeleteReducer = (state = { product: {} }, action) => {
 	}
 };
 
-const productSaveReducer = (state = { product: {} }, action) => {
+const productSaveReducer = (state = { product: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_SAVE_REQUEST:
 			return { loading: true };
@@ -72,7 +72,7 @@ const productSaveReducer = (state = { product: {} }, action) => {
 	}
 };
 
-const productImagesReducer = (state = { images: [] }, action) => {
+const productImagesReducer = (state = { images: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_IMAGES_REQUEST:
 			return { loading: true };
@@ -85,7 +85,7 @@ const productImagesReducer = (state = { images: [] }, action) => {
 	}
 };
 
-const productReviewSaveReducer = (state = {}, action) => {
+const productReviewSaveReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_REVIEW_SAVE_REQUEST:
 			return { loading: true };

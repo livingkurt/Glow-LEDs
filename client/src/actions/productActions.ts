@@ -20,7 +20,9 @@ import {
 } from '../constants/productConstants';
 import axios from 'axios';
 
-const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (dispatch) => {
+const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void
+) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 		const { data } = await axios.get(
@@ -37,7 +39,25 @@ const listProducts = (category = '', searchKeyword = '', sortOrder = '') => asyn
 	}
 };
 
-const saveProduct = (product) => async (dispatch, getState) => {
+const saveProduct = (product: {
+	_id: any;
+	name?: any;
+	price?: any;
+	display_image?: any;
+	video?: any;
+	brand?: any;
+	category?: any;
+	countInStock?: any;
+	facts?: any;
+	included_items?: any;
+	description?: any;
+	hidden?: any;
+	sale_price?: any;
+	volume?: any;
+}) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	console.log({ productActions: product });
 	try {
 		dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
@@ -62,7 +82,7 @@ const saveProduct = (product) => async (dispatch, getState) => {
 	}
 };
 
-const detailsProduct = (productId) => async (dispatch) => {
+const detailsProduct = (productId: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
 		const { data } = await axios.get('/api/products/' + productId);
@@ -72,7 +92,10 @@ const detailsProduct = (productId) => async (dispatch) => {
 	}
 };
 
-const deleteProduct = (productId) => async (dispatch, getState) => {
+const deleteProduct = (productId: string) => async (
+	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	try {
 		const { userLogin: { userInfo } } = getState();
 		dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
@@ -87,7 +110,7 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
 	}
 };
 
-const imagesProduct = (folder_dir) => async (dispatch) => {
+const imagesProduct = (folder_dir: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	// console.log({ folder_dir });
 	try {
 		dispatch({ type: PRODUCT_IMAGES_REQUEST, payload: folder_dir });
@@ -98,7 +121,10 @@ const imagesProduct = (folder_dir) => async (dispatch) => {
 	}
 };
 
-const saveProductReview = (product_id, review) => async (dispatch, getState) => {
+const saveProductReview = (product_id: any, review: { name: any; rating: any; comment: any }) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: { token: any } } }
+) => {
 	try {
 		const { userLogin: { userInfo: { token } } } = getState();
 		dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST, payload: review });

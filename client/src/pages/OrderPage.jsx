@@ -106,6 +106,7 @@ const OrderPage = (props) => {
 			if (successPay) {
 				set_paypal_state('none');
 				// props.history.push("/profile");
+				dispatch(detailsOrder(props.match.params.id));
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
 			}

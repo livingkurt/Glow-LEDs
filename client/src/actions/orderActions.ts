@@ -26,7 +26,20 @@ import {
 	ORDER_DELIVERY_FAIL
 } from '../constants/orderConstants';
 
-const createOrder = (order) => async (dispatch, getState) => {
+const createOrder = (order: {
+	orderItems: any;
+	shipping: any;
+	payment: any;
+	itemsPrice: any;
+	shippingPrice: any;
+	taxPrice: number;
+	totalPrice: any;
+	user_data: any;
+	order_note: any;
+}) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	console.log({ createOrder_order: order });
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
@@ -45,7 +58,10 @@ const createOrder = (order) => async (dispatch, getState) => {
 	}
 };
 
-const listMyOrders = () => async (dispatch, getState) => {
+const listMyOrders = () => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	try {
 		dispatch({ type: MY_ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
@@ -58,7 +74,10 @@ const listMyOrders = () => async (dispatch, getState) => {
 	}
 };
 
-const listOrders = () => async (dispatch, getState) => {
+const listOrders = () => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	try {
 		dispatch({ type: ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
@@ -71,7 +90,10 @@ const listOrders = () => async (dispatch, getState) => {
 	}
 };
 
-const detailsOrder = (orderId) => async (dispatch, getState) => {
+const detailsOrder = (orderId: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	try {
 		dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
@@ -84,7 +106,10 @@ const detailsOrder = (orderId) => async (dispatch, getState) => {
 	}
 };
 
-const payOrder = (order, paymentResult, user_data) => async (dispatch, getState) => {
+const payOrder = (order: { _id: string }, paymentResult: any, user_data: any) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	try {
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentResult });
 		const { userLogin: { userInfo } } = getState();
@@ -102,7 +127,10 @@ const payOrder = (order, paymentResult, user_data) => async (dispatch, getState)
 	}
 };
 
-const deleteOrder = (orderId) => async (dispatch, getState) => {
+const deleteOrder = (orderId: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	try {
 		dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
@@ -115,7 +143,10 @@ const deleteOrder = (orderId) => async (dispatch, getState) => {
 	}
 };
 
-const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
+const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	console.log({ ...order, isShipped: shippingResult });
 	try {
 		dispatch({ type: ORDER_SHIPPING_REQUEST, payload: shippingResult });
@@ -139,7 +170,10 @@ const shipOrder = (order, shippingResult) => async (dispatch, getState) => {
 	}
 };
 
-const deliverOrder = (order, deliveryResult) => async (dispatch, getState) => {
+const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
 	console.log({ ...order, isDelivered: deliveryResult });
 	try {
 		dispatch({ type: ORDER_DELIVERY_REQUEST, payload: deliveryResult });
