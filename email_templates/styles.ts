@@ -1,4 +1,4 @@
-module.exports = (props) => {
+export default () => {
 	return `
  
   .fade_in {

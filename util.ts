@@ -1,10 +1,12 @@
-// import jwt from 'jsonwebtoken';
-// import config from './config';
 export {};
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 const config = require('./config');
+import { Request } from 'express';
+export interface IGetUserAuthInfoRequest extends Request {
+	user: any; // or any other type
+}
 
-const getToken = (user) => {
+const getToken = (user: { _id: any; name: any; email: any; isAdmin: any }) => {
 	return jwt.sign(
 		{
 			_id: user._id,
@@ -19,12 +21,16 @@ const getToken = (user) => {
 	);
 };
 
-const isAuth = (req, res, next) => {
+const isAuth = (
+	req: { headers: { authorization: any }; user: any },
+	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
+	next: () => void
+) => {
 	const token = req.headers.authorization;
 
 	if (token) {
 		const onlyToken = token.slice(7, token.length);
-		jwt.verify(onlyToken, config.JWT_SECRET, (err, decode) => {
+		jwt.verify(onlyToken, config.JWT_SECRET, (err: any, decode: any) => {
 			if (err) {
 				return res.status(401).send({ msg: 'Invalid Token' });
 			}
@@ -37,7 +43,11 @@ const isAuth = (req, res, next) => {
 	}
 };
 
-const isAdmin = (req, res, next) => {
+const isAdmin = (
+	req: { user: { isAdmin: any } },
+	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
+	next: () => any
+) => {
 	console.log(req.user);
 	if (req.user && req.user.isAdmin) {
 		return next();
@@ -45,12 +55,10 @@ const isAdmin = (req, res, next) => {
 	return res.status(401).send({ msg: 'Admin Token is not valid.' });
 };
 
-// export {
-//   getToken, isAuth, isAdmin
-// }
+export { getToken, isAuth, isAdmin };
 
-module.exports = {
-	getToken,
-	isAuth,
-	isAdmin
-};
+// module.exports = {
+// 	getToken,
+// 	isAuth,
+// 	isAdmin
+// };

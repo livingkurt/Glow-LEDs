@@ -1,5 +1,19 @@
-module.exports = (props) => {
-	const format_date_display = (unformatted_date) => {
+export default (props: {
+	title: string;
+	_id: string;
+	shipping: { address: string; city: string; state: string; postalCode: number; country: string };
+	isShipped: boolean;
+	shippedAt: Date;
+	isPaid: boolean;
+	paidAt: Date;
+	orderItems: object[];
+	itemsPrice: number;
+	shippingPrice: number;
+	taxPrice: number;
+	totalPrice: number;
+	order_note: string;
+}) => {
+	const format_date_display = (unformatted_date: string | number | Date) => {
 		const date = new Date(unformatted_date);
 		const day = date.getDate();
 		const month = date.getMonth() + 1;
@@ -48,7 +62,7 @@ module.exports = (props) => {
                     <h1>Shopping Cart</h1>
                     <div>Price</div>
                   </li>
-                  ${props.orderItems.map((item) => {
+                  ${props.orderItems.map((item: any) => {
 						let item_item = `<li>
                     <div class="cart-image">
                     <img src="${process.env.NODE_ENV === 'production'

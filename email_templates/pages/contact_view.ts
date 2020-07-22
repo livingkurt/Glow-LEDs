@@ -1,4 +1,10 @@
-module.exports = (props) => {
+export default (props: {
+	message: string;
+	name: string;
+	email: string;
+	order_number: string;
+	reason_for_contact: string;
+}) => {
 	console.log({ props });
 
 	return `

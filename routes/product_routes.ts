@@ -1,9 +1,9 @@
 export {};
-const express = require('express');
-const Product = require('../models/product');
+import express from 'express';
+import Product from '../models/product';
 const { isAuth, isAdmin } = require('../util');
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const router = express.Router();
 
@@ -61,14 +61,15 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	return res.status(500).send({ message: ' Error in Updating Product.' });
 });
 
-router.delete('/:id', isAuth, isAdmin, async (req, res) => {
+router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
 	const product = await Product.findById(req.params.id);
 	const updated_product = { ...product, deleted: true };
+	const message: any = { message: 'Product Deleted' };
 	// const deleted_product = await updated_product.save();
 	const deleted_product = await Product.updateOne({ _id: req.params.id }, { deleted: true });
 	if (deleted_product) {
 		// await deletedProduct.remove();
-		res.send({ message: 'Product Deleted' });
+		res.send(message);
 	} else {
 		res.send('Error in Deletion.');
 	}
@@ -101,7 +102,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 	return res.status(500).send({ message: ' Error in Creating Product.' });
 });
 
-router.post('/images', async (req, res) => {
+router.post('/images', async (req: { body: {} }, res: { send: (arg0: any[]) => void }) => {
 	// console.log(req.body)
 	try {
 		let relative_directory = path.join('.', '/client/public', Object.keys(req.body).join(''));
@@ -115,12 +116,12 @@ router.post('/images', async (req, res) => {
 		full_directory = full_directory_array.join('/');
 		if (full_directory === './client/public') {
 		} else {
-			fs.readdir(full_directory, (err, files) => {
+			fs.readdir(full_directory, (err: any, files: any[]) => {
 				if (err) {
 					return console.log('Unable to scan directory: ' + err);
 				}
 				let image_path = '';
-				let images = [];
+				let images: Array<string> = [];
 
 				files.forEach((file) => {
 					image_path = './' + relative_directory + '/' + file;
@@ -149,7 +150,8 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 		};
 		product.reviews.push(review);
 		product.numReviews = product.reviews.length;
-		product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length;
+		product.rating =
+			product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
 		const updatedProduct = await product.save();
 		res.status(201).send({
 			data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
@@ -160,7 +162,7 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 	}
 });
 
-router.put('/all', isAuth, async (req, res) => {
+router.put('/all', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
 	// const product = await Product.updateMany({ $set: { volume: 5 } });
 	const product = await Product.updateMany({
 		$set: { volume: 5 }
@@ -168,4 +170,5 @@ router.put('/all', isAuth, async (req, res) => {
 	res.send(product);
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

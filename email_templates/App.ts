@@ -1,4 +1,4 @@
-module.exports = (body, styles) => {
+export default (body: any, styles: any) => {
 	return `
   <html lang="en">
 

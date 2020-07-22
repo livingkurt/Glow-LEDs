@@ -1,4 +1,4 @@
-module.exports = (props) => {
+export default (props: { name: string }) => {
 	return `
   <div class="main_container" style="padding: 20px;">
           <div style="display: flex; justify-content: center; margin: 0px auto;">

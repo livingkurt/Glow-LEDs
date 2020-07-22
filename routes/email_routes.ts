@@ -1,19 +1,18 @@
 export {};
-const nodemailer = require('nodemailer');
-require('dotenv').config();
-const { isAuth, isAdmin } = require('../util');
-const express = require('express');
-const router = express.Router();
-const User = require('../models/user');
-const main_layout = require('../email_templates/App');
-const styles = require('../email_templates/styles');
-const {
+import nodemailer from 'nodemailer';
+import express from 'express';
+import User from '../models/user';
+import main_layout from '../email_templates/App';
+import styles from '../email_templates/styles';
+import {
 	contact_view,
 	reset_password_view,
 	verified_account_view,
 	verify_account_view,
 	order_view
-} = require('../email_templates/pages/index');
+} from '../email_templates/pages/index';
+require('dotenv').config();
+const router = express.Router();
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -173,7 +172,7 @@ router.post('/paid', async (req, res) => {
 
 router.post('/shipping', async (req, res) => {
 	console.log({ shipping: req.body });
-	let user = {};
+	let user: any = {};
 	try {
 		user = await User.findOne({ _id: req.body.user });
 	} catch (error) {
@@ -202,7 +201,7 @@ router.post('/shipping', async (req, res) => {
 
 router.post('/delivery', async (req, res) => {
 	console.log({ delivery: req.body });
-	let user = {};
+	let user: any = {};
 	try {
 		user = await User.findOne({ _id: req.body.user });
 	} catch (error) {
@@ -227,4 +226,5 @@ router.post('/delivery', async (req, res) => {
 	});
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

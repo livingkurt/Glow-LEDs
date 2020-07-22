@@ -1,11 +1,12 @@
 export {};
-const express = require('express');
-const path = require('path');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+import express from 'express';
+import path from 'path';
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+// import config from './config';
 const config = require('./config');
-const { user_routes, product_routes, order_routes, email_routes } = require('./routes/index');
-const Product = require('./models/product');
+import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
+import Product from './models/product';
 
 mongoose
 	.connect(config.RESTORED_MONGODB_URI, {
@@ -13,7 +14,7 @@ mongoose
 		useUnifiedTopology: true,
 		useCreateIndex: true
 	})
-	.catch((error) => console.log(error.reason));
+	.catch((error: { reason: any }) => console.log(error.reason));
 
 const app = express();
 app.use(bodyParser.json());
