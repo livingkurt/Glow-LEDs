@@ -103,12 +103,13 @@ const HomePage = (props) => {
 							type="video/mp4"
 						/>
 					</video> */}
+
 					<div className="iframe-container">
 						<iframe
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/VAFdEVftaGw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/7KWW2ZNKffQ?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"
