@@ -109,7 +109,7 @@ const HomePage = (props) => {
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/7KWW2ZNKffQ?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/CaC-86DAql4?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"
@@ -144,10 +144,10 @@ const HomePage = (props) => {
 					</video> */}
 					<div className="iframe-container">
 						<iframe
-							width="2000"
+							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/kDZVkghXxRs?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"
@@ -181,7 +181,7 @@ const HomePage = (props) => {
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/VAFdEVftaGw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/RLiFZahHbjU?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"

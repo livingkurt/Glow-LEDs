@@ -129,7 +129,7 @@ const ProductPage = (props) => {
 											Price: ${product.price ? product.price.toFixed(2) : product.price}
 										</label>
 									)}
-									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Unavailable.'}</li>
+									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
 										<FlexContainer v_i_center styles={{ height: '25px' }}>
 											Qty:{' '}
@@ -155,10 +155,12 @@ const ProductPage = (props) => {
 										</h4>
 									</li>
 									<li>
-										{product.countInStock > 0 && (
+										{product.countInStock > 0 ? (
 											<button onClick={handleAddToCart} className="button primary">
 												Add to Cart
 											</button>
+										) : (
+											<button className="button inactive">Out of Stock</button>
 										)}
 									</li>
 								</ul>

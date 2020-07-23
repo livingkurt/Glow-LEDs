@@ -28,6 +28,40 @@ const ProductsPage = (props) => {
 	const deleteHandler = (product) => {
 		dispatch(deleteProduct(product._id));
 	};
+
+	const sale_price_switch = (product) => {
+		if (product.sale_price !== 0) {
+			return (
+				<label>
+					<del style={{ color: 'red' }}>
+						<label style={{ color: 'white' }}>
+							${product.price ? product.price.toFixed(2) : product.price}
+						</label>
+					</del>{' '}
+					<i class="fas fa-arrow-right" /> ${product.sale_price ? (
+						product.sale_price.toFixed(2)
+					) : (
+						product.sale_price
+					)}{' '}
+					On Sale!
+				</label>
+			);
+		} else if (!product.countInStock) {
+			return (
+				<label>
+					<del style={{ color: 'red' }}>
+						<label style={{ color: 'white', marginRight: '7px' }}>
+							${product.price ? product.price.toFixed(2) : product.price}
+						</label>
+					</del>{' '}
+					<i class="fas fa-arrow-right" />
+					<label style={{ marginLeft: '7px' }}>Sold Out</label>
+				</label>
+			);
+		} else {
+			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+		}
+	};
 	return (
 		<div class="main_container">
 			<FlexContainer>
@@ -66,7 +100,8 @@ const ProductsPage = (props) => {
 										</td>
 										<td style={{ minWidth: '420px' }}>{product.name}</td>
 										<td style={{ minWidth: '225px' }}>
-											{product.sale_price !== 0 ? (
+											{sale_price_switch(product)}
+											{/* {product.sale_price !== 0 ? (
 												<label>
 													<del style={{ color: 'red' }}>
 														<label style={{ color: 'white' }}>
@@ -80,7 +115,7 @@ const ProductsPage = (props) => {
 												<label>
 													${product.price ? product.price.toFixed(2) : product.price}
 												</label>
-											)}
+											)} */}
 										</td>
 										<td>{product.category}</td>
 										<td style={{ minWidth: '111px' }}>{product.brand}</td>
