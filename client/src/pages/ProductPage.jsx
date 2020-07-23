@@ -34,7 +34,7 @@ const ProductPage = (props) => {
 				<FlexContainer h_between>
 					<FlexContainer styles={{ marginBottom: 10 }}>
 						<Link to="/allproducts">
-							<button class="button primary">Back to Results</button>
+							<button class="button primary">Back to All Products</button>
 						</Link>
 					</FlexContainer>
 					{userInfo &&

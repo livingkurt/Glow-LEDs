@@ -147,7 +147,7 @@ const HomePage = (props) => {
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/RLiFZahHbjU?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"
@@ -161,7 +161,7 @@ const HomePage = (props) => {
 					found in your space.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/category/Caps">
+					<Link to="/category/Infinity">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Infinity Mirrors</h2>
 						</button>
@@ -181,7 +181,7 @@ const HomePage = (props) => {
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/RLiFZahHbjU?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"
@@ -195,7 +195,7 @@ const HomePage = (props) => {
 				</p>
 
 				<FlexContainer h_center>
-					<Link to="/category/Caps">
+					<Link to="/category/StringLights">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop String Lights</h2>
 						</button>

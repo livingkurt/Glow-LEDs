@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-// Components
 
 const Product = (props) => {
 	const sale_price_switch = () => {
@@ -39,7 +38,6 @@ const Product = (props) => {
 		}
 	};
 
-	// console.log(props.product);
 	return (
 		<li key={props.product._id} style={props.styles}>
 			<div className="product">
