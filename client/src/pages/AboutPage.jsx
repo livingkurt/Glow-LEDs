@@ -29,11 +29,13 @@ const TermsPage = () => {
 						/>
 					</div>
 					<p style={{ lineHeight: '25px' }}>
-						Our hope is that diffuser caps will change the way we think of what a diffuser can be and how
-						gloving is viewed forever. Along with the Diffuser Caps we decided to create Custom and Premade
-						Infinity Mirrors that using WS2812B Individually Addressable LEDs. The majority of infinity
-						mirrors you will find will not have the ability to perform light shows like Glow LEDs Infinity
-						Mirrors.
+						Glow LEDs has been a long time coming. I (Kurt) have had these ideas in my brain for quite a
+						while now. All I needed was the free time that quarantine has gifted me (against my will). Glow
+						LEDs is completely home-grown and every product received will be handcrafted, with love, from my
+						very own two hands. I design all the schematics, invent designs, program the lights, solder all
+						the wires, I even made this whole website. I (Destanye) help with orders, designs, marketing,
+						customer service and anything that doesn’t involve coding or engineering. This business is truly
+						a labor of love and we hope that something here brings happiness into your life.
 					</p>
 
 					<div
@@ -58,15 +60,19 @@ const TermsPage = () => {
 							src="/images/optimized_images/personal_images/img_0345_optimized.jpg"
 						/>
 					</div>
+					{/* <p style={{ lineHeight: '25px' }}>
+						I (Destanye) help with orders, designs, marketing, customer service and anything that doesn’t
+						involve coding or engineering. This business is truly a labor of love and we hope that something
+						here brings happiness into your life.
+					</p> */}
 					<p style={{ lineHeight: '25px' }}>
-						Along with the Diffuser Caps we decided to create Custom and Premade Infinity Mirrors that using
-						WS2812B Individually Addressable LEDs. The majority of infinity mirrors you will find will not
-						have the ability to perform light shows like Glow LEDs Infinity Mirrors.
-					</p>
-					<p style={{ lineHeight: '25px' }}>
-						Along with the Diffuser Caps we decided to create Custom and Premade Infinity Mirrors that using
-						WS2812B Individually Addressable LEDs. The majority of infinity mirrors you will find will not
-						have the ability to perform light shows like Glow LEDs Infinity Mirrors.
+						With the diffuser caps, our hope is that we can change the way we think of what a diffuser can
+						be and how gloving is viewed forever. With the Infinity Mirrors, we decided to use Individually
+						Addressable LEDs which allows each LED to have its own unique color. By using these specific
+						LEDs we are able to create more vibrant colors and intricate patterns. Other infinity mirrors
+						you will find will not have the ability to perform light shows like Glow LEDs Infinity Mirrors.
+						Our string lights also use Individually Addressable LEDs which gives us the ability to create
+						custom color schemes and patterns you will not find anywhere else.
 					</p>
 				</div>
 				<div>
@@ -84,56 +90,64 @@ const TermsPage = () => {
 						src="/images/optimized_images/about_me_images/2_img_9862_optimized.jpg"
 					/>
 					<p style={{ lineHeight: '25px' }}>
-						With you microlights outside of your gloves. Place the Diffuser Adapters onto your microlight
-						bulbs. Then place them inside of the glove. So now you have flat top domes in your gloves.
+						With your microlights outside of your gloves, place the Diffuser Adapters onto your microlight
+						bulbs. Then place them inside of the glove. Now it should look like you have flat top domes
+						inside your gloves.
 					</p>
 					<p style={{ lineHeight: '25px' }}>
-						Next, grip the diffuser adapter from in the glove, do not only hold by microlight or you risk
+						Grip the diffuser adapter from outside the glove, do not only hold by microlight or you risk
 						causing extra stress to the bulb.
 					</p>
 					<p style={{ lineHeight: '25px' }}>
-						Then take you cap, and place it over top of your glove and adapter and screw in the cap like you
+						Take your cap, and place it over top of your glove and adapter and screw in the cap like you
 						would a jar.
 					</p>
 					<p style={{ lineHeight: '25px' }}>
 						The threads should catch and only needs a single turn to become snug. Do not over tighten or
 						push the cap on. Let the threads do the work.
 					</p>
-					<p style={{ lineHeight: '25px' }}>
+					{/* <p style={{ lineHeight: '25px' }}>
 						The threads should catch and only needs a single turn to become snug.
 					</p>
 					<p style={{ lineHeight: '25px' }}>
 						Do not over tighten or push the cap on. Let the threads do the work.
-					</p>
+					</p> */}
 					<h3 style={{ fontSize: 20, textAlign: 'center' }}>How to order a custom product?</h3>
 					<p style={{ lineHeight: '25px' }}>
 						At Glow-LEDS.com we offer many premade and predesigned products, as well as the ability to get a
-						customized version of the products, or even if you just want to make a dream happen. We are here
-						to help. Before ordering anything send us a message to explain your vision and we will create a
-						detailed invoice and design. The price may vary depending on the size and hardware used.
+						customized version of the products. Before ordering anything custom a consultation must be had.
+						Send us a message to explain your vision and we will create a detailed invoice and design. The
+						price may vary depending on the size and hardware used.
 					</p>
 
 					<h2 style={{ fontSize: 30, textAlign: 'center' }}>Processing/Shipping</h2>
 					<p style={{ lineHeight: '25px' }}>
-						Glow-LEDs.com is headquartered in Austin, Texas and orders are processed as they are recieved.
+						Glow-LEDs.com is headquartered in Austin, Texas and orders are processed as they are received.
 						Products are not stocked waiting to be shipped at this time. Each order will be filled as it is
-						recieved. Some orders may take longer to be shipped as supplies may take time to be sourced. All
-						orders ship USPS First Class or Priority Mail, and send out when assembly is completed.
+						received. Some orders may take longer to be shipped as supplies may take time to be sourced.
+						Small packages will be sent via USPS First Class and large packages will be sent via Priority
+						Mail. Shipping time is 1-3 business days. Not responsible for delays due to post office. For
+						glove accessories (caps, adapters, diffusers, battery storage) we will get your order in the
+						mail within approximately 3-4 days after the order is placed. For string lights we will get your
+						order in the mail within approximately 3-4 days after the order is placed. For infinity mirrors,
+						expect a longer processing time. We will get your order in the mail within approximately 7-10
+						days after the order is placed. Assembly of infinity mirrors is much more intensive than other
+						products. If a custom order is placed, processing times will be discussed during consultation.
 					</p>
 					<h2 style={{ fontSize: 30, textAlign: 'center' }}>Returns/Cancellations</h2>
 					<p style={{ lineHeight: '25px' }}>
-						Your satisfaction is our priority! We accept returns on unused factory sealed product within 30
-						days of purchase. Unfortunately we can not accept returns on used items. All returns are subject
-						to a 30% restocking fee (you will be refunded 70% of the original purchase price). To initiate a
-						return please contact support. You will be supplied with an address to send your product. Please
-						put your full name and order number in the return shipment and you will be refunded.
-					</p>
-					<h2 style={{ fontSize: 30, textAlign: 'center' }}>Glow-LEDs.com Lifetime Warranty</h2>
-					<p style={{ lineHeight: '25px' }}>
-						Glow-LEDs.com provides a lifetime warranty covering manufacturing defects. Warranty does not
-						cover loss, water damage, or physical abuse. If you receive a product that is defective, we will
-						ship you out a replacement product- all we need from you is to cover shipping. If you have
-						questions about your product qualifying for warranty replacement, please use our contact form.
+						Your satisfaction is our priority! We accept returns within 30 days of purchase. All returns are
+						subject to a 30% restocking fee (you will be refunded 70% of the original purchase price). To
+						initiate a return please contact info.glowleds@gmail.com. You will be supplied with an address
+						to send your product. Please put your full name and order number in the return shipment and you
+						will be refunded. We do not refund shipping costs. Custom items are non-refundable. Refunds are
+						returned to the original form of payment. We do not refund damaged items unless they arrived
+						damaged at our own fault. If item arrives damamged in any way please contact us immediately at
+						info.glowleds@gmail.com. Reviewing your order in the Shopping Bag carefully prior to checkout is
+						highly recommended. Our online orders process immediately to ensure our clients receive their
+						products as soon as possible. As a result, we are unable to cancel or modify your order once
+						submitted. If the address on your order is incorrect, please contact us at
+						info.glowleds@gmail.com immediately.
 					</p>
 				</div>
 			</div>
