@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Product = (props) => {
 	const sale_price_switch = () => {
@@ -42,7 +43,11 @@ const Product = (props) => {
 		<li key={props.product._id} style={props.styles}>
 			<div className="product">
 				<Link to={'/product/' + props.product._id}>
-					<img className="product-image" src={props.product.display_image} alt="product" />
+					<LazyLoadImage
+						className="product-image"
+						alt={props.product.name}
+						src={props.product.display_image} // use normal <img> attributes as props
+					/>
 				</Link>
 				<label styles={{ fontSize: '1.3rem' }}>{props.product.brand}</label>
 				<Link to={'/product/' + props.product._id}>
