@@ -2,80 +2,7 @@ import React, { useEffect } from 'react';
 import { FlexContainer } from '../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 
-const HomePage = (props) => {
-	useEffect(() => {
-		// const diffuser_caps_video = document.getElementById('diffuser_caps_video');
-		// diffuser_caps_video.muted = true;
-		// diffuser_caps_video.autoplay = true;
-		// diffuser_caps_video.playsinline = true;
-		// const infinity_mirror_video = document.getElementById('infinity_mirror_video');
-		// infinity_mirror_video.muted = true;
-		// infinity_mirror_video.autoplay = true;
-		// infinity_mirror_video.playsinline = true;
-		// const string_lights_video = document.getElementById('string_lights_video');
-		// string_lights_video.muted = true;
-		// string_lights_video.autoplay = true;
-		// string_lights_video.playsinline = true;
-	}, []);
-
-	const heading_styles = {
-		fontSize: 30,
-		justifyContent: 'center',
-		margin: '20px auto'
-	};
-
-	const flex_styles = {
-		height: '100%',
-		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-		borderRadius: '20px',
-		padding: '10px',
-		marginBottom: '10px'
-	};
-
-	// const homepage_video = {
-	// 	width: '100%',
-	// 	height: '100%',
-	// 	position: 'absolute',
-	// 	left: '0',
-	// 	top: '0',
-	// 	right: '0',
-	// 	bottom: '0',
-	// 	borderRadius: '20px',
-	// 	outline: 'none'
-	// };
-	// const video_wrapper = {
-	// 	position: 'relative'
-	// 	// padding: '56.25% 0 0'
-	// };
-
-	const div_styles = {
-		// backgroundColor: '#2f2f2f',
-		// border: '3px #2f2f2f solid',
-		// background:'linear-gradient(135deg, rgba(0,154,120,1) 15%, rgba(0,35,142,1) 46%, rgba(76,0,139,1) 62%, rgba(129,0,118,1) 95%)',
-		// background: "linear-gradient(135deg, rgba(255,0,0,1) 0%, rgba(255,173,0,1) 14%, rgba(247,255,0,1) 28%, rgba(16,255,0,1) 40%, rgba(0,255,199,1) 52%, rgba(0,63,255,1) 66%, rgba(139,0,255,1) 83%, rgba(255,0,234,1) 95%)",
-		// background: "linear-gradient(135deg, rgba(125,0,0,1) 0%, rgba(152,103,0,1) 14%, rgba(156,161,0,1) 28%, rgba(9,145,0,1) 40%, rgba(0,154,120,1) 52%, rgba(0,35,142,1) 66%, rgba(76,0,139,1) 83%, rgba(129,0,118,1) 95%)",
-		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
-		borderRadius: '20px',
-		padding: '25px',
-		marginBottom: '25px'
-	};
-
-	// $(document).ready(function() {
-	// 	var inner = $('.inner');
-	// 	var elementPosTop = inner.position().top;
-	// 	var viewportHeight = $(window).height();
-	// 	$(window).on('scroll', function() {
-	// 		var scrollPos = $(window).scrollTop();
-	// 		var elementFromTop = elementPosTop - scrollPos;
-
-	// 		if (elementFromTop > 0 && elementFromTop < elementPosTop + viewportHeight) {
-	// 			inner.addClass('active');
-	// 		} else {
-	// 			inner.removeClass('active');
-	// 		}
-	// 	});
-	// });
-
+const MaintenancePage = (props) => {
 	const header_styles = {
 		gridArea: 'header',
 		backgroundColor: '#333333',
@@ -85,39 +12,17 @@ const HomePage = (props) => {
 		padding: '15px',
 		listStyleType: 'none',
 		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
-		// position: 'fixed',
-		// right: '0',
-		// left: '0',
-		// zIndex: '999',
-		// top: '0'
 	};
 
-	const homepage_video = {
-		width: '100%',
-		height: '100%',
-		position: 'absolute',
-		left: '0',
-		top: '0',
-		right: '0',
-		bottom: '0',
-		borderRadius: '20px',
-		outline: 'none'
-	};
 	const video_wrapper = {
 		position: 'relative'
-		// padding: '56.25% 0 0'
 	};
 
 	const content_styles = {
-		// width: '75%',
-		// gridArea: 'main',
 		backgroundColor: '#737373',
 		boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 		background: 'linear-gradient(180deg, rgba(138, 138, 138, 1) 0%, rgba(39, 39, 39, 1) 100%)',
-		// borderRadius: '20px',
-		// margin: '20px auto 20px',
 		padding: '2rem',
-		// padding: '2rem 10rem',
 		minHeight: '81vh'
 	};
 
@@ -229,9 +134,6 @@ const HomePage = (props) => {
 						<h1>String Lights</h1>
 					</FlexContainer>
 					<FlexContainer h_center styles={video_wrapper}>
-						{/* <video id="string_lights_video" style={homepage_video} controls>
-						<source src="https://youtu.be/kDZVkghXxRs" type="video/mp4" />
-					</video> */}
 						<div className="iframe-container">
 							<iframe
 								width="996"
@@ -255,4 +157,4 @@ const HomePage = (props) => {
 		</div>
 	);
 };
-export default HomePage;
+export default MaintenancePage;
