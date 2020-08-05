@@ -18,7 +18,12 @@ const PlaceOrderPage = (props) => {
 	} else if (!payment.paymentMethod) {
 		props.history.push('/payment');
 	}
-	const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
+	// const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
+	const itemsPrice =
+		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
+			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
+
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	useEffect(() => {
 		calculate_shipping();

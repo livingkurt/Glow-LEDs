@@ -103,9 +103,17 @@ const CartPage = (props) => {
 				<div className="cart-action">
 					<h3 className="subtotal_h3">
 						Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-						{cartItems
-							.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0)
-							.toFixed(2)}
+						{/* {console.log(
+							cartItems
+								.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0)
+								.toFixed(2)
+						)} */}
+						{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
+							cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
+						) : (
+							cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
+						)}
+						{/* {cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)} */}
 					</h3>
 					<button
 						onClick={checkoutHandler}
