@@ -7,6 +7,9 @@ import bodyParser from 'body-parser';
 const config = require('./config');
 import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
 import Product from './models/product';
+const https = require('https');
+const http = require('http');
+const fs = require('fs');
 
 mongoose
 	.connect(config.RESTORED_MONGODB_URI, {
@@ -34,11 +37,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.put('/api/all', async (req, res) => {
-	const product = await Product.updateMany({
-		// $rename: { shipping_price: 'volume' }
-		$set: { deleted: false }
-		// $unset: { shipping_price: 1 }
-	});
+	// const product = await Product.updateMany({
+	// 	// $rename: { shipping_price: 'volume' }
+	// 	$set: { hidden: true }
+	// 	// $unset: { shipping_price: 1 }
+	// });
+	// res.send(product);
+	const product = await Product.updateMany({ category: 'Caps' }, { $set: { hidden: false } });
+	console.log(product);
 	res.send(product);
 });
 
@@ -46,6 +52,19 @@ app.get('*', (request, response) => {
 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
-app.listen(config.PORT, () => {
+// app.listen(config.PORT, () => {
+// 	console.log('Server started at http://localhost:5000');
+// });
+
+const options = {
+	key: fs.readFileSync('certification/glowleds-key.pem'),
+	cert: fs.readFileSync('certification/glowleds-cert.pem')
+};
+
+http.createServer(app).listen(config.PORT, () => {
 	console.log('Server started at http://localhost:5000');
+});
+
+https.createServer(options, app).listen(5001, () => {
+	console.log('Server started at 5001');
 });

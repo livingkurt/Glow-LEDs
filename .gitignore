@@ -139,3 +139,5 @@ email_templates/pages/index.js
 email_templates/pages/contact_view.js
 email_templates/App.js
 email_templates/styles.js
+
+certification/glowleds-key.pem
