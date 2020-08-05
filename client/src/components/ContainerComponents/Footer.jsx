@@ -1,5 +1,6 @@
 import React from 'react';
 import FlexContainer from './FlexContainer';
+import { Link } from 'react-router-dom';
 
 const Footer = (props) => {
 	const footer_styles = {
@@ -22,8 +23,20 @@ const Footer = (props) => {
 	return (
 		<footer style={{ ...footer_styles, ...props.styles }}>
 			<FlexContainer h_between v_i_center styles={{ width: '100%' }}>
-				<div style={{ marginLeft: '96px' }} />
-				<label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label>
+				{/* <div style={{ marginLeft: '96px' }} /> */}
+				{/* <label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label> */}
+				<FlexContainer styles={{ marginLeft: '10px' }}>
+					<Link to="/contact">
+						<button style={{ margin: 'auto', marginRight: '10px' }} className="button mobile_nav">
+							Contact
+						</button>
+					</Link>
+					<Link to="/terms">
+						<button style={{ margin: 'auto' }} className="button mobile_nav">
+							Terms
+						</button>
+					</Link>
+				</FlexContainer>
 				<FlexContainer styles={{ marginTop: '8px' }}>
 					<div style={{ marginLeft: '10px', fontSize: '30px' }}>
 						<a href="https://www.facebook.com/Glow-LEDscom-100365571740684" target="_blank">

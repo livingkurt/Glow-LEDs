@@ -6,11 +6,11 @@ const TermsPage = () => {
 			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
 			<p>
 				Prior to using this website- I fully agree to the terms set forth here: Under no circumstances will the
-				seller (Glow-LEDs.com LLC hereby referred to as “Glow-LEDs.com” & all affiliates) be liable for any
-				damages or expenses by reason of use or sale of Glow-LEDs.com products. I understand that products sold
-				on Glow-LEDs.com contain small parts and are a choking hazard for small children. Glow-LEDs.com is not
+				seller (Glow-LEDs.com hereby referred to as “Glow-LEDs.com” & all affiliates) be liable for any damages
+				or expenses by reason of use or sale of Glow-LEDs.com products. I understand that products sold on
+				Glow-LEDs.com contain small parts and are a choking hazard for small children. Glow-LEDs.com is not
 				responsible for any injuries or damages that can result from any of the products sold on Glow-LEDs.com,
-				any of its affiliates, or produced by Glow-LEDs.com LLC. I hereby release from any legal liability
+				any of its affiliates, or produced by Glow-LEDs.com. I hereby release from any legal liability
 				Glow-LEDs.com including its owners, agents, and employees from any and all liability for damage, injury
 				or death to myself, or any other person or property resulting the selection, assembly, maintenance or
 				use of such equipment and any claim based upon negligence, breach of warranty, contract or legal theory
