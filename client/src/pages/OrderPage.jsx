@@ -6,6 +6,7 @@ import { detailsOrder, payOrder, shipOrder, deliverOrder } from '../actions/orde
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { PaypalButton } from '../components/SpecialtyComponents';
+import { Loading } from '../components/UtilityComponents';
 // import { email_delivery, email_shipping } from '../actions/emailActions';
 const OrderPage = (props) => {
 	console.log(props.userInfo);
@@ -31,6 +32,7 @@ const OrderPage = (props) => {
 
 	const [ shipping_state, set_shipping_state ] = useState({});
 	const [ delivery_state, set_delivery_state ] = useState({});
+	const [ payment_loading, set_payment_loading ] = useState(true);
 
 	const [ order_state, set_order_state ] = useState({});
 
@@ -105,6 +107,8 @@ const OrderPage = (props) => {
 		() => {
 			if (successPay) {
 				set_paypal_state('none');
+				console.log('successPay');
+				props.history.push('/paymentcomplete/' + props.match.params.id);
 				// props.history.push("/profile");
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
@@ -126,7 +130,9 @@ const OrderPage = (props) => {
 	}, []);
 
 	const handleSuccessPayment = (paymentResult) => {
+		console.log('handleSuccessPayment');
 		dispatch(payOrder(order, paymentResult, user_data));
+		set_payment_loading(false);
 	};
 
 	const empty_cart = () => {
@@ -271,25 +277,26 @@ const OrderPage = (props) => {
 							className="placeorder-actions-payment"
 							style={{ display: 'flex', justifyContent: 'center' }}
 						>
-							{loadingPay && (
+							<Loading loading={loadingPay} error={errorPay}>
+								{/* {loadingPay ? (
 								<FlexContainer h_center>
 									<h2>Finishing Payment..</h2>
+									<img src="loading.gif" className="loading_gif" alt="loading" />
+									<img src="loading_overlay.png" className="loading_png" alt="loading" />
 								</FlexContainer>
-							)}
-							<div style={{ display: paypal_state }}>
+							)} */}
+								{/* <div style={{ display: paypal_state }}> */}
 								{!order.isPaid && (
 									<PaypalButton amount={order.totalPrice} onSuccess={handleSuccessPayment} />
 								)}
-							</div>
+								{/* </div> */}
+							</Loading>
 						</li>
 						<FlexContainer column>
 							<div htmlFor="order_note">Order Note</div>
-							<textarea
-								name="order_note"
-								value={order.order_note}
-								id="order_note"
-								style={{ width: '100%', height: '100px' }}
-							/>
+							<p name="order_note" id="order_note" style={{ width: '100%', height: '100px' }}>
+								{order.order_note}
+							</p>
 						</FlexContainer>
 					</ul>
 				</div>

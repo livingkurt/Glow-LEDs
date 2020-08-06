@@ -25,7 +25,8 @@ import {
 	CheckEmailPage,
 	ChangePasswordPage,
 	TermsPage,
-	AboutPage
+	AboutPage,
+	OrderPaymentCompletePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -62,6 +63,7 @@ const App = () => {
 							<Route path="/contact" exact={true} component={ContactPage} />
 							<Route path="/terms" exact={true} component={TermsPage} />
 							<Route path="/about" exact={true} component={AboutPage} />
+							<Route path="/paymentcomplete/:id" exact={true} component={OrderPaymentCompletePage} />
 							{/* Private Routes */}
 							<PrivateRoute path="/profile" component={ProfilePage} />
 							<PrivateRoute path="/editprofile" component={EditProfilePage} />
