@@ -75,16 +75,15 @@ const MaintenancePage = (props) => {
 					Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items
 					are handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up
 					with the intention of turning your home into a glowing rainbow dreamland with infinite hours of
-					entertainment. You don’t need a party to enjoy our products (although parties are defiantly
+					entertainment. You don’t need a party to enjoy our products (although parties are definitely
 					encouraged). The beautiful colors have the ability to turn your home into the next best festival or
 					into a relaxing retreat, you decide.
 				</p>
-				{/* <div className="home_page_divs">
+				<div className="home_page_divs">
 					<FlexContainer h_center>
 						<h1>Diffuser Caps</h1>
 					</FlexContainer>
 					<FlexContainer h_center styles={video_wrapper}>
-
 						<div className="iframe-container">
 							<iframe
 								width="996"
@@ -104,7 +103,7 @@ const MaintenancePage = (props) => {
 						through the gloves to the adapter and start throwing heat right away. Mix and match the cap
 						designs create truly ridiculous light shows. 100% facemelt guarantee.
 					</p>
-				</div> */}
+				</div>
 				<div className="home_page_divs">
 					<FlexContainer h_center>
 						<h1>Infinity Mirrors</h1>
