@@ -343,7 +343,7 @@ const EditProductPage = (props) => {
 									)}
 								</li>
 								{/* <li> */}
-								{product.reviews.map((review) => {
+								{/* {product.reviews.map((review) => {
 									return (
 										<li
 											key={review._id}
@@ -374,7 +374,7 @@ const EditProductPage = (props) => {
 											</div>
 										</li>
 									);
-								})}
+								})} */}
 								{/* </li> */}
 							</ul>
 						)}

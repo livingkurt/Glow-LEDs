@@ -6,10 +6,12 @@ export default (props: { name: string }) => {
               Welcome ${props.name}, to Glow LEDs</h1>
           </div>
           <div class="title" style="display:  flex; justify-content: center;">
-            <p style=" text-align: center; max-width: 654px;"> Here at Glow-LEDs.com, we strive to bring as much light in to as many lives as possible. All items are
-            handmade in my apartment in Austin, TX, spanning a wide variety of flow arts, including Infinity
-            Mirrors, String Lights, and Gloving Accessories. We pride ourselves on more than just the quality of our
-            EDM products; Glow-LEDs.com is here to make your viby dreams happen..</p>
+            <p style=" text-align: center; max-width: 654px;"> Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
+            handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
+            the intention of turning your home into a glowing rainbow dreamland with infinite hours of
+            entertainment. You don’t need a party to enjoy our products (although parties are definitely encouraged).
+            The beautiful colors have the ability to turn your home into the next best festival or into a relaxing
+            retreat, you decide.</p>
           </div>
           <div style="display:flex; justify-content: center; margin-top: 10px;">
             <button

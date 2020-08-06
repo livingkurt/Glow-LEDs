@@ -292,12 +292,14 @@ const OrderPage = (props) => {
 								{/* </div> */}
 							</Loading>
 						</li>
-						<FlexContainer column>
-							<div htmlFor="order_note">Order Note</div>
-							<p name="order_note" id="order_note" style={{ width: '100%', height: '100px' }}>
-								{order.order_note}
-							</p>
-						</FlexContainer>
+						{order.order_note && (
+							<FlexContainer column>
+								<div htmlFor="order_note">Order Note</div>
+								<p name="order_note" id="order_note" style={{ width: '100%', height: '100px' }}>
+									{order.order_note}
+								</p>
+							</FlexContainer>
+						)}
 					</ul>
 				</div>
 			</div>
