@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveProduct, detailsProduct } from '../actions/productActions';
+import { saveProduct, detailsProduct, deleteProductReview } from '../actions/productActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../components/UtilityComponents';
+import { Rating } from '../components/SpecialtyComponents';
+import { format_date_display } from '../utils/helper_functions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -32,47 +34,56 @@ const EditProductPage = (props) => {
 
 	const productDelete = useSelector((state) => state.productDelete);
 	const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
+
+	const productReviewDelete = useSelector((state) => state.productReviewDelete);
+	const { success: productDeleteSuccess } = productReviewDelete;
+
 	const dispatch = useDispatch();
 	const product_id = props.match.params.id ? props.match.params.id : '';
 
+	console.log({ product });
+
 	// console.log({ ID: props.match.params.id })
 
-	useEffect(() => {
-		dispatch(detailsProduct(product_id));
-		if (props.match.params.id) {
-			// console.log({ product })
-			setId(product._id);
-			setName(product.name);
-			setPrice(product.price);
-			setDescription(product.description);
-			setFacts(product.facts);
-			setIncludedItems(product.included_items);
-			setHidden(product.hidden);
-			setSalePrice(product.sale_price);
-			setVolume(product.volume);
-			setDisplayImage(product.display_image);
-			setVideo(product.video);
-			setBrand(product.brand);
-			setCategory(product.category);
-			setCountInStock(product.countInStock);
-		} else {
-			setId('');
-			setName('');
-			setPrice('');
-			setDescription('');
-			setFacts('');
-			setIncludedItems('');
-			setDisplayImage('');
-			setVideo('');
-			setBrand('');
-			setCategory('');
-			setCountInStock('');
-			setHidden();
-			setSalePrice('');
-			setVolume('');
-		}
-		return () => {};
-	}, []);
+	useEffect(
+		() => {
+			dispatch(detailsProduct(product_id));
+			if (props.match.params.id) {
+				// console.log({ product })
+				setId(product._id);
+				setName(product.name);
+				setPrice(product.price);
+				setDescription(product.description);
+				setFacts(product.facts);
+				setIncludedItems(product.included_items);
+				setHidden(product.hidden);
+				setSalePrice(product.sale_price);
+				setVolume(product.volume);
+				setDisplayImage(product.display_image);
+				setVideo(product.video);
+				setBrand(product.brand);
+				setCategory(product.category);
+				setCountInStock(product.countInStock);
+			} else {
+				setId('');
+				setName('');
+				setPrice('');
+				setDescription('');
+				setFacts('');
+				setIncludedItems('');
+				setDisplayImage('');
+				setVideo('');
+				setBrand('');
+				setCategory('');
+				setCountInStock('');
+				setHidden();
+				setSalePrice('');
+				setVolume('');
+			}
+			return () => {};
+		},
+		[ productDeleteSuccess ]
+	);
 
 	// useEffect(
 	// 	() => {
@@ -135,6 +146,11 @@ const EditProductPage = (props) => {
 		} else {
 			history.push('/products');
 		}
+	};
+
+	const delete_review = (review_id) => {
+		console.log({ review_id, id });
+		dispatch(deleteProductReview(id, review_id));
 	};
 
 	return (
@@ -326,6 +342,40 @@ const EditProductPage = (props) => {
 										</Link>
 									)}
 								</li>
+								{/* <li> */}
+								{product.reviews.map((review) => {
+									return (
+										<li
+											key={review._id}
+											style={{
+												listStyleType: 'none',
+												background: '#616161',
+												padding: '5px',
+												borderRadius: '15px',
+												boxShadow:
+													'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+											}}
+										>
+											<div>
+												<div>{review.name}</div>
+												<div>
+													<Rating value={review.rating} />
+												</div>
+												<div>{format_date_display(review.createdAt.substring(0, 10))}</div>
+												<div>{review.comment}</div>
+												<button
+													style={{ width: '100%' }}
+													type="button"
+													className="button secondary"
+													onClick={() => delete_review(review._id)}
+												>
+													X
+												</button>
+											</div>
+										</li>
+									);
+								})}
+								{/* </li> */}
 							</ul>
 						)}
 					</Loading>

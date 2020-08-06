@@ -4,6 +4,7 @@ import Product from '../models/product';
 const { isAuth, isAdmin } = require('../util');
 import fs from 'fs';
 import path from 'path';
+import productModel from '../models/product';
 
 const router = express.Router();
 
@@ -156,6 +157,36 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 		res.status(201).send({
 			data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
 			message: 'Review saved successfully.'
+		});
+	} else {
+		res.status(404).send({ message: 'Product Not Found' });
+	}
+});
+router.delete('/:product_id/reviews/:review_id', isAuth, async (req, res) => {
+	console.log(req.params);
+	const product = await Product.findById(req.params.product_id);
+	if (product) {
+		product.reviews.splice(req.params.review_id, 1);
+		product.numReviews -= 1;
+		// const review = {
+		// 	name: req.body.name,
+		// 	rating: Number(req.body.rating),
+		// 	comment: req.body.comment
+		// };
+		// product.reviews.push(review);
+		// product.numReviews = product.reviews.length;
+		// product.rating =
+		// 	product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
+		if (product.numReviews === 0) {
+			productModel.rating = 0;
+		} else {
+			product.rating =
+				product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
+		}
+		const updatedProduct = await product.save();
+		res.status(201).send({
+			data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+			message: 'Review deleted successfully.'
 		});
 	} else {
 		res.status(404).send({ message: 'Product Not Found' });

@@ -17,7 +17,11 @@ import {
 	PRODUCT_REVIEW_SAVE_REQUEST,
 	PRODUCT_REVIEW_SAVE_SUCCESS,
 	PRODUCT_REVIEW_SAVE_FAIL,
-	PRODUCT_REVIEW_SAVE_RESET
+	PRODUCT_REVIEW_SAVE_RESET,
+	PRODUCT_REVIEW_DELETE_REQUEST,
+	PRODUCT_REVIEW_DELETE_SUCCESS,
+	PRODUCT_REVIEW_DELETE_FAIL,
+	PRODUCT_REVIEW_DELETE_RESET
 } from '../constants/productConstants';
 
 const productListReducer = (state = { products: [] }, action: { type: any; payload: any }) => {
@@ -99,6 +103,20 @@ const productReviewSaveReducer = (state = {}, action: { type: any; payload: any 
 			return state;
 	}
 };
+const productReviewDeleteReducer = (state = {}, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case PRODUCT_REVIEW_DELETE_REQUEST:
+			return { loading: true };
+		case PRODUCT_REVIEW_DELETE_SUCCESS:
+			return { loading: false, review: action.payload, success: true };
+		case PRODUCT_REVIEW_DELETE_FAIL:
+			return { loading: false, error: action.payload };
+		case PRODUCT_REVIEW_DELETE_RESET:
+			return {};
+		default:
+			return state;
+	}
+};
 
 export {
 	productListReducer,
@@ -106,5 +124,6 @@ export {
 	productSaveReducer,
 	productDeleteReducer,
 	productImagesReducer,
-	productReviewSaveReducer
+	productReviewSaveReducer,
+	productReviewDeleteReducer
 };

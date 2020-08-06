@@ -7,7 +7,8 @@ import {
 	productSaveReducer,
 	productDeleteReducer,
 	productImagesReducer,
-	productReviewSaveReducer
+	productReviewSaveReducer,
+	productReviewDeleteReducer
 } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
 import {
@@ -56,7 +57,8 @@ const reducer = combineReducers({
 	userContact: userContactReducer,
 	userPasswordReset: userPasswordResetReducer,
 	userResetPassword: userResetPasswordReducer,
-	userVerify: userVerifyReducer
+	userVerify: userVerifyReducer,
+	productReviewDelete: productReviewDeleteReducer
 });
 
 declare global {

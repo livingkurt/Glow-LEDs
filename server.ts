@@ -7,7 +7,6 @@ import bodyParser from 'body-parser';
 const config = require('./config');
 import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
 import Product from './models/product';
-// var sslRedirect = require('heroku-ssl-redirect');
 
 mongoose
 	.connect(config.RESTORED_MONGODB_URI, {
@@ -21,7 +20,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(sslRedirect());
 
 app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
