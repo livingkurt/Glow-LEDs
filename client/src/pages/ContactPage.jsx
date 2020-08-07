@@ -9,7 +9,6 @@ import { Loading } from '../components/UtilityComponents';
 const ContactPage = () => {
 	const dispatch = useDispatch();
 
-	const [ username, set_username ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
@@ -17,7 +16,6 @@ const ContactPage = () => {
 	const [ reason_for_contact, set_reason_for_contact ] = useState('');
 	const [ message, set_message ] = useState('');
 
-	const [ username_validations, set_username_Validations ] = useState('');
 	const [ first_name_validations, set_first_name_Validations ] = useState('');
 	const [ last_name_validations, set_last_name_Validations ] = useState('');
 	const [ email_validations, set_email_validations ] = useState('');
@@ -31,7 +29,6 @@ const ContactPage = () => {
 	const sendEmail = (e) => {
 		e.preventDefault();
 		const data = {
-			username,
 			first_name,
 			last_name,
 			email,
@@ -41,7 +38,6 @@ const ContactPage = () => {
 		};
 		const request = validate_contact(data);
 
-		set_username_Validations(request.errors.username);
 		set_first_name_Validations(request.errors.first_name);
 		set_last_name_Validations(request.errors.last_name);
 		set_email_validations(request.errors.email);
@@ -51,8 +47,7 @@ const ContactPage = () => {
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(contact(username, first_name, last_name, email, order_number, reason_for_contact, message));
-			set_username_Validations('');
+			dispatch(contact(first_name, last_name, email, order_number, reason_for_contact, message));
 			set_last_name_Validations('');
 			set_first_name_Validations('');
 			set_email_validations('');
@@ -60,7 +55,6 @@ const ContactPage = () => {
 			set_reason_for_contact_validations('');
 			set_message_validations('');
 			// e.target.reset();
-			document.getElementsByName('username').value = '';
 			document.getElementsByName('first_name').value = '';
 			document.getElementsByName('last_name').value = '';
 			document.getElementsByName('email').value = '';
@@ -81,17 +75,6 @@ const ContactPage = () => {
 				</Loading>
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
-				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" username="contact_number" /> */}
-				<label>Username</label>
-				<input
-					onChange={(e) => set_username(e.target.value)}
-					defaultValue={username}
-					className="zoom_f form_input"
-					type="text"
-					name="username"
-					placeholder="Username"
-				/>
-				<label className="validation_text">{username_validations}</label>
 				<label>First Name</label>
 				<input
 					onChange={(e) => set_first_name(e.target.value)}

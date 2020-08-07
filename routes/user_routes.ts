@@ -30,73 +30,84 @@ router.put('/resetpassword', async (req, res) => {
 });
 
 router.post('/passwordreset', async (req, res) => {
-	const email = req.body.email;
-	const user = await User.findOne({ email });
-	console.log({ user });
-	if (user) {
-		res.send(user);
-	} else {
-		res.status(404).send({ msg: 'User Not Found' });
+	try {
+		const email = req.body.email;
+		const user = await User.findOne({ email });
+		console.log({ user });
+		if (user) {
+			res.send(user);
+		} else {
+			res.status(404).send({ msg: 'User Not Found' });
+		}
+	} catch (error) {
+		console.log(error);
+		res.send(error);
 	}
 });
 
 router.put('/update/:id', isAuth, async (req, res) => {
-	const userId = req.params.id;
+	try {
+		const userId = req.params.id;
 
-	const user: any = await User.findById(userId);
-	if (user) {
-		user.username = req.body.username || user.username;
-		user.first_name = req.body.first_name || user.first_name;
-		user.last_name = req.body.last_name || user.last_name;
-		user.email = req.body.email || user.email;
-		user.password = req.body.password || user.password;
-		bcrypt.genSalt(10, (err: any, salt: any) => {
-			bcrypt.hash(user.password, salt, async (err: any, hash: any) => {
-				if (err) throw err;
-				user.password = hash;
-				await user.save();
+		const user: any = await User.findById(userId);
+		if (user) {
+			user.first_name = req.body.first_name || user.first_name;
+			user.last_name = req.body.last_name || user.last_name;
+			user.email = req.body.email || user.email;
+			user.password = req.body.password || user.password;
+			bcrypt.genSalt(10, (err: any, salt: any) => {
+				bcrypt.hash(user.password, salt, async (err: any, hash: any) => {
+					if (err) throw err;
+					user.password = hash;
+					await user.save();
+				});
 			});
-		});
-		user.isVerified = req.body.isVerified || user.isVerified;
-		const updatedUser = await user.save();
-		res.send({
-			_id: updatedUser.id,
-			username: updatedUser.username,
-			first_name: updatedUser.first_name,
-			last_name: updatedUser.last_name,
-			email: updatedUser.email,
-			isVerified: updatedUser.isVerified,
-			token: getToken(updatedUser)
-		});
-	} else {
-		res.status(404).send({ msg: 'User Not Found' });
+			user.isVerified = req.body.isVerified || user.isVerified;
+			const updatedUser = await user.save();
+			res.send({
+				_id: updatedUser.id,
+				first_name: updatedUser.first_name,
+				last_name: updatedUser.last_name,
+				email: updatedUser.email,
+				isVerified: updatedUser.isVerified,
+				token: getToken(updatedUser)
+			});
+		} else {
+			res.status(404).send({ msg: 'User Not Found' });
+		}
+	} catch (error) {
+		console.log(error);
+		res.send(error);
 	}
 });
 
 router.put('/verify/:id', async (req, res) => {
-	const userId = req.params.id;
-	console.log({ verify: userId });
-	const user: any = await User.findById(userId);
-	if (user) {
-		user.username = req.body.username || user.username;
-		user.first_name = req.body.first_name || user.first_name;
-		user.last_name = req.body.last_name || user.last_name;
-		user.email = req.body.email || user.email;
-		user.password = req.body.password || user.password;
-		user.isVerified = true;
-		const updatedUser = await user.save();
-		res.send({
-			_id: updatedUser.id,
-			username: updatedUser.username,
-			first_name: updatedUser.first_name,
-			last_name: updatedUser.last_name,
-			email: updatedUser.email
-			// isVerified: updatedUser.isVerified,
-			// token: getToken(updatedUser)
-		});
-		// res.status(202).send({ msg: 'Verified Account' });
-	} else {
-		res.status(404).send({ msg: 'User Not Found' });
+	try {
+		const userId = req.params.id;
+		console.log({ verify: userId });
+		const user: any = await User.findById(userId);
+		if (user) {
+			user.first_name = req.body.first_name || user.first_name;
+			user.last_name = req.body.last_name || user.last_name;
+			user.email = req.body.email || user.email;
+			user.password = req.body.password || user.password;
+			user.isVerified = true;
+			const updatedUser = await user.save();
+			res.send({
+				_id: updatedUser.id,
+				first_name: updatedUser.first_name,
+				last_name: updatedUser.last_name,
+				email: updatedUser.email
+				// isVerified: updatedUser.isVerified,
+				// token: getToken(updatedUser)
+			});
+			// res.status(202).send({ msg: 'Verified Account' });
+		} else {
+			res.status(404).send({ msg: 'User Not Found' });
+		}
+	} catch (error) {
+		console.log(error);
+		res.send(error);
 	}
 });
 
@@ -117,7 +128,6 @@ router.post('/login', async (req, res) => {
 		if (isMatch) {
 			res.send({
 				_id: login_user.id,
-				username: login_user.username,
 				first_name: login_user.first_name,
 				last_name: login_user.last_name,
 				email: login_user.email,
@@ -136,7 +146,6 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
 	try {
 		const newUser: any = new User({
-			username: req.body.username,
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
 			email: req.body.email,
@@ -153,7 +162,6 @@ router.post('/register', async (req, res) => {
 					await newUser.save();
 					res.json({
 						_id: newUser.id,
-						username: newUser.username,
 						first_name: newUser.first_name,
 						last_name: newUser.last_name,
 						email: newUser.email,
@@ -182,7 +190,6 @@ router.post('/getuser/:id', async (req, res) => {
 			// console.log({ user })
 			res.send({
 				_id: user.id,
-				username: user.username,
 				first_name: user.first_name,
 				last_name: user.last_name,
 				email: user.email,
@@ -202,7 +209,6 @@ router.post('/getuser/:id', async (req, res) => {
 router.get('/createadmin', async (req, res) => {
 	try {
 		const admin: any = new User({
-			username: 'livingkurt',
 			first_name: 'Kurt',
 			last_name: 'LaVacque',
 			email: 'lavacquek@icloud.com',
@@ -221,7 +227,6 @@ router.get('/createadmin', async (req, res) => {
 					await admin.save();
 					res.json({
 						_id: admin.id,
-						username: admin.username,
 						first_name: admin.first_name,
 						last_name: admin.last_name,
 						email: admin.email,
@@ -239,4 +244,3 @@ router.get('/createadmin', async (req, res) => {
 });
 
 export default router;
-// module.exports = router;

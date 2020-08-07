@@ -9,12 +9,10 @@ import { Loading } from '../components/UtilityComponents';
 
 const EditProfilePage = (props) => {
 	const history = useHistory();
-	const [ username, setUsername ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
 
-	const [ username_validations, setUsernameValidations ] = useState('');
 	const [ first_name_validations, setFirstnameValidations ] = useState('');
 	const [ last_name_validations, setLastNameValidations ] = useState('');
 	const [ email_validations, setEmailValidations ] = useState('');
@@ -23,25 +21,18 @@ const EditProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(update({ userId: userInfo._id, email, username, password }));
-	// 	history.push('/profile');
-	// };
-
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { username, first_name, last_name, email };
+		const data = { first_name, last_name, email };
 		const request = validate_profile(data);
 
-		setUsernameValidations(request.errors.username);
 		setFirstnameValidations(request.errors.first_name);
 		setLastNameValidations(request.errors.last_name);
 		setEmailValidations(request.errors.email);
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(update({ userId: userInfo._id, email, username, first_name, last_name }));
+			dispatch(update({ userId: userInfo._id, email, first_name, last_name }));
 			history.push('/profile');
 		}
 	};
@@ -52,7 +43,6 @@ const EditProfilePage = (props) => {
 		() => {
 			if (userInfo) {
 				setEmail(userInfo.email);
-				setUsername(userInfo.username);
 				set_first_name(userInfo.first_name);
 				set_last_name(userInfo.last_name);
 				// setPassword(userInfo.password);
@@ -67,7 +57,6 @@ const EditProfilePage = (props) => {
 		() => {
 			if (userUpdate.userInfo) {
 				setEmail(userUpdate.userInfo.email);
-				setUsername(userUpdate.userInfo.username);
 				set_first_name(userUpdate.userInfo.first_name);
 				set_last_name(userUpdate.userInfo.last_name);
 				// setPassword(userUpdate.userInfo.password);
@@ -99,19 +88,7 @@ const EditProfilePage = (props) => {
 									</Loading>
 								</FlexContainer>
 							</li>
-							<li>
-								<label htmlFor="username">Username</label>
-								<input
-									defaultValue={username}
-									type="username"
-									name="username"
-									id="username"
-									onChange={(e) => setUsername(e.target.value)}
-								/>
-							</li>
-							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-								{username_validations}
-							</label>
+
 							<li>
 								<label htmlFor="first_name">First Name</label>
 								<input
@@ -119,7 +96,7 @@ const EditProfilePage = (props) => {
 									type="first_name"
 									name="first_name"
 									id="first_name"
-									onChange={(e) => setUsername(e.target.value)}
+									onChange={(e) => set_first_name(e.target.value)}
 								/>
 							</li>
 							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>

@@ -34,7 +34,6 @@ const update = (userdata: any) => async (
 		type: USER_UPDATE_REQUEST,
 		payload: {
 			userId: userdata.userId,
-			username: userdata.username,
 			first_name: userdata.first_name,
 			last_name: userdata.last_name,
 			email: userdata.email,
@@ -45,7 +44,6 @@ const update = (userdata: any) => async (
 		const { data } = await axios.put(
 			'/api/users/update/' + userdata.userId,
 			{
-				username: userdata.username,
 				first_name: userdata.first_name,
 				last_name: userdata.last_name,
 				email: userdata.email,
@@ -101,12 +99,12 @@ const reset_password = (user_id: string, password: string, repassword: string) =
 	}
 };
 
-const register = (username: string, first_name: string, last_name: string, email: string, password: string) => async (
+const register = (first_name: string, last_name: string, email: string, password: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
-	dispatch({ type: USER_REGISTER_REQUEST, payload: { username, first_name, last_name, email, password } });
+	dispatch({ type: USER_REGISTER_REQUEST, payload: { first_name, last_name, email, password } });
 	try {
-		const { data } = await axios.post('/api/users/register', { username, first_name, last_name, email, password });
+		const { data } = await axios.post('/api/users/register', { first_name, last_name, email, password });
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 		axios.post('/api/emails/verify', data);
 		// Cookie.set('userInfo', JSON.stringify(data));
@@ -130,7 +128,6 @@ const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payl
 };
 
 const contact = (
-	username: string,
 	first_name: string,
 	last_name: string,
 	email: string,
@@ -140,11 +137,10 @@ const contact = (
 ) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({
 		type: USER_CONTACT_REQUEST,
-		payload: { username, first_name, last_name, email, order_number, reason_for_contact, message }
+		payload: { first_name, last_name, email, order_number, reason_for_contact, message }
 	});
 	try {
 		const { data } = await axios.post('/api/emails/contact', {
-			username,
 			first_name,
 			last_name,
 			email,

@@ -7,14 +7,12 @@ import { validate_registration } from '../utils/helper_functions';
 import { Loading } from '../components/UtilityComponents';
 
 const RegisterPage = (props) => {
-	const [ username, setUsername ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 
-	const [ username_validations, setUsernameValidations ] = useState('');
 	const [ first_name_validations, setFirstNameValidations ] = useState('');
 	const [ last_name_validations, setLastNameValidations ] = useState('');
 	const [ email_validations, setEmailValidations ] = useState('');
@@ -26,26 +24,12 @@ const RegisterPage = (props) => {
 	const dispatch = useDispatch();
 
 	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
-	// useEffect(() => {
-	//   console.log(userInfo)
-	//   if (userInfo) {
-	//     props.history.push(redirect);
-	//   }
-	// }, [userInfo]);
-
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(register(username, email, password));
-	// 	// dispatch(email_registration(username, email, password));
-	// 	props.history.push(redirect);
-	// };
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { username, first_name, last_name, email, password, rePassword };
+		const data = { first_name, last_name, email, password, rePassword };
 		const request = validate_registration(data);
 
-		setUsernameValidations(request.errors.username);
 		setFirstNameValidations(request.errors.first_name);
 		setLastNameValidations(request.errors.first_name);
 		setEmailValidations(request.errors.email);
@@ -53,7 +37,7 @@ const RegisterPage = (props) => {
 		setRePasswordValidations(request.errors.rePassword);
 		console.log(request);
 		if (request.isValid) {
-			dispatch(register(username, first_name, last_name, email, password));
+			dispatch(register(first_name, last_name, email, password));
 			props.history.push('/checkemail');
 		}
 	};
@@ -75,19 +59,6 @@ const RegisterPage = (props) => {
 						</FlexContainer>
 					</li>
 
-					<li>
-						<label htmlFor="username">Username</label>
-						<input
-							type="text"
-							name="username"
-							id="username"
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-					</li>
-
-					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-						{username_validations}
-					</label>
 					<li>
 						<label htmlFor="email">Email</label>
 						<input

@@ -1,6 +1,5 @@
 export default (props: {
 	message: string;
-	username: string;
 	first_name: string;
 	last_name: string;
 	email: string;
@@ -20,9 +19,8 @@ export default (props: {
       Thank you,
     </h3>
     <p>
-      <div>Username: ${props.username}</div>
 
-      <div>Username: ${props.first_name} ${props.last_name}</div>
+      <div>Name: ${props.first_name} ${props.last_name}</div>
 
       <div>User Email: ${props.email}</div>
 

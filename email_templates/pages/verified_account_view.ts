@@ -1,9 +1,9 @@
-export default (props: { username: string }) => {
+export default (props: { first_name: string }) => {
 	return `
   <div class="main_container" style="padding: 20px;">
           <div style="display: flex; justify-content: center; margin: 0px auto;">
             <h1 class="h1_title" style="display: flex; font-size: 50px; margin-bottom: 3vh; text-align: center;">
-              Welcome ${props.username}, to Glow LEDs</h1>
+              Welcome ${props.first_name}, to Glow LEDs</h1>
           </div>
           <div class="title" style="display:  flex; justify-content: center;">
             <p style=" text-align: center; max-width: 654px;"> Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
