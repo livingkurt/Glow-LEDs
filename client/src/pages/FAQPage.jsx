@@ -56,7 +56,7 @@ const TermsPage = () => {
 						Products are not stocked waiting to be shipped at this time. Each order will be filled as it is
 						received. Some orders may take longer to be shipped as supplies may take time to be sourced.
 						Small packages will be sent via USPS First Class and large packages will be sent via Priority
-						Mail. Shipping time is 1-3 business days. Not responsible for delays due to post office. For
+						Mail. Shipping time is 7-10 business days. Not responsible for delays due to post office. For
 						glove accessories (caps, adapters, diffusers, battery storage) we will get your order in the
 						mail within approximately 3-4 days after the order is placed. For string lights we will get your
 						order in the mail within approximately 3-4 days after the order is placed. For infinity mirrors,
