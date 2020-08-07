@@ -16,7 +16,7 @@ const UsersPage = (props) => {
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log({ users_page: userInfo });
+	// console.log({ users_page: userInfo });
 
 	// const userToken = useSelector(state => state.userToken);
 	// // const { to } = userToken;
@@ -92,7 +92,7 @@ const UsersPage = (props) => {
 										</td>
 										<td>
 											<FlexContainer h_between>
-												<Link to={'/user/' + user._id}>
+												<Link to={'/userprofile/' + user._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
 													</button>

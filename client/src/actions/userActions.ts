@@ -28,7 +28,10 @@ import {
 	USER_LIST_FAIL,
 	USER_DELETE_REQUEST,
 	USER_DELETE_SUCCESS,
-	USER_DELETE_FAIL
+	USER_DELETE_FAIL,
+	USER_DETAILS_REQUEST,
+	USER_DETAILS_SUCCESS,
+	USER_DETAILS_FAIL
 } from '../constants/userConstants';
 
 const update = (userdata: any) => async (
@@ -194,8 +197,38 @@ const deleteUser = (userId: string) => async (
 	}
 };
 
+const detailsUser = (userId: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log({ userId });
+	console.log('hello');
+	try {
+		dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/users/' + userId, {
+			headers: { Authorization: 'Bearer ' + userInfo.token }
+		});
+		dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: USER_DETAILS_FAIL, payload: error.message });
+	}
+};
+
 const logout = () => (dispatch: (arg0: { type: string }) => void) => {
 	Cookie.remove('userInfo');
 	dispatch({ type: USER_LOGOUT });
 };
-export { login, register, logout, update, contact, password_reset, reset_password, verify, listUsers, deleteUser };
+export {
+	login,
+	register,
+	logout,
+	update,
+	contact,
+	password_reset,
+	reset_password,
+	verify,
+	listUsers,
+	deleteUser,
+	detailsUser
+};

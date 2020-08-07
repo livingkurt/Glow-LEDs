@@ -28,7 +28,8 @@ import {
 	AboutPage,
 	OrderPaymentCompletePage,
 	UsersPage,
-	FAQPage
+	FAQPage,
+	UserProfilePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -86,6 +87,7 @@ const App = () => {
 							<AdminRoute path="/products" component={ProductsPage} />
 							<AdminRoute path="/orders" component={OrdersPage} />
 							<AdminRoute path="/users" component={UsersPage} />
+							<AdminRoute path="/userprofile/:id" component={UserProfilePage} />
 						</ScrollToTop>
 						<Route component={Four04Page} />
 					</Switch>

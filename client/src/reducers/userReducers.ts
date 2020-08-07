@@ -26,7 +26,10 @@ import {
 	USER_LIST_FAIL,
 	USER_DELETE_REQUEST,
 	USER_DELETE_SUCCESS,
-	USER_DELETE_FAIL
+	USER_DELETE_FAIL,
+	USER_DETAILS_REQUEST,
+	USER_DETAILS_SUCCESS,
+	USER_DETAILS_FAIL
 } from '../constants/userConstants';
 
 const userLoginReducer = (state = {}, action: { type: any; payload: any }) => {
@@ -158,6 +161,24 @@ const userDeleteReducer = (
 	}
 };
 
+const userDetailsReducer = (
+	state = {
+		user: {}
+	},
+	action: { type: any; payload: any }
+) => {
+	switch (action.type) {
+		case USER_DETAILS_REQUEST:
+			return { loading: true };
+		case USER_DETAILS_SUCCESS:
+			return { loading: false, user: action.payload };
+		case USER_DETAILS_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
 export {
 	userLoginReducer,
 	userPasswordResetReducer,
@@ -167,5 +188,6 @@ export {
 	userResetPasswordReducer,
 	userVerifyReducer,
 	userListReducer,
-	userDeleteReducer
+	userDeleteReducer,
+	userDetailsReducer
 };

@@ -12,6 +12,16 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 	res.send(users);
 });
 
+router.get('/:id', isAuth, async (req, res) => {
+	console.log(req.params.id);
+	const user = await User.findOne({ _id: req.params.id });
+	if (user) {
+		res.send(user);
+	} else {
+		res.status(404).send('Order Not Found.');
+	}
+});
+
 router.delete('/:id', isAuth, async (req, res) => {
 	const user = await User.findOne({ _id: req.params.id });
 	if (user) {
