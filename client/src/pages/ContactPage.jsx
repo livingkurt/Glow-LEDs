@@ -82,32 +82,34 @@ const ContactPage = () => {
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
 				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" username="contact_number" /> */}
-				<label>Name</label>
+				<label>Username</label>
 				<input
 					onChange={(e) => set_username(e.target.value)}
 					defaultValue={username}
 					className="zoom_f form_input"
 					type="text"
 					name="username"
-					placeholder="Name"
+					placeholder="Username"
 				/>
 				<label className="validation_text">{username_validations}</label>
+				<label>First Name</label>
 				<input
 					onChange={(e) => set_first_name(e.target.value)}
 					defaultValue={first_name}
 					className="zoom_f form_input"
 					type="text"
 					name="first_name"
-					placeholder="Name"
+					placeholder="First Name"
 				/>
 				<label className="validation_text">{first_name_validations}</label>
+				<label>Last Name</label>
 				<input
 					onChange={(e) => set_last_name(e.target.value)}
 					defaultValue={last_name}
 					className="zoom_f form_input"
 					type="text"
 					name="last_name"
-					placeholder="Name"
+					placeholder="Last Name"
 				/>
 				<label className="validation_text">{last_name_validations}</label>
 				<label>Email</label>

@@ -23,14 +23,14 @@ let transporter = nodemailer.createTransport({
 });
 
 router.post('/contact', async (req, res) => {
-	const data = req.body.user_name;
-	console.log({ data });
+	// const data = req.body;
+	console.log({ contact: req.body });
 
 	let mailOptions = {
-		from: data.email,
+		from: req.body.email,
 		to: process.env.DISPLAY_EMAIL,
-		subject: `New message from ${data.username} - ${data.order_number} - ${data.reason_for_contact}`,
-		html: main_layout(contact_view(data), styles())
+		subject: `New message from ${req.body.username} - ${req.body.order_number} - ${req.body.reason_for_contact}`,
+		html: main_layout(contact_view(req.body), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -38,7 +38,7 @@ router.post('/contact', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('Contact Email Sent to ' + data.username);
+			console.log('Contact Email Sent to ' + req.body.username);
 			res.send('Email Successfully Sent');
 		}
 	});
