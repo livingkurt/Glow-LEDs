@@ -129,6 +129,9 @@ const Header = (props) => {
 							<Link to="/about">
 								<button className="button nav">About</button>
 							</Link>
+							<Link to="/faq">
+								<button className="button nav">FAQ</button>
+							</Link>
 							<Link to="/contact">
 								<button className="button nav">Contact</button>
 							</Link>
@@ -185,6 +188,9 @@ const Header = (props) => {
 							</Link>
 							<Link to="/products">
 								<button className="button nav"> Products</button>
+							</Link>
+							<Link to="/users">
+								<button className="button nav"> Users</button>
 							</Link>
 						</ul>
 					</div>

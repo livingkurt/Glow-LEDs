@@ -18,7 +18,9 @@ import {
 	userContactReducer,
 	userPasswordResetReducer,
 	userResetPasswordReducer,
-	userVerifyReducer
+	userVerifyReducer,
+	userDeleteReducer,
+	userListReducer
 } from './reducers/userReducers';
 import {
 	orderCreateReducer,
@@ -58,7 +60,9 @@ const reducer = combineReducers({
 	userPasswordReset: userPasswordResetReducer,
 	userResetPassword: userResetPasswordReducer,
 	userVerify: userVerifyReducer,
-	productReviewDelete: productReviewDeleteReducer
+	productReviewDelete: productReviewDeleteReducer,
+	userDelete: userDeleteReducer,
+	userList: userListReducer
 });
 
 declare global {

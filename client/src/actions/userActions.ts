@@ -22,7 +22,13 @@ import {
 	USER_RESET_PASSWORD_FAIL,
 	USER_VERIFY_REQUEST,
 	USER_VERIFY_SUCCESS,
-	USER_VERIFY_FAIL
+	USER_VERIFY_FAIL,
+	USER_LIST_REQUEST,
+	USER_LIST_SUCCESS,
+	USER_LIST_FAIL,
+	USER_DELETE_REQUEST,
+	USER_DELETE_SUCCESS,
+	USER_DELETE_FAIL
 } from '../constants/userConstants';
 
 const update = (userdata: any) => async (
@@ -156,8 +162,40 @@ const contact = (
 	}
 };
 
+const listUsers = () => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: USER_LIST_REQUEST });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/users', {
+			headers: { Authorization: 'Bearer ' + userInfo.token }
+		});
+		dispatch({ type: USER_LIST_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: USER_LIST_FAIL, payload: error.message });
+	}
+};
+
+const deleteUser = (userId: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: USER_DELETE_REQUEST, payload: userId });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.delete('/api/users/' + userId, {
+			headers: { Authorization: 'Bearer ' + userInfo.token }
+		});
+		dispatch({ type: USER_DELETE_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: USER_DELETE_FAIL, payload: error.message });
+	}
+};
+
 const logout = () => (dispatch: (arg0: { type: string }) => void) => {
 	Cookie.remove('userInfo');
 	dispatch({ type: USER_LOGOUT });
 };
-export { login, register, logout, update, contact, password_reset, reset_password, verify };
+export { login, register, logout, update, contact, password_reset, reset_password, verify, listUsers, deleteUser };

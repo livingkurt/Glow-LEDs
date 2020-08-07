@@ -26,3 +26,5 @@ export { default as MaintenancePage } from './MaintenancePage';
 export { default as TermsPage } from './TermsPage';
 export { default as AboutPage } from './AboutPage';
 export { default as OrderPaymentCompletePage } from './OrderPaymentCompletePage';
+export { default as UsersPage } from './UsersPage';
+export { default as FAQPage } from './FAQPage';

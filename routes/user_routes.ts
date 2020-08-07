@@ -7,6 +7,21 @@ require('dotenv');
 
 const router = express.Router();
 
+router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
+	const users = await User.find({}).populate('user');
+	res.send(users);
+});
+
+router.delete('/:id', isAuth, async (req, res) => {
+	const user = await User.findOne({ _id: req.params.id });
+	if (user) {
+		const deletedUser = await user.remove();
+		res.send(deletedUser);
+	} else {
+		res.status(404).send('Order Not Found.');
+	}
+});
+
 router.put('/resetpassword', async (req, res) => {
 	console.log({ resetpassword: req.body });
 	try {

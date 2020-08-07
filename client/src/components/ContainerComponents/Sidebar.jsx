@@ -129,6 +129,11 @@ const Sidebar = (props) => {
 									Products
 								</button>
 							</Link>
+							<Link to="/users">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Users
+								</button>
+							</Link>
 						</ul>
 						<i style={icon_styles} className="fas fa-sort-up" />
 					</div>
@@ -188,6 +193,11 @@ const Sidebar = (props) => {
 						<Link to="/about">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								About
+							</button>
+						</Link>
+						<Link to="/faq">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								FAQ
 							</button>
 						</Link>
 						<Link to="/contact">
