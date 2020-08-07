@@ -4,9 +4,9 @@ export {};
 
 const userSchema = new mongoose.Schema(
 	{
-		username: { type: String, required: true },
+		username: { type: String },
 		first_name: { type: String, required: true },
-		last_name: { type: String, required: true },
+		last_name: { type: String },
 		email: {
 			type: String,
 			required: true,

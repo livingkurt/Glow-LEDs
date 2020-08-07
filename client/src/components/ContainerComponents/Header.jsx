@@ -6,14 +6,14 @@ import { logout } from '../../actions/userActions';
 
 const Header = (props) => {
 	const history = useHistory();
-	const [ username, setUserName ] = useState('');
+	const [ first_name, set_first_name ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	useEffect(
 		() => {
 			if (userInfo) {
-				setUserName(userInfo.username);
+				set_first_name(userInfo.first_name);
 			}
 		},
 		[ userInfo ]
@@ -44,7 +44,7 @@ const Header = (props) => {
 	useEffect(
 		() => {
 			if (userUpdate.userInfo) {
-				setUserName(userUpdate.userInfo.username);
+				set_first_name(userUpdate.userInfo.first_name);
 			}
 			return () => {};
 		},
@@ -154,7 +154,7 @@ const Header = (props) => {
 				</Link>
 				{props.userInfo ? (
 					<div className="dropdown">
-						<button className="button nav">{username}</button>
+						<button className="button nav">{first_name}</button>
 						<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
 							<Link to="/profile">
 								<button className="button nav">Profile</button>
