@@ -6,14 +6,14 @@ import { logout } from '../../actions/userActions';
 
 const Header = (props) => {
 	const history = useHistory();
-	const [ name, setName ] = useState('');
+	const [ username, setUserName ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	useEffect(
 		() => {
 			if (userInfo) {
-				setName(userInfo.name);
+				setUserName(userInfo.username);
 			}
 		},
 		[ userInfo ]
@@ -44,7 +44,7 @@ const Header = (props) => {
 	useEffect(
 		() => {
 			if (userUpdate.userInfo) {
-				setName(userUpdate.userInfo.name);
+				setUserName(userUpdate.userInfo.username);
 			}
 			return () => {};
 		},
@@ -57,7 +57,7 @@ const Header = (props) => {
 				<Link to="/">
 					<img
 						className="zoom logo"
-						style={{ marginRight: '130px' }}
+						style={{ marginRight: '170px' }}
 						height="125px"
 						src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 						alt="Glow LEDs"
@@ -139,7 +139,7 @@ const Header = (props) => {
 					</div>
 				</FlexContainer>
 			</FlexContainer>
-			<FlexContainer class="nav_bar" styles={{ width: '270px', justifyContent: 'flex-end' }}>
+			<FlexContainer class="nav_bar" styles={{ width: '322px', justifyContent: 'flex-end' }}>
 				<Link to="/cart">
 					<button className=" button nav cart_text">
 						Cart <i className="fas fa-shopping-cart" />{' '}
@@ -154,7 +154,7 @@ const Header = (props) => {
 				</Link>
 				{props.userInfo ? (
 					<div className="dropdown">
-						<button className="button nav">{name}</button>
+						<button className="button nav">{username}</button>
 						<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
 							<Link to="/profile">
 								<button className="button nav">Profile</button>

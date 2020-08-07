@@ -1,4 +1,4 @@
-export default (props: { name: string; _id: string }) => {
+export default (props: { username: string; _id: string }) => {
 	return `
   <div class="main_container" style="padding: 20px;">
           <div style="display: flex; justify-content: center; margin: 0px auto;">
@@ -9,7 +9,7 @@ export default (props: { name: string; _id: string }) => {
 
           </div>
           <div style="display: flex; justify-content: center; margin: 0px auto;">
-            <h1 class="h2_title" style="display: flex; font-size: 25px; text-align: center;">Hello, ${props.name}
+            <h1 class="h2_title" style="display: flex; font-size: 25px; text-align: center;">Hello, ${props.username}
             </h1>
           </div>
           <p style=" text-align: center; "> Thank you for registering with Glow LEDs. Please verify your email address

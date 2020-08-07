@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 const config = require('./config');
 import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
 import Product from './models/product';
+// const htmlRoutes = require('./email_templates/html_routes');
 
 mongoose
 	.connect(config.RESTORED_MONGODB_URI, {
@@ -25,6 +26,7 @@ app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);
+// app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {
 	res.send(config.PAYPAL_CLIENT_ID);
 });

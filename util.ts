@@ -6,11 +6,13 @@ export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
 
-const getToken = (user: { _id: any; name: any; email: any; isAdmin: any }) => {
+const getToken = (user: { _id: any; username: any; first_name: any; last_name: any; email: any; isAdmin: any }) => {
 	return jwt.sign(
 		{
 			_id: user._id,
-			name: user.name,
+			username: user.username,
+			first_name: user.first_name,
+			last_name: user.last_name,
 			email: user.email,
 			isAdmin: user.isAdmin
 		},

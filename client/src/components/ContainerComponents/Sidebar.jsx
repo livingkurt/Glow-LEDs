@@ -52,14 +52,14 @@ const Sidebar = (props) => {
 		'-webkitTransform': 'rotate(-180deg)'
 	};
 
-	const [ name, setName ] = useState('');
+	const [ username, setUserName ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	useEffect(
 		() => {
 			if (userInfo) {
-				setName(userInfo.name);
+				setUserName(userInfo.username);
 			}
 
 			// }
@@ -72,7 +72,7 @@ const Sidebar = (props) => {
 	useEffect(
 		() => {
 			if (userUpdate.userInfo) {
-				setName(userUpdate.userInfo.name);
+				setUserName(userUpdate.userInfo.username);
 			}
 			return () => {};
 		},
@@ -88,7 +88,7 @@ const Sidebar = (props) => {
 			<FlexContainer column>
 				{props.userInfo ? (
 					<div className="sidebar_dropdown">
-						<button className="sidebar_button primary">{name}</button>
+						<button className="sidebar_button primary">{username}</button>
 						<ul className="sidebar_dropdown_container">
 							<Link to="/profile">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>

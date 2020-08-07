@@ -7,12 +7,16 @@ import { validate_registration } from '../utils/helper_functions';
 import { Loading } from '../components/UtilityComponents';
 
 const RegisterPage = (props) => {
-	const [ name, setName ] = useState('');
+	const [ username, setUsername ] = useState('');
+	const [ first_name, set_first_name ] = useState('');
+	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 
-	const [ name_validations, setNameValidations ] = useState('');
+	const [ username_validations, setUsernameValidations ] = useState('');
+	const [ first_name_validations, setFirstNameValidations ] = useState('');
+	const [ last_name_validations, setLastNameValidations ] = useState('');
 	const [ email_validations, setEmailValidations ] = useState('');
 	const [ password_validations, setPasswordValidations ] = useState('');
 	const [ re_password_validations, setRePasswordValidations ] = useState('');
@@ -31,23 +35,25 @@ const RegisterPage = (props) => {
 
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
-	// 	dispatch(register(name, email, password));
-	// 	// dispatch(email_registration(name, email, password));
+	// 	dispatch(register(username, email, password));
+	// 	// dispatch(email_registration(username, email, password));
 	// 	props.history.push(redirect);
 	// };
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { name, email, password, rePassword };
+		const data = { username, first_name, last_name, email, password, rePassword };
 		const request = validate_registration(data);
 
-		setNameValidations(request.errors.name);
+		setUsernameValidations(request.errors.username);
+		setFirstNameValidations(request.errors.first_name);
+		setLastNameValidations(request.errors.first_name);
 		setEmailValidations(request.errors.email);
 		setPasswordValidations(request.errors.password);
 		setRePasswordValidations(request.errors.rePassword);
 		console.log(request);
 		if (request.isValid) {
-			dispatch(register(name, email, password));
+			dispatch(register(username, first_name, last_name, email, password));
 			props.history.push('/checkemail');
 		}
 	};
@@ -68,20 +74,59 @@ const RegisterPage = (props) => {
 							<Loading loading={loading} error={error} />
 						</FlexContainer>
 					</li>
+
 					<li>
-						<label htmlFor="name">Name</label>
-						<input type="name" name="name" id="name" onChange={(e) => setName(e.target.value)} />
+						<label htmlFor="username">Username</label>
+						<input
+							type="text"
+							name="username"
+							id="username"
+							onChange={(e) => setUsername(e.target.value)}
+						/>
 					</li>
+
 					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-						{name_validations}
+						{username_validations}
 					</label>
 					<li>
 						<label htmlFor="email">Email</label>
-						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+						<input
+							type="text"
+							name="email"
+							id="email"
+							required
+							autocomplete="email"
+							onChange={(e) => setEmail(e.target.value)}
+						/>
 					</li>
 					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
 						{email_validations}
 					</label>
+					<li>
+						<label htmlFor="first_name">First Name</label>
+						<input
+							type="text"
+							name="first_name"
+							id="first_name"
+							onChange={(e) => set_first_name(e.target.value)}
+						/>
+					</li>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{first_name_validations}
+					</label>
+					<li>
+						<label htmlFor="last_name">Last Name</label>
+						<input
+							type="text"
+							name="last_name"
+							id="last_name"
+							onChange={(e) => set_last_name(e.target.value)}
+						/>
+					</li>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{last_name_validations}
+					</label>
+
 					<li>
 						<label htmlFor="password">Password</label>
 						<input

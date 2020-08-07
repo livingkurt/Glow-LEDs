@@ -9,13 +9,17 @@ import { Loading } from '../components/UtilityComponents';
 const ContactPage = () => {
 	const dispatch = useDispatch();
 
-	const [ name, set_name ] = useState('');
+	const [ username, set_username ] = useState('');
+	const [ first_name, set_first_name ] = useState('');
+	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
 	const [ order_number, set_order_number ] = useState('');
 	const [ reason_for_contact, set_reason_for_contact ] = useState('');
 	const [ message, set_message ] = useState('');
 
-	const [ name_validations, set_name_Validations ] = useState('');
+	const [ username_validations, set_username_Validations ] = useState('');
+	const [ first_name_validations, set_first_name_Validations ] = useState('');
+	const [ last_name_validations, set_last_name_Validations ] = useState('');
 	const [ email_validations, set_email_validations ] = useState('');
 	const [ order_number_validations, set_order_number_validations ] = useState('');
 	const [ reason_for_contact_validations, set_reason_for_contact_validations ] = useState('');
@@ -27,7 +31,9 @@ const ContactPage = () => {
 	const sendEmail = (e) => {
 		e.preventDefault();
 		const data = {
-			name,
+			username,
+			first_name,
+			last_name,
 			email,
 			order_number,
 			reason_for_contact,
@@ -35,7 +41,9 @@ const ContactPage = () => {
 		};
 		const request = validate_contact(data);
 
-		set_name_Validations(request.errors.name);
+		set_username_Validations(request.errors.username);
+		set_first_name_Validations(request.errors.first_name);
+		set_last_name_Validations(request.errors.last_name);
 		set_email_validations(request.errors.email);
 		set_order_number_validations(request.errors.order_number);
 		set_reason_for_contact_validations(request.errors.reason_for_contact);
@@ -45,20 +53,26 @@ const ContactPage = () => {
 		if (request.isValid) {
 			dispatch(
 				contact({
-					name,
+					username,
+					first_name,
+					last_name,
 					email,
 					order_number,
 					reason_for_contact,
 					message
 				})
 			);
-			set_name_Validations('');
+			set_username_Validations('');
+			set_last_name_Validations('');
+			set_first_name_Validations('');
 			set_email_validations('');
 			set_order_number_validations('');
 			set_reason_for_contact_validations('');
 			set_message_validations('');
 			// e.target.reset();
-			document.getElementsByName('name').value = '';
+			document.getElementsByName('username').value = '';
+			document.getElementsByName('first_name').value = '';
+			document.getElementsByName('last_name').value = '';
 			document.getElementsByName('email').value = '';
 			document.getElementsByName('order_number').value = '';
 			document.getElementsByName('reason_for_contact').value = '';
@@ -77,17 +91,35 @@ const ContactPage = () => {
 				</Loading>
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
-				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" name="contact_number" /> */}
+				{/* <input onChange={(e) => set_contact_number(e.target.value)} className="zoom_f input_i" type="text" username="contact_number" /> */}
 				<label>Name</label>
 				<input
-					onChange={(e) => set_name(e.target.value)}
-					defaultValue={name}
+					onChange={(e) => set_username(e.target.value)}
+					defaultValue={username}
 					className="zoom_f form_input"
 					type="text"
-					name="name"
+					name="username"
 					placeholder="Name"
 				/>
-				<label className="validation_text">{name_validations}</label>
+				<label className="validation_text">{username_validations}</label>
+				<input
+					onChange={(e) => set_first_name(e.target.value)}
+					defaultValue={first_name}
+					className="zoom_f form_input"
+					type="text"
+					name="first_name"
+					placeholder="Name"
+				/>
+				<label className="validation_text">{first_name_validations}</label>
+				<input
+					onChange={(e) => set_last_name(e.target.value)}
+					defaultValue={last_name}
+					className="zoom_f form_input"
+					type="text"
+					name="last_name"
+					placeholder="Name"
+				/>
+				<label className="validation_text">{last_name_validations}</label>
 				<label>Email</label>
 				<input
 					onChange={(e) => set_email(e.target.value)}

@@ -12,6 +12,8 @@ export default (props: {
 	taxPrice: number;
 	totalPrice: number;
 	order_note: string;
+	paid: string;
+	shipped: string;
 }) => {
 	const format_date_display = (unformatted_date: string | number | Date) => {
 		const date = new Date(unformatted_date);
@@ -31,7 +33,7 @@ export default (props: {
                   <h1 style="display: flex; font-size: 30px; margin-top: 0px;">${props.title}</h1>
               <h1 style="display: flex; font-size: 20px; margin: 0px;">Order Number: <a href="${process.env.NODE_ENV ===
 				'production'
-					? 'https://glow-leds-dev.herokuapp.com'
+					? 'http://glow-leds.com'
 					: 'http://localhost:3000'}/order/${props._id}" style="color:white; text-decoration:none">${props._id}</a></h1>
                     <h1>Shipping</h1>
                     <div>
@@ -44,9 +46,7 @@ export default (props: {
                     style="display: flex; flex-direction: column; margin-top: auto; width: 373px;">
                     <div
                       style="display: flex; justify-content: space-between; align-items: center; flex-direction: row;">
-                      <label style="margin-top: 5px;">${props.isShipped
-							? 'Shipped at ' + format_date_display(props.shippedAt)
-							: ' Not Shipped'}</label>
+                      <label style="margin-top: 5px;">${props.shipped}</label>
                     </div>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ export default (props: {
               <div>
                 <h1>Payment</h1>
                 <div>Payment Method: paypal</div>
-                <div>${props.isPaid ? 'Paid at ' + format_date_display(props.paidAt) : 'Not Paid'}</div>
+                <div>${props.paid}</div>
               </div>
               <div>
                 <ul class="cart-list-container" style="margin-top: 0px;">
@@ -66,12 +66,12 @@ export default (props: {
 						let item_item = `<li>
                     <div class="cart-image">
                     <img src="${process.env.NODE_ENV === 'production'
-						? 'https://glow-leds-dev.herokuapp.com'
-						: 'http://localhost:3000'}/${item.display_image}"
+						? 'http://glow-leds.com'
+						: 'http://localhost:3000'}${item.display_image}"
                         alt="product"></div>
                     <div class="cart-name">
                       <div><a href="${process.env.NODE_ENV === 'production'
-							? 'https://glow-leds-dev.herokuapp.com'
+							? 'http://glow-leds.com'
 							: 'http://localhost:3000'}/product/${item.product}">${item.name}</a></div>
                       <div>Qty: ${item.qty}</div>
                     </div>

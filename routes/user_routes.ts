@@ -45,7 +45,9 @@ router.put('/update/:id', isAuth, async (req, res) => {
 
 	const user: any = await User.findById(userId);
 	if (user) {
-		user.name = req.body.name || user.name;
+		user.username = req.body.username || user.username;
+		user.first_name = req.body.first_name || user.first_name;
+		user.last_name = req.body.last_name || user.last_name;
 		user.email = req.body.email || user.email;
 		user.password = req.body.password || user.password;
 		bcrypt.genSalt(10, (err: any, salt: any) => {
@@ -59,7 +61,9 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		const updatedUser = await user.save();
 		res.send({
 			_id: updatedUser.id,
-			name: updatedUser.name,
+			username: updatedUser.username,
+			first_name: updatedUser.first_name,
+			last_name: updatedUser.last_name,
 			email: updatedUser.email,
 			isVerified: updatedUser.isVerified,
 			token: getToken(updatedUser)
@@ -74,14 +78,18 @@ router.put('/verify/:id', async (req, res) => {
 	console.log({ verify: userId });
 	const user: any = await User.findById(userId);
 	if (user) {
-		user.name = req.body.name || user.name;
+		user.username = req.body.username || user.username;
+		user.first_name = req.body.first_name || user.first_name;
+		user.last_name = req.body.last_name || user.last_name;
 		user.email = req.body.email || user.email;
 		user.password = req.body.password || user.password;
 		user.isVerified = true;
 		const updatedUser = await user.save();
 		res.send({
 			_id: updatedUser.id,
-			name: updatedUser.name,
+			username: updatedUser.username,
+			first_name: updatedUser.first_name,
+			last_name: updatedUser.last_name,
 			email: updatedUser.email
 			// isVerified: updatedUser.isVerified,
 			// token: getToken(updatedUser)
@@ -109,7 +117,9 @@ router.post('/login', async (req, res) => {
 		if (isMatch) {
 			res.send({
 				_id: login_user.id,
-				name: login_user.name,
+				username: login_user.username,
+				first_name: login_user.first_name,
+				last_name: login_user.last_name,
 				email: login_user.email,
 				isAdmin: login_user.isAdmin,
 				token: getToken(login_user)
@@ -126,7 +136,9 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
 	try {
 		const newUser: any = new User({
-			name: req.body.name,
+			username: req.body.username,
+			first_name: req.body.first_name,
+			last_name: req.body.last_name,
 			email: req.body.email,
 			password: req.body.password
 		});
@@ -141,7 +153,9 @@ router.post('/register', async (req, res) => {
 					await newUser.save();
 					res.json({
 						_id: newUser.id,
-						name: newUser.name,
+						username: newUser.username,
+						first_name: newUser.first_name,
+						last_name: newUser.last_name,
 						email: newUser.email,
 						isAdmin: newUser.isAdmin,
 						isVerified: newUser.isVerified,
@@ -168,7 +182,9 @@ router.post('/getuser/:id', async (req, res) => {
 			// console.log({ user })
 			res.send({
 				_id: user.id,
-				name: user.name,
+				username: user.username,
+				first_name: user.first_name,
+				last_name: user.last_name,
 				email: user.email,
 				password: user.password,
 				isAdmin: user.isAdmin,
@@ -186,7 +202,9 @@ router.post('/getuser/:id', async (req, res) => {
 router.get('/createadmin', async (req, res) => {
 	try {
 		const admin: any = new User({
-			name: 'Kurt',
+			username: 'livingkurt',
+			first_name: 'Kurt',
+			last_name: 'LaVacque',
 			email: 'lavacquek@icloud.com',
 			password: 'admin',
 			isVerified: true,
@@ -203,7 +221,9 @@ router.get('/createadmin', async (req, res) => {
 					await admin.save();
 					res.json({
 						_id: admin.id,
-						name: admin.name,
+						username: admin.username,
+						first_name: admin.first_name,
+						last_name: admin.last_name,
 						email: admin.email,
 						isAdmin: admin.isAdmin,
 						isVerified: admin.isVerified,

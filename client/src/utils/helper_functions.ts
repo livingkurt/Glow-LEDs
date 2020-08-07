@@ -43,16 +43,33 @@ export const validate_login = (data: { email: any; password: any }) => {
 	};
 };
 
-export const validate_registration = (data: { name: any; email: any; password: any; rePassword: any }) => {
+export const validate_registration = (data: {
+	username: any;
+	first_name: any;
+	last_name: any;
+	email: any;
+	password: any;
+	rePassword: any;
+}) => {
 	let errors: any = {};
 	// Convert empty fields to an empty string so we can use validator functions
-	data.name = !isEmpty(data.name) ? data.name : '';
+	data.username = !isEmpty(data.username) ? data.username : '';
+	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
+	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.password = !isEmpty(data.password) ? data.password : '';
 	data.rePassword = !isEmpty(data.rePassword) ? data.rePassword : '';
 	// Name checks
-	if (Validator.isEmpty(data.name)) {
-		errors.name = 'Name field is required';
+	if (Validator.isEmpty(data.username)) {
+		errors.username = 'Name field is required';
+	}
+	// Name checks
+	if (Validator.isEmpty(data.first_name)) {
+		errors.first_name = 'Name field is required';
+	}
+	// Name checks
+	if (Validator.isEmpty(data.last_name)) {
+		errors.last_name = 'Name field is required';
 	}
 	// Email checks
 	if (Validator.isEmpty(data.email)) {
@@ -80,7 +97,9 @@ export const validate_registration = (data: { name: any; email: any; password: a
 };
 
 export const validate_contact = (data: {
-	name: any;
+	username: any;
+	first_name: any;
+	last_name: any;
 	email: any;
 	order_number: any;
 	reason_for_contact: any;
@@ -88,14 +107,24 @@ export const validate_contact = (data: {
 }) => {
 	let errors: any = {};
 	// Convert empty fields to an empty string so we can use validator functions
-	data.name = !isEmpty(data.name) ? data.name : '';
+	data.username = !isEmpty(data.username) ? data.username : '';
+	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
+	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.order_number = !isEmpty(data.order_number) ? data.order_number : '';
 	data.reason_for_contact = !isEmpty(data.reason_for_contact) ? data.reason_for_contact : '';
 	data.message = !isEmpty(data.message) ? data.message : '';
 	// Name checks
-	if (Validator.isEmpty(data.name)) {
-		errors.name = 'Name field is required';
+	if (Validator.isEmpty(data.username)) {
+		errors.username = 'Name field is required';
+	}
+	// Name checks
+	if (Validator.isEmpty(data.first_name)) {
+		errors.first_name = 'Name field is required';
+	}
+	// Name checks
+	if (Validator.isEmpty(data.last_name)) {
+		errors.last_name = 'Name field is required';
 	}
 	// Email checks
 	if (Validator.isEmpty(data.email)) {
@@ -120,14 +149,24 @@ export const validate_contact = (data: {
 	};
 };
 
-export const validate_profile = (data: { name: any; email: any }) => {
+export const validate_profile = (data: { username: any; first_name: any; last_name: any; email: any }) => {
 	let errors: any = {};
 	// Convert empty fields to an empty string so we can use validator functions
-	data.name = !isEmpty(data.name) ? data.name : '';
+	data.username = !isEmpty(data.username) ? data.username : '';
+	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
+	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
 	// Name checks
-	if (Validator.isEmpty(data.name)) {
-		errors.name = 'Name field is required';
+	if (Validator.isEmpty(data.username)) {
+		errors.username = 'Name field is required';
+	}
+	// Name checks
+	if (Validator.isEmpty(data.first_name)) {
+		errors.first_name = 'Name field is required';
+	}
+	// Name checks
+	if (Validator.isEmpty(data.last_name)) {
+		errors.last_name = 'Name field is required';
 	}
 	// Email checks
 	if (Validator.isEmpty(data.email)) {

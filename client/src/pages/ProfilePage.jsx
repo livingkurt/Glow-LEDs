@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FlexContainer } from '../components/ContainerComponents';
 
 const ProfilePage = (props) => {
-	const [ name, setName ] = useState('');
+	const [ username, setUsername ] = useState('');
+	const [ first_name, set_first_name ] = useState('');
+	const [ last_name, set_last_name ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const dispatch = useDispatch();
@@ -19,7 +21,9 @@ const ProfilePage = (props) => {
 		() => {
 			if (userInfo) {
 				setEmail(userInfo.email);
-				setName(userInfo.name);
+				setUsername(userInfo.username);
+				set_first_name(userInfo.first_name);
+				set_last_name(userInfo.last_name);
 				setPassword(userInfo.password);
 			}
 			dispatch(listMyOrders());
@@ -32,7 +36,9 @@ const ProfilePage = (props) => {
 		() => {
 			if (userUpdate.userInfo) {
 				setEmail(userUpdate.userInfo.email);
-				setName(userUpdate.userInfo.name);
+				setUsername(userUpdate.userInfo.username);
+				set_first_name(userUpdate.userInfo.first_name);
+				set_last_name(userUpdate.userInfo.last_name);
 				setPassword(userUpdate.userInfo.password);
 			}
 			return () => {};
@@ -52,8 +58,16 @@ const ProfilePage = (props) => {
 			<FlexContainer class="profile_container" row h_between wrap>
 				<FlexContainer column>
 					<FlexContainer column styles={container_styles}>
-						<h3>Name</h3>
-						<label>{name}</label>
+						<h3>Username</h3>
+						<label>{username}</label>
+					</FlexContainer>
+					<FlexContainer column styles={container_styles}>
+						<h3>First Name</h3>
+						<label>{first_name}</label>
+					</FlexContainer>
+					<FlexContainer column styles={container_styles}>
+						<h3>Last Name</h3>
+						<label>{last_name}</label>
 					</FlexContainer>
 					<FlexContainer column styles={container_styles}>
 						<h3>Email</h3>

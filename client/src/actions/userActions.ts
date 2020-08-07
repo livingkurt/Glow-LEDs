@@ -32,12 +32,25 @@ const update = (userdata: any) => async (
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_REQUEST,
-		payload: { userId: userdata.userId, name: userdata.name, email: userdata.email, password: userdata.password }
+		payload: {
+			userId: userdata.userId,
+			username: userdata.username,
+			first_name: userdata.first_name,
+			last_name: userdata.last_name,
+			email: userdata.email,
+			password: userdata.password
+		}
 	});
 	try {
 		const { data } = await axios.put(
 			'/api/users/update/' + userdata.userId,
-			{ name: userdata.name, email: userdata.email, password: userdata.password },
+			{
+				username: userdata.username,
+				first_name: userdata.first_name,
+				last_name: userdata.last_name,
+				email: userdata.email,
+				password: userdata.password
+			},
 			{
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
@@ -88,12 +101,12 @@ const reset_password = (user_id: string, password: string, repassword: string) =
 	}
 };
 
-const register = (name: string, email: string, password: string) => async (
+const register = (username: string, first_name: string, last_name: string, email: string, password: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
-	dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, password } });
+	dispatch({ type: USER_REGISTER_REQUEST, payload: { username, first_name, last_name, email, password } });
 	try {
-		const { data } = await axios.post('/api/users/register', { name, email, password });
+		const { data } = await axios.post('/api/users/register', { username, first_name, last_name, email, password });
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 		axios.post('/api/emails/verify', data);
 		// Cookie.set('userInfo', JSON.stringify(data));
@@ -117,7 +130,15 @@ const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payl
 };
 
 const contact = (
-	user_name: { name: string; email: string; order_number: string; reason_for_contact: string; message: string },
+	user_name: {
+		username: string;
+		first_name: string;
+		last_name: string;
+		email: string;
+		order_number: string;
+		reason_for_contact: string;
+		message: string;
+	},
 	user_email: undefined,
 	order_number: undefined,
 	reason_for_contact: undefined,

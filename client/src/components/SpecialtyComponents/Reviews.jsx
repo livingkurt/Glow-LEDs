@@ -49,7 +49,8 @@ const Review = (props) => {
 		e.preventDefault();
 		dispatch(
 			saveProductReview(props.product_id, {
-				name: userInfo.name,
+				first_name: userInfo.first_name,
+				last_name: userInfo.last_name,
 				rating: rating,
 				comment: comment
 			})
@@ -74,7 +75,8 @@ const Review = (props) => {
 						boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
 					}}
 				>
-					<div>{review.name}</div>
+					<div>{review.first_name + ' ' + review.last_name}</div>
+					{/* <div>{review.last_name}</div> */}
 					<div>
 						<Rating value={review.rating} />
 					</div>
@@ -115,7 +117,7 @@ const Review = (props) => {
 									<h3 htmlFor="rating">Rating</h3>
 									<div className="review_select_dropdown_container">
 										<select
-											name="rating"
+											first_name="rating"
 											id="rating"
 											className="review_select_dropdown"
 											defaultValue={rating}

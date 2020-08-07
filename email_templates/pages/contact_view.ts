@@ -18,7 +18,7 @@ export default (props: {
       Thank you,
     </h3>
     <p>
-      <div>Username: ${props.name}</div>
+      <div>Username: ${props.username}</div>
 
       <div>User Email: ${props.email}</div>
 
