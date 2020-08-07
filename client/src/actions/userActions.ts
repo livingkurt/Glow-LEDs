@@ -29,6 +29,7 @@ const update = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
+	console.log(userdata);
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_REQUEST,
@@ -63,6 +64,7 @@ const update = (userdata: any) => async (
 };
 
 const login = (email: string, password: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	// console.log({ login: email });
 	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
 	try {
 		const { data } = await axios.post('/api/users/login', { email, password });

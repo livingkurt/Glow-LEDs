@@ -46,15 +46,20 @@ router.post('/passwordreset', async (req, res) => {
 });
 
 router.put('/update/:id', isAuth, async (req, res) => {
-	try {
-		const userId = req.params.id;
+	console.log('/update/:id');
+	// try {
+	const userId = req.params.id;
 
-		const user: any = await User.findById(userId);
-		if (user) {
-			user.first_name = req.body.first_name || user.first_name;
-			user.last_name = req.body.last_name || user.last_name;
-			user.email = req.body.email || user.email;
-			user.password = req.body.password || user.password;
+	const user: any = await User.findById(userId);
+	if (user) {
+		user.first_name = req.body.first_name || user.first_name;
+		user.last_name = req.body.last_name || user.last_name;
+		user.email = req.body.email || user.email;
+		user.password = req.body.password || user.password;
+		user.isAdmin = req.body.isAdmin || user.isAdmin;
+		user.isVerified = req.body.isVerified || user.isVerified;
+		if (req.body.password) {
+			console.log('password');
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(user.password, salt, async (err: any, hash: any) => {
 					if (err) throw err;
@@ -62,23 +67,25 @@ router.put('/update/:id', isAuth, async (req, res) => {
 					await user.save();
 				});
 			});
-			user.isVerified = req.body.isVerified || user.isVerified;
-			const updatedUser = await user.save();
-			res.send({
-				_id: updatedUser.id,
-				first_name: updatedUser.first_name,
-				last_name: updatedUser.last_name,
-				email: updatedUser.email,
-				isVerified: updatedUser.isVerified,
-				token: getToken(updatedUser)
-			});
-		} else {
-			res.status(404).send({ msg: 'User Not Found' });
 		}
-	} catch (error) {
-		console.log(error);
-		res.send(error);
+
+		user.isVerified = req.body.isVerified || user.isVerified;
+		const updatedUser = await user.save();
+		res.send({
+			_id: updatedUser.id,
+			first_name: updatedUser.first_name,
+			last_name: updatedUser.last_name,
+			email: updatedUser.email,
+			isVerified: updatedUser.isVerified,
+			token: getToken(updatedUser)
+		});
+	} else {
+		res.status(404).send({ msg: 'User Not Found' });
 	}
+	// } catch (error) {
+	// 	console.log(error);
+	// 	res.send(error);
+	// }
 });
 
 router.put('/verify/:id', async (req, res) => {
@@ -91,6 +98,7 @@ router.put('/verify/:id', async (req, res) => {
 			user.last_name = req.body.last_name || user.last_name;
 			user.email = req.body.email || user.email;
 			user.password = req.body.password || user.password;
+			user.isAdmin = req.body.isAdmin || user.isAdmin;
 			user.isVerified = true;
 			const updatedUser = await user.save();
 			res.send({
@@ -112,35 +120,36 @@ router.put('/verify/:id', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-	try {
-		const email = req.body.email;
-		const password = req.body.password;
+	// try {
+	const email = req.body.email;
+	const password = req.body.password;
 
-		const login_user: any = await User.findOne({ email });
-		if (!login_user) {
-			return res.status(404).json({ emailnotfound: 'Email not found' });
-		}
-		if (!login_user.isVerified) {
-			return res.status(404).json({ emailnotfound: 'Account not Verified' });
-		}
-		// Check password
-		const isMatch = await bcrypt.compare(password, login_user.password);
-		if (isMatch) {
-			res.send({
-				_id: login_user.id,
-				first_name: login_user.first_name,
-				last_name: login_user.last_name,
-				email: login_user.email,
-				isAdmin: login_user.isAdmin,
-				token: getToken(login_user)
-			});
-		} else {
-			return res.status(400).json({ passwordincorrect: 'Password incorrect' });
-		}
-	} catch (error) {
-		console.log(error);
-		res.send(error);
+	const login_user: any = await User.findOne({ email });
+	if (!login_user) {
+		return res.status(404).json({ emailnotfound: 'Email not found' });
 	}
+	if (!login_user.isVerified) {
+		return res.status(404).json({ emailnotfound: 'Account not Verified' });
+	}
+	// Check password
+	const isMatch = await bcrypt.compare(password, login_user.password);
+	if (isMatch) {
+		res.send({
+			_id: login_user.id,
+			first_name: login_user.first_name,
+			last_name: login_user.last_name,
+			email: login_user.email,
+			isAdmin: login_user.isAdmin,
+			isVerified: login_user.isVerified,
+			token: getToken(login_user)
+		});
+	} else {
+		return res.status(400).json({ passwordincorrect: 'Password incorrect' });
+	}
+	// } catch (error) {
+	// 	console.log(error);
+	// 	res.send(error);
+	// }
 });
 
 router.post('/register', async (req, res) => {
@@ -149,7 +158,9 @@ router.post('/register', async (req, res) => {
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,
 			email: req.body.email,
-			password: req.body.password
+			password: req.body.password,
+			isAdmin: false,
+			isVerified: false
 		});
 		const user = await User.findOne({ email: newUser.email });
 		if (user) {
