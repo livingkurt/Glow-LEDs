@@ -14,14 +14,26 @@ export default (props: { first_name: string; _id: string }) => {
           </div>
           <p style=" text-align: center; "> Thank you for registering with Glow LEDs. Please verify your email address
             by clicking below.</p>
-
-          <div style="display:flex; justify-content: center; margin-top: 10px;">
+      
+          <div style="display:flex; justify-content: center; flex-direction: column; margin-top: 10px;">
             <button
-              style=" border-radius: 5px; background-color:#73737300;  font-weight: bold; border: 0px; color: white; text-decoration: none; box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 15px; ">
+              style=" border-radius: 5px; background-color:#73737300;  width: 155px;  margin: 0 auto; font-weight: bold; border: 0px; color: white; text-decoration: none; box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); padding: 15px; ">
               <a style="font-size: 20px; color: white; text-decoration: none;"
                 href="${process.env.NODE_ENV === 'production'
 					? 'http://www.glow-leds.com'
 					: 'http://localhost:3000'}/verified/${props._id}">Verify Email</a></button>
+          <p style=" text-align: center;">If the "Verifiy Email" button doesn't work click
+            or
+            copy and paste this link
+            <a style="color: #8ce4ff;  text-decoration: underline;"
+              href=" ${process.env.NODE_ENV === 'production'
+					? 'http://www.glow-leds.com'
+					: 'http://localhost:3000'}/verified/${props._id}">${process.env.NODE_ENV === 'production'
+		? 'http://www.glow-leds.com'
+		: 'http://localhost:3000'}/verified/${props._id}</a>
+            into
+            your browser to verify account
+          </p>
           </div>
           <p style=" text-align: center;">If you didn’t request this, please ignore this email. Your
             email won’t be verified until you access the link above.

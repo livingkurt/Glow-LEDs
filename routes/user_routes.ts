@@ -51,6 +51,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 	const userId = req.params.id;
 
 	const user: any = await User.findById(userId);
+	console.log('/update/:id');
 	if (user) {
 		user.first_name = req.body.first_name || user.first_name;
 		user.last_name = req.body.last_name || user.last_name;
@@ -58,18 +59,26 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		user.password = req.body.password || user.password;
 		user.isAdmin = req.body.isAdmin || user.isAdmin;
 		user.isVerified = req.body.isVerified || user.isVerified;
-		if (req.body.password) {
-			console.log('password');
-			bcrypt.genSalt(10, (err: any, salt: any) => {
-				bcrypt.hash(user.password, salt, async (err: any, hash: any) => {
-					if (err) throw err;
-					user.password = hash;
-					await user.save();
-				});
-			});
-		}
+		// bcrypt.genSalt(10, (err: any, salt: any) => {
+		// 	bcrypt.hash(user.password, salt, async (err: any, hash: any) => {
+		// 		if (err) throw err;
+		// 		user.password = hash;
+		// 		await User.updateOne(
+		// 			{ _id: userId },
+		// 			{
+		// 				first_name: user.first_name,
+		// 				last_name: user.last_name,
+		// 				email: user.email,
+		// 				password: user.password,
+		// 				isAdmin: user.isAdmin,
+		// 				isVerified: user.isVerified
+		// 			}
+		// 		);
+		// 		// await user.save();
+		// 	});
+		// });
+		// // }
 
-		user.isVerified = req.body.isVerified || user.isVerified;
 		const updatedUser = await user.save();
 		res.send({
 			_id: updatedUser.id,
@@ -87,6 +96,57 @@ router.put('/update/:id', isAuth, async (req, res) => {
 	// 	res.send(error);
 	// }
 });
+// router.put('/changepassword/:id', isAuth, async (req, res) => {
+// 	console.log('/changepassword/:id');
+// 	// try {
+// 	const userId = req.params.id;
+
+// 	const user: any = await User.findById(userId);
+// 	console.log('/changepassword/:id');
+// 	if (user) {
+// 		user.first_name = req.body.first_name || user.first_name;
+// 		user.last_name = req.body.last_name || user.last_name;
+// 		user.email = req.body.email || user.email;
+// 		user.password = req.body.password || user.password;
+// 		user.isAdmin = req.body.isAdmin || user.isAdmin;
+// 		user.isVerified = req.body.isVerified || user.isVerified;
+// 		bcrypt.genSalt(10, (err: any, salt: any) => {
+// 			bcrypt.hash(user.password, salt, async (err: any, hash: any) => {
+// 				if (err) throw err;
+// 				user.password = hash;
+// 				await User.updateOne(
+// 					{ _id: userId },
+// 					{
+// 						first_name: user.first_name,
+// 						last_name: user.last_name,
+// 						email: user.email,
+// 						password: user.password,
+// 						isAdmin: user.isAdmin,
+// 						isVerified: user.isVerified
+// 					}
+// 				);
+// 				// await user.save();
+// 			});
+// 		});
+// 		// }
+
+// 		const updatedUser = await user.save();
+// 		res.send({
+// 			_id: updatedUser.id,
+// 			first_name: updatedUser.first_name,
+// 			last_name: updatedUser.last_name,
+// 			email: updatedUser.email,
+// 			isVerified: updatedUser.isVerified,
+// 			token: getToken(updatedUser)
+// 		});
+// 	} else {
+// 		res.status(404).send({ msg: 'User Not Found' });
+// 	}
+// 	// } catch (error) {
+// 	// 	console.log(error);
+// 	// 	res.send(error);
+// 	// }
+// });
 
 router.put('/verify/:id', async (req, res) => {
 	try {
