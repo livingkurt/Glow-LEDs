@@ -108,7 +108,7 @@ const OrderPage = (props) => {
 			if (successPay) {
 				set_paypal_state('none');
 				console.log('successPay');
-				props.history.push('/paymentcomplete/' + props.match.params.id);
+				// props.history.push('/paymentcomplete/' + props.match.params.id);
 				// props.history.push("/profile");
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
@@ -133,6 +133,9 @@ const OrderPage = (props) => {
 		console.log('handleSuccessPayment');
 		dispatch(payOrder(order, paymentResult, user_data));
 		set_payment_loading(false);
+		// if (successPay) {
+		props.history.push('/paymentcomplete/' + props.match.params.id);
+		// }
 	};
 
 	const empty_cart = () => {
@@ -158,11 +161,15 @@ const OrderPage = (props) => {
 							<FlexContainer column>
 								<h1>Shipping</h1>
 								<div>
+									<div>
+										{order.shipping.first_name} {order.shipping.last_name}
+									</div>
 									<div>{order.shipping.address}</div>
 									<div>
 										{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}{' '}
 										{order.shipping.country}
 									</div>
+									<div>{order.shipping.email}</div>
 								</div>
 							</FlexContainer>
 							<FlexContainer column styles={{ marginTop: 'auto', width: '373px' }} class="ship_deliver">

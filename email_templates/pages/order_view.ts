@@ -1,7 +1,16 @@
 export default (props: {
 	title: string;
 	_id: string;
-	shipping: { address: string; city: string; state: string; postalCode: number; country: string };
+	shipping: {
+		first_name: string;
+		last_name: string;
+		email: string;
+		address: string;
+		city: string;
+		state: string;
+		postalCode: number;
+		country: string;
+	};
 	isShipped: boolean;
 	shippedAt: Date;
 	isPaid: boolean;
@@ -37,9 +46,12 @@ export default (props: {
 					: 'http://localhost:3000'}/order/${props._id}" style="color:white; text-decoration:none">${props._id}</a></h1>
                     <h1>Shipping</h1>
                     <div>
+                    
+                    <div>${props.shipping.first_name} ${props.shipping.last_name}</div>
                     <div>${props.shipping.address}</div>
                     <div>${props.shipping.city}, ${props.shipping.state} ${props.shipping.postalCode} ${props.shipping
 		.country}</div>
+    <div>${props.shipping.email}</div>
                     </div>
                   </div>
                   <div class="ship_deliver"

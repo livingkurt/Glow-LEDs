@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 
 const ShippingPage = (props) => {
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
+	const [ first_name, set_first_name ] = useState('');
+	const [ last_name, set_last_name ] = useState('');
 	const [ address, setAddress ] = useState('');
 	const [ city, setCity ] = useState('');
 	const [ state, setState ] = useState('');
@@ -13,7 +18,9 @@ const ShippingPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(saveShipping({ address, city, state, postalCode, country }));
+		dispatch(
+			saveShipping({ first_name, last_name, email: userInfo.email, address, city, state, postalCode, country })
+		);
 		props.history.push('payment');
 	};
 	return (
@@ -24,6 +31,24 @@ const ShippingPage = (props) => {
 					<ul className="form-container">
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
+						</li>
+						<li>
+							<label htmlFor="first_name">First Name</label>
+							<input
+								type="text"
+								name="first_name"
+								id="first_name"
+								onChange={(e) => set_first_name(e.target.value)}
+							/>
+						</li>
+						<li>
+							<label htmlFor="last_name">Last Name</label>
+							<input
+								type="text"
+								name="last_name"
+								id="last_name"
+								onChange={(e) => set_last_name(e.target.value)}
+							/>
 						</li>
 						<li>
 							<label htmlFor="address">Address</label>

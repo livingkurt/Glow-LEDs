@@ -93,10 +93,14 @@ const PlaceOrderPage = (props) => {
 					<div>
 						<h1>Shipping</h1>
 						<div className="label">
+							<div>
+								{shipping.first_name} {shipping.last_name}
+							</div>
 							<div>{shipping.address}</div>
 							<div>
 								{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
 							</div>
+							<div>{shipping.email}</div>
 						</div>
 					</div>
 					<div>

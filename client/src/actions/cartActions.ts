@@ -48,9 +48,15 @@ const removeFromCart = (productId: string) => (
 	const { cart: { cartItems } } = getState();
 	Cookie.set('cartItems', JSON.stringify(cartItems));
 };
-const saveShipping = (data: { address: string; city: string; state: string; postalCode: string; country: string }) => (
-	dispatch: (arg0: { type: string; payload: any }) => void
-) => {
+const saveShipping = (data: {
+	first_name: string;
+	last_name: string;
+	address: string;
+	city: string;
+	state: string;
+	postalCode: string;
+	country: string;
+}) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
 };
 const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
