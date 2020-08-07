@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { logout, update } from '../actions/userActions';
-import { listMyOrders } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_profile } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
@@ -47,7 +46,6 @@ const EditProfilePage = (props) => {
 				set_last_name(userInfo.last_name);
 				// setPassword(userInfo.password);
 			}
-			dispatch(listMyOrders());
 			return () => {};
 		},
 		[ userInfo ]
