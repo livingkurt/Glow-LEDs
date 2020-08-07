@@ -130,28 +130,24 @@ const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payl
 };
 
 const contact = (
-	user_name: {
-		username: string;
-		first_name: string;
-		last_name: string;
-		email: string;
-		order_number: string;
-		reason_for_contact: string;
-		message: string;
-	},
-	user_email: undefined,
-	order_number: undefined,
-	reason_for_contact: undefined,
-	message: undefined
+	username: string,
+	first_name: string,
+	last_name: string,
+	email: string,
+	order_number: string,
+	reason_for_contact: string,
+	message: string
 ) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({
 		type: USER_CONTACT_REQUEST,
-		payload: { user_name, user_email, order_number, reason_for_contact, message }
+		payload: { username, first_name, last_name, email, order_number, reason_for_contact, message }
 	});
 	try {
 		const { data } = await axios.post('/api/emails/contact', {
-			user_name,
-			user_email,
+			username,
+			first_name,
+			last_name,
+			email,
 			order_number,
 			reason_for_contact,
 			message

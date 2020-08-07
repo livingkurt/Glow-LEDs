@@ -51,17 +51,7 @@ const ContactPage = () => {
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(
-				contact({
-					username,
-					first_name,
-					last_name,
-					email,
-					order_number,
-					reason_for_contact,
-					message
-				})
-			);
+			dispatch(contact(username, first_name, last_name, email, order_number, reason_for_contact, message));
 			set_username_Validations('');
 			set_last_name_Validations('');
 			set_first_name_Validations('');
