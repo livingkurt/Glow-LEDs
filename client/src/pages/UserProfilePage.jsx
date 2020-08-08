@@ -15,8 +15,8 @@ const UserProfilePage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
-	const [ verified, set_verified ] = useState('');
-	const [ admin, set_admin ] = useState('');
+	const [ verified, set_verified ] = useState();
+	const [ admin, set_admin ] = useState();
 	// const [ password, setPassword ] = useState('');
 
 	const dispatch = useDispatch();

@@ -82,8 +82,8 @@ const EditUserProfilePage = (props) => {
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
 			<FlexContainer styles={{ marginBottom: 10 }}>
-				<Link to="/profile">
-					<button className="button primary">Back to Profile</button>
+				<Link to={'/userprofile/' + user._id}>
+					<button className="button primary">Back to {user.first_name}'s Profile</button>
 				</Link>
 			</FlexContainer>
 			<div className="profile-info">
@@ -177,7 +177,7 @@ const EditUserProfilePage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to="/profile">
+								<Link to={'/userprofile/' + user._id}>
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>

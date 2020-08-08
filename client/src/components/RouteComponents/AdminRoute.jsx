@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Cookie from 'js-cookie';
 // import { isLogin } from '../utils';
 
 const AdminRoute = ({ component: Component, ...rest }) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	// console.log({ AdminRoute: userInfo.isAdmin });
+	// const userInfo = Cookie.getJSON('userInfo') || null;
 
 	const [ admin, setAdmin ] = useState(false);
 	useEffect(() => {

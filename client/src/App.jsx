@@ -90,8 +90,8 @@ const App = () => {
 							<AdminRoute path="/users" component={UsersPage} />
 							<AdminRoute path="/userprofile/:id" component={UserProfilePage} />
 							<AdminRoute path="/edituserprofile" component={EditUserProfilePage} />
+							<Route component={Four04Page} />
 						</ScrollToTop>
-						<Route component={Four04Page} />
 					</Switch>
 				</Content>
 				<Footer />
