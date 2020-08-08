@@ -8,8 +8,16 @@ const Loading = (props) => {
 		<div>
 			{props.loading ? (
 				<FlexContainer h_center column>
-					<img src="loading.gif" className="loading_gif" alt="loading" />
-					<img src="loading_overlay.png" className="loading_png" alt="loading" />
+					<img
+						src="https://cdn.filestackcontent.com/47roj3J6SPKXPROCeTok"
+						className="loading_gif"
+						alt="loading"
+					/>
+					<img
+						src="https://cdn.filestackcontent.com/KMBcTNF6TQWFTHeaHY0S"
+						className="loading_png"
+						alt="loading"
+					/>
 					<h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>
 				</FlexContainer>
 			) : props.error ? (

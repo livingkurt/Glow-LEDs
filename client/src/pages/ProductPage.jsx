@@ -5,6 +5,7 @@ import { detailsProduct } from '../actions/productActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Rating, Reviews, Slideshow, RelatedProducts } from '../components/SpecialtyComponents';
 import { Loading } from '../components/UtilityComponents';
+import ReactFilestack from 'filestack-react';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -28,6 +29,12 @@ const ProductPage = (props) => {
 		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
 	};
 
+	// const finishUploading = async (fsData) => {
+	// 	const src = fsData.filesUploaded[0].url;
+	// 	console.log(src);
+	// };
+	// console.log(process.env.REACT_APP_FILESTACK_API);
+
 	return (
 		<FlexContainer column>
 			<div className="back-to-result">
@@ -47,6 +54,18 @@ const ProductPage = (props) => {
 					)}
 				</FlexContainer>
 			</div>
+			{/* <img src="https://cdn.filestackcontent.com/47roj3J6SPKXPROCeTok" className="loading_gif" alt="loading" /> */}
+			{/* <img src="https://cdn.filestackcontent.com/KMBcTNF6TQWFTHeaHY0S" className="loading_png" alt="loading" /> */}
+			{/* <ReactFilestack apikey={'ALVdoogZTRidxhPQF0JBIz'} onSuccess={(res) => console.log(res)} /> */}
+			{/* <ReactFilestack
+				apikey={process.env.REACT_APP_FILESTACK_API}
+				customRender={({ onPick }) => (
+					<div>
+						<button onClick={onPick}>Upload image</button>
+					</div>
+				)}
+				onSuccess={finishUploading}
+			/> */}
 			<Loading loading={loading} error={error}>
 				{product && (
 					<FlexContainer column>
@@ -59,6 +78,7 @@ const ProductPage = (props) => {
 									<img
 										id="expandedImg"
 										alt=""
+										className="details-image-img"
 										src={product.display_image}
 										style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
 									/>
