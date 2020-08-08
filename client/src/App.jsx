@@ -90,7 +90,6 @@ const App = () => {
 							<Route path="/about" exact={true} component={AboutPage} />
 							<Route path="/faq" exact={true} component={FAQPage} />
 							<Route path="/paymentcomplete/:id" exact={true} component={OrderPaymentCompletePage} />
-
 							<Route component={Four04Page} />
 						</Switch>
 					</ScrollToTop>

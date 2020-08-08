@@ -2,7 +2,7 @@ export {};
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
+// import bodyParser from 'body-parser';
 // import config from './config';
 const config = require('./config');
 import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
@@ -18,7 +18,7 @@ mongoose
 	.catch((error: { reason: any }) => console.log(error.reason));
 
 const app = express();
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
