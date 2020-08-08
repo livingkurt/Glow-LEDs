@@ -31,7 +31,10 @@ import {
 	USER_DELETE_FAIL,
 	USER_DETAILS_REQUEST,
 	USER_DETAILS_SUCCESS,
-	USER_DETAILS_FAIL
+	USER_DETAILS_FAIL,
+	USER_UPDATE_USER_REQUEST,
+	USER_UPDATE_USER_SUCCESS,
+	USER_UPDATE_USER_FAIL
 } from '../constants/userConstants';
 
 const update = (userdata: any) => async (
@@ -47,7 +50,9 @@ const update = (userdata: any) => async (
 			first_name: userdata.first_name,
 			last_name: userdata.last_name,
 			email: userdata.email,
-			password: userdata.password
+			password: userdata.password,
+			verified: userdata.verified,
+			admin: userdata.admin
 		}
 	});
 	try {
@@ -57,7 +62,9 @@ const update = (userdata: any) => async (
 				first_name: userdata.first_name,
 				last_name: userdata.last_name,
 				email: userdata.email,
-				password: userdata.password
+				password: userdata.password,
+				verified: userdata.verified,
+				admin: userdata.admin
 			},
 			{
 				headers: {
@@ -69,6 +76,47 @@ const update = (userdata: any) => async (
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
 		dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
+	}
+};
+const updateUser = (userdata: any) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log(userdata);
+	const { userLogin: { userInfo } } = getState();
+	dispatch({
+		type: USER_UPDATE_USER_REQUEST,
+		payload: {
+			userId: userdata.userId,
+			first_name: userdata.first_name,
+			last_name: userdata.last_name,
+			email: userdata.email,
+			password: userdata.password,
+			verified: userdata.verified,
+			admin: userdata.admin
+		}
+	});
+	try {
+		const { data } = await axios.put(
+			'/api/users/update/' + userdata.userId,
+			{
+				first_name: userdata.first_name,
+				last_name: userdata.last_name,
+				email: userdata.email,
+				password: userdata.password,
+				verified: userdata.verified,
+				admin: userdata.admin
+			},
+			{
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			}
+		);
+		dispatch({ type: USER_UPDATE_USER_SUCCESS, payload: data });
+		// Cookie.set('userInfo', JSON.stringify(data));
+	} catch (error) {
+		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.message });
 	}
 };
 
@@ -230,5 +278,6 @@ export {
 	verify,
 	listUsers,
 	deleteUser,
-	detailsUser
+	detailsUser,
+	updateUser
 };

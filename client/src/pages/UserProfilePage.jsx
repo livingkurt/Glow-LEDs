@@ -24,7 +24,8 @@ const UserProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	const userUpdate = useSelector((state) => state.userUpdate);
+	const userUpdateUser = useSelector((state) => state.userUpdateUser);
+	const { loading: userLoading, userInfo: userUpdate, error: userError } = userUpdateUser;
 	useEffect(() => {
 		dispatch(detailsUser(props.match.params.id));
 		return () => {};
@@ -46,17 +47,17 @@ const UserProfilePage = (props) => {
 
 	useEffect(
 		() => {
-			if (userUpdate.user) {
-				setEmail(userUpdate.user.email);
-				set_first_name(userUpdate.user.first_name);
-				set_last_name(userUpdate.user.last_name);
-				set_verified(userUpdate.user.isVerified);
-				set_admin(userUpdate.user.isAdmin);
-				// setPassword(userUpdate.user.password);
+			if (userUpdate) {
+				setEmail(userUpdate.email);
+				set_first_name(userUpdate.first_name);
+				set_last_name(userUpdate.last_name);
+				set_verified(userUpdate.isVerified);
+				set_admin(userUpdate.isAdmin);
+				// setPassword(userUpdate.password);
 			}
 			return () => {};
 		},
-		[ userUpdate.user ]
+		[ userUpdate ]
 	);
 
 	const container_styles = {
@@ -90,11 +91,11 @@ const UserProfilePage = (props) => {
 							</FlexContainer>
 							<FlexContainer column styles={container_styles}>
 								<h3>Verified</h3>
-								<label>{verified ? 'Verified' : 'Not Verified'}</label>
+								<label>{verified === true ? 'Verified' : 'Not Verified'}</label>
 							</FlexContainer>
 							<FlexContainer column styles={container_styles}>
 								<h3>Admin</h3>
-								<label>{admin ? 'Admin' : 'Not Admin'}</label>
+								<label>{admin === true ? 'Admin' : 'Not Admin'}</label>
 							</FlexContainer>
 						</FlexContainer>
 						<FlexContainer>

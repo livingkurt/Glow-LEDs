@@ -29,7 +29,10 @@ import {
 	USER_DELETE_FAIL,
 	USER_DETAILS_REQUEST,
 	USER_DETAILS_SUCCESS,
-	USER_DETAILS_FAIL
+	USER_DETAILS_FAIL,
+	USER_UPDATE_USER_REQUEST,
+	USER_UPDATE_USER_SUCCESS,
+	USER_UPDATE_USER_FAIL
 } from '../constants/userConstants';
 
 const userLoginReducer = (state = {}, action: { type: any; payload: any }) => {
@@ -93,6 +96,18 @@ const userUpdateReducer = (state = {}, action: { type: any; payload: any }) => {
 		case USER_UPDATE_SUCCESS:
 			return { loading: false, userInfo: action.payload };
 		case USER_UPDATE_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+const userUpdateUserReducer = (state = {}, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case USER_UPDATE_USER_REQUEST:
+			return { loading: true };
+		case USER_UPDATE_USER_SUCCESS:
+			return { loading: false, userInfo: action.payload };
+		case USER_UPDATE_USER_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;
@@ -189,5 +204,6 @@ export {
 	userVerifyReducer,
 	userListReducer,
 	userDeleteReducer,
-	userDetailsReducer
+	userDetailsReducer,
+	userUpdateUserReducer
 };
