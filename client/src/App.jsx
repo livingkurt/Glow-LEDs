@@ -49,26 +49,8 @@ const App = () => {
 				<Header userInfo={userInfo} />
 				<Sidebar userInfo={userInfo} />
 				<Content>
-					<Switch>
-						<ScrollToTop>
-							{/* Public Routes */}
-							<Route path="/login" component={LoginPage} />
-							<Route path="/verified/:id" component={VerifiedPage} />
-							<Route path="/checkemail" component={CheckEmailPage} />
-							<Route path="/changepassword" component={ChangePasswordPage} />
-							<Route path="/register" component={RegisterPage} />
-							<Route path="/product/:id" component={ProductPage} />
-							<Route path="/passwordreset" component={PasswordResetPage} />
-							<Route path="/resetpassword/:id" component={ResetPasswordPage} />
-							<Route path="/cart/:id?" component={CartPage} />
-							<Route path="/category/:id?" component={AllProductsPage} />
-							<Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
-							<Route path="/" exact={true} component={HomePage} />
-							<Route path="/contact" exact={true} component={ContactPage} />
-							<Route path="/terms" exact={true} component={TermsPage} />
-							<Route path="/about" exact={true} component={AboutPage} />
-							<Route path="/faq" exact={true} component={FAQPage} />
-							<Route path="/paymentcomplete/:id" exact={true} component={OrderPaymentCompletePage} />
+					<ScrollToTop>
+						<Switch>
 							{/* Private Routes */}
 							<PrivateRoute path="/profile" component={ProfilePage} />
 							<PrivateRoute path="/editprofile" component={EditProfilePage} />
@@ -90,9 +72,28 @@ const App = () => {
 							<AdminRoute path="/users" component={UsersPage} />
 							<AdminRoute path="/userprofile/:id" component={UserProfilePage} />
 							<AdminRoute path="/edituserprofile" component={EditUserProfilePage} />
+							{/* Public Routes */}
+							<Route path="/login" component={LoginPage} />
+							<Route path="/verified/:id" component={VerifiedPage} />
+							<Route path="/checkemail" component={CheckEmailPage} />
+							<Route path="/changepassword" component={ChangePasswordPage} />
+							<Route path="/register" component={RegisterPage} />
+							<Route path="/product/:id" component={ProductPage} />
+							<Route path="/passwordreset" component={PasswordResetPage} />
+							<Route path="/resetpassword/:id" component={ResetPasswordPage} />
+							<Route path="/cart/:id?" component={CartPage} />
+							<Route path="/category/:id?" component={AllProductsPage} />
+							<Route path="/allproducts/:id?" exact={true} component={AllProductsPage} />
+							<Route path="/" exact={true} component={HomePage} />
+							<Route path="/contact" exact={true} component={ContactPage} />
+							<Route path="/terms" exact={true} component={TermsPage} />
+							<Route path="/about" exact={true} component={AboutPage} />
+							<Route path="/faq" exact={true} component={FAQPage} />
+							<Route path="/paymentcomplete/:id" exact={true} component={OrderPaymentCompletePage} />
+
 							<Route component={Four04Page} />
-						</ScrollToTop>
-					</Switch>
+						</Switch>
+					</ScrollToTop>
 				</Content>
 				<Footer />
 			</Container>

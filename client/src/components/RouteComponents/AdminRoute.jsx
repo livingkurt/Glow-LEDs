@@ -7,21 +7,14 @@ import Cookie from 'js-cookie';
 const AdminRoute = ({ component: Component, ...rest }) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	// console.log({ AdminRoute: userInfo.isAdmin });
-	// const userInfo = Cookie.getJSON('userInfo') || null;
-
-	const [ admin, setAdmin ] = useState(false);
-	useEffect(() => {
-		if (userInfo) {
-			setAdmin(true);
-		}
-		return () => {};
-	}, []);
 
 	return (
 		// Show the component only when the user is logged in
 		// Otherwise, redirect the user to /signin page
-		<Route {...rest} render={(props) => (admin ? <Component {...props} /> : <Redirect to="/allproducts" />)} />
+		<Route
+			{...rest}
+			render={(props) => (userInfo.isAdmin ? <Component {...props} /> : <Redirect to="/allproducts" />)}
+		/>
 	);
 };
 
