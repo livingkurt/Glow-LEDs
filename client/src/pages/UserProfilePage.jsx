@@ -99,7 +99,7 @@ const UserProfilePage = (props) => {
 						</FlexContainer>
 						<FlexContainer>
 							<div style={{ height: 50 }}>
-								<Link to={'/editprofile'}>
+								<Link to={'/edituserprofile'}>
 									<button
 										style={{ marginRight: '10px', maxWidth: '150px' }}
 										className="button primary"

@@ -29,3 +29,4 @@ export { default as OrderPaymentCompletePage } from './OrderPaymentCompletePage'
 export { default as UsersPage } from './UsersPage';
 export { default as FAQPage } from './FAQPage';
 export { default as UserProfilePage } from './UserProfilePage';
+export { default as EditUserProfilePage } from './EditUserProfilePage';

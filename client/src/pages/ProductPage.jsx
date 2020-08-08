@@ -178,6 +178,13 @@ const ProductPage = (props) => {
 								alt="loading"
 							/>
 						</FlexContainer> */}
+							{/* {product.category === 'Caps' && (
+								// <h1 style={{ marginBottom: '10px', textAlign: 'center' }}>Patent Pending</h1>
+								<img
+									src="/images/optimized_images/logo_images/patent_pending.png"
+									alt="patent pending"
+								/>
+							)} */}
 							<FlexContainer column>
 								<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 								<FlexContainer column styles={{ height: '100%' }}>
