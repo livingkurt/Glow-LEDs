@@ -227,6 +227,22 @@ router.post('/getuser/:id', async (req, res) => {
 		res.send(error);
 	}
 });
+router.post('/checkemail', async (req, res) => {
+	try {
+		console.log({ email: req.body.email });
+		const user: any = await User.findOne({ email: req.body.email });
+		console.log(user);
+		if (user) {
+			return res.json({ email: 'User Already Exists' });
+			// return res.status(400).json({ email: 'User Already Exists' });
+		}
+		// res.json({ message: "User Already Exists" })
+		res.status(200).json({ email: 'No User Found' });
+	} catch (error) {
+		console.log(error);
+		res.send(error);
+	}
+});
 
 router.get('/createadmin', async (req, res) => {
 	try {

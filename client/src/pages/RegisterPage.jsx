@@ -31,16 +31,29 @@ const RegisterPage = (props) => {
 		const request = validate_registration(data);
 
 		setFirstNameValidations(request.errors.first_name);
-		setLastNameValidations(request.errors.first_name);
+		setLastNameValidations(request.errors.last_name);
 		setEmailValidations(request.errors.email);
 		setPasswordValidations(request.errors.password);
 		setRePasswordValidations(request.errors.rePassword);
 		console.log(request);
+		console.log(request.errors.email);
 		if (request.isValid) {
 			dispatch(register(first_name, last_name, email, password));
-			props.history.push('/checkemail');
+
+			// props.history.push('/checkemail');
 		}
 	};
+
+	useEffect(
+		() => {
+			if (userInfo) {
+				props.history.push('/checkemail');
+			}
+
+			return () => {};
+		},
+		[ userInfo ]
+	);
 
 	return (
 		<div className="form">
@@ -55,24 +68,14 @@ const RegisterPage = (props) => {
 					</li>
 					<li>
 						<FlexContainer h_center>
-							<Loading loading={loading} error={error} />
+							{error && (
+								<label style={{ textAlign: 'center' }}>
+									{error ? 'Registration Failed' : 'Registration Complete'}
+								</label>
+							)}
 						</FlexContainer>
 					</li>
 
-					<li>
-						<label htmlFor="email">Email</label>
-						<input
-							type="text"
-							name="email"
-							id="email"
-							required
-							autocomplete="email"
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-					</li>
-					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-						{email_validations}
-					</label>
 					<li>
 						<label htmlFor="first_name">First Name</label>
 						<input
@@ -97,7 +100,14 @@ const RegisterPage = (props) => {
 					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
 						{last_name_validations}
 					</label>
-
+					<li>
+						<label htmlFor="email">Email</label>
+						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+					</li>
+					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						{/* {console.log(email_validations)} */}
+						{email_validations}
+					</label>
 					<li>
 						<label htmlFor="password">Password</label>
 						<input

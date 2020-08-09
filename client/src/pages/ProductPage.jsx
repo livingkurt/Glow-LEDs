@@ -93,7 +93,29 @@ const ProductPage = (props) => {
 										<Rating value={product.rating} text={product.numReviews + ' reviews'} />
 									</a>
 								</div>
-								<FlexContainer>
+								{product.name === 'Custom Infinity Mirror' ? (
+									<h3 style={{ margin: 0, marginRight: 5 }}>
+										Price: $549.99 - <i class="fas fa-arrow-up" />
+									</h3>
+								) : (
+									<FlexContainer>
+										<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
+										{product.sale_price !== 0 ? (
+											<label>
+												<del style={{ color: 'red' }}>
+													<label style={{ color: 'white' }}>
+														${product.price ? product.price.toFixed(2) : product.price}
+													</label>
+												</del>{' '}
+												<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
+												On Sale!
+											</label>
+										) : (
+											<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+										)}
+									</FlexContainer>
+								)}
+								{/* <FlexContainer>
 									<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
 									{product.sale_price !== 0 ? (
 										<label>
@@ -108,7 +130,7 @@ const ProductPage = (props) => {
 									) : (
 										<label>${product.price ? product.price.toFixed(2) : product.price}</label>
 									)}
-								</FlexContainer>
+								</FlexContainer> */}
 								<FlexContainer column>
 									<FlexContainer column styles={{ height: '100%' }}>
 										<div>
@@ -174,15 +196,21 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									<li>
-										{product.countInStock > 0 ? (
-											<button onClick={handleAddToCart} className="button primary">
-												Add to Cart
-											</button>
-										) : (
-											<button className="button inactive">Out of Stock</button>
-										)}
-									</li>
+									{product.name === 'Custom Infinity Mirror' ? (
+										<Link to="/contact">
+											<button className="button primary full-width">Contact</button>
+										</Link>
+									) : (
+										<li>
+											{product.countInStock > 0 ? (
+												<button onClick={handleAddToCart} className="button primary">
+													Add to Cart
+												</button>
+											) : (
+												<button className="button inactive">Out of Stock</button>
+											)}
+										</li>
+									)}
 								</ul>
 							</div>
 						</div>

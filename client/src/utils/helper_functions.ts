@@ -43,7 +43,7 @@ export const validate_login = (data: { email: any; password: any }) => {
 	};
 };
 
-export const validate_registration = (data: {
+export const validate_registration = async (data: {
 	first_name: any;
 	last_name: any;
 	email: any;
@@ -51,19 +51,44 @@ export const validate_registration = (data: {
 	rePassword: any;
 }) => {
 	let errors: any = {};
+
+	// let response: AxiosResponse<any>;
+	// if (data.email) {
+	// 	response = axios.post('/api/users/checkemail', { email: data.email });
+	// 	// .then((response) => {
+	// 	// console.log(response);
+	// 	console.log(response);
+	// 	// Password checks
+	// 	if (response.data.email === data.email) {
+	// 		errors.email = 'Email Already in Use';
+	// 	}
+	// 	// });
+	// }
+	let request: AxiosResponse<any>;
+	// if (data.email) {
+	// 	request = await axios.post('/api/users/checkemail', { email: data.email });
+	// 	console.log({ request: Promise.all([ request.data ]) });
+	// 	// Password checks
+	// 	// if ()
+	// 	const d = request.data;
+	// 	if (Promise.all([ d ])[0].email) {
+	// 		errors.email = 'Email Already in Use';
+	// 	}
+	// }
 	// Convert empty fields to an empty string so we can use validator functions
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
+	// cons
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.password = !isEmpty(data.password) ? data.password : '';
 	data.rePassword = !isEmpty(data.rePassword) ? data.rePassword : '';
-	// Name checks
+	// First Name checks
 	if (Validator.isEmpty(data.first_name)) {
-		errors.first_name = 'Name field is required';
+		errors.first_name = 'First Name field is required';
 	}
-	// Name checks
+	// Last Name checks
 	if (Validator.isEmpty(data.last_name)) {
-		errors.last_name = 'Name field is required';
+		errors.last_name = 'Last Name field is required';
 	}
 	// Email checks
 	if (Validator.isEmpty(data.email)) {
@@ -90,6 +115,8 @@ export const validate_registration = (data: {
 	};
 };
 
+const get_request = () => {};
+
 export const validate_contact = (data: {
 	first_name: any;
 	last_name: any;
@@ -106,13 +133,13 @@ export const validate_contact = (data: {
 	data.order_number = !isEmpty(data.order_number) ? data.order_number : '';
 	data.reason_for_contact = !isEmpty(data.reason_for_contact) ? data.reason_for_contact : '';
 	data.message = !isEmpty(data.message) ? data.message : '';
-	// Name checks
+	// First Name checks
 	if (Validator.isEmpty(data.first_name)) {
-		errors.first_name = 'Name field is required';
+		errors.first_name = 'First Name field is required';
 	}
-	// Name checks
+	// Last Name checks
 	if (Validator.isEmpty(data.last_name)) {
-		errors.last_name = 'Name field is required';
+		errors.last_name = 'Last Name field is required';
 	}
 	// Email checks
 	if (Validator.isEmpty(data.email)) {
@@ -143,13 +170,13 @@ export const validate_profile = (data: { first_name: any; last_name: any; email:
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
-	// Name checks
+	// First Name checks
 	if (Validator.isEmpty(data.first_name)) {
-		errors.first_name = 'Name field is required';
+		errors.first_name = 'First Name field is required';
 	}
-	// Name checks
+	// Last Name checks
 	if (Validator.isEmpty(data.last_name)) {
-		errors.last_name = 'Name field is required';
+		errors.last_name = 'Last Name field is required';
 	}
 	// Email checks
 	if (Validator.isEmpty(data.email)) {

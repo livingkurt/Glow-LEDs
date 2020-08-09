@@ -50,11 +50,17 @@ const Product = (props) => {
 						src={props.product.display_image} // use normal <img> attributes as props
 					/>
 				</Link>
-				<label styles={{ fontSize: '1.3rem' }}>{props.product.brand}</label>
+				<label style={{ fontSize: '1.3rem' }}>{props.product.brand}</label>
 				<Link to={'/product/' + props.product._id}>
-					<label styles={{ fontSize: '1.6rem' }}>{props.product.name}</label>
+					<label style={{ fontSize: '1.6rem' }}>{props.product.name}</label>
 				</Link>
-				<label className="product-price">{sale_price_switch()}</label>
+				{props.product.name === 'Custom Infinity Mirror' ? (
+					<label className="product-price">
+						$549.99 - <i class="fas fa-arrow-up" />
+					</label>
+				) : (
+					<label className="product-price">{sale_price_switch()}</label>
+				)}
 				{props.product.rating ? (
 					<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
 				) : (

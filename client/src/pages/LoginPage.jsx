@@ -52,9 +52,11 @@ const LoginPage = (props) => {
 					</li>
 					<li>
 						<FlexContainer h_center>
-							<Loading loading={loading} error={error}>
-								{error && <h3 style={{ textAlign: 'center' }}>{error}</h3>}
-							</Loading>
+							{/* <Loading loading={loading} error={error}> */}
+							{error && (
+								<label style={{ textAlign: 'center' }}>{error ? 'User Not Found' : 'Logged In'}</label>
+							)}
+							{/* </Loading> */}
 						</FlexContainer>
 					</li>
 					<li>
