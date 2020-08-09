@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { listProducts } from '../actions/productActions';
 import { Product, Search, Sort } from '../components/SpecialtyComponents/index';
 import { FlexContainer } from '../components/ContainerComponents/index';
 import { Loading } from '../components/UtilityComponents';
 
 const AllProductsPage = (props) => {
+	const history = useHistory();
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.id ? props.match.params.id : '';
@@ -33,7 +35,14 @@ const AllProductsPage = (props) => {
 			// console.log({ category_exists: props.match.params.id });
 			// console.log({ category_exists });
 			// // if (category_exists) {
-			dispatch(listProducts(category));
+			// console.log(products);
+			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'Adapters' ].includes(category)) {
+				dispatch(listProducts(category));
+			} else {
+				history.push('/allproducts');
+				dispatch(listProducts(''));
+			}
+
 			// } else {
 			// 	listProducts();
 			// }
