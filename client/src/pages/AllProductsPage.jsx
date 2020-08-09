@@ -13,12 +13,30 @@ const AllProductsPage = (props) => {
 	const { products, loading, error } = productList;
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(listProducts(''));
+		// dispatch(listProducts(''));
+		dispatch(listProducts(category));
 	}, []);
 
 	useEffect(
 		() => {
+			// let category_exists;
+			// // if (products) {
+			// category_exists = products.find((product) => product.category == props.match.params.id);
+			// if (category_exists) {
+			// 	dispatch(listProducts(category));
+			// } else {
+			// 	listProducts();
+			// }
+			// }
+
+			// // const category_exists = products.forEach((product) => console.log(product.category));
+			// console.log({ category_exists: props.match.params.id });
+			// console.log({ category_exists });
+			// // if (category_exists) {
 			dispatch(listProducts(category));
+			// } else {
+			// 	listProducts();
+			// }
 		},
 		[ category ]
 	);

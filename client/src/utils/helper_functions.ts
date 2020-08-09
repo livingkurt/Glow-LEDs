@@ -43,7 +43,7 @@ export const validate_login = (data: { email: any; password: any }) => {
 	};
 };
 
-export const validate_registration = async (data: {
+export const validate_registration = (data: {
 	first_name: any;
 	last_name: any;
 	email: any;
@@ -51,33 +51,17 @@ export const validate_registration = async (data: {
 	rePassword: any;
 }) => {
 	let errors: any = {};
-
-	// let response: AxiosResponse<any>;
-	// if (data.email) {
-	// 	response = axios.post('/api/users/checkemail', { email: data.email });
-	// 	// .then((response) => {
-	// 	// console.log(response);
-	// 	console.log(response);
-	// 	// Password checks
-	// 	if (response.data.email === data.email) {
-	// 		errors.email = 'Email Already in Use';
-	// 	}
-	// 	// });
-	// }
-	let request: AxiosResponse<any>;
+	// let request: AxiosResponse<any>;
 	// if (data.email) {
 	// 	request = await axios.post('/api/users/checkemail', { email: data.email });
-	// 	console.log({ request: Promise.all([ request.data ]) });
+	// 	console.log({ request: request.data });
 	// 	// Password checks
-	// 	// if ()
-	// 	const d = request.data;
-	// 	if (Promise.all([ d ])[0].email) {
+	// 	if (!request.data) {
 	// 		errors.email = 'Email Already in Use';
 	// 	}
 	// }
 	// Convert empty fields to an empty string so we can use validator functions
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
-	// cons
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.password = !isEmpty(data.password) ? data.password : '';
@@ -114,8 +98,6 @@ export const validate_registration = async (data: {
 		isValid: isEmpty(errors)
 	};
 };
-
-const get_request = () => {};
 
 export const validate_contact = (data: {
 	first_name: any;

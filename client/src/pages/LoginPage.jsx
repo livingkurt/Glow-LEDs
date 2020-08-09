@@ -54,7 +54,9 @@ const LoginPage = (props) => {
 						<FlexContainer h_center>
 							{/* <Loading loading={loading} error={error}> */}
 							{error && (
-								<label style={{ textAlign: 'center' }}>{error ? 'User Not Found' : 'Logged In'}</label>
+								<label style={{ textAlign: 'center' }}>
+									{error ? 'User Not Found or Not Verified' : 'Logging In'}
+								</label>
 							)}
 							{/* </Loading> */}
 						</FlexContainer>
@@ -81,7 +83,9 @@ const LoginPage = (props) => {
 
 					<li>
 						<Link to="/passwordreset" style={{ fontFamily: 'heading_font' }}>
-							Forgot Password?
+							<button type="submit" className="button secondary">
+								Forgot Password?
+							</button>
 						</Link>
 					</li>
 					<li>
