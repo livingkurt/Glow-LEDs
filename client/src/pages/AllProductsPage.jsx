@@ -36,7 +36,7 @@ const AllProductsPage = (props) => {
 			// console.log({ category_exists });
 			// // if (category_exists) {
 			// console.log(products);
-			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'Adapters' ].includes(category)) {
+			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'Adapters', 'StringLights' ].includes(category)) {
 				dispatch(listProducts(category));
 			} else {
 				history.push('/allproducts');
