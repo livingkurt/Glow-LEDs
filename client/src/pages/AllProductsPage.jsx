@@ -21,31 +21,12 @@ const AllProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			// let category_exists;
-			// // if (products) {
-			// category_exists = products.find((product) => product.category == props.match.params.id);
-			// if (category_exists) {
-			// 	dispatch(listProducts(category));
-			// } else {
-			// 	listProducts();
-			// }
-			// }
-
-			// // const category_exists = products.forEach((product) => console.log(product.category));
-			// console.log({ category_exists: props.match.params.id });
-			// console.log({ category_exists });
-			// // if (category_exists) {
-			// console.log(products);
 			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'Adapters', 'StringLights' ].includes(category)) {
 				dispatch(listProducts(category));
 			} else {
 				history.push('/allproducts');
 				dispatch(listProducts(''));
 			}
-
-			// } else {
-			// 	listProducts();
-			// }
 		},
 		[ category ]
 	);
@@ -73,7 +54,7 @@ const AllProductsPage = (props) => {
 				<h1>{category || 'All Products'}</h1>
 			</FlexContainer>
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} />
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} />
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
