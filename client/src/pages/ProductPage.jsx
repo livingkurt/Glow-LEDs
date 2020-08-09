@@ -9,7 +9,9 @@ import ReactFilestack from 'filestack-react';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
+	const cart = useSelector((state) => state.cart);
 
+	const { cartItems } = cart;
 	let { userInfo } = userLogin;
 
 	const [ qty, setQty ] = useState(1);
@@ -95,7 +97,7 @@ const ProductPage = (props) => {
 								</div>
 								{product.name === 'Custom Infinity Mirror' ? (
 									<h3 style={{ margin: 0, marginRight: 5 }}>
-										Price: $549.99 - <i class="fas fa-arrow-up" />
+										Price: $549.99 - $<i class="fas fa-arrow-up" />
 									</h3>
 								) : (
 									<FlexContainer>
@@ -174,7 +176,7 @@ const ProductPage = (props) => {
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
 										<FlexContainer v_i_center styles={{ height: '25px' }}>
-											Qty:{' '}
+											Qty: {/* {cartItems.find((item) => item.product === product._id)} */}
 											<div className="qty_select_dropdown_container">
 												<select
 													defaultValue={qty}

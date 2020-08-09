@@ -18,10 +18,13 @@ const addToCart = (productId: string, qty: number) => async (
 			};
 		}
 	) => void,
-	getState: () => { cart: { cartItems: object } }
+	getState: () => { cart: { cartItems: any } }
 ) => {
 	try {
 		const { data } = await Axios.get('/api/products/' + productId);
+		const { cart: { cartItems } } = getState();
+		// const same_product = cartItems.find((item: any) => item.product === productId);
+		// qty = same_product ? qty + same_product.qty : qty;
 		dispatch({
 			type: CART_ADD_ITEM,
 			payload: {
@@ -35,10 +38,11 @@ const addToCart = (productId: string, qty: number) => async (
 				qty
 			}
 		});
-		const { cart: { cartItems } } = getState();
+
 		Cookie.set('cartItems', JSON.stringify(cartItems));
 	} catch (error) {}
 };
+
 const removeFromCart = (productId: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { cart: { cartItems: object } }

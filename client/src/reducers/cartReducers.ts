@@ -4,15 +4,45 @@ const cartReducer = (state = { cartItems: [], shipping: {}, payment: {} }, actio
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
-			let product: any = state.cartItems.find((x) => x['product'] === item.product);
+			let product: any = state.cartItems.find((cart_item) => cart_item['product'] === item.product);
 			if (product) {
 				return {
-					cartItems: state.cartItems.map((x) => (x['product'] === product.product ? item : x))
+					cartItems: state.cartItems.map(
+						(cart_item) => (cart_item['product'] === product.product ? item : cart_item)
+					)
 				};
+				// let product: any = state.cartItems.find((cart_item) => cart_item['product'] === item.product);
+				// if (product) {
+				// 	console.log({ cartReducer: product. });
+				// 	return {
+				// 		cartItems: state.cartItems.map(
+				// 			(cart_item) =>
+				// 				cart_item['product'] === product.product
+				// 					? { ...item, qty: item.qty + product.qty }
+				// 					: cart_item
+				// 		)
+				// 	};
+				// return {
+				// 	cartItems: state.cartItems.map(
+				// 		(cart_item) =>
+				// 			cart_item['product'] === product.product
+				// 				? { ...item, qty: item.qty + product.product.qty }
+				// 				: cart_item
+				// 	)
+				// };
+				// return {
+				// 	cartItems: state.cartItems.forEach(
+				// 		(cart_item: any) =>
+				// 			cart_item['product'] === product.product
+				// 				? (cart_item.qty = item.qty + product.product.qty)
+				// 				: cart_item
+				// 	)
+				// };
+				// }
 			}
 			return { cartItems: [ ...state.cartItems, item ] };
 		case CART_REMOVE_ITEM:
-			return { cartItems: state.cartItems.filter((x) => x['product'] !== action.payload) };
+			return { cartItems: state.cartItems.filter((cart_item) => cart_item['product'] !== action.payload) };
 		case CART_SAVE_SHIPPING:
 			return { ...state, shipping: action.payload };
 		case CART_SAVE_PAYMENT:

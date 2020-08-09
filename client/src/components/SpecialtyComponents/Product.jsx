@@ -56,7 +56,7 @@ const Product = (props) => {
 				</Link>
 				{props.product.name === 'Custom Infinity Mirror' ? (
 					<label className="product-price">
-						$549.99 - <i class="fas fa-arrow-up" />
+						$549.99 - $<i class="fas fa-arrow-up" />
 					</label>
 				) : (
 					<label className="product-price">{sale_price_switch()}</label>

@@ -10,7 +10,7 @@ const CartPage = (props) => {
 
 	console.log(cartItems);
 	const productId = props.match.params.id;
-	const qty = props.location.search ? Number(props.location.search.split('=')[1]) : 1;
+	const qty = parseInt(props.location.search ? Number(props.location.search.split('=')[1]) : 1);
 	const dispatch = useDispatch();
 
 	const removeFromCartHandler = (productId) => {
@@ -19,7 +19,13 @@ const CartPage = (props) => {
 
 	useEffect(() => {
 		if (productId) {
+			// console.log(cartItems.find((item) => item.product === productId));
+			// const same_product = cartItems.find((item) => item.product === productId);
+			// if (same_product) {
+			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
+			// } else {
 			dispatch(addToCart(productId, qty));
+			// }
 		}
 	}, []);
 
@@ -53,13 +59,14 @@ const CartPage = (props) => {
 											Qty:{' '}
 											<div className="qty_select_dropdown_container">
 												<select
-													defaultValue={item.qty}
+													// defaultValue={item.qty}
+													value={item.qty}
 													className="qty_select_dropdown"
 													onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
 												>
 													{[ ...Array(item.countInStock).keys() ].map((x) => (
-														<option key={x + 1} defaultValue={x + 1}>
-															{x + 1}
+														<option key={x + 1} defaultValue={parseInt(x + 1)}>
+															{parseInt(x + 1)}
 														</option>
 													))}
 												</select>
