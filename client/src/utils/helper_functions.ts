@@ -78,7 +78,7 @@ export const validate_registration = (data: {
 	if (Validator.isEmpty(data.email)) {
 		errors.email = 'Email field is required';
 	} else if (!Validator.isEmail(data.email)) {
-		errors.email = 'Email must include an @ symbol to be valid';
+		errors.email = 'Email must a valid email';
 	}
 	// Password checks
 	if (Validator.isEmpty(data.password)) {

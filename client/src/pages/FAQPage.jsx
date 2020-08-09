@@ -8,8 +8,8 @@ const TermsPage = () => {
 		<div class="main_container">
 			<div class="inner_content">
 				<div>
-					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Question</h1>
-					<h3 style={{ clear: 'both', textAlign: 'center' }}>How do properly use diffuser caps?</h3>
+					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
+					<h2 style={{ clear: 'both', textAlign: 'center' }}>How to properly use diffuser caps?</h2>
 					<img
 						style={{
 							float: 'left',
@@ -42,7 +42,7 @@ const TermsPage = () => {
 					<p style={{ lineHeight: '25px' }}>
 						Do not over tighten or push the cap on. Let the threads do the work.
 					</p> */}
-					<h3 style={{ textAlign: 'center' }}>How to order a custom product?</h3>
+					<h2 style={{ textAlign: 'center' }}>How to order a custom product?</h2>
 					<p style={{ lineHeight: '25px' }}>
 						At Glow-LEDS.com we offer many premade and predesigned products, as well as the ability to get a
 						customized version of the products. Before ordering anything custom a consultation must be had.
