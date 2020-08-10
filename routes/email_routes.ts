@@ -190,9 +190,9 @@ router.post('/orderpaid', async (req, res) => {
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.user_data.email,
-		subject: 'Order Paid by ' + req.body.user_data.first_name,
+		subject: 'Here is your receipt from Glow LEDs',
 		html: main_layout(
-			order_view({ ...req.body, title: 'Order Paid by ' + req.body.user_data.first_name, paid, shipped }),
+			order_view({ ...req.body, title: 'Here is your receipt from Glow LEDs', paid, shipped }),
 			styles()
 		)
 	};
