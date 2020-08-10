@@ -176,7 +176,7 @@ const PlaceOrderPage = (props) => {
 							</button>
 						</li>
 						<FlexContainer column>
-							{/* <label htmlFor="order_note">Add a note about order</label> */}
+							<label htmlFor="order_note">If paypal button doesn't show, refresh page.</label>
 							<div htmlFor="order_note">Add a note</div>
 							<textarea
 								name="order_note"
