@@ -47,9 +47,9 @@ const LoginPage = (props) => {
 		<div className="form">
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
-					<li style={{ display: 'flex', flexDirection: 'row' }}>
-						<h1>Login or</h1>
-						<li>
+					<li style={{ display: 'flex', flexDirection: 'column' }}>
+						<h1>Login </h1>
+						<li style={{ marginBottom: '-20px' }}>
 							<Link
 								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
 								className="button secondary text-center"
