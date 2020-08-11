@@ -299,7 +299,10 @@ const OrderPage = (props) => {
 								{/* </div> */}
 							</Loading>
 						</li>
-						<label htmlFor="order_note">If paypal button doesn't show, refresh page.</label>
+						{!order.isPaid && (
+							<label htmlFor="order_note">If paypal button doesn't show, refresh page.</label>
+						)}
+
 						{order.order_note && (
 							<FlexContainer column>
 								<div htmlFor="order_note">Order Note</div>

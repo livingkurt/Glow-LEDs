@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../actions/orderActions';
@@ -6,6 +6,7 @@ import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Loading } from '../components/UtilityComponents';
 import { listUsers, deleteUser } from '../actions/userActions';
+import { Search, Sort } from '../components/SpecialtyComponents';
 
 const UsersPage = (props) => {
 	const userList = useSelector((state) => state.userList);
@@ -38,6 +39,26 @@ const UsersPage = (props) => {
 	const deleteHandler = (user) => {
 		dispatch(deleteUser(user._id));
 	};
+	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ sortOrder, setSortOrder ] = useState('');
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		// dispatch(listProducts(category, searchKeyword, sortOrder));
+	};
+
+	const sortHandler = (e) => {
+		setSortOrder(e.target.value);
+		// dispatch(listProducts(category, searchKeyword, e.target.value));
+	};
+
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listProducts(category, searchKeyword, sortOrder));
+	// 	},
+	// 	[ sortOrder ]
+	// );
+
 	return (
 		<div class="main_container">
 			<div className="order-header">
@@ -52,6 +73,10 @@ const UsersPage = (props) => {
 					Users
 				</h1>
 			</div>
+			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+				{/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} /> */}
+				{/* <Sort sortHandler={sortHandler} /> */}
+			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{users && (
 					<div className="order-list responsive_table">
