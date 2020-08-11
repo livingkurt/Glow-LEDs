@@ -127,17 +127,32 @@ const ContactPage = () => {
 					defaultValue={reason_for_contact}
 					className="form_input contact_dropdown"
 					name="reason_for_contact"
+					placeholder="----Click Here to Choose Reason----"
 				>
-					<option style={{ color: 'gray' }} value="">
+					<option style={{ color: 'gray' }} disabled="disabled" selected="selected" value="">
 						----Click Here to Choose Reason----
 					</option>
-					<option value="Custom Orders">Custom Orders</option>
-					<option value="Didn't Recieve Verification Email">Didn't Recieve Verification Email</option>
-					<option value="Order Issues">Order Issues</option>
-					<option value="Returns">Returns</option>
-					<option value="Technical Support">Technical Support</option>
-					<option value="Product Suggestions">Product Suggestions</option>
-					<option value="Website Bugs">Website Bugs</option>
+					<option className="options" value="Custom Orders">
+						Custom Orders
+					</option>
+					<option className="options" value="Didn't Recieve Verification Email">
+						Didn't Recieve Verification Email
+					</option>
+					<option className="options" value="Order Issues">
+						Order Issues
+					</option>
+					<option className="options" value="Returns">
+						Returns
+					</option>
+					<option className="options" value="Technical Support">
+						Technical Support
+					</option>
+					<option className="options" value="Product Suggestions">
+						Product Suggestions
+					</option>
+					<option className="options" value="Website Bugs">
+						Website Bugs
+					</option>
 				</select>
 				<label className="validation_text">{reason_for_contact_validations}</label>
 				{console.log({ reason_for_contact })}
