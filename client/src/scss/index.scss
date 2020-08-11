@@ -856,7 +856,7 @@ video {
 	background: gray;
 }
 
-.sidebar_button:focus + .sidebar_dropdown_container {
+.sidebar_button:hover + .sidebar_dropdown_container {
 	max-height: 600px;
 }
 
