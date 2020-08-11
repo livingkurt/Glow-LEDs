@@ -3,7 +3,7 @@ import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexContainer } from '../components/ContainerComponents';
-import { RelatedProducts, CartProducts } from '../components/SpecialtyComponents';
+import { SuggestedProducts } from '../components/SpecialtyComponents';
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 
@@ -140,8 +140,8 @@ const CartPage = (props) => {
 				</FlexContainer>
 			</div>
 
-			{/* {cartItems.length === 0 && <CartProducts />} */}
-			<CartProducts />
+			{/* {cartItems.length === 0 && <SuggestedProducts />} */}
+			<SuggestedProducts />
 		</FlexContainer>
 	);
 };

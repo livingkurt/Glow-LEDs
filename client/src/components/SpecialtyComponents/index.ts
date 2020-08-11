@@ -7,4 +7,5 @@ export { default as PaypalButton } from './PaypalButton';
 export { default as Reviews } from './Reviews';
 export { default as Slideshow } from './Slideshow';
 export { default as RelatedProducts } from './RelatedProducts';
-export { default as CartProducts } from './CartProducts';
+export { default as SuggestedProducts } from './SuggestedProducts';
+// export { default as Slider } from './Slider';

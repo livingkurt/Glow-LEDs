@@ -161,7 +161,7 @@ const EditProductPage = (props) => {
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					<Loading loading={loading} error={error}>
 						{product && (
-							<ul className="form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>
+							<ul className="edit-form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>
 								<h1
 									style={{
 										textAlign: 'center',

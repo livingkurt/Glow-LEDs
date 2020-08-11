@@ -49,6 +49,13 @@ button {
 	font-size: $font_size;
 }
 
+.inactive {
+	display: none;
+}
+.active {
+	display: block;
+}
+
 .content {
 	background-color: $content_bg_color;
 	box-shadow: $bs_deep;
@@ -258,6 +265,24 @@ header {
 .form-container {
 	display: flex;
 	width: 28rem;
+	flex-direction: column;
+	max-width: 32rem;
+	padding: 2rem;
+	box-shadow: $bs_deep;
+	background-color: #5a5a5a;
+	border-radius: $br_small_containers;
+	list-style-type: none;
+	margin: 0 auto;
+	li {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+	}
+}
+.edit-form-container {
+	display: flex;
+	width: 60rem;
 	flex-direction: column;
 	max-width: 32rem;
 	padding: 2rem;
@@ -570,7 +595,7 @@ tbody > tr:nth-child(odd) {
 	padding-right: 8px;
 	font-size: $font_size;
 	margin: 0;
-	width: 100px;
+	width: 117px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;

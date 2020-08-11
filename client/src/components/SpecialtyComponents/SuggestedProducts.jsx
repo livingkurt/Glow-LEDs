@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, detailsProduct } from '../../actions/productActions';
 import Product from './Product';
 import { Loading } from '../UtilityComponents';
+// import Slider from './Slider';
 
 const CartProducts = (props) => {
 	const dispatch = useDispatch();
@@ -20,6 +21,13 @@ const CartProducts = (props) => {
 		// }
 	}, []);
 
+	// buttonRight.onclick = function () {
+	//   document.getElementById('container').scrollLeft += 20;
+	// };
+	// buttonLeft.onclick = function () {
+	//   document.getElementById('container').scrollLeft -= 20;
+	// };
+
 	return (
 		<FlexContainer column styles={{ margin: '0 10px' }}>
 			<h1
@@ -31,6 +39,7 @@ const CartProducts = (props) => {
 			>
 				Suggested Products
 			</h1>
+			{/* <Slider /> */}
 			<Loading loading={loading} error={error}>
 				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
 					{products &&
