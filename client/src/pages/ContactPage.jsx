@@ -172,11 +172,13 @@ const ContactPage = () => {
 				>
 					Send
 				</button>
-				<p style={{ lineHeight: '25px' }}>
-					You can find your order number logging in and going to the drop down with your name on it and
-					clicking orders. The order Number will be in the far left column. Or by checking the email you
-					recieved for making your order.
-				</p>
+				{[ 'Order Issues', 'Returns', 'Technical Support' ].includes(reason_for_contact) && (
+					<p style={{ lineHeight: '25px' }}>
+						You can find your order number by logging in and going to the drop down with your name on it and
+						clicking orders. The order Number will be in the far left column. Or by checking the email you
+						recieved for making your order.
+					</p>
+				)}
 			</form>
 		</div>
 	);

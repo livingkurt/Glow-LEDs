@@ -21,10 +21,12 @@ const addToCart = (productId: string, qty: number) => async (
 	getState: () => { cart: { cartItems: any } }
 ) => {
 	try {
+		console.log('Add To Cart Before');
 		const { data } = await Axios.get('/api/products/' + productId);
 		const { cart: { cartItems } } = getState();
 		// const same_product = cartItems.find((item: any) => item.product === productId);
 		// qty = same_product ? qty + same_product.qty : qty;
+
 		dispatch({
 			type: CART_ADD_ITEM,
 			payload: {
@@ -38,8 +40,34 @@ const addToCart = (productId: string, qty: number) => async (
 				qty
 			}
 		});
+		const cart_item = [
+			{
+				product: data._id,
+				name: data.name,
+				display_image: data.display_image,
+				price: data.price,
+				sale_price: data.sale_price,
+				countInStock: data.countInStock,
+				volume: data.volume,
+				qty
+			}
+		];
 
-		Cookie.set('cartItems', JSON.stringify(cartItems));
+		if (cartItems === []) {
+			console.log('No Cart Items');
+			// Cookie.set('cartItems', JSON.stringify(cart_item));
+			Cookie.set('cartItems', JSON.stringify([ ...cart_item ]));
+		}
+		// else {
+		// 	console.log('Yes Cart Items');
+		// 	// Cookie.set('cartItems', JSON.stringify(cartItems));
+		// 	Cookie.set('cartItems', JSON.stringify([ ...cartItems, ...cart_item ]));
+		// }
+		// Cookie.set('cartItems', JSON.stringify([ ...cartItems, ...cart_item ]));
+
+		// console.log('Add To Cart After');
+		console.log({ cartItems });
+		console.log({ cart_item });
 	} catch (error) {}
 };
 

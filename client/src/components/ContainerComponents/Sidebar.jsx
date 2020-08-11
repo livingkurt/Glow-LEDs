@@ -18,10 +18,12 @@ const Sidebar = (props) => {
 					}
 				}
 				// Bind the event listener
-				document.addEventListener('mousedown', handleClickOutside);
+				document.addEventListener('mousedown touchstart', handleClickOutside);
+				// document.addEventListener('touchstart', handleClickOutside);
 				return () => {
 					// Unbind the event listener on clean up
-					document.removeEventListener('mousedown', handleClickOutside);
+					document.removeEventListener('mousedown touchstart', handleClickOutside);
+					// document.removeEventListener('touchstart', handleClickOutside);
 				};
 			},
 			[ ref ]
