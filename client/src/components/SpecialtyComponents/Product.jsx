@@ -46,6 +46,7 @@ const Product = (props) => {
 					<LazyLoadImage
 						className="product-image"
 						alt={props.product.name}
+						style={{ height: props.size, width: props.size }}
 						effect="blur"
 						src={props.product.display_image} // use normal <img> attributes as props
 					/>

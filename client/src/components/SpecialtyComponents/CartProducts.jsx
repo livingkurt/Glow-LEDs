@@ -6,28 +6,19 @@ import { listProducts, detailsProduct } from '../../actions/productActions';
 import Product from './Product';
 import { Loading } from '../UtilityComponents';
 
-const RelatedProducts = (props) => {
+const CartProducts = (props) => {
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 
-	useEffect(
-		() => {
-			if (props.product) {
-				dispatch(listProducts(props.product.category));
-			}
-		},
-		[ props.product ]
-	);
+	console.log({ products });
 
-	useEffect(
-		() => {
-			dispatch(detailsProduct(props.product_id));
-			return () => {};
-		},
-		[ props.product_id ]
-	);
+	useEffect(() => {
+		// if (props.product) {
+		dispatch(listProducts(''));
+		// }
+	}, []);
 
 	return (
 		<FlexContainer column styles={{ margin: '0 10px' }}>
@@ -38,19 +29,17 @@ const RelatedProducts = (props) => {
 					justifyContent: 'center'
 				}}
 			>
-				Related Products
+				Suggested Products
 			</h1>
 			<Loading loading={loading} error={error}>
 				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
 					{products &&
 						products.map(
 							(item, index) =>
-								!item.hidden &&
-								props.product_id &&
-								item._id !== props.product_id && (
+								!item.hidden && (
 									<Product
 										key={index}
-										size="300px"
+										size="200px"
 										product={item}
 										styles={{ marginRight: 20, listStyleType: 'none' }}
 									/>
@@ -62,4 +51,4 @@ const RelatedProducts = (props) => {
 	);
 };
 
-export default RelatedProducts;
+export default CartProducts;
