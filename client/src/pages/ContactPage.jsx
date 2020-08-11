@@ -125,10 +125,12 @@ const ContactPage = () => {
 				<select
 					onChange={(e) => set_reason_for_contact(e.target.value)}
 					defaultValue={reason_for_contact}
-					className="form_input"
+					className="form_input contact_dropdown"
 					name="reason_for_contact"
 				>
-					<option value="">-</option>
+					<option style={{ color: 'gray' }} value="">
+						----Click Here to Choose Reason----
+					</option>
 					<option value="Custom Orders">Custom Orders</option>
 					<option value="Didn't Recieve Verification Email">Didn't Recieve Verification Email</option>
 					<option value="Order Issues">Order Issues</option>
