@@ -63,8 +63,8 @@ const OrdersPage = (props) => {
 									<th>USER</th>
 									<th>PAID</th>
 									<th>PAID AT</th>
-									<th>DELIVERED</th>
-									<th>DELIVERED AT</th>
+									<th>SHIPPED AT</th>
+									<th>SHIPPED AT</th>
 									<th>ACTIONS</th>
 								</tr>
 							</thead>
