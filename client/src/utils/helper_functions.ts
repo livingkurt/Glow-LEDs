@@ -103,7 +103,7 @@ export const validate_contact = (data: {
 	first_name: any;
 	last_name: any;
 	email: any;
-	order_number: any;
+	// order_number: any;
 	reason_for_contact: any;
 	message: any;
 }) => {
@@ -112,7 +112,7 @@ export const validate_contact = (data: {
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
-	data.order_number = !isEmpty(data.order_number) ? data.order_number : '';
+	// data.order_number = !isEmpty(data.order_number) ? data.order_number : '';
 	data.reason_for_contact = !isEmpty(data.reason_for_contact) ? data.reason_for_contact : '';
 	data.message = !isEmpty(data.message) ? data.message : '';
 	// First Name checks
@@ -127,12 +127,12 @@ export const validate_contact = (data: {
 	if (Validator.isEmpty(data.email)) {
 		errors.email = 'Email field is required';
 	} else if (!Validator.isEmail(data.email)) {
-		errors.email = 'Email must include an @ symbol to be valid';
+		errors.email = 'Email must be a valid email';
 	}
-	// Password checks
-	if (Validator.isEmpty(data.order_number)) {
-		errors.order_number = 'Order Number field is required';
-	}
+	// // Password checks
+	// if (Validator.isEmpty(data.order_number)) {
+	// 	errors.order_number = 'Order Number field is required';
+	// }
 	if (Validator.isEmpty(data.reason_for_contact)) {
 		errors.reason_for_contact = 'Reason for Contact field is required';
 	}

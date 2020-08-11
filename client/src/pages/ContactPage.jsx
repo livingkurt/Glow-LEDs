@@ -26,22 +26,32 @@ const ContactPage = () => {
 	const userContact = useSelector((state) => state.userContact);
 	const { loading, completed, error } = userContact;
 
+	let request;
 	const sendEmail = (e) => {
 		e.preventDefault();
+
+		if ([ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact)) {
+			set_order_number_validations('55555555');
+		}
 		const data = {
 			first_name,
 			last_name,
 			email,
-			order_number,
+			// order_number,
 			reason_for_contact,
 			message
 		};
-		const request = validate_contact(data);
+		request = validate_contact(data);
 
 		set_first_name_Validations(request.errors.first_name);
 		set_last_name_Validations(request.errors.last_name);
 		set_email_validations(request.errors.email);
+		// if ([ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact)) {
+		// set_order_number_validations(request.errors.order_number);
+		// }
+		// else {
 		set_order_number_validations(request.errors.order_number);
+		// }
 		set_reason_for_contact_validations(request.errors.reason_for_contact);
 		set_message_validations(request.errors.message);
 
@@ -71,7 +81,11 @@ const ContactPage = () => {
 			</FlexContainer>
 			<FlexContainer h_center>
 				<Loading loading={loading} error={error}>
-					{completed && <h3 style={{ textAlign: 'center' }}>{completed}</h3>}
+					{completed && (
+						<h3 style={{ textAlign: 'center' }}>
+							{completed ? completed : request.isValid ? 'Error Sending Email' : ''}
+						</h3>
+					)}
 				</Loading>
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
@@ -105,16 +119,7 @@ const ContactPage = () => {
 					placeholder="Email"
 				/>
 				<label className="validation_text">{email_validations}</label>
-				<label>Order Number</label>
-				<input
-					onChange={(e) => set_order_number(e.target.value)}
-					defaultValue={order_number}
-					className="zoom_f form_input"
-					type="text"
-					name="order_number"
-					placeholder="Order Number"
-				/>
-				<label className="validation_text">{order_number_validations}</label>
+
 				<label>Reason for Contact</label>
 				{/* <input onChange={(e) => set_}defaultValue={} className="zoom_f form_input" type="text" name="order_number" placeholder="Order Number" /> */}
 				<select
@@ -123,12 +128,32 @@ const ContactPage = () => {
 					className="form_input"
 					name="reason_for_contact"
 				>
-					<option defaultValue="">-</option>
-					<option defaultValue="order_issues">Order Issues</option>
-					<option defaultValue="returns">Returns</option>
-					<option defaultValue="technical_support">Technical Support</option>
+					<option value="">-</option>
+					<option value="Custom Orders">Custom Orders</option>
+					<option value="Didn't Recieve Verification Email">Didn't Recieve Verification Email</option>
+					<option value="Order Issues">Order Issues</option>
+					<option value="Returns">Returns</option>
+					<option value="Technical Support">Technical Support</option>
+					<option value="Product Suggestions">Product Suggestions</option>
+					<option value="Website Bugs">Website Bugs</option>
 				</select>
 				<label className="validation_text">{reason_for_contact_validations}</label>
+				{console.log({ reason_for_contact })}
+				{[ 'Order Issues', 'Returns', 'Technical Support' ].includes(reason_for_contact) && (
+					<div className="full-width">
+						<label>Order Number</label>
+						<input
+							onChange={(e) => set_order_number(e.target.value)}
+							defaultValue={order_number}
+							className="zoom_f form_input full-width"
+							type="text"
+							name="order_number"
+							placeholder="Order Number"
+						/>
+						<label className="validation_text">{order_number_validations}</label>
+					</div>
+				)}
+
 				<label>Message</label>
 				<textarea
 					onChange={(e) => set_message(e.target.value)}
@@ -142,10 +167,16 @@ const ContactPage = () => {
 					style={{ width: '100px' }}
 					className="zoom_b button primary"
 					id="button"
+					å
 					onClick={(e) => sendEmail(e)}
 				>
 					Send
 				</button>
+				<p style={{ lineHeight: '25px' }}>
+					You can find your order number logging in and going to the drop down with your name on it and
+					clicking orders. The order Number will be in the far left column. Or by checking the email you
+					recieved for making your order.
+				</p>
 			</form>
 		</div>
 	);

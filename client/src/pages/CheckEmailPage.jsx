@@ -11,8 +11,9 @@ const CheckEmailPage = (props) => {
 			<FlexContainer h_center>
 				<FlexContainer v_i_center wrap>
 					<p style={{ textAlign: 'center', width: '100%' }}>
-						If you do not recieve a verification email, please contact support
+						If you do not recieve a verification email, make sure to check your spam folder.
 					</p>
+					<p style={{ textAlign: 'center', width: '100%' }}>If still not there please contact support.</p>
 					<FlexContainer h_center>
 						<Link to="/contact">
 							<button style={{ marginLeft: '10px' }} className="button primary">

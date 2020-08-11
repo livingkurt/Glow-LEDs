@@ -172,7 +172,7 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<li>
 							<button className="button primary full-width" onClick={placeOrderHandler}>
-								Place Order
+								Start Payment Process
 							</button>
 						</li>
 						<FlexContainer column>
