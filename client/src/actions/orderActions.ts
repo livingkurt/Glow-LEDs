@@ -51,7 +51,7 @@ const createOrder = (order: {
 		});
 		console.log({ createOrder_newOrder: newOrder });
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-		axios.post('/api/emails/order', { ...newOrder, user_data });
+		// axios.post('/api/emails/order', { ...newOrder, user_data });
 		axios.post('/api/emails/sale', { ...newOrder, user_data });
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
