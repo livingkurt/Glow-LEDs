@@ -4,6 +4,12 @@ import { FlexContainer } from '../ContainerComponents';
 // Components
 
 const Loading = (props) => {
+	const loading_message = () => {
+		setTimeout(() => {
+			return <h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
+		}, 3000);
+	};
+
 	return (
 		<div>
 			{props.loading ? (
@@ -18,7 +24,7 @@ const Loading = (props) => {
 						className="loading_png"
 						alt="loading"
 					/>
-					<h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>
+					{loading_message()}
 				</FlexContainer>
 			) : props.error ? (
 				<FlexContainer h_center>
