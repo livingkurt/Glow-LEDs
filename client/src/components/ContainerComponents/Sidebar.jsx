@@ -156,10 +156,10 @@ const Sidebar = (props) => {
 								Caps
 							</button>
 						</Link>
-						<Link to="/category/Adapters">
+						<Link to="/category/DiffuserAdapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
-								Adapters
+								Diffuser Adapters
 							</button>
 						</Link>
 						<Link to="/category/Accessories">

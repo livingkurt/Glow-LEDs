@@ -31,7 +31,7 @@ export const validate_login = (data: { email: any; password: any }) => {
 	if (Validator.isEmpty(data.email)) {
 		errors.email = 'Email field is required';
 	} else if (!Validator.isEmail(data.email)) {
-		errors.email = 'Email must include an @ symbol to be valid';
+		errors.email = 'Valid email required';
 	}
 	// Password checks
 	if (Validator.isEmpty(data.password)) {
@@ -164,7 +164,7 @@ export const validate_profile = (data: { first_name: any; last_name: any; email:
 	if (Validator.isEmpty(data.email)) {
 		errors.email = 'Email field is required';
 	} else if (!Validator.isEmail(data.email)) {
-		errors.email = 'Email must include an @ symbol to be valid';
+		errors.email = 'Valid email required';
 	}
 
 	return {

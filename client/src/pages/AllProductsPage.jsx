@@ -21,7 +21,7 @@ const AllProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'Adapters', 'StringLights' ].includes(category)) {
+			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'DiffuserAdapters', 'StringLights' ].includes(category)) {
 				dispatch(listProducts(category));
 			} else {
 				history.push('/allproducts');
