@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,7 @@ const CartPage = (props) => {
 	const productId = props.match.params.id;
 	const qty = parseInt(props.location.search ? Number(props.location.search.split('=')[1]) : 1);
 	const dispatch = useDispatch();
+	const [ no_items_in_cart, set_no_items_in_cart ] = useState('');
 
 	const removeFromCartHandler = (productId) => {
 		dispatch(removeFromCart(productId));
@@ -31,7 +32,11 @@ const CartPage = (props) => {
 	}, []);
 
 	const checkoutHandler = () => {
-		props.history.push('/login?redirect=shipping');
+		if (cartItems.length === 0) {
+			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
+		} else {
+			props.history.push('/login?redirect=shipping');
+		}
 	};
 
 	return (
@@ -132,14 +137,14 @@ const CartPage = (props) => {
 						<button
 							onClick={checkoutHandler}
 							className="button primary full-width"
-							disabled={cartItems.length === 0}
+							// disabled={cartItems.length === 0}
 						>
 							Proceed to Checkout
 						</button>
 					</div>
 				</FlexContainer>
 			</div>
-
+			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
 			{/* {cartItems.length === 0 && <SuggestedProducts />} */}
 			<SuggestedProducts />
 		</FlexContainer>
