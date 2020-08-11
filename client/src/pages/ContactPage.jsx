@@ -129,7 +129,7 @@ const ContactPage = () => {
 					name="reason_for_contact"
 					placeholder="----Click Here to Choose Reason----"
 				>
-					<option style={{ color: 'gray' }} disabled="disabled" selected="selected" value="">
+					<option className="grey_option" disabled="disabled" selected="selected" value="">
 						----Click Here to Choose Reason----
 					</option>
 					<option className="options" value="Custom Orders">

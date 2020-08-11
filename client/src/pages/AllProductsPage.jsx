@@ -63,6 +63,9 @@ const AllProductsPage = (props) => {
 						{products.map((product, index) => !product.hidden && <Product key={index} product={product} />)}
 					</ul>
 				)}
+				{products.length === 0 && (
+					<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
+				)}
 			</Loading>
 		</div>
 	);
