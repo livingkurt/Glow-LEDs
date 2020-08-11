@@ -102,8 +102,8 @@ const Header = (props) => {
 							<Link to="/category/Caps">
 								<button className="button nav">Caps</button>
 							</Link>
-							<Link to="/category/DiffuserAdapter">
-								<button className="button nav"> Diffuser Adapter</button>
+							<Link to="/category/DiffuserAdapters">
+								<button className="button nav"> Diffuser Adapters</button>
 							</Link>
 							<Link to="/category/Accessories">
 								<button className="button nav">Accessories</button>
