@@ -143,7 +143,7 @@ const RegisterPage = (props) => {
 							to={redirect === '/' ? 'login' : 'login?redirect=' + redirect}
 							className="button secondary text-center"
 						>
-							Sign In Here
+							Login
 						</Link>
 					</li>
 				</ul>

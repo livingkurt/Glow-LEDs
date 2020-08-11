@@ -49,14 +49,6 @@ const LoginPage = (props) => {
 				<ul className="form-container">
 					<li style={{ display: 'flex', flexDirection: 'column' }}>
 						<h1>Login </h1>
-						<li style={{ marginBottom: '-20px' }}>
-							<Link
-								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-								className="button secondary text-center"
-							>
-								New User
-							</Link>
-						</li>
 					</li>
 					<li>
 						<FlexContainer h_center>
@@ -99,15 +91,23 @@ const LoginPage = (props) => {
 							<button className="button secondary full-width">Forgot Password?</button>
 						</Link>
 					</li>
-					{/* <li style={{ fontFamily: 'heading_font' }}>New to Glow LEDs?</li> */}
-					{/* <li>
+					<li>New to Glow LEDs?</li>
+					<li>
 						<Link
 							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
 							className="button secondary text-center"
 						>
-							Create your Glow LED account
+							Create Account
 						</Link>
-					</li> */}
+					</li>
+					{/* <li style={{ marginBottom: '-20px' }}>
+							<Link
+								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
+								className="button secondary text-center"
+							>
+								New User
+							</Link>
+						</li> */}
 				</ul>
 			</form>
 		</div>
