@@ -8,9 +8,9 @@ const Sort = (props) => {
 			<label>Sort By</label>
 			<div className="select_dropdown_container">
 				<select name="sortOrder" className="select_dropdown" onChange={props.sortHandler}>
-					<option defaultValue="">-----</option>
-					<option defaultValue="lowest">Lowest</option>
-					<option defaultValue="highest">Highest</option>
+					<option value="-----">Newest</option>
+					<option value="lowest">Lowest</option>
+					<option value="highest">Highest</option>
 				</select>
 				<i className="fas fa-sort-up icon_styles" />
 			</div>

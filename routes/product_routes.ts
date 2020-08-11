@@ -18,9 +18,23 @@ router.get('/', async (req, res) => {
 				}
 			}
 		: {};
-	const sortOrder = req.query.sortOrder
-		? req.query.sortOrder === 'lowest' ? { price: 1 } : { price: -1 }
-		: { _id: -1 };
+	// const sortOrder = req.query.sortOrder
+	// 	? req.query.sortOrder === 'lowest' ? { price: 1 } : { price: -1 }
+	// 	: { _id: -1 };
+	let sortOrder = {};
+	if (req.query.sortOrder === 'lowest') {
+		sortOrder = { price: 1 };
+	} else if (req.query.sortOrder === 'highest') {
+		sortOrder = { price: -1 };
+	} else if (req.query.sortOrder === '-----' || req.query.sortOrder === '') {
+		sortOrder = { _id: -1 };
+	}
+	// const sortOrder =
+	// 	req.query.sortOrder === 'lowest'
+	// 		? { price: 1 }
+	// 		: req.query.sortOrder === 'highest' ? { price: -1 } : req.query.sortOrder === '-----' ? { _id: 1 } : '';
+	console.log({ sortOrder });
+	console.log({ query: req.query.sortOrder });
 	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
 	res.send(products);
 });
