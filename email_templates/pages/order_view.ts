@@ -32,6 +32,8 @@ export default (props: {
 		const formatted_date = `${month}/${day}/${year}`;
 		return formatted_date;
 	};
+	console.log({ order_view_props: props });
+	console.log({ order_view_props_order_items: props.orderItems });
 	return `
  
           <div class="placeorder">

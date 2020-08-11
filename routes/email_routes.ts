@@ -116,7 +116,7 @@ router.post('/order', async (req, res) => {
 	let user = {};
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
-		to: req.body.user_data.email,
+		to: req.body.shipping.email,
 		subject: 'Glow LEDs Order Confirmation',
 		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed', paid, shipped }), styles())
 	};
@@ -126,7 +126,7 @@ router.post('/order', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('Order Email Sent to ' + req.body.user_data.first_name);
+			console.log('Order Email Sent to ' + req.body.shipping.first_name);
 			res.send('Email Successfully Sent');
 		}
 	});
@@ -135,13 +135,15 @@ router.post('/order', async (req, res) => {
 router.post('/sale', async (req, res) => {
 	console.log({ sale: req.body });
 	console.log({ sale_items: req.body.orderItems });
+	const paid = 'Not Paid';
+	const shipped = 'Not Shipped';
 	let user = {};
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		to: process.env.EMAIL,
-		subject: 'New Order from ' + req.body.user_data.first_name,
+		subject: 'New Order from ' + req.body.shipping.first_name,
 		html: main_layout(
-			order_view({ ...req.body, title: 'New Order from ' + req.body.user_data.first_name }),
+			order_view({ ...req.body, title: 'New Order from ' + req.body.shipping.first_name, paid, shipped }),
 			styles()
 		)
 	};
@@ -151,7 +153,7 @@ router.post('/sale', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('New Order Made by ' + req.body.user_data.first_name);
+			console.log('New Order Made by ' + req.body.shipping.first_name);
 			res.send('Email Successfully Sent');
 		}
 	});
@@ -165,9 +167,9 @@ router.post('/paid', async (req, res) => {
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		to: process.env.EMAIL,
-		subject: 'Order Paid by ' + req.body.user_data.first_name,
+		subject: 'Order Paid by ' + req.body.shipping.first_name,
 		html: main_layout(
-			order_view({ ...req.body, title: 'Order Paid by ' + req.body.user_data.first_name, paid, shipped }),
+			order_view({ ...req.body, title: 'Order Paid by ' + req.body.shipping.first_name, paid, shipped }),
 			styles()
 		)
 	};
@@ -177,7 +179,7 @@ router.post('/paid', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('New Order Paid by ' + req.body.user_data.first_name);
+			console.log('New Order Paid by ' + req.body.shipping.first_name);
 			res.send('Email Successfully Sent');
 		}
 	});
@@ -189,10 +191,10 @@ router.post('/orderpaid', async (req, res) => {
 	const shipped = 'Not Shipped';
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
-		to: req.body.user_data.email,
+		to: req.body.shipping.email,
 		subject: 'Here is your receipt from Glow LEDs',
 		html: main_layout(
-			order_view({ ...req.body, title: 'Here is your receipt from Glow LEDs', paid, shipped }),
+			order_view({ ...req.body, title: 'Order Complete! \nHere is your receipt from Glow LEDs', paid, shipped }),
 			styles()
 		)
 	};
@@ -202,7 +204,7 @@ router.post('/orderpaid', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('New Order Paid by ' + req.body.user_data.first_name);
+			console.log('New Order Paid by ' + req.body.shipping.first_name);
 			res.send('Email Successfully Sent');
 		}
 	});
