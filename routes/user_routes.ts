@@ -8,7 +8,7 @@ require('dotenv');
 const router = express.Router();
 
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const users = await User.find({}).populate('user');
+	const users = await User.find({}).populate('user').sort({ createdAt: -1 });
 	res.send(users);
 });
 
