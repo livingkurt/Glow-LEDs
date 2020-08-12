@@ -63,10 +63,11 @@ const FAQPage = () => {
 					<h2 style={{ textAlign: 'center' }}>Ordering Custom Products</h2>
 					<p style={{ lineHeight: '25px' }}>
 						At Glow-LEDS.com we offer many premade and predesigned products, as well as the ability to get a
-						customized version of the products. Before ordering anything custom a consultation must be had.
-						Send us a message with inspirational pictures, appoximate dimmensions and any other details to
-						explain your vision and we will create a detailed invoice and design. The price may vary
-						depending on the size and hardware used.
+						customized version of the products. At this time we are only accepting requests for custom
+						infinity mirrors. Before ordering anything custom a consultation must be had. Send us a message
+						with inspirational pictures, appoximate dimmensions and any other details to explain your vision
+						and we will create a detailed invoice and design. The price may vary depending on the size and
+						hardware used.
 					</p>
 					<Link to="/contact">
 						<FlexContainer h_center>
