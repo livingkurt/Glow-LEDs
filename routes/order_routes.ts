@@ -9,7 +9,7 @@ const { isAuth, isAdmin } = require('../util');
 const router = express.Router();
 
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const orders = await Order.find({}).populate('user');
+	const orders = await Order.find({}).populate('user').sort({ createdAt: -1 });
 	res.send(orders);
 });
 router.get('/mine', isAuth, async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {

@@ -11,6 +11,7 @@ import {
 	verify_account_view,
 	order_view
 } from '../email_templates/pages/index';
+const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
 const router = express.Router();
 
@@ -22,26 +23,53 @@ let transporter = nodemailer.createTransport({
 	}
 });
 
+// module.exports = (app) => {
+// 	app.post('/api/email/order_confirmation', async (req, res) => {
+// 		const { recipient, orderNumber } = req.body;
+// 		sgMail.setApiKey(process.env.SENDGRID_SECRET);
+// 		const msg = {
+// 			to: recipient,
+// 			from: 'keibooher@gmail.com', // Use the email address or domain you verified above
+// 			subject: 'Sending with Twilio SendGrid is Fun',
+// 			text: 'and easy to do anywhere, even with Node.js',
+// 			html: confirmationTemplate(orderNumber)
+// 		};
+// 		try {
+// 			sgMail.send(msg);
+// 			res.send(200);
+// 		} catch (err) {
+// 			res.status(422).send(err);
+// 		}
+// 	});
+// };
+
 router.post('/contact', async (req, res) => {
 	// const data = req.body;
 	console.log({ contact: req.body });
-
+	console.log(process.env.SENDGRID_SECRET);
+	sgMail.setApiKey(process.env.SENDGRID_SECRET);
 	let mailOptions = {
-		from: req.body.email,
 		to: process.env.DISPLAY_EMAIL,
+		from: req.body.email,
 		subject: `New message from ${req.body.first_name} - ${req.body.order_number} - ${req.body.reason_for_contact}`,
 		html: main_layout(contact_view(req.body), styles())
 	};
 
-	transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			console.log('Error Occurs', err);
-			res.send(err);
-		} else {
-			console.log('Contact Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
-		}
-	});
+	try {
+		sgMail.send(mailOptions);
+		res.send(200);
+	} catch (err) {
+		res.status(422).send(err);
+	}
+	// transporter.sendMail(mailOptions, (err, data) => {
+	// 	if (err) {
+	// 		console.log('Error Occurs', err);
+	// 		res.send(err);
+	// 	} else {
+	// 		console.log('Contact Email Sent to ' + req.body.first_name);
+	// 		res.send('Email Successfully Sent');
+	// 	}
+	// });
 });
 
 router.post('/passwordreset', async (req, res) => {
