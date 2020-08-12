@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 const config = require('./config');
 import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
 import Product from './models/product';
+import User from './models/user';
 // const htmlRoutes = require('./email_templates/html_routes');
 
 mongoose
@@ -35,17 +36,17 @@ if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));
 }
 
-app.put('/api/all', async (req, res) => {
-	// const product = await Product.updateMany({
-	// 	// $rename: { shipping_price: 'volume' }
-	// 	$set: { hidden: true }
-	// 	// $unset: { shipping_price: 1 }
-	// });
-	// res.send(product);
-	const product = await Product.updateMany({ category: 'Caps' }, { $set: { hidden: false } });
-	console.log(product);
-	res.send(product);
-});
+// app.put('/api/all', async (req, res) => {
+// 	// const product = await Product.updateMany({
+// 	// 	// $rename: { shipping_price: 'volume' }
+// 	// 	$set: { hidden: true }
+// 	// 	// $unset: { shipping_price: 1 }
+// 	// });
+// 	// res.send(product);
+// 	const product = await User.updateMany({ $set: { deleted: false } });
+// 	console.log(product);
+// 	res.send(product);
+// });
 
 app.get('*', (request, response) => {
 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));

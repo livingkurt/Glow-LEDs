@@ -51,7 +51,8 @@ const orderSchema = new mongoose.Schema(
 		shippedAt: { type: Date },
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
-		order_note: { type: String }
+		order_note: { type: String },
+		deleted: { type: Boolean, required: false }
 	},
 	{
 		timestamps: true
