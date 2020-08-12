@@ -1,22 +1,49 @@
-// React
-import React, { useState } from 'react';
-import { FlexContainer } from '../ContainerComponents';
-
-const Sort = (props) => {
+import React, { useEffect, useState } from 'react';
+import { useEmblaCarousel } from 'embla-carousel/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+const EmblaCarousel = ({ children }) => {
+	const [ EmblaCarouselReact, embla ] = useEmblaCarousel({ loop: false });
+	const [ refresh, setRefresh ] = useState(false);
+	useEffect(
+		() => {
+			if (embla) {
+				// Embla API is ready
+			}
+		},
+		[ embla ]
+	);
+	const prev = () => {
+		if (!embla) {
+			return;
+		}
+		if (embla.selectedScrollSnap() === -1) {
+			embla.reInit();
+		}
+		embla.scrollPrev();
+	};
+	const next = () => {
+		if (!embla) {
+			setRefresh(!refresh);
+			return;
+		}
+		if (embla.selectedScrollSnap() === -1) {
+			embla.reInit();
+		}
+		embla.scrollNext();
+	};
 	return (
-		<FlexContainer v_i_center styles={{ marginLeft: '13px' }}>
-			<label>Sort By</label>
-			<div className="select_dropdown_container">
-				<select name="sortOrder" className="select_dropdown" onChange={props.sortHandler}>
-					<option value="category">Category</option>
-					<option value="newest">Newest</option>
-					<option value="lowest">Lowest</option>
-					<option value="highest">Highest</option>
-				</select>
-				<i className="fas fa-sort-up icon_styles" />
-			</div>
-		</FlexContainer>
+		<div className="flex space-between">
+			<FontAwesomeIcon onClick={prev} className="margin-auto-v font-size-3-0" icon={faCaretLeft} />
+			<EmblaCarouselReact>
+				<div style={{ display: 'flex' }}>
+					{children.map((child) => {
+						return child;
+					})}
+				</div>
+			</EmblaCarouselReact>
+			<FontAwesomeIcon onClick={next} className="margin-auto-v font-size-3-0" icon={faCaretRight} />
+		</div>
 	);
 };
-
-export default Sort;
+export default EmblaCarousel;

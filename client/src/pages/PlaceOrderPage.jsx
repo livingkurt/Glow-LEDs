@@ -24,9 +24,11 @@ const PlaceOrderPage = (props) => {
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
-	const [ shippingPrice, setShippingPrice ] = useState(0);
+	const [ shippingPrice, setShippingPrice ] = useState(5);
+
 	useEffect(() => {
 		calculate_shipping();
+		console.log({ shippingPrice });
 		return () => {};
 	}, []);
 
@@ -44,19 +46,21 @@ const PlaceOrderPage = (props) => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
 		if (volume <= 10) {
 			setShippingPrice(5);
-		} else if (volume > 10 && volume < 245) {
+		} else if (volume > 10 && volume < 250) {
 			setShippingPrice(9);
-		} else if (volume > 245 && volume < 405) {
+		} else if (volume > 250 && volume < 405) {
 			setShippingPrice(10);
 		} else if (volume > 405 && volume < 500) {
 			setShippingPrice(12);
 		} else if (volume > 500) {
 			setShippingPrice(15);
 		}
+		console.log({ shippingPrice });
 	};
 
 	const placeOrderHandler = () => {
 		// create an order
+		console.log({ shippingPrice });
 		dispatch(
 			createOrder({
 				orderItems: cartItems,
