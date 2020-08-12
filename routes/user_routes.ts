@@ -95,6 +95,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		// user.password = req.body.password || user.password;
 		user.isAdmin = req.body.admin || user.isAdmin;
 		user.isVerified = req.body.verified || user.isVerified;
+		user.deleted = req.body.deleted || false;
 		const updatedUser = await user.save();
 		res.send({
 			_id: updatedUser.id,
@@ -122,6 +123,7 @@ router.put('/verify/:id', async (req, res) => {
 			user.password = req.body.password || user.password;
 			user.isAdmin = req.body.isAdmin || user.isAdmin;
 			user.isVerified = true;
+			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
 			res.send({
 				_id: updatedUser.id,

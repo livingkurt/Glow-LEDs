@@ -100,7 +100,8 @@ router.post(
 			taxPrice: req.body.taxPrice,
 			shippingPrice: req.body.shippingPrice,
 			totalPrice: req.body.totalPrice,
-			order_note: req.body.order_note
+			order_note: req.body.order_note,
+			deleted: false
 		});
 		const newOrderCreated = await newOrder.save();
 		res.status(201).send({ message: 'New Order Created', data: newOrderCreated });

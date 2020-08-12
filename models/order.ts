@@ -52,7 +52,7 @@ const orderSchema = new mongoose.Schema(
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
 		order_note: { type: String },
-		deleted: { type: Boolean, required: false }
+		deleted: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true

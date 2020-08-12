@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		isAdmin: { type: Boolean, required: true, default: false },
 		isVerified: { type: Boolean, required: true, default: false },
-		deleted: { type: Boolean, required: false }
+		deleted: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true
