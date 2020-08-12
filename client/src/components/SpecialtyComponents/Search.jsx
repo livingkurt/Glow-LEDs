@@ -9,18 +9,18 @@ const Search = (props) => {
 			style={{
 				display: 'flex',
 				flexDirection: 'row',
-				justifyContent: 'center',
-				marginRight: '20px'
+				justifyContent: 'center'
+				// marginRight: '20px'
 			}}
 		>
-			<FlexContainer h_between v_i_center class="search_container">
+			<FlexContainer h_between v_i_center wrap class="search_container">
 				<input
 					name="searchKeyword"
 					onChange={(e) => props.setSearchKeyword(e.target.value)}
 					style={{ marginRight: '5px', width: '200px' }}
 					className="form_input"
 				/>
-				<button type="submit" className="button primary">
+				<button type="submit" className="button primary search">
 					Search {props.category && 'Category'}
 				</button>
 			</FlexContainer>

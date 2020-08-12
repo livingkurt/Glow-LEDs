@@ -239,7 +239,7 @@
 		padding: 0px !important;
 	}
 	.search_container {
-		max-width: 250px !important;
+		// max-width: 250px !important;
 	}
 	.cart_text {
 		display: none !important;
@@ -279,6 +279,19 @@
 		text-align: center !important;
 		justify-content: center !important;
 	}
+}
+@media only screen and (max-width: 450px) {
+	.search_container {
+		justify-content: center !important;
+	}
+	.button.primary.search {
+		// width: 79% !important;
+		margin-right: 5px !important;
+		width: 200px !important;
+	}
+	// .search_input {
+	// 	width: 100% !important;
+	// }
 }
 
 @media only screen and (max-width: 412px) {
