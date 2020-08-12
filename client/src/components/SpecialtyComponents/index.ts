@@ -8,4 +8,4 @@ export { default as Reviews } from './Reviews';
 export { default as Slideshow } from './Slideshow';
 export { default as RelatedProducts } from './RelatedProducts';
 export { default as SuggestedProducts } from './SuggestedProducts';
-// export { default as Slider } from './Slider';
+export { default as EmblaCarousel } from './EmblaCarousel';

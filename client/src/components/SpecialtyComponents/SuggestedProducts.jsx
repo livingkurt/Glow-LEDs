@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, detailsProduct } from '../../actions/productActions';
 import Product from './Product';
 import { Loading } from '../UtilityComponents';
+import EmblaCarousel from './EmblaCarousel';
 // import Slider from './Slider';
 
-const CartProducts = (props) => {
+const SuggestedProducts = (props) => {
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
@@ -40,24 +41,33 @@ const CartProducts = (props) => {
 				Suggested Products
 			</h1>
 			{/* <Slider /> */}
+
 			<Loading loading={loading} error={error}>
 				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
+					{/* <EmblaCarousel> */}
 					{products &&
 						products.map(
 							(item, index) =>
 								!item.hidden && (
+									// <div className="embla__slide" key={index}>
+									// 	<div className="embla__slide__inner">
+									// 		<div className="embla__slide__img">
 									<Product
 										key={index}
-										size="200px"
+										size="175px"
 										product={item}
 										styles={{ marginRight: 20, listStyleType: 'none' }}
 									/>
+									// 		</div>
+									// 	</div>
+									// </div>
 								)
 						)}
+					{/* </EmblaCarousel> */}
 				</FlexContainer>
 			</Loading>
 		</FlexContainer>
 	);
 };
 
-export default CartProducts;
+export default SuggestedProducts;

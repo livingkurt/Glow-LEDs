@@ -29,6 +29,9 @@
 	.sidebar {
 		display: none;
 	}
+	.embla {
+		width: 950px;
+	}
 }
 
 @media only screen and (max-width: 1177px) {
@@ -36,6 +39,16 @@
 		margin: 0 20px !important;
 		margin-top: 185px !important;
 	}
+	.embla {
+		width: 900px;
+	}
+	// .embla__button--prev {
+	// 	left: 27px;
+	// }
+
+	// .embla__button--next {
+	// 	right: 27px;
+	// }
 }
 
 @media only screen and (max-width: 1040px) {
@@ -110,7 +123,30 @@
 		margin: 10px;
 		margin-top: 0px;
 	}
+	.embla {
+		width: 800px;
+	}
+	.embla__slide {
+		min-width: 30%;
+	}
 }
+// @media only screen and (max-width: 950px) {
+// 	.embla {
+// 		width: 700px;
+// 	}
+// 	.embla__slide {
+// 		min-width: 35%;
+// 	}
+// }
+
+// @media only screen and (max-width: 950px) {
+// 	.embla {
+// 		width: 700px;
+// 	}
+// 	.embla__slide {
+// 		min-width: 35%;
+// 	}
+// }
 
 @media only screen and (max-width: 704px) {
 	h1 {
@@ -151,6 +187,9 @@
 	}
 	.profile_orders_container {
 		margin: 0;
+	}
+	.embla {
+		width: 700px;
 	}
 }
 
@@ -231,6 +270,14 @@
 	}
 	.nav_bar {
 		margin-left: 23px !important;
+	}
+	.about_pictures {
+		margin: 0px !important;
+		margin-bottom: 10px !important;
+	}
+	.about_names {
+		text-align: center !important;
+		justify-content: center !important;
 	}
 }
 

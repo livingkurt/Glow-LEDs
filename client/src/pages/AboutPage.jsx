@@ -15,15 +15,22 @@ const TermsPage = () => {
 							float: 'left',
 							margin: '0 25px 25px 0'
 						}}
+						className="about_pictures"
 					>
-						<h2 style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}>
+						<h2
+							className="about_names"
+							style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
+						>
 							Hi, My Name is Kurt!
 						</h2>
 						<img
 							style={{
 								// float: 'left',
-								height: '200px',
-								borderRadius: '15px'
+								// height: '200px',
+								borderRadius: '15px',
+								width: '100%',
+								height: 'auto',
+								maxWidth: '400px'
 							}}
 							src="/images/optimized_images/personal_images/IMG_8989_optimized.jpeg"
 						/>
@@ -39,12 +46,14 @@ const TermsPage = () => {
 					</p>
 
 					<div
+						className="about_pictures"
 						style={{
 							float: 'right',
 							margin: '0px 0px 25px 25px'
 						}}
 					>
 						<h2
+							className="about_names"
 							style={{
 								fontFamily: 'heading_font',
 								display: 'flex',
@@ -56,7 +65,12 @@ const TermsPage = () => {
 							Hi, My Name is Destanye!
 						</h2>
 						<img
-							style={{ height: '200px', borderRadius: '15px' }}
+							style={{
+								borderRadius: '15px',
+								width: '100%',
+								height: 'auto',
+								maxWidth: '400px'
+							}}
 							src="/images/optimized_images/personal_images/img_0345_optimized.jpg"
 						/>
 					</div>

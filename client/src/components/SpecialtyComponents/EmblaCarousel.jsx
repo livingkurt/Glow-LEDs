@@ -1,49 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { PrevButton, NextButton } from './EmblaCarouselButtons';
 import { useEmblaCarousel } from 'embla-carousel/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretRight, faCaretLeft } from '@fortawesome/free-solid-svg-icons';
+// import { mediaByIndex } from '../media';
+// import '../css/embla.css';
+
 const EmblaCarousel = ({ children }) => {
-	const [ EmblaCarouselReact, embla ] = useEmblaCarousel({ loop: false });
-	const [ refresh, setRefresh ] = useState(false);
-	useEffect(
+	const [ EmblaCarouselReact, embla ] = useEmblaCarousel({ loop: true });
+	const [ prevBtnEnabled, setPrevBtnEnabled ] = useState(false);
+	const [ nextBtnEnabled, setNextBtnEnabled ] = useState(false);
+
+	const scrollPrev = useCallback(() => embla && embla.scrollPrev(), [ embla ]);
+	const scrollNext = useCallback(() => embla && embla.scrollNext(), [ embla ]);
+	const onSelect = useCallback(
 		() => {
-			if (embla) {
-				// Embla API is ready
-			}
+			if (!embla) return;
+			setPrevBtnEnabled(embla.canScrollPrev());
+			setNextBtnEnabled(embla.canScrollNext());
 		},
 		[ embla ]
 	);
-	const prev = () => {
-		if (!embla) {
-			return;
-		}
-		if (embla.selectedScrollSnap() === -1) {
-			embla.reInit();
-		}
-		embla.scrollPrev();
-	};
-	const next = () => {
-		if (!embla) {
-			setRefresh(!refresh);
-			return;
-		}
-		if (embla.selectedScrollSnap() === -1) {
-			embla.reInit();
-		}
-		embla.scrollNext();
-	};
+
+	useEffect(
+		() => {
+			if (!embla) return;
+			embla.on('select', onSelect);
+			onSelect();
+		},
+		[ embla, onSelect ]
+	);
+
 	return (
-		<div className="flex space-between">
-			<FontAwesomeIcon onClick={prev} className="margin-auto-v font-size-3-0" icon={faCaretLeft} />
-			<EmblaCarouselReact>
-				<div style={{ display: 'flex' }}>
-					{children.map((child) => {
-						return child;
-					})}
-				</div>
+		<div className="embla">
+			<EmblaCarouselReact className="embla__viewport">
+				<div className="embla__container">{children}</div>
 			</EmblaCarouselReact>
-			<FontAwesomeIcon onClick={next} className="margin-auto-v font-size-3-0" icon={faCaretRight} />
+			<PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />
+			<NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
 		</div>
 	);
 };
+
 export default EmblaCarousel;
