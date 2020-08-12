@@ -8,7 +8,7 @@ require('dotenv');
 const router = express.Router();
 
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const users = await User.find({}).populate('user').sort({ createdAt: -1 });
+	const users = await User.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
 	res.send(users);
 });
 
@@ -23,12 +23,23 @@ router.get('/:id', isAuth, async (req, res) => {
 });
 
 router.delete('/:id', isAuth, async (req, res) => {
-	const user = await User.findOne({ _id: req.params.id });
-	if (user) {
-		const deletedUser = await user.remove();
-		res.send(deletedUser);
+	// const user = await User.findOne({ _id: req.params.id });
+	// if (user) {
+	// 	const deletedUser = await user.remove();
+	// 	res.send(deletedUser);
+	// } else {
+	// 	res.status(404).send('Order Not Found.');
+	// }
+	const user = await User.findById(req.params.id);
+	const updated_user = { ...user, deleted: true };
+	const message: any = { message: 'User Deleted' };
+	// const deleted_user = await updated_user.save();
+	const deleted_user = await User.updateOne({ _id: req.params.id }, { deleted: true });
+	if (deleted_user) {
+		// await deletedProduct.remove();
+		res.send(message);
 	} else {
-		res.status(404).send('Order Not Found.');
+		res.send('Error in Deletion.');
 	}
 });
 

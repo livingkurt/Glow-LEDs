@@ -9,11 +9,11 @@ const { isAuth, isAdmin } = require('../util');
 const router = express.Router();
 
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const orders = await Order.find({}).populate('user').sort({ createdAt: -1 });
+	const orders = await Order.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
 	res.send(orders);
 });
 router.get('/mine', isAuth, async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-	const orders = await Order.find({ user: req.user._id });
+	const orders = await Order.find({ deleted: false, user: req.user._id });
 	res.send(orders);
 });
 
@@ -47,12 +47,23 @@ router.delete(
 			status: (arg0: number) => { (): any; new (): any; send: { (arg0: string): void; new (): any } };
 		}
 	) => {
-		const order = await Order.findOne({ _id: req.params.id });
-		if (order) {
-			const deletedOrder = await order.remove();
-			res.send(deletedOrder);
+		// const order = await Order.findOne({ _id: req.params.id });
+		// if (order) {
+		// 	const deletedOrder = await order.remove();
+		// 	res.send(deletedOrder);
+		// } else {
+		// 	res.status(404).send('Order Not Found.');
+		// }
+		const order = await Order.findById(req.params.id);
+		const updated_order = { ...order, deleted: true };
+		const message: any = { message: 'Order Deleted' };
+		// const deleted_order = await updated_order.save();
+		const deleted_order = await Order.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_order) {
+			// await deletedProduct.remove();
+			res.send(message);
 		} else {
-			res.status(404).send('Order Not Found.');
+			res.send('Error in Deletion.');
 		}
 	}
 );
