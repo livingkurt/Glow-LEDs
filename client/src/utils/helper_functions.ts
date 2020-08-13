@@ -108,6 +108,58 @@ export const validate_registration = (data: {
 	};
 };
 
+export const validate_shipping = (data: {
+	first_name: any;
+	last_name: any;
+	address: any;
+	city: any;
+	state: any;
+	postalCode: any;
+	country: any;
+}) => {
+	let errors: any = {};
+	// Convert empty fields to an empty string so we can use validator functions
+	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
+	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
+	data.address = !isEmpty(data.address) ? data.address : '';
+	data.city = !isEmpty(data.city) ? data.city : '';
+	data.state = !isEmpty(data.state) ? data.state : '';
+	data.postalCode = !isEmpty(data.postalCode) ? data.postalCode : '';
+	data.country = !isEmpty(data.country) ? data.country : '';
+	// First Name checks
+	if (Validator.isEmpty(data.first_name)) {
+		errors.first_name = 'First Name field is required';
+	}
+	// Last Name checks
+	if (Validator.isEmpty(data.last_name)) {
+		errors.last_name = 'Last Name field is required';
+	}
+	// Address checks
+	if (Validator.isEmpty(data.address)) {
+		errors.address = 'Address field is required';
+	}
+	// City checks
+	if (Validator.isEmpty(data.city)) {
+		errors.city = 'City field is required';
+	}
+	// State checks
+	if (Validator.isEmpty(data.state)) {
+		errors.state = 'State field is required';
+	}
+	// Postal Code checks
+	if (Validator.isEmpty(data.postalCode)) {
+		errors.postalCode = 'Postal Code field is required';
+	}
+	// Country checks
+	if (Validator.isEmpty(data.country)) {
+		errors.country = 'Country field is required';
+	}
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	};
+};
+
 export const validate_contact = (data: {
 	first_name: any;
 	last_name: any;
