@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
@@ -8,13 +8,16 @@ const ShippingPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	const [ first_name, set_first_name ] = useState('');
-	const [ last_name, set_last_name ] = useState('');
-	const [ address, setAddress ] = useState('');
-	const [ city, setCity ] = useState('');
-	const [ state, setState ] = useState('');
-	const [ postalCode, setPostalCode ] = useState('');
-	const [ country, setCountry ] = useState('');
+	const cart = useSelector((state) => state.cart);
+	const { cartItems, shipping, payment } = cart;
+
+	const [ first_name, set_first_name ] = useState(!shipping.first_name ? '' : shipping.first_name);
+	const [ last_name, set_last_name ] = useState(!shipping.last_name ? '' : shipping.last_name);
+	const [ address, setAddress ] = useState(!shipping.address ? '' : shipping.address);
+	const [ city, setCity ] = useState(!shipping.city ? '' : shipping.city);
+	const [ state, setState ] = useState(!shipping.state ? '' : shipping.state);
+	const [ postalCode, setPostalCode ] = useState(!shipping.postalCode ? '' : shipping.postalCode);
+	const [ country, setCountry ] = useState(!shipping.country ? '' : shipping.country);
 
 	const [ first_name_validations, set_first_name_validations ] = useState('');
 	const [ last_name_validations, set_last_name_validations ] = useState('');
@@ -24,13 +27,6 @@ const ShippingPage = (props) => {
 	const [ postal_code_validations, set_postal_code_validations ] = useState('');
 	const [ country_validations, set_country_validations ] = useState('');
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-
-	//   return () => {
-
-	//   };
-	// }, []);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -75,6 +71,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="first_name">First Name</label>
 							<input
 								type="text"
+								value={first_name}
 								name="first_name"
 								id="first_name"
 								onChange={(e) => set_first_name(e.target.value)}
@@ -87,6 +84,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="last_name">Last Name</label>
 							<input
 								type="text"
+								value={last_name}
 								name="last_name"
 								id="last_name"
 								onChange={(e) => set_last_name(e.target.value)}
@@ -99,6 +97,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="address">Address</label>
 							<input
 								type="text"
+								value={address}
 								name="address"
 								id="address"
 								onChange={(e) => setAddress(e.target.value)}
@@ -109,14 +108,26 @@ const ShippingPage = (props) => {
 						</label>
 						<li>
 							<label htmlFor="city">City</label>
-							<input type="text" name="city" id="city" onChange={(e) => setCity(e.target.value)} />
+							<input
+								type="text"
+								value={city}
+								name="city"
+								id="city"
+								onChange={(e) => setCity(e.target.value)}
+							/>
 						</li>
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{city_validations}
 						</label>
 						<li>
 							<label htmlFor="state">State</label>
-							<input type="text" name="state" id="state" onChange={(e) => setState(e.target.value)} />
+							<input
+								type="text"
+								value={state}
+								name="state"
+								id="state"
+								onChange={(e) => setState(e.target.value)}
+							/>
 						</li>
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{state_validations}
@@ -125,6 +136,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="postalCode">Postal Code</label>
 							<input
 								type="text"
+								value={postalCode}
 								name="postalCode"
 								id="postalCode"
 								onChange={(e) => setPostalCode(e.target.value)}
@@ -137,6 +149,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="country">Country</label>
 							<input
 								type="text"
+								value={country}
 								name="country"
 								id="country"
 								onChange={(e) => setCountry(e.target.value)}

@@ -91,6 +91,7 @@ const saveShipping = (data: {
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
 };
+
 const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_PAYMENT, payload: data });
 };

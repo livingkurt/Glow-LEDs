@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { savePayment } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 import { validate_payment } from '../utils/helper_functions';
 
 const PaymentPage = (props) => {
-	const [ paymentMethod, setPaymentMethod ] = useState('');
+	const cart = useSelector((state) => state.cart);
+	const { cartItems, shipping, payment } = cart;
+	console.log({ payment });
+
+	const [ paymentMethod, setPaymentMethod ] = useState(!payment.paymentMethod ? '' : payment.paymentMethod);
+	console.log({ paymentMethod });
 
 	const [ payment_method_validations, set_payment_method_validations ] = useState('');
 
@@ -37,7 +42,9 @@ const PaymentPage = (props) => {
 									type="radio"
 									name="paymentMethod"
 									id="paymentMethod"
+									defaultChecked={payment.paymentMethod === 'paypal'}
 									defaultValue="paypal"
+									value={payment.paymentMethod}
 									onChange={(e) => setPaymentMethod(e.target.value)}
 								/>
 								<label htmlFor="paymentMethod">Paypal</label>

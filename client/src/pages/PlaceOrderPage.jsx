@@ -8,10 +8,9 @@ import { CheckoutSteps } from '../components/SpecialtyComponents';
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
+	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { loading, success, error, order } = orderCreate;
-
-	const { cartItems, shipping, payment } = cart;
 
 	if (!shipping.address) {
 		props.history.push('/shipping');
