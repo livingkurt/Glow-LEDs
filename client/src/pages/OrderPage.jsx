@@ -158,7 +158,7 @@ const OrderPage = (props) => {
 				<div className="placeorder-info">
 					<div>
 						<FlexContainer h_between wrap>
-							<FlexContainer column>
+							<FlexContainer column styles={{ width: '100%' }}>
 								<h1>Shipping</h1>
 								<div>
 									<div>
@@ -170,18 +170,27 @@ const OrderPage = (props) => {
 										{order.shipping.country}
 									</div>
 									<div>{order.shipping.email}</div>
+									<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
+										<p style={{ marginBottom: '0px' }}>
+											{shipping_state ? (
+												'Shipped at ' + format_date_display(order_state.shippedAt)
+											) : (
+												'Not Shipped'
+											)}
+										</p>
+									</div>
 								</div>
 							</FlexContainer>
-							<FlexContainer column styles={{ marginTop: 'auto', width: '373px' }} class="ship_deliver">
+							<FlexContainer wrap h_between styles={{ width: '100%' }} className="ship_deliver">
 								<FlexContainer row v_i_center h_between>
 									{console.log({ shipping_state })}
-									<label style={{ marginTop: '5px' }}>
+									{/* <label style={{ marginTop: '5px' }}>
 										{shipping_state ? (
 											'Shipped at ' + format_date_display(order_state.shippedAt)
 										) : (
 											'Not Shipped'
 										)}
-									</label>
+									</label> */}
 									{props.userInfo &&
 									props.userInfo.isAdmin && (
 										<div>
@@ -193,20 +202,20 @@ const OrderPage = (props) => {
 								</FlexContainer>
 								<FlexContainer row v_i_center h_between>
 									{console.log({ delivery_state })}
-									<label style={{ marginTop: '5px' }}>
+									{/* <label style={{ marginTop: '5px' }}>
 										{delivery_state ? (
 											'Delivered at ' + format_date_display(order_state.deliveredAt)
 										) : (
 											'Not Delivered'
 										)}
-									</label>
+									</label> */}
 									{props.userInfo &&
 									props.userInfo.isAdmin && (
-										<div>
+										<FlexContainer h_right>
 											<button className="button primary" onClick={update_delivered_state}>
 												{delivery_state ? 'Mark As Not Delivered' : 'Mark As Delivered'}
 											</button>
-										</div>
+										</FlexContainer>
 									)}
 								</FlexContainer>
 							</FlexContainer>
@@ -215,7 +224,12 @@ const OrderPage = (props) => {
 					<div>
 						<h1>Payment</h1>
 						<div>Payment Method: {order.payment.paymentMethod}</div>
-						<div>{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}</div>
+						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
+							<p style={{ marginBottom: '0px' }}>
+								{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}
+							</p>
+						</div>
+						{/* <div>{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}</div> */}
 					</div>
 					<div>
 						<ul style={{ marginTop: 0 }} className="cart-list-container">

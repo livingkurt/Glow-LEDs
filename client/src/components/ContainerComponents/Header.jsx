@@ -53,7 +53,7 @@ const Header = (props) => {
 
 	return (
 		<header id="overlay">
-			<div className="menu_button" style={{ width: '230px' }}>
+			<div className="menu_button" style={{ width: '233px' }}>
 				<Link to="/">
 					<img
 						className="zoom logo"
@@ -144,7 +144,7 @@ const Header = (props) => {
 					</div>
 				</FlexContainer>
 			</FlexContainer>
-			<FlexContainer class="nav_bar" styles={{ width: '230px', justifyContent: 'flex-end' }}>
+			<FlexContainer class="nav_bar" styles={{ width: '233px', justifyContent: 'flex-end' }}>
 				<Link to="/cart">
 					<button className=" button nav cart_text">
 						Cart <i className="fas fa-shopping-cart" />{' '}
