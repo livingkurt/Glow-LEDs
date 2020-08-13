@@ -63,8 +63,9 @@ const OrdersPage = (props) => {
 									<th>USER</th>
 									<th>PAID</th>
 									<th>PAID AT</th>
-									<th>SHIPPED AT</th>
-									<th>SHIPPED AT</th>
+									<th>SHIPPED</th>
+									<th>SHIPPED On</th>
+									<th>DELIVERED</th>
 									<th>ACTIONS</th>
 								</tr>
 							</thead>
@@ -91,6 +92,13 @@ const OrdersPage = (props) => {
 											)}
 										</td>
 										<td>{!order.shippedAt ? '' : format_date_display(order.shippedAt)}</td>
+										<td>
+											{order.isDelivered ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
 										<td>
 											<FlexContainer h_between>
 												<Link to={'/order/' + order._id}>
