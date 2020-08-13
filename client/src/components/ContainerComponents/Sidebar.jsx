@@ -146,23 +146,23 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Gloving</button>
 					<ul className="sidebar_dropdown_container">
-						<Link to="/category/Domes">
+						<Link to="/category/domes">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Domes
 							</button>
 						</Link>
-						<Link to="/category/Caps">
+						<Link to="/category/caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Caps
 							</button>
 						</Link>
-						<Link to="/category/DiffuserAdapters">
+						<Link to="/category/diffuser_adapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
 								Diffuser Adapters
 							</button>
 						</Link>
-						<Link to="/category/Accessories">
+						<Link to="/category/accessories">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
 								Accessories
@@ -174,12 +174,12 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Decor</button>
 					<ul className="sidebar_dropdown_container">
-						<Link to="/category/StringLights">
+						<Link to="/category/string_lights">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								String Lights
 							</button>
 						</Link>
-						<Link to="/category/Infinity">
+						<Link to="/category/infinity_mirrors">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Infinity Mirrors
 							</button>

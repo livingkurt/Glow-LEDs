@@ -96,16 +96,16 @@ const Header = (props) => {
 						<button className="button nav">Gloving</button>
 						{/* </Link> */}
 						<ul style={{ width: 210 }} className="dropdown-nav-content hover_fade_in">
-							<Link to="/category/Domes">
+							<Link to="/category/domes">
 								<button className="button nav">Domes</button>
 							</Link>
-							<Link to="/category/Caps">
+							<Link to="/category/caps">
 								<button className="button nav">Caps</button>
 							</Link>
-							<Link to="/category/DiffuserAdapters">
+							<Link to="/category/diffuser_adapters">
 								<button className="button nav"> Diffuser Adapters</button>
 							</Link>
-							<Link to="/category/Accessories">
+							<Link to="/category/accessories">
 								<button className="button nav">Accessories</button>
 							</Link>
 						</ul>
@@ -115,10 +115,10 @@ const Header = (props) => {
 						<button className="button nav">Decor</button>
 						{/* </Link> */}
 						<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
-							<Link to="/category/StringLights">
+							<Link to="/category/string_lights">
 								<button className="button nav">String Lights</button>
 							</Link>
-							<Link to="/category/Infinity">
+							<Link to="/category/infinity_mirrors">
 								<button className="button nav"> Infinity Mirrors</button>
 							</Link>
 						</ul>

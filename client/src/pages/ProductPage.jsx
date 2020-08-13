@@ -228,7 +228,7 @@ const ProductPage = (props) => {
 								alt="loading"
 							/>
 						</FlexContainer> */}
-							{/* {product.category === 'Caps' && (
+							{/* {product.category === 'caps' && (
 								// <h1 style={{ marginBottom: '10px', textAlign: 'center' }}>Patent Pending</h1>
 								<img
 									src="/images/optimized_images/logo_images/patent_pending.png"

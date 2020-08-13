@@ -5,6 +5,7 @@ import { listProducts } from '../actions/productActions';
 import { Product, Search, Sort } from '../components/SpecialtyComponents/index';
 import { FlexContainer } from '../components/ContainerComponents/index';
 import { Loading } from '../components/UtilityComponents';
+import { humanize } from '../utils/helper_functions';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
@@ -21,7 +22,11 @@ const AllProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			if ([ 'Caps', 'Infinity', 'Accessories', 'Domes', 'DiffuserAdapters', 'StringLights' ].includes(category)) {
+			if (
+				[ 'caps', 'infinity_mirrors', 'accessories', 'domes', 'diffuser_adapters', 'string_lights' ].includes(
+					category
+				)
+			) {
 				dispatch(listProducts(category));
 			} else {
 				history.push('/allproducts');
@@ -51,7 +56,7 @@ const AllProductsPage = (props) => {
 	return (
 		<div>
 			<FlexContainer h_center>
-				<h1>{category || 'All Products'}</h1>
+				<h1>{humanize(category) || 'All Products'}</h1>
 			</FlexContainer>
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />

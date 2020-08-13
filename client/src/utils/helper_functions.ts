@@ -7,6 +7,15 @@ interface errors {
 	password: string;
 }
 
+export const humanize = (str: string) => {
+	var i,
+		frags = str.split('_');
+	for (i = 0; i < frags.length; i++) {
+		frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+	}
+	return frags.join(' ');
+};
+
 export const format_date_display = (unformatted_date: string | number | Date) => {
 	const date = new Date(unformatted_date);
 	const day = date.getDate();

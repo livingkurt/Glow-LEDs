@@ -108,7 +108,7 @@ const HomePage = (props) => {
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/category/StringLights">
+					<Link to="/category/string_lights">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop String Lights</h2>
 						</button>
