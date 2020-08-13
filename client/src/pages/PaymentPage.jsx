@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { savePayment } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
+import { validate_payment } from '../utils/helper_functions';
 
 const PaymentPage = (props) => {
 	const [ paymentMethod, setPaymentMethod ] = useState('');
+
+	const [ payment_method_validations, set_payment_method_validations ] = useState('');
 
 	const dispatch = useDispatch();
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(savePayment({ paymentMethod }));
-		props.history.push('placeorder');
+		const data = { paymentMethod };
+		const request = validate_payment(data);
+		set_payment_method_validations(request.errors.paymentMethod);
+		if (request.isValid) {
+			dispatch(savePayment({ paymentMethod }));
+			props.history.push('placeorder');
+		}
 	};
 	return (
 		<div>
@@ -34,6 +42,9 @@ const PaymentPage = (props) => {
 								/>
 								<label htmlFor="paymentMethod">Paypal</label>
 							</div>
+							<label className="validation_text" style={{ marginTop: '1rem', justifyContent: 'center' }}>
+								{payment_method_validations}
+							</label>
 						</li>
 
 						<li>

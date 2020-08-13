@@ -159,6 +159,20 @@ export const validate_shipping = (data: {
 		isValid: isEmpty(errors)
 	};
 };
+export const validate_payment = (data: { paymentMethod: any }) => {
+	let errors: any = {};
+	// Convert empty fields to an empty string so we can use validator functions
+	data.paymentMethod = !isEmpty(data.paymentMethod) ? data.paymentMethod : '';
+	// First Name checks
+	if (Validator.isEmpty(data.paymentMethod)) {
+		errors.paymentMethod = 'Payment Method is required';
+	}
+
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	};
+};
 
 export const validate_contact = (data: {
 	first_name: any;

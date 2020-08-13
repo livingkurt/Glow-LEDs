@@ -25,6 +25,13 @@ const ShippingPage = (props) => {
 	const [ country_validations, set_country_validations ] = useState('');
 	const dispatch = useDispatch();
 
+	// useEffect(() => {
+
+	//   return () => {
+
+	//   };
+	// }, []);
+
 	const submitHandler = (e) => {
 		e.preventDefault();
 		const data = { first_name, last_name, address, city, state, postalCode, country };
@@ -73,7 +80,7 @@ const ShippingPage = (props) => {
 								onChange={(e) => set_first_name(e.target.value)}
 							/>
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{first_name_validations}
 						</label>
 						<li>
@@ -85,7 +92,7 @@ const ShippingPage = (props) => {
 								onChange={(e) => set_last_name(e.target.value)}
 							/>
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{last_name_validations}
 						</label>
 						<li>
@@ -97,21 +104,21 @@ const ShippingPage = (props) => {
 								onChange={(e) => setAddress(e.target.value)}
 							/>
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{address_validations}
 						</label>
 						<li>
 							<label htmlFor="city">City</label>
 							<input type="text" name="city" id="city" onChange={(e) => setCity(e.target.value)} />
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{city_validations}
 						</label>
 						<li>
 							<label htmlFor="state">State</label>
 							<input type="text" name="state" id="state" onChange={(e) => setState(e.target.value)} />
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{state_validations}
 						</label>
 						<li>
@@ -123,7 +130,7 @@ const ShippingPage = (props) => {
 								onChange={(e) => setPostalCode(e.target.value)}
 							/>
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{postal_code_validations}
 						</label>
 						<li>
@@ -135,7 +142,7 @@ const ShippingPage = (props) => {
 								onChange={(e) => setCountry(e.target.value)}
 							/>
 						</li>
-						<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{country_validations}
 						</label>
 
