@@ -5,6 +5,10 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../components/UtilityComponents';
 
+const colors = {
+	hidden: '#333333'
+};
+
 const ProductsPage = (props) => {
 	const productList = useSelector((state) => state.productList);
 	const { loading, products, error } = productList;
@@ -64,13 +68,24 @@ const ProductsPage = (props) => {
 	};
 	return (
 		<div class="main_container">
-			<FlexContainer>
-				<h1 style={{ textAlign: 'center', marginRight: 'auto' }}>Products</h1>
+			<FlexContainer wrap h_between>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Hidden</label>
+					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
 				<Link to="/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
 					</button>
 				</Link>
+			</FlexContainer>
+			<FlexContainer h_center>
+				<h1 style={{ textAlign: 'center' }}>Products</h1>
+				{/* <Link to="/editproduct">
+					<button className="button primary" style={{ width: '160px' }}>
+						Create Product
+					</button>
+				</Link> */}
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{products && (
@@ -89,7 +104,10 @@ const ProductsPage = (props) => {
 							</thead>
 							<tbody>
 								{products.map((product) => (
-									<tr key={product._id} style={{ backgroundColor: '#626262' }}>
+									<tr
+										key={product._id}
+										style={{ backgroundColor: product.hidden ? colors.hidden : '#626262' }}
+									>
 										<td>{product._id}</td>
 										<td>
 											{product.hidden ? (
