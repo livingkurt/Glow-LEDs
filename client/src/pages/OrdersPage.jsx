@@ -37,6 +37,13 @@ const OrdersPage = (props) => {
 	const deleteHandler = (order) => {
 		dispatch(deleteOrder(order._id));
 	};
+
+	const colors = {
+		not_paid: '#333333',
+		shipped: '#8e8e8e',
+		not_shipped: '#626262'
+	};
+
 	return (
 		<div class="main_container">
 			<div className="order-header">
@@ -71,7 +78,19 @@ const OrdersPage = (props) => {
 							</thead>
 							<tbody>
 								{orders.map((order) => (
-									<tr key={order._id}>
+									<tr
+										key={order._id}
+										// style={{
+										// 	backgroundColor: !order.isPaid
+										// 		? colors.note_paid
+										// 		: !order.isShipped ? colors.not_shipped : '#626262'
+										// }}
+										style={{
+											backgroundColor: !order.isPaid
+												? colors.not_paid
+												: !order.isShipped ? colors.not_shipped : colors.shipped
+										}}
+									>
 										<td>{order._id}</td>
 										<td>{format_date_display(order.createdAt)}</td>
 										<td>${order.totalPrice.toFixed(2)}</td>
