@@ -151,7 +151,7 @@ const Sidebar = (props) => {
 								Domes
 							</button>
 						</Link>
-						<Link to="/category/caps">
+						<Link to="/category/diffuser_caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Caps
 							</button>
