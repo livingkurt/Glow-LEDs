@@ -59,8 +59,28 @@ const UsersPage = (props) => {
 	// 	[ sortOrder ]
 	// );
 
+	const colors = {
+		not_verified: '#333333',
+		verifid: '#8e8e8e',
+		admin: '#626262'
+	};
+
 	return (
 		<div class="main_container">
+			<FlexContainer h_between wrap>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
+					<label style={{ marginRight: '1rem' }}>Not Verfied</label>
+					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
+					<label style={{ marginRight: '1rem' }}>Verified</label>
+					<div style={{ backgroundColor: '#8e8e8e', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
+					<label style={{ marginRight: '1rem' }}>Admin</label>
+					<div style={{ backgroundColor: '#626262', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+			</FlexContainer>
 			<div className="order-header">
 				<h1
 					style={{
@@ -73,6 +93,7 @@ const UsersPage = (props) => {
 					Users
 				</h1>
 			</div>
+
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
 				{/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} /> */}
 				{/* <Sort sortHandler={sortHandler} /> */}
@@ -95,7 +116,14 @@ const UsersPage = (props) => {
 							</thead>
 							<tbody>
 								{users.map((user) => (
-									<tr key={user._id}>
+									<tr
+										key={user._id}
+										style={{
+											backgroundColor: user.isAdmin
+												? colors.admin
+												: user.isVerified ? colors.verifid : colors.not_verified
+										}}
+									>
 										<td>{user._id}</td>
 										<td>{format_date_display(user.createdAt)}</td>
 										<td>{user.first_name}</td>

@@ -89,7 +89,7 @@ const ProductsPage = (props) => {
 							</thead>
 							<tbody>
 								{products.map((product) => (
-									<tr key={product._id}>
+									<tr key={product._id} style={{ backgroundColor: '#626262' }}>
 										<td>{product._id}</td>
 										<td>
 											{product.hidden ? (
