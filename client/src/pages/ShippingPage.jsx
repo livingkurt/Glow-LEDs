@@ -11,13 +11,30 @@ const ShippingPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
 
-	const [ first_name, set_first_name ] = useState(!shipping.first_name ? '' : shipping.first_name);
-	const [ last_name, set_last_name ] = useState(!shipping.last_name ? '' : shipping.last_name);
-	const [ address, setAddress ] = useState(!shipping.address ? '' : shipping.address);
-	const [ city, setCity ] = useState(!shipping.city ? '' : shipping.city);
-	const [ state, setState ] = useState(!shipping.state ? '' : shipping.state);
-	const [ postalCode, setPostalCode ] = useState(!shipping.postalCode ? '' : shipping.postalCode);
-	const [ country, setCountry ] = useState(!shipping.country ? '' : shipping.country);
+	const [ first_name, set_first_name ] = useState('');
+	const [ last_name, set_last_name ] = useState('');
+	const [ address, setAddress ] = useState('');
+	const [ city, setCity ] = useState('');
+	const [ state, setState ] = useState('');
+	const [ postalCode, setPostalCode ] = useState('');
+	const [ country, setCountry ] = useState('');
+
+	useEffect(
+		() => {
+			if (shipping) {
+				set_first_name(shipping.first_name);
+				set_last_name(shipping.last_name);
+				setAddress(shipping.address);
+				setCity(shipping.city);
+				setState(shipping.state);
+				setPostalCode(shipping.postalCode);
+				setCountry(shipping.country);
+			}
+
+			return () => {};
+		},
+		[ shipping ]
+	);
 
 	const [ first_name_validations, set_first_name_validations ] = useState('');
 	const [ last_name_validations, set_last_name_validations ] = useState('');
