@@ -24,11 +24,30 @@ const UserOrderPage = (props) => {
 		[ userInfo ]
 	);
 
+	const colors = {
+		not_paid: '#333333',
+		shipped: '#8e8e8e',
+		paid: '#626262'
+	};
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
-			<Link to="/profile">
-				<button className="button primary">Back to Profile</button>
-			</Link>
+			<FlexContainer wrap h_between>
+				<Link to="/profile">
+					<button className="button primary">Back to Profile</button>
+				</Link>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Not Paid</label>
+					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Paid</label>
+					<div style={{ backgroundColor: '#626262', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Shipped</label>
+					<div style={{ backgroundColor: '#8e8e8e', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+			</FlexContainer>
 			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto', width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
@@ -43,17 +62,32 @@ const UserOrderPage = (props) => {
 										<th>DATE</th>
 										<th>TOTAL</th>
 										<th>PAID</th>
+										<th>SHIPPED</th>
 										<th>ACTIONS</th>
 									</tr>
 								</thead>
 								<tbody>
 									{orders.map((order) => (
-										<tr key={order._id}>
+										<tr
+											key={order._id}
+											style={{
+												backgroundColor: !order.isPaid
+													? colors.not_paid
+													: !order.isShipped ? colors.paid : colors.shipped
+											}}
+										>
 											<td>{order._id}</td>
 											<td>{format_date_display(order.createdAt)}</td>
 											<td>${order.totalPrice.toFixed(2)}</td>
 											<td>
 												{order.isPaid ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td>
+												{order.isShipped ? (
 													<i className="fas fa-check-circle" />
 												) : (
 													<i className="fas fa-times-circle" />

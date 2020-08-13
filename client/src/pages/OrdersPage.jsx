@@ -41,11 +41,25 @@ const OrdersPage = (props) => {
 	const colors = {
 		not_paid: '#333333',
 		shipped: '#8e8e8e',
-		not_shipped: '#626262'
+		paid: '#626262'
 	};
 
 	return (
 		<div class="main_container">
+			<FlexContainer h_between wrap>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Not Paid</label>
+					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Paid</label>
+					<div style={{ backgroundColor: '#626262', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+					<label style={{ marginRight: '1rem' }}>Shipped</label>
+					<div style={{ backgroundColor: '#8e8e8e', height: '20px', width: '60px', borderRadius: '5px' }} />
+				</FlexContainer>
+			</FlexContainer>
 			<div className="order-header">
 				<h1
 					style={{
@@ -83,12 +97,12 @@ const OrdersPage = (props) => {
 										// style={{
 										// 	backgroundColor: !order.isPaid
 										// 		? colors.note_paid
-										// 		: !order.isShipped ? colors.not_shipped : '#626262'
+										// 		: !order.isShipped ? colors.paid : '#626262'
 										// }}
 										style={{
 											backgroundColor: !order.isPaid
 												? colors.not_paid
-												: !order.isShipped ? colors.not_shipped : colors.shipped
+												: !order.isShipped ? colors.paid : colors.shipped
 										}}
 									>
 										<td>{order._id}</td>
