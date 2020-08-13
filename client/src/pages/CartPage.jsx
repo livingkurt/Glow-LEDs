@@ -81,7 +81,7 @@ const CartPage = (props) => {
 															</option>
 														))}
 													</select>
-													<i className="fas fa-sort-up icon_styles" />
+													{/* <i className="fas fa-sort-up icon_styles" /> */}
 												</div>
 											</FlexContainer>
 										</div>

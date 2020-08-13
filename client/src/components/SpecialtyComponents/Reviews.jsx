@@ -129,7 +129,7 @@ const Review = (props) => {
 											<option value="2">2 - Fair</option>
 											<option value="1">1 - Poor</option>
 										</select>
-										<i className="fas fa-sort-up review_icon_styles" />
+										{/* <i className="fas fa-sort-up review_icon_styles" /> */}
 									</div>
 								</FlexContainer>
 							</li>
