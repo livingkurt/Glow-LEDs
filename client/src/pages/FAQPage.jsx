@@ -12,16 +12,6 @@ const FAQPage = () => {
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
 					<h2 style={{ clear: 'both', textAlign: 'center' }}>Using Diffuser Adapters and Caps</h2>
-					{/* <img
-						style={{
-							float: 'left',
-							height: '200px',
-							borderRadius: '15px',
-							margin: '0px 25px 25px 0'
-						}}
-						src="/images/optimized_images/about_me_images/2_img_9862_optimized.jpg"
-					/> */}
-
 					<FlexContainer h_center styles={{ position: 'relative' }}>
 						<div className="iframe-container">
 							<iframe
@@ -108,20 +98,38 @@ const FAQPage = () => {
 						<li style={{ lineHeight: '25px' }}>
 							If a custom order is placed, processing times will be discussed during consultation.
 						</li>
+						<li style={{ lineHeight: '25px' }}>
+							If the address on your order is incorrect, please contact us immediately at
+							info.glowleds@gmail.com
+						</li>
 					</ul>
+					<Link to="/contact">
+						<FlexContainer h_center>
+							<button className="button primary " style={{ margin: 'auto' }}>
+								Contact
+							</button>
+						</FlexContainer>
+					</Link>
 					<h2 style={{ fontSize: 30, textAlign: 'center' }}>Returns/Cancellations</h2>
 					<ul style={{ padding: '18px' }}>
 						<li style={{ lineHeight: '25px' }}>
-							Your satisfaction is our priority! We accept returns within 14 days of delivery.
+							100% satisfaction guarantee. We accept returns within 14 days of delivery.
 						</li>
-						<li style={{ lineHeight: '25px' }}>
+						{/* <li style={{ lineHeight: '25px' }}>
 							To initiate a return please contact info.glowleds@gmail.com and You will be supplied with an
 							address to send your product.
+						</li> */}
+						<li style={{ lineHeight: '25px' }}>
+							To initiate a return please contact info.glowleds@gmail.com and You will be supplied with a
+							prepaid shipping label to send back your product.
 						</li>
 						<li style={{ lineHeight: '25px' }}>
-							Please put your full name and order number in the return shipment and you will be refunded.
+							Please include your full name and order number in the return shipment and you will be
+							refunded the full amount minus shipping.
 						</li>
-						<li style={{ lineHeight: '25px' }}>We do not refund shipping costs.</li>
+						{/* <li style={{ lineHeight: '25px' }}>
+							You will be refunded your full amount and you'll only be resonsible for return shipping.
+						</li> */}
 						<li style={{ lineHeight: '25px' }}>Custom items are non-refundable.</li>
 						<li style={{ lineHeight: '25px' }}>Refunds are returned to the original form of payment.</li>
 						<li style={{ lineHeight: '25px' }}>
@@ -130,15 +138,24 @@ const FAQPage = () => {
 						<li style={{ lineHeight: '25px' }}>
 							If item arrives damamged in any way please contact us immediately at info.glowleds@gmail.com
 						</li>
-						<li style={{ lineHeight: '25px' }}>
+						{/* <li style={{ lineHeight: '25px' }}>
 							Reviewing your order in the Shopping Cart carefully prior to checkout is highly recommended.
 							Our online orders process immediately to ensure our clients receive their products as soon
 							as possible. As a result, we are unable to cancel or modify your order once submitted.
-						</li>
-
+						</li> */}
+						{/* <li style={{ lineHeight: '25px' }}>
+							Our online orders process immediately to ensure our clients receive their products as soon
+							as possible. As a result, you must contact us about your cancelation or modififcation within
+							one hour of your order once submitted.
+						</li> */}
 						<li style={{ lineHeight: '25px' }}>
-							If the address on your order is incorrect, please contact us at info.glowleds@gmail.com
-							immediately.
+							Our online orders process immediately to ensure our clients receive their products as soon
+							as possible. If you would like to cancel your order you must contact us within one hour of
+							payment.
+						</li>
+						<li style={{ lineHeight: '25px' }}>
+							We are not able to modify orders. If you would like to add an item you will need to do so in
+							another order.
 						</li>
 						<Link to="/contact">
 							<FlexContainer h_center>
