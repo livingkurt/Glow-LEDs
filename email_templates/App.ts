@@ -17,8 +17,7 @@ export default (body: any, styles: any) => {
   <meta property="og:description" content="3D Printed LED toys, by a glover that wants the world to stay lit">
   <meta property="og:url" content="http://www.glow-leds.com">
   <meta property="og:site_name" content="LED Gloves">
-  <meta property="og:image"
-    content="http://www.glow-leds.com/images/glow_leds_link_logo_optimized.png">
+  <meta property="og:image" content="http://www.glow-leds.com/images/glow_leds_link_logo_optimized.png">
   <meta property="og:image:secure_url"
     content="http://www.glow-leds.comhttp://www.glow-leds.com/images/glow_leds_link_logo_optimized.png">
   <meta property="og:image:width" content="1080">
@@ -27,8 +26,7 @@ export default (body: any, styles: any) => {
   <meta name="twitter:description" content="3D Printed LED toys, by a glover that wants the world to stay lit">
   <meta name="twitter:title" content="Glow LEDs | Diffusers | Accessories | Glow-LEDS.com">
   <meta name="twitter:site" content="@glowleds">
-  <meta name="twitter:image"
-    content="http://www.glow-leds.com/images/glow_leds_link_logo_optimized.png">
+  <meta name="twitter:image" content="http://www.glow-leds.com/images/glow_leds_link_logo_optimized.png">
   <meta name="twitter:creator" content="@glowleds">
   <meta property="DC.date.issued" content="2015-04-28T07:34:45+00:00">
   <link rel="shortlink" href="http://www.glow-leds.com">
@@ -42,36 +40,37 @@ export default (body: any, styles: any) => {
   <link rel="manifest" href="/manifest.json">
   <title>Glow LEDs</title>
   <link href="/static/css/main.a02bf091.chunk.css" rel="stylesheet">
-  <link href="styles.css" rel="stylesheet">
-  <style>
-    ${styles}
-  </style>
+  <!-- <link href="styles.css" rel="stylesheet"> -->
+
 </head>
 
-<body data-gr-c-s-loaded="true" style="height: 100%; overflow-y: scroll;">
-  <div id="root" style="height: 100%;">
-    <div class="fade_in" style="height: 100%;">
-      <header id="overlay"
-        style="grid-area: header / header / header / header; background-color: rgb(51, 51, 51); color: rgb(255, 255, 255); display: flex; align-items: center; padding: 15px; list-style-type: none; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px; flex-direction: column;">
-        <div class="brand"><a href="/"><img class="zoom logo" height="125px"
-              src="https://glow-leds-dev.herokuapp.com/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"></a><button
-            class="button_symbol mobile_buttons" style="display: none; font-size: 30px; height: 50px; width: 50px;"><i
-              cl ass="fas fa-bars" aria-hidden="true"></i></button></div>
-        <div style="display: flex; justify-content: center; margin: 0px auto; flex-direction: column;">
-          <div class="logo_text" style="display: flex; justify-content: center; margin: 0px auto; align-items: center;">
-            <a href="/"><img class="logo_2" src="https://glow-leds-dev.herokuapp.com/images/optimized_images/logo_images/glow_logo_optimized.png" alt="Glow LEDs"
-                style="display: none; height: 80px;"></a><a href="/">
-              <h1 class="glow_leds_text"
-                style="display: flex; font-family: Helvetica; font-size: 67px; margin: 17px 0px 10px; text-align: center; justify-content: center; width: 100%;">
-                Glow LEDs</h1>
-            </a></div>
-        </div>
-      </header>
-      <div class="content"
-      style="width: 75%; margin: 30px auto; grid-area: main / main / main / main; background: linear-gradient(rgb(138, 138, 138) 0%, rgb(39, 39, 39) 100%); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px; border-radius: 20px; padding: 2rem; min-height: 81vh; ">
-      <div>
+<body data-gr-c-s-loaded="true" style="font-family: Helvetica;background-color: #333333;color: white; margin: 0px;">
+  <header id="overlay"
+    style="background-color: rgb(51, 51, 51);color: rgb(255, 255, 255);display: flex;align-items: center;padding: 15px;list-style-type: none;flex-direction: column;box-sizing: border-box;z-index: 999;">
+    <div class="brand" style="box-sizing: border-box;"><a href="/"
+        style="box-sizing: border-box;text-decoration: none;color: white;"><img class="zoom logo"
+          src="https://glow-leds-dev.herokuapp.com/images/optimized_images/logo_images/glow_logo_optimized.png"
+          alt="Glow LEDs"
+          style="height: 90px;width: 100px;box-sizing: border-box; margin: 0px;"></a><button
+        class="button_symbol mobile_buttons"
+        style="display: none;font-size: 30px;height: 50px;width: 50px;box-sizing: border-box;"><i cl ass="fas fa-bars"
+          aria-hidden="true" style="box-sizing: border-box;"></i></button></div>
+    <div style="display: flex;justify-content: center;margin: 0px auto;flex-direction: column;box-sizing: border-box;">
+      <div class="logo_text"
+        style="display: flex;justify-content: center;margin: 0px auto;align-items: center;box-sizing: border-box;">
+        <a href="/" style="box-sizing: border-box;text-decoration: none;color: white;"><img class="logo_2"
+            src="https://glow-leds-dev.herokuapp.com/images/optimized_images/logo_images/glow_logo_optimized.png"
+            alt="Glow LEDs" style="display: none;height: 80px; width: 80px;box-sizing: border-box;"></a><a href="/"
+          style="box-sizing: border-box;text-decoration: none;color: white;">
+          <h1 class="glow_leds_text"
+            style="display: flex;font-family: Helvetica;font-size: 50px;margin: 17px 0px 10px;text-align: center;justify-content: center;width: 100%;box-sizing: border-box;margin-bottom: 10px;margin-top: 17px;">
+            Glow LEDs</h1>
+        </a></div>
+    </div>
+  </header>
+  <div class="content" style="box-sizing: border-box;background-color: #333333;">
         ${body}
-        </div>
+    </div>
   </body>
   
   </html>

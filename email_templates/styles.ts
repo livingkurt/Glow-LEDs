@@ -261,9 +261,10 @@ export default () => {
   }
   
   .cart-price {
-    flex: 1 1;
-    font-size: 2rem;
+    // flex: 1 1;
+    font-size: 1.6rem;
     text-align: right;
+    width: 60px;
   }
   
   .form_input {
@@ -1137,6 +1138,7 @@ export default () => {
     }
     .logo_2 {
       height: 70px !important;
+      width: 70px !important;
     }
     .main_container, .profile_container, .table_container {
       padding: 0px !important;
@@ -1186,6 +1188,8 @@ export default () => {
     }
     .logo_2 {
       height: 60px !important;
+      width: 60px !important;
+      margin: 0px !important;
     }
     .sidebar {
       top: 92px !important;
@@ -1215,7 +1219,8 @@ export default () => {
       font-size: 14px;
     }
     .cart-price {
-      font-size: 18px;
+      font-size: 1.6rem;
+      width: 60px;
     }
     .cart-list-container li img {
       max-width: 7rem;
@@ -1261,6 +1266,12 @@ export default () => {
     }
     .welcome_text {
       font-size: 30px !important;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    .glow_leds_text {
+      display: none !important;
     }
   }
   

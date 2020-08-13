@@ -47,29 +47,29 @@ router.post('/contact', async (req, res) => {
 	// const data = req.body;
 	console.log({ contact: req.body });
 	console.log(process.env.SENDGRID_SECRET);
-	sgMail.setApiKey(process.env.SENDGRID_SECRET);
+	// sgMail.setApiKey(process.env.SENDGRID_SECRET);
 	let mailOptions = {
 		to: process.env.DISPLAY_EMAIL,
 		from: req.body.email,
 		subject: `New message from ${req.body.first_name} - ${req.body.order_number} - ${req.body.reason_for_contact}`,
-		html: main_layout(contact_view(req.body), styles())
+		html: contact_view(req.body)
 	};
 
-	try {
-		sgMail.send(mailOptions);
-		res.send(200);
-	} catch (err) {
-		res.status(422).send(err);
-	}
-	// transporter.sendMail(mailOptions, (err, data) => {
-	// 	if (err) {
-	// 		console.log('Error Occurs', err);
-	// 		res.send(err);
-	// 	} else {
-	// 		console.log('Contact Email Sent to ' + req.body.first_name);
-	// 		res.send('Email Successfully Sent');
-	// 	}
-	// });
+	// try {
+	// 	sgMail.send(mailOptions);
+	// 	res.send(200);
+	// } catch (err) {
+	// 	res.status(422).send(err);
+	// }
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.send(err);
+		} else {
+			console.log('Contact Email Sent to ' + req.body.first_name);
+			res.send('Email Successfully Sent');
+		}
+	});
 });
 
 router.post('/passwordreset', async (req, res) => {

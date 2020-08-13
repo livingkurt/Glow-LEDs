@@ -177,6 +177,7 @@ const ContactPage = () => {
 					defaultValue={message}
 					className="zoom_f form_input"
 					name="message"
+					style={{ fontFamily: 'Helvetica' }}
 					placeholder="Enter Message Here"
 				/>
 				<label className="validation_text">{message_validations}</label>
