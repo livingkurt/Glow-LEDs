@@ -53,11 +53,11 @@ const Header = (props) => {
 
 	return (
 		<header id="overlay">
-			<div>
+			<div className="menu_button" style={{ width: '230px' }}>
 				<Link to="/">
 					<img
 						className="zoom logo"
-						style={{ marginRight: '170px' }}
+						// style={{ marginRight: '176px' }}
 						height="125px"
 						src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 						alt="Glow LEDs"
@@ -95,7 +95,7 @@ const Header = (props) => {
 						{/* <Link to="/category/Diffusers"> */}
 						<button className="button nav">Gloving</button>
 						{/* </Link> */}
-						<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
+						<ul style={{ width: 210 }} className="dropdown-nav-content hover_fade_in">
 							<Link to="/category/Domes">
 								<button className="button nav">Domes</button>
 							</Link>
@@ -144,7 +144,7 @@ const Header = (props) => {
 					</div>
 				</FlexContainer>
 			</FlexContainer>
-			<FlexContainer class="nav_bar" styles={{ width: '322px', justifyContent: 'flex-end' }}>
+			<FlexContainer class="nav_bar" styles={{ width: '230px', justifyContent: 'flex-end' }}>
 				<Link to="/cart">
 					<button className=" button nav cart_text">
 						Cart <i className="fas fa-shopping-cart" />{' '}

@@ -71,7 +71,25 @@
 	/* .content {
     margin: 0 20px !important;
   } */
+	// .logo {
+	// 	margin-right: 63px;
+	// }
 }
+// @media only screen and (max-width: 1056px) and (min-width: 1040px) {
+// 	.logo {
+// 		margin-right: 176px !important;
+// 	}
+// }
+// @media only screen and (max-width: 1043px) {
+// 	.logo {
+// 		margin-right: 176px !important;
+// 	}
+// }
+// @media only screen and (max-width: 1039px) {
+// 	.logo {
+// 		margin-right: 36px !important;
+// 	}
+// }
 
 @media only screen and (max-width: 1032px) {
 	.home_links {
@@ -83,6 +101,9 @@
 	}
 	.button.mobile.nav {
 		display: block !important;
+	}
+	.menu_button {
+		width: unset !important;
 	}
 	.logo {
 		display: none;

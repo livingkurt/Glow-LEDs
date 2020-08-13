@@ -91,6 +91,7 @@ header {
 	color: $font_color;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	padding: 15px;
 	list-style-type: none;
 	box-shadow: $bs_deep;
