@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { savePayment } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 import { validate_payment } from '../utils/helper_functions';
+import { Link } from 'react-router-dom';
 
 const PaymentPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -77,6 +78,11 @@ const PaymentPage = (props) => {
 							<button type="submit" className="button primary">
 								Continue
 							</button>
+						</li>
+						<li>
+							<Link to="/shipping">
+								<button class="button secondary full-width">Back to Shipping</button>
+							</Link>
 						</li>
 					</ul>
 				</form>

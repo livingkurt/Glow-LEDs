@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 import { validate_shipping } from '../utils/helper_functions';
+import { FlexContainer } from '../components/ContainerComponents';
+import { Link } from 'react-router-dom';
 
 const ShippingPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -78,6 +80,7 @@ const ShippingPage = (props) => {
 	return (
 		<div>
 			<CheckoutSteps step1 step2 />
+
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					<ul className="form-container">
@@ -181,6 +184,11 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
+						{/* <li>
+							<Link to="/cart">
+								<button class="button secondary full-width">Back to Cart</button>
+							</Link>
+						</li> */}
 					</ul>
 				</form>
 			</div>
