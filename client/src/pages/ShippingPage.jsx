@@ -5,6 +5,7 @@ import { CheckoutSteps } from '../components/SpecialtyComponents';
 import { validate_shipping } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Link } from 'react-router-dom';
+import MetaTags from 'react-meta-tags';
 
 const ShippingPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -79,6 +80,14 @@ const ShippingPage = (props) => {
 	};
 	return (
 		<div>
+			<MetaTags>
+				<title>Glow LEDs Shipping</title>
+				<meta property="og:title" content="Glow LEDs Shipping" />
+				<meta name="description" content="Glow LEDs Shipping" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<CheckoutSteps step1 step2 />
 
 			<div className="form">

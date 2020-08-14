@@ -5,6 +5,7 @@ import { register } from '../actions/userActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { validate_registration } from '../utils/helper_functions';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const RegisterPage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
@@ -57,6 +58,14 @@ const RegisterPage = (props) => {
 
 	return (
 		<div className="form">
+			<MetaTags>
+				<title>Glow LEDs Register</title>
+				<meta property="og:title" content="Glow LEDs Register" />
+				<meta name="description" content="Glow LEDs Register" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>

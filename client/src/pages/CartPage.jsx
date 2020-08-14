@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexContainer } from '../components/ContainerComponents';
 import { SuggestedProducts } from '../components/SpecialtyComponents';
+import MetaTags from 'react-meta-tags';
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 
@@ -41,6 +42,14 @@ const CartPage = (props) => {
 
 	return (
 		<FlexContainer column>
+			<MetaTags>
+				<title>Glow LEDs Cart</title>
+				<meta property="og:title" content="Glow LEDs Cart" />
+				<meta name="description" content="Glow LEDs Cart" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<div className="cart">
 				<div className="cart-list">
 					<ul className="cart-list-container">

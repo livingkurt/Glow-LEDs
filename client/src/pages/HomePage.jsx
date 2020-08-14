@@ -1,10 +1,19 @@
 import React from 'react';
 import { FlexContainer } from '../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
+import MetaTags from 'react-meta-tags';
 
 const HomePage = (props) => {
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Welcome Page</title>
+				<meta property="og:title" content="Glow LEDs Welcome Page" />
+				<meta name="description" content="Glow LEDs Welcome Page" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer h_center>
 				<h1 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
 					Welcome to Glow-LEDs

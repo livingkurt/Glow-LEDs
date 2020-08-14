@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { update, reset_password } from '../actions/userActions';
 import { FlexContainer } from '../components/ContainerComponents';
+import MetaTags from 'react-meta-tags';
 
 const RegisterPage = (props) => {
 	const [ password, setPassword ] = useState('');
@@ -21,6 +22,14 @@ const RegisterPage = (props) => {
 	};
 	return (
 		<div className="form">
+			<MetaTags>
+				<title>Glow LEDs Reset Password</title>
+				<meta property="og:title" content="Glow LEDs Reset Password" />
+				<meta name="description" content="Glow LEDs Reset Password" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>

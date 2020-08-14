@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../components/UtilityComponents';
 import { Rating } from '../components/SpecialtyComponents';
 import { format_date_display } from '../utils/helper_functions';
+import MetaTags from 'react-meta-tags';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -160,6 +161,14 @@ const EditProductPage = (props) => {
 
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Edit Product</title>
+				<meta property="og:title" content="Glow LEDs Edit Product" />
+				<meta name="description" content="Glow LEDs Edit Product" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<h1 style={{ textAlign: 'center' }}>{product_pathname ? 'Edit Product' : 'Create Product'}</h1>
 
 			<div className="form">

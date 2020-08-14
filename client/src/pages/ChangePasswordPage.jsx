@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const ChangePasswordPage = (props) => {
 	const history = useHistory();
@@ -71,6 +72,14 @@ const ChangePasswordPage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
+			<MetaTags>
+				<title>Glow LEDs Change Password</title>
+				<meta property="og:title" content="Glow LEDs Change Password" />
+				<meta name="description" content="Glow LEDs Change Password" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer styles={{ marginBottom: 10 }}>
 				<Link to="/account/profile">
 					<button className="button primary">Back to Profile</button>

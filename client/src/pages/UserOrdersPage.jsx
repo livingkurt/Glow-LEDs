@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
@@ -31,6 +32,14 @@ const UserOrderPage = (props) => {
 	};
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
+			<MetaTags>
+				<title>Glow LEDs User Orders</title>
+				<meta property="og:title" content="Glow LEDs User Orders" />
+				<meta name="description" content="Glow LEDs User Orders" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer wrap h_between>
 				<Link to="/account/profile">
 					<button className="button primary">Back to Profile</button>

@@ -87,9 +87,7 @@ const Header = (props) => {
 				</FlexContainer>
 				<FlexContainer row h_between class="nav_bar">
 					<Link to="/collections/all/products">
-						<button style={{ width: '139px' }} className="button nav">
-							All Products
-						</button>
+						<button className="button nav">Products</button>
 					</Link>
 					<div className="dropdown-nav">
 						{/* <Link to="/collections/all/products/category/Diffusers"> */}

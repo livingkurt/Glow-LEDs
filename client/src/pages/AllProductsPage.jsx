@@ -6,6 +6,7 @@ import { Product, Search, Sort } from '../components/SpecialtyComponents/index';
 import { FlexContainer } from '../components/ContainerComponents/index';
 import { Loading } from '../components/UtilityComponents';
 import { humanize } from '../utils/helper_functions';
+import MetaTags from 'react-meta-tags';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
@@ -57,6 +58,14 @@ const AllProductsPage = (props) => {
 
 	return (
 		<div>
+			<MetaTags>
+				<title>Products</title>
+				<meta property="og:title" content="Products" />
+				<meta name="description" content="Glow LEDs Products" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer h_center>
 				<h1>{humanize(category) || 'All Products'}</h1>
 			</FlexContainer>

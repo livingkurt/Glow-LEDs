@@ -3,11 +3,20 @@ import React, { useState } from 'react';
 import { FlexContainer } from '../components/ContainerComponents';
 // import { listenerCount } from 'cluster';
 import { Link } from 'react-router-dom';
+import MetaTags from 'react-meta-tags';
 // import "./form.css";
 
 const FAQPage = () => {
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Frequently Asked Questions</title>
+				<meta property="og:title" content="Glow LEDs Frequently Asked Questions" />
+				<meta name="description" content="Glow LEDs Frequently Asked Questions" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<div class="inner_content">
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>

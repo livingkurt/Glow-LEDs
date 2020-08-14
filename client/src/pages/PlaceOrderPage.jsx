@@ -5,6 +5,7 @@ import { createOrder } from '../actions/orderActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 // import { email_order } from '../actions/emailActions';
+import MetaTags from 'react-meta-tags';
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
@@ -90,6 +91,14 @@ const PlaceOrderPage = (props) => {
 
 	return (
 		<div>
+			<MetaTags>
+				<title>Glow LEDs Place Order</title>
+				<meta property="og:title" content="Glow LEDs Place Order" />
+				<meta name="description" content="Glow LEDs Place Order" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<CheckoutSteps step1 step2 step3 step4 />
 			<div className="placeorder">
 				<div className="placeorder-info">

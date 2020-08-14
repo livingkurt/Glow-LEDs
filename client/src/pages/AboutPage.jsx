@@ -2,10 +2,19 @@ import React, { useState } from 'react';
 // import emailjs from 'emailjs-com';
 import { FlexContainer } from '../components/ContainerComponents';
 // import "./form.css";
+import MetaTags from 'react-meta-tags';
 
-const TermsPage = () => {
+const AboutPage = () => {
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>About Glow LEDs</title>
+				<meta property="og:title" content="About Glow LEDs" />
+				<meta name="description" content="Learn about the Glow LEDs team" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<div class="inner_content">
 				<h1 style={{ fontSize: 40, textAlign: 'center' }}>About Glow-LEDs</h1>
 
@@ -94,4 +103,4 @@ const TermsPage = () => {
 	);
 };
 
-export default TermsPage;
+export default AboutPage;

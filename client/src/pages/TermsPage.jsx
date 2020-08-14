@@ -1,8 +1,17 @@
 import React from 'react';
+import MetaTags from 'react-meta-tags';
 
 const TermsPage = () => {
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Terms and Conditions</title>
+				<meta property="og:title" content="Glow LEDs Terms and Conditions" />
+				<meta name="description" content="Glow LEDs Terms and Conditions" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
 			<p>
 				Prior to using this website- I fully agree to the terms set forth here: Under no circumstances will the

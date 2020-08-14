@@ -5,6 +5,7 @@ import { listOrders, deleteOrder } from '../actions/orderActions';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const OrdersPage = (props) => {
 	const orderList = useSelector((state) => state.orderList);
@@ -46,6 +47,14 @@ const OrdersPage = (props) => {
 
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Admin Orders</title>
+				<meta property="og:title" content="Glow LEDs Admin Orders" />
+				<meta name="description" content="Glow LEDs Admin Orders" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer h_between wrap>
 				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
 					<label style={{ marginRight: '1rem' }}>Not Paid</label>

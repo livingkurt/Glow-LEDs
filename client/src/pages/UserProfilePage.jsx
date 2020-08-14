@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FlexContainer } from '../components/ContainerComponents';
 import { detailsUser } from '../actions/userActions';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const UserProfilePage = (props) => {
 	// const history = useHistory();
@@ -66,6 +67,14 @@ const UserProfilePage = (props) => {
 
 	return (
 		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
+			<MetaTags>
+				<title>Glow LEDs User Profile</title>
+				<meta property="og:title" content="Glow LEDs User Profile" />
+				<meta name="description" content="Glow LEDs User Profile" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer>
 				<h1 style={{ textAlign: 'center', width: '100%' }}>{first_name}'s Profile</h1>
 			</FlexContainer>

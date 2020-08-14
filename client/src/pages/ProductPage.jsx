@@ -6,6 +6,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { Rating, Reviews, Slideshow, RelatedProducts } from '../components/SpecialtyComponents';
 import { Loading } from '../components/UtilityComponents';
 import ReactFilestack from 'filestack-react';
+import MetaTags from 'react-meta-tags';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -39,6 +40,14 @@ const ProductPage = (props) => {
 
 	return (
 		<FlexContainer column>
+			<MetaTags>
+				<title>Glow LEDs Product</title>
+				<meta property="og:title" content="Glow LEDs Product" />
+				<meta name="description" content="Glow LEDs Product" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<div className="back-to-result">
 				<FlexContainer h_between>
 					<FlexContainer styles={{ marginBottom: 10 }}>

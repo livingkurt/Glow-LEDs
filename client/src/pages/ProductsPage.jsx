@@ -4,6 +4,7 @@ import { listProducts, deleteProduct } from '../actions/productActions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const colors = {
 	hidden: '#333333'
@@ -68,12 +69,20 @@ const ProductsPage = (props) => {
 	};
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Admin Products</title>
+				<meta property="og:title" content="Glow LEDs Admin Products" />
+				<meta name="description" content="Glow LEDs Admin Products" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer wrap h_between>
 				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
 					<label style={{ marginRight: '1rem' }}>Hidden</label>
 					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
 				</FlexContainer>
-				<Link to="/editproduct">
+				<Link to="/admin/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
 					</button>

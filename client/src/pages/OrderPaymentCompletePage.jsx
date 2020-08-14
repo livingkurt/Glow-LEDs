@@ -3,6 +3,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 
 const OrderPaymentCompletePage = (props) => {
 	const orderPay = useSelector((state) => state.orderPay);
@@ -18,6 +19,14 @@ const OrderPaymentCompletePage = (props) => {
 	);
 	return (
 		<FlexContainer h_center column>
+			<MetaTags>
+				<title>Glow LEDs Payment Complete</title>
+				<meta property="og:title" content="Glow LEDs Payment Complete" />
+				<meta name="description" content="Glow LEDs Payment Complete" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			{props.loadingPay ? (
 				<FlexContainer h_center column>
 					<img src="loading.gif" className="loading_gif" alt="loading" />

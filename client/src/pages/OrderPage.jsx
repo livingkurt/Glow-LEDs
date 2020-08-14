@@ -7,6 +7,7 @@ import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
 import { PaypalButton } from '../components/SpecialtyComponents';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 // import { email_delivery, email_shipping } from '../actions/emailActions';
 const OrderPage = (props) => {
 	console.log(props.userInfo);
@@ -154,6 +155,14 @@ const OrderPage = (props) => {
 		<div>{error}</div>
 	) : (
 		<div>
+			<MetaTags>
+				<title>Glow LEDs Order</title>
+				<meta property="og:title" content="Glow LEDs Order" />
+				<meta name="description" content="Glow LEDs Order" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>

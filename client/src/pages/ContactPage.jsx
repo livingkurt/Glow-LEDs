@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../actions/userActions';
 import { validate_contact } from '../utils/helper_functions';
 import { Loading } from '../components/UtilityComponents';
+import MetaTags from 'react-meta-tags';
 // import "./form.css";
 
 const ContactPage = () => {
@@ -76,6 +77,14 @@ const ContactPage = () => {
 
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Contact</title>
+				<meta property="og:title" content="Glow LEDs Contact" />
+				<meta name="description" content="Glow LEDs Contact" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer h_center>
 				<h1>Contact</h1>
 			</FlexContainer>

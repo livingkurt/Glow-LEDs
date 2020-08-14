@@ -7,6 +7,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { Loading } from '../components/UtilityComponents';
 import { listUsers, deleteUser } from '../actions/userActions';
 import { Search, Sort } from '../components/SpecialtyComponents';
+import MetaTags from 'react-meta-tags';
 
 const UsersPage = (props) => {
 	const userList = useSelector((state) => state.userList);
@@ -67,6 +68,14 @@ const UsersPage = (props) => {
 
 	return (
 		<div class="main_container">
+			<MetaTags>
+				<title>Glow LEDs Admin Users</title>
+				<meta property="og:title" content="Glow LEDs Admin Users" />
+				<meta name="description" content="Glow LEDs Admin Users" />
+				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+			</MetaTags>
 			<FlexContainer h_between wrap>
 				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
 					<label style={{ marginRight: '1rem' }}>Not Verfied</label>
