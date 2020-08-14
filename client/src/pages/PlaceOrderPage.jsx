@@ -78,7 +78,7 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (success) {
-				props.history.push('/account/account/order/' + order._id);
+				props.history.push('/account/order/' + order._id);
 			}
 		},
 		[ success ]

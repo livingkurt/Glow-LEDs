@@ -108,7 +108,7 @@ const OrdersPage = (props) => {
 										<td>{order._id}</td>
 										<td>{format_date_display(order.createdAt)}</td>
 										<td>${order.totalPrice.toFixed(2)}</td>
-										<td>{order.user.first_name}</td>
+										<td>{!order.user ? 'N/A' : order.user.first_name}</td>
 										<td>
 											{order.isPaid ? (
 												<i className="fas fa-check-circle" />
