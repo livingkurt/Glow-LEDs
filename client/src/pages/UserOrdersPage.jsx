@@ -32,7 +32,7 @@ const UserOrderPage = (props) => {
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<FlexContainer wrap h_between>
-				<Link to="/profile">
+				<Link to="/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
 				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
@@ -94,7 +94,7 @@ const UserOrderPage = (props) => {
 												)}
 											</td>
 											<td>
-												<Link to={'/order/' + order._id}>
+												<Link to={'/account/order/' + order._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
 													</button>

@@ -21,14 +21,14 @@ const ProductPage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(detailsProduct(props.match.params.id));
+		dispatch(detailsProduct(props.match.params.pathname));
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
 	}, []);
 
 	const handleAddToCart = () => {
-		props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
+		props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
 	};
 
 	// const finishUploading = async (fsData) => {
@@ -42,13 +42,14 @@ const ProductPage = (props) => {
 			<div className="back-to-result">
 				<FlexContainer h_between>
 					<FlexContainer styles={{ marginBottom: 10 }}>
-						<Link to="/allproducts">
+						<Link to="/collections/all/products">
 							<button class="button primary">Back to All Products</button>
 						</Link>
 					</FlexContainer>
+					{/* {console.log(props.match.params.pathname)} */}
 					{userInfo &&
 					userInfo.isAdmin && (
-						<Link to={'/editproduct/' + props.match.params.id}>
+						<Link to={'/admin/editproduct/' + props.match.params.pathname}>
 							<button className="button primary" style={{ width: '156px' }}>
 								Edit Product
 							</button>
@@ -310,12 +311,12 @@ const ProductPage = (props) => {
 							{!product.reviews.length && (
 								<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 							)}
-							<Reviews product={product} product_id={props.match.params.id} />
+							<Reviews product={product} product_id={props.match.params.pathname} />
 						</div>
 					</FlexContainer>
 				)}
 			</Loading>
-			<RelatedProducts product={product} product_id={props.match.params.id} />
+			<RelatedProducts product={product} product_id={props.match.params.pathname} />
 		</FlexContainer>
 	);
 };

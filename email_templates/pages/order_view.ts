@@ -100,7 +100,7 @@ export default (props: {
               <div class="cart-name" style="box-sizing: border-box;">
                 <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
 					? 'http://glow-leds.com'
-					: 'http://localhost:3000'}/product/${item.product}"
+					: 'http://localhost:3000'}/collections/all/products/${item.product}"
                     style="box-sizing: border-box;text-decoration: none;color: white;">${item.name}</a></div>
                 <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
               </div>

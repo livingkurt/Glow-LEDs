@@ -17,12 +17,12 @@ const ProfilePage = (props) => {
 	const { userInfo } = userLogin;
 	const handleLogout = () => {
 		dispatch(logout());
-		props.history.push('/login');
+		props.history.push('/account/login');
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(update({ userId: userInfo._id, email, name, password }));
-		history.push('/profile');
+		history.push('/account/profile');
 	};
 	const userUpdate = useSelector((state) => state.userUpdate);
 	const { loading, success, error } = userUpdate;
@@ -103,7 +103,7 @@ const ProfilePage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to="/profile">
+								<Link to="/account/profile">
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>

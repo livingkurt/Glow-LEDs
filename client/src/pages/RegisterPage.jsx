@@ -40,14 +40,14 @@ const RegisterPage = (props) => {
 		if (request.isValid) {
 			dispatch(register(first_name, last_name, email, password));
 
-			// props.history.push('/checkemail');
+			// props.history.push('/account/checkemail');
 		}
 	};
 
 	useEffect(
 		() => {
 			if (userInfo) {
-				props.history.push('/checkemail');
+				props.history.push('/account/checkemail');
 			}
 
 			return () => {};

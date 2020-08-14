@@ -30,7 +30,7 @@ const ProductsPage = (props) => {
 		[ successSave, successDelete ]
 	);
 	const deleteHandler = (product) => {
-		dispatch(deleteProduct(product._id));
+		dispatch(deleteProduct(product.pathname));
 	};
 
 	const sale_price_switch = (product) => {
@@ -122,7 +122,7 @@ const ProductsPage = (props) => {
 										<td style={{ minWidth: '111px' }}>{product.brand}</td>
 										<td>
 											<FlexContainer h_between>
-												<Link to={'/editproduct/' + product._id}>
+												<Link to={'/admin/editproduct/' + product.pathname}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
 													</button>

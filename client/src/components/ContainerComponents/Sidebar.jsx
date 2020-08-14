@@ -42,7 +42,7 @@ const Sidebar = (props) => {
 	const handleLogout = () => {
 		dispatch(logout());
 		closeMenu();
-		history.push('/login');
+		history.push('/account/login');
 	};
 
 	const icon_styles = {
@@ -90,12 +90,12 @@ const Sidebar = (props) => {
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">{first_name}</button>
 						<ul className="sidebar_dropdown_container">
-							<Link to="/profile">
+							<Link to="/account/profile">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Profile
 								</button>
 							</Link>
-							<Link to="/userorders">
+							<Link to="/account/orders">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Orders
 								</button>
@@ -108,7 +108,7 @@ const Sidebar = (props) => {
 						<i style={icon_styles} className="fas fa-sort-up" />
 					</div>
 				) : (
-					<Link to="/login">
+					<Link to="/account/login">
 						<button className="sidebar_button primary" onClick={closeMenu}>
 							Login
 						</button>
@@ -119,17 +119,17 @@ const Sidebar = (props) => {
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">Admin</button>
 						<ul className="sidebar_dropdown_container">
-							<Link to="/orders">
+							<Link to="/admin/orders">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Orders
 								</button>
 							</Link>
-							<Link to="/products">
+							<Link to="/admin/products">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Products
 								</button>
 							</Link>
-							<Link to="/users">
+							<Link to="/admin/users">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Users
 								</button>
@@ -138,7 +138,7 @@ const Sidebar = (props) => {
 						<i style={icon_styles} className="fas fa-sort-up" />
 					</div>
 				)}
-				<Link to="/allproducts">
+				<Link to="/collections/all/products">
 					<button className="sidebar_button primary" onClick={closeMenu}>
 						All Products
 					</button>
@@ -146,23 +146,23 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Gloving</button>
 					<ul className="sidebar_dropdown_container">
-						<Link to="/category/domes">
+						<Link to="/collections/all/products/category/domes">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Domes
 							</button>
 						</Link>
-						<Link to="/category/caps">
+						<Link to="/collections/all/products/category/caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Caps
 							</button>
 						</Link>
-						<Link to="/category/diffuser_adapters">
+						<Link to="/collections/all/products/category/diffuser_adapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
 								Diffuser Adapters
 							</button>
 						</Link>
-						<Link to="/category/accessories">
+						<Link to="/collections/all/products/category/accessories">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
 								Accessories
@@ -174,12 +174,12 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Decor</button>
 					<ul className="sidebar_dropdown_container">
-						<Link to="/category/string_lights">
+						<Link to="/collections/all/products/category/string_lights">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								String Lights
 							</button>
 						</Link>
-						<Link to="/category/infinity_mirrors">
+						<Link to="/collections/all/products/category/infinity_mirrors">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Infinity Mirrors
 							</button>
@@ -190,22 +190,22 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Support</button>
 					<ul className="sidebar_dropdown_container">
-						<Link to="/about">
+						<Link to="/pages/about">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								About
 							</button>
 						</Link>
-						<Link to="/faq">
+						<Link to="/pages/faq">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								FAQ
 							</button>
 						</Link>
-						<Link to="/contact">
+						<Link to="/pages/contact">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Contact
 							</button>
 						</Link>
-						<Link to="/terms">
+						<Link to="/pages/terms">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Terms and Conditions
 							</button>

@@ -6,11 +6,8 @@ import mongoose from 'mongoose';
 // import bodyParser from 'body-parser';
 // import config from './config';
 const config = require('./config');
-import { user_routes, product_routes, order_routes, email_routes } from './routes/index';
-import Product from './models/product';
+import { user_routes, product_routes, order_routes, email_routes, batch_routes } from './routes/index';
 
-import User from './models/user';
-import Order from './models/order';
 // const htmlRoutes = require('./email_templates/html_routes');
 
 mongoose
@@ -31,6 +28,7 @@ app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);
+app.use('/api/all', batch_routes);
 
 // app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {
@@ -40,33 +38,6 @@ app.get('/api/config/paypal', (req, res) => {
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));
 }
-
-app.put('/api/all', async (req, res) => {
-	const order = await Order.updateMany({
-		// $rename: { shipping_price: 'volume' }
-		$set: { deleted: false }
-		// $unset: { shipping_price: 1 }
-	});
-	res.send(order);
-	// const user = await User.updateMany(
-	// 	{},
-	// 	{
-	// 		// $rename: { shipping_price: 'volume' }
-	// 		$set: { deleted: false }
-	// 		// $unset: { shipping_price: 1 }
-	// 	}
-	// );
-	// res.send(user);
-	// const product = await User.updateMany({
-	// 	// $rename: { shipping_price: 'volume' }
-	// 	$set: { hidden: true }
-	// 	// $unset: { shipping_price: 1 }
-	// });
-	// res.send(product);
-	// const users = await User.updateMany({}, { $set: { deleted: false } );
-	// console.log(users);
-	// res.send(users);
-});
 
 app.get('*', (request, response) => {
 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));

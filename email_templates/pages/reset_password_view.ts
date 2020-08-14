@@ -24,7 +24,7 @@ export default (props: { first_name: string; _id: string }) => {
                 <a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;" href="${process
 					.env.NODE_ENV === 'production'
 					? 'http://www.glow-leds.com'
-					: 'http://localhost:3000'}/resetpassword/${props._id}">Change your Password</a></button>
+					: 'http://localhost:3000'}/account/resetpassword/${props._id}">Change your Password</a></button>
             </div>
             <p style="text-align: center;box-sizing: border-box;">If you didn’t request this, please ignore this email. Your
               password won’t change until you access the link above and create a new one.

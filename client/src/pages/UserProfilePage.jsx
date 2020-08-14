@@ -100,7 +100,7 @@ const UserProfilePage = (props) => {
 						</FlexContainer>
 						<FlexContainer>
 							<div style={{ height: 50 }}>
-								<Link to={'/edituserprofile'}>
+								<Link to={'/admin/edituserprofile'}>
 									<button
 										style={{ marginRight: '10px', maxWidth: '150px' }}
 										className="button primary"
@@ -110,7 +110,7 @@ const UserProfilePage = (props) => {
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
-								<Link to={'/changepassword'}>
+								<Link to={'/account/changepassword'}>
 									<button
 										style={{ marginRight: '10px', maxWidth: '210px' }}
 										className="button primary"
@@ -120,7 +120,7 @@ const UserProfilePage = (props) => {
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
-								<Link to={'/userorders'}>
+								<Link to={'/account/orders'}>
 									<button style={{ maxWidth: '150px' }} className="button primary">
 										View Orders
 									</button>

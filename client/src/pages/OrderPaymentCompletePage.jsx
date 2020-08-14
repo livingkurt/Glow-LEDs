@@ -11,7 +11,7 @@ const OrderPaymentCompletePage = (props) => {
 	useEffect(
 		() => {
 			if (successPay) {
-				props.history.push('/paymentcomplete/' + props.match.params.id);
+				props.history.push('/checkout/paymentcomplete/' + props.match.params.id);
 			}
 		},
 		[ successPay ]
@@ -36,17 +36,17 @@ const OrderPaymentCompletePage = (props) => {
 					<p style={{ textAlign: 'center' }}>We appreciate your support</p>
 					<p style={{ textAlign: 'center' }}> We will notify you when your order ships!</p>
 					<FlexContainer h_center wrap row h_between styles={{ width: '100%' }}>
-						<Link to={'/order/' + props.match.params.id}>
+						<Link to={'/account/order/' + props.match.params.id}>
 							<button style={{ margin: '15px' }} className="button primary">
 								View Order
 							</button>
 						</Link>
-						<Link to="/userorders">
+						<Link to="/account/orders">
 							<button style={{ margin: '15px' }} className="button primary">
 								Your Orders
 							</button>
 						</Link>
-						<Link to="/allproducts">
+						<Link to="/collections/all/products">
 							<button style={{ margin: '15px' }} className="button primary">
 								Products
 							</button>

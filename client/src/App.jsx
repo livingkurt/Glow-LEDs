@@ -52,44 +52,51 @@ const App = () => {
 					<ScrollToTop>
 						<Switch>
 							{/* Private Routes */}
-							<PrivateRoute path="/profile" component={ProfilePage} />
-							<PrivateRoute path="/editprofile" component={EditProfilePage} />
-							<PrivateRoute path="/userorders" component={UserOrdersPage} />
-							<PrivateRoute path="/shipping" component={ShippingPage} />
-							<PrivateRoute path="/payment" component={PaymentPage} />
+							<PrivateRoute path="/account/profile" component={ProfilePage} />
+							<PrivateRoute path="/account/editprofile" component={EditProfilePage} />
+							<PrivateRoute path="/account/orders" component={UserOrdersPage} />
+							<PrivateRoute path="/checkout/shipping" component={ShippingPage} />
+							<PrivateRoute path="/checkout/payment" component={PaymentPage} />
+							<Route
+								path="/checkout/paymentcomplete/:id"
+								exact={true}
+								component={OrderPaymentCompletePage}
+							/>
 							<PrivateRoute
-								path="/order/:id"
+								path="/account/order/:id"
 								component={(props) => <OrderPage userInfo={userInfo} {...props} />}
 							/>
 							<PrivateRoute
-								path="/placeorder"
+								path="/checkout/placeorder"
 								component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 							/>
 							{/* Admin Routes */}
-							<AdminRoute path="/editproduct/:id?" component={EditProductPage} />
-							<AdminRoute path="/products" component={ProductsPage} />
-							<AdminRoute path="/orders" component={OrdersPage} />
-							<AdminRoute path="/users" component={UsersPage} />
-							<AdminRoute path="/userprofile/:id" component={UserProfilePage} />
-							<AdminRoute path="/edituserprofile" component={EditUserProfilePage} />
+							<AdminRoute path="/admin/editproduct/:pathname?" component={EditProductPage} />
+							<AdminRoute path="/admin/products" component={ProductsPage} />
+							<AdminRoute path="/admin/orders" component={OrdersPage} />
+							<AdminRoute path="/admin/users" component={UsersPage} />
+							<AdminRoute path="/admin/userprofile/:id" component={UserProfilePage} />
+							<AdminRoute path="/admin/edituserprofile" component={EditUserProfilePage} />
 							{/* Public Routes */}
-							<Route path="/login" component={LoginPage} />
-							<Route path="/verified/:id" component={VerifiedPage} />
-							<Route path="/checkemail" component={CheckEmailPage} />
-							<Route path="/changepassword" component={ChangePasswordPage} />
-							<Route path="/register" component={RegisterPage} />
-							<Route path="/product/:id" component={ProductPage} />
-							<Route path="/passwordreset" component={PasswordResetPage} />
-							<Route path="/resetpassword/:id" component={ResetPasswordPage} />
-							<Route path="/cart/:id?" component={CartPage} />
-							<Route path="/category/:id?" component={AllProductsPage} />
-							<Route path="/allproducts" exact={true} component={AllProductsPage} />
+							<Route path="/account/login" component={LoginPage} />
+							<Route path="/account/verified/:id" component={VerifiedPage} />
+							<Route path="/account/checkemail" component={CheckEmailPage} />
+							<Route path="/account/changepassword" component={ChangePasswordPage} />
+							<Route path="/account/register" component={RegisterPage} />
+							<Route path="/account/passwordreset" component={PasswordResetPage} />
+							<Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
+
+							<Route path="/checkout/cart/:pathname?" component={CartPage} />
+							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
+							<Route path="/collections/all/products/category/:category?" component={AllProductsPage} />
+							<Route path="/collections/all/products/:pathname" component={ProductPage} />
+
+							<Route path="/pages/contact" exact={true} component={ContactPage} />
+							<Route path="/pages/terms" exact={true} component={TermsPage} />
+							<Route path="/pages/about" exact={true} component={AboutPage} />
+							<Route path="/pages/faq" exact={true} component={FAQPage} />
 							<Route path="/" exact={true} component={HomePage} />
-							<Route path="/contact" exact={true} component={ContactPage} />
-							<Route path="/terms" exact={true} component={TermsPage} />
-							<Route path="/about" exact={true} component={AboutPage} />
-							<Route path="/faq" exact={true} component={FAQPage} />
-							<Route path="/paymentcomplete/:id" exact={true} component={OrderPaymentCompletePage} />
+
 							<Route component={Four04Page} />
 						</Switch>
 					</ScrollToTop>

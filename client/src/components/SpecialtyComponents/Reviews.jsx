@@ -159,7 +159,7 @@ const Review = (props) => {
 					</form>
 				) : (
 					<div>
-						Please <Link to="/login">Login</Link> to Write a Review
+						Please <Link to="/account/login">Login</Link> to Write a Review
 					</div>
 				)}
 			</li>

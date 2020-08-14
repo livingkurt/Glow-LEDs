@@ -17,7 +17,7 @@ const RegisterPage = (props) => {
 		e.preventDefault();
 		dispatch(reset_password(props.match.params.id, password, rePassword));
 		// dispatch(email_registration(name, email, password));
-		props.history.push('/login');
+		props.history.push('/account/login');
 	};
 	return (
 		<div className="form">

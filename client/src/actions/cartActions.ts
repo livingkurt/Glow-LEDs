@@ -2,7 +2,7 @@ import Axios from 'axios';
 import Cookie from 'js-cookie';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_PAYMENT } from '../constants/cartConstants';
 
-const addToCart = (productId: string, qty: number) => async (
+const addToCart = (pathname: string, qty: number) => async (
 	dispatch: (
 		arg0: {
 			type: string;
@@ -22,9 +22,10 @@ const addToCart = (productId: string, qty: number) => async (
 ) => {
 	try {
 		console.log('Add To Cart Before');
-		const { data } = await Axios.get('/api/products/' + productId);
+		const { data } = await Axios.get('/api/products/' + pathname);
+
 		const { cart: { cartItems } } = getState();
-		// const same_product = cartItems.find((item: any) => item.product === productId);
+		// const same_product = cartItems.find((item: any) => item.product === pathname);
 		// qty = same_product ? qty + same_product.qty : qty;
 
 		dispatch({

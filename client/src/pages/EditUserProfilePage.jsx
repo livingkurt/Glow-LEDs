@@ -37,7 +37,7 @@ const EditUserProfilePage = (props) => {
 		console.log(request);
 		if (request.isValid) {
 			dispatch(updateUser({ userId: user._id, email, first_name, last_name, verified, admin }));
-			history.push('/userprofile/' + user._id);
+			history.push('/admin/userprofile/' + user._id);
 		}
 	};
 
@@ -82,7 +82,7 @@ const EditUserProfilePage = (props) => {
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
 			<FlexContainer styles={{ marginBottom: 10 }}>
-				<Link to={'/userprofile/' + user._id}>
+				<Link to={'/admin/userprofile/' + user._id}>
 					<button className="button primary">Back to {user.first_name}'s Profile</button>
 				</Link>
 			</FlexContainer>
@@ -177,7 +177,7 @@ const EditUserProfilePage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to={'/userprofile/' + user._id}>
+								<Link to={'/admin/userprofile/' + user._id}>
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>

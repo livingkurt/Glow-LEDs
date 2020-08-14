@@ -11,7 +11,9 @@ const AllProductsPage = (props) => {
 	const history = useHistory();
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
-	const category = props.match.params.id ? props.match.params.id : '';
+	const category = props.match.params.category ? props.match.params.category : '';
+	console.log({ category });
+	console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 	const dispatch = useDispatch();
@@ -29,7 +31,7 @@ const AllProductsPage = (props) => {
 			) {
 				dispatch(listProducts(category));
 			} else {
-				history.push('/allproducts');
+				history.push('/collections/all/products');
 				dispatch(listProducts(''));
 			}
 		},

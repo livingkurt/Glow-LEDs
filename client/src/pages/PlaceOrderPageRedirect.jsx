@@ -15,7 +15,7 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (!shipping) {
-				props.history.push('/allproducts');
+				props.history.push('/collections/all/products');
 				set_redirect(true);
 			}
 		},
@@ -23,11 +23,11 @@ const PlaceOrderPage = (props) => {
 	);
 
 	if (!shipping) {
-		props.history.push('/allproducts');
+		props.history.push('/collections/all/products');
 	} else if (!shipping.address) {
-		props.history.push('/shipping');
+		props.history.push('/checkout/shipping');
 	} else if (!payment.paymentMethod) {
-		props.history.push('/payment');
+		props.history.push('/checkout/payment');
 	}
 
 	// const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
@@ -92,18 +92,18 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (success) {
-				props.history.push('/order/' + order._id);
+				props.history.push('/account/order/' + order._id);
 			}
 		},
 		[ success ]
 	);
 
 	const checkoutHandler = () => {
-		props.history.push('/login?redirect=shipping');
+		props.history.push('/account/login?redirect=shipping');
 	};
 
 	if (cartItems.length === 0) {
-		return <Redirect to="/allproducts" />;
+		return <Redirect to="/collections/all/products" />;
 	} else {
 		return (
 			<div>
@@ -143,7 +143,9 @@ const PlaceOrderPage = (props) => {
 											</div>
 											<div className=" label cart-name">
 												<div>
-													<Link to={'/product/' + item.product}>{item.name}</Link>
+													<Link to={'/collections/all/products/' + item.product}>
+														{item.name}
+													</Link>
 												</div>
 												<div>Qty: {item.qty}</div>
 											</div>

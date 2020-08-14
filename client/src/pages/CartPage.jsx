@@ -10,23 +10,23 @@ const CartPage = (props) => {
 	const { cartItems } = cart;
 
 	console.log(cartItems);
-	const productId = props.match.params.id;
+	const pathname = props.match.params.pathname;
 	const qty = parseInt(props.location.search ? Number(props.location.search.split('=')[1]) : 1);
 	const dispatch = useDispatch();
 	const [ no_items_in_cart, set_no_items_in_cart ] = useState('');
 
-	const removeFromCartHandler = (productId) => {
-		dispatch(removeFromCart(productId));
+	const removeFromCartHandler = (pathname) => {
+		dispatch(removeFromCart(pathname));
 	};
 
 	useEffect(() => {
-		if (productId) {
-			// console.log(cartItems.find((item) => item.product === productId));
-			// const same_product = cartItems.find((item) => item.product === productId);
+		if (pathname) {
+			// console.log(cartItems.find((item) => item.product === pathname));
+			// const same_product = cartItems.find((item) => item.product === pathname);
 			// if (same_product) {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
-			dispatch(addToCart(productId, qty));
+			dispatch(addToCart(pathname, qty));
 			// }
 		}
 	}, []);
@@ -35,7 +35,7 @@ const CartPage = (props) => {
 		if (cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 		} else {
-			props.history.push('/login?redirect=shipping');
+			props.history.push('/account/login?redirect=/checkout/shipping');
 		}
 	};
 
@@ -62,7 +62,7 @@ const CartPage = (props) => {
 									</div>
 									<div className="cart-name">
 										<div>
-											<Link to={'/product/' + item.product}>{item.name}</Link>
+											<Link to={'/collections/all/products/' + item.product}>{item.name}</Link>
 										</div>
 										<div>
 											<FlexContainer v_i_center styles={{ height: '25px' }}>

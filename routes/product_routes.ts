@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
 				}
 			}
 		: {};
+
 	let sortOrder = {};
 	if (req.query.sortOrder === 'lowest') {
 		sortOrder = { price: 1 };
@@ -28,12 +29,16 @@ router.get('/', async (req, res) => {
 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
 		sortOrder = { category: -1 };
 	}
+	console.log({ category });
 	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+	console.log({ products });
 	res.send(products);
 });
 
-router.get('/:id', async (req, res) => {
-	const product = await Product.findOne({ _id: req.params.id });
+router.get('/:pathname', async (req, res) => {
+	const product = await Product.findOne({ pathname: req.params.pathname });
+	console.log({ product });
+	console.log(req.params.pathname);
 	if (product) {
 		res.send(product);
 	} else {
@@ -41,9 +46,9 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-router.put('/:id', isAuth, isAdmin, async (req, res) => {
+router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 	console.log({ product_routes_put: req.body });
-	const productId = req.params.id;
+	const productId = req.params.pathname;
 	const product = await Product.findById(productId);
 	if (product) {
 		product.name = req.body.name;
@@ -59,6 +64,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 		product.hidden = req.body.hidden;
 		product.sale_price = req.body.sale_price;
 		product.volume = req.body.volume;
+		product.pathname = req.body.pathname.split(' ').join('_').toLowerCase();
 		product.deleted = req.body.deleted || false;
 		const updatedProduct = await product.save();
 		console.log({ product_routes_post: updatedProduct });
@@ -69,21 +75,28 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	return res.status(500).send({ message: ' Error in Updating Product.' });
 });
 
-router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
-	const product = await Product.findById(req.params.id);
-	const updated_product = { ...product, deleted: true };
-	const message: any = { message: 'Product Deleted' };
-	// const deleted_product = await updated_product.save();
-	const deleted_product = await Product.updateOne({ _id: req.params.id }, { deleted: true });
-	if (deleted_product) {
-		// await deletedProduct.remove();
-		res.send(message);
-	} else {
-		res.send('Error in Deletion.');
+router.delete(
+	'/:pathname',
+	isAuth,
+	isAdmin,
+	async (req: { params: { pathname: any } }, res: { send: (arg0: string) => void }) => {
+		const product = await Product.findById(req.params.pathname);
+		const updated_product = { ...product, deleted: true };
+		const message: any = { message: 'Product Deleted' };
+		// const deleted_product = await updated_product.save();
+		const deleted_product = await Product.updateOne({ pathname: req.params.pathname }, { deleted: true });
+		if (deleted_product) {
+			// await deletedProduct.remove();
+			res.send(message);
+		} else {
+			res.send('Error in Deletion.');
+		}
 	}
-});
+);
 
 router.post('/', isAuth, isAdmin, async (req, res) => {
+	// const converted_pathname = req.body.pathname.toLowerCase()
+	// const converted_pathname = req.body.pathname.split(' ').join('_')
 	const product = new Product({
 		name: req.body.name,
 		price: req.body.price,
@@ -100,6 +113,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		hidden: req.body.hidden,
 		sale_price: req.body.sale_price,
 		volume: req.body.volume,
+		pathname: req.body.pathname.split(' ').join('_').toLowerCase(),
 		deleted: req.body.deleted || false
 	});
 	console.log({ product_routes_post: product });
@@ -148,8 +162,8 @@ router.post('/images', async (req: { body: {} }, res: { send: (arg0: any[]) => v
 	}
 });
 
-router.post('/:id/reviews', isAuth, async (req, res) => {
-	const product = await Product.findById(req.params.id);
+router.post('/:pathname/reviews', isAuth, async (req, res) => {
+	const product = await Product.findById(req.params.pathname);
 	if (product) {
 		const review = {
 			first_name: req.body.first_name,
@@ -170,9 +184,9 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 		res.status(404).send({ message: 'Product Not Found' });
 	}
 });
-router.delete('/:product_id/reviews/:review_id', isAuth, async (req, res) => {
+router.delete('/:pathname/reviews/:review_id', isAuth, async (req, res) => {
 	console.log(req.params);
-	const product = await Product.findById(req.params.product_id);
+	const product = await Product.findById(req.params.pathname);
 	if (product) {
 		product.reviews.splice(req.params.review_id, 1);
 		product.numReviews -= 1;

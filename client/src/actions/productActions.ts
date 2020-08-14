@@ -85,10 +85,10 @@ const saveProduct = (product: {
 	}
 };
 
-const detailsProduct = (productId: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+const detailsProduct = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
-		dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
-		const { data } = await axios.get('/api/products/' + productId);
+		dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: pathname });
+		const { data } = await axios.get('/api/products/' + pathname);
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });

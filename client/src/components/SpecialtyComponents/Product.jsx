@@ -40,9 +40,9 @@ const Product = (props) => {
 	};
 
 	return (
-		<li key={props.product._id} style={props.styles}>
+		<li key={props.product.pathname} style={props.styles}>
 			<div className="product">
-				<Link to={'/product/' + props.product._id}>
+				<Link to={'/collections/all/products/' + props.product.pathname}>
 					<LazyLoadImage
 						className="product-image"
 						alt={props.product.name}
@@ -52,7 +52,7 @@ const Product = (props) => {
 					/>
 				</Link>
 				<label style={{ fontSize: '1.3rem' }}>{props.product.brand}</label>
-				<Link to={'/product/' + props.product._id}>
+				<Link to={'/collections/all/products/' + props.product.pathname}>
 					<label style={{ fontSize: '1.6rem' }}>{props.product.name}</label>
 				</Link>
 				{props.product.name === 'Custom Infinity Mirror' ? (

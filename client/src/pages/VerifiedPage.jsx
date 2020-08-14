@@ -13,7 +13,7 @@ const VerifiedPage = (props) => {
 		dispatch(verify(props.match.params.id));
 		if (!loading) {
 			setTimeout(function() {
-				props.history.push('/login');
+				props.history.push('/account/login');
 			}, 3000);
 		}
 

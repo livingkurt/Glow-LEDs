@@ -108,8 +108,8 @@ const OrderPage = (props) => {
 			if (successPay) {
 				set_paypal_state('none');
 				console.log('successPay');
-				// props.history.push('/paymentcomplete/' + props.match.params.id);
-				// props.history.push("/profile");
+				// props.history.push('/checkout/paymentcomplete/' + props.match.params.id);
+				// props.history.push("/account/profile");
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
@@ -134,7 +134,7 @@ const OrderPage = (props) => {
 		dispatch(payOrder(order, paymentResult, user_data));
 		set_payment_loading(false);
 		// if (successPay) {
-		props.history.push('/paymentcomplete/' + props.match.params.id);
+		props.history.push('/checkout/paymentcomplete/' + props.match.params.id);
 		// }
 	};
 
@@ -248,7 +248,9 @@ const OrderPage = (props) => {
 										</div>
 										<div className="cart-name">
 											<div>
-												<Link to={'/product/' + item.product}>{item.name}</Link>
+												<Link to={'/collections/all/products/' + item.product}>
+													{item.name}
+												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>
 										</div>

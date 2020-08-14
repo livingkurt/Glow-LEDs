@@ -13,9 +13,9 @@ const PlaceOrderPage = (props) => {
 	const { loading, success, error, order } = orderCreate;
 
 	if (!shipping.address) {
-		props.history.push('/shipping');
+		props.history.push('/checkout/shipping');
 	} else if (!payment.paymentMethod) {
-		props.history.push('/payment');
+		props.history.push('/checkout/payment');
 	}
 	// const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
 	const itemsPrice =
@@ -78,14 +78,14 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (success) {
-				props.history.push('/order/' + order._id);
+				props.history.push('/account/account/order/' + order._id);
 			}
 		},
 		[ success ]
 	);
 
 	const checkoutHandler = () => {
-		props.history.push('/login?redirect=shipping');
+		props.history.push('/account/login?redirect=shipping');
 	};
 
 	return (
@@ -126,7 +126,9 @@ const PlaceOrderPage = (props) => {
 										</div>
 										<div className=" label cart-name">
 											<div>
-												<Link to={'/product/' + item.product}>{item.name}</Link>
+												<Link to={'/collections/all/products/' + item.product}>
+													{item.name}
+												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>
 										</div>

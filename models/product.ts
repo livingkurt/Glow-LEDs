@@ -31,7 +31,8 @@ const productSchema = new mongoose.Schema(
 		hidden: { type: Boolean, default: false },
 		sale_price: { type: Number, default: 0 },
 		volume: { type: Number, required: 0 },
-		deleted: { type: Boolean, default: false }
+		deleted: { type: Boolean, default: false },
+		pathname: { type: String }
 	},
 	{
 		timestamps: true

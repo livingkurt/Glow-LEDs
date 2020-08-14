@@ -46,7 +46,7 @@ const HomePage = (props) => {
 					ridiculous light shows. 100% facemelt guarantee.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/category/Caps">
+					<Link to="/collections/all/products/category/caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Diffuser Caps</h2>
 						</button>
@@ -77,7 +77,7 @@ const HomePage = (props) => {
 					found in your space.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/category/Infinity">
+					<Link to="/collections/all/products/category/infinity_mirrors">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Infinity Mirrors</h2>
 						</button>
@@ -108,7 +108,7 @@ const HomePage = (props) => {
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/category/string_lights">
+					<Link to="/collections/all/products/category/string_lights">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop String Lights</h2>
 						</button>

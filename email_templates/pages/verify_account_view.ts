@@ -31,7 +31,7 @@ export default (props: { first_name: string; _id: string }) => {
           <a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"
             href="${process.env.NODE_ENV === 'production'
 				? 'http://www.glow-leds.com'
-				: 'http://localhost:3000'}/verified/${props._id}">Verify
+				: 'http://localhost:3000'}/account/verified/${props._id}">Verify
             Email</a></button>
         <p style="background-color: #8a8a8a; font-size: 18px;text-align: center;box-sizing: border-box;">If the "Verifiy Email"
           button
@@ -41,9 +41,9 @@ export default (props: { first_name: string; _id: string }) => {
           <a style="background-color: #8a8a8a;color: #8ce4ff;text-decoration: underline;box-sizing: border-box;"
             href=" ${process.env.NODE_ENV === 'production'
 				? 'http://www.glow-leds.com'
-				: 'http://localhost:3000'}/verified/${props._id}">${process.env.NODE_ENV === 'production'
+				: 'http://localhost:3000'}/account/verified/${props._id}">${process.env.NODE_ENV === 'production'
 		? 'http://www.glow-leds.com'
-		: 'http://localhost:3000'}/verified/${props._id}</a>
+		: 'http://localhost:3000'}/account/verified/${props._id}</a>
           into
           your browser to verify account
         </p>

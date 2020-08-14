@@ -87,14 +87,14 @@ const LoginPage = (props) => {
 						</button>
 					</li>
 					<li>
-						<Link to="/passwordreset" style={{ fontFamily: 'heading_font' }}>
+						<Link to="/account/passwordreset" style={{ fontFamily: 'heading_font' }}>
 							<button className="button secondary full-width">Forgot Password?</button>
 						</Link>
 					</li>
 					<li>New to Glow LEDs?</li>
 					<li>
 						<Link
-							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
+							to={redirect === '/' ? 'account/register' : 'account/register?redirect=' + redirect}
 							className="button secondary text-center"
 						>
 							Create Account

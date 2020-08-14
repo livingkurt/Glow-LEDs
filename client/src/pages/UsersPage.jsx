@@ -145,7 +145,7 @@ const UsersPage = (props) => {
 										</td>
 										<td>
 											<FlexContainer h_between>
-												<Link to={'/userprofile/' + user._id}>
+												<Link to={'/admin/userprofile/' + user._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
 													</button>
