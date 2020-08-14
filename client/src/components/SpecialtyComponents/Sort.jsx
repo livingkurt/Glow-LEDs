@@ -8,8 +8,8 @@ const Sort = (props) => {
 			<label>Sort By</label>
 			<div className="select_dropdown_container">
 				<select name="sortOrder" className="select_dropdown" onChange={props.sortHandler}>
-					<option value="category">Category</option>
 					<option value="newest">Newest</option>
+					<option value="category">Category</option>
 					<option value="lowest">Lowest</option>
 					<option value="highest">Highest</option>
 				</select>

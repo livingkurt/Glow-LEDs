@@ -24,9 +24,9 @@ router.get('/', async (req, res) => {
 		sortOrder = { price: 1 };
 	} else if (req.query.sortOrder === 'highest') {
 		sortOrder = { price: -1 };
-	} else if (req.query.sortOrder === 'newest') {
+	} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
 		sortOrder = { _id: -1 };
-	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
+	} else if (req.query.sortOrder === 'category') {
 		sortOrder = { category: -1 };
 	}
 	console.log({ category });
