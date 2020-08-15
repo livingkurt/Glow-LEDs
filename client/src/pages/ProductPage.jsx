@@ -51,7 +51,7 @@ const ProductPage = (props) => {
 					property="og:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
-				<meta
+				{/* <meta
 					property="og:image"
 					content={
 						'https://www.glow-leds.com' + loading ? (
@@ -61,7 +61,9 @@ const ProductPage = (props) => {
 						)
 					}
 				/>
-				<meta
+				/> */}
+				<meta property="og:image" content={'https://www.glow-leds.com' + product.display_image} />
+				{/* <meta
 					property="og:image:secure_url"
 					content={
 						'https://www.glow-leds.com' + loading ? (
@@ -70,7 +72,8 @@ const ProductPage = (props) => {
 							product.display_image
 						)
 					}
-				/>
+				/> */}
+				<meta property="og:image:secure_url" content={'https://www.glow-leds.com' + product.display_image} />
 				<meta property="og:url" content="https://www.glow-leds.com" />
 				<meta name="twitter:card" content="summary" />
 				<meta name="twitter:title" content="Products | Glow LEDs" />
@@ -78,7 +81,8 @@ const ProductPage = (props) => {
 					name="twitter:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
-				<meta
+				<meta name="twitter:image" content={'https://www.glow-leds.com' + product.display_image} />
+				{/* <meta
 					name="twitter:image"
 					content={
 						'https://www.glow-leds.com' + loading ? (
@@ -87,7 +91,7 @@ const ProductPage = (props) => {
 							product.display_image
 						)
 					}
-				/>
+				/> */}
 			</MetaTags>
 			<div className="back-to-result">
 				<FlexContainer h_between>
