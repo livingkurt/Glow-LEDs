@@ -20,6 +20,50 @@ const HomePage = (props) => {
 				</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
+				<h1> INTRODUCING: Honey Comb Diffuser Caps </h1>
+			</FlexContainer>
+
+			<img
+				style={{ borderRadius: '10px', width: '100%' }}
+				src="/images/optimized_images/promo_images/img_0792_1_optimized.jpg"
+				alt="promo"
+			/>
+			<FlexContainer h_center>
+				<h1>24 Hour BOGO Sale</h1>
+			</FlexContainer>
+			<FlexContainer h_center>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					For 24hrs only GET A FREE SET OF HEART DIFFUSER CAPS WITH ANY PURCHASE OF DIFFUSER CAPS ❤😱 No code
+					necessary! Simply write in the order notes that you'd like the free set of Heart Diffuser Caps and
+					they're all yours 😁 Offer good until 5pm CST 8/15/2020 And please don't forget to order Diffuser
+					Adapters, you will need a set to use these babies
+				</p>
+			</FlexContainer>
+			<FlexContainer h_center v_i_center>
+				{/* <img
+					style={{ borderRadius: '10px', width: '43%' }}
+					src="/images/optimized_images/product_images/Diffusers/Diffuser_Caps/Dodecahedron_Face/img_9979_optimized.jpg"
+					alt="promo"
+				/> */}
+				{/* <h1 style={{ fontSize: '60px', margin: '18px' }}>+</h1> */}
+				<img
+					style={{
+						borderRadius: '10px',
+						// objectFit: 'cover',
+						// objectPosition: '-20% -319px',
+
+						width: '100%'
+						// height: '375px'
+					}}
+					src="/images/optimized_images/promo_images/1_img_9836_optimized.png"
+					alt="promo"
+				/>
+			</FlexContainer>
+			<FlexContainer h_center />
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				Buy any set of diffuser caps and get a free set of heart diffuser caps in your order!
+			</p>
+			<FlexContainer h_center>
 				<h1>From a Glover that just wants the world to stay lit</h1>
 			</FlexContainer>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
