@@ -7,7 +7,7 @@ const HomePage = (props) => {
 	return (
 		<div class="main_container">
 			<MetaTags>
-				<title>Glow LEDs | Home of Diffuser Caps, Infinity Mirrors and String Lights.</title>
+				<title>Glow LEDs | Home of the Diffuser Caps.</title>
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
