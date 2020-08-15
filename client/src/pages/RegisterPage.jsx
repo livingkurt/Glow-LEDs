@@ -59,12 +59,35 @@ const RegisterPage = (props) => {
 	return (
 		<div className="form">
 			<MetaTags>
-				<title>Glow LEDs Register</title>
-				<meta property="og:title" content="Glow LEDs Register" />
-				<meta name="description" content="Glow LEDs Register" />
-				<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				{/* <meta property="og:image" content="path/to/image.jpg" /> */}
+				<title>Register | Glow LEDs</title>
+				<meta
+					name="description"
+					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+				/>
+				<meta property="og:title" content="Products | Glow LEDs" />
+				<meta
+					property="og:description"
+					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+				/>
+				<meta
+					property="og:image"
+					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
+				/>
+				<meta
+					property="og:image:secure_url"
+					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
+				/>
+				<meta property="og:url" content="https://www.glow-leds.com" />
+				<meta name="twitter:card" content="summary" />
+				<meta name="twitter:title" content="Products | Glow LEDs" />
+				<meta
+					name="twitter:description"
+					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+				/>
+				<meta
+					name="twitter:image"
+					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
+				/>
 			</MetaTags>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
