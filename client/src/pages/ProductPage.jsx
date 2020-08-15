@@ -53,11 +53,23 @@ const ProductPage = (props) => {
 				/>
 				<meta
 					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
+					content={
+						'https://www.glow-leds.com' + loading ? (
+							'/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png'
+						) : (
+							product.display_image
+						)
+					}
 				/>
 				<meta
 					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
+					content={
+						'https://www.glow-leds.com' + loading ? (
+							'/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png'
+						) : (
+							product.display_image
+						)
+					}
 				/>
 				<meta property="og:url" content="https://www.glow-leds.com" />
 				<meta name="twitter:card" content="summary" />
@@ -68,7 +80,13 @@ const ProductPage = (props) => {
 				/>
 				<meta
 					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
+					content={
+						'https://www.glow-leds.com' + loading ? (
+							'/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png'
+						) : (
+							product.display_image
+						)
+					}
 				/>
 			</MetaTags>
 			<div className="back-to-result">
