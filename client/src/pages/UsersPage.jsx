@@ -152,18 +152,6 @@ const UsersPage = (props) => {
 						</FlexContainer>
 					);
 				})}
-				{/* <FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
-					<label style={{ marginRight: '1rem' }}>Not Verfied</label>
-					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
-					<label style={{ marginRight: '1rem' }}>Verified</label>
-					<div style={{ backgroundColor: '#8e8e8e', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
-					<label style={{ marginRight: '1rem' }}>Admin</label>
-					<div style={{ backgroundColor: '#626262', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer> */}
 			</FlexContainer>
 			<div className="order-header">
 				<h1
