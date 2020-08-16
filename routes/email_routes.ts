@@ -10,7 +10,8 @@ import {
 	verified_account_view,
 	verify_account_view,
 	order_view,
-	contact_confirmation_view
+	contact_confirmation_view,
+	not_verified_view
 } from '../email_templates/pages/index';
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
@@ -253,6 +254,28 @@ router.post('/notpaid', async (req, res) => {
 		bcc: process.env.EMAIL,
 		subject: 'Glow LEDs Order Not Complete',
 		html: main_layout(order_view({ ...req.body, title: 'Order Not Complete', paid, shipped }), styles())
+	};
+
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.send(err);
+		} else {
+			console.log('Order Not Complete for ' + req.body.shipping.first_name);
+			res.send('Email Successfully Sent');
+		}
+	});
+});
+router.post('/notverified', async (req, res) => {
+	console.log({ notpaid: req.body });
+	let user = {};
+
+	let mailOptions = {
+		from: process.env.DISPLAY_EMAIL,
+		to: req.body.email,
+		bcc: process.env.EMAIL,
+		subject: 'Having Trouble Verifying your Glow LEDs Account',
+		html: main_layout(not_verified_view(req.body), styles())
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {

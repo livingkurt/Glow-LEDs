@@ -7,6 +7,7 @@
 // };
 
 export { default as verify_account_view } from './verify_account_view';
+export { default as not_verified_view } from './not_verified_view';
 export { default as verified_account_view } from './verified_account_view';
 export { default as reset_password_view } from './reset_password_view';
 export { default as contact_view } from './contact_view';

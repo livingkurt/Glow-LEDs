@@ -6,6 +6,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { detailsUser } from '../actions/userActions';
 import { Loading } from '../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import API from '../utils/API';
 
 const UserProfilePage = (props) => {
 	// const history = useHistory();
@@ -65,6 +66,10 @@ const UserProfilePage = (props) => {
 		marginBottom: '20px'
 	};
 
+	const send_not_verified_email = async () => {
+		const request = await API.not_verified_email(user);
+		console.log(request);
+	};
 	return (
 		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
 			<MetaTags>
@@ -134,7 +139,7 @@ const UserProfilePage = (props) => {
 							<div style={{ height: 50 }}>
 								<Link to={'/admin/edituserprofile'}>
 									<button
-										style={{ marginRight: '10px', maxWidth: '150px' }}
+										style={{ marginRight: '10px', maxWidth: '225px' }}
 										className="button primary"
 									>
 										Edit Profile
@@ -153,10 +158,24 @@ const UserProfilePage = (props) => {
 							</div>
 							<div style={{ height: 50 }}>
 								<Link to={'/account/orders'}>
-									<button style={{ maxWidth: '150px' }} className="button primary">
+									<button
+										style={{ maxWidth: '225px', marginRight: '10px' }}
+										className="button primary"
+									>
 										View Orders
 									</button>
 								</Link>
+							</div>
+							<div style={{ height: 50 }}>
+								{/* <Link to={'/account/orders'}> */}
+								<button
+									style={{ maxWidth: '225px' }}
+									onClick={send_not_verified_email}
+									className="button primary"
+								>
+									Still Not Verified
+								</button>
+								{/* </Link> */}
 							</div>
 						</FlexContainer>
 					</FlexContainer>
