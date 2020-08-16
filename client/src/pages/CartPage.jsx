@@ -32,6 +32,21 @@ const CartPage = (props) => {
 		}
 	}, []);
 
+	useEffect(
+		() => {
+			// if (pathname) {
+			// console.log(cartItems.find((item) => item.product === pathname));
+			// const same_product = cartItems.find((item) => item.product === pathname);
+			// if (same_product) {
+			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
+			// } else {
+			dispatch(addToCart(pathname, qty));
+			// }
+			// }
+		},
+		[ props.match.params.pathname ]
+	);
+
 	const checkoutHandler = () => {
 		if (cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');

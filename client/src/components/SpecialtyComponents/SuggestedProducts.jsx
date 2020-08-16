@@ -52,12 +52,14 @@ const SuggestedProducts = (props) => {
 									// <div className="embla__slide" key={index}>
 									// 	<div className="embla__slide__inner">
 									// 		<div className="embla__slide__img">
-									<Product
-										key={index}
-										size="175px"
-										product={item}
-										styles={{ marginRight: 20, listStyleType: 'none' }}
-									/>
+									<div class="tooltip">
+										<Product
+											key={index}
+											size="175px"
+											product={item}
+											styles={{ marginRight: 20, listStyleType: 'none' }}
+										/>
+									</div>
 									// 		</div>
 									// 	</div>
 									// </div>
