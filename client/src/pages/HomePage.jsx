@@ -52,7 +52,7 @@ const HomePage = (props) => {
 				alt="promo"
 			/>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
-				Throw a show like your in a bee in a hive buzzin' around.
+				Throw a show like your a bee in a hive buzzin' around.
 			</p>
 			<FlexContainer h_center>
 				<Link to="/collections/all/products/honey_comb_diffuser_caps">
