@@ -1,5 +1,6 @@
 export default (props: {
 	title: string;
+	// body: string;
 	_id: string;
 	shipping: {
 		first_name: string;
@@ -39,24 +40,38 @@ export default (props: {
   <div class="placeorder" style="display: flex;flex-wrap: wrap;justify-content: space-between;color: white;">
       <div class="placeorder-info" style="box-sizing: border-box;flex: 3 1 60rem;">
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem;margin: 1rem;">
-          <div style="display: flex;justify-content: space-between;flex-wrap: wrap;">
-            <div style="display: flex;flex-direction: column;box-sizing: border-box;">
-              <h1 style="display: flex;font-size: 30px;margin-top: 0px;box-sizing: border-box;font-family: Helvetica;">
+          <div style="display: flex;justify-content: space-between; flex-direction: column;">
+            <div style="display: block;flex-direction: column;box-sizing: border-box;">
+              <h1 style="display: flex; width: 100%; font-size: 30px;margin-top: 0px; margin-bottom: 0px;box-sizing: border-box;font-family: Helvetica;">
                 ${props.title}</h1>
-
-              <div class="  display: flex;  flex-wrap: wrap;" style="box-sizing: border-box;">
+                <div style=" width: 100%;">
+                  ${props.title === 'Order Not Complete' &&
+						`<div style=" width: 100%;"> 
+                    <h3 >You have placed an order but have yet to pay.</h3>
+                    <button style="background-color: #8a8a8a;border-radius: 5px;background-color: #676767;margin: 0 auto; margin-bottom: 10px;font-weight: bold;border: 0px;color: white;text-decoration: none;padding: 15px;box-sizing: border-box;font-size: 1.6rem;"><a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"href="${process
+						.env.NODE_ENV === 'production'
+						? 'http://www.glow-leds.com'
+						: 'http://localhost:3000'}/account/order/${props._id}">Complete Order</a></button>
+        <h3>Do you need assistance completing your order?</h3>
+                    <button style="background-color: #8a8a8a;border-radius: 5px;background-color: #676767;margin: 0 auto; margin-bottom: 10px;font-weight: bold;border: 0px;color: white;text-decoration: none;padding: 15px;box-sizing: border-box;font-size: 1.6rem;"><a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"
+            href="${process.env.NODE_ENV === 'production'
+				? 'http://www.glow-leds.com'
+				: 'http://localhost:3000'}/pages/contact">Contact</a></button>
+                  </div>`}
+                </div>
+              <div class="  display: flex;  flex-wrap: wrap;" style=" width: 100%;>
 
                 <h2 style="font-size: 20px;margin: 0px;box-sizing: border-box;font-family: Helvetica;">Order
                   Number: </h2>
 
                 <a href="${process.env.NODE_ENV === 'production'
 					? 'http://glow-leds.com'
-					: 'http://localhost:3000'}/order/${props._id}"
+					: 'http://localhost:3000'}/account/order/${props._id}"
                   style="color: white;text-decoration: none;box-sizing: border-box;">${props._id}</a>
               </div>
               <h1 style="box-sizing: border-box;font-family: Helvetica;">Shipping</h1>
 
-              <div style="box-sizing: border-box;">
+              <div style=" width: 100%;">
 
                 <div style="box-sizing: border-box;">${props.shipping.first_name} ${props.shipping.last_name}
                 </div>
@@ -64,13 +79,10 @@ export default (props: {
                 <div style="box-sizing: border-box;">${props.shipping.city}, ${props.shipping.state}
                   ${props.shipping.postalCode} ${props.shipping.country}</div>
                 <div style="box-sizing: border-box; text-decoration: none; color: white;">${props.shipping.email}</div>
+                <div
+                style="    border-top: 0.1rem solid white;width: 100%;">
+                <label style="margin-top: 10px;box-sizing: border-box;"><strong>${props.shipped}</strong></label>
               </div>
-            </div>
-            <div class="ship_deliver"
-              style="display: flex;flex-direction: column;margin-top: auto;box-sizing: border-box;">
-              <div
-                style="display: flex;justify-content: space-between;align-items: center;flex-direction: row;box-sizing: border-box;">
-                <label style="margin-top: 5px;box-sizing: border-box;">${props.shipped}</label>
               </div>
             </div>
           </div>
@@ -78,7 +90,9 @@ export default (props: {
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
           <h1 style="box-sizing: border-box;font-family: Helvetica;">Payment</h1>
           <div style="box-sizing: border-box;">Payment Method: paypal</div>
-          <div style="box-sizing: border-box;">${props.paid}</div>
+          <div style="box-sizing: border-box; border-top: 0.1rem solid white;width: 100%;">
+            <label style="margin-top: 10px;box-sizing: border-box;"><strong>${props.paid}</strong></label>
+          </div>
         </div>
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
           <ul class="cart-list-container"

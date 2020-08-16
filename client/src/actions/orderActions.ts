@@ -170,6 +170,32 @@ const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
 		dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
 	}
 };
+// const notPaidOrder = (order: { _id: string }, notPaidResult: boolean) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	console.log({ ...order, isShipped: notPaidResult });
+// 	try {
+// 		dispatch({ type: ORDER_NOT_PAID_REQUEST, payload: notPaidResult });
+// 		const { userLogin: { userInfo } } = getState();
+// 		const { data } = await axios.put(
+// 			'/api/orders/' + order._id + '/shipping',
+// 			{
+// 				...order,
+// 				isNotPaid: notPaidResult,
+// 				shippedAt: notPaidResult ? Date.now() : ''
+// 			},
+// 			{
+// 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+// 			}
+// 		);
+// 		console.log({ data });
+// 		dispatch({ type: ORDER_NOT_PAID_SUCCESS, payload: data });
+// 		// axios.post("/api/emails/shipping", data);
+// 	} catch (error) {
+// 		dispatch({ type: ORDER_NOT_PAID_FAIL, payload: error.message });
+// 	}
+// };
 
 const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,

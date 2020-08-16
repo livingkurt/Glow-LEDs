@@ -8,6 +8,7 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { PaypalButton } from '../components/SpecialtyComponents';
 import { Loading } from '../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import API from '../utils/API';
 // import { email_delivery, email_shipping } from '../actions/emailActions';
 const OrderPage = (props) => {
 	console.log(props.userInfo);
@@ -81,6 +82,11 @@ const OrderPage = (props) => {
 		},
 		[ delivery ]
 	);
+
+	const send_not_paid_email = async () => {
+		const request = await API.not_paid_email(order, user_data);
+		console.log(request);
+	};
 
 	const update_shipping_state = () => {
 		if (order_state.isShipped) {
@@ -247,6 +253,24 @@ const OrderPage = (props) => {
 										<FlexContainer h_right>
 											<button className="button primary" onClick={update_delivered_state}>
 												{delivery_state ? 'Mark As Not Delivered' : 'Mark As Delivered'}
+											</button>
+										</FlexContainer>
+									)}
+								</FlexContainer>
+								<FlexContainer row v_i_center h_between>
+									{console.log({ delivery_state })}
+									{/* <label style={{ marginTop: '5px' }}>
+										{delivery_state ? (
+											'Delivered at ' + format_date_display(order_state.deliveredAt)
+										) : (
+											'Not Delivered'
+										)}
+									</label> */}
+									{props.userInfo &&
+									props.userInfo.isAdmin && (
+										<FlexContainer h_right>
+											<button className="button primary" onClick={send_not_paid_email}>
+												Still Not Paid
 											</button>
 										</FlexContainer>
 									)}
