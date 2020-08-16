@@ -47,7 +47,7 @@ const CheckEmailPage = (props) => {
 					</p>
 					<p style={{ textAlign: 'center', width: '100%' }}>If still not there please contact support.</p>
 					<FlexContainer h_center>
-						<Link to="/pages/contact">
+						<Link to="/pages/contact/did_not_recieve_verification_email">
 							<button style={{ marginLeft: '10px' }} className="button primary">
 								Contact Support
 							</button>
