@@ -220,7 +220,8 @@ router.post('/notpaid', async (req, res) => {
 	// const body = 'You have placed an order but have yet to pay. Would you like assistance completing your order?';
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
-		to: process.env.EMAIL,
+		to: req.body.shipping.email,
+		bcc: process.env.EMAIL,
 		subject: 'Glow LEDs Order Not Complete',
 		html: main_layout(order_view({ ...req.body, title: 'Order Not Complete', paid, shipped }), styles())
 	};
@@ -230,7 +231,7 @@ router.post('/notpaid', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('New Order Paid by ' + req.body.shipping.first_name);
+			console.log('Order Not Complete for ' + req.body.shipping.first_name);
 			res.send('Email Successfully Sent');
 		}
 	});
