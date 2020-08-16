@@ -60,28 +60,6 @@ const UsersPage = (props) => {
 	// 	[ sortOrder ]
 	// );
 
-	// const colors = {
-	// 	not_verified: '#333333',
-	// 	verifid: '#8e8e8e',
-	// 	admin: '#626262'
-	// };
-
-	// const determine_color = (user) => {
-	// 	let result = '';
-	// 	if (!user.isVerified) {
-	// 		console.log('Not Verified');
-	// 		result = colors.not_verified;
-	// 	}
-	// 	if (user.isVerified) {
-	// 		console.log('Verified');
-	// 		result = colors.verifid;
-	// 	}
-	// 	if (user.isAdmin) {
-	// 		console.log('Admin');
-	// 		result = colors.admin;
-	// 	}
-	// 	return result;
-	// };
 	const colors = [
 		{ name: 'Not Verified', color: '#333333' },
 		{ name: 'Verified', color: '#626262' },
@@ -190,11 +168,6 @@ const UsersPage = (props) => {
 								{users.map((user) => (
 									<tr
 										key={user._id}
-										// style={{
-										// 	backgroundColor: user.isAdmin
-										// 		? colors.admin
-										// 		: user.isVerified ? colors.verifid : colors.not_verified
-										// }}
 										style={{
 											backgroundColor: determine_color(user)
 										}}

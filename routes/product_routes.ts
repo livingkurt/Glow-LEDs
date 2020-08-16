@@ -24,20 +24,15 @@ router.get('/', async (req, res) => {
 		sortOrder = { price: 1 };
 	} else if (req.query.sortOrder === 'highest') {
 		sortOrder = { price: -1 };
-	} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
+	} else if (req.query.sortOrder === 'newest') {
 		sortOrder = { _id: -1 };
-	} else if (req.query.sortOrder === 'category') {
+	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
 		sortOrder = { category: -1 };
 	}
-	// console.log({ category });
-	// console.log({ category });
+
 	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	// console.log({ products });
 	console.log(products);
 	res.send(products);
-	// for (let product of products) {
-	// 	console.log(products);
-	// }
 });
 
 router.get('/:pathname', async (req, res) => {
