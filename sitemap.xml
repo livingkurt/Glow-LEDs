@@ -20,7 +20,7 @@
 </url>
 
 <!-- Account -->
-<url>
+<!-- <url>
   <loc>https://www.glow-leds.com/account/profile </loc>
 </url>
 <url>
@@ -31,7 +31,7 @@
 </url>
 <url>
   <loc>https://www.glow-leds.com/account/order</loc>
-</url>
+</url> -->
 <url>
   <loc>https://www.glow-leds.com/account/login </loc>
 </url>
@@ -41,9 +41,9 @@
 <url>
   <loc>https://www.glow-leds.com/account/checkemail </loc>
 </url>
-<url>
+<!-- <url>
   <loc>https://www.glow-leds.com/account/changepassword </loc>
-</url>
+</url> -->
 <url>
   <loc>https://www.glow-leds.com/account/register </loc>
 </url>
@@ -55,7 +55,7 @@
 </url>
 
 <!-- Checkout -->
-<url>
+<!-- <url>
   <loc>https://www.glow-leds.com/checkout/shipping </loc>
 </url>
 <url>
@@ -66,13 +66,13 @@
 </url>
 <url>
   <loc>https://www.glow-leds.com/checkout/placeorder</loc>
-</url>
+</url> -->
 <url>
   <loc>https://www.glow-leds.com/checkout/cart </loc>
 </url>
 
 <!-- Admin -->
-<url>
+<!-- <url>
   <loc>https://www.glow-leds.com/admin/editproduct </loc>
 </url>
 <url>
@@ -89,7 +89,7 @@
 </url>
 <url>
   <loc>https://www.glow-leds.com/admin/edituserprofile </loc>
-</url>
+</url> -->
 
 <!-- Pages -->
 <url>
