@@ -212,7 +212,7 @@ const ContactPage = (props) => {
 				</select>
 				<label className="validation_text">{reason_for_contact_validations}</label>
 				{console.log({ reason_for_contact })}
-				{[ 'Order Issues', 'Returns', 'Technical Support' ].includes(reason_for_contact) && (
+				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (
 					<div className="full-width">
 						<label>Order Number</label>
 						<input
@@ -245,7 +245,7 @@ const ContactPage = (props) => {
 				>
 					Send
 				</button>
-				{[ 'Order Issues', 'Returns', 'Technical Support' ].includes(reason_for_contact) && (
+				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (
 					<p style={{ lineHeight: '25px' }}>
 						You can find your order number by logging in and going to the drop down with your name on it and
 						clicking orders. The order Number will be in the far left column. Or by checking the email you
@@ -253,7 +253,7 @@ const ContactPage = (props) => {
 					</p>
 				)}
 
-				{[ 'Submit Content to be Featured' ].includes(reason_for_contact) && (
+				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 					<div>
 						<p>
 							Put your facebook or instagram handle in the message. Then upload content using the google
