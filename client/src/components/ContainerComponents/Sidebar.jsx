@@ -140,7 +140,7 @@ const Sidebar = (props) => {
 				)}
 				<Link to="/collections/all/products">
 					<button className="sidebar_button primary" onClick={closeMenu}>
-						All Products
+						Products
 					</button>
 				</Link>
 				<div className="sidebar_dropdown">
