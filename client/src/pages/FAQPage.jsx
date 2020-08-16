@@ -91,7 +91,7 @@ const FAQPage = () => {
 						and we will create a detailed invoice and design. The price may vary depending on the size and
 						hardware used.
 					</p>
-					<Link to="/contact">
+					<Link to="/pages/contact">
 						<FlexContainer h_center>
 							<button className="button primary " style={{ margin: 'auto' }}>
 								Contact
@@ -135,7 +135,7 @@ const FAQPage = () => {
 							info.glowleds@gmail.com
 						</li>
 					</ul>
-					<Link to="/contact">
+					<Link to="/pages/contact">
 						<FlexContainer h_center>
 							<button className="button primary " style={{ margin: 'auto' }}>
 								Contact
@@ -189,7 +189,7 @@ const FAQPage = () => {
 							We are not able to modify orders. If you would like to add an item you will need to do so in
 							another order.
 						</li>
-						<Link to="/contact">
+						<Link to="/pages/contact">
 							<FlexContainer h_center>
 								<button className="button primary " style={{ margin: 'auto' }}>
 									Contact

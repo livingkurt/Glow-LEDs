@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { FlexContainer } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
+import Banner from './Banner';
 
 const Header = (props) => {
 	const history = useHistory();
@@ -52,151 +53,154 @@ const Header = (props) => {
 	);
 
 	return (
-		<header id="overlay">
-			<div className="menu_button" style={{ width: '233px' }}>
-				<Link to="/">
-					<img
-						className="zoom logo"
-						// style={{ marginRight: '176px' }}
-						height="125px"
-						src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-						alt="Glow LEDs"
-					/>
-				</Link>
-				<button
-					className="button mobile nav"
-					onClick={openMenu}
-					style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px', padding: '10px' }}
-				>
-					<i className="fas fa-bars" />
-				</button>
-			</div>
-			<FlexContainer column h_center>
-				<FlexContainer h_center v_i_center class="logo_text">
+		<div style={{ display: 'flex', flexDirection: 'column' }}>
+			<Banner />
+			<header id="overlay">
+				<div className="menu_button" style={{ width: '233px' }}>
 					<Link to="/">
 						<img
-							className="logo_2 zoom "
-							style={{ display: 'none', height: '80px' }}
+							className="zoom logo"
+							// style={{ marginRight: '176px' }}
+							height="125px"
 							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 							alt="Glow LEDs"
 						/>
 					</Link>
-					<Link to="/">
-						<h1 className="glow_leds_text">Glow LEDs</h1>
-					</Link>
-				</FlexContainer>
-				<FlexContainer row h_between class="nav_bar">
-					<Link to="/collections/all/products">
-						<button className="button nav">Products</button>
-					</Link>
-					<div className="dropdown-nav">
-						{/* <Link to="/collections/all/products/category/Diffusers"> */}
-						<button className="button nav">Gloving</button>
-						{/* </Link> */}
-						<ul style={{ width: 210 }} className="dropdown-nav-content hover_fade_in">
-							<Link to="/collections/all/products/category/domes">
-								<button className="button nav">Domes</button>
-							</Link>
-							<Link to="/collections/all/products/category/caps">
-								<button className="button nav">Caps</button>
-							</Link>
-							<Link to="/collections/all/products/category/diffuser_adapters">
-								<button className="button nav"> Diffuser Adapters</button>
-							</Link>
-							<Link to="/collections/all/products/category/accessories">
-								<button className="button nav">Accessories</button>
-							</Link>
-						</ul>
-					</div>
-					<div className="dropdown-nav">
-						{/* <Link to="/collections/all/products/category/Diffusers"> */}
-						<button className="button nav">Decor</button>
-						{/* </Link> */}
-						<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
-							<Link to="/collections/all/products/category/string_lights">
-								<button className="button nav">String Lights</button>
-							</Link>
-							<Link to="/collections/all/products/category/infinity_mirrors">
-								<button className="button nav"> Infinity Mirrors</button>
-							</Link>
-						</ul>
-					</div>
-					<div className="dropdown-nav">
-						{/* <Link to="/collections/all/products/category/Diffusers"> */}
-						<button className="button nav">Support</button>
-						{/* </Link> */}
-						<ul style={{ width: 230 }} className="dropdown-nav-content hover_fade_in">
-							<Link to="/pages/about">
-								<button className="button nav">About</button>
-							</Link>
-							<Link to="/pages/faq">
-								<button className="button nav">FAQ</button>
-							</Link>
-							<Link to="/pages/contact">
-								<button className="button nav">Contact</button>
-							</Link>
-							<Link to="/pages/terms">
-								<button className="button nav">Term and Conditions</button>
-							</Link>
-						</ul>
-					</div>
-				</FlexContainer>
-			</FlexContainer>
-			<FlexContainer class="nav_bar" styles={{ width: '233px', justifyContent: 'flex-end' }}>
-				<Link to="/checkout/cart">
-					<button className=" button nav cart_text">
-						Cart <i className="fas fa-shopping-cart" />{' '}
-						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+					<button
+						className="button mobile nav"
+						onClick={openMenu}
+						style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px', padding: '10px' }}
+					>
+						<i className="fas fa-bars" />
 					</button>
-				</Link>
-				<Link to="/checkout/cart">
-					<button style={{ display: 'none' }} className=" button mobile nav cart_icon">
-						<i className="fas fa-shopping-cart" />{' '}
-						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
-					</button>
-				</Link>
-				{props.userInfo ? (
-					<div className="dropdown">
-						<button className="button nav">{first_name}</button>
-						<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
-							<Link to="/account/profile">
-								<button className="button nav">Profile</button>
-							</Link>
-							<Link to="/account/orders">
-								<button className="button nav">Orders</button>
-							</Link>
-							<button className="button nav" onClick={handleLogout} style={{ marginRight: 'auto' }}>
-								{' '}
-								Logout
-							</button>
-						</ul>
-					</div>
-				) : (
-					<div>
-						<Link to="/account/login">
-							<button className="button nav">Login</button>
+				</div>
+				<FlexContainer column h_center>
+					<FlexContainer h_center v_i_center class="logo_text">
+						<Link to="/">
+							<img
+								className="logo_2 zoom "
+								style={{ display: 'none', height: '80px' }}
+								src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+								alt="Glow LEDs"
+							/>
 						</Link>
-					</div>
-				)}
-				{props.userInfo &&
-				props.userInfo.isAdmin && (
-					<div className="dropdown ">
-						<button className="button nav">Admin</button>
-						<ul className="dropdown-content hover_fade_in">
-							<Link to="/admin/orders">
-								<button className="button nav">Orders</button>
+						<Link to="/">
+							<h1 className="glow_leds_text">Glow LEDs</h1>
+						</Link>
+					</FlexContainer>
+					<FlexContainer row h_between class="nav_bar">
+						<Link to="/collections/all/products">
+							<button className="button nav">Products</button>
+						</Link>
+						<div className="dropdown-nav">
+							{/* <Link to="/collections/all/products/category/Diffusers"> */}
+							<button className="button nav">Gloving</button>
+							{/* </Link> */}
+							<ul style={{ width: 210 }} className="dropdown-nav-content hover_fade_in">
+								<Link to="/collections/all/products/category/domes">
+									<button className="button nav">Domes</button>
+								</Link>
+								<Link to="/collections/all/products/category/caps">
+									<button className="button nav">Caps</button>
+								</Link>
+								<Link to="/collections/all/products/category/diffuser_adapters">
+									<button className="button nav"> Diffuser Adapters</button>
+								</Link>
+								<Link to="/collections/all/products/category/accessories">
+									<button className="button nav">Accessories</button>
+								</Link>
+							</ul>
+						</div>
+						<div className="dropdown-nav">
+							{/* <Link to="/collections/all/products/category/Diffusers"> */}
+							<button className="button nav">Decor</button>
+							{/* </Link> */}
+							<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
+								<Link to="/collections/all/products/category/string_lights">
+									<button className="button nav">String Lights</button>
+								</Link>
+								<Link to="/collections/all/products/category/infinity_mirrors">
+									<button className="button nav"> Infinity Mirrors</button>
+								</Link>
+							</ul>
+						</div>
+						<div className="dropdown-nav">
+							{/* <Link to="/collections/all/products/category/Diffusers"> */}
+							<button className="button nav">Support</button>
+							{/* </Link> */}
+							<ul style={{ width: 230 }} className="dropdown-nav-content hover_fade_in">
+								<Link to="/pages/about">
+									<button className="button nav">About</button>
+								</Link>
+								<Link to="/pages/faq">
+									<button className="button nav">FAQ</button>
+								</Link>
+								<Link to="/pages/contact">
+									<button className="button nav">Contact</button>
+								</Link>
+								<Link to="/pages/terms">
+									<button className="button nav">Term and Conditions</button>
+								</Link>
+							</ul>
+						</div>
+					</FlexContainer>
+				</FlexContainer>
+				<FlexContainer class="nav_bar" styles={{ width: '233px', justifyContent: 'flex-end' }}>
+					<Link to="/checkout/cart">
+						<button className=" button nav cart_text">
+							Cart <i className="fas fa-shopping-cart" />{' '}
+							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+						</button>
+					</Link>
+					<Link to="/checkout/cart">
+						<button style={{ display: 'none' }} className=" button mobile nav cart_icon">
+							<i className="fas fa-shopping-cart" />{' '}
+							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+						</button>
+					</Link>
+					{props.userInfo ? (
+						<div className="dropdown">
+							<button className="button nav">{first_name}</button>
+							<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
+								<Link to="/account/profile">
+									<button className="button nav">Profile</button>
+								</Link>
+								<Link to="/account/orders">
+									<button className="button nav">Orders</button>
+								</Link>
+								<button className="button nav" onClick={handleLogout} style={{ marginRight: 'auto' }}>
+									{' '}
+									Logout
+								</button>
+							</ul>
+						</div>
+					) : (
+						<div>
+							<Link to="/account/login">
+								<button className="button nav">Login</button>
 							</Link>
-							<Link to="/admin/products">
-								<button className="button nav"> Products</button>
-							</Link>
-							<Link to="/admin/users">
-								<button className="button nav"> Users</button>
-							</Link>
-						</ul>
-					</div>
-				)}
-			</FlexContainer>
-		</header>
+						</div>
+					)}
+					{props.userInfo &&
+					props.userInfo.isAdmin && (
+						<div className="dropdown ">
+							<button className="button nav">Admin</button>
+							<ul className="dropdown-content hover_fade_in">
+								<Link to="/admin/orders">
+									<button className="button nav">Orders</button>
+								</Link>
+								<Link to="/admin/products">
+									<button className="button nav"> Products</button>
+								</Link>
+								<Link to="/admin/users">
+									<button className="button nav"> Users</button>
+								</Link>
+							</ul>
+						</div>
+					)}
+				</FlexContainer>
+			</header>
+		</div>
 	);
 };
 

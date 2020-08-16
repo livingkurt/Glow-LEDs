@@ -26,7 +26,7 @@ const Footer = (props) => {
 				{/* <div style={{ marginLeft: '96px' }} /> */}
 				{/* <label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label> */}
 				<FlexContainer styles={{ marginLeft: '10px' }}>
-					<Link to="/contact">
+					<Link to="/pages/contact">
 						<button style={{ margin: 'auto', marginRight: '10px' }} className="button mobile_nav">
 							Contact
 						</button>
