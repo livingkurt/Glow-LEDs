@@ -257,7 +257,7 @@ const ProductPage = (props) => {
 										</h4>
 									</li>
 									{product.name === 'Custom Infinity Mirror' ? (
-										<Link to="/contact">
+										<Link to="/pages/contact/custon_orders">
 											<button className="button primary full-width">Contact</button>
 										</Link>
 									) : (
