@@ -15,20 +15,42 @@
 <url>
   <loc>https://www.glow-leds.com/collections/all/products</loc>
 </url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/honey_comb_diffuser_caps</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/serotonin_molecule_infinity_mirror</loc>
-</url>
+
+
+<!-- Diffusers -->
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/large_frosted_dome_diffusers</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/blinking_eyes_diffuser_caps</loc>
+  <loc>https://www.glow-leds.com/collections/all/products/frosted_dome_diffusers</loc>
+</url>
+
+<!-- String Lights -->
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/50_led_3_5m_string_lights</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/50_led_3</loc>
+  <loc>https://www.glow-leds.com/collections/all/products/150_led_10_5m_string_lights</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/200_led_14m_string_lights</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/100_led_7m_string_lights</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/string_lights_controller_power_adapter</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/50_string_lights_w_o_controller</loc>
+</url>
+
+<!-- Diffuser Caps -->
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/honey_comb_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/blinking_eyes_diffuser_caps</loc>
 </url>
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/x_diffuser_caps</loc>
@@ -49,12 +71,6 @@
   <loc>https://www.glow-leds.com/collections/all/products/mountain_diffuser_caps</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/large_custom_infinity_mirror</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/coin_battery_storage</loc>
-</url>
-<url>
   <loc>https://www.glow-leds.com/collections/all/products/diffuser_caps_adapters_starter_kit</loc>
 </url>
 <url>
@@ -70,9 +86,6 @@
   <loc>https://www.glow-leds.com/collections/all/products/diffuser_adapters_no_caps</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/150_led_10</loc>
-</url>
-<url>
   <loc>https://www.glow-leds.com/collections/all/products/tiger_diffuser_caps</loc>
 </url>
 <url>
@@ -85,25 +98,10 @@
   <loc>https://www.glow-leds.com/collections/all/products/trinity_diffuser_caps</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/triforce_infinity_mirror</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/200_led_14m_string_lights</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/frosted_dome_diffusers</loc>
-</url>
-<url>
   <loc>https://www.glow-leds.com/collections/all/products/phoenix_diffuser_caps</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/100_led_7m_string_lights</loc>
-</url>
-<url>
   <loc>https://www.glow-leds.com/collections/all/products/seed_of_life_diffuser_caps</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/string_lights_controller_power_adapter</loc>
 </url>
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/flower_diffuser_caps</loc>
@@ -115,16 +113,10 @@
   <loc>https://www.glow-leds.com/collections/all/products/lion_diffuser_caps</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/custom_infinity_mirror</loc>
-</url>
-<url>
   <loc>https://www.glow-leds.com/collections/all/products/illuminate￼_diffuser_caps</loc>
 </url>
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/dizzy_face_emoji_diffuser_caps</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/collections/all/products/50_string_lights_w_o_controller</loc>
 </url>
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/gyro_sphere_diffuser_caps</loc>
@@ -132,9 +124,33 @@
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/custom_diffuser_caps</loc>
 </url>
+
+<!-- Infinity Mirrors -->
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/large_custom_infinity_mirror</loc>
+</url>
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/serotonin_molecule_infinity_mirror</loc>
 </url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/triforce_infinity_mirror</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/custom_infinity_mirror</loc>
+</url>
+
+<!-- Accessories -->
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/coin_battery_storage</loc>
+</url>
+
+
+
+
+
+
+
+
 
 
 
