@@ -43,7 +43,7 @@ const HomePage = (props) => {
 				</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
-				<h1> INTRODUCING: Honey Comb Diffuser Caps </h1>
+				<h1> Introducing: Honey Comb Diffuser Caps </h1>
 			</FlexContainer>
 
 			<img
@@ -51,7 +51,17 @@ const HomePage = (props) => {
 				src="/images/optimized_images/promo_images/img_0792_1_optimized.jpg"
 				alt="promo"
 			/>
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				Throw a show like your in a bee in a hive buzzin' around.
+			</p>
 			<FlexContainer h_center>
+				<Link to="/collections/all/products/honey_comb_diffuser_caps">
+					<button className="button primary" style={{ background: 'transparent' }}>
+						<h2>Shop Honey Comb Diffuser Caps</h2>
+					</button>
+				</Link>
+			</FlexContainer>
+			{/* <FlexContainer h_center>
 				<h1>24 Hour BOGO Sale</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
@@ -63,29 +73,20 @@ const HomePage = (props) => {
 				</p>
 			</FlexContainer>
 			<FlexContainer h_center v_i_center>
-				{/* <img
-					style={{ borderRadius: '10px', width: '43%' }}
-					src="/images/optimized_images/product_images/Diffusers/Diffuser_Caps/Dodecahedron_Face/img_9979_optimized.jpg"
-					alt="promo"
-				/> */}
-				{/* <h1 style={{ fontSize: '60px', margin: '18px' }}>+</h1> */}
 				<img
 					style={{
 						borderRadius: '10px',
-						// objectFit: 'cover',
-						// objectPosition: '-20% -319px',
 
 						width: '100%'
-						// height: '375px'
 					}}
 					src="/images/optimized_images/promo_images/1_img_9836_optimized.png"
 					alt="promo"
 				/>
-			</FlexContainer>
+			</FlexContainer> */}
 			<FlexContainer h_center />
-			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+			{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Buy any set of diffuser caps and get a free set of heart diffuser caps in your order!
-			</p>
+			</p> */}
 			<FlexContainer h_center>
 				<h1>From a Glover that just wants the world to stay lit</h1>
 			</FlexContainer>
