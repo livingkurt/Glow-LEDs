@@ -19,7 +19,7 @@ const Banner = (props) => {
 				<div>
 					<label>Submit content to be featured on our pages </label>
 					<i style={{ margin: '0 10px ' }} class="fas fa-arrow-right" />
-					<Link to="/pages/contact">
+					<Link to="/pages/contact/submit_content_to_be_featured">
 						<button className="banner-button">Send us a message!</button>
 					</Link>
 				</div>

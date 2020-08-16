@@ -90,8 +90,12 @@ const App = () => {
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route path="/collections/all/products/category/:category?" component={AllProductsPage} />
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
-
-							<Route path="/pages/contact" exact={true} component={ContactPage} />
+							<Route
+								path="/pages/contact/:reason?"
+								exact={true}
+								component={(props) => <ContactPage userInfo={userInfo} {...props} />}
+							/>
+							{/* <Route path="/pages/contact/:reason?" exact={true} component={ContactPage} /> */}
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />

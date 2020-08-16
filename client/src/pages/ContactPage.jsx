@@ -7,14 +7,17 @@ import { Loading } from '../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 // import "./form.css";
 
-const ContactPage = () => {
+const ContactPage = (props) => {
 	const dispatch = useDispatch();
-
-	const [ first_name, set_first_name ] = useState('');
-	const [ last_name, set_last_name ] = useState('');
-	const [ email, set_email ] = useState('');
-	const [ order_number, set_order_number ] = useState('');
-	const [ reason_for_contact, set_reason_for_contact ] = useState('');
+	const userInfo = props.userInfo;
+	console.log({ userInfo });
+	const [ first_name, set_first_name ] = useState(userInfo ? userInfo.first_name : '');
+	const [ last_name, set_last_name ] = useState(userInfo ? userInfo.last_name : '');
+	const [ email, set_email ] = useState(userInfo ? userInfo.email : '');
+	const [ order_number, set_order_number ] = useState(userInfo ? userInfo.order_number : '');
+	const [ reason_for_contact, set_reason_for_contact ] = useState(
+		props.match.params.reason ? props.match.params.reason : ''
+	);
 	const [ message, set_message ] = useState('');
 
 	const [ first_name_validations, set_first_name_Validations ] = useState('');
@@ -125,6 +128,7 @@ const ContactPage = () => {
 				<input
 					onChange={(e) => set_first_name(e.target.value)}
 					defaultValue={first_name}
+					value={first_name}
 					className="zoom_f form_input"
 					type="text"
 					name="first_name"
@@ -135,6 +139,7 @@ const ContactPage = () => {
 				<input
 					onChange={(e) => set_last_name(e.target.value)}
 					defaultValue={last_name}
+					value={last_name}
 					className="zoom_f form_input"
 					type="text"
 					name="last_name"
@@ -145,6 +150,7 @@ const ContactPage = () => {
 				<input
 					onChange={(e) => set_email(e.target.value)}
 					defaultValue={email}
+					value={email}
 					className="zoom_f form_input"
 					type="text"
 					name="email"
@@ -165,28 +171,28 @@ const ContactPage = () => {
 						----Click Here to Choose Reason----
 					</option>
 
-					<option className="options" value="Didn't Recieve Verification Email">
-						Didn't Recieve Verification Email
+					<option className="options" value="did_not_recieve_verification_email">
+						Did no Recieve Verification Email
 					</option>
-					<option className="options" value="Order Issues">
+					<option className="options" value="order_issues">
 						Order Issues
 					</option>
-					<option className="options" value="Returns">
+					<option className="options" value="returns">
 						Returns
 					</option>
-					<option className="options" value="Technical Support">
+					<option className="options" value="technical_support">
 						Technical Support
 					</option>
-					<option className="options" value="Website Bugs">
+					<option className="options" value="website_bugs">
 						Website Bugs
 					</option>
-					<option className="options" value="Custom Orders">
+					<option className="options" value="custom_orders">
 						Custom Orders
 					</option>
-					<option className="options" value="Product Suggestions">
+					<option className="options" value="product_suggestions">
 						Product Suggestions
 					</option>
-					<option className="options" value="Submit Content to be Featured">
+					<option className="options" value="submit_content_to_be_featured">
 						Submit Content to be Featured
 					</option>
 				</select>
