@@ -191,9 +191,10 @@ const contact = (
 	last_name: string,
 	email: string,
 	order_number: string,
-	reason_for_contact: string,
+	reason: string,
 	message: string
 ) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	const reason_for_contact = reason;
 	dispatch({
 		type: USER_CONTACT_REQUEST,
 		payload: { first_name, last_name, email, order_number, reason_for_contact, message }

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlexContainer } from '../components/ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../actions/userActions';
 import { validate_contact } from '../utils/helper_functions';
 import { Loading } from '../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import { humanize } from '../utils/helper_functions';
 // import "./form.css";
 
 const ContactPage = (props) => {
 	const dispatch = useDispatch();
 	const userInfo = props.userInfo;
 	console.log({ userInfo });
+
 	const [ first_name, set_first_name ] = useState(userInfo ? userInfo.first_name : '');
 	const [ last_name, set_last_name ] = useState(userInfo ? userInfo.last_name : '');
 	const [ email, set_email ] = useState(userInfo ? userInfo.email : '');
@@ -19,6 +21,14 @@ const ContactPage = (props) => {
 		props.match.params.reason ? props.match.params.reason : ''
 	);
 	const [ message, set_message ] = useState('');
+
+	useEffect(
+		() => {
+			set_reason_for_contact(props.match.params.reason);
+			return () => {};
+		},
+		[ props.match.params.reason ]
+	);
 
 	const [ first_name_validations, set_first_name_Validations ] = useState('');
 	const [ last_name_validations, set_last_name_Validations ] = useState('');
@@ -37,12 +47,13 @@ const ContactPage = (props) => {
 		if ([ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact)) {
 			set_order_number_validations('55555555');
 		}
+		const reason = humanize(reason_for_contact);
 		const data = {
 			first_name,
 			last_name,
 			email,
 			// order_number,
-			reason_for_contact,
+			reason,
 			message
 		};
 		request = validate_contact(data);
@@ -172,7 +183,7 @@ const ContactPage = (props) => {
 					</option>
 
 					<option className="options" value="did_not_recieve_verification_email">
-						Did no Recieve Verification Email
+						Did not Recieve Verification Email
 					</option>
 					<option className="options" value="order_issues">
 						Order Issues
