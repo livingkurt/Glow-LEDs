@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://www.glow-leds.com/</loc>
+</url>
+
+<!-- Collections -->
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category</loc>
+</url>
+
+<!-- Account -->
+<url>
+  <loc>https://www.glow-leds.com/account/profile </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/editprofile </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/orders </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/order</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/login </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/verified </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/checkemail </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/changepassword </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/register </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/passwordreset </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/account/resetpassword </loc>
+</url>
+
+<!-- Checkout -->
+<url>
+  <loc>https://www.glow-leds.com/checkout/shipping </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/checkout/payment </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/checkout/paymentcomplete</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/checkout/placeorder</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/checkout/cart </loc>
+</url>
+
+<!-- Admin -->
+<url>
+  <loc>https://www.glow-leds.com/admin/editproduct </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/admin/products </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/admin/orders </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/admin/users </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/admin/userprofile </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/admin/edituserprofile </loc>
+</url>
+
+<!-- Pages -->
+<url>
+  <loc>https://www.glow-leds.com/pages/contact  </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/pages/terms  </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/pages/about  </loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/pages/faq  </loc>
+</url>
+
+
+
+
+</urlset>
