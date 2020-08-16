@@ -283,7 +283,7 @@ router.post('/notverified', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.send(err);
 		} else {
-			console.log('Order Not Complete for ' + req.body.shipping.first_name);
+			console.log('Not Verified Email Sent to ' + req.body.first_name);
 			res.send('Email Successfully Sent');
 		}
 	});
