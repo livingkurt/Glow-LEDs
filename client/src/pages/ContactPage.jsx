@@ -120,7 +120,7 @@ const ContactPage = () => {
 					)}
 				</Loading>
 			</FlexContainer>
-			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form" onSubmit={sendEmail}>
+			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form">
 				<label>First Name</label>
 				<input
 					onChange={(e) => set_first_name(e.target.value)}
@@ -164,9 +164,7 @@ const ContactPage = () => {
 					<option className="grey_option" disabled="disabled" selected="selected" value="">
 						----Click Here to Choose Reason----
 					</option>
-					<option className="options" value="Custom Orders">
-						Custom Orders
-					</option>
+
 					<option className="options" value="Didn't Recieve Verification Email">
 						Didn't Recieve Verification Email
 					</option>
@@ -179,11 +177,17 @@ const ContactPage = () => {
 					<option className="options" value="Technical Support">
 						Technical Support
 					</option>
+					<option className="options" value="Website Bugs">
+						Website Bugs
+					</option>
+					<option className="options" value="Custom Orders">
+						Custom Orders
+					</option>
 					<option className="options" value="Product Suggestions">
 						Product Suggestions
 					</option>
-					<option className="options" value="Website Bugs">
-						Website Bugs
+					<option className="options" value="Submit Content to be Featured">
+						Submit Content to be Featured
 					</option>
 				</select>
 				<label className="validation_text">{reason_for_contact_validations}</label>
@@ -217,7 +221,6 @@ const ContactPage = () => {
 					style={{ width: '100px' }}
 					className="zoom_b button primary"
 					id="button"
-					å
 					onClick={(e) => sendEmail(e)}
 				>
 					Send
@@ -228,6 +231,31 @@ const ContactPage = () => {
 						clicking orders. The order Number will be in the far left column. Or by checking the email you
 						recieved for making your order.
 					</p>
+				)}
+
+				{[ 'Submit Content to be Featured' ].includes(reason_for_contact) && (
+					<div>
+						<p>
+							Put your facebook or instagram handle in the message. Then upload content using the google
+							drive button below
+						</p>
+
+						<button className="zoom_b button primary">
+							<a
+								target="_blank"
+								href="https://drive.google.com/drive/folders/1s4bztbzhIeUO01x32sz6A1Hl1bwzvmw3?usp=sharing"
+							>
+								Google Drive{' '}
+							</a>
+						</button>
+
+						<h2>Content includes: </h2>
+						<ul style={{ lineHeight: '25px', paddingLeft: '20px' }}>
+							<li>Pictures or Video of your Lightshow with Glow LEDs Diffusers or Diffuser Caps. </li>
+							<li>Pictures or Video of your Glow LEDs Infintiy Mirror.</li>
+							<li>Pictures or Video of your Glow LEDs String Lights.</li>
+						</ul>
+					</div>
 				)}
 			</form>
 		</div>
