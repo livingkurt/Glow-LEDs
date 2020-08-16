@@ -144,16 +144,6 @@
   <loc>https://www.glow-leds.com/collections/all/products/coin_battery_storage</loc>
 </url>
 
-
-
-
-
-
-
-
-
-
-
 <!-- Categories -->
 <url>
   <loc>https://www.glow-leds.com/collections/all/products/category/domes</loc>
@@ -174,8 +164,6 @@
   <loc>https://www.glow-leds.com/collections/all/products/category/infinity_mirrors</loc>
 </url>
 
-
-
 <!-- Account -->
 
 <url>
@@ -187,7 +175,6 @@
 <url>
   <loc>https://www.glow-leds.com/account/checkemail </loc>
 </url>
-
 <url>
   <loc>https://www.glow-leds.com/account/register </loc>
 </url>

@@ -39,10 +39,29 @@ const OrdersPage = (props) => {
 		dispatch(deleteOrder(order._id));
 	};
 
-	const colors = {
-		not_paid: '#333333',
-		shipped: '#8e8e8e',
-		paid: '#626262'
+	const colors = [
+		{ name: 'Not Paid', color: '#333333' },
+		{ name: 'Paid', color: '#626262' },
+		{ name: 'Shipped', color: '#8e8e8e' },
+		{ name: 'Delivered', color: '#ababab' }
+	];
+
+	const determine_color = (order) => {
+		let result = '';
+		if (!order.isPaid) {
+			result = colors[0].color;
+		}
+		if (order.isPaid) {
+			result = colors[1].color;
+		}
+		if (order.isShipped) {
+			result = colors[2].color;
+		}
+		if (order.isDelivered) {
+			result = colors[3].color;
+		}
+		console.log(result);
+		return result;
 	};
 
 	return (
@@ -79,18 +98,21 @@ const OrdersPage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer h_between wrap>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-					<label style={{ marginRight: '1rem' }}>Not Paid</label>
-					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-					<label style={{ marginRight: '1rem' }}>Paid</label>
-					<div style={{ backgroundColor: '#626262', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-					<label style={{ marginRight: '1rem' }}>Shipped</label>
-					<div style={{ backgroundColor: '#8e8e8e', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
+				{colors.map((color) => {
+					return (
+						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</FlexContainer>
+					);
+				})}
 			</FlexContainer>
 			<div className="order-header">
 				<h1
@@ -128,14 +150,10 @@ const OrdersPage = (props) => {
 										key={order._id}
 										// style={{
 										// 	backgroundColor: !order.isPaid
-										// 		? colors.note_paid
-										// 		: !order.isShipped ? colors.paid : '#626262'
+										// 		? colors.not_paid
+										// 		: !order.isShipped ? colors.paid : colors.shipped
 										// }}
-										style={{
-											backgroundColor: !order.isPaid
-												? colors.not_paid
-												: !order.isShipped ? colors.paid : colors.shipped
-										}}
+										style={{ backgroundColor: determine_color(order) }}
 									>
 										<td>{order._id}</td>
 										<td>{format_date_display(order.createdAt)}</td>

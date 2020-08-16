@@ -66,6 +66,23 @@ const UsersPage = (props) => {
 		admin: '#626262'
 	};
 
+	const determine_color = (user) => {
+		let result = '';
+		if (!user.isVerified) {
+			console.log('Not Verified');
+			result = colors.not_verified;
+		}
+		if (user.isVerified) {
+			console.log('Verified');
+			result = colors.verifid;
+		}
+		if (user.isAdmin) {
+			console.log('Admin');
+			result = colors.admin;
+		}
+		return result;
+	};
+
 	return (
 		<div class="main_container">
 			<MetaTags>
@@ -150,10 +167,13 @@ const UsersPage = (props) => {
 								{users.map((user) => (
 									<tr
 										key={user._id}
+										// style={{
+										// 	backgroundColor: user.isAdmin
+										// 		? colors.admin
+										// 		: user.isVerified ? colors.verifid : colors.not_verified
+										// }}
 										style={{
-											backgroundColor: user.isAdmin
-												? colors.admin
-												: user.isVerified ? colors.verifid : colors.not_verified
+											backgroundColor: determine_color(user)
 										}}
 									>
 										<td>{user._id}</td>
