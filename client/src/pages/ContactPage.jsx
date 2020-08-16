@@ -47,13 +47,14 @@ const ContactPage = (props) => {
 		if ([ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact)) {
 			set_order_number_validations('55555555');
 		}
-		const reason = humanize(reason_for_contact);
+
+		console.log();
 		const data = {
 			first_name,
 			last_name,
 			email,
 			// order_number,
-			reason,
+			reason_for_contact,
 			message
 		};
 		request = validate_contact(data);
@@ -72,7 +73,8 @@ const ContactPage = (props) => {
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(contact(first_name, last_name, email, order_number, reason_for_contact, message));
+			const reason = humanize(reason_for_contact);
+			dispatch(contact(first_name, last_name, email, order_number, reason, message));
 			set_last_name_Validations('');
 			set_first_name_Validations('');
 			set_email_validations('');
@@ -174,6 +176,7 @@ const ContactPage = (props) => {
 				<select
 					onChange={(e) => set_reason_for_contact(e.target.value)}
 					defaultValue={reason_for_contact}
+					value={reason_for_contact}
 					className="form_input contact_dropdown"
 					name="reason_for_contact"
 					placeholder="----Click Here to Choose Reason----"

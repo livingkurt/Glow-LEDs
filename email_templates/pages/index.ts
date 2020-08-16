@@ -11,3 +11,4 @@ export { default as verified_account_view } from './verified_account_view';
 export { default as reset_password_view } from './reset_password_view';
 export { default as contact_view } from './contact_view';
 export { default as order_view } from './order_view';
+export { default as contact_confirmation_view } from './contact_confirmation_view';

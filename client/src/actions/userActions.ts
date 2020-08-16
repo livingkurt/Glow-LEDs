@@ -208,6 +208,14 @@ const contact = (
 			reason_for_contact,
 			message
 		});
+		const response = await axios.post('/api/emails/contactconfirmation', {
+			first_name,
+			last_name,
+			email,
+			order_number,
+			reason_for_contact,
+			message
+		});
 		dispatch({ type: USER_CONTACT_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: USER_CONTACT_FAIL, payload: error.message });
