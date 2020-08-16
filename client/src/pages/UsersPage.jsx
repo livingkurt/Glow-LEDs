@@ -60,26 +60,46 @@ const UsersPage = (props) => {
 	// 	[ sortOrder ]
 	// );
 
-	const colors = {
-		not_verified: '#333333',
-		verifid: '#8e8e8e',
-		admin: '#626262'
-	};
+	// const colors = {
+	// 	not_verified: '#333333',
+	// 	verifid: '#8e8e8e',
+	// 	admin: '#626262'
+	// };
 
-	const determine_color = (user) => {
+	// const determine_color = (user) => {
+	// 	let result = '';
+	// 	if (!user.isVerified) {
+	// 		console.log('Not Verified');
+	// 		result = colors.not_verified;
+	// 	}
+	// 	if (user.isVerified) {
+	// 		console.log('Verified');
+	// 		result = colors.verifid;
+	// 	}
+	// 	if (user.isAdmin) {
+	// 		console.log('Admin');
+	// 		result = colors.admin;
+	// 	}
+	// 	return result;
+	// };
+	const colors = [
+		{ name: 'Not Verified', color: '#333333' },
+		{ name: 'Verified', color: '#626262' },
+		{ name: 'Admin', color: '#8e8e8e' }
+	];
+
+	const determine_color = (order) => {
 		let result = '';
-		if (!user.isVerified) {
-			console.log('Not Verified');
-			result = colors.not_verified;
+		if (!order.isVerified) {
+			result = colors[0].color;
 		}
-		if (user.isVerified) {
-			console.log('Verified');
-			result = colors.verifid;
+		if (order.isVerified) {
+			result = colors[1].color;
 		}
-		if (user.isAdmin) {
-			console.log('Admin');
-			result = colors.admin;
+		if (order.isAdmin) {
+			result = colors[2].color;
 		}
+		console.log(result);
 		return result;
 	};
 
@@ -117,7 +137,22 @@ const UsersPage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer h_between wrap>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
+				{colors.map((color) => {
+					return (
+						<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</FlexContainer>
+					);
+				})}
+				{/* <FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
 					<label style={{ marginRight: '1rem' }}>Not Verfied</label>
 					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
 				</FlexContainer>
@@ -128,7 +163,7 @@ const UsersPage = (props) => {
 				<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
 					<label style={{ marginRight: '1rem' }}>Admin</label>
 					<div style={{ backgroundColor: '#626262', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
+				</FlexContainer> */}
 			</FlexContainer>
 			<div className="order-header">
 				<h1

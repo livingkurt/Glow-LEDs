@@ -146,15 +146,7 @@ const OrdersPage = (props) => {
 							</thead>
 							<tbody>
 								{orders.map((order) => (
-									<tr
-										key={order._id}
-										// style={{
-										// 	backgroundColor: !order.isPaid
-										// 		? colors.not_paid
-										// 		: !order.isShipped ? colors.paid : colors.shipped
-										// }}
-										style={{ backgroundColor: determine_color(order) }}
-									>
+									<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
 										<td>{order._id}</td>
 										<td>{format_date_display(order.createdAt)}</td>
 										<td>${order.totalPrice.toFixed(2)}</td>
