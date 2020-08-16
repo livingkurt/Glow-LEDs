@@ -13,8 +13,8 @@ const AllProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
-	console.log({ category });
-	console.log(props.match.params);
+	// console.log({ category });
+	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 	const dispatch = useDispatch();
@@ -22,6 +22,16 @@ const AllProductsPage = (props) => {
 		// dispatch(listProducts(''));
 		dispatch(listProducts(category));
 	}, []);
+
+	// for (let product of products) {
+	// 	console.log(product);
+	// }
+	// useEffect(() => {
+	// 	// dispatch(listProducts(''));
+	// 	for (let product of products) {
+	// 		console.log(product);
+	// 	}
+	// }, []);
 
 	useEffect(
 		() => {

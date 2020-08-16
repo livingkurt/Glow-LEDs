@@ -1,6 +1,5 @@
 # Group 1
-User-agent: Googlebot
-Disallow: /admin/
+User-agent: *
 Disallow: /account/profile
 Disallow: /account/editprofile
 Disallow: /account/orders
@@ -9,20 +8,10 @@ Disallow: /checkout/shipping
 Disallow: /checkout/payment
 Disallow: /checkout/paymentcomplete
 Disallow: /checkout/placeorder
+
+
 
 # Group 2
-User-agent: Bingbot
-Disallow: /admin/
-Disallow: /account/profile
-Disallow: /account/editprofile
-Disallow: /account/orders
-Disallow: /account/order
-Disallow: /checkout/shipping
-Disallow: /checkout/payment
-Disallow: /checkout/paymentcomplete
-Disallow: /checkout/placeorder
-
-# Group 3
 User-agent: *
 Allow: /
 

@@ -38,6 +38,22 @@ router.put('/products', async (req, res) => {
 	});
 	res.send(product);
 });
+router.get('/products', async (req, res) => {
+	// const products = await Product.find({});
+
+	// for (let product of products) {
+	// }
+	// res.send(products);
+	const products = await Product.find();
+	console.log({ products });
+	console.log(products);
+	let array = [];
+	for (let product of products) {
+		console.log(product);
+		array.push(product);
+	}
+	res.send(array);
+});
 
 router.put('/orders', async (req, res) => {
 	const order = await Order.updateMany({

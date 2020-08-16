@@ -29,10 +29,15 @@ router.get('/', async (req, res) => {
 	} else if (req.query.sortOrder === 'category') {
 		sortOrder = { category: -1 };
 	}
-	console.log({ category });
+	// console.log({ category });
+	// console.log({ category });
 	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	console.log({ products });
+	// console.log({ products });
+	console.log(products);
 	res.send(products);
+	// for (let product of products) {
+	// 	console.log(products);
+	// }
 });
 
 router.get('/:pathname', async (req, res) => {

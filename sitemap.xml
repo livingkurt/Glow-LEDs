@@ -11,27 +11,157 @@
   <loc>https://www.glow-leds.com/</loc>
 </url>
 
-<!-- Collections -->
+<!-- Products -->
 <url>
   <loc>https://www.glow-leds.com/collections/all/products</loc>
 </url>
 <url>
-  <loc>https://www.glow-leds.com/collections/all/products/category</loc>
+  <loc>https://www.glow-leds.com/collections/all/products/honey_comb_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/serotonin_molecule_infinity_mirror</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/large_frosted_dome_diffusers</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/blinking_eyes_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/50_led_3</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/x_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/icosahedron_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/peace_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/dodecahedron_point_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/owsla_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/mountain_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/large_custom_infinity_mirror</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/coin_battery_storage</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/diffuser_caps_adapters_starter_kit</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/moon_phases_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/vesica_piscis_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/heart_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/diffuser_adapters_no_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/150_led_10</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/tiger_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/cube_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/triforce_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/trinity_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/triforce_infinity_mirror</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/200_led_14m_string_lights</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/frosted_dome_diffusers</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/phoenix_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/100_led_7m_string_lights</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/seed_of_life_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/string_lights_controller_power_adapter</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/flower_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/dodecahedron_face_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/lion_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/custom_infinity_mirror</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/illuminate￼_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/dizzy_face_emoji_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/50_string_lights_w_o_controller</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/gyro_sphere_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/custom_diffuser_caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/serotonin_molecule_infinity_mirror</loc>
 </url>
 
+
+
+<!-- Categories -->
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category/domes</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category/caps</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category/diffuser_adapters</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category/accessories</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category/string_lights</loc>
+</url>
+<url>
+  <loc>https://www.glow-leds.com/collections/all/products/category/infinity_mirrors</loc>
+</url>
+
+
+
 <!-- Account -->
-<!-- <url>
-  <loc>https://www.glow-leds.com/account/profile </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/account/editprofile </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/account/orders </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/account/order</loc>
-</url> -->
+
 <url>
   <loc>https://www.glow-leds.com/account/login </loc>
 </url>
@@ -41,9 +171,7 @@
 <url>
   <loc>https://www.glow-leds.com/account/checkemail </loc>
 </url>
-<!-- <url>
-  <loc>https://www.glow-leds.com/account/changepassword </loc>
-</url> -->
+
 <url>
   <loc>https://www.glow-leds.com/account/register </loc>
 </url>
@@ -55,41 +183,10 @@
 </url>
 
 <!-- Checkout -->
-<!-- <url>
-  <loc>https://www.glow-leds.com/checkout/shipping </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/checkout/payment </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/checkout/paymentcomplete</loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/checkout/placeorder</loc>
-</url> -->
+
 <url>
   <loc>https://www.glow-leds.com/checkout/cart </loc>
 </url>
-
-<!-- Admin -->
-<!-- <url>
-  <loc>https://www.glow-leds.com/admin/editproduct </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/admin/products </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/admin/orders </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/admin/users </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/admin/userprofile </loc>
-</url>
-<url>
-  <loc>https://www.glow-leds.com/admin/edituserprofile </loc>
-</url> -->
 
 <!-- Pages -->
 <url>
