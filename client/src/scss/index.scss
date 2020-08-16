@@ -390,10 +390,32 @@ textarea {
 	z-index: 1;
 	bottom: 25%;
 }
+.tooltipoverlay {
+	background: rgba(0, 0, 0, 0);
+	border-radius: 10px;
+	z-index: 99;
+	transition: background-color 0.5s ease-out;
+}
 
+// .tooltipoverlay:after {
+// 	content: '\A';
+// 	position: absolute;
+// 	width: 100%;
+// 	height: 100%;
+// 	top: 0;
+// 	left: 0;
+// 	// background: rgba(0, 0, 0, 0.6);
+// 	opacity: 0;
+// 	transition: all 1s;
+// 	-webkit-transition: all 1s;
+// }
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
 	visibility: visible;
+}
+.tooltipoverlay:hover {
+	background: #0000001c;
+	z-index: 99;
 }
 
 .product-name {
