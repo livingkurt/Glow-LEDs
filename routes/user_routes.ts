@@ -184,7 +184,7 @@ router.post('/register', async (req, res) => {
 			email: req.body.email,
 			password: req.body.password,
 			isAdmin: false,
-			isVerified: false
+			isVerified: true
 		});
 		const user = await User.findOne({ email: newUser.email });
 		if (user) {

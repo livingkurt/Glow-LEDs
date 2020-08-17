@@ -45,10 +45,20 @@ const RegisterPage = (props) => {
 		}
 	};
 
+	// useEffect(
+	// 	() => {
+	// 		if (userInfo) {
+	// 			props.history.push('/account/checkemail');
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ userInfo ]
+	// );
 	useEffect(
 		() => {
 			if (userInfo) {
-				props.history.push('/account/checkemail');
+				props.history.push('/account/login');
 			}
 
 			return () => {};
@@ -102,7 +112,7 @@ const RegisterPage = (props) => {
 						<FlexContainer h_center>
 							{error && (
 								<label style={{ textAlign: 'center' }}>
-									{error ? 'Registration Failed' : 'Registration Complete'}
+									{error ? 'Already a Member' : 'Registration Complete'}
 								</label>
 							)}
 						</FlexContainer>
