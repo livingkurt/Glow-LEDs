@@ -212,6 +212,12 @@ const PlaceOrderPage = (props) => {
 								Start Payment Process
 							</button>
 						</li>
+						<Link to="/collections/all/products">
+							<li style={{ marginBottom: '10px' }}>
+								<button className="button secondary full-width">Continue Shopping</button>
+							</li>
+						</Link>
+
 						<FlexContainer column>
 							<div htmlFor="order_note">Add a note</div>
 							<textarea
