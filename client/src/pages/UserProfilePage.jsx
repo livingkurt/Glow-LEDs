@@ -138,7 +138,7 @@ const UserProfilePage = (props) => {
 						</FlexContainer>
 						<FlexContainer>
 							<div style={{ height: 50 }}>
-								<Link to={'/admin/edituserprofile'}>
+								<Link to={'/secure/glow/edituserprofile'}>
 									<button
 										style={{ marginRight: '10px', maxWidth: '225px' }}
 										className="button primary"
@@ -158,7 +158,7 @@ const UserProfilePage = (props) => {
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
-								<Link to={'/account/orders'}>
+								<Link to={'/secure/account/orders'}>
 									<button
 										style={{ maxWidth: '225px', marginRight: '10px' }}
 										className="button primary"
@@ -168,7 +168,7 @@ const UserProfilePage = (props) => {
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
-								{/* <Link to={'/account/orders'}> */}
+								{/* <Link to={'/secure/account/orders'}> */}
 								<button
 									style={{ maxWidth: '225px' }}
 									onClick={send_not_verified_email}

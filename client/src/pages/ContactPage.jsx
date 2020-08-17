@@ -95,6 +95,7 @@ const ContactPage = (props) => {
 		<div class="main_container">
 			<MetaTags>
 				<title>Contact | Glow LEDs</title>
+				<link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."

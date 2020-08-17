@@ -150,7 +150,7 @@ const EditProductPage = (props) => {
 		if (pathname) {
 			history.push('/collections/all/products/' + pathname);
 		} else {
-			history.push('/admin/products');
+			history.push('/secure/glow/products');
 		}
 	};
 
@@ -163,6 +163,7 @@ const EditProductPage = (props) => {
 		<div class="main_container">
 			<MetaTags>
 				<title>Edit Product | Glow LEDs</title>
+				<link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
@@ -378,7 +379,7 @@ const EditProductPage = (props) => {
 											</button>
 										</Link>
 									) : (
-										<Link to="/admin/products">
+										<Link to="/secure/glow/products">
 											<button
 												style={{ width: '100%' }}
 												type="button"

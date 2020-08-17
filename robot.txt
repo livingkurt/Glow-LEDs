@@ -1,13 +1,13 @@
 # Group 1
 User-agent: *
-Disallow: /account/profile
-Disallow: /account/editprofile
-Disallow: /account/orders
+Disallow: /secure/account/profile
+Disallow: /secure/account/editprofile
+Disallow: /secure/account/orders
 Disallow: /account/order
-Disallow: /checkout/shipping
-Disallow: /checkout/payment
+Disallow: /secure/checkout/shipping
+Disallow: /secure/checkout/payment
 Disallow: /checkout/paymentcomplete
-Disallow: /checkout/placeorder
+Disallow: /secure/checkout/placeorder
 
 
 

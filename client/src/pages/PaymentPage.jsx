@@ -112,7 +112,7 @@ const PaymentPage = (props) => {
 							</button>
 						</li>
 						<li>
-							<Link to="/checkout/shipping">
+							<Link to="/secure/checkout/shipping">
 								<button class="button secondary full-width">Back to Shipping</button>
 							</Link>
 						</li>

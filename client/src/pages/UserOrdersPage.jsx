@@ -83,7 +83,7 @@ const UserOrderPage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer wrap h_between>
-				<Link to="/account/profile">
+				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
 				{colors.map((color) => {
@@ -161,7 +161,7 @@ const UserOrderPage = (props) => {
 												)}
 											</td>
 											<td>
-												<Link to={'/account/order/' + order._id}>
+												<Link to={'/secure/account/order/' + order._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
 													</button>

@@ -26,7 +26,7 @@ const ChangePasswordPage = (props) => {
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
 	// 	dispatch(update({ userId: userInfo._id, email, name, password }));
-	// 	history.push('/account/profile');
+	// 	history.push('/secure/account/profile');
 	// };
 
 	const submitHandler = async (e) => {
@@ -41,7 +41,7 @@ const ChangePasswordPage = (props) => {
 
 		if (request.isValid) {
 			dispatch(reset_password(userInfo._id, password, rePassword));
-			history.push('/account/profile');
+			history.push('/secure/account/profile');
 		}
 	};
 
@@ -104,7 +104,7 @@ const ChangePasswordPage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer styles={{ marginBottom: 10 }}>
-				<Link to="/account/profile">
+				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
 			</FlexContainer>
@@ -168,7 +168,7 @@ const ChangePasswordPage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to="/account/profile">
+								<Link to="/secure/account/profile">
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>

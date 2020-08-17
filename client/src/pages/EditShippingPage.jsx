@@ -23,7 +23,7 @@ const ProfilePage = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(update({ userId: userInfo._id, email, name, password }));
-		history.push('/account/profile');
+		history.push('/secure/account/profile');
 	};
 	const userUpdate = useSelector((state) => state.userUpdate);
 	const { loading, success, error } = userUpdate;
@@ -135,7 +135,7 @@ const ProfilePage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to="/account/profile">
+								<Link to="/secure/account/profile">
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>

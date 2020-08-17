@@ -176,7 +176,7 @@ const OrdersPage = (props) => {
 										</td>
 										<td>
 											<FlexContainer h_between>
-												<Link to={'/account/order/' + order._id}>
+												<Link to={'/secure/account/order/' + order._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
 													</button>

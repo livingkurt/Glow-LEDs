@@ -52,31 +52,31 @@ const App = () => {
 					<ScrollToTop>
 						<Switch>
 							{/* Private Routes */}
-							<PrivateRoute path="/account/profile" component={ProfilePage} />
-							<PrivateRoute path="/account/editprofile" component={EditProfilePage} />
-							<PrivateRoute path="/account/orders" component={UserOrdersPage} />
-							<PrivateRoute path="/checkout/shipping" component={ShippingPage} />
-							<PrivateRoute path="/checkout/payment" component={PaymentPage} />
-							<Route
-								path="/checkout/paymentcomplete/:id"
+							<PrivateRoute path="/secure/account/profile" component={ProfilePage} />
+							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
+							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
+							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
+							<PrivateRoute path="/secure/checkout/payment" component={PaymentPage} />
+							<PrivateRoute
+								path="/secure/checkout/paymentcomplete/:id"
 								exact={true}
 								component={OrderPaymentCompletePage}
 							/>
 							<PrivateRoute
-								path="/account/order/:id"
+								path="/secure/account/order/:id"
 								component={(props) => <OrderPage userInfo={userInfo} {...props} />}
 							/>
 							<PrivateRoute
-								path="/checkout/placeorder"
+								path="/secure/checkout/placeorder"
 								component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 							/>
 							{/* Admin Routes */}
-							<AdminRoute path="/admin/editproduct/:pathname?" component={EditProductPage} />
-							<AdminRoute path="/admin/products" component={ProductsPage} />
-							<AdminRoute path="/admin/orders" component={OrdersPage} />
-							<AdminRoute path="/admin/users" component={UsersPage} />
-							<AdminRoute path="/admin/userprofile/:id" component={UserProfilePage} />
-							<AdminRoute path="/admin/edituserprofile" component={EditUserProfilePage} />
+							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
+							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
+							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />
+							<AdminRoute path="/secure/glow/users" component={UsersPage} />
+							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
+							<AdminRoute path="/secure/glow/edituserprofile" component={EditUserProfilePage} />
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />

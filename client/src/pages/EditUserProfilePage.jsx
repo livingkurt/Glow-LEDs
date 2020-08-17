@@ -38,7 +38,7 @@ const EditUserProfilePage = (props) => {
 		console.log(request);
 		if (request.isValid) {
 			dispatch(updateUser({ userId: user._id, email, first_name, last_name, verified, admin }));
-			history.push('/admin/userprofile/' + user._id);
+			history.push('/secure/glow/userprofile/' + user._id);
 		}
 	};
 
@@ -114,7 +114,7 @@ const EditUserProfilePage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer styles={{ marginBottom: 10 }}>
-				<Link to={'/admin/userprofile/' + user._id}>
+				<Link to={'/secure/glow/userprofile/' + user._id}>
 					<button className="button primary">Back to {user.first_name}'s Profile</button>
 				</Link>
 			</FlexContainer>
@@ -209,7 +209,7 @@ const EditUserProfilePage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to={'/admin/userprofile/' + user._id}>
+								<Link to={'/secure/glow/userprofile/' + user._id}>
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>

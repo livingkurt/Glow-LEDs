@@ -105,7 +105,7 @@ const ProductsPage = (props) => {
 					<label style={{ marginRight: '1rem' }}>Hidden</label>
 					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
 				</FlexContainer>
-				<Link to="/admin/editproduct">
+				<Link to="/secure/glow/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
 					</button>
@@ -154,7 +154,7 @@ const ProductsPage = (props) => {
 										<td style={{ minWidth: '111px' }}>{product.brand}</td>
 										<td>
 											<FlexContainer h_between>
-												<Link to={'/admin/editproduct/' + product.pathname}>
+												<Link to={'/secure/glow/editproduct/' + product.pathname}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
 													</button>

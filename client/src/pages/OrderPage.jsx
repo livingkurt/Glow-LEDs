@@ -115,8 +115,8 @@ const OrderPage = (props) => {
 			if (successPay) {
 				set_paypal_state('none');
 				console.log('successPay');
-				// props.history.push('/checkout/paymentcomplete/' + props.match.params.id);
-				// props.history.push("/account/profile");
+				// props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
+				// props.history.push("/secure/account/profile");
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
@@ -141,7 +141,7 @@ const OrderPage = (props) => {
 		dispatch(payOrder(order, paymentResult, user_data));
 		set_payment_loading(false);
 		// if (successPay) {
-		props.history.push('/checkout/paymentcomplete/' + props.match.params.id);
+		props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
 		// }
 	};
 

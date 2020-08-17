@@ -14,9 +14,9 @@ const PlaceOrderPage = (props) => {
 	const { loading, success, error, order } = orderCreate;
 
 	if (!shipping.address) {
-		props.history.push('/checkout/shipping');
+		props.history.push('/secure/checkout/shipping');
 	} else if (!payment.paymentMethod) {
-		props.history.push('/checkout/payment');
+		props.history.push('/secure/checkout/payment');
 	}
 	// const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
 	const itemsPrice =
@@ -79,7 +79,7 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (success) {
-				props.history.push('/account/order/' + order._id);
+				props.history.push('/secure/account/order/' + order._id);
 			}
 		},
 		[ success ]

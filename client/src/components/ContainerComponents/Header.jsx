@@ -162,10 +162,10 @@ const Header = (props) => {
 						<div className="dropdown">
 							<button className="button nav">{first_name}</button>
 							<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
-								<Link to="/account/profile">
+								<Link to="/secure/account/profile">
 									<button className="button nav">Profile</button>
 								</Link>
-								<Link to="/account/orders">
+								<Link to="/secure/account/orders">
 									<button className="button nav">Orders</button>
 								</Link>
 								<button className="button nav" onClick={handleLogout} style={{ marginRight: 'auto' }}>
@@ -186,13 +186,13 @@ const Header = (props) => {
 						<div className="dropdown ">
 							<button className="button nav">Admin</button>
 							<ul className="dropdown-content hover_fade_in">
-								<Link to="/admin/orders">
+								<Link to="/secure/glow/orders">
 									<button className="button nav">Orders</button>
 								</Link>
-								<Link to="/admin/products">
+								<Link to="/secure/glow/products">
 									<button className="button nav"> Products</button>
 								</Link>
-								<Link to="/admin/users">
+								<Link to="/secure/glow/users">
 									<button className="button nav"> Users</button>
 								</Link>
 							</ul>

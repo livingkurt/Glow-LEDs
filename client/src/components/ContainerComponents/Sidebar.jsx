@@ -90,12 +90,12 @@ const Sidebar = (props) => {
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">{first_name}</button>
 						<ul className="sidebar_dropdown_container">
-							<Link to="/account/profile">
+							<Link to="/secure/account/profile">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Profile
 								</button>
 							</Link>
-							<Link to="/account/orders">
+							<Link to="/secure/account/orders">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Orders
 								</button>
@@ -119,17 +119,17 @@ const Sidebar = (props) => {
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">Admin</button>
 						<ul className="sidebar_dropdown_container">
-							<Link to="/admin/orders">
+							<Link to="/secure/glow/orders">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Orders
 								</button>
 							</Link>
-							<Link to="/admin/products">
+							<Link to="/secure/glow/products">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Products
 								</button>
 							</Link>
-							<Link to="/admin/users">
+							<Link to="/secure/glow/users">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Users
 								</button>

@@ -52,7 +52,7 @@ export default (props: {
                     <button style="background-color: #8a8a8a;border-radius: 5px;background-color: #676767;margin: 0 auto; margin-bottom: 10px;font-weight: bold;border: 0px;color: white;text-decoration: none;padding: 15px;box-sizing: border-box;font-size: 1.6rem;"><a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"href="${process
 						.env.NODE_ENV === 'production'
 						? 'http://www.glow-leds.com'
-						: 'http://localhost:3000'}/account/order/${props._id}">Complete Order</a></button>
+						: 'http://localhost:3000'}/secure/account/order/${props._id}">Complete Order</a></button>
         <h3>If the payment button does not show, please refresh the page.</h3>
         <h3>Do you need assistance completing your order?</h3>
                     <button style="background-color: #8a8a8a;border-radius: 5px;background-color: #676767;margin: 0 auto; margin-bottom: 10px;font-weight: bold;border: 0px;color: white;text-decoration: none;padding: 15px;box-sizing: border-box;font-size: 1.6rem;"><a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"
@@ -68,7 +68,7 @@ export default (props: {
 
                 <a href="${process.env.NODE_ENV === 'production'
 					? 'http://glow-leds.com'
-					: 'http://localhost:3000'}/account/order/${props._id}"
+					: 'http://localhost:3000'}/secure/account/order/${props._id}"
                   style="color: white;text-decoration: none;box-sizing: border-box;">${props._id}</a>
               </div>
               <h1 style="box-sizing: border-box;font-family: Helvetica;">Shipping</h1>

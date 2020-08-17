@@ -34,7 +34,7 @@ const EditProfilePage = (props) => {
 		console.log(request);
 		if (request.isValid) {
 			dispatch(update({ userId: userInfo._id, email, first_name, last_name }));
-			history.push('/account/profile');
+			history.push('/secure/account/profile');
 		}
 	};
 	const userUpdate = useSelector((state) => state.userUpdate);
@@ -101,7 +101,7 @@ const EditProfilePage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer styles={{ marginBottom: 10 }}>
-				<Link to="/account/profile">
+				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
 			</FlexContainer>
@@ -166,7 +166,7 @@ const EditProfilePage = (props) => {
 								</button>
 							</li>
 							<li>
-								<Link to="/account/profile">
+								<Link to="/secure/account/profile">
 									<button type="button" className="button secondary full-width">
 										Cancel
 									</button>
