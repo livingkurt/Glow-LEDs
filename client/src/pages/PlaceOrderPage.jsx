@@ -154,7 +154,16 @@ const PlaceOrderPage = (props) => {
 						<ul className="cart-list-container">
 							<li>
 								<h1>Shopping Cart</h1>
-								<div>Price</div>
+								<FlexContainer column>
+									<Link to="/collections/all/products">
+										<li style={{ marginBottom: '0', borderBottom: 0 }}>
+											<button className="button secondary full-width" style={{ marginBottom: 0 }}>
+												Continue Shopping
+											</button>
+										</li>
+									</Link>
+									<label style={{ textAlign: 'right' }}>Price</label>
+								</FlexContainer>
 							</li>
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
@@ -220,11 +229,6 @@ const PlaceOrderPage = (props) => {
 								Start Payment Process
 							</button>
 						</li>
-						<Link to="/collections/all/products">
-							<li style={{ marginBottom: '10px' }}>
-								<button className="button secondary full-width">Continue Shopping</button>
-							</li>
-						</Link>
 
 						<FlexContainer column>
 							<div htmlFor="order_note">Add a note</div>
