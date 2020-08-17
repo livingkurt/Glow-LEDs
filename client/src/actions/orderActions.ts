@@ -25,6 +25,7 @@ import {
 	ORDER_DELIVERY_SUCCESS,
 	ORDER_DELIVERY_FAIL
 } from '../constants/orderConstants';
+import Cookie from 'js-cookie';
 
 const createOrder = (order: {
 	orderItems: object;
@@ -53,6 +54,7 @@ const createOrder = (order: {
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 		// axios.post('/api/emails/order', { ...newOrder, user_data });
 		axios.post('/api/emails/sale', { ...newOrder, user_data });
+		Cookie.remove('shipping');
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
 	}

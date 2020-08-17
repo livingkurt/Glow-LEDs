@@ -152,7 +152,7 @@ const PlaceOrderPage = (props) => {
 											</div>
 											<div className=" label cart-name">
 												<div>
-													<Link to={'/collections/all/products/' + item.product}>
+													<Link to={'/collections/all/products/' + item.pathname}>
 														{item.name}
 													</Link>
 												</div>

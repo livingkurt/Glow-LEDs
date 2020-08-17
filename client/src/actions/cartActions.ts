@@ -15,6 +15,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				countInStock: number;
 				volume: number;
 				qty: number;
+				pathname: number;
 			};
 		}
 	) => void,
@@ -25,7 +26,7 @@ const addToCart = (pathname: string, qty: number) => async (
 		const { data } = await Axios.get('/api/products/' + pathname);
 
 		const { cart: { cartItems } } = getState();
-		// const same_product = cartItems.find((item: any) => item.product === pathname);
+		// const same_product = cartItems.find((item: any) => item.pathname === pathname);
 		// qty = same_product ? qty + same_product.qty : qty;
 
 		dispatch({
@@ -38,6 +39,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
 				volume: data.volume,
+				pathname: data.pathname,
 				qty
 			}
 		});
@@ -50,6 +52,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
 				volume: data.volume,
+				pathname: data.pathname,
 				qty
 			}
 		];
@@ -91,6 +94,7 @@ const saveShipping = (data: {
 	country: string;
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
+	Cookie.set('shipping', JSON.stringify(data));
 };
 
 const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {

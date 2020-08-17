@@ -148,7 +148,7 @@ const OrderPage = (props) => {
 	const empty_cart = () => {
 		console.log(cartItems);
 		for (let item of cartItems) {
-			dispatch(removeFromCart(item.product));
+			dispatch(removeFromCart(item.pathname));
 		}
 	};
 
@@ -306,7 +306,7 @@ const OrderPage = (props) => {
 										</div>
 										<div className="cart-name">
 											<div>
-												<Link to={'/collections/all/products/' + item.product}>
+												<Link to={'/collections/all/products/' + item.pathname}>
 													{item.name}
 												</Link>
 											</div>

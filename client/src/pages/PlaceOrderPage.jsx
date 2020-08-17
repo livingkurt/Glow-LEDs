@@ -6,7 +6,8 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 // import { email_order } from '../actions/emailActions';
 import MetaTags from 'react-meta-tags';
-import { addToCart, removeFromCart } from '../actions/cartActions';
+import { addToCart, removeFromCart, saveShipping, savePayment } from '../actions/cartActions';
+import Cookie from 'js-cookie';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -29,12 +30,21 @@ const PlaceOrderPage = (props) => {
 	const [ shippingPrice, setShippingPrice ] = useState(5);
 	const [ place_order_state, set_place_order_state ] = useState(false);
 
-	useEffect(() => {
-		calculate_shipping();
-		console.log({ shippingPrice });
-		set_place_order_state(shipping === {});
-		return () => {};
-	}, []);
+	useEffect(
+		() => {
+			calculate_shipping();
+			console.log({ shippingPrice });
+			// set_place_order_state(shipping === {});
+			const shipping_cookie = Cookie.getJSON('shipping');
+			if (shipping_cookie) {
+				dispatch(saveShipping(shipping_cookie));
+			}
+			dispatch(savePayment({ paymentMethod: 'paypal' }));
+
+			return () => {};
+		},
+		[ cartItems ]
+	);
 
 	// useEffect(
 	// 	() => {
@@ -48,6 +58,12 @@ const PlaceOrderPage = (props) => {
 	// );
 
 	// const shippingPrice = itemsPrice > 100 ? 0 : 5;
+	useEffect(
+		() => {
+			// dispatch(addToCart(pathname, qty));
+		},
+		[ cartItems ]
+	);
 
 	const taxPrice = 0.15 * itemsPrice;
 	const totalPrice = itemsPrice + shippingPrice + taxPrice;
@@ -208,12 +224,12 @@ const PlaceOrderPage = (props) => {
 										</div>
 										<div className=" label cart-name">
 											<div>
-												<Link to={'/collections/all/products/' + item.product}>
+												<Link to={'/collections/all/products/' + item.pathname}>
 													{item.name}
 												</Link>
 											</div>
-											<div>Qty: {item.qty}</div>
-											{/* <FlexContainer v_i_center styles={{ height: '25px' }}>
+											{/* <div>Qty: {item.qty}</div> */}
+											<FlexContainer v_i_center styles={{ height: '25px' }}>
 												Qty:{' '}
 												<div className="qty_select_dropdown_container">
 													{console.log({ item })}
@@ -222,7 +238,7 @@ const PlaceOrderPage = (props) => {
 														value={item.qty}
 														className="qty_select_dropdown"
 														onChange={(e) =>
-															dispatch(addToCart(item.product, e.target.value))}
+															dispatch(addToCart(item.pathname, e.target.value))}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x) => (
 															<option key={x + 1} defaultValue={parseInt(x + 1)}>
@@ -232,7 +248,7 @@ const PlaceOrderPage = (props) => {
 													</select>
 													<i className="fas fa-sort-up icon_styles" />
 												</div>
-											</FlexContainer> */}
+											</FlexContainer>
 										</div>
 										<FlexContainer column>
 											<div className="cart-price">
@@ -250,14 +266,14 @@ const PlaceOrderPage = (props) => {
 													<label>${item.price ? item.price.toFixed(2) : item.price}</label>
 												)}
 											</div>
-											{/* <div style={{ textAlign: 'right', width: '100%' }}>
+											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
 													className="button icon"
-													onClick={() => dispatch(removeFromCart(item.product))}
+													onClick={() => dispatch(removeFromCart(item.pathname))}
 												>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</div> */}
+											</div>
 										</FlexContainer>
 									</li>
 								))

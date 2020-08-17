@@ -234,7 +234,7 @@ const ProductPage = (props) => {
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
 										<FlexContainer v_i_center styles={{ height: '25px' }}>
-											Qty: {/* {cartItems.find((item) => item.product === product._id)} */}
+											Qty: {/* {cartItems.find((item) => item.pathname === product._id)} */}
 											<div className="qty_select_dropdown_container">
 												<select
 													defaultValue={qty}

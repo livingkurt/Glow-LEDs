@@ -22,8 +22,8 @@ const CartPage = (props) => {
 
 	useEffect(() => {
 		if (pathname) {
-			// console.log(cartItems.find((item) => item.product === pathname));
-			// const same_product = cartItems.find((item) => item.product === pathname);
+			// console.log(cartItems.find((item) => item.pathname === pathname));
+			// const same_product = cartItems.find((item) => item.pathname === pathname);
 			// if (same_product) {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
@@ -35,8 +35,8 @@ const CartPage = (props) => {
 	useEffect(
 		() => {
 			// if (pathname) {
-			// console.log(cartItems.find((item) => item.product === pathname));
-			// const same_product = cartItems.find((item) => item.product === pathname);
+			// console.log(cartItems.find((item) => item.pathname === pathname));
+			// const same_product = cartItems.find((item) => item.pathname === pathname);
 			// if (same_product) {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
@@ -110,7 +110,7 @@ const CartPage = (props) => {
 									</div>
 									<div className="cart-name">
 										<div>
-											<Link to={'/collections/all/products/' + item.product}>{item.name}</Link>
+											<Link to={'/collections/all/products/' + item.pathname}>{item.name}</Link>
 										</div>
 										<div>
 											<FlexContainer v_i_center styles={{ height: '25px' }}>
@@ -121,7 +121,7 @@ const CartPage = (props) => {
 														value={item.qty}
 														className="qty_select_dropdown"
 														onChange={(e) =>
-															dispatch(addToCart(item.product, e.target.value))}
+															dispatch(addToCart(item.pathname, e.target.value))}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x) => (
 															<option key={x + 1} defaultValue={parseInt(x + 1)}>
@@ -154,7 +154,7 @@ const CartPage = (props) => {
 										<div style={{ textAlign: 'right', width: '100%' }}>
 											<button
 												className="button icon"
-												onClick={() => removeFromCartHandler(item.product)}
+												onClick={() => removeFromCartHandler(item.pathname)}
 											>
 												<i className="fas fa-trash-alt" />
 											</button>
