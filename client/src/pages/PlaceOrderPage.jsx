@@ -122,7 +122,7 @@ const PlaceOrderPage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</MetaTags>
-			<CheckoutSteps step1 step2 step3 step4 />
+			<CheckoutSteps step1 step2 step3 />
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>

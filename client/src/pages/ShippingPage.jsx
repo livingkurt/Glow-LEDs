@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveShipping } from '../actions/cartActions';
+import { saveShipping, savePayment } from '../actions/cartActions';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 import { validate_shipping } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
@@ -75,7 +75,9 @@ const ShippingPage = (props) => {
 					country
 				})
 			);
-			props.history.push('payment');
+			const paymentMethod = 'paypal';
+			dispatch(savePayment({ paymentMethod }));
+			props.history.push('placeorder');
 		}
 	};
 	return (

@@ -8,11 +8,12 @@ const CheckoutSteps = (props) => {
 			<div className={props.step2 ? 'active' : ''}>
 				<Link to="/secure/checkout/shipping">Shipping</Link>
 			</div>
+
 			<div className={props.step3 ? 'active' : ''}>
-				<Link to="/secure/checkout/payment">Payment</Link>
+				<Link to="/secure/checkout/placeorder">Payment</Link>
 			</div>
 			<div className={props.step4 ? 'active' : ''}>
-				<Link to="/secure/checkout/placeorder">Place Order</Link>
+				<Link to="/secure/checkout/payment">Complete</Link>
 			</div>
 		</div>
 	);

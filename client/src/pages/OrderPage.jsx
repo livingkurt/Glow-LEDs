@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { detailsOrder, payOrder, shipOrder, deliverOrder } from '../actions/orderActions';
 import { format_date_display } from '../utils/helper_functions';
 import { FlexContainer } from '../components/ContainerComponents';
-import { PaypalButton } from '../components/SpecialtyComponents';
+import { PaypalButton, CheckoutSteps } from '../components/SpecialtyComponents';
 import { Loading } from '../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 import API from '../utils/API';
@@ -192,6 +192,8 @@ const OrderPage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</MetaTags>
+			{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
+
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
