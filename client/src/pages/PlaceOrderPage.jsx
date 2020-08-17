@@ -127,17 +127,25 @@ const PlaceOrderPage = (props) => {
 				<div className="placeorder-info">
 					<div>
 						<h1>Shipping</h1>
-						<div className="label">
-							<div>
-								{shipping.first_name} {shipping.last_name}
+						<FlexContainer h_between wrap>
+							<div className="label">
+								<div>
+									{shipping.first_name} {shipping.last_name}
+								</div>
+								<div>{shipping.address}</div>
+								<div>
+									{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+								</div>
+								<div>{shipping.email}</div>
 							</div>
-							<div>{shipping.address}</div>
-							<div>
-								{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+							<div style={{ marginTop: '5px' }}>
+								<Link to="/secure/checkout/shipping">
+									<button className="button primary">Edit Shipping</button>
+								</Link>
 							</div>
-							<div>{shipping.email}</div>
-						</div>
+						</FlexContainer>
 					</div>
+
 					<div>
 						<h1>Payment</h1>
 						<div className="label">Payment Method: {cart.payment.paymentMethod}</div>
