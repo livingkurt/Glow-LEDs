@@ -51,7 +51,7 @@ const CartPage = (props) => {
 		if (cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 		} else {
-			props.history.push('/account/login?redirect=/secure/checkout/shipping');
+			props.history.push('/account/login?redirect=/secure/checkout/placeorder');
 		}
 	};
 
@@ -91,7 +91,7 @@ const CartPage = (props) => {
 			</MetaTags>
 			<div className="cart">
 				<div className="cart-list">
-					<ul className="cart-list-container">
+					<ul className="cart-list-container" style={{ marginRight: '10px' }}>
 						<li>
 							<h2>Shopping Cart</h2>
 							<div>Price</div>

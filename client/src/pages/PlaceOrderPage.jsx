@@ -6,6 +6,8 @@ import { FlexContainer } from '../components/ContainerComponents';
 import { CheckoutSteps } from '../components/SpecialtyComponents';
 // import { email_order } from '../actions/emailActions';
 import MetaTags from 'react-meta-tags';
+import { addToCart, removeFromCart } from '../actions/cartActions';
+
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
@@ -13,11 +15,11 @@ const PlaceOrderPage = (props) => {
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { loading, success, error, order } = orderCreate;
 
-	if (!shipping.address) {
-		props.history.push('/secure/checkout/shipping');
-	} else if (!payment.paymentMethod) {
-		props.history.push('/secure/checkout/payment');
-	}
+	// if (!shipping.address) {
+	// 	props.history.push('/secure/checkout/shipping');
+	// } else if (!payment.paymentMethod) {
+	// 	props.history.push('/secure/checkout/payment');
+	// }
 	// const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
 	const itemsPrice =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
@@ -25,12 +27,25 @@ const PlaceOrderPage = (props) => {
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
 	const [ shippingPrice, setShippingPrice ] = useState(5);
+	const [ place_order_state, set_place_order_state ] = useState(false);
 
 	useEffect(() => {
 		calculate_shipping();
 		console.log({ shippingPrice });
+		set_place_order_state(shipping === {});
 		return () => {};
 	}, []);
+
+	// useEffect(
+	// 	() => {
+	// 		if (shipping.hasOwnProperty("first_name")) {
+	// 			set_place_order_state(true);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ shipping ]
+	// );
 
 	// const shippingPrice = itemsPrice > 100 ? 0 : 5;
 
@@ -122,25 +137,42 @@ const PlaceOrderPage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</MetaTags>
-			<CheckoutSteps step1 step2 step3 />
+			{console.log(shipping === {})}
+			{console.log(shipping === '')}
+			{/* {set_place_order_state(shipping === {})} */}
+			{shipping && shipping.hasOwnProperty('first_name') ? (
+				<CheckoutSteps step1 step2 />
+			) : (
+				<CheckoutSteps step1 />
+			)}
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
 						<h1>Shipping</h1>
 						<FlexContainer h_between wrap>
-							<div className="label">
-								<div>
-									{shipping.first_name} {shipping.last_name}
+							{shipping &&
+							shipping.hasOwnProperty('first_name') && (
+								<div className="label">
+									<div>
+										{shipping.first_name} {shipping.last_name}
+									</div>
+									<div>{shipping.address}</div>
+									<div>
+										{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+									</div>
+									<div>{shipping.email}</div>
 								</div>
-								<div>{shipping.address}</div>
-								<div>
-									{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
-								</div>
-								<div>{shipping.email}</div>
-							</div>
+							)}
+							{console.log({ shipping })}
 							<div style={{ marginTop: '5px' }}>
 								<Link to="/secure/checkout/shipping">
-									<button className="button primary">Edit Shipping</button>
+									<button className="button primary">
+										{shipping && shipping.hasOwnProperty('first_name') ? (
+											'Edit Shipping'
+										) : (
+											'Add Shipping'
+										)}
+									</button>
 								</Link>
 							</div>
 						</FlexContainer>
@@ -148,7 +180,8 @@ const PlaceOrderPage = (props) => {
 
 					<div>
 						<h1>Payment</h1>
-						<div className="label">Payment Method: {cart.payment.paymentMethod}</div>
+						{/* <div className="label">Payment Method: {cart.payment.paymentMethod}</div> */}
+						<div className="label">Payment Method: paypal</div>
 					</div>
 					<div>
 						<ul className="cart-list-container">
@@ -180,22 +213,52 @@ const PlaceOrderPage = (props) => {
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>
-										</div>
-										<div className="cart-price">
-											{item.sale_price !== 0 ? (
-												<div style={{ width: '230px' }}>
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															${item.price ? item.price.toFixed(2) : item.price}
-														</label>
-													</del>{' '}
-													<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
-													On Sale!
+											{/* <FlexContainer v_i_center styles={{ height: '25px' }}>
+												Qty:{' '}
+												<div className="qty_select_dropdown_container">
+													{console.log({ item })}
+													<select
+														// defaultValue={item.qty}
+														value={item.qty}
+														className="qty_select_dropdown"
+														onChange={(e) =>
+															dispatch(addToCart(item.product, e.target.value))}
+													>
+														{[ ...Array(item.countInStock).keys() ].map((x) => (
+															<option key={x + 1} defaultValue={parseInt(x + 1)}>
+																{parseInt(x + 1)}
+															</option>
+														))}
+													</select>
+													<i className="fas fa-sort-up icon_styles" />
 												</div>
-											) : (
-												<label>${item.price ? item.price.toFixed(2) : item.price}</label>
-											)}
+											</FlexContainer> */}
 										</div>
+										<FlexContainer column>
+											<div className="cart-price">
+												{item.sale_price !== 0 ? (
+													<div style={{ width: '230px' }}>
+														<del style={{ color: 'red' }}>
+															<label style={{ color: 'white' }}>
+																${item.price ? item.price.toFixed(2) : item.price}
+															</label>
+														</del>{' '}
+														<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+														On Sale!
+													</div>
+												) : (
+													<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+												)}
+											</div>
+											{/* <div style={{ textAlign: 'right', width: '100%' }}>
+												<button
+													className="button icon"
+													onClick={() => dispatch(removeFromCart(item.product))}
+												>
+													<i className="fas fa-trash-alt" />
+												</button>
+											</div> */}
+										</FlexContainer>
 									</li>
 								))
 							)}
@@ -224,11 +287,15 @@ const PlaceOrderPage = (props) => {
 							<div>Order Total</div>
 							<div>${totalPrice.toFixed(2)}</div>
 						</li>
-						<li>
-							<button className="button primary full-width" onClick={placeOrderHandler}>
-								Start Payment Process
-							</button>
-						</li>
+						{console.log({ shipping })}
+						{shipping &&
+						shipping.hasOwnProperty('first_name') && (
+							<li>
+								<button className="button primary full-width" onClick={placeOrderHandler}>
+									Start Payment Process
+								</button>
+							</li>
+						)}
 
 						<FlexContainer column>
 							<div htmlFor="order_note">Add a note</div>
