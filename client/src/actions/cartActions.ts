@@ -16,6 +16,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				volume: number;
 				qty: number;
 				pathname: number;
+				category: number;
 			};
 		}
 	) => void,
@@ -40,6 +41,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				countInStock: data.countInStock,
 				volume: data.volume,
 				pathname: data.pathname,
+				category: data.category,
 				qty
 			}
 		});
@@ -53,6 +55,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				countInStock: data.countInStock,
 				volume: data.volume,
 				pathname: data.pathname,
+				category: data.category,
 				qty
 			}
 		];

@@ -84,15 +84,36 @@ const CartPage = (props) => {
 	// 	);
 	// 	// }
 	// };
+	// const no_adapters_warning = () => {
+	// 	console.log('Diffuser Caps');
+	// 	if (cartItems.findIndex((cart_item) => cart_item.name.includes('Diffuser Caps')) === 1) {
+	// 		// console.log('Diffuser Caps');
+	// 		// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Adapters')) === -1) {
+	// 		// 	console.log('No Adapters');
+	// 		return "Don't Forget your Diffuser Adapters";
+	// 		// }
+	// 	}
+	// };
 	const no_adapters_warning = () => {
-		console.log('Diffuser Caps');
-		if (cartItems.findIndex((cart_item) => cart_item.name.includes('Diffuser Caps')) === 1) {
-			// console.log('Diffuser Caps');
-			// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Adapters')) === -1) {
-			// 	console.log('No Adapters');
-			return "Don't Forget your Diffuser Adapters";
-			// }
+		// console.log('Diffuser Caps');
+		const categories = cartItems.map((cartItem) => {
+			return cartItem.category;
+		});
+		console.log({ categories });
+		if (categories.includes('caps')) {
+			console.log('Caps');
+			// return "Don't Forget your Diffuser Adapters";
+			if (!categories.includes('diffuser_adapters')) {
+				return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
+			}
 		}
+		// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Diffuser Caps')) === 1) {
+		// 	// console.log('Diffuser Caps');
+		// 	// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Adapters')) === -1) {
+		// 	// 	console.log('No Adapters');
+		// 	return "Don't Forget your Diffuser Adapters";
+		// 	// }
+		// }
 	};
 
 	return (
@@ -158,7 +179,7 @@ const CartPage = (props) => {
 								'Yes'}
 						</h3> */}
 						{/* <h3>{no_adapters_warning()}</h3> */}
-
+						{/* {no_adapters_warning()} */}
 						{cartItems.length === 0 ? (
 							<FlexContainer column v_between>
 								<div>Cart is empty</div>
@@ -166,7 +187,7 @@ const CartPage = (props) => {
 							</FlexContainer>
 						) : (
 							<div>
-								<h4>Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!</h4>
+								<h4>{no_adapters_warning()}</h4>
 								{cartItems.map((item, index) => (
 									<li key={index}>
 										{console.log({ item })}
