@@ -54,66 +54,16 @@ const CartPage = (props) => {
 			props.history.push('/account/login?redirect=/secure/checkout/placeorder');
 		}
 	};
-
-	// const no_adapters_warning = () => {
-	// 	console.log(cartItems);
-	// 	console.log('no_adapters_warning');
-	// 	// if (cartItems.length > 0) {
-	// 	cartItems.find((cart_item) => {
-	// 		// console.log(cart_item.name.slice(13, cart_item.name.length));
-	// 		console.log('Find');
-	// 		if (cart_item.name.slice(13, cart_item.name.length) === 'Diffuser Caps') {
-	// 			console.log('Diffuser Caps');
-	// 			if (
-	// 				cart_item.name !== 'Diffuser Adapters (No Caps)' ||
-	// 				cart_item.name !== 'Diffuser Caps + Adapters Starter Kit'
-	// 			) {
-	// 				console.log('No Adaters');
-	// 				return "Don't Forget your Diffuser Adapters";
-	// 			}
-	// 		}
-	// 	});
-	// 	cartItems.find(
-	// 		(cart_item) =>
-	// 			cart_item.name.slice(13, cart_item.name.length) === 'Diffuser Caps'
-	// 				? cart_item.name !== 'Diffuser Adapters (No Caps)' ||
-	// 					cart_item.name !== 'Diffuser Caps + Adapters Starter Kit'
-	// 					? "Don't Forget your Diffuser Adapters"
-	// 					: "Don't Forget your Diffuser Adapters"
-	// 				: "Don't Forget your Diffuser Adapters"
-	// 	);
-	// 	// }
-	// };
-	// const no_adapters_warning = () => {
-	// 	console.log('Diffuser Caps');
-	// 	if (cartItems.findIndex((cart_item) => cart_item.name.includes('Diffuser Caps')) === 1) {
-	// 		// console.log('Diffuser Caps');
-	// 		// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Adapters')) === -1) {
-	// 		// 	console.log('No Adapters');
-	// 		return "Don't Forget your Diffuser Adapters";
-	// 		// }
-	// 	}
-	// };
 	const no_adapters_warning = () => {
-		// console.log('Diffuser Caps');
 		const categories = cartItems.map((cartItem) => {
 			return cartItem.category;
 		});
-		console.log({ categories });
 		if (categories.includes('caps')) {
 			console.log('Caps');
-			// return "Don't Forget your Diffuser Adapters";
 			if (!categories.includes('diffuser_adapters')) {
 				return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
 			}
 		}
-		// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Diffuser Caps')) === 1) {
-		// 	// console.log('Diffuser Caps');
-		// 	// if (cartItems.findIndex((cart_item) => cart_item.name.includes('Adapters')) === -1) {
-		// 	// 	console.log('No Adapters');
-		// 	return "Don't Forget your Diffuser Adapters";
-		// 	// }
-		// }
 	};
 
 	return (
@@ -157,33 +107,9 @@ const CartPage = (props) => {
 							<h2>Shopping Cart</h2>
 							<div>Price</div>
 						</li>
-						{/* <h3>
-							{cartItems.find(
-								(cart_item) =>
-									cart_item.name.slice(13, cart_item.name.length) === 'Diffuser Caps'
-										? cart_item.name !== 'Diffuser Adapters (No Caps)' ||
-											cart_item.name !== 'Diffuser Caps + Adapters Starter Kit'
-										: "Don't Forget your Diffuser Adapters"
-								// 	: "Don't Forget your Diffuser Adapters"
-								// : "Don't Forget your Diffuser Adapters"
-							)}
-						</h3> */}
-						{/* <h3>
-							{console.log(
-								cartItems.findIndex((cart_item) => cart_item.name.includes('Adapter')) === -1 && 'Yes'
-							)}
-						</h3> */}
-						{/* <h3>
-							{cartItems.findIndex((cart_item) => cart_item.name.includes('Diffuser Caps')) === 1 &&
-								cartItems.findIndex((cart_item) => cart_item.name.includes('Adapters')) === 1 &&
-								'Yes'}
-						</h3> */}
-						{/* <h3>{no_adapters_warning()}</h3> */}
-						{/* {no_adapters_warning()} */}
 						{cartItems.length === 0 ? (
 							<FlexContainer column v_between>
 								<div>Cart is empty</div>
-								{/* <div>Cart is empty</div> */}
 							</FlexContainer>
 						) : (
 							<div>
