@@ -126,7 +126,7 @@ const LoginPage = (props) => {
 					<li>New to Glow LEDs?</li>
 					<li>
 						<Link
-							to={redirect === '/' ? 'account/register' : 'account/register?redirect=' + redirect}
+							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
 							className="button secondary text-center"
 						>
 							Create Account
