@@ -68,6 +68,7 @@ const UserProfilePage = (props) => {
 
 	const send_not_verified_email = async () => {
 		const request = await API.not_verified_email(user);
+
 		console.log(request);
 	};
 	return (

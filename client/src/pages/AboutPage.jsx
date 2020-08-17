@@ -9,6 +9,7 @@ const AboutPage = () => {
 		<div class="main_container">
 			<MetaTags>
 				<title>About | Glow LEDs</title>
+				<link rel="canonical" href="https://www.glow-leds.com/pages/about" />
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
