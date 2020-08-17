@@ -13,7 +13,7 @@ const Sort = (props) => {
 					<option value="lowest">Lowest</option>
 					<option value="highest">Highest</option>
 				</select>
-				{/* <i className="fas fa-sort-up icon_styles" /> */}
+				<i className="fas fa-sort-up icon_styles" />
 			</div>
 		</FlexContainer>
 	);
