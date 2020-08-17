@@ -158,73 +158,78 @@ const CartPage = (props) => {
 								'Yes'}
 						</h3> */}
 						{/* <h3>{no_adapters_warning()}</h3> */}
-						<h4>Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!</h4>
+
 						{cartItems.length === 0 ? (
 							<FlexContainer column v_between>
 								<div>Cart is empty</div>
 								{/* <div>Cart is empty</div> */}
 							</FlexContainer>
 						) : (
-							cartItems.map((item, index) => (
-								<li key={index}>
-									{console.log({ item })}
-									<div className="cart-image">
-										<img src={item.display_image} alt="product" />
-									</div>
-									<div className="cart-name">
-										<div>
-											<Link to={'/collections/all/products/' + item.pathname}>{item.name}</Link>
+							<div>
+								<h4>Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!</h4>
+								{cartItems.map((item, index) => (
+									<li key={index}>
+										{console.log({ item })}
+										<div className="cart-image">
+											<img src={item.display_image} alt="product" />
 										</div>
-										<div>
-											<FlexContainer v_i_center styles={{ height: '25px' }}>
-												Qty:{' '}
-												<div className="qty_select_dropdown_container">
-													<select
-														// defaultValue={item.qty}
-														value={item.qty}
-														className="qty_select_dropdown"
-														onChange={(e) =>
-															dispatch(addToCart(item.pathname, e.target.value))}
-													>
-														{[ ...Array(item.countInStock).keys() ].map((x) => (
-															<option key={x + 1} defaultValue={parseInt(x + 1)}>
-																{parseInt(x + 1)}
-															</option>
-														))}
-													</select>
-													{/* <i className="fas fa-sort-up icon_styles" /> */}
-												</div>
-											</FlexContainer>
+										<div className="cart-name">
+											<div>
+												<Link to={'/collections/all/products/' + item.pathname}>
+													{item.name}
+												</Link>
+											</div>
+											<div>
+												<FlexContainer v_i_center styles={{ height: '25px' }}>
+													Qty:{' '}
+													<div className="qty_select_dropdown_container">
+														<select
+															// defaultValue={item.qty}
+															value={item.qty}
+															className="qty_select_dropdown"
+															onChange={(e) =>
+																dispatch(addToCart(item.pathname, e.target.value))}
+														>
+															{[ ...Array(item.countInStock).keys() ].map((x) => (
+																<option key={x + 1} defaultValue={parseInt(x + 1)}>
+																	{parseInt(x + 1)}
+																</option>
+															))}
+														</select>
+														{/* <i className="fas fa-sort-up icon_styles" /> */}
+													</div>
+												</FlexContainer>
+											</div>
 										</div>
-									</div>
 
-									<FlexContainer column>
-										<div className="cart-price">
-											{item.sale_price !== 0 ? (
-												<label>
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															${item.price ? item.price.toFixed(2) : item.price}
-														</label>
-													</del>{' '}
-													<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
-													On Sale!
-												</label>
-											) : (
-												<label>${item.price ? item.price.toFixed(2) : item.price}</label>
-											)}
-										</div>
-										<div style={{ textAlign: 'right', width: '100%' }}>
-											<button
-												className="button icon"
-												onClick={() => removeFromCartHandler(item.pathname)}
-											>
-												<i className="fas fa-trash-alt" />
-											</button>
-										</div>
-									</FlexContainer>
-								</li>
-							))
+										<FlexContainer column>
+											<div className="cart-price">
+												{item.sale_price !== 0 ? (
+													<label>
+														<del style={{ color: 'red' }}>
+															<label style={{ color: 'white' }}>
+																${item.price ? item.price.toFixed(2) : item.price}
+															</label>
+														</del>{' '}
+														<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+														On Sale!
+													</label>
+												) : (
+													<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+												)}
+											</div>
+											<div style={{ textAlign: 'right', width: '100%' }}>
+												<button
+													className="button icon"
+													onClick={() => removeFromCartHandler(item.pathname)}
+												>
+													<i className="fas fa-trash-alt" />
+												</button>
+											</div>
+										</FlexContainer>
+									</li>
+								))}
+							</div>
 						)}
 					</ul>
 				</div>
