@@ -206,11 +206,12 @@ const PlaceOrderPage = (props) => {
 						</FlexContainer>
 					</div>
 
-					<div>
+					{/* <div>
 						<h1>Payment</h1>
-						{/* <div className="label">Payment Method: {cart.payment.paymentMethod}</div> */}
+						
 						<div className="label">Payment Method: paypal</div>
-					</div>
+					</div> */}
+					{/* <div className="label">Payment Method: {cart.payment.paymentMethod}</div> */}
 					<div>
 						<ul className="cart-list-container">
 							<li>

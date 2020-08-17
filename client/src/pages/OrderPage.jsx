@@ -282,7 +282,7 @@ const OrderPage = (props) => {
 					</div>
 					<div>
 						<h1>Payment</h1>
-						<div>Payment Method: {order.payment.paymentMethod}</div>
+						{/* <div>Payment Method: {order.payment.paymentMethod}</div> */}
 						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 							<p style={{ marginBottom: '0px' }}>
 								{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}
