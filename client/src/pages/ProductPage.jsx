@@ -44,7 +44,7 @@ const ProductPage = (props) => {
 				<FlexContainer h_between>
 					<FlexContainer styles={{ marginBottom: 10 }}>
 						<Link to="/collections/all/products">
-							<button class="button primary">Back to All Products</button>
+							<button class="button primary">Back to Products</button>
 						</Link>
 					</FlexContainer>
 					{/* {console.log(props.match.params.pathname)} */}
