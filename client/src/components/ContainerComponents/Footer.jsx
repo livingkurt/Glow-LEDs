@@ -31,9 +31,14 @@ const Footer = (props) => {
 							Contact
 						</button>
 					</Link>
-					<Link to="/terms">
-						<button style={{ margin: 'auto' }} className="button mobile_nav">
+					<Link to="/pages/terms">
+						<button style={{ margin: 'auto', marginRight: '10px' }} className="button mobile_nav">
 							Terms
+						</button>
+					</Link>
+					<Link to="/pages/sitemap">
+						<button style={{ margin: 'auto' }} className="button mobile_nav">
+							Site Map
 						</button>
 					</Link>
 				</FlexContainer>

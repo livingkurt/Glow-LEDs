@@ -148,10 +148,6 @@ const FAQPage = () => {
 						<li style={{ lineHeight: '25px' }}>
 							100% satisfaction guarantee. We accept returns within 14 days of delivery.
 						</li>
-						{/* <li style={{ lineHeight: '25px' }}>
-							To initiate a return please contact info.glowleds@gmail.com and You will be supplied with an
-							address to send your product.
-						</li> */}
 						<li style={{ lineHeight: '25px' }}>
 							To initiate a return please contact info.glowleds@gmail.com and You will be supplied with a
 							prepaid shipping label to send back your product.
@@ -171,16 +167,6 @@ const FAQPage = () => {
 						<li style={{ lineHeight: '25px' }}>
 							If item arrives damamged in any way please contact us immediately at info.glowleds@gmail.com
 						</li>
-						{/* <li style={{ lineHeight: '25px' }}>
-							Reviewing your order in the Shopping Cart carefully prior to checkout is highly recommended.
-							Our online orders process immediately to ensure our clients receive their products as soon
-							as possible. As a result, we are unable to cancel or modify your order once submitted.
-						</li> */}
-						{/* <li style={{ lineHeight: '25px' }}>
-							Our online orders process immediately to ensure our clients receive their products as soon
-							as possible. As a result, you must contact us about your cancelation or modififcation within
-							one hour of your order once submitted.
-						</li> */}
 						<li style={{ lineHeight: '25px' }}>
 							Our online orders process immediately to ensure our clients receive their products as soon
 							as possible. If you would like to cancel your order you must contact us within one hour of

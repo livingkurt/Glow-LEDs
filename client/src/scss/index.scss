@@ -1242,3 +1242,10 @@ video {
 .embla__button--next {
 	right: -30px;
 }
+
+.inner_content {
+	li {
+		margin: 10px 0;
+		// box-shadow: $bs_deep;
+	}
+}

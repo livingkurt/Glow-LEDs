@@ -30,7 +30,8 @@ import {
 	UsersPage,
 	FAQPage,
 	UserProfilePage,
-	EditUserProfilePage
+	EditUserProfilePage,
+	SitemapPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -99,6 +100,7 @@ const App = () => {
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />
+							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
 							<Route path="/" exact={true} component={HomePage} />
 
 							<Route component={Four04Page} />
