@@ -161,10 +161,6 @@ const ProductPage = (props) => {
 									<h3 style={{ margin: 0, marginRight: 5 }}>
 										Price: $549.99 - $<i class="fas fa-arrow-up" />
 									</h3>
-								) : product.name === 'Custom Diffuser Caps' ? (
-									<h3 style={{ margin: 0, marginRight: 5 }}>
-										Price: $34.99 - $<i class="fas fa-arrow-up" />
-									</h3>
 								) : (
 									<FlexContainer>
 										<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
@@ -226,10 +222,6 @@ const ProductPage = (props) => {
 									{product.name === 'Custom Infinity Mirror' ? (
 										<label style={{ margin: 0, marginRight: 5 }}>
 											Price: $549.99 - $<i class="fas fa-arrow-up" />
-										</label>
-									) : product.name === 'Custom Diffuser Caps' ? (
-										<label style={{ margin: 0, marginRight: 5 }}>
-											Price: $34.99 - $<i class="fas fa-arrow-up" />
 										</label>
 									) : (
 										<FlexContainer>

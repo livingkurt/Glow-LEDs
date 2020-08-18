@@ -93,6 +93,21 @@ const Product = (props) => {
 							<label className="product-price">
 								$549.99 - $<i class="fas fa-arrow-up" />
 							</label>
+						) : (
+							<label className="product-price">{sale_price_switch()}</label>
+						)}
+
+						{props.product.rating ? (
+							<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
+						) : (
+							<span className="rating" style={{ textAlign: 'center', visibility: 'hidden' }}>
+								No Reviews
+							</span>
+						)}
+						{/* {props.product.name === 'Custom Infinity Mirror' ? (
+							<label className="product-price">
+								$549.99 - $<i class="fas fa-arrow-up" />
+							</label>
 						) : props.product.name === 'Custom Diffuser Caps' ? (
 							<label className="product-price">
 								$34.99 - $<i class="fas fa-arrow-up" />
@@ -107,7 +122,7 @@ const Product = (props) => {
 							<span className="rating" style={{ textAlign: 'center', visibility: 'hidden' }}>
 								No Reviews
 							</span>
-						)}
+						)} */}
 					</div>
 				</div>
 			</div>
