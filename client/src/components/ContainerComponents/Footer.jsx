@@ -11,7 +11,7 @@ const Footer = (props) => {
 		justifyContent: 'center',
 		alignItems: 'center',
 		textAlign: 'center',
-		height: '66px',
+		// height: '66px',
 		// position: "fixed",
 		left: '0',
 		bottom: '0',
@@ -25,7 +25,7 @@ const Footer = (props) => {
 			<FlexContainer h_between v_i_center styles={{ width: '100%' }}>
 				{/* <div style={{ marginLeft: '96px' }} /> */}
 				{/* <label styles={{ margin: 'auto' }}>© 2020 Glow LEDs. All Rights Reserved</label> */}
-				<FlexContainer styles={{ marginLeft: '10px' }}>
+				<FlexContainer styles={{ marginLeft: '10px' }} wrap>
 					<Link to="/pages/contact">
 						<button style={{ margin: 'auto', marginRight: '10px' }} className="button mobile_nav">
 							Contact
@@ -42,7 +42,7 @@ const Footer = (props) => {
 						</button>
 					</Link>
 				</FlexContainer>
-				<FlexContainer styles={{ marginTop: '8px' }}>
+				<FlexContainer styles={{ marginTop: '8px' }} wrap>
 					<div style={{ marginLeft: '10px', fontSize: '30px' }}>
 						<a href="https://www.facebook.com/Glow-LEDscom-100365571740684" target="_blank">
 							<i class="fab fa-facebook zoom" />

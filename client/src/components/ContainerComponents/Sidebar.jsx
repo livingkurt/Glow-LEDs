@@ -119,6 +119,11 @@ const Sidebar = (props) => {
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">Admin</button>
 						<ul className="sidebar_dropdown_container">
+							<Link to="/secure/glow/controlpanel">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Control Panel
+								</button>
+							</Link>
 							<Link to="/secure/glow/orders">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
 									Orders

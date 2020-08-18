@@ -186,6 +186,11 @@ const Header = (props) => {
 						<div className="dropdown ">
 							<button className="button nav">Admin</button>
 							<ul className="dropdown-content hover_fade_in">
+								<Link to="/secure/glow/controlpanel">
+									<button className="button nav" style={{ width: '152px' }}>
+										Control Panel
+									</button>
+								</Link>
 								<Link to="/secure/glow/orders">
 									<button className="button nav">Orders</button>
 								</Link>
