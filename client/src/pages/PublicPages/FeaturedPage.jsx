@@ -62,9 +62,19 @@ const FeaturedPage = (props) => {
 			<div className="home_page_divs">
 				<FlexContainer h_center column>
 					<h1 style={{ textAlign: 'center' }}>Keif Light Show</h1>
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Dodecahedron Point Diffuser Caps
-					</p>
+					</p> */}
+					<Link to="/collections/all/products/dodecahedron_point_diffuser_caps">
+						<FlexContainer h_center column>
+							<div className="p_descriptions" style={{ textAlign: 'center' }}>
+								Check out the Dodecahedron Point Diffuser Caps{' '}
+								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									Here
+								</button>
+							</div>
+						</FlexContainer>
+					</Link>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
