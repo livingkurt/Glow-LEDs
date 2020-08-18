@@ -42,7 +42,7 @@ const OrderPaymentCompletePage = (props) => {
 					property="og:image:secure_url"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
-				<meta property="og:url" content="https://www.glow-leds.com" />
+				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/paymentcomplete/' + props.match.params.id" />
 				<meta name="twitter:card" content="summary" />
 				<meta name="twitter:title" content="Products | Glow LEDs" />
 				<meta

@@ -114,7 +114,7 @@ const ProductPage = (props) => {
 								property="og:image:secure_url"
 								content={'https://www.glow-leds.com' + product.display_image}
 							/>
-							<meta property="og:url" content="https://www.glow-leds.com" />
+							<meta property="og:url" content="https://www.glow-leds.com/collections/all/products/" />
 							<meta name="twitter:card" content="summary" />
 							<meta name="twitter:title" content="Products | Glow LEDs" />
 							<meta

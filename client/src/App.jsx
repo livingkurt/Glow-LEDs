@@ -32,7 +32,8 @@ import {
 	UserProfilePage,
 	EditUserProfilePage,
 	SitemapPage,
-	ControlPanelPage
+	ControlPanelPage,
+	FeaturedPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -103,6 +104,7 @@ const App = () => {
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />
 							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
+							<Route path="/pages/featured" exact={true} component={FeaturedPage} />
 							<Route path="/" exact={true} component={HomePage} />
 
 							<Route component={Four04Page} />

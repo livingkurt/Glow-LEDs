@@ -126,6 +126,16 @@ const Header = (props) => {
 						</div>
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
+							<button className="button nav">Community</button>
+							{/* </Link> */}
+							<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
+								<Link to="/pages/featured">
+									<button className="button nav">Featured</button>
+								</Link>
+							</ul>
+						</div>
+						<div className="dropdown-nav">
+							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Support</button>
 							{/* </Link> */}
 							<ul style={{ width: 230 }} className="dropdown-nav-content hover_fade_in">

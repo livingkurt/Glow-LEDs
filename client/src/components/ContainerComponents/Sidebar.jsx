@@ -193,6 +193,17 @@ const Sidebar = (props) => {
 					<i style={icon_styles} className="fas fa-sort-up" />
 				</div>
 				<div className="sidebar_dropdown">
+					<button className="sidebar_button primary">Community</button>
+					<ul className="sidebar_dropdown_container">
+						<Link to="/pages/featured">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Featured
+							</button>
+						</Link>
+					</ul>
+					<i style={icon_styles} className="fas fa-sort-up" />
+				</div>
+				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Support</button>
 					<ul className="sidebar_dropdown_container">
 						<Link to="/pages/about">

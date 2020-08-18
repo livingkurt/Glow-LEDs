@@ -34,3 +34,4 @@ export { default as TermsPage } from './PublicPages/TermsPage';
 export { default as AboutPage } from './PublicPages/AboutPage';
 export { default as FAQPage } from './PublicPages/FAQPage';
 export { default as SitemapPage } from './PublicPages/SitemapPage';
+export { default as FeaturedPage } from './PublicPages/FeaturedPage';
