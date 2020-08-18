@@ -385,7 +385,7 @@ const ProductPage = (props) => {
 					</FlexContainer>
 				)}
 			</Loading>
-			<RelatedProducts product={product} product_id={props.match.params.pathname} />
+			<RelatedProducts product={product} product_pathname={props.match.params.pathname} />
 		</FlexContainer>
 	);
 };

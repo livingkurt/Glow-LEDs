@@ -23,10 +23,10 @@ const RelatedProducts = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(detailsProduct(props.product_id));
+			dispatch(detailsProduct(props.product_pathname));
 			return () => {};
 		},
-		[ props.product_id ]
+		[ props.product_pathname ]
 	);
 
 	return (
@@ -46,8 +46,8 @@ const RelatedProducts = (props) => {
 						products.map(
 							(item, index) =>
 								!item.hidden &&
-								props.product_id &&
-								item._id !== props.product_id && (
+								props.product_pathname &&
+								item.pathname !== props.product_pathname && (
 									<Product
 										key={index}
 										size="300px"
