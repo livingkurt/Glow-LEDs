@@ -38,7 +38,7 @@ const Footer = (props) => {
 					</Link>
 					<Link to="/pages/sitemap">
 						<button style={{ margin: 'auto' }} className="button mobile_nav">
-							Site Map
+							Sitemap
 						</button>
 					</Link>
 				</FlexContainer>
