@@ -65,7 +65,7 @@ const PlaceOrderPage = (props) => {
 		[ cartItems ]
 	);
 
-	const taxPrice = 0.15 * itemsPrice;
+	const taxPrice = 0.0875 * itemsPrice;
 	const totalPrice = itemsPrice + shippingPrice + taxPrice;
 	// const totalPrice = itemsPrice + taxPrice;
 
