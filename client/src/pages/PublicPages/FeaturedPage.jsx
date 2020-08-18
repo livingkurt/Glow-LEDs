@@ -43,12 +43,28 @@ const FeaturedPage = (props) => {
 			</FlexContainer>
 
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
-				A place where we will save all the lightshows and product reviews that you have so graciously given to
-				us. To show our appreciation we will be keeping an archive of all of videos and pictures you've sent u.
+				To show our appreciation we will be keeping an archive of the lightshows and product reviews that you
+				have so graciously given to us. To be featured on our website and pages.
 			</p>
-			<div className="home_page_divs">
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				For Information on how to become featured on our pages. Check our Frequently Asked Questions page.
+			</p>
+			<Link to="/pages/faq">
 				<FlexContainer h_center>
-					<h1>Diffuser Caps</h1>
+					<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+						Frequently Asked Questions
+					</button>
+				</FlexContainer>
+			</Link>
+			{/* <FlexContainer h_center>
+				<h4> No Content Yet</h4>
+			</FlexContainer> */}
+			<div className="home_page_divs">
+				<FlexContainer h_center column>
+					<h1 style={{ textAlign: 'center' }}>Keif Light Show</h1>
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Dodecahedron Point Diffuser Caps
+					</p>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
@@ -56,29 +72,15 @@ const FeaturedPage = (props) => {
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/CaC-86DAql4?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							src="https://www.youtube.com/embed/u6uZel47G8Y?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 							frameborder="0"
 							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 							allowfullscreen="1"
 						/>
 					</div>
 				</FlexContainer>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					It's been too long since a truly new element has been introduced to gloving. We are here to change
-					lightshows forever. This new technology puts designs on the outside of your glove for ultimate
-					definition. Using a propriety design, you will be able to simply screw on the caps through the
-					gloves to the adapter and start throwing heat right away. Mix and match the cap designs create truly
-					ridiculous light shows. 100% facemelt guarantee.
-				</p>
-				<FlexContainer h_center>
-					<Link to="/collections/all/products/category/caps">
-						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Diffuser Caps</h2>
-						</button>
-					</Link>
-				</FlexContainer>
 			</div>
-			<div className="home_page_divs">
+			{/* <div className="home_page_divs">
 				<FlexContainer h_center>
 					<h1>Infinity Mirrors</h1>
 				</FlexContainer>
@@ -139,7 +141,7 @@ const FeaturedPage = (props) => {
 						</button>
 					</Link>
 				</FlexContainer>
-			</div>
+			</div> */}
 		</div>
 	);
 };
