@@ -55,11 +55,11 @@ const Product = (props) => {
 				<div class="tooltipoverlay">
 					<span class="tooltiptext">
 						{props.product.name === 'Custom Infinity Mirror' ? (
-							<Link to="/pages/contact/custon_orders">
+							<Link to="/pages/contact/custom_orders">
 								<button className="button primary">Contact</button>
 							</Link>
 						) : props.product.name === 'Custom Diffuser Caps' ? (
-							<Link to="/pages/contact/custon_orders">
+							<Link to="/pages/contact/custom_orders">
 								<button className="button primary">Contact</button>
 							</Link>
 						) : (

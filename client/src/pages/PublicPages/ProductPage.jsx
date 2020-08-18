@@ -278,7 +278,7 @@ const ProductPage = (props) => {
 									</li>
 									{product.name === 'Custom Infinity Mirror' ||
 									product.name === 'Custom Diffuser Caps' ? (
-										<Link to="/pages/contact/custon_orders">
+										<Link to="/pages/contact/custom_orders">
 											<button className="button primary full-width">Contact</button>
 										</Link>
 									) : (
