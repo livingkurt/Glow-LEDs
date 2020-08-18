@@ -44,7 +44,7 @@ const FeaturedPage = (props) => {
 
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				To show our appreciation we will be keeping an archive of the lightshows and product reviews that you
-				have so graciously given to us. To be featured on our website and pages.
+				have so graciously given to us.
 			</p>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				For Information on how to become featured on our pages. Check our Frequently Asked Questions page.
@@ -62,15 +62,20 @@ const FeaturedPage = (props) => {
 			<div className="home_page_divs">
 				<FlexContainer h_center column>
 					<h1 style={{ textAlign: 'center' }}>Keif Light Show</h1>
-					{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Dodecahedron Point Diffuser Caps
-					</p> */}
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Check out Keif with the dodecahedron point diffuser caps!
+					</p>
+					<p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
+						"If it doesnt work the first time, try to turn it off and then leave it off" -Keif
+					</p>
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Follow him @ Keith Booher on Facebook and @flippity_flap_jacks on Instagram
+					</p>
 					<Link to="/collections/all/products/dodecahedron_point_diffuser_caps">
 						<FlexContainer h_center column>
 							<div className="p_descriptions" style={{ textAlign: 'center' }}>
-								Check out the Dodecahedron Point Diffuser Caps{' '}
 								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-									Here
+									Dodecahedron Point Diffuser Caps
 								</button>
 							</div>
 						</FlexContainer>
