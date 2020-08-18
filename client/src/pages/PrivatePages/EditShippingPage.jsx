@@ -55,6 +55,7 @@ const ProfilePage = (props) => {
 		<FlexContainer class="profile_container" wrap styles={{ padding: '20px' }}>
 			<MetaTags>
 				<title>Edit Shipping | Glow LEDs</title>
+				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editshipping" />
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."

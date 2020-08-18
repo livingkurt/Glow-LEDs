@@ -31,6 +31,7 @@ const MaintenancePage = (props) => {
 		<div style={{ padding: 0 }}>
 			<MetaTags>
 				<title>Maintenance | Glow LEDs</title>
+				<link rel="canonical" href="https://www.glow-leds.com/" />
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."

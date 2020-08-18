@@ -21,6 +21,10 @@ const OrderPaymentCompletePage = (props) => {
 		<FlexContainer h_center column>
 			<MetaTags>
 				<title>Payment Complete | Glow LEDs</title>
+				<link
+					rel="canonical"
+					href={'https://www.glow-leds.com/secure/checkout/paymentcomplete/' + props.match.params.id}
+				/>
 				<meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."

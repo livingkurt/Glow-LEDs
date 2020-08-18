@@ -75,6 +75,10 @@ const ProductPage = (props) => {
 					<FlexContainer column>
 						<MetaTags>
 							<title>{loading ? 'Product' : product.name} | Glow LEDs</title>
+							<link
+								rel="canonical"
+								href={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
+							/>
 							<meta
 								name="description"
 								content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
