@@ -58,10 +58,6 @@ const Product = (props) => {
 							<Link to="/pages/contact/custom_orders">
 								<button className="button primary">Contact</button>
 							</Link>
-						) : props.product.name === 'Custom Diffuser Caps' ? (
-							<Link to="/pages/contact/custom_orders">
-								<button className="button primary">Contact</button>
-							</Link>
 						) : (
 							<li>
 								{props.product.countInStock > 0 ? (

@@ -268,8 +268,7 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									{product.name === 'Custom Infinity Mirror' ||
-									product.name === 'Custom Diffuser Caps' ? (
+									{product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
 											<button className="button primary full-width">Contact</button>
 										</Link>
