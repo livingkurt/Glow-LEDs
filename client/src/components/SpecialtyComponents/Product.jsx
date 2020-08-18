@@ -58,6 +58,10 @@ const Product = (props) => {
 							<Link to="/pages/contact/custon_orders">
 								<button className="button primary">Contact</button>
 							</Link>
+						) : props.product.name === 'Custom Diffuser Caps' ? (
+							<Link to="/pages/contact/custon_orders">
+								<button className="button primary">Contact</button>
+							</Link>
 						) : (
 							<li>
 								{props.product.countInStock > 0 ? (
@@ -89,9 +93,14 @@ const Product = (props) => {
 							<label className="product-price">
 								$549.99 - $<i class="fas fa-arrow-up" />
 							</label>
+						) : props.product.name === 'Custom Diffuser Caps' ? (
+							<label className="product-price">
+								$34.99 - $<i class="fas fa-arrow-up" />
+							</label>
 						) : (
 							<label className="product-price">{sale_price_switch()}</label>
 						)}
+
 						{props.product.rating ? (
 							<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
 						) : (

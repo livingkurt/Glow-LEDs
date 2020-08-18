@@ -161,6 +161,10 @@ const ProductPage = (props) => {
 									<h3 style={{ margin: 0, marginRight: 5 }}>
 										Price: $549.99 - $<i class="fas fa-arrow-up" />
 									</h3>
+								) : product.name === 'Custom Diffuser Caps' ? (
+									<h3 style={{ margin: 0, marginRight: 5 }}>
+										Price: $34.99 - $<i class="fas fa-arrow-up" />
+									</h3>
 								) : (
 									<FlexContainer>
 										<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
@@ -219,21 +223,33 @@ const ProductPage = (props) => {
 
 							<div className="details-action">
 								<ul>
-									{product.sale_price !== 0 ? (
-										<label>
-											Price: {' '}
-											<del style={{ color: 'red' }}>
-												<label style={{ color: 'white' }}>
-													${product.price ? product.price.toFixed(2) : product.price}
-												</label>
-											</del>{' '}
-											<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
-											On Sale!
+									{product.name === 'Custom Infinity Mirror' ? (
+										<label style={{ margin: 0, marginRight: 5 }}>
+											Price: $549.99 - $<i class="fas fa-arrow-up" />
+										</label>
+									) : product.name === 'Custom Diffuser Caps' ? (
+										<label style={{ margin: 0, marginRight: 5 }}>
+											Price: $34.99 - $<i class="fas fa-arrow-up" />
 										</label>
 									) : (
-										<label>
-											Price: ${product.price ? product.price.toFixed(2) : product.price}
-										</label>
+										<FlexContainer>
+											<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
+											{product.sale_price !== 0 ? (
+												<label>
+													<del style={{ color: 'red' }}>
+														<label style={{ color: 'white' }}>
+															${product.price ? product.price.toFixed(2) : product.price}
+														</label>
+													</del>{' '}
+													<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
+													On Sale!
+												</label>
+											) : (
+												<label>
+													${product.price ? product.price.toFixed(2) : product.price}
+												</label>
+											)}
+										</FlexContainer>
 									)}
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
@@ -260,7 +276,8 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									{product.name === 'Custom Infinity Mirror' ? (
+									{product.name === 'Custom Infinity Mirror' ||
+									product.name === 'Custom Diffuser Caps' ? (
 										<Link to="/pages/contact/custon_orders">
 											<button className="button primary full-width">Contact</button>
 										</Link>
