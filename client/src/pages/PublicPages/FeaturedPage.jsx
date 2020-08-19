@@ -66,7 +66,7 @@ const FeaturedPage = (props) => {
 						Check out Keif with the dodecahedron point diffuser caps!
 					</p>
 					<p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
-						"If it doesnt work the first time, try to turn it off and then leave it off" -Keif
+						"If it doesn't work the first time, try to turn it off and then leave it off" -Keif
 					</p>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Follow him @ Keith Booher on Facebook and @flippity_flap_jacks on Instagram

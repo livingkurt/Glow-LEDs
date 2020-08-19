@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 // import bodyParser from 'body-parser';
 // import config from './config';
 const config = require('./config');
+const compression = require('compression');
 import { user_routes, product_routes, order_routes, email_routes, batch_routes } from './routes/index';
 
 // const htmlRoutes = require('./email_templates/html_routes');
@@ -22,6 +23,7 @@ const app = express();
 // app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(compression());
 app.use(sslRedirect());
 
 app.use('/api/users', user_routes);
