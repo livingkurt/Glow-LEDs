@@ -52,12 +52,12 @@ const UserOrderPage = (props) => {
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<MetaTags>
-				<title>{userInfo.first_name} Orders | Glow LEDs</title>
+				<title>My Orders | Glow LEDs</title>
 				{/* <meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/> */}
-				<meta property="og:title" content={`${userInfo.first_name} Orders | Glow LEDs`} />
+				<meta property="og:title" content="My Orders | Glow LEDs" />
 				{/* <meta
 					property="og:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
@@ -72,7 +72,7 @@ const UserOrderPage = (props) => {
 				/> */}
 				<meta property="og:url" content="https://www.glow-leds.com" />
 
-				<meta name="twitter:title" content={`${userInfo.first_name} Orders | Glow LEDs`} />
+				<meta name="twitter:title" content="My Orders | Glow LEDs" />
 				{/* <meta
 					name="twitter:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
@@ -117,7 +117,7 @@ const UserOrderPage = (props) => {
 			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto', width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
-				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Your Orders</h1>
+				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
 				<Loading loading={loading} error={error}>
 					{orders && (
 						<div className="order-list responsive_table">
