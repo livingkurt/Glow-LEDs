@@ -70,15 +70,35 @@ const AllProductsPage = (props) => {
 		all_products:
 			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Infinity Mirrors, and String Lights. Click to Shop.',
 		domes:
-			'Take your gloving light shows to the next level with our Frosted Dome Diffuser at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
+			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
 		caps:
-			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Diffuser Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
-		adapters:
+			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
+		diffuser_adapters:
 			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
 		string_lights:
 			'Decorate your home and festival with these stunning string lights at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
 		infinity_mirrors:
 			'Decorate your home and festival with these stunning Infinity Mirrors at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Infinity Mirrors. Click to Shop.'
+	};
+
+	const description_determination = () => {
+		if (category === 'frosted_diffusers') {
+			return descriptions.frosted_diffusers;
+		}
+		if (category === 'diffuser_adapters') {
+			return descriptions.diffuser_adapters;
+		}
+		if (category.toLowerCase() === 'caps') {
+			return descriptions.caps;
+		}
+		if (category === 'infinity_mirrors') {
+			return descriptions.infinity_mirrors;
+		}
+		if (category === 'string_lights') {
+			return descriptions.string_lights;
+		} else {
+			return descriptions.all_products;
+		}
 	};
 
 	return (
@@ -89,18 +109,9 @@ const AllProductsPage = (props) => {
 				<meta name="twitter:title" content="Products | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/collections/all/products" />
 				<meta property="og:url" content="https://www.glow-leds.com/collections/all/products" />
-				<meta
-					name="description"
-					content="Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Diffuser Caps, Infinity Mirrors, and String Lights. Click to Shop."
-				/>
-				<meta
-					property="og:description"
-					content="Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Diffuser Caps, Infinity Mirrors, and String Lights. Click to Shop."
-				/>
-				<meta
-					name="twitter:description"
-					content="Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Diffuser Caps, Infinity Mirrors, and String Lights. Click to Shop."
-				/>
+				<meta name="description" content={description_determination()} />
+				<meta property="og:description" content={description_determination()} />
+				<meta name="twitter:description" content={description_determination()} />
 			</MetaTags>
 			<FlexContainer h_center>
 				<h1>{humanize(category) || 'Products'}</h1>
