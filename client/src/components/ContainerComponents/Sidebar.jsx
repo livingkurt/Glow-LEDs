@@ -151,14 +151,14 @@ const Sidebar = (props) => {
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Gloving</button>
 					<ul className="sidebar_dropdown_container">
-						<Link to="/collections/all/products/category/domes">
+						<Link to="/collections/all/products/category/frosted_diffusers">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
-								Domes
+								Frosted Diffusers
 							</button>
 						</Link>
 						<Link to="/collections/all/products/category/caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
-								Caps
+								Diffuser Caps
 							</button>
 						</Link>
 						<Link to="/collections/all/products/category/diffuser_adapters">

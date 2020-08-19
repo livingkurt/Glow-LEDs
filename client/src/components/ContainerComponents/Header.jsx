@@ -100,11 +100,11 @@ const Header = (props) => {
 							<button className="button nav">Gloving</button>
 							{/* </Link> */}
 							<ul style={{ width: 210 }} className="dropdown-nav-content hover_fade_in">
-								<Link to="/collections/all/products/category/domes">
-									<button className="button nav">Domes</button>
+								<Link to="/collections/all/products/category/frosted_diffusers">
+									<button className="button nav">Frosted Diffusers</button>
 								</Link>
 								<Link to="/collections/all/products/category/caps">
-									<button className="button nav">Caps</button>
+									<button className="button nav">Diffuser Caps</button>
 								</Link>
 								<Link to="/collections/all/products/category/diffuser_adapters">
 									<button className="button nav"> Diffuser Adapters</button>

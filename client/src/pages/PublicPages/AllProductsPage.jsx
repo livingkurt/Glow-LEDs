@@ -66,6 +66,21 @@ const AllProductsPage = (props) => {
 		dispatch(listProducts(category, searchKeyword, e.target.value));
 	};
 
+	const descriptions = {
+		all_products:
+			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Infinity Mirrors, and String Lights. Click to Shop.',
+		domes:
+			'Take your gloving light shows to the next level with our Frosted Dome Diffuser at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
+		caps:
+			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Diffuser Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
+		adapters:
+			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
+		string_lights:
+			'Decorate your home and festival with these stunning string lights at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
+		infinity_mirrors:
+			'Decorate your home and festival with these stunning Infinity Mirrors at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Infinity Mirrors. Click to Shop.'
+	};
+
 	return (
 		<div>
 			<MetaTags>
