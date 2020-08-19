@@ -23,16 +23,6 @@ const AllProductsPage = (props) => {
 		dispatch(listProducts(category));
 	}, []);
 
-	// for (let product of products) {
-	// 	console.log(product);
-	// }
-	// useEffect(() => {
-	// 	// dispatch(listProducts(''));
-	// 	for (let product of products) {
-	// 		console.log(product);
-	// 	}
-	// }, []);
-
 	useEffect(
 		() => {
 			if (
