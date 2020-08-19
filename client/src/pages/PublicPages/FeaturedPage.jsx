@@ -72,7 +72,7 @@ const FeaturedPage = (props) => {
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Follow him @ Mckinnley Riojas on Facebook and @startstreamtut on Instagram
 					</p>
-					<Link to="/collections/all/products/gyro_sphere_diffuser_caps">
+					<Link to="/collections/all/products/gyrosphere_diffuser_caps">
 						<FlexContainer h_center column>
 							<div className="p_descriptions" style={{ textAlign: 'center' }}>
 								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
