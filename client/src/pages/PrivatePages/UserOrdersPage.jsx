@@ -53,34 +53,10 @@ const UserOrderPage = (props) => {
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<MetaTags>
 				<title>My Orders | Glow LEDs</title>
-				{/* <meta
-					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
 				<meta property="og:title" content="My Orders | Glow LEDs" />
-				{/* <meta
-					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-				<meta property="og:url" content="https://www.glow-leds.com" />
-
 				<meta name="twitter:title" content="My Orders | Glow LEDs" />
-				{/* <meta
-					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
+				<link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
+				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
 			</MetaTags>
 			<FlexContainer wrap h_between>
 				<Link to="/secure/account/profile">

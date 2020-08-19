@@ -163,41 +163,16 @@ const OrderPage = (props) => {
 		<div>
 			<MetaTags>
 				<title>Your Order | Glow LEDs</title>
+				<meta property="og:title" content="Your Order | Glow LEDs" />
+				<meta name="twitter:title" content="Your Order | Glow LEDs" />
 				<link
 					rel="canonical"
 					href={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
 				/>
-				{/* <meta
-					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
-				<meta property="og:title" content="Your Order | Glow LEDs" />
-				{/* <meta
-					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 				<meta
 					property="og:url"
-					content="https://www.glow-leds.com/secure/account/order/' + props.match.params.id"
+					content={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
 				/>
-
-				<meta name="twitter:title" content="Your Order | Glow LEDs" />
-				{/* <meta
-					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 			</MetaTags>
 			{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
 

@@ -71,34 +71,6 @@ const ProductsPage = (props) => {
 		<div class="main_container">
 			<MetaTags>
 				<title>Admin Products | Glow LEDs</title>
-				{/* <meta
-					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
-				{/* <meta property="og:title" content="Admin Products | Glow LEDs" /> */}
-				{/* <meta
-					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-				{/* <meta property="og:url" content="https://www.glow-leds.com" /> */}
-
-				{/* <meta name="twitter:title" content="Admin Products | Glow LEDs" /> */}
-				{/* <meta
-					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 			</MetaTags>
 			<FlexContainer wrap h_between>
 				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>

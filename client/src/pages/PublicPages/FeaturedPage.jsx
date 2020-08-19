@@ -12,32 +12,18 @@ const FeaturedPage = (props) => {
 				<meta name="twitter:title" content="Featured | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/featured" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/featured" />
-				{/* <meta
+				<meta
 					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
-
-				{/* <meta
+					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
+				/>
+				<meta
 					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
 				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-
-				{/* <meta
 					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 			</MetaTags>
 			<FlexContainer h_center>
 				<h1> Featured</h1>

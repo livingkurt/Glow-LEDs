@@ -205,35 +205,6 @@ const EditProductPage = (props) => {
 							<div>
 								<MetaTags>
 									<title>Edit {product.name} | Glow LEDs</title>
-									{/* <link rel="canonical" href="https://www.glow-leds.com/pages/contact" /> */}
-									{/* <meta
-					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
-									{/* <meta property="og:title" content="Products | Glow LEDs" /> */}
-									{/* <meta
-					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-									{/* <meta property="og:url" content="https://www.glow-leds.com" /> */}
-
-									{/* <meta name="twitter:title" content="Products | Glow LEDs" /> */}
-									{/* <meta
-					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 								</MetaTags>
 
 								<ul
@@ -454,7 +425,7 @@ const EditProductPage = (props) => {
 													id="height"
 													onChange={(e) => set_height(e.target.value)}
 												/>
-											</li>
+											</li>``
 											<li>
 												<label htmlFor="weight">Product Weight</label>
 												<input

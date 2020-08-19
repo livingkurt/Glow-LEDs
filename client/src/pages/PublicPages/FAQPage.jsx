@@ -11,38 +11,22 @@ const FAQPage = () => {
 		<div class="main_container">
 			<MetaTags>
 				<title>Frequently Asked Questions | Glow LEDs</title>
-        <meta property="og:title" content="Frequently Asked Questions | Glow LEDs" />
-        <meta name="twitter:title" content="Frequently Asked Questions | Glow LEDs" />
+				<meta property="og:title" content="Frequently Asked Questions | Glow LEDs" />
+				<meta name="twitter:title" content="Frequently Asked Questions | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/faq" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/faq" />
-				{/* <meta
+				<meta property="og:url" content="https://www.glow-leds.com/pages/faq" />
+				<meta
 					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
-				
-				{/* <meta
+					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
+				/>
+				<meta
 					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
 				/>
 				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-				
-
-				
-				{/* <meta
 					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
 				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 			</MetaTags>
 			<div class="inner_content">
 				<div>

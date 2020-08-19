@@ -138,35 +138,10 @@ const PlaceOrderPage = (props) => {
 		<div>
 			<MetaTags>
 				<title>Place Order | Glow LEDs</title>
-				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
-				{/* <meta
-					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
 				<meta property="og:title" content="Place Order | Glow LEDs" />
-				{/* <meta
-					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
-
 				<meta name="twitter:title" content="Place Order | Glow LEDs" />
-				{/* <meta
-					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
+				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
+				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
 			</MetaTags>
 			{console.log(shipping === {})}
 			{console.log(shipping === '')}

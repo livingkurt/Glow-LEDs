@@ -10,32 +10,18 @@ const TermsPage = () => {
 				<meta name="twitter:title" content="Terms and Conditions | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/terms" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/terms" />
-				{/* <meta
+				<meta
 					name="description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/> */}
-
-				{/* <meta
+					content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
+				/>
+				<meta
 					property="og:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+					content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
 				/>
 				<meta
-					property="og:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta
-					property="og:image:secure_url"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
-
-				{/* <meta
 					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+					content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
 				/>
-				<meta
-					name="twitter:image"
-					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/> */}
 			</MetaTags>
 			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
 			<p>
