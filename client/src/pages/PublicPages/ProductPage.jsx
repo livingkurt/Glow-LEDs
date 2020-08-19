@@ -74,17 +74,17 @@ const ProductPage = (props) => {
 				{product && (
 					<FlexContainer column>
 						<MetaTags>
-							<title>{loading ? 'Product' : product.name}" | Glow LEDs</title>
-							<meta
-								property="og:title"
-								content={loading ? 'Product | Glow LEDs' : product.name + ' | Glow LEDs'}
-							/>
-							<meta name="twitter:title" content="Products | Glow LEDs" />
+							<title>{loading ? 'Product | Glow LEDs' : product.meta_title}</title>
+							<meta property="og:title" content={loading ? 'Product | Glow LEDs' : product.meta_title} />
+							<meta name="twitter:title" content={loading ? 'Product | Glow LEDs' : product.meta_title} />
 							<link
 								rel="canonical"
 								href={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
 							/>
-							<meta property="og:url" content="https://www.glow-leds.com/collections/all/products/" />
+							<meta
+								property="og:url"
+								content={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
+							/>
 							<meta property="og:image" content={'https://www.glow-leds.com' + product.display_image} />
 
 							<meta
@@ -92,20 +92,38 @@ const ProductPage = (props) => {
 								content={'https://www.glow-leds.com' + product.display_image}
 							/>
 							<meta name="twitter:image" content={'https://www.glow-leds.com' + product.display_image} />
-							{/* <meta
+							<meta
 								name="description"
-								content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-							/> */}
+								content={
+									loading ? (
+										'Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world.'
+									) : (
+										product.meta_description
+									)
+								}
+							/>
 
-							{/* <meta
+							<meta
 								property="og:description"
-								content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-							/> */}
+								content={
+									loading ? (
+										'Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world.'
+									) : (
+										product.meta_description
+									)
+								}
+							/>
 
-							{/* <meta
+							<meta
 								name="twitter:description"
-								content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-							/> */}
+								content={
+									loading ? (
+										'Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world.'
+									) : (
+										product.meta_description
+									)
+								}
+							/>
 						</MetaTags>
 						<div className="details">
 							<FlexContainer column>
