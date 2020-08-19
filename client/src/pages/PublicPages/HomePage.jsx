@@ -7,23 +7,23 @@ const HomePage = (props) => {
 	return (
 		<div class="main_container">
 			<MetaTags>
-				<title>Glow LEDs | Home of the Diffuser Caps.</title>
-				<meta property="og:title" content="Glow LEDs | Home of the Diffuser Caps." />
-				<meta name="twitter:title" content="Glow LEDs | Home of the Diffuser Caps." />
+				<title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
+				<meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
+				<meta name="twitter:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
 				<link rel="canonical" href="https://www.glow-leds.com/" />
 				<meta property="og:url" content="https://www.glow-leds.com" />
 				<meta
 					name="description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Modern Wall Decor such as Infinity Mirrors, and String Lights."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and String Lights."
 				/>
 
 				<meta
 					property="og:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Modern Wall Decor such as Infinity Mirrors, and String Lights."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and String Lights."
 				/>
 				<meta
 					name="twitter:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Modern Wall Decor such as Infinity Mirrors, and String Lights."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and String Lights."
 				/>
 				<meta
 					property="og:image"
