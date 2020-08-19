@@ -86,7 +86,7 @@ const SitemapPage = () => {
 						<h2 style={{ textAlign: 'left' }}>Categories</h2>
 						<ul>
 							<li>
-								<Link to="/collections/all/products/category/domes">Dome Diffusers</Link>
+								<Link to="/collections/all/products/category/frosted_diffusers">Frosted Diffusers</Link>
 							</li>
 							<li>
 								<Link to="/collections/all/products/category/caps">Diffuser Caps</Link>
