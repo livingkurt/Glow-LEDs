@@ -62,6 +62,42 @@ const FeaturedPage = (props) => {
 			</FlexContainer> */}
 			<div className="home_page_divs">
 				<FlexContainer h_center column>
+					<h1 style={{ textAlign: 'center' }}>StarStream TuT Light Show</h1>
+					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
+						Check out Keif with the dodecahedron point diffuser caps!
+					</p>
+					{/* <p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
+						"If it doesn't work the first time, try to turn it off and then leave it off" -Keif
+					</p> */}
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Follow him @ Mckinnley Riojas on Facebook and @startstreamtut on Instagram
+					</p>
+					<Link to="/collections/all/products/gyro_sphere_diffuser_caps">
+						<FlexContainer h_center column>
+							<div className="p_descriptions" style={{ textAlign: 'center' }}>
+								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									Gyro Sphere Diffuser Caps
+								</button>
+							</div>
+						</FlexContainer>
+					</Link>
+				</FlexContainer>
+				<FlexContainer h_center styles={{ position: 'relative' }}>
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/ba39K2M4b7E?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</FlexContainer>
+			</div>
+			<div className="home_page_divs">
+				<FlexContainer h_center column>
 					<h1 style={{ textAlign: 'center' }}>Keif Light Show</h1>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Check out Keif with the dodecahedron point diffuser caps!
