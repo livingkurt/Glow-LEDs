@@ -58,13 +58,15 @@ const Header = (props) => {
 			<header id="overlay">
 				<div className="menu_button" style={{ width: '233px' }}>
 					<Link to="/">
-						<img
-							className="zoom logo"
-							// style={{ marginRight: '176px' }}
-							height="125px"
-							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-							alt="Glow LEDs"
-						/>
+						<div className="logo" style={{ height: '125px', width: '125px' }}>
+							<img
+								className="zoom logo_s"
+								// style={{ marginRight: '176px' }}
+
+								src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+								alt="Glow LEDs"
+							/>
+						</div>
 					</Link>
 					<button
 						className="button mobile nav"
@@ -77,12 +79,13 @@ const Header = (props) => {
 				<FlexContainer column h_center>
 					<FlexContainer h_center v_i_center class="logo_text">
 						<Link to="/">
-							<img
-								className="logo_2 zoom "
-								style={{ display: 'none', height: '80px' }}
-								src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-								alt="Glow LEDs"
-							/>
+							<div className="logo_2" style={{ height: '80px', width: '80px', display: 'none' }}>
+								<img
+									className=" zoom logo_s"
+									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+									alt="Glow LEDs"
+								/>
+							</div>
 						</Link>
 						<Link to="/">
 							<h1 className="glow_leds_text">Glow LEDs</h1>
