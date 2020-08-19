@@ -64,19 +64,19 @@ const FeaturedPage = (props) => {
 				<FlexContainer h_center column>
 					<h1 style={{ textAlign: 'center' }}>StarStream TuT Light Show</h1>
 					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out Keif with the dodecahedron point diffuser caps!
+						Check out StarStream TuT with the Gyrosphere Diffuser Caps!
 					</p>
 					{/* <p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
 						"If it doesn't work the first time, try to turn it off and then leave it off" -Keif
 					</p> */}
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Follow him @ Mckinnley Riojas on Facebook and @startstreamtut on Instagram
+						Follow him @ Mckinnley Riojas on Facebook and @starstreamtut on Instagram
 					</p>
 					<Link to="/collections/all/products/gyrosphere_diffuser_caps">
 						<FlexContainer h_center column>
 							<div className="p_descriptions" style={{ textAlign: 'center' }}>
 								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-									Gyro Sphere Diffuser Caps
+									Gyrosphere Diffuser Caps
 								</button>
 							</div>
 						</FlexContainer>
