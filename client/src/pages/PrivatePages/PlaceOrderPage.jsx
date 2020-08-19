@@ -75,7 +75,9 @@ const PlaceOrderPage = (props) => {
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-		if (volume <= 10) {
+		if (volume === 0) {
+			setShippingPrice(0);
+		} else if (volume <= 10) {
 			setShippingPrice(5);
 		} else if (volume > 10 && volume < 250) {
 			setShippingPrice(9);
