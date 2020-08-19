@@ -42,7 +42,6 @@ const AboutPage = () => {
 			</MetaTags>
 			<div class="inner_content">
 				<h1 style={{ fontSize: 40, textAlign: 'center' }}>About Glow-LEDs</h1>
-
 				<div>
 					<div
 						style={{
@@ -75,9 +74,10 @@ const AboutPage = () => {
 						while now. All I needed was the free time that quarantine has gifted me (against my will). Glow
 						LEDs is completely home-grown and every product received will be handcrafted, with love, from my
 						very own two hands. I design all the schematics, invent designs, program the lights, solder all
-						the wires, I even made this whole website. I (Destanye) help with orders, designs, marketing,
-						customer service and anything that doesn’t involve coding or engineering. This business is truly
-						a labor of love and we hope that something here brings happiness into your life.
+						the wires, I even made this whole website and all of the music, pictures, and videos inside it.
+						I (Destanye) help with orders, quality control, designs, marketing, customer service and
+						anything that doesn’t involve coding or engineering. This business is truly a labor of love and
+						we hope that something here brings happiness into your life.
 					</p>
 
 					<div
