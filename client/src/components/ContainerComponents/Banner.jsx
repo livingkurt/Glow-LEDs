@@ -41,17 +41,25 @@ const Banner = (props) => {
 				</div>
 				<FlexContainer styles={{ marginTop: '3px' }} class="big_screen">
 					<div style={{ marginLeft: '10px' }}>
-						<a href="https://www.facebook.com/Glow-LEDscom-100365571740684" target="_blank">
+						<a
+							rel="noreferrer"
+							href="https://www.facebook.com/Glow-LEDscom-100365571740684"
+							target="_blank"
+						>
 							<i class="fab fa-facebook zoom" />
 						</a>
 					</div>
 					<div style={{ marginLeft: '10px' }}>
-						<a href="https://www.instagram.com/glow_leds/" target="_blank">
+						<a rel="noreferrer" href="https://www.instagram.com/glow_leds/" target="_blank">
 							<i class="fab fa-instagram zoom" />
 						</a>
 					</div>
 					<div style={{ marginLeft: '10px', marginRight: '10px' }}>
-						<a href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw" target="_blank">
+						<a
+							rel="noreferrer"
+							href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
+							target="_blank"
+						>
 							<i class="fab fa-youtube zoom" />
 						</a>
 					</div>

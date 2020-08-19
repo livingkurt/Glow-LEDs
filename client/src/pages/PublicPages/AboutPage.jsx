@@ -57,6 +57,7 @@ const AboutPage = () => {
 							Hi, My Name is Kurt!
 						</h2>
 						<img
+							alt="picture of founder"
 							style={{
 								// float: 'left',
 								// height: '200px',
@@ -98,6 +99,7 @@ const AboutPage = () => {
 							Hi, My Name is Destanye!
 						</h2>
 						<img
+							alt="picture of partner"
 							style={{
 								borderRadius: '15px',
 								width: '100%',
