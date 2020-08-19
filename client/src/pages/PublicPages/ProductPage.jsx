@@ -91,7 +91,7 @@ const ProductPage = (props) => {
 								property="og:image:secure_url"
 								content={'https://www.glow-leds.com' + product.display_image}
 							/>
-              <meta name="twitter:image" content={'https://www.glow-leds.com' + product.display_image} />
+							<meta name="twitter:image" content={'https://www.glow-leds.com' + product.display_image} />
 							{/* <meta
 								name="description"
 								content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
@@ -106,7 +106,6 @@ const ProductPage = (props) => {
 								name="twitter:description"
 								content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 							/> */}
-							
 						</MetaTags>
 						<div className="details">
 							<FlexContainer column>
