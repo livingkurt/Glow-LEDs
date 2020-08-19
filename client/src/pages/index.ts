@@ -1,13 +1,13 @@
 export { default as EditProductPage } from './AdminPages/EditProductPage';
 export { default as OrdersPage } from './AdminPages/OrdersPage';
 export { default as ProductsPage } from './AdminPages/ProductsPage';
-export { default as UserOrdersPage } from './AdminPages/UserOrdersPage';
 export { default as UsersPage } from './AdminPages/UsersPage';
 export { default as UserProfilePage } from './AdminPages/UserProfilePage';
 export { default as EditUserProfilePage } from './AdminPages/EditUserProfilePage';
 export { default as ControlPanelPage } from './AdminPages/ControlPanelPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
+export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';
 export { default as PaymentPage } from './PrivatePages/PaymentPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';
 export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPage';

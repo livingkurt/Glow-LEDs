@@ -70,13 +70,16 @@ const RegisterPage = (props) => {
 		<div className="form">
 			<MetaTags>
 				<title>Register | Glow LEDs</title>
+        <meta property="og:title" content="Register | Glow LEDs" />
+        <meta name="twitter:title" content="Register | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/register" />
-				<meta
+        <meta property="og:url" content="https://www.glow-leds.com/account/register" />
+				{/* <meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta property="og:title" content="Products | Glow LEDs" />
-				<meta
+				/> */}
+				
+				{/* <meta
 					property="og:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
@@ -87,18 +90,18 @@ const RegisterPage = (props) => {
 				<meta
 					property="og:image:secure_url"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
-				<meta property="og:url" content="https://www.glow-leds.com/account/register" />
-				<meta name="twitter:card" content="summary" />
-				<meta name="twitter:title" content="Products | Glow LEDs" />
-				<meta
+				/> */}
+				
+
+				
+				{/* <meta
 					name="twitter:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
 				<meta
 					name="twitter:image"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
+				/> */}
 			</MetaTags>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">

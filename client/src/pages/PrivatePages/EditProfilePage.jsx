@@ -72,12 +72,12 @@ const EditProfilePage = (props) => {
 			<MetaTags>
 				<title>Edit Profile | Glow LEDs</title>
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editprofile" />
-				<meta
+				{/* <meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
-				/>
-				<meta property="og:title" content="Products | Glow LEDs" />
-				<meta
+				/> */}
+				<meta property="og:title" content="Edit Profile | Glow LEDs" />
+				{/* <meta
 					property="og:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
@@ -88,18 +88,18 @@ const EditProfilePage = (props) => {
 				<meta
 					property="og:image:secure_url"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
+				/> */}
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editprofile" />
-				<meta name="twitter:card" content="summary" />
-				<meta name="twitter:title" content="Products | Glow LEDs" />
-				<meta
+
+				<meta name="twitter:title" content="Edit Profile | Glow LEDs" />
+				{/* <meta
 					name="twitter:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
 				<meta
 					name="twitter:image"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
-				/>
+				/> */}
 			</MetaTags>
 			<FlexContainer styles={{ marginBottom: 10 }}>
 				<Link to="/secure/account/profile">
