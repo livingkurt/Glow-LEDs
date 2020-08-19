@@ -1270,3 +1270,18 @@ video {
 	width: 100%;
 	height: auto;
 }
+
+ol {
+	list-style: 'none';
+	padding: 0;
+	li {
+		counter-increment: step-counter;
+		list-style-position: inside;
+	}
+	li:before {
+		content: counter(step-counter)". ";
+	}
+	li:before:first-child {
+		margin-right: 10px;
+	}
+}

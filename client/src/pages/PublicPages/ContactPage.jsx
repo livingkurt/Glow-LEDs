@@ -95,15 +95,15 @@ const ContactPage = (props) => {
 		<div class="main_container">
 			<MetaTags>
 				<title>Contact | Glow LEDs</title>
-        <meta property="og:title" content="Contact | Glow LEDs" />
-        <meta name="twitter:title" content="Contact | Glow LEDs" />
+				<meta property="og:title" content="Contact | Glow LEDs" />
+				<meta name="twitter:title" content="Contact | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
-        <meta property="og:url" content="https://www.glow-leds.com/pages/contact" />
+				<meta property="og:url" content="https://www.glow-leds.com/pages/contact" />
 				{/* <meta
 					name="description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/> */}
-				
+
 				{/* <meta
 					property="og:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
@@ -116,9 +116,7 @@ const ContactPage = (props) => {
 					property="og:image:secure_url"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/> */}
-				
 
-				
 				{/* <meta
 					name="twitter:description"
 					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
@@ -259,17 +257,26 @@ const ContactPage = (props) => {
 
 				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 					<div>
-						<p>
-							Put your facebook or instagram handle in the message. Then upload content using the google
-							drive button below
-						</p>
+						{/* <p>
+							Put your facebook or instagram handle in the message. Click the send button. Then upload your content using the
+							WeTransfer button below. For Email To put info.glowleds@gmail.com 🙂 In the message part you
+							could put a little quote or message we could have alongside your video.
+						</p> */}
+						<h2>Steps to Ensure Content Gets Featured </h2>
+						<ol>
+							<li>Put your facebook or instagram handle in the message.</li>
+							<li>Click the send button.</li>
+							<li>Then upload your content using theWeTransfer button below.</li>
+							<li>For Email To put info.glowleds@gmail.com</li>
+							<li>
+								In the message part you could put a little quote or message we could have alongside your
+								video.
+							</li>
+						</ol>
 
 						<button className="zoom_b button primary">
-							<a
-								target="_blank"
-								href="https://drive.google.com/drive/folders/1s4bztbzhIeUO01x32sz6A1Hl1bwzvmw3?usp=sharing"
-							>
-								Google Drive{' '}
+							<a target="_blank" href="https://wetransfer.com/">
+								WeTransfer{' '}
 							</a>
 						</button>
 
