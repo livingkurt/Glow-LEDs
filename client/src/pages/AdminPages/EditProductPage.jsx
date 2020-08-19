@@ -24,6 +24,13 @@ const EditProductPage = (props) => {
 	const [ hidden, setHidden ] = useState();
 	const [ sale_price, setSalePrice ] = useState();
 	const [ volume, setVolume ] = useState();
+	const [ meta_title, set_meta_title ] = useState();
+	const [ meta_description, set_meta_description ] = useState();
+	const [ meta_keywords, set_meta_keywords ] = useState();
+	const [ length, set_length ] = useState();
+	const [ width, set_width ] = useState();
+	const [ height, set_height ] = useState();
+	const [ weight, set_weight ] = useState();
 	const [ pathname, setPathname ] = useState();
 
 	const history = useHistory();
@@ -61,6 +68,13 @@ const EditProductPage = (props) => {
 				setHidden(product.hidden);
 				setSalePrice(product.sale_price);
 				setVolume(product.volume);
+				set_meta_title(product.meta_title);
+				set_meta_description(product.meta_description);
+				set_meta_keywords(product.meta_keywords);
+				set_length(product.length);
+				set_width(product.width);
+				set_height(product.height);
+				set_weight(product.weight);
 				setDisplayImage(product.display_image);
 				setVideo(product.video);
 				setBrand(product.brand);
@@ -82,6 +96,13 @@ const EditProductPage = (props) => {
 				setHidden();
 				setSalePrice('');
 				setVolume('');
+				set_meta_title('');
+				set_meta_description('');
+				set_meta_keywords('');
+				set_length('');
+				set_width('');
+				set_height('');
+				set_weight('');
 				setPathname('');
 			}
 			return () => {};
@@ -128,6 +149,13 @@ const EditProductPage = (props) => {
 				hidden,
 				sale_price,
 				volume,
+				meta_title,
+				meta_description,
+				meta_keywords,
+				length,
+				width,
+				height,
+				weight,
 				pathname
 			})
 		);
@@ -146,6 +174,13 @@ const EditProductPage = (props) => {
 		setHidden();
 		setSalePrice('');
 		setVolume('');
+		set_meta_title('');
+		set_meta_description('');
+		set_meta_keywords('');
+		set_length('');
+		set_width('');
+		set_height('');
+		set_weight('');
 		setPathname('');
 		if (pathname) {
 			history.push('/collections/all/products/' + pathname);
@@ -201,7 +236,10 @@ const EditProductPage = (props) => {
 				/> */}
 								</MetaTags>
 
-								<ul className="edit-form-container" style={{ maxWidth: '64rem', marginBottom: '20px' }}>
+								<ul
+									className="edit-form-container"
+									style={{ maxWidth: '105rem', marginBottom: '20px' }}
+								>
 									<h1
 										style={{
 											textAlign: 'center',
@@ -213,8 +251,8 @@ const EditProductPage = (props) => {
 										{loading ? 'Product' : product.name}
 									</h1>
 
-									<FlexContainer row>
-										<FlexContainer column styles={{ width: '50%', marginRight: '10px' }}>
+									<FlexContainer row wrap h_between>
+										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="name">Name</label>
 												<input
@@ -243,16 +281,6 @@ const EditProductPage = (props) => {
 													value={sale_price}
 													id="sale_price"
 													onChange={(e) => setSalePrice(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="volume">Product Volume</label>
-												<input
-													type="text"
-													name="volume"
-													value={volume}
-													id="volume"
-													onChange={(e) => setVolume(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -295,16 +323,7 @@ const EditProductPage = (props) => {
 													onChange={(e) => setVideo(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="countInStock">Count In Stock</label>
-												<input
-													type="text"
-													name="countInStock"
-													value={countInStock}
-													id="countInStock"
-													onChange={(e) => setCountInStock(e.target.value)}
-												/>
-											</li>
+
 											<li>
 												<label htmlFor="hidden">Hide Product</label>
 												<input
@@ -321,7 +340,17 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 										</FlexContainer>
-										<FlexContainer column styles={{ width: '50%', marginLeft: '10px' }}>
+										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+											<li>
+												<label htmlFor="countInStock">Count In Stock</label>
+												<input
+													type="text"
+													name="countInStock"
+													value={countInStock}
+													id="countInStock"
+													onChange={(e) => setCountInStock(e.target.value)}
+												/>
+											</li>
 											<li>
 												<label htmlFor="facts">Facts</label>
 												<textarea
@@ -352,6 +381,8 @@ const EditProductPage = (props) => {
 													onChange={(e) => setDescription(e.target.value)}
 												/>
 											</li>
+										</FlexContainer>
+										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
@@ -360,6 +391,88 @@ const EditProductPage = (props) => {
 													defaultValue={pathname}
 													id="pathname"
 													onChange={(e) => setPathname(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="meta_title">Meta Title</label>
+												<input
+													type="text"
+													name="meta_title"
+													value={meta_title}
+													id="meta_title"
+													onChange={(e) => set_meta_title(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="meta_description">Meta Description</label>
+												<textarea
+													className="edit_product_textarea"
+													name="meta_description"
+													value={meta_description}
+													id="meta_description"
+													onChange={(e) => set_meta_description(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="meta_keywords">Meta Keywords</label>
+												<textarea
+													className="edit_product_textarea"
+													name="meta_keywords"
+													value={meta_keywords}
+													id="meta_keywords"
+													onChange={(e) => set_meta_keywords(e.target.value)}
+												/>
+											</li>
+										</FlexContainer>
+										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+											<li>
+												<label htmlFor="length">Product Length</label>
+												<input
+													type="text"
+													name="length"
+													defaultValue={length}
+													id="length"
+													onChange={(e) => set_length(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="width">Product Width</label>
+												<input
+													type="text"
+													name="width"
+													value={width}
+													id="width"
+													onChange={(e) => set_width(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="height">Product Height</label>
+												<input
+													type="text"
+													name="height"
+													value={height}
+													id="height"
+													onChange={(e) => set_height(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="weight">Product Weight</label>
+												<input
+													type="text"
+													name="weight"
+													value={weight}
+													id="weight"
+													onChange={(e) => set_weight(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="volume">Product Volume</label>
+												<input
+													type="text"
+													name="volume"
+													value={volume}
+													id="volume"
+													onChange={(e) => setVolume(e.target.value)}
 												/>
 											</li>
 										</FlexContainer>
@@ -618,7 +731,7 @@ export default EditProductPage;
 // 								</h1>
 
 // 								<FlexContainer row>
-// 									<FlexContainer column styles={{ width: '50%', marginRight: '10px' }}>
+// 									<FlexContainer column styles={{ width: '33%', marginRight: '10px' }}>
 // 										<li>
 // 											<label htmlFor="name">Name</label>
 // 											<input
@@ -725,7 +838,7 @@ export default EditProductPage;
 // 											/>
 // 										</li>
 // 									</FlexContainer>
-// 									<FlexContainer column styles={{ width: '50%', marginLeft: '10px' }}>
+// 									<FlexContainer column styles={{ width: '33%', marginLeft: '10px' }}>
 // 										<li>
 // 											<label htmlFor="facts">Facts</label>
 // 											<textarea

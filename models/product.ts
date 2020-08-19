@@ -32,7 +32,14 @@ const productSchema = new mongoose.Schema(
 		sale_price: { type: Number, default: 0 },
 		volume: { type: Number, required: 0 },
 		deleted: { type: Boolean, default: false },
-		pathname: { type: String }
+		pathname: { type: String },
+		meta_title: { type: String },
+		meta_description: { type: String },
+		meta_keywords: { type: String },
+		length: { type: Number },
+		width: { type: Number },
+		height: { type: Number },
+		weight: { type: Number }
 	},
 	{
 		timestamps: true

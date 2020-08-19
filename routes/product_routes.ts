@@ -66,6 +66,13 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 		product.volume = req.body.volume;
 		product.pathname = req.body.pathname.split(' ').join('_').toLowerCase();
 		product.deleted = req.body.deleted || false;
+		product.meta_title = req.body.meta_title;
+		product.meta_description = req.body.meta_description;
+		product.meta_keywords = req.body.meta_keywords;
+		product.length = req.body.length;
+		product.width = req.body.width;
+		product.height = req.body.height;
+		product.weight = req.body.weight;
 		const updatedProduct = await product.save();
 		console.log({ product_routes_post: updatedProduct });
 		if (updatedProduct) {
@@ -114,7 +121,14 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		sale_price: req.body.sale_price,
 		volume: req.body.volume,
 		pathname: req.body.pathname.split(' ').join('_').toLowerCase(),
-		deleted: req.body.deleted || false
+		deleted: req.body.deleted || false,
+		meta_title: req.body.meta_title,
+		meta_description: req.body.meta_description,
+		meta_keywords: req.body.meta_keywords,
+		length: req.body.length,
+		width: req.body.width,
+		height: req.body.height,
+		weight: req.body.weight
 	});
 	console.log({ product_routes_post: product });
 	const newProduct = await product.save();

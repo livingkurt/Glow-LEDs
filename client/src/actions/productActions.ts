@@ -57,6 +57,10 @@ const saveProduct = (product: {
 	hidden?: boolean;
 	sale_price?: number;
 	volume?: number;
+	weight?: number;
+	length?: number;
+	width?: number;
+	height?: number;
 }) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
