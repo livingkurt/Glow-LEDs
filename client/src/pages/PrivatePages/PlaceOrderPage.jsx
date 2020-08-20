@@ -32,6 +32,14 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
+			// if (shipping) {
+			// 	if (shipping.country === 'United States' || shipping.country === 'US' || shipping.country === 'USA') {
+			// 		calculate_shipping();
+			// 	} else {
+			// 		calculate_international();
+			// 	}
+			// }
+
 			calculate_shipping();
 			console.log({ shippingPrice });
 			// set_place_order_state(shipping === {});
@@ -45,6 +53,29 @@ const PlaceOrderPage = (props) => {
 		},
 		[ cartItems ]
 	);
+
+	// useEffect(
+	// 	() => {
+	// 		// if (shipping) {
+	// 		// 	if (shipping.country === 'United States' || shipping.country === 'US' || shipping.country === 'USA') {
+	// 		// 		calculate_shipping();
+	// 		// 	} else {
+	// 		// 		calculate_international();
+	// 		// 	}
+	// 		// }
+	// 		calculate_shipping();
+	// 		console.log({ shippingPrice });
+	// 		// set_place_order_state(shipping === {});
+	// 		const shipping_cookie = Cookie.getJSON('shipping');
+	// 		if (shipping_cookie) {
+	// 			dispatch(saveShipping(shipping_cookie));
+	// 		}
+	// 		// dispatch(savePayment({ paymentMethod: 'paypal' }));
+
+	// 		return () => {};
+	// 	},
+	// 	[ shipping ]
+	// );
 
 	// useEffect(
 	// 	() => {
@@ -75,21 +106,66 @@ const PlaceOrderPage = (props) => {
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-		if (volume === 0) {
-			setShippingPrice(0);
-		} else if (volume <= 10) {
-			setShippingPrice(5);
-		} else if (volume > 10 && volume < 250) {
-			setShippingPrice(9);
-		} else if (volume > 250 && volume < 405) {
-			setShippingPrice(10);
-		} else if (volume > 405 && volume < 500) {
-			setShippingPrice(12);
-		} else if (volume > 500) {
-			setShippingPrice(15);
+		if (shipping) {
+			console.log('Shipping');
+			console.log(shipping.country);
+			if (
+				shipping.country === 'United States' ||
+				shipping.country === 'US' ||
+				shipping.country === 'USA' ||
+				shipping.country === 'United States of America' ||
+				shipping.country === 'America'
+			) {
+				console.log('US');
+				if (volume === 0) {
+					setShippingPrice(0);
+				} else if (volume <= 10) {
+					setShippingPrice();
+				} else if (volume > 10 && volume < 250) {
+					setShippingPrice(9);
+				} else if (volume > 250 && volume < 405) {
+					setShippingPrice(10);
+				} else if (volume > 405 && volume < 500) {
+					setShippingPrice(12);
+				} else if (volume > 500) {
+					setShippingPrice(15);
+				}
+			} else {
+				console.log('International');
+				if (volume === 0) {
+					setShippingPrice(0);
+				} else if (volume <= 10) {
+					setShippingPrice(17);
+				} else if (volume > 10 && volume < 250) {
+					setShippingPrice(17);
+				} else if (volume > 250 && volume < 405) {
+					setShippingPrice(20);
+				} else if (volume > 405 && volume < 500) {
+					setShippingPrice(20);
+				} else if (volume > 500) {
+					setShippingPrice(30);
+				}
+			}
 		}
 		console.log({ shippingPrice });
 	};
+	// const calculate_international = () => {
+	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+	// 	if (volume === 0) {
+	// 		setShippingPrice(0);
+	// 	} else if (volume <= 10) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 10 && volume < 250) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 250 && volume < 405) {
+	// 		setShippingPrice(20);
+	// 	} else if (volume > 405 && volume < 500) {
+	// 		setShippingPrice(30);
+	// 	} else if (volume > 500) {
+	// 		setShippingPrice(35);
+	// 	}
+	// 	console.log({ shippingPrice });
+	// };
 
 	const placeOrderHandler = () => {
 		// create an order
@@ -282,17 +358,31 @@ const PlaceOrderPage = (props) => {
 							<div>${itemsPrice.toFixed(2)}</div>
 						</li>
 						<li>
-							<div>Shipping</div>
-							<div>${shippingPrice.toFixed(2)}</div>
-							{/* <div>Free Shipping</div> */}
-						</li>
-						<li>
 							<div>Tax</div>
 							<div>${taxPrice.toFixed(2)}</div>
 						</li>
 						<li>
+							<div>Shipping</div>
+							<div>
+								{shipping && shipping.hasOwnProperty('first_name') ? (
+									'$' + shippingPrice.toFixed(2)
+								) : (
+									'------'
+								)}
+							</div>
+							{/* <div>Free Shipping</div> */}
+						</li>
+
+						<li>
 							<div>Order Total</div>
-							<div>${totalPrice.toFixed(2)}</div>
+							{/* <div>${totalPrice.toFixed(2)}</div> */}
+							<div>
+								{shipping && shipping.hasOwnProperty('first_name') ? (
+									'$' + totalPrice.toFixed(2)
+								) : (
+									'------'
+								)}
+							</div>
 						</li>
 						{console.log({ shipping })}
 						{shipping &&

@@ -116,6 +116,7 @@ export const validate_shipping = (data: {
 	state: any;
 	postalCode: any;
 	country: any;
+	international: any;
 }) => {
 	let errors: any = {};
 	// Convert empty fields to an empty string so we can use validator functions
@@ -126,6 +127,7 @@ export const validate_shipping = (data: {
 	data.state = !isEmpty(data.state) ? data.state : '';
 	data.postalCode = !isEmpty(data.postalCode) ? data.postalCode : '';
 	data.country = !isEmpty(data.country) ? data.country : '';
+	// data.international = !isEmpty(data.international) ? data.international : '';
 	// First Name checks
 	if (Validator.isEmpty(data.first_name)) {
 		errors.first_name = 'First Name field is required';
@@ -150,10 +152,17 @@ export const validate_shipping = (data: {
 	if (Validator.isEmpty(data.postalCode)) {
 		errors.postalCode = 'Postal Code field is required';
 	}
-	// Country checks
-	if (Validator.isEmpty(data.country)) {
-		errors.country = 'Country field is required';
+	// // International checks
+	// if (Validator.isEmpty(data.international)) {
+	// 	errors.international = 'Country field is required';
+	// }
+	if (data.international) {
+		// Country checks
+		if (Validator.isEmpty(data.country)) {
+			errors.country = 'Country field is required';
+		}
 	}
+
 	return {
 		errors,
 		isValid: isEmpty(errors)

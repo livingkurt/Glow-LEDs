@@ -20,7 +20,9 @@ const ShippingPage = (props) => {
 	const [ city, setCity ] = useState('');
 	const [ state, setState ] = useState('');
 	const [ postalCode, setPostalCode ] = useState('');
-	const [ country, setCountry ] = useState('');
+	const [ country, setCountry ] = useState('United States');
+	const [ international, setInternational ] = useState(false);
+	const [ loading, set_loading ] = useState(true);
 
 	useEffect(
 		() => {
@@ -32,6 +34,7 @@ const ShippingPage = (props) => {
 				setState(shipping.state);
 				setPostalCode(shipping.postalCode);
 				setCountry(shipping.country);
+				setInternational(shipping.international);
 			}
 
 			return () => {};
@@ -46,11 +49,12 @@ const ShippingPage = (props) => {
 	const [ state_validations, set_state_validations ] = useState('');
 	const [ postal_code_validations, set_postal_code_validations ] = useState('');
 	const [ country_validations, set_country_validations ] = useState('');
+	const [ international_validations, set_international_validations ] = useState('');
 	const dispatch = useDispatch();
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { first_name, last_name, address, city, state, postalCode, country };
+		const data = { first_name, last_name, address, city, state, postalCode, country, international };
 		const request = validate_shipping(data);
 		set_first_name_validations(request.errors.first_name);
 		set_last_name_validations(request.errors.last_name);
@@ -59,6 +63,7 @@ const ShippingPage = (props) => {
 		set_state_validations(request.errors.state);
 		set_postal_code_validations(request.errors.postalCode);
 		set_country_validations(request.errors.country);
+		set_international_validations(request.errors.international);
 
 		console.log(request);
 		console.log(request.errors.email);
@@ -72,7 +77,8 @@ const ShippingPage = (props) => {
 					city,
 					state,
 					postalCode,
-					country
+					country: international ? country : 'United States',
+					international
 				})
 			);
 			const paymentMethod = 'paypal';
@@ -80,6 +86,10 @@ const ShippingPage = (props) => {
 			props.history.push('placeorder');
 		}
 	};
+	setTimeout(() => {
+		set_loading(false);
+	}, 500);
+
 	return (
 		<div>
 			<MetaTags>
@@ -175,16 +185,40 @@ const ShippingPage = (props) => {
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{postal_code_validations}
 						</label>
-						<li>
-							<label htmlFor="country">Country</label>
-							<input
-								type="text"
-								value={country}
-								name="country"
-								id="country"
-								onChange={(e) => setCountry(e.target.value)}
-							/>
-						</li>
+						{loading ? (
+							<div>Loading...</div>
+						) : (
+							<div>
+								<li>
+									<label htmlFor="international">International</label>
+									<input
+										type="checkbox"
+										name="international"
+										// defaultChecked={international ? 'checked' : 'unchecked'}
+										defaultValue={international}
+										defaultChecked={international}
+										value={international}
+										id="international"
+										onChange={(e) => {
+											setInternational(e.target.checked);
+										}}
+									/>
+								</li>
+								{international && (
+									<li>
+										<label htmlFor="country">Country</label>
+										<input
+											type="text"
+											value={country}
+											name="country"
+											id="country"
+											onChange={(e) => setCountry(e.target.value)}
+										/>
+									</li>
+								)}
+							</div>
+						)}
+
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{country_validations}
 						</label>
