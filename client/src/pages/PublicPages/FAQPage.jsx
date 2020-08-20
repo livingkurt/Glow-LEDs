@@ -144,7 +144,7 @@ const FAQPage = () => {
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h1 style={{ textAlign: 'center' }}>Processing/Shipping</h1>
 
-						<ul style={{ padding: '18px' }}>
+						<ul style={{ padding: '18px', marginBottom: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Glow-LEDs.com is headquartered in Austin, Texas and orders are processed as they are
 								received. Products are not stocked waiting to be shipped at this time. Each order will
@@ -162,7 +162,7 @@ const FAQPage = () => {
 								order in the mail within approximately 1-3 days after the order is placed.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								For string lights we will get your order in the mail within approximately 3-4 days after
+								For string lights we will get your order in the mail within approximately 1 week after
 								the order is placed.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
@@ -179,7 +179,34 @@ const FAQPage = () => {
 						</ul>
 						<Link to="/pages/contact/order_issues">
 							<FlexContainer h_center>
-								<button className="button primary " style={{ margin: 'auto' }}>
+								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									Contact
+								</button>
+							</FlexContainer>
+						</Link>
+						<h2 style={{ textAlign: 'center' }}>International Shipping</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>We ship internationally!</li>
+							<li style={{ lineHeight: '25px' }}>
+								IMPORTANT: If you live outside of the United States please check the international
+								checkbox when filling out shipping information. A country field will show for you to
+								input your country.
+							</li>
+							{/* <li style={{ lineHeight: '25px' }}>
+								Shipping will not be calculated correctly if you do not input your country correctly.
+							</li> */}
+							<li style={{ lineHeight: '25px' }}>
+								Shipping times will vary, and will depend on the country.
+							</li>
+							{/* <li style={{ lineHeight: '25px' }}>
+								Shipping times will vary, and will depend on the country.
+							</li> */}
+							<li style={{ lineHeight: '25px' }}>All shipments come with tracking numbers.</li>
+							<li style={{ lineHeight: '25px' }}>Please contact us if you have questions.</li>
+						</ul>
+						<Link to="/pages/contact/order_issues">
+							<FlexContainer h_center>
+								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
 									Contact
 								</button>
 							</FlexContainer>
