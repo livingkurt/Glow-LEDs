@@ -129,6 +129,9 @@ models/user.js
 models/product.js
 models/index.js
 models/order.js
+models/feature.js
+models/cart.js
+models/expense.js
 
 email_templates/HTML
 email_templates/pages/verify_account_view.js

@@ -425,7 +425,7 @@ const EditProductPage = (props) => {
 													id="height"
 													onChange={(e) => set_height(e.target.value)}
 												/>
-											</li>``
+											</li>
 											<li>
 												<label htmlFor="weight">Product Weight</label>
 												<input

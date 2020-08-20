@@ -108,11 +108,12 @@ export default (props: {
             ${props.orderItems.map((item: any) => {
 				let item_item = `<li
               style="box-sizing: border-box;display: flex;justify-content: space-between;padding-bottom: 1rem;margin-bottom: 1rem;border-bottom: .1rem #c0c0c0 solid;">
+              <div style="display: flex; "></div>
               <div class="cart-image" style="box-sizing: border-box;">
                 <img src="${process.env.NODE_ENV === 'production'
 					? 'http://glow-leds.com'
 					: 'http://localhost:3000'}${item.display_image}" alt="product"
-                  style="box-sizing: border-box;max-width: 10rem;max-height: 10rem;border-radius: 1.5rem;margin-right: 10px;">
+                  style="height: auto; width: 100%;box-sizing: border-box;max-width: 10rem;max-height: 10rem;border-radius: 1.5rem;margin-right: 10px;">
               </div>
               <div class="cart-name" style="box-sizing: border-box;">
                 <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
@@ -120,6 +121,7 @@ export default (props: {
 					: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
                     style="box-sizing: border-box;text-decoration: none;color: white;">${item.name}</a></div>
                 <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
+              </div>
               </div>
               <div class="cart-price" style="box-sizing: border-box;text-align: right; width: 230px;">
                 ${item.sale_price !== 0
