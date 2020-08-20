@@ -10,6 +10,12 @@ import {
 	productReviewSaveReducer,
 	productReviewDeleteReducer
 } from './reducers/productReducers';
+import {
+	expenseListReducer,
+	expenseDetailsReducer,
+	expenseSaveReducer,
+	expenseDeleteReducer
+} from './reducers/expenseReducers';
 import { cartReducer } from './reducers/cartReducers';
 import {
 	userLoginReducer,
@@ -66,7 +72,11 @@ const reducer = combineReducers({
 	userDelete: userDeleteReducer,
 	userList: userListReducer,
 	userDetails: userDetailsReducer,
-	userUpdateUser: userUpdateUserReducer
+	userUpdateUser: userUpdateUserReducer,
+	expenseList: expenseListReducer,
+	expenseDetails: expenseDetailsReducer,
+	expenseSave: expenseSaveReducer,
+	expenseDelete: expenseDeleteReducer
 });
 
 declare global {

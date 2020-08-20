@@ -63,14 +63,14 @@ const PlaceOrderPage = (props) => {
 	// 		// 		calculate_international();
 	// 		// 	}
 	// 		// }
-	// 		// calculate_shipping();
+	// 		calculate_shipping();
 	// 		console.log({ shippingPrice });
 	// 		// set_place_order_state(shipping === {});
 	// 		const shipping_cookie = Cookie.getJSON('shipping');
 	// 		if (shipping_cookie) {
 	// 			dispatch(saveShipping(shipping_cookie));
 	// 		}
-	// 		dispatch(savePayment({ paymentMethod: 'paypal' }));
+	// 		// dispatch(savePayment({ paymentMethod: 'paypal' }));
 
 	// 		return () => {};
 	// 	},
@@ -106,10 +106,21 @@ const PlaceOrderPage = (props) => {
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+		// if (shipping) {
+		// 	console.log('Shipping');
+		// 	console.log(shipping.country);
+		// if (
+		// 	shipping.country === 'United States' ||
+		// 	shipping.country === 'US' ||
+		// 	shipping.country === 'USA' ||
+		// 	shipping.country === 'United States of America' ||
+		// 	shipping.country === 'America'
+		// ) {
+		console.log('US');
 		if (volume === 0) {
 			setShippingPrice(0);
 		} else if (volume <= 10) {
-			setShippingPrice(5);
+			setShippingPrice();
 		} else if (volume > 10 && volume < 250) {
 			setShippingPrice(9);
 		} else if (volume > 250 && volume < 405) {
@@ -119,25 +130,42 @@ const PlaceOrderPage = (props) => {
 		} else if (volume > 500) {
 			setShippingPrice(15);
 		}
+		// } else {
+		// 	console.log('International');
+		// 	if (volume === 0) {
+		// 		setShippingPrice(0);
+		// 	} else if (volume <= 10) {
+		// 		setShippingPrice(17);
+		// 	} else if (volume > 10 && volume < 250) {
+		// 		setShippingPrice(17);
+		// 	} else if (volume > 250 && volume < 405) {
+		// 		setShippingPrice(20);
+		// 	} else if (volume > 405 && volume < 500) {
+		// 		setShippingPrice(20);
+		// 	} else if (volume > 500) {
+		// 		setShippingPrice(30);
+		// 	}
+		// }
+		// }
 		console.log({ shippingPrice });
 	};
-	const calculate_international = () => {
-		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-		if (volume === 0) {
-			setShippingPrice(0);
-		} else if (volume <= 10) {
-			setShippingPrice(17);
-		} else if (volume > 10 && volume < 250) {
-			setShippingPrice(17);
-		} else if (volume > 250 && volume < 405) {
-			setShippingPrice(20);
-		} else if (volume > 405 && volume < 500) {
-			setShippingPrice(30);
-		} else if (volume > 500) {
-			setShippingPrice(35);
-		}
-		console.log({ shippingPrice });
-	};
+	// const calculate_international = () => {
+	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+	// 	if (volume === 0) {
+	// 		setShippingPrice(0);
+	// 	} else if (volume <= 10) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 10 && volume < 250) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 250 && volume < 405) {
+	// 		setShippingPrice(20);
+	// 	} else if (volume > 405 && volume < 500) {
+	// 		setShippingPrice(30);
+	// 	} else if (volume > 500) {
+	// 		setShippingPrice(35);
+	// 	}
+	// 	console.log({ shippingPrice });
+	// };
 
 	const placeOrderHandler = () => {
 		// create an order

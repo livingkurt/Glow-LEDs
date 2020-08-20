@@ -1,21 +1,16 @@
 import mongoose from 'mongoose';
 export {};
-// const mongoose = require('mongoose');
 
 const expenseSchema = new mongoose.Schema(
 	{
-		first_name: { type: String, required: true },
-		last_name: { type: String },
-		email: {
-			type: String,
-			required: true,
-			unique: true,
-			index: true,
-			dropDups: true
-		},
-		password: { type: String, required: true },
-		isAdmin: { type: Boolean, required: true, default: false },
-		isVerified: { type: Boolean, required: true, default: false },
+		expense_name: { type: String, required: true },
+		application: { type: String },
+		url: { type: String },
+		place_of_purchase: { type: String },
+		date_of_purchase: { type: String },
+		category: { type: String },
+		card: { type: String },
+		amount: { type: Number },
 		deleted: { type: Boolean, default: false }
 	},
 	{
@@ -26,5 +21,3 @@ const expenseSchema = new mongoose.Schema(
 const expenseModel = mongoose.model('Expense', expenseSchema);
 
 export default expenseModel;
-
-// module.exports = userModel;

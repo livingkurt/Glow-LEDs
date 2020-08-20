@@ -5,6 +5,8 @@ export { default as UsersPage } from './AdminPages/UsersPage';
 export { default as UserProfilePage } from './AdminPages/UserProfilePage';
 export { default as EditUserProfilePage } from './AdminPages/EditUserProfilePage';
 export { default as ControlPanelPage } from './AdminPages/ControlPanelPage';
+export { default as ExpensesPage } from './AdminPages/ExpensesPage';
+export { default as EditExpensePage } from './AdminPages/EditExpensePage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';

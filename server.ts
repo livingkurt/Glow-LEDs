@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 // import config from './config';
 const config = require('./config');
 const compression = require('compression');
-import { user_routes, product_routes, order_routes, email_routes, batch_routes } from './routes/index';
+import { user_routes, product_routes, order_routes, email_routes, batch_routes, expense_routes } from './routes/index';
 
 // const htmlRoutes = require('./email_templates/html_routes');
 
@@ -27,6 +27,7 @@ app.use(compression());
 app.use(sslRedirect());
 
 app.use('/api/users', user_routes);
+app.use('/api/expense', expense_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);

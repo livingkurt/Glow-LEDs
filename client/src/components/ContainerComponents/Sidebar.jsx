@@ -139,6 +139,11 @@ const Sidebar = (props) => {
 									Users
 								</button>
 							</Link>
+							<Link to="/secure/glow/expenses">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Expenses
+								</button>
+							</Link>
 						</ul>
 						<i style={icon_styles} className="fas fa-sort-up" />
 					</div>
