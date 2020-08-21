@@ -15,6 +15,7 @@ const PlaceOrderPage = (props) => {
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { loading, success, error, order } = orderCreate;
+	console.log({ shipping });
 
 	// if (!shipping.address) {
 	// 	props.history.push('/secure/checkout/shipping');
@@ -40,7 +41,7 @@ const PlaceOrderPage = (props) => {
 			// 	}
 			// }
 
-			calculate_shipping();
+			// calculate_shipping();
 			console.log({ shippingPrice });
 			// set_place_order_state(shipping === {});
 			const shipping_cookie = Cookie.getJSON('shipping');
@@ -54,6 +55,20 @@ const PlaceOrderPage = (props) => {
 		[ cartItems ]
 	);
 
+	useEffect(
+		() => {
+			if (shipping) {
+				if (shipping.international) {
+					calculate_international();
+				} else {
+					calculate_shipping();
+				}
+			}
+			// calculate_shipping();
+			return () => {};
+		},
+		[ shipping ]
+	);
 	// useEffect(
 	// 	() => {
 	// 		// if (shipping) {
@@ -214,6 +229,7 @@ const PlaceOrderPage = (props) => {
 									<div>
 										{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
 									</div>
+									<div>{shipping.international && 'International'}</div>
 									<div>{shipping.email}</div>
 								</div>
 							)}

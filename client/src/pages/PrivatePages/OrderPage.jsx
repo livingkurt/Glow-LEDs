@@ -194,11 +194,12 @@ const OrderPage = (props) => {
 									<div>
 										{order.shipping.first_name} {order.shipping.last_name}
 									</div>
-									<div>{order.shipping.address}</div>
+
 									<div>
 										{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}{' '}
 										{order.shipping.country}
 									</div>
+									<div>{order.shipping.international && 'International'}</div>
 									<div>{order.shipping.email}</div>
 									<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 										<p style={{ marginBottom: '0px' }}>

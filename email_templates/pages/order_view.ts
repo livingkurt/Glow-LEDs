@@ -11,6 +11,7 @@ export default (props: {
 		state: string;
 		postalCode: number;
 		country: string;
+		international: boolean;
 	};
 	isShipped: boolean;
 	shippedAt: Date;
@@ -81,6 +82,10 @@ export default (props: {
                 <div style="box-sizing: border-box;">${props.shipping.address}</div>
                 <div style="box-sizing: border-box;">${props.shipping.city}, ${props.shipping.state}
                   ${props.shipping.postalCode} ${props.shipping.country}</div>
+                  ${props.shipping.international
+						? `<div style="box-sizing: border-box;">International</div>`
+						: `<div></div>`}
+                  
                 <div style="box-sizing: border-box; text-decoration: none; color: white;">${props.shipping.email}</div>
                 <div
                 style="    border-top: 0.1rem solid white;width: 100%;">

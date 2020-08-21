@@ -10,6 +10,7 @@ const shippingSchema = {
 	city: { type: String, required: true },
 	state: { type: String, required: true },
 	postalCode: { type: String, required: true },
+	international: { type: Boolean },
 	country: { type: String, required: true }
 };
 
