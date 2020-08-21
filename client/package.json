@@ -6,6 +6,7 @@
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^5.14.0",
 		"@fortawesome/react-fontawesome": "^0.1.11",
+		"@sendgrid/mail": "^7.2.4",
 		"@testing-library/jest-dom": "^5.10.0",
 		"@testing-library/react": "^10.2.1",
 		"@testing-library/user-event": "^11.4.2",

@@ -21,6 +21,12 @@ const ContactPage = (props) => {
 		props.match.params.reason ? props.match.params.reason : ''
 	);
 	const [ message, set_message ] = useState('');
+	const [ song_id, set_song_id ] = useState('');
+	const [ instagram_handle, set_instagram_handle ] = useState('');
+	const [ facebook_name, set_facebook_name ] = useState('');
+	const [ glover_name, set_glover_name ] = useState('');
+	const [ quote, set_quote ] = useState('');
+	const [ content_type, set_content_type ] = useState('');
 
 	useEffect(
 		() => {
@@ -74,7 +80,22 @@ const ContactPage = (props) => {
 		console.log(request);
 		if (request.isValid) {
 			const reason = humanize(reason_for_contact);
-			dispatch(contact(first_name, last_name, email, order_number, reason, message));
+			dispatch(
+				contact(
+					first_name,
+					last_name,
+					email,
+					order_number,
+					reason,
+					message,
+					content_type,
+					glover_name,
+					instagram_handle,
+					facebook_name,
+					song_id,
+					quote
+				)
+			);
 			set_last_name_Validations('');
 			set_first_name_Validations('');
 			set_email_validations('');
@@ -215,6 +236,105 @@ const ContactPage = (props) => {
 					</div>
 				)}
 
+				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
+					<div>
+						{/* <label>Type of Content</label>
+						<input
+							onChange={(e) => set_content_type(e.target.value)}
+							defaultValue={content_type}
+							value={content_type}
+							className="zoom_f form_input"
+							type="text"
+							name="content_type"
+							placeholder="Type of Content"
+						/> */}
+						{/* <label>Type of Content</label>
+
+						<select
+							onChange={(e) => set_content_type(e.target.value)}
+							defaultValue={content_type}
+							value={content_type}
+							className="form_input contact_dropdown"
+							name="content_type"
+							placeholder="----Click Here to Choose Reason----"
+						>
+							<option className="grey_option" disabled="disabled" selected="selected" value="">
+								----Click Here to Choose Reason----
+							</option>
+
+							<option className="options" value="lightshow">
+								Lightshow
+							</option>
+							<option className="options" value="returns">
+								Infinity Mirror
+							</option>
+							<option className="options" value="returns">
+								String Lights
+							</option>
+							<option className="options" value="returns">
+								Other
+							</option>
+						</select> */}
+						<FlexContainer wrap h_between styles={{ gap: '10px' }}>
+							<div style={{ width: '330px' }}>
+								<label>Instagram Handle</label>
+								<input
+									onChange={(e) => set_instagram_handle(e.target.value)}
+									defaultValue={instagram_handle}
+									value={instagram_handle}
+									className="zoom_f form_input"
+									type="text"
+									name="instagram_handle"
+									placeholder="Instagram Handle (optional)"
+								/>
+							</div>
+							<div style={{ width: '330px' }}>
+								<label>Facebook Name</label>
+								<input
+									onChange={(e) => set_facebook_name(e.target.value)}
+									defaultValue={facebook_name}
+									value={facebook_name}
+									className="zoom_f form_input"
+									type="text"
+									name="facebook_name"
+									placeholder="Facebook (optional) "
+								/>
+							</div>
+							<div style={{ width: '330px' }}>
+								<label>Glover Name</label>
+								<input
+									onChange={(e) => set_glover_name(e.target.value)}
+									defaultValue={glover_name}
+									value={glover_name}
+									className="zoom_f form_input"
+									type="text"
+									name="glover_name"
+									placeholder="Glover Name (optional)"
+								/>
+							</div>
+						</FlexContainer>
+						<label>Song ID</label>
+						<input
+							onChange={(e) => set_song_id(e.target.value)}
+							defaultValue={song_id}
+							value={song_id}
+							className="zoom_f form_input"
+							type="text"
+							name="song_id"
+							placeholder="Song ID (optional)"
+						/>
+						{/* <label>Quote</label>
+						<input
+							onChange={(e) => set_quote(e.target.value)}
+							defaultValue={quote}
+							value={quote}
+							className="zoom_f form_input"
+							type="text"
+							name="quote"
+							placeholder="Quote"
+						/> */}
+					</div>
+				)}
 				<label>Message</label>
 				<textarea
 					onChange={(e) => set_message(e.target.value)}
@@ -225,14 +345,7 @@ const ContactPage = (props) => {
 					placeholder="Enter Message Here"
 				/>
 				<label className="validation_text">{message_validations}</label>
-				<button
-					style={{ width: '100px' }}
-					className="zoom_b button primary"
-					id="button"
-					onClick={(e) => sendEmail(e)}
-				>
-					Send
-				</button>
+
 				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (
 					<p style={{ lineHeight: '25px' }}>
 						You can find your order number by logging in and going to the drop down with your name on it and
@@ -241,39 +354,43 @@ const ContactPage = (props) => {
 					</p>
 				)}
 
-				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
-					<div>
-						{/* <p>
-							Put your facebook or instagram handle in the message. Click the send button. Then upload your content using the
-							WeTransfer button below. For Email To put info.glowleds@gmail.com 🙂 In the message part you
-							could put a little quote or message we could have alongside your video.
-						</p> */}
-						<h2>Steps to Ensure Content Gets Featured </h2>
-						<ol>
-							<li>Put your facebook or instagram handle in the message.</li>
-							<li>Click the send button.</li>
-							<li>Then upload your content using theWeTransfer button below.</li>
-							<li>For Email To put info.glowleds@gmail.com</li>
-							<li>
-								In the message part you could put a little quote or message we could have alongside your
-								video.
-							</li>
-						</ol>
+				<div>
+					{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
+						<div>
+							<h2>Steps to Ensure Content Gets Featured </h2>
+							<ol style={{ paddingLeft: '20px' }}>
+								<li>Fill out relevant info above </li>
+								<li>Then upload your content using the WeTransfer button below.</li>
+								<li>For "Email To" put info.glowleds@gmail.com</li>
+								<li>After completing steps on wetransfer click the send button below.</li>
+							</ol>
 
-						<button className="zoom_b button primary">
-							<a target="_blank" href="https://wetransfer.com/">
-								WeTransfer{' '}
-							</a>
-						</button>
-
-						<h2>Content includes: </h2>
-						<ul style={{ lineHeight: '25px', paddingLeft: '20px' }}>
-							<li>Pictures or Video of your Lightshow with Glow LEDs Diffusers or Diffuser Caps. </li>
-							<li>Pictures or Video of your Glow LEDs Infintiy Mirror.</li>
-							<li>Pictures or Video of your Glow LEDs String Lights.</li>
-						</ul>
-					</div>
-				)}
+							<button className="zoom_b button primary">
+								<a target="_blank" href="https://wetransfer.com/">
+									WeTransfer{' '}
+								</a>
+							</button>
+						</div>
+					)}
+					<button
+						style={{ width: '100px', marginTop: '10px' }}
+						className="zoom_b button primary"
+						id="button"
+						onClick={(e) => sendEmail(e)}
+					>
+						Send
+					</button>
+					{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
+						<div>
+							<h2>Content includes: </h2>
+							<ul style={{ lineHeight: '25px', paddingLeft: '20px' }}>
+								<li>Pictures or Video of your Lightshow with Glow LEDs Diffusers or Diffuser Caps. </li>
+								<li>Pictures or Video of your Glow LEDs Infintiy Mirror.</li>
+								<li>Pictures or Video of your Glow LEDs String Lights.</li>
+							</ul>
+						</div>
+					)}
+				</div>
 			</form>
 		</div>
 	);

@@ -49,7 +49,7 @@ const isAdmin = (
 	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
 	next: () => any
 ) => {
-	console.log(req.user);
+	// console.log(req.user);
 	if (req.user && req.user.isAdmin) {
 		return next();
 	}

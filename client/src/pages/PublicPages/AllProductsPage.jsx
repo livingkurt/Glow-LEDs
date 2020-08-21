@@ -95,6 +95,7 @@ const AllProductsPage = (props) => {
 			return descriptions.all_products;
 		}
 	};
+	console.log({ category });
 
 	return (
 		<div>
@@ -109,7 +110,12 @@ const AllProductsPage = (props) => {
 				<meta name="twitter:description" content={description_determination()} />
 			</MetaTags>
 			<FlexContainer h_center>
-				<h1>{humanize(category) || 'Products'}</h1>
+				<FlexContainer>
+					<h1>{category === 'caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}</h1>
+					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
+						{category === 'caps' || category === 'diffuser_adapters' ? '™' : ''}{' '}
+					</label>
+				</FlexContainer>
 			</FlexContainer>
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />

@@ -192,7 +192,13 @@ const contact = (
 	email: string,
 	order_number: string,
 	reason: string,
-	message: string
+	message: string,
+	content_type: string,
+	glover_name: string,
+	instagram_handle: string,
+	facebook_name: string,
+	song_id: string,
+	quote: string
 ) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	const reason_for_contact = reason;
 	dispatch({
@@ -206,7 +212,13 @@ const contact = (
 			email,
 			order_number,
 			reason_for_contact,
-			message
+			message,
+			content_type,
+			glover_name,
+			instagram_handle,
+			facebook_name,
+			song_id,
+			quote
 		});
 		const response = await axios.post('/api/emails/contactconfirmation', {
 			first_name,
@@ -214,7 +226,13 @@ const contact = (
 			email,
 			order_number,
 			reason_for_contact,
-			message
+			message,
+			content_type,
+			glover_name,
+			instagram_handle,
+			facebook_name,
+			song_id,
+			quote
 		});
 		dispatch({ type: USER_CONTACT_SUCCESS, payload: data });
 	} catch (error) {

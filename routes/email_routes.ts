@@ -45,6 +45,26 @@ let transporter = nodemailer.createTransport({
 // 	});
 // };
 
+// router.post('/contact', async (req, res) => {
+// 	// const data = req.body;
+// 	// console.log({ contact: req.body });
+// 	console.log(process.env.SENDGRID_SECRET);
+// 	sgMail.setApiKey(process.env.SENDGRID_SECRET);
+// 	const msg = {
+// 		to: 'info.glowleds@gmail.com',
+// 		from: 'info.glowleds@gmail.com', // Use the email address or domain you verified above
+// 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
+// 		text: 'and easy to do anywhere, even with Node.js',
+// 		html: contact_view(req.body)
+// 	};
+// 	try {
+// 		sgMail.send(msg);
+// 		res.send(200);
+// 	} catch (err) {
+// 		res.status(422).send(err);
+// 	}
+// });
+
 router.post('/contact', async (req, res) => {
 	// const data = req.body;
 	console.log({ contact: req.body });
@@ -56,13 +76,6 @@ router.post('/contact', async (req, res) => {
 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
 		html: contact_view(req.body)
 	};
-
-	// try {
-	// 	sgMail.send(mailOptions);
-	// 	res.send(200);
-	// } catch (err) {
-	// 	res.status(422).send(err);
-	// }
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
@@ -73,6 +86,7 @@ router.post('/contact', async (req, res) => {
 		}
 	});
 });
+
 router.post('/contactconfirmation', async (req, res) => {
 	// const data = req.body;
 	console.log({ contact: req.body });
