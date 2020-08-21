@@ -82,24 +82,21 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 	return res.status(500).send({ message: ' Error in Updating Product.' });
 });
 
-router.delete(
-	'/:pathname',
-	isAuth,
-	isAdmin,
-	async (req: { params: { pathname: any } }, res: { send: (arg0: string) => void }) => {
-		const product = await Product.findById(req.params.pathname);
-		const updated_product = { ...product, deleted: true };
-		const message: any = { message: 'Product Deleted' };
-		// const deleted_product = await updated_product.save();
-		const deleted_product = await Product.updateOne({ pathname: req.params.pathname }, { deleted: true });
-		if (deleted_product) {
-			// await deletedProduct.remove();
-			res.send(message);
-		} else {
-			res.send('Error in Deletion.');
-		}
+router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
+	console.log(req.params.id);
+	const product = await Product.findById(req.params.id);
+	const updated_product = { ...product, deleted: true };
+	const message: any = { message: 'Product Deleted' };
+
+	// const deleted_product = await updated_product.save();
+	const deleted_product = await Product.updateOne({ _id: req.params.id }, { deleted: true });
+	if (deleted_product) {
+		// await deletedProduct.remove();
+		res.send(message);
+	} else {
+		res.send('Error in Deletion.');
 	}
-);
+});
 
 router.post('/', isAuth, isAdmin, async (req, res) => {
 	// const converted_pathname = req.body.pathname.toLowerCase()
@@ -198,36 +195,36 @@ router.post('/:pathname/reviews', isAuth, async (req, res) => {
 		res.status(404).send({ message: 'Product Not Found' });
 	}
 });
-router.delete('/:pathname/reviews/:review_id', isAuth, async (req, res) => {
-	console.log(req.params);
-	const product = await Product.findById(req.params.pathname);
-	if (product) {
-		product.reviews.splice(req.params.review_id, 1);
-		product.numReviews -= 1;
-		// const review = {
-		// 	name: req.body.name,
-		// 	rating: Number(req.body.rating),
-		// 	comment: req.body.comment
-		// };
-		// product.reviews.push(review);
-		// product.numReviews = product.reviews.length;
-		// product.rating =
-		// 	product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
-		if (product.numReviews === 0) {
-			productModel.rating = 0;
-		} else {
-			product.rating =
-				product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
-		}
-		const updatedProduct = await product.save();
-		res.status(201).send({
-			data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
-			message: 'Review deleted successfully.'
-		});
-	} else {
-		res.status(404).send({ message: 'Product Not Found' });
-	}
-});
+// router.delete('/:pathname/reviews/:review_id', isAuth, async (req, res) => {
+// 	console.log(req.params);
+// 	const product = await Product.findById(req.params.pathname);
+// 	if (product) {
+// 		product.reviews.splice(req.params.review_id, 1);
+// 		product.numReviews -= 1;
+// 		// const review = {
+// 		// 	name: req.body.name,
+// 		// 	rating: Number(req.body.rating),
+// 		// 	comment: req.body.comment
+// 		// };
+// 		// product.reviews.push(review);
+// 		// product.numReviews = product.reviews.length;
+// 		// product.rating =
+// 		// 	product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
+// 		if (product.numReviews === 0) {
+// 			productModel.rating = 0;
+// 		} else {
+// 			product.rating =
+// 				product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
+// 		}
+// 		const updatedProduct = await product.save();
+// 		res.status(201).send({
+// 			data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+// 			message: 'Review deleted successfully.'
+// 		});
+// 	} else {
+// 		res.status(404).send({ message: 'Product Not Found' });
+// 	}
+// });
 
 router.put('/all', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
 	// const product = await Product.updateMany({ $set: { volume: 5 } });

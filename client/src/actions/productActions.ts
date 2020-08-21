@@ -99,14 +99,15 @@ const detailsProduct = (pathname: string) => async (dispatch: (arg0: { type: str
 	}
 };
 
-const deleteProduct = (productId: string) => async (
+const deleteProduct = (id: string) => async (
 	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		const { userLogin: { userInfo } } = getState();
-		dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
-		const { data } = await axios.delete('/api/products/' + productId, {
+		console.log(id);
+		dispatch({ type: PRODUCT_DELETE_REQUEST, payload: id });
+		const { data } = await axios.delete('/api/products/' + id, {
 			headers: {
 				Authorization: 'Bearer ' + userInfo.token
 			}

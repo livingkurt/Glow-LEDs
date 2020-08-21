@@ -31,7 +31,8 @@ const ProductsPage = (props) => {
 		[ successSave, successDelete ]
 	);
 	const deleteHandler = (product) => {
-		dispatch(deleteProduct(product.pathname));
+		console.log(product._id);
+		dispatch(deleteProduct(product._id));
 	};
 
 	const sale_price_switch = (product) => {
