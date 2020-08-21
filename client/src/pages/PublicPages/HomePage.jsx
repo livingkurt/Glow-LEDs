@@ -134,6 +134,37 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
+					<h1>Frosted Diffusers</h1>
+				</FlexContainer>
+				<FlexContainer h_center styles={{ position: 'relative' }}>
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/uY2xjrGrZd0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</FlexContainer>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
+					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
+					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
+					LED), and 46 ft (200 LED) options so there’s a size for every need.
+				</p>
+				<FlexContainer h_center>
+					<Link to="/collections/all/products/category/frosted_diffusers">
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Frosted Diffusers</h2>
+						</button>
+					</Link>
+				</FlexContainer>
+			</div>
+			<div className="home_page_divs">
+				<FlexContainer h_center>
 					<h1>Infinity Mirrors</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
