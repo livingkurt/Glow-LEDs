@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	console.log({ expense_routes_put: req.body });
 	const expenseId = req.params.id;
-	const expense = await Expense.findById(expenseId);
+	const expense: any = await Expense.findById(expenseId);
 	if (expense) {
 		expense.expense_name = req.body.expense_name;
 		expense.application = req.body.application;
