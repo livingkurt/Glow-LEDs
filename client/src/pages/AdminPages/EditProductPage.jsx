@@ -54,61 +54,139 @@ const EditProductPage = (props) => {
 
 	// console.log({ ID: props.match.params.id })
 
+	useEffect(() => {
+		if (props.match.params.pathname) {
+			console.log('Is ID');
+			dispatch(detailsProduct(props.match.params.pathname));
+			dispatch(detailsProduct(props.match.params.pathname));
+		} else {
+			dispatch(detailsProduct(''));
+		}
+
+		// set_loading_data(false);
+		set_state();
+		return () => {};
+	}, []);
+
 	useEffect(
 		() => {
-			dispatch(detailsProduct(product_pathname));
-			if (props.match.params.pathname) {
-				// console.log({ product })
-				setId(product._id);
-				setName(product.name);
-				setPrice(product.price);
-				setDescription(product.description);
-				setFacts(product.facts);
-				setIncludedItems(product.included_items);
-				setHidden(product.hidden);
-				setSalePrice(product.sale_price);
-				setVolume(product.volume);
-				set_meta_title(product.meta_title);
-				set_meta_description(product.meta_description);
-				set_meta_keywords(product.meta_keywords);
-				set_length(product.length);
-				set_width(product.width);
-				set_height(product.height);
-				set_weight(product.weight);
-				setDisplayImage(product.display_image);
-				setVideo(product.video);
-				setBrand(product.brand);
-				setCategory(product.category);
-				setCountInStock(product.countInStock);
-				setPathname(product.pathname);
+			if (product) {
+				console.log('Set');
+				set_state();
 			} else {
-				setId('');
-				setName('');
-				setPrice('');
-				setDescription('');
-				setFacts('');
-				setIncludedItems('');
-				setDisplayImage('');
-				setVideo('');
-				setBrand('');
-				setCategory('');
-				setCountInStock('');
-				setHidden();
-				setSalePrice('');
-				setVolume('');
-				set_meta_title('');
-				set_meta_description('');
-				set_meta_keywords('');
-				set_length('');
-				set_width('');
-				set_height('');
-				set_weight('');
-				setPathname('');
+				console.log('UnSet');
+				unset_state();
 			}
+
 			return () => {};
 		},
-		[ productDeleteSuccess ]
+		[ product, productDeleteSuccess ]
 	);
+
+	const set_state = () => {
+		setId(product._id);
+		setName(product.name);
+		setPrice(product.price);
+		setDescription(product.description);
+		setFacts(product.facts);
+		setIncludedItems(product.included_items);
+		setHidden(product.hidden);
+		setSalePrice(product.sale_price);
+		setVolume(product.volume);
+		set_meta_title(product.meta_title);
+		set_meta_description(product.meta_description);
+		set_meta_keywords(product.meta_keywords);
+		set_length(product.length);
+		set_width(product.width);
+		set_height(product.height);
+		set_weight(product.weight);
+		setDisplayImage(product.display_image);
+		setVideo(product.video);
+		setBrand(product.brand);
+		setCategory(product.category);
+		setCountInStock(product.countInStock);
+		setPathname(product.pathname);
+	};
+	const unset_state = () => {
+		setId('');
+		setName('');
+		setPrice('');
+		setDescription('');
+		setFacts('');
+		setIncludedItems('');
+		setDisplayImage('');
+		setVideo('');
+		setBrand('');
+		setCategory('');
+		setCountInStock('');
+		setHidden();
+		setSalePrice('');
+		setVolume('');
+		set_meta_title('');
+		set_meta_description('');
+		set_meta_keywords('');
+		set_length('');
+		set_width('');
+		set_height('');
+		set_weight('');
+		setPathname('');
+	};
+
+	// useEffect(
+	// 	() => {
+	// 		dispatch(detailsProduct(product_pathname));
+	// 		if (props.match.params.pathname) {
+	// 			// console.log({ product })
+	// 			setId(product._id);
+	// 			setName(product.name);
+	// 			setPrice(product.price);
+	// 			setDescription(product.description);
+	// 			setFacts(product.facts);
+	// 			setIncludedItems(product.included_items);
+	// 			setHidden(product.hidden);
+	// 			setSalePrice(product.sale_price);
+	// 			setVolume(product.volume);
+	// 			set_meta_title(product.meta_title);
+	// 			set_meta_description(product.meta_description);
+	// 			set_meta_keywords(product.meta_keywords);
+	// 			set_length(product.length);
+	// 			set_width(product.width);
+	// 			set_height(product.height);
+	// 			set_weight(product.weight);
+	// 			setDisplayImage(product.display_image);
+	// 			setVideo(product.video);
+	// 			setBrand(product.brand);
+	// 			setCategory(product.category);
+	// 			setCountInStock(product.countInStock);
+	// 			setPathname(product.pathname);
+	// 		} else {
+	// 			setId('');
+	// 			setName('');
+	// 			setPrice('');
+	// 			setDescription('');
+	// 			setFacts('');
+	// 			setIncludedItems('');
+	// 			setDisplayImage('');
+	// 			setVideo('');
+	// 			setBrand('');
+	// 			setCategory('');
+	// 			setCountInStock('');
+	// 			setHidden();
+	// 			setSalePrice('');
+	// 			setVolume('');
+	// 			set_meta_title('');
+	// 			set_meta_description('');
+	// 			set_meta_keywords('');
+	// 			set_length('');
+	// 			set_width('');
+	// 			set_height('');
+	// 			set_weight('');
+	// 			setPathname('');
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ productDeleteSuccess ]
+	// );
 
 	// useEffect(
 	// 	() => {
@@ -196,7 +274,7 @@ const EditProductPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<h1 style={{ textAlign: 'center' }}>{product_pathname ? 'Edit Product' : 'Create Product'}</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
