@@ -7,7 +7,7 @@ const expenseSchema = new mongoose.Schema(
 		application: { type: String },
 		url: { type: String },
 		place_of_purchase: { type: String },
-		date_of_purchase: { type: String },
+		date_of_purchase: { type: Date },
 		category: { type: String },
 		card: { type: String },
 		amount: { type: Number },

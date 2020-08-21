@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveExpense, detailsExpense } from '../../actions/expenseActions';
+import { saveExpense, detailsExpense, listExpenses } from '../../actions/expenseActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
-import { format_date_display } from '../../utils/helper_functions';
+import { format_date_display, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
 
 const EditExpensePage = (props) => {
@@ -20,20 +20,23 @@ const EditExpensePage = (props) => {
 	const [ category, set_category ] = useState('');
 	const [ card, set_card ] = useState('');
 	const [ amount, set_amount ] = useState('');
+	const [ loading_data, set_loading_data ] = useState(true);
 
 	const history = useHistory();
 
 	const expenseDetails = useSelector((state) => state.expenseDetails);
 	const { expense, loading, error } = expenseDetails;
 
-	// const expenseSave = useSelector((state) => state.expenseSave);
-	// const { loading: loadingSave, success: successSave, error: errorSave } = expenseSave;
+	const expenseSave = useSelector((state) => state.expenseSave);
+	const { loading: loadingSave, success: successSave, error: errorSave } = expenseSave;
 
-	// const expenseDelete = useSelector((state) => state.expenseDelete);
-	// const { loading: loadingDelete, success: successDelete, error: errorDelete } = expenseDelete;
+	const expenseDelete = useSelector((state) => state.expenseDelete);
+	const { loading: loadingDelete, success: successDelete, error: errorDelete } = expenseDelete;
 
 	// const expenseReviewDelete = useSelector((state) => state.expenseReviewDelete);
 	// const { success: expenseDeleteSuccess } = expenseReviewDelete;
+	const expenseList = useSelector((state) => state.expenseList);
+	const { expenses } = expenseList;
 
 	const dispatch = useDispatch();
 	const expense_id = props.match.params.id ? props.match.params.id : '';
@@ -42,46 +45,97 @@ const EditExpensePage = (props) => {
 
 	// console.log({ ID: props.match.params.id })
 
+	// useEffect(() => {
+	// 	// dispatch(detailsExpense(expense_id));
+	// 	dispatch(listExpenses());
+	// 	if (expense) {
+	// 		// console.log({ expense })
+	// 		set_id(expense._id);
+	// 		set_expense_name(expense.expense_name);
+	// 		set_application(expense.application);
+	// 		set_url(expense.url);
+	// 		set_place_of_purchase(expense.place_of_purchase);
+	// 		set_date_of_purchase(format_date_display(expense.date_of_purchase));
+	// 		set_category(expense.category);
+	// 		set_card(expense.card);
+	// 		set_amount(expense.amount);
+	// 	} else {
+	// 		set_id('');
+	// 		set_expense_name('');
+	// 		set_application('');
+	// 		set_url('');
+	// 		set_place_of_purchase('');
+	// 		set_date_of_purchase('');
+	// 		set_category('');
+	// 		set_card('');
+	// 		set_amount('');
+	// 	}
+	// 	return () => {};
+	// }, []);
+
 	useEffect(() => {
-		dispatch(detailsExpense(expense_id));
 		if (props.match.params.id) {
-			// console.log({ expense })
-			set_id(expense._id);
-			set_expense_name(expense.expense_name);
-			set_application(expense.application);
-			set_url(expense.url);
-			set_place_of_purchase(expense.place_of_purchase);
-			set_date_of_purchase(expense.date_of_purchase);
-			set_category(expense.category);
-			set_card(expense.card);
-			set_amount(expense.amount);
+			console.log('Is ID');
+			dispatch(detailsExpense(props.match.params.id));
+			dispatch(detailsExpense(props.match.params.id));
 		} else {
-			set_id('');
-			set_expense_name('');
-			set_application('');
-			set_url('');
-			set_place_of_purchase('');
-			set_date_of_purchase('');
-			set_category('');
-			set_card('');
-			set_amount('');
+			dispatch(detailsExpense(''));
 		}
+
+		// set_loading_data(false);
+		set_state();
 		return () => {};
 	}, []);
 
+	useEffect(
+		() => {
+			if (expense) {
+				console.log('Set');
+				set_state();
+			} else {
+				console.log('UnSet');
+				unset_state();
+			}
+
+			return () => {};
+		},
+		[ expense ]
+	);
+
+	const set_state = () => {
+		set_id(expense._id);
+		set_expense_name(expense.expense_name);
+		set_application(expense.application);
+		set_url(expense.url);
+		set_place_of_purchase(expense.place_of_purchase);
+		set_date_of_purchase(format_date_display(expense.date_of_purchase));
+		set_category(expense.category);
+		set_card(expense.card);
+		set_amount(expense.amount);
+	};
+	const unset_state = () => {
+		set_id('');
+		set_expense_name('');
+		set_application('');
+		set_url('');
+		set_place_of_purchase('');
+		set_date_of_purchase('');
+		set_category('');
+		set_card('');
+		set_amount('');
+	};
+
 	// useEffect(
 	// 	() => {
-	// 		setId(expense._id);
-	// 		setName(expense.name);
-	// 		setPrice(expense.price);
-	// 		setDescription(expense.description);
-	// 		setFacts(expense.facts);
-	// 		setIncludedItems(expense.included_items);
-	// 		setDisplayImage(expense.display_image);
-	// 		setVideo(expense.video);
-	// 		setBrand(expense.brand);
-	// 		setCategory(expense.category);
-	// 		setCountInStock(expense.countInStock);
+	// 		set_id(expense._id);
+	// 		set_expense_name(expense.expense_name);
+	// 		set_application(expense.application);
+	// 		set_url(expense.url);
+	// 		set_place_of_purchase(expense.place_of_purchase);
+	// 		set_date_of_purchase(format_date_display(expense.date_of_purchase));
+	// 		set_category(expense.category);
+	// 		set_card(expense.card);
+	// 		set_amount(expense.amount);
 	// 		return () => {
 	// 			//
 	// 		};
@@ -91,6 +145,9 @@ const EditExpensePage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+		console.log(unformat_date(date_of_purchase));
+		console.log(date_of_purchase);
+		// console.log({ id });
 		dispatch(
 			saveExpense({
 				_id: id,
@@ -98,7 +155,7 @@ const EditExpensePage = (props) => {
 				application,
 				url,
 				place_of_purchase,
-				date_of_purchase,
+				date_of_purchase: unformat_date(date_of_purchase),
 				category,
 				card,
 				amount
@@ -114,19 +171,22 @@ const EditExpensePage = (props) => {
 		set_category('');
 		set_card('');
 		set_amount('');
-		if (id) {
-			history.push('/collections/all/expenses/' + id);
-		} else {
-			history.push('/secure/glow/expenses');
-		}
+		// if (id) {
+		// 	history.push('/collections/all/expenses/' + id);
+		// } else {
+		history.push('/secure/glow/expenses');
+		// }
 	};
 
 	return (
 		<div class="main_container">
-			<h1 style={{ textAlign: 'center' }}>{expense_id ? 'Edit Expense' : 'Create Expense'}</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Expense' : 'Create Expense'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
+					{/* {loading_data ? (
+						<div>Loading...</div>
+					) : ( */}
 					<Loading loading={loading} error={error}>
 						{expense && (
 							<div>
@@ -210,7 +270,7 @@ const EditExpensePage = (props) => {
 											</li>
 
 											<li>
-												<label htmlFor="card">Card Number</label>
+												<label htmlFor="card">Card</label>
 												<input
 													type="text"
 													name="card"
@@ -224,7 +284,7 @@ const EditExpensePage = (props) => {
 												<input
 													type="text"
 													name="amount"
-													defaultValue={amount}
+													value={amount}
 													id="amount"
 													onChange={(e) => set_amount(e.target.value)}
 												/>
@@ -238,7 +298,7 @@ const EditExpensePage = (props) => {
 									</li>
 									<li>
 										{id ? (
-											<Link to={'/collections/all/expenses/' + props.match.params.id}>
+											<Link to="/secure/glow/expenses">
 												<button
 													style={{ width: '100%' }}
 													type="button"
@@ -297,6 +357,7 @@ const EditExpensePage = (props) => {
 							</div>
 						)}
 					</Loading>
+					{/* )} */}
 				</form>
 			</div>
 		</div>

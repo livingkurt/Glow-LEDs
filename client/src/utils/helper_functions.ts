@@ -16,13 +16,54 @@ export const humanize = (str: string) => {
 	return frags.join(' ');
 };
 
+const get_formatted_time = (date: any) => {
+	let formatted_time;
+	if ((formatted_time = date < 10)) {
+		formatted_time = '0' + date;
+	} else {
+		formatted_time = date;
+	}
+	return formatted_time;
+};
+
 export const format_date_display = (unformatted_date: string | number | Date) => {
 	const date = new Date(unformatted_date);
-	const day = date.getDate();
-	const month = date.getMonth() + 1;
+	const day = get_formatted_time(date.getDate());
+	const month = get_formatted_time(date.getMonth() + 1);
 	const year = date.getFullYear();
-	const formatted_date = `${month}/${day}/${year}`;
+	const formatted_date = `${month}/${day}/20`;
 	return formatted_date;
+};
+
+// export const unformat_date = (formatted_date: string) => {
+// 	// const date = new Date(unformatted_date);
+// 	const day = formatted_date.slice(0, 2);
+// 	const month = formatted_date.slice(3, 5);
+// 	const year = formatted_date.slice(6, 10);
+// 	// const unformatted_date = `${year}-${day}-${month}`;
+// 	const unformatted_date = `2020-${day}-${month}`;
+// 	console.log(unformatted_date);
+// 	return unformatted_date;
+// };
+
+// export const format_date_display = (unformatted_date: string) => {
+// 	const date = new Date(unformatted_date);
+// 	const day = date.getDate() > 10 ? '0' + date.getDate() : date.getDate();
+// 	const month = date.getMonth() + 1 > 10 ? '0' + date.getMonth() : date.getMonth();
+// 	const year = date.getFullYear().toString();
+// 	const formatted_date = `${month}/${day}/${year.slice(0, 2)}`;
+// 	return formatted_date;
+// };
+
+export const unformat_date = (formatted_date: string) => {
+	// const date = new Date(unformatted_date);
+	const day = formatted_date.slice(0, 2);
+	const month = formatted_date.slice(3, 5);
+	const year = formatted_date.slice(6, 10);
+	// const unformatted_date = `${year}-${day}-${month}`;
+	const unformatted_date = `2020-${day}-${month}`;
+	console.log(unformatted_date);
+	return unformatted_date;
 };
 
 // export const email_validations = email => {

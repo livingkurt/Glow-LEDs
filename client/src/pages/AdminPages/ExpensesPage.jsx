@@ -5,6 +5,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import { format_date_display } from '../../utils/helper_functions';
 
 const colors = {
 	hidden: '#333333'
@@ -85,11 +86,6 @@ const ExpensesPage = (props) => {
 			</FlexContainer>
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Expenses</h1>
-				{/* <Link to="/editexpense">
-					<button className="button primary" style={{ width: '160px' }}>
-						Create Expense
-					</button>
-				</Link> */}
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{expenses && (
@@ -98,32 +94,35 @@ const ExpensesPage = (props) => {
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Hidden</th>
-									<th>Name</th>
-									<th>Price</th>
-									<th>Category</th>
-									<th>Brand</th>
-									<th>Action</th>
+									<th>expense name</th>
+									<th>date</th>
+									<th>category</th>
+									<th>amount</th>
+									<th>card</th>
+									<th>place</th>
+									<th>application</th>
+									<th>url</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
-								{/* {expenses.map((expense) => (
+								{expenses.map((expense) => (
 									<tr
 										key={expense._id}
-										style={{ backgroundColor: expense.hidden ? colors.hidden : '#626262' }}
+										style={{
+											backgroundColor: expense.hidden ? colors.hidden : '#626262',
+											fontSize: '1.4rem'
+										}}
 									>
 										<td>{expense._id}</td>
-										<td>
-											{expense.hidden ? (
-												<i className="fas fa-eye-slash" />
-											) : (
-												<i className="fas fa-eye" />
-											)}
-										</td>
-										<td style={{ minWidth: '420px' }}>{expense.name}</td>
-										<td style={{ minWidth: '225px' }}>{sale_price_switch(expense)}</td>
+										<td style={{ minWidth: '300px' }}>{expense.expense_name}</td>
+										<td>{format_date_display(expense.date_of_purchase)}</td>
 										<td>{expense.category}</td>
-										<td style={{ minWidth: '111px' }}>{expense.brand}</td>
+										<td>${expense.amount ? expense.amount.toFixed(2) : expense.amount}</td>
+										<td>{expense.card}</td>
+										<td>{expense.place_of_purchase}</td>
+										<td style={{ minWidth: '200px' }}>{expense.application}</td>
+										<td style={{ minWidth: '800px' }}>{expense.url}</td>
 										<td>
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editexpense/' + expense._id}>
@@ -137,7 +136,7 @@ const ExpensesPage = (props) => {
 											</FlexContainer>
 										</td>
 									</tr>
-								))} */}
+								))}
 							</tbody>
 						</table>
 					</div>

@@ -26,8 +26,8 @@ app.use(express.json());
 app.use(compression());
 app.use(sslRedirect());
 
+app.use('/api/expenses', expense_routes);
 app.use('/api/users', user_routes);
-app.use('/api/expense', expense_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);
