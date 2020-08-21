@@ -31,21 +31,23 @@ router.put('/products', async (req, res) => {
 	// for (let product of products) {
 	// }
 	// res.send(products);
-	const product = await Product.updateMany({
-		// $rename: { shipping_price: 'volume' }
-		$set: {
-			meta_title: '',
-			meta_description: '',
-			meta_keywords: '',
-			length: 0,
-			width: 0,
-			height: 0,
-			weight: 0
+	const product = await Product.updateMany(
+		{ category: 'frosted_diffusers' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				weight_pounds: 0,
+				weight_ounces: 0.4,
+				length: 3,
+				width: 2,
+				height: 0.75
+			}
+			// $unset: { shipping_price: 1 }
 		}
-		// $unset: { shipping_price: 1 }
-	});
+	);
 	res.send(product);
 });
+
 router.get('/products', async (req, res) => {
 	// const products = await Product.find({});
 

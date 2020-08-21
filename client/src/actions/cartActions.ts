@@ -14,7 +14,8 @@ const addToCart = (pathname: string, qty: number) => async (
 				sale_price: number;
 				countInStock: number;
 				volume: number;
-				weight: number;
+				weight_pounds: number;
+				weight_ounces: number;
 				length: number;
 				width: number;
 				height: number;
@@ -44,7 +45,8 @@ const addToCart = (pathname: string, qty: number) => async (
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
 				volume: data.volume,
-				weight: data.weight,
+				weight_pounds: data.weight_pounds,
+				weight_ounces: data.weight_ounces,
 				length: data.length,
 				width: data.width,
 				height: data.volume,
@@ -62,7 +64,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
 				volume: data.volume,
-				weight: data.weight,
+				weight_pounds: data.weight_pounds,
 				length: data.length,
 				width: data.width,
 				height: data.volume,

@@ -57,7 +57,8 @@ const saveProduct = (product: {
 	hidden?: boolean;
 	sale_price?: number;
 	volume?: number;
-	weight?: number;
+	weight_pounds?: number;
+	weight_ounces?: number;
 	length?: number;
 	width?: number;
 	height?: number;

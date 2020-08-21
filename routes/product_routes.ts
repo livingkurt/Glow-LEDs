@@ -72,7 +72,8 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 		product.length = req.body.length;
 		product.width = req.body.width;
 		product.height = req.body.height;
-		product.weight = req.body.weight;
+		product.weight_pounds = req.body.weight_pounds;
+		product.weight_ounces = req.body.weight_ounces;
 		const updatedProduct = await product.save();
 		console.log({ product_routes_post: updatedProduct });
 		if (updatedProduct) {
@@ -125,7 +126,8 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		length: req.body.length,
 		width: req.body.width,
 		height: req.body.height,
-		weight: req.body.weight
+		weight_pounds: req.body.weight_pounds,
+		weight_ounces: req.body.weight_ounces
 	});
 	console.log({ product_routes_post: product });
 	const newProduct = await product.save();

@@ -39,7 +39,8 @@ const productSchema = new mongoose.Schema(
 		length: { type: Number },
 		width: { type: Number },
 		height: { type: Number },
-		weight: { type: Number }
+		weight_pounds: { type: Number },
+		weight_ounces: { type: Number }
 	},
 	{
 		timestamps: true

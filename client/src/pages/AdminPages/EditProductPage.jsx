@@ -30,7 +30,8 @@ const EditProductPage = (props) => {
 	const [ length, set_length ] = useState();
 	const [ width, set_width ] = useState();
 	const [ height, set_height ] = useState();
-	const [ weight, set_weight ] = useState();
+	const [ weight_pounds, set_weight_pounds ] = useState();
+	const [ weight_ounces, set_weight_ounces ] = useState();
 	const [ pathname, setPathname ] = useState();
 
 	const history = useHistory();
@@ -99,7 +100,8 @@ const EditProductPage = (props) => {
 		set_length(product.length);
 		set_width(product.width);
 		set_height(product.height);
-		set_weight(product.weight);
+		set_weight_pounds(product.weight_pounds);
+		set_weight_ounces(product.weight_ounces);
 		setDisplayImage(product.display_image);
 		setVideo(product.video);
 		setBrand(product.brand);
@@ -128,7 +130,8 @@ const EditProductPage = (props) => {
 		set_length('');
 		set_width('');
 		set_height('');
-		set_weight('');
+		set_weight_pounds('');
+		set_weight_ounces('');
 		setPathname('');
 	};
 
@@ -152,7 +155,7 @@ const EditProductPage = (props) => {
 	// 			set_length(product.length);
 	// 			set_width(product.width);
 	// 			set_height(product.height);
-	// 			set_weight(product.weight);
+	// 			set_weight_pounds(product.weight_pounds);
 	// 			setDisplayImage(product.display_image);
 	// 			setVideo(product.video);
 	// 			setBrand(product.brand);
@@ -180,7 +183,7 @@ const EditProductPage = (props) => {
 	// 			set_length('');
 	// 			set_width('');
 	// 			set_height('');
-	// 			set_weight('');
+	// 			set_weight_pounds('');
 	// 			setPathname('');
 	// 		}
 	// 		return () => {};
@@ -233,7 +236,8 @@ const EditProductPage = (props) => {
 				length,
 				width,
 				height,
-				weight,
+				weight_pounds,
+				weight_ounces,
 				pathname
 			})
 		);
@@ -258,7 +262,8 @@ const EditProductPage = (props) => {
 		set_length('');
 		set_width('');
 		set_height('');
-		set_weight('');
+		set_weight_pounds('');
+		set_weight_ounces('');
 		setPathname('');
 		if (pathname) {
 			history.push('/collections/all/products/' + pathname);
@@ -505,13 +510,23 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="weight">Product Weight</label>
+												<label htmlFor="weight_pounds">Product lbs</label>
 												<input
 													type="text"
-													name="weight"
-													value={weight}
-													id="weight"
-													onChange={(e) => set_weight(e.target.value)}
+													name="weight_pounds"
+													value={weight_pounds}
+													id="weight_pounds"
+													onChange={(e) => set_weight_pounds(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="weight_ounces">Product oz</label>
+												<input
+													type="text"
+													name="weight_ounces"
+													value={weight_ounces}
+													id="weight_ounces"
+													onChange={(e) => set_weight_ounces(e.target.value)}
 												/>
 											</li>
 											<li>
