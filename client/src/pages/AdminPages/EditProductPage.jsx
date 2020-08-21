@@ -532,27 +532,26 @@ const EditProductPage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to={'/collections/all/products/' + props.match.params.pathname}>
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Product
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/glow/products">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Products
-												</button>
-											</Link>
-										)}
+										<Link to={'/collections/all/products/' + props.match.params.pathname}>
+											<button
+												style={{ width: '100%' }}
+												type="button"
+												className="button secondary"
+											>
+												Back to Product
+											</button>
+										</Link>
+									</li>
+									<li>
+										<Link to="/secure/glow/products">
+											<button
+												style={{ width: '100%' }}
+												type="button"
+												className="button secondary"
+											>
+												Back to Products
+											</button>
+										</Link>
 									</li>
 									{/* <li> */}
 									{/* {product.reviews.map((review) => {
