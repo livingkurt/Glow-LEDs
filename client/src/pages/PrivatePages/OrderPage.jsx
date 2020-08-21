@@ -176,6 +176,14 @@ const OrderPage = (props) => {
 			</MetaTags>
 			{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
 
+			{props.userInfo &&
+			props.userInfo.isAdmin && (
+				<FlexContainer styles={{ marginBottom: 10, marginLeft: '20px' }}>
+					<Link to="/secure/glow/orders">
+						<button className="button primary">Back to Orders</button>
+					</Link>
+				</FlexContainer>
+			)}
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
