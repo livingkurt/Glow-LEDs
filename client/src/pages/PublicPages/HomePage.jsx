@@ -45,25 +45,97 @@ const HomePage = (props) => {
 				</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
-				<h1> Introducing: Honey Comb Diffuser Caps </h1>
+				<h1> Featured Content </h1>
 			</FlexContainer>
 
-			<img
+			{/* <img
 				style={{ borderRadius: '10px', width: '100%' }}
 				src="/images/optimized_images/promo_images/img_0792_1_optimized.jpg"
 				alt="promo"
-			/>
+			/> */}
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
-				Throw a show like your a bee in a hive buzzin' around.
+				Did you know that Glow LEDs has a featured section on the website? It's under the community tab!
 			</p>
-			<FlexContainer h_center>
+			<Link to="/pages/featured">
+				<FlexContainer h_center column>
+					<div className="p_descriptions" style={{ textAlign: 'center' }}>
+						<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+							Featured Content
+						</button>
+					</div>
+				</FlexContainer>
+			</Link>
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				We will be posting lightshows, product demmonstrations and much more every wednesday on our social media
+				and our website to show our appreciation for all you lovers of lights.
+			</p>
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				Check out this weeks lightshow!
+			</p>
+			{/* <FlexContainer h_center>
 				<Link to="/collections/all/products/honey_comb_diffuser_caps">
 					<button className="button primary" style={{ background: 'transparent' }}>
 						<h2>Shop Honey Comb Diffuser Caps</h2>
 					</button>
 				</Link>
-			</FlexContainer>
-			{/* <FlexContainer h_center>
+			</FlexContainer> */}
+			<div className="home_page_divs">
+				<FlexContainer h_center column>
+					<h1 style={{ textAlign: 'center' }}>StarStream TuT Light Show</h1>
+					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
+						Check out StarStream TuT with the Gyrosphere Diffuser Caps!
+					</p>
+					{/* <p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
+						"If it doesn't work the first time, try to turn it off and then leave it off" -Keif
+					</p> */}
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Follow him @ Mckinnley Riojas on Facebook and @starstreamtut on Instagram
+					</p>
+					<Link to="/collections/all/products/gyrosphere_diffuser_caps">
+						<FlexContainer h_center column>
+							<div className="p_descriptions" style={{ textAlign: 'center' }}>
+								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									Gyrosphere Diffuser Caps
+								</button>
+							</div>
+						</FlexContainer>
+					</Link>
+				</FlexContainer>
+				<FlexContainer h_center styles={{ position: 'relative' }}>
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/ba39K2M4b7E?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</FlexContainer>
+			</div>
+			<div className="home_page_divs">
+				<FlexContainer h_center>
+					<h1> Introducing: Honey Comb Diffuser Caps </h1>
+				</FlexContainer>
+
+				<img
+					style={{ borderRadius: '10px', width: '100%' }}
+					src="/images/optimized_images/promo_images/img_0792_1_optimized.jpg"
+					alt="promo"
+				/>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					Throw a show like your a bee in a hive buzzin' around.
+				</p>
+				<FlexContainer h_center>
+					<Link to="/collections/all/products/honey_comb_diffuser_caps">
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Honey Comb Diffuser Caps</h2>
+						</button>
+					</Link>
+				</FlexContainer>
+				{/* <FlexContainer h_center>
 				<h1>24 Hour BOGO Sale</h1>
 			</FlexContainer>
 			<FlexContainer h_center>
@@ -85,7 +157,8 @@ const HomePage = (props) => {
 					alt="promo"
 				/>
 			</FlexContainer> */}
-			<FlexContainer h_center />
+				<FlexContainer h_center />
+			</div>
 			{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Buy any set of diffuser caps and get a free set of heart diffuser caps in your order!
 			</p> */}
