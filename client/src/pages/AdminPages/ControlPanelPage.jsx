@@ -5,77 +5,87 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import { listOrders } from '../../actions/orderActions';
+import { listExpenses } from '../../actions/expenseActions';
 
 const colors = {
 	hidden: '#333333'
 };
 
-const ProductsPage = (props) => {
-	const productList = useSelector((state) => state.productList);
-	const { loading, products, error } = productList;
-
-	const productSave = useSelector((state) => state.productSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
-
-	const productDelete = useSelector((state) => state.productDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
+const ControlPanelPage = (props) => {
 	const dispatch = useDispatch();
+	const expenseList = useSelector((state) => state.expenseList);
+	const { loading: loading_expenses, expenses, error: error_expenses } = expenseList;
 
-	useEffect(
-		() => {
-			dispatch(listProducts());
-			return () => {
-				//
-			};
-		},
-		[ successSave, successDelete ]
-	);
-	const deleteHandler = (product) => {
-		dispatch(deleteProduct(product.pathname));
-	};
+	const orderList = useSelector((state) => state.orderList);
+	const { loading, orders, error } = orderList;
 
-	const sale_price_switch = (product) => {
-		if (product.sale_price !== 0) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>
-							${product.price ? product.price.toFixed(2) : product.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${product.sale_price ? (
-						product.sale_price.toFixed(2)
-					) : (
-						product.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!product.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white', marginRight: '7px' }}>
-							${product.price ? product.price.toFixed(2) : product.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" />
-					<label style={{ marginLeft: '7px' }}>Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
-		}
-	};
+	useEffect(() => {
+		dispatch(listOrders());
+		dispatch(listExpenses());
+	}, []);
+
 	return (
 		<div class="main_container">
-			<MetaTags>
-				<title>Control Panel | Glow LEDs</title>
-			</MetaTags>
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
 			</FlexContainer>
+			{expenses &&
+			orders && (
+				<div className="order-list responsive_table">
+					<table className="table" style={{ width: '50%' }}>
+						<thead>
+							<tr>
+								<th>Category</th>
+								<th>Expense</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								style={{
+									backgroundColor: '#626262',
+									fontSize: '1.4rem',
+									height: '50px'
+								}}
+								className=""
+							>
+								<th style={{ padding: '15px' }}>Total Expenses</th>
+								<th style={{ padding: '15px' }}>
+									${expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)}
+								</th>
+							</tr>
+
+							<tr
+								style={{
+									backgroundColor: '#626262',
+									fontSize: '1.4rem',
+									height: '50px'
+								}}
+							>
+								<th style={{ padding: '15px' }}>Total Income</th>
+								<th style={{ padding: '15px' }}>
+									${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+								</th>
+							</tr>
+
+							<tr
+								style={{
+									backgroundColor: '#626262',
+									fontSize: '1.4rem',
+									height: '50px'
+								}}
+							>
+								<th style={{ padding: '15px' }}>Total Profit</th>
+								<th style={{ padding: '15px' }}>
+									${(orders.reduce((a, expense) => a + expense.totalPrice, 0) -
+										expenses.reduce((a, order) => a + order.amount, 0)).toFixed(2)}
+								</th>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			)}
 		</div>
 	);
 };
-export default ProductsPage;
+export default ControlPanelPage;
