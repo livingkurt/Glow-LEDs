@@ -5,7 +5,7 @@ import { detailsProduct } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Rating, Reviews, Slideshow, RelatedProducts } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
-import ReactFilestack from 'filestack-react';
+// import ReactFilestack from 'filestack-react';
 import MetaTags from 'react-meta-tags';
 
 const ProductPage = (props) => {
