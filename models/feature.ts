@@ -4,19 +4,14 @@ export {};
 
 const featureSchema = new mongoose.Schema(
 	{
-		first_name: { type: String, required: true },
-		last_name: { type: String },
-		email: {
-			type: String,
-			required: true,
-			unique: true,
-			index: true,
-			dropDups: true
-		},
-		password: { type: String, required: true },
-		isAdmin: { type: Boolean, required: true, default: false },
-		isVerified: { type: Boolean, required: true, default: false },
-		deleted: { type: Boolean, default: false }
+		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		glover_name: { type: String },
+		instagram_handle: { type: String },
+		facebook_name: { type: String },
+		song_id: { type: String },
+		quote: { type: String },
+		video: { type: String },
+		picture: { type: String }
 	},
 	{
 		timestamps: true

@@ -69,8 +69,6 @@ const ExpensesPage = (props) => {
 		}
 	};
 
-	const decide_total = () => {};
-
 	return (
 		<div class="main_container">
 			<MetaTags>
