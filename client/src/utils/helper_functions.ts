@@ -28,7 +28,7 @@ const get_formatted_time = (date: any) => {
 
 export const format_date_display = (unformatted_date: string | number | Date) => {
 	const date = new Date(unformatted_date);
-	const day = get_formatted_time(date.getDate());
+	const day = get_formatted_time(date.getDate() + 1);
 	const month = get_formatted_time(date.getMonth() + 1);
 	const year = date.getFullYear();
 	const formatted_date = `${month}/${day}/20`;
