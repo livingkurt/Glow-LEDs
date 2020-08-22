@@ -14,6 +14,7 @@ const Search = (props) => {
 			}}
 		>
 			<FlexContainer h_between v_i_center wrap class="search_container">
+				<label aria-label="searchKeyword" htmlFor="searchKeyword" />
 				<input
 					name="searchKeyword"
 					onChange={(e) => props.setSearchKeyword(e.target.value)}

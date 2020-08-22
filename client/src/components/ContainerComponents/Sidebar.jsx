@@ -82,7 +82,7 @@ const Sidebar = (props) => {
 	return (
 		<aside ref={wrapperRef} className="sidebar">
 			<h2>Shopping Categories</h2>
-			<button className="sidebar_close_button" onClick={closeMenu}>
+			<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
 				<i className="fas fa-times" />
 			</button>
 			<FlexContainer column>
