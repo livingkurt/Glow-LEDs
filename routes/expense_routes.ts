@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 	}
 
 	// const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	const expenses = await Expense.find({});
+	const expenses = await Expense.find({}).sort({ _id: -1 });
 	// console.log(expenses);
 	res.send(expenses);
 });

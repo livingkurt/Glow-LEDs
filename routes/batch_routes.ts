@@ -5,6 +5,7 @@ const { getToken, isAuth } = require('../util');
 import bcrypt from 'bcryptjs';
 import Product from '../models/product';
 import Order from '../models/order';
+import { Expense } from '../models';
 require('dotenv');
 
 const router = express.Router();
@@ -46,6 +47,33 @@ router.put('/products', async (req, res) => {
 		}
 	);
 	res.send(product);
+});
+
+router.put('/expenses', async (req, res) => {
+	// const products = await Product.find({});
+
+	// for (let product of products) {
+	// }
+	// res.send(products);
+	const expenses = await Expense.updateMany(
+		{ category: 'frosted_diffusers' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				expense_name: '',
+				application: '',
+				url: '',
+				category: 'Supplies',
+				place_of_purchase: 'Amazon',
+				card: 'AMZNK',
+				date_of_purchase: '',
+				amount: 0,
+				deleted: false
+			}
+			// $unset: { shipping_price: 1 }
+		}
+	);
+	res.send(expenses);
 });
 
 router.get('/products', async (req, res) => {
