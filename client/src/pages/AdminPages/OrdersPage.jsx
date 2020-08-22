@@ -104,6 +104,39 @@ const OrdersPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr>
+									<th>Total</th>
+									<th>Number of Orders</th>
+									<th>Average Total Per Orders</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									// key={order._id}
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem'
+									}}
+								>
+									<td>
+										<label>
+											${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+										</label>
+									</td>
+									<td>
+										<label>{orders.length.toFixed(2)}</label>
+									</td>
+									<td>
+										<label>
+											${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2) /
+												orders.length.toFixed(2)}
+										</label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table className="table">
+							<thead>
+								<tr>
 									<th>ID</th>
 									<th>DATE</th>
 									<th>TOTAL</th>

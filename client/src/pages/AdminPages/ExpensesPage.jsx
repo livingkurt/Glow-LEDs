@@ -94,91 +94,64 @@ const ExpensesPage = (props) => {
 			<Loading loading={loading} error={error}>
 				{expenses && (
 					<div className="expense-list responsive_table">
-						<FlexContainer wrap h_between>
-							{/* <label>Total: ${expenses.reduce((expense, c) => expense + c.amount, 0).toFixed(2)}</label>
-							<label>
-								Total Shipping: ${expenses
-									.filter((expense) => expense.category === 'Shipping')
-									.reduce((expense, c) => expense + c.amount, 0)
-									.toFixed(2)}
-							</label>
-							<label>
-								Total Supplies: ${expenses
-									.filter((expense) => expense.category === 'Supplies')
-									.reduce((expense, c) => expense + c.amount, 0)
-									.toFixed(2)}
-							</label>
-							<label>
-								Total Business: ${expenses
-									.filter((expense) => expense.category === 'Business')
-									.reduce((expense, c) => expense + c.amount, 0)
-									.toFixed(2)}
-							</label>
-							<label>
-								Total Website: ${expenses
-									.filter((expense) => expense.category === 'Website')
-									.reduce((expense, c) => expense + c.amount, 0)
-									.toFixed(2)}
-							</label> */}
-							<table className="table">
-								<thead>
-									<tr>
-										<th>Total</th>
-										<th>Supplies</th>
-										<th>Website</th>
-										<th>Shipping</th>
-										<th>Business</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr
-										// key={expense._id}
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem'
-										}}
-									>
-										<td>
-											<label>
-												${expenses.reduce((expense, c) => expense + c.amount, 0).toFixed(2)}
-											</label>
-										</td>
-										<td>
-											<label>
-												${expenses
-													.filter((expense) => expense.category === 'Supplies')
-													.reduce((expense, c) => expense + c.amount, 0)
-													.toFixed(2)}
-											</label>
-										</td>
-										<td>
-											<label>
-												${expenses
-													.filter((expense) => expense.category === 'Website')
-													.reduce((expense, c) => expense + c.amount, 0)
-													.toFixed(2)}
-											</label>
-										</td>
-										<td>
-											<label>
-												${expenses
-													.filter((expense) => expense.category === 'Shipping')
-													.reduce((expense, c) => expense + c.amount, 0)
-													.toFixed(2)}
-											</label>
-										</td>
-										<td>
-											<label>
-												${expenses
-													.filter((expense) => expense.category === 'Business')
-													.reduce((expense, c) => expense + c.amount, 0)
-													.toFixed(2)}
-											</label>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</FlexContainer>
+						<table className="table">
+							<thead>
+								<tr>
+									<th>Total</th>
+									<th>Supplies</th>
+									<th>Website</th>
+									<th>Shipping</th>
+									<th>Business</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									// key={expense._id}
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem'
+									}}
+								>
+									<td>
+										<label>
+											${expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)}
+										</label>
+									</td>
+									<td>
+										<label>
+											${expenses
+												.filter((expense) => expense.category === 'Supplies')
+												.reduce((a, expense) => a + expense.amount, 0)
+												.toFixed(2)}
+										</label>
+									</td>
+									<td>
+										<label>
+											${expenses
+												.filter((expense) => expense.category === 'Website')
+												.reduce((a, expense) => a + expense.amount, 0)
+												.toFixed(2)}
+										</label>
+									</td>
+									<td>
+										<label>
+											${expenses
+												.filter((expense) => expense.category === 'Shipping')
+												.reduce((a, expense) => a + expense.amount, 0)
+												.toFixed(2)}
+										</label>
+									</td>
+									<td>
+										<label>
+											${expenses
+												.filter((expense) => expense.category === 'Business')
+												.reduce((a, expense) => a + expense.amount, 0)
+												.toFixed(2)}
+										</label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 						<table className="table">
 							<thead>
 								<tr>
