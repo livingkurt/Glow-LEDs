@@ -1,0 +1,10 @@
+@for $i from 0 to 100 {
+	.w-#{$i}rem {
+		width: $i + rem;
+	}
+}
+@for $i from 0 to 1000 {
+	.w-#{$i}px {
+		width: $i + px;
+	}
+}

@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, deleteProduct } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { listOrders } from '../../actions/orderActions';
 import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
+// import { Doughnut } from 'react-chartjs-2';
+import Chart from 'chart.js';
 
 const colors = {
 	hidden: '#333333'
@@ -12,6 +14,10 @@ const colors = {
 
 const ControlPanelPage = (props) => {
 	const dispatch = useDispatch();
+
+	const chartRef = useRef();
+	const expense_doughnut_ref = useRef();
+
 	const expenseList = useSelector((state) => state.expenseList);
 	const { loading: loading_expenses, expenses, error: error_expenses } = expenseList;
 
@@ -31,6 +37,79 @@ const ControlPanelPage = (props) => {
 		dispatch(listUsers());
 	}, []);
 
+	useEffect(
+		() => {
+			initialize_chart();
+			return () => {};
+		},
+		[ expenses ]
+	);
+
+	const initialize_chart = () => {
+		const expense_chartRef = chartRef.current.getContext('2d');
+
+		new Chart(expense_chartRef, {
+			type: 'line',
+			data: {
+				//Bring in data
+				labels: expenses.map((expense) => expense.expense_name),
+				datasets: [
+					{
+						label: 'Sales',
+						data: expenses.map((expense) => expense.amount),
+						fill: true,
+						borderColor: 'black'
+					}
+				]
+			},
+			options: {
+				// // Responsive Design
+				// responsive: true,
+				// maintainAspectRatio: false
+				// // Customize the Layout
+				// layout: {
+				// 	padding: {
+				// 		top: 5,
+				// 		left: 15,
+				// 		right: 15,
+				// 		bottom: 15
+				// 	}
+				// }
+			}
+			// // Removing Data Ticks, Graph Lines, and Borders
+			// scales: {
+			// 	xAxes: [
+			// 		{
+			// 			ticks: { display: false },
+			// 			gridLines: {
+			// 				display: false,
+			// 				drawBorder: false
+			// 			}
+			// 		}
+			// 	],
+			// 	yAxes: [
+			// 		{
+			// 			ticks: { display: false },
+			// 			gridLines: {
+			// 				display: false,
+			// 				drawBorder: false
+			// 			}
+			// 		}
+			// 	]
+			// }
+		});
+		// const expense_doughnut_chart = expense_doughnut_ref.current.getContext('2d');
+		// new Chart(expense_doughnut_chart, {
+		// 	type: 'doughnut',
+		// 	data: [
+		// 		expenses.filter((expense) => expense === 'Supplies').map((expense) => expense.amount),
+		// 		expenses.filter((expense) => expense === 'Business').map((expense) => expense.amount),
+		// 		expenses.filter((expense) => expense === 'Website').map((expense) => expense.amount)
+		// 	],
+		// 	labels: [ 'Supplies', 'Business', 'Website' ],
+		// 	options: {}
+		// });
+	};
 	return (
 		<div class="main_container">
 			<FlexContainer h_center>
@@ -153,6 +232,8 @@ const ControlPanelPage = (props) => {
 					</div>
 				)}
 			</FlexContainer>
+			<canvas id="expense_chart" ref={chartRef} />
+			<canvas id="expense_doughnut" ref={expense_doughnut_ref} />
 		</div>
 	);
 };

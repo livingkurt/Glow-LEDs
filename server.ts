@@ -5,8 +5,8 @@ import path from 'path';
 import mongoose from 'mongoose';
 // import bodyParser from 'body-parser';
 // import config from './config';
-const expressAttack = require('express-attack');
-const requestIp = require('request-ip');
+// const expressAttack = require('express-attack');
+// const requestIp = require('request-ip');
 const config = require('./config');
 const compression = require('compression');
 import { user_routes, product_routes, order_routes, email_routes, batch_routes, expense_routes } from './routes/index';
@@ -27,22 +27,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(compression());
 app.use(sslRedirect());
-// throttle request when given IP hit 50 times over 300 seconds
-function throttleByIp(req: any) {
-	const clientIp = requestIp.getClientIp(req);
 
-	return {
-		key: clientIp,
-		limit: 50,
-		period: 300
-	};
-}
+// // throttle request when given IP hit 50 times over 300 seconds
+// function throttleByIp(req: any) {
+// 	const clientIp = requestIp.getClientIp(req);
 
-app.use(
-	expressAttack({
-		throttles: [ throttleByIp ]
-	})
-);
+// 	return {
+// 		key: clientIp,
+// 		limit: 50,
+// 		period: 300
+// 	};
+// }
+
+// app.use(
+// 	expressAttack({
+// 		throttles: [ throttleByIp ]
+// 	})
+// );
 
 app.use('/api/expenses', expense_routes);
 app.use('/api/users', user_routes);

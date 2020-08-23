@@ -8,6 +8,14 @@
 	src: url("/fonts/beyond_the_mountains.otf");
 }
 
+@import './size/width.scss';
+@import './size/height.scss';
+@import './spacing/margin.scss';
+@import './alignment/text-align.scss';
+@import './elements/button.scss';
+@import './size/font-size.scss';
+@import './alignment/flex.scss';
+
 $background_color: #272727;
 $content_bg_color: #272727;
 $font_color: white;

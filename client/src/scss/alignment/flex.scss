@@ -1,0 +1,48 @@
+$justify: "c" center, "s" flex-start, "r" flex-end, "b" space-between, "a" space-around, "e" space-evenly;
+$align: "c" center, "s" flex-start, "r" flex-end, "b" stretch, "b" baseline;
+
+@each $i in $justify {
+	.jc-#{nth($i, 1)} {
+		display: flex !important;
+		justify-content: nth($i, 2) !important;
+	}
+}
+
+@each $i in $align {
+	.ai-#{nth($i, 1)} {
+		display: flex;
+		align-items: nth($i, 2);
+	}
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+.column {
+	display: flex;
+	flex-direction: column;
+}
+.w {
+	display: flex;
+	flex-direction: column;
+}
+
+// .flex {
+// 	display: flex;
+
+// 	$justify-positions: (s: flex-start, e: flex-end, c: center, a: space-around, b: space-between, e: space-evenly);
+// 	$align-positions: (s: flex-start, e: flex-end, c: center, s: stretch, b: baseline);
+
+// 	@mixin just-align($name,$prop,$arr) {
+// 		@each $mod, $dir in $arr {
+// 			#{$name}-#{$mod} {
+// 				display: flex;
+// 				#{$prop}: #{$dir};
+// 			}
+// 		}
+// 	}
+
+// 	@include just-align('ai','align-items', $align-positions);
+// 	@include just-align('jc','justify-content', $justify-positions);
+// }

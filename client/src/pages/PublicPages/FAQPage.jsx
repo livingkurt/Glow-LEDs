@@ -79,15 +79,18 @@ const FAQPage = () => {
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Ordering Custom Products</h1>
-						{/* <h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
+						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								A 100% refundable deposit of $20 is required to hold your place in line and to be seen
-								for a consultation.
+								A single 100% refundable deposit of $20 is required to hold your place in line and to be
+								seen for a consultation.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								The total price will be $40, deposit included, and will include 10 custom diffuser caps
-								and 10 diffuser adapters.
+								The total price for a single design is $40. Any additional designs will be $35 if
+								purchased in the same order.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								This includes 10 custom diffuser caps per design and 10 diffuser adapters.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								As soon as you pay your deposit, please use the contact button and send us your ideas
@@ -102,10 +105,10 @@ const FAQPage = () => {
 								After consultation, a design will be drafted by us and prototypes will be made.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								At this point we will show you our results and if you wish to proceed, one final $20
-								payment will be required.
+								At this point we will show you our results and if you wish to proceed, the final payment
+								will be required.
 							</li>
-						</ul> */}
+						</ul>
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
