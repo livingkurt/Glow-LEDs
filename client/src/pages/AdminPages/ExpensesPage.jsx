@@ -180,7 +180,7 @@ const ExpensesPage = (props) => {
 										<td>{expense.category}</td>
 										<td>${expense.amount ? expense.amount.toFixed(2) : expense.amount}</td>
 										<td>{expense.card}</td>
-										<td>{expense.place_of_purchase}</td>
+										<td style={{ minWidth: '150px' }}>{expense.place_of_purchase}</td>
 										<td style={{ minWidth: '200px' }}>{expense.application}</td>
 										<td style={{ minWidth: '800px' }}>{expense.url}</td>
 										<td>
