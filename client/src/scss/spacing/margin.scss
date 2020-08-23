@@ -1,85 +1,85 @@
 // Margin px
 @for $i from 0 to 40 {
 	.m-#{$i}rem {
-		margin: $i + rem;
+		margin: $i + rem !important;
 	}
 }
 // Margin rem
 @for $i from 0 to 100 {
 	.m-#{$i}px {
-		margin: $i + px;
+		margin: $i + px !important;
 	}
 }
 // Top rem
 @for $i from 0 to 40 {
 	.mt-#{$i}rem {
-		margin-top: $i + rem;
+		margin-top: $i + rem !important;
 	}
 }
 // Top px
 @for $i from 0 to 100 {
 	.mt-#{$i}px {
-		margin-top: $i + px;
+		margin-top: $i + px !important;
 	}
 }
 // Bottom rem
 @for $i from 0 to 40 {
 	.mb-#{$i}rem {
-		margin-bottom: $i + rem;
+		margin-bottom: $i + rem !important;
 	}
 }
 // Bottom px
 @for $i from 0 to 100 {
 	.mb-#{$i}px {
-		margin-bottom: $i + px;
+		margin-bottom: $i + px !important;
 	}
 }
 // Left rem
 @for $i from 0 to 40 {
 	.ml-#{$i}rem {
-		margin-left: $i + rem;
+		margin-left: $i + rem !important;
 	}
 }
 // Left px
 @for $i from 0 to 100 {
 	.ml-#{$i}px {
-		margin-left: $i + px;
+		margin-left: $i + px !important;
 	}
 }
 // Right rem
 @for $i from 0 to 40 {
 	.mr-#{$i}rem {
-		margin-right: $i + rem;
+		margin-right: $i + rem !important;
 	}
 }
 // Right px
 @for $i from 0 to 100 {
 	.mr-#{$i}px {
-		margin-right: $i + px;
+		margin-right: $i + px !important;
 	}
 }
 // Horizontal rem
 @for $i from 0 to 40 {
 	.mh-#{$i}rem {
-		margin: 0, $i + rem;
+		margin: 0 $i + rem !important;
 	}
 }
 // Horizontal px
 @for $i from 0 to 100 {
 	.mh-#{$i}px {
-		margin: 0, $i + px;
+		margin: 0 $i + px !important;
 	}
 }
 // Vertical rem
 @for $i from 0 to 40 {
 	.mv-#{$i}rem {
-		margin: $i + rem, 0;
+		margin: $i + rem 0;
 	}
 }
 // Vertical px
 @for $i from 0 to 100 {
 	.mv-#{$i}px {
-		margin: $i + px, 0;
+		margin: $i + px 0;
 	}
 }
 

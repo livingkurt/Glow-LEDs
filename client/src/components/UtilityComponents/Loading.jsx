@@ -1,6 +1,7 @@
 // React
 import React from 'react';
 import { FlexContainer } from '../ContainerComponents';
+require('dotenv').config();
 // Components
 
 const Loading = (props) => {
@@ -14,7 +15,7 @@ const Loading = (props) => {
 		<div>
 			{props.loading ? (
 				<FlexContainer h_center column>
-					<img
+					{/* <img
 						src="https://cdn.filestackcontent.com/47roj3J6SPKXPROCeTok"
 						className="loading_gif"
 						alt="loading"
@@ -23,7 +24,9 @@ const Loading = (props) => {
 						src="https://cdn.filestackcontent.com/KMBcTNF6TQWFTHeaHY0S"
 						className="loading_png"
 						alt="loading"
-					/>
+					/> */}
+					<img src={process.env.PUBLIC_URL + '/loading.gif'} className="loading_gif" alt="loading" />
+					<img src={process.env.PUBLIC_URL + '/loading_overlay.png'} className="loading_png" alt="loading" />
 					{loading_message()}
 				</FlexContainer>
 			) : props.error ? (

@@ -5,7 +5,7 @@ export default (props: {
 	email: string;
 	order_number: string;
 	reason_for_contact: string;
-	content_type: string;
+	inspirational_pictures: Array<string>;
 	glover_name: string;
 	instagram_handle: string;
 	facebook_name: string;
@@ -34,7 +34,7 @@ export default (props: {
 
       <div>Reason For Contact: ${props.reason_for_contact}</div>
 
-      ${props.content_type ? `<div>Content Type: ${props.content_type}</div>` : `<div></div>`}
+     
 
       ${props.glover_name ? `<div>Glover Name: ${props.glover_name}</div>` : `<div></div>`}
 
@@ -45,6 +45,14 @@ export default (props: {
       ${props.song_id ? `<div>Song ID: ${props.song_id}</div>` : `<div></div>`}
 
       ${props.quote ? `<div>Quote: ${props.quote}</div>` : `<div></div>`}
-    </p>
+
+      ${props.inspirational_pictures ? `<div>Inspirational Pictures</div>` : `<div></div>`}
+      ${props.inspirational_pictures
+			? props.inspirational_pictures.map((picture: any) => {
+					let item = `<img style="width: 100%; height: auto;border-radius: 15px;margin-right: 10px" src=${picture}>`;
+					return item;
+				})
+			: `<div></div>`}
+      </p>
 	`;
 };

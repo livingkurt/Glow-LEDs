@@ -6,7 +6,8 @@ import { validate_contact } from '../../utils/helper_functions';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 import { humanize } from '../../utils/helper_functions';
-// import "./form.css";
+import ReactFilestack from 'filestack-react';
+require('dotenv').config();
 
 const ContactPage = (props) => {
 	const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const ContactPage = (props) => {
 	const [ facebook_name, set_facebook_name ] = useState('');
 	const [ glover_name, set_glover_name ] = useState('');
 	const [ quote, set_quote ] = useState('');
-	const [ content_type, set_content_type ] = useState('');
+	const [ inspirational_pictures, set_inspirational_pictures ] = useState([]);
 
 	useEffect(
 		() => {
@@ -88,7 +89,7 @@ const ContactPage = (props) => {
 					order_number,
 					reason,
 					message,
-					content_type,
+					inspirational_pictures,
 					glover_name,
 					instagram_handle,
 					facebook_name,
@@ -111,6 +112,14 @@ const ContactPage = (props) => {
 			document.getElementsByName('message').value = '';
 		}
 	};
+
+	const finishUploading = async (fsData) => {
+		const pictures = [];
+		const src = fsData.filesUploaded[0].url;
+		console.log(src);
+		set_inspirational_pictures((inspirational_pictures) => [ ...inspirational_pictures, src ]);
+	};
+	console.log(process.env.REACT_APP_FILESTACK_API);
 
 	return (
 		<div class="main_container">
@@ -235,46 +244,43 @@ const ContactPage = (props) => {
 						<label className="validation_text">{order_number_validations}</label>
 					</div>
 				)}
+				{[ 'custom_orders' ].includes(reason_for_contact) && (
+					<div className="full-width">
+						<label>Upload your Pictures</label>
+						<ReactFilestack
+							apikey={process.env.REACT_APP_FILESTACK_API}
+							customRender={({ onPick }) => (
+								<div>
+									<button class="button primary mv-10px" onClick={onPick}>
+										Upload image
+									</button>
+								</div>
+							)}
+							onSuccess={finishUploading}
+						/>
+						<FlexContainer>
+							{inspirational_pictures.map((picture) => {
+								return (
+									<img
+										style={{
+											width: '100%',
+											height: 'auto',
+											maxWidth: '150px',
+											maxHeight: '150px',
+											borderRadius: '15px',
+											marginRight: '10px'
+										}}
+										className="mv-10px"
+										src={picture}
+									/>
+								);
+							})}
+						</FlexContainer>
+					</div>
+				)}
 
 				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 					<div>
-						{/* <label>Type of Content</label>
-						<input
-							onChange={(e) => set_content_type(e.target.value)}
-							defaultValue={content_type}
-							value={content_type}
-							className="zoom_f form_input"
-							type="text"
-							name="content_type"
-							placeholder="Type of Content"
-						/> */}
-						{/* <label>Type of Content</label>
-
-						<select
-							onChange={(e) => set_content_type(e.target.value)}
-							defaultValue={content_type}
-							value={content_type}
-							className="form_input contact_dropdown"
-							name="content_type"
-							placeholder="----Click Here to Choose Reason----"
-						>
-							<option className="grey_option" disabled="disabled" selected="selected" value="">
-								----Click Here to Choose Reason----
-							</option>
-
-							<option className="options" value="lightshow">
-								Lightshow
-							</option>
-							<option className="options" value="returns">
-								Infinity Mirror
-							</option>
-							<option className="options" value="returns">
-								String Lights
-							</option>
-							<option className="options" value="returns">
-								Other
-							</option>
-						</select> */}
 						<FlexContainer wrap h_between styles={{ gap: '10px' }}>
 							<div style={{ width: '330px' }}>
 								<label>Instagram Handle</label>
