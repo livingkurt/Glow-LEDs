@@ -97,7 +97,9 @@ const Header = (props) => {
 						<Link to="/">
 							<FlexContainer>
 								<h1 className="glow_leds_text">Glow LEDs</h1>
-								<label style={{ color: '#9a9898' }}>™</label>
+								<label className="tm" style={{ color: '#9a9898' }}>
+									™
+								</label>
 							</FlexContainer>
 						</Link>
 					</FlexContainer>
