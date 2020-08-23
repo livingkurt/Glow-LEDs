@@ -173,22 +173,6 @@ const ProductPage = (props) => {
 										)}
 									</FlexContainer>
 								)}
-								{/* <FlexContainer>
-									<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
-									{product.sale_price !== 0 ? (
-										<label>
-											<del style={{ color: 'red' }}>
-												<label style={{ color: 'white' }}>
-													${product.price ? product.price.toFixed(2) : product.price}
-												</label>
-											</del>{' '}
-											<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
-											On Sale!
-										</label>
-									) : (
-										<label>${product.price ? product.price.toFixed(2) : product.price}</label>
-									)}
-								</FlexContainer> */}
 								<FlexContainer column>
 									<FlexContainer column styles={{ height: '100%' }}>
 										<div>

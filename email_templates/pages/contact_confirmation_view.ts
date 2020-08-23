@@ -40,8 +40,6 @@ export default (props: {
       
       <div>Reason For Contact: ${props.reason_for_contact}</div>
 
-      // ${props.inspirational_pictures ? `<div>Content Type: ${props.inspirational_pictures}</div>` : `<div></div>`}
-
       ${props.glover_name ? `<div>Glover Name: ${props.glover_name}</div>` : `<div></div>`}
 
       ${props.instagram_handle ? `<div>Instagram Handle: ${props.instagram_handle}</div>` : `<div></div>`}

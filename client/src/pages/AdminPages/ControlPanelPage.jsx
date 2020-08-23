@@ -45,6 +45,10 @@ const ControlPanelPage = (props) => {
 		[ expenses ]
 	);
 
+	// const month= ["January","February","March","April","May","June","July",
+	//           "August","September","October","November","December"];
+	const month = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
 	const initialize_chart = () => {
 		const expense_chartRef = chartRef.current.getContext('2d');
 
