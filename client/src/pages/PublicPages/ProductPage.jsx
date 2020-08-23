@@ -140,6 +140,7 @@ const ProductPage = (props) => {
 									/>
 								</div>
 							</FlexContainer>
+							<Slideshow product={product} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
 								<h1 class="product_title_side" styles={{ display: 'flex' }}>
 									{product.name}
@@ -149,6 +150,7 @@ const ProductPage = (props) => {
 										<Rating value={product.rating} text={product.numReviews + ' reviews'} />
 									</a>
 								</div>
+
 								{product.name === 'Custom Infinity Mirror' ? (
 									<h3 style={{ margin: 0, marginRight: 5 }}>
 										Price: $549.99 - $<i class="fas fa-arrow-up" />

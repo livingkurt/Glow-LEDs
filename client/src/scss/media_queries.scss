@@ -11,6 +11,9 @@
 	.alt_pictures_shown {
 		display: none !important;
 	}
+	.alt_pictures_shown_shown {
+		display: none !important;
+	}
 	.alt_pictures_hidden {
 		display: flex !important;
 	}
@@ -150,6 +153,12 @@
 	.embla__slide {
 		min-width: 30%;
 	}
+	.alt_pictures_shown_shown {
+		display: flex !important;
+	}
+	.alt_pictures_hidden {
+		display: none !important;
+	}
 }
 // @media only screen and (max-width: 950px) {
 // 	.embla {
@@ -158,6 +167,9 @@
 // 	.embla__slide {
 // 		min-width: 35%;
 // 	}
+// }
+// @media only screen and (max-width: 950px) {
+
 // }
 
 // @media only screen and (max-width: 950px) {
