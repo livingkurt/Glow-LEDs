@@ -109,7 +109,8 @@ const FAQPage = () => {
 							</li>
 
 							<li style={{ lineHeight: '25px' }}>
-								Processing and shipping times depend on how many orders are ahead of you. If you would like an estimate please reach out to us.
+								Processing and shipping times depend on how many orders are ahead of you. If you would
+								like an estimate please reach out to us.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								We respect others intellectual property. Any designs that are unique logos will not be

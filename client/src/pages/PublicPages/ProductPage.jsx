@@ -268,7 +268,7 @@ const ProductPage = (props) => {
 
 						<FlexContainer column styles={{ padding: '1rem' }}>
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
-							<p>{product.description}</p>
+							<p style={{ lineHeight: '30px' }}>{product.description}</p>
 							{/* <FlexContainer h_center>
 							<img
 								src="/gifs/product_gifs/BTSM/BTSM.gif"
