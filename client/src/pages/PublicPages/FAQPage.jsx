@@ -79,18 +79,19 @@ const FAQPage = () => {
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Ordering Custom Products</h1>
-						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
+						{/* <h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								A single 100% refundable deposit of $20 is required to hold your place in line and to be
-								seen for a consultation.
+								seen for a consultation. The deposit will be deducted from the total price.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								The total price for a single design is $40. Any additional designs will be $35 if
-								purchased in the same order.
+								The total price for a single design starts at $40. The price may vary based on the
+								intricacy of the design and materials used. If multiple designs are desired, you will
+								have to pay a similar price per design.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								This includes 10 custom diffuser caps per design and 10 diffuser adapters.
+								This includes 10 custom diffuser caps and 10 diffuser adapters.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								As soon as you pay your deposit, please use the contact button and send us your ideas
@@ -98,17 +99,28 @@ const FAQPage = () => {
 								address, phone number or social media username).
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								The $20 deposit is 100% refundable at this point if we determine we are unable to
-								produce what you are desiring or we are unable to come to an agreement.
+								A design will be drafted by us, price will be determined, prototypes will be made and we
+								will show you our results.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								After consultation, a design will be drafted by us and prototypes will be made.
+								If we determine we are unable to produce what you are desiring, or you are unsatisfied
+								with the results, we will refund your $20 deposit. If you wish to proceed, the final
+								payment will be required and we will ship them out to you.
+							</li>
+
+							<li style={{ lineHeight: '25px' }}>
+								Processing and shipping times depend on how many orders are ahead of you. If you would like an estimate please reach out to us.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								At this point we will show you our results and if you wish to proceed, the final payment
-								will be required.
+								We respect others intellectual property. Any designs that are unique logos will not be
+								redistributed without permission. Any common shapes or patterns may be promoted or
+								distributed on Glow-LEDs.com at a later date.
 							</li>
-						</ul>
+							<li style={{ lineHeight: '25px' }}>
+								If you have an idea for a common shape or pattern feel free to send it as a suggestion
+								and we may have it on the website in the near future!
+							</li>
+						</ul> */}
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>

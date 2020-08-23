@@ -23,8 +23,10 @@ const TermsPage = () => {
 					content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
 				/>
 			</MetaTags>
+
 			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
-			<p>
+
+			<p style={{ lineHeight: '30px' }}>
 				Prior to using this website- I fully agree to the terms set forth here: Under no circumstances will the
 				seller (Glow-LEDs.com hereby referred to as “Glow-LEDs.com” & all affiliates) be liable for any damages
 				or expenses by reason of use or sale of Glow-LEDs.com products. I understand that products sold on
@@ -47,16 +49,38 @@ const TermsPage = () => {
 				proceeding. I acknowledge that my email address will be added to the Glow-LEDs.com email list. In which,
 				occasional promotions and customer information details may be sent. I may unsubscribe at any time by
 				using the unsubscribe link in any email sent, or by contacting Glow-LEDs.com. Under no circumstances
-				will my email address be shared with any third party. I have carefully read this Agreement and Release
-				of Liability and fully understand its content. I understand that it provides a comprehensive release of
-				liability as to me, and all others to whom I may supply the equipment. This Agreement and Release of
-				Liability may not be added or altered except by the written agreement assigned by Glow-LEDs.com. It is
-				not intended to assert any claim or defense which applicable law prohibits. Rights of parties may vary
-				from state to state. By accessing the Glow-LEDs.com website you agree to the terms and conditions
-				outlined above. If you do not agree to these terms and conditions, please exit this site immediately. We
-				reserve the right to change, modify, add or remove portions of these terms at any time. If you continue
-				to use the site after we have posted changes to the terms, you have then inherently accepted those
-				terms. If you need to contact us, please use our contact form.
+				will my email address be shared with any third party.
+			</p>
+			{/* <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Custom Products</h2> */}
+			<ul style={{ padding: '0 18px' }}>
+				<li style={{ lineHeight: '30px' }}>
+					I understand that any Custom ordered products are the intellectual property of Glow-LEDs.com and may
+					be used, promoted or distributed at any time.
+				</li>
+			</ul>
+			{/* <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Featured Content</h2> */}
+			<ul style={{ padding: '0 18px' }}>
+				<li style={{ lineHeight: '30px' }}>
+					Any media, incuding videos or pictures, submitted to Glow-LEDs.com may be used on Glow-LEDS.com or
+					GLow LEDs social media to either entertain or promote.
+				</li>
+				<li style={{ lineHeight: '30px' }}>
+					Glow-LEDs.com will not distribute such media to third parties for any reason without prior consent
+					from submitter.
+				</li>
+			</ul>
+			{/* <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Agreement</h2> */}
+			<p style={{ lineHeight: '30px' }}>
+				I have carefully read this Agreement and Release of Liability and fully understand its content. I
+				understand that it provides a comprehensive release of liability as to me, and all others to whom I may
+				supply the equipment. This Agreement and Release of Liability may not be added or altered except by the
+				written agreement assigned by Glow-LEDs.com. It is not intended to assert any claim or defense which
+				applicable law prohibits. Rights of parties may vary from state to state. By accessing the Glow-LEDs.com
+				website you agree to the terms and conditions outlined above. If you do not agree to these terms and
+				conditions, please exit this site immediately. We reserve the right to change, modify, add or remove
+				portions of these terms at any time. If you continue to use the site after we have posted changes to the
+				terms, you have then inherently accepted those terms. If you need to contact us, please use our contact
+				form.
 			</p>
 		</div>
 	);
