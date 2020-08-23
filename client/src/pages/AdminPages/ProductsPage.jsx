@@ -113,7 +113,11 @@ const ProductsPage = (props) => {
 										key={product._id}
 										style={{ backgroundColor: product.hidden ? colors.hidden : '#626262' }}
 									>
-										<td>{product._id}</td>
+										<td>
+											<Link to={'/collections/all/products/' + product.pathname}>
+												{product._id}
+											</Link>
+										</td>
 										<td>
 											{product.hidden ? (
 												<i className="fas fa-eye-slash" />
