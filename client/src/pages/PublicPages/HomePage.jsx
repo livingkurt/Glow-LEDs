@@ -49,7 +49,7 @@ const HomePage = (props) => {
 					<h1 style={{ textAlign: 'center' }}>Custom Diffuser Caps Now Officially Available!!</h1>
 				</FlexContainer>
 
-				<Link to="/collections/all/products/custom_diffuser_caps">
+				<Link to="/collections/all/products/custom_diffuser_caps_deposit">
 					<img
 						style={{ borderRadius: '10px', width: '100%' }}
 						src="/images/optimized_images/promo_images/img_9932_home_page_optimized.jpg"
@@ -70,7 +70,7 @@ const HomePage = (props) => {
 					for full details 😊
 				</p>
 				<FlexContainer h_center>
-					<Link to="/collections/all/products/custom_diffuser_caps">
+					<Link to="/collections/all/products/custom_diffuser_caps_deposit">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Custom Diffuser Caps</h2>
 						</button>
