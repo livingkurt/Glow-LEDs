@@ -5,6 +5,7 @@ export {};
 const express = require('express');
 import Order from '../models/order';
 const { isAuth, isAdmin } = require('../util');
+require('dotenv').config();
 const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 const router = express.Router();
