@@ -44,127 +44,41 @@ const HomePage = (props) => {
 					Welcome to Glow-LEDs
 				</h1>
 			</FlexContainer>
-			<FlexContainer h_center>
-				<h1> Featured Content </h1>
-			</FlexContainer>
-
-			<div className="home_page_divs">
-				<FlexContainer h_center column>
-					<h1 style={{ textAlign: 'center' }}>StarStream TuT Light Show</h1>
-					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out StarStream TuT with the Gyrosphere Diffuser Caps!
-					</p>
-					{/* <p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
-						"If it doesn't work the first time, try to turn it off and then leave it off" -Keif
-					</p> */}
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Follow him @ Mckinnley Riojas on Facebook and @starstreamtut on Instagram
-					</p>
-					<Link to="/collections/all/products/gyrosphere_diffuser_caps">
-						<FlexContainer h_center column>
-							<div className="p_descriptions" style={{ textAlign: 'center' }}>
-								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-									Gyrosphere Diffuser Caps
-								</button>
-							</div>
-						</FlexContainer>
-					</Link>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
-					<div className="iframe-container">
-						<iframe
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/ba39K2M4b7E?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</FlexContainer>
-				{/* <img
-				style={{ borderRadius: '10px', width: '100%' }}
-				src="/images/optimized_images/promo_images/img_0792_1_optimized.jpg"
-				alt="promo"
-			/> */}
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Did you know that Glow LEDs has a featured section on the website? It's under the community tab!
-				</p>
-				<Link to="/pages/featured">
-					<FlexContainer h_center column>
-						<div className="p_descriptions" style={{ textAlign: 'center' }}>
-							<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-								Featured Content
-							</button>
-						</div>
-					</FlexContainer>
-				</Link>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					We will be posting lightshows, product demmonstrations and much more every wednesday on our social
-					media and our website to show our appreciation for all you lovers of lights.
-				</p>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Check out this weeks lightshow!
-				</p>
-				{/* <FlexContainer h_center>
-				<Link to="/collections/all/products/honey_comb_diffuser_caps">
-					<button className="button primary" style={{ background: 'transparent' }}>
-						<h2>Shop Honey Comb Diffuser Caps</h2>
-					</button>
-				</Link>
-			</FlexContainer> */}
-			</div>
-
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1> Introducing: Honey Comb Diffuser Caps </h1>
+					<h1 style={{ textAlign: 'center' }}>Custom Diffuser Caps Now Officially Available!!</h1>
 				</FlexContainer>
 
-				<img
-					style={{ borderRadius: '10px', width: '100%' }}
-					src="/images/optimized_images/promo_images/img_0792_1_optimized.jpg"
-					alt="promo"
-				/>
+				<Link to="/collections/all/products/custom_diffuser_caps">
+					<img
+						style={{ borderRadius: '10px', width: '100%' }}
+						src="/images/optimized_images/promo_images/img_9932_home_page_optimized.jpg"
+						alt="promo"
+					/>
+				</Link>
+				<FlexContainer h_center>
+					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
+						Give your shows a new Glow with Custom Diffuser Caps
+					</h2>
+				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Throw a show like your a bee in a hive buzzin' around.
+					Our most highly requested item is here! 🎊 You can now order CUSTOM DIFFUSER CAPS! 🔥 Imagine
+					throwing a light show with your own logo, teams logo, or favorite symbol or pattern as the trails
+					😱💀 The sky is the limit here and we cannot wait to see what you come up with! We will take orders
+					as first come, first served so be sure to secure your spot in line ASAP to receive the shortest wait
+					time 🕑 The process is a little different so be sure to check out the FAQ page under the Support tab
+					for full details 😊
 				</p>
 				<FlexContainer h_center>
-					<Link to="/collections/all/products/honey_comb_diffuser_caps">
+					<Link to="/collections/all/products/custom_diffuser_caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Honey Comb Diffuser Caps</h2>
+							<h2>Shop Custom Diffuser Caps</h2>
 						</button>
 					</Link>
 				</FlexContainer>
-				{/* <FlexContainer h_center>
-				<h1>24 Hour BOGO Sale</h1>
-			</FlexContainer>
-			<FlexContainer h_center>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					For 24hrs only GET A FREE SET OF HEART DIFFUSER CAPS WITH ANY PURCHASE OF DIFFUSER CAPS ❤😱 No code
-					necessary! Simply write in the order notes that you'd like the free set of Heart Diffuser Caps and
-					they're all yours 😁 Offer good until 5pm CST 8/15/2020 And please don't forget to order Diffuser
-					Adapters, you will need a set to use these babies
-				</p>
-			</FlexContainer>
-			<FlexContainer h_center v_i_center>
-				<img
-					style={{
-						borderRadius: '10px',
-
-						width: '100%'
-					}}
-					src="/images/optimized_images/promo_images/1_img_9836_optimized.png"
-					alt="promo"
-				/>
-			</FlexContainer> */}
-				<FlexContainer h_center />
 			</div>
-			{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
-				Buy any set of diffuser caps and get a free set of heart diffuser caps in your order!
-			</p> */}
 			<FlexContainer h_center>
-				<h1>From a Glover that just wants the world to stay lit</h1>
+				<h1 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h1>
 			</FlexContainer>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
@@ -176,7 +90,7 @@ const HomePage = (props) => {
 			</p>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1>Diffuser Caps</h1>
+					<h1 style={{ textAlign: 'center' }}>Diffuser Caps</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
@@ -208,7 +122,7 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1>Frosted Diffusers</h1>
+					<h1 style={{ textAlign: 'center' }}>Frosted Diffusers</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
@@ -239,7 +153,7 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1>Infinity Mirrors</h1>
+					<h1 style={{ textAlign: 'center' }}>Infinity Mirrors</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
