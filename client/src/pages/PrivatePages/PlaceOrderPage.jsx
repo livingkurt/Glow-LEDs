@@ -404,7 +404,7 @@ const PlaceOrderPage = (props) => {
 								// token={(token) => console.log(token)}
 								stripeKey={process.env.REACT_APP_STRIPE_KEY}
 							>
-								<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
+								<button className="button primary full-width" style={{ marginBottom: '12px' }}>
 									Pay for Order
 								</button>
 							</StripeCheckout>
