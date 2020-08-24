@@ -97,7 +97,7 @@ export default (props: {
         </div>
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
           <h1 style="box-sizing: border-box;font-family: Helvetica;">Payment</h1>
-          <div style="box-sizing: border-box;">Payment Method: paypal</div>
+          <div style="box-sizing: border-box;">Payment Method: stripe</div>
           <div style="box-sizing: border-box; border-top: 0.1rem solid white;width: 100%;">
             <label style="margin-top: 10px;box-sizing: border-box;"><strong>${props.paid}</strong></label>
           </div>
