@@ -115,7 +115,7 @@ router.put(
 	async (
 		req: {
 			params: { id: any };
-			body: { paymentResult: any; payerID: any; orderID: any; paymentID: any; token: any };
+			body: { token: any };
 		},
 		res: {
 			send: (arg0: { message: string; order: any }) => void;
@@ -125,25 +125,25 @@ router.put(
 		}
 	) => {
 		console.log(req.body);
-		console.log({ Pay: req.body.paymentResult.id });
+		console.log({ Pay: req.body.token });
 		const order = await Order.findById(req.params.id);
 		const charge = await stripe.charges.create({
 			amount: (order.totalPrice * 100).toFixed(0),
 			currency: 'usd',
 			description: `Order Paid`,
-			source: req.body.paymentResult.id
+			source: req.body.token.id
 		});
-		if (order) {
+		if (charge) {
 			order.isPaid = true;
 			order.paidAt = Date.now();
-			order.payment = {
-				paymentMethod: 'paypal',
-				paymentResult: {
-					payerID: req.body.payerID,
-					orderID: req.body.orderID,
-					paymentID: req.body.paymentID
-				}
-			};
+			// order.payment = {
+			// 	paymentMethod: 'paypal',
+			// 	paymentResult: {
+			// 		payerID: req.body.payerID,
+			// 		orderID: req.body.orderID,
+			// 		paymentID: req.body.paymentID
+			// 	}
+			// };
 			const updatedOrder = await order.save();
 			res.send({ message: 'Order Paid.', order: updatedOrder });
 		} else {

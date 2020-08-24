@@ -154,14 +154,14 @@ const OrderPage = (props) => {
 		empty_cart();
 	}, []);
 
-	const handleSuccessPayment = (paymentResult, token) => {
-		console.log('handleSuccessPayment');
-		dispatch(payOrder(order, paymentResult, user_data, token));
-		set_payment_loading(false);
-		// if (successPay) {
-		props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-		// }
-	};
+	// const handleSuccessPayment = (token) => {
+	// 	console.log('handleSuccessPayment');
+	// 	dispatch(payOrder(order, user_data, token));
+	// 	set_payment_loading(false);
+	// 	// if (successPay) {
+	// 	props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
+	// 	// }
+	// };
 
 	const empty_cart = () => {
 		console.log(cartItems);
@@ -368,36 +368,30 @@ const OrderPage = (props) => {
 							className="placeorder-actions-payment"
 							style={{ display: 'flex', justifyContent: 'center' }}
 						>
-							<Loading loading={loadingPay} error={errorPay}>
-								{/* {loadingPay ? (
+							{/* <Loading loading={loadingPay} error={errorPay}> */}
+							{/* {loadingPay ? (
 								<FlexContainer h_center>
 									<h2>Finishing Payment..</h2>
 									<img src="loading.gif" className="loading_gif" alt="loading" />
 									<img src="loading_overlay.png" className="loading_png" alt="loading" />
 								</FlexContainer>
 							)} */}
-								{/* <div style={{ display: paypal_state }}> */}
-								{!order.isPaid && (
+							{/* {!order.isPaid && (
 									// <PaypalButton amount={order.totalPrice} onSuccess={handleSuccessPayment} />
 									<StripeCheckout
 										name="Glow LEDs"
-										// description={order.orderItems.map((item) => {
-										// 	return `${item.qty}x - ${item.name}`;
-										// })}
-										// description={`Pay for Order: ${order._id}`}
 										description={`Pay for Order`}
 										amount={order.totalPrice * 100}
 										token={(token) => handleSuccessPayment(token)}
-										// token={(token) => console.log(token)}
 										stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									>
 										<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
 											Pay for Order
 										</button>
 									</StripeCheckout>
-								)}
-								{/* </div> */}
-							</Loading>
+								)} */}
+							{/* </div> */}
+							{/* </Loading> */}
 						</li>
 						{/* {!order.isPaid && (
 							<label htmlFor="order_note">If paypal button doesn't show, refresh page.</label>

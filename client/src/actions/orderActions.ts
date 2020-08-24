@@ -27,17 +27,20 @@ import {
 } from '../constants/orderConstants';
 import Cookie from 'js-cookie';
 
-const createOrder = (order: {
-	orderItems: object;
-	shipping: object;
-	payment: any;
-	itemsPrice: number;
-	shippingPrice: number;
-	taxPrice: number;
-	totalPrice: number;
-	user_data: object;
-	order_note: string;
-}) => async (
+const createOrder = (
+	order: {
+		orderItems: object;
+		shipping: object;
+		payment: any;
+		itemsPrice: number;
+		shippingPrice: number;
+		taxPrice: number;
+		totalPrice: number;
+		user_data: object;
+		order_note: string;
+	},
+	token: any
+) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -52,6 +55,14 @@ const createOrder = (order: {
 		});
 		console.log({ createOrder_newOrder: newOrder });
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+		const { data } = await axios.put(
+			'/api/orders/' + newOrder._id + '/pay',
+			{ token },
+			{
+				headers: { Authorization: 'Bearer ' + user_data.token }
+			}
+		);
+		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		// axios.post('/api/emails/order', { ...newOrder, user_data });
 		axios.post('/api/emails/sale', { ...newOrder, user_data });
 		Cookie.remove('shipping');
@@ -108,16 +119,16 @@ const detailsOrder = (orderId: string) => async (
 	}
 };
 
-const payOrder = (order: { _id: string }, paymentResult: any, user_data: any, token: any) => async (
+const payOrder = (order: { _id: string }, user_data: any, token: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentResult });
+		dispatch({ type: ORDER_PAY_REQUEST, payload: token });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.put(
 			'/api/orders/' + order._id + '/pay',
-			{ paymentResult, user_data, token },
+			{ user_data, token },
 			{
 				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}

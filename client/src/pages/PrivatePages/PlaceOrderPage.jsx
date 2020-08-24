@@ -8,6 +8,7 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import Cookie from 'js-cookie';
+import StripeCheckout from 'react-stripe-checkout';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -17,6 +18,8 @@ const PlaceOrderPage = (props) => {
 	const { loading, success, error, order } = orderCreate;
 	console.log({ shipping });
 
+	const orderPay = useSelector((state) => state.orderPay);
+	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
 	// if (!shipping.address) {
 	// 	props.history.push('/secure/checkout/shipping');
 	// } else if (!payment.paymentMethod) {
@@ -155,28 +158,32 @@ const PlaceOrderPage = (props) => {
 		console.log({ shippingPrice });
 	};
 
-	const placeOrderHandler = () => {
+	const placeOrderHandler = (token) => {
 		// create an order
 		console.log({ shippingPrice });
 		dispatch(
-			createOrder({
-				orderItems: cartItems,
-				shipping,
-				payment,
-				itemsPrice,
-				shippingPrice,
-				taxPrice,
-				totalPrice,
-				user_data,
-				order_note
-			})
+			createOrder(
+				{
+					orderItems: cartItems,
+					shipping,
+					payment,
+					itemsPrice,
+					shippingPrice,
+					taxPrice,
+					totalPrice,
+					user_data,
+					order_note
+				},
+				token
+			)
 		);
 	};
 
 	useEffect(
 		() => {
 			if (success) {
-				props.history.push('/secure/account/order/' + order._id);
+				// props.history.push('/secure/account/order/' + order._id);
+				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
 			}
 		},
 		[ success ]
@@ -198,14 +205,14 @@ const PlaceOrderPage = (props) => {
 		}
 	};
 
-	const handleSuccessPayment = (paymentResult, token) => {
-		console.log('handleSuccessPayment');
-		dispatch(payOrder(order, paymentResult, user_data, token));
-		set_payment_loading(false);
-		// if (successPay) {
-		props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-		// }
-	};
+	// const handleSuccessPayment = (paymentResult, token) => {
+	// 	console.log('handleSuccessPayment');
+	// 	dispatch(payOrder(order, paymentResult, user_data, token));
+	// 	set_payment_loading(false);
+	// 	// if (successPay) {
+	// 	props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
+	// 	// }
+	// };
 
 	return (
 		<div>
@@ -385,11 +392,22 @@ const PlaceOrderPage = (props) => {
 						{console.log({ shipping })}
 						{shipping &&
 						shipping.hasOwnProperty('first_name') && (
-							<li>
-								<button className="button primary full-width" onClick={placeOrderHandler}>
-									Start Payment Process
+							<StripeCheckout
+								name="Glow LEDs"
+								// description={order.orderItems.map((item) => {
+								// 	return `${item.qty}x - ${item.name}`;
+								// })}
+								// description={`Pay for Order: ${order._id}`}
+								description={`Pay for Order`}
+								amount={totalPrice.toFixed(2) * 100}
+								token={(token) => placeOrderHandler(token)}
+								// token={(token) => console.log(token)}
+								stripeKey={process.env.REACT_APP_STRIPE_KEY}
+							>
+								<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
+									Pay for Order
 								</button>
-							</li>
+							</StripeCheckout>
 						)}
 
 						<FlexContainer column>
