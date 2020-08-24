@@ -58,10 +58,18 @@ const CartPage = (props) => {
 		const categories = cartItems.map((cartItem) => {
 			return cartItem.category;
 		});
-		if (categories.includes('caps')) {
-			console.log('Caps');
-			if (!categories.includes('diffuser_adapters')) {
-				return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
+		const names = cartItems.map((cartItem) => {
+			return cartItem.name;
+		});
+		if (
+			!categories.includes('Custom Diffuser Caps Final Payment') ||
+			!categories.includes('Custom Diffuser Caps Deposit')
+		) {
+			if (categories.includes('caps')) {
+				console.log('Caps');
+				if (!categories.includes('diffuser_adapters')) {
+					return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
+				}
 			}
 		}
 	};

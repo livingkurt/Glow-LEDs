@@ -122,6 +122,7 @@ const payOrder = (order: { _id: string }, paymentResult: any, user_data: any) =>
 				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
 		);
+		const res = await axios.post('api/stripe', userInfo.token);
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		axios.post('/api/emails/paid', { ...order, user_data });
 		axios.post('/api/emails/orderpaid', { ...order, user_data });

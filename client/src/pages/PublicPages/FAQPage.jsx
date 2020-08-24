@@ -82,44 +82,65 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								A single 100% refundable deposit of $10 is required to hold your place in line and to be
-								seen for a consultation. The deposit will be deducted from the total price.
+								A single 100% <label style={{ marginRight: '5px' }}>💯</label>️ refundable deposit{' '}
+								<label style={{ marginRight: '5px' }}>💸</label>️of $9.99 is required to hold your place
+								in line and to be seen for a consultation{' '}
+								<label style={{ marginRight: '5px' }}>👨‍⚕️</label>️. The deposit will be deducted from
+								the total price.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								The total price for a single design starts at $40. The price may vary based on the
-								intricacy of the design and materials used. If multiple designs are desired, you will
-								have to pay a similar price per design.
+								The total price <label style={{ marginRight: '5px' }}>💸</label>️ for a single design
+								starts at $40. The price may vary based on the intricacy of the design and materials
+								used <label style={{ marginRight: '5px' }}>🧐</label>️. If multiple designs are desired,
+								you will have to pay a similar price per design{' '}
+								<label style={{ marginRight: '5px' }}>✨</label>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								This includes 10 custom diffuser caps and 10 diffuser adapters.
+								This includes 10 custom diffuser caps <label style={{ marginRight: '5px' }}>🧢</label>️
+								and 10 diffuser adapters.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								As soon as you pay your deposit, please use the contact button and send us your ideas
-								and inspirational pictures. also include your preferred method of contact (an e-mail
-								address, phone number or social media username).
+								As soon as you pay your deposit <label style={{ marginRight: '5px' }}>💸</label>️,
+								please use the contact button <label style={{ marginRight: '5px' }}>📞</label>️ and send{' '}
+								us <label style={{ marginRight: '5px' }}>📨</label>️ your ideas and inspirational
+								pictures <label style={{ marginRight: '11px' }}>🌈</label>️. Also include your preferred
+								method of contact (an e-mail address <label style={{ marginRight: '5px' }}>📧 </label>️,
+								phone number <label style={{ marginRight: '5px' }}>📞</label>️ or social media username{' '}
+								<i class="fab fa-facebook" /> <i class="fab fa-instagram" />.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								A design will be drafted by us, price will be determined, prototypes will be made and we
-								will show you our results.
+								A design will be drafted by us 📝, price will be determined, prototypes will be made{' '}
+								<label style={{ marginRight: '5px' }}>🏗️</label>️ and we will show you our results{' '}
+								<label style={{ marginRight: '5px' }}>🔥</label>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								If we determine we are unable to produce what you are desiring, or you are unsatisfied
-								with the results, we will refund your $10 deposit. If you wish to proceed, the final
-								payment will be required and we will ship them out to you.
+								with the results, we will refund your $10 deposit{' '}
+								<label style={{ marginRight: '5px' }}>💸</label>️. If you wish to proceed, the final
+								payment will be required and we will ship them out to you{' '}
+								<label style={{ marginRight: '5px' }}>🚚</label>️.
 							</li>
 
 							<li style={{ lineHeight: '25px' }}>
-								Processing and shipping times depend on how many orders are ahead of you. If you would
-								like an estimate please reach out to us.
+								Processing <label style={{ marginRight: '5px' }}>📦</label>️ and shipping times{' '}
+								<label style={{ marginRight: '5px' }}>🚚</label>️ depend on how many orders are ahead of
+								you <label style={{ marginRight: '5px' }}>⏩</label>️. If you would like an estimate 📝
+								please reach out to us <label style={{ marginRight: '5px' }}>📞</label>.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								We respect others intellectual property. Any designs that are unique logos will not be
-								redistributed without permission. Any common shapes or patterns may be promoted or
-								distributed on Glow-LEDs.com at a later date.
+								We respect others intellectual property{' '}
+								<label style={{ marginRight: '5px' }}>🏘️</label>. Any designs that are unique logos{' '}
+								<label style={{ marginRight: '5px' }}></label>
+								will not be redistributed without permission{' '}
+								<label style={{ marginRight: '5px' }}>🚫</label>. Any common shapes or patterns{' '}
+								<label style={{ marginRight: '5px' }}>▲●✚</label> may be promoted or distributed on
+								Glow-LEDs.com at a later date.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								If you have an idea for a common shape or pattern feel free to send it as a suggestion
-								and we may have it on the website in the near future!
+								If you have an idea for a common shape or pattern{' '}
+								<label style={{ marginRight: '5px' }}>▲●✚</label> feel free to send it{' '}
+								<label style={{ marginRight: '5px' }}>📦</label>️ as a suggestion and we may have it on
+								the website in the near future <label style={{ marginRight: '5px' }}>🔮</label>️!
 							</li>
 						</ul>
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
