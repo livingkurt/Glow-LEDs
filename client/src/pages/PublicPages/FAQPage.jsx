@@ -82,11 +82,10 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								A single 100% <label style={{ marginRight: '5px' }}>💯</label>️ refundable deposit{' '}
-								<label style={{ marginRight: '5px' }}>💸</label>️of $9.99 is required to hold your place
-								in line and to be seen for a consultation{' '}
-								<label style={{ marginRight: '5px' }}>👨‍⚕️</label>️. The deposit will be deducted from
-								the total price.
+								A single 100% refundable deposit of $9.99{' '}
+								<label style={{ marginRight: '5px' }}>💸</label>️ is required to hold your place in line
+								and to be seen for a consultation <label style={{ marginRight: '5px' }}>👨‍⚕️</label>️.
+								The deposit will be deducted from the total price.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								The total price <label style={{ marginRight: '5px' }}>💸</label>️ for a single design
@@ -102,10 +101,10 @@ const FAQPage = () => {
 							<li style={{ lineHeight: '25px' }}>
 								As soon as you pay your deposit <label style={{ marginRight: '5px' }}>💸</label>️,
 								please use the contact button <label style={{ marginRight: '5px' }}>📞</label>️ and send{' '}
-								us <label style={{ marginRight: '5px' }}>📨</label>️ your ideas and inspirational
-								pictures <label style={{ marginRight: '11px' }}>🌈</label>️. Also include your preferred
-								method of contact (an e-mail address <label style={{ marginRight: '5px' }}>📧 </label>️,
-								phone number <label style={{ marginRight: '5px' }}>📞</label>️ or social media username{' '}
+								us your ideas and inspirational pictures{' '}
+								<label style={{ marginRight: '11px' }}>🌈</label>️. Also include your preferred method
+								of contact (an e-mail address <label style={{ marginRight: '5px' }}>📧 </label>️, phone
+								number <label style={{ marginRight: '5px' }}>📞</label>️ or social media username{' '}
 								<i class="fab fa-facebook" /> <i class="fab fa-instagram" />.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
@@ -129,18 +128,20 @@ const FAQPage = () => {
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								We respect others intellectual property{' '}
-								<label style={{ marginRight: '5px' }}>🏘️</label>. Any designs that are unique logos{' '}
-								<label style={{ marginRight: '5px' }}></label>
+								<label style={{ marginRight: '5px' }}>🏘️</label>. Any designs that are trademarked or
+								Copyrighted <label style={{ marginRight: '5px' }}></label>
 								will not be redistributed without permission{' '}
-								<label style={{ marginRight: '5px' }}>🚫</label>. Any common shapes or patterns{' '}
-								<label style={{ marginRight: '5px' }}>▲●✚</label> may be promoted or distributed on
-								Glow-LEDs.com at a later date.
+								<label style={{ marginRight: '5px' }}>🚫</label>.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								If you have an idea for a common shape or pattern{' '}
-								<label style={{ marginRight: '5px' }}>▲●✚</label> feel free to send it{' '}
-								<label style={{ marginRight: '5px' }}>📦</label>️ as a suggestion and we may have it on
-								the website in the near future <label style={{ marginRight: '5px' }}>🔮</label>️!
+								Sometimes your custom requests are already in our make list 📝. When this happens, you
+								may see your design idea come up for sale on the website later on{' '}
+								<label style={{ marginRight: '5px' }}>🛍</label>️. While we can't guarantee you'll be
+								the only glover to receive this set, we're excited to make you the first{' '}
+								<label style={{ marginRight: '5px' }}>😄</label>️! If you have an idea for a common
+								shape or pattern feel free to send it <label style={{ marginRight: '5px' }}>📦</label>️
+								as a suggestion and we may have it on the website in the near future{' '}
+								<label style={{ marginRight: '5px' }}>🔮</label>️!
 							</li>
 						</ul>
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
