@@ -42,63 +42,48 @@ export default (props: {
  
   <div class="placeorder" style="display: flex;flex-wrap: wrap;justify-content: space-between;color: white;">
       <div class="placeorder-info" style="box-sizing: border-box;flex: 3 1 60rem;">
-        <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem;margin: 1rem;">
+        <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem;margin: 1rem;  margin-bottom: 0;">
           <div style="display: flex;justify-content: space-between; flex-direction: column;">
             <div style="display: block;flex-direction: column;box-sizing: border-box;">
               <h1 style="display: flex; width: 100%; font-size: 30px;margin-top: 0px; margin-bottom: 0px;box-sizing: border-box;font-family: Helvetica;">
                 ${props.title}</h1>
-                <div style=" width: 100%;">
-                  ${props.title === 'Order Not Complete'
-						? `<div style=" width: 100%;"> 
-                    <h3 >You have placed an order but have yet to pay.</h3>
-                    <h3 > When we recieve the payment we will start preparing your package for shipment. Thank you for your support!</h3>
-                    <button style="background-color: #8a8a8a;border-radius: 5px;background-color: #676767;margin: 0 auto; margin-bottom: 10px;font-weight: bold;border: 0px;color: white;text-decoration: none;padding: 15px;box-sizing: border-box;font-size: 1.6rem;"><a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"href="${process
-						.env.NODE_ENV === 'production'
-						? 'http://www.glow-leds.com'
-						: 'http://localhost:3000'}/secure/account/order/${props._id}">Complete Order</a></button>
-        <h3>If the payment button does not show, please refresh the page.</h3>
-        <h3>Do you need assistance completing your order?</h3>
-                    <button style="background-color: #8a8a8a;border-radius: 5px;background-color: #676767;margin: 0 auto; margin-bottom: 10px;font-weight: bold;border: 0px;color: white;text-decoration: none;padding: 15px;box-sizing: border-box;font-size: 1.6rem;"><a style="font-size: 20px;color: white;text-decoration: none;box-sizing: border-box;"
-            href="${process.env.NODE_ENV === 'production'
-				? 'http://www.glow-leds.com'
-				: 'http://localhost:3000'}/pages/pages/contact/order_issues">Contact</a></button>
-                  </div>`
-						: `<div></div>`}
-                </div>
-              <div class="  display: flex;  flex-wrap: wrap;" style=" width: 100%;>
-
-                <h2 style="font-size: 20px;margin: 0px;box-sizing: border-box;font-family: Helvetica;">OrderNumber: </h2>
-                <a href="${process.env.NODE_ENV === 'production'
-					? 'http://glow-leds.com'
-					: 'http://localhost:3000'}/secure/account/order/${props._id}"
-                  style="color: white;text-decoration: none;box-sizing: border-box;">${props._id}</a>
+                <div style="  display: flex;  flex-wrap: wrap; ">
+                <h3 style=" box-sizing: border-box;"><strong>Date: </strong> ${format_date_display(props.createdAt)}
+                </h3>
               </div>
-            <div style="  display: flex;  flex-wrap: wrap;>
-              <h2 style="box-sizing: border-box;">Date</h2>
-              <div style="box-sizing: border-box;">${format_date_display(props.createdAt)}</div>
-            </div>
-              <h1 style="box-sizing: border-box;font-family: Helvetica;">Shipping</h1>
-
-              <div style=" width: 100%;">
-
-                <div style="box-sizing: border-box;">${props.shipping.first_name} ${props.shipping.last_name}
-                </div>
-                <div style="box-sizing: border-box;">${props.shipping.address}</div>
-                <div style="box-sizing: border-box;">${props.shipping.city}, ${props.shipping.state}
-                  ${props.shipping.postalCode} ${props.shipping.country}</div>
-                  ${props.shipping.international
-						? `<div style="box-sizing: border-box;">International</div>`
-						: `<div></div>`}
-                  
-                <div style="box-sizing: border-box; text-decoration: none; color: white;">${props.shipping.email}</div>
-                <div
-                style="    border-top: 0.1rem solid white;width: 100%;">
-                <label style="margin-top: 10px;box-sizing: border-box;"><strong>${props.shipped}</strong></label>
+              <div style=" display: flex;  flex-wrap: wrap; width: 100%;">
+                <h3 style="margin: 0px; box-sizing: border-box;font-family: Helvetica;"><strong>Order
+                    Number: </strong><a href="${process.env.NODE_ENV === 'production'
+						? 'http://glow-leds.com'
+						: 'http://localhost:3000'}/secure/account/order/${props._id}"
+                    style="color: white;text-decoration: none;box-sizing: border-box;">${props._id}</a></h3>
+              </div>
+              
               </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="placeorder-action">
+      <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
+        <h1 style="box-sizing: border-box;font-family: Helvetica;  margin-top: 0;">Shipping</h1>
+
+        <div style=" width: 100%;">
+
+          <div style="box-sizing: border-box;">${props.shipping.first_name} ${props.shipping.last_name}
+          </div>
+          <div style="box-sizing: border-box;">${props.shipping.address}</div>
+          <div style="box-sizing: border-box;">${props.shipping.city}, ${props.shipping.state}
+            ${props.shipping.postalCode} ${props.shipping.country}</div>
+          ${props.shipping.international ? `<div style="box-sizing: border-box;">International</div>` : `<div></div>`}
+
+          <div style="box-sizing: border-box; text-decoration: none; color: white;">${props.shipping.email}</div>
+          <div style="    border-top: 0.1rem solid white;width: 100%;">
+            <label style="margin-top: 10px;box-sizing: border-box;"><strong>${props.shipped}</strong></label>
+          </div>
+        </div>
+      </div>
+    </div>
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
           <ul class="cart-list-container"
             style="margin-top: 0px;box-sizing: border-box;padding: 0;list-style-type: none;margin-right: 10px;">
@@ -145,6 +130,10 @@ export default (props: {
 				return item_item;
 			})}
           </ul>
+          <div style="display: flex;flex-direction: column;box-sizing: border-box;">
+          <div for="order_note" style="box-sizing: border-box;">Order Note: </div>
+          <div style="box-sizing: border-box;">${props.order_note}</div>
+        </div>
         </div>
       </div>
       <div class="placeorder-action"
@@ -167,37 +156,22 @@ export default (props: {
             <div style="box-sizing: border-box;">Tax</div>
             <div style="box-sizing: border-box;">$${props.taxPrice.toFixed(2)}</div>
           </li>
-          <li
-            style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
-            <div style="box-sizing: border-box;">Order Total</div>
-            <div style="box-sizing: border-box;">$${props.totalPrice.toFixed(2)}</div>
-          </li>
-          <li class="placeorder-actions-payment"
-            style="display: flex;justify-content: center;box-sizing: border-box;margin-bottom: 1rem;">
-            <div style="display: block;box-sizing: border-box;width: 100%;"></div>
-          </li>
-        </ul>
-        <ul style="box-sizing: border-box;padding: 0;list-style-type: none;">
           <li style="box-sizing: border-box;display: flex;justify-content: space-between;margin-bottom: 1rem;">
             <div style="display: flex; flex-direction: column; width: 100%;">
             <div style="box-sizing: border-box; border-top: 0.1rem solid white;width: 100%; display: flex; flex-direction: column;"><label>
             </div>
           </li>
           <li
+          style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+          <div style="box-sizing: border-box;">Order Total</div>
+          <div style="box-sizing: border-box;">$${props.totalPrice.toFixed(2)}</div>
+        </li>
+          <li
             style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
             <div style="box-sizing: border-box;">${props.paid}</div>
             <div style="box-sizing: border-box;">${props.token.card.brand} ending in ${props.token.card.last4}</div>
           </li>
-          <li
-            style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
-            <div style="box-sizing: border-box;">Date</div>
-            <div style="box-sizing: border-box;">${format_date_display(props.createdAt)}</div>
-          </li>
         </ul>
-        <div style="display: flex;flex-direction: column;box-sizing: border-box;">
-            <div for="order_note" style="box-sizing: border-box;">Order Note</div>
-            <div style="box-sizing: border-box;">${props.order_note}</div>
-          </div>
       </div>
     </div>
 	`;
