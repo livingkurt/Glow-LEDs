@@ -5,6 +5,7 @@ export {};
 const express = require('express');
 import Order from '../models/order';
 const { isAuth, isAdmin } = require('../util');
+// const stripe = require('stripe')(keys.stripeSecretKey);
 
 const router = express.Router();
 
@@ -120,6 +121,12 @@ router.put(
 			) => { (): any; new (): any; send: { (arg0: { message: string }): void; new (): any } };
 		}
 	) => {
+		// const charge = await stripe.charges.create({
+		//   amount: 500,
+		//   currency: 'usd',
+		//   description: '$5 for 5 credits',
+		//   source: req.body.id
+		// });
 		const order = await Order.findById(req.params.id);
 		if (order) {
 			order.isPaid = true;
@@ -139,6 +146,20 @@ router.put(
 		}
 	}
 );
+
+// app.post('/api/stripe', requireLogin, async (req, res) => {
+//   const charge = await stripe.charges.create({
+//     amount: 500,
+//     currency: 'usd',
+//     description: '$5 for 5 credits',
+//     source: req.body.id
+//   });
+
+//   req.user.credits += 5;
+//   const user = await req.user.save();
+
+//   res.send(user);
+// });
 
 router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {

@@ -79,10 +79,10 @@ const FAQPage = () => {
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Ordering Custom Products</h1>
-						{/* <h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
+						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								A single 100% refundable deposit of $20 is required to hold your place in line and to be
+								A single 100% refundable deposit of $10 is required to hold your place in line and to be
 								seen for a consultation. The deposit will be deducted from the total price.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
@@ -104,7 +104,7 @@ const FAQPage = () => {
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								If we determine we are unable to produce what you are desiring, or you are unsatisfied
-								with the results, we will refund your $20 deposit. If you wish to proceed, the final
+								with the results, we will refund your $10 deposit. If you wish to proceed, the final
 								payment will be required and we will ship them out to you.
 							</li>
 
@@ -121,7 +121,7 @@ const FAQPage = () => {
 								If you have an idea for a common shape or pattern feel free to send it as a suggestion
 								and we may have it on the website in the near future!
 							</li>
-						</ul> */}
+						</ul>
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>

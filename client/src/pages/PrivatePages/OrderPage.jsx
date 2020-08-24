@@ -194,7 +194,7 @@ const OrderPage = (props) => {
 									<div>
 										{order.shipping.first_name} {order.shipping.last_name}
 									</div>
-
+									<div>{order.shipping.address}</div>
 									<div>
 										{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}{' '}
 										{order.shipping.country}
