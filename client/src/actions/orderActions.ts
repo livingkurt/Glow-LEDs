@@ -108,7 +108,7 @@ const detailsOrder = (orderId: string) => async (
 	}
 };
 
-const payOrder = (order: { _id: string }, paymentResult: any, user_data: any) => async (
+const payOrder = (order: { _id: string }, paymentResult: any, user_data: any, token: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -117,12 +117,12 @@ const payOrder = (order: { _id: string }, paymentResult: any, user_data: any) =>
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.put(
 			'/api/orders/' + order._id + '/pay',
-			{ paymentResult, user_data },
+			{ paymentResult, user_data, token },
 			{
 				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
 		);
-		const res = await axios.post('api/stripe', userInfo.token);
+		// const res = await axios.post('api/stripe', userInfo.token);
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		axios.post('/api/emails/paid', { ...order, user_data });
 		axios.post('/api/emails/orderpaid', { ...order, user_data });

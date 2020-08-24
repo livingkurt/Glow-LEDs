@@ -7,13 +7,15 @@ require('dotenv').config();
 const StripeButton = () => {
 	return (
 		<StripeCheckout
-			name="Emaily"
-			description="$5 for 5 email credits"
-			amount={500}
+			name="Pay for Order"
+			description={`Order paid by ${user_data.name}`}
+			amount={order.totalPrice * 100}
 			token={(token) => handleSuccessPayment(token)}
 			stripeKey={process.env.REACT_APP_STRIPE_KEY}
 		>
-			<button className="btn">Add Credits</button>
+			<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
+				Pay for Order
+			</button>
 		</StripeCheckout>
 	);
 };

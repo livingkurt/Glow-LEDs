@@ -5,7 +5,7 @@ export {};
 const express = require('express');
 import Order from '../models/order';
 const { isAuth, isAdmin } = require('../util');
-// const stripe = require('stripe')(keys.stripeSecretKey);
+const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 const router = express.Router();
 
@@ -113,7 +113,10 @@ router.put(
 	'/:id/pay',
 	isAuth,
 	async (
-		req: { params: { id: any }; body: { payerID: any; orderID: any; paymentID: any } },
+		req: {
+			params: { id: any };
+			body: { paymentResult: any; payerID: any; orderID: any; paymentID: any; token: any };
+		},
 		res: {
 			send: (arg0: { message: string; order: any }) => void;
 			status: (
@@ -121,13 +124,15 @@ router.put(
 			) => { (): any; new (): any; send: { (arg0: { message: string }): void; new (): any } };
 		}
 	) => {
-		// const charge = await stripe.charges.create({
-		//   amount: 500,
-		//   currency: 'usd',
-		//   description: '$5 for 5 credits',
-		//   source: req.body.id
-		// });
+		console.log(req.body);
+		console.log({ Pay: req.body.paymentResult.id });
 		const order = await Order.findById(req.params.id);
+		const charge = await stripe.charges.create({
+			amount: (order.totalPrice * 100).toFixed(0),
+			currency: 'usd',
+			description: `Order Paid`,
+			source: req.body.paymentResult.id
+		});
 		if (order) {
 			order.isPaid = true;
 			order.paidAt = Date.now();
@@ -147,19 +152,26 @@ router.put(
 	}
 );
 
-// app.post('/api/stripe', requireLogin, async (req, res) => {
-//   const charge = await stripe.charges.create({
-//     amount: 500,
-//     currency: 'usd',
-//     description: '$5 for 5 credits',
-//     source: req.body.id
-//   });
+router.post(
+	'/api/stripe',
+	isAuth,
+	async (
+		req: { body: { id: any }; user: { credits: number; save: () => any } },
+		res: { send: (arg0: any) => void }
+	) => {
+		const charge = await stripe.charges.create({
+			amount: 500,
+			currency: 'usd',
+			description: '$5 for 5 credits',
+			source: req.body.id
+		});
 
-//   req.user.credits += 5;
-//   const user = await req.user.save();
+		req.user.credits += 5;
+		const user = await req.user.save();
 
-//   res.send(user);
-// });
+		res.send(user);
+	}
+);
 
 router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {

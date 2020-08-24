@@ -205,8 +205,8 @@ router.post('/order', async (req, res) => {
 });
 
 router.post('/sale', async (req, res) => {
-	console.log({ sale: req.body });
-	console.log({ sale_items: req.body.orderItems });
+	// console.log({ sale: req.body });
+	// console.log({ sale_items: req.body.orderItems });
 	const paid = 'Not Paid';
 	const shipped = 'Not Shipped';
 	let user = {};

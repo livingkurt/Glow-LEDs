@@ -10,8 +10,9 @@ import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 import API from '../../utils/API';
 import StripeCheckout from 'react-stripe-checkout';
+
 require('dotenv').config();
-// import { email_delivery, email_shipping } from '../../actions/emailActions';
+
 const OrderPage = (props) => {
 	console.log(props.userInfo);
 	const user_data = props.userInfo;
@@ -127,6 +128,21 @@ const OrderPage = (props) => {
 		[ successPay ]
 	);
 
+	// useEffect(
+	// 	() => {
+	// 		if (successPay ) {
+	// 			set_paypal_state('none');
+	// 			console.log('successPay');
+	// 			props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
+	// 			// props.history.push("/secure/account/profile");
+	// 			dispatch(detailsOrder(props.match.params.id));
+	// 		} else {
+	// 			dispatch(detailsOrder(props.match.params.id));
+	// 		}
+	// 	},
+	// 	[ successPay ]
+	// );
+
 	useEffect(
 		() => {
 			set_order_state(order);
@@ -138,9 +154,9 @@ const OrderPage = (props) => {
 		empty_cart();
 	}, []);
 
-	const handleSuccessPayment = (paymentResult) => {
+	const handleSuccessPayment = (paymentResult, token) => {
 		console.log('handleSuccessPayment');
-		dispatch(payOrder(order, paymentResult, user_data));
+		dispatch(payOrder(order, paymentResult, user_data, token));
 		set_payment_loading(false);
 		// if (successPay) {
 		props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
@@ -362,25 +378,30 @@ const OrderPage = (props) => {
 							)} */}
 								{/* <div style={{ display: paypal_state }}> */}
 								{!order.isPaid && (
-									<PaypalButton amount={order.totalPrice} onSuccess={handleSuccessPayment} />
-									// <StripeCheckout
-									// 	name="Pay for Order"
-									// 	description={`Order paid by ${user_data.name}`}
-									// 	amount={order.totalPrice * 100}
-									// 	token={(token) => handleSuccessPayment(token)}
-									// 	stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									// >
-									// 	<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
-									// 		Pay with Stripe
-									// 	</button>
-									// </StripeCheckout>
+									// <PaypalButton amount={order.totalPrice} onSuccess={handleSuccessPayment} />
+									<StripeCheckout
+										name="Glow LEDs"
+										// description={order.orderItems.map((item) => {
+										// 	return `${item.qty}x - ${item.name}`;
+										// })}
+										// description={`Pay for Order: ${order._id}`}
+										description={`Pay for Order`}
+										amount={order.totalPrice * 100}
+										token={(token) => handleSuccessPayment(token)}
+										// token={(token) => console.log(token)}
+										stripeKey={process.env.REACT_APP_STRIPE_KEY}
+									>
+										<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
+											Pay for Order
+										</button>
+									</StripeCheckout>
 								)}
 								{/* </div> */}
 							</Loading>
 						</li>
-						{!order.isPaid && (
+						{/* {!order.isPaid && (
 							<label htmlFor="order_note">If paypal button doesn't show, refresh page.</label>
-						)}
+						)} */}
 
 						{order.order_note && (
 							<FlexContainer column>

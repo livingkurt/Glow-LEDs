@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder } from '../../actions/orderActions';
+import { createOrder, payOrder } from '../../actions/orderActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 // import { email_order } from '../../actions/emailActions';
@@ -30,6 +30,7 @@ const PlaceOrderPage = (props) => {
 
 	const [ shippingPrice, setShippingPrice ] = useState(5);
 	const [ place_order_state, set_place_order_state ] = useState(false);
+	const [ payment_loading, set_payment_loading ] = useState(true);
 
 	useEffect(
 		() => {
@@ -195,6 +196,15 @@ const PlaceOrderPage = (props) => {
 			return "Don't Forget: Add a note of the caps you want or a random pair will be sent to you";
 			// }
 		}
+	};
+
+	const handleSuccessPayment = (paymentResult, token) => {
+		console.log('handleSuccessPayment');
+		dispatch(payOrder(order, paymentResult, user_data, token));
+		set_payment_loading(false);
+		// if (successPay) {
+		props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
+		// }
 	};
 
 	return (
