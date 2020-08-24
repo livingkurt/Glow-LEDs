@@ -180,9 +180,10 @@ router.post('/verify', async (req, res) => {
 });
 
 router.post('/order', async (req, res) => {
-	console.log({ order: req.body.orderItems });
+	console.log({ order: req.body.token });
+	console.log({ order: req.body.token.card.last4 });
 
-	const paid = 'Not Paid';
+	const paid = 'Paid';
 	const shipped = 'Not Shipped';
 	// const delivered = "Not Shipped"
 	let user = {};
@@ -207,7 +208,7 @@ router.post('/order', async (req, res) => {
 router.post('/sale', async (req, res) => {
 	// console.log({ sale: req.body });
 	// console.log({ sale_items: req.body.orderItems });
-	const paid = 'Not Paid';
+	const paid = 'Paid';
 	const shipped = 'Not Shipped';
 	let user = {};
 	let mailOptions = {

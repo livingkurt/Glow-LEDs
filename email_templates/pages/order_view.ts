@@ -25,6 +25,8 @@ export default (props: {
 	order_note: string;
 	paid: string;
 	shipped: string;
+	createdAt: Date;
+	token: any;
 }) => {
 	const format_date_display = (unformatted_date: string | number | Date) => {
 		const date = new Date(unformatted_date);
@@ -65,14 +67,16 @@ export default (props: {
                 </div>
               <div class="  display: flex;  flex-wrap: wrap;" style=" width: 100%;>
 
-                <h2 style="font-size: 20px;margin: 0px;box-sizing: border-box;font-family: Helvetica;">Order
-                  Number: </h2>
-
+                <h2 style="font-size: 20px;margin: 0px;box-sizing: border-box;font-family: Helvetica;">OrderNumber: </h2>
                 <a href="${process.env.NODE_ENV === 'production'
 					? 'http://glow-leds.com'
 					: 'http://localhost:3000'}/secure/account/order/${props._id}"
                   style="color: white;text-decoration: none;box-sizing: border-box;">${props._id}</a>
               </div>
+            <div style="  display: flex;  flex-wrap: wrap;>
+              <h2 style="box-sizing: border-box;">Date</h2>
+              <div style="box-sizing: border-box;">${format_date_display(props.createdAt)}</div>
+            </div>
               <h1 style="box-sizing: border-box;font-family: Helvetica;">Shipping</h1>
 
               <div style=" width: 100%;">
@@ -96,13 +100,6 @@ export default (props: {
           </div>
         </div>
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
-          <h1 style="box-sizing: border-box;font-family: Helvetica;">Payment</h1>
-          <div style="box-sizing: border-box;">Payment Method: stripe</div>
-          <div style="box-sizing: border-box; border-top: 0.1rem solid white;width: 100%;">
-            <label style="margin-top: 10px;box-sizing: border-box;"><strong>${props.paid}</strong></label>
-          </div>
-        </div>
-        <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;">
           <ul class="cart-list-container"
             style="margin-top: 0px;box-sizing: border-box;padding: 0;list-style-type: none;margin-right: 10px;">
             <li
@@ -113,32 +110,34 @@ export default (props: {
             ${props.orderItems.map((item: any) => {
 				let item_item = `<li
               style="box-sizing: border-box;display: flex;justify-content: space-between;padding-bottom: 1rem;margin-bottom: 1rem;border-bottom: .1rem #c0c0c0 solid;">
-              <div class="cart-image" style="box-sizing: border-box;">
-                <img src="${process.env.NODE_ENV === 'production'
-					? 'http://glow-leds.com'
-					: 'http://localhost:3000'}${item.display_image}" alt="product"
-                  style="height: auto;
-                  width: 100%;box-sizing: border-box;max-width: 10rem;max-height: 10rem;border-radius: 1.5rem;margin-right: 10px;">
+              <div style="display:flex; width: 100%;">
+                <div class="cart-image" style="box-sizing: border-box;">
+                  <img src="${process.env.NODE_ENV === 'production'
+						? 'http://glow-leds.com'
+						: 'http://localhost:3000'}${item.display_image}" alt="product"
+                    style="height: auto;
+                    width: 100%;box-sizing: border-box;max-width: 10rem;max-height: 10rem;border-radius: 1.5rem;margin-right: 10px;">
+                </div>
+                <div class="cart-name" style="box-sizing: border-box;">
+                  <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
+						? 'http://glow-leds.com'
+						: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
+                      style="box-sizing: border-box;text-decoration: none;color: white;">${item.name}</a></div>
+                  <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
+                </div>
               </div>
-              <div class="cart-name" style="box-sizing: border-box;">
-                <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
-					? 'http://glow-leds.com'
-					: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
-                    style="box-sizing: border-box;text-decoration: none;color: white;">${item.name}</a></div>
-                <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
-              </div>
-              <div class="cart-price" style="box-sizing: border-box;text-align: right; width: 230px;">
+              <div class="cart-price" style="box-sizing: border-box;text-align: right; width: 100px;">
                 ${item.sale_price !== 0
-					? `<div style="width: 230px;box-sizing: border-box;">
+					? `<div style="width: 100px;box-sizing: border-box;">
                   <del style="color: red;box-sizing: border-box;">
-                    <label style="color: white;box-sizing: border-box;">${item.price ? item.price : item.price}</label>
+                    <label style="color: white;box-sizing: border-box;">$${item.price ? item.price : item.price}</label>
                   </del>{' '}
-                  <i class="fas fa-arrow-right" style="box-sizing: border-box;"></i> ${item.sale_price
+                  <i class="fas fa-arrow-right" style="box-sizing: border-box;"></i> $${item.sale_price
 						? item.sale_price.toFixed(2)
 						: item.sale_price}{' '}
                   On Sale!
                 </div>`
-					: `<label style="box-sizing: border-box;">${item.price
+					: `<label style="box-sizing: border-box;">$${item.price
 							? item.price.toFixed(2)
 							: item.price}</label>`}
               </div>
@@ -152,7 +151,7 @@ export default (props: {
         style="box-sizing: border-box;flex: 1 1 20rem;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem; margin: 1rem;margin-bottom: 10px;">
         <ul style="box-sizing: border-box;padding: 0;list-style-type: none;">
           <li style="box-sizing: border-box;display: flex;justify-content: space-between;margin-bottom: 1rem;">
-            <h1 style="margin-top: 0px;box-sizing: border-box;font-family: Helvetica;">Order Summary</h1>
+            <h1 style="margin-top: 0px;box-sizing: border-box;font-family: Helvetica;">Payment Summary</h1>
           </li>
           <li
             style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
@@ -177,11 +176,28 @@ export default (props: {
             style="display: flex;justify-content: center;box-sizing: border-box;margin-bottom: 1rem;">
             <div style="display: block;box-sizing: border-box;width: 100%;"></div>
           </li>
-          <div style="display: flex;flex-direction: column;box-sizing: border-box;">
+        </ul>
+        <ul style="box-sizing: border-box;padding: 0;list-style-type: none;">
+          <li style="box-sizing: border-box;display: flex;justify-content: space-between;margin-bottom: 1rem;">
+            <div style="display: flex; flex-direction: column; width: 100%;">
+            <div style="box-sizing: border-box; border-top: 0.1rem solid white;width: 100%; display: flex; flex-direction: column;"><label>
+            </div>
+          </li>
+          <li
+            style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+            <div style="box-sizing: border-box;">${props.paid}</div>
+            <div style="box-sizing: border-box;">${props.token.card.brand} ending in ${props.token.card.last4}</div>
+          </li>
+          <li
+            style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+            <div style="box-sizing: border-box;">Date</div>
+            <div style="box-sizing: border-box;">${format_date_display(props.createdAt)}</div>
+          </li>
+        </ul>
+        <div style="display: flex;flex-direction: column;box-sizing: border-box;">
             <div for="order_note" style="box-sizing: border-box;">Order Note</div>
             <div style="box-sizing: border-box;">${props.order_note}</div>
           </div>
-        </ul>
       </div>
     </div>
 	`;

@@ -60,6 +60,7 @@ const OrderPaymentCompletePage = (props) => {
 							</button>
 						</Link>
 					</FlexContainer>
+          <p style={{ textAlign: 'center' }}> If you are trying to make a new order, Refresh the Page and go back to cart to start checkout process</p>
 				</div>
 			)}
 		</FlexContainer>

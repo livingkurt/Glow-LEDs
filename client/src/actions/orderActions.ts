@@ -63,8 +63,8 @@ const createOrder = (
 			}
 		);
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-		// axios.post('/api/emails/order', { ...newOrder, user_data });
-		axios.post('/api/emails/sale', { ...newOrder, user_data });
+		axios.post('/api/emails/order', { ...newOrder, user_data, token });
+		axios.post('/api/emails/sale', { ...newOrder, user_data, token });
 		Cookie.remove('shipping');
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });

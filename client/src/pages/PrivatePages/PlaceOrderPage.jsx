@@ -177,6 +177,14 @@ const PlaceOrderPage = (props) => {
 				token
 			)
 		);
+		empty_cart();
+	};
+
+	const empty_cart = () => {
+		console.log(cartItems);
+		for (let item of cartItems) {
+			dispatch(removeFromCart(item.pathname));
+		}
 	};
 
 	useEffect(
@@ -227,7 +235,7 @@ const PlaceOrderPage = (props) => {
 			{console.log(shipping === '')}
 			{/* {set_place_order_state(shipping === {})} */}
 			{shipping && shipping.hasOwnProperty('first_name') ? (
-				<CheckoutSteps step1 step2 />
+				<CheckoutSteps step1 step2 step3 />
 			) : (
 				<CheckoutSteps step1 />
 			)}
