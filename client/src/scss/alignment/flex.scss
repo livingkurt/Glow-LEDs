@@ -10,25 +10,26 @@ $align: "c" center, "s" flex-start, "r" flex-end, "b" stretch, "b" baseline;
 
 @each $i in $align {
 	.ai-#{nth($i, 1)} {
-		display: flex;
-		align-items: nth($i, 2);
+		display: flex !important;
+		align-items: nth($i, 2) !important;
 	}
 }
 
 .row {
-	display: flex;
-	flex-direction: row;
+	display: flex !important;
+	flex-direction: row !important;
 }
 .column {
-	display: flex;
-	flex-direction: column;
-}
-.w {
-	display: flex;
-	flex-direction: column;
+	display: flex !important;
+	flex-direction: column !important;
 }
 .none {
-	display: none;
+	display: none !important;
+}
+
+.wrap {
+	display: flex !important;
+	flex-wrap: wrap !important;
 }
 
 // .flex {

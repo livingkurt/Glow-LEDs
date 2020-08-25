@@ -47,6 +47,13 @@ const App = () => {
 
 	let { userInfo } = userLogin;
 
+	const theme_colors = {
+		footer: '#333333',
+		header: '#333333',
+		content: 'linear-gradient(180deg, #8a8a8a 0%, #272727 100%);',
+		container: '#272727'
+	};
+
 	return (
 		<Router>
 			<Container>
@@ -113,7 +120,7 @@ const App = () => {
 						</Switch>
 					</ScrollToTop>
 				</Content>
-				<Footer />
+				<Footer backgroundColor={theme_colors.footer} />
 			</Container>
 		</Router>
 	);
