@@ -2,6 +2,7 @@ import {
 	ORDER_CREATE_REQUEST,
 	ORDER_CREATE_SUCCESS,
 	ORDER_CREATE_FAIL,
+	ORDER_REMOVE_STATE,
 	ORDER_DETAILS_REQUEST,
 	ORDER_DETAILS_SUCCESS,
 	ORDER_DETAILS_FAIL,
@@ -33,6 +34,8 @@ const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => 
 			return { loading: false, order: action.payload, success: true };
 		case ORDER_CREATE_FAIL:
 			return { loading: false, error: action.payload };
+		// case ORDER_REMOVE_STATE:
+		// 	return { loading: false, order: action.payload, success: false };
 		default:
 			return state;
 	}
@@ -113,6 +116,8 @@ const orderPayReducer = (
 			return { loading: false, success: true };
 		case ORDER_PAY_FAIL:
 			return { loading: false, error: action.payload };
+		case ORDER_REMOVE_STATE:
+			return { loading: false, success: false };
 		default:
 			return state;
 	}

@@ -9,6 +9,7 @@ import MetaTags from 'react-meta-tags';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
+import { Loading } from '../../components/UtilityComponents';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -33,7 +34,7 @@ const PlaceOrderPage = (props) => {
 
 	const [ shippingPrice, setShippingPrice ] = useState(5);
 	const [ place_order_state, set_place_order_state ] = useState(false);
-	const [ payment_loading, set_payment_loading ] = useState(true);
+	const [ payment_loading, set_payment_loading ] = useState(false);
 
 	useEffect(
 		() => {
@@ -178,6 +179,7 @@ const PlaceOrderPage = (props) => {
 			)
 		);
 		empty_cart();
+		set_payment_loading(true);
 	};
 
 	const empty_cart = () => {
@@ -189,12 +191,12 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (success) {
-				// props.history.push('/secure/account/order/' + order._id);
+			if (successPay && order) {
 				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+				set_payment_loading(false);
 			}
 		},
-		[ success ]
+		[ successPay ]
 	);
 
 	const checkoutHandler = () => {
@@ -239,6 +241,7 @@ const PlaceOrderPage = (props) => {
 			) : (
 				<CheckoutSteps step1 />
 			)}
+			<Loading loading={payment_loading} />
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>

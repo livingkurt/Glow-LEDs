@@ -3,6 +3,7 @@ import {
 	ORDER_CREATE_REQUEST,
 	ORDER_CREATE_SUCCESS,
 	ORDER_CREATE_FAIL,
+	ORDER_REMOVE_STATE,
 	ORDER_DETAILS_REQUEST,
 	ORDER_DETAILS_SUCCESS,
 	ORDER_DETAILS_FAIL,
@@ -66,6 +67,7 @@ const createOrder = (
 		axios.post('/api/emails/order', { ...newOrder, user_data, token });
 		axios.post('/api/emails/sale', { ...newOrder, user_data, token });
 		Cookie.remove('shipping');
+		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
 	}

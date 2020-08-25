@@ -34,8 +34,8 @@ const OrderPaymentCompletePage = (props) => {
 				</FlexContainer>
 			) : props.errorPay ? (
 				<FlexContainer h_center>
-					<h3 style={{ textAlign: 'center' }}>Page Error</h3>
-					<h3 style={{ textAlign: 'center' }}>{props.errorPay} </h3>
+					<h3 style={{ textAlign: 'center' }}>Payment Not Complete</h3>
+					<label style={{ textAlign: 'center' }}>Maybe try a different card {props.errorPay} </label>
 				</FlexContainer>
 			) : (
 				<div>
@@ -60,7 +60,11 @@ const OrderPaymentCompletePage = (props) => {
 							</button>
 						</Link>
 					</FlexContainer>
-          <p style={{ textAlign: 'center' }}> If you are trying to make a new order, Refresh the Page and go back to cart to start checkout process</p>
+					<p style={{ textAlign: 'center' }}>
+						{' '}
+						If you are trying to make a new order, Refresh the Page and go back to cart to start checkout
+						process
+					</p>
 				</div>
 			)}
 		</FlexContainer>
