@@ -9,7 +9,6 @@ import {
 	RegisterPage,
 	ProductsPage,
 	ShippingPage,
-	PaymentPage,
 	PlaceOrderPage,
 	OrderPage,
 	ProfilePage,
@@ -61,7 +60,6 @@ const App = () => {
 							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
 							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
-							<PrivateRoute path="/secure/checkout/payment" component={PaymentPage} />
 							<PrivateRoute
 								path="/secure/checkout/paymentcomplete/:id"
 								exact={true}

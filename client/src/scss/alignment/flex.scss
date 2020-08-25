@@ -27,6 +27,9 @@ $align: "c" center, "s" flex-start, "r" flex-end, "b" stretch, "b" baseline;
 	display: flex;
 	flex-direction: column;
 }
+.none {
+	display: none;
+}
 
 // .flex {
 // 	display: flex;

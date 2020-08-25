@@ -8,3 +8,23 @@
 		width: $i + px;
 	}
 }
+
+@for $i from 0 to 100 {
+	.w-#{$i}per {
+		width: percentage($i/100);
+	}
+}
+.w-100per {
+	width: 100%;
+}
+
+@for $i from 0 to 100 {
+	.max-w-#{$i}rem {
+		max-width: $i + rem;
+	}
+}
+@for $i from 0 to 2000 {
+	.max-w-#{$i}px {
+		max-width: $i + px;
+	}
+}

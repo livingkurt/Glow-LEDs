@@ -32,12 +32,6 @@ const ProductPage = (props) => {
 		props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
 	};
 
-	// const finishUploading = async (fsData) => {
-	// 	const src = fsData.filesUploaded[0].url;
-	// 	console.log(src);
-	// };
-	// console.log(process.env.REACT_APP_FILESTACK_API);
-
 	return (
 		<FlexContainer column>
 			<div className="back-to-result">
@@ -58,18 +52,6 @@ const ProductPage = (props) => {
 					)}
 				</FlexContainer>
 			</div>
-			{/* <img src="https://cdn.filestackcontent.com/47roj3J6SPKXPROCeTok" className="loading_gif" alt="loading" /> */}
-			{/* <img src="https://cdn.filestackcontent.com/KMBcTNF6TQWFTHeaHY0S" className="loading_png" alt="loading" /> */}
-			{/* <ReactFilestack apikey={'ALVdoogZTRidxhPQF0JBIz'} onSuccess={(res) => console.log(res)} /> */}
-			{/* <ReactFilestack
-				apikey={process.env.REACT_APP_FILESTACK_API}
-				customRender={({ onPick }) => (
-					<div>
-						<button onClick={onPick}>Upload image</button>
-					</div>
-				)}
-				onSuccess={finishUploading}
-			/> */}
 			<Loading loading={loading} error={error}>
 				{product && (
 					<FlexContainer column>

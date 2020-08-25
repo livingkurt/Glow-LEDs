@@ -1,4 +1,3 @@
-export { default as Background } from './Background';
 export { default as Container } from './Container';
 export { default as FlexContainer } from './FlexContainer';
 export { default as Header } from './Header';

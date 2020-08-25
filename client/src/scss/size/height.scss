@@ -8,3 +8,14 @@
 		height: $i + px;
 	}
 }
+
+@for $i from 0 to 100 {
+	.max-h-#{$i}rem {
+		max-height: $i + rem;
+	}
+}
+@for $i from 0 to 2000 {
+	.max-h-#{$i}px {
+		max-height: $i + px;
+	}
+}

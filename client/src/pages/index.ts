@@ -10,7 +10,6 @@ export { default as EditExpensePage } from './AdminPages/EditExpensePage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';
-export { default as PaymentPage } from './PrivatePages/PaymentPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';
 export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPage';
 export { default as ProfilePage } from './PrivatePages/ProfilePage';
