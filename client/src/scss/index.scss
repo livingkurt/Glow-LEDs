@@ -12,10 +12,13 @@
 @import './size/height.scss';
 @import './spacing/margin.scss';
 @import './spacing/padding.scss';
-@import './alignment/text-align.scss';
+
 @import './elements/button.scss';
+@import './elements/list.scss';
 @import './size/font-size.scss';
+@import './alignment/text-align.scss';
 @import './alignment/flex.scss';
+@import './alignment/position.scss';
 
 $background_color: #272727;
 $content_bg_color: #272727;
@@ -1016,7 +1019,7 @@ video {
 
 /* The grid: Four equal columns that floats next to each other */
 
-.column {
+.img_column {
 	float: left;
 	width: 10%;
 	padding: 10px;
@@ -1024,14 +1027,14 @@ video {
 
 /* Style the images inside the grid */
 
-.column img {
+.img_column img {
 	opacity: 0.8;
 	cursor: pointer;
 	height: unset;
 	border-radius: $br_small_containers;
 }
 
-.column img:hover {
+.img_column img:hover {
 	opacity: 1;
 }
 

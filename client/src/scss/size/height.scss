@@ -1,21 +1,21 @@
 @for $i from 0 to 100 {
 	.h-#{$i}rem {
-		height: $i + rem;
+		height: $i + rem !important;
 	}
 }
 @for $i from 0 to 1000 {
 	.h-#{$i}px {
-		height: $i + px;
+		height: $i + px !important;
 	}
 }
 
 @for $i from 0 to 100 {
 	.max-h-#{$i}rem {
-		max-height: $i + rem;
+		max-height: $i + rem !important;
 	}
 }
 @for $i from 0 to 2000 {
 	.max-h-#{$i}px {
-		max-height: $i + px;
+		max-height: $i + px !important;
 	}
 }

@@ -36,12 +36,12 @@ const Product = (props) => {
 			return (
 				<label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white', marginRight: '7px' }}>
+						<label style={{ color: 'white' }} className="ml-7px">
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
 					<i class="fas fa-arrow-right" />
-					<label style={{ marginLeft: '7px' }}>Sold Out</label>
+					<label className="ml-7px">Sold Out</label>
 				</label>
 			);
 		} else {
@@ -96,29 +96,8 @@ const Product = (props) => {
 						{props.product.rating ? (
 							<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
 						) : (
-							<span className="rating" style={{ textAlign: 'center', visibility: 'hidden' }}>
-								No Reviews
-							</span>
+							<span className="rating vis-hid ta-c">No Reviews</span>
 						)}
-						{/* {props.product.name === 'Custom Infinity Mirror' ? (
-							<label className="product-price">
-								$549.99 - $<i class="fas fa-arrow-up" />
-							</label>
-						) : props.product.name === 'Custom Diffuser Caps' ? (
-							<label className="product-price">
-								$34.99 - $<i class="fas fa-arrow-up" />
-							</label>
-						) : (
-							<label className="product-price">{sale_price_switch()}</label>
-						)}
-
-						{props.product.rating ? (
-							<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
-						) : (
-							<span className="rating" style={{ textAlign: 'center', visibility: 'hidden' }}>
-								No Reviews
-							</span>
-						)} */}
 					</div>
 				</div>
 			</div>

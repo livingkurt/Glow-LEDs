@@ -53,42 +53,35 @@ const Header = (props) => {
 	);
 
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column' }}>
+		<div className="column">
 			<Banner />
 			<header id="overlay">
-				<div className="menu_button" style={{ width: '233px' }}>
+				<div className="menu_button w-233px">
 					<Link to="/">
-						<FlexContainer>
-							<div className="logo" style={{ height: '125px', width: '125px' }}>
+						<div className="row">
+							<div className="logo h-125px w-125px">
 								<img
 									className="zoom logo_s"
-									// style={{ marginRight: '176px' }}
-
 									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 									alt="Glow LEDs"
 								/>
 							</div>
-							{/* <h4>™</h4> */}
-
-							{/* <h1 className="glow_leds_text">Glow LEDs</h1> */}
-							{/* <label style={{ color: '#9a9898' }}>™</label> */}
-						</FlexContainer>
+						</div>
 					</Link>
 					<button
-						className="button mobile nav"
+						className="button mobile nav none fs-30px h-50px w-50px p-10px"
 						onClick={openMenu}
 						aria-label="sidebar"
-						style={{ display: 'none', fontSize: '30px', height: '50px', width: '50px', padding: '10px' }}
 					>
 						<i className="fas fa-bars" />
 					</button>
 				</div>
-				<FlexContainer column h_center>
-					<FlexContainer h_center v_i_center class="logo_text">
+				<div className="column jc-c mh-auto">
+					<div className="logo_text jc-c mh-auto ai-c">
 						<Link to="/">
-							<div className="logo_2" style={{ height: '80px', width: '80px', display: 'none' }}>
+							<div className="logo_2 h-80px w-80px none">
 								<img
-									className=" zoom logo_s"
+									className="zoom logo_s"
 									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 									alt="Glow LEDs"
 								/>
@@ -102,8 +95,8 @@ const Header = (props) => {
 								</label>
 							</FlexContainer>
 						</Link>
-					</FlexContainer>
-					<FlexContainer row h_between class="nav_bar">
+					</div>
+					<div className="jc-b nav_bar">
 						<Link to="/collections/all/products">
 							<button className="button nav">Products</button>
 						</Link>
@@ -111,7 +104,7 @@ const Header = (props) => {
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Gloving</button>
 							{/* </Link> */}
-							<ul style={{ width: 210 }} className="dropdown-nav-content hover_fade_in">
+							<ul className="dropdown-nav-content hover_fade_in w-210px">
 								<Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="button nav">Frosted Diffusers</button>
 								</Link>
@@ -130,7 +123,7 @@ const Header = (props) => {
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Decor</button>
 							{/* </Link> */}
-							<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
+							<ul className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/collections/all/products/category/string_lights">
 									<button className="button nav">String Lights</button>
 								</Link>
@@ -143,7 +136,7 @@ const Header = (props) => {
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Community</button>
 							{/* </Link> */}
-							<ul style={{ width: 200 }} className="dropdown-nav-content hover_fade_in">
+							<ul className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/pages/featured">
 									<button className="button nav">Featured</button>
 								</Link>
@@ -153,7 +146,7 @@ const Header = (props) => {
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Support</button>
 							{/* </Link> */}
-							<ul style={{ width: 230 }} className="dropdown-nav-content hover_fade_in">
+							<ul className="dropdown-nav-content hover_fade_in w-230px">
 								<Link to="/pages/about">
 									<button className="button nav">About</button>
 								</Link>
@@ -168,9 +161,9 @@ const Header = (props) => {
 								</Link>
 							</ul>
 						</div>
-					</FlexContainer>
-				</FlexContainer>
-				<FlexContainer class="nav_bar" styles={{ width: '233px', justifyContent: 'flex-end' }}>
+					</div>
+				</div>
+				<FlexContainer class="nav_bar w-233px jc-e">
 					<Link to="/checkout/cart">
 						<button className=" button nav cart_text">
 							Cart <i className="fas fa-shopping-cart" />{' '}
@@ -178,7 +171,7 @@ const Header = (props) => {
 						</button>
 					</Link>
 					<Link to="/checkout/cart">
-						<button style={{ display: 'none' }} className=" button mobile nav cart_icon">
+						<button className=" button mobile nav cart_icon none">
 							<i className="fas fa-shopping-cart" />{' '}
 							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 						</button>
@@ -186,14 +179,14 @@ const Header = (props) => {
 					{props.userInfo ? (
 						<div className="dropdown">
 							<button className="button nav">{first_name}</button>
-							<ul className="dropdown-content hover_fade_in" style={{ width: '150px' }}>
+							<ul className="dropdown-content hover_fade_in w-150px">
 								<Link to="/secure/account/profile">
 									<button className="button nav">Profile</button>
 								</Link>
 								<Link to="/secure/account/orders">
 									<button className="button nav">Orders</button>
 								</Link>
-								<button className="button nav" onClick={handleLogout} style={{ marginRight: 'auto' }}>
+								<button className="button nav mr-auto" onClick={handleLogout}>
 									{' '}
 									Logout
 								</button>
@@ -212,9 +205,7 @@ const Header = (props) => {
 							<button className="button nav">Admin</button>
 							<ul className="dropdown-content hover_fade_in">
 								<Link to="/secure/glow/controlpanel">
-									<button className="button nav" style={{ width: '152px' }}>
-										Control Panel
-									</button>
+									<button className="button nav w-152px">Control Panel</button>
 								</Link>
 								<Link to="/secure/glow/orders">
 									<button className="button nav">Orders</button>

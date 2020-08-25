@@ -11,7 +11,7 @@ const Banner = () => {
 						<button className="banner-button">Submit content to be featured on our pages</button>
 					</Link>
 				</div>
-				<div className="small_screen ml-10px none ta-c w-100per">
+				<div className="smaller_screen ml-10px none ta-c w-100per">
 					<Link to="/pages/contact/submit_content_to_be_featured">
 						<button className="banner-button">Submit content to be featured</button>
 					</Link>

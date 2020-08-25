@@ -7,6 +7,7 @@ import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
 // import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
+import { occurrence } from '../../utils/helper_functions';
 
 const colors = {
 	hidden: '#333333'
@@ -40,6 +41,7 @@ const ControlPanelPage = (props) => {
 	useEffect(
 		() => {
 			initialize_chart();
+			// console.log(occurrence(products));
 			return () => {};
 		},
 		[ expenses ]
@@ -235,6 +237,64 @@ const ControlPanelPage = (props) => {
 						</table>
 					</div>
 				)}
+				{/* {products && (
+					<div className="order-list responsive_table">
+						<table className="table">
+							<thead>
+								<tr>
+									<th>Category</th>
+									<th>Number of Occurances</th>
+								</tr>
+							</thead>
+							<tbody>
+                
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total Products</th>
+									<th style={{ padding: '15px' }}>{products.length}</th>
+								</tr>
+
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Orders</th>
+									<th style={{ padding: '15px' }}>{orders.length}</th>
+								</tr>
+
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Users</th>
+									<th style={{ padding: '15px' }}>{users.length}</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Expenses</th>
+									<th style={{ padding: '15px' }}>{expenses.length}</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				)} */}
 			</FlexContainer>
 			<canvas id="expense_chart" ref={chartRef} />
 			<canvas id="expense_doughnut" ref={expense_doughnut_ref} />

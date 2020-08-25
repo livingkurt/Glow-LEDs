@@ -1,5 +1,5 @@
-$justify: "c" center, "s" flex-start, "r" flex-end, "b" space-between, "a" space-around, "e" space-evenly;
-$align: "c" center, "s" flex-start, "r" flex-end, "b" stretch, "b" baseline;
+$justify: "c" center, "s" flex-start, "e" flex-end, "b" space-between, "a" space-around, "e" space-evenly;
+$align: "c" center, "s" flex-start, "e" flex-end, "b" stretch, "b" baseline;
 
 @each $i in $justify {
 	.jc-#{nth($i, 1)} {
@@ -16,12 +16,12 @@ $align: "c" center, "s" flex-start, "r" flex-end, "b" stretch, "b" baseline;
 }
 
 .row {
-	display: flex !important;
-	flex-direction: row !important;
+	display: flex;
+	flex-direction: row;
 }
 .column {
-	display: flex !important;
-	flex-direction: column !important;
+	display: flex;
+	flex-direction: column;
 }
 .none {
 	display: none !important;

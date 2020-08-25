@@ -28,6 +28,15 @@ const get_formatted_time = (date: any) => {
 
 export const format_date_display = (unformatted_date: string | number | Date) => {
 	const date = new Date(unformatted_date);
+	const day = get_formatted_time(date.getDate());
+	const month = get_formatted_time(date.getMonth() + 1);
+	const year = date.getFullYear();
+	const formatted_date = `${month}/${day}/20`;
+	return formatted_date;
+};
+
+export const format_date_display_expenses = (unformatted_date: string | number | Date) => {
+	const date = new Date(unformatted_date);
 	const day = get_formatted_time(date.getDate() + 1);
 	const month = get_formatted_time(date.getMonth() + 1);
 	const year = date.getFullYear();
@@ -64,6 +73,25 @@ export const unformat_date = (formatted_date: string) => {
 	const unformatted_date = `2020-${day}-${month}`;
 	console.log(unformatted_date);
 	return unformatted_date;
+};
+
+export const occurrence = function(array: any) {
+	'use strict';
+	console.log(array);
+	var result: any = {};
+	if (array instanceof Array) {
+		// Check if input is array.
+		array.forEach(function(v: any, i: any) {
+			if (!result[v.category]) {
+				// Initial object property creation.
+				result[v.category] = [ i ]; // Create an array for that property.
+			} else {
+				// Same occurrences found.
+				result[v.category].push(i); // Fill the array.
+			}
+		});
+	}
+	return result;
 };
 
 // export const email_validations = email => {

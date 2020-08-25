@@ -85,7 +85,7 @@ const Sidebar = (props) => {
 			<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
 				<i className="fas fa-times" />
 			</button>
-			<FlexContainer column>
+			<div className="column">
 				{props.userInfo ? (
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">{first_name}</button>
@@ -105,7 +105,10 @@ const Sidebar = (props) => {
 								Logout
 							</button>
 						</ul>
-						<i style={icon_styles} className="fas fa-sort-up" />
+						<i
+							style={{ '-webkitTransform': 'rotate(-180deg)' }}
+							className=" pos-abs right-10px top-8px fas fa-sort-up"
+						/>
 					</div>
 				) : (
 					<Link to="/account/login">
@@ -145,7 +148,10 @@ const Sidebar = (props) => {
 								</button>
 							</Link>
 						</ul>
-						<i style={icon_styles} className="fas fa-sort-up" />
+						<i
+							style={{ '-webkitTransform': 'rotate(-180deg)' }}
+							className=" pos-abs right-10px top-8px fas fa-sort-up"
+						/>
 					</div>
 				)}
 				<Link to="/collections/all/products">
@@ -179,7 +185,10 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} className="fas fa-sort-up" />
+					<i
+						style={{ '-webkitTransform': 'rotate(-180deg)' }}
+						className=" pos-abs right-10px top-8px fas fa-sort-up"
+					/>
 				</div>
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Decor</button>
@@ -195,7 +204,10 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} className="fas fa-sort-up" />
+					<i
+						style={{ '-webkitTransform': 'rotate(-180deg)' }}
+						className=" pos-abs right-10px top-8px fas fa-sort-up"
+					/>
 				</div>
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Community</button>
@@ -206,7 +218,10 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} className="fas fa-sort-up" />
+					<i
+						style={{ '-webkitTransform': 'rotate(-180deg)' }}
+						className=" pos-abs right-10px top-8px fas fa-sort-up"
+					/>
 				</div>
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Support</button>
@@ -232,9 +247,12 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i style={icon_styles} className="fas fa-sort-up" />
+					<i
+						style={{ '-webkitTransform': 'rotate(-180deg)' }}
+						className=" pos-abs right-10px top-8px fas fa-sort-up"
+					/>
 				</div>
-			</FlexContainer>
+			</div>
 		</aside>
 	);
 };

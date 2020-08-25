@@ -36,7 +36,7 @@ const Slideshow = (props) => {
 				{images &&
 					images.map((image, index) => {
 						return (
-							<div className="column" key={index}>
+							<div className="img_column" key={index}>
 								<img src={image} alt="" style={{ width: '100%' }} onClick={(e) => change_image(e)} />
 							</div>
 						);

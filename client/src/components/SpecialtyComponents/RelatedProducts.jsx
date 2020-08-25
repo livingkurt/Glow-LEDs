@@ -30,18 +30,10 @@ const RelatedProducts = (props) => {
 	);
 
 	return (
-		<FlexContainer column styles={{ margin: '0 10px' }}>
-			<h1
-				style={{
-					textAlign: 'center',
-					width: '100%',
-					justifyContent: 'center'
-				}}
-			>
-				Related Products
-			</h1>
+		<div className="column mh-10px">
+			<h1 className="ta-c w-100per jc-c">Related Products</h1>
 			<Loading loading={loading} error={error}>
-				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
+				<div className="row p-10px overflow-s">
 					{products &&
 						products.map(
 							(item, index) =>
@@ -56,9 +48,9 @@ const RelatedProducts = (props) => {
 									/>
 								)
 						)}
-				</FlexContainer>
+				</div>
 			</Loading>
-		</FlexContainer>
+		</div>
 	);
 };
 

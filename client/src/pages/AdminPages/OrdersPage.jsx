@@ -39,11 +39,17 @@ const OrdersPage = (props) => {
 		dispatch(deleteOrder(order._id));
 	};
 
+	// const colors = [
+	// 	{ name: 'Not Paid', color: '#333333' },
+	// 	{ name: 'Paid', color: '#626262' },
+	// 	{ name: 'Shipped', color: '#8e8e8e' },
+	// 	{ name: 'Delivered', color: '#ababab' }
+	// ];
 	const colors = [
-		{ name: 'Not Paid', color: '#333333' },
-		{ name: 'Paid', color: '#626262' },
-		{ name: 'Shipped', color: '#8e8e8e' },
-		{ name: 'Delivered', color: '#ababab' }
+		{ name: 'Not Paid', color: '#6d3e3e' },
+		{ name: 'Paid', color: '#3e4c6d' },
+		{ name: 'Shipped', color: '#636363' },
+		{ name: 'Delivered', color: '#333333' }
 	];
 
 	const determine_color = (order) => {

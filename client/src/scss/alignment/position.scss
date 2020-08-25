@@ -10,6 +10,18 @@
 		left: $i + px !important;
 	}
 }
+// - Left px
+@for $i from 0 to 40 {
+	.left-n#{$i}rem {
+		left: -$i + rem !important;
+	}
+}
+// - Left rem
+@for $i from 0 to 100 {
+	.left-n#{$i}px {
+		left: -$i + px !important;
+	}
+}
 // Top rem
 @for $i from 0 to 40 {
 	.top-#{$i}rem {
@@ -48,12 +60,18 @@
 }
 
 .pos-rel {
-	position: relative;
+	position: relative !important;
 }
 
 .pos-abs {
-	position: absolute;
+	position: absolute !important;
 }
 .pos-fix {
-	position: fixed;
+	position: fixed !important;
+}
+.vis-hid {
+	visibility: hidden !important;
+}
+.overflow-s {
+	overflow-x: scroll !important;
 }
