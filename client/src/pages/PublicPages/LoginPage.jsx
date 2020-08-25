@@ -115,7 +115,7 @@ const LoginPage = (props) => {
 					<li>
 						<Link
 							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-							className="button secondary text-center"
+							className="button primary text-center"
 						>
 							Create Account
 						</Link>

@@ -44,14 +44,14 @@ const ProductPage = (props) => {
 				<FlexContainer h_between>
 					<FlexContainer styles={{ marginBottom: 10 }}>
 						<Link to="/collections/all/products">
-							<button class="button primary">Back to Products</button>
+							<button class="button secondary">Back to Products</button>
 						</Link>
 					</FlexContainer>
 					{/* {console.log(props.match.params.pathname)} */}
 					{userInfo &&
 					userInfo.isAdmin && (
 						<Link to={'/secure/glow/editproduct/' + props.match.params.pathname}>
-							<button className="button primary" style={{ width: '156px' }}>
+							<button className="button secondary" style={{ width: '156px' }}>
 								Edit Product
 							</button>
 						</Link>

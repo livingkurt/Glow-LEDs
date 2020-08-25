@@ -236,7 +236,9 @@ const PlaceOrderPage = (props) => {
 			{console.log(shipping === {})}
 			{console.log(shipping === '')}
 			{/* {set_place_order_state(shipping === {})} */}
-			{shipping && shipping.hasOwnProperty('first_name') ? (
+			{successPay ? (
+				<CheckoutSteps step1 step2 step3 step4 />
+			) : shipping && shipping.hasOwnProperty('first_name') ? (
 				<CheckoutSteps step1 step2 step3 />
 			) : (
 				<CheckoutSteps step1 />
