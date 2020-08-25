@@ -35,38 +35,33 @@ const ExpensesPage = (props) => {
 		dispatch(deleteExpense(expense._id));
 	};
 
-	const sale_price_switch = (expense) => {
-		if (expense.sale_price !== 0) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>
-							${expense.price ? expense.price.toFixed(2) : expense.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${expense.sale_price ? (
-						expense.sale_price.toFixed(2)
-					) : (
-						expense.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!expense.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white', marginRight: '7px' }}>
-							${expense.price ? expense.price.toFixed(2) : expense.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" />
-					<label style={{ marginLeft: '7px' }}>Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${expense.price ? expense.price.toFixed(2) : expense.price}</label>;
+	const colors = [
+		{ name: 'Supplies', color: '#6d3e3e' },
+		{ name: 'Website', color: '#6d3e5c' },
+		{ name: 'Shipping', color: '#3e4c6d' },
+		{ name: 'Business', color: '#6d5a3e' },
+		{ name: 'Equipment', color: '#3f6561' }
+	];
+
+	const determine_color = (expense) => {
+		let result = '';
+		if (expense.category === 'Supplies') {
+			result = colors[0].color;
 		}
+		if (expense.category === 'Website') {
+			result = colors[1].color;
+		}
+		if (expense.category === 'Shipping') {
+			result = colors[2].color;
+		}
+		if (expense.category === 'Business') {
+			result = colors[3].color;
+		}
+		if (expense.category === 'Equipment') {
+			result = colors[4].color;
+		}
+		console.log(result);
+		return result;
 	};
 
 	return (
@@ -75,9 +70,22 @@ const ExpensesPage = (props) => {
 				<title>Admin Expenses | Glow LEDs</title>
 			</MetaTags>
 			<FlexContainer wrap h_between>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-					<label style={{ marginRight: '1rem' }}>Hidden</label>
-					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
+				<FlexContainer h_between wrap>
+					{colors.map((color) => {
+						return (
+							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+								<label style={{ marginRight: '1rem' }}>{color.name}</label>
+								<div
+									style={{
+										backgroundColor: color.color,
+										height: '20px',
+										width: '60px',
+										borderRadius: '5px'
+									}}
+								/>
+							</FlexContainer>
+						);
+					})}
 				</FlexContainer>
 				<Link to="/secure/glow/editexpense">
 					<button className="button primary" style={{ width: '160px' }}>
@@ -170,7 +178,7 @@ const ExpensesPage = (props) => {
 									<tr
 										key={expense._id}
 										style={{
-											backgroundColor: expense.hidden ? colors.hidden : '#626262',
+											backgroundColor: determine_color(expense),
 											fontSize: '1.4rem'
 										}}
 									>
