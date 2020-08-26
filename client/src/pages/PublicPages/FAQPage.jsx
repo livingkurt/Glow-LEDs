@@ -60,20 +60,20 @@ const FAQPage = () => {
 								Now it should look like you have flat top domes inside your gloves.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Grip <label style={{ marginRight: '9px' }}>🤏</label>️the diffuser adapter from outside
+								Grip <span style={{ marginRight: '9px' }}>🤏</span>️the diffuser adapter from outside
 								the glove, do not only hold by microlight or the diffuser adapter might spin on the bulb
 								and wont screw in properly or you risk causing extra stress to the bulb.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Take your cap <label style={{ marginRight: '9px' }}>👑</label>️, and place it over top
-								of your glove and adapter and screw <label style={{ marginRight: '9px' }}>🔩</label>️ in
-								the cap like you would a jar 🍯.
+								Take your cap <span style={{ marginRight: '9px' }}>👑</span>️, and place it over top of
+								your glove and adapter and screw <span style={{ marginRight: '9px' }}>🔩</span>️ in the
+								cap like you would a jar 🍯.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								The threads should catch and only needs a single turn{' '}
-								<label style={{ marginRight: '5px' }}>🌀</label>️to become snug. Do not over tighten or
+								<span style={{ marginRight: '5px' }}>🌀</span>️to become snug. Do not over tighten or
 								push the cap on. Let the threads do the work{' '}
-								<label style={{ marginRight: '2px' }}>💫</label>️ .
+								<span style={{ marginRight: '2px' }}>💫</span>️ .
 							</li>
 						</ul>
 					</div>
@@ -82,66 +82,66 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								A single 100% refundable deposit of $9.99{' '}
-								<label style={{ marginRight: '5px' }}>💸</label>️ is required to hold your place in line
-								and to be seen for a consultation <label style={{ marginRight: '5px' }}>👨‍⚕️</label>️.
-								The deposit will be deducted from the total price.
+								A single 100% refundable deposit of $9.99 <span style={{ marginRight: '5px' }}>💸</span>️
+								is required to hold your place in line and to be seen for a consultation{' '}
+								<span style={{ marginRight: '5px' }}>👨‍⚕️</span>️. The deposit will be deducted from
+								the total price.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								The total price <label style={{ marginRight: '5px' }}>💸</label>️ for a single design
+								The total price <span style={{ marginRight: '5px' }}>💸</span>️ for a single design
 								starts at $40. The price may vary based on the intricacy of the design and materials
-								used <label style={{ marginRight: '5px' }}>🧐</label>️. If multiple designs are desired,
+								used <span style={{ marginRight: '5px' }}>🧐</span>️. If multiple designs are desired,
 								you will have to pay a similar price per design{' '}
-								<label style={{ marginRight: '5px' }}>✨</label>️.
+								<span style={{ marginRight: '5px' }}>✨</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								This includes 10 custom diffuser caps <label style={{ marginRight: '5px' }}>🧢</label>️
+								This includes 10 custom diffuser caps <span style={{ marginRight: '5px' }}>🧢</span>️
 								and 10 diffuser adapters.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								As soon as you pay your deposit <label style={{ marginRight: '5px' }}>💸</label>️,
-								please use the contact button <label style={{ marginRight: '5px' }}>📞</label>️ and send{' '}
-								us your ideas and inspirational pictures{' '}
-								<label style={{ marginRight: '11px' }}>🌈</label>️. Also include your preferred method
-								of contact (an e-mail address <label style={{ marginRight: '5px' }}>📧 </label>️, phone
-								number <label style={{ marginRight: '5px' }}>📞</label>️ or social media username{' '}
+								As soon as you pay your deposit <span style={{ marginRight: '5px' }}>💸</span>️, please
+								use the contact button <span style={{ marginRight: '5px' }}>📞</span>️ and send us your
+								ideas and inspirational pictures <span style={{ marginRight: '11px' }}>🌈</span>️. Also
+								include your preferred method of contact (an e-mail address{' '}
+								<span style={{ marginRight: '5px' }}>📧 </span>️, phone number{' '}
+								<span style={{ marginRight: '5px' }}>📞</span>️ or social media username{' '}
 								<i class="fab fa-facebook" /> <i class="fab fa-instagram" />.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								A design will be drafted by us 📝, price will be determined, prototypes will be made{' '}
-								<label style={{ marginRight: '5px' }}>🏗️</label>️ and we will show you our results{' '}
-								<label style={{ marginRight: '5px' }}>🔥</label>️.
+								<span style={{ marginRight: '5px' }}>🏗️</span>️ and we will show you our results{' '}
+								<span style={{ marginRight: '5px' }}>🔥</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								If we determine we are unable to produce what you are desiring, or you are unsatisfied
 								with the results, we will refund your $10 deposit{' '}
-								<label style={{ marginRight: '5px' }}>💸</label>️. If you wish to proceed, the final
+								<span style={{ marginRight: '5px' }}>💸</span>️. If you wish to proceed, the final
 								payment will be required and we will ship them out to you{' '}
-								<label style={{ marginRight: '5px' }}>🚚</label>️.
+								<span style={{ marginRight: '5px' }}>🚚</span>️.
 							</li>
 
 							<li style={{ lineHeight: '25px' }}>
-								Processing <label style={{ marginRight: '5px' }}>📦</label>️ and shipping times{' '}
-								<label style={{ marginRight: '5px' }}>🚚</label>️ depend on how many orders are ahead of
-								you <label style={{ marginRight: '5px' }}>⏩</label>️. If you would like an estimate 📝
-								please reach out to us <label style={{ marginRight: '5px' }}>📞</label>.
+								Processing <span style={{ marginRight: '5px' }}>📦</span>️ and shipping times{' '}
+								<span style={{ marginRight: '5px' }}>🚚</span>️ depend on how many orders are ahead of
+								you <span style={{ marginRight: '5px' }}>⏩</span>️. If you would like an estimate 📝
+								please reach out to us <span style={{ marginRight: '5px' }}>📞</span>.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								We respect others intellectual property{' '}
-								<label style={{ marginRight: '5px' }}>🏘️</label>. Any designs that are trademarked or
-								Copyrighted <label style={{ marginRight: '5px' }}></label>
+								We respect others intellectual property <span style={{ marginRight: '5px' }}>🏘️</span>.
+								Any designs that are trademarked or Copyrighted{' '}
+								<span style={{ marginRight: '5px' }}></span>
 								will not be redistributed without permission{' '}
-								<label style={{ marginRight: '5px' }}>🚫</label>.
+								<span style={{ marginRight: '5px' }}>🚫</span>.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Sometimes your custom requests are already in our make list 📝. When this happens, you
 								may see your design idea come up for sale on the website later on{' '}
-								<label style={{ marginRight: '5px' }}>🛍</label>️. While we can't guarantee you'll be
-								the only glover to receive this set, we're excited to make you the first{' '}
-								<label style={{ marginRight: '5px' }}>😄</label>️! If you have an idea for a common
-								shape or pattern feel free to send it <label style={{ marginRight: '5px' }}>📦</label>️
-								as a suggestion and we may have it on the website in the near future{' '}
-								<label style={{ marginRight: '5px' }}>🔮</label>️!
+								<span style={{ marginRight: '5px' }}>🛍</span>️. While we can't guarantee you'll be the
+								only glover to receive this set, we're excited to make you the first{' '}
+								<span style={{ marginRight: '5px' }}>😄</span>️! If you have an idea for a common shape
+								or pattern feel free to send it <span style={{ marginRight: '5px' }}>📦</span>️ as a
+								suggestion and we may have it on the website in the near future{' '}
+								<span style={{ marginRight: '5px' }}>🔮</span>️!
 							</li>
 						</ul>
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
@@ -150,12 +150,12 @@ const FAQPage = () => {
 								Before ordering a custom infinity mirror a consultation must be had 📝.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Use the contact button <label style={{ marginRight: '5px' }}>📞</label>️ to send us a
-								message with inspirational pictures <label style={{ marginRight: '5px' }}>⛰️</label>️,
-								appoximate dimmensions <label style={{ marginRight: '5px' }}>📐</label>️ and any other
-								details to explain your vision <label style={{ marginRight: '11px' }}>🌈</label>️and we
+								Use the contact button <span style={{ marginRight: '5px' }}>📞</span>️ to send us a
+								message with inspirational pictures <span style={{ marginRight: '5px' }}>⛰️</span>️,
+								appoximate dimmensions <span style={{ marginRight: '5px' }}>📐</span>️ and any other
+								details to explain your vision <span style={{ marginRight: '11px' }}>🌈</span>️and we
 								will create a detailed invoice and design 📝. Also include your preferred method of
-								contact <label style={{ marginRight: '5px' }}>📞</label>️å (an e-mail address, phone
+								contact <span style={{ marginRight: '5px' }}>📞</span>️å (an e-mail address, phone
 								number or social media username).
 							</li>
 							<li style={{ lineHeight: '25px' }}>
@@ -175,13 +175,13 @@ const FAQPage = () => {
 						<p style={{ lineHeight: '25px' }}>
 							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
 							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
-							<label style={{ marginRight: '3px' }}>❤</label>️ to see how you put our products to use. To
-							be featured <label style={{ marginRight: '0px' }}>📸</label>️ on our social media or website
-							send <label style={{ marginRight: '9px' }}>✉️</label>️us your videos{' '}
-							<label style={{ marginRight: '5px' }}>📹 </label>️direcly using the Contact button{' '}
-							<label style={{ marginRight: '5px' }}>📞</label>️ here on the website. You will be given a
+							<span style={{ marginRight: '3px' }}>❤</span>️ to see how you put our products to use. To be
+							featured <span style={{ marginRight: '0px' }}>📸</span>️ on our social media or website send{' '}
+							<span style={{ marginRight: '9px' }}>✉️</span>️us your videos{' '}
+							<span style={{ marginRight: '5px' }}>📹 </span>️direcly using the Contact button{' '}
+							<span style={{ marginRight: '5px' }}>📞</span>️ here on the website. You will be given a
 							wetransfer link where you can send us your content to be featured{' '}
-							<label style={{ marginRight: '5px' }}>🌟</label>️.
+							<span style={{ marginRight: '5px' }}>🌟</span>️.
 						</p>
 						<Link to="/pages/contact/submit_content_to_be_featured">
 							<FlexContainer h_center>
@@ -197,37 +197,34 @@ const FAQPage = () => {
 						<ul style={{ padding: '18px', marginBottom: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Glow-LEDs.com is headquartered in Austin, Texas{' '}
-								<label style={{ marginRight: '3px' }}>🇨🇱</label>️ and orders are processed as they are
-								received <label style={{ marginRight: '5px' }}>📨</label>️. Products are not stocked
+								<span style={{ marginRight: '3px' }}>🇨🇱</span>️ and orders are processed as they are
+								received <span style={{ marginRight: '5px' }}>📨</span>️. Products are not stocked
 								waiting to be shipped at this time. Each order will be filled as it is received. Some
 								orders may take longer than others to be shipped.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Small packages will be sent via USPS <i class="fab fa-usps" /> First Class and large
-								packages <label style={{ marginRight: '5px' }}>📦</label>️will be sent via Priority
-								Mail.
+								packages <span style={{ marginRight: '5px' }}>📦</span>️will be sent via Priority Mail.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Shipping time is 1-3 business days <label style={{ marginRight: '5px' }}>🚚</label>️.
+								Shipping time is 1-3 business days <span style={{ marginRight: '5px' }}>🚚</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								All shipments come with tracking numbers{' '}
-								<label style={{ marginRight: '5px' }}>🔢</label>️.
+								All shipments come with tracking numbers <span style={{ marginRight: '5px' }}>🔢</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Not responsible for delays due to post office{' '}
-								<label style={{ marginRight: '5px' }}>🏤</label>️.
+								<span style={{ marginRight: '5px' }}>🏤</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								For glove accessories (caps, adapters, diffusers, battery storage) we will get your
-								order in the mail <label style={{ marginRight: '5px' }}>✉️ </label>️ within
-								approximately 1-3 days <label style={{ marginRight: '5px' }}>🗓 </label>️after the order
-								is placed.
+								order in the mail <span style={{ marginRight: '5px' }}>✉️ </span>️ within approximately
+								1-3 days <span style={{ marginRight: '5px' }}>🗓 </span>️after the order is placed.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								For string lights <label style={{ marginRight: '5px' }}>💡</label>️we will get your
-								order in the mail <label style={{ marginRight: '5px' }}>✉️ </label>️within approximately
-								1 week after the order is placed.
+								For string lights <span style={{ marginRight: '5px' }}>💡</span>️we will get your order
+								in the mail <span style={{ marginRight: '5px' }}>✉️ </span>️within approximately 1 week
+								after the order is placed.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								For infinity mirrors, expect a longer processing time. Assembly of infinity mirrors is
@@ -237,7 +234,7 @@ const FAQPage = () => {
 								If a custom order is placed, processing times will be discussed during consultation.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								If the address on your order is incorrect, please contact us<label style={{ marginRight: '5px' }}>📞</label>️
+								If the address on your order is incorrect, please contact us<span style={{ marginRight: '5px' }}>📞</span>️
 								immediately at info.glowleds@gmail.com
 							</li>
 						</ul>
@@ -251,12 +248,12 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center' }}>International Shipping</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
-								We ship internationally! <label style={{ marginRight: '5px' }}>🌎</label>️
+								We ship internationally! <span style={{ marginRight: '5px' }}>🌎</span>️
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								IMPORTANT: If you live outside of the United States{' '}
-								<label style={{ marginRight: '5px' }}>🇺🇸</label>️ please check the international
-								checkbox when filling out shipping <label style={{ marginRight: '5px' }}>🚚</label>️
+								<span style={{ marginRight: '5px' }}>🇺🇸</span>️ please check the international
+								checkbox when filling out shipping <span style={{ marginRight: '5px' }}>🚚</span>️
 								information. A country field will show for you to input your country.
 							</li>
 							{/* <li style={{ lineHeight: '25px' }}>
@@ -269,12 +266,11 @@ const FAQPage = () => {
 								Shipping times will vary, and will depend on the country.
 							</li> */}
 							<li style={{ lineHeight: '25px' }}>
-								All shipments come with tracking numbers{' '}
-								<label style={{ marginRight: '5px' }}>🔢</label>️.
+								All shipments come with tracking numbers <span style={{ marginRight: '5px' }}>🔢</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Please contact us <label style={{ marginRight: '5px' }}>📞</label>️ if you have
-								questions <label style={{ marginRight: '5px' }}>❓</label>️
+								Please contact us <span style={{ marginRight: '5px' }}>📞</span>️ if you have questions{' '}
+								<span style={{ marginRight: '5px' }}>❓</span>️
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
@@ -289,17 +285,17 @@ const FAQPage = () => {
 						<h1 style={{ textAlign: 'center' }}>Returns/Cancellations</h1>
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								100% satisfaction guarantee <label style={{ marginRight: '5px' }}>💯</label>️. We accept
+								100% satisfaction guarantee <span style={{ marginRight: '5px' }}>💯</span>️. We accept
 								returns within 14 days of delivery .
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								To initiate a return please contact <label style={{ marginRight: '5px' }}>📞</label>️
-								info.glowleds@gmail.com and You will be supplied with a prepaid shipping label{' '}
-								<label style={{ marginRight: '5px' }}>🏷️</label>️to send back your product.
+								To initiate a return please contact <span style={{ marginRight: '5px' }}>📞</span>️
+								info.glowleds@gmail.com and You will be supplied with a prepaid shipping span{' '}
+								<span style={{ marginRight: '5px' }}>🏷️</span>️to send back your product.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Please include your full name and order number{' '}
-								<label style={{ marginRight: '9px' }}>🔢</label>️in the return shipment and you will be
+								<span style={{ marginRight: '9px' }}>🔢</span>️in the return shipment and you will be
 								refunded the full amount minus original shipping costs.
 							</li>
 							{/* <li style={{ lineHeight: '25px' }}>
@@ -308,22 +304,22 @@ const FAQPage = () => {
 							<li style={{ lineHeight: '25px' }}>Custom items are non-refundable .</li>
 							<li style={{ lineHeight: '25px' }}>
 								Refunds are returned to the original form of payment{' '}
-								<label style={{ marginRight: '5px' }}>💳</label>️
+								<span style={{ marginRight: '5px' }}>💳</span>️
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								We do not refund damaged <label style={{ marginRight: '5px' }}>🤕</label>️items unless
+								We do not refund damaged <span style={{ marginRight: '5px' }}>🤕</span>️items unless
 								they arrived damaged at our own fault.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								If item arrives damamged in any way please contact us{' '}
-								<label style={{ marginRight: '5px' }}>📞</label>️ immediately at info.glowleds@gmail.com
+								<span style={{ marginRight: '5px' }}>📞</span>️ immediately at info.glowleds@gmail.com
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Our online orders process immediately <label style={{ marginRight: '10px' }}>💨</label>️to
+								Our online orders process immediately <span style={{ marginRight: '10px' }}>💨</span>️to
 								ensure our clients receive their products as soon as possible. If you would like to
-								cancel <label style={{ marginRight: '10px' }}>🚫</label>️your order you must contact{' '}
-								<label style={{ marginRight: '5px' }}>📞</label>️ us within one hour of payment{' '}
-								<label style={{ marginRight: '5px' }}>💳</label>️.
+								cancel <span style={{ marginRight: '10px' }}>🚫</span>️your order you must contact{' '}
+								<span style={{ marginRight: '5px' }}>📞</span>️ us within one hour of payment{' '}
+								<span style={{ marginRight: '5px' }}>💳</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								We are not able to modify orders. If you would like to add an item you will need to do
