@@ -127,13 +127,13 @@ const ControlPanelPage = (props) => {
 	// 	// });
 	// };
 
-	const initialize_occurance_chart = (occurances) => {
+	const initialize_occurance_chart = (occurrences) => {
 		const expense_chartRef = chartRef.current.getContext('2d');
-		const multiplier = 360 / occurances.length;
+		const multiplier = 360 / occurrences.length;
 
 		let num = 0;
 		console.log(
-			occurances.map((item) => {
+			occurrences.map((item) => {
 				num += multiplier;
 				// return `hsl(${num}, 100%, 50%)`;
 				let color = hslToHex(num, 100, 50);
@@ -144,16 +144,16 @@ const ControlPanelPage = (props) => {
 			type: 'bar',
 			data: {
 				//Bring in data
-				labels: occurances.map((product) => product.name),
+				labels: occurrences.map((product) => product.name),
 				datasets: [
 					{
 						label: 'Product',
-						data: occurances.map((product) => product.occurance),
+						data: occurrences.map((product) => product.occurrence),
 						fill: true,
 						borderColor: '#3e4c6d',
 						// backgroundColor: '#333333',
 						// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
-						backgroundColor: occurances.map((item) => {
+						backgroundColor: occurrences.map((item) => {
 							num += multiplier;
 							let color = hslToHex(num, 100, 50);
 							// return `hsl(${num}, 50%, 100%)`;
@@ -185,7 +185,7 @@ const ControlPanelPage = (props) => {
 				title: {
 					display: false,
 					fontColor: 'white',
-					text: 'Occurances'
+					text: 'Occurrences'
 				},
 				scales: {
 					xAxes: [
@@ -233,22 +233,22 @@ const ControlPanelPage = (props) => {
 	const get_product_names = async () => {
 		const array_of_ids = Object.keys(occurrence(orders));
 		const { data: names } = await API.get_product_names(array_of_ids);
-		let occurances = [];
+		let occurrences = [];
 		for (let i = 0; i < names.length; i++) {
 			Object.keys(occurrence(orders)).map((item) => {
 				if (item === names[i]._id) {
-					occurances = [
-						...occurances,
-						{ name: names[i].name, occurance: occurrence(orders)[names[i]._id].length }
+					occurrences = [
+						...occurrences,
+						{ name: names[i].name, occurrence: occurrence(orders)[names[i]._id].length }
 					];
 				}
 			});
 		}
-		console.log(occurances);
-		// occurances.sort((a, b) => (a.occurance > b.occurance ? -1 : 1));
-		console.log(occurances.sort((a, b) => (a.occurance > b.occurance ? -1 : 1)));
-		set_product_occurances(occurances);
-		initialize_occurance_chart(occurances);
+		console.log(occurrences);
+		// occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
+		console.log(occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1)));
+		set_product_occurances(occurrences);
+		initialize_occurance_chart(occurrences);
 	};
 	return (
 		<div class="main_container">
@@ -374,7 +374,7 @@ const ControlPanelPage = (props) => {
 					</div>
 				)}
 			</FlexContainer>
-			<h1 className="ta-c w-100per jc-c">Occurances</h1>
+			<h1 className="ta-c w-100per jc-c">Occurrences</h1>
 			<canvas id="expense_chart" ref={chartRef} />
 			{orders && (
 				<div className="order-list responsive_table">
@@ -382,7 +382,7 @@ const ControlPanelPage = (props) => {
 						<thead>
 							<tr>
 								<th>Category</th>
-								<th>Number of Occurances</th>
+								<th>Number of Occurrences</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -398,7 +398,7 @@ const ControlPanelPage = (props) => {
 										className=""
 									>
 										<th style={{ padding: '15px' }}>{item.name}</th>
-										<th style={{ padding: '15px' }}>{item.occurance}</th>
+										<th style={{ padding: '15px' }}>{item.occurrence}</th>
 									</tr>
 								);
 							})}
