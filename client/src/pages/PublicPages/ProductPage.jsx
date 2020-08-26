@@ -205,8 +205,8 @@ const ProductPage = (props) => {
 									)}
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
-										<FlexContainer v_i_center styles={{ height: '25px' }}>
-											Qty: {/* {cartItems.find((item) => item.pathname === product._id)} */}
+										{/* <FlexContainer v_i_center styles={{ height: '25px' }}>
+											Qty: 
 											<div className="qty_select_dropdown_container">
 												<select
 													defaultValue={qty}
@@ -222,6 +222,28 @@ const ProductPage = (props) => {
 													))}
 												</select>
 												<i className="fas fa-sort-up icon_styles" />
+											</div>
+                      
+										</FlexContainer> */}
+										<FlexContainer v_i_center styles={{ height: '25px' }}>
+											<label aria-label="sortOrder" htmlFor="sortOrder" className="select-label">
+												Qty
+											</label>
+											<div className="custom-select">
+												<select
+													defaultValue={qty}
+													className="qty_select_dropdown"
+													onChange={(e) => {
+														setQty(e.target.value);
+													}}
+												>
+													{[ ...Array(product.countInStock).keys() ].map((x) => (
+														<option key={x + 1} defaultValue={x + 1}>
+															{x + 1}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
 											</div>
 										</FlexContainer>
 										<h4 style={{ marginBottom: 0, marginTop: 11 }}>

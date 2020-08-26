@@ -191,7 +191,48 @@ const ContactPage = (props) => {
 
 				<label>Reason for Contact</label>
 				{/* <input onChange={(e) => set_}defaultValue={} className="zoom_f form_input" type="text" name="order_number" placeholder="Order Number" /> */}
-				<select
+
+				<div className="custom-select mt-8px mb-15px">
+					<select
+						onChange={(e) => set_reason_for_contact(e.target.value)}
+						defaultValue={reason_for_contact}
+						value={reason_for_contact}
+						className=" contact_dropdown full-width"
+						name="reason_for_contact"
+						placeholder="----Click Here to Choose Reason----"
+					>
+						<option className="grey_option" disabled="disabled" selected="selected" value="">
+							----Click Here to Choose Reason----
+						</option>
+
+						<option className="options" value="did_not_recieve_verification_email">
+							Did not Recieve Verification Email
+						</option>
+						<option className="options" value="order_issues">
+							Order Issues
+						</option>
+						<option className="options" value="returns">
+							Returns
+						</option>
+						<option className="options" value="technical_support">
+							Technical Support
+						</option>
+						<option className="options" value="website_bugs">
+							Website Bugs
+						</option>
+						<option className="options" value="custom_orders">
+							Custom Orders
+						</option>
+						<option className="options" value="product_suggestions">
+							Product Suggestions
+						</option>
+						<option className="options" value="submit_content_to_be_featured">
+							Submit Content to be Featured
+						</option>
+					</select>
+					<span className="custom-arrow" />
+				</div>
+				{/* <select
 					onChange={(e) => set_reason_for_contact(e.target.value)}
 					defaultValue={reason_for_contact}
 					value={reason_for_contact}
@@ -227,7 +268,7 @@ const ContactPage = (props) => {
 					<option className="options" value="submit_content_to_be_featured">
 						Submit Content to be Featured
 					</option>
-				</select>
+				</select> */}
 				<label className="validation_text">{reason_for_contact_validations}</label>
 				{console.log({ reason_for_contact })}
 				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (

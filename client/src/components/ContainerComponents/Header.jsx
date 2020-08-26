@@ -165,7 +165,7 @@ const Header = (props) => {
 				</div>
 				<FlexContainer class="nav_bar w-233px jc-e">
 					<Link to="/checkout/cart">
-						<button className=" button nav cart_text">
+						<button className=" button nav cart_text w-105px">
 							Cart <i className="fas fa-shopping-cart" />{' '}
 							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 						</button>
