@@ -131,7 +131,7 @@ const ControlPanelPage = (props) => {
 		const expense_chartRef = chartRef.current.getContext('2d');
 		const multiplier = 360 / occurrences.length;
 
-		let num = 0;
+		let num = -multiplier;
 		console.log(
 			occurrences.map((item) => {
 				num += multiplier;
