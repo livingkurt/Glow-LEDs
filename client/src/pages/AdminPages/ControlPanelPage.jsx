@@ -141,6 +141,8 @@ const ControlPanelPage = (props) => {
 			});
 		}
 		console.log(occurances);
+		// occurances.sort((a, b) => (a.occurance > b.occurance ? -1 : 1));
+		console.log(occurances.sort((a, b) => (a.occurance > b.occurance ? -1 : 1)));
 		set_product_occurances(occurances);
 	};
 	return (
