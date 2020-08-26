@@ -130,7 +130,7 @@ const ControlPanelPage = (props) => {
 		const expense_chartRef = chartRef.current.getContext('2d');
 
 		new Chart(expense_chartRef, {
-			type: 'line',
+			type: 'bar',
 			data: {
 				//Bring in data
 				labels: occurances.map((product) => product.name),
