@@ -7,7 +7,7 @@ import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
 // import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
-import { occurrence } from '../../utils/helper_functions';
+import { occurrence, hslToHex } from '../../utils/helper_functions';
 import API from '../../utils/API';
 
 const colors = {
@@ -126,9 +126,20 @@ const ControlPanelPage = (props) => {
 	// 	// 	options: {}
 	// 	// });
 	// };
+
 	const initialize_occurance_chart = (occurances) => {
 		const expense_chartRef = chartRef.current.getContext('2d');
+		const multiplier = 360 / occurances.length;
 
+		let num = 0;
+		console.log(
+			occurances.map((item) => {
+				num += multiplier;
+				// return `hsl(${num}, 100%, 50%)`;
+				let color = hslToHex(num, 100, 50);
+				return color;
+			})
+		);
 		new Chart(expense_chartRef, {
 			type: 'bar',
 			data: {
@@ -140,7 +151,14 @@ const ControlPanelPage = (props) => {
 						data: occurances.map((product) => product.occurance),
 						fill: true,
 						borderColor: '#3e4c6d',
-						backgroundColor: '#333333',
+						// backgroundColor: '#333333',
+						// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
+						backgroundColor: occurances.map((item) => {
+							num += multiplier;
+							let color = hslToHex(num, 100, 50);
+							// return `hsl(${num}, 50%, 100%)`;
+							return color;
+						}),
 						color: 'white'
 					}
 				]
