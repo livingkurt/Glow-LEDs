@@ -30,31 +30,58 @@ const FeaturedPage = (props) => {
 			</FlexContainer>
 
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
-				To show our appreciation we will be keeping an archive of the lightshows and product reviews that you
-				have so graciously given to us.
+				Here is an archive of the lightshows and product reviews that you have so graciously given to us. We
+				appreciate each and every one of you.
 			</p>
-			<p className="p_descriptions" style={{ textAlign: 'center' }}>
-				For Information on how to become featured on our pages. Check our Frequently Asked Questions page.
-			</p>
-			<Link to="/pages/faq">
-				<FlexContainer h_center>
-					<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-						Frequently Asked Questions
-					</button>
+			<div className="home_page_divs">
+				<FlexContainer h_center column>
+					<h1 style={{ textAlign: 'center' }}>Trump Light Show</h1>
+					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
+						Check out Trump with the Custom Tiger Diffuser Caps!
+					</p>
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Follow him @ Andrew Trump on Facebook and @emazingtrump on Instagram
+					</p>
+					<Link to="/collections/all/products/custom_diffuser_caps_deposit">
+						<FlexContainer h_center column>
+							<div className="p_descriptions" style={{ textAlign: 'center' }}>
+								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									Custom Diffuser Caps
+								</button>
+							</div>
+						</FlexContainer>
+					</Link>
 				</FlexContainer>
-			</Link>
-			{/* <FlexContainer h_center>
-				<h4> No Content Yet</h4>
-			</FlexContainer> */}
+				<FlexContainer h_center styles={{ position: 'relative' }}>
+					<div className="iframe-container">
+						<iframe
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/i9s4qEj4mGU?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</FlexContainer>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					For Information on how to become featured on our pages. Check our Frequently Asked Questions page.
+				</p>
+				<Link to="/pages/faq">
+					<FlexContainer h_center>
+						<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+							Frequently Asked Questions
+						</button>
+					</FlexContainer>
+				</Link>
+			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center column>
 					<h1 style={{ textAlign: 'center' }}>StarStream TuT Light Show</h1>
 					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
 						Check out StarStream TuT with the Gyrosphere Diffuser Caps!
 					</p>
-					{/* <p className="p_descriptions" style={{ textAlign: 'center', margin: 0 }}>
-						"If it doesn't work the first time, try to turn it off and then leave it off" -Keif
-					</p> */}
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Follow him @ Mckinnley Riojas on Facebook and @starstreamtut on Instagram
 					</p>
@@ -81,6 +108,16 @@ const FeaturedPage = (props) => {
 						/>
 					</div>
 				</FlexContainer>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					For Information on how to become featured on our pages. Check our Frequently Asked Questions page.
+				</p>
+				<Link to="/pages/faq">
+					<FlexContainer h_center>
+						<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+							Frequently Asked Questions
+						</button>
+					</FlexContainer>
+				</Link>
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center column>
@@ -117,6 +154,16 @@ const FeaturedPage = (props) => {
 						/>
 					</div>
 				</FlexContainer>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					For Information on how to become featured on our pages. Check our Frequently Asked Questions page.
+				</p>
+				<Link to="/pages/faq">
+					<FlexContainer h_center>
+						<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+							Frequently Asked Questions
+						</button>
+					</FlexContainer>
+				</Link>
 			</div>
 			{/* <div className="home_page_divs">
 				<FlexContainer h_center>
