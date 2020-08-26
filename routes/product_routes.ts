@@ -35,6 +35,13 @@ router.get('/', async (req, res) => {
 	res.send(products);
 });
 
+router.post('/array', async (req, res) => {
+	console.log(req.body);
+	const products = await Product.find({ _id: { $in: req.body } });
+	console.log(products);
+	res.send(products);
+});
+
 router.get('/:pathname', async (req, res) => {
 	const product = await Product.findOne({ pathname: req.params.pathname });
 	console.log({ product });

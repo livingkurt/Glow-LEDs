@@ -77,20 +77,23 @@ export const unformat_date = (formatted_date: string) => {
 
 export const occurrence = function(array: any) {
 	'use strict';
-	console.log(array);
+	// console.log(array);
 	var result: any = {};
 	if (array instanceof Array) {
 		// Check if input is array.
-		array.forEach(function(v: any, i: any) {
-			if (!result[v.category]) {
-				// Initial object property creation.
-				result[v.category] = [ i ]; // Create an array for that property.
-			} else {
-				// Same occurrences found.
-				result[v.category].push(i); // Fill the array.
-			}
-		});
+		for (let i of array) {
+			i.orderItems.forEach(function(v: any, i: any) {
+				if (!result[v.product]) {
+					// Initial object property creation.
+					result[v.product] = [ i ]; // Create an array for that property.
+				} else {
+					// Same occurrences found.
+					result[v.product].push(i); // Fill the array.
+				}
+			});
+		}
 	}
+
 	return result;
 };
 

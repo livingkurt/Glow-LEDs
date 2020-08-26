@@ -9,5 +9,9 @@ export default {
 	not_verified_email: function(userInfo: any) {
 		console.log({ not_paid_email: userInfo });
 		return axios.post('/api/emails/notverified', userInfo);
+	},
+	get_product_names: function(array: any) {
+		console.log({ not_paid_email: array });
+		return axios.post('/api/products/array', array);
 	}
 };
