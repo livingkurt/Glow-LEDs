@@ -16,6 +16,12 @@ import {
 	expenseSaveReducer,
 	expenseDeleteReducer
 } from './reducers/expenseReducers';
+import {
+	featureListReducer,
+	featureDetailsReducer,
+	featureSaveReducer,
+	featureDeleteReducer
+} from './reducers/featureReducers';
 import { cartReducer } from './reducers/cartReducers';
 import {
 	userLoginReducer,
@@ -76,7 +82,11 @@ const reducer = combineReducers({
 	expenseList: expenseListReducer,
 	expenseDetails: expenseDetailsReducer,
 	expenseSave: expenseSaveReducer,
-	expenseDelete: expenseDeleteReducer
+	expenseDelete: expenseDeleteReducer,
+	featureList: featureListReducer,
+	featureDetails: featureDetailsReducer,
+	featureSave: featureSaveReducer,
+	featureDelete: featureDeleteReducer
 });
 
 declare global {

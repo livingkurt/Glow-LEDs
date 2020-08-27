@@ -9,7 +9,15 @@ import mongoose from 'mongoose';
 // const requestIp = require('request-ip');
 const config = require('./config');
 const compression = require('compression');
-import { user_routes, product_routes, order_routes, email_routes, batch_routes, expense_routes } from './routes/index';
+import {
+	user_routes,
+	product_routes,
+	order_routes,
+	email_routes,
+	batch_routes,
+	expense_routes,
+	feature_routes
+} from './routes/index';
 
 // const htmlRoutes = require('./email_templates/html_routes');
 
@@ -46,6 +54,7 @@ app.use(sslRedirect());
 // );
 
 app.use('/api/expenses', expense_routes);
+app.use('/api/features', feature_routes);
 app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 export {};
-// const mongoose = require('mongoose');
 
 const featureSchema = new mongoose.Schema(
 	{
@@ -8,10 +7,12 @@ const featureSchema = new mongoose.Schema(
 		glover_name: { type: String },
 		instagram_handle: { type: String },
 		facebook_name: { type: String },
+		product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
 		song_id: { type: String },
 		quote: { type: String },
 		video: { type: String },
-		picture: { type: String }
+		picture: { type: String },
+		deleted: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true
@@ -21,5 +22,3 @@ const featureSchema = new mongoose.Schema(
 const featureModel = mongoose.model('Feature', featureSchema);
 
 export default featureModel;
-
-// module.exports = userModel;

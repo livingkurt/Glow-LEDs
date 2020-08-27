@@ -5,7 +5,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
-import { format_date_display_expenses, unformat_date } from '../../utils/helper_functions';
+import { format_date_display, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
 
 const EditExpensePage = (props) => {
@@ -55,7 +55,7 @@ const EditExpensePage = (props) => {
 	// 		set_application(expense.application);
 	// 		set_url(expense.url);
 	// 		set_place_of_purchase(expense.place_of_purchase);
-	// 		set_date_of_purchase(format_date_display_expenses(expense.date_of_purchase));
+	// 		set_date_of_purchase(format_date_display(expense.date_of_purchase));
 	// 		set_category(expense.category);
 	// 		set_card(expense.card);
 	// 		set_amount(expense.amount);
@@ -108,7 +108,7 @@ const EditExpensePage = (props) => {
 		set_application(expense.application);
 		set_url(expense.url);
 		set_place_of_purchase(expense.place_of_purchase);
-		set_date_of_purchase(format_date_display_expenses(expense.date_of_purchase));
+		set_date_of_purchase(format_date_display(expense.date_of_purchase));
 		set_category(expense.category);
 		set_card(expense.card);
 		set_amount(expense.amount);
@@ -132,7 +132,7 @@ const EditExpensePage = (props) => {
 	// 		set_application(expense.application);
 	// 		set_url(expense.url);
 	// 		set_place_of_purchase(expense.place_of_purchase);
-	// 		set_date_of_purchase(format_date_display_expenses(expense.date_of_purchase));
+	// 		set_date_of_purchase(format_date_display(expense.date_of_purchase));
 	// 		set_category(expense.category);
 	// 		set_card(expense.card);
 	// 		set_amount(expense.amount);
@@ -338,7 +338,7 @@ const EditExpensePage = (props) => {
 												<div>
 													<Rating value={review.rating} />
 												</div>
-												<div>{format_date_display_expenses(review.createdAt.substring(0, 10))}</div>
+												<div>{format_date_display(review.createdAt.substring(0, 10))}</div>
 												<div>{review.comment}</div>
 												<button
 													style={{ width: '100%' }}

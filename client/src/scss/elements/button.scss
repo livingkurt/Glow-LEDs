@@ -70,3 +70,76 @@ $br_large_containers: 2rem;
 	box-shadow: $bs_deep;
 	background-color: gray;
 }
+
+// Button
+
+.button {
+	box-shadow: $bs_shallow;
+	background-color: transparent;
+	color: $font_color;
+	border: 0px;
+	font-family: $main_font;
+	border-radius: $br_small_containers;
+	transition: all .5s ease;
+	padding: 10px;
+}
+
+.button:hover {
+	box-shadow: $bs_deep;
+	background-color: #bebcbc;
+}
+
+// .button.primary {
+// 	background-color: #586086;
+// }
+.button.primary {
+	background-color: #4d5061;
+}
+
+.button.primary:hover {
+	box-shadow: $bs_deep;
+	background-color: #393e55;
+}
+// .button.primary {
+// 	background-color: #865858;
+// }
+
+// .button.primary:hover {
+// 	box-shadow: $bs_deep;
+// 	background-color: #6b3636;
+// }
+
+.button.secondary {
+	background-color: #6a6c80;
+}
+
+.button.secondary:hover {
+	box-shadow: $bs_deep;
+	background-color: #4d5061;
+}
+
+.button.nav {
+	background-color: transparent;
+	box-shadow: unset;
+}
+
+.button.icon {
+	box-shadow: unset;
+	padding: 6px 10px;
+}
+
+.button.icon:hover {
+	background-color: gray;
+	box-shadow: $bs_deep;
+}
+
+.button.mobile.nav {
+	background-color: transparent;
+	box-shadow: unset;
+}
+
+.button.nav:hover,
+.button.mobile.nav:hover {
+	box-shadow: $bs_deep;
+	background-color: gray;
+}
