@@ -5,11 +5,38 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
+// router.get('/', async (req, res) => {
+// 	const category = req.query.category ? { category: req.query.category } : {};
+// 	const searchKeyword = req.query.searchKeyword
+// 		? {
+// 				name: {
+// 					$regex: req.query.searchKeyword,
+// 					$options: 'i'
+// 				}
+// 			}
+// 		: {};
+
+// 	let sortOrder = {};
+// 	if (req.query.sortOrder === 'lowest') {
+// 		sortOrder = { price: 1 };
+// 	} else if (req.query.sortOrder === 'highest') {
+// 		sortOrder = { price: -1 };
+// 	} else if (req.query.sortOrder === 'newest') {
+// 		sortOrder = { _id: -1 };
+// 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
+// 		sortOrder = { category: -1, createdAt: -1 };
+// 	}
+
+// 	// const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+// 	const features = await Feature.find({ deleted: false }).sort({ release_date: -1 });
+// 	// console.log(features);
+// 	res.send(features);
+// });
 router.get('/', async (req, res) => {
 	const category = req.query.category ? { category: req.query.category } : {};
 	const searchKeyword = req.query.searchKeyword
 		? {
-				name: {
+				facebook_name: {
 					$regex: req.query.searchKeyword,
 					$options: 'i'
 				}
@@ -17,18 +44,23 @@ router.get('/', async (req, res) => {
 		: {};
 
 	let sortOrder = {};
-	if (req.query.sortOrder === 'lowest') {
-		sortOrder = { price: 1 };
-	} else if (req.query.sortOrder === 'highest') {
-		sortOrder = { price: -1 };
+	if (req.query.sortOrder === 'glover name') {
+		sortOrder = { glover_name: 1 };
+	} else if (req.query.sortOrder === 'facebook name') {
+		sortOrder = { facebook_name: 1 };
+	} else if (req.query.sortOrder === 'song id') {
+		sortOrder = { song_id: 1 };
+	} else if (req.query.sortOrder === 'product') {
+		sortOrder = { product: 1 };
+	} else if (req.query.sortOrder === 'instagram handle') {
+		sortOrder = { instagram_handle: 1 };
+	} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
+		sortOrder = { release_date: -1 };
 	} else if (req.query.sortOrder === 'newest') {
 		sortOrder = { _id: -1 };
-	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-		sortOrder = { category: -1, createdAt: -1 };
 	}
 
-	// const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	const features = await Feature.find({ deleted: false }).sort({ release_date: -1 });
+	const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
 	// console.log(features);
 	res.send(features);
 });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listFeatures, deleteFeature } from '../../actions/featureActions';
 import { FlexContainer } from '../../components/ContainerComponents';
@@ -6,12 +6,16 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 import { format_date_display_expenses } from '../../utils/helper_functions';
+import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const colors = {
 	hidden: '#333333'
 };
 
 const FeaturesPage = (props) => {
+	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ sortOrder, setSortOrder ] = useState('');
+	const category = props.match.params.category ? props.match.params.category : '';
 	const featureList = useSelector((state) => state.featureList);
 	const { loading, features, error } = featureList;
 
@@ -30,6 +34,22 @@ const FeaturesPage = (props) => {
 			};
 		},
 		[ successSave, successDelete ]
+	);
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(listFeatures(category, searchKeyword, sortOrder));
+	};
+
+	const sortHandler = (e) => {
+		setSortOrder(e.target.value);
+		dispatch(listFeatures(category, searchKeyword, e.target.value));
+	};
+
+	useEffect(
+		() => {
+			dispatch(listFeatures(category, searchKeyword, sortOrder));
+		},
+		[ sortOrder ]
 	);
 	const deleteHandler = (feature) => {
 		dispatch(deleteFeature(feature._id));
@@ -63,6 +83,15 @@ const FeaturesPage = (props) => {
 		console.log(result);
 		return result;
 	};
+	const sort_options = [
+		'Release Date',
+		'Glover Name',
+		'Facebook Name',
+		'Instagram Handle',
+		'Product',
+		'Song ID',
+		'Newest'
+	];
 
 	return (
 		<div class="main_container">
@@ -96,6 +125,10 @@ const FeaturesPage = (props) => {
 
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Features</h1>
+			</FlexContainer>
+			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{features && (
