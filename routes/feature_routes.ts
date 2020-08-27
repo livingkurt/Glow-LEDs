@@ -58,6 +58,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 		feature.quote = req.body.quote;
 		feature.video = req.body.video;
 		feature.picture = req.body.picture;
+		feature.release_date = new Date(req.body.release_date);
 		feature.deleted = req.body.deleted || false;
 		const updatedFeature = await feature.save();
 		console.log({ feature_routes_post: updatedFeature });
@@ -83,23 +84,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	// const converted_id = req.body.id.toLowerCase()
 	console.log('Post');
-	// ISODate('2020-08-21T00:13:08.879Z');
-	// const converted_id = req.body.id.split(' ').join('_')
-	// const feature = new Feature({
-	// 	feature_name: req.body.feature_name,
-	// 	application: req.body.application,
-	// 	url: req.body.url,
-	// 	place_of_purchase: req.body.place_of_purchase,
-	// 	date_of_purchase: new Date(req.body.date_of_purchase),
-	// 	category: req.body.category,
-	// 	card: req.body.card,
-	// 	amount: req.body.amount,
-	// 	deleted: req.body.deleted || false
-	// });
-	// console.log({ feature_routes_post: feature });
-	// const newFeature = await feature.save();
 	const newFeature = await Feature.create({
 		user: req.body.user,
 		glover_name: req.body.glover_name,
@@ -110,6 +95,7 @@ router.post('/', async (req, res) => {
 		quote: req.body.quote,
 		video: req.body.video,
 		picture: req.body.picture,
+		release_date: new Date(req.body.release_date),
 		deleted: req.body.deleted || false
 	});
 	// console.log({ feature_routes_post: feature });

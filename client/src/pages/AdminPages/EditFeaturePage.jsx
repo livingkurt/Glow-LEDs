@@ -5,7 +5,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
-import { format_date_display_expenses, unformat_date } from '../../utils/helper_functions';
+import { format_date_display, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
 
 const EditFeaturePage = (props) => {
@@ -20,6 +20,7 @@ const EditFeaturePage = (props) => {
 	const [ song_id, set_song_id ] = useState('');
 	const [ video, set_video ] = useState('');
 	const [ picture, set_picture ] = useState('');
+	const [ release_date, set_release_date ] = useState('');
 	const [ loading_data, set_loading_data ] = useState(true);
 
 	const history = useHistory();
@@ -112,6 +113,7 @@ const EditFeaturePage = (props) => {
 		set_song_id(feature.song_id);
 		set_video(feature.video);
 		set_picture(feature.picture);
+		set_release_date(format_date_display(feature.release_date));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -123,6 +125,7 @@ const EditFeaturePage = (props) => {
 		set_song_id('');
 		set_video('');
 		set_picture('');
+		set_release_date('');
 	};
 
 	// useEffect(
@@ -157,7 +160,8 @@ const EditFeaturePage = (props) => {
 				product,
 				song_id,
 				video,
-				picture
+				picture,
+				release_date: unformat_date(release_date)
 			})
 		);
 		e.target.reset();
@@ -170,6 +174,7 @@ const EditFeaturePage = (props) => {
 		set_song_id('');
 		set_video('');
 		set_picture('');
+		set_release_date('');
 		// if (id) {
 		// 	history.push('/collections/all/features/' + id);
 		// } else {
@@ -286,6 +291,16 @@ const EditFeaturePage = (props) => {
 													value={picture}
 													id="picture"
 													onChange={(e) => set_picture(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="release_date">Release Date</label>
+												<input
+													type="text"
+													name="release_date"
+													value={release_date}
+													id="release_date"
+													onChange={(e) => set_release_date(e.target.value)}
 												/>
 											</li>
 										</FlexContainer>

@@ -104,6 +104,7 @@ const FeaturesPage = (props) => {
 							<thead>
 								<tr>
 									<th>user</th>
+									<th>Release Date</th>
 									<th>glover name</th>
 									<th>instagram handle</th>
 									<th>facebook name</th>
@@ -124,6 +125,9 @@ const FeaturesPage = (props) => {
 										}}
 									>
 										<td style={{ minWidth: '5rem' }}>{feature.user}</td>
+										<td style={{ minWidth: '15rem' }}>
+											{format_date_display_expenses(feature.release_date)}
+										</td>
 										<td style={{ minWidth: '15rem' }}>{feature.glover_name}</td>
 										<td style={{ minWidth: '10rem' }}>{feature.instagram_handle}</td>
 										<td style={{ minWidth: '15rem' }}>{feature.facebook_name}</td>
