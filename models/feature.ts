@@ -7,7 +7,7 @@ const featureSchema = new mongoose.Schema(
 		glover_name: { type: String },
 		instagram_handle: { type: String },
 		facebook_name: { type: String },
-		product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+		product: { type: String },
 		song_id: { type: String },
 		quote: { type: String },
 		video: { type: String },
