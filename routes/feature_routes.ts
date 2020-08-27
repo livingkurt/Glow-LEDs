@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 	}
 
 	// const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	const features = await Feature.find({ deleted: false }).sort({ date_of_purchase: -1 });
+	const features = await Feature.find({ deleted: false }).sort({ release_date: -1 });
 	// console.log(features);
 	res.send(features);
 });
