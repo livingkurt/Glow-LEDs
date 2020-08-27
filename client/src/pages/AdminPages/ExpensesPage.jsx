@@ -68,21 +68,21 @@ const ExpensesPage = (props) => {
 		dispatch(listExpenses(category, searchKeyword, e.target.value));
 	};
 
-	useEffect(() => {
-		dispatch(listExpenses());
-		return () => {
-			//
-		};
-	}, []);
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listExpenses());
-	// 		return () => {
-	// 			//
-	// 		};
-	// 	},
-	// 	[ successSave, successDelete ]
-	// );
+	// useEffect(() => {
+	// 	dispatch(listExpenses());
+	// 	return () => {
+	// 		//
+	// 	};
+	// }, []);
+	useEffect(
+		() => {
+			dispatch(listExpenses());
+			return () => {
+				//
+			};
+		},
+		[ successSave, successDelete ]
+	);
 	const deleteHandler = (expense) => {
 		dispatch(deleteExpense(expense._id));
 	};
@@ -118,7 +118,7 @@ const ExpensesPage = (props) => {
 
 	// const sort_options = [ 'All Expenses', 'Supplies', 'Website', 'Shipping', 'Business', 'Equipment' ];
 	// const sort_options = [ 'All Expenses', 'Supplies', 'Website', 'Shipping', 'Business', 'Equipment' ];
-	const sort_options = [ 'Date', 'Category', 'Newest', 'Lowest', 'Highest' ];
+	const sort_options = [ 'Date', 'Category', 'Application', 'Newest', 'Lowest', 'Highest' ];
 
 	return (
 		<div class="main_container">

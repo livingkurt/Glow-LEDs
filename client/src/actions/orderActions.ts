@@ -89,16 +89,27 @@ const listMyOrders = () => async (
 	}
 };
 
-const listOrders = () => async (
+const listOrders = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/orders', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
-		});
+		// const { data } = await axios.get('/api/orders', {
+		// 	headers: { Authorization: 'Bearer ' + userInfo.token }
+		// });
+		const { data } = await axios.get(
+			'/api/orders?category=' +
+				category +
+				'&searchKeyword=' +
+				searchKeyword +
+				'&sortOrder=' +
+				sortOrder.toLowerCase(),
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.token }
+			}
+		);
 		dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: ORDER_LIST_FAIL, payload: error.message });

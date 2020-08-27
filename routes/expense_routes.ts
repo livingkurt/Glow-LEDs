@@ -27,6 +27,8 @@ router.get('/', async (req, res) => {
 		sortOrder = { date_of_purchase: -1 };
 	} else if (req.query.sortOrder === 'category') {
 		sortOrder = { category: 1, createdAt: -1 };
+	} else if (req.query.sortOrder === 'application') {
+		sortOrder = { application: 1, createdAt: -1 };
 	}
 
 	const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);

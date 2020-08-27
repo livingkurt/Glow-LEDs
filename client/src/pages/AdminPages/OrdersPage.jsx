@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../../actions/orderActions';
@@ -6,8 +6,13 @@ import { format_date_display } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const OrdersPage = (props) => {
+	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ sortOrder, setSortOrder ] = useState('');
+
+	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, error } = orderList;
 
@@ -34,6 +39,22 @@ const OrdersPage = (props) => {
 		},
 		[ successDelete ]
 	);
+	useEffect(
+		() => {
+			dispatch(listOrders(category, searchKeyword, sortOrder));
+		},
+		[ sortOrder ]
+	);
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(listOrders(category, searchKeyword, sortOrder));
+	};
+
+	const sortHandler = (e) => {
+		setSortOrder(e.target.value);
+		dispatch(listOrders(category, searchKeyword, e.target.value));
+	};
 
 	const deleteHandler = (order) => {
 		dispatch(deleteOrder(order._id));
@@ -66,9 +87,11 @@ const OrdersPage = (props) => {
 		if (order.isDelivered) {
 			result = colors[3].color;
 		}
-		console.log(result);
+		// console.log(result);
 		return result;
 	};
+
+	const sort_options = [ 'Date', 'Paid', 'Shipped', 'Delievered', 'Newest', 'Lowest', 'Highest' ];
 
 	return (
 		<div class="main_container">
@@ -104,6 +127,10 @@ const OrdersPage = (props) => {
 					Orders
 				</h1>
 			</div>
+			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
+			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{orders && (
 					<div className="order-list responsive_table">

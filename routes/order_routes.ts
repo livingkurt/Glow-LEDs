@@ -10,10 +10,45 @@ const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 const router = express.Router();
 
+// router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
+// 	const orders = await Order.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
+// 	res.send(orders);
+// });
+
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const orders = await Order.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
+	const category = req.query.category ? { category: req.query.category } : {};
+	const searchKeyword = req.query.searchKeyword
+		? {
+				_id: {
+					$regex: req.query.searchKeyword,
+					$options: 'i'
+				}
+			}
+		: {};
+
+	let sortOrder = {};
+	if (req.query.sortOrder === 'lowest') {
+		sortOrder = { totalPrice: 1 };
+	} else if (req.query.sortOrder === 'highest') {
+		sortOrder = { totalPrice: -1 };
+	} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+		sortOrder = { createdAt: -1 };
+	} else if (req.query.sortOrder === 'paid') {
+		sortOrder = { isPaid: -1 };
+	} else if (req.query.sortOrder === 'shipped') {
+		sortOrder = { isShipped: -1 };
+	} else if (req.query.sortOrder === 'delivered') {
+		sortOrder = { isDelivered: -1 };
+	}
+	console.log({ sortOrder: req.query.sortOrder });
+	console.log({ sortOrder });
+	console.log({ searchKeyword });
+	const orders = await Order.find({ deleted: false, ...category, ...searchKeyword }).populate('user').sort(sortOrder);
+	// const orders = await Expense.find({}).sort({ date_of_purchase: -1 });
+	// console.log(orders);
 	res.send(orders);
 });
+
 router.get('/mine', isAuth, async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
 	const orders = await Order.find({ deleted: false, user: req.user._id });
 	res.send(orders);
