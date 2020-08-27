@@ -57,7 +57,7 @@ const FeaturedPage = (props) => {
 							<FlexContainer h_center column>
 								<h1 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h1>
 								<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-									Check out Trump with the Custom Tiger Diffuser Caps!
+									Check out {feature.glover_name} with the {humanize(feature.product)}!
 								</p>
 								<p className="p_descriptions" style={{ textAlign: 'center' }}>
 									Follow him @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on
