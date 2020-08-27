@@ -97,6 +97,8 @@ const AllProductsPage = (props) => {
 	};
 	console.log({ category });
 
+	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
+
 	return (
 		<div>
 			<MetaTags>
@@ -119,7 +121,7 @@ const AllProductsPage = (props) => {
 			</FlexContainer>
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
-				<Sort sortHandler={sortHandler} />
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{products && (

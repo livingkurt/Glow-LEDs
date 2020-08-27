@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listExpenses, deleteExpense } from '../../actions/expenseActions';
+import { useHistory } from 'react-router-dom';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
+import { Search, Sort } from '../../components/SpecialtyComponents/index';
 import MetaTags from 'react-meta-tags';
 import { format_date_display_expenses } from '../../utils/helper_functions';
 
@@ -12,6 +14,12 @@ const colors = {
 };
 
 const ExpensesPage = (props) => {
+	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ sortOrder, setSortOrder ] = useState('');
+	const history = useHistory();
+
+	const category = props.match.params.category ? props.match.params.category : '';
+
 	const expenseList = useSelector((state) => state.expenseList);
 	const { loading, expenses, error } = expenseList;
 
@@ -22,15 +30,59 @@ const ExpensesPage = (props) => {
 	const { success: successDelete } = expenseDelete;
 	const dispatch = useDispatch();
 
+	// useEffect(
+	// 	() => {
+	// 		// if (
+	// 		// 	[
+	// 		// 		'caps',
+	// 		// 		'infinity_mirrors',
+	// 		// 		'accessories',
+	// 		// 		'frosted_diffusers',
+	// 		// 		'diffuser_adapters',
+	// 		// 		'string_lights'
+	// 		// 	].includes(category)
+	// 		// ) {
+	// 			dispatch(listExpenses(category));
+	// 		} else {
+	// 			// history.push('/collections/all/products');
+	// 			dispatch(listExpenses(''));
+	// 		}
+	// 	},
+	// 	[ category ]
+	// );
+
 	useEffect(
 		() => {
-			dispatch(listExpenses());
-			return () => {
-				//
-			};
+			dispatch(listExpenses(category, searchKeyword, sortOrder));
 		},
-		[ successSave, successDelete ]
+		[ sortOrder ]
 	);
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(listExpenses(category, searchKeyword, sortOrder));
+	};
+
+	const sortHandler = (e) => {
+		setSortOrder(e.target.value);
+		dispatch(listExpenses(category, searchKeyword, e.target.value));
+	};
+
+	useEffect(() => {
+		dispatch(listExpenses());
+		return () => {
+			//
+		};
+	}, []);
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listExpenses());
+	// 		return () => {
+	// 			//
+	// 		};
+	// 	},
+	// 	[ successSave, successDelete ]
+	// );
 	const deleteHandler = (expense) => {
 		dispatch(deleteExpense(expense._id));
 	};
@@ -60,9 +112,13 @@ const ExpensesPage = (props) => {
 		if (expense.category === 'Equipment') {
 			result = colors[4].color;
 		}
-		console.log(result);
+		// console.log(result);
 		return result;
 	};
+
+	// const sort_options = [ 'All Expenses', 'Supplies', 'Website', 'Shipping', 'Business', 'Equipment' ];
+	// const sort_options = [ 'All Expenses', 'Supplies', 'Website', 'Shipping', 'Business', 'Equipment' ];
+	const sort_options = [ 'Date', 'Category', 'Newest', 'Lowest', 'Highest' ];
 
 	return (
 		<div class="main_container">
@@ -96,6 +152,10 @@ const ExpensesPage = (props) => {
 
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Expenses</h1>
+			</FlexContainer>
+			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{expenses && (

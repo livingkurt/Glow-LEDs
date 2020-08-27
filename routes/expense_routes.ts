@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 	const category = req.query.category ? { category: req.query.category } : {};
 	const searchKeyword = req.query.searchKeyword
 		? {
-				name: {
+				expense_name: {
 					$regex: req.query.searchKeyword,
 					$options: 'i'
 				}
@@ -18,17 +18,19 @@ router.get('/', async (req, res) => {
 
 	let sortOrder = {};
 	if (req.query.sortOrder === 'lowest') {
-		sortOrder = { price: 1 };
+		sortOrder = { amount: 1 };
 	} else if (req.query.sortOrder === 'highest') {
-		sortOrder = { price: -1 };
+		sortOrder = { amount: -1 };
 	} else if (req.query.sortOrder === 'newest') {
 		sortOrder = { _id: -1 };
-	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-		sortOrder = { category: -1, createdAt: -1 };
+	} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+		sortOrder = { date_of_purchase: -1 };
+	} else if (req.query.sortOrder === 'category') {
+		sortOrder = { category: 1, createdAt: -1 };
 	}
 
-	// const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	const expenses = await Expense.find({}).sort({ date_of_purchase: -1 });
+	const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+	// const expenses = await Expense.find({}).sort({ date_of_purchase: -1 });
 	// console.log(expenses);
 	res.send(expenses);
 });

@@ -10,10 +10,13 @@ const Sort = (props) => {
 			</label>
 			<div className="custom-select">
 				<select name="sortOrder" onChange={props.sortHandler}>
-					<option value="category">Category</option>
+					{props.sort_options.map((option) => {
+						return <option value={option.toLowerCase()}>{option}</option>;
+					})}
+					{/* <option value="category">Category</option>
 					<option value="newest">Newest</option>
 					<option value="lowest">Lowest</option>
-					<option value="highest">Highest</option>
+					<option value="highest">Highest</option> */}
 				</select>
 				<span className="custom-arrow" />
 			</div>
@@ -22,27 +25,3 @@ const Sort = (props) => {
 };
 
 export default Sort;
-// React
-// import React, { useState } from 'react';
-// import { FlexContainer } from '../ContainerComponents';
-
-// const Sort = (props) => {
-// 	return (
-// 		<FlexContainer v_i_center styles={{ marginLeft: '13px' }}>
-// 			<label aria-label="sortOrder" htmlFor="sortOrder">
-// 				Sort By
-// 			</label>
-// 			<div className="select_dropdown_container">
-// 				<select name="sortOrder" className="select_dropdown" onChange={props.sortHandler}>
-// 					<option value="category">Category</option>
-// 					<option value="newest">Newest</option>
-// 					<option value="lowest">Lowest</option>
-// 					<option value="highest">Highest</option>
-// 				</select>
-// 				// <i className="fas fa-sort-up icon_styles" />
-// 			</div>
-// 		</FlexContainer>
-// 	);
-// };
-
-// export default Sort;
