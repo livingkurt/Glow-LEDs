@@ -9,6 +9,9 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
 
 const UsersPage = (props) => {
+	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ sortOrder, setSortOrder ] = useState('');
+	const category = props.match.params.category ? props.match.params.category : '';
 	const userList = useSelector((state) => state.userList);
 	const { loading, users, error } = userList;
 
@@ -30,25 +33,23 @@ const UsersPage = (props) => {
 	const deleteHandler = (user) => {
 		dispatch(deleteUser(user._id));
 	};
-	const [ searchKeyword, setSearchKeyword ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// dispatch(listProducts(category, searchKeyword, sortOrder));
+		dispatch(listUsers(category, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		// dispatch(listProducts(category, searchKeyword, e.target.value));
+		dispatch(listUsers(category, searchKeyword, e.target.value));
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listProducts(category, searchKeyword, sortOrder));
-	// 	},
-	// 	[ sortOrder ]
-	// );
+	useEffect(
+		() => {
+			dispatch(listUsers(category, searchKeyword, sortOrder));
+		},
+		[ sortOrder ]
+	);
 
 	const colors = [
 		{ name: 'Not Verified', color: '#333333' },
@@ -70,6 +71,8 @@ const UsersPage = (props) => {
 		console.log(result);
 		return result;
 	};
+
+	const sort_options = [ 'Date', 'First Name', 'Last Name' ];
 
 	return (
 		<div class="main_container">
@@ -107,8 +110,8 @@ const UsersPage = (props) => {
 			</div>
 
 			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
-				{/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} /> */}
-				{/* <Sort sortHandler={sortHandler} /> */}
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{users && (

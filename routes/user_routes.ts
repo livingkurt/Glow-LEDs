@@ -7,8 +7,32 @@ require('dotenv');
 
 const router = express.Router();
 
-router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const users = await User.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
+// router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
+// 	const users = await User.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
+// 	res.send(users);
+// });
+
+router.get('/', async (req, res) => {
+	const category = req.query.category ? { category: req.query.category } : {};
+	const searchKeyword = req.query.searchKeyword
+		? {
+				first_name: {
+					$regex: req.query.searchKeyword,
+					$options: 'i'
+				}
+			}
+		: {};
+
+	let sortOrder = {};
+	if (req.query.sortOrder === 'first name') {
+		sortOrder = { first_name: 1 };
+	} else if (req.query.sortOrder === 'last name') {
+		sortOrder = { last_name: 1 };
+	} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
+		sortOrder = { _id: -1 };
+	}
+
+	const users = await User.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
 	res.send(users);
 });
 

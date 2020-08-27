@@ -242,16 +242,27 @@ const contact = (
 	}
 };
 
-const listUsers = () => async (
+const listUsers = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: USER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/users', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
-		});
+		// const { data } = await axios.get('/api/users', {
+		// 	headers: { Authorization: 'Bearer ' + userInfo.token }
+		// });
+		const { data } = await axios.get(
+			'/api/users?category=' +
+				category +
+				'&searchKeyword=' +
+				searchKeyword +
+				'&sortOrder=' +
+				sortOrder.toLowerCase(),
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.token }
+			}
+		);
 		dispatch({ type: USER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: USER_LIST_FAIL, payload: error.message });
