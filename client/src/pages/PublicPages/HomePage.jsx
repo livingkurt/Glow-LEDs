@@ -62,12 +62,30 @@ const HomePage = (props) => {
 					</h2>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Our most highly requested item is here! 🎊 You can now order CUSTOM DIFFUSER CAPS! 🔥 Imagine
-					throwing a light show with your own logo, teams logo, or favorite symbol or pattern as the trails
-					😱💀 The sky is the limit here and we cannot wait to see what you come up with! We will take orders
-					as first come, first served so be sure to secure your spot in line ASAP to receive the shortest wait
-					time 🕑 The process is a little different so be sure to check out the FAQ page under the Support tab
-					for full details 😊
+					Our most highly requested item is here!{' '}
+					<span aria-label="emoji" role="img">
+						🎊
+					</span>{' '}
+					You can now order CUSTOM DIFFUSER CAPS!{' '}
+					<span aria-label="emoji" role="img">
+						🔥
+					</span>{' '}
+					Imagine throwing a light show with your own logo, teams logo, or favorite symbol or pattern as the
+					trails
+					<span aria-label="emoji" role="img">
+						😱💀
+					</span>{' '}
+					The sky is the limit here and we cannot wait to see what you come up with! We will take orders as
+					first come, first served so be sure to secure your spot in line ASAP to receive the shortest wait
+					time{' '}
+					<span aria-label="emoji" role="img">
+						🕑
+					</span>{' '}
+					The process is a little different so be sure to check out the FAQ page under the Support tab for
+					full details{' '}
+					<span aria-label="emoji" role="img">
+						😊
+					</span>
 				</p>
 				<FlexContainer h_center>
 					<Link to="/collections/all/products/custom_diffuser_caps_deposit">
@@ -95,6 +113,7 @@ const HomePage = (props) => {
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
 						<iframe
+							title="Diffuser Caps Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -127,6 +146,7 @@ const HomePage = (props) => {
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
 						<iframe
+							title="Frosted Diffusers Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -158,6 +178,7 @@ const HomePage = (props) => {
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
 						<iframe
+							title="Infinity Mirrors Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -189,6 +210,7 @@ const HomePage = (props) => {
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
 						<iframe
+							title="String Lights Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}

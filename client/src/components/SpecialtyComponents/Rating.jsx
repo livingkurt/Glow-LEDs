@@ -1,10 +1,6 @@
 import React from 'react';
 
 const Rating = (props) => {
-	const span_style = {
-		marginLeft: '-15px'
-	};
-
 	return !props.value ? (
 		<div />
 	) : (

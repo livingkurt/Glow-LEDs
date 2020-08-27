@@ -32,6 +32,7 @@ export { default as Four04Page } from './PublicPages/Four04Page';
 export { default as ResetPasswordPage } from './PublicPages/ResetPasswordPage';
 export { default as VerifiedPage } from './PublicPages/VerifiedPage';
 export { default as CheckEmailPage } from './PublicPages/CheckEmailPage';
+export { default as EmailSentPage } from './PublicPages/EmailSentPage';
 export { default as MaintenancePage } from './PublicPages/MaintenancePage';
 export { default as TermsPage } from './PublicPages/TermsPage';
 export { default as AboutPage } from './PublicPages/AboutPage';

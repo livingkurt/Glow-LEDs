@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { validate_login } from '../../utils/helper_functions';
-import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
 const LoginPage = (props) => {

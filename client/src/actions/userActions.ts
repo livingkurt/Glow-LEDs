@@ -13,6 +13,7 @@ import {
 	USER_UPDATE_FAIL,
 	USER_CONTACT_REQUEST,
 	USER_CONTACT_SUCCESS,
+	USER_CONTACT_REMOVE_SUCCESS,
 	USER_CONTACT_FAIL,
 	USER_PASSWORD_RESET_SUCCESS,
 	USER_PASSWORD_RESET_FAIL,
@@ -235,6 +236,7 @@ const contact = (
 			quote
 		});
 		dispatch({ type: USER_CONTACT_SUCCESS, payload: data });
+		dispatch({ type: USER_CONTACT_REMOVE_SUCCESS, payload: {} });
 	} catch (error) {
 		dispatch({ type: USER_CONTACT_FAIL, payload: error.message });
 	}

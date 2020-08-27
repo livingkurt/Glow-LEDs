@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, payOrder, shipOrder, deliverOrder } from '../../actions/orderActions';
+import { detailsOrder, shipOrder, deliverOrder } from '../../actions/orderActions';
 import { format_date_display } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import { PaypalButton, CheckoutSteps } from '../../components/SpecialtyComponents';
-import { Loading } from '../../components/UtilityComponents';
+import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
 import API from '../../utils/API';
-import StripeCheckout from 'react-stripe-checkout';
 
 require('dotenv').config();
 
@@ -28,11 +26,11 @@ const OrderPage = (props) => {
 	console.log({ OrderPage: order });
 
 	const orderShipping = useSelector((state) => state.orderShipping);
-	const { loading: load_shipping, order: shipping, error: error_shipping } = orderShipping;
+	const { order: shipping } = orderShipping;
 	console.log({ shipping });
 
 	const orderDelivery = useSelector((state) => state.orderDelivery);
-	const { loading: load_deliverey, order: delivery, error: error_deliverey } = orderDelivery;
+	const { order: delivery } = orderDelivery;
 	console.log({ delivery });
 
 	const [ shipping_state, set_shipping_state ] = useState({});
@@ -111,15 +109,13 @@ const OrderPage = (props) => {
 		}
 	};
 
-	const [ paypal_state, set_paypal_state ] = useState('block');
+	// const [ paypal_state, set_paypal_state ] = useState('block');
 
 	useEffect(
 		() => {
 			if (successPay) {
-				set_paypal_state('none');
+				// set_paypal_state('none');
 				console.log('successPay');
-				// props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-				// props.history.push("/secure/account/profile");
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
@@ -127,21 +123,6 @@ const OrderPage = (props) => {
 		},
 		[ successPay ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		if (successPay ) {
-	// 			set_paypal_state('none');
-	// 			console.log('successPay');
-	// 			props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-	// 			// props.history.push("/secure/account/profile");
-	// 			dispatch(detailsOrder(props.match.params.id));
-	// 		} else {
-	// 			dispatch(detailsOrder(props.match.params.id));
-	// 		}
-	// 	},
-	// 	[ successPay ]
-	// );
 
 	useEffect(
 		() => {
@@ -153,15 +134,6 @@ const OrderPage = (props) => {
 	useEffect(() => {
 		empty_cart();
 	}, []);
-
-	// const handleSuccessPayment = (token) => {
-	// 	console.log('handleSuccessPayment');
-	// 	dispatch(payOrder(order, user_data, token));
-	// 	set_payment_loading(false);
-	// 	// if (successPay) {
-	// 	props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-	// 	// }
-	// };
 
 	const empty_cart = () => {
 		console.log(cartItems);

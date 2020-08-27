@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { validate_registration } from '../../utils/helper_functions';
-import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
 const RegisterPage = (props) => {
@@ -45,16 +44,6 @@ const RegisterPage = (props) => {
 		}
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (userInfo) {
-	// 			props.history.push('/account/checkemail');
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ userInfo ]
-	// );
 	useEffect(
 		() => {
 			if (userInfo) {

@@ -4,8 +4,6 @@ import { saveProduct, detailsProduct, deleteProductReview } from '../../actions/
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date_display } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
 
 const EditProductPage = (props) => {
@@ -39,11 +37,11 @@ const EditProductPage = (props) => {
 	const productDetails = useSelector((state) => state.productDetails);
 	const { product, loading, error } = productDetails;
 
-	const productSave = useSelector((state) => state.productSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
+	// const productSave = useSelector((state) => state.productSave);
+	// const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
 
-	const productDelete = useSelector((state) => state.productDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
+	// const productDelete = useSelector((state) => state.productDelete);
+	// const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
 
 	const productReviewDelete = useSelector((state) => state.productReviewDelete);
 	const { success: productDeleteSuccess } = productReviewDelete;
@@ -272,10 +270,10 @@ const EditProductPage = (props) => {
 		}
 	};
 
-	const delete_review = (review_id) => {
-		console.log({ review_id, id });
-		dispatch(deleteProductReview(id, review_id));
-	};
+	// const delete_review = (review_id) => {
+	// 	console.log({ review_id, id });
+	// 	dispatch(deleteProductReview(id, review_id));
+	// };
 
 	return (
 		<div class="main_container">

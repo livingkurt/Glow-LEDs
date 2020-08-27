@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
-import FlexContainer from './FlexContainer';
 
 const Sidebar = (props) => {
 	const history = useHistory();
@@ -31,8 +30,6 @@ const Sidebar = (props) => {
 	useOutsideAlerter(wrapperRef);
 
 	const cart = useSelector((state) => state.cart);
-
-	const { cartItems } = cart;
 
 	const closeMenu = () => {
 		document.querySelector('.sidebar').classList.remove('open');

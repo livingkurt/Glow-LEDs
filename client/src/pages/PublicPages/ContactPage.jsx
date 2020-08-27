@@ -13,7 +13,7 @@ require('dotenv').config();
 const ContactPage = (props) => {
 	const dispatch = useDispatch();
 	const userInfo = props.userInfo;
-	console.log({ userInfo });
+	// console.log({ userInfo });
 
 	const [ first_name, set_first_name ] = useState(userInfo ? userInfo.first_name : '');
 	const [ last_name, set_last_name ] = useState(userInfo ? userInfo.last_name : '');
@@ -30,14 +30,6 @@ const ContactPage = (props) => {
 	const [ quote, set_quote ] = useState('');
 	const [ inspirational_pictures, set_inspirational_pictures ] = useState([]);
 
-	useEffect(
-		() => {
-			set_reason_for_contact(props.match.params.reason);
-			return () => {};
-		},
-		[ props.match.params.reason ]
-	);
-
 	const [ first_name_validations, set_first_name_Validations ] = useState('');
 	const [ last_name_validations, set_last_name_Validations ] = useState('');
 	const [ email_validations, set_email_validations ] = useState('');
@@ -47,6 +39,25 @@ const ContactPage = (props) => {
 
 	const userContact = useSelector((state) => state.userContact);
 	const { loading, completed, error } = userContact;
+	console.log({ completed });
+
+	useEffect(
+		() => {
+			set_reason_for_contact(props.match.params.reason);
+			return () => {};
+		},
+		[ props.match.params.reason ]
+	);
+	useEffect(
+		() => {
+			if (completed) {
+				props.history.push('/account/emailsent');
+			}
+
+			return () => {};
+		},
+		[ completed ]
+	);
 
 	let request;
 	const sendEmail = (e) => {
@@ -56,7 +67,7 @@ const ContactPage = (props) => {
 			set_order_number_validations('55555555');
 		}
 
-		console.log();
+		// console.log();
 		const data = {
 			first_name,
 			last_name,
@@ -79,7 +90,7 @@ const ContactPage = (props) => {
 		set_reason_for_contact_validations(request.errors.reason_for_contact);
 		set_message_validations(request.errors.message);
 
-		console.log(request);
+		// console.log(request);
 		if (request.isValid) {
 			const reason = humanize(reason_for_contact);
 			dispatch(
@@ -98,17 +109,19 @@ const ContactPage = (props) => {
 					quote
 				)
 			);
-			dispatch(
-				saveFeature({
-					user: userInfo,
-					glover_name,
-					instagram_handle,
-					facebook_name,
-					product: '',
-					song_id,
-					release_date: '2020-12-29'
-				})
-			);
+			if (reason_for_contact === 'submit_content_to_be_featured') {
+				dispatch(
+					saveFeature({
+						user: userInfo,
+						glover_name,
+						instagram_handle,
+						facebook_name,
+						product: '',
+						song_id,
+						release_date: '2020-12-29'
+					})
+				);
+			}
 			set_last_name_Validations('');
 			set_first_name_Validations('');
 			set_email_validations('');
@@ -128,10 +141,10 @@ const ContactPage = (props) => {
 	const finishUploading = async (fsData) => {
 		const pictures = [];
 		const src = fsData.filesUploaded[0].url;
-		console.log(src);
+		// console.log(src);
 		set_inspirational_pictures((inspirational_pictures) => [ ...inspirational_pictures, src ]);
 	};
-	console.log(process.env.REACT_APP_FILESTACK_API);
+	// console.log(process.env.REACT_APP_FILESTACK_API);
 
 	return (
 		<div class="main_container">
@@ -282,7 +295,7 @@ const ContactPage = (props) => {
 					</option>
 				</select> */}
 				<label className="validation_text">{reason_for_contact_validations}</label>
-				{console.log({ reason_for_contact })}
+				{/* {console.log({ reason_for_contact })} */}
 				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (
 					<div className="full-width">
 						<label>Order Number</label>

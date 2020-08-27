@@ -1,7 +1,6 @@
 // React
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../ContainerComponents';
 import { imagesProduct } from '../../actions/productActions';
 import { Loading } from '../UtilityComponents';
 // Components

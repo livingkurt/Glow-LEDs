@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping, savePayment } from '../../actions/cartActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/helper_functions';
-import { FlexContainer } from '../../components/ContainerComponents';
-import { Link } from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 
 const ShippingPage = (props) => {

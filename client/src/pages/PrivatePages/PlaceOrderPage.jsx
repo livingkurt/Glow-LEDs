@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder, payOrder } from '../../actions/orderActions';
+import { createOrder } from '../../actions/orderActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
-// import { email_order } from '../../actions/emailActions';
 import MetaTags from 'react-meta-tags';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import Cookie from 'js-cookie';
@@ -16,39 +15,21 @@ const PlaceOrderPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
-	const { loading, success, error, order } = orderCreate;
+	const { order } = orderCreate;
 	console.log({ shipping });
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	// if (!shipping.address) {
-	// 	props.history.push('/secure/checkout/shipping');
-	// } else if (!payment.paymentMethod) {
-	// 	props.history.push('/secure/checkout/payment');
-	// }
-	// const itemsPrice = cartItems.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0);
 	const itemsPrice =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
 	const [ shippingPrice, setShippingPrice ] = useState(5);
-	const [ place_order_state, set_place_order_state ] = useState(false);
 	const [ payment_loading, set_payment_loading ] = useState(false);
 
 	useEffect(
 		() => {
-			// if (shipping) {
-			// 	if (shipping.country === 'United States' || shipping.country === 'US' || shipping.country === 'USA') {
-			// 		calculate_shipping();
-			// 	} else {
-			// 		calculate_international();
-			// 	}
-			// }
-
-			// calculate_shipping();
-			console.log({ shippingPrice });
-			// set_place_order_state(shipping === {});
 			const shipping_cookie = Cookie.getJSON('shipping');
 			if (shipping_cookie) {
 				dispatch(saveShipping(shipping_cookie));
@@ -74,51 +55,9 @@ const PlaceOrderPage = (props) => {
 		},
 		[ shipping ]
 	);
-	// useEffect(
-	// 	() => {
-	// 		// if (shipping) {
-	// 		// 	if (shipping.country === 'United States' || shipping.country === 'US' || shipping.country === 'USA') {
-	// 		// 		calculate_shipping();
-	// 		// 	} else {
-	// 		// 		calculate_international();
-	// 		// 	}
-	// 		// }
-	// 		// calculate_shipping();
-	// 		console.log({ shippingPrice });
-	// 		// set_place_order_state(shipping === {});
-	// 		const shipping_cookie = Cookie.getJSON('shipping');
-	// 		if (shipping_cookie) {
-	// 			dispatch(saveShipping(shipping_cookie));
-	// 		}
-	// 		dispatch(savePayment({ paymentMethod: 'paypal' }));
-
-	// 		return () => {};
-	// 	},
-	// 	[ shipping ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		if (shipping.hasOwnProperty("first_name")) {
-	// 			set_place_order_state(true);
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ shipping ]
-	// );
-
-	// const shippingPrice = itemsPrice > 100 ? 0 : 5;
-	useEffect(
-		() => {
-			// dispatch(addToCart(pathname, qty));
-		},
-		[ cartItems ]
-	);
 
 	const taxPrice = 0.0875 * itemsPrice;
 	const totalPrice = itemsPrice + shippingPrice + taxPrice;
-	// const totalPrice = itemsPrice + taxPrice;
 
 	const [ order_note, set_order_note ] = useState('');
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { Loading } from '../UtilityComponents';
 
 const PaypalButton = (props) => {
 	const [ sdkReady, setSdkReady ] = useState(false);

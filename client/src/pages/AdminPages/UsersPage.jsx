@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { listOrders, deleteOrder } from '../../actions/orderActions';
 import { format_date_display } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
@@ -18,17 +17,8 @@ const UsersPage = (props) => {
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	// console.log({ users_page: userInfo });
-
-	// const userToken = useSelector(state => state.userToken);
-	// // const { to } = userToken;
-	// console.log({ userToken })
 
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	//   // dispatch(token(userInfo.refreshToken));
-	// }, [error]);
 
 	useEffect(
 		() => {

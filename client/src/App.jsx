@@ -36,7 +36,8 @@ import {
 	ExpensesPage,
 	EditExpensePage,
 	EditFeaturePage,
-	FeaturesPage
+	FeaturesPage,
+	EmailSentPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -98,6 +99,7 @@ const App = () => {
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
 							<Route path="/account/checkemail" component={CheckEmailPage} />
+							<Route path="/account/emailsent" component={EmailSentPage} />
 							<Route path="/account/changepassword" component={ChangePasswordPage} />
 							<Route path="/account/register" component={RegisterPage} />
 							<Route path="/account/passwordreset" component={PasswordResetPage} />

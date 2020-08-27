@@ -1,17 +1,15 @@
 // React
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { addToCart } from '../../actions/cartActions';
 
 const Product = (props) => {
-	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const handleAddToCart = () => {
-		// history.push('/checkout/cart/' + props.product.pathname + '?qty=1');
 		dispatch(addToCart(props.product.pathname, 1));
 	};
 

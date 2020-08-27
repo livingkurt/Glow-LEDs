@@ -11,6 +11,7 @@ import {
 	USER_UPDATE_FAIL,
 	USER_CONTACT_REQUEST,
 	USER_CONTACT_SUCCESS,
+	USER_CONTACT_REMOVE_SUCCESS,
 	USER_CONTACT_FAIL,
 	USER_PASSWORD_RESET_REQUEST,
 	USER_PASSWORD_RESET_SUCCESS,
@@ -135,6 +136,8 @@ const userContactReducer = (state = {}, action: { type: any; payload: any }) => 
 			return { loading: false, completed: action.payload };
 		case USER_CONTACT_FAIL:
 			return { loading: false, error: action.payload };
+		case USER_CONTACT_REMOVE_SUCCESS:
+			return { loading: false, completed: false };
 		default:
 			return state;
 	}

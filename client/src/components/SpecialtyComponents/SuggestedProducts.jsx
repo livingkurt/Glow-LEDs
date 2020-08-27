@@ -2,10 +2,10 @@
 import React, { useEffect } from 'react';
 import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts, detailsProduct } from '../../actions/productActions';
+import { listProducts } from '../../actions/productActions';
 import Product from './Product';
 import { Loading } from '../UtilityComponents';
-import EmblaCarousel from './EmblaCarousel';
+// import EmblaCarousel from './EmblaCarousel';
 // import Slider from './Slider';
 
 const SuggestedProducts = (props) => {
