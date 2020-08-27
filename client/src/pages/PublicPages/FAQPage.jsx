@@ -50,7 +50,10 @@ const FAQPage = () => {
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								With your microlights outside of your gloves, place the Diffuser Adapters onto your
-								microlight bulbs 💡.
+								microlight bulbs{' '}
+								<span aria-label="emoji" role="img">
+									💡
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Then place them inside of the glove 🧤, pushing it as far you can so the glove is tight
@@ -60,20 +63,34 @@ const FAQPage = () => {
 								Now it should look like you have flat top domes inside your gloves.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Grip <span style={{ marginRight: '9px' }}>🤏</span>️the diffuser adapter from outside
-								the glove, do not only hold by microlight or the diffuser adapter might spin on the bulb
-								and wont screw in properly or you risk causing extra stress to the bulb.
+								Grip{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+									🤏
+								</span>️the diffuser adapter from outside the glove, do not only hold by microlight or
+								the diffuser adapter might spin on the bulb and wont screw in properly or you risk
+								causing extra stress to the bulb.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Take your cap <span style={{ marginRight: '9px' }}>👑</span>️, and place it over top of
-								your glove and adapter and screw <span style={{ marginRight: '9px' }}>🔩</span>️ in the
-								cap like you would a jar 🍯.
+								Take your cap{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+									👑
+								</span>️, and place it over top of your glove and adapter and screw{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+									🔩
+								</span>️ in the cap like you would a jar{' '}
+								<span aria-label="emoji" role="img">
+									🍯
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								The threads should catch and only needs a single turn{' '}
-								<span style={{ marginRight: '5px' }}>🌀</span>️to become snug. Do not over tighten or
-								push the cap on. Let the threads do the work{' '}
-								<span style={{ marginRight: '2px' }}>💫</span>️ .
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🌀
+								</span>️to become snug. Do not over tighten or push the cap on. Let the threads do the
+								work{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '2px' }}>
+									💫
+								</span>️ .
 							</li>
 						</ul>
 					</div>
@@ -82,81 +99,157 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								A single 100% refundable deposit of $9.99 <span style={{ marginRight: '5px' }}>💸</span>️
-								is required to hold your place in line and to be seen for a consultation{' '}
-								<span style={{ marginRight: '5px' }}>👨‍⚕️</span>️. The deposit will be deducted from
-								the total price.
+								A single 100% refundable deposit of $9.99{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💸
+								</span>️ is required to hold your place in line and to be seen for a consultation{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									👨‍⚕️
+								</span>️. The deposit will be deducted from the total price.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								The total price <span style={{ marginRight: '5px' }}>💸</span>️ for a single design
-								starts at $40. The price may vary based on the intricacy of the design and materials
-								used <span style={{ marginRight: '5px' }}>🧐</span>️. If multiple designs are desired,
-								you will have to pay a similar price per design{' '}
-								<span style={{ marginRight: '5px' }}>✨</span>️.
+								The total price{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💸
+								</span>️ for a single design starts at $40. The price may vary based on the intricacy of
+								the design and materials used{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🧐
+								</span>️. If multiple designs are desired, you will have to pay a similar price per
+								design{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									✨
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								This includes 10 custom diffuser caps <span style={{ marginRight: '5px' }}>🧢</span>️
-								and 10 diffuser adapters.
+								This includes 10 custom diffuser caps{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🧢
+								</span>️ and 10 diffuser adapters.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								As soon as you pay your deposit <span style={{ marginRight: '5px' }}>💸</span>️, please
-								use the contact button <span style={{ marginRight: '5px' }}>📞</span>️ and send us your
-								ideas and inspirational pictures <span style={{ marginRight: '11px' }}>🌈</span>️. Also
-								include your preferred method of contact (an e-mail address{' '}
-								<span style={{ marginRight: '5px' }}>📧 </span>️, phone number{' '}
-								<span style={{ marginRight: '5px' }}>📞</span>️ or social media username{' '}
-								<i class="fab fa-facebook" /> <i class="fab fa-instagram" />.
+								As soon as you pay your deposit{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💸
+								</span>️, please use the contact button{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ and send us your ideas and inspirational pictures{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '11px' }}>
+									🌈
+								</span>️. Also include your preferred method of contact (an e-mail address{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📧{' '}
+								</span>️, phone number{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ or social media username <i class="fab fa-facebook" />{' '}
+								<i class="fab fa-instagram" />.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								A design will be drafted by us 📝, price will be determined, prototypes will be made{' '}
-								<span style={{ marginRight: '5px' }}>🏗️</span>️ and we will show you our results{' '}
-								<span style={{ marginRight: '5px' }}>🔥</span>️.
+								A design will be drafted by us{' '}
+								<span aria-label="emoji" role="img">
+									📝
+								</span>️., price will be determined, prototypes will be made{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🏗️
+								</span>️ and we will show you our results{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🔥
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								If we determine we are unable to produce what you are desiring, or you are unsatisfied
 								with the results, we will refund your $10 deposit{' '}
-								<span style={{ marginRight: '5px' }}>💸</span>️. If you wish to proceed, the final
-								payment will be required and we will ship them out to you{' '}
-								<span style={{ marginRight: '5px' }}>🚚</span>️.
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💸
+								</span>️. If you wish to proceed, the final payment will be required and we will ship
+								them out to you{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🚚
+								</span>️.
 							</li>
 
 							<li style={{ lineHeight: '25px' }}>
-								Processing <span style={{ marginRight: '5px' }}>📦</span>️ and shipping times{' '}
-								<span style={{ marginRight: '5px' }}>🚚</span>️ depend on how many orders are ahead of
-								you <span style={{ marginRight: '5px' }}>⏩</span>️. If you would like an estimate 📝
-								please reach out to us <span style={{ marginRight: '5px' }}>📞</span>.
+								Processing{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📦
+								</span>️ and shipping times{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🚚
+								</span>️ depend on how many orders are ahead of you{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									⏩
+								</span>️. If you would like an estimate{' '}
+								<span aria-label="emoji" role="img">
+									📝
+								</span>️ please reach out to us{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								We respect others intellectual property <span style={{ marginRight: '5px' }}>🏘️</span>.
-								Any designs that are trademarked or Copyrighted{' '}
-								<span style={{ marginRight: '5px' }}></span>
+								We respect others intellectual property{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🏘️
+								</span>. Any designs that are trademarked or Copyrighted{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									
+								</span>
 								will not be redistributed without permission{' '}
-								<span style={{ marginRight: '5px' }}>🚫</span>.
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🚫
+								</span>.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Sometimes your custom requests are already in our make list 📝. When this happens, you
-								may see your design idea come up for sale on the website later on{' '}
-								<span style={{ marginRight: '5px' }}>🛍</span>️. While we can't guarantee you'll be the
-								only glover to receive this set, we're excited to make you the first{' '}
-								<span style={{ marginRight: '5px' }}>😄</span>️! If you have an idea for a common shape
-								or pattern feel free to send it <span style={{ marginRight: '5px' }}>📦</span>️ as a
-								suggestion and we may have it on the website in the near future{' '}
-								<span style={{ marginRight: '5px' }}>🔮</span>️!
+								Sometimes your custom requests are already in our make list{' '}
+								<span aria-label="emoji" role="img">
+									📝
+								</span>️. When this happens, you may see your design idea come up for sale on the
+								website later on{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🛍
+								</span>️. While we can't guarantee you'll be the only glover to receive this set, we're
+								excited to make you the first{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									😄
+								</span>️! If you have an idea for a common shape or pattern feel free to send it{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📦
+								</span>️ as a suggestion and we may have it on the website in the near future{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🔮
+								</span>️!
 							</li>
 						</ul>
 						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								Before ordering a custom infinity mirror a consultation must be had 📝.
+								Before ordering a custom infinity mirror a consultation must be had{' '}
+								<span aria-label="emoji" role="img">
+									📝
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Use the contact button <span style={{ marginRight: '5px' }}>📞</span>️ to send us a
-								message with inspirational pictures <span style={{ marginRight: '5px' }}>⛰️</span>️,
-								appoximate dimmensions <span style={{ marginRight: '5px' }}>📐</span>️ and any other
-								details to explain your vision <span style={{ marginRight: '11px' }}>🌈</span>️and we
-								will create a detailed invoice and design 📝. Also include your preferred method of
-								contact <span style={{ marginRight: '5px' }}>📞</span>️å (an e-mail address, phone
-								number or social media username).
+								Use the contact button{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ to send us a message with inspirational pictures{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									⛰️
+								</span>️, appoximate dimmensions{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📐
+								</span>️ and any other details to explain your vision{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '11px' }}>
+									🌈
+								</span>️and we will create a detailed invoice and design{' '}
+								<span aria-label="emoji" role="img">
+									📝
+								</span>️ . Also include your preferred method of contact{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️å (an e-mail address, phone number or social media username).
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Pricing begins at $549. The price may vary depending on the size and hardware used ⚙️ .
@@ -175,13 +268,25 @@ const FAQPage = () => {
 						<p style={{ lineHeight: '25px' }}>
 							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
 							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
-							<span style={{ marginRight: '3px' }}>❤</span>️ to see how you put our products to use. To be
-							featured <span style={{ marginRight: '0px' }}>📸</span>️ on our social media or website send{' '}
-							<span style={{ marginRight: '9px' }}>✉️</span>️us your videos{' '}
-							<span style={{ marginRight: '5px' }}>📹 </span>️direcly using the Contact button{' '}
-							<span style={{ marginRight: '5px' }}>📞</span>️ here on the website. You will be given a
-							wetransfer link where you can send us your content to be featured{' '}
-							<span style={{ marginRight: '5px' }}>🌟</span>️.
+							<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
+								❤
+							</span>️ to see how you put our products to use. To be featured{' '}
+							<span aria-label="emoji" role="img" style={{ marginRight: '0px' }}>
+								📸
+							</span>️ on our social media or website send{' '}
+							<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+								✉️
+							</span>️us your videos{' '}
+							<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+								📹{' '}
+							</span>️direcly using the Contact button{' '}
+							<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+								📞
+							</span>️ here on the website. You will be given a wetransfer link where you can send us your
+							content to be featured{' '}
+							<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+								🌟
+							</span>️.
 						</p>
 						<Link to="/pages/contact/submit_content_to_be_featured">
 							<FlexContainer h_center>
@@ -197,34 +302,57 @@ const FAQPage = () => {
 						<ul style={{ padding: '18px', marginBottom: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Glow-LEDs.com is headquartered in Austin, Texas{' '}
-								<span style={{ marginRight: '3px' }}>🇨🇱</span>️ and orders are processed as they are
-								received <span style={{ marginRight: '5px' }}>📨</span>️. Products are not stocked
-								waiting to be shipped at this time. Each order will be filled as it is received. Some
-								orders may take longer than others to be shipped.
+								<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
+									🇨🇱
+								</span>️ and orders are processed as they are received{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📨
+								</span>️. Products are not stocked waiting to be shipped at this time. Each order will
+								be filled as it is received. Some orders may take longer than others to be shipped.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Small packages will be sent via USPS <i class="fab fa-usps" /> First Class and large
-								packages <span style={{ marginRight: '5px' }}>📦</span>️will be sent via Priority Mail.
+								packages{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📦
+								</span>️will be sent via Priority Mail.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Shipping time is 1-3 business days <span style={{ marginRight: '5px' }}>🚚</span>️.
+								Shipping time is 1-3 business days{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🚚
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								All shipments come with tracking numbers <span style={{ marginRight: '5px' }}>🔢</span>️.
+								All shipments come with tracking numbers{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🔢
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Not responsible for delays due to post office{' '}
-								<span style={{ marginRight: '5px' }}>🏤</span>️.
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🏤
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								For glove accessories (caps, adapters, diffusers, battery storage) we will get your
-								order in the mail <span style={{ marginRight: '5px' }}>✉️ </span>️ within approximately
-								1-3 days <span style={{ marginRight: '5px' }}>🗓 </span>️after the order is placed.
+								order in the mail{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									✉️{' '}
+								</span>️ within approximately 1-3 days{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🗓{' '}
+								</span>️after the order is placed.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								For string lights <span style={{ marginRight: '5px' }}>💡</span>️we will get your order
-								in the mail <span style={{ marginRight: '5px' }}>✉️ </span>️within approximately 1 week
-								after the order is placed.
+								For string lights{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💡
+								</span>️we will get your order in the mail{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									✉️{' '}
+								</span>️within approximately 1 week after the order is placed.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								For infinity mirrors, expect a longer processing time. Assembly of infinity mirrors is
@@ -234,8 +362,13 @@ const FAQPage = () => {
 								If a custom order is placed, processing times will be discussed during consultation.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								If the address on your order is incorrect, please contact us<span style={{ marginRight: '5px' }}>📞</span>️
-								immediately at info.glowleds@gmail.com
+								If the address on your order is incorrect, please contact us<span
+									aria-label="emoji"
+									role="img"
+									style={{ marginRight: '5px' }}
+								>
+									📞
+								</span>️ immediately at info.glowleds@gmail.com
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
@@ -248,13 +381,19 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center' }}>International Shipping</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
-								We ship internationally! <span style={{ marginRight: '5px' }}>🌎</span>️
+								We ship internationally!{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🌎
+								</span>️
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								IMPORTANT: If you live outside of the United States{' '}
-								<span style={{ marginRight: '5px' }}>🇺🇸</span>️ please check the international
-								checkbox when filling out shipping <span style={{ marginRight: '5px' }}>🚚</span>️
-								information. A country field will show for you to input your country.
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🇺🇸
+								</span>️ please check the international checkbox when filling out shipping{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🚚
+								</span>️ information. A country field will show for you to input your country.
 							</li>
 							{/* <li style={{ lineHeight: '25px' }}>
 								Shipping will not be calculated correctly if you do not input your country correctly.
@@ -266,11 +405,19 @@ const FAQPage = () => {
 								Shipping times will vary, and will depend on the country.
 							</li> */}
 							<li style={{ lineHeight: '25px' }}>
-								All shipments come with tracking numbers <span style={{ marginRight: '5px' }}>🔢</span>️.
+								All shipments come with tracking numbers{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🔢
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Please contact us <span style={{ marginRight: '5px' }}>📞</span>️ if you have questions{' '}
-								<span style={{ marginRight: '5px' }}>❓</span>️
+								Please contact us{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ if you have questions{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									❓
+								</span>️
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
@@ -285,18 +432,26 @@ const FAQPage = () => {
 						<h1 style={{ textAlign: 'center' }}>Returns/Cancellations</h1>
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								100% satisfaction guarantee <span style={{ marginRight: '5px' }}>💯</span>️. We accept
-								returns within 14 days of delivery .
+								100% satisfaction guarantee{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💯
+								</span>️. We accept returns within 14 days of delivery .
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								To initiate a return please contact <span style={{ marginRight: '5px' }}>📞</span>️
-								info.glowleds@gmail.com and You will be supplied with a prepaid shipping span{' '}
-								<span style={{ marginRight: '5px' }}>🏷️</span>️to send back your product.
+								To initiate a return please contact{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ info.glowleds@gmail.com and You will be supplied with a prepaid shipping span{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🏷️
+								</span>️to send back your product.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Please include your full name and order number{' '}
-								<span style={{ marginRight: '9px' }}>🔢</span>️in the return shipment and you will be
-								refunded the full amount minus original shipping costs.
+								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+									🔢
+								</span>️in the return shipment and you will be refunded the full amount minus original
+								shipping costs.
 							</li>
 							{/* <li style={{ lineHeight: '25px' }}>
 							You will be refunded your full amount and you'll only be resonsible for return shipping.
@@ -304,22 +459,37 @@ const FAQPage = () => {
 							<li style={{ lineHeight: '25px' }}>Custom items are non-refundable .</li>
 							<li style={{ lineHeight: '25px' }}>
 								Refunds are returned to the original form of payment{' '}
-								<span style={{ marginRight: '5px' }}>💳</span>️
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💳
+								</span>️
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								We do not refund damaged <span style={{ marginRight: '5px' }}>🤕</span>️items unless
-								they arrived damaged at our own fault.
+								We do not refund damaged{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🤕
+								</span>️items unless they arrived damaged at our own fault.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								If item arrives damamged in any way please contact us{' '}
-								<span style={{ marginRight: '5px' }}>📞</span>️ immediately at info.glowleds@gmail.com
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ immediately at info.glowleds@gmail.com
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Our online orders process immediately <span style={{ marginRight: '10px' }}>💨</span>️to
-								ensure our clients receive their products as soon as possible. If you would like to
-								cancel <span style={{ marginRight: '10px' }}>🚫</span>️your order you must contact{' '}
-								<span style={{ marginRight: '5px' }}>📞</span>️ us within one hour of payment{' '}
-								<span style={{ marginRight: '5px' }}>💳</span>️.
+								Our online orders process immediately{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '10px' }}>
+									💨
+								</span>️to ensure our clients receive their products as soon as possible. If you would
+								like to cancel{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '10px' }}>
+									🚫
+								</span>️your order you must contact{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									📞
+								</span>️ us within one hour of payment{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									💳
+								</span>️.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								We are not able to modify orders. If you would like to add an item you will need to do

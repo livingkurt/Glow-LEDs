@@ -425,7 +425,12 @@ const ContactPage = (props) => {
 							</ol>
 
 							<button className="zoom_b button primary">
-								<a target="_blank" href="https://wetransfer.com/">
+								<a
+									target="_blank"
+									href="https://wetransfer.com/"
+									rel="noreferrer"
+									rel="noopener noreferrer"
+								>
 									WeTransfer{' '}
 								</a>
 							</button>
