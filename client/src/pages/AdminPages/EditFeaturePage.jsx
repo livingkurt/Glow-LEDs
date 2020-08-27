@@ -223,6 +223,16 @@ const EditFeaturePage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="release_date">Release Date</label>
+												<input
+													type="text"
+													name="release_date"
+													value={release_date}
+													id="release_date"
+													onChange={(e) => set_release_date(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="glover_name">Glover Name</label>
 												<input
 													type="text"
@@ -240,16 +250,6 @@ const EditFeaturePage = (props) => {
 													value={instagram_handle}
 													id="instagram_handle"
 													onChange={(e) => set_instagram_handle(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="song_id">Song ID</label>
-												<input
-													type="text"
-													name="song_id"
-													value={song_id}
-													id="song_id"
-													onChange={(e) => set_song_id(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -284,6 +284,16 @@ const EditFeaturePage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="song_id">Song ID</label>
+												<input
+													type="text"
+													name="song_id"
+													value={song_id}
+													id="song_id"
+													onChange={(e) => set_song_id(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="picture">Picture</label>
 												<input
 													type="text"
@@ -291,16 +301,6 @@ const EditFeaturePage = (props) => {
 													value={picture}
 													id="picture"
 													onChange={(e) => set_picture(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="release_date">Release Date</label>
-												<input
-													type="text"
-													name="release_date"
-													value={release_date}
-													id="release_date"
-													onChange={(e) => set_release_date(e.target.value)}
 												/>
 											</li>
 										</FlexContainer>
