@@ -52,7 +52,7 @@ const FeaturedPage = (props) => {
 				appreciate each and every one of you.
 			</p>
 			{features &&
-				features.filter((feature) => feature.release_date < today).map((feature) => {
+				features.filter((feature) => feature.release_date <= today).map((feature) => {
 					return (
 						<div className="home_page_divs">
 							<FlexContainer h_center column>
