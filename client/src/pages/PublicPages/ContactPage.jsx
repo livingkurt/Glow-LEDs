@@ -7,6 +7,7 @@ import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 import { humanize } from '../../utils/helper_functions';
 import ReactFilestack from 'filestack-react';
+import { saveFeature } from '../../actions/featureActions';
 require('dotenv').config();
 
 const ContactPage = (props) => {
@@ -96,6 +97,17 @@ const ContactPage = (props) => {
 					song_id,
 					quote
 				)
+			);
+			dispatch(
+				saveFeature({
+					user: userInfo,
+					glover_name,
+					instagram_handle,
+					facebook_name,
+					product: '',
+					song_id,
+					release_date: '2020-12-29'
+				})
 			);
 			set_last_name_Validations('');
 			set_first_name_Validations('');
