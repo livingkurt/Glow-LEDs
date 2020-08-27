@@ -26,6 +26,8 @@ router.get('/', async (req, res) => {
 		sortOrder = { price: -1 };
 	} else if (req.query.sortOrder === 'newest') {
 		sortOrder = { _id: -1 };
+	} else if (req.query.sortOrder === 'hidden') {
+		sortOrder = { hidden: -1 };
 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
 		sortOrder = { category: -1, createdAt: -1 };
 	}

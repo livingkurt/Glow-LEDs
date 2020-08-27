@@ -1,16 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, deleteProduct } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
+import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const colors = {
 	hidden: '#333333'
 };
 
 const ProductsPage = (props) => {
+	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ sortOrder, setSortOrder ] = useState('');
+	const category = props.match.params.category ? props.match.params.category : '';
 	const productList = useSelector((state) => state.productList);
 	const { loading, products, error } = productList;
 
@@ -34,6 +38,25 @@ const ProductsPage = (props) => {
 		console.log(product._id);
 		dispatch(deleteProduct(product._id));
 	};
+
+	useEffect(
+		() => {
+			dispatch(listProducts(category, searchKeyword, sortOrder));
+		},
+		[ sortOrder ]
+	);
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+		dispatch(listProducts(category, searchKeyword, sortOrder));
+	};
+
+	const sortHandler = (e) => {
+		setSortOrder(e.target.value);
+		dispatch(listProducts(category, searchKeyword, e.target.value));
+	};
+
+	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
 	const sale_price_switch = (product) => {
 		if (product.sale_price !== 0) {
@@ -91,6 +114,10 @@ const ProductsPage = (props) => {
 						Create Product
 					</button>
 				</Link> */}
+			</FlexContainer>
+			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</FlexContainer>
 			<Loading loading={loading} error={error}>
 				{products && (
