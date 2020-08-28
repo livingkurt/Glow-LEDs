@@ -9,6 +9,7 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
+import { validate_promo_code } from '../../utils/helper_functions';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -16,17 +17,22 @@ const PlaceOrderPage = (props) => {
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { order } = orderCreate;
-	console.log({ shipping });
+	// console.log({ shipping });
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	const itemsPrice =
+	const items_price =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
 	const [ shippingPrice, setShippingPrice ] = useState(5);
+	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
+	const [ itemsPrice, setItemsPrice ] = useState(items_price);
+	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
+	const [ totalPrice, setTotalPrice ] = useState(0);
+	const [ show_message, set_show_message ] = useState('');
 
 	useEffect(
 		() => {
@@ -56,8 +62,8 @@ const PlaceOrderPage = (props) => {
 		[ shipping ]
 	);
 
-	const taxPrice = 0.0875 * itemsPrice;
-	const totalPrice = itemsPrice + shippingPrice + taxPrice;
+	// const taxPrice = 0.0875 * itemsPrice;
+	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
 	const [ order_note, set_order_note ] = useState('');
 
@@ -78,7 +84,8 @@ const PlaceOrderPage = (props) => {
 		} else if (volume > 500) {
 			setShippingPrice(15);
 		}
-		console.log({ shippingPrice });
+		// console.log({ shippingPrice });
+		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 	};
 	const calculate_international = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
@@ -95,7 +102,8 @@ const PlaceOrderPage = (props) => {
 		} else if (volume > 500) {
 			setShippingPrice(80);
 		}
-		console.log({ shippingPrice });
+		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+		// console.log({ shippingPrice });
 	};
 
 	const placeOrderHandler = (token) => {
@@ -163,6 +171,45 @@ const PlaceOrderPage = (props) => {
 	// 	// }
 	// };
 
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+		},
+		[ itemsPrice, taxPrice ]
+	);
+
+	const [ promo_code_validations, set_promo_code_validations ] = useState('');
+
+	const promo_codes = [ '' ];
+	const check_code = () => {
+		const data = { promo_code, promo_codes };
+		const request = validate_promo_code(data);
+
+		set_promo_code_validations(request.errors.promo_code);
+		console.log(request);
+		if (request.isValid) {
+			if (show_message) {
+				set_promo_code_validations('Promo Code in Use');
+			} else {
+				console.log(promo_code);
+				// if (promo_code === 'Glow' || promo_code === 'glow') {
+				setItemsPrice(items_price - items_price * 0.25);
+				setTaxPrice(0.0875 * (items_price - items_price * 0.25));
+				set_show_message(promo_code);
+				set_promo_code('');
+			}
+		}
+		// else {
+		//   set_show_message('Promo Code Not Valid')
+		// }
+	};
+
+	const remove_promo = () => {
+		setItemsPrice(items_price);
+		setTaxPrice(0.0875 * items_price);
+		set_show_message('');
+	};
+
 	return (
 		<div>
 			<MetaTags>
@@ -172,9 +219,6 @@ const PlaceOrderPage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
 			</MetaTags>
-			{console.log(shipping === {})}
-			{console.log(shipping === '')}
-			{/* {set_place_order_state(shipping === {})} */}
 			{successPay ? (
 				<CheckoutSteps step1 step2 step3 step4 />
 			) : shipping && shipping.hasOwnProperty('first_name') ? (
@@ -202,7 +246,6 @@ const PlaceOrderPage = (props) => {
 									<div>{shipping.email}</div>
 								</div>
 							)}
-							{console.log({ shipping })}
 							<div style={{ marginTop: '5px' }}>
 								<Link to="/secure/checkout/shipping">
 									<button className="button primary">
@@ -345,19 +388,13 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						</li>
-						{console.log({ shipping })}
 						{shipping &&
 						shipping.hasOwnProperty('first_name') && (
 							<StripeCheckout
 								name="Glow LEDs"
-								// description={order.orderItems.map((item) => {
-								// 	return `${item.qty}x - ${item.name}`;
-								// })}
-								// description={`Pay for Order: ${order._id}`}
 								description={`Pay for Order`}
 								amount={totalPrice.toFixed(2) * 100}
 								token={(token) => placeOrderHandler(token)}
-								// token={(token) => console.log(token)}
 								stripeKey={process.env.REACT_APP_STRIPE_KEY}
 							>
 								<button className="button primary full-width" style={{ marginBottom: '12px' }}>
@@ -365,7 +402,33 @@ const PlaceOrderPage = (props) => {
 								</button>
 							</StripeCheckout>
 						)}
-
+						<div className="mv-10px">
+							<label htmlFor="promo_code">Promo Code</label>
+							<div className="row">
+								<input
+									type="text"
+									value={promo_code}
+									name="promo_code"
+									id="promo_code"
+									className="w-100per"
+									onChange={(e) => set_promo_code(e.target.value)}
+								/>
+								<button className="button primary" onClick={() => check_code()}>
+									Apply
+								</button>
+							</div>
+						</div>
+						<label className="validation_text" style={{ textAlign: 'center' }}>
+							{promo_code_validations}
+						</label>
+						{show_message && (
+							<div className="promo_code mv-1rem">
+								<button className="button icon" onClick={() => remove_promo()}>
+									<i className="fas fa-times mr-5px" />
+								</button>
+								{show_message}
+							</div>
+						)}
 						<FlexContainer column>
 							<div htmlFor="order_note">Add a note</div>
 							<textarea

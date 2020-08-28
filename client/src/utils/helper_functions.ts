@@ -162,6 +162,25 @@ export const hslToHex = (h: any, s: any, l: any) => {
 
 // export const email_validations = email => {
 
+export const validate_promo_code = (data: { promo_code: any; promo_codes: any }) => {
+	let errors: any = {};
+	interface errors {
+		promo_code: string;
+	}
+	// Convert empty fields to an empty string so we can use validator functions
+	data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : '';
+	// Email checks
+	if (Validator.isEmpty(data.promo_code)) {
+		errors.promo_code = 'Promo Code Field Empty';
+	} else if (!data.promo_codes.includes(data.promo_code.toLowerCase())) {
+		errors.promo_code = 'Promo Code Not Valid';
+	}
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	};
+};
+
 export const validate_login = (data: { email: any; password: any }) => {
 	let errors: any = {};
 	interface errors {

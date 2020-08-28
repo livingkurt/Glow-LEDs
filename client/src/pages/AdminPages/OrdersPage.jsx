@@ -160,8 +160,8 @@ const OrdersPage = (props) => {
 									</td>
 									<td>
 										<label>
-											${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2) /
-												orders.length.toFixed(2)}
+											${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+												orders.length).toFixed(2)}
 										</label>
 									</td>
 								</tr>
@@ -187,7 +187,7 @@ const OrdersPage = (props) => {
 									<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
 										<td>{order._id}</td>
 										<td>{format_date_display(order.createdAt)}</td>
-										<td>${order.totalPrice.toFixed(2)}</td>
+										<td>${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}</td>
 										<td>{!order.user ? 'N/A' : order.user.first_name}</td>
 										<td>
 											{order.isPaid ? (
