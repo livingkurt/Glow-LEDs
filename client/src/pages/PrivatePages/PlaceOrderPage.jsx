@@ -247,18 +247,22 @@ const PlaceOrderPage = (props) => {
 											<img src={item.display_image} alt="product" />
 										</div>
 										<div className=" label cart-name">
-											<div>
+											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{item.name}
 												</Link>
 											</div>
 											{/* <div>Qty: {item.qty}</div> */}
 											<FlexContainer v_i_center styles={{ height: '25px' }}>
-												Qty:{' '}
-												<div className="qty_select_dropdown_container">
-													{console.log({ item })}
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label"
+												>
+													Qty
+												</label>
+												<div className="custom-select">
 													<select
-														// defaultValue={item.qty}
 														value={item.qty}
 														className="qty_select_dropdown"
 														onChange={(e) =>
@@ -270,7 +274,7 @@ const PlaceOrderPage = (props) => {
 															</option>
 														))}
 													</select>
-													<i className="fas fa-sort-up icon_styles" />
+													<span className="custom-arrow" />
 												</div>
 											</FlexContainer>
 										</div>
