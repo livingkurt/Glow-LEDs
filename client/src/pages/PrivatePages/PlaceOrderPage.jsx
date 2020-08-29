@@ -12,6 +12,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/helper_functions';
 
 const PlaceOrderPage = (props) => {
+	const discount_percent = 0.1;
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
@@ -193,8 +194,8 @@ const PlaceOrderPage = (props) => {
 			} else {
 				console.log(promo_code);
 				// if (promo_code === 'Glow' || promo_code === 'glow') {
-				setItemsPrice(items_price - items_price * 0.25);
-				setTaxPrice(0.0875 * (items_price - items_price * 0.25));
+				setItemsPrice(items_price - items_price * discount_percent);
+				setTaxPrice(0.0875 * (items_price - items_price * discount_percent));
 				set_show_message(promo_code);
 				set_promo_code('');
 			}
@@ -359,7 +360,16 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<li>
 							<div>Items</div>
-							<div>${itemsPrice.toFixed(2)}</div>
+							{show_message ? (
+								<div>
+									<del style={{ color: 'red' }}>
+										<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>
+									</del>{' '}
+									<i class="fas fa-arrow-right" /> ${itemsPrice.toFixed(2)}
+								</div>
+							) : (
+								<div>${itemsPrice.toFixed(2)}</div>
+							)}
 						</li>
 						<li>
 							<div>Tax</div>
