@@ -13,7 +13,7 @@ const cartReducer = (state = { cartItems: [], shipping: {}, payment: {} }, actio
 					)
 				};
 			}
-			console.log({ cartItems: [ ...state.cartItems, item ] });
+			// console.log({ cartItems: [ ...state.cartItems, item ] });
 			// Cookie.set();
 			Cookie.set('cartItems', JSON.stringify([ ...state.cartItems, item ]));
 			return { cartItems: [ ...state.cartItems, item ] };

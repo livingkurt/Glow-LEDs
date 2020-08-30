@@ -16,6 +16,7 @@ const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
+	console.log({ cartItems });
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { order } = orderCreate;
 	// console.log({ shipping });
@@ -43,6 +44,11 @@ const PlaceOrderPage = (props) => {
 				dispatch(saveShipping(shipping_cookie));
 			}
 			dispatch(savePayment({ paymentMethod: 'paypal' }));
+			setItemsPrice(
+				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
+					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
+			);
 
 			return () => {};
 		},
@@ -59,6 +65,7 @@ const PlaceOrderPage = (props) => {
 				}
 			}
 			// calculate_shipping();
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 			return () => {};
 		},
 		[ shipping ]
@@ -332,10 +339,12 @@ const PlaceOrderPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														value={item.qty}
+														defaultValue={item.qty}
 														className="qty_select_dropdown"
 														onChange={(e) =>
 															dispatch(addToCart(item.pathname, e.target.value))}
+														// >
+														// onChange={(e) => console.log(e.target.value)}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x) => (
 															<option key={x + 1} defaultValue={parseInt(x + 1)}>

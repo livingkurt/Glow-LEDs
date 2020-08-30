@@ -53,6 +53,164 @@ router.get('/mine', isAuth, async (req: { user: { _id: any } }, res: { send: (ar
 	const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
 	res.send(orders);
 });
+router.get('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+	const charges = await stripe.charges.list({});
+	res.send(charges);
+});
+router.put('/charge', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+	const charge = {
+		id: 'ch_1HLXUxJUIKBwBp0weEYLWN75',
+		object: 'charge',
+		amount: 1804,
+		amount_refunded: 0,
+		application: null,
+		application_fee: null,
+		application_fee_amount: null,
+		balance_transaction: 'txn_1HLXUyJUIKBwBp0wztOer7F1',
+		billing_details: {
+			address: {
+				city: null,
+				country: null,
+				line1: null,
+				line2: null,
+				postal_code: null,
+				state: null
+			},
+			email: null,
+			name: 'mickeydustin@gmail.com',
+			phone: null
+		},
+		calculated_statement_descriptor: 'GLOW-LEDS',
+		captured: true,
+		created: 1598720751,
+		currency: 'usd',
+		customer: null,
+		description: 'Order Paid',
+		destination: null,
+		dispute: null,
+		disputed: false,
+		failure_code: null,
+		failure_message: null,
+		fraud_details: {},
+		invoice: null,
+		livemode: true,
+		metadata: {},
+		on_behalf_of: null,
+		order: null,
+		outcome: {
+			network_status: 'approved_by_network',
+			reason: null,
+			risk_level: 'normal',
+			seller_message: 'Payment complete.',
+			type: 'authorized'
+		},
+		paid: true,
+		payment_intent: null,
+		payment_method: 'card_1HLXUsJUIKBwBp0w2uVdKjlg',
+		payment_method_details: {
+			card: {
+				brand: 'visa',
+				checks: {
+					address_line1_check: null,
+					address_postal_code_check: null,
+					cvc_check: 'pass'
+				},
+				country: 'US',
+				exp_month: 8,
+				exp_year: 2025,
+				fingerprint: 'EMZu4Tq0WHVwHhDG',
+				funding: 'debit',
+				installments: null,
+				last4: '7823',
+				network: 'visa',
+				three_d_secure: null,
+				wallet: null
+			},
+			type: 'card'
+		},
+		receipt_email: null,
+		receipt_number: null,
+		receipt_url:
+			'https://pay.stripe.com/receipts/acct_1GEFSPJUIKBwBp0w/ch_1HLXUxJUIKBwBp0weEYLWN75/rcpt_HvOH05NFPwPo88xZSUtHkqzvk2GKnsT',
+		refunded: false,
+		refunds: {
+			object: 'list',
+			data: [],
+			has_more: false,
+			total_count: 0,
+			url: '/v1/charges/ch_1HLXUxJUIKBwBp0weEYLWN75/refunds'
+		},
+		review: null,
+		shipping: null,
+		source: {
+			id: 'card_1HLXUsJUIKBwBp0w2uVdKjlg',
+			object: 'card',
+			address_city: null,
+			address_country: null,
+			address_line1: null,
+			address_line1_check: null,
+			address_line2: null,
+			address_state: null,
+			address_zip: null,
+			address_zip_check: null,
+			brand: 'Visa',
+			country: 'US',
+			customer: null,
+			cvc_check: 'pass',
+			dynamic_last4: null,
+			exp_month: 8,
+			exp_year: 2025,
+			fingerprint: 'EMZu4Tq0WHVwHhDG',
+			funding: 'debit',
+			last4: '7823',
+			metadata: {},
+			name: 'mickeydustin@gmail.com',
+			tokenization_method: null
+		},
+		source_transfer: null,
+		statement_descriptor: null,
+		statement_descriptor_suffix: null,
+		status: 'succeeded',
+		transfer_data: null,
+		transfer_group: null
+	};
+	try {
+		// console.log(req.body);
+		// console.log({ Pay: req.body.token });
+		// const order = await Order.findOne({ _id: '5f4a8aee4b7048002a000738' }).populate('user');
+		// const order = await Order.updateOne({ _id: '5f495379cf122f780209e0ea' }, { payment: { charge: charge } });
+		// console.log(order);
+		// res.send(order);
+		const order = await Order.updateOne({ _id: '5f4a8aee4b7048002a000738' }, { payment: { charge: charge } });
+		console.log(order);
+		res.send(order);
+		// if (order) {
+		// order.payment.charge = charge;
+		// const updatedOrder = await order.save();
+		// res.send({ message: 'Order Paid.', order: updatedOrder });
+		// }
+		// else {
+		// if (charge) {
+		//   order.isPaid = true;
+		//   order.paidAt = Date.now();
+		//   order.payment = {
+		//     paymentMethod: 'stripe',
+		//     charge: charge
+		//     // paymentResult: {
+		//     // 	payment_id: charge.id,
+		//     // 	last_4: charge.payment_method_details.last4,
+		//     // 	payment_created: charge.created
+		//     // }
+		//   };
+
+		// res.status(404).send({ message: 'Order not found.' });
+		// }
+	} catch (error) {
+		// res.status(503).send({ message: 'Order and Payment Failed' });
+		console.log({ error });
+		res.send(error);
+	}
+});
 
 router.get(
 	'/:id',

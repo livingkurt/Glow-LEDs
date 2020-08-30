@@ -46,8 +46,8 @@ router.post('/array', async (req, res) => {
 
 router.get('/:pathname', async (req, res) => {
 	const product = await Product.findOne({ pathname: req.params.pathname });
-	console.log({ product });
-	console.log(req.params.pathname);
+	// console.log({ product });
+	// console.log(req.params.pathname);
 	if (product) {
 		res.send(product);
 	} else {

@@ -96,7 +96,7 @@ router.get('/products', async (req, res) => {
 router.put('/orders', async (req, res) => {
 	const order = await Order.updateMany({
 		// $rename: { shipping_price: 'volume' }
-		$set: { deleted: false }
+		$set: { payment: { charge: {} }, isRefunded: false }
 		// $unset: { shipping_price: 1 }
 	});
 	res.send(order);
