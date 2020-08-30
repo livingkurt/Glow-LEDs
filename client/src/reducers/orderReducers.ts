@@ -18,6 +18,9 @@ import {
 	ORDER_DELETE_REQUEST,
 	ORDER_DELETE_SUCCESS,
 	ORDER_DELETE_FAIL,
+	ORDER_REFUND_REQUEST,
+	ORDER_REFUND_SUCCESS,
+	ORDER_REFUND_FAIL,
 	ORDER_SHIPPING_REQUEST,
 	ORDER_SHIPPING_SUCCESS,
 	ORDER_SHIPPING_FAIL,
@@ -145,6 +148,19 @@ const orderDeleteReducer = (
 	}
 };
 
+const orderRefundReducer = (state = {}, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case ORDER_REFUND_REQUEST:
+			return { loading: true };
+		case ORDER_REFUND_SUCCESS:
+			return { loading: false, order: action.payload, success: true };
+		case ORDER_REFUND_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
 const orderShippingReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case ORDER_SHIPPING_REQUEST:
@@ -178,6 +194,7 @@ export {
 	myOrderListReducer,
 	orderListReducer,
 	orderDeleteReducer,
+	orderRefundReducer,
 	orderShippingReducer,
 	orderDeliveryReducer
 };

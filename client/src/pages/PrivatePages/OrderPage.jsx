@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, shipOrder, deliverOrder } from '../../actions/orderActions';
+import { detailsOrder, shipOrder, deliverOrder, refundOrder } from '../../actions/orderActions';
 import { format_date_display } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
@@ -25,6 +25,10 @@ const OrderPage = (props) => {
 	const { loading, order, error } = orderDetails;
 	console.log({ OrderPage: order });
 
+	const orderRefund = useSelector((state) => state.orderRefund);
+	const { order: refund } = orderRefund;
+	console.log({ refund });
+
 	const orderShipping = useSelector((state) => state.orderShipping);
 	const { order: shipping } = orderShipping;
 	console.log({ shipping });
@@ -33,6 +37,9 @@ const OrderPage = (props) => {
 	const { order: delivery } = orderDelivery;
 	console.log({ delivery });
 
+	const [ refund_state, set_refund_state ] = useState({});
+	const [ refund_amount, set_refund_amount ] = useState(0);
+	const [ refund_reason, set_refund_reason ] = useState('');
 	const [ shipping_state, set_shipping_state ] = useState({});
 	const [ delivery_state, set_delivery_state ] = useState({});
 	const [ payment_loading, set_payment_loading ] = useState(true);
@@ -44,6 +51,7 @@ const OrderPage = (props) => {
 			if (order) {
 				set_order_state(order);
 				console.log({ order });
+				set_shipping_state(order.isRefunded);
 				set_shipping_state(order.isShipped);
 				set_delivery_state(order.isDelivered);
 			}
@@ -51,6 +59,23 @@ const OrderPage = (props) => {
 		[ order ]
 	);
 
+	useEffect(
+		() => {
+			if (refund) {
+				set_refund_state(refund.isRefunded);
+				dispatch(detailsOrder(props.match.params.id));
+				// set_order_state({
+				//   ...order_state,
+				//   isRefunded: refund.isRefunded,
+				//   shippedAt: refund.isRefunded ? Date.now() : ""
+
+				// })
+				set_order_state(refund);
+				console.log({ refund: refund.isRefunded });
+			}
+		},
+		[ refund ]
+	);
 	useEffect(
 		() => {
 			if (shipping) {
@@ -89,6 +114,15 @@ const OrderPage = (props) => {
 		console.log(request);
 	};
 
+	const update_refund_state = () => {
+		// if (order_state.isRefunded) {
+		// 	set_refund_state(false);
+		// 	dispatch(refundOrder(order, false));
+		// } else {
+		set_refund_state(true);
+		dispatch(refundOrder(order, true, refund_amount, refund_reason));
+		// }
+	};
 	const update_shipping_state = () => {
 		if (order_state.isShipped) {
 			set_shipping_state(false);
@@ -177,6 +211,12 @@ const OrderPage = (props) => {
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
+						{order.isRefunded && (
+							<h1>
+								Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
+								{format_date_display(order.refundedAt)}
+							</h1>
+						)}
 						<FlexContainer h_between wrap>
 							<FlexContainer column styles={{ width: '100%' }}>
 								<h1>Shipping</h1>
@@ -203,64 +243,9 @@ const OrderPage = (props) => {
 									</div>
 								</div>
 							</FlexContainer>
-							<FlexContainer wrap h_between styles={{ width: '100%' }} className="ship_deliver">
-								<FlexContainer row v_i_center h_between>
-									{console.log({ shipping_state })}
-									{/* <label style={{ marginTop: '5px' }}>
-										{shipping_state ? (
-											'Shipped at ' + format_date_display(order_state.shippedAt)
-										) : (
-											'Not Shipped'
-										)}
-									</label> */}
-									{props.userInfo &&
-									props.userInfo.isAdmin && (
-										<div>
-											<button className="button primary" onClick={update_shipping_state}>
-												{shipping_state ? 'Mark As Not Shipped' : 'Mark As Shipped'}
-											</button>
-										</div>
-									)}
-								</FlexContainer>
-								<FlexContainer row v_i_center h_between>
-									{console.log({ delivery_state })}
-									{/* <label style={{ marginTop: '5px' }}>
-										{delivery_state ? (
-											'Delivered at ' + format_date_display(order_state.deliveredAt)
-										) : (
-											'Not Delivered'
-										)}
-									</label> */}
-									{props.userInfo &&
-									props.userInfo.isAdmin && (
-										<FlexContainer h_right>
-											<button className="button primary" onClick={update_delivered_state}>
-												{delivery_state ? 'Mark As Not Delivered' : 'Mark As Delivered'}
-											</button>
-										</FlexContainer>
-									)}
-								</FlexContainer>
-								<FlexContainer row v_i_center h_between>
-									{console.log({ delivery_state })}
-									{/* <label style={{ marginTop: '5px' }}>
-										{delivery_state ? (
-											'Delivered at ' + format_date_display(order_state.deliveredAt)
-										) : (
-											'Not Delivered'
-										)}
-									</label> */}
-									{props.userInfo &&
-									props.userInfo.isAdmin && (
-										<FlexContainer h_right>
-											<button className="button primary" onClick={send_not_paid_email}>
-												Still Not Paid
-											</button>
-										</FlexContainer>
-									)}
-								</FlexContainer>
-							</FlexContainer>
 						</FlexContainer>
 					</div>
+
 					<div>
 						<h1>Payment</h1>
 						{/* <div>Payment Method: {order.payment.paymentMethod}</div> */}
@@ -332,10 +317,38 @@ const OrderPage = (props) => {
 							<div>Tax</div>
 							<div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
 						</li>
-						<li>
-							<div>Order Total</div>
-							<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
-						</li>
+						{!order.isRefunded && (
+							<li>
+								<div>Order Total</div>
+								<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
+							</li>
+						)}
+						{order.isRefunded && (
+							<li>
+								<div>Order Total</div>
+								<del style={{ color: 'red' }}>
+									<label style={{ color: 'white' }}>
+										<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
+									</label>
+								</del>
+							</li>
+						)}
+						{order.isRefunded && (
+							<li>
+								<div>Return Amount</div>
+								<div>${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+							</li>
+						)}
+						{order.isRefunded && (
+							<li>
+								<div>New Order Total</div>
+								<div>
+									${(order.totalPrice -
+										order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+								</div>
+							</li>
+						)}
+
 						<li
 							className="placeorder-actions-payment"
 							style={{ display: 'flex', justifyContent: 'center' }}
@@ -378,6 +391,107 @@ const OrderPage = (props) => {
 							</FlexContainer>
 						)}
 					</ul>
+					<FlexContainer wrap h_between styles={{ width: '100%' }} className="ship_deliver">
+						<FlexContainer row v_i_center h_between>
+							{console.log({ shipping_state })}
+							{/* <label style={{ marginTop: '5px' }}>
+										{shipping_state ? (
+											'Shipped at ' + format_date_display(order_state.shippedAt)
+										) : (
+											'Not Shipped'
+										)}
+									</label> */}
+							{props.userInfo &&
+							props.userInfo.isAdmin && (
+								<div>
+									<button className="button primary" onClick={update_refund_state}>
+										{/* {shipping_state ? 'Mark As Not Refunded' : 'Mark As Shipped'} */}
+										Refund Customer
+									</button>
+									<div className="mv-10px">
+										<label htmlFor="refund_amount">Refund Amount</label>
+										<div className="row">
+											<input
+												type="text"
+												value={refund_amount}
+												name="refund_amount"
+												id="refund_amount"
+												className="w-100per"
+												onChange={(e) => set_refund_amount(e.target.value)}
+											/>
+										</div>
+										<div className="mv-10px">
+											<label htmlFor="refund_reason">Refund Reason</label>
+											<div className="row">
+												<input
+													type="text"
+													value={refund_reason}
+													name="refund_reason"
+													id="refund_reason"
+													className="w-100per"
+													onChange={(e) => set_refund_reason(e.target.value)}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							)}
+						</FlexContainer>
+						<FlexContainer row v_i_center h_between>
+							{console.log({ shipping_state })}
+							{/* <label style={{ marginTop: '5px' }}>
+										{shipping_state ? (
+											'Shipped at ' + format_date_display(order_state.shippedAt)
+										) : (
+											'Not Shipped'
+										)}
+									</label> */}
+							{props.userInfo &&
+							props.userInfo.isAdmin && (
+								<div>
+									<button className="button primary" onClick={update_shipping_state}>
+										{shipping_state ? 'Mark As Not Shipped' : 'Mark As Shipped'}
+									</button>
+								</div>
+							)}
+						</FlexContainer>
+						<FlexContainer row v_i_center h_between>
+							{console.log({ delivery_state })}
+							{/* <label style={{ marginTop: '5px' }}>
+										{delivery_state ? (
+											'Delivered at ' + format_date_display(order_state.deliveredAt)
+										) : (
+											'Not Delivered'
+										)}
+									</label> */}
+							{props.userInfo &&
+							props.userInfo.isAdmin && (
+								<FlexContainer h_right>
+									<button className="button primary" onClick={update_delivered_state}>
+										{delivery_state ? 'Mark As Not Delivered' : 'Mark As Delivered'}
+									</button>
+								</FlexContainer>
+							)}
+						</FlexContainer>
+						<FlexContainer row v_i_center h_between>
+							{console.log({ delivery_state })}
+							{/* <label style={{ marginTop: '5px' }}>
+										{delivery_state ? (
+											'Delivered at ' + format_date_display(order_state.deliveredAt)
+										) : (
+											'Not Delivered'
+										)}
+									</label> */}
+							{props.userInfo &&
+							props.userInfo.isAdmin && (
+								<FlexContainer h_right>
+									<button className="button primary" onClick={send_not_paid_email}>
+										Still Not Paid
+									</button>
+								</FlexContainer>
+							)}
+						</FlexContainer>
+					</FlexContainer>
 				</div>
 			</div>
 		</div>

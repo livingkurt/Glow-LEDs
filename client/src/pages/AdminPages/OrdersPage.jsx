@@ -70,7 +70,8 @@ const OrdersPage = (props) => {
 		{ name: 'Not Paid', color: '#6d3e3e' },
 		{ name: 'Paid', color: '#3e4c6d' },
 		{ name: 'Shipped', color: '#636363' },
-		{ name: 'Delivered', color: '#333333' }
+		{ name: 'Delivered', color: '#333333' },
+		{ name: 'Refunded', color: '#a9a9a9' }
 	];
 
 	const determine_color = (order) => {
@@ -87,6 +88,9 @@ const OrdersPage = (props) => {
 		if (order.isDelivered) {
 			result = colors[3].color;
 		}
+		if (order.isRefunded) {
+			result = colors[4].color;
+		}
 		// console.log(result);
 		return result;
 	};
@@ -101,7 +105,7 @@ const OrdersPage = (props) => {
 			<FlexContainer h_between wrap>
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+						<FlexContainer h_between styles={{ margin: '1rem', width: '14rem' }}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -179,6 +183,9 @@ const OrdersPage = (props) => {
 									<th>SHIPPED</th>
 									<th>SHIPPED On</th>
 									<th>DELIVERED</th>
+									<th>REFUNDED</th>
+									<th>REFUNDED AT</th>
+									<th>REFUND AMOUNT</th>
 									<th>ACTIONS</th>
 								</tr>
 							</thead>
@@ -210,6 +217,22 @@ const OrdersPage = (props) => {
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td>
+											{order.isRefunded ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td>{!order.refundedAt ? '' : format_date_display(order.refundedAt)}</td>
+										<td>
+											{order.isRefunded && (
+												<div>
+													${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+														100).toFixed(2)}
+												</div>
 											)}
 										</td>
 										<td>

@@ -15,7 +15,10 @@ const shippingSchema = {
 };
 
 const paymentSchema = {
-	paymentMethod: { type: String, required: true }
+	paymentMethod: { type: String, required: true },
+	charge: { type: Object },
+	refund: { type: Array },
+	refund_reason: { type: Array }
 };
 
 const orderItemSchema = new mongoose.Schema(
@@ -50,6 +53,8 @@ const orderSchema = new mongoose.Schema(
 		paidAt: { type: Date },
 		isShipped: { type: Boolean, default: false },
 		shippedAt: { type: Date },
+		isRefunded: { type: Boolean, default: false },
+		refundedAt: { type: Date },
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
 		order_note: { type: String },

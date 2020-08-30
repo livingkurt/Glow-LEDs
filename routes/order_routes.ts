@@ -50,7 +50,7 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 });
 
 router.get('/mine', isAuth, async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-	const orders = await Order.find({ deleted: false, user: req.user._id });
+	const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
 	res.send(orders);
 });
 
@@ -119,6 +119,8 @@ router.post(
 				shippingPrice: any;
 				totalPrice: any;
 				order_note: any;
+				isRefunded: any;
+				refundedAt: any;
 			};
 			user: { _id: any };
 		},
@@ -160,54 +162,98 @@ router.put(
 			) => { (): any; new (): any; send: { (arg0: { message: string }): void; new (): any } };
 		}
 	) => {
-		console.log(req.body);
-		console.log({ Pay: req.body.token });
-		const order = await Order.findById(req.params.id);
-		const charge = await stripe.charges.create({
-			amount: (order.totalPrice * 100).toFixed(0),
-			currency: 'usd',
-			description: `Order Paid`,
-			source: req.body.token.id
-		});
-		if (charge) {
-			order.isPaid = true;
-			order.paidAt = Date.now();
-			// order.payment = {
-			// 	paymentMethod: 'paypal',
-			// 	paymentResult: {
-			// 		payerID: req.body.payerID,
-			// 		orderID: req.body.orderID,
-			// 		paymentID: req.body.paymentID
-			// 	}
-			// };
-			const updatedOrder = await order.save();
-			res.send({ message: 'Order Paid.', order: updatedOrder });
-		} else {
-			res.status(404).send({ message: 'Order not found.' });
+		try {
+			console.log(req.body);
+			console.log({ Pay: req.body.token });
+			const order = await Order.findById(req.params.id).populate('user');
+			console.log({ user: order.user.first_name });
+			const charge = await stripe.charges.create({
+				amount: (order.totalPrice * 100).toFixed(0),
+				currency: 'usd',
+				// name: order.user.first_name,
+				description: `Order Paid`,
+				source: req.body.token.id
+			});
+			console.log(charge);
+			if (charge) {
+				order.isPaid = true;
+				order.paidAt = Date.now();
+				order.payment = {
+					paymentMethod: 'stripe',
+					charge: charge
+					// paymentResult: {
+					// 	payment_id: charge.id,
+					// 	last_4: charge.payment_method_details.last4,
+					// 	payment_created: charge.created
+					// }
+				};
+				const updatedOrder = await order.save();
+				res.send({ message: 'Order Paid.', order: updatedOrder });
+			} else {
+				res.status(404).send({ message: 'Order not found.' });
+			}
+		} catch (error) {
+			// res.status(503).send({ message: 'Order and Payment Failed' });
+			console.log({ error });
+			res.send(error);
 		}
 	}
 );
 
-router.post(
-	'/api/stripe',
-	isAuth,
-	async (
-		req: { body: { id: any }; user: { credits: number; save: () => any } },
-		res: { send: (arg0: any) => void }
-	) => {
-		const charge = await stripe.charges.create({
-			amount: 500,
-			currency: 'usd',
-			description: '$5 for 5 credits',
-			source: req.body.id
+// router.post(
+// 	'/refund',
+// 	isAuth,
+// 	async (
+// 		req: { body: { id: any }; user: { credits: number; save: () => any } },
+// 		res: { send: (arg0: any) => void }
+// 	) => {
+// 		const refund = await stripe.refunds.create({
+// 			charge: 'ch_1GEgHsJUIKBwBp0w91w7aeVE',
+// 			object: 'refund',
+// 			amount: 500
+// 		});
+
+// 		// req.user.credits += 5;
+// 		// const user = await req.user.save();
+
+// 		// res.send(user);
+// 	}
+// );
+
+// isRefunded: req.body.isRefunded,
+// refundedAt: req.body.refundedAt,
+
+router.put('/:id/refund', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+	try {
+		console.log({ refund: req.body });
+		// const updated_order = req.body;
+		const order = await Order.findById(req.params.id);
+		console.log({ id: order.payment.charge.id });
+		console.log({ payment: order.payment });
+		console.log({ refund_amount: req.body.refund_amount });
+		const refund = await stripe.refunds.create({
+			charge: order.payment.charge.id,
+			amount: req.body.refund_amount * 100
 		});
-
-		req.user.credits += 5;
-		const user = await req.user.save();
-
-		res.send(user);
+		console.log({ refund });
+		if (refund) {
+			order.isRefunded = true;
+			order.refundedAt = Date.now();
+			order.payment = {
+				paymentMethod: order.payment.paymentMethod,
+				charge: order.payment.charge,
+				refund: [ ...order.payment.refund, refund ],
+				refund_reason: [ ...order.payment.refund_reason, req.body.refund_reason ]
+			};
+			const updated = await Order.updateOne({ _id: req.params.id }, order);
+			console.log({ refund: updated });
+			// Send the request back to the front end
+			res.send(updated);
+		}
+	} catch (err) {
+		console.log(err);
 	}
-);
+});
 
 router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {

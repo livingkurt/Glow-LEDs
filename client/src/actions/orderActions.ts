@@ -22,6 +22,9 @@ import {
 	ORDER_SHIPPING_REQUEST,
 	ORDER_SHIPPING_SUCCESS,
 	ORDER_SHIPPING_FAIL,
+	ORDER_REFUND_REQUEST,
+	ORDER_REFUND_SUCCESS,
+	ORDER_REFUND_FAIL,
 	ORDER_DELIVERY_REQUEST,
 	ORDER_DELIVERY_SUCCESS,
 	ORDER_DELIVERY_FAIL
@@ -171,6 +174,40 @@ const deleteOrder = (orderId: string) => async (
 	}
 };
 
+const refundOrder = (
+	order: { _id: string },
+	refundResult: boolean,
+	refund_amount: number,
+	refund_reason: string
+) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log({ ...order, isRefunded: refundResult });
+	try {
+		dispatch({ type: ORDER_REFUND_REQUEST, payload: refundResult });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.put(
+			'/api/orders/' + order._id + '/refund',
+			{
+				...order,
+				refund_amount: refund_amount,
+				isRefunded: refundResult,
+				RefundedAt: refundResult ? Date.now() : '',
+				refund_reason: refund_reason
+			},
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+			}
+		);
+		console.log({ data });
+		dispatch({ type: ORDER_REFUND_SUCCESS, payload: data });
+		axios.post('/api/emails/refund', order);
+	} catch (error) {
+		dispatch({ type: ORDER_REFUND_FAIL, payload: error.message });
+	}
+};
+
 const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -250,4 +287,14 @@ const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async 
 		dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
 	}
 };
-export { createOrder, detailsOrder, payOrder, listMyOrders, listOrders, deleteOrder, shipOrder, deliverOrder };
+export {
+	createOrder,
+	detailsOrder,
+	payOrder,
+	listMyOrders,
+	listOrders,
+	deleteOrder,
+	refundOrder,
+	shipOrder,
+	deliverOrder
+};

@@ -17,6 +17,9 @@ export default (props: {
 	shippedAt: Date;
 	isPaid: boolean;
 	paidAt: Date;
+	isRefunded: boolean;
+	refundedAt: Date;
+	payment: any;
 	orderItems: object[];
 	itemsPrice: number;
 	shippingPrice: number;
@@ -26,7 +29,8 @@ export default (props: {
 	paid: string;
 	shipped: string;
 	createdAt: Date;
-	token: any;
+	refunded: Boolean;
+	// token: any;
 }) => {
 	const format_date_display = (unformatted_date: string | number | Date) => {
 		const date = new Date(unformatted_date);
@@ -37,19 +41,26 @@ export default (props: {
 		return formatted_date;
 	};
 	console.log({ order_view_props: props });
-	console.log({ order_view_props_order_items: props.orderItems });
+	// console.log({ order_view_props_order_items: props.orderItems });
+	console.log({ order_view_props_order_items: props.payment.charge });
 	return `
  
   <div class="placeorder" style="display: flex;flex-wrap: wrap;justify-content: space-between;color: white;">
       <div class="placeorder-info" style="box-sizing: border-box;flex: 3 1 60rem;">
+      
         <div style="box-sizing: border-box;border-radius: 1rem;background-color: #8a8a8a;padding: 1rem;margin: 1rem;  margin-bottom: 0;">
           <div style="display: flex;justify-content: space-between; flex-direction: column;">
             <div style="display: block;flex-direction: column;box-sizing: border-box;">
               <h1 style="display: flex; width: 100%; font-size: 30px;margin-top: 0px; margin-bottom: 0px;box-sizing: border-box;font-family: Helvetica;">
                 ${props.title}</h1>
                 <div style="  display: flex;  flex-wrap: wrap; ">
-                <h3 style=" box-sizing: border-box;"><strong>Date: </strong> ${format_date_display(props.createdAt)}
-                </h3>
+                ${props.refunded
+					? `<h2>
+                      Refunded: ${props.payment.refund_reason[
+							props.payment.refund_reason.length - 1
+						]} on ${format_date_display(props.refundedAt)}
+                    </h2>`
+					: `<div></div>`}
               </div>
               <div style=" display: flex;  flex-wrap: wrap; width: 100%;">
                 <h3 style="margin: 0px; box-sizing: border-box;font-family: Helvetica;"><strong>Order
@@ -161,16 +172,46 @@ export default (props: {
             <div style="box-sizing: border-box; border-top: 0.1rem solid white;width: 100%; display: flex; flex-direction: column;"><label>
             </div>
           </li>
-          <li
-          style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+                ${props.refunded
+					? `<li style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+                    <div style="box-sizing: border-box;">Order Total</div>
+                    <del style={{ color: 'red' }}>
+                      <label style={{ color: 'white' }}>
+                        <div style="box-sizing: border-box;">$${props.totalPrice
+							? props.totalPrice.toFixed(2)
+							: props.totalPrice}</div>
+                      </label>
+                    </del>
+                  </li>`
+					: `<li style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
           <div style="box-sizing: border-box;">Order Total</div>
-          <div style="box-sizing: border-box;">$${props.totalPrice.toFixed(2)}</div>
-        </li>
-        
+          <div style="box-sizing: border-box;">$${props.totalPrice
+				? props.totalPrice.toFixed(2)
+				: props.totalPrice}</div>
+        </li>`}
+                ${props.refunded
+					? `<li style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+                    <div style="box-sizing: border-box;">Refund Amount</div>
+                    <div style="box-sizing: border-box;">$${(props.payment.refund.reduce(
+						(a: any, c: any) => a + c.amount,
+						0
+					) / 100).toFixed(2)}</div>
+                  </li>`
+					: `<div style="box-sizing: border-box;"></div>`}
+                ${props.refunded
+					? `<li style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+                    <div style="box-sizing: border-box;">New Order Total</div>
+                    <div style="box-sizing: border-box;">
+                      $${(props.totalPrice -
+							props.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100).toFixed(2)}
+                    </div>
+                  </li>`
+					: `<div style="box-sizing: border-box;"></div>`}
           <li
             style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
             <div style="box-sizing: border-box;">${props.paid}</div>
-            <div style="box-sizing: border-box;">${props.token.card.brand} ending in ${props.token.card.last4}</div>
+            <div style="box-sizing: border-box;">${props.payment.charge.payment_method_details.card
+				.brand} ending in ${props.payment.charge.payment_method_details.card.last4}</div>
           </li>
         </ul>
       </div>

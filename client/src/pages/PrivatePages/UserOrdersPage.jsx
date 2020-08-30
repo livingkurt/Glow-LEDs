@@ -25,11 +25,37 @@ const UserOrderPage = (props) => {
 		[ userInfo ]
 	);
 
+	// const colors = [
+	// 	{ name: 'Not Paid', color: '#333333' },
+	// 	{ name: 'Paid', color: '#626262' },
+	// 	{ name: 'Shipped', color: '#8e8e8e' },
+	// 	{ name: 'Delivered', color: '#ababab' }
+	// ];
+
+	// const determine_color = (order) => {
+	// 	let result = '';
+	// 	if (!order.isPaid) {
+	// 		result = colors[0].color;
+	// 	}
+	// 	if (order.isPaid) {
+	// 		result = colors[1].color;
+	// 	}
+	// 	if (order.isShipped) {
+	// 		result = colors[2].color;
+	// 	}
+	// 	if (order.isDelivered) {
+	// 		result = colors[3].color;
+	// 	}
+	// 	console.log(result);
+	// 	return result;
+	// };
+
 	const colors = [
-		{ name: 'Not Paid', color: '#333333' },
-		{ name: 'Paid', color: '#626262' },
-		{ name: 'Shipped', color: '#8e8e8e' },
-		{ name: 'Delivered', color: '#ababab' }
+		{ name: 'Not Paid', color: '#6d3e3e' },
+		{ name: 'Paid', color: '#3e4c6d' },
+		{ name: 'Shipped', color: '#636363' },
+		{ name: 'Delivered', color: '#333333' },
+		{ name: 'Refunded', color: '#a9a9a9' }
 	];
 
 	const determine_color = (order) => {
@@ -46,9 +72,13 @@ const UserOrderPage = (props) => {
 		if (order.isDelivered) {
 			result = colors[3].color;
 		}
-		console.log(result);
+		if (order.isRefunded) {
+			result = colors[4].color;
+		}
+		// console.log(result);
 		return result;
 	};
+
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<MetaTags>
@@ -90,7 +120,7 @@ const UserOrderPage = (props) => {
 					<div style={{ backgroundColor: '#8e8e8e', height: '20px', width: '60px', borderRadius: '5px' }} />
 				</FlexContainer> */}
 			</FlexContainer>
-			<div className="profile-orders profile_orders_container" style={{ overflowX: 'auto', width: '100%' }}>
+			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
@@ -106,6 +136,9 @@ const UserOrderPage = (props) => {
 										<th>PAID</th>
 										<th>SHIPPED</th>
 										<th>DELIVERED</th>
+										<th>REFUNDED</th>
+										<th>REFUNDED AT</th>
+										<th>REFUND AMOUNT</th>
 										<th>ACTIONS</th>
 									</tr>
 								</thead>
@@ -134,6 +167,22 @@ const UserOrderPage = (props) => {
 													<i className="fas fa-check-circle" />
 												) : (
 													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td>
+												{order.isRefunded ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td>{!order.refundedAt ? '' : format_date_display(order.refundedAt)}</td>
+											<td>
+												{order.isRefunded && (
+													<div>
+														${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+															100).toFixed(2)}
+													</div>
 												)}
 											</td>
 											<td>

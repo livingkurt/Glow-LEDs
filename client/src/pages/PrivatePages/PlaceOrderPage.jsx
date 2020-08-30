@@ -22,6 +22,7 @@ const PlaceOrderPage = (props) => {
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
+	console.log({ orderPay });
 	const items_price =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
@@ -142,9 +143,19 @@ const PlaceOrderPage = (props) => {
 			if (successPay && order) {
 				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
 				set_payment_loading(false);
+			} else if (errorPay) {
 			}
 		},
 		[ successPay ]
+	);
+	useEffect(
+		() => {
+			if (successPay && order) {
+				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+				set_payment_loading(false);
+			}
+		},
+		[ errorPay ]
 	);
 
 	const checkoutHandler = () => {
@@ -228,6 +239,20 @@ const PlaceOrderPage = (props) => {
 				<CheckoutSteps step1 />
 			)}
 			<Loading loading={payment_loading} />
+			{payment_loading && (
+				<div className="payment_message">
+					<p>Wait a moment while we process your Payment</p>
+					<p>Please Do not Refresh Page</p>
+				</div>
+			)}
+			{errorPay && (
+				<div className="payment_error_message">
+					<p>Your Payment has Failed</p>
+					<p>Please Check your card number or Contact Support for assistance</p>
+				</div>
+			)}
+
+			{/* <Loading loading={loadingPay} error={errorPay} /> */}
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>

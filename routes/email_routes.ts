@@ -11,7 +11,8 @@ import {
 	verify_account_view,
 	order_view,
 	contact_confirmation_view,
-	not_verified_view
+	not_verified_view,
+	refund_view
 } from '../email_templates/pages/index';
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
@@ -179,6 +180,60 @@ router.post('/verify', async (req, res) => {
 	});
 });
 
+router.post('/order', async (req, res) => {
+	console.log({ order: req.body.token });
+	console.log({ order: req.body.token.card.last4 });
+
+	const paid = 'Paid';
+	const shipped = 'Not Shipped';
+	// const delivered = "Not Shipped"
+	let user = {};
+	let mailOptions = {
+		from: process.env.DISPLAY_EMAIL,
+		to: req.body.shipping.email,
+		subject: 'Glow LEDs Order Confirmation',
+		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed', paid, shipped }), styles())
+	};
+
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.send(err);
+		} else {
+			console.log('Order Email Sent to ' + req.body.shipping.first_name);
+			res.send('Email Successfully Sent');
+		}
+	});
+});
+router.post('/refund', async (req, res) => {
+	console.log({ refund: req.body });
+	// console.log({ order: req.body.token.card.last4 });
+
+	const paid = 'Paid';
+	const shipped = req.body.isShipped ? 'Shipped' : 'Not Shipped';
+	const refunded = true;
+	// const delivered = "Not Shipped"
+	let user = {};
+	let mailOptions = {
+		from: process.env.DISPLAY_EMAIL,
+		to: req.body.shipping.email,
+		subject: 'Glow LEDs Order Refund',
+		html: main_layout(
+			refund_view({ ...req.body, title: 'You have been refunded for your order', paid, shipped, refunded }),
+			styles()
+		)
+	};
+
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.send(err);
+		} else {
+			console.log('Order Email Sent to ' + req.body.shipping.first_name);
+			res.send('Email Successfully Sent');
+		}
+	});
+});
 router.post('/order', async (req, res) => {
 	console.log({ order: req.body.token });
 	console.log({ order: req.body.token.card.last4 });
