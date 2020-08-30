@@ -335,7 +335,7 @@ const OrderPage = (props) => {
 						)}
 						{order.isRefunded && (
 							<li>
-								<div>Return Amount</div>
+								<div>Refund Amount</div>
 								<div>${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
 							</li>
 						)}
