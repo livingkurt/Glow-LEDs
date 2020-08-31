@@ -17,12 +17,13 @@ export default (props: {
 	shippedAt: Date;
 	isPaid: boolean;
 	paidAt: Date;
-	orderItems: object[];
+	orderItems: any;
 	itemsPrice: number;
 	shippingPrice: number;
 	taxPrice: number;
 	totalPrice: number;
 	order_note: string;
+	promo_code: string;
 	paid: string;
 	shipped: string;
 	createdAt: Date;
@@ -130,9 +131,9 @@ export default (props: {
 				return item_item;
 			})}
           </ul>
-          <div style="display: flex;flex-direction: column;box-sizing: border-box;">
-          <div for="order_note" style="box-sizing: border-box;">Order Note: </div>
-          <div style="box-sizing: border-box;">${props.order_note}</div>
+        <div style="display: flex; flex-direction: column; box-sizing: border-box;">
+          <div style="box-sizing: border-box; margin: 10px 0;">Promo Code: ${props.promo_code}</div>
+          <div style="box-sizing: border-box; margin-bottom: 10px;">Order Note: ${props.order_note}</div>
         </div>
         </div>
       </div>
@@ -142,10 +143,17 @@ export default (props: {
           <li style="box-sizing: border-box;display: flex;justify-content: space-between;margin-bottom: 1rem;">
             <h1 style="margin-top: 0px;box-sizing: border-box;font-family: Helvetica;">Payment Summary</h1>
           </li>
-          <li
-            style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
+          <li style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
             <div style="box-sizing: border-box;">Items</div>
-            <div style="box-sizing: border-box;">$${props.itemsPrice.toFixed(2)}</div>
+            <div style="box-sizing: border-box;">${props.promo_code
+				? `    <del style="color: red;">
+                  <label style="color: white;">$${props.orderItems.reduce(
+						(a: any, c: any) => a + c.price * c.qty,
+						0
+					)}</label>
+                </del>
+                <label style="color: white;"> ----- $${props.itemsPrice.toFixed(2)}</label>`
+				: `<div>$${props.itemsPrice.toFixed(2)}</div>`}</div>
           </li>
           <li
             style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">

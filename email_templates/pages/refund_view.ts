@@ -26,6 +26,7 @@ export default (props: {
 	taxPrice: number;
 	totalPrice: number;
 	order_note: string;
+	promo_code: string;
 	paid: string;
 	shipped: string;
 	createdAt: Date;
@@ -141,7 +142,11 @@ export default (props: {
 				return item_item;
 			})}
           </ul>
-          <div style="display: flex;flex-direction: column;box-sizing: border-box;">
+        <div style="display: flex;flex-direction: column;box-sizing: border-box;">
+          <div for="promo_code" style="box-sizing: border-box;">Order Note: </div>
+          <div style="box-sizing: border-box;">${props.promo_code}</div>
+        </div>
+        <div style="display: flex;flex-direction: column;box-sizing: border-box;">
           <div for="order_note" style="box-sizing: border-box;">Order Note: </div>
           <div style="box-sizing: border-box;">${props.order_note}</div>
         </div>

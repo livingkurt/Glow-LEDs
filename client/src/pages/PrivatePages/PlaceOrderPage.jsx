@@ -129,7 +129,8 @@ const PlaceOrderPage = (props) => {
 					taxPrice,
 					totalPrice,
 					user_data,
-					order_note
+					order_note,
+					promo_code
 				},
 				token
 			)
@@ -199,7 +200,7 @@ const PlaceOrderPage = (props) => {
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
-	const promo_codes = [ '' ];
+	const promo_codes = [ 'giveaway20' ];
 	const check_code = () => {
 		const data = { promo_code, promo_codes };
 		const request = validate_promo_code(data);
@@ -215,7 +216,7 @@ const PlaceOrderPage = (props) => {
 				setItemsPrice(items_price - items_price * discount_percent);
 				setTaxPrice(0.0875 * (items_price - items_price * discount_percent));
 				set_show_message(promo_code);
-				set_promo_code('');
+				// set_promo_code('');
 			}
 		}
 		// else {
@@ -418,12 +419,9 @@ const PlaceOrderPage = (props) => {
 									'------'
 								)}
 							</div>
-							{/* <div>Free Shipping</div> */}
 						</li>
-
 						<li>
 							<div>Order Total</div>
-							{/* <div>${totalPrice.toFixed(2)}</div> */}
 							<div>
 								{shipping && shipping.hasOwnProperty('first_name') ? (
 									'$' + totalPrice.toFixed(2)

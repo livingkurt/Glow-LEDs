@@ -306,7 +306,19 @@ const OrderPage = (props) => {
 						</li>
 						<li>
 							<div>Items</div>
-							<div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div>
+							{/* <div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div> */}
+							{order.promo_code ? (
+								<div>
+									<del style={{ color: 'red' }}>
+										<label style={{ color: 'white' }}>
+											${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
+										</label>
+									</del>{' '}
+									<i class="fas fa-arrow-right" /> ${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}
+								</div>
+							) : (
+								<div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div>
+							)}
 						</li>
 						<li>
 							<div>Shipping</div>
@@ -352,42 +364,28 @@ const OrderPage = (props) => {
 						<li
 							className="placeorder-actions-payment"
 							style={{ display: 'flex', justifyContent: 'center' }}
-						>
-							{/* <Loading loading={loadingPay} error={errorPay}> */}
-							{/* {loadingPay ? (
-								<FlexContainer h_center>
-									<h2>Finishing Payment..</h2>
-									<img src="loading.gif" className="loading_gif" alt="loading" />
-									<img src="loading_overlay.png" className="loading_png" alt="loading" />
-								</FlexContainer>
-							)} */}
-							{/* {!order.isPaid && (
-									// <PaypalButton amount={order.totalPrice} onSuccess={handleSuccessPayment} />
-									<StripeCheckout
-										name="Glow LEDs"
-										description={`Pay for Order`}
-										amount={order.totalPrice * 100}
-										token={(token) => handleSuccessPayment(token)}
-										stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									>
-										<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
-											Pay for Order
-										</button>
-									</StripeCheckout>
-								)} */}
-							{/* </div> */}
-							{/* </Loading> */}
-						</li>
-						{/* {!order.isPaid && (
-							<label htmlFor="order_note">If paypal button doesn't show, refresh page.</label>
-						)} */}
+						/>
 
+						{order.promo_code && (
+							<FlexContainer column>
+								<div
+									style={{ borderTop: '.1rem white solid' }}
+									className="pt-1rem"
+									htmlFor="promo_code"
+								>
+									Promo Code: {order.promo_code}
+								</div>
+							</FlexContainer>
+						)}
 						{order.order_note && (
 							<FlexContainer column>
-								<div htmlFor="order_note">Order Note</div>
-								<p name="order_note" id="order_note" style={{ width: '100%', height: '100px' }}>
-									{order.order_note}
-								</p>
+								<div
+									style={{ borderTop: '.1rem white solid' }}
+									className="pt-1rem"
+									htmlFor="order_note"
+								>
+									Order Note: {order.order_note}
+								</div>
 							</FlexContainer>
 						)}
 					</ul>

@@ -42,6 +42,7 @@ const createOrder = (
 		totalPrice: number;
 		user_data: object;
 		order_note: string;
+		promo_code: string;
 	},
 	token: any
 ) => async (

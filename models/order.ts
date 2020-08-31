@@ -58,6 +58,7 @@ const orderSchema = new mongoose.Schema(
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
 		order_note: { type: String },
+		promo_code: { type: String },
 		deleted: { type: Boolean, default: false }
 	},
 	{

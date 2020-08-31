@@ -22,6 +22,7 @@ export default (props: {
 	taxPrice: number;
 	totalPrice: number;
 	order_note: string;
+	promo_code: string;
 	paid: string;
 	shipped: string;
 }) => {
