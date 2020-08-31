@@ -15,6 +15,17 @@ $align: "c" center, "s" flex-start, "e" flex-end, "b" stretch, "b" baseline;
 	}
 }
 
+@for $i from 0 to 100 {
+	.g-#{$i}rem {
+		gap: $i + rem !important;
+	}
+}
+@for $i from 0 to 100 {
+	.g-#{$i}px {
+		gap: $i + px !important;
+	}
+}
+
 .row {
 	display: flex;
 	flex-direction: row;

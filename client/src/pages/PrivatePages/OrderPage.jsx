@@ -329,6 +329,7 @@ const OrderPage = (props) => {
 							<div>Tax</div>
 							<div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
 						</li>
+
 						{!order.isRefunded && (
 							<li>
 								<div>Order Total</div>
@@ -389,7 +390,7 @@ const OrderPage = (props) => {
 							</FlexContainer>
 						)}
 					</ul>
-					<FlexContainer wrap h_between styles={{ width: '100%' }} className="ship_deliver">
+					<div className="ship_deliver ai-s wrap w-100per column g-17px">
 						<FlexContainer row v_i_center h_between>
 							{console.log({ shipping_state })}
 							{/* <label style={{ marginTop: '5px' }}>
@@ -489,7 +490,7 @@ const OrderPage = (props) => {
 								</FlexContainer>
 							)}
 						</FlexContainer>
-					</FlexContainer>
+					</div>
 				</div>
 			</div>
 		</div>
