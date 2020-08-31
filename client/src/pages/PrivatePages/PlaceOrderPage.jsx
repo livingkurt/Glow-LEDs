@@ -12,7 +12,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/helper_functions';
 
 const PlaceOrderPage = (props) => {
-	const discount_percent = 0.1;
+	const discount_percent = 0.2;
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
