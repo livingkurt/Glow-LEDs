@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 	} else if (req.query.sortOrder === 'hidden') {
 		sortOrder = { hidden: -1 };
 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-		sortOrder = { category: -1, createdAt: -1 };
+		sortOrder = { order: 1, _id: -1 };
 	}
 
 	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
