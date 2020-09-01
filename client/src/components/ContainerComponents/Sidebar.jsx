@@ -169,6 +169,11 @@ const Sidebar = (props) => {
 								Diffuser Caps
 							</button>
 						</Link>
+						<Link to="/collections/all/products/category/mini_caps">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Mini Diffuser Caps
+							</button>
+						</Link>
 						<Link to="/collections/all/products/category/diffuser_adapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								{' '}
