@@ -111,9 +111,9 @@ const Header = (props) => {
 								<Link to="/collections/all/products/category/caps">
 									<button className="button nav">Diffuser Caps</button>
 								</Link>
-								<Link to="/collections/all/products/category/mini_caps">
+								{/* <Link to="/collections/all/products/category/mini_caps">
 									<button className="button nav">Mini Diffuser Caps</button>
-								</Link>
+								</Link> */}
 								<Link to="/collections/all/products/category/diffuser_adapters">
 									<button className="button nav"> Diffuser Adapters</button>
 								</Link>
