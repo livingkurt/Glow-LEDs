@@ -52,6 +52,16 @@ const Footer = (props) => {
 							<i class="fab fa-youtube zoom" />
 						</a>
 					</div>
+					<div className="mr-10px fs-30px">
+						<a
+							rel="noreferrer"
+							href="https://soundcloud.com/ntre"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<i class="fab fa-soundcloud" />
+						</a>
+					</div>
 				</div>
 			</div>
 		</footer>

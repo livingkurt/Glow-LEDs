@@ -54,6 +54,16 @@ const Banner = () => {
 							<i class="fab fa-youtube zoom" />
 						</a>
 					</div>
+					<div className="mr-10px">
+						<a
+							rel="noreferrer"
+							href="https://soundcloud.com/ntre"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<i class="fab fa-soundcloud" />
+						</a>
+					</div>
 				</FlexContainer>
 			</div>
 		</span>
