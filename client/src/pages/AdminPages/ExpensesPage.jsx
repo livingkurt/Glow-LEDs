@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Search, Sort } from '../../components/SpecialtyComponents/index';
 import MetaTags from 'react-meta-tags';
-import { format_date_display_expenses } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 
 const colors = {
 	hidden: '#333333'
@@ -244,7 +244,7 @@ const ExpensesPage = (props) => {
 									>
 										<td>{expense._id}</td>
 										<td style={{ minWidth: '300px' }}>{expense.expense_name}</td>
-										<td>{format_date_display_expenses(expense.date_of_purchase)}</td>
+										<td>{format_date(expense.date_of_purchase)}</td>
 										<td>{expense.category}</td>
 										<td>${expense.amount ? expense.amount.toFixed(2) : expense.amount}</td>
 										<td>{expense.card}</td>

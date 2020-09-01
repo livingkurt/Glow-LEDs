@@ -33,7 +33,7 @@ export default (props: {
 	refunded: Boolean;
 	// token: any;
 }) => {
-	const format_date_display = (unformatted_date: string | number | Date) => {
+	const format_date = (unformatted_date: string | number | Date) => {
 		const date = new Date(unformatted_date);
 		const day = date.getDate();
 		const month = date.getMonth() + 1;
@@ -57,9 +57,9 @@ export default (props: {
                 <div style="  display: flex;  flex-wrap: wrap; ">
                 ${props.refunded
 					? `<h2>
-                      Refunded: ${props.payment.refund_reason[
-							props.payment.refund_reason.length - 1
-						]} on ${format_date_display(props.refundedAt)}
+                      Refunded: ${props.payment.refund_reason[props.payment.refund_reason.length - 1]} on ${format_date(
+							props.refundedAt
+						)}
                     </h2>`
 					: `<div></div>`}
               </div>

@@ -16,31 +16,73 @@ export const humanize = (str: string) => {
 	return frags.join(' ');
 };
 
-const get_formatted_time = (date: any) => {
-	let formatted_time;
-	if ((formatted_time = date < 10)) {
-		formatted_time = '0' + date;
-	} else {
-		formatted_time = date;
-	}
-	return formatted_time;
-};
+// const get_formatted_time = (date: any) => {
+// 	console.log({ date });
+// 	let formatted_time;
+// 	if ((formatted_time = date <= 10)) {
+// 		formatted_time = '0' + date;
+// 		console.log({ formatted_time });
+// 	} else {
+// 		formatted_time = date;
+// 		console.log({ formatted_time });
+// 	}
 
-export const format_date_display = (unformatted_date: string | number | Date) => {
-	const date = new Date(unformatted_date);
-	const day = get_formatted_time(date.getDate());
-	const month = get_formatted_time(date.getMonth() + 1);
-	const year = date.getFullYear();
-	const formatted_date = `${month}/${day}/20`;
-	return formatted_date;
-};
+// 	return formatted_time;
+// };
 
-export const format_date_display_expenses = (unformatted_date: string | number | Date) => {
-	const date = new Date(unformatted_date);
-	const day = get_formatted_time(date.getDate() + 1);
-	const month = get_formatted_time(date.getMonth() + 1);
-	const year = date.getFullYear();
+// export const format_date = (unformatted_date: string) => {
+// 	const date = new Date(unformatted_date);
+// 	const day = get_formatted_time(date.getDate());
+// 	const month = get_formatted_time(date.getMonth() + 1);
+// 	const year = date.getFullYear();
+// 	const formatted_date = `${month}/${day}/20`;
+// 	return formatted_date;
+// };
+
+// export const format_date_display_expenses = (unformatted_date: string) => {
+// 	const date = new Date(unformatted_date);
+// 	const day = get_formatted_time(date.getDate() + 1);
+// 	const month = get_formatted_time(date.getMonth() + 1);
+// 	const year = date.getFullYear();
+// 	const formatted_date = `${month}/${day}/20`;
+// 	return formatted_date;
+// };
+
+// function get_formatted_time(n: any) {
+// 	console.log({ get_formatted_time: (n < 10 ? '0' : '') + n });
+// 	return (n < 10 ? '0' : '') + n;
+// }
+
+// export const format_date_display_features = (unformatted_date: string) => {
+// 	console.log({ unformatted_date });
+
+// 	// const year_1 = date.getFullYear();
+// 	const date = new Date(unformatted_date);
+// 	const date_2 = new Date(unformatted_date).toLocaleDateString();
+// 	console.log({ date_2 });
+// 	console.log({ date });
+// 	const day = get_formatted_time(date.getDate());
+// 	console.log({ day });
+// 	const month = get_formatted_time(date.getMonth());
+// 	console.log({ month });
+// 	const year = date.getFullYear();
+// 	const formatted_date = `${month}/${day}/20`;
+// 	return formatted_date;
+// };
+export const format_date = (unformatted_date: string) => {
+	console.log({ unformatted_date });
+	// const date = unformatted_date.split('-');
+	const month = unformatted_date.slice(5, 7);
+	const day = unformatted_date.slice(8, 10);
+	const year = unformatted_date.slice(0, 4);
+
+	// console.log({ day });
+
+	// console.log({ month });
+
+	// console.log({ year });
 	const formatted_date = `${month}/${day}/20`;
+	console.log({ formatted_date });
 	return formatted_date;
 };
 
@@ -55,7 +97,7 @@ export const format_date_display_expenses = (unformatted_date: string | number |
 // 	return unformatted_date;
 // };
 
-// export const format_date_display = (unformatted_date: string) => {
+// export const format_date = (unformatted_date: string) => {
 // 	const date = new Date(unformatted_date);
 // 	const day = date.getDate() > 10 ? '0' + date.getDate() : date.getDate();
 // 	const month = date.getMonth() + 1 > 10 ? '0' + date.getMonth() : date.getMonth();
@@ -63,17 +105,70 @@ export const format_date_display_expenses = (unformatted_date: string | number |
 // 	const formatted_date = `${month}/${day}/${year.slice(0, 2)}`;
 // 	return formatted_date;
 // };
-
 export const unformat_date = (formatted_date: string) => {
-	// const date = new Date(unformatted_date);
-	const day = formatted_date.slice(0, 2);
-	const month = formatted_date.slice(3, 5);
-	const year = formatted_date.slice(6, 10);
-	// const unformatted_date = `${year}-${day}-${month}`;
-	const unformatted_date = `2020-${day}-${month}`;
-	console.log(unformatted_date);
-	return unformatted_date;
+	// console.log({ formatted_date });
+	const date = formatted_date.split('/');
+	// console.log({ date });
+	const day = date[1];
+	// console.log({ day });
+	const month = date[0];
+	// console.log({ month });
+	const year = date[2];
+	// console.log({ year });
+	const unformat_date = `2020-${month}-${day}`;
+	console.log(unformat_date);
+	return unformat_date;
 };
+
+// export const unformat_date = (formatted_date: string) => {
+// 	// const date = new Date(unformatted_date);
+// 	const day = formatted_date.slice(0, 2);
+// 	const month = formatted_date.slice(3, 5);
+// 	const year = formatted_date.slice(6, 10);
+// 	// const unformatted_date = `${year}-${day}-${month}`;
+// 	const unformatted_date = `2020-${day}-${month}`;
+// 	console.log(unformatted_date);
+// 	return unformatted_date;
+// };
+
+// export const unformat_date_features = (formatted_date: string) => {
+// 	const date = new Date(formatted_date);
+// 	const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
+// 	const [ { value: month }, , { value: day }, , { value: year } ] = dateTimeFormat.formatToParts(date);
+// 	// const unformatted_date = `${year}-${day}-${month}`;
+// 	const unformatted_date = `2020-${day}-${month}`;
+// 	console.log(unformatted_date);
+// 	return unformatted_date;
+// };
+
+// export const format_date_display_features = (unformatted_date: string) => {
+// 	const date = new Date(unformatted_date);
+// 	const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' });
+// 	const [ { value: month }, , { value: day }, , { value: year } ] = dateTimeFormat.formatToParts(date);
+
+// 	console.log(`${month}/${day}/${year}`);
+// 	// console.log(`${day}👠${month}👢${year}`) // just for fun
+// 	// const date = new Date(unformatted_date);
+// 	// const day = get_formatted_time(date.getDate());
+// 	// const month = get_formatted_time(date.getMonth() + 1);
+// 	// const year = date.getFullYear();
+// 	const formatted_date = `${month}/${day}/20`;
+// 	return formatted_date;
+// };
+
+// const d = new Date('2010-08-05')
+// const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+// const mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d)
+// const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+
+// console.log(`${da}-${mo}-${ye}`)
+
+// var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+// var today  = new Date();
+
+// console.log(today.toLocaleDateString("en-US")); // 9/17/2016
+// console.log(today.toLocaleDateString("en-US", options)); // Saturday, September 17, 2016
+// console.log(today.toLocaleDateString("hi-IN", options));
 
 export const occurrence = function(array: any) {
 	'use strict';

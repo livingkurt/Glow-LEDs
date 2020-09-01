@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { format_date_display } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { listUsers, deleteUser } from '../../actions/userActions';
@@ -138,7 +138,7 @@ const UsersPage = (props) => {
 										}}
 									>
 										<td>{user._id}</td>
-										<td>{format_date_display(user.createdAt)}</td>
+										<td>{format_date(user.createdAt)}</td>
 										<td>{user.first_name}</td>
 										<td>{user.last_name}</td>
 										<td>{user.email}</td>

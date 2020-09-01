@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { logout, update, token } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { format_date_display } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
@@ -146,7 +146,7 @@ const UserOrderPage = (props) => {
 									{orders.map((order) => (
 										<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
 											<td>{order._id}</td>
-											<td>{format_date_display(order.createdAt)}</td>
+											<td>{format_date(order.createdAt)}</td>
 											<td>${order.totalPrice.toFixed(2)}</td>
 											<td>
 												{order.isPaid ? (
@@ -176,7 +176,7 @@ const UserOrderPage = (props) => {
 													<i className="fas fa-times-circle" />
 												)}
 											</td>
-											<td>{!order.refundedAt ? '' : format_date_display(order.refundedAt)}</td>
+											<td>{!order.refundedAt ? '' : format_date(order.refundedAt)}</td>
 											<td>
 												{order.isRefunded && (
 													<div>

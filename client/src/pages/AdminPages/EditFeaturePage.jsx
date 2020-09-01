@@ -5,7 +5,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
-import { format_date_display, unformat_date } from '../../utils/helper_functions';
+import { format_date, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
 
 const EditFeaturePage = (props) => {
@@ -43,36 +43,6 @@ const EditFeaturePage = (props) => {
 	const feature_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ feature });
-
-	// console.log({ ID: props.match.params.id })
-
-	// useEffect(() => {
-	// 	// dispatch(detailsFeature(feature_id));
-	// 	dispatch(listFeatures());
-	// 	if (feature) {
-	// 		// console.log({ feature })
-	// 		set_id(feature._id);
-	// 		set_user(feature.user);
-	// 		set_glover_name(feature.glover_name);
-	// 		set_instagram_handle(feature.instagram_handle);
-	// 		set_facebook_name(feature.facebook_name);
-	// 		set_product(format_date_display_features(feature.product));
-	// 		set_song_id(feature.song_id);
-	// 		set_video(feature.video);
-	// 		set_picture(feature.picture);
-	// 	} else {
-	// 		set_id('');
-	// 		set_user('');
-	// 		set_glover_name('');
-	// 		set_instagram_handle('');
-	// 		set_facebook_name('');
-	// 		set_product('');
-	// 		set_song_id('');
-	// 		set_video('');
-	// 		set_picture('');
-	// 	}
-	// 	return () => {};
-	// }, []);
 
 	useEffect(() => {
 		if (props.match.params.id) {
@@ -113,7 +83,12 @@ const EditFeaturePage = (props) => {
 		set_song_id(feature.song_id);
 		set_video(feature.video);
 		set_picture(feature.picture);
-		set_release_date(format_date_display(feature.release_date));
+		if (feature.release_date) {
+			set_release_date(format_date(feature.release_date));
+		}
+
+		// ffeature.release_date);
+		// console.log(format_date(feature.release_date));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -128,28 +103,16 @@ const EditFeaturePage = (props) => {
 		set_release_date('');
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		set_id(feature._id);
-	// 		set_user(feature.user);
-	// 		set_glover_name(feature.glover_name);
-	// 		set_instagram_handle(feature.instagram_handle);
-	// 		set_facebook_name(feature.facebook_name);
-	// 		set_product(format_date_display_features(feature.product));
-	// 		set_song_id(feature.song_id);
-	// 		set_video(feature.video);
-	// 		set_picture(feature.picture);
-	// 		return () => {
-	// 			//
-	// 		};
-	// 	},
-	// 	[ successSave, successDelete ]
-	// );
-
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log(product);
-		// console.log({ id });
+		console.log(release_date);
+		console.log(format_date(release_date));
+		console.log(unformat_date(format_date(release_date)));
+		// console.log(unformat_date(release_date));
+		// console.log(format_date(unformat_date(release_date)));
+		// console.log(format_date(unformat_date(release_date)));
+
+		console.log({ id });
 		dispatch(
 			saveFeature({
 				_id: id,
@@ -222,6 +185,8 @@ const EditFeaturePage = (props) => {
 													onChange={(e) => set_user(e.target.value)}
 												/>
 											</li>
+											{console.log({ release_date })}
+
 											<li>
 												<label htmlFor="release_date">Release Date</label>
 												<input
@@ -333,40 +298,6 @@ const EditFeaturePage = (props) => {
 											</Link>
 										)}
 									</li>
-									{/* <li> */}
-									{/* {feature.reviews.map((review) => {
-									return (
-										<li
-											key={review._id}
-											style={{
-												listStyleType: 'none',
-												background: '#616161',
-												padding: '5px',
-												borderRadius: '15px',
-												boxShadow:
-													'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
-											}}
-										>
-											<div>
-												<div>{review.name}</div>
-												<div>
-													<Rating value={review.rating} />
-												</div>
-												<div>{format_date_display_features(review.createdAt.substring(0, 10))}</div>
-												<div>{review.comment}</div>
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-													onClick={() => delete_review(review._id)}
-												>
-													X
-												</button>
-											</div>
-										</li>
-									);
-								})} */}
-									{/* </li> */}
 								</ul>
 							</div>
 						)}

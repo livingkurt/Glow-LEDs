@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../../actions/orderActions';
-import { format_date_display } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
@@ -193,7 +193,7 @@ const OrdersPage = (props) => {
 								{orders.map((order) => (
 									<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
 										<td>{order._id}</td>
-										<td>{format_date_display(order.createdAt)}</td>
+										<td>{format_date(order.createdAt)}</td>
 										<td>${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}</td>
 										<td>{!order.user ? 'N/A' : order.user.first_name}</td>
 										<td>
@@ -203,7 +203,7 @@ const OrdersPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{!order.paidAt ? '' : format_date_display(order.paidAt)}</td>
+										<td>{!order.paidAt ? '' : format_date(order.paidAt)}</td>
 										<td>
 											{order.isShipped ? (
 												<i className="fas fa-check-circle" />
@@ -211,7 +211,7 @@ const OrdersPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{!order.shippedAt ? '' : format_date_display(order.shippedAt)}</td>
+										<td>{!order.shippedAt ? '' : format_date(order.shippedAt)}</td>
 										<td>
 											{order.isDelivered ? (
 												<i className="fas fa-check-circle" />
@@ -226,7 +226,7 @@ const OrdersPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{!order.refundedAt ? '' : format_date_display(order.refundedAt)}</td>
+										<td>{!order.refundedAt ? '' : format_date(order.refundedAt)}</td>
 										<td>
 											{order.isRefunded && (
 												<div>

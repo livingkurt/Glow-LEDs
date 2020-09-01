@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-import { format_date_display } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlexContainer } from '../ContainerComponents';
 import { saveProductReview, detailsProduct } from '../../actions/productActions';
@@ -80,7 +80,7 @@ const Review = (props) => {
 					<div>
 						<Rating value={review.rating} />
 					</div>
-					<div>{format_date_display(review.createdAt.substring(0, 10))}</div>
+					<div>{format_date(review.createdAt.substring(0, 10))}</div>
 					<div>{review.comment}</div>
 				</li>
 			))}

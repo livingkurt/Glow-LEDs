@@ -29,7 +29,7 @@ export default (props: {
 	createdAt: Date;
 	token: any;
 }) => {
-	const format_date_display = (unformatted_date: string | number | Date) => {
+	const format_date = (unformatted_date: string | number | Date) => {
 		const date = new Date(unformatted_date);
 		const day = date.getDate();
 		const month = date.getMonth() + 1;
@@ -49,7 +49,7 @@ export default (props: {
               <h1 style="display: flex; width: 100%; font-size: 30px;margin-top: 0px; margin-bottom: 0px;box-sizing: border-box;font-family: Helvetica;">
                 ${props.title}</h1>
                 <div style="  display: flex;  flex-wrap: wrap; ">
-                <h3 style=" box-sizing: border-box;"><strong>Date: </strong> ${format_date_display(props.createdAt)}
+                <h3 style=" box-sizing: border-box;"><strong>Date: </strong> ${format_date(props.createdAt)}
                 </h3>
               </div>
               <div style=" display: flex;  flex-wrap: wrap; width: 100%;">

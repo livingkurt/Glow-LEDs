@@ -3,7 +3,7 @@ import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsOrder, shipOrder, deliverOrder, refundOrder } from '../../actions/orderActions';
-import { format_date_display } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
@@ -214,7 +214,7 @@ const OrderPage = (props) => {
 						{order.isRefunded && (
 							<h1>
 								Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
-								{format_date_display(order.refundedAt)}
+								{format_date(order.refundedAt)}
 							</h1>
 						)}
 						<FlexContainer h_between wrap>
@@ -234,7 +234,7 @@ const OrderPage = (props) => {
 									<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 										<p style={{ marginBottom: '0px' }}>
 											{/* {shipping_state ? (
-												'Shipped at ' + format_date_display(order_state.shippedAt)
+												'Shipped at ' + format_date(order_state.shippedAt)
 											) : (
 												'Not Shipped'
 											)} */}
@@ -251,10 +251,10 @@ const OrderPage = (props) => {
 						{/* <div>Payment Method: {order.payment.paymentMethod}</div> */}
 						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 							<p style={{ marginBottom: '0px' }}>
-								{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}
+								{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}
 							</p>
 						</div>
-						{/* <div>{order.isPaid ? 'Paid at ' + format_date_display(order.paidAt) : 'Not Paid'}</div> */}
+						{/* <div>{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}</div> */}
 					</div>
 					<div>
 						<ul style={{ marginTop: 0 }} className="cart-list-container">
@@ -395,7 +395,7 @@ const OrderPage = (props) => {
 							{console.log({ shipping_state })}
 							{/* <label style={{ marginTop: '5px' }}>
 										{shipping_state ? (
-											'Shipped at ' + format_date_display(order_state.shippedAt)
+											'Shipped at ' + format_date(order_state.shippedAt)
 										) : (
 											'Not Shipped'
 										)}
@@ -440,7 +440,7 @@ const OrderPage = (props) => {
 							{console.log({ shipping_state })}
 							{/* <label style={{ marginTop: '5px' }}>
 										{shipping_state ? (
-											'Shipped at ' + format_date_display(order_state.shippedAt)
+											'Shipped at ' + format_date(order_state.shippedAt)
 										) : (
 											'Not Shipped'
 										)}
@@ -458,7 +458,7 @@ const OrderPage = (props) => {
 							{console.log({ delivery_state })}
 							{/* <label style={{ marginTop: '5px' }}>
 										{delivery_state ? (
-											'Delivered at ' + format_date_display(order_state.deliveredAt)
+											'Delivered at ' + format_date(order_state.deliveredAt)
 										) : (
 											'Not Delivered'
 										)}
@@ -476,7 +476,7 @@ const OrderPage = (props) => {
 							{console.log({ delivery_state })}
 							{/* <label style={{ marginTop: '5px' }}>
 										{delivery_state ? (
-											'Delivered at ' + format_date_display(order_state.deliveredAt)
+											'Delivered at ' + format_date(order_state.deliveredAt)
 										) : (
 											'Not Delivered'
 										)}

@@ -5,7 +5,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
-import { format_date_display_expenses } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const colors = {
@@ -158,9 +158,7 @@ const FeaturesPage = (props) => {
 										}}
 									>
 										<td style={{ minWidth: '5rem' }}>{feature.user}</td>
-										<td style={{ minWidth: '15rem' }}>
-											{format_date_display_expenses(feature.release_date)}
-										</td>
+										<td style={{ minWidth: '15rem' }}>{format_date(feature.release_date)}</td>
 										<td style={{ minWidth: '15rem' }}>{feature.glover_name}</td>
 										<td style={{ minWidth: '10rem' }}>{feature.instagram_handle}</td>
 										<td style={{ minWidth: '15rem' }}>{feature.facebook_name}</td>
