@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema(
 		reviews: [ reviewSchema ],
 		hidden: { type: Boolean, default: false },
 		sale_price: { type: Number, default: 0 },
-		volume: { type: Number, required: 0 },
+		volume: { type: Number, required: true },
 		deleted: { type: Boolean, default: false },
 		pathname: { type: String },
 		meta_title: { type: String },

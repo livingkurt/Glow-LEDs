@@ -28,6 +28,15 @@ const ProductPage = (props) => {
 		video.autoplay = true;
 	}, []);
 
+	useEffect(
+		() => {
+			if (error) {
+				props.history.push('/collections/all/products');
+			}
+		},
+		[ error ]
+	);
+
 	const handleAddToCart = () => {
 		props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
 	};
