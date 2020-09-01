@@ -127,6 +127,15 @@ const ControlPanelPage = (props) => {
 	// 	// });
 	// };
 
+	const duration_of_opening = () => {
+		const current_date = new Date();
+		const start_date = new Date('2020-08-10');
+		var difference_in_time = current_date.getTime() - start_date.getTime();
+		var difference_in_day = difference_in_time / (1000 * 3600 * 24);
+		console.log({ difference_in_day });
+		return difference_in_day;
+	};
+
 	const initialize_occurance_chart = (occurrences) => {
 		const expense_chartRef = chartRef.current.getContext('2d');
 		const multiplier = 360 / occurrences.length;
@@ -306,6 +315,29 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>
 										${(orders.reduce((a, expense) => a + expense.totalPrice, 0) -
 											expenses.reduce((a, order) => a + order.amount, 0)).toFixed(2)}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Days Open</th>
+									<th style={{ padding: '15px' }}>{duration_of_opening().toFixed(0)}</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Average Daily Income</th>
+									<th style={{ padding: '15px' }}>
+										${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+											duration_of_opening()).toFixed(2)}
 									</th>
 								</tr>
 							</tbody>
