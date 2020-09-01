@@ -57,7 +57,7 @@ const Banner = () => {
 					<div className="mr-10px">
 						<a
 							rel="noreferrer"
-							href="https://soundcloud.com/ntre"
+							href="https://soundcloud.com/ntre/tracks"
 							target="_blank"
 							rel="noopener noreferrer"
 						>

@@ -55,7 +55,7 @@ const Footer = (props) => {
 					<div className="mr-10px fs-30px">
 						<a
 							rel="noreferrer"
-							href="https://soundcloud.com/ntre"
+							href="https://soundcloud.com/ntre/tracks"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
