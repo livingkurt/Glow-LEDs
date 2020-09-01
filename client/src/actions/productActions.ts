@@ -59,6 +59,7 @@ const saveProduct = (product: {
 	volume?: number;
 	weight_pounds?: number;
 	weight_ounces?: number;
+	pathname?: string;
 	length?: number;
 	width?: number;
 	height?: number;

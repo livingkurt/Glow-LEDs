@@ -74,6 +74,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 		product.sale_price = req.body.sale_price;
 		product.volume = req.body.volume;
 		product.pathname = req.body.pathname.split(' ').join('_').toLowerCase();
+		product.order = req.body.order;
 		product.deleted = req.body.deleted || false;
 		product.meta_title = req.body.meta_title;
 		product.meta_description = req.body.meta_description;
@@ -127,6 +128,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		hidden: req.body.hidden,
 		sale_price: req.body.sale_price,
 		volume: req.body.volume,
+		order: req.body.order,
 		pathname: req.body.pathname.split(' ').join('_').toLowerCase(),
 		deleted: req.body.deleted || false,
 		meta_title: req.body.meta_title,

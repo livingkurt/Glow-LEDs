@@ -31,6 +31,7 @@ const EditProductPage = (props) => {
 	const [ weight_pounds, set_weight_pounds ] = useState();
 	const [ weight_ounces, set_weight_ounces ] = useState();
 	const [ pathname, setPathname ] = useState();
+	const [ order, setOrder ] = useState();
 
 	const history = useHistory();
 
@@ -106,6 +107,7 @@ const EditProductPage = (props) => {
 		setCategory(product.category);
 		setCountInStock(product.countInStock);
 		setPathname(product.pathname);
+		setOrder(product.order);
 	};
 	const unset_state = () => {
 		setId('');
@@ -131,6 +133,7 @@ const EditProductPage = (props) => {
 		set_weight_pounds('');
 		set_weight_ounces('');
 		setPathname('');
+		setOrder('');
 	};
 
 	// useEffect(
@@ -236,7 +239,8 @@ const EditProductPage = (props) => {
 				height,
 				weight_pounds,
 				weight_ounces,
-				pathname
+				pathname,
+				order
 			})
 		);
 		e.target.reset();
@@ -263,6 +267,7 @@ const EditProductPage = (props) => {
 		set_weight_pounds('');
 		set_weight_ounces('');
 		setPathname('');
+		setOrder('');
 		if (pathname) {
 			history.push('/collections/all/products/' + pathname);
 		} else {
@@ -443,6 +448,16 @@ const EditProductPage = (props) => {
 													defaultValue={pathname}
 													id="pathname"
 													onChange={(e) => setPathname(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="order">Order</label>
+												<input
+													type="text"
+													name="order"
+													defaultValue={order}
+													id="order"
+													onChange={(e) => setOrder(e.target.value)}
 												/>
 											</li>
 											<li>
