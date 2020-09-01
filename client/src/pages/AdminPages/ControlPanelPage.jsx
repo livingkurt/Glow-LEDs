@@ -340,6 +340,32 @@ const ControlPanelPage = (props) => {
 											duration_of_opening()).toFixed(2)}
 									</th>
 								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Average Weekly Income</th>
+									<th style={{ padding: '15px' }}>
+										${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+											(duration_of_opening() / 7)).toFixed(2)}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Average Monthly Income</th>
+									<th style={{ padding: '15px' }}>
+										${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+											(duration_of_opening() / 30)).toFixed(2)}
+									</th>
+								</tr>
 							</tbody>
 						</table>
 					</div>
