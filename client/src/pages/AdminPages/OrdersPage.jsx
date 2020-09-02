@@ -186,6 +186,7 @@ const OrdersPage = (props) => {
 									<th>REFUNDED</th>
 									<th>REFUNDED AT</th>
 									<th>REFUND AMOUNT</th>
+									<th>ORDER ITEMS</th>
 									<th>ACTIONS</th>
 								</tr>
 							</thead>
@@ -211,7 +212,9 @@ const OrdersPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{!order.shippedAt ? '' : format_date(order.shippedAt)}</td>
+										<td style={{ minWidth: '150px' }}>
+											{!order.shippedAt ? '' : format_date(order.shippedAt)}
+										</td>
 										<td>
 											{order.isDelivered ? (
 												<i className="fas fa-check-circle" />
@@ -226,14 +229,21 @@ const OrdersPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{!order.refundedAt ? '' : format_date(order.refundedAt)}</td>
-										<td>
+										<td style={{ minWidth: '125px' }}>
+											{!order.refundedAt ? '' : format_date(order.refundedAt)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
 											{order.isRefunded && (
 												<div>
 													${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
 														100).toFixed(2)}
 												</div>
 											)}
+										</td>
+										<td style={{ minWidth: '500px' }}>
+											{order.orderItems.map((item) => {
+												return <div>{item.name}</div>;
+											})}
 										</td>
 										<td>
 											<FlexContainer h_between>
