@@ -297,40 +297,6 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									{/* {((product.name === 'Diffuser Caps + Adapters Starter Kit' ||
-															product.name ===
-																'Mini Diffuser Caps + Adapters Starter Kit') &&
-															(product.name === 'Diffuser Caps + Adapters Starter Kit' &&
-																original_diffuser_caps.map(
-																	(cap, index) =>
-																		cap.name === 'Custom Diffuser Caps Deposit' ? (
-																			''
-																		) : (
-																			<option
-																				key={index}
-																				value={JSON.stringify(cap)}
-																				// data-value={{ ...cap }}
-																			>
-																				{cap.name.slice(0, -14)}
-																			</option>
-																		)
-																))) ||
-															(product.name ===
-																'Mini Diffuser Caps + Adapters Starter Kit' &&
-																mini_diffuser_caps.map(
-																	(cap, index) =>
-																		cap.name === 'Custom Diffuser Caps Deposit' ? (
-																			''
-																		) : (
-																			<option
-																				key={index}
-																				value={JSON.stringify(cap)}
-																				// data-value={{ ...cap }}
-																			>
-																				{cap.name.slice(0, -14)}
-																			</option>
-																		)
-																))} */}
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
@@ -407,8 +373,9 @@ const ProductPage = (props) => {
 												</div>
 											</li>
 										))}
-									{product.name === 'Diffuser Caps + Adapters Starter Kit' ||
-									(product.name === 'Mini Diffuser Caps + Adapters Starter Kit' && !diffuser_cap) ? (
+									{(product.name === 'Diffuser Caps + Adapters Starter Kit' ||
+										product.name === 'Mini Diffuser Caps + Adapters Starter Kit') &&
+									!diffuser_cap ? (
 										<div />
 									) : product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
