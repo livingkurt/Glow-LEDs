@@ -80,7 +80,7 @@ const CartPage = (props) => {
 			!categories.includes('Custom Diffuser Caps Final Payment') ||
 			!categories.includes('Custom Diffuser Caps Deposit')
 		) {
-			if (categories.includes('caps')) {
+			if (categories.includes('diffuser_caps')) {
 				console.log('Caps');
 				if (!categories.includes('diffuser_adapters')) {
 					return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";

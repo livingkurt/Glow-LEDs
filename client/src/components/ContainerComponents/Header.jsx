@@ -108,10 +108,10 @@ const Header = (props) => {
 								<Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="button nav">Frosted Diffusers</button>
 								</Link>
-								<Link to="/collections/all/products/category/caps">
+								<Link to="/collections/all/products/category/diffuser_caps">
 									<button className="button nav">Diffuser Caps</button>
 								</Link>
-								{/* <Link to="/collections/all/products/category/mini_caps">
+								{/* <Link to="/collections/all/products/category/mini_diffuser_caps">
 									<button className="button nav">Mini Diffuser Caps</button>
 								</Link> */}
 								<Link to="/collections/all/products/category/diffuser_adapters">

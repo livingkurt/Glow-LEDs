@@ -164,12 +164,12 @@ const Sidebar = (props) => {
 								Frosted Diffusers
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/caps">
+						<Link to="/collections/all/products/category/diffuser_caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Diffuser Caps
 							</button>
 						</Link>
-						{/* <Link to="/collections/all/products/category/mini_caps">
+						{/* <Link to="/collections/all/products/category/mini_diffuser_caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Mini Diffuser Caps
 							</button>

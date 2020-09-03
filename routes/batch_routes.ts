@@ -33,11 +33,11 @@ router.put('/products', async (req, res) => {
 	// }
 	// res.send(products);
 	const product = await Product.updateMany(
-		{ category: 'Caps' },
+		{ category: 'string_lights' },
 		{
 			// $rename: { shipping_price: 'volume' }
 			$set: {
-				order: 7
+				category: 'glow_strings'
 			}
 			// $unset: { shipping_price: 1 }
 		}

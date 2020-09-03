@@ -132,7 +132,7 @@ const HomePage = (props) => {
 					ridiculous light shows. 100% facemelt guarantee.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/collections/all/products/category/caps">
+					<Link to="/collections/all/products/category/diffuser_caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Diffuser Caps</h2>
 						</button>

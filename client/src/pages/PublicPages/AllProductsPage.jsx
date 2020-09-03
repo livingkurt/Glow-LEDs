@@ -28,6 +28,7 @@ const AllProductsPage = (props) => {
 			if (
 				[
 					'caps',
+					'diffuser_caps',
 					'infinity_mirrors',
 					'accessories',
 					'frosted_diffusers',
@@ -69,7 +70,7 @@ const AllProductsPage = (props) => {
 			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Infinity Mirrors, and Glow Strings. Click to Shop.',
 		frosted_diffusers:
 			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
-		caps:
+		diffuser_caps:
 			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
 		diffuser_adapters:
 			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
@@ -86,8 +87,8 @@ const AllProductsPage = (props) => {
 		if (category === 'diffuser_adapters') {
 			return descriptions.diffuser_adapters;
 		}
-		if (category.toLowerCase() === 'caps') {
-			return descriptions.caps;
+		if (category.toLowerCase() === 'diffuser_caps') {
+			return descriptions.diffuser_caps;
 		}
 		if (category === 'infinity_mirrors') {
 			return descriptions.infinity_mirrors;
@@ -116,9 +117,11 @@ const AllProductsPage = (props) => {
 			</MetaTags>
 			<FlexContainer h_center>
 				<FlexContainer>
-					<h1>{category === 'caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}</h1>
+					<h1>
+						{category === 'diffuser_caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}
+					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
-						{category === 'caps' || category === 'diffuser_adapters' ? '™' : ''}{' '}
+						{category === 'diffuser_caps' || category === 'diffuser_adapters' ? '™' : ''}{' '}
 					</label>
 				</FlexContainer>
 			</FlexContainer>

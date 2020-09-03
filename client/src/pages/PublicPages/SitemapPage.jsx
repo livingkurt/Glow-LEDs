@@ -89,7 +89,7 @@ const SitemapPage = () => {
 								<Link to="/collections/all/products/category/frosted_diffusers">Frosted Diffusers</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/category/caps">Diffuser Caps</Link>
+								<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
 							</li>
 							<li>
 								<Link to="/collections/all/products/category/diffuser_adapters">Diffuser Adapters</Link>
@@ -194,7 +194,7 @@ const SitemapPage = () => {
 
 							<ul className="products_list">
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/category/caps">Diffuser Caps</Link>
+									<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
 								</li>
 								<ul>
 									<li>
