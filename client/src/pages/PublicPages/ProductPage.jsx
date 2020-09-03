@@ -321,7 +321,8 @@ const ProductPage = (props) => {
 														</option>
 														{original_diffuser_caps.map(
 															(cap, index) =>
-																cap.name === 'Custom Diffuser Caps Deposit' ? (
+																cap.name === 'Custom Diffuser Caps Deposit' ||
+																cap.name === 'Diffuser Caps + Adapters Starter Kit' ? (
 																	''
 																) : (
 																	<option key={index} value={JSON.stringify(cap)}>
@@ -359,7 +360,9 @@ const ProductPage = (props) => {
 															</option>
 															{mini_diffuser_caps.map(
 																(cap, index) =>
-																	cap.name === 'Custom Mini Diffuser Caps Deposit' ? (
+																	cap.name === 'Custom Mini Diffuser Caps Deposit' ||
+																	cap.name ===
+																		'Mini Diffuser Caps + Adapters Starter Kit' ? (
 																		''
 																	) : (
 																		<option key={index} value={JSON.stringify(cap)}>
