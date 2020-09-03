@@ -73,7 +73,7 @@ const HomePage = (props) => {
 				<FlexContainer h_center>
 					<Link to="/collections/all/products/category/mini_diffuser_caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Custom Diffuser Caps</h2>
+							<h2>Shop Mini Diffuser Caps</h2>
 						</button>
 					</Link>
 				</FlexContainer>
