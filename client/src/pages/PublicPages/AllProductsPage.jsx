@@ -33,6 +33,7 @@ const AllProductsPage = (props) => {
 					'frosted_diffusers',
 					'diffuser_adapters',
 					'string_lights',
+					'glow_strings',
 					'mini_diffuser_caps',
 					'mini_diffuser_adapters'
 				].includes(category)
