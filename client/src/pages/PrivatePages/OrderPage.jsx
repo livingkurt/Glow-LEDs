@@ -12,7 +12,7 @@ import API from '../../utils/API';
 require('dotenv').config();
 
 const OrderPage = (props) => {
-	console.log(props.userInfo);
+	// console.log(props.userInfo);
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
@@ -23,28 +23,31 @@ const OrderPage = (props) => {
 
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { loading, order, error } = orderDetails;
-	console.log({ OrderPage: order });
+	// console.log({ order: order });
 
 	const orderRefund = useSelector((state) => state.orderRefund);
 	const { order: refund } = orderRefund;
-	console.log({ refund });
+	// console.log({ refund });
 
 	const orderShipping = useSelector((state) => state.orderShipping);
 	const { order: shipping } = orderShipping;
-	console.log({ shipping });
+	// console.log({ shipping });
 
 	const orderDelivery = useSelector((state) => state.orderDelivery);
 	const { order: delivery } = orderDelivery;
-	console.log({ delivery });
+	// console.log({ delivery });
 
 	const [ refund_state, set_refund_state ] = useState({});
 	const [ refund_amount, set_refund_amount ] = useState(0);
 	const [ refund_reason, set_refund_reason ] = useState('');
+	const [ product, set_product ] = useState('');
+	const [ product_object, set_product_object ] = useState('');
 	const [ shipping_state, set_shipping_state ] = useState({});
 	const [ delivery_state, set_delivery_state ] = useState({});
 	const [ payment_loading, set_payment_loading ] = useState(true);
 
 	const [ order_state, set_order_state ] = useState({});
+	console.log({ product });
 
 	useEffect(
 		() => {
@@ -54,10 +57,28 @@ const OrderPage = (props) => {
 				set_shipping_state(order.isRefunded);
 				set_shipping_state(order.isShipped);
 				set_delivery_state(order.isDelivered);
+				set_product_object(order.product);
 			}
 		},
 		[ order ]
 	);
+
+	useEffect(
+		() => {
+			if (product_object) {
+				set_product(product_object._id);
+			}
+			return () => {};
+		},
+		[ product_object ]
+	);
+	// useEffect(
+	// 	() => {
+	// 		dispatch(detailsOrder(props.match.params.id));
+	// 		return () => {};
+	// 	},
+	// 	[ product ]
+	// );
 
 	useEffect(
 		() => {
@@ -71,7 +92,7 @@ const OrderPage = (props) => {
 
 				// })
 				set_order_state(refund);
-				console.log({ refund: refund.isRefunded });
+				// console.log({ refund: refund.isRefunded });
 			}
 		},
 		[ refund ]
@@ -87,7 +108,7 @@ const OrderPage = (props) => {
 
 				// })
 				set_order_state(shipping);
-				console.log({ shipping: shipping.isShipped });
+				// console.log({ shipping: shipping.isShipped });
 			}
 		},
 		[ shipping ]
@@ -103,7 +124,7 @@ const OrderPage = (props) => {
 				//   isDelivered: delivery.isDelivered,
 				//   deliveredAt: delivery.isDelivered ? Date.now() : ""
 				// })
-				console.log({ delivery: delivery.isShipped });
+				// console.log({ delivery: delivery.isShipped });
 			}
 		},
 		[ delivery ]
@@ -112,6 +133,11 @@ const OrderPage = (props) => {
 	const send_not_paid_email = async () => {
 		const request = await API.not_paid_email(order, user_data);
 		console.log(request);
+	};
+	const save_product = async () => {
+		const request = await API.save_product(order, user_data, product);
+		console.log(request);
+		dispatch(detailsOrder(props.match.params.id));
 	};
 
 	const update_refund_state = () => {
@@ -149,7 +175,7 @@ const OrderPage = (props) => {
 		() => {
 			if (successPay) {
 				// set_paypal_state('none');
-				console.log('successPay');
+				// console.log('successPay');
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
@@ -160,7 +186,9 @@ const OrderPage = (props) => {
 
 	useEffect(
 		() => {
-			set_order_state(order);
+			if (order) {
+				set_order_state(order);
+			}
 		},
 		[ order ]
 	);
@@ -170,7 +198,7 @@ const OrderPage = (props) => {
 	}, []);
 
 	const empty_cart = () => {
-		console.log(cartItems);
+		// console.log(cartItems);
 		for (let item of cartItems) {
 			dispatch(removeFromCart(item.pathname));
 		}
@@ -275,7 +303,8 @@ const OrderPage = (props) => {
 										<div className="cart-name">
 											<div>
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+													{order.product &&
+													item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
 														`${item.name} w (${order.product.name})`
 													) : (
 														item.name
@@ -396,23 +425,36 @@ const OrderPage = (props) => {
 							</FlexContainer>
 						)}
 					</ul>
+					<FlexContainer row v_i_center h_between>
+						{console.log({ order_product: order.product })}
+						{props.userInfo &&
+						props.userInfo.isAdmin && (
+							<div className="row">
+								<div className="mv-10px ">
+									<label htmlFor="product">Product</label>
+									<div className="row">
+										<input
+											type="text"
+											value={product}
+											name="product"
+											id="product"
+											className="w-100per"
+											onChange={(e) => set_product(e.target.value)}
+										/>
+										<button className="button primary" onClick={save_product}>
+											Add
+										</button>
+									</div>
+								</div>
+							</div>
+						)}
+					</FlexContainer>
 					<div className="ship_deliver ai-s wrap w-100per column g-17px">
 						<FlexContainer row v_i_center h_between>
-							{console.log({ shipping_state })}
-							{/* <label style={{ marginTop: '5px' }}>
-										{shipping_state ? (
-											'Shipped at ' + format_date(order_state.shippedAt)
-										) : (
-											'Not Shipped'
-										)}
-									</label> */}
+							{/* {console.log({ shipping_state })} */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<div>
-									<button className="button primary" onClick={update_refund_state}>
-										{/* {shipping_state ? 'Mark As Not Refunded' : 'Mark As Shipped'} */}
-										Refund Customer
-									</button>
 									<div className="mv-10px">
 										<label htmlFor="refund_amount">Refund Amount</label>
 										<div className="row">
@@ -438,12 +480,16 @@ const OrderPage = (props) => {
 												/>
 											</div>
 										</div>
+										<button className="button primary" onClick={update_refund_state}>
+											Refund Customer
+										</button>
 									</div>
 								</div>
 							)}
 						</FlexContainer>
+
 						<FlexContainer row v_i_center h_between>
-							{console.log({ shipping_state })}
+							{/* {console.log({ shipping_state })} */}
 							{/* <label style={{ marginTop: '5px' }}>
 										{shipping_state ? (
 											'Shipped at ' + format_date(order_state.shippedAt)
@@ -461,7 +507,7 @@ const OrderPage = (props) => {
 							)}
 						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
-							{console.log({ delivery_state })}
+							{/* {console.log({ delivery_state })} */}
 							{/* <label style={{ marginTop: '5px' }}>
 										{delivery_state ? (
 											'Delivered at ' + format_date(order_state.deliveredAt)
@@ -479,14 +525,7 @@ const OrderPage = (props) => {
 							)}
 						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
-							{console.log({ delivery_state })}
-							{/* <label style={{ marginTop: '5px' }}>
-										{delivery_state ? (
-											'Delivered at ' + format_date(order_state.deliveredAt)
-										) : (
-											'Not Delivered'
-										)}
-									</label> */}
+							{/* {console.log({ delivery_state })} */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<FlexContainer h_right>

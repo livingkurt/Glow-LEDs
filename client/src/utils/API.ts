@@ -14,6 +14,10 @@ export default {
 		console.log({ not_paid_email: array });
 		return axios.post('/api/products/array', array);
 	},
+	save_product: function(order: any, user_data: any, product: any) {
+		console.log({ save_product: { order, user_data, product } });
+		return axios.put('/api/orders/addproduct', { order, user_data, product });
+	},
 	get_diffuser_caps: function() {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/caps');

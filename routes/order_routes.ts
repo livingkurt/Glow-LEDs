@@ -241,6 +241,27 @@ router.put('/:id/refund', async (req: { body: any; params: { id: any } }, res: {
 	}
 });
 
+router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+	try {
+		// const order = req.body.order;
+		const order_id = req.body.order._id;
+		const product_id = req.body.product;
+		// console.log({ order });
+		console.log({ order_id: order_id });
+		console.log({ product_id: product_id });
+
+		const order = await Order.findById(order_id);
+		// const updated_order = { ...order, product: product_id };
+		order.product = product_id;
+		const updated = await Order.updateOne({ _id: order_id }, order);
+		// Send the request back to the front end
+		console.log({ updated });
+		res.send(updated);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {
 		console.log({ shipping: req.body });
