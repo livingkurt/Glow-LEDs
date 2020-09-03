@@ -293,15 +293,20 @@ const ProductPage = (props) => {
 														<option key={1} defaultValue="">
 															---Choose Cap---
 														</option>
-														{diffuser_caps.map((cap, index) => (
-															<option
-																key={index}
-																value={JSON.stringify(cap)}
-																// data-value={{ ...cap }}
-															>
-																{cap.name.slice(0, -14)}
-															</option>
-														))}
+														{diffuser_caps.map(
+															(cap, index) =>
+																cap.name === 'Custom Diffuser Caps Deposit' ? (
+																	''
+																) : (
+																	<option
+																		key={index}
+																		value={JSON.stringify(cap)}
+																		// data-value={{ ...cap }}
+																	>
+																		{cap.name.slice(0, -14)}
+																	</option>
+																)
+														)}
 													</select>
 													<span className="custom-arrow" />
 												</div>
