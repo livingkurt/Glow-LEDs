@@ -268,12 +268,18 @@ const OrderPage = (props) => {
 								order.orderItems.map((item) => (
 									<li key={item._id}>
 										<div className="cart-image">
-											<img src={item.display_image} alt="product" />
+											<Link to={'/collections/all/products/' + item.pathname}>
+												<img src={item.display_image} alt="product" />
+											</Link>
 										</div>
 										<div className="cart-name">
 											<div>
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name}
+													{item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+														`${item.name} w (${order.product.name})`
+													) : (
+														item.name
+													)}
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>

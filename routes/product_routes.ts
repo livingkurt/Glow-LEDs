@@ -36,6 +36,11 @@ router.get('/', async (req, res) => {
 	// console.log(products);
 	res.send(products);
 });
+router.get('/caps', async (req, res) => {
+	const products = await Product.find({ deleted: false, hidden: false, category: 'caps' });
+	// console.log(products);
+	res.send(products);
+});
 
 router.post('/array', async (req, res) => {
 	// console.log(req.body);

@@ -13,5 +13,9 @@ export default {
 	get_product_names: function(array: any) {
 		console.log({ not_paid_email: array });
 		return axios.post('/api/products/array', array);
+	},
+	get_diffuser_caps: function() {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/products/caps');
 	}
 };

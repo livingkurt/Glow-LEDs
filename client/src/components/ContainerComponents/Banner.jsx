@@ -5,7 +5,7 @@ import { FlexContainer } from './index';
 const Banner = () => {
 	return (
 		<span className="banner">
-			<div className="max-w-1125px m-auto jc-b">
+			<div className="max-w-1500px m-auto jc-b">
 				<div className="small_screen ml-10px none ta-c w-100per">
 					<Link to="/pages/contact/submit_content_to_be_featured">
 						<button className="banner-button">Submit content to be featured on our pages</button>

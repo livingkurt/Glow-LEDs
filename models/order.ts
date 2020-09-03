@@ -59,7 +59,11 @@ const orderSchema = new mongoose.Schema(
 		deliveredAt: { type: Date },
 		order_note: { type: String },
 		promo_code: { type: String },
-		deleted: { type: Boolean, default: false }
+		deleted: { type: Boolean, default: false },
+		product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		}
 	},
 	{
 		timestamps: true

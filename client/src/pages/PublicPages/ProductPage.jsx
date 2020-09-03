@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct } from '../../actions/productActions';
+import { detailsProduct, listProducts } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Rating, Reviews, Slideshow, RelatedProducts } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
-// import ReactFilestack from 'filestack-react';
+import Cookie from 'js-cookie';
 import MetaTags from 'react-meta-tags';
+import API from '../../utils/API';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -16,9 +17,18 @@ const ProductPage = (props) => {
 	let { userInfo } = userLogin;
 
 	const [ qty, setQty ] = useState(1);
+	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
+	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
 
 	const { product, loading, error } = productDetails;
+
+	const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
+
+	// const productList = useSelector((state) => state.productList);
+	// const { products, loading: loading_products, error: error_products } = productList;
+	// console.log({ products });
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -26,7 +36,19 @@ const ProductPage = (props) => {
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
+		// dispatch(listProducts(''));
+		get_diffuser_caps();
+		// if (diffuser_cap_cookie) {
+		// 	set_diffuser_cap(diffuser_cap_cookie);
+		// 	console.log({ diffuser_cap_cookie });
+		// }
 	}, []);
+
+	const get_diffuser_caps = async () => {
+		const { data } = await API.get_diffuser_caps();
+		console.log(data);
+		set_diffuser_caps(data);
+	};
 
 	useEffect(
 		() => {
@@ -38,6 +60,10 @@ const ProductPage = (props) => {
 	);
 
 	const handleAddToCart = () => {
+		console.log({ diffuser_cap });
+		if (diffuser_cap) {
+			Cookie.set('diffuser_cap', diffuser_cap);
+		}
 		props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
 	};
 
@@ -164,6 +190,7 @@ const ProductPage = (props) => {
 										)}
 									</FlexContainer>
 								)}
+
 								<FlexContainer column>
 									<FlexContainer column styles={{ height: '100%' }}>
 										<div>
@@ -214,29 +241,13 @@ const ProductPage = (props) => {
 									)}
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
-										{/* <FlexContainer v_i_center styles={{ height: '25px' }}>
-											Qty: 
-											<div className="qty_select_dropdown_container">
-												<select
-													defaultValue={qty}
-													className="qty_select_dropdown"
-													onChange={(e) => {
-														setQty(e.target.value);
-													}}
-												>
-													{[ ...Array(product.countInStock).keys() ].map((x) => (
-														<option key={x + 1} defaultValue={x + 1}>
-															{x + 1}
-														</option>
-													))}
-												</select>
-												<i className="fas fa-sort-up icon_styles" />
-											</div>
-                      
-										</FlexContainer> */}
 										<FlexContainer v_i_center styles={{ height: '25px' }}>
-											<label aria-label="sortOrder" htmlFor="sortOrder" className="select-label">
-												Qty
+											<label
+												aria-label="sortOrder"
+												htmlFor="sortOrder"
+												className="select-label mr-1rem"
+											>
+												Qty:
 											</label>
 											<div className="custom-select">
 												<select
@@ -255,11 +266,51 @@ const ProductPage = (props) => {
 												<span className="custom-arrow" />
 											</div>
 										</FlexContainer>
+
 										<h4 style={{ marginBottom: 0, marginTop: 11 }}>
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									{product.name === 'Custom Infinity Mirror' ? (
+									{product.name === 'Diffuser Caps + Adapters Starter Kit' && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Caps:
+												</label>
+												<div className="custom-select">
+													<select
+														defaultValue={diffuser_cap}
+														value={diffuser_cap}
+														className="qty_select_dropdown"
+														onChange={(e) => {
+															set_diffuser_cap(e.target.value);
+														}}
+													>
+														<option key={1} defaultValue="">
+															---Choose Cap---
+														</option>
+														{diffuser_caps.map((cap, index) => (
+															<option
+																key={index}
+																value={JSON.stringify(cap)}
+																// data-value={{ ...cap }}
+															>
+																{cap.name.slice(0, -14)}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
+									{product.name === 'Diffuser Caps + Adapters Starter Kit' && !diffuser_cap ? (
+										<div />
+									) : product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
 											<button className="button primary full-width">Contact</button>
 										</Link>

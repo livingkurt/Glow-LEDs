@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { SuggestedProducts } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
+import Cookie from 'js-cookie';
+import { humanize } from '../../utils/helper_functions';
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 
@@ -20,6 +22,10 @@ const CartPage = (props) => {
 		dispatch(removeFromCart(pathname));
 	};
 
+	const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
+
+	const [ diffuser_cap, set_diffuser_cap ] = useState({});
+
 	useEffect(() => {
 		if (pathname) {
 			// console.log(cartItems.find((item) => item.pathname === pathname));
@@ -27,7 +33,12 @@ const CartPage = (props) => {
 			// if (same_product) {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
+
 			dispatch(addToCart(pathname, qty));
+			if (diffuser_cap_cookie) {
+				set_diffuser_cap(diffuser_cap_cookie);
+				console.log({ diffuser_cap_cookie });
+			}
 			// }
 		}
 	}, []);
@@ -41,6 +52,10 @@ const CartPage = (props) => {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
 			dispatch(addToCart(pathname, qty));
+			if (diffuser_cap_cookie) {
+				set_diffuser_cap(diffuser_cap_cookie);
+				console.log({ diffuser_cap_cookie });
+			}
 			// }
 			// }
 		},
@@ -101,12 +116,19 @@ const CartPage = (props) => {
 									<li key={index}>
 										{console.log({ item })}
 										<div className="cart-image">
-											<img src={item.display_image} alt="product" />
+											<Link to={'/collections/all/products/' + item.pathname}>
+												<img src={item.display_image} alt="product" />
+											</Link>
 										</div>
 										<div className="cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name}
+													{item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+														`${item.name} w (${diffuser_cap.name})`
+													) : (
+														item.name
+													)}
+													{/* {item.name} */}
 												</Link>
 											</div>
 											<div>

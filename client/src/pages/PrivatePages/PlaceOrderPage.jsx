@@ -9,21 +9,21 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
-import { validate_promo_code } from '../../utils/helper_functions';
+import { validate_promo_code, humanize } from '../../utils/helper_functions';
 
 const PlaceOrderPage = (props) => {
 	const discount_percent = 0.2;
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
-	console.log({ cartItems });
+	// console.log({ cartItems });
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { order } = orderCreate;
-	// console.log({ shipping });
+	console.log({ order });
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	console.log({ orderPay });
+	// console.log({ orderPay });
 	const items_price =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
@@ -36,12 +36,18 @@ const PlaceOrderPage = (props) => {
 	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
+	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 
 	useEffect(
 		() => {
 			const shipping_cookie = Cookie.getJSON('shipping');
+			const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
 			if (shipping_cookie) {
 				dispatch(saveShipping(shipping_cookie));
+			}
+			if (diffuser_cap_cookie) {
+				set_diffuser_cap(diffuser_cap_cookie);
+				console.log({ diffuser_cap_cookie });
 			}
 			dispatch(savePayment({ paymentMethod: 'paypal' }));
 			setItemsPrice(
@@ -130,7 +136,8 @@ const PlaceOrderPage = (props) => {
 					totalPrice,
 					user_data,
 					order_note,
-					promo_code
+					promo_code,
+					product: diffuser_cap._id
 				},
 				token
 			)
@@ -321,12 +328,18 @@ const PlaceOrderPage = (props) => {
 								cartItems.map((item, index) => (
 									<li key={index}>
 										<div className="cart-image">
-											<img src={item.display_image} alt="product" />
+											<Link to={'/collections/all/products/' + item.pathname}>
+												<img src={item.display_image} alt="product" />
+											</Link>
 										</div>
 										<div className=" label cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name}
+													{item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+														`${item.name} w (${diffuser_cap.name})`
+													) : (
+														item.name
+													)}
 												</Link>
 											</div>
 											{/* <div>Qty: {item.qty}</div> */}
@@ -336,7 +349,7 @@ const PlaceOrderPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label"
 												>
-													Qty
+													Qty:
 												</label>
 												<div className="custom-select">
 													<select

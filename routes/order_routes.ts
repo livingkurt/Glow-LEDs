@@ -72,7 +72,7 @@ router.get(
 			status: (arg0: number) => { (): any; new (): any; send: { (arg0: string): void; new (): any } };
 		}
 	) => {
-		const order = await Order.findOne({ _id: req.params.id });
+		const order = await Order.findOne({ _id: req.params.id }).populate('product').populate('user');
 		if (order) {
 			res.send(order);
 		} else {
@@ -128,6 +128,7 @@ router.post(
 				totalPrice: any;
 				order_note: any;
 				promo_code: any;
+				product: any;
 			};
 			user: { _id: any };
 		},
@@ -148,6 +149,7 @@ router.post(
 			totalPrice: req.body.totalPrice,
 			order_note: req.body.order_note,
 			promo_code: req.body.promo_code,
+			product: req.body.product,
 			deleted: false
 		});
 		const newOrderCreated = await newOrder.save();

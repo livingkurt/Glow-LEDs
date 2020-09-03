@@ -43,6 +43,7 @@ const createOrder = (
 		user_data: object;
 		order_note: string;
 		promo_code: string;
+		product: string;
 	},
 	token: any
 ) => async (
@@ -71,6 +72,7 @@ const createOrder = (
 		axios.post('/api/emails/order', { ...newOrder, user_data, token });
 		axios.post('/api/emails/sale', { ...newOrder, user_data, token });
 		Cookie.remove('shipping');
+		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });

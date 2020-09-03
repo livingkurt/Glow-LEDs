@@ -91,7 +91,7 @@ export default () => {
     margin: 20px auto;
     padding: 2rem;
     min-height: 81vh;
-    max-width: 1125px;
+    max-width: 1500px;
   }
   
   #root {
