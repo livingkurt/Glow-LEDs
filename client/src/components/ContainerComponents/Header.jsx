@@ -127,8 +127,8 @@ const Header = (props) => {
 							<button className="button nav">Decor</button>
 							{/* </Link> */}
 							<ul className="dropdown-nav-content hover_fade_in w-200px">
-								<Link to="/collections/all/products/category/string_lights">
-									<button className="button nav">String Lights</button>
+								<Link to="/collections/all/products/category/glow_strings">
+									<button className="button nav">Glow Strings</button>
 								</Link>
 								<Link to="/collections/all/products/category/infinity_mirrors">
 									<button className="button nav"> Infinity Mirrors</button>
