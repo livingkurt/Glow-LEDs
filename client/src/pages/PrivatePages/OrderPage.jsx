@@ -303,8 +303,9 @@ const OrderPage = (props) => {
 										<div className="cart-name">
 											<div>
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{order.product &&
-													item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+													{(order.product &&
+														item.name === 'Diffuser Caps + Adapters Starter Kit') ||
+													item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
 														`${item.name} w (${order.product.name})`
 													) : (
 														item.name

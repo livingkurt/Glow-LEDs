@@ -164,25 +164,29 @@ const Sidebar = (props) => {
 								Frosted Diffusers
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/diffuser_caps">
-							<button className="sidebar_button secondary" onClick={closeMenu}>
-								Diffuser Caps
-							</button>
-						</Link>
-						{/* <Link to="/collections/all/products/category/mini_diffuser_caps">
+
+						<Link to="/collections/all/products/category/mini_diffuser_caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Mini Diffuser Caps
 							</button>
-						</Link> */}
+						</Link>
+						<Link to="/collections/all/products/category/mini_diffuser_adapters">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Mini Diffuser Adapters
+							</button>
+						</Link>
+						<Link to="/collections/all/products/category/diffuser_caps">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Original Diffuser Caps
+							</button>
+						</Link>
 						<Link to="/collections/all/products/category/diffuser_adapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
-								{' '}
-								Diffuser Adapters
+								Original Diffuser Adapters
 							</button>
 						</Link>
 						<Link to="/collections/all/products/category/accessories">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
-								{' '}
 								Accessories
 							</button>
 						</Link>

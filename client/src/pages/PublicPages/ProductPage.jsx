@@ -17,9 +17,12 @@ const ProductPage = (props) => {
 	let { userInfo } = userLogin;
 
 	const [ qty, setQty ] = useState(1);
+	const [ original_diffuser_caps, set_original_diffuser_caps ] = useState([]);
+	const [ mini_diffuser_caps, set_mini_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
+	console.log({ diffuser_cap });
 
 	const { product, loading, error } = productDetails;
 
@@ -37,18 +40,41 @@ const ProductPage = (props) => {
 		video.muted = true;
 		video.autoplay = true;
 		// dispatch(listProducts(''));
-		get_diffuser_caps();
+		get_original_diffuser_caps();
+		get_mini_diffuser_caps();
 		// if (diffuser_cap_cookie) {
 		// 	set_diffuser_cap(diffuser_cap_cookie);
 		// 	console.log({ diffuser_cap_cookie });
 		// }
 	}, []);
 
-	const get_diffuser_caps = async () => {
-		const { data } = await API.get_diffuser_caps();
+	const get_original_diffuser_caps = async () => {
+		const { data } = await API.get_original_diffuser_caps();
 		console.log(data);
-		set_diffuser_caps(data);
+		set_original_diffuser_caps(data);
+		// set_diffuser_caps(data);
 	};
+	const get_mini_diffuser_caps = async () => {
+		const { data } = await API.get_mini_diffuser_caps();
+		console.log(data);
+		set_mini_diffuser_caps(data);
+		// set_diffuser_caps(data);
+	};
+
+	// useEffect(
+	// 	() => {
+	// 		if (product) {
+	// 			if (product.name === 'Diffuser Caps + Adapters Starter Kit') {
+	// 				get_original_diffuser_caps();
+	// 				console.log('Diffuser Caps + Adapters Starter Kit');
+	// 			} else if (product.name === 'Mini Diffuser Caps + Adapters Starter Kit') {
+	// 				get_mini_diffuser_caps();
+	// 				console.log('Mini Diffuser Caps + Adapters Starter Kit');
+	// 			}
+	// 		}
+	// 	},
+	// 	[ product ]
+	// );
 
 	useEffect(
 		() => {
@@ -271,7 +297,41 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									{product.name === 'Diffuser Caps + Adapters Starter Kit' && (
+									{/* {((product.name === 'Diffuser Caps + Adapters Starter Kit' ||
+															product.name ===
+																'Mini Diffuser Caps + Adapters Starter Kit') &&
+															(product.name === 'Diffuser Caps + Adapters Starter Kit' &&
+																original_diffuser_caps.map(
+																	(cap, index) =>
+																		cap.name === 'Custom Diffuser Caps Deposit' ? (
+																			''
+																		) : (
+																			<option
+																				key={index}
+																				value={JSON.stringify(cap)}
+																				// data-value={{ ...cap }}
+																			>
+																				{cap.name.slice(0, -14)}
+																			</option>
+																		)
+																))) ||
+															(product.name ===
+																'Mini Diffuser Caps + Adapters Starter Kit' &&
+																mini_diffuser_caps.map(
+																	(cap, index) =>
+																		cap.name === 'Custom Diffuser Caps Deposit' ? (
+																			''
+																		) : (
+																			<option
+																				key={index}
+																				value={JSON.stringify(cap)}
+																				// data-value={{ ...cap }}
+																			>
+																				{cap.name.slice(0, -14)}
+																			</option>
+																		)
+																))} */}
+									{(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
 												<label
@@ -293,16 +353,12 @@ const ProductPage = (props) => {
 														<option key={1} defaultValue="">
 															---Choose Cap---
 														</option>
-														{diffuser_caps.map(
+														{original_diffuser_caps.map(
 															(cap, index) =>
 																cap.name === 'Custom Diffuser Caps Deposit' ? (
 																	''
 																) : (
-																	<option
-																		key={index}
-																		value={JSON.stringify(cap)}
-																		// data-value={{ ...cap }}
-																	>
+																	<option key={index} value={JSON.stringify(cap)}>
 																		{cap.name.slice(0, -14)}
 																	</option>
 																)
@@ -312,8 +368,47 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
-									)}
-									{product.name === 'Diffuser Caps + Adapters Starter Kit' && !diffuser_cap ? (
+									)) ||
+										(product.name === 'Mini Diffuser Caps + Adapters Starter Kit' && (
+											<li>
+												<div className="ai-c h-25px mb-15px">
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label mr-1rem"
+													>
+														Caps:
+													</label>
+													<div className="custom-select">
+														<select
+															defaultValue={diffuser_cap}
+															value={diffuser_cap}
+															className="qty_select_dropdown"
+															onChange={(e) => {
+																set_diffuser_cap(e.target.value);
+															}}
+														>
+															<option key={1} defaultValue="">
+																---Choose Cap---
+															</option>
+															{mini_diffuser_caps.map(
+																(cap, index) =>
+																	cap.name === 'Custom Mini Diffuser Caps Deposit' ? (
+																		''
+																	) : (
+																		<option key={index} value={JSON.stringify(cap)}>
+																			{cap.name.slice(0, -14)}
+																		</option>
+																	)
+															)}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											</li>
+										))}
+									{product.name === 'Diffuser Caps + Adapters Starter Kit' ||
+									(product.name === 'Mini Diffuser Caps + Adapters Starter Kit' && !diffuser_cap) ? (
 										<div />
 									) : product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
@@ -329,7 +424,26 @@ const ProductPage = (props) => {
 												<button className="button inactive">Out of Stock</button>
 											)}
 										</li>
-									)}
+									)
+									// ||
+									// (product.name === 'Mini Diffuser Caps + Adapters Starter Kit' || !diffuser_cap) ? (
+									// 	<div />
+									// ) : product.name === 'Custom Infinity Mirror' ? (
+									// 	<Link to="/pages/contact/custom_orders">
+									// 		<button className="button primary full-width">Contact</button>
+									// 	</Link>
+									// ) : (
+									// 	<li>
+									// 		{product.countInStock > 0 ? (
+									// 			<button onClick={handleAddToCart} className="button primary">
+									// 				Add to Cart
+									// 			</button>
+									// 		) : (
+									// 			<button className="button inactive">Out of Stock</button>
+									// 		)}
+									// 	</li>
+									// )
+									}
 								</ul>
 							</div>
 						</div>

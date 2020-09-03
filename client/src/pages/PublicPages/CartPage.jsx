@@ -123,7 +123,8 @@ const CartPage = (props) => {
 										<div className="cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+													{item.name === 'Diffuser Caps + Adapters Starter Kit' ||
+													item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
 														`${item.name} w (${diffuser_cap.name})`
 													) : (
 														item.name

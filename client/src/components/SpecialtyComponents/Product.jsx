@@ -52,7 +52,10 @@ const Product = (props) => {
 			<div class="tooltip">
 				<div class="tooltipoverlay">
 					<span class="tooltiptext">
-						{props.product.name === 'Custom Infinity Mirror' ? (
+						{props.product.name === 'Diffuser Caps + Adapters Starter Kit' ||
+						props.product.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
+							<div />
+						) : props.product.name === 'Custom Infinity Mirror' ? (
 							<Link to="/pages/contact/custom_orders">
 								<button className="button primary">Contact</button>
 							</Link>

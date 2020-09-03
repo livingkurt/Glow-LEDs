@@ -104,52 +104,55 @@ const Header = (props) => {
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Gloving</button>
 							{/* </Link> */}
-							<ul className="dropdown-nav-content hover_fade_in w-210px">
+							<div className="dropdown-nav-content hover_fade_in w-300px">
 								<Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="button nav">Frosted Diffusers</button>
 								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps">
-									<button className="button nav">Diffuser Caps</button>
-								</Link>
-								{/* <Link to="/collections/all/products/category/mini_diffuser_caps">
+								<Link to="/collections/all/products/category/mini_diffuser_caps">
 									<button className="button nav">Mini Diffuser Caps</button>
-								</Link> */}
+								</Link>
+								<Link to="/collections/all/products/category/mini_diffuser_adapters">
+									<button className="button nav">Mini Diffuser Adapters</button>
+								</Link>
+								<Link to="/collections/all/products/category/diffuser_caps">
+									<button className="button nav">Original Diffuser Caps</button>
+								</Link>
 								<Link to="/collections/all/products/category/diffuser_adapters">
-									<button className="button nav"> Diffuser Adapters</button>
+									<button className="button nav">Original Diffuser Adapters</button>
 								</Link>
 								<Link to="/collections/all/products/category/accessories">
 									<button className="button nav">Accessories</button>
 								</Link>
-							</ul>
+							</div>
 						</div>
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Decor</button>
 							{/* </Link> */}
-							<ul className="dropdown-nav-content hover_fade_in w-200px">
+							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/collections/all/products/category/glow_strings">
 									<button className="button nav">Glow Strings</button>
 								</Link>
 								<Link to="/collections/all/products/category/infinity_mirrors">
 									<button className="button nav"> Infinity Mirrors</button>
 								</Link>
-							</ul>
+							</div>
 						</div>
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Community</button>
 							{/* </Link> */}
-							<ul className="dropdown-nav-content hover_fade_in w-200px">
+							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/pages/featured">
 									<button className="button nav">Featured</button>
 								</Link>
-							</ul>
+							</div>
 						</div>
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Support</button>
 							{/* </Link> */}
-							<ul className="dropdown-nav-content hover_fade_in w-230px">
+							<div className="dropdown-nav-content hover_fade_in w-230px">
 								<Link to="/pages/about">
 									<button className="button nav">About</button>
 								</Link>
@@ -162,7 +165,7 @@ const Header = (props) => {
 								<Link to="/pages/terms">
 									<button className="button nav">Term and Conditions</button>
 								</Link>
-							</ul>
+							</div>
 						</div>
 					</div>
 				</div>

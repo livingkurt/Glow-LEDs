@@ -36,8 +36,13 @@ router.get('/', async (req, res) => {
 	// console.log(products);
 	res.send(products);
 });
-router.get('/caps', async (req, res) => {
-	const products = await Product.find({ deleted: false, hidden: false, category: 'caps' });
+router.get('/originalcaps', async (req, res) => {
+	const products = await Product.find({ deleted: false, hidden: false, category: 'diffuser_caps' });
+	// console.log(products);
+	res.send(products);
+});
+router.get('/minicaps', async (req, res) => {
+	const products = await Product.find({ deleted: false, hidden: false, category: 'mini_diffuser_caps' });
 	// console.log(products);
 	res.send(products);
 });
