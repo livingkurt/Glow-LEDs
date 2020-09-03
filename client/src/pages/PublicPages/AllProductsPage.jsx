@@ -121,7 +121,13 @@ const AllProductsPage = (props) => {
 						{category === 'diffuser_caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}
 					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
-						{category === 'diffuser_caps' || category === 'diffuser_adapters' ? '™' : ''}{' '}
+						{category === 'diffuser_caps' ||
+						category === 'diffuser_adapters' ||
+						category === 'glow_strings' ? (
+							'™'
+						) : (
+							''
+						)}{' '}
 					</label>
 				</FlexContainer>
 			</FlexContainer>
