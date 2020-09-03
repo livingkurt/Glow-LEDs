@@ -46,46 +46,29 @@ const HomePage = (props) => {
 			</FlexContainer>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1 style={{ textAlign: 'center' }}>Custom Diffuser Caps Now Officially Available!!</h1>
+					<h1 style={{ textAlign: 'center' }}>INTRODUCING: Mini Diffuser Caps and Star Caps </h1>
 				</FlexContainer>
 
 				<Link to="/collections/all/products/custom_diffuser_caps_deposit">
 					<img
-						style={{ borderRadius: '10px', width: '100%' }}
-						src="/images/optimized_images/promo_images/img_9932_home_page_optimized.jpg"
+						style={{ borderRadius: '20px', width: '100%' }}
+						src="/images/optimized_images/promo_images/img_1589_optimized.jpg"
 						alt="promo"
 					/>
 				</Link>
 				<FlexContainer h_center>
 					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
-						Give your shows a new Glow with Custom Diffuser Caps
+						20% Smaller! 100%{' '}
+						<span aria-label="emoji" role="img">
+							🔥
+						</span>{' '}
 					</h2>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Our most highly requested item is here!{' '}
-					<span aria-label="emoji" role="img">
-						🎊
-					</span>{' '}
-					You can now order CUSTOM DIFFUSER CAPS!{' '}
-					<span aria-label="emoji" role="img">
-						🔥
-					</span>{' '}
-					Imagine throwing a light show with your own logo, teams logo, or favorite symbol or pattern as the
-					trails
-					<span aria-label="emoji" role="img">
-						😱💀
-					</span>{' '}
-					The sky is the limit here and we cannot wait to see what you come up with! We will take orders as
-					first come, first served so be sure to secure your spot in line ASAP to receive the shortest wait
-					time{' '}
-					<span aria-label="emoji" role="img">
-						🕑
-					</span>{' '}
-					The process is a little different so be sure to check out the FAQ page under the Support tab for
-					full details{' '}
-					<span aria-label="emoji" role="img">
-						😊
-					</span>
+					Based on feedback from YOU ☺️ we thought that some glovers might feel more comfortable with
+					something a little more bite sized 😁 Get the same Diffuser Caps that you know and love in a smaller
+					size. We Call them Mini Diffuser Caps! 👶🏼 Also available now are Star Diffuser Caps, in Original
+					and Mini size 🤩
 				</p>
 				<FlexContainer h_center>
 					<Link to="/collections/all/products/custom_diffuser_caps_deposit">

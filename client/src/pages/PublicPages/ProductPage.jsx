@@ -391,26 +391,7 @@ const ProductPage = (props) => {
 												<button className="button inactive">Out of Stock</button>
 											)}
 										</li>
-									)
-									// ||
-									// (product.name === 'Mini Diffuser Caps + Adapters Starter Kit' || !diffuser_cap) ? (
-									// 	<div />
-									// ) : product.name === 'Custom Infinity Mirror' ? (
-									// 	<Link to="/pages/contact/custom_orders">
-									// 		<button className="button primary full-width">Contact</button>
-									// 	</Link>
-									// ) : (
-									// 	<li>
-									// 		{product.countInStock > 0 ? (
-									// 			<button onClick={handleAddToCart} className="button primary">
-									// 				Add to Cart
-									// 			</button>
-									// 		) : (
-									// 			<button className="button inactive">Out of Stock</button>
-									// 		)}
-									// 	</li>
-									// )
-									}
+									)}
 								</ul>
 							</div>
 						</div>
