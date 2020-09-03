@@ -268,11 +268,11 @@ const EditProductPage = (props) => {
 		set_weight_ounces('');
 		setPathname('');
 		setOrder('');
-		if (pathname) {
-			history.push('/collections/all/products/' + pathname);
-		} else {
-			history.push('/secure/glow/products');
-		}
+		// if (pathname) {
+		// history.push('/collections/all/products/' + pathname);
+		// } else {
+		history.push('/secure/glow/products');
+		// }
 	};
 
 	// const delete_review = (review_id) => {

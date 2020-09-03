@@ -181,12 +181,12 @@ const PlaceOrderPage = (props) => {
 		const name = cartItems.map((cartItem) => {
 			return cartItem.name;
 		});
-		if (name.includes('Diffuser Caps + Adapters Starter Kit')) {
-			// console.log('Caps');
-			// if (!categories.includes('diffuser_adapters')) {
-			return "Don't Forget: Add a note of the caps you want or a random pair will be sent to you";
-			// }
-		}
+		// if (name.includes('Diffuser Caps + Adapters Starter Kit')) {
+		// 	// console.log('Caps');
+		// 	// if (!categories.includes('diffuser_adapters')) {
+		// 	return "Don't Forget: Add a note of the caps you want or a random pair will be sent to you";
+		// 	// }
+		// }
 	};
 
 	// const handleSuccessPayment = (paymentResult, token) => {
