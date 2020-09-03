@@ -207,7 +207,7 @@ const PlaceOrderPage = (props) => {
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
-	const promo_codes = [ 'giveaway20' ];
+	const promo_codes = [ '' ];
 	const check_code = () => {
 		const data = { promo_code, promo_codes };
 		const request = validate_promo_code(data);
