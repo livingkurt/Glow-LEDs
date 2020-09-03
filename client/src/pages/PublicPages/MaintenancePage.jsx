@@ -138,7 +138,7 @@ const MaintenancePage = (props) => {
 				</div>
 				<div className="home_page_divs">
 					<FlexContainer h_center>
-						<h1>String Lights</h1>
+						<h1>Glow Strings</h1>
 					</FlexContainer>
 					<FlexContainer h_center styles={video_wrapper}>
 						<div className="iframe-container">

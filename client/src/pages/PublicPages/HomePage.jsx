@@ -14,16 +14,16 @@ const HomePage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com" />
 				<meta
 					name="description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and String Lights."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
 				/>
 
 				<meta
 					property="og:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and String Lights."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
 				/>
 				<meta
 					name="twitter:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and String Lights."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
 				/>
 				<meta
 					property="og:image"
@@ -205,12 +205,12 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1>String Lights</h1>
+					<h1>Glow Strings</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
 					<div className="iframe-container">
 						<iframe
-							title="String Lights Promo Video"
+							title="Glow Strings Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -228,9 +228,9 @@ const HomePage = (props) => {
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
 				<FlexContainer h_center>
-					<Link to="/collections/all/products/category/string_lights">
+					<Link to="/collections/all/products/category/glow_strings">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop String Lights</h2>
+							<h2>Shop Glow Strings</h2>
 						</button>
 					</Link>
 				</FlexContainer>

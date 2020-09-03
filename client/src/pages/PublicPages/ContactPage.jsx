@@ -463,7 +463,7 @@ const ContactPage = (props) => {
 							<ul style={{ lineHeight: '25px', paddingLeft: '20px' }}>
 								<li>Pictures or Video of your Lightshow with Glow LEDs Diffusers or Diffuser Caps. </li>
 								<li>Pictures or Video of your Glow LEDs Infintiy Mirror.</li>
-								<li>Pictures or Video of your Glow LEDs String Lights.</li>
+								<li>Pictures or Video of your Glow LEDs Glow Strings.</li>
 							</ul>
 						</div>
 					)}

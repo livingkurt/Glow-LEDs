@@ -30,26 +30,6 @@ const ExpensesPage = (props) => {
 	const { success: successDelete } = expenseDelete;
 	const dispatch = useDispatch();
 
-	// useEffect(
-	// 	() => {
-	// 		// if (
-	// 		// 	[
-	// 		// 		'caps',
-	// 		// 		'infinity_mirrors',
-	// 		// 		'accessories',
-	// 		// 		'frosted_diffusers',
-	// 		// 		'diffuser_adapters',
-	// 		// 		'string_lights'
-	// 		// 	].includes(category)
-	// 		// ) {
-	// 			dispatch(listExpenses(category));
-	// 		} else {
-	// 			// history.push('/collections/all/products');
-	// 			dispatch(listExpenses(''));
-	// 		}
-	// 	},
-	// 	[ category ]
-	// );
 
 	useEffect(
 		() => {

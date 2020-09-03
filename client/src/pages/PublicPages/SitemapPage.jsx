@@ -98,7 +98,7 @@ const SitemapPage = () => {
 								<Link to="/collections/all/products/category/accessories">Accessories</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/category/string_lights">String Lights</Link>
+								<Link to="/collections/all/products/category/glow_strings">Glow Strings</Link>
 							</li>
 							<li>
 								<Link to="/collections/all/products/category/infinity_mirrors">Infinity Mirrors</Link>
@@ -135,36 +135,36 @@ const SitemapPage = () => {
 
 							<ul className="products_list">
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/category/string_lights">String Lights</Link>
+									<Link to="/collections/all/products/category/glow_strings">Glow Strings</Link>
 								</li>
 								<ul>
 									<li>
-										<Link to="/collections/all/products/50_led_3_5m_string_lights">
-											50 LED 3.5m String Lights
+										<Link to="/collections/all/products/50_led_3_5m_glow_strings">
+											50 LED 3.5m Glow Strings
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/150_led_10_5m_string_lights">
-											150 LED 10.5m String Lights
+										<Link to="/collections/all/products/150_led_10_5m_glow_strings">
+											150 LED 10.5m Glow Strings
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/200_led_14m_string_lights">
-											200 LED 14m String Lights
+										<Link to="/collections/all/products/200_led_14m_glow_strings">
+											200 LED 14m Glow Strings
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/100_led_7m_string_lights">
-											100 LED 7m String Lights
+										<Link to="/collections/all/products/100_led_7m_glow_strings">
+											100 LED 7m Glow Strings
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/string_lights_controller_power_adapter">
+							<Link to="/collections/all/products/glow_strings_controller_power_adapter">
 								Home
 							</Link>
 						</li> */}
 									{/* <li>
-							<Link to="/collections/all/products/50_string_lights_w_o_controller">
+							<Link to="/collections/all/products/50_glow_strings_w_o_controller">
 								Home
 							</Link>
 						</li> */}
