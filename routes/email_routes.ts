@@ -218,6 +218,7 @@ router.post('/refund', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.shipping.email,
 		subject: 'Glow LEDs Order Refund',
+		bcc: process.env.EMAIL,
 		html: main_layout(
 			refund_view({ ...req.body, title: 'You have been refunded for your order', paid, shipped, refunded }),
 			styles()

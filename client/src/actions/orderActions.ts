@@ -205,7 +205,7 @@ const refundOrder = (
 		);
 		console.log({ data });
 		dispatch({ type: ORDER_REFUND_SUCCESS, payload: data });
-		axios.post('/api/emails/refund', order);
+		axios.post('/api/emails/refund', data);
 	} catch (error) {
 		dispatch({ type: ORDER_REFUND_FAIL, payload: error.message });
 	}

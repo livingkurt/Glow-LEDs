@@ -41,9 +41,9 @@ export default (props: {
 		const formatted_date = `${month}/${day}/${year}`;
 		return formatted_date;
 	};
-	console.log({ order_view_props: props });
+	console.log({ refund_view: props });
 	// console.log({ order_view_props_order_items: props.orderItems });
-	console.log({ order_view_props_order_items: props.payment.charge });
+	// console.log({ order_view_props_order_items: props.payment.charge });
 	return `
  
   <div class="placeorder" style="display: flex;flex-wrap: wrap;justify-content: space-between;color: white;">
@@ -197,7 +197,7 @@ export default (props: {
                 ${props.refunded
 					? `<li style="box-sizing: border-box;display: flex; flex-wrap: wrap;justify-content: space-between;margin-bottom: 1rem;">
                     <div style="box-sizing: border-box;">Refund Amount</div>
-                    <div style="box-sizing: border-box;">$${(props.payment.refund.reduce(
+                    <div style="box-sizing: border-box;">-$${(props.payment.refund.reduce(
 						(a: any, c: any) => a + c.amount,
 						0
 					) / 100).toFixed(2)}</div>
