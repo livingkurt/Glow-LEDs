@@ -170,21 +170,21 @@ const Sidebar = (props) => {
 								Mini Diffuser Caps
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/mini_diffuser_adapters">
+						{/* <Link to="/collections/all/products/category/mini_diffuser_adapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Mini Diffuser Adapters
 							</button>
-						</Link>
+						</Link> */}
 						<Link to="/collections/all/products/category/diffuser_caps">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Original Diffuser Caps
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/diffuser_adapters">
+						{/* <Link to="/collections/all/products/category/diffuser_adapters">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Original Diffuser Adapters
 							</button>
-						</Link>
+						</Link> */}
 						<Link to="/collections/all/products/category/accessories">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Accessories

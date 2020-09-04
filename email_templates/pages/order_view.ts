@@ -26,6 +26,7 @@ export default (props: {
 	promo_code: string;
 	paid: string;
 	shipped: string;
+	product: any;
 	createdAt: Date;
 	token: any;
 }) => {
@@ -108,7 +109,11 @@ export default (props: {
                   <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
 						? 'http://glow-leds.com'
 						: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
-                      style="box-sizing: border-box;text-decoration: none;color: white;">${item.name}</a></div>
+                      style="box-sizing: border-box;text-decoration: none;color: white;">${(props.product &&
+							item.name === 'Diffuser Caps + Adapters Starter Kit') ||
+						item.name === 'Mini Diffuser Caps + Adapters Starter Kit'
+							? `${item.name} w (${props.product.name})`
+							: item.name}</a></div>
                   <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
                 </div>
               </div>

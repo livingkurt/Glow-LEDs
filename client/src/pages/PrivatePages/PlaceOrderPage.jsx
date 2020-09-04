@@ -41,10 +41,10 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			const shipping_cookie = Cookie.getJSON('shipping');
-			const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
 			if (shipping_cookie) {
 				dispatch(saveShipping(shipping_cookie));
 			}
+			const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
 			if (diffuser_cap_cookie) {
 				set_diffuser_cap(diffuser_cap_cookie);
 				console.log({ diffuser_cap_cookie });

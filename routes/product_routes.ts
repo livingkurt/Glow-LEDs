@@ -120,6 +120,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', isAuth, isAdmin, async (req, res) => {
+	console.log({ product_routes_put: req.body });
 	// const converted_pathname = req.body.pathname.toLowerCase()
 	// const converted_pathname = req.body.pathname.split(' ').join('_')
 	const product = new Product({
