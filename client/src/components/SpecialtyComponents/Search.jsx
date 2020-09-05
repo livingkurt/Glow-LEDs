@@ -17,6 +17,7 @@ const Search = (props) => {
 				<label aria-label="searchKeyword" htmlFor="searchKeyword" />
 				<input
 					name="searchKeyword"
+					placeholder="Search"
 					onChange={(e) => props.setSearchKeyword(e.target.value)}
 					style={{ marginRight: '5px', width: '200px' }}
 					className="form_input"

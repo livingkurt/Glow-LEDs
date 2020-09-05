@@ -1,3 +1,8 @@
+@media only screen and (max-width: 1550px) {
+	.content {
+		margin: 0 20px !important;
+	}
+}
 @media only screen and (max-width: 1468px) {
 	.home_links {
 		justify-content: center !important;
@@ -327,6 +332,7 @@
 	}
 	.button.primary.search {
 		// width: 79% !important;
+		margin-bottom: 10px !important;
 		margin-right: 5px !important;
 		width: 200px !important;
 	}
