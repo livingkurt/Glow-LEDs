@@ -26,12 +26,24 @@ const orderItemSchema = new mongoose.Schema(
 		name: { type: String, required: true },
 		qty: { type: Number, required: true },
 		display_image: { type: String, required: true },
+		diffuser_cap_color: { type: String, required: true, default: 'Black' },
 		price: { type: Number, required: true },
+		category: { type: String, required: true },
 		sale_price: { type: Number },
+		volume: { type: Number },
+		weight_pounds: { type: Number },
+		weight_ounces: { type: Number },
+		length: { type: Number },
+		width: { type: Number },
+		height: { type: Number },
 		product: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product',
 			required: true
+		},
+		secondary_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
 		}
 	},
 	{
@@ -59,11 +71,11 @@ const orderSchema = new mongoose.Schema(
 		deliveredAt: { type: Date },
 		order_note: { type: String },
 		promo_code: { type: String },
-		deleted: { type: Boolean, default: false },
-		product: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Product'
-		}
+		deleted: { type: Boolean, default: false }
+		// product: {
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: 'Product'
+		// }
 	},
 	{
 		timestamps: true

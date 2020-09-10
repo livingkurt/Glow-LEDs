@@ -12,7 +12,7 @@ const CartPage = (props) => {
 
 	const { cartItems } = cart;
 
-	console.log(cartItems);
+	// console.log({ cartItems });
 	const pathname = props.match.params.pathname;
 	const qty = parseInt(props.location.search ? Number(props.location.search.split('=')[1]) : 1);
 	const dispatch = useDispatch();
@@ -22,9 +22,11 @@ const CartPage = (props) => {
 		dispatch(removeFromCart(pathname));
 	};
 
-	const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
+	// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
+	// const diffuser_cap_color_cookie = Cookie.getJSON('diffuser_cap_color');
 
-	const [ diffuser_cap, set_diffuser_cap ] = useState({});
+	// const [ diffuser_cap, set_diffuser_cap ] = useState({});
+	// const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
 
 	useEffect(() => {
 		if (pathname) {
@@ -35,10 +37,14 @@ const CartPage = (props) => {
 			// } else {
 
 			dispatch(addToCart(pathname, qty));
-			if (diffuser_cap_cookie) {
-				set_diffuser_cap(diffuser_cap_cookie);
-				console.log({ diffuser_cap_cookie });
-			}
+			// if (diffuser_cap_cookie) {
+			// 	set_diffuser_cap(diffuser_cap_cookie);
+			// 	console.log({ diffuser_cap_cookie });
+			// }
+			// if (diffuser_cap_color_cookie) {
+			// 	set_diffuser_cap_color(diffuser_cap_color_cookie);
+			// 	console.log({ diffuser_cap_color_cookie });
+			// }
 			// }
 		}
 	}, []);
@@ -51,11 +57,15 @@ const CartPage = (props) => {
 			// if (same_product) {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
-			dispatch(addToCart(pathname, qty));
-			if (diffuser_cap_cookie) {
-				set_diffuser_cap(diffuser_cap_cookie);
-				console.log({ diffuser_cap_cookie });
-			}
+			// dispatch(addToCart(pathname, qty));
+			// if (diffuser_cap_cookie) {
+			// 	set_diffuser_cap(diffuser_cap_cookie);
+			// 	// console.log({ diffuser_cap_cookie });
+			// }
+			// if (diffuser_cap_color_cookie) {
+			// 	set_diffuser_cap_color(diffuser_cap_color_cookie);
+			// 	// console.log({ diffuser_cap_color_cookie });
+			// }
 			// }
 			// }
 		},
@@ -81,7 +91,7 @@ const CartPage = (props) => {
 			!categories.includes('Custom Diffuser Caps Deposit')
 		) {
 			if (categories.includes('diffuser_caps')) {
-				console.log('Caps');
+				// console.log('Caps');
 				if (!categories.includes('diffuser_adapters')) {
 					return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
 				}
@@ -114,7 +124,7 @@ const CartPage = (props) => {
 								<h4>{no_adapters_warning()}</h4>
 								{cartItems.map((item, index) => (
 									<li key={index}>
-										{console.log({ item })}
+										{/* {console.log({ item })} */}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
 												<img src={item.display_image} alt="product" />
@@ -123,13 +133,13 @@ const CartPage = (props) => {
 										<div className="cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name === 'Diffuser Caps + Adapters Starter Kit' ||
-													item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
-														`${item.name} w (${diffuser_cap.name})`
-													) : (
-														item.name
-													)}
-													{/* {item.name} */}
+													{(item.category === 'diffuser_caps' ||
+														item.category === 'mini_diffuser_caps') &&
+														item.diffuser_cap_color}{' '}
+													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
+													{/* {item.name === 'Diffuser Caps + Adapters Starter Kit' ||
+														(item.name === 'Mini Diffuser Caps + Adapters Starter Kit' &&
+															` w (${JSON.parse(item.diffuser_cap).name})`)} */}
 												</Link>
 											</div>
 											<div>

@@ -72,7 +72,11 @@ router.get(
 			status: (arg0: number) => { (): any; new (): any; send: { (arg0: string): void; new (): any } };
 		}
 	) => {
-		const order = await Order.findOne({ _id: req.params.id }).populate('product').populate('user');
+		console.log('Hello');
+		const order = await Order.findOne({ _id: req.params.id })
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.populate('user');
 		if (order) {
 			res.send(order);
 		} else {
@@ -149,9 +153,10 @@ router.post(
 			totalPrice: req.body.totalPrice,
 			order_note: req.body.order_note,
 			promo_code: req.body.promo_code,
-			product: req.body.product,
+			// product: req.body.product,
 			deleted: false
 		});
+
 		const newOrderCreated = await newOrder.save();
 		res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
 	}

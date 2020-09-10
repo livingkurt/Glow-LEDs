@@ -51,7 +51,7 @@ const Product = (props) => {
 		<li key={props.product.pathname} style={props.styles}>
 			<div class="tooltip">
 				<div class="tooltipoverlay">
-					<span class="tooltiptext">
+					{/* <span class="tooltiptext">
 						{props.product.name === 'Diffuser Caps + Adapters Starter Kit' ||
 						props.product.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
 							<div />
@@ -70,7 +70,7 @@ const Product = (props) => {
 								)}
 							</li>
 						)}
-					</span>
+					</span> */}
 					<div className="product">
 						<Link to={'/collections/all/products/' + props.product.pathname}>
 							<LazyLoadImage

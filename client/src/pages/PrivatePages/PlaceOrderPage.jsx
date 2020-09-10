@@ -123,7 +123,7 @@ const PlaceOrderPage = (props) => {
 
 	const placeOrderHandler = (token) => {
 		// create an order
-		console.log({ shippingPrice });
+		console.log({ cartItems });
 		dispatch(
 			createOrder(
 				{
@@ -136,8 +136,8 @@ const PlaceOrderPage = (props) => {
 					totalPrice,
 					user_data,
 					order_note,
-					promo_code,
-					product: diffuser_cap._id
+					promo_code
+					// product: diffuser_cap._id
 				},
 				token
 			)
@@ -335,12 +335,10 @@ const PlaceOrderPage = (props) => {
 										<div className=" label cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.name === 'Diffuser Caps + Adapters Starter Kit' ||
-													item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
-														`${item.name} w (${diffuser_cap.name})`
-													) : (
-														item.name
-													)}
+													{(item.category === 'diffuser_caps' ||
+														item.category === 'mini_diffuser_caps') &&
+														item.diffuser_cap_color}{' '}
+													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
 												</Link>
 											</div>
 											{/* <div>Qty: {item.qty}</div> */}

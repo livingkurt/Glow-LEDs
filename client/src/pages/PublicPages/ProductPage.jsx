@@ -8,6 +8,7 @@ import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import MetaTags from 'react-meta-tags';
 import API from '../../utils/API';
+import { addToCart } from '../../actions/cartActions';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -21,8 +22,9 @@ const ProductPage = (props) => {
 	const [ mini_diffuser_caps, set_mini_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
+	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
 	const productDetails = useSelector((state) => state.productDetails);
-	console.log({ diffuser_cap });
+	// console.log({ diffuser_cap });
 
 	const { product, loading, error } = productDetails;
 
@@ -50,13 +52,13 @@ const ProductPage = (props) => {
 
 	const get_original_diffuser_caps = async () => {
 		const { data } = await API.get_original_diffuser_caps();
-		console.log(data);
+		// console.log(data);
 		set_original_diffuser_caps(data);
 		// set_diffuser_caps(data);
 	};
 	const get_mini_diffuser_caps = async () => {
 		const { data } = await API.get_mini_diffuser_caps();
-		console.log(data);
+		// console.log(data);
 		set_mini_diffuser_caps(data);
 		// set_diffuser_caps(data);
 	};
@@ -86,12 +88,22 @@ const ProductPage = (props) => {
 	);
 
 	const handleAddToCart = () => {
+		console.log({ pathname: props.match.params.pathname });
+		console.log({ qty });
+		console.log({ diffuser_cap_color });
 		console.log({ diffuser_cap });
 		if (diffuser_cap) {
 			Cookie.set('diffuser_cap', diffuser_cap);
 		}
-		props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
+		if (diffuser_cap_color) {
+			Cookie.set('diffuser_cap_color', diffuser_cap_color);
+		}
+		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap));
+		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
+		props.history.push('/checkout/cart');
 	};
+
+	const filament_colors = [ 'Black', 'White', 'Silver', 'Gold', 'Blue', 'Red' ];
 
 	return (
 		<FlexContainer column>
@@ -313,7 +325,7 @@ const ProductPage = (props) => {
 														value={diffuser_cap}
 														className="qty_select_dropdown"
 														onChange={(e) => {
-															set_diffuser_cap(e.target.value);
+															set_diffuser_cap(JSON.parse(e.target.value));
 														}}
 													>
 														<option key={1} defaultValue="">
@@ -352,7 +364,7 @@ const ProductPage = (props) => {
 															value={diffuser_cap}
 															className="qty_select_dropdown"
 															onChange={(e) => {
-																set_diffuser_cap(e.target.value);
+																set_diffuser_cap(JSON.parse(e.target.value));
 															}}
 														>
 															<option key={1} defaultValue="">
@@ -376,6 +388,37 @@ const ProductPage = (props) => {
 												</div>
 											</li>
 										))}
+									{(product.category === 'diffuser_caps' ||
+										product.category === 'mini_diffuser_caps') && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Cap Color:
+												</label>
+												<div className="custom-select">
+													<select
+														defaultValue={diffuser_cap_color}
+														value={diffuser_cap_color}
+														className="qty_select_dropdown"
+														onChange={(e) => {
+															set_diffuser_cap_color(e.target.value);
+														}}
+													>
+														{filament_colors.map((color, index) => (
+															<option key={index} value={color}>
+																{color}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' ||
 										product.name === 'Mini Diffuser Caps + Adapters Starter Kit') &&
 									!diffuser_cap ? (

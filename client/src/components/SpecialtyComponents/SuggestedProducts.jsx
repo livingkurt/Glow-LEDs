@@ -14,7 +14,7 @@ const SuggestedProducts = (props) => {
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 
-	console.log({ products });
+	// console.log({ products });
 
 	useEffect(() => {
 		// if (props.product) {

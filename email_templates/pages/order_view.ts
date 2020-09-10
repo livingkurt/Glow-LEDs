@@ -109,11 +109,13 @@ export default (props: {
                   <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
 						? 'http://glow-leds.com'
 						: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
-                      style="box-sizing: border-box;text-decoration: none;color: white;">${(props.product &&
-							item.name === 'Diffuser Caps + Adapters Starter Kit') ||
-						item.name === 'Mini Diffuser Caps + Adapters Starter Kit'
-							? `${item.name} w (${props.product.name})`
-							: item.name}</a></div>
+                      style="box-sizing: border-box;text-decoration: none;color: white;">  ${item.category ===
+							'diffuser_caps' || item.category === 'mini_diffuser_caps'
+							? item.diffuser_cap_color
+							: ''}
+                    ${item.name}
+                    ${item.secondary_product ? `w (${item.secondary_product.name})` : ''}</a></div>
+                     
                   <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
                 </div>
               </div>
@@ -122,10 +124,10 @@ export default (props: {
 					? `<div style="width: 100px;box-sizing: border-box;">
                   <del style="color: red;box-sizing: border-box;">
                     <label style="color: white;box-sizing: border-box;">$${item.price ? item.price : item.price}</label>
-                  </del>{' '}
+                  </del>
                   <i class="fas fa-arrow-right" style="box-sizing: border-box;"></i> $${item.sale_price
 						? item.sale_price.toFixed(2)
-						: item.sale_price}{' '}
+						: item.sale_price}
                   On Sale!
                 </div>`
 					: `<label style="box-sizing: border-box;">$${item.price

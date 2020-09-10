@@ -43,7 +43,7 @@ const createOrder = (
 		user_data: object;
 		order_note: string;
 		promo_code: string;
-		product: string;
+		// product: string;
 	},
 	token: any
 ) => async (

@@ -97,7 +97,7 @@ const AllProductsPage = (props) => {
 			return descriptions.all_products;
 		}
 	};
-	console.log({ category });
+	// console.log({ category });
 
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
 

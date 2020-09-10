@@ -23,7 +23,7 @@ const OrderPage = (props) => {
 
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { loading, order, error } = orderDetails;
-	// console.log({ order: order });
+	console.log({ order: order });
 
 	const orderRefund = useSelector((state) => state.orderRefund);
 	const { order: refund } = orderRefund;
@@ -290,11 +290,13 @@ const OrderPage = (props) => {
 								<h1>Shopping Cart</h1>
 								<div>Price</div>
 							</li>
+							{console.log({ orderItems: order.orderItems })}
 							{order.orderItems.length === 0 ? (
 								<div>Cart is empty</div>
 							) : (
 								order.orderItems.map((item) => (
 									<li key={item._id}>
+										{console.log({ item })}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
 												<img src={item.display_image} alt="product" />
@@ -303,13 +305,11 @@ const OrderPage = (props) => {
 										<div className="cart-name">
 											<div>
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{(order.product &&
-														item.name === 'Diffuser Caps + Adapters Starter Kit') ||
-													item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
-														`${item.name} w (${order.product.name})`
-													) : (
-														item.name
-													)}
+													{(item.category === 'diffuser_caps' ||
+														item.category === 'mini_diffuser_caps') &&
+														item.diffuser_cap_color}{' '}
+													{item.name}{' '}
+													{item.secondary_product && `w (${item.secondary_product.name})`}
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>

@@ -2,14 +2,17 @@ import Axios from 'axios';
 import Cookie from 'js-cookie';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_PAYMENT } from '../constants/cartConstants';
 
-const addToCart = (pathname: string, qty: number) => async (
+const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, diffuser_cap: any) => async (
 	dispatch: (
 		arg0: {
 			type: string;
 			payload: {
 				product: object;
+				secondary_product: object;
 				name: string;
 				display_image: string;
+				diffuser_cap: any;
+				diffuser_cap_color: string;
 				price: number;
 				sale_price: number;
 				countInStock: number;
@@ -21,7 +24,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				height: number;
 				qty: number;
 				pathname: number;
-				category: number;
+				category: string;
 			};
 		}
 	) => void,
@@ -32,6 +35,7 @@ const addToCart = (pathname: string, qty: number) => async (
 		const { data } = await Axios.get('/api/products/' + pathname);
 
 		const { cart: { cartItems } } = getState();
+		console.log({ pathname, qty, diffuser_cap_color, diffuser_cap });
 		// const same_product = cartItems.find((item: any) => item.pathname === pathname);
 		// qty = same_product ? qty + same_product.qty : qty;
 
@@ -39,8 +43,11 @@ const addToCart = (pathname: string, qty: number) => async (
 			type: CART_ADD_ITEM,
 			payload: {
 				product: data._id,
+				secondary_product: diffuser_cap._id,
 				name: data.name,
 				display_image: data.display_image,
+				diffuser_cap_color,
+				diffuser_cap,
 				price: data.price,
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
@@ -58,13 +65,17 @@ const addToCart = (pathname: string, qty: number) => async (
 		const cart_item = [
 			{
 				product: data._id,
+				secondary_product: diffuser_cap._id,
 				name: data.name,
 				display_image: data.display_image,
+				diffuser_cap_color,
+				diffuser_cap,
 				price: data.price,
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
 				volume: data.volume,
 				weight_pounds: data.weight_pounds,
+				weight_ounces: data.weight_ounces,
 				length: data.length,
 				width: data.width,
 				height: data.volume,
@@ -73,6 +84,7 @@ const addToCart = (pathname: string, qty: number) => async (
 				qty
 			}
 		];
+		console.log({ cart_item });
 
 		if (cartItems === []) {
 			console.log('No Cart Items');
