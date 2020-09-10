@@ -116,10 +116,15 @@ export default (props: {
                     width: 100%;box-sizing: border-box;max-width: 10rem;max-height: 10rem;border-radius: 1.5rem;margin-right: 10px;">
                 </div>
                 <div class="cart-name" style="box-sizing: border-box;">
-                  <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
-						? 'http://glow-leds.com'
-						: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
-                      style="box-sizing: border-box;text-decoration: none;color: white;">${item.name}</a></div>
+                <div style="box-sizing: border-box;"><a href="${process.env.NODE_ENV === 'production'
+					? 'http://glow-leds.com'
+					: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
+                          style="box-sizing: border-box;text-decoration: none;color: white;">  ${item.category ===
+								'diffuser_caps' || item.category === 'mini_diffuser_caps'
+								? item.diffuser_cap_color
+								: ''}
+                        ${item.name}
+                        ${item.diffuser_cap_name ? `w (${item.diffuser_cap_name})` : ''}</a></div>
                   <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
                 </div>
               </div>
