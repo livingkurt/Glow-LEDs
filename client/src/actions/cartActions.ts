@@ -12,6 +12,7 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 				name: string;
 				display_image: string;
 				diffuser_cap: any;
+				diffuser_cap_name: string;
 				diffuser_cap_color: string;
 				price: number;
 				sale_price: number;
@@ -48,6 +49,7 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 				display_image: data.display_image,
 				diffuser_cap_color,
 				diffuser_cap,
+				diffuser_cap_name: diffuser_cap.name,
 				price: data.price,
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
@@ -68,6 +70,7 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 				secondary_product: diffuser_cap._id,
 				name: data.name,
 				display_image: data.display_image,
+				diffuser_cap_name: diffuser_cap.name,
 				diffuser_cap_color,
 				diffuser_cap,
 				price: data.price,

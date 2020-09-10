@@ -38,7 +38,7 @@ export default (props: {
 		const formatted_date = `${month}/${day}/${year}`;
 		return formatted_date;
 	};
-	console.log({ order_view_props: props });
+	// console.log({ order_view_props: props });
 	console.log({ order_view_props_order_items: props.orderItems });
 	return `
  
@@ -114,7 +114,7 @@ export default (props: {
 							? item.diffuser_cap_color
 							: ''}
                     ${item.name}
-                    ${item.secondary_product ? `w (${item.secondary_product.name})` : ''}</a></div>
+                    ${item.diffuser_cap_name ? `w (${item.diffuser_cap_name})` : ''}</a></div>
                      
                   <div style="box-sizing: border-box;">Qty: ${item.qty}</div>
                 </div>

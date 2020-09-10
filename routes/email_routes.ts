@@ -181,8 +181,9 @@ router.post('/verify', async (req, res) => {
 });
 
 router.post('/order', async (req, res) => {
-	console.log({ order: req.body.token });
-	console.log({ order: req.body.token.card.last4 });
+	console.log({ order: req.body });
+	// console.log({ order: req.body.token });
+	// console.log({ order: req.body.token.card.last4 });
 
 	const paid = 'Paid';
 	const shipped = 'Not Shipped';
