@@ -37,7 +37,7 @@ router.put('/products', async (req, res) => {
 		{
 			// $rename: { shipping_price: 'volume' }
 			$set: {
-				hidden: false
+				diffuser_cap_color: 'Black'
 			}
 			// $unset: { shipping_price: 1 }
 		}
@@ -89,13 +89,58 @@ router.get('/products', async (req, res) => {
 	res.send(array);
 });
 
-router.put('/orders', async (req, res) => {
-	const order = await Order.updateMany({
-		// $rename: { shipping_price: 'volume' }
-		$set: { payment: { charge: {} }, isRefunded: false }
-		// $unset: { shipping_price: 1 }
-	});
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_original', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Black',
+				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
 	res.send(order);
 });
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_mini', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Mini Diffuser Caps + Adapters Starter Kit' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Black',
+				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+
+// router.put('/orders_mini', async (req, res) => {
+// 	const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+// 	const order = await Order.updateMany(
+// 		{ 'orderItems.name': 'Mini Diffuser Caps + Adapters Starter Kit' },
+// 		{
+// 			// $rename: { shipping_price: 'volume' }
+// 			$set: {
+// 				'orderItems.$.secondary_product': 'Black'
+// 			}
+// 			// $unset: { shipping_price: 1 }
+// 		},
+// 		{ upsert: true }
+// 	);
+// 	console.log({ order });
+// 	res.send(order);
+// });
 
 export default router;
