@@ -95,6 +95,59 @@ const FAQPage = () => {
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+						<h2 style={{ clear: 'both', textAlign: 'center' }}>Orienting Your Diffuser Caps</h2>
+						<FlexContainer h_center styles={{ position: 'relative' }}>
+							<div className="iframe-container">
+								<iframe
+									width="996"
+									height="560"
+									style={{ borderRadius: '20px' }}
+									src="https://www.youtube.com/embed/vG4qgtrotkw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+									frameborder="0"
+									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen="1"
+								/>
+							</div>
+						</FlexContainer>
+
+						<ul style={{ padding: '18px' }}>
+							<li style={{ lineHeight: '25px' }}>
+								To place your Diffuser Caps right-side-up, put the Diffuser Adapters onto your
+								microlight bulbs with the notch facing the back of the microlight. Then place the light
+								and Adapter inside the glove.{' '}
+								<span aria-label="emoji" role="img">
+									💡
+								</span>️.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								Take your cap{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+									👑
+								</span>️, and place it over top of your glove and adapter with the design upside-down to
+								your desired orientation and screw{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
+									🔩
+								</span>️ in the cap like you would a jar{' '}
+								<span aria-label="emoji" role="img">
+									🍯
+								</span>️.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								The threads should catch and only needs a half turn{' '}
+								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
+									🌀
+								</span>️to become snug.
+								<span aria-label="emoji" role="img" style={{ marginRight: '2px' }}>
+									💫
+								</span>️ .
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								To put Diffuser Caps in a different orientation, follow the same steps but change the
+								placement of the notch.
+							</li>
+						</ul>
+					</div>
+					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Ordering Custom Products</h1>
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
 						<ul style={{ padding: '0 18px' }}>

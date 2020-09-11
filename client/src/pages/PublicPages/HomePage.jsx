@@ -91,6 +91,36 @@ const HomePage = (props) => {
 			</p>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
+					<h1 style={{ textAlign: 'center' }}>Mini Diffuser Caps</h1>
+				</FlexContainer>
+				<FlexContainer h_center styles={{ position: 'relative' }}>
+					<div className="iframe-container">
+						<iframe
+							title="Mini Diffuser Caps Promo Video"
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/0b1cn_3EczE?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</FlexContainer>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					Get the same Diffuser Caps that you know and love in a smaller size. We Call them Mini Diffuser
+					Caps!
+				</p>
+				<FlexContainer h_center>
+					<Link to="/collections/all/products/category/mini_diffuser_caps">
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Mini Diffuser Caps</h2>
+						</button>
+					</Link>
+				</FlexContainer>
+			</div>
+			<div className="home_page_divs">
+				<FlexContainer h_center>
 					<h1 style={{ textAlign: 'center' }}>Diffuser Caps</h1>
 				</FlexContainer>
 				<FlexContainer h_center styles={{ position: 'relative' }}>
