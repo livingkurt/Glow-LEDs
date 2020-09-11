@@ -41,6 +41,7 @@ const OrderPage = (props) => {
 	const [ refund_amount, set_refund_amount ] = useState(0);
 	const [ refund_reason, set_refund_reason ] = useState('');
 	const [ product, set_product ] = useState('');
+	const [ secondary_product, set_secondary_product ] = useState('');
 	const [ product_object, set_product_object ] = useState('');
 	const [ shipping_state, set_shipping_state ] = useState({});
 	const [ delivery_state, set_delivery_state ] = useState({});
@@ -136,6 +137,11 @@ const OrderPage = (props) => {
 	};
 	const save_product = async () => {
 		const request = await API.save_product(order, user_data, product);
+		console.log(request);
+		dispatch(detailsOrder(props.match.params.id));
+	};
+	const save_secondary_product = async () => {
+		const request = await API.save_secondary_product(order, user_data, secondary_product);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
@@ -296,7 +302,7 @@ const OrderPage = (props) => {
 							) : (
 								order.orderItems.map((item) => (
 									<li key={item._id}>
-										{console.log({ item })}
+										{/* {console.log({ item })} */}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
 												<img src={item.display_image} alt="product" />
@@ -304,6 +310,7 @@ const OrderPage = (props) => {
 										</div>
 										<div className="cart-name">
 											<div>
+												{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{(item.category === 'diffuser_caps' ||
 														item.category === 'mini_diffuser_caps') &&
@@ -313,6 +320,31 @@ const OrderPage = (props) => {
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>
+											{props.userInfo &&
+											props.userInfo.isAdmin &&
+											item.secondary_product && (
+												<div className="row">
+													<div className="mv-10px ">
+														<label htmlFor="secondary_product">Secondary Product</label>
+														<div className="row">
+															<input
+																type="text"
+																value={item.secondary_product._id}
+																name="secondary_product"
+																id="secondary_product"
+																className="w-100per"
+																onChange={(e) => set_secondary_product(e.target.value)}
+															/>
+															<button
+																className="button primary"
+																onClick={save_secondary_product}
+															>
+																Add
+															</button>
+														</div>
+													</div>
+												</div>
+											)}
 										</div>
 										<div className="cart-price">
 											{item.sale_price !== 0 ? (

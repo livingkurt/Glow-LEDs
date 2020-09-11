@@ -261,6 +261,33 @@ router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: {
 		console.log(err);
 	}
 });
+router.put(
+	'/addsecondaryproduct',
+	async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+		try {
+			const order_id = req.body.order._id;
+			const product_id = req.body.secondary_product;
+			const order = await Order.findById(order_id)
+				.populate('orderItems.product')
+				.populate('orderItems.secondary_product')
+				.populate('user');
+			for (let item of order.orderItems) {
+				if (
+					item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ||
+					item.name === 'Diffuser Caps + Adapters Starter Kit'
+				) {
+					item.secondary_product = product_id;
+				}
+			}
+			console.log({ order });
+
+			const updated = await Order.updateOne({ _id: order_id }, order);
+			res.send(updated);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+);
 
 router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {

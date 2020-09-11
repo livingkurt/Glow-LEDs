@@ -18,6 +18,10 @@ export default {
 		console.log({ save_product: { order, user_data, product } });
 		return axios.put('/api/orders/addproduct', { order, user_data, product });
 	},
+	save_secondary_product: function(order: any, user_data: any, secondary_product: any) {
+		console.log({ save_secondary_product: { order, user_data, secondary_product } });
+		return axios.put('/api/orders/addsecondaryproduct', { order, user_data, secondary_product });
+	},
 	get_original_diffuser_caps: function() {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/originalcaps');

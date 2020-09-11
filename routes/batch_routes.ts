@@ -98,7 +98,8 @@ router.put('/orders_original', async (req, res) => {
 			// $rename: { shipping_price: 'volume' }
 			$set: {
 				'orderItems.$.diffuser_cap_color': 'Black',
-				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392'
+				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392',
+				'orderItems.$.category': 'diffuser_caps'
 			}
 			// $unset: { shipping_price: 1 }
 		},
@@ -116,7 +117,8 @@ router.put('/orders_mini', async (req, res) => {
 			// $rename: { shipping_price: 'volume' }
 			$set: {
 				'orderItems.$.diffuser_cap_color': 'Black',
-				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392'
+				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392',
+				'orderItems.$.category': 'mini_diffuser_caps'
 			}
 			// $unset: { shipping_price: 1 }
 		},
@@ -125,6 +127,23 @@ router.put('/orders_mini', async (req, res) => {
 	console.log({ order });
 	res.send(order);
 });
+// router.put('/orders_mini_caps', async (req, res) => {
+// 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+// 	const order = await Order.updateMany(
+// 		{ 'orderItems.name': 'Mini Diffuser Caps + Adapters Starter Kit' },
+// 		{
+// 			// $rename: { shipping_price: 'volume' }
+// 			$set: {
+// 				'orderItems.$.diffuser_cap_color': 'Black',
+// 				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392'
+// 			}
+// 			// $unset: { shipping_price: 1 }
+// 		},
+// 		{ upsert: true }
+// 	);
+// 	console.log({ order });
+// 	res.send(order);
+// });
 
 // router.put('/orders_mini', async (req, res) => {
 // 	const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
