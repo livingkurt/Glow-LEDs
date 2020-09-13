@@ -40,40 +40,76 @@ const HomePage = (props) => {
 				/>
 			</MetaTags>
 			<FlexContainer h_center>
-				<h1 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
+				<h1 className="welcome_text mb-3rem" style={{ fontSize: '6rem' }}>
 					Welcome to Glow-LEDs
 				</h1>
 			</FlexContainer>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1 style={{ textAlign: 'center' }}>INTRODUCING: Mini Diffuser Caps and Star Caps </h1>
+					<h1 style={{ textAlign: 'center' }}>Now Available: Get your caps in 5 new colors!</h1>
 				</FlexContainer>
 
 				<Link to="/collections/all/products/category/mini_diffuser_caps">
 					<img
 						style={{ borderRadius: '20px', width: '100%' }}
-						src="/images/optimized_images/promo_images/img_1589_optimized.jpg"
+						src="/images/optimized_images/promo_images/combined-colored-caps_2_no_words_optimized.jpg"
 						alt="promo"
 					/>
 				</Link>
 				<FlexContainer h_center>
 					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
-						20% Smaller! 100%{' '}
+						New Colors include Black{' '}
 						<span aria-label="emoji" role="img">
-							🔥
+							⚫
+						</span>{' '}
+						, Red{' '}
+						<span aria-label="emoji" role="img">
+							❤️
+						</span>{' '}
+						, Silver<span aria-label="emoji" role="img">
+							🥈
+						</span>{' '}
+						, White{' '}
+						<span aria-label="emoji" role="img">
+							❄️
+						</span>{' '}
+						, Blue{' '}
+						<span aria-label="emoji" role="img">
+							🦋
+						</span>{' '}
+						, Gold{' '}
+						<span aria-label="emoji" role="img">
+							🥇
 						</span>{' '}
 					</h2>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Based on feedback from YOU ☺️ we thought that some glovers might feel more comfortable with
-					something a little more bite sized 😁 Get the same Diffuser Caps that you know and love in a smaller
-					size. We Call them Mini Diffuser Caps! 👶🏼 Also available now are Star Diffuser Caps, in Original
-					and Mini size 🤩
+					Any Caps, Any Color! & No extra cost! The Blue
+					<span aria-label="emoji" role="img">
+						🦋
+					</span>{' '}
+					and Silver{' '}
+					<span aria-label="emoji" role="img">
+						🥈
+					</span>{' '}
+					have a very opaque look that looks almost black when the room is dark. The Red{' '}
+					<span aria-label="emoji" role="img">
+						❤️
+					</span>{' '}
+					White ❄️ and Gold{' '}
+					<span aria-label="emoji" role="img">
+						🥇
+					</span>{' '}
+					have a more transparent look that shows off the color while giving your lightshow! Simply choose
+					your desired color from the drop down menu when you’re adding the Diffuser Caps to your cart{' '}
+					<span aria-label="emoji" role="img">
+						🛒
+					</span>{' '}
 				</p>
 				<FlexContainer h_center>
-					<Link to="/collections/all/products/category/mini_diffuser_caps">
+					<Link to="/collections/all/products">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Mini Diffuser Caps</h2>
+							<h2>Shop Colored Diffuser Caps</h2>
 						</button>
 					</Link>
 				</FlexContainer>
