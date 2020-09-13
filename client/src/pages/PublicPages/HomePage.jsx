@@ -58,7 +58,7 @@ const HomePage = (props) => {
 				</Link>
 				<FlexContainer h_center>
 					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
-						New Colors include Black{' '}
+						Colors now include Black{' '}
 						<span aria-label="emoji" role="img">
 							⚫
 						</span>{' '}
