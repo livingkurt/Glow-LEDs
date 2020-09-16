@@ -73,6 +73,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 		product.name = req.body.name;
 		product.price = req.body.price;
 		product.display_image = req.body.display_image;
+		product.images = req.body.images;
 		product.video = req.body.video;
 		product.brand = req.body.brand;
 		product.category = req.body.category;
@@ -127,6 +128,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 		name: req.body.name,
 		price: req.body.price,
 		display_image: req.body.display_image,
+		images: req.body.images,
 		video: req.body.video,
 		brand: req.body.brand,
 		category: req.body.category,

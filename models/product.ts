@@ -17,6 +17,7 @@ const productSchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true },
 		display_image: { type: String, required: true },
+		images: { type: Array },
 		video: { type: String },
 		brand: { type: String, required: true },
 		price: { type: Number, default: 0, required: true },

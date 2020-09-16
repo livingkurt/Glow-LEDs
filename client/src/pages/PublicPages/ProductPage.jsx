@@ -251,7 +251,6 @@ const ProductPage = (props) => {
 								</FlexContainer>
 								<Slideshow product={product} show_hide="alt_pictures_hidden" />
 							</div>
-
 							<div className="details-action">
 								<ul>
 									{product.name === 'Custom Infinity Mirror' ? (

@@ -12,6 +12,8 @@ const EditProductPage = (props) => {
 	const [ name, setName ] = useState('');
 	const [ price, setPrice ] = useState('');
 	const [ display_image, setDisplayImage ] = useState('');
+	const [ images, set_images ] = useState([]);
+	const [ image, set_image ] = useState('');
 	const [ video, setVideo ] = useState('');
 	const [ brand, setBrand ] = useState('');
 	const [ category, setCategory ] = useState('');
@@ -32,6 +34,7 @@ const EditProductPage = (props) => {
 	const [ weight_ounces, set_weight_ounces ] = useState();
 	const [ pathname, setPathname ] = useState();
 	const [ order, setOrder ] = useState();
+	const [ show_message, set_show_message ] = useState('');
 
 	const history = useHistory();
 
@@ -102,6 +105,8 @@ const EditProductPage = (props) => {
 		set_weight_pounds(product.weight_pounds);
 		set_weight_ounces(product.weight_ounces);
 		setDisplayImage(product.display_image);
+		set_images(product.images);
+		// set_image(product.image);
 		setVideo(product.video);
 		setBrand(product.brand);
 		setCategory(product.category);
@@ -116,7 +121,9 @@ const EditProductPage = (props) => {
 		setDescription('');
 		setFacts('');
 		setIncludedItems('');
-		setDisplayImage('');
+		setDisplayImage([]);
+		set_images('');
+		set_image('');
 		setVideo('');
 		setBrand('');
 		setCategory('');
@@ -136,82 +143,6 @@ const EditProductPage = (props) => {
 		setOrder('');
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		dispatch(detailsProduct(product_pathname));
-	// 		if (props.match.params.pathname) {
-	// 			// console.log({ product })
-	// 			setId(product._id);
-	// 			setName(product.name);
-	// 			setPrice(product.price);
-	// 			setDescription(product.description);
-	// 			setFacts(product.facts);
-	// 			setIncludedItems(product.included_items);
-	// 			setHidden(product.hidden);
-	// 			setSalePrice(product.sale_price);
-	// 			setVolume(product.volume);
-	// 			set_meta_title(product.meta_title);
-	// 			set_meta_description(product.meta_description);
-	// 			set_meta_keywords(product.meta_keywords);
-	// 			set_length(product.length);
-	// 			set_width(product.width);
-	// 			set_height(product.height);
-	// 			set_weight_pounds(product.weight_pounds);
-	// 			setDisplayImage(product.display_image);
-	// 			setVideo(product.video);
-	// 			setBrand(product.brand);
-	// 			setCategory(product.category);
-	// 			setCountInStock(product.countInStock);
-	// 			setPathname(product.pathname);
-	// 		} else {
-	// 			setId('');
-	// 			setName('');
-	// 			setPrice('');
-	// 			setDescription('');
-	// 			setFacts('');
-	// 			setIncludedItems('');
-	// 			setDisplayImage('');
-	// 			setVideo('');
-	// 			setBrand('');
-	// 			setCategory('');
-	// 			setCountInStock('');
-	// 			setHidden();
-	// 			setSalePrice('');
-	// 			setVolume('');
-	// 			set_meta_title('');
-	// 			set_meta_description('');
-	// 			set_meta_keywords('');
-	// 			set_length('');
-	// 			set_width('');
-	// 			set_height('');
-	// 			set_weight_pounds('');
-	// 			setPathname('');
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ productDeleteSuccess ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		setId(product._id);
-	// 		setName(product.name);
-	// 		setPrice(product.price);
-	// 		setDescription(product.description);
-	// 		setFacts(product.facts);
-	// 		setIncludedItems(product.included_items);
-	// 		setDisplayImage(product.display_image);
-	// 		setVideo(product.video);
-	// 		setBrand(product.brand);
-	// 		setCategory(product.category);
-	// 		setCountInStock(product.countInStock);
-	// 		return () => {
-	// 			//
-	// 		};
-	// 	},
-	// 	[ successSave, successDelete ]
-	// );
-
 	const submitHandler = (e) => {
 		console.log({ hidden });
 		e.preventDefault();
@@ -221,6 +152,7 @@ const EditProductPage = (props) => {
 				name,
 				price,
 				display_image,
+				images,
 				video,
 				brand,
 				category,
@@ -251,6 +183,8 @@ const EditProductPage = (props) => {
 		setFacts('');
 		setIncludedItems('');
 		setDisplayImage('');
+		set_images([]);
+		set_image('');
 		setVideo('');
 		setBrand('');
 		setCategory('');
@@ -279,6 +213,29 @@ const EditProductPage = (props) => {
 	// 	console.log({ review_id, id });
 	// 	dispatch(deleteProductReview(id, review_id));
 	// };
+
+	const add_image = (e) => {
+		e.preventDefault();
+		console.log(image);
+		if (image.indexOf(' ')) {
+			image.split(' ').map((image) => {
+				set_images((images) => [ ...images, image ]);
+			});
+		} else {
+			set_images((images) => [ ...images, image ]);
+		}
+
+		set_image('');
+	};
+
+	const remove_image = (image_index, e) => {
+		e.preventDefault();
+		set_images((images) =>
+			images.filter((image, index) => {
+				return image_index !== index;
+			})
+		);
+	};
 
 	return (
 		<div class="main_container">
@@ -371,6 +328,16 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="display_image">Display Image</label>
+												<input
+													type="text"
+													name="display_image"
+													value={display_image}
+													id="display_image"
+													onChange={(e) => setDisplayImage(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="video">Video</label>
 												<input
 													type="text"
@@ -396,7 +363,21 @@ const EditProductPage = (props) => {
 													}}
 												/>
 											</li>
+											<li>
+												<label htmlFor="image">image</label>
+												<input
+													type="text"
+													name="image"
+													value={image}
+													id="image"
+													onChange={(e) => set_image(e.target.value)}
+												/>
+												<button className="button primary" onClick={(e) => add_image(e)}>
+													Add Image
+												</button>
+											</li>
 										</FlexContainer>
+
 										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="countInStock">Count In Stock</label>
@@ -554,6 +535,39 @@ const EditProductPage = (props) => {
 											</li>
 										</FlexContainer>
 									</FlexContainer>
+									<div className="row wrap">
+										{images &&
+											images.map((picture) => {
+												return (
+													<img
+														style={{
+															width: '100%',
+															height: 'auto',
+															maxWidth: '150px',
+															maxHeight: '150px',
+															borderRadius: '15px',
+															marginRight: '10px'
+														}}
+														className="mv-10px"
+														src={picture}
+													/>
+												);
+											})}
+									</div>
+									{images &&
+										images.map((picture, index) => {
+											return (
+												<div className="promo_code mv-1rem w-100per">
+													<button
+														className="button icon"
+														onClick={(e) => remove_image(index, e)}
+													>
+														<i className="fas fa-times mr-5px" />
+													</button>
+													{picture}
+												</div>
+											);
+										})}
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}
