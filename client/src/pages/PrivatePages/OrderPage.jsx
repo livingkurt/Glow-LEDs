@@ -302,10 +302,10 @@ const OrderPage = (props) => {
 							) : (
 								order.orderItems.map((item) => (
 									<li key={item._id}>
-										{/* {console.log({ item })} */}
+										{console.log({ item })}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} alt="product" />
+												<img src={item.product.images[0]} alt="product" />
 											</Link>
 										</div>
 										<div className="cart-name">

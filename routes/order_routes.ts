@@ -182,29 +182,19 @@ router.put(
 		}
 	) => {
 		try {
-			// console.log(req.body);
-			// console.log({ Pay: req.body.token });
 			const order = await Order.findById(req.params.id).populate('user');
-			// console.log({ user: order.user.first_name });
 			const charge = await stripe.charges.create({
 				amount: (order.totalPrice * 100).toFixed(0),
 				currency: 'usd',
-				// name: order.user.first_name,
 				description: `Order Paid`,
 				source: req.body.token.id
 			});
-			// console.log(charge);
 			if (charge) {
 				order.isPaid = true;
 				order.paidAt = Date.now();
 				order.payment = {
 					paymentMethod: 'stripe',
 					charge: charge
-					// paymentResult: {
-					// 	payment_id: charge.id,
-					// 	last_4: charge.payment_method_details.last4,
-					// 	payment_created: charge.created
-					// }
 				};
 				const updatedOrder = await order.save();
 				res.send({ message: 'Order Paid.', order: updatedOrder });
@@ -212,7 +202,6 @@ router.put(
 				res.status(404).send({ message: 'Order not found.' });
 			}
 		} catch (error) {
-			// res.status(503).send({ message: 'Order and Payment Failed' });
 			console.log({ error });
 			res.send(error);
 		}

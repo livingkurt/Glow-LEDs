@@ -90,6 +90,25 @@ router.get('/products', async (req, res) => {
 });
 
 // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_remove_color', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Serotonin Molecule Infinity Mirror' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': '',
+				'orderItems.$.category': 'infinity_mirrors'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
 router.put('/orders_original', async (req, res) => {
 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 	const order = await Order.updateMany(

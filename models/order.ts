@@ -26,7 +26,7 @@ const orderItemSchema = new mongoose.Schema(
 		name: { type: String, required: true },
 		qty: { type: Number, required: true },
 		display_image: { type: String, required: true },
-		diffuser_cap_color: { type: String, required: true, default: 'Black' },
+		diffuser_cap_color: { type: String },
 		diffuser_cap_name: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
