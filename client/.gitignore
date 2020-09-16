@@ -112,6 +112,7 @@ client/build
 DS_STORE
 
 client/public/images/full_sized_images
+client/public/images/optimized_images
 client/public/videos/full_sized_videos
 client/public/gifs/full_sized_gifs
 

@@ -78,7 +78,7 @@ const Product = (props) => {
 								alt={props.product.name}
 								style={{ height: props.size, width: props.size }}
 								effect="blur"
-								src={props.product.display_image} // use normal <img> attributes as props
+								src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
 							/>
 						</Link>
 

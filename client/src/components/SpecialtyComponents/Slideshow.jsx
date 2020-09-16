@@ -9,17 +9,17 @@ const Slideshow = (props) => {
 	const dispatch = useDispatch();
 
 	const productImages = useSelector((state) => state.productImages);
-	const { images, loading: loadingImages, error: errorImages } = productImages;
+	// const { images, loading: loadingImages, error: errorImages } = productImages;
 
-	useEffect(
-		() => {
-			if (props.product) {
-				dispatch(imagesProduct(props.product.display_image));
-			}
-			return () => {};
-		},
-		[ props.product ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (props.product) {
+	// 			dispatch(imagesProduct(props.product.display_image));
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ props.product ]
+	// );
 
 	const classes = 'details-image ' + props.show_hide;
 
@@ -31,16 +31,16 @@ const Slideshow = (props) => {
 
 	return (
 		<div className={classes}>
-			<Loading loading={loadingImages} error={errorImages}>
-				{images &&
-					images.map((image, index) => {
-						return (
-							<div className="img_column" key={index}>
-								<img src={image} alt="" style={{ width: '100%' }} onClick={(e) => change_image(e)} />
-							</div>
-						);
-					})}
-			</Loading>
+			{/* <Loading loading={loadingImages} error={errorImages}> */}
+			{props.product.images &&
+				props.product.images.map((image, index) => {
+					return (
+						<div className="img_column" key={index}>
+							<img src={image} alt="" style={{ width: '100%' }} onClick={(e) => change_image(e)} />
+						</div>
+					);
+				})}
+			{/* </Loading> */}
 		</div>
 	);
 };

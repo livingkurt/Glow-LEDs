@@ -141,13 +141,19 @@ const ProductPage = (props) => {
 								property="og:url"
 								content={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
 							/>
-							<meta property="og:image" content={'https://www.glow-leds.com' + product.display_image} />
+							<meta
+								property="og:image"
+								content={'https://www.glow-leds.com' + (product.images && product.images[0])}
+							/>
 
 							<meta
 								property="og:image:secure_url"
-								content={'https://www.glow-leds.com' + product.display_image}
+								content={'https://www.glow-leds.com' + (product.images && product.images[0])}
 							/>
-							<meta name="twitter:image" content={'https://www.glow-leds.com' + product.display_image} />
+							<meta
+								name="twitter:image"
+								content={'https://www.glow-leds.com' + (product.images && product.images[0])}
+							/>
 							<meta
 								name="description"
 								content={
@@ -191,7 +197,7 @@ const ProductPage = (props) => {
 										id="expandedImg"
 										alt=""
 										className="details-image-img"
-										src={product.display_image}
+										src={product.images && product.images[0]}
 										style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
 									/>
 								</div>

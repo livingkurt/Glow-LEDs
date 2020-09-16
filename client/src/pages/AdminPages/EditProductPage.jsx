@@ -327,7 +327,7 @@ const EditProductPage = (props) => {
 													onChange={(e) => setDisplayImage(e.target.value)}
 												/>
 											</li>
-											<li>
+											{/* <li>
 												<label htmlFor="display_image">Display Image</label>
 												<input
 													type="text"
@@ -336,7 +336,7 @@ const EditProductPage = (props) => {
 													id="display_image"
 													onChange={(e) => setDisplayImage(e.target.value)}
 												/>
-											</li>
+											</li> */}
 											<li>
 												<label htmlFor="video">Video</label>
 												<input

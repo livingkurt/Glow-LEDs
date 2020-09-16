@@ -55,30 +55,6 @@ const HomePage = (props) => {
 						src="/images/optimized_images/promo_images/combined-colored-caps_2_no_words_optimized.jpg"
 						alt="promo"
 					/>
-					<a href="https://imgbox.com/7YbLprG7" target="_blank">
-						<img src="https://thumbs2.imgbox.com/e9/a5/7YbLprG7_t.png" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/7zRZ6CJu" target="_blank">
-						<img src="https://thumbs2.imgbox.com/33/b4/7zRZ6CJu_t.jpg" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/wJob8M3M" target="_blank">
-						<img src="https://thumbs2.imgbox.com/fc/7b/wJob8M3M_t.jpg" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/PnslDFRi" target="_blank">
-						<img src="https://thumbs2.imgbox.com/db/91/PnslDFRi_t.jpg" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/OjxFFv5S" target="_blank">
-						<img src="https://thumbs2.imgbox.com/c1/9e/OjxFFv5S_t.jpg" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/3hTAc8ah" target="_blank">
-						<img src="https://thumbs2.imgbox.com/4d/d5/3hTAc8ah_t.jpg" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/NLlq0sN0" target="_blank">
-						<img src="https://thumbs2.imgbox.com/aa/cb/NLlq0sN0_t.jpg" alt="image host" />
-					</a>{' '}
-					<a href="https://imgbox.com/pCVbVl6U" target="_blank">
-						<img src="https://thumbs2.imgbox.com/6a/e6/pCVbVl6U_t.jpg" alt="image host" />
-					</a>
 				</Link>
 				<FlexContainer h_center>
 					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
