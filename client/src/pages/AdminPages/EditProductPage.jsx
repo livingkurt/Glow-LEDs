@@ -11,7 +11,7 @@ const EditProductPage = (props) => {
 	const [ id, setId ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ price, setPrice ] = useState('');
-	const [ display_image, setDisplayImage ] = useState('');
+	// const [ display_image, setDisplayImage ] = useState('');
 	const [ images, set_images ] = useState([]);
 	const [ image, set_image ] = useState('');
 	const [ video, setVideo ] = useState('');
@@ -104,7 +104,7 @@ const EditProductPage = (props) => {
 		set_height(product.height);
 		set_weight_pounds(product.weight_pounds);
 		set_weight_ounces(product.weight_ounces);
-		setDisplayImage(product.display_image);
+		// setDisplayImage(product.display_image);
 		set_images(product.images);
 		// set_image(product.image);
 		setVideo(product.video);
@@ -121,8 +121,8 @@ const EditProductPage = (props) => {
 		setDescription('');
 		setFacts('');
 		setIncludedItems('');
-		setDisplayImage([]);
-		set_images('');
+		// setDisplayImage([]);
+		set_images([]);
 		set_image('');
 		setVideo('');
 		setBrand('');
@@ -151,7 +151,7 @@ const EditProductPage = (props) => {
 				_id: id,
 				name,
 				price,
-				display_image,
+				// display_image,
 				images,
 				video,
 				brand,
@@ -182,7 +182,7 @@ const EditProductPage = (props) => {
 		setDescription('');
 		setFacts('');
 		setIncludedItems('');
-		setDisplayImage('');
+		// setDisplayImage('');
 		set_images([]);
 		set_image('');
 		setVideo('');
@@ -236,7 +236,45 @@ const EditProductPage = (props) => {
 			})
 		);
 	};
+	const [ new_array, set_new_array ] = useState([]);
 
+	useEffect(
+		() => {
+			set_images(new_array);
+			return () => {};
+		},
+		[ new_array ]
+	);
+
+	const move_image_up = (image_index, e) => {
+		e.preventDefault();
+		const new_array = move(images, image_index, image_index - 1);
+		set_new_array(new_array);
+	};
+	const move_image_down = (image_index, e) => {
+		e.preventDefault();
+		const new_array = move(images, image_index, image_index + 1);
+		set_new_array(new_array);
+	};
+
+	function move(arr, old_index, new_index) {
+		console.log({ arr, old_index, new_index });
+		while (old_index < 0) {
+			old_index += arr.length;
+		}
+		while (new_index < 0) {
+			new_index += arr.length;
+		}
+		if (new_index >= arr.length) {
+			var k = new_index - arr.length;
+			while (k-- + 1) {
+				arr.push(undefined);
+			}
+		}
+		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+		console.log({ arr });
+		return arr;
+	}
 	return (
 		<div class="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
@@ -317,7 +355,7 @@ const EditProductPage = (props) => {
 													onChange={(e) => setBrand(e.target.value)}
 												/>
 											</li>
-											<li>
+											{/* <li>
 												<label htmlFor="display_image">Display Image</label>
 												<input
 													type="text"
@@ -326,7 +364,7 @@ const EditProductPage = (props) => {
 													id="display_image"
 													onChange={(e) => setDisplayImage(e.target.value)}
 												/>
-											</li>
+											</li> */}
 											{/* <li>
 												<label htmlFor="display_image">Display Image</label>
 												<input
@@ -557,14 +595,38 @@ const EditProductPage = (props) => {
 									{images &&
 										images.map((picture, index) => {
 											return (
-												<div className="promo_code mv-1rem w-100per">
-													<button
-														className="button icon"
-														onClick={(e) => remove_image(index, e)}
-													>
-														<i className="fas fa-times mr-5px" />
-													</button>
-													{picture}
+												<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+													<div>
+														<button
+															className="button icon"
+															onClick={(e) => remove_image(index, e)}
+														>
+															<i className="fas fa-times mr-5px" />
+														</button>
+														{picture}
+													</div>
+													<div>
+														{index > 0 && (
+															<button
+																className="button icon"
+																onClick={(e) => move_image_up(index, e)}
+															>
+																<i className=" fas fa-sort-up" />
+															</button>
+														)}
+
+														{index < images.length - 1 && (
+															<button
+																className="button icon"
+																onClick={(e) => move_image_down(index, e)}
+															>
+																<i
+																	style={{ '-webkitTransform': 'rotate(-180deg)' }}
+																	className=" fas fa-sort-up"
+																/>
+															</button>
+														)}
+													</div>
 												</div>
 											);
 										})}

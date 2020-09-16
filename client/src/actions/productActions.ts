@@ -46,7 +46,6 @@ const saveProduct = (product: {
 	_id: string;
 	name?: string;
 	price?: number;
-	display_image?: string;
 	video?: string;
 	brand?: string;
 	category?: string;

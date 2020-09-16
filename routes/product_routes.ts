@@ -72,7 +72,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 	if (product) {
 		product.name = req.body.name;
 		product.price = req.body.price;
-		product.display_image = req.body.display_image;
+		// product.display_image = req.body.display_image;
 		product.images = req.body.images;
 		product.video = req.body.video;
 		product.brand = req.body.brand;
@@ -127,7 +127,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 	const product = new Product({
 		name: req.body.name,
 		price: req.body.price,
-		display_image: req.body.display_image,
+		// display_image: req.body.display_image,
 		images: req.body.images,
 		video: req.body.video,
 		brand: req.body.brand,
