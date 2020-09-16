@@ -48,10 +48,46 @@ export const occurrence = function(array: any) {
 					// Same occurrences found.
 					result[v.product].push(i); // Fill the array.
 				}
+				// if (!result[v.secondary_product]) {
+				// 	// Initial object property creation.
+				// 	result[v.secondary_product] = [ i ]; // Create an array for that property.
+				// } else {
+				// 	// Same occurrences found.
+				// 	result[v.secondary_product].push(i); // Fill the array.
+				// }
 			});
 		}
 	}
 
+	return result;
+};
+export const occurrence_secondary = function(array: any) {
+	'use strict';
+	// console.log(array);
+	var result: any = {};
+	if (array instanceof Array) {
+		// Check if input is array.
+		for (let i of array) {
+			console.log({ orderItems: i.orderItems });
+			i.orderItems.forEach((v: any, i: any) => {
+				if (!result[v.secondary_product]) {
+					// Initial object property creation.
+					result[v.secondary_product] = [ i ]; // Create an array for that property.
+				} else {
+					// Same occurrences found.
+					result[v.secondary_product].push(i); // Fill the array.
+				}
+				// if (!result[v.secondary_product]) {
+				// 	// Initial object property creation.
+				// 	result[v.secondary_product] = [ i ]; // Create an array for that property.
+				// } else {
+				// 	// Same occurrences found.
+				// 	result[v.secondary_product].push(i); // Fill the array.
+				// }
+			});
+		}
+	}
+	console.log({ result });
 	return result;
 };
 
@@ -89,7 +125,7 @@ export const occurrence = function(array: any) {
 // };
 
 export const hslToHex = (h: any, s: any, l: any) => {
-	console.log(h);
+	// console.log(h);
 	h /= 360;
 	s /= 100;
 	l /= 100;

@@ -43,7 +43,11 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 	console.log({ sortOrder: req.query.sortOrder });
 	console.log({ sortOrder });
 	console.log({ searchKeyword });
-	const orders = await Order.find({ deleted: false, ...category, ...searchKeyword }).populate('user').sort(sortOrder);
+	const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+		.populate('user')
+		.populate('orderItems.product')
+		.populate('orderItems.secondary_product')
+		.sort(sortOrder);
 	// const orders = await Expense.find({}).sort({ date_of_purchase: -1 });
 	// console.log(orders);
 	res.send(orders);

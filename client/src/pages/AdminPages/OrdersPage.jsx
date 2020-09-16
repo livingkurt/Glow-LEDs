@@ -242,7 +242,16 @@ const OrdersPage = (props) => {
 										</td>
 										<td style={{ minWidth: '500px' }}>
 											{order.orderItems.map((item) => {
-												return <div>{item.name}</div>;
+												console.log({ item });
+												return (
+													<div>
+														<div>
+															{item.diffuser_cap_color} {item.name}
+														</div>
+														{item.secondary_product &&
+															'(' + item.secondary_product.name + ')'}
+													</div>
+												);
 											})}
 										</td>
 										<td>
