@@ -90,6 +90,10 @@ const FeaturedPage = (props) => {
 									/>
 								</div>
 							</FlexContainer>
+
+							<p className="p_descriptions" style={{ textAlign: 'center' }}>
+								{feature.song_id}
+							</p>
 							<p className="p_descriptions" style={{ textAlign: 'center' }}>
 								For Information on how to become featured on our pages. Check our Frequently Asked
 								Questions page.

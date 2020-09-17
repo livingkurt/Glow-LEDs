@@ -10,6 +10,7 @@ import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
 import { validate_promo_code, humanize } from '../../utils/helper_functions';
+import { SuggestedProducts } from '../../components/SpecialtyComponents';
 
 const PlaceOrderPage = (props) => {
 	const discount_percent = 0.2;
@@ -497,6 +498,7 @@ const PlaceOrderPage = (props) => {
 					</ul>
 				</div>
 			</div>
+			<SuggestedProducts />
 		</div>
 	);
 };

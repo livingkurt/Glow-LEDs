@@ -241,6 +241,7 @@ const EditProductPage = (props) => {
 	useEffect(
 		() => {
 			set_images(new_array);
+
 			return () => {};
 		},
 		[ new_array ]
@@ -249,12 +250,16 @@ const EditProductPage = (props) => {
 	const move_image_up = (image_index, e) => {
 		e.preventDefault();
 		const new_array = move(images, image_index, image_index - 1);
+		set_images(new_array);
 		set_new_array(new_array);
+		image_display(new_array);
 	};
 	const move_image_down = (image_index, e) => {
 		e.preventDefault();
 		const new_array = move(images, image_index, image_index + 1);
+		set_images(new_array);
 		set_new_array(new_array);
+		image_display(new_array);
 	};
 
 	function move(arr, old_index, new_index) {
@@ -275,6 +280,62 @@ const EditProductPage = (props) => {
 		console.log({ arr });
 		return arr;
 	}
+
+	const image_display = (images) => {
+		return (
+			<div>
+				<div className="row wrap">
+					{images &&
+						images.map((picture) => {
+							return (
+								<img
+									style={{
+										width: '100%',
+										height: 'auto',
+										maxWidth: '150px',
+										maxHeight: '150px',
+										borderRadius: '15px',
+										marginRight: '10px'
+									}}
+									className="mv-10px"
+									src={picture}
+								/>
+							);
+						})}
+				</div>
+				{images &&
+					images.map((picture, index) => {
+						return (
+							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+								<div>
+									<button className="button icon" onClick={(e) => remove_image(index, e)}>
+										<i className="fas fa-times mr-5px" />
+									</button>
+									{picture}
+								</div>
+								<div>
+									{index > 0 && (
+										<button className="button icon" onClick={(e) => move_image_up(index, e)}>
+											<i className=" fas fa-sort-up" />
+										</button>
+									)}
+
+									{index < images.length - 1 && (
+										<button className="button icon" onClick={(e) => move_image_down(index, e)}>
+											<i
+												style={{ '-webkitTransform': 'rotate(-180deg)' }}
+												className=" fas fa-sort-up"
+											/>
+										</button>
+									)}
+								</div>
+							</div>
+						);
+					})}
+			</div>
+		);
+	};
+
 	return (
 		<div class="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
@@ -573,7 +634,8 @@ const EditProductPage = (props) => {
 											</li>
 										</FlexContainer>
 									</FlexContainer>
-									<div className="row wrap">
+									{image_display(images)}
+									{/* <div className="row wrap">
 										{images &&
 											images.map((picture) => {
 												return (
@@ -629,7 +691,7 @@ const EditProductPage = (props) => {
 													</div>
 												</div>
 											);
-										})}
+										})} */}
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}
