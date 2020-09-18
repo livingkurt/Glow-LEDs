@@ -52,7 +52,7 @@ const HomePage = (props) => {
 				<Link to="/collections/all/products/category/mini_diffuser_caps">
 					<img
 						style={{ borderRadius: '20px', width: '100%' }}
-						src="/images/optimized_images/promo_images/img_2201_optimized.jpg"
+						src="/images/optimized_images/promo_images/img_2201_cropped_optimized.jpg"
 						alt="promo"
 					/>
 				</Link>
