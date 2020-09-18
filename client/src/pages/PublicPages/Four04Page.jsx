@@ -38,27 +38,6 @@ const Four04Page = (props) => {
 			</MetaTags>
 			<h1 styles={{ margin: '20px auto' }}>404 Page Not Found</h1>
 			<label>Sorry About that</label>
-			<a href="https://imgbox.com/RUGmaL2p" target="_blank">
-				<img src="https://thumbs2.imgbox.com/ac/85/RUGmaL2p_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/0A0SSu3s" target="_blank">
-				<img src="https://thumbs2.imgbox.com/04/d9/0A0SSu3s_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/JMF2TrCn" target="_blank">
-				<img src="https://thumbs2.imgbox.com/1b/23/JMF2TrCn_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/E7MNIl0O" target="_blank">
-				<img src="https://thumbs2.imgbox.com/d4/d4/E7MNIl0O_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/9ewtEmAE" target="_blank">
-				<img src="https://thumbs2.imgbox.com/b4/e6/9ewtEmAE_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/lYGhPqIB" target="_blank">
-				<img src="https://thumbs2.imgbox.com/ad/f0/lYGhPqIB_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/WcvvhMHM" target="_blank">
-				<img src="https://thumbs2.imgbox.com/7c/f8/WcvvhMHM_t.jpg" alt="image host" />
-			</a>
 		</FlexContainer>
 	);
 };
