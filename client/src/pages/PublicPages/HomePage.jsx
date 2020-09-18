@@ -46,70 +46,31 @@ const HomePage = (props) => {
 			</FlexContainer>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
-					<h1 style={{ textAlign: 'center' }}>Now Available: Get your caps in 5 new colors!</h1>
+					<h1 style={{ textAlign: 'center' }}>Now Available: New Frosted Diffusers</h1>
 				</FlexContainer>
 
 				<Link to="/collections/all/products/category/mini_diffuser_caps">
 					<img
 						style={{ borderRadius: '20px', width: '100%' }}
-						src="/images/optimized_images/promo_images/combined-colored-caps_2_no_words_optimized.jpg"
+						src="/images/optimized_images/promo_images/img_2201_optimized.jpg"
 						alt="promo"
 					/>
 				</Link>
 				<FlexContainer h_center>
 					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
-						Colors now include Black{' '}
-						<span aria-label="emoji" role="img">
-							⚫
-						</span>{' '}
-						, Red{' '}
-						<span aria-label="emoji" role="img">
-							❤️
-						</span>{' '}
-						, Silver<span aria-label="emoji" role="img">
-							🥈
-						</span>{' '}
-						, White{' '}
-						<span aria-label="emoji" role="img">
-							❄️
-						</span>{' '}
-						, Blue{' '}
-						<span aria-label="emoji" role="img">
-							🦋
-						</span>{' '}
-						, Gold{' '}
-						<span aria-label="emoji" role="img">
-							🥇
-						</span>{' '}
+						We now have EIGHT new Frosted Diffuser types available!
 					</h2>
 				</FlexContainer>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Any Caps, Any Color! & No extra cost! The Blue
-					<span aria-label="emoji" role="img">
-						🦋
-					</span>{' '}
-					and Silver{' '}
-					<span aria-label="emoji" role="img">
-						🥈
-					</span>{' '}
-					have a very opaque look that looks almost black when the room is dark. The Red{' '}
-					<span aria-label="emoji" role="img">
-						❤️
-					</span>{' '}
-					White ❄️ and Gold{' '}
-					<span aria-label="emoji" role="img">
-						🥇
-					</span>{' '}
-					have a more transparent look that shows off the color while giving your lightshow! Simply choose
-					your desired color from the drop down menu when you’re adding the Diffuser Caps to your cart{' '}
-					<span aria-label="emoji" role="img">
-						🛒
-					</span>{' '}
+					You may recognise some of these from way back in the day Some of them are BRAND NEW, never before
+					made! We are also giving FREE SHIPPING with any order over $40 since we know you’ll want more than
+					just one pair (no code needed) We couldn’t be more excited to share these with you all As always,
+					give us your feedback and suggestions as this brand is ran by YOU and what the COMMUNITY wants
 				</p>
 				<FlexContainer h_center>
-					<Link to="/collections/all/products">
+					<Link to="/collections/all/products/category/frosted_diffusers">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Colored Diffuser Caps</h2>
+							<h2>Shop Frosted Diffusers</h2>
 						</button>
 					</Link>
 				</FlexContainer>
