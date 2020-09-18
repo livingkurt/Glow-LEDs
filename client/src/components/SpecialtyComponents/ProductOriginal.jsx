@@ -9,7 +9,7 @@ import { addToCart } from '../../actions/cartActions';
 const Product = (props) => {
 	const dispatch = useDispatch();
 
-	// console.log(props.product && props.product.pathname);
+	console.log(props.product && props.product.pathname);
 
 	const handleAddToCart = () => {
 		dispatch(addToCart(props.product.pathname, 1));

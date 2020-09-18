@@ -21,6 +21,26 @@ const CartPage = (props) => {
 	const removeFromCartHandler = (pathname) => {
 		dispatch(removeFromCart(pathname));
 	};
+	// const addToCartHandler = (pathname, qty) => {
+	// 	console.log({ pathname, qty });
+	// 	dispatch(addToCart(pathname, qty));
+	// };
+
+	const handleAddToCart = (pathname, qty) => {
+		// console.log({ pathname: props.match.params.pathname });
+		// console.log({ qty });
+		// console.log({ diffuser_cap_color });
+		// console.log({ diffuser_cap });
+		// if (diffuser_cap) {
+		// 	Cookie.set('diffuser_cap', diffuser_cap);
+		// }
+		// if (diffuser_cap_color) {
+		// 	Cookie.set('diffuser_cap_color', diffuser_cap_color);
+		// }
+		dispatch(addToCart(pathname, qty));
+		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
+		// props.history.push('/checkout/cart');
+	};
 
 	// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
 	// const diffuser_cap_color_cookie = Cookie.getJSON('diffuser_cap_color');
@@ -28,15 +48,15 @@ const CartPage = (props) => {
 	// const [ diffuser_cap, set_diffuser_cap ] = useState({});
 	// const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
 
-	useEffect(() => {
-		if (pathname) {
+	useEffect(
+		() => {
+			// if (pathname) {
 			// console.log(cartItems.find((item) => item.pathname === pathname));
 			// const same_product = cartItems.find((item) => item.pathname === pathname);
 			// if (same_product) {
 			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
 			// } else {
-
-			dispatch(addToCart(pathname, qty));
+			// dispatch(addToCart(pathname, qty));
 			// if (diffuser_cap_cookie) {
 			// 	set_diffuser_cap(diffuser_cap_cookie);
 			// 	console.log({ diffuser_cap_cookie });
@@ -46,8 +66,10 @@ const CartPage = (props) => {
 			// 	console.log({ diffuser_cap_color_cookie });
 			// }
 			// }
-		}
-	}, []);
+			// }
+		},
+		[ cartItems ]
+	);
 
 	useEffect(
 		() => {
@@ -143,7 +165,7 @@ const CartPage = (props) => {
 												</Link>
 											</div>
 											<div>
-												<FlexContainer v_i_center styles={{ height: '25px' }}>
+												{/* <FlexContainer v_i_center styles={{ height: '25px' }}>
 													<label
 														aria-label="sortOrder"
 														htmlFor="sortOrder"
@@ -153,10 +175,35 @@ const CartPage = (props) => {
 													</label>
 													<div className="custom-select">
 														<select
-															value={item.qty}
+															defaultValue={item.qty}
 															className="qty_select_dropdown"
 															onChange={(e) =>
 																dispatch(addToCart(item.pathname, e.target.value))}
+														>
+															{[ ...Array(item.countInStock).keys() ].map((x) => (
+																<option key={x + 1} defaultValue={parseInt(x + 1)}>
+																	{parseInt(x + 1)}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</FlexContainer> */}
+												<FlexContainer v_i_center styles={{ height: '25px' }}>
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label mr-1rem"
+													>
+														Qty:
+													</label>
+													<div className="custom-select">
+														<select
+															defaultValue={item.qty}
+															className="qty_select_dropdown"
+															onChange={(e) => {
+																dispatch(addToCart(item.pathname, e.target.value));
+															}}
 														>
 															{[ ...Array(item.countInStock).keys() ].map((x) => (
 																<option key={x + 1} defaultValue={parseInt(x + 1)}>

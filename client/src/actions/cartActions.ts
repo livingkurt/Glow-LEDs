@@ -8,7 +8,7 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 			type: string;
 			payload: {
 				product: object;
-				secondary_product: object;
+				secondary_product: string;
 				name: string;
 				display_image: string;
 				diffuser_cap: any;
@@ -35,76 +35,58 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 		console.log('Add To Cart Before');
 		const { data } = await Axios.get('/api/products/' + pathname);
 
-		const { cart: { cartItems } } = getState();
 		console.log({ pathname, qty, diffuser_cap_color, diffuser_cap });
-		// const same_product = cartItems.find((item: any) => item.pathname === pathname);
-		// qty = same_product ? qty + same_product.qty : qty;
+		console.log({ data });
 
+		let cartItem: any = {
+			product: data._id,
+			name: data.name,
+			display_image: data.images[0],
+			price: data.price,
+			sale_price: data.sale_price,
+			countInStock: data.countInStock,
+			volume: data.volume,
+			weight_pounds: data.weight_pounds,
+			weight_ounces: data.weight_ounces,
+			length: data.length,
+			width: data.width,
+			height: data.volume,
+			pathname: data.pathname,
+			category: data.category,
+			qty
+		};
+		if (diffuser_cap) {
+			cartItem = {
+				product: data._id,
+				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
+				name: data.name,
+				display_image: data.images[0],
+				diffuser_cap_color,
+				diffuser_cap,
+				diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
+				price: data.price,
+				sale_price: data.sale_price,
+				countInStock: data.countInStock,
+				volume: data.volume,
+				weight_pounds: data.weight_pounds,
+				weight_ounces: data.weight_ounces,
+				length: data.length,
+				width: data.width,
+				height: data.volume,
+				pathname: data.pathname,
+				category: data.category,
+				qty
+			};
+		}
 		dispatch({
 			type: CART_ADD_ITEM,
-			payload: {
-				product: data._id,
-				secondary_product: diffuser_cap._id,
-				name: data.name,
-				display_image: data.images[0],
-				diffuser_cap_color,
-				diffuser_cap,
-				diffuser_cap_name: diffuser_cap.name,
-				price: data.price,
-				sale_price: data.sale_price,
-				countInStock: data.countInStock,
-				volume: data.volume,
-				weight_pounds: data.weight_pounds,
-				weight_ounces: data.weight_ounces,
-				length: data.length,
-				width: data.width,
-				height: data.volume,
-				pathname: data.pathname,
-				category: data.category,
-				qty
-			}
+			payload: cartItem
 		});
-		const cart_item = [
-			{
-				product: data._id,
-				secondary_product: diffuser_cap._id,
-				name: data.name,
-				display_image: data.images[0],
-				diffuser_cap_name: diffuser_cap.name,
-				diffuser_cap_color,
-				diffuser_cap,
-				price: data.price,
-				sale_price: data.sale_price,
-				countInStock: data.countInStock,
-				volume: data.volume,
-				weight_pounds: data.weight_pounds,
-				weight_ounces: data.weight_ounces,
-				length: data.length,
-				width: data.width,
-				height: data.volume,
-				pathname: data.pathname,
-				category: data.category,
-				qty
-			}
-		];
-		console.log({ cart_item });
-
-		if (cartItems === []) {
-			console.log('No Cart Items');
-			// Cookie.set('cartItems', JSON.stringify(cart_item));
-			Cookie.set('cartItems', JSON.stringify([ ...cart_item ]));
-		}
-		// else {
-		// 	console.log('Yes Cart Items');
-		// 	// Cookie.set('cartItems', JSON.stringify(cartItems));
-		// 	Cookie.set('cartItems', JSON.stringify([ ...cartItems, ...cart_item ]));
-		// }
-		// Cookie.set('cartItems', JSON.stringify([ ...cartItems, ...cart_item ]));
-
-		// console.log('Add To Cart After');
-		console.log({ cartItems });
-		console.log({ cart_item });
-	} catch (error) {}
+		const { cart: { cartItems } } = getState();
+		Cookie.set('cartItems', JSON.stringify(cartItems));
+	} catch (error) {
+		console.log({ error });
+	}
 };
 
 const removeFromCart = (productId: string) => (

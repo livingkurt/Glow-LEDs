@@ -10,7 +10,7 @@ import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
 import { validate_promo_code, humanize } from '../../utils/helper_functions';
-import { SuggestedProducts } from '../../components/SpecialtyComponents';
+import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
 
 const PlaceOrderPage = (props) => {
 	const discount_percent = 0.2;
@@ -99,6 +99,9 @@ const PlaceOrderPage = (props) => {
 			setShippingPrice(12);
 		} else if (volume > 500) {
 			setShippingPrice(15);
+		}
+		if (itemsPrice >= 50) {
+			setShippingPrice(0);
 		}
 		// console.log({ shippingPrice });
 		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
@@ -204,6 +207,13 @@ const PlaceOrderPage = (props) => {
 			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 		},
 		[ itemsPrice, taxPrice ]
+	);
+
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+		},
+		[ itemsPrice ]
 	);
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
@@ -498,7 +508,8 @@ const PlaceOrderPage = (props) => {
 					</ul>
 				</div>
 			</div>
-			<SuggestedProducts />
+			{/* <SuggestedProducts /> */}
+			{/* <Carousel /> */}
 		</div>
 	);
 };
