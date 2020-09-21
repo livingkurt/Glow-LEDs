@@ -256,7 +256,7 @@ const OrdersPage = (props) => {
 												return (
 													<div>
 														<div>
-															{item.diffuser_cap_color} {item.name}
+															{item.qty}x {item.diffuser_cap_color} {item.name}
 														</div>
 														{item.secondary_product &&
 															'(' + item.secondary_product.name + ')'}
