@@ -284,10 +284,10 @@ router.put(
 
 router.put('/:id/manufactured', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {
-		console.log({ manfactured: req.body });
+		console.log({ manufactured: req.body });
 		const updated_order = req.body;
 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		console.log({ manfactured: updated_order });
+		console.log({ manufactured: updated_order });
 		// Send the request back to the front end
 		res.send(updated_order);
 	} catch (err) {

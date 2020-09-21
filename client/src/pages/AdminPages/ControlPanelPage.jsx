@@ -7,7 +7,7 @@ import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
 // import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
-import { occurrence, hslToHex, occurrence_secondary } from '../../utils/helper_functions';
+import { occurrence, hslToHex } from '../../utils/helper_functions';
 import API from '../../utils/API';
 
 const colors = {
@@ -132,7 +132,7 @@ const ControlPanelPage = (props) => {
 		const start_date = new Date('2020-08-10');
 		var difference_in_time = current_date.getTime() - start_date.getTime();
 		var difference_in_day = difference_in_time / (1000 * 3600 * 24);
-		// console.log({ difference_in_day });
+		console.log({ difference_in_day });
 		return difference_in_day;
 	};
 
@@ -141,14 +141,14 @@ const ControlPanelPage = (props) => {
 		const multiplier = 360 / occurrences.length;
 
 		let num = -multiplier;
-		// console.log(
-		// 	occurrences.map((item) => {
-		// 		num += multiplier;
-		// 		// return `hsl(${num}, 100%, 50%)`;
-		// 		let color = hslToHex(num, 100, 50);
-		// 		return color;
-		// 	})
-		// );
+		console.log(
+			occurrences.map((item) => {
+				num += multiplier;
+				// return `hsl(${num}, 100%, 50%)`;
+				let color = hslToHex(num, 100, 50);
+				return color;
+			})
+		);
 		new Chart(expense_chartRef, {
 			type: 'bar',
 			data: {
@@ -241,10 +241,10 @@ const ControlPanelPage = (props) => {
 	};
 	const get_product_names = async () => {
 		const array_of_ids = Object.keys(occurrence(orders));
-		const array_of_secondary_ids = Object.keys(occurrence_secondary(orders));
-		console.log({ array_of_secondary_ids });
+		const ids = occurrence(orders);
+		console.log({ ids });
+		console.log({ array_of_ids });
 		const { data: names } = await API.get_product_names(array_of_ids);
-		const { data: secondary_names } = await API.get_product_names(array_of_secondary_ids);
 		let occurrences = [];
 		for (let i = 0; i < names.length; i++) {
 			Object.keys(occurrence(orders)).map((item) => {
@@ -256,9 +256,9 @@ const ControlPanelPage = (props) => {
 				}
 			});
 		}
-		// console.log(occurrences);
+		console.log(occurrences);
 		// occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
-		occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
+		console.log(occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1)));
 		set_product_occurances(occurrences);
 		initialize_occurance_chart(occurrences);
 	};

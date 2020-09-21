@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder } from '../../actions/orderActions';
@@ -11,7 +11,6 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ expandable, set_expandable ] = useState('none');
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
@@ -23,8 +22,6 @@ const OrdersPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	console.log({ orderspage: userInfo });
-
-	const row_ref = useRef();
 
 	// const userToken = useSelector(state => state.userToken);
 	// // const { to } = userToken;
@@ -118,22 +115,6 @@ const OrdersPage = (props) => {
 		'Highest'
 	];
 
-	const show_hide = (id) => {
-		const row = document.getElementById(id);
-		console.log(row);
-		row.classList.toggle('hide-row');
-		// if (expandable === 'flex') {
-		// 	set_expandable('none');
-		// } else if (expandable === 'none') {
-		// 	set_expandable('flex');
-		// }
-	};
-
-	// const toggleRow = (element) => {
-	// 	element.getElementsByClassName('expanded-row-content')[0].classList.toggle('hide-row');
-	// 	// console.log(event);
-	// };
-
 	return (
 		<div class="main_container">
 			<MetaTags>
@@ -185,6 +166,7 @@ const OrdersPage = (props) => {
 							</thead>
 							<tbody>
 								<tr
+									// key={order._id}
 									style={{
 										backgroundColor: '#626262',
 										fontSize: '1.4rem'
@@ -209,18 +191,12 @@ const OrdersPage = (props) => {
 						</table>
 						<table className="table">
 							<thead>
-								<tr className="tr">
-									{/* <th>
-										<div className="jc-b">
-											<div>ID</div> <div>DATE</div> <div>TOTAL</div> <div>USER</div>
-											<div>ORDER ITEMS</div> <div>ACTIONS</div>
-										</div>
-									</th> */}
-									<th className="w-300px">ID</th>
-									<th className="w-171px">DATE</th>
-									<th className="w-171px">TOTAL</th>
-									<th className="w-172px">USER</th>
-									{/* <th>PAID</th>
+								<tr>
+									<th>ID</th>
+									<th>DATE</th>
+									<th>TOTAL</th>
+									<th>USER</th>
+									<th>PAID</th>
 									<th>PAID AT</th>
 									<th>MANUFACTURED</th>
 									<th>MANUFACTURED On</th>
@@ -228,29 +204,86 @@ const OrdersPage = (props) => {
 									<th>PACKAGED On</th>
 									<th>SHIPPED</th>
 									<th>SHIPPED On</th>
-									<th>DELIVERED</th> */}
-									{/* <th>REFUNDED</th>
+									<th>DELIVERED</th>
+									<th>REFUNDED</th>
 									<th>REFUNDED AT</th>
-									<th>REFUND AMOUNT</th> */}
-									<th className="w-400px">ORDER ITEMS</th>
-									<th className="w-150px">ACTIONS</th>
+									<th>REFUND AMOUNT</th>
+									<th>ORDER ITEMS</th>
+									<th>ACTIONS</th>
 								</tr>
 							</thead>
 							<tbody>
 								{orders.map((order) => (
-									<tr
-										key={order._id}
-										style={{ backgroundColor: determine_color(order) }}
-										className="tr"
-									>
-										<td className="w-300px">{order._id}</td>
-										{/* <hr width="1" size="10" /> */}
-										<td className="w-171px">{format_date(order.createdAt)}</td>
-										<td className="w-171px">
-											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
+									<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
+										<td>{order._id}</td>
+										<td>{format_date(order.createdAt)}</td>
+										<td>${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}</td>
+										<td>{!order.user ? 'N/A' : order.user.first_name}</td>
+										<td>
+											{order.isPaid ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
 										</td>
-										<td className="w-172px">{!order.user ? 'N/A' : order.user.first_name}</td>
-										<td className="w-400px">
+										<td>{!order.paidAt ? '' : format_date(order.paidAt)}</td>
+
+										<td>
+											{order.isManufactured ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
+											{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}
+										</td>
+										<td>
+											{order.isPackaged ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
+											{!order.packagedAt ? '' : format_date(order.packagedAt)}
+										</td>
+										<td>
+											{order.isShipped ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
+											{!order.shippedAt ? '' : format_date(order.shippedAt)}
+										</td>
+										<td>
+											{order.isDelivered ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td>
+											{order.isRefunded ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td style={{ minWidth: '125px' }}>
+											{!order.refundedAt ? '' : format_date(order.refundedAt)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
+											{order.isRefunded && (
+												<div>
+													${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+														100).toFixed(2)}
+												</div>
+											)}
+										</td>
+										<td style={{ minWidth: '500px' }}>
 											{order.orderItems.map((item) => {
 												console.log({ item });
 												return (
@@ -264,10 +297,9 @@ const OrdersPage = (props) => {
 												);
 											})}
 										</td>
-
-										<td className="w-150px">
+										<td>
 											<FlexContainer h_between>
-												<button className="button icon" onClick={() => show_hide(order._id)}>
+												<button className="button icon" onClick={() => deleteHandler(order)}>
 													<i
 														style={{ '-webkitTransform': 'rotate(-180deg)' }}
 														className="top-8px fas fa-sort-up"
@@ -283,97 +315,7 @@ const OrdersPage = (props) => {
 												</button>
 											</FlexContainer>
 										</td>
-										<td id={order._id} className="expanded-row-content hide-row">
-											<div className="row jc-b w-100per">
-												<div className="w-100per">
-													<div>Paid</div>
-													<div className="mv-5px">
-														{order.isPaid ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
-												</div>
-												<div className="w-100per">
-													<div>Manufactured</div>
-													<div className="mv-5px">
-														{order.isManufactured ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>
-														{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}
-													</div>
-												</div>
-												<div className="w-100per">
-													<div>Packaged</div>
-													<div className="mv-5px">
-														{order.isPackaged ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
-												</div>
-												<div className="w-100per">
-													<div>Shipped</div>
-													<div className="mv-5px">
-														{order.isShipped ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
-												</div>
-												<div className="w-100per">
-													<div>Delivered</div>
-													<div className="mv-5px">
-														{order.isDelivered ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>
-														{!order.deliveredAt ? '' : format_date(order.deliveredAt)}
-													</div>
-												</div>
-												<div className="w-100per">
-													<div>Refund</div>
-													<div className="mv-5px">
-														{order.isRefunded ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div style={{ minWidth: '125px' }}>
-														{!order.refundedAt ? '' : format_date(order.refundedAt)}
-													</div>
-													<div style={{ minWidth: '150px' }}>
-														{order.isRefunded && (
-															<div>
-																${(order.payment.refund.reduce(
-																	(a, c) => a + c.amount,
-																	0
-																) / 100).toFixed(2)}
-															</div>
-														)}
-													</div>
-												</div>
-											</div>
-										</td>
 									</tr>
-
-									// <tr>
-
-									// </tr>
 								))}
 							</tbody>
 						</table>

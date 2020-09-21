@@ -48,7 +48,7 @@ router.get('/minicaps', async (req, res) => {
 });
 
 router.post('/array', async (req, res) => {
-	// console.log(req.body);
+	console.log({ control_panel: req.body });
 	const products = await Product.find({ _id: { $in: req.body } });
 	// console.log(products);
 	res.send(products);
