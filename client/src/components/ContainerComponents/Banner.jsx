@@ -6,7 +6,7 @@ const Banner = () => {
 	return (
 		<span className="banner">
 			<div className="max-w-1500px m-auto jc-b">
-				<div className="small_screen ml-10px none ta-c w-100per">
+				{/* <div className="small_screen ml-10px none ta-c w-100per">
 					<Link to="/pages/contact/submit_content_to_be_featured">
 						<button className="banner-button">Submit content to be featured on our pages</button>
 					</Link>
@@ -22,6 +22,9 @@ const Banner = () => {
 					<Link to="/pages/contact/submit_content_to_be_featured">
 						<button className="banner-button">Send us a message!</button>
 					</Link>
+				</div> */}
+				<div className="ml-10px mt-5px">
+					<label>Free Shipping on Orders over $40 </label>
 				</div>
 				<FlexContainer class="big_screen mt-3px">
 					<div className="ml-10px">
