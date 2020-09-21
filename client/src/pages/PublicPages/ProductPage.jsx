@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, listProducts } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import { Rating, Reviews, Slideshow, RelatedProducts } from '../../components/SpecialtyComponents';
+import { Rating, Reviews, Slideshow, RelatedProducts, RelatedCarousel } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import MetaTags from 'react-meta-tags';
@@ -547,6 +547,11 @@ const ProductPage = (props) => {
 				)}
 			</Loading>
 			<RelatedProducts product={product} product_pathname={props.match.params.pathname} />
+			{/* <RelatedCarousel
+				product={product}
+				product_category={product && product.category}
+				product_pathname={props.match.params.pathname}
+			/> */}
 		</FlexContainer>
 	);
 };

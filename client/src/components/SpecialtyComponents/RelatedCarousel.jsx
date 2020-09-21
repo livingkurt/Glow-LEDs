@@ -2,27 +2,44 @@
 import React, { useEffect, useState } from 'react';
 import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../../actions/productActions';
-import CarouselItem from './CarouselItem';
+import { listProducts, detailsProduct } from '../../actions/productActions';
+import Product from './Product';
 import { Loading } from '../UtilityComponents';
-import { shuffle } from '../../utils/helper_functions';
+import { CarouselItem } from '.';
 
-const Carousel = (props) => {
+const RelatedProducts = (props) => {
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 
+	useEffect(
+		() => {
+			if (props.product) {
+				dispatch(listProducts(props.product.category));
+			}
+		},
+		[ props.product ]
+	);
+
+	// useEffect(
+	// 	() => {
+	// 		dispatch(detailsProduct(props.product_pathname));
+	// 		return () => {};
+	// 	},
+	// 	[ props.product_pathname ]
+	// );
+
 	// let random_order_products;
 
 	// const [ random_order_products, set_random_order_products ] = useState(products);
 
-	useEffect(() => {
-		dispatch(listProducts(''));
-		// random_order_products = shuffle(products);
+	// useEffect(() => {
+	// 	dispatch(listProducts(''));
+	// 	// random_order_products = shuffle(products);
 
-		// }
-	}, []);
+	// 	// }
+	// }, []);
 
 	// useEffect(
 	// 	() => {
@@ -99,17 +116,8 @@ const Carousel = (props) => {
 	let width = useCurrentWidth();
 
 	return (
-		<FlexContainer column styles={{ margin: '0 10px' }}>
-			<h1
-				style={{
-					textAlign: 'center',
-					width: '100%',
-					justifyContent: 'center'
-				}}
-			>
-				Suggested Products
-			</h1>
-
+		<div className="column mh-10px">
+			<h1 className="ta-c w-100per jc-c">Related Products</h1>
 			<Loading loading={loading} error={error}>
 				{products && (
 					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
@@ -155,8 +163,8 @@ const Carousel = (props) => {
 					</FlexContainer>
 				)}
 			</Loading>
-		</FlexContainer>
+		</div>
 	);
 };
 
-export default Carousel;
+export default RelatedProducts;

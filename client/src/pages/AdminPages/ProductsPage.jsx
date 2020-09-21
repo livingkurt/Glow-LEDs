@@ -130,7 +130,7 @@ const ProductsPage = (props) => {
 									<th>Name</th>
 									<th>Price</th>
 									<th>Category</th>
-									<th>Brand</th>
+									<th>Order</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -155,7 +155,7 @@ const ProductsPage = (props) => {
 										<td style={{ minWidth: '420px' }}>{product.name}</td>
 										<td style={{ minWidth: '225px' }}>{sale_price_switch(product)}</td>
 										<td>{product.category}</td>
-										<td style={{ minWidth: '111px' }}>{product.brand}</td>
+										<td style={{ minWidth: '111px' }}>{product.order}</td>
 										<td>
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editproduct/' + product.pathname}>

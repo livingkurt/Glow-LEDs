@@ -22,6 +22,12 @@ import {
 	ORDER_SHIPPING_REQUEST,
 	ORDER_SHIPPING_SUCCESS,
 	ORDER_SHIPPING_FAIL,
+	ORDER_MANUFACTURED_REQUEST,
+	ORDER_MANUFACTURED_SUCCESS,
+	ORDER_MANUFACTURED_FAIL,
+	ORDER_PACKAGED_REQUEST,
+	ORDER_PACKAGED_SUCCESS,
+	ORDER_PACKAGED_FAIL,
 	ORDER_REFUND_REQUEST,
 	ORDER_REFUND_SUCCESS,
 	ORDER_REFUND_FAIL,
@@ -31,7 +37,7 @@ import {
 } from '../constants/orderConstants';
 import Cookie from 'js-cookie';
 
-const createOrder = (
+export const createOrder = (
 	order: {
 		orderItems: object;
 		shipping: object;
@@ -79,7 +85,7 @@ const createOrder = (
 	}
 };
 
-const listMyOrders = () => async (
+export const listMyOrders = () => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -95,7 +101,7 @@ const listMyOrders = () => async (
 	}
 };
 
-const listOrders = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listOrders = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -122,7 +128,7 @@ const listOrders = (category = '', searchKeyword = '', sortOrder = '') => async 
 	}
 };
 
-const detailsOrder = (orderId: string) => async (
+export const detailsOrder = (orderId: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -138,7 +144,7 @@ const detailsOrder = (orderId: string) => async (
 	}
 };
 
-const payOrder = (order: { _id: string }, user_data: any, token: any) => async (
+export const payOrder = (order: { _id: string }, user_data: any, token: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -161,7 +167,7 @@ const payOrder = (order: { _id: string }, user_data: any, token: any) => async (
 	}
 };
 
-const deleteOrder = (orderId: string) => async (
+export const deleteOrder = (orderId: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -177,7 +183,7 @@ const deleteOrder = (orderId: string) => async (
 	}
 };
 
-const refundOrder = (
+export const refundOrder = (
 	order: { _id: string },
 	refundResult: boolean,
 	refund_amount: number,
@@ -211,7 +217,7 @@ const refundOrder = (
 	}
 };
 
-const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
+export const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -237,34 +243,59 @@ const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
 		dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
 	}
 };
-// const notPaidOrder = (order: { _id: string }, notPaidResult: boolean) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void,
-// 	getState: () => { userLogin: { userInfo: any } }
-// ) => {
-// 	console.log({ ...order, isShipped: notPaidResult });
-// 	try {
-// 		dispatch({ type: ORDER_NOT_PAID_REQUEST, payload: notPaidResult });
-// 		const { userLogin: { userInfo } } = getState();
-// 		const { data } = await axios.put(
-// 			'/api/orders/' + order._id + '/shipping',
-// 			{
-// 				...order,
-// 				isNotPaid: notPaidResult,
-// 				shippedAt: notPaidResult ? Date.now() : ''
-// 			},
-// 			{
-// 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
-// 			}
-// 		);
-// 		console.log({ data });
-// 		dispatch({ type: ORDER_NOT_PAID_SUCCESS, payload: data });
-// 		// axios.post("/api/emails/shipping", data);
-// 	} catch (error) {
-// 		dispatch({ type: ORDER_NOT_PAID_FAIL, payload: error.message });
-// 	}
-// };
 
-const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async (
+export const manufactureOrder = (order: { _id: string }, manufacturedResult: boolean) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log({ ...order, isManufactured: manufacturedResult });
+	try {
+		dispatch({ type: ORDER_MANUFACTURED_REQUEST, payload: manufacturedResult });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.put(
+			'/api/orders/' + order._id + '/manufactured',
+			{
+				...order,
+				isManufactured: manufacturedResult,
+				manufacturedAt: manufacturedResult ? Date.now() : ''
+			},
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+			}
+		);
+		console.log({ data });
+		dispatch({ type: ORDER_MANUFACTURED_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: ORDER_MANUFACTURED_FAIL, payload: error.message });
+	}
+};
+export const packageOrder = (order: { _id: string }, packagedResult: boolean) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log({ ...order, isPackaged: packagedResult });
+	try {
+		dispatch({ type: ORDER_PACKAGED_REQUEST, payload: packagedResult });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.put(
+			'/api/orders/' + order._id + '/packaged',
+			{
+				...order,
+				isPackaged: packagedResult,
+				packagedAt: packagedResult ? Date.now() : ''
+			},
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+			}
+		);
+		console.log({ data });
+		dispatch({ type: ORDER_PACKAGED_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: ORDER_PACKAGED_FAIL, payload: error.message });
+	}
+};
+
+export const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -289,15 +320,4 @@ const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async 
 	} catch (error) {
 		dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
 	}
-};
-export {
-	createOrder,
-	detailsOrder,
-	payOrder,
-	listMyOrders,
-	listOrders,
-	deleteOrder,
-	refundOrder,
-	shipOrder,
-	deliverOrder
 };

@@ -3,7 +3,7 @@ import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexContainer } from '../../components/ContainerComponents';
-import { SuggestedProducts } from '../../components/SpecialtyComponents';
+import { Carousel, SuggestedProducts } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
 import Cookie from 'js-cookie';
 import { humanize } from '../../utils/helper_functions';
@@ -277,7 +277,8 @@ const CartPage = (props) => {
 			</div>
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
 			{/* {cartItems.length === 0 && <SuggestedProducts />} */}
-			<SuggestedProducts />
+			{/* <SuggestedProducts /> */}
+			<Carousel />
 		</FlexContainer>
 	);
 };

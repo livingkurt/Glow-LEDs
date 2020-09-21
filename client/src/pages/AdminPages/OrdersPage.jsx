@@ -69,6 +69,8 @@ const OrdersPage = (props) => {
 	const colors = [
 		{ name: 'Not Paid', color: '#6d3e3e' },
 		{ name: 'Paid', color: '#3e4c6d' },
+		{ name: 'Manufactured', color: '#4b7188' },
+		{ name: 'Packaged', color: '#6f5f7d' },
 		{ name: 'Shipped', color: '#636363' },
 		{ name: 'Delivered', color: '#333333' },
 		{ name: 'Refunded', color: '#a9a9a9' }
@@ -82,20 +84,36 @@ const OrdersPage = (props) => {
 		if (order.isPaid) {
 			result = colors[1].color;
 		}
-		if (order.isShipped) {
+		if (order.isManufactured) {
 			result = colors[2].color;
 		}
-		if (order.isDelivered) {
+		if (order.isPackaged) {
 			result = colors[3].color;
 		}
-		if (order.isRefunded) {
+		if (order.isShipped) {
 			result = colors[4].color;
+		}
+		if (order.isDelivered) {
+			result = colors[5].color;
+		}
+		if (order.isRefunded) {
+			result = colors[6].color;
 		}
 		// console.log(result);
 		return result;
 	};
 
-	const sort_options = [ 'Date', 'Paid', 'Shipped', 'Delievered', 'Newest', 'Lowest', 'Highest' ];
+	const sort_options = [
+		'Date',
+		'Paid',
+		'Manufactured',
+		'Packaged',
+		'Shipped',
+		'Delievered',
+		'Newest',
+		'Lowest',
+		'Highest'
+	];
 
 	return (
 		<div class="main_container">
@@ -105,7 +123,7 @@ const OrdersPage = (props) => {
 			<FlexContainer h_between wrap>
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem', width: '14rem' }}>
+						<FlexContainer h_between styles={{ margin: '1rem' }}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -180,6 +198,10 @@ const OrdersPage = (props) => {
 									<th>USER</th>
 									<th>PAID</th>
 									<th>PAID AT</th>
+									<th>MANUFACTURED</th>
+									<th>MANUFACTURED On</th>
+									<th>PACKAGED</th>
+									<th>PACKAGED On</th>
 									<th>SHIPPED</th>
 									<th>SHIPPED On</th>
 									<th>DELIVERED</th>
@@ -205,6 +227,27 @@ const OrdersPage = (props) => {
 											)}
 										</td>
 										<td>{!order.paidAt ? '' : format_date(order.paidAt)}</td>
+
+										<td>
+											{order.isManufactured ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
+											{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}
+										</td>
+										<td>
+											{order.isPackaged ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td style={{ minWidth: '150px' }}>
+											{!order.packagedAt ? '' : format_date(order.packagedAt)}
+										</td>
 										<td>
 											{order.isShipped ? (
 												<i className="fas fa-check-circle" />

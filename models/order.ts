@@ -64,19 +64,19 @@ const orderSchema = new mongoose.Schema(
 		totalPrice: { type: Number },
 		isPaid: { type: Boolean, default: false },
 		paidAt: { type: Date },
+		isManufactured: { type: Boolean, default: false },
+		manufacturedAt: { type: Date },
+		isPackaged: { type: Boolean, default: false },
+		packagedAt: { type: Date },
 		isShipped: { type: Boolean, default: false },
 		shippedAt: { type: Date },
-		isRefunded: { type: Boolean, default: false },
-		refundedAt: { type: Date },
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
+		isRefunded: { type: Boolean, default: false },
+		refundedAt: { type: Date },
 		order_note: { type: String },
 		promo_code: { type: String },
 		deleted: { type: Boolean, default: false }
-		// product: {
-		// 	type: mongoose.Schema.Types.ObjectId,
-		// 	ref: 'Product'
-		// }
 	},
 	{
 		timestamps: true

@@ -2,7 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, shipOrder, deliverOrder, refundOrder } from '../../actions/orderActions';
+import {
+	detailsOrder,
+	shipOrder,
+	deliverOrder,
+	refundOrder,
+	manufactureOrder,
+	packageOrder
+} from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
@@ -31,7 +38,12 @@ const OrderPage = (props) => {
 
 	const orderShipping = useSelector((state) => state.orderShipping);
 	const { order: shipping } = orderShipping;
-	// console.log({ shipping });
+
+	const orderManufactured = useSelector((state) => state.orderManufactured);
+	const { order: manufactured } = orderManufactured;
+
+	const orderPackaged = useSelector((state) => state.orderPackaged);
+	const { order: packaged } = orderPackaged;
 
 	const orderDelivery = useSelector((state) => state.orderDelivery);
 	const { order: delivery } = orderDelivery;
@@ -44,6 +56,8 @@ const OrderPage = (props) => {
 	const [ secondary_product, set_secondary_product ] = useState('');
 	const [ product_object, set_product_object ] = useState('');
 	const [ shipping_state, set_shipping_state ] = useState({});
+	const [ packaged_state, set_packaged_state ] = useState({});
+	const [ manufactured_state, set_manufactured_state ] = useState({});
 	const [ delivery_state, set_delivery_state ] = useState({});
 	const [ payment_loading, set_payment_loading ] = useState(true);
 
@@ -57,6 +71,8 @@ const OrderPage = (props) => {
 				console.log({ order });
 				set_shipping_state(order.isRefunded);
 				set_shipping_state(order.isShipped);
+				set_manufactured_state(order.isManufactured);
+				set_packaged_state(order.isPackaged);
 				set_delivery_state(order.isDelivered);
 				set_product_object(order.product);
 			}
@@ -86,14 +102,7 @@ const OrderPage = (props) => {
 			if (refund) {
 				set_refund_state(refund.isRefunded);
 				dispatch(detailsOrder(props.match.params.id));
-				// set_order_state({
-				//   ...order_state,
-				//   isRefunded: refund.isRefunded,
-				//   shippedAt: refund.isRefunded ? Date.now() : ""
-
-				// })
 				set_order_state(refund);
-				// console.log({ refund: refund.isRefunded });
 			}
 		},
 		[ refund ]
@@ -102,17 +111,28 @@ const OrderPage = (props) => {
 		() => {
 			if (shipping) {
 				set_shipping_state(shipping.isShipped);
-				// set_order_state({
-				//   ...order_state,
-				//   isShipped: shipping.isShipped,
-				//   shippedAt: shipping.isShipped ? Date.now() : ""
-
-				// })
 				set_order_state(shipping);
-				// console.log({ shipping: shipping.isShipped });
 			}
 		},
 		[ shipping ]
+	);
+	useEffect(
+		() => {
+			if (packaged) {
+				set_packaged_state(packaged.isPackaged);
+				set_order_state(packaged);
+			}
+		},
+		[ packaged ]
+	);
+	useEffect(
+		() => {
+			if (manufactured) {
+				set_manufactured_state(manufactured.isManufactured);
+				set_order_state(manufactured);
+			}
+		},
+		[ manufactured ]
 	);
 
 	useEffect(
@@ -120,12 +140,6 @@ const OrderPage = (props) => {
 			if (delivery) {
 				set_delivery_state(delivery.isDelivered);
 				set_order_state(delivery);
-				// set_order_state({
-				//   ...order_state,
-				//   isDelivered: delivery.isDelivered,
-				//   deliveredAt: delivery.isDelivered ? Date.now() : ""
-				// })
-				// console.log({ delivery: delivery.isShipped });
 			}
 		},
 		[ delivery ]
@@ -162,6 +176,24 @@ const OrderPage = (props) => {
 		} else {
 			set_shipping_state(true);
 			dispatch(shipOrder(order, true));
+		}
+	};
+	const update_manufactured_state = () => {
+		if (order_state.isManufactured) {
+			set_manufactured_state(false);
+			dispatch(manufactureOrder(order, false));
+		} else {
+			set_manufactured_state(true);
+			dispatch(manufactureOrder(order, true));
+		}
+	};
+	const update_packaged_state = () => {
+		if (order_state.isPackaged) {
+			set_packaged_state(false);
+			dispatch(packageOrder(order, false));
+		} else {
+			set_packaged_state(true);
+			dispatch(packageOrder(order, true));
 		}
 	};
 
@@ -521,6 +553,42 @@ const OrderPage = (props) => {
 							)}
 						</FlexContainer>
 
+						<FlexContainer row v_i_center h_between>
+							{/* {console.log({ shipping_state })} */}
+							{/* <label style={{ marginTop: '5px' }}>
+										{shipping_state ? (
+											'Shipped at ' + format_date(order_state.shippedAt)
+										) : (
+											'Not Shipped'
+										)}
+									</label> */}
+							{props.userInfo &&
+							props.userInfo.isAdmin && (
+								<div>
+									<button className="button primary" onClick={update_manufactured_state}>
+										{manufactured_state ? 'Mark As Not Manufactured' : 'Mark As Manufactured'}
+									</button>
+								</div>
+							)}
+						</FlexContainer>
+						<FlexContainer row v_i_center h_between>
+							{/* {console.log({ shipping_state })} */}
+							{/* <label style={{ marginTop: '5px' }}>
+										{shipping_state ? (
+											'Shipped at ' + format_date(order_state.shippedAt)
+										) : (
+											'Not Shipped'
+										)}
+									</label> */}
+							{props.userInfo &&
+							props.userInfo.isAdmin && (
+								<div>
+									<button className="button primary" onClick={update_packaged_state}>
+										{packaged_state ? 'Mark As Not Packaged' : 'Mark As Packaged'}
+									</button>
+								</div>
+							)}
+						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
 							{/* {console.log({ shipping_state })} */}
 							{/* <label style={{ marginTop: '5px' }}>

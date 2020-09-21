@@ -509,7 +509,7 @@ const PlaceOrderPage = (props) => {
 				</div>
 			</div>
 			{/* <SuggestedProducts /> */}
-			{/* <Carousel /> */}
+			<Carousel />
 		</div>
 	);
 };

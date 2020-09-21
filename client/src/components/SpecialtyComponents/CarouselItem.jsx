@@ -29,7 +29,7 @@ const CarouselItem = (props) => {
 	);
 
 	const sale_price_switch = () => {
-		if (props.product.sale_price !== 0) {
+		if (props.product && props.product.sale_price !== 0) {
 			return (
 				<label>
 					<del style={{ color: 'red' }}>
@@ -45,7 +45,7 @@ const CarouselItem = (props) => {
 					On Sale!
 				</label>
 			);
-		} else if (!props.product.countInStock) {
+		} else if (props.product && !props.product.countInStock) {
 			return (
 				<label>
 					<del style={{ color: 'red' }}>
@@ -58,66 +58,50 @@ const CarouselItem = (props) => {
 				</label>
 			);
 		} else {
-			return <label>${props.product.price ? props.product.price.toFixed(2) : props.product.price}</label>;
+			return (
+				<label>
+					${props.product && props.product.price ? (
+						props.product.price.toFixed(2)
+					) : (
+						props.product && props.product.price
+					)}
+				</label>
+			);
 		}
 	};
 
 	return (
 		<div>
 			{!loading && (
-				<li key={product.pathname} style={props.styles}>
-					<div class="tooltip">
-						<div class="tooltipoverlay">
-							{/* <span class="tooltiptext">
-        {product.name === 'Diffuser Caps + Adapters Starter Kit' ||
-        product.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
-          <div />
-        ) : product.name === 'Custom Infinity Mirror' ? (
-          <Link to="/pages/contact/custom_orders">
-            <button className="button primary">Contact</button>
-          </Link>
-        ) : (
-          <li>
-            {product.countInStock > 0 ? (
-              <button onClick={handleAddToCart} className="button primary">
-                Quick Add to Cart
-              </button>
-            ) : (
-              <button className="button inactive">Out of Stock</button>
-            )}
-          </li>
-        )}
-      </span> */}
-							<div className="product">
-								<Link to={'/collections/all/products/' + product.pathname}>
-									<LazyLoadImage
-										className="product-image"
-										alt={product.name}
-										style={{ height: props.size, width: props.size }}
-										effect="blur"
-										src={product.images && product.images[0]} // use normal <img> attributes as props
-									/>
-								</Link>
+				<li key={props.product && product.pathname} style={props.styles}>
+					<div className="product">
+						<Link to={'/collections/all/products/' + product && product.pathname}>
+							<LazyLoadImage
+								className="product-image"
+								alt={product.name}
+								style={{ height: props.size, width: props.size }}
+								effect="blur"
+								src={product.images && product.images[0]} // use normal <img> attributes as props
+							/>
+						</Link>
 
-								<label style={{ fontSize: '1.3rem' }}>{product.brand}</label>
-								<Link to={'/collections/all/products/' + product.pathname}>
-									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
-								</Link>
-								{product.name === 'Custom Infinity Mirror' ? (
-									<label className="product-price">
-										$549.99 - $<i class="fas fa-arrow-up" />
-									</label>
-								) : (
-									<label className="product-price">{sale_price_switch()}</label>
-								)}
+						<label style={{ fontSize: '1.3rem' }}>{product.brand}</label>
+						<Link to={'/collections/all/products/' + product.pathname}>
+							<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
+						</Link>
+						{product.name === 'Custom Infinity Mirror' ? (
+							<label className="product-price">
+								$549.99 - $<i class="fas fa-arrow-up" />
+							</label>
+						) : (
+							<label className="product-price">{sale_price_switch()}</label>
+						)}
 
-								{product.rating ? (
-									<Rating value={product.rating} text={product.numReviews + ' reviews'} />
-								) : (
-									<span className="rating vis-hid ta-c">No Reviews</span>
-								)}
-							</div>
-						</div>
+						{product.rating ? (
+							<Rating value={product.rating} text={product.numReviews + ' reviews'} />
+						) : (
+							<span className="rating vis-hid ta-c">No Reviews</span>
+						)}
 					</div>
 				</li>
 			)}

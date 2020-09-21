@@ -45,7 +45,9 @@ import {
 	orderDeleteReducer,
 	orderShippingReducer,
 	orderDeliveryReducer,
-	orderRefundReducer
+	orderRefundReducer,
+	orderPackagedReducer,
+	orderManufacturedReducer
 } from './reducers/orderReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
@@ -70,6 +72,8 @@ const reducer = combineReducers({
 	orderList: orderListReducer,
 	orderDelete: orderDeleteReducer,
 	orderRefund: orderRefundReducer,
+	orderManufactured: orderManufacturedReducer,
+	orderPackaged: orderPackagedReducer,
 	orderShipping: orderShippingReducer,
 	orderDelivery: orderDeliveryReducer,
 	userContact: userContactReducer,

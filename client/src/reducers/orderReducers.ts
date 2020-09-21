@@ -21,6 +21,12 @@ import {
 	ORDER_REFUND_REQUEST,
 	ORDER_REFUND_SUCCESS,
 	ORDER_REFUND_FAIL,
+	ORDER_MANUFACTURED_REQUEST,
+	ORDER_MANUFACTURED_SUCCESS,
+	ORDER_MANUFACTURED_FAIL,
+	ORDER_PACKAGED_REQUEST,
+	ORDER_PACKAGED_SUCCESS,
+	ORDER_PACKAGED_FAIL,
 	ORDER_SHIPPING_REQUEST,
 	ORDER_SHIPPING_SUCCESS,
 	ORDER_SHIPPING_FAIL,
@@ -29,7 +35,7 @@ import {
 	ORDER_DELIVERY_FAIL
 } from '../constants/orderConstants';
 
-const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case ORDER_CREATE_REQUEST:
 			return { loading: true };
@@ -44,7 +50,7 @@ const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => 
 	}
 };
 
-const orderDetailsReducer = (
+export const orderDetailsReducer = (
 	state = {
 		order: {
 			orderItems: [],
@@ -66,7 +72,7 @@ const orderDetailsReducer = (
 	}
 };
 
-const myOrderListReducer = (
+export const myOrderListReducer = (
 	state = {
 		orders: []
 	},
@@ -84,7 +90,7 @@ const myOrderListReducer = (
 	}
 };
 
-const orderListReducer = (
+export const orderListReducer = (
 	state = {
 		orders: []
 	},
@@ -102,7 +108,7 @@ const orderListReducer = (
 	}
 };
 
-const orderPayReducer = (
+export const orderPayReducer = (
 	state = {
 		order: {
 			orderItems: [],
@@ -126,7 +132,7 @@ const orderPayReducer = (
 	}
 };
 
-const orderDeleteReducer = (
+export const orderDeleteReducer = (
 	state = {
 		order: {
 			orderItems: [],
@@ -148,7 +154,7 @@ const orderDeleteReducer = (
 	}
 };
 
-const orderRefundReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderRefundReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case ORDER_REFUND_REQUEST:
 			return { loading: true };
@@ -161,7 +167,31 @@ const orderRefundReducer = (state = {}, action: { type: any; payload: any }) => 
 	}
 };
 
-const orderShippingReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderManufacturedReducer = (state = {}, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case ORDER_MANUFACTURED_REQUEST:
+			return { loading: true };
+		case ORDER_MANUFACTURED_SUCCESS:
+			return { loading: false, order: action.payload, success: true };
+		case ORDER_MANUFACTURED_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+export const orderPackagedReducer = (state = {}, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case ORDER_PACKAGED_REQUEST:
+			return { loading: true };
+		case ORDER_PACKAGED_SUCCESS:
+			return { loading: false, order: action.payload, success: true };
+		case ORDER_PACKAGED_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+export const orderShippingReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case ORDER_SHIPPING_REQUEST:
 			return { loading: true };
@@ -174,7 +204,7 @@ const orderShippingReducer = (state = {}, action: { type: any; payload: any }) =
 	}
 };
 
-const orderDeliveryReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderDeliveryReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case ORDER_DELIVERY_REQUEST:
 			return { loading: true };
@@ -185,16 +215,4 @@ const orderDeliveryReducer = (state = {}, action: { type: any; payload: any }) =
 		default:
 			return state;
 	}
-};
-
-export {
-	orderCreateReducer,
-	orderDetailsReducer,
-	orderPayReducer,
-	myOrderListReducer,
-	orderListReducer,
-	orderDeleteReducer,
-	orderRefundReducer,
-	orderShippingReducer,
-	orderDeliveryReducer
 };
