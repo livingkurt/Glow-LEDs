@@ -21,7 +21,7 @@ const Search = (props) => {
 					onChange={(e) => props.setSearchKeyword(e.target.value)}
 					className="form_input search"
 				/>
-				<button type="submit" className="button primary">
+				<button type="submit" className="button primary w-50px">
 					{/* Search {props.category && 'Category'} */}
 					<i class="fas fa-search" />
 				</button>
