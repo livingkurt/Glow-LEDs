@@ -234,8 +234,9 @@ const PlaceOrderPage = (props) => {
 
 		set_promo_code_validations(request.errors.promo_code);
 		console.log(request);
-		const promo = promos.find((promo) => promo.promo_code === promo_code);
+
 		if (request.isValid) {
+			const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
 			if (show_message) {
 				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
