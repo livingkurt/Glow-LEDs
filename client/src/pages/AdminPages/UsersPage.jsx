@@ -124,6 +124,8 @@ const UsersPage = (props) => {
 									<th>FIRST</th>
 									<th>LAST</th>
 									<th>EMAIL</th>
+									<th>Sponsor</th>
+									<th>Sponsored</th>
 									<th>VERIFIED</th>
 									<th>ADMIN</th>
 									<th>ACTIONS</th>
@@ -142,6 +144,14 @@ const UsersPage = (props) => {
 										<td>{user.first_name}</td>
 										<td>{user.last_name}</td>
 										<td>{user.email}</td>
+										<td>{user.sponsor}</td>
+										<td>
+											{user.isSponsored ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
 										<td>
 											{user.isVerified ? (
 												<i className="fas fa-check-circle" />

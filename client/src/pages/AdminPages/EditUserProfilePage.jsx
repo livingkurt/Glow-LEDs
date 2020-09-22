@@ -15,6 +15,8 @@ const EditUserProfilePage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
+	const [ sponsored, set_sponsored ] = useState('');
+	const [ sponsor, set_sponsor ] = useState('');
 	const [ verified, set_verified ] = useState('');
 	const [ admin, set_admin ] = useState('');
 
@@ -53,6 +55,8 @@ const EditUserProfilePage = (props) => {
 				set_email(user.email);
 				set_first_name(user.first_name);
 				set_last_name(user.last_name);
+				set_sponsored(user.isSponsored);
+				set_sponsor(user.sponsor);
 				set_verified(user.isVerified);
 				set_admin(user.isAdmin);
 				// setPassword(user.password);
@@ -70,6 +74,8 @@ const EditUserProfilePage = (props) => {
 				set_email(userUpdate.email);
 				set_first_name(userUpdate.first_name);
 				set_last_name(userUpdate.last_name);
+				set_sponsored(userUpdate.isSponsored);
+				set_sponsor(userUpdate.sponsor);
 				set_verified(userUpdate.isVerified);
 				set_admin(userUpdate.isAdmin);
 				// setPassword(userUpdate.password);
@@ -145,6 +151,31 @@ const EditUserProfilePage = (props) => {
 									{email_validations}
 								</label>
 								{console.log({ verified })}
+
+								<li>
+									<label htmlFor="sponsored"> Sponsored</label>
+									<input
+										type="checkbox"
+										name="sponsored"
+										// defaultChecked={sponsored === true ? 'checked' : 'unchecked'}
+										defaultChecked={sponsored}
+										// checked={sponsored}
+										id="sponsored"
+										onChange={(e) => {
+											set_sponsored(e.target.checked);
+										}}
+									/>
+								</li>
+								<li>
+									<label htmlFor="sponsor">Sponsor</label>
+									<input
+										defaultValue={sponsor}
+										type="text"
+										name="sponsor"
+										id="sponsor"
+										onChange={(e) => set_sponsor(e.target.value)}
+									/>
+								</li>
 								<li>
 									<label htmlFor="verified"> Verified</label>
 									<input
