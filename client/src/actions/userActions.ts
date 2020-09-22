@@ -52,6 +52,8 @@ const update = (userdata: any) => async (
 			last_name: userdata.last_name,
 			email: userdata.email,
 			password: userdata.password,
+			is_sponsored: userdata.is_sponsored,
+			sponsor: userdata.sponsor,
 			verified: userdata.verified,
 			admin: userdata.admin
 		}
@@ -64,6 +66,8 @@ const update = (userdata: any) => async (
 				last_name: userdata.last_name,
 				email: userdata.email,
 				password: userdata.password,
+				is_sponsored: userdata.is_sponsored,
+				sponsor: userdata.sponsor,
 				verified: userdata.verified,
 				admin: userdata.admin
 			},
@@ -93,6 +97,8 @@ const updateUser = (userdata: any) => async (
 			last_name: userdata.last_name,
 			email: userdata.email,
 			password: userdata.password,
+			is_sponsored: userdata.is_sponsored,
+			sponsor: userdata.sponsor,
 			verified: userdata.verified,
 			admin: userdata.admin
 		}
@@ -105,6 +111,8 @@ const updateUser = (userdata: any) => async (
 				last_name: userdata.last_name,
 				email: userdata.email,
 				password: userdata.password,
+				is_sponsored: userdata.is_sponsored,
+				sponsor: userdata.sponsor,
 				verified: userdata.verified,
 				admin: userdata.admin
 			},

@@ -229,8 +229,7 @@ const PlaceOrderPage = (props) => {
 
 	// const promo_codes = [ '' ];
 	const check_code = () => {
-		const promo_codes = promos.map((promo) => promo.promo_code);
-		const data = { promo_code, promo_codes };
+		const data = { promo_code, promos };
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);

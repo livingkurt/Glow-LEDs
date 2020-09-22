@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		isAdmin: { type: Boolean, required: true, default: false },
 		isVerified: { type: Boolean, required: true, default: false },
-		isSponsored: { type: Boolean, required: true, default: false },
+		is_sponsored: { type: Boolean, required: true, default: false },
 		sponsor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sponsor' },
 		deleted: { type: Boolean, default: false }
 	},

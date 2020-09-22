@@ -15,7 +15,7 @@ const EditUserProfilePage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
-	const [ sponsored, set_sponsored ] = useState('');
+	const [ is_sponsored, set_is_sponsored ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ verified, set_verified ] = useState('');
 	const [ admin, set_admin ] = useState('');
@@ -39,7 +39,9 @@ const EditUserProfilePage = (props) => {
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(updateUser({ userId: user._id, email, first_name, last_name, verified, admin }));
+			dispatch(
+				updateUser({ userId: user._id, email, first_name, last_name, is_sponsored, sponsor, verified, admin })
+			);
 			history.push('/secure/glow/userprofile/' + user._id);
 		}
 	};
@@ -55,7 +57,7 @@ const EditUserProfilePage = (props) => {
 				set_email(user.email);
 				set_first_name(user.first_name);
 				set_last_name(user.last_name);
-				set_sponsored(user.isSponsored);
+				set_is_sponsored(user.isSponsored);
 				set_sponsor(user.sponsor);
 				set_verified(user.isVerified);
 				set_admin(user.isAdmin);
@@ -74,7 +76,7 @@ const EditUserProfilePage = (props) => {
 				set_email(userUpdate.email);
 				set_first_name(userUpdate.first_name);
 				set_last_name(userUpdate.last_name);
-				set_sponsored(userUpdate.isSponsored);
+				set_is_sponsored(userUpdate.isSponsored);
 				set_sponsor(userUpdate.sponsor);
 				set_verified(userUpdate.isVerified);
 				set_admin(userUpdate.isAdmin);
@@ -153,16 +155,16 @@ const EditUserProfilePage = (props) => {
 								{console.log({ verified })}
 
 								<li>
-									<label htmlFor="sponsored"> Sponsored</label>
+									<label htmlFor="is_sponsored"> Sponsored</label>
 									<input
 										type="checkbox"
-										name="sponsored"
-										// defaultChecked={sponsored === true ? 'checked' : 'unchecked'}
-										defaultChecked={sponsored}
-										// checked={sponsored}
-										id="sponsored"
+										name="is_sponsored"
+										// defaultChecked={is_sponsored === true ? 'checked' : 'unchecked'}
+										defaultChecked={is_sponsored}
+										// checked={is_sponsored}
+										id="is_sponsored"
 										onChange={(e) => {
-											set_sponsored(e.target.checked);
+											set_is_sponsored(e.target.checked);
 										}}
 									/>
 								</li>

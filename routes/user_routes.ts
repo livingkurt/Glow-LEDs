@@ -119,6 +119,8 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		// user.password = req.body.password || user.password;
 		user.isAdmin = req.body.admin || user.isAdmin;
 		user.isVerified = req.body.verified || user.isVerified;
+		user.sponsor = req.body.sponsor || user.sponsor;
+		user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
 		user.deleted = req.body.deleted || false;
 		const updatedUser = await user.save();
 		res.send({
