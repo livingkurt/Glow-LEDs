@@ -18,9 +18,9 @@ const ProductSmallScreen = (props) => {
 	const sale_price_switch = () => {
 		if (props.product.sale_price !== 0) {
 			return (
-				<label>
+				<label className="">
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>
+						<label className="" style={{ color: 'white' }}>
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
@@ -53,7 +53,7 @@ const ProductSmallScreen = (props) => {
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
 			<Link to={'/collections/all/products/' + props.product.pathname}>
 				<div className="small_screen_product row">
-					<div className="m-10px">
+					<div className="">
 						<LazyLoadImage
 							className="product-image w-200px h-200px "
 							alt={props.product.name}
@@ -62,14 +62,16 @@ const ProductSmallScreen = (props) => {
 						/>
 					</div>
 					<div className="p-10px">
-						<div style={{ fontSize: '1.6rem' }}>{props.product.name}</div>
-						<div className="mt-10px">
+						<div className="product_text" style={{ fontSize: '1.6rem' }}>
+							{props.product.name}
+						</div>
+						<div className="product_text mt-10px">
 							{props.product.name === 'Custom Infinity Mirror' ? (
-								<div className="product-price">
+								<div className="">
 									$549.99 - $<i class="fas fa-arrow-up" />
 								</div>
 							) : (
-								<div className="product-price">{sale_price_switch()}</div>
+								<div className="">{sale_price_switch()}</div>
 							)}
 						</div>
 						{/* <div className="h-100per">

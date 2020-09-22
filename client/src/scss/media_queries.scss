@@ -344,6 +344,12 @@
 	}
 }
 @media only screen and (max-width: 450px) {
+	.product_text {
+		font-size: 1.4rem !important;
+	}
+	.small_screen_product {
+		padding: 5px;
+	}
 	.product-image {
 		height: 150px !important;
 		width: 150px !important;

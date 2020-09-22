@@ -237,7 +237,7 @@ const PlaceOrderPage = (props) => {
 		console.log(request);
 		if (request.isValid) {
 			if (show_message) {
-				set_promo_code_validations('Promo Code in Use');
+				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
 				const promo = promos.find((promo) => promo.promo_code === promo_code);
 				setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
