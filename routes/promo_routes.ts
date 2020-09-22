@@ -82,6 +82,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	const promo: any = await Promo.findById(featureId);
 	if (promo) {
 		promo.sponsor = req.body.sponsor;
+		promo.user = req.body.user;
 		promo.promo_code = req.body.promo_code;
 		promo.for_customer = req.body.for_customer;
 		promo.excluded_categories = req.body.excluded_categories;
@@ -119,6 +120,7 @@ router.post('/', async (req, res) => {
 	console.log('Post');
 	const newFeature = await Promo.create({
 		sponsor: req.body.sponsor,
+		user: req.body.user,
 		promo_code: req.body.promo_code,
 		for_customer: req.body.for_customer,
 		excluded_categories: req.body.excluded_categories,

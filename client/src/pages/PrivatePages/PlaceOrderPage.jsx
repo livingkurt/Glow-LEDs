@@ -235,11 +235,14 @@ const PlaceOrderPage = (props) => {
 
 		set_promo_code_validations(request.errors.promo_code);
 		console.log(request);
+		const promo = promos.find((promo) => promo.promo_code === promo_code);
 		if (request.isValid) {
 			if (show_message) {
 				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
-				const promo = promos.find((promo) => promo.promo_code === promo_code);
+				// else if (user_data._id && promo.user === user_data._id){
+
+				// }
 				setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
 				setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
 				set_show_message(promo.promo_code);

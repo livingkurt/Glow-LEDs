@@ -13,6 +13,7 @@ const EditPromoPage = (props) => {
 
 	const [ id, set_id ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
+	const [ user, set_user ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ for_customer, set_for_customer ] = useState('');
 	const [ excluded_categories, set_excluded_categories ] = useState('');
@@ -77,6 +78,7 @@ const EditPromoPage = (props) => {
 	const set_state = () => {
 		set_id(promo._id);
 		set_sponsor(promo.sponsor);
+		set_user(promo.user);
 		set_promo_code(promo.promo_code);
 		set_for_customer(promo.for_customer);
 		set_excluded_categories(promo.excluded_categories);
@@ -92,6 +94,7 @@ const EditPromoPage = (props) => {
 	const unset_state = () => {
 		set_id('');
 		set_sponsor('');
+		set_user('');
 		set_promo_code('');
 		set_for_customer('');
 		set_excluded_categories('');
@@ -115,6 +118,7 @@ const EditPromoPage = (props) => {
 		console.log({
 			_id: id,
 			sponsor,
+			user,
 			promo_code,
 			for_customer,
 			excluded_categories,
@@ -129,6 +133,7 @@ const EditPromoPage = (props) => {
 			savePromo({
 				_id: id,
 				sponsor,
+				user,
 				promo_code,
 				for_customer,
 				excluded_categories,
@@ -143,6 +148,7 @@ const EditPromoPage = (props) => {
 		e.target.reset();
 		set_id('');
 		set_sponsor('');
+		set_user('');
 		set_promo_code('');
 		set_for_customer('');
 		set_excluded_categories('');
@@ -199,7 +205,16 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_sponsor(e.target.value)}
 												/>
 											</li>
-											{console.log({ number_of_orders })}
+											<li>
+												<label htmlFor="user">For User</label>
+												<input
+													type="text"
+													name="user"
+													value={user}
+													id="user"
+													onChange={(e) => set_user(e.target.value)}
+												/>
+											</li>
 
 											{/* <li>
 												<label htmlFor="number_of_orders">Number of Orders</label>
