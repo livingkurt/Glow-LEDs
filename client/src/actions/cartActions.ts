@@ -55,7 +55,7 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 			category: data.category,
 			qty
 		};
-		if (diffuser_cap) {
+		if (diffuser_cap || diffuser_cap_color) {
 			cartItem = {
 				product: data._id,
 				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
