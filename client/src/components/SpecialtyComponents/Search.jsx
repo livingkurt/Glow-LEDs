@@ -6,26 +6,25 @@ const Search = (props) => {
 	return (
 		<form
 			onSubmit={props.submitHandler}
+			className="mr-10px"
 			style={{
 				display: 'flex',
 				flexDirection: 'row',
 				justifyContent: 'center'
-				// marginRight: '20px'
 			}}
 		>
-			<FlexContainer h_between v_i_center wrap class="search_container">
+			<div className="jc-b ai-c search_container">
 				<label aria-label="searchKeyword" htmlFor="searchKeyword" />
 				<input
 					name="searchKeyword"
 					placeholder="Search"
 					onChange={(e) => props.setSearchKeyword(e.target.value)}
-					style={{ marginRight: '5px', width: '200px' }}
-					className="form_input"
+					className="form_input w-175px"
 				/>
-				<button type="submit" className="button primary search">
+				<button type="submit" className="button primary">
 					Search {props.category && 'Category'}
 				</button>
-			</FlexContainer>
+			</div>
 		</form>
 	);
 };

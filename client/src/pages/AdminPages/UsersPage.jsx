@@ -109,10 +109,10 @@ const UsersPage = (props) => {
 				</h1>
 			</div>
 
-			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-			</FlexContainer>
+			</div>
 			<Loading loading={loading} error={error}>
 				{users && (
 					<div className="order-list responsive_table">

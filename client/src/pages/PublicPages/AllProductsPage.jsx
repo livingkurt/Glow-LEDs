@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
-import { Product, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
@@ -131,19 +131,36 @@ const AllProductsPage = (props) => {
 					</label>
 				</FlexContainer>
 			</FlexContainer>
-			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-			</FlexContainer>
+			</div>
 			<Loading loading={loading} error={error}>
-				{products && (
-					<ul className="products" style={{ marginTop: 0 }}>
-						{products.map(
-							(product, index) =>
-								!product.hidden && <Product size="300px" key={index} product={product} />
+				<div>
+					<div className="product_big_screen">
+						{products && (
+							<ul className="products" style={{ marginTop: 0 }}>
+								{products.map(
+									(product, index) =>
+										!product.hidden && <Product size="300px" key={index} product={product} />
+								)}
+							</ul>
 						)}
-					</ul>
-				)}
+					</div>
+
+					<div className="product_small_screen none">
+						{products && (
+							<ul className="products" style={{ marginTop: 0 }}>
+								{products.map(
+									(product, index) =>
+										!product.hidden && (
+											<ProductSmallScreen size="300px" key={index} product={product} />
+										)
+								)}
+							</ul>
+						)}
+					</div>
+				</div>
 				{products.length === 0 && (
 					<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
 				)}

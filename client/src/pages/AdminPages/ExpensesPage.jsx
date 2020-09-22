@@ -30,7 +30,6 @@ const ExpensesPage = (props) => {
 	const { success: successDelete } = expenseDelete;
 	const dispatch = useDispatch();
 
-
 	useEffect(
 		() => {
 			dispatch(listExpenses(category, searchKeyword, sortOrder));
@@ -133,10 +132,10 @@ const ExpensesPage = (props) => {
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Expenses</h1>
 			</FlexContainer>
-			<FlexContainer h_center styles={{ flexWrap: 'wrap' }}>
+			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-			</FlexContainer>
+			</div>
 			<Loading loading={loading} error={error}>
 				{expenses && (
 					<div className="expense-list responsive_table">
