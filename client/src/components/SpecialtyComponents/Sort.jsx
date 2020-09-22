@@ -9,9 +9,9 @@ const Sort = (props) => {
 				Sort By
 			</label> */}
 			<div className="custom-select">
-				<select name="sortOrder" onChange={props.sortHandler}>
+				<select name="sortOrder" className="sort_select" onChange={props.sortHandler}>
 					<option className="grey_option" disabled="disabled" selected="selected" value="">
-						----Sort By---
+						Sort By
 					</option>
 					{props.sort_options.map((option) => {
 						return <option value={option.toLowerCase()}>{option}</option>;
