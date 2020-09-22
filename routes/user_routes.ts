@@ -128,6 +128,8 @@ router.put('/update/:id', isAuth, async (req, res) => {
 			first_name: updatedUser.first_name,
 			last_name: updatedUser.last_name,
 			email: updatedUser.email,
+			sponsor: updatedUser.sponsor,
+			is_sponsored: updatedUser.is_sponsored,
 			isVerified: updatedUser.isVerified,
 			isAdmin: updatedUser.isAdmin,
 			token: getToken(updatedUser)
@@ -155,7 +157,9 @@ router.put('/verify/:id', async (req, res) => {
 				_id: updatedUser.id,
 				first_name: updatedUser.first_name,
 				last_name: updatedUser.last_name,
-				email: updatedUser.email
+				email: updatedUser.email,
+				sponsor: updatedUser.sponsor,
+				is_sponsored: updatedUser.is_sponsored
 				// isVerified: updatedUser.isVerified,
 				// token: getToken(updatedUser)
 			});
@@ -190,6 +194,8 @@ router.post('/login', async (req, res) => {
 			last_name: login_user.last_name,
 			email: login_user.email,
 			isAdmin: login_user.isAdmin,
+			sponsor: login_user.sponsor,
+			is_sponsored: login_user.is_sponsored,
 			isVerified: login_user.isVerified,
 			token: getToken(login_user)
 		});
@@ -209,6 +215,8 @@ router.post('/register', async (req, res) => {
 			last_name: req.body.last_name,
 			email: req.body.email,
 			password: req.body.password,
+			sponsor: req.body.sponsor,
+			is_sponsored: req.body.is_sponsored,
 			isAdmin: false,
 			isVerified: true
 		});
@@ -256,6 +264,8 @@ router.post('/getuser/:id', async (req, res) => {
 				email: user.email,
 				password: user.password,
 				isAdmin: user.isAdmin,
+				sponsor: user.sponsor,
+				is_sponsored: user.is_sponsored,
 				token: getToken(user)
 			});
 		} else {
@@ -307,6 +317,8 @@ router.get('/createadmin', async (req, res) => {
 						first_name: admin.first_name,
 						last_name: admin.last_name,
 						email: admin.email,
+						sponsor: admin.sponsor,
+						is_sponsored: admin.is_sponsored,
 						isAdmin: admin.isAdmin,
 						isVerified: admin.isVerified,
 						token: getToken(admin)

@@ -138,7 +138,11 @@ export const validate_promo_code = (data: any) => {
 		errors.promo_code = 'Promo Code Not Active';
 	}
 	if (!promo.for_customer) {
-		if (!promo.sponsor === data.user.sponsor) {
+		console.log('Hello');
+		console.log(data.user_data);
+		console.log(promo);
+
+		if (promo.user !== data.user_data.sponsor) {
 			errors.promo_code = 'Promo Code Not Active';
 		}
 	}
