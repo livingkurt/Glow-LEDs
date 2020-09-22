@@ -134,18 +134,24 @@ export const validate_promo_code = (data: any) => {
 	if (Validator.isEmpty(data.promo_code)) {
 		errors.promo_code = 'Promo Code Field Empty';
 	}
-	if (!promo.active) {
-		errors.promo_code = 'Promo Code Not Active';
-	}
-	if (!promo.for_customer) {
-		console.log('Hello');
-		console.log(data.user_data);
-		console.log(promo);
+	if (promo) {
+		// errors.promo_code = 'Promo Code Not Active Start';
+		if (!promo.active) {
+			errors.promo_code = 'Promo Code Not Active Start';
+		}
+		if (!promo.for_customer) {
+			console.log('Hello');
+			console.log(data.user_data);
+			console.log(promo);
+			console.log(data.user_data._id);
+			console.log(promo.user);
 
-		if (promo.user !== data.user_data.sponsor) {
-			errors.promo_code = 'Promo Code Not Active';
+			if (promo.user !== data.user_data._id) {
+				errors.promo_code = 'Promo Code Not Active End';
+			}
 		}
 	}
+
 	if (!promo_codes.includes(data.promo_code.toLowerCase())) {
 		errors.promo_code = 'Promo Code Not Valid';
 	}
