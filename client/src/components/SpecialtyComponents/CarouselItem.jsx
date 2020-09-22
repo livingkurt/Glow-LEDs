@@ -74,8 +74,8 @@ const CarouselItem = (props) => {
 		<div>
 			{!loading && (
 				<li key={props.product && product.pathname} style={props.styles}>
-					<div className="product">
-						<Link to={'/collections/all/products/' + product && product.pathname}>
+					<Link to={product && '/collections/all/products/' + product.pathname}>
+						<div className="product">
 							<LazyLoadImage
 								className="product-image"
 								alt={product.name}
@@ -83,26 +83,24 @@ const CarouselItem = (props) => {
 								effect="blur"
 								src={product.images && product.images[0]} // use normal <img> attributes as props
 							/>
-						</Link>
 
-						<label style={{ fontSize: '1.3rem' }}>{product.brand}</label>
-						<Link to={'/collections/all/products/' + product.pathname}>
+							<label style={{ fontSize: '1.3rem' }}>{product.brand}</label>
 							<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
-						</Link>
-						{product.name === 'Custom Infinity Mirror' ? (
-							<label className="product-price">
-								$549.99 - $<i class="fas fa-arrow-up" />
-							</label>
-						) : (
-							<label className="product-price">{sale_price_switch()}</label>
-						)}
+							{product.name === 'Custom Infinity Mirror' ? (
+								<label className="product-price">
+									$549.99 - $<i class="fas fa-arrow-up" />
+								</label>
+							) : (
+								<label className="product-price">{sale_price_switch()}</label>
+							)}
 
-						{product.rating ? (
-							<Rating value={product.rating} text={product.numReviews + ' reviews'} />
-						) : (
-							<span className="rating vis-hid ta-c">No Reviews</span>
-						)}
-					</div>
+							{product.rating ? (
+								<Rating value={product.rating} text={product.numReviews + ' reviews'} />
+							) : (
+								<span className="rating vis-hid ta-c">No Reviews</span>
+							)}
+						</div>
+					</Link>
 				</li>
 			)}
 		</div>

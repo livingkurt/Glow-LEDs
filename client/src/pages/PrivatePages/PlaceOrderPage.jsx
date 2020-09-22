@@ -45,15 +45,15 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			const shipping_cookie = Cookie.getJSON('shipping');
-			if (shipping_cookie) {
-				dispatch(saveShipping(shipping_cookie));
-			}
-			const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
-			if (diffuser_cap_cookie) {
-				set_diffuser_cap(diffuser_cap_cookie);
-				console.log({ diffuser_cap_cookie });
-			}
+			// const shipping_cookie = Cookie.getJSON('shipping');
+			// if (shipping_cookie) {
+			// 	dispatch(saveShipping(shipping_cookie));
+			// }
+			// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
+			// if (diffuser_cap_cookie) {
+			// 	set_diffuser_cap(diffuser_cap_cookie);
+			// 	console.log({ diffuser_cap_cookie });
+			// }
 			dispatch(savePayment({ paymentMethod: 'paypal' }));
 			setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
