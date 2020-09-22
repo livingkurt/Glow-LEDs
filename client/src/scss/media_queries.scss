@@ -252,10 +252,7 @@
 	.search_and_sort {
 		justify-content: flex-start !important;
 	}
-	.product-image {
-		height: 150px !important;
-		width: 150px !important;
-	}
+
 	.products li {
 		margin: 0;
 	}
@@ -347,6 +344,10 @@
 	}
 }
 @media only screen and (max-width: 450px) {
+	.product-image {
+		height: 150px !important;
+		width: 150px !important;
+	}
 	.search_container {
 		justify-content: center !important;
 	}
@@ -369,8 +370,8 @@
 
 @media only screen and (max-width: 412px) {
 	.product-image {
-		height: 100px !important;
-		width: 100px !important;
+		height: 125px !important;
+		width: 125px !important;
 	}
 	.product_title_top {
 		font-size: 3rem !important;
