@@ -126,6 +126,8 @@ routes/order_routes.js
 routes/batch_routes.js
 routes/expense_routes.js
 routes/feature_routes.js
+routes/promo_routes.js
+routes/sponsor_routes.js
 
 models/user.js
 models/product.js
@@ -134,6 +136,8 @@ models/order.js
 models/feature.js
 models/cart.js
 models/expense.js
+models/promo.js
+models/sponsor.js
 
 email_templates/HTML
 email_templates/pages/verify_account_view.js

@@ -8,6 +8,10 @@ export { default as ControlPanelPage } from './AdminPages/ControlPanelPage';
 export { default as ExpensesPage } from './AdminPages/ExpensesPage';
 export { default as EditExpensePage } from './AdminPages/EditExpensePage';
 export { default as EditFeaturePage } from './AdminPages/EditFeaturePage';
+export { default as EditPromoPage } from './AdminPages/EditPromoPage';
+export { default as EditSponsorPage } from './AdminPages/EditSponsorPage';
+export { default as SponsorsPage } from './AdminPages/SponsorsPage';
+export { default as PromosPage } from './AdminPages/PromosPage';
 export { default as FeaturesPage } from './AdminPages/FeaturesPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';

@@ -37,7 +37,11 @@ import {
 	EditExpensePage,
 	EditFeaturePage,
 	FeaturesPage,
-	EmailSentPage
+	EmailSentPage,
+	EditPromoPage,
+	EditSponsorPage,
+	PromosPage,
+	SponsorsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -95,6 +99,10 @@ const App = () => {
 							<AdminRoute path="/secure/glow/editfeature/:id?" component={EditFeaturePage} />
 							<AdminRoute path="/secure/glow/expenses" component={ExpensesPage} />
 							<AdminRoute path="/secure/glow/features" component={FeaturesPage} />
+							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
+							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />
+							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
+							<AdminRoute path="/secure/glow/sponsors" component={SponsorsPage} />
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />

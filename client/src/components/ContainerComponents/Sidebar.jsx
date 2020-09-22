@@ -144,6 +144,16 @@ const Sidebar = (props) => {
 									Expenses
 								</button>
 							</Link>
+							<Link to="/secure/glow/sponsors">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Sponsors
+								</button>
+							</Link>
+							<Link to="/secure/glow/promos">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Promos
+								</button>
+							</Link>
 						</ul>
 						<i
 							style={{ '-webkitTransform': 'rotate(-180deg)' }}

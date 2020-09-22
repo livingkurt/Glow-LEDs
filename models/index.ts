@@ -10,3 +10,5 @@ export { default as User } from './user';
 export { default as Feature } from './feature';
 export { default as Cart } from './cart';
 export { default as Expense } from './expense';
+export { default as Promo } from './promo';
+export { default as Sponsor } from './sponsor';

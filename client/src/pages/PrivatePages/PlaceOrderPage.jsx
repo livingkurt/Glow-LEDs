@@ -6,6 +6,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
+import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
@@ -24,6 +25,9 @@ const PlaceOrderPage = (props) => {
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
+
+	const promoList = useSelector((state) => state.promoList);
+	const { loading: promo_loading, promos, error: promo_error } = promoList;
 	// console.log({ orderPay });
 	const items_price =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
@@ -77,6 +81,11 @@ const PlaceOrderPage = (props) => {
 		},
 		[ shipping ]
 	);
+
+	useEffect(() => {
+		dispatch(listPromos());
+		return () => {};
+	}, []);
 
 	// const taxPrice = 0.0875 * itemsPrice;
 	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
@@ -218,8 +227,9 @@ const PlaceOrderPage = (props) => {
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
-	const promo_codes = [ '' ];
+	// const promo_codes = [ '' ];
 	const check_code = () => {
+		const promo_codes = promos.map((promo) => promo.promo_code);
 		const data = { promo_code, promo_codes };
 		const request = validate_promo_code(data);
 
@@ -229,12 +239,10 @@ const PlaceOrderPage = (props) => {
 			if (show_message) {
 				set_promo_code_validations('Promo Code in Use');
 			} else {
-				console.log(promo_code);
-				// if (promo_code === 'Glow' || promo_code === 'glow') {
-				setItemsPrice(items_price - items_price * discount_percent);
-				setTaxPrice(0.0875 * (items_price - items_price * discount_percent));
-				set_show_message(promo_code);
-				// set_promo_code('');
+				const promo = promos.find((promo) => promo.promo_code === promo_code);
+				setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
+				setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
+				set_show_message(promo.promo_code);
 			}
 		}
 		// else {

@@ -12,3 +12,5 @@ export { default as email_routes } from './email_routes';
 export { default as batch_routes } from './batch_routes';
 export { default as expense_routes } from './expense_routes';
 export { default as feature_routes } from './feature_routes';
+export { default as sponsor_routes } from './sponsor_routes';
+export { default as promo_routes } from './promo_routes';

@@ -49,6 +49,13 @@ import {
 	orderPackagedReducer,
 	orderManufacturedReducer
 } from './reducers/orderReducers';
+import { promoDeleteReducer, promoDetailsReducer, promoListReducer, promoSaveReducer } from './reducers/promoReducers';
+import {
+	sponsorDeleteReducer,
+	sponsorDetailsReducer,
+	sponsorListReducer,
+	sponsorSaveReducer
+} from './reducers/sponsorReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
@@ -92,7 +99,15 @@ const reducer = combineReducers({
 	featureList: featureListReducer,
 	featureDetails: featureDetailsReducer,
 	featureSave: featureSaveReducer,
-	featureDelete: featureDeleteReducer
+	featureDelete: featureDeleteReducer,
+	promoList: promoListReducer,
+	promoDetails: promoDetailsReducer,
+	promoSave: promoSaveReducer,
+	promoDelete: promoDeleteReducer,
+	sponsorList: sponsorListReducer,
+	sponsorDetails: sponsorDetailsReducer,
+	sponsorSave: sponsorSaveReducer,
+	sponsorDelete: sponsorDeleteReducer
 });
 
 declare global {
