@@ -19,21 +19,24 @@ import {
 	ORDER_LIST_REQUEST,
 	ORDER_LIST_SUCCESS,
 	ORDER_LIST_FAIL,
-	ORDER_SHIPPING_REQUEST,
-	ORDER_SHIPPING_SUCCESS,
-	ORDER_SHIPPING_FAIL,
-	ORDER_MANUFACTURED_REQUEST,
-	ORDER_MANUFACTURED_SUCCESS,
-	ORDER_MANUFACTURED_FAIL,
-	ORDER_PACKAGED_REQUEST,
-	ORDER_PACKAGED_SUCCESS,
-	ORDER_PACKAGED_FAIL,
+	ORDER_UPDATE_REQUEST,
+	ORDER_UPDATE_SUCCESS,
+	ORDER_UPDATE_FAIL,
+	// ORDER_SHIPPING_REQUEST,
+	// ORDER_SHIPPING_SUCCESS,
+	// ORDER_SHIPPING_FAIL,
+	// ORDER_MANUFACTURED_REQUEST,
+	// ORDER_MANUFACTURED_SUCCESS,
+	// ORDER_MANUFACTURED_FAIL,
+	// ORDER_PACKAGED_REQUEST,
+	// ORDER_PACKAGED_SUCCESS,
+	// ORDER_PACKAGED_FAIL,
 	ORDER_REFUND_REQUEST,
 	ORDER_REFUND_SUCCESS,
-	ORDER_REFUND_FAIL,
-	ORDER_DELIVERY_REQUEST,
-	ORDER_DELIVERY_SUCCESS,
-	ORDER_DELIVERY_FAIL
+	ORDER_REFUND_FAIL
+	// ORDER_DELIVERY_REQUEST,
+	// ORDER_DELIVERY_SUCCESS,
+	// ORDER_DELIVERY_FAIL
 } from '../constants/orderConstants';
 import Cookie from 'js-cookie';
 
@@ -217,107 +220,133 @@ export const refundOrder = (
 	}
 };
 
-export const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
+export const update_order = (order: { _id: string }, result: boolean, is_action: string, action_at: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ ...order, isShipped: shippingResult });
+	console.log({ ...order, [is_action]: result });
 	try {
-		dispatch({ type: ORDER_SHIPPING_REQUEST, payload: shippingResult });
+		dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/shipping',
+			'/api/orders/' + order._id + '/update',
 			{
 				...order,
-				isShipped: shippingResult,
-				shippedAt: shippingResult ? Date.now() : ''
+				[is_action]: result,
+				[action_at]: result ? Date.now() : ''
 			},
 			{
 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
 			}
 		);
 		console.log({ data });
-		dispatch({ type: ORDER_SHIPPING_SUCCESS, payload: data });
-		// axios.post("/api/emails/shipping", data);
+		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.message });
 	}
 };
 
-export const manufactureOrder = (order: { _id: string }, manufacturedResult: boolean) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
-	console.log({ ...order, isManufactured: manufacturedResult });
-	try {
-		dispatch({ type: ORDER_MANUFACTURED_REQUEST, payload: manufacturedResult });
-		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/manufactured',
-			{
-				...order,
-				isManufactured: manufacturedResult,
-				manufacturedAt: manufacturedResult ? Date.now() : ''
-			},
-			{
-				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
-			}
-		);
-		console.log({ data });
-		dispatch({ type: ORDER_MANUFACTURED_SUCCESS, payload: data });
-	} catch (error) {
-		dispatch({ type: ORDER_MANUFACTURED_FAIL, payload: error.message });
-	}
-};
-export const packageOrder = (order: { _id: string }, packagedResult: boolean) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
-	console.log({ ...order, isPackaged: packagedResult });
-	try {
-		dispatch({ type: ORDER_PACKAGED_REQUEST, payload: packagedResult });
-		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/packaged',
-			{
-				...order,
-				isPackaged: packagedResult,
-				packagedAt: packagedResult ? Date.now() : ''
-			},
-			{
-				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
-			}
-		);
-		console.log({ data });
-		dispatch({ type: ORDER_PACKAGED_SUCCESS, payload: data });
-	} catch (error) {
-		dispatch({ type: ORDER_PACKAGED_FAIL, payload: error.message });
-	}
-};
+// export const shipOrder = (order: { _id: string }, shippingResult: boolean) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	console.log({ ...order, isShipped: shippingResult });
+// 	try {
+// 		dispatch({ type: ORDER_SHIPPING_REQUEST, payload: shippingResult });
+// 		const { userLogin: { userInfo } } = getState();
+// 		const { data } = await axios.put(
+// 			'/api/orders/' + order._id + '/update',
+// 			{
+// 				...order,
+// 				isShipped: shippingResult,
+// 				shippedAt: shippingResult ? Date.now() : ''
+// 			},
+// 			{
+// 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+// 			}
+// 		);
+// 		console.log({ data });
+// 		dispatch({ type: ORDER_SHIPPING_SUCCESS, payload: data });
+// 		// axios.post("/api/emails/shipping", data);
+// 	} catch (error) {
+// 		dispatch({ type: ORDER_SHIPPING_FAIL, payload: error.message });
+// 	}
+// };
 
-export const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
-	console.log({ ...order, isDelivered: deliveryResult });
-	try {
-		dispatch({ type: ORDER_DELIVERY_REQUEST, payload: deliveryResult });
-		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/delivery',
-			{
-				...order,
-				isDelivered: deliveryResult,
-				deliveredAt: deliveryResult ? Date.now() : ''
-			},
-			{
-				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
-			}
-		);
-		console.log({ data });
-		dispatch({ type: ORDER_DELIVERY_SUCCESS, payload: data });
-		// axios.post("/api/emails/delivery", data);
-	} catch (error) {
-		dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
-	}
-};
+// export const manufactureOrder = (order: { _id: string }, manufacturedResult: boolean) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	console.log({ ...order, isManufactured: manufacturedResult });
+// 	try {
+// 		dispatch({ type: ORDER_MANUFACTURED_REQUEST, payload: manufacturedResult });
+// 		const { userLogin: { userInfo } } = getState();
+// 		const { data } = await axios.put(
+// 			'/api/orders/' + order._id + '/update',
+// 			{
+// 				...order,
+// 				isManufactured: manufacturedResult,
+// 				manufacturedAt: manufacturedResult ? Date.now() : ''
+// 			},
+// 			{
+// 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+// 			}
+// 		);
+// 		console.log({ data });
+// 		dispatch({ type: ORDER_MANUFACTURED_SUCCESS, payload: data });
+// 	} catch (error) {
+// 		dispatch({ type: ORDER_MANUFACTURED_FAIL, payload: error.message });
+// 	}
+// };
+// export const packageOrder = (order: { _id: string }, packagedResult: boolean) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	console.log({ ...order, isPackaged: packagedResult });
+// 	try {
+// 		dispatch({ type: ORDER_PACKAGED_REQUEST, payload: packagedResult });
+// 		const { userLogin: { userInfo } } = getState();
+// 		const { data } = await axios.put(
+// 			'/api/orders/' + order._id + '/update',
+// 			{
+// 				...order,
+// 				isPackaged: packagedResult,
+// 				packagedAt: packagedResult ? Date.now() : ''
+// 			},
+// 			{
+// 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+// 			}
+// 		);
+// 		console.log({ data });
+// 		dispatch({ type: ORDER_PACKAGED_SUCCESS, payload: data });
+// 	} catch (error) {
+// 		dispatch({ type: ORDER_PACKAGED_FAIL, payload: error.message });
+// 	}
+// };
+
+// export const deliverOrder = (order: { _id: string }, deliveryResult: boolean) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	console.log({ ...order, isDelivered: deliveryResult });
+// 	try {
+// 		dispatch({ type: ORDER_DELIVERY_REQUEST, payload: deliveryResult });
+// 		const { userLogin: { userInfo } } = getState();
+// 		const { data } = await axios.put(
+// 			'/api/orders/' + order._id + '/update',
+// 			{
+// 				...order,
+// 				isDelivered: deliveryResult,
+// 				deliveredAt: deliveryResult ? Date.now() : ''
+// 			},
+// 			{
+// 				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+// 			}
+// 		);
+// 		console.log({ data });
+// 		dispatch({ type: ORDER_DELIVERY_SUCCESS, payload: data });
+// 		// axios.post("/api/emails/delivery", data);
+// 	} catch (error) {
+// 		dispatch({ type: ORDER_DELIVERY_FAIL, payload: error.message });
+// 	}
+// };

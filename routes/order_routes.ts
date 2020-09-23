@@ -282,12 +282,51 @@ router.put(
 	}
 );
 
-router.put('/:id/manufactured', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+// router.put('/:id/update', isAuth, isAdmin, async (req, res) => {
+// 	console.log({ product_routes_put: req.body });
+//   const order_id = req.params.id;
+//   const updated_order = req.body;
+// 	// const order = await Order.findById(order_id);
+// 	if (order) {
+// 		// order.name = req.body.name;
+// 		// order.price = req.body.price;
+// 		// order.images = req.body.images;
+// 		// order.video = req.body.video;
+// 		// order.brand = req.body.brand;
+// 		// order.category = req.body.category;
+// 		// order.countInStock = req.body.countInStock;
+// 		// order.facts = req.body.facts;
+// 		// order.included_items = req.body.included_items;
+// 		// order.description = req.body.description;
+// 		// order.hidden = req.body.hidden;
+// 		// order.sale_price = req.body.sale_price;
+// 		// order.volume = req.body.volume;
+// 		// order.pathname = req.body.pathname.split(' ').join('_').toLowerCase();
+// 		// order.order = req.body.order;
+// 		// order.deleted = req.body.deleted || false;
+// 		// order.meta_title = req.body.meta_title;
+// 		// order.meta_description = req.body.meta_description;
+// 		// order.meta_keywords = req.body.meta_keywords;
+// 		// order.length = req.body.length;
+// 		// order.width = req.body.width;
+// 		// order.height = req.body.height;
+// 		// order.weight_pounds = req.body.weight_pounds;
+// 		// order.weight_ounces = req.body.weight_ounces;
+// 		const updated_order = await order.save();
+// 		console.log({ order_routes_put: updated_order });
+// 		if (updated_order) {
+// 			return res.status(200).send({ message: 'Product Updated', data: updated_order });
+// 		}
+// 	}
+// 	return res.status(500).send({ message: ' Error in Updating Product.' });
+// });
+
+router.put('/:id/update', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {
-		console.log({ manufactured: req.body });
+		console.log({ update: req.body });
 		const updated_order = req.body;
 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		console.log({ manufactured: updated_order });
+		console.log({ update: updated_order });
 		// Send the request back to the front end
 		res.send(updated_order);
 	} catch (err) {
@@ -295,58 +334,71 @@ router.put('/:id/manufactured', async (req: { body: any; params: { id: any } }, 
 	}
 });
 
-router.put('/:id/packaged', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
-	try {
-		console.log({ packaged: req.body });
-		const updated_order = req.body;
-		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		console.log({ packaged: updated_order });
-		// Send the request back to the front end
-		res.send(updated_order);
-	} catch (err) {
-		console.log(err);
-	}
-});
+// router.put('/:id/manufactured', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+// 	try {
+// 		console.log({ manufactured: req.body });
+// 		const updated_order = req.body;
+// 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+// 		console.log({ manufactured: updated_order });
+// 		// Send the request back to the front end
+// 		res.send(updated_order);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
 
-router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
-	try {
-		console.log({ shipping: req.body });
-		const updated_order = req.body;
-		// const order = req.body.order
-		// const result = req.body.shippingResult
-		// const updated_order = {
-		//   ...req.body,
-		//   isShipped: result,
-		//   shippedAt: result ? Date.now() : ""
-		// }
-		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		console.log({ shipping: updated_order });
-		// Send the request back to the front end
-		res.send(updated_order);
-	} catch (err) {
-		console.log(err);
-	}
-});
+// router.put('/:id/packaged', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+// 	try {
+// 		console.log({ packaged: req.body });
+// 		const updated_order = req.body;
+// 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+// 		console.log({ packaged: updated_order });
+// 		// Send the request back to the front end
+// 		res.send(updated_order);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
 
-router.put('/:id/delivery', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
-	try {
-		console.log({ delivery: req.body });
-		const updated_order = req.body;
-		// const order = req.body.order
-		// const result = req.body.deliveryResult
-		// const updated_order = {
-		//   ...req.body,
-		//   isDelivered: result,
-		//   deliveredAt: result ? "" : Date.now()
-		// }
-		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		console.log({ delivery: updated_order });
-		// Send the request back to the front end
-		res.send(updated_order);
-	} catch (err) {
-		console.log(err);
-	}
-});
+// router.put('/:id/shipping', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+// 	try {
+// 		console.log({ shipping: req.body });
+// 		const updated_order = req.body;
+// 		// const order = req.body.order
+// 		// const result = req.body.shippingResult
+// 		// const updated_order = {
+// 		//   ...req.body,
+// 		//   isShipped: result,
+// 		//   shippedAt: result ? Date.now() : ""
+// 		// }
+// 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+// 		console.log({ shipping: updated_order });
+// 		// Send the request back to the front end
+// 		res.send(updated_order);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
+
+// router.put('/:id/delivery', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+// 	try {
+// 		console.log({ delivery: req.body });
+// 		const updated_order = req.body;
+// 		// const order = req.body.order
+// 		// const result = req.body.deliveryResult
+// 		// const updated_order = {
+// 		//   ...req.body,
+// 		//   isDelivered: result,
+// 		//   deliveredAt: result ? "" : Date.now()
+// 		// }
+// 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+// 		console.log({ delivery: updated_order });
+// 		// Send the request back to the front end
+// 		res.send(updated_order);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
 
 // module.exports = router;
 export default router;

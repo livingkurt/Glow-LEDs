@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
 	detailsOrder,
-	shipOrder,
-	deliverOrder,
+	// shipOrder,
+	// deliverOrder,
 	refundOrder,
-	manufactureOrder,
-	packageOrder
+	// manufactureOrder,
+	// packageOrder,
+	update_order
 } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
@@ -36,17 +37,17 @@ const OrderPage = (props) => {
 	const { order: refund } = orderRefund;
 	// console.log({ refund });
 
-	const orderShipping = useSelector((state) => state.orderShipping);
-	const { order: shipping } = orderShipping;
+	// const orderShipping = useSelector((state) => state.orderShipping);
+	// const { order: shipping } = orderShipping;
 
-	const orderManufactured = useSelector((state) => state.orderManufactured);
-	const { order: manufactured } = orderManufactured;
+	// const orderManufactured = useSelector((state) => state.orderManufactured);
+	// const { order: manufactured } = orderManufactured;
 
-	const orderPackaged = useSelector((state) => state.orderPackaged);
-	const { order: packaged } = orderPackaged;
+	// const orderPackaged = useSelector((state) => state.orderPackaged);
+	// const { order: packaged } = orderPackaged;
 
-	const orderDelivery = useSelector((state) => state.orderDelivery);
-	const { order: delivery } = orderDelivery;
+	// const orderDelivery = useSelector((state) => state.orderDelivery);
+	// const { order: delivery } = orderDelivery;
 	// console.log({ delivery });
 
 	const [ refund_state, set_refund_state ] = useState({});
@@ -107,43 +108,43 @@ const OrderPage = (props) => {
 		},
 		[ refund ]
 	);
-	useEffect(
-		() => {
-			if (shipping) {
-				set_shipping_state(shipping.isShipped);
-				set_order_state(shipping);
-			}
-		},
-		[ shipping ]
-	);
-	useEffect(
-		() => {
-			if (packaged) {
-				set_packaged_state(packaged.isPackaged);
-				set_order_state(packaged);
-			}
-		},
-		[ packaged ]
-	);
-	useEffect(
-		() => {
-			if (manufactured) {
-				set_manufactured_state(manufactured.isManufactured);
-				set_order_state(manufactured);
-			}
-		},
-		[ manufactured ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (shipping) {
+	// 			set_shipping_state(shipping.isShipped);
+	// 			set_order_state(shipping);
+	// 		}
+	// 	},
+	// 	[ shipping ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		if (packaged) {
+	// 			set_packaged_state(packaged.isPackaged);
+	// 			set_order_state(packaged);
+	// 		}
+	// 	},
+	// 	[ packaged ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		if (manufactured) {
+	// 			set_manufactured_state(manufactured.isManufactured);
+	// 			set_order_state(manufactured);
+	// 		}
+	// 	},
+	// 	[ manufactured ]
+	// );
 
-	useEffect(
-		() => {
-			if (delivery) {
-				set_delivery_state(delivery.isDelivered);
-				set_order_state(delivery);
-			}
-		},
-		[ delivery ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (delivery) {
+	// 			set_delivery_state(delivery.isDelivered);
+	// 			set_order_state(delivery);
+	// 		}
+	// 	},
+	// 	[ delivery ]
+	// );
 
 	const send_not_paid_email = async () => {
 		const request = await API.not_paid_email(order, user_data);
@@ -172,38 +173,38 @@ const OrderPage = (props) => {
 	const update_shipping_state = () => {
 		if (order_state.isShipped) {
 			set_shipping_state(false);
-			dispatch(shipOrder(order, false));
+			dispatch(update_order(order, false, 'isShipped', 'shippedAt'));
 		} else {
 			set_shipping_state(true);
-			dispatch(shipOrder(order, true));
+			dispatch(update_order(order, true, 'isShipped', 'shippedAt'));
 		}
 	};
 	const update_manufactured_state = () => {
 		if (order_state.isManufactured) {
 			set_manufactured_state(false);
-			dispatch(manufactureOrder(order, false));
+			dispatch(update_order(order, false, 'isManufactured', 'manufacturedAt'));
 		} else {
 			set_manufactured_state(true);
-			dispatch(manufactureOrder(order, true));
+			dispatch(update_order(order, true, 'isManufactured', 'manufacturedAt'));
 		}
 	};
 	const update_packaged_state = () => {
 		if (order_state.isPackaged) {
 			set_packaged_state(false);
-			dispatch(packageOrder(order, false));
+			dispatch(update_order(order, false, 'isPackaged', 'packagedAt'));
 		} else {
 			set_packaged_state(true);
-			dispatch(packageOrder(order, true));
+			dispatch(update_order(order, true, 'isPackaged', 'packagedAt'));
 		}
 	};
 
 	const update_delivered_state = () => {
 		if (order_state.isDelivered) {
 			set_delivery_state(false);
-			dispatch(deliverOrder(order, false));
+			dispatch(update_order(order, false, 'isDelivered', 'deliveredAt'));
 		} else {
 			set_delivery_state(true);
-			dispatch(deliverOrder(order, true));
+			dispatch(update_order(order, true, 'isDelivered', 'deliveredAt'));
 		}
 	};
 
@@ -554,14 +555,6 @@ const OrderPage = (props) => {
 						</FlexContainer>
 
 						<FlexContainer row v_i_center h_between>
-							{/* {console.log({ shipping_state })} */}
-							{/* <label style={{ marginTop: '5px' }}>
-										{shipping_state ? (
-											'Shipped at ' + format_date(order_state.shippedAt)
-										) : (
-											'Not Shipped'
-										)}
-									</label> */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<div>
@@ -572,14 +565,6 @@ const OrderPage = (props) => {
 							)}
 						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
-							{/* {console.log({ shipping_state })} */}
-							{/* <label style={{ marginTop: '5px' }}>
-										{shipping_state ? (
-											'Shipped at ' + format_date(order_state.shippedAt)
-										) : (
-											'Not Shipped'
-										)}
-									</label> */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<div>
@@ -590,14 +575,6 @@ const OrderPage = (props) => {
 							)}
 						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
-							{/* {console.log({ shipping_state })} */}
-							{/* <label style={{ marginTop: '5px' }}>
-										{shipping_state ? (
-											'Shipped at ' + format_date(order_state.shippedAt)
-										) : (
-											'Not Shipped'
-										)}
-									</label> */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<div>
@@ -608,14 +585,6 @@ const OrderPage = (props) => {
 							)}
 						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
-							{/* {console.log({ delivery_state })} */}
-							{/* <label style={{ marginTop: '5px' }}>
-										{delivery_state ? (
-											'Delivered at ' + format_date(order_state.deliveredAt)
-										) : (
-											'Not Delivered'
-										)}
-									</label> */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<FlexContainer h_right>
@@ -625,6 +594,7 @@ const OrderPage = (props) => {
 								</FlexContainer>
 							)}
 						</FlexContainer>
+
 						<FlexContainer row v_i_center h_between>
 							{/* {console.log({ delivery_state })} */}
 							{props.userInfo &&

@@ -43,11 +43,11 @@ import {
 	myOrderListReducer,
 	orderListReducer,
 	orderDeleteReducer,
-	orderShippingReducer,
-	orderDeliveryReducer,
-	orderRefundReducer,
-	orderPackagedReducer,
-	orderManufacturedReducer
+	// orderShippingReducer,
+	// orderDeliveryReducer,
+	orderRefundReducer
+	// orderPackagedReducer,
+	// orderManufacturedReducer
 } from './reducers/orderReducers';
 import { promoDeleteReducer, promoDetailsReducer, promoListReducer, promoSaveReducer } from './reducers/promoReducers';
 import {
@@ -79,10 +79,10 @@ const reducer = combineReducers({
 	orderList: orderListReducer,
 	orderDelete: orderDeleteReducer,
 	orderRefund: orderRefundReducer,
-	orderManufactured: orderManufacturedReducer,
-	orderPackaged: orderPackagedReducer,
-	orderShipping: orderShippingReducer,
-	orderDelivery: orderDeliveryReducer,
+	// orderManufactured: orderManufacturedReducer,
+	// orderPackaged: orderPackagedReducer,
+	// orderShipping: orderShippingReducer,
+	// orderDelivery: orderDeliveryReducer,
 	userContact: userContactReducer,
 	userPasswordReset: userPasswordResetReducer,
 	userResetPassword: userResetPasswordReducer,
