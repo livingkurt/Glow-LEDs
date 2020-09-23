@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { listOrders, deleteOrder } from '../../actions/orderActions';
+import { listOrders, deleteOrder, update_order } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
@@ -36,11 +36,14 @@ const OrdersPage = (props) => {
 	//   // dispatch(token(userInfo.refreshToken));
 	// }, [error]);
 
+	const [ order_state, set_order_state ] = useState({});
+
 	useEffect(
 		() => {
 			dispatch(listOrders());
+			dispatch(listOrders());
 		},
-		[ successDelete ]
+		[ successDelete, order_state ]
 	);
 	useEffect(
 		() => {
@@ -133,6 +136,16 @@ const OrdersPage = (props) => {
 	// 	element.getElementsByClassName('expanded-row-content')[0].classList.toggle('hide-row');
 	// 	// console.log(event);
 	// };
+
+	const update_order_state = (order, state, is_action, action_at) => {
+		if (state) {
+			set_order_state({ ...order_state, [is_action]: false });
+			dispatch(update_order(order, false, is_action, action_at));
+		} else {
+			set_order_state({ ...order_state, [is_action]: true });
+			dispatch(update_order(order, true, is_action, action_at));
+		}
+	};
 
 	return (
 		<div class="main_container">
@@ -308,6 +321,25 @@ const OrdersPage = (props) => {
 													<div>
 														{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}
 													</div>
+
+													<div>
+														<button
+															className="button primary"
+															onClick={() =>
+																update_order_state(
+																	order,
+																	order.isManufactured,
+																	'isManufactured',
+																	'manufacturedAt'
+																)}
+														>
+															{order.isManufactured ? (
+																'Unset to Manufactured'
+															) : (
+																'Set to Manufactured'
+															)}
+														</button>
+													</div>
 												</div>
 												<div className="w-100per">
 													<div>Packaged</div>
@@ -319,6 +351,21 @@ const OrdersPage = (props) => {
 														)}
 													</div>
 													<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
+
+													<div>
+														<button
+															className="button primary"
+															onClick={() =>
+																update_order_state(
+																	order,
+																	order.isPackaged,
+																	'isPackaged',
+																	'packagedAt'
+																)}
+														>
+															{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+														</button>
+													</div>
 												</div>
 												<div className="w-100per">
 													<div>Shipped</div>
@@ -330,6 +377,21 @@ const OrdersPage = (props) => {
 														)}
 													</div>
 													<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
+
+													<div>
+														<button
+															className="button primary"
+															onClick={() =>
+																update_order_state(
+																	order,
+																	order.isShipped,
+																	'isShipped',
+																	'shippedAt'
+																)}
+														>
+															{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+														</button>
+													</div>
 												</div>
 												<div className="w-100per">
 													<div>Delivered</div>
@@ -343,6 +405,19 @@ const OrdersPage = (props) => {
 													<div>
 														{!order.deliveredAt ? '' : format_date(order.deliveredAt)}
 													</div>
+
+													<button
+														className="button primary"
+														onClick={() =>
+															update_order_state(
+																order,
+																order.isDelivered,
+																'isDelivered',
+																'deliveredAt'
+															)}
+													>
+														{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+													</button>
 												</div>
 												<div className="w-100per">
 													<div>Refund</div>
