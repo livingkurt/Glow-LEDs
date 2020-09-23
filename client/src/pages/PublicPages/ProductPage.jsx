@@ -103,7 +103,7 @@ const ProductPage = (props) => {
 		props.history.push('/checkout/cart');
 	};
 
-	const filament_colors = [ 'Black', 'White', 'Silver', 'Gold', 'Blue', 'Red' ];
+	const filament_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple', 'Glow in the Dark' ];
 	// const filament_colors = [ 'Black' ];
 
 	return (
