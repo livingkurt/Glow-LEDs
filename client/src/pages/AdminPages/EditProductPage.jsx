@@ -124,7 +124,7 @@ const EditProductPage = (props) => {
 		setBrand(product.brand);
 		setCategory(product.category);
 		setCountInStock(product.countInStock);
-		setPathname(product.pathname);
+		props.match.params.pathname && setPathname(product.pathname);
 		setOrder(product.order);
 	};
 	const unset_state = () => {
@@ -382,13 +382,13 @@ const EditProductPage = (props) => {
 										{loading ? 'Product' : product.name}
 									</h1>
 									<li>
-										<label
+										{/* <label
 											aria-label="sortOrder"
 											htmlFor="sortOrder"
 											className="select-label mb-15px jc-c"
 										>
 											Product
-										</label>
+										</label> */}
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
 												<select
