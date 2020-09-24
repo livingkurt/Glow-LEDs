@@ -33,12 +33,11 @@ export default (props: {
 	refunded: Boolean;
 	// token: any;
 }) => {
-	const format_date = (unformatted_date: string | number | Date) => {
-		const date = new Date(unformatted_date);
-		const day = date.getDate();
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-		const formatted_date = `${month}/${day}/${year}`;
+	const format_date = (unformatted_date: string) => {
+		const month = unformatted_date.slice(5, 7);
+		const day = unformatted_date.slice(8, 10);
+		const year = unformatted_date.slice(0, 4);
+		const formatted_date = `${month}/${day}/20`;
 		return formatted_date;
 	};
 	console.log({ refund_view: props });
