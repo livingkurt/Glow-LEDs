@@ -10,6 +10,15 @@
 }
 
 @for $i from 0 to 100 {
+	.h-#{$i}per {
+		height: percentage($i/100) !important;
+	}
+}
+.h-100per {
+	height: 100% !important;
+}
+
+@for $i from 0 to 100 {
 	.max-h-#{$i}rem {
 		max-height: $i + rem !important;
 	}

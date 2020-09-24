@@ -9,6 +9,8 @@ import Cookie from 'js-cookie';
 import MetaTags from 'react-meta-tags';
 import API from '../../utils/API';
 import { addToCart } from '../../actions/cartActions';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -22,6 +24,7 @@ const ProductPage = (props) => {
 	const [ mini_diffuser_caps, set_mini_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
+	const [ image, set_image ] = useState('');
 	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
 	const productDetails = useSelector((state) => state.productDetails);
 	// console.log({ diffuser_cap });
@@ -63,20 +66,14 @@ const ProductPage = (props) => {
 		// set_diffuser_caps(data);
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (product) {
-	// 			if (product.name === 'Diffuser Caps + Adapters Starter Kit') {
-	// 				get_original_diffuser_caps();
-	// 				console.log('Diffuser Caps + Adapters Starter Kit');
-	// 			} else if (product.name === 'Mini Diffuser Caps + Adapters Starter Kit') {
-	// 				get_mini_diffuser_caps();
-	// 				console.log('Mini Diffuser Caps + Adapters Starter Kit');
-	// 			}
-	// 		}
-	// 	},
-	// 	[ product ]
-	// );
+	useEffect(
+		() => {
+			if (product) {
+				set_image(product.images && product.images[0]);
+			}
+		},
+		[ product ]
+	);
 
 	useEffect(
 		() => {
@@ -193,13 +190,20 @@ const ProductPage = (props) => {
 									{product.name}
 								</h1>
 								<div className="details-image">
-									<img
-										id="expandedImg"
-										alt=""
-										className="details-image-img"
-										src={product.images && product.images[0]}
-										style={{ maxWidth: '400px', maxHeight: '400px', height: '100%', width: '100%' }}
-									/>
+									<Zoom>
+										<img
+											id="expandedImg"
+											alt=""
+											className="details-image-img"
+											src={image}
+											style={{
+												maxWidth: '400px',
+												maxHeight: '400px',
+												height: '100%',
+												width: '100%'
+											}}
+										/>
+									</Zoom>
 								</div>
 							</FlexContainer>
 							<Slideshow product={product} show_hide="alt_pictures_shown_shown" />
@@ -255,7 +259,7 @@ const ProductPage = (props) => {
 										</div>
 									</FlexContainer>
 								</FlexContainer>
-								<Slideshow product={product} show_hide="alt_pictures_hidden" />
+								<Slideshow product={product} show_hide="alt_pictures_hidden" set_image={set_image} />
 							</div>
 							<div className="details-action">
 								<ul>
@@ -447,7 +451,7 @@ const ProductPage = (props) => {
 								</ul>
 							</div>
 						</div>
-						<Slideshow product={product} show_hide="alt_pictures_shown" />
+						<Slideshow product={product} show_hide="alt_pictures_shown" set_image={set_image} />
 
 						<FlexContainer column styles={{ padding: '1rem' }}>
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>

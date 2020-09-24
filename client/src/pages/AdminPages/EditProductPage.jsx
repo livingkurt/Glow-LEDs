@@ -321,38 +321,61 @@ const EditProductPage = (props) => {
 							);
 						})}
 				</div>
-				{images &&
-					images.map((picture, index) => {
-						return (
-							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-								<div>
-									<button className="button icon" onClick={(e) => remove_image(index, e)}>
-										<i className="fas fa-times mr-5px" />
-									</button>
-									{picture}
-								</div>
-								<div>
-									{index > 0 && (
-										<button className="button icon" onClick={(e) => move_image_up(index, e)}>
-											<i className=" fas fa-sort-up" />
-										</button>
-									)}
+				<div className="jc-b">
+					<div>
+						{images &&
+							images.map((picture, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="button icon" onClick={(e) => remove_image(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{picture}
+										</div>
+										<div>
+											{index > 0 && (
+												<button
+													className="button icon"
+													onClick={(e) => move_image_up(index, e)}
+												>
+													<i className=" fas fa-sort-up" />
+												</button>
+											)}
 
-									{index < images.length - 1 && (
-										<button className="button icon" onClick={(e) => move_image_down(index, e)}>
-											<i
-												style={{ '-webkitTransform': 'rotate(-180deg)' }}
-												className=" fas fa-sort-up"
-											/>
-										</button>
-									)}
-								</div>
-							</div>
-						);
-					})}
+											{index < images.length - 1 && (
+												<button
+													className="button icon"
+													onClick={(e) => move_image_down(index, e)}
+												>
+													<i
+														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														className=" fas fa-sort-up"
+													/>
+												</button>
+											)}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+					<li>
+						<label htmlFor="images">Images</label>
+						<textarea
+							className="edit_product_textarea w-450px h-100per"
+							name="images"
+							value={images}
+							id="images"
+							// onChange={(e) => set_images(e.target.value)}
+						/>
+					</li>
+				</div>
 			</div>
 		);
 	};
+
+	const move_left = () => {};
+	const move_right = () => {};
 
 	return (
 		<div class="main_container">
@@ -371,16 +394,36 @@ const EditProductPage = (props) => {
 									className="edit-form-container"
 									style={{ maxWidth: '105rem', marginBottom: '20px' }}
 								>
-									<h1
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											marginRight: 'auto',
-											justifyContent: 'center'
-										}}
-									>
-										{loading ? 'Product' : product.name}
-									</h1>
+									<div className="row">
+										<div className="ai-c">
+											<button
+												style={{ borderRadius: '50%' }}
+												className="button icon h-59px"
+												onClick={() => move_left()}
+											>
+												<i className="fas fa-arrow-circle-left fs-40px" />
+											</button>
+										</div>
+										<h1
+											style={{
+												textAlign: 'center',
+												width: '100%',
+												marginRight: 'auto',
+												justifyContent: 'center'
+											}}
+										>
+											{loading ? 'Product' : product.name}
+										</h1>
+										<div className="ai-c">
+											<button
+												style={{ borderRadius: '50%' }}
+												className="button icon h-59px"
+												onClick={() => move_right()}
+											>
+												<i className="fas fa-arrow-circle-right fs-40px" />
+											</button>
+										</div>
+									</div>
 									<li>
 										{/* <label
 											aria-label="sortOrder"
@@ -679,63 +722,6 @@ const EditProductPage = (props) => {
 										</div>
 									</div>
 									{image_display(images)}
-									{/* <div className="row wrap">
-										{images &&
-											images.map((picture) => {
-												return (
-													<img
-														style={{
-															width: '100%',
-															height: 'auto',
-															maxWidth: '150px',
-															maxHeight: '150px',
-															borderRadius: '15px',
-															marginRight: '10px'
-														}}
-														className="mv-10px"
-														src={picture}
-													/>
-												);
-											})}
-									</div>
-									{images &&
-										images.map((picture, index) => {
-											return (
-												<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-													<div>
-														<button
-															className="button icon"
-															onClick={(e) => remove_image(index, e)}
-														>
-															<i className="fas fa-times mr-5px" />
-														</button>
-														{picture}
-													</div>
-													<div>
-														{index > 0 && (
-															<button
-																className="button icon"
-																onClick={(e) => move_image_up(index, e)}
-															>
-																<i className=" fas fa-sort-up" />
-															</button>
-														)}
-
-														{index < images.length - 1 && (
-															<button
-																className="button icon"
-																onClick={(e) => move_image_down(index, e)}
-															>
-																<i
-																	style={{ '-webkitTransform': 'rotate(-180deg)' }}
-																	className=" fas fa-sort-up"
-																/>
-															</button>
-														)}
-													</div>
-												</div>
-											);
-										})} */}
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}
