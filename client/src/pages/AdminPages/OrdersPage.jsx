@@ -22,7 +22,7 @@ const OrdersPage = (props) => {
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log({ orderspage: userInfo });
+	// console.log({ orderspage: userInfo });
 
 	const row_ref = useRef();
 
@@ -168,6 +168,11 @@ const OrdersPage = (props) => {
 						</FlexContainer>
 					);
 				})}
+				<Link to="/secure/glow/editorder">
+					<button className="button primary" style={{ width: '160px' }}>
+						Create Order
+					</button>
+				</Link>
 			</FlexContainer>
 			<div className="order-header">
 				<h1
@@ -286,9 +291,14 @@ const OrdersPage = (props) => {
 														className="top-8px fas fa-sort-up"
 													/>
 												</button>
-												<Link to={'/secure/account/order/' + order._id}>
+												<Link to={'/secure/glow/editorder/' + order._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
+													</button>
+												</Link>
+												<Link to={'/secure/account/order/' + order._id}>
+													<button className="button icon">
+														<i class="fas fa-mountain" />
 													</button>
 												</Link>
 												<button className="button icon" onClick={() => deleteHandler(order)}>

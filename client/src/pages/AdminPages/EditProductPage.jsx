@@ -341,7 +341,7 @@ const EditProductPage = (props) => {
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
 
 			<div className="form">
-				<form onSubmit={submitHandler} style={{ width: '100%' }}>
+				<form onSubmit={submitHandler} className="w-100per">
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
@@ -364,8 +364,8 @@ const EditProductPage = (props) => {
 										{loading ? 'Product' : product.name}
 									</h1>
 
-									<FlexContainer row wrap h_between>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap jc-b">
+										<div className="w-228px m-10px">
 											<li>
 												<label htmlFor="name">Name</label>
 												<input
@@ -475,9 +475,9 @@ const EditProductPage = (props) => {
 													Add Image
 												</button>
 											</li>
-										</FlexContainer>
+										</div>
 
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+										<div className="w-228px m-10px">
 											<li>
 												<label htmlFor="countInStock">Count In Stock</label>
 												<input
@@ -518,8 +518,8 @@ const EditProductPage = (props) => {
 													onChange={(e) => setDescription(e.target.value)}
 												/>
 											</li>
-										</FlexContainer>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+										</div>
+										<div className="column" styles={{ width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
@@ -570,8 +570,8 @@ const EditProductPage = (props) => {
 													onChange={(e) => set_meta_keywords(e.target.value)}
 												/>
 											</li>
-										</FlexContainer>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+										</div>
+										<div className="w-228px m-10px">
 											<li>
 												<label htmlFor="length">Product Length</label>
 												<input
@@ -632,8 +632,8 @@ const EditProductPage = (props) => {
 													onChange={(e) => setVolume(e.target.value)}
 												/>
 											</li>
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									{image_display(images)}
 									{/* <div className="row wrap">
 										{images &&
