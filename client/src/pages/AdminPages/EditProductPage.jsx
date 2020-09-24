@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveProduct, detailsProduct, deleteProductReview } from '../../actions/productActions';
+import { saveProduct, detailsProduct, deleteProductReview, listProducts } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
@@ -34,7 +34,7 @@ const EditProductPage = (props) => {
 	const [ weight_ounces, set_weight_ounces ] = useState();
 	const [ pathname, setPathname ] = useState();
 	const [ order, setOrder ] = useState();
-	const [ show_message, set_show_message ] = useState('');
+	// const [ products, set_products ] = useState('');
 
 	const history = useHistory();
 
@@ -47,6 +47,9 @@ const EditProductPage = (props) => {
 	// const productDelete = useSelector((state) => state.productDelete);
 	// const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
 
+	const productList = useSelector((state) => state.productList);
+	const { products, loading: loading_products, error: error_products } = productList;
+
 	const productReviewDelete = useSelector((state) => state.productReviewDelete);
 	const { success: productDeleteSuccess } = productReviewDelete;
 
@@ -55,7 +58,7 @@ const EditProductPage = (props) => {
 
 	console.log({ product });
 
-	// console.log({ ID: props.match.params.id })
+	// console.log({ ID: id });
 
 	useEffect(() => {
 		if (props.match.params.pathname) {
@@ -65,11 +68,21 @@ const EditProductPage = (props) => {
 		} else {
 			dispatch(detailsProduct(''));
 		}
+		dispatch(listProducts(''));
 
 		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);
+
+	useEffect(() => {
+		return () => {};
+	}, []);
+
+	const use_template = (e) => {
+		dispatch(detailsProduct(e.target.value));
+		// history.push('/secure/glow/products');
+	};
 
 	useEffect(
 		() => {
@@ -148,7 +161,7 @@ const EditProductPage = (props) => {
 		e.preventDefault();
 		dispatch(
 			saveProduct({
-				_id: id,
+				_id: props.match.params.pathname && id,
 				name,
 				price,
 				// display_image,
@@ -368,7 +381,33 @@ const EditProductPage = (props) => {
 									>
 										{loading ? 'Product' : product.name}
 									</h1>
-
+									<li>
+										<label
+											aria-label="sortOrder"
+											htmlFor="sortOrder"
+											className="select-label mb-15px jc-c"
+										>
+											Product
+										</label>
+										<div className="ai-c h-25px mb-15px jc-c">
+											<div className="custom-select">
+												<select
+													className="qty_select_dropdown"
+													onChange={(e) => use_template(e)}
+												>
+													<option key={1} defaultValue="">
+														---Choose Product as a Template---
+													</option>
+													{products.map((product, index) => (
+														<option key={index} value={product.pathname}>
+															{product.name}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+									</li>
 									<div className="row wrap jc-b">
 										<div className="w-228px m-10px">
 											<li>
