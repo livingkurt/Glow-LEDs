@@ -217,12 +217,17 @@ const EditProductPage = (props) => {
 	const add_image = (e) => {
 		e.preventDefault();
 		console.log(image);
-		if (image.indexOf(' ')) {
+		if (image.indexOf(' ') >= 0) {
+			console.log('indexOf');
 			image.split(' ').map((image) => {
 				set_images((images) => [ ...images, image ]);
 			});
-		} else {
+		} else if (images) {
+			console.log('images.length > 0');
 			set_images((images) => [ ...images, image ]);
+		} else {
+			console.log('images.length === 0');
+			set_images([ image ]);
 		}
 
 		set_image('');
