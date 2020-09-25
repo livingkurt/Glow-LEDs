@@ -22,7 +22,13 @@ import {
 	featureSaveReducer,
 	featureDeleteReducer
 } from './reducers/featureReducers';
-import { cartReducer } from './reducers/cartReducers';
+import {
+	cartDeleteReducer,
+	cartDetailsReducer,
+	cartListReducer,
+	cartReducer,
+	cartSaveReducer
+} from './reducers/cartReducers';
 import {
 	userLoginReducer,
 	userRegisterReducer,
@@ -43,11 +49,7 @@ import {
 	myOrderListReducer,
 	orderListReducer,
 	orderDeleteReducer,
-	// orderShippingReducer,
-	// orderDeliveryReducer,
 	orderRefundReducer
-	// orderPackagedReducer,
-	// orderManufacturedReducer
 } from './reducers/orderReducers';
 import { promoDeleteReducer, promoDetailsReducer, promoListReducer, promoSaveReducer } from './reducers/promoReducers';
 import {
@@ -56,6 +58,12 @@ import {
 	sponsorListReducer,
 	sponsorSaveReducer
 } from './reducers/sponsorReducers';
+import {
+	contentDeleteReducer,
+	contentDetailsReducer,
+	contentListReducer,
+	contentSaveReducer
+} from './reducers/contentReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
@@ -65,6 +73,10 @@ const reducer = combineReducers({
 	productList: productListReducer,
 	productDetails: productDetailsReducer,
 	cart: cartReducer,
+	cartList: cartListReducer,
+	cartDetails: cartDetailsReducer,
+	cartSave: cartSaveReducer,
+	cartDelete: cartDeleteReducer,
 	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
 	productSave: productSaveReducer,
@@ -79,10 +91,6 @@ const reducer = combineReducers({
 	orderList: orderListReducer,
 	orderDelete: orderDeleteReducer,
 	orderRefund: orderRefundReducer,
-	// orderManufactured: orderManufacturedReducer,
-	// orderPackaged: orderPackagedReducer,
-	// orderShipping: orderShippingReducer,
-	// orderDelivery: orderDeliveryReducer,
 	userContact: userContactReducer,
 	userPasswordReset: userPasswordResetReducer,
 	userResetPassword: userResetPasswordReducer,
@@ -107,7 +115,11 @@ const reducer = combineReducers({
 	sponsorList: sponsorListReducer,
 	sponsorDetails: sponsorDetailsReducer,
 	sponsorSave: sponsorSaveReducer,
-	sponsorDelete: sponsorDeleteReducer
+	sponsorDelete: sponsorDeleteReducer,
+	contentList: contentListReducer,
+	contentDetails: contentDetailsReducer,
+	contentSave: contentSaveReducer,
+	contentDelete: contentDeleteReducer
 });
 
 declare global {

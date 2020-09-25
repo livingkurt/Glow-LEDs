@@ -237,6 +237,9 @@ const Header = (props) => {
 								<Link to="/secure/glow/carts">
 									<button className="button nav">Carts</button>
 								</Link>
+								<Link to="/secure/glow/contents">
+									<button className="button nav">Contents</button>
+								</Link>
 							</ul>
 						</div>
 					)}

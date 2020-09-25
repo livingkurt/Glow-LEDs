@@ -159,6 +159,11 @@ const Sidebar = (props) => {
 									Carts
 								</button>
 							</Link>
+							<Link to="/secure/glow/contents">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Contents
+								</button>
+							</Link>
 						</ul>
 						<i
 							style={{ '-webkitTransform': 'rotate(-180deg)' }}

@@ -15,3 +15,4 @@ export { default as feature_routes } from './feature_routes';
 export { default as sponsor_routes } from './sponsor_routes';
 export { default as promo_routes } from './promo_routes';
 export { default as cart_routes } from './cart_routes';
+export { default as content_routes } from './content_routes';

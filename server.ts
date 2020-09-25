@@ -20,7 +20,8 @@ import {
 	feature_routes,
 	promo_routes,
 	sponsor_routes,
-	cart_routes
+	cart_routes,
+	content_routes
 } from './routes/index';
 
 // const htmlRoutes = require('./email_templates/html_routes');
@@ -59,6 +60,7 @@ app.use(sslRedirect());
 
 app.use('/api/promos', promo_routes);
 app.use('/api/carts', cart_routes);
+app.use('/api/contents', content_routes);
 app.use('/api/sponsors', sponsor_routes);
 app.use('/api/expenses', expense_routes);
 app.use('/api/features', feature_routes);

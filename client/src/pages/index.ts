@@ -14,8 +14,10 @@ export { default as EditOrderPage } from './AdminPages/EditOrderPage';
 export { default as SponsorsPage } from './AdminPages/SponsorsPage';
 export { default as PromosPage } from './AdminPages/PromosPage';
 export { default as FeaturesPage } from './AdminPages/FeaturesPage';
+export { default as ContentsPage } from './AdminPages/ContentsPage';
 export { default as CartsPage } from './AdminPages/CartsPage';
 export { default as EditCartPage } from './AdminPages/EditCartPage';
+export { default as EditContentPage } from './AdminPages/EditContentPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';
