@@ -13,7 +13,7 @@ import {
 	FEATURE_DELETE_FAIL
 } from '../constants/featureConstants';
 
-const featureListReducer = (state = { features: [] }, action: { type: any; payload: any }) => {
+export const featureListReducer = (state = { features: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case FEATURE_LIST_REQUEST:
 			return { loading: true, features: [] };
@@ -26,7 +26,7 @@ const featureListReducer = (state = { features: [] }, action: { type: any; paylo
 	}
 };
 
-const featureDetailsReducer = (state = { feature: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const featureDetailsReducer = (state = { feature: { reviews: [] } }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case FEATURE_DETAILS_REQUEST:
 			return { loading: true };
@@ -39,7 +39,7 @@ const featureDetailsReducer = (state = { feature: { reviews: [] } }, action: { t
 	}
 };
 
-const featureDeleteReducer = (state = { feature: {} }, action: { type: any; payload: any }) => {
+export const featureDeleteReducer = (state = { feature: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case FEATURE_DELETE_REQUEST:
 			return { loading: true };
@@ -52,7 +52,7 @@ const featureDeleteReducer = (state = { feature: {} }, action: { type: any; payl
 	}
 };
 
-const featureSaveReducer = (state = { feature: {} }, action: { type: any; payload: any }) => {
+export const featureSaveReducer = (state = { feature: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case FEATURE_SAVE_REQUEST:
 			return { loading: true };
@@ -64,5 +64,3 @@ const featureSaveReducer = (state = { feature: {} }, action: { type: any; payloa
 			return state;
 	}
 };
-
-export { featureListReducer, featureDetailsReducer, featureSaveReducer, featureDeleteReducer };

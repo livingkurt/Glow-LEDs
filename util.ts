@@ -6,7 +6,7 @@ export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
 
-const getToken = (user: { _id: any; first_name: any; last_name: any; email: any; isAdmin: any }) => {
+export const getToken = (user: { _id: any; first_name: any; last_name: any; email: any; isAdmin: any }) => {
 	return jwt.sign(
 		{
 			_id: user._id,
@@ -22,7 +22,7 @@ const getToken = (user: { _id: any; first_name: any; last_name: any; email: any;
 	);
 };
 
-const isAuth = (
+export const isAuth = (
 	req: { headers: { authorization: any }; user: any },
 	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
 	next: () => void
@@ -44,7 +44,7 @@ const isAuth = (
 	}
 };
 
-const isAdmin = (
+export const isAdmin = (
 	req: { user: { isAdmin: any } },
 	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
 	next: () => any
@@ -55,11 +55,3 @@ const isAdmin = (
 	}
 	return res.status(401).send({ msg: 'Admin Token is not valid.' });
 };
-
-export { getToken, isAuth, isAdmin };
-
-// module.exports = {
-// 	getToken,
-// 	isAuth,
-// 	isAdmin
-// };

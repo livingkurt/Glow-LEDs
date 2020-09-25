@@ -14,7 +14,7 @@ import {
 } from '../constants/expenseConstants';
 import axios from 'axios';
 
-const listExpenses = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listExpenses = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
@@ -33,7 +33,7 @@ const listExpenses = (category = '', searchKeyword = '', sortOrder = '') => asyn
 	}
 };
 
-const saveExpense = (expense: {
+export const saveExpense = (expense: {
 	_id: string;
 	expense_name?: string;
 	application?: number;
@@ -71,7 +71,9 @@ const saveExpense = (expense: {
 	}
 };
 
-const detailsExpense = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsExpense = (pathname: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	try {
 		dispatch({ type: EXPENSE_DETAILS_REQUEST, payload: pathname });
 		const { data } = await axios.get('/api/expenses/' + pathname);
@@ -81,7 +83,7 @@ const detailsExpense = (pathname: string) => async (dispatch: (arg0: { type: str
 	}
 };
 
-const deleteExpense = (expenseId: string) => async (
+export const deleteExpense = (expenseId: string) => async (
 	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -98,5 +100,3 @@ const deleteExpense = (expenseId: string) => async (
 		dispatch({ type: EXPENSE_DELETE_FAIL, payload: error.message });
 	}
 };
-
-export { listExpenses, detailsExpense, saveExpense, deleteExpense };

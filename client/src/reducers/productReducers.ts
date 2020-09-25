@@ -24,7 +24,7 @@ import {
 	PRODUCT_REVIEW_DELETE_RESET
 } from '../constants/productConstants';
 
-const productListReducer = (state = { products: [] }, action: { type: any; payload: any }) => {
+export const productListReducer = (state = { products: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_LIST_REQUEST:
 			return { loading: true, products: [] };
@@ -37,7 +37,7 @@ const productListReducer = (state = { products: [] }, action: { type: any; paylo
 	}
 };
 
-const productDetailsReducer = (state = { product: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const productDetailsReducer = (state = { product: { reviews: [] } }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_DETAILS_REQUEST:
 			return { loading: true };
@@ -50,7 +50,7 @@ const productDetailsReducer = (state = { product: { reviews: [] } }, action: { t
 	}
 };
 
-const productDeleteReducer = (state = { product: {} }, action: { type: any; payload: any }) => {
+export const productDeleteReducer = (state = { product: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_DELETE_REQUEST:
 			return { loading: true };
@@ -63,7 +63,7 @@ const productDeleteReducer = (state = { product: {} }, action: { type: any; payl
 	}
 };
 
-const productSaveReducer = (state = { product: {} }, action: { type: any; payload: any }) => {
+export const productSaveReducer = (state = { product: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_SAVE_REQUEST:
 			return { loading: true };
@@ -76,7 +76,7 @@ const productSaveReducer = (state = { product: {} }, action: { type: any; payloa
 	}
 };
 
-const productImagesReducer = (state = { images: [] }, action: { type: any; payload: any }) => {
+export const productImagesReducer = (state = { images: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_IMAGES_REQUEST:
 			return { loading: true };
@@ -89,7 +89,7 @@ const productImagesReducer = (state = { images: [] }, action: { type: any; paylo
 	}
 };
 
-const productReviewSaveReducer = (state = {}, action: { type: any; payload: any }) => {
+export const productReviewSaveReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_REVIEW_SAVE_REQUEST:
 			return { loading: true };
@@ -103,7 +103,7 @@ const productReviewSaveReducer = (state = {}, action: { type: any; payload: any 
 			return state;
 	}
 };
-const productReviewDeleteReducer = (state = {}, action: { type: any; payload: any }) => {
+export const productReviewDeleteReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PRODUCT_REVIEW_DELETE_REQUEST:
 			return { loading: true };
@@ -116,14 +116,4 @@ const productReviewDeleteReducer = (state = {}, action: { type: any; payload: an
 		default:
 			return state;
 	}
-};
-
-export {
-	productListReducer,
-	productDetailsReducer,
-	productSaveReducer,
-	productDeleteReducer,
-	productImagesReducer,
-	productReviewSaveReducer,
-	productReviewDeleteReducer
 };

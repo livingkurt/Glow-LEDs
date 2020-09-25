@@ -14,7 +14,7 @@ import {
 } from '../constants/featureConstants';
 import axios from 'axios';
 
-const listFeatures = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listFeatures = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
@@ -33,7 +33,7 @@ const listFeatures = (category = '', searchKeyword = '', sortOrder = '') => asyn
 	}
 };
 
-const saveFeature = (feature: {
+export const saveFeature = (feature: {
 	_id: string;
 	feature_name?: string;
 	application?: number;
@@ -71,7 +71,9 @@ const saveFeature = (feature: {
 	}
 };
 
-const detailsFeature = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsFeature = (pathname: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	try {
 		dispatch({ type: FEATURE_DETAILS_REQUEST, payload: pathname });
 		const { data } = await axios.get('/api/features/' + pathname);
@@ -81,7 +83,7 @@ const detailsFeature = (pathname: string) => async (dispatch: (arg0: { type: str
 	}
 };
 
-const deleteFeature = (featureId: string) => async (
+export const deleteFeature = (featureId: string) => async (
 	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -98,5 +100,3 @@ const deleteFeature = (featureId: string) => async (
 		dispatch({ type: FEATURE_DELETE_FAIL, payload: error.message });
 	}
 };
-
-export { listFeatures, detailsFeature, saveFeature, deleteFeature };

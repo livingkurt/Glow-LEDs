@@ -23,7 +23,7 @@ import {
 } from '../constants/productConstants';
 import axios from 'axios';
 
-const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
@@ -42,7 +42,7 @@ const listProducts = (category = '', searchKeyword = '', sortOrder = '') => asyn
 	}
 };
 
-const saveProduct = (product: {
+export const saveProduct = (product: {
 	_id: string;
 	name?: string;
 	price?: number;
@@ -90,7 +90,9 @@ const saveProduct = (product: {
 	}
 };
 
-const detailsProduct = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsProduct = (pathname: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	try {
 		dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: pathname });
 		const { data } = await axios.get('/api/products/' + pathname);
@@ -100,7 +102,7 @@ const detailsProduct = (pathname: string) => async (dispatch: (arg0: { type: str
 	}
 };
 
-const deleteProduct = (id: string) => async (
+export const deleteProduct = (id: string) => async (
 	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -119,7 +121,9 @@ const deleteProduct = (id: string) => async (
 	}
 };
 
-const imagesProduct = (folder_dir: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const imagesProduct = (folder_dir: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	// console.log({ folder_dir });
 	try {
 		dispatch({ type: PRODUCT_IMAGES_REQUEST, payload: folder_dir });
@@ -130,7 +134,10 @@ const imagesProduct = (folder_dir: string) => async (dispatch: (arg0: { type: st
 	}
 };
 
-const saveProductReview = (product_id: string, review: { name: string; rating: number; comment: string }) => async (
+export const saveProductReview = (
+	product_id: string,
+	review: { name: string; rating: number; comment: string }
+) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: { token: any } } }
 ) => {
@@ -147,7 +154,7 @@ const saveProductReview = (product_id: string, review: { name: string; rating: n
 		dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error.message });
 	}
 };
-const deleteProductReview = (product_id: string, review_id: string) => async (
+export const deleteProductReview = (product_id: string, review_id: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: { token: any } } }
 ) => {
@@ -164,14 +171,4 @@ const deleteProductReview = (product_id: string, review_id: string) => async (
 	} catch (error) {
 		dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: error.message });
 	}
-};
-
-export {
-	listProducts,
-	detailsProduct,
-	saveProduct,
-	deleteProduct,
-	imagesProduct,
-	saveProductReview,
-	deleteProductReview
 };

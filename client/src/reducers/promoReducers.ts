@@ -13,7 +13,7 @@ import {
 	PROMO_DELETE_FAIL
 } from '../constants/promoConstants';
 
-const promoListReducer = (state = { promos: [] }, action: { type: any; payload: any }) => {
+export const promoListReducer = (state = { promos: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PROMO_LIST_REQUEST:
 			return { loading: true, promos: [] };
@@ -26,7 +26,7 @@ const promoListReducer = (state = { promos: [] }, action: { type: any; payload: 
 	}
 };
 
-const promoDetailsReducer = (state = { promo: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const promoDetailsReducer = (state = { promo: { reviews: [] } }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PROMO_DETAILS_REQUEST:
 			return { loading: true };
@@ -39,7 +39,7 @@ const promoDetailsReducer = (state = { promo: { reviews: [] } }, action: { type:
 	}
 };
 
-const promoDeleteReducer = (state = { promo: {} }, action: { type: any; payload: any }) => {
+export const promoDeleteReducer = (state = { promo: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PROMO_DELETE_REQUEST:
 			return { loading: true };
@@ -52,7 +52,7 @@ const promoDeleteReducer = (state = { promo: {} }, action: { type: any; payload:
 	}
 };
 
-const promoSaveReducer = (state = { promo: {} }, action: { type: any; payload: any }) => {
+export const promoSaveReducer = (state = { promo: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case PROMO_SAVE_REQUEST:
 			return { loading: true };
@@ -64,5 +64,3 @@ const promoSaveReducer = (state = { promo: {} }, action: { type: any; payload: a
 			return state;
 	}
 };
-
-export { promoListReducer, promoDetailsReducer, promoSaveReducer, promoDeleteReducer };

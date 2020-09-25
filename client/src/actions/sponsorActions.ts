@@ -14,7 +14,7 @@ import {
 } from '../constants/sponsorConstants';
 import axios from 'axios';
 
-const listSponsors = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listSponsors = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
@@ -33,7 +33,7 @@ const listSponsors = (category = '', searchKeyword = '', sortOrder = '') => asyn
 	}
 };
 
-const saveSponsor = (sponsor: any) => async (
+export const saveSponsor = (sponsor: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -61,7 +61,9 @@ const saveSponsor = (sponsor: any) => async (
 	}
 };
 
-const detailsSponsor = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsSponsor = (pathname: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	try {
 		dispatch({ type: SPONSOR_DETAILS_REQUEST, payload: pathname });
 		const { data } = await axios.get('/api/sponsors/' + pathname);
@@ -71,7 +73,7 @@ const detailsSponsor = (pathname: string) => async (dispatch: (arg0: { type: str
 	}
 };
 
-const deleteSponsor = (sponsorId: string) => async (
+export const deleteSponsor = (sponsorId: string) => async (
 	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -88,5 +90,3 @@ const deleteSponsor = (sponsorId: string) => async (
 		dispatch({ type: SPONSOR_DELETE_FAIL, payload: error.message });
 	}
 };
-
-export { listSponsors, detailsSponsor, saveSponsor, deleteSponsor };

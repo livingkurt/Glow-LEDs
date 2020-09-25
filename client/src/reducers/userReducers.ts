@@ -36,7 +36,7 @@ import {
 	USER_UPDATE_USER_FAIL
 } from '../constants/userConstants';
 
-const userLoginReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userLoginReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_LOGIN_REQUEST:
 			return { loading: true };
@@ -51,7 +51,7 @@ const userLoginReducer = (state = {}, action: { type: any; payload: any }) => {
 	}
 };
 
-const userPasswordResetReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userPasswordResetReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_PASSWORD_RESET_REQUEST:
 			return { loading: true };
@@ -64,7 +64,7 @@ const userPasswordResetReducer = (state = {}, action: { type: any; payload: any 
 	}
 };
 
-const userResetPasswordReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userResetPasswordReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_RESET_PASSWORD_REQUEST:
 			return { loading: true };
@@ -77,7 +77,7 @@ const userResetPasswordReducer = (state = {}, action: { type: any; payload: any 
 	}
 };
 
-const userVerifyReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userVerifyReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_VERIFY_REQUEST:
 			return { loading: true };
@@ -90,7 +90,7 @@ const userVerifyReducer = (state = {}, action: { type: any; payload: any }) => {
 	}
 };
 
-const userUpdateReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userUpdateReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_UPDATE_REQUEST:
 			return { loading: true };
@@ -102,7 +102,7 @@ const userUpdateReducer = (state = {}, action: { type: any; payload: any }) => {
 			return state;
 	}
 };
-const userUpdateUserReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userUpdateUserReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_UPDATE_USER_REQUEST:
 			return { loading: true };
@@ -115,7 +115,7 @@ const userUpdateUserReducer = (state = {}, action: { type: any; payload: any }) 
 	}
 };
 
-const userRegisterReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userRegisterReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_REGISTER_REQUEST:
 			return { loading: true };
@@ -128,7 +128,7 @@ const userRegisterReducer = (state = {}, action: { type: any; payload: any }) =>
 	}
 };
 
-const userContactReducer = (state = {}, action: { type: any; payload: any }) => {
+export const userContactReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_CONTACT_REQUEST:
 			return { loading: true };
@@ -143,7 +143,7 @@ const userContactReducer = (state = {}, action: { type: any; payload: any }) => 
 	}
 };
 
-const userListReducer = (
+export const userListReducer = (
 	state = {
 		users: []
 	},
@@ -161,7 +161,7 @@ const userListReducer = (
 	}
 };
 
-const userDeleteReducer = (
+export const userDeleteReducer = (
 	state = {
 		user: {}
 	},
@@ -179,7 +179,7 @@ const userDeleteReducer = (
 	}
 };
 
-const userDetailsReducer = (
+export const userDetailsReducer = (
 	state = {
 		user: {}
 	},
@@ -195,18 +195,4 @@ const userDetailsReducer = (
 		default:
 			return state;
 	}
-};
-
-export {
-	userLoginReducer,
-	userPasswordResetReducer,
-	userRegisterReducer,
-	userUpdateReducer,
-	userContactReducer,
-	userResetPasswordReducer,
-	userVerifyReducer,
-	userListReducer,
-	userDeleteReducer,
-	userDetailsReducer,
-	userUpdateUserReducer
 };

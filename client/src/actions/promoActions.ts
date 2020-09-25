@@ -14,7 +14,7 @@ import {
 } from '../constants/promoConstants';
 import axios from 'axios';
 
-const listPromos = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listPromos = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
@@ -33,7 +33,7 @@ const listPromos = (category = '', searchKeyword = '', sortOrder = '') => async 
 	}
 };
 
-const savePromo = (promo: any) => async (
+export const savePromo = (promo: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -61,7 +61,7 @@ const savePromo = (promo: any) => async (
 	}
 };
 
-const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
 		dispatch({ type: PROMO_DETAILS_REQUEST, payload: pathname });
 		const { data } = await axios.get('/api/promos/' + pathname);
@@ -71,7 +71,7 @@ const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type: strin
 	}
 };
 
-const deletePromo = (promoId: string) => async (
+export const deletePromo = (promoId: string) => async (
 	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -88,5 +88,3 @@ const deletePromo = (promoId: string) => async (
 		dispatch({ type: PROMO_DELETE_FAIL, payload: error.message });
 	}
 };
-
-export { listPromos, detailsPromo, savePromo, deletePromo };

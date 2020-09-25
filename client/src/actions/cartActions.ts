@@ -2,7 +2,7 @@ import Axios from 'axios';
 import Cookie from 'js-cookie';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_PAYMENT } from '../constants/cartConstants';
 
-const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, diffuser_cap: any) => async (
+export const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, diffuser_cap: any) => async (
 	dispatch: (
 		arg0: {
 			type: string;
@@ -89,7 +89,7 @@ const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, di
 	}
 };
 
-const removeFromCart = (productId: string) => (
+export const removeFromCart = (productId: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { cart: { cartItems: object } }
 ) => {
@@ -98,7 +98,7 @@ const removeFromCart = (productId: string) => (
 	const { cart: { cartItems } } = getState();
 	Cookie.set('cartItems', JSON.stringify(cartItems));
 };
-const saveShipping = (data: {
+export const saveShipping = (data: {
 	first_name: string;
 	last_name: string;
 	address: string;
@@ -112,7 +112,8 @@ const saveShipping = (data: {
 	Cookie.set('shipping', JSON.stringify(data));
 };
 
-const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const savePayment = (data: { paymentMethod: any }) => (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	dispatch({ type: CART_SAVE_PAYMENT, payload: data });
 };
-export { addToCart, removeFromCart, saveShipping, savePayment };

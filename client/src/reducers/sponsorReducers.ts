@@ -13,7 +13,7 @@ import {
 	SPONSOR_DELETE_FAIL
 } from '../constants/sponsorConstants';
 
-const sponsorListReducer = (state = { sponsors: [] }, action: { type: any; payload: any }) => {
+export const sponsorListReducer = (state = { sponsors: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case SPONSOR_LIST_REQUEST:
 			return { loading: true, sponsors: [] };
@@ -26,7 +26,7 @@ const sponsorListReducer = (state = { sponsors: [] }, action: { type: any; paylo
 	}
 };
 
-const sponsorDetailsReducer = (state = { sponsor: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const sponsorDetailsReducer = (state = { sponsor: { reviews: [] } }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case SPONSOR_DETAILS_REQUEST:
 			return { loading: true };
@@ -39,7 +39,7 @@ const sponsorDetailsReducer = (state = { sponsor: { reviews: [] } }, action: { t
 	}
 };
 
-const sponsorDeleteReducer = (state = { sponsor: {} }, action: { type: any; payload: any }) => {
+export const sponsorDeleteReducer = (state = { sponsor: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case SPONSOR_DELETE_REQUEST:
 			return { loading: true };
@@ -52,7 +52,7 @@ const sponsorDeleteReducer = (state = { sponsor: {} }, action: { type: any; payl
 	}
 };
 
-const sponsorSaveReducer = (state = { sponsor: {} }, action: { type: any; payload: any }) => {
+export const sponsorSaveReducer = (state = { sponsor: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case SPONSOR_SAVE_REQUEST:
 			return { loading: true };
@@ -64,5 +64,3 @@ const sponsorSaveReducer = (state = { sponsor: {} }, action: { type: any; payloa
 			return state;
 	}
 };
-
-export { sponsorListReducer, sponsorDetailsReducer, sponsorSaveReducer, sponsorDeleteReducer };

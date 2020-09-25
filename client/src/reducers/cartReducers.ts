@@ -1,7 +1,10 @@
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_PAYMENT } from '../constants/cartConstants';
 import Cookie from 'js-cookie';
 
-const cartReducer = (state = { cartItems: [], shipping: {}, payment: {} }, action: { type: any; payload: any }) => {
+export const cartReducer = (
+	state = { cartItems: [], shipping: {}, payment: {} },
+	action: { type: any; payload: any }
+) => {
 	console.log('cartReducer');
 	switch (action.type) {
 		case CART_ADD_ITEM:
@@ -25,5 +28,3 @@ const cartReducer = (state = { cartItems: [], shipping: {}, payment: {} }, actio
 			return state;
 	}
 };
-
-export { cartReducer };

@@ -13,7 +13,7 @@ import {
 	EXPENSE_DELETE_FAIL
 } from '../constants/expenseConstants';
 
-const expenseListReducer = (state = { expenses: [] }, action: { type: any; payload: any }) => {
+export const expenseListReducer = (state = { expenses: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case EXPENSE_LIST_REQUEST:
 			return { loading: true, expenses: [] };
@@ -26,7 +26,7 @@ const expenseListReducer = (state = { expenses: [] }, action: { type: any; paylo
 	}
 };
 
-const expenseDetailsReducer = (state = { expense: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const expenseDetailsReducer = (state = { expense: { reviews: [] } }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case EXPENSE_DETAILS_REQUEST:
 			return { loading: true };
@@ -39,7 +39,7 @@ const expenseDetailsReducer = (state = { expense: { reviews: [] } }, action: { t
 	}
 };
 
-const expenseDeleteReducer = (state = { expense: {} }, action: { type: any; payload: any }) => {
+export const expenseDeleteReducer = (state = { expense: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case EXPENSE_DELETE_REQUEST:
 			return { loading: true };
@@ -52,7 +52,7 @@ const expenseDeleteReducer = (state = { expense: {} }, action: { type: any; payl
 	}
 };
 
-const expenseSaveReducer = (state = { expense: {} }, action: { type: any; payload: any }) => {
+export const expenseSaveReducer = (state = { expense: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case EXPENSE_SAVE_REQUEST:
 			return { loading: true };
@@ -64,5 +64,3 @@ const expenseSaveReducer = (state = { expense: {} }, action: { type: any; payloa
 			return state;
 	}
 };
-
-export { expenseListReducer, expenseDetailsReducer, expenseSaveReducer, expenseDeleteReducer };

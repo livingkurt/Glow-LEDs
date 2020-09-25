@@ -222,7 +222,7 @@ export const print_invoice = (order: any) => {
 			.map((item: any) => {
 				let item_item = `<tr class="item">
           <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
-            ${item.name}
+          ${item.qty}x ${item.name}
           </td>
   
           <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"

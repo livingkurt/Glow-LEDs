@@ -38,7 +38,7 @@ import {
 	USER_UPDATE_USER_FAIL
 } from '../constants/userConstants';
 
-const update = (userdata: any) => async (
+export const update = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -83,7 +83,7 @@ const update = (userdata: any) => async (
 		dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
 	}
 };
-const updateUser = (userdata: any) => async (
+export const updateUser = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -129,7 +129,9 @@ const updateUser = (userdata: any) => async (
 	}
 };
 
-const login = (email: string, password: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const login = (email: string, password: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
 	// console.log({ login: email });
 	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
 	try {
@@ -141,7 +143,7 @@ const login = (email: string, password: string) => async (dispatch: (arg0: { typ
 	}
 };
 
-const password_reset = (email: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const password_reset = (email: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ password_reset: email });
 	dispatch({ type: USER_PASSWORD_RESET_REQUEST, payload: { email } });
 	try {
@@ -153,7 +155,7 @@ const password_reset = (email: string) => async (dispatch: (arg0: { type: string
 	}
 };
 
-const reset_password = (user_id: string, password: string, repassword: string) => async (
+export const reset_password = (user_id: string, password: string, repassword: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	console.log({ user_id, password, repassword });
@@ -167,7 +169,7 @@ const reset_password = (user_id: string, password: string, repassword: string) =
 	}
 };
 
-const register = (first_name: string, last_name: string, email: string, password: string) => async (
+export const register = (first_name: string, last_name: string, email: string, password: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	dispatch({ type: USER_REGISTER_REQUEST, payload: { first_name, last_name, email, password } });
@@ -181,7 +183,7 @@ const register = (first_name: string, last_name: string, email: string, password
 	}
 };
 
-const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ user_id });
 	dispatch({ type: USER_VERIFY_REQUEST, payload: { user_id } });
 	try {
@@ -195,7 +197,7 @@ const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payl
 	}
 };
 
-const contact = (
+export const contact = (
 	first_name: string,
 	last_name: string,
 	email: string,
@@ -250,7 +252,7 @@ const contact = (
 	}
 };
 
-const listUsers = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listUsers = (category = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -277,7 +279,7 @@ const listUsers = (category = '', searchKeyword = '', sortOrder = '') => async (
 	}
 };
 
-const deleteUser = (userId: string) => async (
+export const deleteUser = (userId: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -293,7 +295,7 @@ const deleteUser = (userId: string) => async (
 	}
 };
 
-const detailsUser = (userId: string) => async (
+export const detailsUser = (userId: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -311,21 +313,7 @@ const detailsUser = (userId: string) => async (
 	}
 };
 
-const logout = () => (dispatch: (arg0: { type: string }) => void) => {
+export const logout = () => (dispatch: (arg0: { type: string }) => void) => {
 	Cookie.remove('userInfo');
 	dispatch({ type: USER_LOGOUT });
-};
-export {
-	login,
-	register,
-	logout,
-	update,
-	contact,
-	password_reset,
-	reset_password,
-	verify,
-	listUsers,
-	deleteUser,
-	detailsUser,
-	updateUser
 };
