@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 // const expressAttack = require('express-attack');
 // const requestIp = require('request-ip');
 const config = require('./config');
+require('dotenv').config();
 const compression = require('compression');
 import {
 	user_routes,
