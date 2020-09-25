@@ -108,7 +108,7 @@ const EditExpensePage = (props) => {
 		set_application(expense.application);
 		set_url(expense.url);
 		set_place_of_purchase(expense.place_of_purchase);
-		set_date_of_purchase(format_date(expense.date_of_purchase));
+		set_date_of_purchase(expense.date_of_purchase);
 		set_category(expense.category);
 		set_card(expense.card);
 		set_amount(expense.amount);
