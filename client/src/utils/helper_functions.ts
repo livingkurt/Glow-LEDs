@@ -141,7 +141,7 @@ export const print_invoice = (order: any) => {
                 <td class="title"
                   style="vertical-align: top; padding-bottom: 20px; font-size: 45px; line-height: 45px; color: #333; "
                   valign="top">
-                  <img src="https://images2.imgbox.com/43/9c/VfPHO7QY_o.png"
+                  <img src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
                     style="width:100%; max-width:400px; margin-left: -13px;">
                 </td>
   
@@ -162,10 +162,11 @@ export const print_invoice = (order: any) => {
                 <td style="vertical-align: top; padding-bottom: 40px;" valign="top">
                   Glow LEDs<br>
                   404 Kenniston Dr<br>
-                  Austin, TX 78752
+                  Austin, TX 78752<br>
+                  info.glowleds@gmail.com
                 </td>
   
-                <td style="padding: 5px; vertical-align: top; text-align: right; padding-bottom: 40px;" valign="top"
+                <td style=" vertical-align: top; text-align: right; padding-bottom: 40px;" valign="top"
                   align="right">
                   ${order.shipping.first_name} ${order.shipping.last_name}<br>
                   ${order.shipping.address}<br>
@@ -217,19 +218,21 @@ export const print_invoice = (order: any) => {
             Price
           </td>
         </tr>
-        ${order.orderItems.map((item: any) => {
-			let item_item = `<tr class="item">
+        ${order.orderItems
+			.map((item: any) => {
+				let item_item = `<tr class="item">
           <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
             ${item.name}
           </td>
   
           <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
             align="right">
-            $${item.price}
+            $${item.price.toFixed(2)}
           </td>
         </tr>`;
-			return item_item;
-		})}
+				return item_item;
+			})
+			.join('')}
   
      
       </table>
@@ -260,8 +263,8 @@ export const print_invoice = (order: any) => {
   
   </html>`);
 
-	// mywindow.document.close(); // necessary for IE >= 10
-	// mywindow.focus(); // necessary for IE >= 10*/
+	mywindow.document.close(); // necessary for IE >= 10
+	mywindow.focus(); // necessary for IE >= 10*/
 
 	mywindow.print();
 	// mywindow.close();
