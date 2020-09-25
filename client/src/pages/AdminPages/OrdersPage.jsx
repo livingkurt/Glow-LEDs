@@ -259,7 +259,7 @@ const OrdersPage = (props) => {
     
             <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
               align="right">
-              ${item.price}
+              $${item.price}
             </td>
           </tr>`;
 				return item_item;
