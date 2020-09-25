@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { logout, updateUser } from '../../actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { validate_profile } from '../../utils/helper_functions';
+import { validate_profile } from '../../utils/validations';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';

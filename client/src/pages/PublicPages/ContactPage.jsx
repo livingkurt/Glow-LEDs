@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../../actions/userActions';
-import { validate_contact } from '../../utils/helper_functions';
+import { validate_contact } from '../../utils/validations';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 import { humanize } from '../../utils/helper_functions';

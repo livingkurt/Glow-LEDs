@@ -10,7 +10,7 @@ import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
-import { validate_promo_code, humanize } from '../../utils/helper_functions';
+import { validate_promo_code } from '../../utils/validations';
 import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
 
 const PlaceOrderPage = (props) => {

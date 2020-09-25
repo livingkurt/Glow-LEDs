@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { logout, update, reset_password } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { validate_password_change } from '../../utils/helper_functions';
+import { validate_password_change } from '../../utils/validations';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
