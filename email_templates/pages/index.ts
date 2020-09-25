@@ -14,3 +14,4 @@ export { default as contact_view } from './contact_view';
 export { default as order_view } from './order_view';
 export { default as refund_view } from './refund_view';
 export { default as contact_confirmation_view } from './contact_confirmation_view';
+export { default as invoice_view } from './invoice_view';

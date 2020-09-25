@@ -12,11 +12,13 @@ import {
 	order_view,
 	contact_confirmation_view,
 	not_verified_view,
-	refund_view
+	refund_view,
+	invoice_view
 } from '../email_templates/pages/index';
 const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
 const router = express.Router();
+const PHE = require('print-html-element');
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -65,6 +67,12 @@ let transporter = nodemailer.createTransport({
 // 		res.status(422).send(err);
 // 	}
 // });
+
+router.post('/invoice', async (req, res) => {
+	console.log({ invoice: req.body });
+	// PHE.printHtml(invoice_view(req.body));
+	res.render('./invoice.html');
+});
 
 router.post('/contact', async (req, res) => {
 	// const data = req.body;

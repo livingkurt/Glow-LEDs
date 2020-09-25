@@ -30,7 +30,7 @@ export default (props: {
 	createdAt: Date;
 	token: any;
 }) => {
-	const format_date = (unformatted_date: string) => {
+	const format_date = (unformatted_date: any) => {
 		const month = unformatted_date.slice(5, 7);
 		const day = unformatted_date.slice(8, 10);
 		const year = unformatted_date.slice(0, 4);
