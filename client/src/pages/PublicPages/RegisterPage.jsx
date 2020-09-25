@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import { validate_registration } from '../../utils/helper_functions';
+import { validate_registration } from '../../utils/validations';
 import MetaTags from 'react-meta-tags';
 
 const RegisterPage = (props) => {
