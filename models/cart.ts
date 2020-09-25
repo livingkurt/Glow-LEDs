@@ -5,7 +5,8 @@ export {};
 const cartSchema = new mongoose.Schema(
 	{
 		cartItems: { type: Array },
-		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		deleted: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true

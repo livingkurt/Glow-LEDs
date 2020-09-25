@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { addToCart, removeFromCart } from '../../actions/cartActions';
+import { addToCart, detailsCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexContainer } from '../../components/ContainerComponents';
@@ -8,29 +8,109 @@ import MetaTags from 'react-meta-tags';
 import Cookie from 'js-cookie';
 import { humanize } from '../../utils/helper_functions';
 const CartPage = (props) => {
-	const cart = useSelector((state) => state.cart);
+	const user_data = props.userInfo;
+	// const cart = useSelector((state) => state.cart);
 
-	const { cartItems } = cart;
+	// const { cart.cartItems } = cart;
 
+	// console.log({ cart.cartItems });
+	const pathname = props.match.params.pathname;
+	const qty = parseInt(props.location.search ? Number(props.location.search.split('=')[1]) : 1);
 	const dispatch = useDispatch();
 	const [ no_items_in_cart, set_no_items_in_cart ] = useState('');
 
 	const removeFromCartHandler = (pathname) => {
 		dispatch(removeFromCart(pathname));
 	};
+	// const addToCartHandler = (pathname, qty) => {
+	// 	console.log({ pathname, qty });
+	// 	dispatch(addToCart(pathname, qty));
+	// };
+
+	const cartDetails = useSelector((state) => state.cartDetails);
+	const { cart, loading, error } = cartDetails;
+
+	const handleAddToCart = (pathname, qty) => {
+		// console.log({ pathname: props.match.params.pathname });
+		// console.log({ qty });
+		// console.log({ diffuser_cap_color });
+		// console.log({ diffuser_cap });
+		// if (diffuser_cap) {
+		// 	Cookie.set('diffuser_cap', diffuser_cap);
+		// }
+		// if (diffuser_cap_color) {
+		// 	Cookie.set('diffuser_cap_color', diffuser_cap_color);
+		// }
+		dispatch(addToCart(pathname, qty));
+		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
+		// props.history.push('/checkout/cart');
+	};
+
+	// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
+	// const diffuser_cap_color_cookie = Cookie.getJSON('diffuser_cap_color');
+
+	// const [ diffuser_cap, set_diffuser_cap ] = useState({});
+	// const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
+
+	useEffect(
+		() => {
+			dispatch(detailsCart(user_data.cart));
+			// if (pathname) {
+			// console.log(cart.cartItems.find((item) => item.pathname === pathname));
+			// const same_product = cart.cartItems.find((item) => item.pathname === pathname);
+			// if (same_product) {
+			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
+			// } else {
+			// dispatch(addToCart(pathname, qty));
+			// if (diffuser_cap_cookie) {
+			// 	set_diffuser_cap(diffuser_cap_cookie);
+			// 	console.log({ diffuser_cap_cookie });
+			// }
+			// if (diffuser_cap_color_cookie) {
+			// 	set_diffuser_cap_color(diffuser_cap_color_cookie);
+			// 	console.log({ diffuser_cap_color_cookie });
+			// }
+			// }
+			// }
+		},
+		[ cart.cartItems ]
+	);
+
+	useEffect(
+		() => {
+			// if (pathname) {
+			// console.log(cart.cartItems.find((item) => item.pathname === pathname));
+			// const same_product = cart.cartItems.find((item) => item.pathname === pathname);
+			// if (same_product) {
+			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
+			// } else {
+			// dispatch(addToCart(pathname, qty));
+			// if (diffuser_cap_cookie) {
+			// 	set_diffuser_cap(diffuser_cap_cookie);
+			// 	// console.log({ diffuser_cap_cookie });
+			// }
+			// if (diffuser_cap_color_cookie) {
+			// 	set_diffuser_cap_color(diffuser_cap_color_cookie);
+			// 	// console.log({ diffuser_cap_color_cookie });
+			// }
+			// }
+			// }
+		},
+		[ props.match.params.pathname ]
+	);
 
 	const checkoutHandler = () => {
-		if (cartItems.length === 0) {
+		if (cart.cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 		} else {
 			props.history.push('/account/login?redirect=/secure/checkout/placeorder');
 		}
 	};
 	const no_adapters_warning = () => {
-		const categories = cartItems.map((cartItem) => {
+		const categories = cart.cartItems.map((cartItem) => {
 			return cartItem.category;
 		});
-		const names = cartItems.map((cartItem) => {
+		const names = cart.cartItems.map((cartItem) => {
 			return cartItem.name;
 		});
 		if (
@@ -62,14 +142,14 @@ const CartPage = (props) => {
 							<h2>Shopping Cart</h2>
 							<div>Price</div>
 						</li>
-						{cartItems.length === 0 ? (
+						{cart.cartItems.length === 0 ? (
 							<FlexContainer column v_between>
 								<div>Cart is empty</div>
 							</FlexContainer>
 						) : (
 							<div>
 								<h4>{no_adapters_warning()}</h4>
-								{cartItems.map((item, index) => (
+								{cart.cartItems.map((item, index) => (
 									<li key={index}>
 										{/* {console.log({ item })} */}
 										<div className="cart-image">
@@ -84,9 +164,36 @@ const CartPage = (props) => {
 														item.category === 'mini_diffuser_caps') &&
 														item.diffuser_cap_color}{' '}
 													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
+													{/* {item.name === 'Diffuser Caps + Adapters Starter Kit' ||
+														(item.name === 'Mini Diffuser Caps + Adapters Starter Kit' &&
+															` w (${JSON.parse(item.diffuser_cap).name})`)} */}
 												</Link>
 											</div>
 											<div>
+												{/* <FlexContainer v_i_center styles={{ height: '25px' }}>
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label"
+													>
+														Qty
+													</label>
+													<div className="custom-select">
+														<select
+															defaultValue={item.qty}
+															className="qty_select_dropdown"
+															onChange={(e) =>
+																dispatch(addToCart(item.pathname, e.target.value))}
+														>
+															{[ ...Array(item.countInStock).keys() ].map((x) => (
+																<option key={x + 1} defaultValue={parseInt(x + 1)}>
+																	{parseInt(x + 1)}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</FlexContainer> */}
 												<FlexContainer v_i_center styles={{ height: '25px' }}>
 													<label
 														aria-label="sortOrder"
@@ -150,20 +257,32 @@ const CartPage = (props) => {
 				<FlexContainer h_center class="cart-action-container">
 					<div className="cart-action">
 						<h3 className="subtotal_h3">
-							Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-							{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-								cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
+							Subtotal ( {cart.cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
+							{/* {console.log(
+							cart.cartItems
+								.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0)
+								.toFixed(2)
+						)} */}
+							{cart.cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
+								cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
 							) : (
-								cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
+								cart.cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 							)}
+							{/* {cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)} */}
 						</h3>
-						<button onClick={checkoutHandler} className="button primary full-width">
+						<button
+							onClick={checkoutHandler}
+							className="button primary full-width"
+							// disabled={cart.cartItems.length === 0}
+						>
 							Proceed to Checkout
 						</button>
 					</div>
 				</FlexContainer>
 			</div>
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
+			{/* {cart.cartItems.length === 0 && <SuggestedProducts />} */}
+			{/* <SuggestedProducts /> */}
 			<Carousel />
 		</FlexContainer>
 	);

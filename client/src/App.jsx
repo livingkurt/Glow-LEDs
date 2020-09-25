@@ -42,7 +42,9 @@ import {
 	EditSponsorPage,
 	PromosPage,
 	SponsorsPage,
-	EditOrderPage
+	EditOrderPage,
+	EditCartPage,
+	CartsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -99,8 +101,10 @@ const App = () => {
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
 							<AdminRoute path="/secure/glow/editfeature/:id?" component={EditFeaturePage} />
+							<AdminRoute path="/secure/glow/editcart/:id?" component={EditCartPage} />
 							<AdminRoute path="/secure/glow/expenses" component={ExpensesPage} />
 							<AdminRoute path="/secure/glow/features" component={FeaturesPage} />
+							<AdminRoute path="/secure/glow/carts" component={CartsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />

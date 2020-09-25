@@ -1,6 +1,24 @@
 import Axios from 'axios';
 import Cookie from 'js-cookie';
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_PAYMENT } from '../constants/cartConstants';
+import {
+	CART_ADD_ITEM,
+	CART_REMOVE_ITEM,
+	CART_SAVE_SHIPPING,
+	CART_SAVE_PAYMENT,
+	CART_LIST_REQUEST,
+	CART_LIST_SUCCESS,
+	CART_LIST_FAIL,
+	CART_DETAILS_REQUEST,
+	CART_DETAILS_SUCCESS,
+	CART_DETAILS_FAIL,
+	CART_SAVE_REQUEST,
+	CART_SAVE_SUCCESS,
+	CART_SAVE_FAIL,
+	CART_DELETE_SUCCESS,
+	CART_DELETE_FAIL,
+	CART_DELETE_REQUEST
+} from '../constants/cartConstants';
+import axios from 'axios';
 
 export const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, diffuser_cap: any) => async (
 	dispatch: (
@@ -29,7 +47,7 @@ export const addToCart = (pathname: string, qty: number, diffuser_cap_color: str
 			};
 		}
 	) => void,
-	getState: () => { cart: { cartItems: any } }
+	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
 	try {
 		console.log('Add To Cart Before');
@@ -82,8 +100,34 @@ export const addToCart = (pathname: string, qty: number, diffuser_cap_color: str
 			type: CART_ADD_ITEM,
 			payload: cartItem
 		});
+
 		const { cart: { cartItems } } = getState();
 		Cookie.set('cartItems', JSON.stringify(cartItems));
+		// dispatch({ type: CART_SAVE_REQUEST, payload: cartItems });
+		// const { userLogin: { userInfo } } = getState();
+		// if (!userInfo._id) {
+		// 	const { data } = await axios.post(
+		// 		'/api/carts',
+		// 		{ user: userInfo, cartItems },
+		// 		{
+		// 			headers: {
+		// 				Authorization: 'Bearer ' + userInfo.token
+		// 			}
+		// 		}
+		// 	);
+		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		// } else {
+		// 	const { data } = await axios.put(
+		// 		'/api/carts/' + cartItems._id,
+		// 		{ user: userInfo, cartItems },
+		// 		{
+		// 			headers: {
+		// 				Authorization: 'Bearer ' + userInfo.token
+		// 			}
+		// 		}
+		// 	);
+		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		// }
 	} catch (error) {
 		console.log({ error });
 	}
@@ -116,4 +160,89 @@ export const savePayment = (data: { paymentMethod: any }) => (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	dispatch({ type: CART_SAVE_PAYMENT, payload: data });
+};
+
+export const listCarts = (category = '', searchKeyword = '', sortOrder = '') => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void
+) => {
+	try {
+		dispatch({ type: CART_LIST_REQUEST });
+		const { data } = await axios.get(
+			'/api/carts?category=' +
+				category +
+				'&searchKeyword=' +
+				searchKeyword +
+				'&sortOrder=' +
+				sortOrder.toLowerCase()
+		);
+		dispatch({ type: CART_LIST_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: CART_LIST_FAIL, payload: error.message });
+	}
+};
+
+export const saveCart = (cart: {
+	_id: string;
+	cart_name?: string;
+	application?: number;
+	url?: string;
+	place_of_purchase?: string;
+	date_of_purchase?: string;
+	category?: string;
+	card?: number;
+	amount?: string;
+}) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log({ cartActions: cart });
+	try {
+		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
+		const { userLogin: { userInfo } } = getState();
+		if (!cart._id) {
+			const { data } = await axios.post('/api/carts', cart, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		} else {
+			const { data } = await axios.put('/api/carts/' + cart._id, cart, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		}
+	} catch (error) {
+		dispatch({ type: CART_SAVE_FAIL, payload: error.message });
+	}
+};
+
+export const detailsCart = (cart_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	try {
+		dispatch({ type: CART_DETAILS_REQUEST, payload: cart_id });
+		const { data } = await axios.get('/api/carts/' + cart_id);
+		dispatch({ type: CART_DETAILS_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: CART_DETAILS_FAIL, payload: error.message });
+	}
+};
+
+export const deleteCart = (cartId: string) => async (
+	dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		const { userLogin: { userInfo } } = getState();
+		dispatch({ type: CART_DELETE_REQUEST, payload: cartId });
+		const { data } = await axios.delete('/api/carts/' + cartId, {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.token
+			}
+		});
+		dispatch({ type: CART_DELETE_SUCCESS, payload: data, success: true });
+	} catch (error) {
+		dispatch({ type: CART_DELETE_FAIL, payload: error.message });
+	}
 };

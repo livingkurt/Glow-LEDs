@@ -232,7 +232,10 @@ const Header = (props) => {
 									<button className="button nav"> Sponsors</button>
 								</Link>
 								<Link to="/secure/glow/promos">
-									<button className="button nav">Promo</button>
+									<button className="button nav">Promos</button>
+								</Link>
+								<Link to="/secure/glow/carts">
+									<button className="button nav">Carts</button>
 								</Link>
 							</ul>
 						</div>

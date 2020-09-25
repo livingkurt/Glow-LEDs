@@ -131,7 +131,7 @@ export const print_invoice = (order: any) => {
   
   <body>
     <div class="invoice-box"
-      style="display: flex; flex-direction: column; max-width: 800px; margin: auto; padding: 30px; font-size: 16px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
+      style="display: flex; flex-direction: column; max-width: 600px; margin: auto; padding: 30px; font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
       <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;" width="100%"
         align="left">
         <tr class="top">
@@ -142,7 +142,7 @@ export const print_invoice = (order: any) => {
                   style="vertical-align: top; padding-bottom: 20px; font-size: 45px; line-height: 45px; color: #333; "
                   valign="top">
                   <img src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
-                    style="width:100%; max-width:400px; margin-left: -13px;">
+                    style="width:60%; max-width:400px; margin-left: -13px;">
                 </td>
   
                 <td style="padding: 5px; vertical-align: top; text-align: right; padding-bottom: 20px;" valign="top"
