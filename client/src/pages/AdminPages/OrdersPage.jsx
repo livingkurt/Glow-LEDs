@@ -244,18 +244,6 @@ const OrdersPage = (props) => {
 									<th className="w-171px">DATE</th>
 									<th className="w-171px">TOTAL</th>
 									<th className="w-172px">USER</th>
-									{/* <th>PAID</th>
-									<th>PAID AT</th>
-									<th>MANUFACTURED</th>
-									<th>MANUFACTURED On</th>
-									<th>PACKAGED</th>
-									<th>PACKAGED On</th>
-									<th>SHIPPED</th>
-									<th>SHIPPED On</th>
-									<th>DELIVERED</th> */}
-									{/* <th>REFUNDED</th>
-									<th>REFUNDED AT</th>
-									<th>REFUND AMOUNT</th> */}
 									<th className="w-400px">ORDER ITEMS</th>
 									<th className="w-150px">ACTIONS</th>
 								</tr>
@@ -463,6 +451,65 @@ const OrdersPage = (props) => {
 													>
 														Print Invoice
 													</button>
+												</div>
+											</div>
+											<div className="jc-b">
+												<div className="column w-100per">
+													<h1>Shipping</h1>
+													<div>
+														<div>
+															{order.shipping.first_name} {order.shipping.last_name}
+														</div>
+														<div>{order.shipping.address}</div>
+														<div>
+															{order.shipping.city}, {order.shipping.state}{' '}
+															{order.shipping.postalCode} {order.shipping.country}
+														</div>
+														<div>{order.shipping.international && 'International'}</div>
+														<div>{order.shipping.email}</div>
+													</div>
+												</div>
+												<div className="column w-100per">
+													<h1>Totals</h1>
+													<div className="row w-100per jc-b">
+														<div>Items - </div>
+														{/* <div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div> */}
+														{order.promo_code ? (
+															<div>
+																<del style={{ color: 'red' }}>
+																	<label style={{ color: 'white' }}>
+																		${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
+																	</label>
+																</del>{' '}
+																<i class="fas fa-arrow-right" /> ${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}
+															</div>
+														) : (
+															<div>
+																${order.itemsPrice ? (
+																	order.itemsPrice.toFixed(2)
+																) : (
+																	order.itemsPrice
+																)}
+															</div>
+														)}
+													</div>
+													<div className="row w-100per jc-b">
+														<div>Shipping - </div>
+														{/* <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div> */}
+														<div>
+															${order.shippingPrice ? (
+																order.shippingPrice.toFixed(2)
+															) : (
+																order.shippingPrice
+															)}
+														</div>
+													</div>
+													<div className="row w-100per jc-b">
+														<div>Tax - </div>
+														<div>
+															${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}
+														</div>
+													</div>
 												</div>
 											</div>
 										</td>

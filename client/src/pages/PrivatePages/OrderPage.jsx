@@ -208,11 +208,6 @@ const OrderPage = (props) => {
 									<div>{order.shipping.email}</div>
 									<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 										<p style={{ marginBottom: '0px' }}>
-											{/* {shipping_state ? (
-												'Shipped at ' + format_date(order_state.shippedAt)
-											) : (
-												'Not Shipped'
-											)} */}
 											{shipping_state ? 'Shipped' : 'Not Shipped'}
 										</p>
 									</div>
