@@ -46,7 +46,7 @@ const AllProductsPage = (props) => {
 			// 	dispatch(listProducts(''));
 			// }
 		},
-		[ category ]
+		[ category, subcategory ]
 	);
 
 	useEffect(
