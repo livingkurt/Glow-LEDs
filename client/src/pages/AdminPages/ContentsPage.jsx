@@ -139,7 +139,7 @@ const ContentsPage = (props) => {
 									<th>ID</th>
 									<th>Home Page</th>
 									<th>Banner</th>
-									{/* <th>About Page</th> */}
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
