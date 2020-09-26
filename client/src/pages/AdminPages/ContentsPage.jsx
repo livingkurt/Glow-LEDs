@@ -152,8 +152,10 @@ const ContentsPage = (props) => {
 										}}
 									>
 										<td style={{ minWidth: '5rem' }}>{content._id}</td>
-										<td style={{ minWidth: '5rem' }}>{content.home_page.h1}</td>
-										<td style={{ minWidth: '15rem' }}>{content.banner.label}</td>
+										<td style={{ minWidth: '5rem' }}>
+											{contents.home_page && content.home_page.h1}
+										</td>
+										<td style={{ minWidth: '15rem' }}>{contents.banner && content.banner.label}</td>
 										{/* <td style={{ minWidth: '10rem' }}>{content.about_page}</td> */}
 										<td>
 											<FlexContainer h_between>
