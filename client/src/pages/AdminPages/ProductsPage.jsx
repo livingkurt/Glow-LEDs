@@ -15,6 +15,7 @@ const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
+	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 	const productList = useSelector((state) => state.productList);
 	const { loading, products, error } = productList;
 
@@ -41,21 +42,20 @@ const ProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listProducts(category, searchKeyword, sortOrder));
+			dispatch(listProducts(category.subcategory, searchKeyword, sortOrder));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listProducts(category, searchKeyword, sortOrder));
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, searchKeyword, e.target.value));
+		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value));
 	};
-
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
 	const sale_price_switch = (product) => {

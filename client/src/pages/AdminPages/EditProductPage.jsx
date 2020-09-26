@@ -24,7 +24,7 @@ const EditProductPage = (props) => {
 	const [ hidden, setHidden ] = useState();
 	const [ sale_price, setSalePrice ] = useState();
 	const [ volume, setVolume ] = useState();
-	const [ subcategories, set_subcategories ] = useState([]);
+	const [ subcategories, set_subcategories ] = useState('');
 	const [ subcategory, set_subcategory ] = useState('');
 	const [ meta_title, set_meta_title ] = useState();
 	const [ meta_description, set_meta_description ] = useState();
@@ -125,7 +125,7 @@ const EditProductPage = (props) => {
 		setVideo(product.video);
 		setBrand(product.brand);
 		setCategory(product.category);
-		set_subcategories(product.subcategories);
+		set_subcategory(product.subcategory);
 		setCountInStock(product.countInStock);
 		props.match.params.pathname && setPathname(product.pathname);
 		setOrder(product.order);
@@ -143,7 +143,7 @@ const EditProductPage = (props) => {
 		setVideo('');
 		setBrand('');
 		setCategory('');
-		set_subcategories([]);
+		set_subcategories('');
 		set_subcategory('');
 		setCountInStock('');
 		setHidden();
@@ -181,7 +181,7 @@ const EditProductPage = (props) => {
 				hidden,
 				sale_price,
 				volume,
-				subcategories,
+				subcategory,
 				meta_title,
 				meta_description,
 				meta_keywords,
@@ -202,7 +202,7 @@ const EditProductPage = (props) => {
 		setFacts('');
 		setIncludedItems('');
 		// setDisplayImage('');
-		set_subcategories([]);
+		set_subcategories('');
 		set_subcategory('');
 		set_images([]);
 		set_image('');
@@ -254,24 +254,24 @@ const EditProductPage = (props) => {
 		set_image('');
 	};
 
-	const add_subcategory = (e) => {
-		e.preventDefault();
-		console.log(subcategory);
-		if (subcategory.indexOf(' ') >= 0) {
-			console.log('indexOf');
-			subcategory.split(' ').map((subcategory) => {
-				set_subcategories((subcategories) => [ ...subcategories, subcategory ]);
-			});
-		} else if (subcategories) {
-			console.log('subcategories.length > 0');
-			set_subcategories((subcategories) => [ ...subcategories, subcategory ]);
-		} else {
-			console.log('subcategories.length === 0');
-			set_subcategories([ subcategory ]);
-		}
+	// const add_subcategory = (e) => {
+	// 	e.preventDefault();
+	// 	console.log(subcategory);
+	// 	if (subcategory.indexOf(' ') >= 0) {
+	// 		console.log('indexOf');
+	// 		subcategory.split(' ').map((subcategory) => {
+	// 			set_subcategories((subcategories) => [ ...subcategories, subcategory ]);
+	// 		});
+	// 	} else if (subcategories) {
+	// 		console.log('subcategories.length > 0');
+	// 		set_subcategories((subcategories) => [ ...subcategories, subcategory ]);
+	// 	} else {
+	// 		console.log('subcategories.length === 0');
+	// 		set_subcategories([ subcategory ]);
+	// 	}
 
-		set_subcategory('');
-	};
+	// 	set_subcategory('');
+	// };
 
 	const remove_image = (image_index, e) => {
 		e.preventDefault();
@@ -281,14 +281,14 @@ const EditProductPage = (props) => {
 			})
 		);
 	};
-	const remove_subcategory = (subcategory_index, e) => {
-		e.preventDefault();
-		set_subcategories((subcategories) =>
-			subcategories.filter((subcategory, index) => {
-				return subcategory_index !== index;
-			})
-		);
-	};
+	// const remove_subcategory = (subcategory_index, e) => {
+	// 	e.preventDefault();
+	// 	set_subcategories((subcategories) =>
+	// 		subcategories.filter((subcategory, index) => {
+	// 			return subcategory_index !== index;
+	// 		})
+	// 	);
+	// };
 	// const [ new_array, set_new_array ] = useState([]);
 	// const [ new_array, set_new_array ] = useState([]);
 
@@ -314,20 +314,6 @@ const EditProductPage = (props) => {
 		set_images(new_array);
 		// set_new_array(new_array);
 		image_display(new_array);
-	};
-	const move_subcategories_up = (subcategories_index, e) => {
-		e.preventDefault();
-		const new_array = move(subcategories, subcategories_index, subcategories_index - 1);
-		set_subcategories(new_array);
-		// set_new_array(new_array);
-		subcategory_display(new_array);
-	};
-	const move_subcategories_down = (subcategories_index, e) => {
-		e.preventDefault();
-		const new_array = move(subcategories, subcategories_index, subcategories_index + 1);
-		set_subcategories(new_array);
-		// set_new_array(new_array);
-		subcategory_display(new_array);
 	};
 
 	function move(arr, old_index, new_index) {
@@ -423,25 +409,25 @@ const EditProductPage = (props) => {
 			</div>
 		);
 	};
-	const subcategory_display = (subcategories) => {
-		return (
-			<div className=" w-100per">
-				{subcategories &&
-					subcategories.map((subcategory, index) => {
-						return (
-							<div className="promo_code mv-1rem w-100per row jc-b max-w-55rem w-100per">
-								<div className=" w-100per">
-									<button className="button icon" onClick={(e) => remove_subcategory(index, e)}>
-										<i className="fas fa-times mr-5px" />
-									</button>
-									{subcategory}
-								</div>
-							</div>
-						);
-					})}
-			</div>
-		);
-	};
+	// const subcategory_display = (subcategories) => {
+	// 	return (
+	// 		<div className=" w-100per">
+	// 			{subcategories &&
+	// 				subcategories.map((subcategory, index) => {
+	// 					return (
+	// 						<div className="promo_code mv-1rem w-100per row jc-b max-w-55rem w-100per">
+	// 							<div className=" w-100per">
+	// 								<button className="button icon" onClick={(e) => remove_subcategory(index, e)}>
+	// 									<i className="fas fa-times mr-5px" />
+	// 								</button>
+	// 								{subcategory}
+	// 							</div>
+	// 						</div>
+	// 					);
+	// 				})}
+	// 		</div>
+	// 	);
+	// };
 
 	const move_left = () => {};
 	const move_right = () => {};
@@ -563,18 +549,18 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="subcategories">Subcategories</label>
+												<label htmlFor="subcategory">Subcategories</label>
 												<input
 													type="text"
-													name="subcategories"
-													// defaultvalue={subcategories}
-													id="subcategories"
+													name="subcategory"
+													value={subcategory}
+													id="subcategory"
 													onChange={(e) => set_subcategory(e.target.value)}
 												/>
-												<button className="button primary" onClick={(e) => add_subcategory(e)}>
+												{/* <button className="button primary" onClick={(e) => add_subcategory(e)}>
 													Add Subcategory
 												</button>
-												{subcategory_display(subcategories)}
+												{subcategory_display(subcategories)} */}
 											</li>
 											<li>
 												<label htmlFor="brand">Brand</label>

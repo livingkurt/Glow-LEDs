@@ -675,6 +675,10 @@ td {
 	display: inline-block;
 	position: relative;
 }
+.dropdown-nav-subcategory {
+	display: inline-block;
+	position: relative;
+}
 
 .dropdown-nav-content {
 	position: absolute;
@@ -689,8 +693,25 @@ td {
 	/* margin-top: 0.4rem; */
 	box-shadow: $bs_deep;
 }
+.dropdown-nav-subcategory-content {
+	position: absolute;
+	display: none;
+	left: 0;
+	padding: 1rem;
+	list-style-type: none;
+	z-index: 1;
+	background-color: #333333;
+	margin: 0;
+	border-radius: $br_small_containers;
+	/* margin-top: 0.4rem; */
+	box-shadow: $bs_deep;
+}
 
 .dropdown-nav:hover .dropdown-nav-content {
+	display: flex;
+	flex-direction: column;
+}
+.dropdown-nav-subcategory:hover .dropdown-nav-subcategory-content {
 	display: flex;
 	flex-direction: column;
 }

@@ -8,8 +8,38 @@ import productModel from '../models/product';
 
 const router = express.Router();
 
+// router.get('/', async (req, res) => {
+// 	const category = req.query.category ? { category: req.query.category } : {};
+// 	const searchKeyword = req.query.searchKeyword
+// 		? {
+// 				name: {
+// 					$regex: req.query.searchKeyword,
+// 					$options: 'i'
+// 				}
+// 			}
+// 		: {};
+
+// 	let sortOrder = {};
+// 	if (req.query.sortOrder === 'lowest') {
+// 		sortOrder = { price: 1 };
+// 	} else if (req.query.sortOrder === 'highest') {
+// 		sortOrder = { price: -1 };
+// 	} else if (req.query.sortOrder === 'newest') {
+// 		sortOrder = { _id: -1 };
+// 	} else if (req.query.sortOrder === 'hidden') {
+// 		sortOrder = { hidden: -1 };
+// 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
+// 		sortOrder = { order: 1, _id: -1 };
+// 	}
+
+// 	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+// 	// console.log(products);
+// 	res.send(products);
+// });
+
 router.get('/', async (req, res) => {
 	const category = req.query.category ? { category: req.query.category } : {};
+	const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
 	const searchKeyword = req.query.searchKeyword
 		? {
 				name: {
@@ -18,6 +48,7 @@ router.get('/', async (req, res) => {
 				}
 			}
 		: {};
+	console.log({ searchKeyword });
 
 	let sortOrder = {};
 	if (req.query.sortOrder === 'lowest') {
@@ -31,16 +62,25 @@ router.get('/', async (req, res) => {
 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
 		sortOrder = { order: 1, _id: -1 };
 	}
+	const categorizing = subcategory === {} ? subcategory : category;
+	console.log({ categorizing });
+	console.log({ query: req.query });
+	console.log({ subcategory });
+	console.log({ category, subcategory, searchKeyword });
 
-	const products = await Product.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	// console.log(products);
+	const products = await Product.find({ deleted: false, ...category, ...subcategory, ...searchKeyword }).sort(
+		sortOrder
+	);
+	console.log({ products });
 	res.send(products);
 });
+
 router.get('/originalcaps', async (req, res) => {
 	const products = await Product.find({ deleted: false, hidden: false, category: 'diffuser_caps' });
 	// console.log(products);
 	res.send(products);
 });
+
 router.get('/minicaps', async (req, res) => {
 	const products = await Product.find({ deleted: false, hidden: false, category: 'mini_diffuser_caps' });
 	// console.log(products);

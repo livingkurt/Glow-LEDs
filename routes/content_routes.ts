@@ -39,8 +39,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	const content = await Content.findOne({ _id: req.params.id });
-	console.log({ content });
-	console.log(req.params.id);
+	// console.log({ content });
 	if (content) {
 		res.send(content);
 	} else {
@@ -49,7 +48,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
-	console.log({ content_routes_put: req.body });
 	const contentId = req.params.id;
 	const content: any = await Content.findById(contentId);
 	if (content) {
@@ -64,7 +62,6 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 
 router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
 	const content = await Content.findById(req.params.id);
-	const updated_content = { ...content, deleted: true };
 	const message: any = { message: 'Content Deleted' };
 	// const deleted_content = await updated_content.save();
 	const deleted_content = await Content.updateOne({ _id: req.params.id }, { deleted: true });

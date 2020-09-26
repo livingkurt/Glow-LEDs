@@ -23,14 +23,36 @@ import {
 } from '../constants/productConstants';
 import axios from 'axios';
 
-export const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (
+// export const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (
+// 	dispatch: (arg0: { type: string; payload?: any }) => void
+// ) => {
+// 	try {
+// 		dispatch({ type: PRODUCT_LIST_REQUEST });
+// 		const { data } = await axios.get(
+// 			'/api/products?category=' +
+// 				category +
+// 				'&searchKeyword=' +
+// 				searchKeyword +
+// 				'&sortOrder=' +
+// 				sortOrder.toLowerCase()
+// 		);
+// 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+// 	} catch (error) {
+// 		dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+// 	}
+// };
+
+export const listProducts = (category = '', subcategory = '', searchKeyword = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
+		console.log({ searchKeyword });
 		const { data } = await axios.get(
 			'/api/products?category=' +
 				category +
+				'&subcategory=' +
+				subcategory +
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +

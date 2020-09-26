@@ -13,54 +13,58 @@ const AllProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
-	// console.log({ category });
+	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+	console.log({ subcategory });
 	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 	const dispatch = useDispatch();
 	useEffect(() => {
 		// dispatch(listProducts(''));
-		dispatch(listProducts(category));
+		dispatch(listProducts(category, subcategory));
 	}, []);
 
 	useEffect(
 		() => {
-			if (
-				[
-					'diffuser_caps',
-					'infinity_mirrors',
-					'accessories',
-					'frosted_diffusers',
-					'diffuser_adapters',
-					'glow_strings',
-					'mini_diffuser_caps',
-					'mini_diffuser_adapters'
-				].includes(category)
-			) {
-				dispatch(listProducts(category));
-			} else {
-				history.push('/collections/all/products');
-				dispatch(listProducts(''));
-			}
+			console.log({ category });
+			console.log({ subcategory });
+			// if (
+			// 	[
+			// 		'diffuser_caps',
+			// 		'infinity_mirrors',
+			// 		'accessories',
+			// 		'frosted_diffusers',
+			// 		'diffuser_adapters',
+			// 		'glow_strings',
+			// 		'mini_diffuser_caps',
+			// 		'mini_diffuser_adapters'
+			// 	].includes(category)
+			// ) {
+			dispatch(listProducts(category, subcategory));
+			// } else {
+			// 	history.push('/collections/all/products');
+			// 	dispatch(listProducts(''));
+			// }
 		},
 		[ category ]
 	);
 
 	useEffect(
 		() => {
-			dispatch(listProducts(category, searchKeyword, sortOrder));
+			dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
+		console.log({ searchKeyword });
 		e.preventDefault();
-		dispatch(listProducts(category, searchKeyword, sortOrder));
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, searchKeyword, e.target.value));
+		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value));
 	};
 
 	const descriptions = {

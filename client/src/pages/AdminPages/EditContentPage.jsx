@@ -51,7 +51,7 @@ const EditContentPage = (props) => {
 	const dispatch = useDispatch();
 	const content_id = props.match.params.id ? props.match.params.id : '';
 
-	console.log({ content });
+	// console.log({ content });
 
 	useEffect(() => {
 		if (props.match.params.id) {

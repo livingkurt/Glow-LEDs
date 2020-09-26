@@ -108,15 +108,99 @@ const Header = (props) => {
 								<Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="button nav">Frosted Diffusers</button>
 								</Link>
-								<Link to="/collections/all/products/category/mini_diffuser_caps">
+								{/* <Link to="/collections/all/products/category/mini_diffuser_caps">
 									<button className="button nav">Mini Diffuser Caps</button>
-								</Link>
+								</Link> */}
+								<div className="dropdown-nav-subcategory">
+									<Link to="/collections/all/products/category/mini_diffuser_caps">
+										<button className="button nav">Mini Diffuser Caps</button>
+									</Link>
+									<div className="dropdown-nav-subcategory-content hover_fade_in ">
+										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/geometric">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Geomotric</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/shapes">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Shapes</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/patterns">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Patterns</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/emoji">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Emojis</button>
+											</div>
+										</Link>
+									</div>
+								</div>
 								{/* <Link to="/collections/all/products/category/mini_diffuser_adapters">
 									<button className="button nav">Mini Diffuser Adapters</button>
 								</Link> */}
-								<Link to="/collections/all/products/category/diffuser_caps">
-									<button className="button nav">Original Diffuser Caps</button>
-								</Link>
+
+								<div className="dropdown-nav-subcategory">
+									<Link to="/collections/all/products/category/diffuser_caps">
+										<button className="button nav">Original Diffuser Caps</button>
+									</Link>
+									<div className="dropdown-nav-subcategory-content hover_fade_in ">
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Geomotric</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Shapes</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Patterns</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/emoji">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Emojis</button>
+											</div>
+										</Link>
+									</div>
+								</div>
 								{/* <Link to="/collections/all/products/category/diffuser_adapters">
 									<button className="button nav">Original Diffuser Adapters</button>
 								</Link> */}
