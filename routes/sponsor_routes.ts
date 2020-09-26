@@ -81,19 +81,9 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	const featureId = req.params.id;
 	const sponsor: any = await Sponsor.findById(featureId);
 	if (sponsor) {
-		sponsor.user = req.body.user;
-		sponsor.glover_name = req.body.glover_name;
-		sponsor.instagram_handle = req.body.instagram_handle;
-		sponsor.facebook_name = req.body.facebook_name;
-		sponsor.percentage_off = req.body.percentage_off;
-		sponsor.promo_code = req.body.promo_code;
-		sponsor.funds_generated = req.body.funds_generated;
-		sponsor.active = req.body.active;
-		sponsor.deleted = req.body.deleted || false;
-		const updatedFeature = await sponsor.save();
-		console.log({ feature_routes_post: updatedFeature });
-		if (updatedFeature) {
-			return res.status(200).send({ message: 'Sponsor Updated', data: updatedFeature });
+		const updatedSponsor = await Sponsor.updateOne({ _id: featureId }, req.body);
+		if (updatedSponsor) {
+			return res.status(200).send({ message: 'Sponsor Updated', data: updatedSponsor });
 		}
 	}
 	return res.status(500).send({ message: ' Error in Updating Sponsor.' });
@@ -101,12 +91,10 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 
 router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
 	const sponsor = await Sponsor.findById(req.params.id);
-	const updated_feature = { ...sponsor, deleted: true };
 	const message: any = { message: 'Sponsor Deleted' };
-	// const deleted_feature = await updated_feature.save();
 	const deleted_feature = await Sponsor.updateOne({ _id: req.params.id }, { deleted: true });
 	if (deleted_feature) {
-		// await deletedFeature.remove();
+		// await deletedSponsor.remove();
 		res.send(message);
 	} else {
 		res.send('Error in Deletion.');
@@ -114,21 +102,9 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	console.log('Post');
-	const newFeature = await Sponsor.create({
-		user: req.body.user,
-		glover_name: req.body.glover_name,
-		instagram_handle: req.body.instagram_handle,
-		facebook_name: req.body.facebook_name,
-		percentage_off: req.body.percentage_off,
-		promo_code: req.body.promo_code,
-		funds_generated: req.body.funds_generated,
-		active: req.body.active,
-		deleted: req.body.deleted || false
-	});
-	// console.log({ feature_routes_post: sponsor });
-	if (newFeature) {
-		return res.status(201).send({ message: 'New Sponsor Created', data: newFeature });
+	const newSponsor = await Sponsor.create(req.body);
+	if (newSponsor) {
+		return res.status(201).send({ message: 'New Sponsor Created', data: newSponsor });
 	}
 	return res.status(500).send({ message: ' Error in Creating Sponsor.' });
 });

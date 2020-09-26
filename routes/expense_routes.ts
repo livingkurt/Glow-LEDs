@@ -51,17 +51,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	const expenseId = req.params.id;
 	const expense: any = await Expense.findById(expenseId);
 	if (expense) {
-		expense.expense_name = req.body.expense_name;
-		expense.application = req.body.application;
-		expense.url = req.body.url;
-		expense.place_of_purchase = req.body.place_of_purchase;
-		expense.date_of_purchase = new Date(req.body.date_of_purchase);
-		expense.category = req.body.category;
-		expense.card = req.body.card;
-		expense.amount = req.body.amount;
-		expense.deleted = req.body.deleted || false;
-		const updatedExpense = await expense.save();
-		console.log({ expense_routes_post: updatedExpense });
+		const updatedExpense = await Expense.findById(expenseId);
 		if (updatedExpense) {
 			return res.status(200).send({ message: 'Expense Updated', data: updatedExpense });
 		}
@@ -84,35 +74,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	// const converted_id = req.body.id.toLowerCase()
-	console.log('Post');
-	// ISODate('2020-08-21T00:13:08.879Z');
-	// const converted_id = req.body.id.split(' ').join('_')
-	// const expense = new Expense({
-	// 	expense_name: req.body.expense_name,
-	// 	application: req.body.application,
-	// 	url: req.body.url,
-	// 	place_of_purchase: req.body.place_of_purchase,
-	// 	date_of_purchase: new Date(req.body.date_of_purchase),
-	// 	category: req.body.category,
-	// 	card: req.body.card,
-	// 	amount: req.body.amount,
-	// 	deleted: req.body.deleted || false
-	// });
-	// console.log({ expense_routes_post: expense });
-	// const newExpense = await expense.save();
-	const newExpense = await Expense.create({
-		expense_name: req.body.expense_name,
-		application: req.body.application,
-		url: req.body.url,
-		place_of_purchase: req.body.place_of_purchase,
-		date_of_purchase: new Date(req.body.date_of_purchase),
-		category: req.body.category,
-		card: req.body.card,
-		amount: req.body.amount,
-		deleted: req.body.deleted || false
-	});
-	// console.log({ expense_routes_post: expense });
+	const newExpense = await Expense.create(req.body);
 	if (newExpense) {
 		return res.status(201).send({ message: 'New Expense Created', data: newExpense });
 	}

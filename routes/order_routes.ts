@@ -146,22 +146,23 @@ router.post(
 			) => { (): any; new (): any; send: { (arg0: { message: string; data: any }): void; new (): any } };
 		}
 	) => {
-		const newOrder = new Order({
-			orderItems: req.body.orderItems,
-			user: req.user._id,
-			shipping: req.body.shipping,
-			payment: req.body.payment,
-			itemsPrice: req.body.itemsPrice,
-			taxPrice: req.body.taxPrice,
-			shippingPrice: req.body.shippingPrice,
-			totalPrice: req.body.totalPrice,
-			order_note: req.body.order_note,
-			promo_code: req.body.promo_code,
-			// product: req.body.product,
-			deleted: false
-		});
+		// const newOrder = new Order({
+		// 	orderItems: req.body.orderItems,
+		// 	user: req.user._id,
+		// 	shipping: req.body.shipping,
+		// 	payment: req.body.payment,
+		// 	itemsPrice: req.body.itemsPrice,
+		// 	taxPrice: req.body.taxPrice,
+		// 	shippingPrice: req.body.shippingPrice,
+		// 	totalPrice: req.body.totalPrice,
+		// 	order_note: req.body.order_note,
+		// 	promo_code: req.body.promo_code,
+		// 	// product: req.body.product,
+		// 	deleted: false
+		// });
+		const newOrderCreated = await Order.create(req.body);
 
-		const newOrderCreated = await newOrder.save();
+		// const newOrderCreated = await newOrder.save();
 		res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
 	}
 );

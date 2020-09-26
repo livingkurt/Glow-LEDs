@@ -53,24 +53,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	const contentId = req.params.id;
 	const content: any = await Content.findById(contentId);
 	if (content) {
-		content.home_page.h1 = req.body.home_page_h1;
-		content.home_page.image = req.body.home_page_image;
-		content.home_page.h2 = req.body.home_page_h2;
-		content.home_page.p = req.body.home_page_p;
-		content.home_page.button = req.body.home_page_button;
-		content.home_page.link = req.body.home_page_link;
-
-		content.banner.label = req.body.banner_label;
-		content.banner.button = req.body.banner_button;
-		content.banner.link = req.body.banner_link;
-
-		content.about_page.kurt_p = req.body.about_page_kurt_p;
-		content.about_page.destanye_p = req.body.about_page_destanye_p;
-
-		content.active = req.body.active;
-
-		content.deleted = req.body.deleted || false;
-		const updatedContent = await content.save();
+		const updatedContent = await Content.updateOne({ _id: contentId }, req.body);
 		console.log({ content_routes_post: updatedContent });
 		if (updatedContent) {
 			return res.status(200).send({ message: 'Content Updated', data: updatedContent });
@@ -94,31 +77,9 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	console.log('Post');
-	const newContent = await Content.create({
-		home_page: {
-			h1: req.body.h1,
-			image: req.body.image,
-			h2: req.body.h2,
-			p: req.body.p,
-			button: req.body.button,
-			link: req.body.link
-		},
-		banner: {
-			label: req.body.label,
-			button: req.body.button,
-			link: req.body.link
-		},
-		about_page: {
-			kurt_p: req.body.kurt_p,
-			destanye_p: req.body.destanye_p
-		},
-		active: req.body.active,
-		deleted: req.body.deleted || false
-	});
-
-	if (newContent) {
-		return res.status(201).send({ message: 'New Content Created', data: newContent });
+	const newProduct = await Content.create(req.body);
+	if (newProduct) {
+		return res.status(201).send({ message: 'New Content Created', data: newProduct });
 	}
 	return res.status(500).send({ message: ' Error in Creating Content.' });
 });

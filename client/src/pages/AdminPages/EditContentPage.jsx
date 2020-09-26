@@ -16,19 +16,19 @@ const EditContentPage = (props) => {
 	const [ about_page, set_about_page ] = useState({});
 	const [ banner, set_banner ] = useState({});
 
-	const [ home_page_h1, set_home_page_h1 ] = useState('');
-	const [ home_page_image, set_home_page_image ] = useState('');
-	const [ home_page_h2, set_home_page_h2 ] = useState('');
-	const [ home_page_p, set_home_page_p ] = useState('');
-	const [ home_page_button, set_home_page_button ] = useState('');
-	const [ home_page_link, set_home_page_link ] = useState('');
+	// const [ home_page_h1, set_home_page_h1 ] = useState('');
+	// const [ home_page_image, set_home_page_image ] = useState('');
+	// const [ home_page_h2, set_home_page_h2 ] = useState('');
+	// const [ home_page_p, set_home_page_p ] = useState('');
+	// const [ home_page_button, set_home_page_button ] = useState('');
+	// const [ home_page_link, set_home_page_link ] = useState('');
 
-	const [ banner_label, set_banner_label ] = useState('');
-	const [ banner_button_text, set_banner_button_text ] = useState('');
-	const [ banner_link, set_banner_link ] = useState('');
+	// const [ banner_label, set_banner_label ] = useState('');
+	// const [ banner_button_text, set_banner_button_text ] = useState('');
+	// const [ banner_link, set_banner_link ] = useState('');
 
-	const [ about_page_kurt_p, set_about_page_kurt_p ] = useState('');
-	const [ about_page_destanye_p, set_about_page_destanye_p ] = useState('');
+	// const [ about_page_kurt_p, set_about_page_kurt_p ] = useState('');
+	// const [ about_page_destanye_p, set_about_page_destanye_p ] = useState('');
 
 	const [ active, set_active ] = useState(true);
 
@@ -84,41 +84,19 @@ const EditContentPage = (props) => {
 
 	const set_state = () => {
 		set_id(content._id);
-		if (content.home_page) {
-			set_home_page_h1(content.home_page.h1);
-			set_home_page_image(content.home_page.image);
-			set_home_page_h2(content.home_page.h2);
-			set_home_page_p(content.home_page.p);
-			set_home_page_button(content.home_page.button);
-			set_home_page_link(content.home_page.link);
-		}
-		if (content.about_page) {
-			set_about_page_kurt_p(content.about_page.kurt_p);
-			set_about_page_destanye_p(content.about_page.destanye_p);
-			set_active(content.active);
-		}
-		if (content.banner) {
-			set_banner_label(content.banner.label);
-			set_banner_button_text(content.banner.button_text);
-			set_banner_link(content.banner.link);
-		}
+		set_home_page(content.home_page);
+		set_banner(content.banner);
+		set_about_page(content.about_page);
+		set_active(content.active);
 
 		// fcontent.banner_link);
 		// console.log(format_date(content.banner_link));
 	};
 	const unset_state = () => {
 		set_id('');
-		set_home_page_h1('');
-		set_home_page_image('');
-		set_home_page_h2('');
-		set_home_page_p('');
-		set_home_page_button('');
-		set_home_page_link('');
-		set_banner_label('');
-		set_banner_button_text('');
-		set_banner_link('');
-		set_about_page_kurt_p('');
-		set_about_page_destanye_p('');
+		set_home_page('');
+		set_banner('');
+		set_about_page('');
 		set_active(true);
 	};
 
@@ -135,33 +113,17 @@ const EditContentPage = (props) => {
 		dispatch(
 			saveContent({
 				_id: id,
-				home_page_h1,
-				home_page_image,
-				home_page_h2,
-				home_page_p,
-				home_page_button,
-				home_page_link,
-				banner_label,
-				banner_button_text,
-				banner_link,
-				about_page_kurt_p,
-				about_page_destanye_p,
+				home_page,
+				banner,
+				about_page,
 				active
 			})
 		);
 		e.target.reset();
 		set_id('');
-		set_home_page_h1('');
-		set_home_page_image('');
-		set_home_page_h2('');
-		set_home_page_p('');
-		set_home_page_button('');
-		set_home_page_link('');
-		set_banner_label('');
-		set_banner_button_text('');
-		set_banner_link('');
-		set_about_page_kurt_p('');
-		set_about_page_destanye_p('');
+		set_home_page('');
+		set_banner('');
+		set_about_page('');
 		set_active(true);
 		// if (id) {
 		// 	history.push('/collections/all/contents/' + id);
@@ -209,9 +171,10 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="home_page_h1"
-													value={home_page_h1}
+													value={home_page && home_page.h1}
 													id="home_page_h1"
-													onChange={(e) => set_home_page_h1(e.target.value)}
+													onChange={(e) =>
+														set_home_page({ ...home_page, h1: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -219,9 +182,10 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="home_page_image"
-													value={home_page_image}
+													value={home_page && home_page.image}
 													id="home_page_image"
-													onChange={(e) => set_home_page_image(e.target.value)}
+													onChange={(e) =>
+														set_home_page({ ...home_page, image: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -229,9 +193,10 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="home_page_h2"
-													value={home_page_h2}
+													value={home_page && home_page.h2}
 													id="home_page_h2"
-													onChange={(e) => set_home_page_h2(e.target.value)}
+													onChange={(e) =>
+														set_home_page({ ...home_page, h2: e.target.value })}
 												/>
 											</li>
 
@@ -240,9 +205,9 @@ const EditContentPage = (props) => {
 												<textarea
 													className="edit_product_textarea"
 													name="home_page_p"
-													value={home_page_p}
+													value={home_page && home_page.p}
 													id="home_page_p"
-													onChange={(e) => set_home_page_p(e.target.value)}
+													onChange={(e) => set_home_page({ ...home_page, p: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -250,9 +215,10 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="home_page_button"
-													value={home_page_button}
+													value={home_page && home_page.button}
 													id="home_page_button"
-													onChange={(e) => set_home_page_button(e.target.value)}
+													onChange={(e) =>
+														set_home_page({ ...home_page, button: e.target.value })}
 												/>
 											</li>
 
@@ -261,9 +227,10 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="home_page_link"
-													value={home_page_link}
+													value={home_page && home_page.link}
 													id="home_page_link"
-													onChange={(e) => set_home_page_link(e.target.value)}
+													onChange={(e) =>
+														set_home_page({ ...home_page, link: e.target.value })}
 												/>
 											</li>
 										</div>
@@ -275,9 +242,9 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="banner_label"
-													value={banner_label}
+													value={banner && banner.label}
 													id="banner_label"
-													onChange={(e) => set_banner_label(e.target.value)}
+													onChange={(e) => set_banner({ ...banner, label: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -285,9 +252,9 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="banner_button_text"
-													value={banner_button_text}
+													value={banner && banner.button}
 													id="banner_button_text"
-													onChange={(e) => set_banner_button_text(e.target.value)}
+													onChange={(e) => set_banner({ ...banner, button: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -295,9 +262,9 @@ const EditContentPage = (props) => {
 												<input
 													type="text"
 													name="banner_link"
-													value={banner_link}
+													value={banner && banner.link}
 													id="banner_link"
-													onChange={(e) => set_banner_link(e.target.value)}
+													onChange={(e) => set_banner({ ...banner, link: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -308,7 +275,7 @@ const EditContentPage = (props) => {
 													// defaultChecked={active ? 'checked' : 'unchecked'}
 													// defaultValue={active}
 													defaultChecked={active}
-													// value={active ? '1' : '0'}
+													// value={active && active ? '1' : '0'}
 													id="active"
 													onChange={(e) => {
 														set_active(e.target.checked);
@@ -324,9 +291,10 @@ const EditContentPage = (props) => {
 												<textarea
 													className="edit_product_textarea"
 													name="about_page_kurt_p"
-													value={about_page_kurt_p}
+													value={about_page && about_page.kurt_p}
 													id="about_page_kurt_p"
-													onChange={(e) => set_about_page_kurt_p(e.target.value)}
+													onChange={(e) =>
+														set_about_page({ ...about_page, kurt_p: e.target.value })}
 												/>
 											</li>
 											<li>
@@ -334,9 +302,10 @@ const EditContentPage = (props) => {
 												<textarea
 													className="edit_product_textarea"
 													name="about_page_destanye_p"
-													value={about_page_destanye_p}
+													value={about_page && about_page.destanye_p}
 													id="about_page_destanye_p"
-													onChange={(e) => set_about_page_destanye_p(e.target.value)}
+													onChange={(e) =>
+														set_about_page({ ...about_page, destanye_p: e.target.value })}
 												/>
 											</li>
 										</div>

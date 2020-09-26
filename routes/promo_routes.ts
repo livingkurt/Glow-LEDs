@@ -77,26 +77,13 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
-	console.log({ feature_routes_put: req.body });
-	const featureId = req.params.id;
-	const promo: any = await Promo.findById(featureId);
+	console.log({ promo_routes_put: req.body });
+	const promoId = req.params.id;
+	const promo: any = await Promo.findById(promoId);
 	if (promo) {
-		promo.sponsor = req.body.sponsor;
-		promo.user = req.body.user;
-		promo.promo_code = req.body.promo_code;
-		promo.for_customer = req.body.for_customer;
-		promo.excluded_categories = req.body.excluded_categories;
-		promo.excluded_products = req.body.excluded_products;
-		promo.percentage_off = req.body.percentage_off;
-		promo.number_of_uses = req.body.number_of_uses;
-		promo.funds_generated = req.body.funds_generated;
-		promo.number_of_orders = req.body.number_of_orders;
-		promo.active = req.body.active;
-		promo.deleted = req.body.deleted || false;
-		const updatedFeature = await promo.save();
-		console.log({ feature_routes_post: updatedFeature });
-		if (updatedFeature) {
-			return res.status(200).send({ message: 'Promo Updated', data: updatedFeature });
+		const updatedPromo = await Promo.updateOne({ _id: promoId }, req.body);
+		if (updatedPromo) {
+			return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
 		}
 	}
 	return res.status(500).send({ message: ' Error in Updating Promo.' });
@@ -104,12 +91,12 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 
 router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
 	const promo = await Promo.findById(req.params.id);
-	const updated_feature = { ...promo, deleted: true };
+	const updated_promo = { ...promo, deleted: true };
 	const message: any = { message: 'Promo Deleted' };
-	// const deleted_feature = await updated_feature.save();
-	const deleted_feature = await Promo.updateOne({ _id: req.params.id }, { deleted: true });
-	if (deleted_feature) {
-		// await deletedFeature.remove();
+	// const deleted_promo = await updated_promo.save();
+	const deleted_promo = await Promo.updateOne({ _id: req.params.id }, { deleted: true });
+	if (deleted_promo) {
+		// await deletedPromo.remove();
 		res.send(message);
 	} else {
 		res.send('Error in Deletion.');
@@ -117,24 +104,9 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	console.log('Post');
-	const newFeature = await Promo.create({
-		sponsor: req.body.sponsor,
-		user: req.body.user,
-		promo_code: req.body.promo_code,
-		for_customer: req.body.for_customer,
-		excluded_categories: req.body.excluded_categories,
-		excluded_products: req.body.excluded_products,
-		percentage_off: req.body.percentage_off,
-		number_of_uses: req.body.number_of_uses,
-		funds_generated: req.body.funds_generated,
-		number_of_orders: req.body.number_of_orders,
-		active: req.body.active,
-		deleted: req.body.deleted || false
-	});
-	// console.log({ feature_routes_post: promo });
-	if (newFeature) {
-		return res.status(201).send({ message: 'New Promo Created', data: newFeature });
+	const newPromo = await Promo.create(req.body);
+	if (newPromo) {
+		return res.status(201).send({ message: 'New Promo Created', data: newPromo });
 	}
 	return res.status(500).send({ message: ' Error in Creating Promo.' });
 });
