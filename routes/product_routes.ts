@@ -101,44 +101,6 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 	return res.status(500).send({ message: ' Error in Creating Product.' });
 });
 
-// router.post('/images', async (req: { body: {} }, res: { send: (arg0: any[]) => void }) => {
-// 	// console.log(req.body)
-// 	try {
-// 		let relative_directory = path.join('.', '/client/public', Object.keys(req.body).join(''));
-// 		let home_directory = path.join(__dirname, '..');
-// 		let full_directory = path.join(home_directory, `/client/public`, Object.keys(req.body).join(''));
-// 		var relative_directory_array = relative_directory.split('/');
-// 		relative_directory_array.pop();
-// 		relative_directory = relative_directory_array.join('/');
-// 		var full_directory_array = full_directory.split('/');
-// 		full_directory_array.pop();
-// 		full_directory = full_directory_array.join('/');
-// 		if (full_directory === './client/public') {
-// 		} else {
-// 			fs.readdir(full_directory, (err: any, files: any[]) => {
-// 				if (err) {
-// 					return console.log('Unable to scan directory: ' + err);
-// 				}
-// 				let image_path = '';
-// 				let images: Array<string> = [];
-
-// 				files.forEach((file) => {
-// 					image_path = './' + relative_directory + '/' + file;
-// 					var array = image_path.split('/');
-// 					var lastsegment = array[array.length - 1];
-// 					if (lastsegment === '.DS_Store') {
-// 					} else {
-// 						images = [ ...images, image_path.substr(15) ];
-// 					}
-// 				});
-// 				res.send(images);
-// 			});
-// 		}
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
-// });
-
 router.post('/:pathname/reviews', isAuth, async (req, res) => {
 	const product = await Product.findById(req.params.pathname);
 	if (product) {

@@ -42,27 +42,7 @@ export const listProducts = (category = '', searchKeyword = '', sortOrder = '') 
 	}
 };
 
-export const saveProduct = (product: {
-	_id: string;
-	name?: string;
-	price?: number;
-	video?: string;
-	brand?: string;
-	category?: string;
-	countInStock?: number;
-	facts?: string;
-	included_items?: string;
-	description?: string;
-	hidden?: boolean;
-	sale_price?: number;
-	volume?: number;
-	weight_pounds?: number;
-	weight_ounces?: number;
-	pathname?: string;
-	length?: number;
-	width?: number;
-	height?: number;
-}) => async (
+export const saveProduct = (product: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
