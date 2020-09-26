@@ -54,11 +54,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	const cartId = req.params.id;
 	const cart: any = await Cart.findById(cartId);
 	if (cart) {
-		cart.cartItems = req.body.cartItems;
-		cart.user = req.body._id;
-		cart.deleted = req.body.deleted || false;
-		const updatedCart = await cart.save();
-		console.log({ cart_routes_post: updatedCart });
+		const updatedCart = await Cart.updateOne({ _id: cartId }, req.body);
 		if (updatedCart) {
 			return res.status(200).send({ message: 'Cart Updated', data: updatedCart });
 		}
@@ -81,13 +77,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	console.log('Post');
-	const newCart = await Cart.create({
-		cartItems: req.body.cartItems,
-		user: req.body.user._id,
-		deleted: req.body.deleted || false
-	});
-	// console.log({ cart_routes_post: cart });
+	const newCart = await Cart.create(req.body);
 	if (newCart) {
 		return res.status(201).send({ message: 'New Cart Created', data: newCart });
 	}
