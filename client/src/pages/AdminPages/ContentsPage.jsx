@@ -130,21 +130,16 @@ const ContentsPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
-			{/* <Loading loading={loading} error={error}>
+			<Loading loading={loading} error={error}>
 				{contents && (
 					<div className="content-list responsive_table">
 						<table className="table">
 							<thead>
 								<tr>
-									<th>user</th>
-									<th>Release Date</th>
-									<th>glover name</th>
-									<th>instagram handle</th>
-									<th>facebook name</th>
-									<th>product</th>
-									<th>video</th>
-									<th>song id</th>
-									<th>picture</th>
+									<th>ID</th>
+									<th>Home Page</th>
+									<th>Banner</th>
+									{/* <th>About Page</th> */}
 								</tr>
 							</thead>
 							<tbody>
@@ -156,15 +151,10 @@ const ContentsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td style={{ minWidth: '5rem' }}>{content.user}</td>
-										<td style={{ minWidth: '15rem' }}>{format_date(content.release_date)}</td>
-										<td style={{ minWidth: '15rem' }}>{content.glover_name}</td>
-										<td style={{ minWidth: '10rem' }}>{content.instagram_handle}</td>
-										<td style={{ minWidth: '15rem' }}>{content.facebook_name}</td>
-										<td style={{ minWidth: '5rem' }}>{content.product}</td>
-										<td style={{ minWidth: '10rem' }}>{content.video}</td>
-										<td style={{ minWidth: '50rem' }}>{content.song_id}</td>
-										<td style={{ minWidth: '10rem' }}>{content.picture}</td>
+										<td style={{ minWidth: '5rem' }}>{content._id}</td>
+										<td style={{ minWidth: '5rem' }}>{content.home_page.h1}</td>
+										<td style={{ minWidth: '15rem' }}>{content.banner.label}</td>
+										{/* <td style={{ minWidth: '10rem' }}>{content.about_page}</td> */}
 										<td>
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editcontent/' + content._id}>
@@ -183,7 +173,7 @@ const ContentsPage = (props) => {
 						</table>
 					</div>
 				)}
-			</Loading> */}
+			</Loading>
 		</div>
 	);
 };

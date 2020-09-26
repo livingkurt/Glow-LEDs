@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents/index';
+
 import { Link } from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
+import { detailsContent, listContents } from '../../actions/contentActions';
 
 const HomePage = (props) => {
+	const contentDetails = useSelector((state) => state.contentDetails);
+	const { content, loading, error } = contentDetails;
+
+	const contentList = useSelector((state) => state.contentList);
+	const { loading: loading_contents, contents, error: error_contents } = contentList;
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(listContents());
+		return () => {};
+	}, []);
+
+	useEffect(
+		() => {
+			const active_content = contents.find((content) => content.active === true);
+			if (active_content) {
+				dispatch(detailsContent(active_content._id));
+			}
+			return () => {};
+		},
+		[ contents ]
+	);
+
 	return (
 		<div class="main_container">
 			<MetaTags>
@@ -39,42 +66,41 @@ const HomePage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</MetaTags>
+
 			<FlexContainer h_center>
 				<h1 className="welcome_text mb-3rem" style={{ fontSize: '6rem' }}>
 					Welcome to Glow-LEDs
 				</h1>
 			</FlexContainer>
-			<div className="home_page_divs">
-				<FlexContainer h_center>
-					<h1 style={{ textAlign: 'center' }}>Now Available: New Frosted Diffusers</h1>
-				</FlexContainer>
+			{content &&
+			content.home_page && (
+				<div className="home_page_divs">
+					<FlexContainer h_center>
+						<h1 style={{ textAlign: 'center' }}>{content.home_page.h1}</h1>
+					</FlexContainer>
 
-				<Link to="/collections/all/products/category/mini_diffuser_caps">
-					<img
-						style={{ borderRadius: '20px', width: '100%' }}
-						src="/images/optimized_images/promo_images/img_2201_cropped_optimized.jpg"
-						alt="promo"
-					/>
-				</Link>
-				<FlexContainer h_center>
-					<h2 style={{ marginBottom: 0, textAlign: 'center' }}>
-						We now have EIGHT new Frosted Diffuser types available!
-					</h2>
-				</FlexContainer>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					You may recognise some of these from way back in the day Some of them are BRAND NEW, never before
-					made! We are also giving FREE SHIPPING with any order over $40 since we know you’ll want more than
-					just one pair (no code needed) We couldn’t be more excited to share these with you all As always,
-					give us your feedback and suggestions as this brand is ran by YOU and what the COMMUNITY wants
-				</p>
-				<FlexContainer h_center>
-					<Link to="/collections/all/products/category/frosted_diffusers">
-						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Frosted Diffusers</h2>
-						</button>
+					<Link to={content.home_page.link}>
+						<img
+							style={{ borderRadius: '20px', width: '100%' }}
+							src={content.home_page.image}
+							alt="promo"
+						/>
 					</Link>
-				</FlexContainer>
-			</div>
+					<FlexContainer h_center>
+						<h2 style={{ marginBottom: 0, textAlign: 'center' }}>{content.home_page.h2}</h2>
+					</FlexContainer>
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						{content.home_page.p}
+					</p>
+					<FlexContainer h_center>
+						<Link to={content.home_page.link}>
+							<button className="button primary" style={{ background: 'transparent' }}>
+								<h2>{content.home_page.button}</h2>
+							</button>
+						</Link>
+					</FlexContainer>
+				</div>
+			)}
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h1>
 			</FlexContainer>
@@ -86,6 +112,7 @@ const HomePage = (props) => {
 				encouraged). The beautiful colors have the ability to turn your home into the next best festival or into
 				a relaxing retreat, you decide.
 			</p>
+
 			<div className="home_page_divs">
 				<FlexContainer h_center>
 					<h1 style={{ textAlign: 'center' }}>Mini Diffuser Caps</h1>
@@ -116,6 +143,7 @@ const HomePage = (props) => {
 					</Link>
 				</FlexContainer>
 			</div>
+
 			<div className="home_page_divs">
 				<FlexContainer h_center>
 					<h1 style={{ textAlign: 'center' }}>Diffuser Caps</h1>

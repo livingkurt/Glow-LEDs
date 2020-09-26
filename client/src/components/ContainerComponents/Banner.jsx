@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { detailsContent, listContents } from '../../actions/contentActions';
 import { FlexContainer } from './index';
 
 const Banner = () => {
+	const contentDetails = useSelector((state) => state.contentDetails);
+	const { content, loading, error } = contentDetails;
+
+	const contentList = useSelector((state) => state.contentList);
+	const { loading: loading_contents, contents, error: error_contents } = contentList;
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(listContents());
+		return () => {};
+	}, []);
+
+	useEffect(
+		() => {
+			const active_content = contents.find((content) => content.active === true);
+			if (active_content) {
+				dispatch(detailsContent(active_content._id));
+			}
+			return () => {};
+		},
+		[ contents ]
+	);
 	return (
 		<span className="banner">
 			<div className="max-w-1500px m-auto jc-b">
@@ -23,9 +48,12 @@ const Banner = () => {
 						<button className="banner-button">Send us a message!</button>
 					</Link>
 				</div> */}
-				<div className="ml-10px mt-5px">
-					<label>Free Shipping on Orders over $40 </label>
-				</div>
+				{content &&
+				content.banner && (
+					<div className="ml-10px mt-5px">
+						<label>{content.banner.label}</label>
+					</div>
+				)}
 				<FlexContainer class="big_screen mt-3px">
 					<div className="ml-10px">
 						<a

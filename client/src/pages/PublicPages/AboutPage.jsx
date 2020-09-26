@@ -1,10 +1,32 @@
-import React, { useState } from 'react';
-// import emailjs from 'emailjs-com';
-import { FlexContainer } from '../../components/ContainerComponents';
-// import "./form.css";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import MetaTags from 'react-meta-tags';
+import { detailsContent, listContents } from '../../actions/contentActions';
 
 const AboutPage = () => {
+	const contentDetails = useSelector((state) => state.contentDetails);
+	const { content, loading, error } = contentDetails;
+
+	const contentList = useSelector((state) => state.contentList);
+	const { loading: loading_contents, contents, error: error_contents } = contentList;
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(listContents());
+		return () => {};
+	}, []);
+
+	useEffect(
+		() => {
+			const active_content = contents.find((content) => content.active === true);
+			if (active_content) {
+				dispatch(detailsContent(active_content._id));
+			}
+			return () => {};
+		},
+		[ contents ]
+	);
 	return (
 		<div class="main_container">
 			<MetaTags>
@@ -46,17 +68,7 @@ const AboutPage = () => {
 							src="/images/optimized_images/personal_images/IMG_8989_optimized.jpeg"
 						/>
 					</div>
-					<p style={{ lineHeight: '25px' }}>
-						Glow LEDs has been a long time coming. I (Kurt) have had these ideas in my brain for quite a
-						while now. All I needed was the free time that quarantine has gifted me (against my will). Glow
-						LEDs is completely home-grown and every product received will be handcrafted, with love, from my
-						very own two hands. I design all the schematics, invent designs, program the lights, solder all
-						the wires, I even made this whole website and all of the music, pictures, and videos inside it.
-						I (Destanye) help with orders, quality control, designs, marketing, customer service and
-						anything that doesn’t involve coding or engineering. This business is truly a labor of love and
-						we hope that something here brings happiness into your life.
-					</p>
-
+					{content && content.banner && <p style={{ lineHeight: '25px' }}>{content.about_page.kurt_p}</p>}
 					<div
 						className="about_pictures"
 						style={{
@@ -92,15 +104,7 @@ const AboutPage = () => {
 						involve coding or engineering. This business is truly a labor of love and we hope that something
 						here brings happiness into your life.
 					</p> */}
-					<p style={{ lineHeight: '25px' }}>
-						With the diffuser caps, our hope is that we can change the way we think of what a diffuser can
-						be and how gloving is viewed forever. With the Infinity Mirrors, we decided to use Individually
-						Addressable LEDs which allows each LED to have its own unique color. By using these specific
-						LEDs we are able to create more vibrant colors and intricate patterns. Other infinity mirrors
-						you will find will not have the ability to perform light shows like Glow LEDs Infinity Mirrors.
-						Our string lights also use Individually Addressable LEDs which gives us the ability to create
-						custom color schemes and patterns you will not find anywhere else.
-					</p>
+					{content && content.banner && <p style={{ lineHeight: '25px' }}>{content.about_page.destanye_p}</p>}
 				</div>
 			</div>
 		</div>

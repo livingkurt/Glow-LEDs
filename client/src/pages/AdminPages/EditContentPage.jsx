@@ -12,6 +12,10 @@ const EditContentPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
 
 	const [ id, set_id ] = useState('');
+	const [ home_page, set_home_page ] = useState({});
+	const [ about_page, set_about_page ] = useState({});
+	const [ banner, set_banner ] = useState({});
+
 	const [ home_page_h1, set_home_page_h1 ] = useState('');
 	const [ home_page_image, set_home_page_image ] = useState('');
 	const [ home_page_h2, set_home_page_h2 ] = useState('');
@@ -23,8 +27,10 @@ const EditContentPage = (props) => {
 	const [ banner_button_text, set_banner_button_text ] = useState('');
 	const [ banner_link, set_banner_link ] = useState('');
 
-	const [ about_kurt_p, set_about_kurt_p ] = useState('');
-	const [ about_destanye_p, set_about_destanye_p ] = useState('');
+	const [ about_page_kurt_p, set_about_page_kurt_p ] = useState('');
+	const [ about_page_destanye_p, set_about_page_destanye_p ] = useState('');
+
+	const [ active, set_active ] = useState(true);
 
 	const history = useHistory();
 
@@ -78,17 +84,24 @@ const EditContentPage = (props) => {
 
 	const set_state = () => {
 		set_id(content._id);
-		set_home_page_h1(content.home_page_h1);
-		set_home_page_image(content.home_page_image);
-		set_home_page_h2(content.home_page_h2);
-		set_home_page_p(content.home_page_p);
-		set_home_page_button(content.home_page_button);
-		set_home_page_link(content.home_page_link);
-		set_banner_label(content.banner_label);
-		set_banner_button_text(content.banner_button_text);
-		set_banner_link(content.banner_link);
-		set_about_kurt_p(content.about_kurt_p);
-		set_about_destanye_p(content.about_destanye_p);
+		if (content.home_page) {
+			set_home_page_h1(content.home_page.h1);
+			set_home_page_image(content.home_page.image);
+			set_home_page_h2(content.home_page.h2);
+			set_home_page_p(content.home_page.p);
+			set_home_page_button(content.home_page.button);
+			set_home_page_link(content.home_page.link);
+		}
+		if (content.about_page) {
+			set_about_page_kurt_p(content.about_page.kurt_p);
+			set_about_page_destanye_p(content.about_page.destanye_p);
+			set_active(content.active);
+		}
+		if (content.banner) {
+			set_banner_label(content.banner.label);
+			set_banner_button_text(content.banner.button_text);
+			set_banner_link(content.banner.link);
+		}
 
 		// fcontent.banner_link);
 		// console.log(format_date(content.banner_link));
@@ -104,15 +117,16 @@ const EditContentPage = (props) => {
 		set_banner_label('');
 		set_banner_button_text('');
 		set_banner_link('');
-		set_about_kurt_p('');
-		set_about_destanye_p('');
+		set_about_page_kurt_p('');
+		set_about_page_destanye_p('');
+		set_active(true);
 	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log(banner_link);
-		console.log(format_date(banner_link));
-		console.log(unformat_date(format_date(banner_link)));
+		// console.log(banner_link);
+		// console.log(format_date(banner_link));
+		// console.log(unformat_date(format_date(banner_link)));
 		// console.log(unformat_date(banner_link));
 		// console.log(format_date(unformat_date(banner_link)));
 		// console.log(format_date(unformat_date(banner_link)));
@@ -130,8 +144,9 @@ const EditContentPage = (props) => {
 				banner_label,
 				banner_button_text,
 				banner_link,
-				about_kurt_p,
-				about_destanye_p
+				about_page_kurt_p,
+				about_page_destanye_p,
+				active
 			})
 		);
 		e.target.reset();
@@ -145,8 +160,9 @@ const EditContentPage = (props) => {
 		set_banner_label('');
 		set_banner_button_text('');
 		set_banner_link('');
-		set_about_kurt_p('');
-		set_about_destanye_p('');
+		set_about_page_kurt_p('');
+		set_about_page_destanye_p('');
+		set_active(true);
 		// if (id) {
 		// 	history.push('/collections/all/contents/' + id);
 		// } else {
@@ -284,28 +300,43 @@ const EditContentPage = (props) => {
 													onChange={(e) => set_banner_link(e.target.value)}
 												/>
 											</li>
+											<li>
+												<label htmlFor="active">Active?</label>
+												<input
+													type="checkbox"
+													name="active"
+													// defaultChecked={active ? 'checked' : 'unchecked'}
+													// defaultValue={active}
+													defaultChecked={active}
+													// value={active ? '1' : '0'}
+													id="active"
+													onChange={(e) => {
+														set_active(e.target.checked);
+													}}
+												/>
+											</li>
 										</div>
 
 										<div className="w-228px m-10px">
 											<h2>About Page</h2>
 											<li>
-												<label htmlFor="about_kurt_p">About Page Kurt P</label>
+												<label htmlFor="about_page_kurt_p">About Page Kurt P</label>
 												<textarea
 													className="edit_product_textarea"
-													name="about_kurt_p"
-													value={about_kurt_p}
-													id="about_kurt_p"
-													onChange={(e) => set_about_kurt_p(e.target.value)}
+													name="about_page_kurt_p"
+													value={about_page_kurt_p}
+													id="about_page_kurt_p"
+													onChange={(e) => set_about_page_kurt_p(e.target.value)}
 												/>
 											</li>
 											<li>
-												<label htmlFor="about_destanye_p">About Page Kurt P</label>
+												<label htmlFor="about_page_destanye_p">About Page Kurt P</label>
 												<textarea
 													className="edit_product_textarea"
-													name="about_destanye_p"
-													value={about_destanye_p}
-													id="about_destanye_p"
-													onChange={(e) => set_about_destanye_p(e.target.value)}
+													name="about_page_destanye_p"
+													value={about_page_destanye_p}
+													id="about_page_destanye_p"
+													onChange={(e) => set_about_page_destanye_p(e.target.value)}
 												/>
 											</li>
 										</div>

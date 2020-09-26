@@ -25,7 +25,9 @@ const contentSchema = new mongoose.Schema(
 	{
 		home_page: home_page_schema,
 		banner: banner_schema,
-		about_page: about_schema
+		about_page: about_schema,
+		active: { type: Boolean, default: true },
+		deleted: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true

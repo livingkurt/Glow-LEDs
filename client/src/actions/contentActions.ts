@@ -33,17 +33,7 @@ export const listContents = (category = '', searchKeyword = '', sortOrder = '') 
 	}
 };
 
-export const saveContent = (content: {
-	_id: string;
-	content_name?: string;
-	application?: number;
-	url?: string;
-	place_of_purchase?: string;
-	date_of_purchase?: string;
-	category?: string;
-	card?: number;
-	amount?: string;
-}) => async (
+export const saveContent = (content: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -52,6 +42,7 @@ export const saveContent = (content: {
 		dispatch({ type: CONTENT_SAVE_REQUEST, payload: content });
 		const { userLogin: { userInfo } } = getState();
 		if (!content._id) {
+			console.log({ contentActions: content });
 			const { data } = await axios.post('/api/contents', content, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
