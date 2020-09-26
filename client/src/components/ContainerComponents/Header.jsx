@@ -134,6 +134,15 @@ const Header = (props) => {
 												<button className="button nav">Shapes</button>
 											</div>
 										</Link>
+										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Abstract</button>
+											</div>
+										</Link>
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/patterns">
 											<div className="row">
 												<i
@@ -179,6 +188,15 @@ const Header = (props) => {
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
 												<button className="button nav">Shapes</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
