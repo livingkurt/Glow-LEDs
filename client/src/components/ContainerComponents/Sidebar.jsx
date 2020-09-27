@@ -204,11 +204,11 @@ const Sidebar = (props) => {
 										Shapes
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/symbols">
+								{/* <Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/symbols">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Symbols
 									</button>
-								</Link>
+								</Link> */}
 								<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Abstract
@@ -219,11 +219,11 @@ const Sidebar = (props) => {
 										Patterns
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/emoji">
+								{/* <Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/emoji">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Emojis
 									</button>
-								</Link>
+								</Link> */}
 							</ul>
 							<i
 								style={{ '-webkitTransform': 'rotate(-180deg)' }}

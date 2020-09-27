@@ -134,7 +134,7 @@ const Header = (props) => {
 												<button className="button nav">Shapes</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/symbols">
+										{/* <Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/symbols">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -142,7 +142,7 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav">Symbols</button>
 											</div>
-										</Link>
+										</Link> */}
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
 											<div className="row">
 												<i
@@ -161,7 +161,7 @@ const Header = (props) => {
 												<button className="button nav">Patterns</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/emoji">
+										{/* <Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/emoji">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -169,7 +169,7 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav">Emojis</button>
 											</div>
-										</Link>
+										</Link> */}
 									</div>
 								</div>
 								{/* <Link to="/collections/all/products/category/mini_diffuser_adapters">
