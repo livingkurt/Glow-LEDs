@@ -134,6 +134,15 @@ const Header = (props) => {
 												<button className="button nav">Shapes</button>
 											</div>
 										</Link>
+										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/symbols">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Symbols</button>
+											</div>
+										</Link>
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
 											<div className="row">
 												<i

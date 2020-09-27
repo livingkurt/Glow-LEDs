@@ -944,12 +944,34 @@ video {
 	text-align: start;
 	padding-left: 20px;
 }
+.sidebar_button.nested {
+	border-bottom: 1px white solid;
+	width: 100%;
+	border-radius: 0px;
+	text-align: start;
+	padding-left: 20px;
+}
 
 .sidebar_dropdown {
 	position: relative;
 }
+.sidebar_dropdown_secondary {
+	position: relative;
+}
 
 .sidebar_dropdown_container {
+	overflow: hidden;
+	height: auto;
+	max-height: 0px;
+	transition: all 0.5s;
+	left: 0;
+	list-style-type: none;
+	background-color: #969696;
+	margin: 0;
+	width: 100%;
+}
+
+.sidebar_dropdown_secondary_container {
 	overflow: hidden;
 	height: auto;
 	max-height: 0px;
@@ -966,6 +988,21 @@ video {
 }
 
 .sidebar_button:hover + .sidebar_dropdown_container {
+	max-height: 600px;
+}
+
+.sidebar_dropdown_container:hover {
+	max-height: 600px;
+}
+
+.sidebar_button.secondary:hover {
+	background: gray;
+}
+
+.sidebar_button.secondary:hover + .sidebar_dropdown_secondary_container {
+	max-height: 600px;
+}
+.sidebar_dropdown_secondary_container:hover {
 	max-height: 600px;
 }
 
