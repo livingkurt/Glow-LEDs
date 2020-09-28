@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
 	}
 
 	const devices = await Device.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	console.log(devices);
+	// console.log(devices);
 	res.send(devices);
 });
 

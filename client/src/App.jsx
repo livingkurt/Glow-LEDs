@@ -85,7 +85,10 @@ const App = () => {
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
 							<PrivateRoute path="/secure/account/glowcontrol/:id" component={GlowControlPage} />
 							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
-							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
+							<PrivateRoute
+								path="/secure/account/editdevice/:id?"
+								component={(props) => <EditDevicePage userInfo={userInfo} {...props} />}
+							/>
 							<PrivateRoute
 								path="/secure/checkout/paymentcomplete/:id"
 								exact={true}

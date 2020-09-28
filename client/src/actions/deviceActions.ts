@@ -75,10 +75,9 @@ export const saveDevice = (device: {
 
 export const detailsDevice = (id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
-		console.log({ detailsDevice: 'detailsDevice' });
+		console.log({ listDevices: 'listDevices' });
 		dispatch({ type: DEVICE_DETAILS_REQUEST, payload: id });
 		const { data } = await axios.get('/api/devices/' + id);
-		console.log({ detailsDevice: data });
 		dispatch({ type: DEVICE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: DEVICE_DETAILS_FAIL, payload: error.message });

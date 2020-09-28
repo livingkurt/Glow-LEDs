@@ -9,9 +9,11 @@ import { format_date, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
 
 const EditDevicePage = (props) => {
+	const user_data = props.userInfo;
 	// const [modalVisible, setModalVisible] = useState(false);
 
 	const [ id, set_id ] = useState('');
+	const [ user, set_user ] = useState(user_data._id);
 	const [ device_name, set_device_name ] = useState('');
 	const [ query_url, set_query_url ] = useState('');
 	const [ location, set_location ] = useState('');
@@ -72,6 +74,7 @@ const EditDevicePage = (props) => {
 
 	const set_state = () => {
 		set_id(device._id);
+		set_user(device.user);
 		set_device_name(device.device_name);
 		set_query_url(device.query_url);
 		set_location(device.location);
@@ -84,6 +87,7 @@ const EditDevicePage = (props) => {
 	};
 	const unset_state = () => {
 		set_id('');
+		set_user('');
 		set_device_name('');
 		set_query_url('');
 		set_location('');
@@ -102,6 +106,7 @@ const EditDevicePage = (props) => {
 		dispatch(
 			saveDevice({
 				_id: id,
+				user,
 				device_name,
 				query_url,
 				location,
@@ -112,6 +117,7 @@ const EditDevicePage = (props) => {
 		);
 		e.target.reset();
 		set_id('');
+		set_user('');
 		set_device_name('');
 		set_query_url('');
 		set_location('');
