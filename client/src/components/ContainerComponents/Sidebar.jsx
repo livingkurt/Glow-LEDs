@@ -82,7 +82,7 @@ const Sidebar = (props) => {
 			<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
 				<i className="fas fa-times" />
 			</button>
-			<div className="column">
+			<div className="column h-100per" style={{ overflowY: 'scroll' }}>
 				{props.userInfo ? (
 					<div className="sidebar_dropdown">
 						<button className="sidebar_button primary">{first_name}</button>
