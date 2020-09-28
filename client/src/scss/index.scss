@@ -696,7 +696,8 @@ td {
 .dropdown-nav-subcategory-content {
 	position: absolute;
 	display: none;
-	left: 0;
+	left: 268px;
+	top: -5px;
 	padding: 1rem;
 	list-style-type: none;
 	z-index: 1;
@@ -704,7 +705,7 @@ td {
 	margin: 0;
 	border-radius: $br_small_containers;
 	/* margin-top: 0.4rem; */
-	box-shadow: $bs_deep;
+	// box-shadow: $bs_deep;
 }
 
 .dropdown-nav:hover .dropdown-nav-content {
