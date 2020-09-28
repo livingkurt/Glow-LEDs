@@ -10,24 +10,51 @@ import MetaTags from 'react-meta-tags';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	// console.log({ search_outside: search });
+	const [ searchKeyword, setSearchKeyword ] = useState(
+		props.location.search.substring(8) ? props.location.search.substring(8) : ''
+	);
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+
 	console.log({ subcategory });
 	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 	const dispatch = useDispatch();
-	useEffect(() => {
-		// dispatch(listProducts(''));
-		dispatch(listProducts(category, subcategory));
-	}, []);
+	useEffect(
+		() => {
+			// dispatch(listProducts(''));
+			// console.log({ search: search.substring(8) });
+			dispatch(listProducts(category, subcategory, searchKeyword));
+		},
+		[ searchKeyword ]
+	);
+
+	useEffect(
+		() => {
+			// dispatch(listProducts(''));
+			console.log(props.location);
+			// let params = new URLSearchParams(props.location);
+			// params.delete('search');
+
+			// let params = new URLSearchParams(props.location.pathmame + props.location.search);
+
+			// params.delete('searcj'); //Query string is now: 'bar=2'
+			setSearchKeyword('');
+			dispatch(listProducts(category, subcategory));
+		},
+		[ props.location.pathname ]
+	);
 
 	useEffect(
 		() => {
 			console.log({ category });
 			console.log({ subcategory });
+			console.log({ searchKeyword });
+			// console.log({ search });
 			// if (
 			// 	[
 			// 		'diffuser_caps',
@@ -40,13 +67,24 @@ const AllProductsPage = (props) => {
 			// 		'mini_diffuser_adapters'
 			// 	].includes(category)
 			// ) {
-			dispatch(listProducts(category, subcategory));
+			if (searchKeyword) {
+				history.push({
+					search: '?search=' + searchKeyword
+				});
+			}
+			// else if (search) {
+			// 	history.push({
+			// 		search: '?search=' + search
+			// 	});
+			// }
+
+			dispatch(listProducts(category, subcategory, searchKeyword));
 			// } else {
-			// 	history.push('/collections/all/products');
+
 			// 	dispatch(listProducts(''));
 			// }
 		},
-		[ category, subcategory ]
+		[ category, subcategory, searchKeyword ]
 	);
 
 	useEffect(
@@ -59,6 +97,12 @@ const AllProductsPage = (props) => {
 	const submitHandler = (e) => {
 		console.log({ searchKeyword });
 		e.preventDefault();
+		// history.push(
+		// 	'/collections/all/products/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
+		// );
+		history.push({
+			search: '?search=' + searchKeyword
+		});
 		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
 	};
 

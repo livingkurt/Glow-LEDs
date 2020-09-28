@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { FlexContainer } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
+import { listProducts } from '../../actions/productActions';
 import Banner from './Banner';
 
 const Header = (props) => {
@@ -98,7 +99,9 @@ const Header = (props) => {
 					</div>
 					<div className="jc-b nav_bar">
 						<Link to="/collections/all/products">
-							<button className="button nav">Products</button>
+							<button className="button nav" onClick={() => dispatch(listProducts(''))}>
+								Products
+							</button>
 						</Link>
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
