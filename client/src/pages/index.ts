@@ -20,6 +20,7 @@ export { default as EditCartPage } from './AdminPages/EditCartPage';
 export { default as EditContentPage } from './AdminPages/EditContentPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
+export { default as GlowControlPage } from './PrivatePages/GlowControlPage';
 export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';
 export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPage';
@@ -48,3 +49,4 @@ export { default as AboutPage } from './PublicPages/AboutPage';
 export { default as FAQPage } from './PublicPages/FAQPage';
 export { default as SitemapPage } from './PublicPages/SitemapPage';
 export { default as FeaturedPage } from './PublicPages/FeaturedPage';
+export { default as GlowControlHomePage } from './PublicPages/GlowControlHomePage';

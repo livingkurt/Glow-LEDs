@@ -46,7 +46,9 @@ import {
 	EditCartPage,
 	CartsPage,
 	ContentsPage,
-	EditContentPage
+	EditContentPage,
+	GlowControlPage,
+	GlowControlHomePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -79,6 +81,7 @@ const App = () => {
 							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
 							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
+							<PrivateRoute path="/secure/account/glowcontrol" component={GlowControlPage} />
 							<PrivateRoute
 								path="/secure/checkout/paymentcomplete/:id"
 								exact={true}
@@ -138,6 +141,7 @@ const App = () => {
 								component={(props) => <ContactPage userInfo={userInfo} {...props} />}
 							/>
 							{/* <Route path="/pages/contact/:reason?" exact={true} component={ContactPage} /> */}
+							<Route path="/pages/glowcontrol" component={GlowControlHomePage} />
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />

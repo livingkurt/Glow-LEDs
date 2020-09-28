@@ -97,6 +97,11 @@ const Sidebar = (props) => {
 									Orders
 								</button>
 							</Link>
+							<Link to="/pages/glowcontrol">
+								<button className=" sidebar_button secondary" onClick={closeMenu}>
+									Glow Control
+								</button>
+							</Link>
 							<button onClick={handleLogout} className=" sidebar_button secondary">
 								{' '}
 								Logout

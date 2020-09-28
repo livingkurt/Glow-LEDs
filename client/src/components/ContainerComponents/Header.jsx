@@ -299,12 +299,15 @@ const Header = (props) => {
 					{props.userInfo ? (
 						<div className="dropdown">
 							<button className="button nav">{first_name}</button>
-							<ul className="dropdown-content hover_fade_in w-150px">
+							<ul className="dropdown-content hover_fade_in w-200px">
 								<Link to="/secure/account/profile">
 									<button className="button nav">Profile</button>
 								</Link>
 								<Link to="/secure/account/orders">
 									<button className="button nav">Orders</button>
+								</Link>
+								<Link to="/pages/glowcontrol">
+									<button className="button nav">Glow Control</button>
 								</Link>
 								<button className="button nav mr-auto" onClick={handleLogout}>
 									{' '}
