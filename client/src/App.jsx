@@ -83,7 +83,7 @@ const App = () => {
 							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
 							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
-							<PrivateRoute path="/secure/account/glowcontrol" component={GlowControlPage} />
+							<PrivateRoute path="/secure/account/glowcontrol/:id" component={GlowControlPage} />
 							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
 							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
 							<PrivateRoute

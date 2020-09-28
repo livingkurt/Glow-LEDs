@@ -18,6 +18,7 @@ export const listDevices = (category = '', searchKeyword = '', sortOrder = '') =
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
+		console.log({ listDevices: 'listDevices' });
 		dispatch({ type: DEVICE_LIST_REQUEST });
 		const { data } = await axios.get(
 			'/api/devices?category=' +
@@ -27,6 +28,7 @@ export const listDevices = (category = '', searchKeyword = '', sortOrder = '') =
 				'&sortOrder=' +
 				sortOrder.toLowerCase()
 		);
+		console.log({ listDevices: data });
 		dispatch({ type: DEVICE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: DEVICE_LIST_FAIL, payload: error.message });
@@ -71,10 +73,12 @@ export const saveDevice = (device: {
 	}
 };
 
-export const detailsDevice = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsDevice = (id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
-		dispatch({ type: DEVICE_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/devices/' + pathname);
+		console.log({ detailsDevice: 'detailsDevice' });
+		dispatch({ type: DEVICE_DETAILS_REQUEST, payload: id });
+		const { data } = await axios.get('/api/devices/' + id);
+		console.log({ detailsDevice: data });
 		dispatch({ type: DEVICE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: DEVICE_DETAILS_FAIL, payload: error.message });

@@ -140,6 +140,7 @@ const DevicesPage = (props) => {
 									<th>Name</th>
 									<th>URL</th>
 									<th>Location</th>
+									<th>View</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -155,7 +156,13 @@ const DevicesPage = (props) => {
 										<td>{device.device_name}</td>
 										<td>{device.query_url}</td>
 										<td>{device.location}</td>
-
+										<td>
+											<Link to={'/secure/account/glowcontrol/' + device._id}>
+												<button className="button icon">
+													<i class="fas fa-eye" />
+												</button>
+											</Link>
+										</td>
 										<td>
 											<FlexContainer h_between>
 												<Link to={'/secure/account/editdevice/' + device._id}>

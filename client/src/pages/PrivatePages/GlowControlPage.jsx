@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Route, BrowserRouter as Router, Switch, Link, useHistory } from 'react-router-dom';
+import { saveDevice, detailsDevice, listDevices } from '../../actions/deviceActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ToggleSwitch } from '../../components/UtilityComponents';
 import API from '../../utils/API';
@@ -13,16 +15,24 @@ import {
 } from '../../components/ColorComponents';
 
 const GlowControl = (props) => {
-	const devices = {
-		living_room: { name: 'Living Room', query_url: '192.168.0.219' },
-		test_2: { name: 'Test', query_url: '192.168.0.152' },
-		bedroom: { name: 'Bedroom', query_url: '192.168.0.58' },
-		keiths: { name: 'Keiths', query_url: '192.168.1.145' }
-	};
+	const device_id = props.match.params.id ? props.match.params.id : '';
+	console.log({ device_id });
+	// const devices = {
+	// 	living_room: { name: 'Living Room', query_url: '192.168.0.219' },
+	// 	test_2: { name: 'Test', query_url: '192.168.0.152' },
+	// 	bedroom: { name: 'Bedroom', query_url: '192.168.0.58' },
+	// 	keiths: { name: 'Keiths', query_url: '192.168.1.145' }
 
+	const dispatch = useDispatch();
+	// };
+
+	const deviceDetails = useSelector((state) => state.deviceDetails);
+	const { device, loading: loading_device, error } = deviceDetails;
+
+	console.log({ device });
 	const [ settings, set_settings ] = useState({});
-	const [ leds, set_leds ] = useState(devices);
-	const [ current_device, set_current_device ] = useState(leds.bedroom);
+	const [ leds, set_leds ] = useState();
+	// const [ device, set_device ] = useState('');
 	const [ patterns, set_patterns ] = useState([]);
 	const [ palettes, set_palettes ] = useState([]);
 	// const [ devices, set_devices ] = useState([]);
@@ -33,9 +43,32 @@ const GlowControl = (props) => {
 	const [ show_hide_palette, set_show_hide_palette ] = useState();
 	const [ mode_specific_settings, set_mode_specific_settings ] = useState('');
 
+	useEffect(
+		() => {
+			if (device && device.query_url) {
+				get_all_settings(device.query_url);
+				console.log({ query_url: device.query_url });
+			}
+
+			// set_device(device);
+			console.log({ device });
+			// console.log({ query_url: device.query_url });
+
+			// set_leds(devices);
+			return () => {};
+		},
+		[ device ]
+	);
+
 	useEffect(() => {
-		get_all_settings(current_device.query_url);
-		set_leds(devices);
+		if (props.match.params.id) {
+			console.log('Is ID');
+			dispatch(detailsDevice(props.match.params.id));
+			dispatch(detailsDevice(props.match.params.id));
+		} else {
+			dispatch(detailsDevice(''));
+		}
+		// set_state();
 		return () => {};
 	}, []);
 
@@ -50,7 +83,7 @@ const GlowControl = (props) => {
 	const update_leds = async (field_name, value) => {
 		try {
 			console.log({ field_name, value });
-			const res = await API.update_leds(current_device.query_url, field_name, value);
+			const res = await API.update_leds(device.query_url, field_name, value);
 			if (field_name === 'pattern') {
 				let pattern = camelize(patterns[value]);
 				console.log(pattern);
@@ -86,7 +119,7 @@ const GlowControl = (props) => {
 			}
 			console.log(field_name, value, red, green, blue);
 			set_rgb({ red, green, blue });
-			const res = await API.update_rgb(current_device.query_url, red, green, blue);
+			const res = await API.update_rgb(device.query_url, red, green, blue);
 		} catch (err) {
 			console.log(err);
 		}
@@ -101,7 +134,7 @@ const GlowControl = (props) => {
 			console.log(field_name, field_value);
 			console.log(field_name, field_value, hue, saturation, value);
 			set_hsv({ hue, saturation, value });
-			const res = await API.update_hsv(current_device.query_url, hue, saturation, value);
+			const res = await API.update_hsv(device.query_url, hue, saturation, value);
 		} catch (err) {
 			console.log(err);
 		}
@@ -110,6 +143,8 @@ const GlowControl = (props) => {
 	const get_all_settings = async (query_url) => {
 		try {
 			const res = await API.get_all_settings(query_url);
+			console.log({ res });
+			console.log({ query_url });
 
 			const settings = res.data;
 			let saved_settings = {};
@@ -146,16 +181,16 @@ const GlowControl = (props) => {
 
 	const reset_device = async () => {
 		try {
-			const res = await API.reset_device(current_device.query_url);
+			const res = await API.reset_device(device.query_url);
 		} catch (err) {
 			console.log(err);
 		}
 	};
 	console.log({ settings });
 
-	const change_device = (current_device) => {
-		set_current_device(current_device);
-		get_all_settings(current_device.query_url);
+	const change_device = (device) => {
+		// set_device(device);
+		get_all_settings(device.query_url);
 		set_loading(true);
 	};
 
@@ -194,7 +229,7 @@ const GlowControl = (props) => {
 	return (
 		<Router>
 			{/* <div className="content w-100per"> */}
-			<div className="jc-b">
+			{/* <div className="jc-b">
 				<div className="jc-b w-50per">
 					<button onClick={() => change_device(leds.living_room)} className="btn btn-nav">
 						Living Room
@@ -212,7 +247,7 @@ const GlowControl = (props) => {
 				<button className="btn primary" onClick={() => reset_device()}>
 					Reset
 				</button>
-			</div>
+			</div> */}
 			{/* <DropdownSelector
 					update_function={update_leds}
 					data={devices}
@@ -224,7 +259,7 @@ const GlowControl = (props) => {
 			) : (
 				settings && (
 					<div className="column w-100per">
-						<h1 className="ta-c">{current_device.name}</h1>
+						<h1 className="ta-c">{device.device_name}</h1>
 						{settings.pattern.options
 							.map((pattern) => {
 								return camelize(pattern);
