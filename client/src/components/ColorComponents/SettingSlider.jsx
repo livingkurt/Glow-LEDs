@@ -4,9 +4,9 @@ import { Arrows } from '../UtilityComponents';
 const SettingSlider = (props) => {
 	const [ value, set_value ] = useState(props.setting.value);
 	return (
-		<div className="m-v-s w-100">
+		<div className="mv-10px w-100per">
 			<div className="row ai-c">
-				<label className="m-t-s w-16rem" htmlFor={props.setting.name}>
+				<label className="mt-5px w-16rem" htmlFor={props.setting.name}>
 					{props.setting.label}
 				</label>
 				<input
@@ -15,7 +15,7 @@ const SettingSlider = (props) => {
 					max={props.setting.max}
 					step={props.setting.step}
 					value={value}
-					className="w-8rem m-r-l"
+					className="w-8rem mr-20px"
 					name={props.setting.name}
 					onMouseUp={(e) => props.update_function(e.target.name, e.target.value)}
 					// onChange={(e) =>
@@ -32,7 +32,7 @@ const SettingSlider = (props) => {
 					step={props.setting.step}
 					value={value}
 					dir={props.direction}
-					className="w-90  m-r-xl"
+					className="w-100per  mr-10px"
 					name={props.setting.name}
 					onMouseUp={(e) => props.update_function(e.target.name, e.target.value)}
 					onBlur={(e) => props.update_function(e.target.name, e.target.value)}

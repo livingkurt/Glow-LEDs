@@ -221,13 +221,13 @@ const EditDevicePage = (props) => {
 									</li>
 									<li>
 										{id ? (
-											<Link to="/secure/account/devices">
+											<Link to={'/secure/account/glowcontrol/' + id}>
 												<button
 													style={{ width: '100%' }}
 													type="button"
 													className="button secondary"
 												>
-													Cancel
+													Back to Device
 												</button>
 											</Link>
 										) : (
@@ -237,7 +237,7 @@ const EditDevicePage = (props) => {
 													type="button"
 													className="button secondary"
 												>
-													Cancel
+													Back to Devices
 												</button>
 											</Link>
 										)}

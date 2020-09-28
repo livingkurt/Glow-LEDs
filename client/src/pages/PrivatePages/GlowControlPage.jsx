@@ -227,33 +227,16 @@ const GlowControl = (props) => {
 	// };
 
 	return (
-		<Router>
-			{/* <div className="content w-100per"> */}
-			{/* <div className="jc-b">
-				<div className="jc-b w-50per">
-					<button onClick={() => change_device(leds.living_room)} className="btn btn-nav">
-						Living Room
-					</button>
-					<button onClick={() => change_device(leds.bedroom)} className="btn btn-nav">
-						Bedroom
-					</button>
-					<button onClick={() => change_device(leds.test_2)} className="btn btn-nav">
-						Test 2
-					</button>
-					<button onClick={() => change_device(leds.keiths)} className="btn btn-nav">
-						Keiths
-					</button>
-				</div>
-				<button className="btn primary" onClick={() => reset_device()}>
-					Reset
-				</button>
-			</div> */}
-			{/* <DropdownSelector
-					update_function={update_leds}
-					data={devices}
-					setting={settings.device}
-					settings={settings}
-				/> */}
+		<div>
+			<div className="jc-b w-100per">
+				<Link to="/secure/account/devices">
+					<button className="button primary">Back to Devices</button>
+				</Link>
+
+				<Link to={'/secure/account/editdevice/' + device_id}>
+					<button className="button primary">Edit Device</button>
+				</Link>
+			</div>
 			{loading ? (
 				<h1 className="ta-c">Loading... Make Sure Device is Turned On</h1>
 			) : (
@@ -544,13 +527,13 @@ const GlowControl = (props) => {
 												// webkitTransform: 'rotate(180deg)',
 												height: '36px',
 												left: '230px',
-												width: '77%',
+												width: '83%',
 												borderRadius: '10px',
 												marginRight: '10px'
 											}}
-											src="./images/hsv_picture.jpg"
+											src="https://images2.imgbox.com/f5/31/yXxteuO4_o.jpg"
 											alt="hsv"
-											className="w-100per"
+											// className="w-100per"
 										/>
 										<div
 											style={{
@@ -593,8 +576,7 @@ const GlowControl = (props) => {
 					</div>
 				)
 			)}
-			{/* </div> */}
-		</Router>
+		</div>
 	);
 };
 

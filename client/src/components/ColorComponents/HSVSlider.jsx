@@ -12,7 +12,7 @@ const HSVSlider = (props) => {
 		[ props.hsv[props.color] ]
 	);
 	return (
-		<div className="m-v-s w-100">
+		<div className="mv-5px w-100per">
 			<div className="row">
 				<label className="m-t-s w-16rem" htmlFor={props.color}>
 					{props.color.toUpperCase()}
@@ -23,7 +23,7 @@ const HSVSlider = (props) => {
 					max="255"
 					step="1"
 					value={props.hsv[props.color]}
-					className="w-8rem m-r-l"
+					className="w-8rem mr-20px"
 					name={props.color}
 					onMouseUp={(e) => update(e)}
 					onChange={(e) => props.set_hsv({ ...props.hsv, [props.color]: e.target.value })}
@@ -35,7 +35,7 @@ const HSVSlider = (props) => {
 					step="1"
 					value={props.hsv[props.color]}
 					dir={props.direction}
-					className="w-90"
+					className="w-100per"
 					name={props.color}
 					onMouseUp={(e) => update(e)}
 					onBlur={(e) => update(e)}
