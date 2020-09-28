@@ -35,17 +35,7 @@ export const listDevices = (category = '', searchKeyword = '', sortOrder = '') =
 	}
 };
 
-export const saveDevice = (device: {
-	_id: string;
-	device_name?: string;
-	application?: number;
-	url?: string;
-	place_of_purchase?: string;
-	date_of_purchase?: string;
-	category?: string;
-	card?: number;
-	amount?: string;
-}) => async (
+export const saveDevice = (device: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {

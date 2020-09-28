@@ -3,17 +3,25 @@ export {};
 
 const settingsSchema = {
 	brightness: { type: Number, default: 255 },
-	motion_speed: { type: Number },
+	motion_speed: { type: Number, default: 30 },
+	strobe: { type: Number },
+	gap: { type: Number },
+	blank: { type: Number },
 	autoplay_pattern: { type: Boolean, default: true },
+	autoplay_pattern_duration: { type: Number, default: 40 },
+	random_pattern: { type: Boolean, default: false },
 	palette: { type: Number },
 	blend_palette: { type: Boolean, default: true },
 	autoplay_palette: { type: Boolean, default: false },
+	autoplay_palette_duration: { type: Number, default: 40 },
+	random_palette: { type: Boolean, default: false },
 	color_density: { type: Number },
 	color_speed: { type: Number },
 	color_fade: { type: Number }
 };
 
 const deviceSettingsSchema = {
+	power: { type: Boolean },
 	strobe_settings: settingsSchema,
 	pulse_settings: settingsSchema,
 	sparkle_settings: settingsSchema,
