@@ -21,7 +21,8 @@ import {
 	promo_routes,
 	sponsor_routes,
 	cart_routes,
-	content_routes
+	content_routes,
+	device_routes
 } from './routes/index';
 
 // const htmlRoutes = require('./email_templates/html_routes');
@@ -68,6 +69,7 @@ app.use('/api/users', user_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);
+app.use('/api/devices', device_routes);
 app.use('/api/all', batch_routes);
 
 // app.use('/', htmlRoutes);

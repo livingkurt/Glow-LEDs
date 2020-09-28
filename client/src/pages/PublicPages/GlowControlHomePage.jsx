@@ -79,21 +79,14 @@ const GlowControlHomePage = (props) => {
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Control your Glow LEDs Infinity Mirrors and Glow Strings with ease!
 			</p>
-			{/* <FlexContainer h_center>
-				<Link to="/collections/all/products/category/infinity_mirrors">
-					<button className="button primary" style={{ background: 'transparent' }}>
-						<h2>Start Here</h2>
-					</button>
-				</Link>
-			</FlexContainer> */}
 
 			<div className="home_page_divs">
 				<div className="wrap jc-b">
-					<h1 className="ta-c w-500px" />
+					<h1 className=" w-500px" />
 					<h1 className="ta-c">Devices</h1>
 					<div className=" jc-fe w-500px">
 						<label className="p-10px ">Click Here to Get Started!</label>
-						<Link to="/secure/add_device">
+						<Link to="/secure/account/editdevice">
 							<button className="button primary">Add Device</button>
 						</Link>
 					</div>

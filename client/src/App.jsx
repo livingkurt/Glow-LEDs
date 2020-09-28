@@ -48,13 +48,15 @@ import {
 	ContentsPage,
 	EditContentPage,
 	GlowControlPage,
-	GlowControlHomePage
+	GlowControlHomePage,
+	EditDevicePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
 
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { ScrollToTop } from './components/UtilityComponents';
+import DevicesPage from './pages/PrivatePages/DevicesPage';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -82,6 +84,8 @@ const App = () => {
 							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
 							<PrivateRoute path="/secure/account/glowcontrol" component={GlowControlPage} />
+							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
+							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
 							<PrivateRoute
 								path="/secure/checkout/paymentcomplete/:id"
 								exact={true}

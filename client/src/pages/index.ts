@@ -20,6 +20,7 @@ export { default as EditCartPage } from './AdminPages/EditCartPage';
 export { default as EditContentPage } from './AdminPages/EditContentPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
+export { default as EditDevicePage } from './PrivatePages/EditDevicePage';
 export { default as GlowControlPage } from './PrivatePages/GlowControlPage';
 export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';

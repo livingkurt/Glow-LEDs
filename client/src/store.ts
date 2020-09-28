@@ -23,6 +23,12 @@ import {
 	featureDeleteReducer
 } from './reducers/featureReducers';
 import {
+	deviceListReducer,
+	deviceDetailsReducer,
+	deviceSaveReducer,
+	deviceDeleteReducer
+} from './reducers/deviceReducers';
+import {
 	cartDeleteReducer,
 	cartDetailsReducer,
 	cartListReducer,
@@ -108,6 +114,10 @@ const reducer = combineReducers({
 	featureDetails: featureDetailsReducer,
 	featureSave: featureSaveReducer,
 	featureDelete: featureDeleteReducer,
+	deviceList: deviceListReducer,
+	deviceDetails: deviceDetailsReducer,
+	deviceSave: deviceSaveReducer,
+	deviceDelete: deviceDeleteReducer,
 	promoList: promoListReducer,
 	promoDetails: promoDetailsReducer,
 	promoSave: promoSaveReducer,

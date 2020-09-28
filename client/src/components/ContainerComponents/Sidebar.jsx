@@ -97,9 +97,9 @@ const Sidebar = (props) => {
 									Orders
 								</button>
 							</Link>
-							<Link to="/pages/glowcontrol">
+							<Link to="/secure/account/devices">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>
-									Glow Control
+									Devices
 								</button>
 							</Link>
 							<button onClick={handleLogout} className=" sidebar_button secondary">
@@ -329,6 +329,11 @@ const Sidebar = (props) => {
 						className=" pos-abs right-10px top-8px fas fa-sort-up"
 					/>
 				</div>
+				<Link to="/pages/glowcontrol">
+					<button className="sidebar_button primary" onClick={closeMenu}>
+						Glow Control
+					</button>
+				</Link>
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Support</button>
 					<ul className="sidebar_dropdown_container">
