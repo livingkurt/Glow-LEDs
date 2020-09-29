@@ -9,31 +9,31 @@ router.get('/', async (req, res) => {
 	const category = req.query.category ? { category: req.query.category } : {};
 	const searchKeyword = req.query.searchKeyword
 		? {
-				facebook_name: {
+				device_name: {
 					$regex: req.query.searchKeyword,
 					$options: 'i'
 				}
 			}
 		: {};
 
-	let sortOrder = {};
-	if (req.query.sortOrder === 'glover name') {
-		sortOrder = { glover_name: 1 };
-	} else if (req.query.sortOrder === 'facebook name') {
-		sortOrder = { facebook_name: 1 };
-	} else if (req.query.sortOrder === 'song id') {
-		sortOrder = { song_id: 1 };
-	} else if (req.query.sortOrder === 'product') {
-		sortOrder = { product: 1 };
-	} else if (req.query.sortOrder === 'instagram handle') {
-		sortOrder = { instagram_handle: 1 };
-	} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-		sortOrder = { release_date: -1 };
-	} else if (req.query.sortOrder === 'newest') {
-		sortOrder = { _id: -1 };
-	}
+	// let sortOrder = {};
+	// if (req.query.sortOrder === 'glover name') {
+	// 	sortOrder = { glover_name: 1 };
+	// } else if (req.query.sortOrder === 'facebook name') {
+	// 	sortOrder = { facebook_name: 1 };
+	// } else if (req.query.sortOrder === 'song id') {
+	// 	sortOrder = { song_id: 1 };
+	// } else if (req.query.sortOrder === 'product') {
+	// 	sortOrder = { product: 1 };
+	// } else if (req.query.sortOrder === 'instagram handle') {
+	// 	sortOrder = { instagram_handle: 1 };
+	// } else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
+	// 	sortOrder = { release_date: -1 };
+	// } else if (req.query.sortOrder === 'newest') {
+	// 	sortOrder = { _id: -1 };
+	// }
 
-	const devices = await Device.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+	const devices = await Device.find({ deleted: false, ...category, ...searchKeyword });
 	// console.log(devices);
 	res.send(devices);
 });

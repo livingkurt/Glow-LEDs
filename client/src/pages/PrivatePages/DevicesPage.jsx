@@ -88,15 +88,15 @@ const DevicesPage = (props) => {
 		console.log(result);
 		return result;
 	};
-	const sort_options = [
-		'Release Date',
-		'Glover Name',
-		'Facebook Name',
-		'Instagram Handle',
-		'Product',
-		'Song ID',
-		'Newest'
-	];
+	// const sort_options = [
+	// 	'Release Date',
+	// 	'Glover Name',
+	// 	'Facebook Name',
+	// 	'Instagram Handle',
+	// 	'Product',
+	// 	'Song ID',
+	// 	'Newest'
+	// ];
 
 	return (
 		<div class="main_container">
@@ -105,7 +105,7 @@ const DevicesPage = (props) => {
 			</MetaTags>
 			<FlexContainer wrap h_between>
 				<FlexContainer h_between wrap>
-					{colors.map((color) => {
+					{/* {colors.map((color) => {
 						return (
 							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
@@ -119,7 +119,7 @@ const DevicesPage = (props) => {
 								/>
 							</FlexContainer>
 						);
-					})}
+					})} */}
 				</FlexContainer>
 				<div className=" jc-fe w-500px">
 					<label className="p-10px ">Click Here to Get Started!</label>
@@ -134,7 +134,7 @@ const DevicesPage = (props) => {
 			</FlexContainer>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
-				<Sort sortHandler={sortHandler} sort_options={sort_options} />
+				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
 			</div>
 			<Loading loading={loading} error={error}>
 				{devices && (

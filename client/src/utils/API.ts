@@ -47,7 +47,7 @@ export default {
 		return axios.post(`http://${query_url}/hsv?h=${hue}&s=${saturation}&v=${value}`);
 	},
 	get_all_settings: (query_url: string) => {
-		return axios.get(`http://${query_url}/all`);
+		return axios.get(`https://${query_url}/all`);
 	},
 	get_device_name: (query_url: string) => {
 		return axios.get(`http://${query_url}/device`);
