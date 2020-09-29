@@ -5,6 +5,8 @@ import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import { detailsContent, listContents } from '../../actions/contentActions';
+import { deleteDevice, listDevices } from '../../actions/deviceActions';
+import { Loading } from '../../components/UtilityComponents';
 
 const GlowControlHomePage = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);
@@ -30,6 +32,45 @@ const GlowControlHomePage = (props) => {
 		},
 		[ contents ]
 	);
+
+	const deviceList = useSelector((state) => state.deviceList);
+	const { loading: loading_devices, devices, error: error_devices } = deviceList;
+
+	const deviceSave = useSelector((state) => state.deviceSave);
+	const { success: successSave } = deviceSave;
+
+	const deviceDelete = useSelector((state) => state.deviceDelete);
+	const { success: successDelete } = deviceDelete;
+
+	useEffect(
+		() => {
+			dispatch(listDevices());
+			return () => {
+				//
+			};
+		},
+		[ successSave, successDelete ]
+	);
+	// const submitHandler = (e) => {
+	// 	e.preventDefault();
+	// 	dispatch(listDevices(category, searchKeyword, sortOrder));
+	// };
+
+	// const sortHandler = (e) => {
+	// 	setSortOrder(e.target.value);
+	// 	dispatch(listDevices(category, searchKeyword, e.target.value));
+	// };
+
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listDevices(category, searchKeyword, sortOrder));
+	// 	},
+	// 	[ sortOrder ]
+	// );
+
+	const deleteHandler = (device) => {
+		dispatch(deleteDevice(device._id));
+	};
 
 	return (
 		<div class="main_container">
@@ -91,7 +132,64 @@ const GlowControlHomePage = (props) => {
 						</Link>
 					</div>
 				</div>
-				<h2 className="p-10px ta-c">No Devices Yet</h2>
+				{devices.length > 0 ? (
+					<Loading loading={loading_devices} error={error_devices}>
+						{devices && (
+							<div className="device-list responsive_table">
+								<table className="table">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>URL</th>
+											<th>Location</th>
+											<th>View</th>
+											<th>Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										{devices.map((device) => (
+											<tr
+												key={device._id}
+												style={{
+													backgroundColor: '#3e4c6d',
+													fontSize: '1.4rem'
+												}}
+											>
+												<td>{device.device_name}</td>
+												<td>{device.query_url}</td>
+												<td>{device.location}</td>
+												<td>
+													<Link to={'/secure/account/glowcontrol/' + device._id}>
+														<button className="button icon">
+															<i class="fas fa-eye" />
+														</button>
+													</Link>
+												</td>
+												<td>
+													<FlexContainer h_between>
+														<Link to={'/secure/account/editdevice/' + device._id}>
+															<button className="button icon">
+																<i className="fas fa-edit" />
+															</button>
+														</Link>
+														<button
+															className="button icon"
+															onClick={() => deleteHandler(device)}
+														>
+															<i className="fas fa-trash-alt" />
+														</button>
+													</FlexContainer>
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						)}
+					</Loading>
+				) : (
+					<h2 className="p-10px ta-c">No Devices Yet</h2>
+				)}
 			</div>
 			<div className="home_page_divs">
 				<FlexContainer h_center>
