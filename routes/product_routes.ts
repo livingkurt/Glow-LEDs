@@ -63,15 +63,15 @@ router.get('/', async (req, res) => {
 		sortOrder = { order: 1, _id: -1 };
 	}
 	const categorizing = subcategory === {} ? subcategory : category;
-	console.log({ categorizing });
-	console.log({ query: req.query });
-	console.log({ subcategory });
-	console.log({ category, subcategory, searchKeyword });
+	// console.log({ categorizing });
+	// console.log({ query: req.query });
+	// console.log({ subcategory });
+	// console.log({ category, subcategory, searchKeyword });
 
 	const products = await Product.find({ deleted: false, ...category, ...subcategory, ...searchKeyword }).sort(
 		sortOrder
 	);
-	console.log({ products });
+	// console.log({ products });
 	res.send(products);
 });
 

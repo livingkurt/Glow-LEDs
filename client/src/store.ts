@@ -26,7 +26,8 @@ import {
 	deviceListReducer,
 	deviceDetailsReducer,
 	deviceSaveReducer,
-	deviceDeleteReducer
+	deviceDeleteReducer,
+	myDeviceListReducer
 } from './reducers/deviceReducers';
 import {
 	cartDeleteReducer,
@@ -118,6 +119,7 @@ const reducer = combineReducers({
 	deviceDetails: deviceDetailsReducer,
 	deviceSave: deviceSaveReducer,
 	deviceDelete: deviceDeleteReducer,
+	myDeviceList: myDeviceListReducer,
 	promoList: promoListReducer,
 	promoDetails: promoDetailsReducer,
 	promoSave: promoSaveReducer,

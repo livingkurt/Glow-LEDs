@@ -5,10 +5,11 @@ import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
 import { detailsContent, listContents } from '../../actions/contentActions';
-import { deleteDevice, listDevices } from '../../actions/deviceActions';
+import { deleteDevice, listMyDevices } from '../../actions/deviceActions';
 import { Loading } from '../../components/UtilityComponents';
 
 const GlowControlHomePage = (props) => {
+	const user_data = props.userInfo;
 	const contentDetails = useSelector((state) => state.contentDetails);
 	const { content, loading, error } = contentDetails;
 
@@ -33,8 +34,10 @@ const GlowControlHomePage = (props) => {
 		[ contents ]
 	);
 
-	const deviceList = useSelector((state) => state.deviceList);
-	const { loading: loading_devices, devices, error: error_devices } = deviceList;
+	const myDeviceList = useSelector((state) => state.myDeviceList);
+	const { loading: loading_devices, devices, error: error_devices } = myDeviceList;
+
+	console.log({ devices });
 
 	const deviceSave = useSelector((state) => state.deviceSave);
 	const { success: successSave } = deviceSave;
@@ -44,7 +47,7 @@ const GlowControlHomePage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listDevices());
+			dispatch(listMyDevices());
 			return () => {
 				//
 			};
@@ -53,17 +56,17 @@ const GlowControlHomePage = (props) => {
 	);
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
-	// 	dispatch(listDevices(category, searchKeyword, sortOrder));
+	// 	dispatch(listMyDevices(category, searchKeyword, sortOrder));
 	// };
 
 	// const sortHandler = (e) => {
 	// 	setSortOrder(e.target.value);
-	// 	dispatch(listDevices(category, searchKeyword, e.target.value));
+	// 	dispatch(listMyDevices(category, searchKeyword, e.target.value));
 	// };
 
 	// useEffect(
 	// 	() => {
-	// 		dispatch(listDevices(category, searchKeyword, sortOrder));
+	// 		dispatch(listMyDevices(category, searchKeyword, sortOrder));
 	// 	},
 	// 	[ sortOrder ]
 	// );
@@ -132,7 +135,7 @@ const GlowControlHomePage = (props) => {
 						</Link>
 					</div>
 				</div>
-				{devices.length > 0 ? (
+				{user_data ? devices && devices.length > 0 ? (
 					<Loading loading={loading_devices} error={error_devices}>
 						{devices && (
 							<div className="device-list responsive_table">
@@ -189,6 +192,13 @@ const GlowControlHomePage = (props) => {
 					</Loading>
 				) : (
 					<h2 className="p-10px ta-c">No Devices Yet</h2>
+				) : (
+					<div className="row jc-c ai-c">
+						<h2 className="p-10px ta-c">Login to View Devices</h2>
+						<Link to="/account/login?redirect=/pages/glowcontrol">
+							<button className="button primary">Login</button>
+						</Link>
+					</div>
 				)}
 			</div>
 			<div className="home_page_divs">

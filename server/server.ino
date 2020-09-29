@@ -21,6 +21,8 @@ extern "C"
 //#include <IRremoteESP8266.h>
 #include "GradientPalettes.h"
 // #include "modes/modes.h"
+#include <Ethernet.h>
+#include <SPI.h>
 
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
@@ -286,9 +288,6 @@ void (*resetFunc)(void) = 0;
 
 const bool apMode = false;
 
-const char *host = "www.glow-leds-dev.herokuapp.com/";
-const int httpsPort = 443;
-
 void setup()
 {
   WiFi.setSleepMode(WIFI_NONE_SLEEP);
@@ -349,68 +348,151 @@ void setup()
   //initializeWiFi();
   wifi_setup();
   run_server();
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-
-  // Use WiFiClientSecure class to create TLS connection
-  WiFiClientSecure client;
-  Serial.print("connecting to ");
-  Serial.println(host);
-  if (!client.connect(host, httpsPort))
-  {
-    Serial.println("connection failed");
-    return;
-  }
-
-  // if (client.verify(fingerprint, host))
+  // while (WiFi.status() != WL_CONNECTED)
   // {
-  //   Serial.println("certificate matches");
+  //   delay(500);
+  //   Serial.print(".");
+  // }
+
+  // const char *host = "http.//glow-leds-dev.herokuapp.com/";
+  // const int httpsPort = 443;
+  // Serial.println("");
+  // Serial.println("WiFi connected");
+  // Serial.println("IP address: ");
+  // Serial.println(WiFi.localIP());
+
+  // // Use WiFiClientSecure class to create TLS connection
+  // WiFiClientSecure client;
+  // Serial.print("connecting to ");
+  // Serial.println(host);
+  // if (!client.connect(host, httpsPort))
+  // {
+  //   Serial.println("connection failed");
+  //   return;
+  // }
+
+  // // if (client.verify(fingerprint, host))
+  // // {
+  // //   Serial.println("certificate matches");
+  // // }
+  // // else
+  // // {
+  // //   Serial.println("certificate doesn't match");
+  // // }
+
+  // String url = "/api/promos/";
+  // Serial.print("requesting URL: ");
+  // Serial.println(url);
+
+  // client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+  //              "Host: " + host + "\r\n" +
+  //              "User-Agent: BuildFailureDetectorESP8266\r\n" +
+  //              "Connection: close\r\n\r\n");
+
+  // Serial.println("request sent");
+  // while (client.connected())
+  // {
+  //   String line = client.readStringUntil('\n');
+  //   if (line == "\r")
+  //   {
+  //     Serial.println("headers received");
+  //     break;
+  //   }
+  // }
+  // String line = client.readStringUntil('\n');
+  // if (line.startsWith("{\"state\":\"success\""))
+  // {
+  //   Serial.println("esp8266/Arduino CI successfull!");
   // }
   // else
   // {
-  //   Serial.println("certificate doesn't match");
+  //   Serial.println("esp8266/Arduino CI has failed");
   // }
+  // Serial.println("reply was:");
+  // Serial.println("==========");
+  // Serial.println(line);
+  // Serial.println("==========");
+  // Serial.println("closing connection");
 
-  String url = "/api/promos/";
-  Serial.print("requesting URL: ");
-  Serial.println(url);
+  // Initialize Serial port
+  Serial.begin(9600);
+  while (!Serial)
+    continue;
 
-  client.print(String("GET ") + url + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" +
-               "User-Agent: BuildFailureDetectorESP8266\r\n" +
-               "Connection: close\r\n\r\n");
+  // Initialize Ethernet library
+  byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED};
+  Ethernet.init(8); // use pin 53 for Ethernet CS
 
-  Serial.println("request sent");
-  while (client.connected())
+  if (!Ethernet.begin(mac))
   {
-    String line = client.readStringUntil('\n');
-    if (line == "\r")
-    {
-      Serial.println("headers received");
-      break;
-    }
+    Serial.println(F("Failed to configure Ethernet"));
+    return;
   }
-  String line = client.readStringUntil('\n');
-  if (line.startsWith("{\"state\":\"success\""))
+  delay(1000);
+
+  Serial.println(F("Connecting..."));
+
+  // Connect to HTTP server
+  EthernetClient client;
+  client.setTimeout(10000);
+  if (!client.connect("http://glow-leds-dev.herokuapp.com", 80))
   {
-    Serial.println("esp8266/Arduino CI successfull!");
+    Serial.println(F("Connection failed"));
+    return;
   }
-  else
+
+  Serial.println(F("Connected!"));
+
+  // Send HTTP request
+  client.println(F("GET /api/command/ HTTP/1.1"));
+  client.println(F("Host: https://glow-leds-dev.herokuapp.com"));
+  client.println(F("Connection: close"));
+  Serial.println(F("Done"));
+  if (client.println() == 0)
   {
-    Serial.println("esp8266/Arduino CI has failed");
+    Serial.println(F("Failed to send request"));
+    return;
   }
-  Serial.println("reply was:");
-  Serial.println("==========");
-  Serial.println(line);
-  Serial.println("==========");
-  Serial.println("closing connection");
+
+  // Check HTTP status
+  char status[32] = {0};
+  client.readBytesUntil('\r', status, sizeof(status));
+  Serial.println(status);
+  if (strcmp(status, "HTTP/1.1 200 OK") != 0)
+  {
+    Serial.print(F("Unexpected response: "));
+    Serial.println(status);
+    return;
+  }
+
+  // Skip HTTP headers
+  char endOfHeaders[] = "\r\n\r\n";
+  if (!client.find(endOfHeaders))
+  {
+    Serial.println(F("Invalid response"));
+    return;
+  }
+
+  // Allocate JsonBuffer
+  // Use arduinojson.org/assistant to compute the capacity.
+  const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
+  DynamicJsonBuffer jsonBuffer(capacity);
+
+  // Parse JSON object
+  JsonObject &root = jsonBuffer.parseObject(client);
+  if (!root.success())
+  {
+    Serial.println(F("Parsing failed!"));
+    return;
+  }
+
+  // Extract values
+  Serial.println(F("Response:"));
+  Serial.println(root["command"].as<char *>());
+
+  // Disconnect
+  client.stop();
+
   autoplayPatternTimeout = millis() + (autoplayPatternDuration * 1000);
   autoplayPaletteTimeout = millis() + (autoplayPaletteDuration * 1000);
 }

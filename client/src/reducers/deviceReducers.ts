@@ -10,7 +10,10 @@ import {
 	DEVICE_SAVE_FAIL,
 	DEVICE_DELETE_REQUEST,
 	DEVICE_DELETE_SUCCESS,
-	DEVICE_DELETE_FAIL
+	DEVICE_DELETE_FAIL,
+	MY_DEVICE_LIST_REQUEST,
+	MY_DEVICE_LIST_SUCCESS,
+	MY_DEVICE_LIST_FAIL
 } from '../constants/deviceConstants';
 
 export const deviceListReducer = (state = { devices: [] }, action: { type: any; payload: any }) => {
@@ -20,6 +23,24 @@ export const deviceListReducer = (state = { devices: [] }, action: { type: any; 
 		case DEVICE_LIST_SUCCESS:
 			return { loading: false, devices: action.payload };
 		case DEVICE_LIST_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
+export const myDeviceListReducer = (
+	state = {
+		devices: []
+	},
+	action: { type: any; payload: any }
+) => {
+	switch (action.type) {
+		case MY_DEVICE_LIST_REQUEST:
+			return { loading: true };
+		case MY_DEVICE_LIST_SUCCESS:
+			return { loading: false, devices: action.payload };
+		case MY_DEVICE_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;

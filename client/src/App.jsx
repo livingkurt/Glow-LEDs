@@ -148,7 +148,10 @@ const App = () => {
 								component={(props) => <ContactPage userInfo={userInfo} {...props} />}
 							/>
 							{/* <Route path="/pages/contact/:reason?" exact={true} component={ContactPage} /> */}
-							<Route path="/pages/glowcontrol" component={GlowControlHomePage} />
+							<Route
+								path="/pages/glowcontrol"
+								component={(props) => <GlowControlHomePage userInfo={userInfo} {...props} />}
+							/>
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />

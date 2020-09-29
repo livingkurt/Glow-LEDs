@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listDevices, deleteDevice } from '../../actions/deviceActions';
+import { listDevices, deleteDevice, listMyDevices } from '../../actions/deviceActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
@@ -16,8 +16,12 @@ const DevicesPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
-	const deviceList = useSelector((state) => state.deviceList);
-	const { loading, devices, error } = deviceList;
+	// const deviceList = useSelector((state) => state.deviceList);
+	// const { loading, devices, error } = deviceList;
+
+	const myDeviceList = useSelector((state) => state.myDeviceList);
+	const { loading, devices, error } = myDeviceList;
+	console.log({ devices });
 
 	const deviceSave = useSelector((state) => state.deviceSave);
 	const { success: successSave } = deviceSave;
@@ -28,7 +32,8 @@ const DevicesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listDevices());
+			// dispatch(listDevices());
+			dispatch(listMyDevices());
 			return () => {
 				//
 			};
@@ -37,17 +42,17 @@ const DevicesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listDevices(category, searchKeyword, sortOrder));
+		dispatch(listMyDevices(category, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listDevices(category, searchKeyword, e.target.value));
+		dispatch(listMyDevices(category, searchKeyword, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			dispatch(listDevices(category, searchKeyword, sortOrder));
+			dispatch(listMyDevices(category, searchKeyword, sortOrder));
 		},
 		[ sortOrder ]
 	);

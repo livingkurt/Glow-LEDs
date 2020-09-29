@@ -10,7 +10,10 @@ import {
 	DEVICE_SAVE_FAIL,
 	DEVICE_DELETE_SUCCESS,
 	DEVICE_DELETE_FAIL,
-	DEVICE_DELETE_REQUEST
+	DEVICE_DELETE_REQUEST,
+	MY_DEVICE_LIST_REQUEST,
+	MY_DEVICE_LIST_SUCCESS,
+	MY_DEVICE_LIST_FAIL
 } from '../constants/deviceConstants';
 import axios from 'axios';
 
@@ -35,6 +38,23 @@ export const listDevices = (category = '', searchKeyword = '', sortOrder = '') =
 	}
 };
 
+export const listMyDevices = () => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		console.log({ listMyDevices: 'listMyDevices' });
+		dispatch({ type: MY_DEVICE_LIST_REQUEST });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/devices/mine', {
+			headers: { Authorization: 'Bearer ' + userInfo.token }
+		});
+		dispatch({ type: MY_DEVICE_LIST_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: MY_DEVICE_LIST_FAIL, payload: error.message });
+	}
+};
+
 export const saveDevice = (device: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -43,6 +63,7 @@ export const saveDevice = (device: any) => async (
 	try {
 		dispatch({ type: DEVICE_SAVE_REQUEST, payload: device });
 		const { userLogin: { userInfo } } = getState();
+		device = { ...device, user: userInfo._id };
 		if (!device._id) {
 			const { data } = await axios.post('/api/devices', device, {
 				headers: {

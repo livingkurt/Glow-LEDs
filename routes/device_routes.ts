@@ -38,6 +38,11 @@ router.get('/', async (req, res) => {
 	res.send(devices);
 });
 
+router.get('/mine', isAuth, async (req: any, res: any) => {
+	const devices = await Device.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
+	res.send(devices);
+});
+
 router.get('/:id', async (req, res) => {
 	const device = await Device.findOne({ _id: req.params.id });
 	console.log({ device });
@@ -47,6 +52,15 @@ router.get('/:id', async (req, res) => {
 	} else {
 		res.status(404).send({ message: 'Device Not Found.' });
 	}
+});
+
+router.post('/', async (req, res) => {
+	console.log('Post New Device');
+	const newDevice = await Device.create(req.body);
+	if (newDevice) {
+		return res.status(201).send({ message: 'New Device Created', data: newDevice });
+	}
+	return res.status(500).send({ message: ' Error in Creating Device.' });
 });
 
 router.put('/:id', isAuth, async (req, res) => {
@@ -74,15 +88,6 @@ router.delete('/:id', isAuth, async (req: { params: { id: any } }, res: { send: 
 	} else {
 		res.send('Error in Deletion.');
 	}
-});
-
-router.post('/', async (req, res) => {
-	console.log('Post New Device');
-	const newDevice = await Device.create(req.body);
-	if (newDevice) {
-		return res.status(201).send({ message: 'New Device Created', data: newDevice });
-	}
-	return res.status(500).send({ message: ' Error in Creating Device.' });
 });
 
 // module.exports = router;
