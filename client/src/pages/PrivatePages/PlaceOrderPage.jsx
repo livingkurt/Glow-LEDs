@@ -9,6 +9,8 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
+import CardNumberElement from 'react-stripe-checkout';
+import CardExpiryElement from 'react-stripe-checkout';
 import { Loading } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
@@ -258,6 +260,11 @@ const PlaceOrderPage = (props) => {
 		setTaxPrice(0.0875 * items_price);
 		set_show_message('');
 	};
+	const handleChangeFor = (type) => ({ error }) => {
+		/* handle error */
+		console.log({ type });
+		console.log({ error });
+	};
 
 	return (
 		<div>
@@ -466,17 +473,22 @@ const PlaceOrderPage = (props) => {
 						</li>
 						{shipping &&
 						shipping.hasOwnProperty('first_name') && (
-							<StripeCheckout
-								name="Glow LEDs"
-								description={`Pay for Order`}
-								amount={totalPrice.toFixed(2) * 100}
-								token={(token) => placeOrderHandler(token)}
-								stripeKey={process.env.REACT_APP_STRIPE_KEY}
-							>
-								<button className="button primary full-width" style={{ marginBottom: '12px' }}>
-									Pay for Order
-								</button>
-							</StripeCheckout>
+							<div>
+								<StripeCheckout
+									name="Glow LEDs"
+									description={`Pay for Order`}
+									amount={totalPrice.toFixed(2) * 100}
+									token={(token) => placeOrderHandler(token)}
+									stripeKey={process.env.REACT_APP_STRIPE_KEY}
+									onChange={handleChangeFor('cardNumber')}
+								>
+									<button className="button primary full-width" style={{ marginBottom: '12px' }}>
+										Pay for Order
+									</button>
+								</StripeCheckout>
+								<CardNumberElement onChange={handleChangeFor('cardNumber')} />
+								<CardExpiryElement onChange={handleChangeFor('cardExpiry')} />
+							</div>
 						)}
 						<div className="mv-10px">
 							<label htmlFor="promo_code">Promo Code</label>

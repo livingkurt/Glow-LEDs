@@ -44,7 +44,8 @@ const orderItemSchema = new mongoose.Schema(
 		},
 		secondary_product: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Product'
+			ref: 'Product',
+			default: null
 		}
 	},
 	{
