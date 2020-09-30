@@ -80,7 +80,10 @@ const App = () => {
 					<MessengerCustomerChat
 						pageId="100365571740684"
 						appId="379385106779969"
-						autoLoad={true}
+						greetingDialogDisplay="show"
+						shouldShowDialog={true}
+						loggedInGreeting={true}
+						loggedOutGreeting={true}
 						// minimized={true}
 					/>
 					{/* <CustomerChat /> */}
