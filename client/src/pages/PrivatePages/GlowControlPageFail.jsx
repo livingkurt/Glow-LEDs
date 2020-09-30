@@ -51,6 +51,8 @@ const GlowControl = (props) => {
 			if (device && device.query_url) {
 				get_all_settings(device.query_url);
 				console.log({ query_url: device.query_url });
+				set_device_settings(device.device_settings);
+				// set_loading(false);
 			}
 
 			// set_device(device);
@@ -83,13 +85,51 @@ const GlowControl = (props) => {
 			.replace(/\s+/g, '');
 	}
 
-	const update_leds = async (field_name, value) => {
+	const update_leds = async (pattern_name, field_name, value) => {
+		try {
+			console.log({ field_name, value });
+			// dispatch(
+			// 	saveDevice({
+			// 		_id: device_id,
+			// 		device_settings,
+			// 		pattern_order,
+			// 		palette_order
+			// 	})
+			// );
+			const res = await API.update_leds(device.query_url, field_name, value);
+			if (field_name === 'pattern') {
+				let pattern = camelize(patterns[value]);
+				console.log(pattern);
+				set_mode_specific_settings(pattern);
+			} else if (field_name === 'autoplayPattern') {
+				if (show_hide_pattern === 1) {
+					set_show_hide_pattern(0);
+					// fade_in();
+				} else if (show_hide_pattern === 0) {
+					set_show_hide_pattern(1);
+					// fade_out();
+				}
+			} else if (field_name === 'autoplayPalette') {
+				if (show_hide_palette === 1) {
+					set_show_hide_palette(0);
+					// fade_in();
+				} else if (show_hide_palette === 0) {
+					set_show_hide_palette(1);
+					// fade_out();
+				}
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const update_settings = async (field_name, value) => {
 		try {
 			console.log({ field_name, value });
 			dispatch(
 				saveDevice({
 					_id: device_id,
-					device_settings,
+					device_settings: { ...device_settings, [field_name]: { value } },
 					pattern_order,
 					palette_order
 				})
@@ -268,6 +308,25 @@ const GlowControl = (props) => {
 									setting={settings.power}
 									settings={settings}
 								/>
+								{/* <ToggleSwitch
+									update_function={update_settings}
+									set_settings={set_device_settings}
+									setting={device_settings.power}
+									settings={device_settings}
+								/> */}
+								{console.log({ device_settings })}
+								{/* <div className="m-v-s ai-c">
+			<label className="w-14rem">{props.setting.label}</label>
+			<label className="switch">
+				<input
+					type="checkbox"
+					name={props.setting.name}
+					defaultChecked={props.setting.value === 1 ? true : false}
+					onChange={(e) => props.update_function(e.target.name, e.target.checked === true ? 1 : 0)}
+				/>
+				<span className="slider round" />
+			</label>
+		</div> */}
 								<DropdownSelector
 									update_function={update_leds}
 									data={patterns}
@@ -297,6 +356,12 @@ const GlowControl = (props) => {
 									setting={settings.autoplayPattern}
 									settings={settings}
 								/>
+								{/* <ToggleSwitch
+									update_function={update_settings}
+									set_settings={set_device_settings}
+									setting={device_settings.autoplayPattern}
+									settings={device_settings}
+								/> */}
 								<div style={{ display: show_hide_pattern === 1 ? 'flex' : 'none' }}>
 									<SettingSlider
 										update_function={update_leds}
@@ -312,6 +377,12 @@ const GlowControl = (props) => {
 										setting={settings.randomPatternMode}
 										settings={settings}
 									/>
+									{/* <ToggleSwitch
+										update_function={update_settings}
+										set_settings={set_device_settings}
+										setting={device_settings.randomPatternMode}
+										settings={device_settings}
+									/> */}
 								</div>
 							</div>
 						)}
@@ -326,17 +397,29 @@ const GlowControl = (props) => {
 									setting={settings.palette}
 									settings={settings}
 								/>
-								<ToggleSwitch
+								{/* <ToggleSwitch
 									update_function={update_leds}
 									set_settings={set_settings}
 									setting={settings.blendMode}
 									settings={settings}
-								/>
-								<ToggleSwitch
+								/> */}
+								{/* <ToggleSwitch
 									update_function={update_leds}
 									set_settings={set_settings}
 									setting={settings.autoplayPalette}
 									settings={settings}
+								/> */}
+								<ToggleSwitch
+									update_function={update_settings}
+									set_settings={set_device_settings}
+									setting={device_settings.blendMode}
+									settings={device_settings}
+								/>
+								<ToggleSwitch
+									update_function={update_settings}
+									set_settings={set_device_settings}
+									setting={device_settings.autoplayPalette}
+									settings={device_settings}
 								/>
 								<div style={{ display: show_hide_palette === 1 ? 'flex' : 'none' }}>
 									<SettingSlider

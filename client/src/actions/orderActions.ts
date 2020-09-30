@@ -51,6 +51,7 @@ export const createOrder = (
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	console.log({ createOrder_order: order });
+	console.log({ createOrder_order: 'Before Order Create' });
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
@@ -60,7 +61,10 @@ export const createOrder = (
 			}
 		});
 		console.log({ createOrder_newOrder: newOrder });
+		console.log({ createOrder_order: 'After Order Create' });
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+		console.log({ createOrder_order: order });
+		console.log({ createOrder_order: 'Before Order Pay' });
 		const { data } = await axios.put(
 			'/api/orders/' + newOrder._id + '/pay',
 			{ token },
@@ -68,14 +72,19 @@ export const createOrder = (
 				headers: { Authorization: 'Bearer ' + user_data.token }
 			}
 		);
+		console.log({ createOrder_order: 'After Order Pay' });
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+
 		axios.post('/api/emails/order', { ...newOrder, user_data, token });
 		axios.post('/api/emails/sale', { ...newOrder, user_data, token });
 		Cookie.remove('shipping');
 		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		console.log({ createOrder_order: 'After Remove State' });
 	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.message });
+		console.log({ createOrder_order: 'After Error' });
+		console.log({ createOrder_order: error.message });
 	}
 };
 
