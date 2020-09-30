@@ -84,9 +84,7 @@ const App = () => {
 						shouldShowDialog={true}
 						loggedInGreeting="Hi! How can we help you?"
 						loggedOutGreeting="Hi! How can we help you?"
-						// minimized={true}
 					/>
-					{/* <CustomerChat /> */}
 					<ScrollToTop>
 						<Switch>
 							{/* Private Routes */}

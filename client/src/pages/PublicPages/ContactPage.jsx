@@ -170,6 +170,12 @@ const ContactPage = (props) => {
 			<FlexContainer h_center>
 				<h1>Contact</h1>
 			</FlexContainer>
+			<div className="column jc-c">
+				<div className="ta-c">We are avaiable from 9 AM to 8 PM on Weekdays</div>
+				<div className="ta-c mt-1rem">
+					Need a quicker reply? Use the Facebook Chat at the Bottom right of your screen to chat instantly!
+				</div>
+			</div>
 			<FlexContainer h_center>
 				<Loading loading={loading} error={error}>
 					{completed && (
