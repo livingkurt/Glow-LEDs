@@ -97,11 +97,11 @@ const Sidebar = (props) => {
 									Orders
 								</button>
 							</Link>
-							<Link to="/secure/account/devices">
+							{/* <Link to="/secure/account/devices">
 								<button className=" sidebar_button secondary" onClick={closeMenu}>
 									Devices
 								</button>
-							</Link>
+							</Link> */}
 							<button onClick={handleLogout} className=" sidebar_button secondary">
 								{' '}
 								Logout
@@ -329,11 +329,11 @@ const Sidebar = (props) => {
 						className=" pos-abs right-10px top-8px fas fa-sort-up"
 					/>
 				</div>
-				<Link to="/pages/glowcontrol">
+				{/* <Link to="/pages/glowcontrol">
 					<button className="sidebar_button primary" onClick={closeMenu}>
 						Glow Control
 					</button>
-				</Link>
+				</Link> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">Support</button>
 					<ul className="sidebar_dropdown_container">

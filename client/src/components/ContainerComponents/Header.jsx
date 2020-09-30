@@ -262,11 +262,11 @@ const Header = (props) => {
 								</Link>
 							</div>
 						</div>
-						<div className="dropdown-nav">
+						{/* <div className="dropdown-nav">
 							<Link to="/pages/glowcontrol">
 								<button className="button nav">Glow Control</button>
 							</Link>
-						</div>
+						</div> */}
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
 							<button className="button nav">Support</button>
@@ -311,9 +311,9 @@ const Header = (props) => {
 								<Link to="/secure/account/orders">
 									<button className="button nav">Orders</button>
 								</Link>
-								<Link to="/secure/account/devices">
+								{/* <Link to="/secure/account/devices">
 									<button className="button nav">Devices</button>
-								</Link>
+								</Link> */}
 								<button className="button nav mr-auto" onClick={handleLogout}>
 									{' '}
 									Logout
