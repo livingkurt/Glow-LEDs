@@ -81,7 +81,7 @@ const App = () => {
 						pageId="100365571740684"
 						appId="379385106779969"
 						autoLoad={true}
-						minimized={true}
+						// minimized={true}
 					/>
 					{/* <CustomerChat /> */}
 					<ScrollToTop>
