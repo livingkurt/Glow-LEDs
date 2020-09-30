@@ -82,8 +82,8 @@ const App = () => {
 						appId="379385106779969"
 						greetingDialogDisplay="show"
 						shouldShowDialog={true}
-						loggedInGreeting={true}
-						loggedOutGreeting={true}
+						loggedInGreeting="Hi! How can we help you?"
+						loggedOutGreeting="Hi! How can we help you?"
 						// minimized={true}
 					/>
 					{/* <CustomerChat /> */}
