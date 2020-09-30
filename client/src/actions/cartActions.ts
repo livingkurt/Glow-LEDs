@@ -73,7 +73,28 @@ export const addToCart = (pathname: string, qty: number, diffuser_cap_color: str
 			category: data.category,
 			qty
 		};
-		if (diffuser_cap || diffuser_cap_color) {
+		if (diffuser_cap_color) {
+			cartItem = {
+				product: data._id,
+				name: data.name,
+				display_image: data.images[0],
+				diffuser_cap_color,
+				diffuser_cap,
+				price: data.price,
+				sale_price: data.sale_price,
+				countInStock: data.countInStock,
+				volume: data.volume,
+				weight_pounds: data.weight_pounds,
+				weight_ounces: data.weight_ounces,
+				length: data.length,
+				width: data.width,
+				height: data.volume,
+				pathname: data.pathname,
+				category: data.category,
+				qty
+			};
+		}
+		if (diffuser_cap) {
 			cartItem = {
 				product: data._id,
 				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
