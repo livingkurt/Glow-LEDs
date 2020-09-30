@@ -78,6 +78,11 @@ const App = () => {
 
 				<Sidebar userInfo={userInfo} />
 				<Content>
+					<MessengerCustomerChat
+						pageId="100365571740684"
+						appId="379385106779969"
+						htmlRef={window.location.pathname}
+					/>
 					<ScrollToTop>
 						<Switch>
 							{/* Private Routes */}
