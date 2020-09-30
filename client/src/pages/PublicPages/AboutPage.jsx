@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import MetaTags from 'react-meta-tags';
 import { detailsContent, listContents } from '../../actions/contentActions';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const AboutPage = () => {
 	const contentDetails = useSelector((state) => state.contentDetails);
@@ -39,6 +40,11 @@ const AboutPage = () => {
 				<meta property="og:description" content="Learn how Glow LEDs got started and more in our About Page" />
 				<meta name="twitter:description" content="Learn how Glow LEDs got started and more in our About Page" />
 			</MetaTags>
+			<MessengerCustomerChat
+				pageId="100365571740684"
+				appId="379385106779969"
+				htmlRef={window.location.pathname}
+			/>
 			<div class="inner_content">
 				<h1 style={{ fontSize: 40, textAlign: 'center' }}>About Glow-LEDs</h1>
 				<div>

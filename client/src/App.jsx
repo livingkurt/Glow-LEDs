@@ -57,6 +57,7 @@ import { useSelector } from 'react-redux';
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -74,6 +75,7 @@ const App = () => {
 		<Router>
 			<Container>
 				<Header userInfo={userInfo} />
+
 				<Sidebar userInfo={userInfo} />
 				<Content>
 					<ScrollToTop>
@@ -163,6 +165,7 @@ const App = () => {
 						</Switch>
 					</ScrollToTop>
 				</Content>
+
 				<Footer backgroundColor={theme_colors.footer} />
 			</Container>
 		</Router>
