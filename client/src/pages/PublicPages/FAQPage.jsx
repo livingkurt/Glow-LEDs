@@ -187,7 +187,7 @@ const FAQPage = () => {
 								</span>️, please use the contact button{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ and send us your ideas and inspirational pictures{' '}
+								</span>️ or the facebook chat and send us your ideas and inspirational pictures{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '11px' }}>
 									🌈
 								</span>️. Also include your preferred method of contact (an e-mail address{' '}
@@ -287,7 +287,7 @@ const FAQPage = () => {
 								Use the contact button{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ to send us a message with inspirational pictures{' '}
+								</span>️ or Facebook Chat to send us a message with inspirational pictures{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									⛰️
 								</span>️, appoximate dimmensions{' '}
@@ -421,7 +421,8 @@ const FAQPage = () => {
 									style={{ marginRight: '5px' }}
 								>
 									📞
-								</span>️ immediately at info.glowleds@gmail.com
+								</span>️ immediately at info.glowleds@gmail.com or Facebook Chat at the Bottom Right of
+								Your Screen.
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
@@ -494,7 +495,8 @@ const FAQPage = () => {
 								To initiate a return please contact{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ info.glowleds@gmail.com and You will be supplied with a prepaid shipping span{' '}
+								</span>️ info.glowleds@gmail.com or Facebook Chat at the Bottom Right of your Screen and
+								You will be supplied with a prepaid shipping span{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🏷️
 								</span>️to send back your product.
@@ -526,7 +528,8 @@ const FAQPage = () => {
 								If item arrives damamged in any way please contact us{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ immediately at info.glowleds@gmail.com
+								</span>️ immediately at info.glowleds@gmail.com or through Facebook Chat at the Bottom
+								right of your screeen.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Our online orders process immediately{' '}
@@ -539,7 +542,7 @@ const FAQPage = () => {
 								</span>️your order you must contact{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ us within one hour of payment{' '}
+								</span>️ us via email or Facebook Chat within one hour of payment{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💳
 								</span>️.
