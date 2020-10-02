@@ -1367,3 +1367,19 @@ video {
 	// width: 50px;
 	border-radius: 20px;
 }
+
+.cart_items {
+	display: flex;
+	flex-wrap: wrap;
+	// gap: 10px;
+	--multiplier: calc(21rem - 100%);
+}
+
+.cart_item {
+	margin: 10px;
+	min-width: 50%;
+	max-width: 100%;
+	border-radius: 20px;
+	flex-grow: 1;
+	flex-basis: calc(var(--multiplier) * 999);
+}

@@ -111,9 +111,9 @@ const PlaceOrderPage = (props) => {
 		} else if (volume > 500) {
 			setShippingPrice(15);
 		}
-		if (itemsPrice >= 50) {
-			setShippingPrice(0);
-		}
+		// if (itemsPrice >= 50) {
+		// 	setShippingPrice(0);
+		// }
 		// console.log({ shippingPrice });
 		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 	};
@@ -355,7 +355,7 @@ const PlaceOrderPage = (props) => {
 								<div>Cart is empty</div>
 							) : (
 								cartItems.map((item, index) => (
-									<li key={index}>
+									<li className=" row cart_items" key={index}>
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
 												<img src={item.display_image} alt="product" />
@@ -398,10 +398,10 @@ const PlaceOrderPage = (props) => {
 												</div>
 											</FlexContainer>
 										</div>
-										<FlexContainer column>
-											<div className="cart-price">
+										<div className=" cart_item">
+											<div className="cart-price ">
 												{item.sale_price !== 0 ? (
-													<div style={{ width: '230px' }}>
+													<div>
 														<del style={{ color: 'red' }}>
 															<label style={{ color: 'white' }}>
 																${item.price ? item.price.toFixed(2) : item.price}
@@ -422,7 +422,7 @@ const PlaceOrderPage = (props) => {
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>
-										</FlexContainer>
+										</div>
 									</li>
 								))
 							)}
