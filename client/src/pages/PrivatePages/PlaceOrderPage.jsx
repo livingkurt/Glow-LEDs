@@ -119,7 +119,7 @@ const PlaceOrderPage = (props) => {
 			setShippingPrice(7);
 		} else if (volume > 165 && volume <= 250) {
 			console.log(8);
-			setShippingPrice(8);
+			setShippingPrice(9);
 		} else if (volume > 250 && volume <= 405) {
 			console.log(10);
 			setShippingPrice(10);
