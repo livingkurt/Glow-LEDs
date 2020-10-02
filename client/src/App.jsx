@@ -145,10 +145,10 @@ const App = () => {
 							<Route path="/checkout/cart/:pathname?" component={CartPage} />
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
-								path="/collections/all/products/category/:category?/subcategory/:subcategory?"
+								path="/collections/all/products/category/:category/subcategory/:subcategory?"
 								component={AllProductsPage}
 							/>
-							<Route path="/collections/all/products/category/:category?" component={AllProductsPage} />
+							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
 							<Route

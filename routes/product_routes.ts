@@ -37,6 +37,22 @@ const router = express.Router();
 // 	res.send(products);
 // });
 
+router.get('/categories', async (req, res) => {
+	const products = await Product.find({ deleted: false }).sort({ category: 1 });
+	const categories = products.map((product: any) => product.category);
+	const no_dups_categories = categories.filter((value: any, index: any) => categories.indexOf(value) === index);
+	res.send(no_dups_categories);
+});
+
+router.get('/subcategories', async (req, res) => {
+	const products = await Product.find({ deleted: false }).sort({ category: 1 });
+	const subcategories = products.map((product: any) => product.subcategory);
+	const no_dups_subcategories = subcategories.filter(
+		(value: any, index: any) => subcategories.indexOf(value) === index
+	);
+	res.send(no_dups_subcategories);
+});
+
 router.get('/', async (req, res) => {
 	const category = req.query.category ? { category: req.query.category } : {};
 	const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
