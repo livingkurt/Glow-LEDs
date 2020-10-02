@@ -454,28 +454,31 @@ const ProductPage = (props) => {
 							</div>
 						</div>
 						<Slideshow product={product} show_hide="alt_pictures_shown" set_image={set_image} />
-						<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
+
 						{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
-							<div className="colored_caps">
-								<div className="column colored_caps_item">
-									<h3 className="colored_caps_images">Colored Caps</h3>
-									<img
-										// className="m-10px w-100per"
-										className="colored_caps_images"
-										// style={{ borderRadius: '20px', minWidth: '450px', flexBasis:  }}
-										src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
-										alt="promo"
-									/>
-								</div>
-								<div className="column colored_caps_item">
-									<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
-									<img
-										// className="m-10px w-100per"
-										className="colored_caps_images"
-										// style={{ borderRadius: '20px', minWidth: '450px' }}
-										src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
-										alt="promo"
-									/>
+							<div>
+								<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
+								<div className="colored_caps">
+									<div className="column colored_caps_item">
+										<h3 className="colored_caps_images">Colored Caps</h3>
+										<img
+											// className="m-10px w-100per"
+											className="colored_caps_images"
+											// style={{ borderRadius: '20px', minWidth: '450px', flexBasis:  }}
+											src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
+											alt="promo"
+										/>
+									</div>
+									<div className="column colored_caps_item">
+										<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
+										<img
+											// className="m-10px w-100per"
+											className="colored_caps_images"
+											// style={{ borderRadius: '20px', minWidth: '450px' }}
+											src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
+											alt="promo"
+										/>
+									</div>
 								</div>
 							</div>
 						)}
