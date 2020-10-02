@@ -1342,3 +1342,28 @@ video {
 // 		margin-right: 10px;
 // 	}
 // }
+
+.colored_caps {
+	display: flex;
+	flex-wrap: wrap;
+	// gap: 10px;
+	--multiplier: calc(92rem - 100%);
+}
+
+.colored_caps_item {
+	margin: 10px;
+	min-width: 48%;
+	max-width: 100%;
+	width: 50px;
+	border-radius: 20px;
+	flex-grow: 1;
+	flex-basis: calc(var(--multiplier) * 999);
+}
+
+.colored_caps_images {
+	margin: 10px;
+	min-width: 48%;
+	max-width: 100%;
+	// width: 50px;
+	border-radius: 20px;
+}
