@@ -34,6 +34,10 @@ export default {
 		// console.log({ not_paid_email: array });
 		return axios.post('/api/emails/invoice', order);
 	},
+	get_occurrences: () => {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/orders/occurrences');
+	},
 	update_leds: (query_url: string, field: string, value: number) => {
 		console.log(`http://${query_url}/${field}?value=${value}`);
 		return axios.post(`http://${query_url}/${field}?value=${value}`);

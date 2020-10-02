@@ -486,8 +486,6 @@ const PlaceOrderPage = (props) => {
 										Pay for Order
 									</button>
 								</StripeCheckout>
-								<CardNumberElement onChange={handleChangeFor('cardNumber')} />
-								<CardExpiryElement onChange={handleChangeFor('cardExpiry')} />
 							</div>
 						)}
 						<div className="mv-10px">

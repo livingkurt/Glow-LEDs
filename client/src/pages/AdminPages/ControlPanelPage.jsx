@@ -32,7 +32,7 @@ const ControlPanelPage = (props) => {
 	const userList = useSelector((state) => state.userList);
 	const { loading: loading_users, users, error: error_users } = userList;
 
-	const [ product_occurances, set_product_occurances ] = useState([]);
+	const [ product_occurrences, set_product_occurrences ] = useState([]);
 
 	useEffect(() => {
 		dispatch(listOrders());
@@ -51,7 +51,7 @@ const ControlPanelPage = (props) => {
 	useEffect(
 		() => {
 			// initialize_chart();
-			get_product_names();
+			get_occurrences();
 			return () => {};
 		},
 		[ orders ]
@@ -136,7 +136,7 @@ const ControlPanelPage = (props) => {
 		return difference_in_day;
 	};
 
-	const initialize_occurance_chart = (occurrences) => {
+	const initialize_occurrence_chart = (occurrences) => {
 		const expense_chartRef = chartRef.current.getContext('2d');
 		const multiplier = 360 / occurrences.length;
 
@@ -239,35 +239,20 @@ const ControlPanelPage = (props) => {
 		// 	options: {}
 		// });
 	};
-	const get_product_names = async () => {
-		const array_of_ids = Object.keys(occurrence(orders));
-		const ids = occurrence(orders);
-		console.log({ ids });
-		console.log({ array_of_ids });
-		const { data: names } = await API.get_product_names(array_of_ids);
-		let occurrences = [];
-		for (let i = 0; i < names.length; i++) {
-			Object.keys(occurrence(orders)).map((item) => {
-				if (item === names[i]._id) {
-					occurrences = [
-						...occurrences,
-						{ name: names[i].name, occurrence: occurrence(orders)[names[i]._id].length }
-					];
-				}
-			});
-		}
-		console.log(occurrences);
-		// occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
-		console.log(occurrences.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1)));
-		set_product_occurances(occurrences);
-		initialize_occurance_chart(occurrences);
+	const get_occurrences = async () => {
+		const { data: occurrences } = await API.get_occurrences();
+		set_product_occurrences(occurrences);
+		initialize_occurrence_chart(occurrences);
 	};
+
 	return (
 		<div class="main_container">
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
 			</FlexContainer>
 			<FlexContainer>
+				{console.log({ expenses })}
+				{console.log({ orders })}
 				{expenses &&
 				orders && (
 					<div className="order-list responsive_table">
@@ -437,7 +422,7 @@ const ControlPanelPage = (props) => {
 			</FlexContainer>
 			<h1 className="ta-c w-100per jc-c">Occurrences</h1>
 			<canvas id="expense_chart" ref={chartRef} />
-			{orders && (
+			{product_occurrences && (
 				<div className="order-list responsive_table">
 					<table className="table">
 						<thead>
@@ -447,7 +432,7 @@ const ControlPanelPage = (props) => {
 							</tr>
 						</thead>
 						<tbody>
-							{product_occurances.map((item, index) => {
+							{product_occurrences.map((item, index) => {
 								return (
 									<tr
 										key={index}
