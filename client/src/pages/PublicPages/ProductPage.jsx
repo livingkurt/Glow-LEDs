@@ -399,7 +399,9 @@ const ProductPage = (props) => {
 											</li>
 										))}
 									{(product.category === 'diffuser_caps' ||
-										product.category === 'mini_diffuser_caps') && (
+										product.category === 'mini_diffuser_caps') &&
+									!product.name === 'Mini Diffuser Adapters (No Caps)' &&
+									!product.name === 'Diffuser Adapters (No Caps)' && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
 												<label
