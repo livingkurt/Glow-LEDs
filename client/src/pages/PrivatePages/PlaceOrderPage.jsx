@@ -36,7 +36,7 @@ const PlaceOrderPage = (props) => {
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
-	const [ shippingPrice, setShippingPrice ] = useState(5);
+	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
@@ -47,10 +47,10 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			// const shipping_cookie = Cookie.getJSON('shipping');
-			// if (shipping_cookie) {
-			// 	dispatch(saveShipping(shipping_cookie));
-			// }
+			const shipping_cookie = Cookie.getJSON('shipping');
+			if (shipping_cookie) {
+				dispatch(saveShipping(shipping_cookie));
+			}
 			// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
 			// if (diffuser_cap_cookie) {
 			// 	set_diffuser_cap(diffuser_cap_cookie);
@@ -75,10 +75,11 @@ const PlaceOrderPage = (props) => {
 					calculate_international();
 				} else {
 					calculate_shipping();
+					calculate_shipping();
 				}
 			}
 			// calculate_shipping();
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 			return () => {};
 		},
 		[ shipping ]
@@ -89,6 +90,14 @@ const PlaceOrderPage = (props) => {
 		return () => {};
 	}, []);
 
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			return () => {};
+		},
+		[ shippingPrice ]
+	);
+
 	// const taxPrice = 0.0875 * itemsPrice;
 	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
@@ -98,19 +107,30 @@ const PlaceOrderPage = (props) => {
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+		console.log(volume);
 		if (volume === 0) {
+			console.log(0);
 			setShippingPrice(0);
 		} else if (volume <= 10) {
+			console.log(5);
 			setShippingPrice(5);
-		} else if (volume > 10 && volume < 250) {
+		} else if (volume > 10 && volume <= 165) {
+			console.log(8);
+			setShippingPrice(7);
+		} else if (volume > 165 && volume <= 250) {
+			console.log(8);
 			setShippingPrice(8);
-		} else if (volume > 250 && volume < 405) {
+		} else if (volume > 250 && volume <= 405) {
+			console.log(10);
 			setShippingPrice(10);
+			console.log(12);
 		} else if (volume > 405 && volume < 500) {
 			setShippingPrice(12);
+			console.log(500);
 		} else if (volume > 500) {
 			setShippingPrice(15);
 		}
+
 		// if (itemsPrice >= 50) {
 		// 	setShippingPrice(0);
 		// }
@@ -454,7 +474,7 @@ const PlaceOrderPage = (props) => {
 						<li>
 							<div>Shipping</div>
 							<div>
-								{shipping && shipping.hasOwnProperty('first_name') ? (
+								{shipping && shipping.hasOwnProperty('first_name') && shippingPrice > 0 ? (
 									'$' + shippingPrice.toFixed(2)
 								) : (
 									'------'
