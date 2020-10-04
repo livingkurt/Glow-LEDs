@@ -759,6 +759,11 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="height">
+													Calculated Volume {length * width * height}
+												</label>
+											</li>
+											<li>
 												<label htmlFor="weight_pounds">Product lbs</label>
 												<input
 													type="text"
