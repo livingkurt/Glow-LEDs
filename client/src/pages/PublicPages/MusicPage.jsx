@@ -48,8 +48,8 @@ const MusicPage = (props) => {
 			</FlexContainer>
 
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
-				Here at Glow LEDs I produce all of the videos, music, and pictures, here is all of the music that I
-				produced which you'll hear in some of the promo videos!
+				Here at Glow LEDs we produce all of the videos, music, and pictures in house here is all of the music
+				that we produced which you'll hear in some of the promo videos!
 			</p>
 
 			<iframe
