@@ -260,6 +260,9 @@ const Header = (props) => {
 								<Link to="/pages/featured">
 									<button className="button nav">Featured</button>
 								</Link>
+								<Link to="/pages/music">
+									<button className="button nav">Music</button>
+								</Link>
 							</div>
 						</div>
 						{/* <div className="dropdown-nav">

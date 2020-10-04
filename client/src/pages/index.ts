@@ -51,3 +51,4 @@ export { default as FAQPage } from './PublicPages/FAQPage';
 export { default as SitemapPage } from './PublicPages/SitemapPage';
 export { default as FeaturedPage } from './PublicPages/FeaturedPage';
 export { default as GlowControlHomePage } from './PublicPages/GlowControlHomePage';
+export { default as MusicPage } from './PublicPages/MusicPage';

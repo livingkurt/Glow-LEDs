@@ -323,6 +323,11 @@ const Sidebar = (props) => {
 								Featured
 							</button>
 						</Link>
+						<Link to="/pages/music">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Music
+							</button>
+						</Link>
 					</ul>
 					<i
 						style={{ '-webkitTransform': 'rotate(-180deg)' }}
