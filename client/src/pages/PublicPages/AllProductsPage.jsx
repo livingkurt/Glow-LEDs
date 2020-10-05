@@ -10,7 +10,7 @@ import MetaTags from 'react-meta-tags';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
-	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''

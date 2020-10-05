@@ -176,7 +176,8 @@ export const register = (first_name: string, last_name: string, email: string, p
 	try {
 		const { data } = await axios.post('/api/users/register', { first_name, last_name, email, password });
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-		axios.post('/api/emails/verify', data);
+		axios.post('/api/emails/verified', data);
+		// axios.post('/api/emails/verify', data);
 		// Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
 		dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
