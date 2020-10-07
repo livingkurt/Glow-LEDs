@@ -131,7 +131,7 @@ export const print_invoice = (order: any) => {
   
   <body>
     <div class="invoice-box"
-      style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
+      style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
       <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;" width="100%"
         align="left">
         <tr class="top">
