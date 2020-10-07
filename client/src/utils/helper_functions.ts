@@ -131,7 +131,7 @@ export const print_invoice = (order: any) => {
   
   <body>
     <div class="invoice-box"
-      style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
+      style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #black;">
       <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;" width="100%"
         align="left">
         <tr class="top">
@@ -261,11 +261,17 @@ export const print_invoice = (order: any) => {
     <div>
       <h3 style="text-align: center;">Welcome to the Glow LEDs family!</h3>
       <div style="text-align: center; ">We are so happy to share our art with you.</div>
-      <div style="text-align: center; ">The code below will take you to our FAQ page for all kinds of helpful information.</div>
+      <div style="text-align: center; ">The code below will take you to our <strong>FAQ page</strong> for all kinds of helpful information.</div>
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div style="text-align: center; width: 125px;">Facebook @GlowLEDsOfficial</div>
+      <div style="text-align: center; width: 125px;">
+        <div style="text-align: center; "><strong>Facebook</strong></div> 
+        <div style="text-align: center; ">@GlowLEDsOfficial</div>
+        </div> 
         <img src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png" style="width:100px; text-align:center;">
-        <div style="text-align: center; width: 125px;">Instagram @glow_leds</div>
+        <div style="text-align: center; width: 125px;">
+        <div style="text-align: center; "><strong>Instagram</strong></div> 
+        <div style="text-align: center; ">@glow_leds</div>
+        </div> 
       </div>
       <div style="text-align: center; "><strong>Tag us in your videos and pictures!</strong></div>
       
@@ -273,7 +279,7 @@ export const print_invoice = (order: any) => {
       <div style="text-align: center; ">We want to feature you!</div>
       <div style="text-align: center; ">We are figuring this out as we go so any feedback is welcome.</div>
       <div style="text-align: center; ">We appreciate you more than you know.</div>
-      <div style="text-align: center; ">Questions or concerns?: <strong>info.glowleds@gmail.com</strong></div>
+      <div style="text-align: center; "><strong>Questions or concerns?:</strong> info.glowleds@gmail.com</div>
     </div>
     </div>
     
