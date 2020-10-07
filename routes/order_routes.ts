@@ -3,6 +3,7 @@
 // import { isAuth, isAdmin } from '../util';
 export {};
 const express = require('express');
+import { User } from '../models';
 import Order from '../models/order';
 const { isAuth, isAdmin } = require('../util');
 require('dotenv').config();
@@ -44,15 +45,22 @@ router.get('/occurrences', async (req: any, res: any) => {
 
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
 	const category = req.query.category ? { category: req.query.category } : {};
-	const searchKeyword = req.query.searchKeyword
-		? {
-				_id: {
-					$regex: req.query.searchKeyword,
-					$options: 'i'
+	let user: any;
+	let searchKeyword: any;
+	if (req.query.searchKeyword) {
+		const userSearchKeyword = req.query.searchKeyword
+			? {
+					first_name: {
+						$regex: req.query.searchKeyword,
+						$options: 'i'
+					}
 				}
-			}
-		: {};
-
+			: {};
+		console.log({ userSearchKeyword });
+		user = await User.findOne({ ...userSearchKeyword });
+		console.log({ user });
+		searchKeyword = { user: user._id };
+	}
 	let sortOrder = {};
 	if (req.query.sortOrder === 'lowest') {
 		sortOrder = { totalPrice: 1 };
@@ -67,16 +75,12 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 	} else if (req.query.sortOrder === 'delivered') {
 		sortOrder = { isDelivered: -1 };
 	}
-	console.log({ sortOrder: req.query.sortOrder });
-	console.log({ sortOrder });
 	console.log({ searchKeyword });
 	const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
 		.populate('user')
 		.populate('orderItems.product')
 		.populate('orderItems.secondary_product')
 		.sort(sortOrder);
-	// const orders = await Expense.find({}).sort({ date_of_purchase: -1 });
-	// console.log(orders);
 	res.send(orders);
 });
 
