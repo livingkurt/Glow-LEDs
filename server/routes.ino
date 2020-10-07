@@ -5,7 +5,6 @@ void cors_set_access_control_headers()
   webServer.sendHeader("Access-Control-Max-Age", "10000");
   webServer.sendHeader("Access-Control-Allow-Methods", "PUT,POST,GET,OPTIONS");
   webServer.sendHeader("Access-Control-Allow-Headers", "*");
-  // webServer.send(204);
 }
 
 void run_server()

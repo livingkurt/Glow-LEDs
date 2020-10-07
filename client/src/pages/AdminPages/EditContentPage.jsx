@@ -67,6 +67,11 @@ const EditContentPage = (props) => {
 		return () => {};
 	}, []);
 
+	const use_template = (e) => {
+		dispatch(detailsContent(e.target.value));
+		// history.push('/secure/glow/products');
+	};
+
 	useEffect(
 		() => {
 			if (content) {
@@ -162,7 +167,21 @@ const EditContentPage = (props) => {
 									>
 										{loading ? 'Content' : content.name}
 									</h1>
-
+									<div className="ai-c h-25px mb-15px jc-c">
+										<div className="custom-select">
+											<select className="qty_select_dropdown" onChange={(e) => use_template(e)}>
+												<option key={1} defaultValue="">
+													---Choose Product as a Template---
+												</option>
+												{contents.map((content, index) => (
+													<option key={index} value={content._id}>
+														{content.home_page.h1}
+													</option>
+												))}
+											</select>
+											<span className="custom-arrow" />
+										</div>
+									</div>
 									<div className="row wrap jc-b">
 										<div className="w-228px m-10px">
 											<h2>Home Page</h2>
