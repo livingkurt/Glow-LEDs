@@ -24,6 +24,7 @@ const EditPromoPage = (props) => {
 	const [ number_of_orders, set_number_of_orders ] = useState('');
 	const [ active, set_active ] = useState('');
 	const [ loading_data, set_loading_data ] = useState(true);
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
 
@@ -74,6 +75,9 @@ const EditPromoPage = (props) => {
 		},
 		[ promo ]
 	);
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const set_state = () => {
 		set_id(promo._id);
@@ -246,21 +250,25 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_for_customer(e.target.value)}
 												/>
 											</li> */}
-											<li>
-												<label htmlFor="for_customer">For Customer</label>
-												<input
-													type="checkbox"
-													name="for_customer"
-													// defaultChecked={for_customer ? 'checked' : 'unchecked'}
-													// defaultValue={for_customer}
-													defaultChecked={for_customer}
-													// value={for_customer ? '1' : '0'}
-													id="for_customer"
-													onChange={(e) => {
-														set_for_customer(e.target.checked);
-													}}
-												/>
-											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="for_customer">For Customer</label>
+													<input
+														type="checkbox"
+														name="for_customer"
+														// defaultChecked={for_customer ? 'checked' : 'unchecked'}
+														// defaultValue={for_customer}
+														defaultChecked={for_customer}
+														// value={for_customer ? '1' : '0'}
+														id="for_customer"
+														onChange={(e) => {
+															set_for_customer(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											{/* <li>
 												<label htmlFor="excluded_categories">Excluded Categories</label>
 												<input
@@ -322,21 +330,25 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_active(e.target.value)}
 												/>
 											</li> */}
-											<li>
-												<label htmlFor="active">Active</label>
-												<input
-													type="checkbox"
-													name="active"
-													// defaultChecked={active ? 'checked' : 'unchecked'}
-													// defaultValue={active}
-													defaultChecked={active}
-													// value={active ? '1' : '0'}
-													id="active"
-													onChange={(e) => {
-														set_active(e.target.checked);
-													}}
-												/>
-											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="active">Active</label>
+													<input
+														type="checkbox"
+														name="active"
+														// defaultChecked={active ? 'checked' : 'unchecked'}
+														// defaultValue={active}
+														defaultChecked={active}
+														// value={active ? '1' : '0'}
+														id="active"
+														onChange={(e) => {
+															set_active(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 										</FlexContainer>
 									</FlexContainer>
 									<li>

@@ -36,6 +36,7 @@ const EditProductPage = (props) => {
 	const [ weight_ounces, set_weight_ounces ] = useState();
 	const [ pathname, setPathname ] = useState();
 	const [ order, setOrder ] = useState();
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ products, set_products ] = useState('');
 
 	const history = useHistory();
@@ -100,6 +101,9 @@ const EditProductPage = (props) => {
 		},
 		[ product, productDeleteSuccess ]
 	);
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const set_state = () => {
 		setId(product._id);
@@ -602,22 +606,25 @@ const EditProductPage = (props) => {
 													onChange={(e) => setVideo(e.target.value)}
 												/>
 											</li>
-
-											<li>
-												<label htmlFor="hidden">Hide Product</label>
-												<input
-													type="checkbox"
-													name="hidden"
-													// defaultChecked={hidden ? 'checked' : 'unchecked'}
-													// defaultValue={hidden}
-													defaultChecked={hidden}
-													// value={hidden ? '1' : '0'}
-													id="hidden"
-													onChange={(e) => {
-														setHidden(e.target.checked);
-													}}
-												/>
-											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="hidden">Hide Product</label>
+													<input
+														type="checkbox"
+														name="hidden"
+														// defaultChecked={hidden ? 'checked' : 'unchecked'}
+														// defaultValue={hidden}
+														defaultChecked={hidden}
+														// value={hidden ? '1' : '0'}
+														id="hidden"
+														onChange={(e) => {
+															setHidden(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="image">image</label>
 												<input

@@ -21,6 +21,7 @@ const EditSponsorPage = (props) => {
 	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ active, set_active ] = useState('');
 	const [ loading_data, set_loading_data ] = useState(true);
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
 
@@ -71,6 +72,9 @@ const EditSponsorPage = (props) => {
 		},
 		[ sponsor ]
 	);
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const set_state = () => {
 		set_id(sponsor._id);
@@ -240,21 +244,25 @@ const EditSponsorPage = (props) => {
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="active">Active</label>
-												<input
-													type="checkbox"
-													name="active"
-													// defaultChecked={active ? 'checked' : 'unchecked'}
-													// defaultValue={active}
-													defaultChecked={active}
-													// value={active ? '1' : '0'}
-													id="active"
-													onChange={(e) => {
-														set_active(e.target.checked);
-													}}
-												/>
-											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="active">Active</label>
+													<input
+														type="checkbox"
+														name="active"
+														// defaultChecked={active ? 'checked' : 'unchecked'}
+														// defaultValue={active}
+														defaultChecked={active}
+														// value={active ? '1' : '0'}
+														id="active"
+														onChange={(e) => {
+															set_active(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 										</FlexContainer>
 									</FlexContainer>
 									<li>
