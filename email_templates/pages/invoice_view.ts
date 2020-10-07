@@ -34,6 +34,7 @@ export default (
 		const formatted_date = `${month}/${day}/20`;
 		return formatted_date;
 	};
+	console.log('invoice_view');
 	return `
  
   <!doctype html>
@@ -41,13 +42,14 @@ export default (
 
 <head>
   <meta charset="utf-8">
-  <title>A simple, clean, and responsive HTML invoice template</title>
+  <title>Glow LEDs Invoice</title>
 
 </head>
 
 <body>
   <div class="invoice-box"
-    style="max-width: 800px; margin: auto; padding: 30px; font-size: 16px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
+    style="width: 800px; margin: auto;  font-size: 16px; line-height: 24px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
+    <h1>Hello</h1>
     <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;" width="100%"
       align="left">
       <tr class="top">
@@ -109,7 +111,7 @@ export default (
 
       <tr class="details">
         <td style="padding: 5px; vertical-align: top; padding-bottom: 20px;" valign="top">
-        ${props.token.card.brand} 
+          ${props.token.card.brand}
         </td>
 
         <td style="padding: 5px; vertical-align: top; text-align: right; padding-bottom: 20px;" valign="top"

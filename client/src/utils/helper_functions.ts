@@ -119,7 +119,7 @@ export const hslToHex = (h: any, s: any, l: any) => {
 };
 
 export const print_invoice = (order: any) => {
-	const mywindow: any = window.open('', 'PRINT', 'height=400,width=600');
+	const mywindow: any = window.open('', 'PRINT', 'height=600,width=800');
 
 	mywindow.document.write(` <!doctype html>
   <html>
@@ -131,21 +131,21 @@ export const print_invoice = (order: any) => {
   
   <body>
     <div class="invoice-box"
-      style="display: flex; flex-direction: column; max-width: 600px; margin: auto; padding: 30px; font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
+      style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #555;">
       <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;" width="100%"
         align="left">
         <tr class="top">
-          <td colspan="2" style="padding: 5px; vertical-align: top;" valign="top">
+          <td colspan="2" style=" vertical-align: top;" valign="top">
             <table style="width: 100%; line-height: inherit; text-align: left;" width="100%" align="left">
               <tr>
                 <td class="title"
-                  style="vertical-align: top; padding-bottom: 20px; font-size: 45px; line-height: 45px; color: #333; "
+                  style="vertical-align: top;   line-height: 45px; color: #333; "
                   valign="top">
                   <img src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
-                    style="width:60%; max-width:400px; margin-left: -13px;">
+                    style="width:100px; margin-left: -5px;">
                 </td>
   
-                <td style="padding: 5px; vertical-align: top; text-align: right; padding-bottom: 20px;" valign="top"
+                <td style=" vertical-align: top; text-align: right; " valign="top"
                   align="right">
                   Invoice #: ${order._id}<br>
                   Created: ${format_date(order.createdAt)}<br>
@@ -159,14 +159,14 @@ export const print_invoice = (order: any) => {
           <td colspan="2" style="vertical-align: top;" valign="top">
             <table style="width: 100%; line-height: inherit; text-align: left;" width="100%" align="left">
               <tr>
-                <td style="vertical-align: top; padding-bottom: 40px;" valign="top">
+                <td style="vertical-align: top;" valign="top">
                   Glow LEDs<br>
                   404 Kenniston Dr<br>
                   Austin, TX 78752<br>
                   info.glowleds@gmail.com
                 </td>
   
-                <td style=" vertical-align: top; text-align: right; padding-bottom: 40px;" valign="top"
+                <td style=" vertical-align: top; text-align: right;" valign="top"
                   align="right">
                   ${order.shipping.first_name} ${order.shipping.last_name}<br>
                   ${order.shipping.address}<br>
@@ -193,11 +193,11 @@ export const print_invoice = (order: any) => {
         </tr>
 
         <tr class="details">
-        <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;padding-bottom: 20px;" valign="top">
+        <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
         ${order.payment.charge.source.brand} 
         </td>
 
-        <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;padding-bottom: 20px;" valign="top"
+        <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
           align="right">
           ${order.payment.charge.source.last4}
         </td>
@@ -258,7 +258,25 @@ export const print_invoice = (order: any) => {
         </div>
       </div>
     </div>
+    <div>
+      <h3 style="text-align: center;">Welcome to the Glow LEDs family!</h3>
+      <div style="text-align: center; ">We are so happy to share our art with you.</div>
+      <div style="text-align: center; ">The code below will take you to our FAQ page for all kinds of helpful information.</div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="text-align: center; width: 125px;">Facebook @GlowLEDsOfficial</div>
+        <img src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png" style="width:100px; text-align:center;">
+        <div style="text-align: center; width: 125px;">Instagram @glow_leds</div>
+      </div>
+      <div style="text-align: center; "><strong>Tag us in your videos and pictures!</strong></div>
+      
+      
+      <div style="text-align: center; ">We want to feature you!</div>
+      <div style="text-align: center; ">We are figuring this out as we go so any feedback is welcome.</div>
+      <div style="text-align: center; ">We appreciate you more than you know.</div>
+      <div style="text-align: center; ">Questions or concerns?: <strong>info.glowleds@gmail.com</strong></div>
     </div>
+    </div>
+    
   </body>
   
   </html>`);
