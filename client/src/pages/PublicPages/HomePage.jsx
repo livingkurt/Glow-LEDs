@@ -78,14 +78,33 @@ const HomePage = (props) => {
 					<FlexContainer h_center>
 						<h1 style={{ textAlign: 'center' }}>{content.home_page.h1}</h1>
 					</FlexContainer>
+					{content.home_page.show_image && (
+						<Link to={content.home_page.link}>
+							<img
+								style={{ borderRadius: '20px', width: '100%' }}
+								src={content.home_page.image}
+								alt="promo"
+							/>
+						</Link>
+					)}
+					{content.home_page.show_video && (
+						<FlexContainer h_center styles={{ position: 'relative' }}>
+							<div className="iframe-container">
+								<iframe
+									title="Mini Diffuser Caps Promo Video"
+									width="996"
+									height="560"
+									style={{ borderRadius: '20px' }}
+									src={`https://www.youtube.com/embed/${content.home_page
+										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+									frameborder="0"
+									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen="1"
+								/>
+							</div>
+						</FlexContainer>
+					)}
 
-					<Link to={content.home_page.link}>
-						<img
-							style={{ borderRadius: '20px', width: '100%' }}
-							src={content.home_page.image}
-							alt="promo"
-						/>
-					</Link>
 					<FlexContainer h_center>
 						<h2 style={{ marginBottom: 0, textAlign: 'center' }}>{content.home_page.h2}</h2>
 					</FlexContainer>
