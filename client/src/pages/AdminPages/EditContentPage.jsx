@@ -16,21 +16,8 @@ const EditContentPage = (props) => {
 	const [ about_page, set_about_page ] = useState({});
 	const [ banner, set_banner ] = useState({});
 
-	// const [ home_page_h1, set_home_page_h1 ] = useState('');
-	// const [ home_page_image, set_home_page_image ] = useState('');
-	// const [ home_page_h2, set_home_page_h2 ] = useState('');
-	// const [ home_page_p, set_home_page_p ] = useState('');
-	// const [ home_page_button, set_home_page_button ] = useState('');
-	// const [ home_page_link, set_home_page_link ] = useState('');
-
-	// const [ banner_label, set_banner_label ] = useState('');
-	// const [ banner_button_text, set_banner_button_text ] = useState('');
-	// const [ banner_link, set_banner_link ] = useState('');
-
-	// const [ about_page_kurt_p, set_about_page_kurt_p ] = useState('');
-	// const [ about_page_destanye_p, set_about_page_destanye_p ] = useState('');
-
 	const [ active, set_active ] = useState(true);
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
 
@@ -87,6 +74,10 @@ const EditContentPage = (props) => {
 		[ content ]
 	);
 
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
+
 	const set_state = () => {
 		set_id(content._id);
 		set_home_page(content.home_page);
@@ -114,7 +105,7 @@ const EditContentPage = (props) => {
 		// console.log(format_date(unformat_date(banner_link)));
 		// console.log(format_date(unformat_date(banner_link)));
 
-		console.log({ id });
+		console.log({ home_page });
 		dispatch(
 			saveContent({
 				_id: id,
@@ -207,6 +198,61 @@ const EditContentPage = (props) => {
 														set_home_page({ ...home_page, image: e.target.value })}
 												/>
 											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_image">Show Image</label>
+													<input
+														type="checkbox"
+														name="show_image"
+														// defaultChecked={show_image ? 'checked' : 'unchecked'}
+														// defaultValue={show_image}
+														defaultChecked={home_page && home_page.show_image}
+														// value={show_image && show_image ? '1' : '0'}
+														id="show_image"
+														onChange={(e) => {
+															set_home_page({
+																...home_page,
+																show_image: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
+											<li>
+												<label htmlFor="home_page_video">Home Page Video</label>
+												<input
+													type="text"
+													name="home_page_video"
+													value={home_page && home_page.video}
+													id="home_page_video"
+													onChange={(e) =>
+														set_home_page({ ...home_page, video: e.target.value })}
+												/>
+											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_video">Show Video</label>
+													<input
+														type="checkbox"
+														name="show_video"
+														// defaultChecked={show_video ? 'checked' : 'unchecked'}
+														// defaultValue={show_video}
+														defaultChecked={home_page && home_page.show_video}
+														// value={show_video && show_video ? '1' : '0'}
+														id="show_video"
+														onChange={(e) => {
+															set_home_page({
+																...home_page,
+																show_video: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="home_page_h2">Home Page H2</label>
 												<input
@@ -286,21 +332,25 @@ const EditContentPage = (props) => {
 													onChange={(e) => set_banner({ ...banner, link: e.target.value })}
 												/>
 											</li>
-											<li>
-												<label htmlFor="active">Active?</label>
-												<input
-													type="checkbox"
-													name="active"
-													// defaultChecked={active ? 'checked' : 'unchecked'}
-													// defaultValue={active}
-													defaultChecked={active}
-													// value={active && active ? '1' : '0'}
-													id="active"
-													onChange={(e) => {
-														set_active(e.target.checked);
-													}}
-												/>
-											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="active">Active?</label>
+													<input
+														type="checkbox"
+														name="active"
+														// defaultChecked={active ? 'checked' : 'unchecked'}
+														// defaultValue={active}
+														defaultChecked={active}
+														// value={active && active ? '1' : '0'}
+														id="active"
+														onChange={(e) => {
+															set_active(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 										</div>
 
 										<div className="w-228px m-10px">

@@ -4,6 +4,9 @@ export {};
 const home_page_schema = {
 	h1: { type: String },
 	image: { type: String },
+	video: { type: String },
+	show_image: { type: Boolean, default: true },
+	show_video: { type: Boolean, default: false },
 	h2: { type: String },
 	p: { type: String },
 	button: { type: String },
