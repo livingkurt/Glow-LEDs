@@ -7,7 +7,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
-const EditUserProfilePage = (props) => {
+const EditUserPage = (props) => {
 	const userDetails = useSelector((state) => state.userDetails);
 	const { loading: loadingUser, user, error: errorUser } = userDetails;
 
@@ -228,4 +228,4 @@ const EditUserProfilePage = (props) => {
 	);
 };
 
-export default EditUserProfilePage;
+export default EditUserPage;

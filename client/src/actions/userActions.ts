@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
+import { PRODUCT_SAVE_FAIL, PRODUCT_SAVE_REQUEST, PRODUCT_SAVE_SUCCESS } from '../constants/productConstants';
 import {
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
@@ -83,6 +84,35 @@ export const update = (userdata: any) => async (
 		dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
 	}
 };
+
+export const saveUser = (user: any) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	console.log({ userActions: user });
+	try {
+		dispatch({ type: PRODUCT_SAVE_REQUEST, payload: user });
+		const { userLogin: { userInfo } } = getState();
+		if (!user._id) {
+			const { data } = await axios.post('/api/users', user, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+		} else {
+			const { data } = await axios.put('/api/users/' + user._id, user, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+		}
+	} catch (error) {
+		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.message });
+	}
+};
+
 export const updateUser = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }

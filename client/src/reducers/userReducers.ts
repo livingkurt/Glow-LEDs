@@ -33,7 +33,10 @@ import {
 	USER_DETAILS_FAIL,
 	USER_UPDATE_USER_REQUEST,
 	USER_UPDATE_USER_SUCCESS,
-	USER_UPDATE_USER_FAIL
+	USER_UPDATE_USER_FAIL,
+	USER_SAVE_REQUEST,
+	USER_SAVE_SUCCESS,
+	USER_SAVE_FAIL
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action: { type: any; payload: any }) => {
@@ -102,6 +105,20 @@ export const userUpdateReducer = (state = {}, action: { type: any; payload: any 
 			return state;
 	}
 };
+
+export const userSaveReducer = (state = { user: {} }, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case USER_SAVE_REQUEST:
+			return { loading: true };
+		case USER_SAVE_SUCCESS:
+			return { loading: false, success: true, user: action.payload };
+		case USER_SAVE_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
 export const userUpdateUserReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case USER_UPDATE_USER_REQUEST:

@@ -29,7 +29,7 @@ import {
 	UsersPage,
 	FAQPage,
 	UserProfilePage,
-	EditUserProfilePage,
+	EditUserPage,
 	SitemapPage,
 	ControlPanelPage,
 	FeaturedPage,
@@ -118,7 +118,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />
 							<AdminRoute path="/secure/glow/users" component={UsersPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
-							<AdminRoute path="/secure/glow/edituserprofile" component={EditUserProfilePage} />
+							<AdminRoute path="/secure/glow/edituser/:id" component={EditUserPage} />
 							<AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />

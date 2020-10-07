@@ -89,6 +89,19 @@ router.put('/resetpassword', async (req, res) => {
 	}
 });
 
+router.put('/:id', isAuth, async (req, res) => {
+	console.log({ user_routes_put: req.body });
+	const userId = req.params.id;
+	const user: any = await User.findById(userId);
+	if (user) {
+		const updatedUser = await User.updateOne({ _id: userId }, req.body);
+		if (updatedUser) {
+			return res.status(200).send({ message: 'User Updated', data: updatedUser });
+		}
+	}
+	return res.status(500).send({ message: ' Error in Updating User.' });
+});
+
 router.post('/passwordreset', async (req, res) => {
 	try {
 		const email = req.body.email;

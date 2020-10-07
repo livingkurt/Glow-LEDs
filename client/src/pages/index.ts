@@ -3,7 +3,7 @@ export { default as OrdersPage } from './AdminPages/OrdersPage';
 export { default as ProductsPage } from './AdminPages/ProductsPage';
 export { default as UsersPage } from './AdminPages/UsersPage';
 export { default as UserProfilePage } from './AdminPages/UserProfilePage';
-export { default as EditUserProfilePage } from './AdminPages/EditUserProfilePage';
+export { default as EditUserPage } from './AdminPages/EditUserPage';
 export { default as ControlPanelPage } from './AdminPages/ControlPanelPage';
 export { default as ExpensesPage } from './AdminPages/ExpensesPage';
 export { default as EditExpensePage } from './AdminPages/EditExpensePage';

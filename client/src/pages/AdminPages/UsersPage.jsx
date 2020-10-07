@@ -146,7 +146,7 @@ const UsersPage = (props) => {
 										<td>{user.email}</td>
 										<td>{user.sponsor}</td>
 										<td>
-											{user.isSponsored ? (
+											{user.is_sponsored ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
@@ -168,7 +168,7 @@ const UsersPage = (props) => {
 										</td>
 										<td>
 											<FlexContainer h_between>
-												<Link to={'/secure/glow/userprofile/' + user._id}>
+												<Link to={'/secure/glow/edituser/' + user._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
 													</button>
