@@ -95,6 +95,11 @@ const UsersPage = (props) => {
 						</FlexContainer>
 					);
 				})}
+				<Link to="/secure/glow/edituser">
+					<button className="button primary" style={{ width: '160px' }}>
+						Create User
+					</button>
+				</Link>
 			</FlexContainer>
 			<div className="order-header">
 				<h1

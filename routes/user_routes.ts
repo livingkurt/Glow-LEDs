@@ -88,6 +88,23 @@ router.put('/resetpassword', async (req, res) => {
 		res.send(error);
 	}
 });
+router.post('/', async (req, res) => {
+	let user: any = {};
+	let hashed_password: string = '';
+	const temporary_password = '123456';
+	bcrypt.genSalt(10, (err: any, salt: any) => {
+		bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
+			if (err) throw err;
+			hashed_password = hash;
+			user = { ...req.body, password: hashed_password };
+			const newUser = await User.create(user);
+			if (newUser) {
+				return res.status(201).send({ message: 'New User Created', data: newUser });
+			}
+			return res.status(500).send({ message: ' Error in Creating User.' });
+		});
+	});
+});
 
 router.put('/:id', isAuth, async (req, res) => {
 	console.log({ user_routes_put: req.body });
