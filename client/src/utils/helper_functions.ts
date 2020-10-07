@@ -267,7 +267,7 @@ export const print_invoice = (order: any) => {
         <div style="text-align: center; "><strong>Facebook</strong></div> 
         <div style="text-align: center; ">@GlowLEDsOfficial</div>
         </div> 
-        <img src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png" style="width:100px; text-align:center;">
+        <img src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png" style="width:75px; text-align:center;">
         <div style="text-align: center; width: 125px;">
         <div style="text-align: center; "><strong>Instagram</strong></div> 
         <div style="text-align: center; ">@glow_leds</div>
