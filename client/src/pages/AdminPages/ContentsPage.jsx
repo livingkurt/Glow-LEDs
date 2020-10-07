@@ -100,7 +100,7 @@ const ContentsPage = (props) => {
 			</MetaTags>
 			<FlexContainer wrap h_between>
 				<FlexContainer h_between wrap>
-					{colors.map((color) => {
+					{/* {colors.map((color) => {
 						return (
 							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
@@ -114,7 +114,7 @@ const ContentsPage = (props) => {
 								/>
 							</FlexContainer>
 						);
-					})}
+					})} */}
 				</FlexContainer>
 				<Link to="/secure/glow/editcontent">
 					<button className="button primary" style={{ width: '160px' }}>
