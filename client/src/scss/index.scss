@@ -679,10 +679,6 @@ td {
 	display: inline-block;
 	position: relative;
 }
-.dropdown-nav-subcategory {
-	display: inline-block;
-	position: relative;
-}
 
 .dropdown-nav-content {
 	position: absolute;
@@ -697,6 +693,12 @@ td {
 	/* margin-top: 0.4rem; */
 	box-shadow: $bs_deep;
 }
+
+.dropdown-nav-subcategory {
+	display: inline-block;
+	position: relative;
+}
+
 .dropdown-nav-subcategory-content {
 	position: absolute;
 	display: none;

@@ -12,13 +12,13 @@
 }
 // - Left px
 @for $i from 0 to 40 {
-	.left-n#{$i}rem {
+	.left-#{$i}rem {
 		left: -$i + rem !important;
 	}
 }
 // - Left rem
 @for $i from 0 to 100 {
-	.left-n#{$i}px {
+	.left-#{$i}px {
 		left: -$i + px !important;
 	}
 }

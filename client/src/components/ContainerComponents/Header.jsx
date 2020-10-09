@@ -113,7 +113,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/mini_diffuser_caps">
 										<button className="button nav">Mini Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in ">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -157,7 +157,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/diffuser_caps">
 										<button className="button nav">Original Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in ">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -217,7 +217,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/mini_diffuser_caps">
 										<button className="button nav">Mini Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in ">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -261,7 +261,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/diffuser_caps">
 										<button className="button nav">Original Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in ">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -359,9 +359,86 @@ const Header = (props) => {
 								<Link to="/pages/about">
 									<button className="button nav">About</button>
 								</Link>
-								<Link to="/pages/faq">
-									<button className="button nav">FAQ</button>
-								</Link>
+
+								<div className="dropdown-nav-subcategory">
+									<Link to="/pages/faq">
+										<button className="button nav">FAQ</button>
+									</Link>
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px w-325px top-38px">
+										<a href="/pages/faq#using_diffuser_caps_and_adapters">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Diffuser Caps Guide</button>
+											</div>
+										</a>
+										{/* <a href="/pages/faq#orienting_your_diffuser_caps">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Orienting Your Diffuser Caps</button>
+											</div>
+										</a> */}
+										<a href="/pages/faq#ordering_custom_products">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Ordering Custom Products</button>
+											</div>
+										</a>
+										{/* <a href="/pages/faq#custom_diffuser_caps">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Custom Diffuser Caps</button>
+											</div>
+										</a>
+										<a href="/pages/faq#custom_infinity_mirrors">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Custom Infinity Mirrors</button>
+											</div>
+										</a> */}
+										<a href="/pages/faq#featured_content">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Featured Content</button>
+											</div>
+										</a>
+										<a href="/pages/faq#processing_shipping">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Processing/Shipping</button>
+											</div>
+										</a>
+										<a href="/pages/faq#returns_cancellations">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav">Returns/Cancellations</button>
+											</div>
+										</a>
+									</div>
+								</div>
 								<Link to="/pages/contact">
 									<button className="button nav">Contact</button>
 								</Link>
