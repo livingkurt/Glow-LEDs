@@ -50,7 +50,8 @@ import {
 	GlowControlPage,
 	GlowControlHomePage,
 	EditDevicePage,
-	MusicPage
+	MusicPage,
+	DiscountPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -59,6 +60,7 @@ import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import { AnnouncementEmail } from './components/EmailComponents';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -133,6 +135,11 @@ const App = () => {
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
 							<AdminRoute path="/secure/glow/sponsors" component={SponsorsPage} />
+							<AdminRoute
+								path="/secure/glow/emails/announcment"
+								exact={true}
+								component={AnnouncementEmail}
+							/>
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
@@ -163,6 +170,7 @@ const App = () => {
 								component={(props) => <GlowControlHomePage userInfo={userInfo} {...props} />}
 							/>
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
+
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />
 							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
