@@ -32,7 +32,9 @@ const FAQPage = () => {
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 style={{ clear: 'both', textAlign: 'center' }}>Using Diffuser Adapters and Caps</h2>
+						<h2 style={{ clear: 'both', textAlign: 'center' }} id="using_diffuser_caps_and_adapters">
+							Using Diffuser Caps and Adapters
+						</h2>
 						<FlexContainer h_center styles={{ position: 'relative' }}>
 							<div className="iframe-container">
 								<iframe
@@ -95,7 +97,9 @@ const FAQPage = () => {
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 style={{ clear: 'both', textAlign: 'center' }}>Orienting Your Diffuser Caps</h2>
+						<h2 style={{ clear: 'both', textAlign: 'center' }} id="orienting_your_diffuser_caps">
+							Orienting Your Diffuser Caps
+						</h2>
 						<FlexContainer h_center styles={{ position: 'relative' }}>
 							<div className="iframe-container">
 								<iframe
@@ -148,8 +152,12 @@ const FAQPage = () => {
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Ordering Custom Products</h1>
-						<h2 style={{ textAlign: 'center', marginBottom: 0 }}>Custom Diffuser Caps</h2>
+						<h1 style={{ textAlign: 'center', marginBottom: '30px' }} id="ordering_custom_products">
+							Ordering Custom Products
+						</h1>
+						<h2 style={{ textAlign: 'center', marginBottom: 0 }} id="custom_diffuser_caps">
+							Custom Diffuser Caps
+						</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								A single 100% refundable deposit of $9.99{' '}
@@ -275,7 +283,9 @@ const FAQPage = () => {
 								</span>️!
 							</li>
 						</ul>
-						<h2 style={{ textAlign: 'center', margin: '0 auto' }}>Custom Infinity Mirrors</h2>
+						<h2 style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
+							Custom Infinity Mirrors
+						</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								Before ordering a custom infinity mirror a consultation must be had{' '}
@@ -317,7 +327,9 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }}>Featured Content</h1>
+						<h1 style={{ textAlign: 'center' }} id="featured_content">
+							Featured Content
+						</h1>
 						<p style={{ lineHeight: '25px' }}>
 							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
 							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
@@ -350,7 +362,9 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }}>Processing/Shipping</h1>
+						<h1 style={{ textAlign: 'center' }} id="processing_shipping">
+							Processing/Shipping
+						</h1>
 
 						<ul style={{ padding: '18px', marginBottom: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
@@ -432,7 +446,9 @@ const FAQPage = () => {
 								</button>
 							</FlexContainer>
 						</Link>
-						<h2 style={{ textAlign: 'center' }}>International Shipping</h2>
+						<h2 style={{ textAlign: 'center' }} id="international_shipping">
+							International Shipping
+						</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								We ship internationally!{' '}
@@ -483,7 +499,9 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }}>Returns/Cancellations</h1>
+						<h1 style={{ textAlign: 'center' }} id="returns_cancellations">
+							Returns/Cancellations
+						</h1>
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								100% satisfaction guarantee{' '}

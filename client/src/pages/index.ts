@@ -15,9 +15,11 @@ export { default as SponsorsPage } from './AdminPages/SponsorsPage';
 export { default as PromosPage } from './AdminPages/PromosPage';
 export { default as FeaturesPage } from './AdminPages/FeaturesPage';
 export { default as ContentsPage } from './AdminPages/ContentsPage';
+export { default as EmailsPage } from './AdminPages/EmailsPage';
 export { default as CartsPage } from './AdminPages/CartsPage';
 export { default as EditCartPage } from './AdminPages/EditCartPage';
 export { default as EditContentPage } from './AdminPages/EditContentPage';
+export { default as EditEmailPage } from './AdminPages/EditEmailPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

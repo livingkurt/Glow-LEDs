@@ -51,7 +51,9 @@ import {
 	GlowControlHomePage,
 	EditDevicePage,
 	MusicPage,
-	DiscountPage
+	DiscountPage,
+	EditEmailPage,
+	EmailsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -130,16 +132,19 @@ const App = () => {
 							<AdminRoute path="/secure/glow/features" component={FeaturesPage} />
 							<AdminRoute path="/secure/glow/carts" component={CartsPage} />
 							<AdminRoute path="/secure/glow/contents" component={ContentsPage} />
-							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />
-							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
-							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
-							<AdminRoute path="/secure/glow/sponsors" component={SponsorsPage} />
 							<AdminRoute
-								path="/secure/glow/emails/announcment"
+								path="/secure/glow/emails/announcement"
 								exact={true}
 								component={AnnouncementEmail}
 							/>
+							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
+							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
+							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />
+							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
+							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
+							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
+							<AdminRoute path="/secure/glow/sponsors" component={SponsorsPage} />
+
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />

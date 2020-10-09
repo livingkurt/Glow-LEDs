@@ -13,3 +13,4 @@ export { default as Expense } from './expense';
 export { default as Promo } from './promo';
 export { default as Sponsor } from './sponsor';
 export { default as Device } from './device';
+export { default as Email } from './email';

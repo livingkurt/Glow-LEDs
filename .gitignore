@@ -143,6 +143,7 @@ models/promo.js
 models/sponsor.js
 models/content.js
 models/device.js
+models/email.js
 
 email_templates/HTML
 email_templates/pages/verify_account_view.js

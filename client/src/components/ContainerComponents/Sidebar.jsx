@@ -169,6 +169,11 @@ const Sidebar = (props) => {
 									Contents
 								</button>
 							</Link>
+							<Link to="/secure/glow/emails">
+								<button className="sidebar_button secondary" onClick={closeMenu}>
+									Emails
+								</button>
+							</Link>
 						</ul>
 						<i
 							style={{ '-webkitTransform': 'rotate(-180deg)' }}

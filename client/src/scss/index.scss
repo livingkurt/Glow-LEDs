@@ -42,6 +42,8 @@ html {
 	font-size: 62.5%;
 	/* 1.6rem * 62.5 = 10px = 1rem */
 	box-sizing: border-box;
+	scroll-padding-top: 220px; /* height of sticky header */
+	scroll-margin-top: 220px;
 }
 
 *:focus {
@@ -58,6 +60,8 @@ body {
 	margin: 0;
 	background-color: $background_color;
 	color: $font_color;
+	scroll-padding-top: 220px; /* height of sticky header */
+	scroll-margin-top: 220px;
 }
 
 button {
