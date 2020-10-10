@@ -157,7 +157,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/diffuser_caps">
 										<button className="button nav">Original Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-20px top-38px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -261,7 +261,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/diffuser_caps">
 										<button className="button nav">Original Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-20px top-38px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -364,7 +364,7 @@ const Header = (props) => {
 									<Link to="/pages/faq">
 										<button className="button nav">FAQ</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px w-325px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-20px w-325px top-38px">
 										<a href="/pages/faq#using_diffuser_caps_and_adapters">
 											<div className="row">
 												<i

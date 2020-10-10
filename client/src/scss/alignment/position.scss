@@ -10,18 +10,7 @@
 		left: $i + px !important;
 	}
 }
-// - Left px
-@for $i from 0 to 40 {
-	.left-#{$i}rem {
-		left: -$i + rem !important;
-	}
-}
-// - Left rem
-@for $i from 0 to 100 {
-	.left-#{$i}px {
-		left: -$i + px !important;
-	}
-}
+
 // Top rem
 @for $i from 0 to 40 {
 	.top-#{$i}rem {
@@ -56,6 +45,56 @@
 @for $i from 0 to 100 {
 	.bottom-#{$i}px {
 		bottom: $i + px !important;
+	}
+}
+
+// - Left px
+@for $i from 0 to 40 {
+	.left-n#{$i}rem {
+		left: -$i + rem !important;
+	}
+}
+// - Left rem
+@for $i from 0 to 100 {
+	.left-n#{$i}px {
+		left: -$i + px !important;
+	}
+}
+
+// Top rem
+@for $i from 0 to 40 {
+	.top-n#{$i}rem {
+		top: -$i + rem !important;
+	}
+}
+// Top px
+@for $i from 0 to 100 {
+	.top-n#{$i}px {
+		top: -$i + px !important;
+	}
+}
+// Right rem
+@for $i from 0 to 40 {
+	.right-n#{$i}rem {
+		right: -$i + rem !important;
+	}
+}
+// Right px
+@for $i from 0 to 100 {
+	.right-n#{$i}px {
+		right: -$i + px !important;
+	}
+}
+// Bottom rem
+@for $i from 0 to 40 {
+	.bottom-n#{$i}rem {
+		bottom: $i + rem !important;
+	}
+}
+// Bottom px
+@for $i from 0 to 100 {
+	.bottom-n#{$i}px {
+		bottom: -$i + px !important;
 	}
 }
 

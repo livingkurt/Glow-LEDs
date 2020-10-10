@@ -61,6 +61,7 @@ const userSchema = new mongoose.Schema(
 		devices: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Device' } ],
 		cart: cartSchema,
 		sponsor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sponsor' },
+		email_subscription: { type: Boolean, required: true, default: true },
 		deleted: { type: Boolean, default: false }
 	},
 	{

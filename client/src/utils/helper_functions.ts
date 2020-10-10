@@ -163,7 +163,7 @@ export const print_invoice = (order: any) => {
                   Glow LEDs<br>
                   404 Kenniston Dr<br>
                   Austin, TX 78752<br>
-                  info.glowleds@gmail.com
+                  info@glow-leds.com
                 </td>
   
                 <td style=" vertical-align: top; text-align: right;" valign="top"
@@ -279,7 +279,7 @@ export const print_invoice = (order: any) => {
       <div style="text-align: center; ">We want to feature you!</div>
       <div style="text-align: center; ">We are figuring this out as we go so any feedback is welcome.</div>
       <div style="text-align: center; ">We appreciate you more than you know.</div>
-      <div style="text-align: center; "><strong>Questions or concerns?:</strong> info.glowleds@gmail.com</div>
+      <div style="text-align: center; "><strong>Questions or concerns?:</strong> info@glow-leds.com</div>
     </div>
     </div>
     

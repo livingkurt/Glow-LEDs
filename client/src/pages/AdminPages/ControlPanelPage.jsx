@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, deleteProduct } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
+import { Link, useHistory } from 'react-router-dom';
 import { listOrders } from '../../actions/orderActions';
 import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
@@ -250,9 +251,39 @@ const ControlPanelPage = (props) => {
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
 			</FlexContainer>
+			<div className="jc-b">
+				<Link to="/secure/glow/orders">
+					<button className="button primary">Orders</button>
+				</Link>
+				<Link to="/secure/glow/products">
+					<button className="button primary"> Products</button>
+				</Link>
+				<Link to="/secure/glow/users">
+					<button className="button primary"> Users</button>
+				</Link>
+				<Link to="/secure/glow/expenses">
+					<button className="button primary"> Expenses</button>
+				</Link>
+				<Link to="/secure/glow/features">
+					<button className="button primary"> Features</button>
+				</Link>
+				<Link to="/secure/glow/sponsors">
+					<button className="button primary"> Sponsors</button>
+				</Link>
+				<Link to="/secure/glow/promos">
+					<button className="button primary">Promos</button>
+				</Link>
+				<Link to="/secure/glow/carts">
+					<button className="button primary">Carts</button>
+				</Link>
+				<Link to="/secure/glow/contents">
+					<button className="button primary">Contents</button>
+				</Link>
+				<Link to="/secure/glow/emails">
+					<button className="button primary">Emails</button>
+				</Link>
+			</div>
 			<FlexContainer>
-				{console.log({ expenses })}
-				{console.log({ orders })}
 				{expenses &&
 				orders && (
 					<div className="order-list responsive_table">

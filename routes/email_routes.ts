@@ -1,7 +1,10 @@
 export {};
 import express from 'express';
 import Email from '../models/email';
+import User from '../models/user';
 const { isAuth, isAdmin } = require('../util');
+import nodemailer from 'nodemailer';
+require('dotenv').config();
 
 const router = express.Router();
 router.get('/', async (req, res) => {
@@ -79,6 +82,60 @@ router.post('/', async (req, res) => {
 		return res.status(201).send({ message: 'New Email Created', data: newProduct });
 	}
 	return res.status(500).send({ message: ' Error in Creating Email.' });
+});
+
+let transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.PASSWORD
+	}
+});
+// let transporter = nodemailer.createTransport({
+// 	host: 'mail.domain.com',
+// 	port: 465,
+// 	secure: true,
+// 	auth: {
+// 		user: process.env.EMAIL,
+// 		pass: process.env.PASSWORD
+// 	},
+// 	tls: {
+// 		rejectUnauthorized: false
+// 	}
+// });
+
+// var transporter = nodemailer.createTransport(`smtps://${process.env.EMAIL}:${process.env.PASSWORD}@smtp.gmail.com`);
+
+console.log({
+	user: process.env.EMAIL,
+	pass: process.env.PASSWORD
+});
+
+router.post('/announcement', async (req, res) => {
+	console.log({ template: req.body.template });
+	console.log({ subject: req.body.subject });
+	const users = await User.find({});
+	const emails = users.map((user: any) => user.email);
+	console.log({ emails });
+
+	const test = [ 'lavacquek@icloud.com', 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
+	test.forEach((email) => {
+		let mailOptions = {
+			to: email,
+			from: process.env.DISPLAY_EMAIL,
+			subject: req.body.subject,
+			html: req.body.template
+		};
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.send(err);
+			} else {
+				console.log('Announcement Email Sent');
+				res.send('Email Successfully Sent');
+			}
+		});
+	});
 });
 
 // module.exports = router;

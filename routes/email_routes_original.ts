@@ -54,8 +54,8 @@ let transporter = nodemailer.createTransport({
 // 	console.log(process.env.SENDGRID_SECRET);
 // 	sgMail.setApiKey(process.env.SENDGRID_SECRET);
 // 	const msg = {
-// 		to: 'info.glowleds@gmail.com',
-// 		from: 'info.glowleds@gmail.com', // Use the email address or domain you verified above
+// 		to: 'info@glow-leds.com',
+// 		from: 'info@glow-leds.com', // Use the email address or domain you verified above
 // 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
 // 		text: 'and easy to do anywhere, even with Node.js',
 // 		html: contact_view(req.body)
