@@ -45,9 +45,12 @@ const ProductPage = (props) => {
 	const diffuser_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	const diffuser_cap_colors = [ 'Translucent White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	const determine_colors = () => {
-		if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
+		if (
+			product.category === 'diffuser_caps' ||
+			(product.category === 'mini_diffuser_caps' || !product.subcategory === 'diffuser_adapters')
+		) {
 			return diffuser_colors;
-		} else if (product.category === 'frosted_diffusers') {
+		} else if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
 			return diffuser_cap_colors;
 		}
 	};
