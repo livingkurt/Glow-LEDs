@@ -14,7 +14,11 @@ const EditEmailPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ announcement, set_announcement ] = useState({});
 	const [ order, set_order ] = useState({});
-	const [ verified, set_verified ] = useState({});
+	const [ account_created, set_account_created ] = useState({});
+	const [ review, set_review ] = useState({});
+	const [ reset_password, set_reset_password ] = useState({});
+	const [ password_changed, set_password_changed ] = useState({});
+	const [ email_content, set_email_content ] = useState([]);
 
 	const [ active, set_active ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -45,14 +49,34 @@ const EditEmailPage = (props) => {
 			console.log('Is ID');
 			dispatch(detailsEmail(props.match.params.id));
 			dispatch(detailsEmail(props.match.params.id));
+			dispatch(detailsEmail(props.match.params.id));
 		} else {
 			dispatch(detailsEmail(''));
 		}
 
 		// set_loading_data(false);
 		set_state();
+		set_state();
 		return () => {};
 	}, []);
+
+	// useEffect(
+	// 	() => {
+	// 		if (props.match.params.id) {
+	// 			console.log('Is ID');
+	// 			dispatch(detailsEmail(props.match.params.id));
+	// 			dispatch(detailsEmail(props.match.params.id));
+	// 			dispatch(detailsEmail(props.match.params.id));
+	// 		} else {
+	// 			dispatch(detailsEmail(''));
+	// 		}
+
+	// 		// set_loading_data(false);
+	// 		set_state();
+	// 		return () => {};
+	// 	},
+	// 	[ email, successSave ]
+	// );
 
 	const use_template = (e) => {
 		dispatch(detailsEmail(e.target.value));
@@ -81,18 +105,70 @@ const EditEmailPage = (props) => {
 	const set_state = () => {
 		set_id(email._id);
 		set_announcement(email.announcement);
-		set_verified(email.verified);
+		set_account_created(email.account_created);
 		set_order(email.order);
+		set_review(email.review);
+		set_reset_password(email.reset_password);
+		set_password_changed(email.password_changed);
 		set_active(email.active);
+		set_email_content([
+			{ name: 'Announcement', data: email.announcement, state: announcement, set_state: set_announcement },
+			{
+				name: 'Account Created',
+				data: email.account_created,
+				state: account_created,
+				set_state: set_account_created
+			},
+			{ name: 'Order', data: email.order, state: order, set_state: set_order },
+			{ name: 'Review', data: email.review, state: review, set_state: set_review },
+			{
+				name: 'Reset Password',
+				data: email.reset_password,
+				state: reset_password,
+				set_state: set_reset_password
+			},
+			{
+				name: 'Password Changed',
+				data: email.password_changed,
+				state: password_changed,
+				set_state: set_password_changed
+			}
+		]);
+		set_email_content([
+			{ name: 'Announcement', data: email.announcement, state: announcement, set_state: set_announcement },
+			{
+				name: 'Account Created',
+				data: email.account_created,
+				state: account_created,
+				set_state: set_account_created
+			},
+			{ name: 'Order', data: email.order, state: order, set_state: set_order },
+			{ name: 'Review', data: email.review, state: review, set_state: set_review },
+			{
+				name: 'Reset Password',
+				data: email.reset_password,
+				state: reset_password,
+				set_state: set_reset_password
+			},
+			{
+				name: 'Password Changed',
+				data: email.password_changed,
+				state: password_changed,
+				set_state: set_password_changed
+			}
+		]);
 
-		// femail.verified_link);
-		// console.log(format_date(email.verified_link));
+		// femail.account_created_link);
+		// console.log(format_date(email.account_created_link));
 	};
 	const unset_state = () => {
 		set_id('');
 		set_announcement('');
-		set_verified('');
+		set_account_created('');
 		set_order('');
+		set_review('');
+		set_reset_password('');
+		set_password_changed('');
 		set_active(true);
 	};
 
@@ -103,15 +179,33 @@ const EditEmailPage = (props) => {
 				_id: id,
 				announcement,
 				order,
-				verified,
+				account_created,
+				review,
+				reset_password,
+				password_changed,
+				active
+			})
+		);
+		dispatch(
+			saveEmail({
+				_id: id,
+				announcement,
+				order,
+				account_created,
+				review,
+				reset_password,
+				password_changed,
 				active
 			})
 		);
 		e.target.reset();
 		set_id('');
 		set_announcement('');
-		set_verified('');
+		set_account_created('');
 		set_order('');
+		set_review('');
+		set_reset_password('');
+		set_password_changed('');
 		set_active(true);
 		// if (id) {
 		// 	history.push('/collections/all/emails/' + id);
@@ -165,31 +259,136 @@ const EditEmailPage = (props) => {
 											<span className="custom-arrow" />
 										</div>
 									</div>
+
 									<div className="row wrap jc-b">
+										{/* {email_content &&
+											email_content.map((email) => {
+												return (
+													<div className="w-228px m-10px">
+														<h2>{email.name}</h2>
+														<li>
+															<label htmlFor={`${email.name}_h1`}>{email.name} H1</label>
+															<input
+																type="text"
+																name={`${email.name}_h1`}
+																defaultValue={email.data && email.data.h1}
+																id={`${email.name}_h1`}
+																onChange={(e) =>
+																	email.set_state({
+																		...email.state,
+																		h1: e.target.value
+																	})}
+															/>
+														</li>
+														<li>
+															<label htmlFor={`${email.name}_image`}>
+																{email.name} Image
+															</label>
+															<input
+																type="text"
+																name={`${email.name}_image`}
+																defaultValue={email.data && email.data.image}
+																id={`${email.name}_image`}
+																onChange={(e) =>
+																	email.set_state({
+																		...email.state,
+																		image: e.target.value
+																	})}
+															/>
+														</li>
+
+														<li>
+															<label htmlFor={`${email.name}_h2`}>{email.name} H2</label>
+															<input
+																type="text"
+																name={`${email.name}_h2`}
+																defaultValue={email.data && email.data.h2}
+																id={`${email.name}_h2`}
+																onChange={(e) =>
+																	email.set_state({
+																		...email.state,
+																		h2: e.target.value
+																	})}
+															/>
+														</li>
+
+														<li>
+															<label htmlFor={`${email.name}_p`}>{email.name} P</label>
+															<textarea
+																className="edit_product_textarea"
+																name={`${email.name}_p`}
+																defaultValue={email.data && email.data.p}
+																id={`${email.name}_p`}
+																onChange={(e) =>
+																	email.set_state({
+																		...email.state,
+																		p: e.target.value
+																	})}
+															/>
+														</li>
+														<li>
+															<label htmlFor={`${email.name}_button`}>
+																{email.name} Button
+															</label>
+															<input
+																type="text"
+																name={`${email.name}_button`}
+																defaultValue={email.data && email.data.button}
+																id={`${email.name}_button`}
+																onChange={(e) =>
+																	email.set_state({
+																		...email.state,
+																		button: e.target.value
+																	})}
+															/>
+														</li>
+
+														<li>
+															<label htmlFor={`${email.name}_link`}>
+																{email.name} Link
+															</label>
+															<input
+																type="text"
+																name={`${email.name}_link`}
+																defaultValue={email.data && email.data.link}
+																id={`${email.name}_link`}
+																onChange={(e) =>
+																	email.set_state({
+																		...email.state,
+																		link: e.target.value
+																	})}
+															/>
+														</li>
+													</div>
+												);
+											})} */}
+
+										{/* <div className="row wrap jc-b"> */}
 										<div className="w-228px m-10px">
 											<h2>Announcement</h2>
-											<li>
-												<label htmlFor="announcement_h1">Announcement H1</label>
-												<input
-													type="text"
-													name="announcement_h1"
-													value={announcement && announcement.h1}
-													id="announcement_h1"
-													onChange={(e) =>
-														set_announcement({ ...announcement, h1: e.target.value })}
-												/>
-											</li>
-											<li>
-												<label htmlFor="announcement_image">Announcement Image</label>
-												<input
-													type="text"
-													name="announcement_image"
-													value={announcement && announcement.image}
-													id="announcement_image"
-													onChange={(e) =>
-														set_announcement({ ...announcement, image: e.target.value })}
-												/>
-											</li>
+											{Object.keys(announcement).map((field) => {
+												console.log(field);
+												return (
+													field !== 'show_image' && (
+														<li>
+															<label htmlFor={`announcement_${field}`}>
+																Announcement {field}
+															</label>
+															<input
+																type="text"
+																name={`announcement_${field}`}
+																value={announcement && announcement[field]}
+																id={`announcement_${field}`}
+																onChange={(e) =>
+																	set_announcement({
+																		...announcement,
+																		[field]: e.target.value
+																	})}
+															/>
+														</li>
+													)
+												);
+											})}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -212,39 +411,266 @@ const EditEmailPage = (props) => {
 													/>
 												</li>
 											)}
-											<li>
-												<label htmlFor="announcement_video">Announcement Video</label>
-												<input
-													type="text"
-													name="announcement_video"
-													value={announcement && announcement.video}
-													id="announcement_video"
-													onChange={(e) =>
-														set_announcement({ ...announcement, video: e.target.value })}
-												/>
-											</li>
+										</div>
+										<div className="w-228px m-10px">
+											<h2>Review</h2>
+											{Object.keys(review).map((field) => {
+												console.log(field);
+												return (
+													field !== 'show_image' && (
+														<li>
+															<label htmlFor={`review_${field}`}>Review {field}</label>
+															<input
+																type="text"
+																name={`review_${field}`}
+																value={review && review[field]}
+																id={`review_${field}`}
+																onChange={(e) =>
+																	set_review({
+																		...review,
+																		[field]: e.target.value
+																	})}
+															/>
+														</li>
+													)
+												);
+											})}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
 												<li>
-													<label htmlFor="show_video">Show Video</label>
+													<label htmlFor="show_image">Show Image</label>
 													<input
 														type="checkbox"
-														name="show_video"
-														// defaultChecked={show_video ? 'checked' : 'unchecked'}
-														// defaultValue={show_video}
-														defaultChecked={announcement && announcement.show_video}
-														// value={show_video && show_video ? '1' : '0'}
-														id="show_video"
+														name="show_image"
+														// defaultChecked={show_image ? 'checked' : 'unchecked'}
+														// defaultValue={show_image}
+														defaultChecked={review && review.show_image}
+														// value={show_image && show_image ? '1' : '0'}
+														id="show_image"
 														onChange={(e) => {
-															set_announcement({
-																...announcement,
-																show_video: e.target.checked
+															set_review({
+																...review,
+																show_image: e.target.checked
 															});
 														}}
 													/>
 												</li>
 											)}
+										</div>
+										<div className="w-228px m-10px">
+											<h2>Account Created</h2>
+											{Object.keys(account_created).map((field) => {
+												console.log(field);
+												return (
+													field !== 'show_image' && (
+														<li>
+															<label htmlFor={`account_created_${field}`}>
+																Account Created {field}
+															</label>
+															<input
+																type="text"
+																name={`account_created_${field}`}
+																value={account_created && account_created[field]}
+																id={`account_created_${field}`}
+																onChange={(e) =>
+																	set_account_created({
+																		...account_created,
+																		[field]: e.target.value
+																	})}
+															/>
+														</li>
+													)
+												);
+											})}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_image">Show Image</label>
+													<input
+														type="checkbox"
+														name="show_image"
+														// defaultChecked={show_image ? 'checked' : 'unchecked'}
+														// defaultValue={show_image}
+														defaultChecked={account_created && account_created.show_image}
+														// value={show_image && show_image ? '1' : '0'}
+														id="show_image"
+														onChange={(e) => {
+															set_account_created({
+																...account_created,
+																show_image: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
+										</div>
+										<div className="w-228px m-10px">
+											<h2>Order</h2>
+											{Object.keys(order).map((field) => {
+												console.log(field);
+												return (
+													field !== 'show_image' && (
+														<li>
+															<label htmlFor={`order_${field}`}>Order {field}</label>
+															<input
+																type="text"
+																name={`order_${field}`}
+																value={order && order[field]}
+																id={`order_${field}`}
+																onChange={(e) =>
+																	set_order({
+																		...order,
+																		[field]: e.target.value
+																	})}
+															/>
+														</li>
+													)
+												);
+											})}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_image">Show Image</label>
+													<input
+														type="checkbox"
+														name="show_image"
+														// defaultChecked={show_image ? 'checked' : 'unchecked'}
+														// defaultValue={show_image}
+														defaultChecked={order && order.show_image}
+														// value={show_image && show_image ? '1' : '0'}
+														id="show_image"
+														onChange={(e) => {
+															set_order({
+																...order,
+																show_image: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
+										</div>
+										<div className="w-228px m-10px">
+											<h2>Password Changed</h2>
+											{Object.keys(password_changed).map((field) => {
+												console.log(field);
+												return (
+													field !== 'show_image' && (
+														<li>
+															<label htmlFor={`password_changed_${field}`}>
+																Password Changed {field}
+															</label>
+															<input
+																type="text"
+																name={`password_changed_${field}`}
+																value={password_changed && password_changed[field]}
+																id={`password_changed_${field}`}
+																onChange={(e) =>
+																	set_password_changed({
+																		...password_changed,
+																		[field]: e.target.value
+																	})}
+															/>
+														</li>
+													)
+												);
+											})}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_image">Show Image</label>
+													<input
+														type="checkbox"
+														name="show_image"
+														// defaultChecked={show_image ? 'checked' : 'unchecked'}
+														// defaultValue={show_image}
+														defaultChecked={password_changed && password_changed.show_image}
+														// value={show_image && show_image ? '1' : '0'}
+														id="show_image"
+														onChange={(e) => {
+															set_password_changed({
+																...password_changed,
+																show_image: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
+										</div>
+										<div className="w-228px m-10px">
+											<h2>Reset Password</h2>
+											{Object.keys(reset_password).map((field) => {
+												console.log(field);
+												return (
+													field !== 'show_image' && (
+														<li>
+															<label htmlFor={`reset_password_${field}`}>
+																Reset Password {field}
+															</label>
+															<input
+																type="text"
+																name={`reset_password_${field}`}
+																value={reset_password && reset_password[field]}
+																id={`reset_password_${field}`}
+																onChange={(e) =>
+																	set_reset_password({
+																		...reset_password,
+																		[field]: e.target.value
+																	})}
+															/>
+														</li>
+													)
+												);
+											})}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_image">Show Image</label>
+													<input
+														type="checkbox"
+														name="show_image"
+														// defaultChecked={show_image ? 'checked' : 'unchecked'}
+														// defaultValue={show_image}
+														defaultChecked={reset_password && reset_password.show_image}
+														// value={show_image && show_image ? '1' : '0'}
+														id="show_image"
+														onChange={(e) => {
+															set_reset_password({
+																...reset_password,
+																show_image: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
+										</div>
+
+										{/* <li>
+												<label htmlFor="announcement_h1">Announcement H1</label>
+												<input
+													type="text"
+													name="announcement_h1"
+													value={announcement && announcement.h1}
+													id="announcement_h1"
+													onChange={(e) =>
+														set_announcement({ ...announcement, h1: e.target.value })}
+												/>
+											</li>
+											<li>
+												<label htmlFor="announcement_image">Announcement Image</label>
+												<input
+													type="text"
+													name="announcement_image"
+													value={announcement && announcement.image}
+													id="announcement_image"
+													onChange={(e) =>
+														set_announcement({ ...announcement, image: e.target.value })}
+												/>
+											</li>
 											<li>
 												<label htmlFor="announcement_h2">Announcement H2</label>
 												<input
@@ -290,89 +716,7 @@ const EditEmailPage = (props) => {
 													onChange={(e) =>
 														set_announcement({ ...announcement, link: e.target.value })}
 												/>
-											</li>
-										</div>
-
-										<div className="w-228px m-10px">
-											<h2>Order</h2>
-											<li>
-												<label htmlFor="verified_label">Order Label</label>
-												<input
-													type="text"
-													name="verified_label"
-													value={verified && verified.label}
-													id="verified_label"
-													onChange={(e) =>
-														set_verified({ ...verified, label: e.target.value })}
-												/>
-											</li>
-											<li>
-												<label htmlFor="verified_button_text">Order Button Text</label>
-												<input
-													type="text"
-													name="verified_button_text"
-													value={verified && verified.button}
-													id="verified_button_text"
-													onChange={(e) =>
-														set_verified({ ...verified, button: e.target.value })}
-												/>
-											</li>
-											<li>
-												<label htmlFor="verified_link">Order Link</label>
-												<input
-													type="text"
-													name="verified_link"
-													value={verified && verified.link}
-													id="verified_link"
-													onChange={(e) =>
-														set_verified({ ...verified, link: e.target.value })}
-												/>
-											</li>
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="active">Active?</label>
-													<input
-														type="checkbox"
-														name="active"
-														// defaultChecked={active ? 'checked' : 'unchecked'}
-														// defaultValue={active}
-														defaultChecked={active}
-														// value={active && active ? '1' : '0'}
-														id="active"
-														onChange={(e) => {
-															set_active(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-										</div>
-
-										<div className="w-228px m-10px">
-											<h2>Verified</h2>
-											<li>
-												<label htmlFor="order_kurt_p">Verified Kurt P</label>
-												<textarea
-													className="edit_product_textarea"
-													name="order_kurt_p"
-													value={order && order.kurt_p}
-													id="order_kurt_p"
-													onChange={(e) => set_order({ ...order, kurt_p: e.target.value })}
-												/>
-											</li>
-											<li>
-												<label htmlFor="order_destanye_p">Verified Kurt P</label>
-												<textarea
-													className="edit_product_textarea"
-													name="order_destanye_p"
-													value={order && order.destanye_p}
-													id="order_destanye_p"
-													onChange={(e) =>
-														set_order({ ...order, destanye_p: e.target.value })}
-												/>
-											</li>
-										</div>
+											</li> */}
 									</div>
 									<li>
 										<button type="submit" className="button primary">

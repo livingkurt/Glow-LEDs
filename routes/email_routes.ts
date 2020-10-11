@@ -66,6 +66,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
+	console.log({ put: req.body });
 	const emailId = req.params.id;
 	const email: any = await Email.findById(emailId);
 	if (email) {
