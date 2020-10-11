@@ -24,6 +24,7 @@ const ProductPage = (props) => {
 	const [ mini_diffuser_caps, set_mini_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
+	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
 	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
 	const productDetails = useSelector((state) => state.productDetails);
@@ -102,6 +103,12 @@ const ProductPage = (props) => {
 
 	const filament_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	// const filament_colors = [ 'Black' ];
+
+	const handle_diffuser_cap_change = (e) => {
+		set_diffuser_cap(JSON.parse(e.target.value));
+		console.log(JSON.parse(e.target.value).pathname);
+		set_diffuser_cap_name(JSON.parse(e.target.value).pathname);
+	};
 
 	return (
 		<FlexContainer column>
@@ -331,12 +338,10 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														defaultValue={diffuser_cap.pathname}
-														value={diffuser_cap.pathname}
+														defaultValue={diffuser_cap_name}
+														// value={diffuser_cap_name}
 														className="qty_select_dropdown"
-														onChange={(e) => {
-															set_diffuser_cap(JSON.parse(e.target.value));
-														}}
+														onChange={(e) => set_diffuser_cap(JSON.parse(e.target.value))}
 													>
 														<option key={1} defaultValue="">
 															---Choose Cap---
@@ -371,12 +376,11 @@ const ProductPage = (props) => {
 													{console.log({ diffuser_cap })}
 													<div className="custom-select">
 														<select
-															defaultValue={diffuser_cap.name}
-															value={diffuser_cap.name}
+															defaultValue={diffuser_cap_name}
+															// value={diffuser_cap_name}
 															className="qty_select_dropdown"
-															onChange={(e) => {
-																set_diffuser_cap(JSON.parse(e.target.value));
-															}}
+															onChange={(e) =>
+																set_diffuser_cap(JSON.parse(e.target.value))}
 														>
 															<option key={1} defaultValue="">
 																---Choose Cap---
