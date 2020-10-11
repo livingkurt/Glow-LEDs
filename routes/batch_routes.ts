@@ -15,7 +15,7 @@ router.put('/users', async (req, res) => {
 		{},
 		{
 			// $rename: { shipping_price: 'volume' }
-			$set: { deleted: false }
+			$set: { email_subscription: true }
 			// $unset: { shipping_price: 1 }
 		}
 	);

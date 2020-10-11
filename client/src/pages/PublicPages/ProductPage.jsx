@@ -331,8 +331,8 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														defaultValue={diffuser_cap}
-														value={diffuser_cap}
+														defaultValue={diffuser_cap.pathname}
+														value={diffuser_cap.pathname}
 														className="qty_select_dropdown"
 														onChange={(e) => {
 															set_diffuser_cap(JSON.parse(e.target.value));
@@ -368,10 +368,11 @@ const ProductPage = (props) => {
 													>
 														Caps:
 													</label>
+													{console.log({ diffuser_cap })}
 													<div className="custom-select">
 														<select
-															defaultValue={diffuser_cap}
-															value={diffuser_cap}
+															defaultValue={diffuser_cap.name}
+															value={diffuser_cap.name}
 															className="qty_select_dropdown"
 															onChange={(e) => {
 																set_diffuser_cap(JSON.parse(e.target.value));
@@ -399,9 +400,8 @@ const ProductPage = (props) => {
 											</li>
 										))}
 									{(product.category === 'diffuser_caps' ||
-										product.category === 'mini_diffuser_caps') &&
-									!product.name === 'Mini Diffuser Adapters (No Caps)' &&
-									!product.name === 'Diffuser Adapters (No Caps)' && (
+										product.category === 'mini_diffuser_caps' ||
+										product.category === 'frosted_diffusers') && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
 												<label

@@ -210,7 +210,7 @@ const Header = (props) => {
 								</Link>
 							</div>
 						</div>
-						<div className="dropdown-nav">
+						{/* <div className="dropdown-nav">
 							<button className="button nav">Diffuser Caps</button>
 							<div className="dropdown-nav-content hover_fade_in w-300px">
 								<div className="dropdown-nav-subcategory">
@@ -318,7 +318,7 @@ const Header = (props) => {
 									<button className="button nav">Frosted Diffusers</button>
 								</Link>
 							</div>
-						</div>
+						</div> */}
 
 						<div className="dropdown-nav">
 							{/* <Link to="/collections/all/products/category/Diffusers"> */}
