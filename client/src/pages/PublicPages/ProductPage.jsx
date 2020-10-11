@@ -40,6 +40,18 @@ const ProductPage = (props) => {
 
 	const dispatch = useDispatch();
 
+	// const filament_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
+
+	const diffuser_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
+	const diffuser_cap_colors = [ 'Translucent White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
+	const determine_colors = () => {
+		if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
+			return diffuser_colors;
+		} else if (product.category === 'frosted_diffusers') {
+			return diffuser_cap_colors;
+		}
+	};
+
 	useEffect(() => {
 		dispatch(detailsProduct(props.match.params.pathname));
 		const video = document.getElementsByClassName('product_video');
@@ -48,6 +60,7 @@ const ProductPage = (props) => {
 		// dispatch(listProducts(''));
 		get_original_diffuser_caps();
 		get_mini_diffuser_caps();
+
 		// if (diffuser_cap_cookie) {
 		// 	set_diffuser_cap(diffuser_cap_cookie);
 		// 	console.log({ diffuser_cap_cookie });
@@ -101,7 +114,6 @@ const ProductPage = (props) => {
 		props.history.push('/checkout/cart');
 	};
 
-	const filament_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	// const filament_colors = [ 'Black' ];
 
 	const handle_diffuser_cap_change = (e) => {
@@ -424,7 +436,7 @@ const ProductPage = (props) => {
 															set_diffuser_cap_color(e.target.value);
 														}}
 													>
-														{filament_colors.map((color, index) => (
+														{determine_colors().map((color, index) => (
 															<option key={index} value={color}>
 																{color}
 															</option>

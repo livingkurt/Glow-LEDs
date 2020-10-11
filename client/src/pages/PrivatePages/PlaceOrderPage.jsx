@@ -385,7 +385,8 @@ const PlaceOrderPage = (props) => {
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{(item.category === 'diffuser_caps' ||
-														item.category === 'mini_diffuser_caps') &&
+														item.category === 'mini_diffuser_caps' ||
+														item.category === 'frosted_diffusers') &&
 														item.diffuser_cap_color}{' '}
 													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
 												</Link>
