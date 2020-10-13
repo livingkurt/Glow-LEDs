@@ -137,9 +137,7 @@ const EmailsPage = (props) => {
 									<th>Email Type</th>
 									<th>Show Image</th>
 									<th>H2</th>
-									{/* <th>P</th> */}
 									<th>Button</th>
-									{/* <th >Link</th> */}
 									<th>Active</th>
 									<th>Actions</th>
 								</tr>
@@ -156,7 +154,6 @@ const EmailsPage = (props) => {
 										<td>{email._id}</td>
 										<td className="min-w-16rem">{email.email_type}</td>
 										<td>{email.h1}</td>
-										{/* <td >{email.image}</td> */}
 										<td className="min-w-14rem">
 											{email.show_image ? (
 												<i className="fas fa-check-circle" />
@@ -165,9 +162,7 @@ const EmailsPage = (props) => {
 											)}
 										</td>
 										<td>{email.h2}</td>
-										{/* <td >{email.p}</td> */}
 										<td>{email.button}</td>
-										{/* <td >{email.link}</td> */}
 										<td>
 											{email.active ? (
 												<i className="fas fa-check-circle" />

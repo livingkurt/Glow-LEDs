@@ -465,7 +465,7 @@ const Header = (props) => {
 					{props.userInfo ? (
 						<div className="dropdown">
 							<button className="button nav">{first_name}</button>
-							<ul className="dropdown-content hover_fade_in w-200px">
+							<ul className="dropdown-content hover_fade_in w-110px">
 								<Link to="/secure/account/profile">
 									<button className="button nav">Profile</button>
 								</Link>
