@@ -150,10 +150,11 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		user.isAdmin = req.body.admin || user.isAdmin;
 		user.isVerified = req.body.verified || user.isVerified;
 		user.sponsor = req.body.sponsor || user.sponsor;
-		user.email_subscription = req.body.email_subscription ? req.body.email_subscription : false;
+		user.email_subscription = req.body.email_subscription;
 		user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
 		user.deleted = req.body.deleted || false;
 		const updatedUser = await user.save();
+		// const updatedUser = await User.updateOne({ _id: userId }, user);
 		console.log({ updatedUser });
 		res.send({
 			_id: updatedUser.id,
