@@ -28,3 +28,13 @@
 		max-width: $i + px !important;
 	}
 }
+@for $i from 0 to 100 {
+	.min-w-#{$i}rem {
+		min-width: $i + rem !important;
+	}
+}
+@for $i from 0 to 2000 {
+	.min-w-#{$i}px {
+		min-width: $i + px !important;
+	}
+}

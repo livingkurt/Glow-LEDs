@@ -135,8 +135,14 @@ const EmailsPage = (props) => {
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Announcement</th>
-									<th>Order</th>
+									<th>H1</th>
+									<th>Email Type</th>
+									<th className="min-w-5rem">Show Image</th>
+									<th>H2</th>
+									{/* <th>P</th> */}
+									<th>Button</th>
+									{/* <th >Link</th> */}
+									<th>Active</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -149,11 +155,28 @@ const EmailsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td style={{ minWidth: '5rem' }}>{email._id}</td>
-										<td style={{ minWidth: '5rem' }}>
-											{email.announcement && email.announcement.h1}
+										<td>{email._id}</td>
+										<td>{email.email_type}</td>
+										<td>{email.h1}</td>
+										{/* <td >{email.image}</td> */}
+										<td className="min-w-5rem">
+											{email.show_image ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
 										</td>
-										<td style={{ minWidth: '15rem' }}>{email.order && email.order.h1}</td>
+										<td>{email.h2}</td>
+										{/* <td >{email.p}</td> */}
+										<td>{email.button}</td>
+										{/* <td >{email.link}</td> */}
+										<td>
+											{email.active ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
 										<td>
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editemail/' + email._id}>

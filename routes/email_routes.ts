@@ -23,10 +23,11 @@ const PHE = require('print-html-element');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
-	const category = req.query.category ? { category: req.query.category } : {};
+	const email_type = req.query.category ? { email_type: req.query.category } : {};
+	console.log(email_type);
 	const searchKeyword = req.query.searchKeyword
 		? {
-				p: {
+				email_type: {
 					$regex: req.query.searchKeyword,
 					$options: 'i'
 				}
@@ -50,8 +51,8 @@ router.get('/', async (req, res) => {
 		sortOrder = { _id: -1 };
 	}
 
-	const emails = await Email.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	// console.log(emails);
+	const emails = await Email.find({ deleted: false, ...email_type, ...searchKeyword }).sort(sortOrder);
+	console.log(emails);
 	res.send(emails);
 });
 
