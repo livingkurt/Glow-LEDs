@@ -163,7 +163,7 @@ const EditEmailPage = (props) => {
 									<title>Edit {email.name} | Glow LEDs</title>
 								</MetaTags>
 
-								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
+								<ul className="edit-form-container" style={{ maxWidth: '50rem', marginBottom: '20px' }}>
 									<h1
 										style={{
 											textAlign: 'center',
@@ -195,7 +195,7 @@ const EditEmailPage = (props) => {
 										</div>
 									</li>
 									<div className="row wrap jc-c">
-										<div className="column  m-10px">
+										<div className="column w-100per m-10px">
 											{/* <li>
 												<label htmlFor="email_type">Email Type</label>
 												<input
