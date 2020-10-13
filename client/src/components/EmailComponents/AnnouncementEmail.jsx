@@ -120,6 +120,7 @@ const AnnouncementEmail = () => {
 									fontSize: '16px',
 									lineHeight: '30px',
 									maxWidth: '800px',
+									textAlign: 'center',
 									width: '100%',
 									margin: '20px auto',
 									color: 'white'

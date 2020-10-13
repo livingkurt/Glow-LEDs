@@ -118,6 +118,7 @@ const ReviewEmail = () => {
 									lineHeight: '30px',
 									maxWidth: '800px',
 									width: '100%',
+									textAlign: 'center',
 									margin: '20px auto',
 									color: 'white'
 								}}
