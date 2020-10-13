@@ -259,7 +259,7 @@ const AnnouncementEmail = () => {
 								Want to change how you receive these emails? <br /> You can{' '}
 								<a
 									rel="noreferrer"
-									href="https://www.glow-leds.com/collections/all/products/category/frosted_diffusers"
+									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
 									style={{
@@ -272,7 +272,7 @@ const AnnouncementEmail = () => {
 								or{' '}
 								<a
 									rel="noreferrer"
-									href="https://www.glow-leds.com/collections/all/products/category/frosted_diffusers"
+									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
 									style={{
