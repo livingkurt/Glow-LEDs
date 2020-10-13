@@ -12,6 +12,9 @@ const AnnouncementEmail = () => {
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
 	const emailList = useSelector((state) => state.emailList);
 	const { loading: loading_emails, emails, error: error_emails } = emailList;
 
@@ -278,7 +281,13 @@ const AnnouncementEmail = () => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const send_announcement_email = async () => {
-		const data = await API.send_announcement_email(email_template, email.announcement.h1);
+		const data = await API.send_announcement_email(email_template, email.h1);
+		console.log('Success');
+	};
+
+	const save_html = async () => {
+		const data = await API.save_html(email_template, email, userInfo.token);
+		console.log(data);
 		console.log('Success');
 	};
 
@@ -289,6 +298,9 @@ const AnnouncementEmail = () => {
 				<Link to="/secure/glow/emails">
 					<button className="button primary">Back to Emails</button>
 				</Link>
+				<button className="button primary mb-1rem" onClick={() => save_html()}>
+					Save HTML
+				</button>
 				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
 				</button>

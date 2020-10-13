@@ -13,14 +13,15 @@ export {};
 
 const emailSchema = new mongoose.Schema(
 	{
-		email_type: { type: String, default: '' },
-		h1: { type: String, default: '' },
-		image: { type: String, default: '' },
+		email_type: { type: String },
+		h1: { type: String },
+		image: { type: String },
 		show_image: { type: Boolean, default: true },
-		h2: { type: String, default: '' },
-		p: { type: String, default: '' },
-		button: { type: String, default: '' },
-		link: { type: String, default: '' },
+		h2: { type: String },
+		p: { type: String },
+		button: { type: String },
+		link: { type: String },
+		html: { type: String },
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }
 	},

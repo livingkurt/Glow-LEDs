@@ -9,6 +9,15 @@ export default {
 	send_announcement_email: (template: string, subject: string) => {
 		return axios.post('/api/emails/announcement', { template, subject });
 	},
+	save_html: (template: string, email: any, token: any) => {
+		console.log({ template, email, token });
+		email = { ...email, html: template };
+		return axios.put('/api/emails/' + email._id, email, {
+			headers: {
+				Authorization: 'Bearer ' + token
+			}
+		});
+	},
 	not_verified_email: (userInfo: any) => {
 		console.log({ not_paid_email: userInfo });
 		return axios.post('/api/emails/notverified', userInfo);
