@@ -62,7 +62,14 @@ import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
-import { AnnouncementEmail, ReviewEmail } from './components/EmailComponents';
+import {
+	AccountCreatedEmail,
+	AnnouncementEmail,
+	OrderEmail,
+	PasswordChangedEmail,
+	ResetPasswordEmail,
+	ReviewEmail
+} from './components/EmailComponents';
 
 const App = () => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -138,6 +145,22 @@ const App = () => {
 								component={AnnouncementEmail}
 							/>
 							<AdminRoute path="/secure/glow/emails/review" exact={true} component={ReviewEmail} />
+							<AdminRoute
+								path="/secure/glow/emails/account_created"
+								exact={true}
+								component={AccountCreatedEmail}
+							/>
+							<AdminRoute path="/secure/glow/emails/order" exact={true} component={OrderEmail} />
+							<AdminRoute
+								path="/secure/glow/emails/reset_password"
+								exact={true}
+								component={ResetPasswordEmail}
+							/>
+							<AdminRoute
+								path="/secure/glow/emails/password_changed"
+								exact={true}
+								component={PasswordChangedEmail}
+							/>
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />

@@ -15,10 +15,12 @@ const ReviewEmail = () => {
 	const emailList = useSelector((state) => state.emailList);
 	const { loading: loading_emails, emails, error: error_emails } = emailList;
 
+	console.log({ emails });
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listEmails());
+		dispatch(listEmails('Reviews'));
 		return () => {};
 	}, []);
 
@@ -36,8 +38,7 @@ const ReviewEmail = () => {
 	const jsx = (
 		<body style={{ padding: 0, margin: 0 }}>
 			<div>
-				{email &&
-				email.review && (
+				{email && (
 					<div
 						style={{
 							fontFamily: 'helvetica',
@@ -76,17 +77,17 @@ const ReviewEmail = () => {
 									fontSize: '2em'
 								}}
 							>
-								{email.review && email.review.h1}
+								{email.h1}
 							</h4>
 						</div>
 						<div style={{ backgroundColor: '#5f5f5f', padding: '20px' }}>
 							<div style={{ display: 'flex', justifyContent: 'center' }}>
-								{email.review.show_image && (
+								{email.show_image && (
 									<table width="100%" style={{ maxWidth: '900px' }}>
 										<tr>
 											<td>
 												<img
-													src={email.review && email.review.image}
+													src={email.image}
 													alt="Glow LEDs"
 													style={{
 														textAlign: 'center',
@@ -97,23 +98,6 @@ const ReviewEmail = () => {
 											</td>
 										</tr>
 									</table>
-								)}
-								{email.review.show_video && (
-									<FlexContainer h_center styles={{ position: 'relative' }}>
-										<div className="iframe-container">
-											<iframe
-												title={email.review && email.review.h1}
-												width="996"
-												height="560"
-												style={{ borderRadius: '20px' }}
-												src={`https://www.youtube.com/embed/${email.review
-													.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-												frameborder="0"
-												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-												allowfullscreen="1"
-											/>
-										</div>
-									</FlexContainer>
 								)}
 							</div>
 							<h4
@@ -126,7 +110,7 @@ const ReviewEmail = () => {
 									marginBottom: '0'
 								}}
 							>
-								{email.review && email.review.h2}
+								{email.h2}
 							</h4>
 							<p
 								style={{
@@ -138,7 +122,7 @@ const ReviewEmail = () => {
 									color: 'white'
 								}}
 							>
-								{email.review && email.review.p}
+								{email.p}
 							</p>
 							<div
 								style={{
@@ -147,7 +131,7 @@ const ReviewEmail = () => {
 								}}
 							>
 								<a
-									src={email.review && email.review.link}
+									href={email.link}
 									alt="discount image"
 									style={{
 										backgroundColor: '#4c4f60',
@@ -165,7 +149,7 @@ const ReviewEmail = () => {
 											textAlign: 'center'
 										}}
 									>
-										{email.review && email.review.button}
+										{email.button}
 									</h4>
 								</a>
 							</div>
@@ -259,7 +243,7 @@ const ReviewEmail = () => {
 								Want to change how you receive these emails? <br /> You can{' '}
 								<a
 									rel="noreferrer"
-									href="https://www.glow-leds.com/collections/all/products/category/frosted_diffusers"
+									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
 									style={{
@@ -272,7 +256,7 @@ const ReviewEmail = () => {
 								or{' '}
 								<a
 									rel="noreferrer"
-									href="https://www.glow-leds.com/collections/all/products/category/frosted_diffusers"
+									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
 									style={{
@@ -293,8 +277,8 @@ const ReviewEmail = () => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_review_email = async () => {
-		const data = await API.send_review_email(email_template, email.review.h1);
+	const send_announcement_email = async () => {
+		const data = await API.send_announcement_email(email_template, email.announcement.h1);
 		console.log('Success');
 	};
 
@@ -305,8 +289,8 @@ const ReviewEmail = () => {
 				<Link to="/secure/glow/emails">
 					<button className="button primary">Back to Emails</button>
 				</Link>
-				<button className="button primary mb-1rem" onClick={() => send_review_email()}>
-					Send Review Email
+				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
+					Send Announcement Email
 				</button>
 			</div>
 			{jsx}

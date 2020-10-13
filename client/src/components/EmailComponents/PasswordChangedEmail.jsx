@@ -8,7 +8,7 @@ import MetaTags from 'react-meta-tags';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 
-const AccountCreatedEmail = () => {
+const PasswordChangedEmail = () => {
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
@@ -20,7 +20,7 @@ const AccountCreatedEmail = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listEmails('Account Created'));
+		dispatch(listEmails('Password Changed'));
 		return () => {};
 	}, []);
 
@@ -298,4 +298,4 @@ const AccountCreatedEmail = () => {
 	);
 };
 
-export default AccountCreatedEmail;
+export default PasswordChangedEmail;

@@ -100,24 +100,22 @@ const EmailsPage = (props) => {
 			</MetaTags>
 			<FlexContainer wrap h_between>
 				<Link to="/secure/glow/emails/announcement">
-					<button className="button primary" style={{ width: '160px' }}>
-						Announcement
-					</button>
+					<button className="button primary">Announcement</button>
 				</Link>
 				<Link to="/secure/glow/emails/review">
-					<button className="button primary" style={{ width: '160px' }}>
-						Review
-					</button>
+					<button className="button primary">Review</button>
 				</Link>
-				<Link to="/secure/glow/emails/verified">
-					<button className="button primary" style={{ width: '160px' }}>
-						Verified
-					</button>
+				<Link to="/secure/glow/emails/account_created">
+					<button className="button primary">Account Created</button>
+				</Link>
+				<Link to="/secure/glow/emails/reset_password">
+					<button className="button primary">Reset Password</button>
+				</Link>
+				<Link to="/secure/glow/emails/password_changed">
+					<button className="button primary">Password Changed</button>
 				</Link>
 				<Link to="/secure/glow/editemail">
-					<button className="button primary" style={{ width: '160px' }}>
-						Create Email
-					</button>
+					<button className="button primary">Create Email</button>
 				</Link>
 			</FlexContainer>
 
@@ -137,7 +135,7 @@ const EmailsPage = (props) => {
 									<th>ID</th>
 									<th>H1</th>
 									<th>Email Type</th>
-									<th className="min-w-5rem">Show Image</th>
+									<th>Show Image</th>
 									<th>H2</th>
 									{/* <th>P</th> */}
 									<th>Button</th>
@@ -156,10 +154,10 @@ const EmailsPage = (props) => {
 										}}
 									>
 										<td>{email._id}</td>
-										<td>{email.email_type}</td>
+										<td className="min-w-16rem">{email.email_type}</td>
 										<td>{email.h1}</td>
 										{/* <td >{email.image}</td> */}
-										<td className="min-w-5rem">
+										<td className="min-w-14rem">
 											{email.show_image ? (
 												<i className="fas fa-check-circle" />
 											) : (
