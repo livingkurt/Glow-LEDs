@@ -103,6 +103,7 @@ router.post('/', async (req, res) => {
 
 let transporter = nodemailer.createTransport({
 	service: 'gmail',
+	pool: true,
 	auth: {
 		user: process.env.EMAIL,
 		pass: process.env.PASSWORD
@@ -132,10 +133,11 @@ router.post('/announcement', async (req, res) => {
 	console.log({ template: req.body.template });
 	console.log({ subject: req.body.subject });
 	console.log({ test: req.body.test });
-	const users = await User.find({});
-	// const all_emails = users.map((user: any) => user.email);
-	const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
-	const test = [ 'lavacquek@icloud.com' ];
+	const users = await User.find({ email_subscription: true });
+	const all_emails = users.map((user: any) => user.email);
+	// const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
+	const test = [ 'lavacquek@icloud.com', 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
+	// const test = [ 'keith.booher@yahoo.com', 'keibooher@gmail.com' ];
 	console.log({ all_emails });
 	// const all_emails = [ 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
 	let emails = req.body.test ? test : all_emails;
@@ -153,10 +155,12 @@ router.post('/announcement', async (req, res) => {
 				res.send(err);
 			} else {
 				console.log('Announcement Email Sent to ' + email);
-				res.send('Announcement Email Sent to ' + email);
+				// res.send('Announcement Email Sent to ' + email);
 			}
 		});
 	});
+
+	res.send('Announcement Email Sent to ' + all_emails);
 });
 
 router.post('/invoice', async (req, res) => {
