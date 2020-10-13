@@ -12,6 +12,9 @@ const ResetPasswordEmail = () => {
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
 	const emailList = useSelector((state) => state.emailList);
 	const { loading: loading_emails, emails, error: error_emails } = emailList;
 
@@ -235,15 +238,14 @@ const ResetPasswordEmail = () => {
 									margin: '15px auto'
 								}}
 							/>
-							{/* <p style={{ textAlign: 'center' }}>Copyright © 2020 Throwlights, Inc., All rights reserved.</p> */}
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								Our mailing address is: <br />404 Kenniston Dr Apt D, Austin, TX 78752{' '}
 							</p>
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								Want to change how you receive these emails? <br /> You can{' '}
+								If you have any questions or concerns <br /> You can visit our {' '}
 								<a
 									rel="noreferrer"
-									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
+									href="https://www.glow-leds.com/pages/faq"
 									target="_blank"
 									rel="noopener noreferrer"
 									style={{
@@ -251,12 +253,12 @@ const ResetPasswordEmail = () => {
 										color: 'white'
 									}}
 								>
-									update your preferences
+									frequently asked questions
 								</a>{' '}
-								or{' '}
+								page or contact us{' '}
 								<a
 									rel="noreferrer"
-									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
+									href="https://www.glow-leds.com/pages/contact"
 									target="_blank"
 									rel="noopener noreferrer"
 									style={{
@@ -264,9 +266,9 @@ const ResetPasswordEmail = () => {
 										color: 'white'
 									}}
 								>
-									unsubscribe{' '}
+									here
 								</a>
-								from this list.
+								.
 							</p>
 						</div>
 					</div>
@@ -281,6 +283,11 @@ const ResetPasswordEmail = () => {
 		const data = await API.send_announcement_email(email_template, email.announcement.h1);
 		console.log('Success');
 	};
+	const save_html = async () => {
+		const data = await API.save_html(email_template, email, userInfo.token);
+		console.log(data);
+		console.log('Success');
+	};
 
 	console.log({ email_template });
 	return (
@@ -289,9 +296,12 @@ const ResetPasswordEmail = () => {
 				<Link to="/secure/glow/emails">
 					<button className="button primary">Back to Emails</button>
 				</Link>
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
-					Send Announcement Email
+				<button className="button primary mb-1rem" onClick={() => save_html()}>
+					Save HTML
 				</button>
+				{/* <button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
+					Send Announcement Email
+				</button> */}
 			</div>
 			{jsx}
 		</div>

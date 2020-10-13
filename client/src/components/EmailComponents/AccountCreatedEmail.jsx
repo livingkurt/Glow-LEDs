@@ -300,9 +300,9 @@ const AccountCreatedEmail = () => {
 				<button className="button primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
+				{/* <button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
-				</button>
+				</button> */}
 			</div>
 			{jsx}
 		</div>
