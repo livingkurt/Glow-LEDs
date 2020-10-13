@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents/index';
@@ -9,6 +9,8 @@ import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 
 const AnnouncementEmail = () => {
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ test, set_test ] = useState(true);
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
@@ -37,6 +39,10 @@ const AnnouncementEmail = () => {
 		},
 		[ emails ]
 	);
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const jsx = (
 		<body style={{ padding: 0, margin: 0 }}>
@@ -282,8 +288,9 @@ const AnnouncementEmail = () => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const send_announcement_email = async () => {
-		const data = await API.send_announcement_email(email_template, email.h1);
-		console.log('Success');
+		const data = await API.send_announcement_email(email_template, email.h1, test);
+		console.log('Announcement Email Sent Successfully');
+		console.log(data);
 	};
 
 	const save_html = async () => {
@@ -295,13 +302,29 @@ const AnnouncementEmail = () => {
 	console.log({ email_template });
 	return (
 		<div className="">
-			<div className="jc-b mb-1rem">
+			<div className="jc-b mb-1rem ai-c">
 				<Link to="/secure/glow/emails">
 					<button className="button primary">Back to Emails</button>
 				</Link>
 				<button className="button primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>
+				{loading_checkboxes ? (
+					<div>Loading...</div>
+				) : (
+					<div>
+						<label htmlFor="test">Test</label>
+						<input
+							type="checkbox"
+							name="test"
+							defaultChecked={test}
+							id="test"
+							onChange={(e) => {
+								set_test(e.target.checked);
+							}}
+						/>
+					</div>
+				)}
 				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
 				</button>

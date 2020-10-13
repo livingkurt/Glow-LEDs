@@ -131,12 +131,16 @@ console.log({
 router.post('/announcement', async (req, res) => {
 	console.log({ template: req.body.template });
 	console.log({ subject: req.body.subject });
+	console.log({ test: req.body.test });
 	const users = await User.find({});
-	const emails = users.map((user: any) => user.email);
-	console.log({ emails });
+	// const all_emails = users.map((user: any) => user.email);
+	const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
+	const test = [ 'lavacquek@icloud.com' ];
+	console.log({ all_emails });
+	// const all_emails = [ 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
+	let emails = req.body.test ? test : all_emails;
 
-	const test = [ 'lavacquek@icloud.com', 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
-	test.forEach((email) => {
+	emails.forEach((email: any) => {
 		let mailOptions = {
 			to: email,
 			from: process.env.DISPLAY_EMAIL,
@@ -148,8 +152,8 @@ router.post('/announcement', async (req, res) => {
 				console.log('Error Occurs', err);
 				res.send(err);
 			} else {
-				console.log('Announcement Email Sent');
-				res.send('Email Successfully Sent');
+				console.log('Announcement Email Sent to ' + email);
+				res.send('Announcement Email Sent to ' + email);
 			}
 		});
 	});
