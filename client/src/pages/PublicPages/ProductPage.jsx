@@ -45,13 +45,10 @@ const ProductPage = (props) => {
 	const diffuser_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	const diffuser_cap_colors = [ 'Translucent White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	const determine_colors = () => {
-		if (
-			product.category === 'diffuser_caps' ||
-			(product.category === 'mini_diffuser_caps' || !product.subcategory === 'diffuser_adapters')
-		) {
-			return diffuser_colors;
-		} else if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
+		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
 			return diffuser_cap_colors;
+		} else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
+			return diffuser_colors;
 		}
 	};
 
@@ -428,7 +425,7 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													Cap Color:
+													Color:
 												</label>
 												<div className="custom-select">
 													<select
@@ -594,7 +591,7 @@ const ProductPage = (props) => {
 							{!product.reviews.length && (
 								<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 							)}
-							<Reviews product={product} product_id={props.match.params.pathname} />
+							<Reviews product={product} pathname={props.match.params.pathname} />
 						</div>
 					</FlexContainer>
 				)}

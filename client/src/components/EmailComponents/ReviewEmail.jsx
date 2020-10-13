@@ -8,7 +8,7 @@ import MetaTags from 'react-meta-tags';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 
-const AnnouncementEmail = () => {
+const ReviewEmail = () => {
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
@@ -37,7 +37,7 @@ const AnnouncementEmail = () => {
 		<body style={{ padding: 0, margin: 0 }}>
 			<div>
 				{email &&
-				email.announcement && (
+				email.review && (
 					<div
 						style={{
 							fontFamily: 'helvetica',
@@ -76,17 +76,17 @@ const AnnouncementEmail = () => {
 									fontSize: '2em'
 								}}
 							>
-								{email.announcement && email.announcement.h1}
+								{email.review && email.review.h1}
 							</h4>
 						</div>
 						<div style={{ backgroundColor: '#5f5f5f', padding: '20px' }}>
 							<div style={{ display: 'flex', justifyContent: 'center' }}>
-								{email.announcement.show_image && (
+								{email.review.show_image && (
 									<table width="100%" style={{ maxWidth: '900px' }}>
 										<tr>
 											<td>
 												<img
-													src={email.announcement && email.announcement.image}
+													src={email.review && email.review.image}
 													alt="Glow LEDs"
 													style={{
 														textAlign: 'center',
@@ -98,15 +98,15 @@ const AnnouncementEmail = () => {
 										</tr>
 									</table>
 								)}
-								{email.announcement.show_video && (
+								{email.review.show_video && (
 									<FlexContainer h_center styles={{ position: 'relative' }}>
 										<div className="iframe-container">
 											<iframe
-												title={email.announcement && email.announcement.h1}
+												title={email.review && email.review.h1}
 												width="996"
 												height="560"
 												style={{ borderRadius: '20px' }}
-												src={`https://www.youtube.com/embed/${email.announcement
+												src={`https://www.youtube.com/embed/${email.review
 													.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
 												frameborder="0"
 												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -126,7 +126,7 @@ const AnnouncementEmail = () => {
 									marginBottom: '0'
 								}}
 							>
-								{email.announcement && email.announcement.h2}
+								{email.review && email.review.h2}
 							</h4>
 							<p
 								style={{
@@ -138,7 +138,7 @@ const AnnouncementEmail = () => {
 									color: 'white'
 								}}
 							>
-								{email.announcement && email.announcement.p}
+								{email.review && email.review.p}
 							</p>
 							<div
 								style={{
@@ -147,7 +147,7 @@ const AnnouncementEmail = () => {
 								}}
 							>
 								<a
-									src={email.announcement && email.announcement.link}
+									src={email.review && email.review.link}
 									alt="discount image"
 									style={{
 										backgroundColor: '#4c4f60',
@@ -165,7 +165,7 @@ const AnnouncementEmail = () => {
 											textAlign: 'center'
 										}}
 									>
-										{email.announcement && email.announcement.button}
+										{email.review && email.review.button}
 									</h4>
 								</a>
 							</div>
@@ -293,8 +293,8 @@ const AnnouncementEmail = () => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_announcement_email = async () => {
-		const data = await API.send_announcement_email(email_template, email.announcement.h1);
+	const send_review_email = async () => {
+		const data = await API.send_review_email(email_template, email.review.h1);
 		console.log('Success');
 	};
 
@@ -305,8 +305,8 @@ const AnnouncementEmail = () => {
 				<Link to="/secure/glow/emails">
 					<button className="button primary">Back to Emails</button>
 				</Link>
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
-					Send Announcement Email
+				<button className="button primary mb-1rem" onClick={() => send_review_email()}>
+					Send Review Email
 				</button>
 			</div>
 			{jsx}
@@ -314,4 +314,4 @@ const AnnouncementEmail = () => {
 	);
 };
 
-export default AnnouncementEmail;
+export default ReviewEmail;

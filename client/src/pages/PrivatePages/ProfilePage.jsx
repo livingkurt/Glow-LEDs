@@ -9,11 +9,14 @@ const ProfilePage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const [ email_subscription, set_email_subscription ] = useState(true);
 	const [ email, setEmail ] = useState('');
 	const dispatch = useDispatch();
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
+
+	console.log({ userInfo });
 
 	const userUpdate = useSelector((state) => state.userUpdate);
 
@@ -24,6 +27,7 @@ const ProfilePage = (props) => {
 				set_first_name(userInfo.first_name);
 				set_last_name(userInfo.last_name);
 				setPassword(userInfo.password);
+				set_email_subscription(userInfo.email_subscription);
 			}
 			dispatch(listMyOrders());
 			return () => {};
@@ -38,6 +42,7 @@ const ProfilePage = (props) => {
 				set_first_name(userUpdate.userInfo.first_name);
 				set_last_name(userUpdate.userInfo.last_name);
 				setPassword(userUpdate.userInfo.password);
+				set_email_subscription(userUpdate.email_subscription);
 			}
 			return () => {};
 		},
@@ -49,7 +54,7 @@ const ProfilePage = (props) => {
 	};
 
 	return (
-		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
+		<div className="column p-20px inner_content">
 			<MetaTags>
 				<title>Profile | Glow LEDs</title>
 				<meta property="og:title" content="Profile | Glow LEDs" />
@@ -57,53 +62,58 @@ const ProfilePage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/profile" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/profile" />
 			</MetaTags>
-			<FlexContainer>
+			<div>
 				<h1 style={{ textAlign: 'center', width: '100%' }}>User Profile</h1>
-			</FlexContainer>
-			<FlexContainer class="profile_container" row h_between wrap>
-				<FlexContainer column>
-					<FlexContainer column styles={container_styles}>
+			</div>
+			<div className="row jc-b wrap profile_container">
+				<div column>
+					<div className="column mb-20px">
 						<h3>First Name</h3>
 						<label>{first_name}</label>
-					</FlexContainer>
-					<FlexContainer column styles={container_styles}>
+					</div>
+					<div className="column mb-20px">
 						<h3>Last Name</h3>
 						<label>{last_name}</label>
-					</FlexContainer>
-					<FlexContainer column styles={container_styles}>
+					</div>
+					<div className="column mb-20px">
 						<h3>Email</h3>
 						<label>{email}</label>
-					</FlexContainer>
-					<FlexContainer column styles={container_styles}>
+					</div>
+					<div className="column mb-20px">
 						<h3>Password</h3>
 						<label>**********</label>
-					</FlexContainer>
-				</FlexContainer>
-				<FlexContainer>
-					<div style={{ height: 50 }}>
+					</div>
+					<div className="column mb-20px">
+						<h3>Promotional Emails</h3>
+						{console.log({ email_subscription })}
+						<label>{email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
+					</div>
+				</div>
+				<div className="row">
+					<div className="h-20px">
 						<Link to={'/secure/account/editprofile'}>
 							<button style={{ marginRight: '10px', maxWidth: '150px' }} className="button primary">
 								Edit Profile
 							</button>
 						</Link>
 					</div>
-					<div style={{ height: 50 }}>
+					<div className="h-20px">
 						<Link to={'/account/changepassword'}>
 							<button style={{ marginRight: '10px', maxWidth: '210px' }} className="button primary">
 								Change Password
 							</button>
 						</Link>
 					</div>
-					<div style={{ height: 50 }}>
+					<div className="h-20px">
 						<Link to={'/secure/account/orders'}>
 							<button style={{ maxWidth: '150px' }} className="button primary">
 								View Orders
 							</button>
 						</Link>
 					</div>
-				</FlexContainer>
-			</FlexContainer>
-		</FlexContainer>
+				</div>
+			</div>
+		</div>
 	);
 };
 

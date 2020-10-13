@@ -29,7 +29,7 @@ const Four04Page = (props) => {
 				<meta name="twitter:title" content="Products | Glow LEDs" />
 				{/* <meta
 					name="twitter:description"
-					content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
+        content="Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world."
 				/>
 				<meta
 					name="twitter:image"
@@ -38,12 +38,6 @@ const Four04Page = (props) => {
 			</MetaTags>
 			<h1 styles={{ margin: '20px auto' }}>404 Page Not Found</h1>
 			<label>Sorry About that</label>
-			<a href="https://imgbox.com/6GYpuruu" target="_blank">
-				<img src="https://thumbs2.imgbox.com/d2/70/6GYpuruu_t.jpg" alt="image host" />
-			</a>{' '}
-			<a href="https://imgbox.com/qgQhjF0I" target="_blank">
-				<img src="https://thumbs2.imgbox.com/42/5d/qgQhjF0I_t.jpg" alt="image host" />
-			</a>
 		</FlexContainer>
 	);
 };

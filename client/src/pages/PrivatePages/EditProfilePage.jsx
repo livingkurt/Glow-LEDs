@@ -13,10 +13,12 @@ const EditProfilePage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
+	const [ email_subscription, set_email_subscription ] = useState('');
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const [ first_name_validations, setFirstnameValidations ] = useState('');
 	const [ last_name_validations, setLastNameValidations ] = useState('');
-	const [ email_validations, setEmailValidations ] = useState('');
+	const [ email_validations, setEmailValidations ] = useState(true);
 	const dispatch = useDispatch();
 
 	const userLogin = useSelector((state) => state.userLogin);
@@ -33,7 +35,7 @@ const EditProfilePage = (props) => {
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(update({ userId: userInfo._id, email, first_name, last_name }));
+			dispatch(update({ userId: userInfo._id, email, first_name, last_name, email_subscription }));
 			history.push('/secure/account/profile');
 		}
 	};
@@ -46,6 +48,7 @@ const EditProfilePage = (props) => {
 				setEmail(userInfo.email);
 				set_first_name(userInfo.first_name);
 				set_last_name(userInfo.last_name);
+				set_email_subscription(userInfo.email_subscription);
 				// setPassword(userInfo.password);
 			}
 			return () => {};
@@ -53,12 +56,17 @@ const EditProfilePage = (props) => {
 		[ userInfo ]
 	);
 
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
+
 	useEffect(
 		() => {
 			if (userUpdate.userInfo) {
 				setEmail(userUpdate.userInfo.email);
 				set_first_name(userUpdate.userInfo.first_name);
 				set_last_name(userUpdate.userInfo.last_name);
+				set_email_subscription(userUpdate.userInfo.email_subscription);
 				// setPassword(userUpdate.userInfo.password);
 			}
 
@@ -135,6 +143,22 @@ const EditProfilePage = (props) => {
 							<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
 								{email_validations}
 							</label>
+							{loading_checkboxes ? (
+								<div>Loading...</div>
+							) : (
+								<li>
+									<label htmlFor="email_subscription">Promotional Emails</label>
+									<input
+										type="checkbox"
+										name="email_subscription"
+										defaultChecked={email_subscription}
+										id="email_subscription"
+										onChange={(e) => {
+											set_email_subscription(e.target.checked);
+										}}
+									/>
+								</li>
+							)}
 
 							<li>
 								<button type="submit" className="button primary">

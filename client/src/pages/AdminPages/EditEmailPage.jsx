@@ -244,7 +244,7 @@ const EditEmailPage = (props) => {
 									>
 										{loading ? 'Email' : email.name}
 									</h1>
-									<div className="ai-c h-25px mb-15px jc-c">
+									<div className="ai-c h-25px mb-15px jc-c row">
 										<div className="custom-select">
 											<select className="qty_select_dropdown" onChange={(e) => use_template(e)}>
 												<option key={1} defaultValue="">
@@ -258,6 +258,22 @@ const EditEmailPage = (props) => {
 											</select>
 											<span className="custom-arrow" />
 										</div>
+										{loading_checkboxes ? (
+											<div>Loading...</div>
+										) : (
+											<div className="row mt-10px ml-10px">
+												<div htmlFor="active">Active</div>
+												<input
+													type="checkbox"
+													name="active"
+													defaultChecked={active}
+													id="active"
+													onChange={(e) => {
+														set_active(e.target.checked);
+													}}
+												/>
+											</div>
+										)}
 									</div>
 
 									<div className="row wrap jc-b">
@@ -718,6 +734,7 @@ const EditEmailPage = (props) => {
 												/>
 											</li> */}
 									</div>
+
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}

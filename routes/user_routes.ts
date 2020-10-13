@@ -150,15 +150,18 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		user.isAdmin = req.body.admin || user.isAdmin;
 		user.isVerified = req.body.verified || user.isVerified;
 		user.sponsor = req.body.sponsor || user.sponsor;
+		user.email_subscription = req.body.email_subscription ? req.body.email_subscription : false;
 		user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
 		user.deleted = req.body.deleted || false;
 		const updatedUser = await user.save();
+		console.log({ updatedUser });
 		res.send({
 			_id: updatedUser.id,
 			first_name: updatedUser.first_name,
 			last_name: updatedUser.last_name,
 			email: updatedUser.email,
 			sponsor: updatedUser.sponsor,
+			email_subscription: updatedUser.email_subscription,
 			is_sponsored: updatedUser.is_sponsored,
 			isVerified: updatedUser.isVerified,
 			isAdmin: updatedUser.isAdmin,
@@ -168,6 +171,32 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		res.status(404).send({ msg: 'User Not Found' });
 	}
 });
+
+// router.put('/update/:id', isAuth, async (req, res) => {
+// 	console.log({ user_routes_put: req.body });
+// 	const userId = req.params.id;
+// 	const user: any = await User.findById(userId);
+// 	if (user) {
+// 		const updatedUser = await User.updateOne({ _id: userId }, req.body);
+// 		if (updatedUser) {
+// 			// return res.send({ ...updatedUser, token: getToken(updatedUser) });
+// 			return res.send({
+// 				_id: updatedUser.id,
+// 				first_name: updatedUser.first_name,
+// 				last_name: updatedUser.last_name,
+// 				email: updatedUser.email,
+// 				sponsor: updatedUser.sponsor,
+// 				email_subscription: updatedUser.email_subscription,
+// 				is_sponsored: updatedUser.is_sponsored,
+// 				isVerified: updatedUser.isVerified,
+// 				isAdmin: updatedUser.isAdmin,
+// 				token: getToken(updatedUser)
+// 			});
+// 			// res.status(200).send({ message: 'User Updated', data: updatedUser });
+// 		}
+// 	}
+// 	return res.status(500).send({ message: ' Error in Updating User.' });
+// });
 
 router.put('/verify/:id', async (req, res) => {
 	try {
@@ -180,6 +209,8 @@ router.put('/verify/:id', async (req, res) => {
 			user.email = req.body.email || user.email;
 			user.password = req.body.password || user.password;
 			user.isAdmin = req.body.isAdmin || user.isAdmin;
+			user.email_subscription = req.body.email_subscription || user.email_subscription;
+			user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
 			user.isVerified = true;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
@@ -189,6 +220,7 @@ router.put('/verify/:id', async (req, res) => {
 				last_name: updatedUser.last_name,
 				email: updatedUser.email,
 				sponsor: updatedUser.sponsor,
+				email_subscription: updatedUser.email_subscription,
 				is_sponsored: updatedUser.is_sponsored
 				// isVerified: updatedUser.isVerified,
 				// token: getToken(updatedUser)
@@ -226,6 +258,7 @@ router.post('/login', async (req, res) => {
 			isAdmin: login_user.isAdmin,
 			sponsor: login_user.sponsor,
 			is_sponsored: login_user.is_sponsored,
+			email_subscription: login_user.email_subscription,
 			isVerified: login_user.isVerified,
 			token: getToken(login_user)
 		});
@@ -247,6 +280,7 @@ router.post('/register', async (req, res) => {
 			password: req.body.password,
 			sponsor: req.body.sponsor,
 			is_sponsored: req.body.is_sponsored,
+			email_subscription: req.body.email_subscription,
 			isAdmin: false,
 			isVerified: true
 		});
@@ -265,6 +299,8 @@ router.post('/register', async (req, res) => {
 						last_name: newUser.last_name,
 						email: newUser.email,
 						isAdmin: newUser.isAdmin,
+						is_sponsored: newUser.is_sponsored,
+						email_subscription: newUser.email_subscription,
 						isVerified: newUser.isVerified,
 						token: getToken(newUser)
 					});
@@ -296,6 +332,7 @@ router.post('/getuser/:id', async (req, res) => {
 				isAdmin: user.isAdmin,
 				sponsor: user.sponsor,
 				is_sponsored: user.is_sponsored,
+				email_subscription: user.email_subscription,
 				token: getToken(user)
 			});
 		} else {
@@ -349,6 +386,7 @@ router.get('/createadmin', async (req, res) => {
 						email: admin.email,
 						sponsor: admin.sponsor,
 						is_sponsored: admin.is_sponsored,
+						email_subscription: admin.email_subscription,
 						isAdmin: admin.isAdmin,
 						isVerified: admin.isVerified,
 						token: getToken(admin)

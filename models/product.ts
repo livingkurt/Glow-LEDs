@@ -4,9 +4,12 @@ const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema(
 	{
-		name: { type: String, required: true },
+		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		first_name: { type: String },
+		last_name: { type: String },
 		rating: { type: Number, default: 0 },
-		comment: { type: String, required: true }
+		comment: { type: String, required: true },
+		deleted: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true

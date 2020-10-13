@@ -137,36 +137,40 @@ export const imagesProduct = (folder_dir: string) => async (
 };
 
 export const saveProductReview = (
-	product_id: string,
+	product_pathname: string,
 	review: { name: string; rating: number; comment: string }
 ) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: { token: any } } }
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		const { userLogin: { userInfo: { token } } } = getState();
+		const { userLogin: { userInfo } } = getState();
 		dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST, payload: review });
-		const { data } = await axios.post(`/api/products/${product_id}/reviews`, review, {
-			headers: {
-				Authorization: 'Bearer ' + token
+		const { data } = await axios.post(
+			`/api/products/${product_pathname}/reviews`,
+			{ review, userInfo },
+			{
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
 			}
-		});
+		);
 		dispatch({ type: PRODUCT_REVIEW_SAVE_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error.message });
 	}
 };
-export const deleteProductReview = (product_id: string, review_id: string) => async (
+export const deleteProductReview = (product_pathname: string, review_id: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: { token: any } } }
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ product_id, review_id });
+	console.log({ product_pathname, review_id });
 	try {
-		const { userLogin: { userInfo: { token } } } = getState();
-		dispatch({ type: PRODUCT_REVIEW_DELETE_REQUEST, payload: { product_id, review_id } });
-		const { data } = await axios.delete(`/api/products/${product_id}/reviews/${review_id}`, {
+		const { userLogin: { userInfo } } = getState();
+		dispatch({ type: PRODUCT_REVIEW_DELETE_REQUEST, payload: { product_pathname, review_id } });
+		const { data } = await axios.delete(`/api/products/${product_pathname}/reviews/${review_id}`, {
 			headers: {
-				Authorization: 'Bearer ' + token
+				Authorization: 'Bearer ' + userInfo.token
 			}
 		});
 		dispatch({ type: PRODUCT_REVIEW_DELETE_SUCCESS, payload: data });

@@ -104,9 +104,9 @@ const EmailsPage = (props) => {
 						Announcement
 					</button>
 				</Link>
-				<Link to="/secure/glow/emails/order">
+				<Link to="/secure/glow/emails/review">
 					<button className="button primary" style={{ width: '160px' }}>
-						Order
+						Review
 					</button>
 				</Link>
 				<Link to="/secure/glow/emails/verified">

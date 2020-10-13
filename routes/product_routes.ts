@@ -158,25 +158,64 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 });
 
 router.post('/:pathname/reviews', isAuth, async (req, res) => {
-	const product = await Product.findById(req.params.pathname);
-	if (product) {
-		const review = {
-			first_name: req.body.first_name,
-			last_name: req.body.last_name,
-			rating: Number(req.body.rating),
-			comment: req.body.comment
-		};
-		product.reviews.push(review);
-		product.numReviews = product.reviews.length;
-		product.rating =
-			product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
-		const updatedProduct = await product.save();
-		res.status(201).send({
-			data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
-			message: 'Review saved successfully.'
-		});
+	try {
+		console.log(req.body);
+		console.log({ pathname: req.params.pathname });
+		const product = await Product.findOne({ pathname: req.params.pathname });
+		if (product) {
+			// const review = {
+			// 	user: req.body.userInfo._id,
+			// 	first_name: req.body.userInfo.first_name,
+			// 	last_name: req.body.userInfo.last_name,
+			// 	rating: Number(req.body.review.rating),
+			// 	comment: req.body.review.comment
+			// };
+			product.reviews = [
+				...product.reviews,
+				{
+					user: req.body.userInfo._id,
+					first_name: req.body.userInfo.first_name,
+					last_name: req.body.userInfo.last_name,
+					rating: Number(req.body.review.rating),
+					comment: req.body.review.comment
+				}
+			];
+			// console.log({ product });
+			// console.log({ review });
+			console.log({ reviews: product.reviews });
+			// product.reviews = product.reviews ? product.reviews : [];
+			// product.reviews.push(review);
+			product.numReviews = product.reviews.length;
+			product.rating =
+				product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
+			console.log({ product });
+			const updatedProduct = await product.save();
+			// const updatedProduct = await Product.updateOne({ pathname: req.params.pathname }, req.body);
+			res.status(201).send({
+				data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+				message: 'Review saved successfully.'
+			});
+		} else {
+			res.status(404).send({ message: 'Product Not Found' });
+		}
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+router.delete('/:pathname/reviews', isAuth, isAdmin, async (req: any, res: any) => {
+	console.log(req.params.id);
+	const product = await Product.findOne({ pathname: req.params.pathname });
+	const updated_product = { ...product, deleted: true };
+	const message: any = { message: 'Product Deleted' };
+
+	// const deleted_product = await updated_product.save();
+	const deleted_product = await Product.updateOne({ _id: req.params.id }, { deleted: true });
+	if (deleted_product) {
+		// await deletedProduct.remove();
+		res.send(message);
 	} else {
-		res.status(404).send({ message: 'Product Not Found' });
+		res.send('Error in Deletion.');
 	}
 });
 

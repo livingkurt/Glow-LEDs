@@ -19,23 +19,23 @@ const Review = (props) => {
 	const productReviewSave = useSelector((state) => state.productReviewSave);
 	const { success: productSaveSuccess } = productReviewSave;
 
+	const productReviewDelete = useSelector((state) => state.productReviewDelete);
+	const { success: productDeleteSuccess } = productReviewDelete;
+
 	const [ review_modal, setReviewModal ] = useState('none');
 	const [ rating, setRating ] = useState(5);
 	const [ comment, setComment ] = useState('');
 
-	// useEffect(
-	// 	() => {
-	// 		// setRating(0);
-	// 		// setComment('');
-	// 		// dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-	// 		if (productSaveSuccess) {
-	// 			dispatch(detailsProduct(props.product_id));
-	// 		}
+	// useEffect(() => {
+	// 	// setRating(0);
+	// 	// setComment('');
+	// 	// dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+	// 	if (productReviewSave) {
+	// 		dispatch(detailsProduct(props.pathname));
+	// 	}
 
-	// 		// setReviewModal('none');
-	// 	},
-	// 	[ productSaveSuccess ]
-	// );
+	// 	// setReviewModal('none');
+	// }, []);
 
 	const show_write_review = () => {
 		setReviewModal('block');
@@ -48,7 +48,7 @@ const Review = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(
-			saveProductReview(props.product_id, {
+			saveProductReview(props.pathname, {
 				first_name: userInfo.first_name,
 				last_name: userInfo.last_name,
 				rating: rating,
@@ -58,8 +58,12 @@ const Review = (props) => {
 		setRating(0);
 		setComment('');
 		dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-		dispatch(detailsProduct(props.product_id));
+		dispatch(detailsProduct(props.pathname));
 		setReviewModal('none');
+	};
+
+	const remove_review = (review_id) => {
+		dispatch(saveProductReview(props.pathname, review_id));
 	};
 
 	return (
@@ -75,13 +79,22 @@ const Review = (props) => {
 						boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
 					}}
 				>
-					<div>{review.first_name + ' ' + review.last_name}</div>
-					{/* <div>{review.last_name}</div> */}
-					<div>
-						<Rating value={review.rating} />
+					<div className="jc-b">
+						<div>
+							<div>{review.first_name + ' ' + review.last_name}</div>
+							{/* <div>{review.last_name}</div> */}
+							<div>
+								<Rating value={review.rating} />
+							</div>
+							<div>{format_date(review.createdAt.substring(0, 10))}</div>
+							<div>{review.comment}</div>
+						</div>
+						<div className="ta-r">
+							<button className="button icon" onClick={() => remove_review(review._id)}>
+								<i className="fas fa-trash-alt" />
+							</button>
+						</div>
 					</div>
-					<div>{format_date(review.createdAt.substring(0, 10))}</div>
-					<div>{review.comment}</div>
 				</li>
 			))}
 
@@ -159,7 +172,11 @@ const Review = (props) => {
 					</form>
 				) : (
 					<div>
-						Please <Link to="/account/login">Login</Link> to Write a Review
+						Please{' '}
+						<Link to={`/account/login?redirect=/collections/all/products/${props.pathname}`}>
+							<button className="button primary">Login</button>
+						</Link>{' '}
+						to Write a Review
 					</div>
 				)}
 			</li>

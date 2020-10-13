@@ -8,7 +8,7 @@ import MetaTags from 'react-meta-tags';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 
-const AnnouncementEmail = () => {
+const AccountCreatedEmail = () => {
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
@@ -314,4 +314,4 @@ const AnnouncementEmail = () => {
 	);
 };
 
-export default AnnouncementEmail;
+export default AccountCreatedEmail;

@@ -54,6 +54,7 @@ export const update = (userdata: any) => async (
 			email: userdata.email,
 			password: userdata.password,
 			is_sponsored: userdata.is_sponsored,
+			email_subscription: userdata.email_subscription,
 			sponsor: userdata.sponsor,
 			verified: userdata.verified,
 			admin: userdata.admin
@@ -68,6 +69,7 @@ export const update = (userdata: any) => async (
 				email: userdata.email,
 				password: userdata.password,
 				is_sponsored: userdata.is_sponsored,
+				email_subscription: userdata.email_subscription,
 				sponsor: userdata.sponsor,
 				verified: userdata.verified,
 				admin: userdata.admin
@@ -78,6 +80,8 @@ export const update = (userdata: any) => async (
 				}
 			}
 		);
+
+		console.log({ data });
 		dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
@@ -128,6 +132,7 @@ export const updateUser = (userdata: any) => async (
 			email: userdata.email,
 			password: userdata.password,
 			is_sponsored: userdata.is_sponsored,
+			email_subscription: userdata.email_subscription,
 			sponsor: userdata.sponsor,
 			verified: userdata.verified,
 			admin: userdata.admin
@@ -142,6 +147,7 @@ export const updateUser = (userdata: any) => async (
 				email: userdata.email,
 				password: userdata.password,
 				is_sponsored: userdata.is_sponsored,
+				email_subscription: userdata.email_subscription,
 				sponsor: userdata.sponsor,
 				verified: userdata.verified,
 				admin: userdata.admin
@@ -153,7 +159,7 @@ export const updateUser = (userdata: any) => async (
 			}
 		);
 		dispatch({ type: USER_UPDATE_USER_SUCCESS, payload: data });
-		// Cookie.set('userInfo', JSON.stringify(data));
+		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
 		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.message });
 	}
