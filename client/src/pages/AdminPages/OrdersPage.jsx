@@ -234,18 +234,12 @@ const OrdersPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr className="tr">
-									{/* <th>
-										<div className="jc-b">
-											<div>ID</div> <div>DATE</div> <div>TOTAL</div> <div>USER</div>
-											<div>ORDER ITEMS</div> <div>ACTIONS</div>
-										</div>
-									</th> */}
-									<th className="w-300px">ID</th>
-									<th className="w-171px">DATE</th>
-									<th className="w-171px">TOTAL</th>
-									<th className="w-172px">USER</th>
-									<th className="w-400px">ORDER ITEMS</th>
-									<th className="w-150px">ACTIONS</th>
+									<th className="w-250px">ID</th>
+									<th className="w-125px">DATE</th>
+									<th className="w-120px">TOTAL</th>
+									<th className="w-150px">USER</th>
+									<th className="w-580px">ORDER ITEMS</th>
+									<th className="w-175px">ACTIONS</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -255,29 +249,31 @@ const OrdersPage = (props) => {
 										style={{ backgroundColor: determine_color(order) }}
 										className="tr"
 									>
-										<td className="w-300px">{order._id}</td>
-										{/* <hr width="1" size="10" /> */}
-										<td className="w-171px">{format_date(order.createdAt)}</td>
-										<td className="w-171px">
+										<td className="w-250px">{order._id}</td>
+										<td className="w-125px">{format_date(order.createdAt)}</td>
+										<td className="w-120px">
 											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
 										</td>
-										<td className="w-172px">{!order.user ? 'N/A' : order.user.first_name}</td>
-										<td className="w-400px">
+										<td className="w-150px">{!order.user ? 'N/A' : order.user.first_name}</td>
+										<td className="w-580px">
 											{order.orderItems.map((item) => {
 												console.log({ item });
 												return (
 													<div>
 														<div>
-															{item.qty}x {item.diffuser_cap_color} {item.name}
+															{item.qty}x -{' '}
+															{item.diffuser_cap_color &&
+																` ${item.diffuser_cap_color} - `}{' '}
+															{item.name}
 														</div>
 														{item.secondary_product &&
-															'(' + item.secondary_product.name + ')'}
+															'> 1x - ' + item.secondary_product.name + ''}
 													</div>
 												);
 											})}
 										</td>
 
-										<td className="w-150px">
+										<td className="w-175px">
 											<FlexContainer h_between>
 												<button className="button icon" onClick={() => show_hide(order._id)}>
 													<i

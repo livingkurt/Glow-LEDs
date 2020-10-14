@@ -465,7 +465,7 @@ router.post('/notverified', async (req, res) => {
 });
 
 router.post('/orderpaid', async (req, res) => {
-	console.log({ paid: req.body });
+	console.log({ orderpaid: req.body });
 	let user = {};
 	const paid = 'Paid';
 	const shipped = 'Not Shipped';

@@ -90,15 +90,104 @@ router.get('/products', async (req, res) => {
 });
 
 // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
-router.put('/orders_remove_color', async (req, res) => {
+router.put('/orders_remove_color_string_lights', async (req, res) => {
 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 	const order = await Order.updateMany(
-		{ 'orderItems.name': 'Serotonin Molecule Infinity Mirror' },
+		{ 'orderItems.category': 'glow_strings' },
 		{
 			// $rename: { shipping_price: 'volume' }
 			$set: {
-				'orderItems.$.diffuser_cap_color': '',
-				'orderItems.$.category': 'infinity_mirrors'
+				'orderItems.$.diffuser_cap_color': ''
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_remove_color', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.category': 'frosted_diffusers' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Translucent White'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_remove_color_dome', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Frosted Dome Diffusers' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Translucent White'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_remove_color_adapters', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Diffuser Adapters (No Caps)' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Translucent White'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_remove_color_dome_15', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Original 15mm Frosted Dome Diffusers' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Translucent White',
+				'orderItems.$.name': 'Frosted Dome Diffusers'
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
+
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/orders_remove_color_large_domes', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.updateMany(
+		{ 'orderItems.name': 'Large Frosted Dome Diffusers' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				'orderItems.$.diffuser_cap_color': 'Translucent White',
+				'orderItems.$.name': 'Frosted Mega Dome Diffusers'
 			}
 			// $unset: { shipping_price: 1 }
 		},
