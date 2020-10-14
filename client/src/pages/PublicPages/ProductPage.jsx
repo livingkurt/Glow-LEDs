@@ -52,14 +52,6 @@ const ProductPage = (props) => {
 		}
 	};
 
-	const determine_default_color = () => {
-		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
-			return 'Translucent White';
-		} else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
-			return 'Black';
-		}
-	};
-
 	useEffect(() => {
 		dispatch(detailsProduct(props.match.params.pathname));
 		const video = document.getElementsByClassName('product_video');
@@ -95,7 +87,9 @@ const ProductPage = (props) => {
 				set_diffuser_cap_color(
 					product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
 						? 'Translucent White'
-						: 'Black'
+						: product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps'
+							? 'Black'
+							: ''
 				);
 			}
 		},
