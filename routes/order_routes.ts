@@ -43,6 +43,38 @@ router.get('/occurrences', async (req: any, res: any) => {
 	res.send(final_result);
 });
 
+router.get('/get_order_products', async (req: any, res: any) => {
+	const orders = await Order.find({
+		deleted: false,
+		timestamp: {
+			$gte: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
+		}
+	}).populate('orderItems.secondary_product');
+	const products: any = [];
+	orders.forEach((order: any) => {
+		order.orderItems.map((item: any) => {
+			products.push(item.name);
+			if (item.secondary_product) {
+				products.push(item.secondary_product.name);
+			}
+		});
+	});
+	let result: any = {};
+	for (var i = 0; i < products.length; ++i) {
+		if (!result[products[i]]) {
+			result[products[i]] = 0;
+		}
+		++result[products[i]];
+	}
+	let final_result = [];
+	for (let i in result) {
+		const entry = { name: i, occurrence: result[i] };
+		final_result.push(entry);
+	}
+	final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
+	res.send(final_result);
+});
+
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
 	const category = req.query.category ? { category: req.query.category } : {};
 	let user: any;

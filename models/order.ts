@@ -37,6 +37,7 @@ const orderItemSchema = new mongoose.Schema(
 		length: { type: Number },
 		width: { type: Number },
 		height: { type: Number },
+		reviewed: { type: Boolean, default: false },
 		product: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product',
