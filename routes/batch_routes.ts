@@ -89,28 +89,28 @@ router.get('/products', async (req, res) => {
 	res.send(array);
 });
 
-// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
-router.put('/add_reviewed_false', async (req, res) => {
-	const orders = await Order.find({ createdAt: { $lte: new Date(), $gte: new Date(Date() + 14) } });
-	// const order = await Order.updateMany(
-	// 	{
-	// 		createdAt: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
-	// 	},
-	// 	{
-	// 		// $rename: { shipping_price: 'volume' }
-	// 		$set: {
-	// 			'orderItems.$.reviewed': false
-	// 		}
-	// 		// $unset: { shipping_price: 1 }
-	// 	},
-	// 	{ upsert: true }
-	// );
-	// console.log({ order });
+// // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+// router.put('/add_reviewed_false', async (req, res) => {
+// 	// const orders = await Order.find({ createdAt: { $lte: new Date(), $gte: new Date(Date() + 14) } });
+// 	const order = await Order.updateMany(
+// 		{
+// 			createdAt: new Date(new Date() - 7 * 60 * 60 * 24 * 1000)
+// 		},
+// 		{
+// 			// $rename: { shipping_price: 'volume' }
+// 			$set: {
+// 				'orderItems.$.reviewed': false
+// 			}
+// 			// $unset: { shipping_price: 1 }
+// 		},
+// 		{ upsert: true }
+// 	);
+// 	console.log({ order });
 
-	// res.send(order);
-	console.log({ orders });
-	res.send(orders);
-});
+// 	res.send(order);
+// 	// console.log({ orders });
+// 	// res.send(orders);
+// });
 
 // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
 router.put('/orders_remove_color_string_lights', async (req, res) => {
