@@ -26,7 +26,7 @@ const ProductPage = (props) => {
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
-	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
+	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
 	// console.log({ diffuser_cap });
 
@@ -49,6 +49,14 @@ const ProductPage = (props) => {
 			return diffuser_cap_colors;
 		} else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
 			return diffuser_colors;
+		}
+	};
+
+	const determine_default_color = () => {
+		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
+			return 'Translucent White';
+		} else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
+			return 'Black';
 		}
 	};
 
@@ -84,6 +92,11 @@ const ProductPage = (props) => {
 		() => {
 			if (product) {
 				set_image(product.images && product.images[0]);
+				set_diffuser_cap_color(
+					product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
+						? 'Translucent White'
+						: 'Black'
+				);
 			}
 		},
 		[ product ]
@@ -99,16 +112,30 @@ const ProductPage = (props) => {
 	);
 
 	const handleAddToCart = () => {
-		console.log({ pathname: props.match.params.pathname });
-		console.log({ qty });
+		// console.log({ pathname: props.match.params.pathname });
+		// console.log({ qty });
 		console.log({ diffuser_cap_color });
-		console.log({ diffuser_cap });
-		if (diffuser_cap) {
-			Cookie.set('diffuser_cap', diffuser_cap);
-		}
-		if (diffuser_cap_color) {
-			Cookie.set('diffuser_cap_color', diffuser_cap_color);
-		}
+		// console.log({ diffuser_cap });
+
+		// if (diffuser_cap) {
+		// 	Cookie.set('diffuser_cap', diffuser_cap);
+		// }
+		// if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
+		// 	if (diffuser_cap_color) {
+		// 		Cookie.set('diffuser_cap_color', diffuser_cap_color);
+		// 	} else {
+		// 		Cookie.set('diffuser_cap_color', 'Translucent White');
+		// 		set_diffuser_cap_color('Translucent White');
+		// 	}
+		// } else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
+		// 	if (diffuser_cap_color) {
+		// 		Cookie.set('diffuser_cap_color', diffuser_cap_color);
+		// 	} else {
+		// 		Cookie.set('diffuser_cap_color', 'Black');
+		// 		set_diffuser_cap_color('Black');
+		// 	}
+		// }
+
 		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap));
 		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
 		props.history.push('/checkout/cart');
