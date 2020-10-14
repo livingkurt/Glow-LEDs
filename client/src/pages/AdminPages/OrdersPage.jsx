@@ -234,12 +234,12 @@ const OrdersPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr className="tr">
-									<th className="w-250px">ID</th>
-									<th className="w-125px">DATE</th>
-									<th className="w-120px">TOTAL</th>
-									<th className="w-150px">USER</th>
-									<th className="w-580px">ORDER ITEMS</th>
-									<th className="w-175px">ACTIONS</th>
+									<th className="min-w-250px">ID</th>
+									<th className="min-w-125px">DATE</th>
+									<th className="min-w-120px">TOTAL</th>
+									<th className="min-w-150px">USER</th>
+									<th className="min-w-580px">ORDER ITEMS</th>
+									<th className="min-w-175px">ACTIONS</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -249,13 +249,13 @@ const OrdersPage = (props) => {
 										style={{ backgroundColor: determine_color(order) }}
 										className="tr"
 									>
-										<td className="w-250px">{order._id}</td>
-										<td className="w-125px">{format_date(order.createdAt)}</td>
-										<td className="w-120px">
+										<td className="min-w-250px">{order._id}</td>
+										<td className="min-w-125px">{format_date(order.createdAt)}</td>
+										<td className="min-w-120px">
 											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
 										</td>
-										<td className="w-150px">{!order.user ? 'N/A' : order.user.first_name}</td>
-										<td className="w-580px">
+										<td className="min-w-150px">{!order.user ? 'N/A' : order.user.first_name}</td>
+										<td className="min-w-580px">
 											{order.orderItems.map((item) => {
 												console.log({ item });
 												return (
@@ -273,7 +273,7 @@ const OrdersPage = (props) => {
 											})}
 										</td>
 
-										<td className="w-175px">
+										<td className="min-w-175px">
 											<FlexContainer h_between>
 												<button className="button icon" onClick={() => show_hide(order._id)}>
 													<i
