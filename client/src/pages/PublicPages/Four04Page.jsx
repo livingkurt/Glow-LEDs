@@ -38,6 +38,21 @@ const Four04Page = (props) => {
 			</MetaTags>
 			<h1 styles={{ margin: '20px auto' }}>404 Page Not Found</h1>
 			<label>Sorry About that</label>
+			<a href="https://imgbox.com/dwckqgq9" target="_blank">
+				<img src="https://thumbs2.imgbox.com/2e/7b/dwckqgq9_t.jpg" alt="image host" />
+			</a>{' '}
+			<a href="https://imgbox.com/hadYellL" target="_blank">
+				<img src="https://thumbs2.imgbox.com/9b/09/hadYellL_t.jpg" alt="image host" />
+			</a>{' '}
+			<a href="https://imgbox.com/GBGPpTs0" target="_blank">
+				<img src="https://thumbs2.imgbox.com/68/f6/GBGPpTs0_t.jpg" alt="image host" />
+			</a>{' '}
+			<a href="https://imgbox.com/TfsBnDpZ" target="_blank">
+				<img src="https://thumbs2.imgbox.com/74/a7/TfsBnDpZ_t.jpg" alt="image host" />
+			</a>{' '}
+			<a href="https://imgbox.com/FCpWSq8U" target="_blank">
+				<img src="https://thumbs2.imgbox.com/a2/a6/FCpWSq8U_t.jpg" alt="image host" />
+			</a>
 		</FlexContainer>
 	);
 };

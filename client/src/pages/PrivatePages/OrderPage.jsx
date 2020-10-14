@@ -2,20 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-	detailsOrder,
-	// shipOrder,
-	// deliverOrder,
-	refundOrder,
-	// manufactureOrder,
-	// packageOrder,
-	update_order
-} from '../../actions/orderActions';
+import { detailsOrder, payOrder, refundOrder, update_order } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
+import StripeCheckout from 'react-stripe-checkout';
 import MetaTags from 'react-meta-tags';
 import API from '../../utils/API';
+import { Loading } from '../../components/UtilityComponents';
 
 require('dotenv').config();
 
@@ -45,7 +39,7 @@ const OrderPage = (props) => {
 	const [ packaged_state, set_packaged_state ] = useState({});
 	const [ manufactured_state, set_manufactured_state ] = useState({});
 	const [ delivery_state, set_delivery_state ] = useState({});
-	const [ payment_loading, set_payment_loading ] = useState(true);
+	const [ payment_loading, set_payment_loading ] = useState(false);
 
 	const [ order_state, set_order_state ] = useState({});
 
@@ -127,9 +121,30 @@ const OrderPage = (props) => {
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
 			}
+			set_payment_loading(false);
 		},
 		[ successPay ]
 	);
+
+	// useEffect(
+	// 	() => {
+	// 		if (successPay && order) {
+	// 			props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+	// 			set_payment_loading(false);
+	// 		} else if (errorPay) {
+	// 		}
+	// 	},
+	// 	[ successPay ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		if (successPay && order) {
+	// 			props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+	// 			set_payment_loading(false);
+	// 		}
+	// 	},
+	// 	[ errorPay ]
+	// );
 
 	useEffect(
 		() => {
@@ -149,6 +164,20 @@ const OrderPage = (props) => {
 		for (let item of cartItems) {
 			dispatch(removeFromCart(item.pathname));
 		}
+	};
+
+	const pay_order = (token) => {
+		// create an order
+		console.log({ cartItems });
+		dispatch(payOrder(order, token));
+		empty_cart();
+		set_payment_loading(true);
+	};
+
+	const handleChangeFor = (type) => ({ error }) => {
+		/* handle error */
+		console.log({ type });
+		console.log({ error });
 	};
 
 	return loading ? (
@@ -182,6 +211,19 @@ const OrderPage = (props) => {
 						<button className="button primary">Back to Orders</button>
 					</Link>
 				</FlexContainer>
+			)}
+			<Loading loading={payment_loading} />
+			{payment_loading && (
+				<div className="payment_message">
+					<p>Wait a moment while we process your Payment</p>
+					<p>Please Do not Refresh Page</p>
+				</div>
+			)}
+			{errorPay && (
+				<div className="payment_error_message">
+					<p>Your Payment has Failed</p>
+					<p>Please Check your card number or Contact Support for assistance</p>
+				</div>
 			)}
 			<div className="placeorder">
 				<div className="placeorder-info">
@@ -370,6 +412,22 @@ const OrderPage = (props) => {
 							className="placeorder-actions-payment"
 							style={{ display: 'flex', justifyContent: 'center' }}
 						/>
+						{!order.isPaid && (
+							<div>
+								<StripeCheckout
+									name="Glow LEDs"
+									description={`Pay for Order`}
+									amount={(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) * 100}
+									token={(token) => pay_order(token)}
+									stripeKey={process.env.REACT_APP_STRIPE_KEY}
+									onChange={handleChangeFor('cardNumber')}
+								>
+									<button className="button primary full-width" style={{ marginBottom: '12px' }}>
+										Pay for Order
+									</button>
+								</StripeCheckout>
+							</div>
+						)}
 
 						{order.promo_code && (
 							<FlexContainer column>
