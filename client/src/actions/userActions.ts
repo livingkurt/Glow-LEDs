@@ -168,13 +168,13 @@ export const updateUser = (userdata: any) => async (
 export const login = (email: string, password: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
-	// console.log({ login: email });
 	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
 	try {
 		const { data } = await axios.post('/api/users/login', { email, password });
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
+		console.log({ login: error });
 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
 	}
 };

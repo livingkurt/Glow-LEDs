@@ -9,7 +9,7 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
 
@@ -313,13 +313,13 @@ const PlaceOrderPage = (props) => {
 			) : (
 				<CheckoutSteps step1 />
 			)}
-			<Loading loading={payment_loading} error={error} />
-			{payment_loading && (
+			<LoadingPayments loading={payment_loading} error={error} />
+			{/* {payment_loading && (
 				<div className="payment_message">
 					<h2 className="ta-c">Wait a moment while we process your Payment</h2>
 					<p className="ta-c">Please Do not Refresh Page</p>
 				</div>
-			)}
+			)} */}
 			{/* {error && (
 				<div className="payment_error_message">
 					<p>Your Payment has Failed</p>

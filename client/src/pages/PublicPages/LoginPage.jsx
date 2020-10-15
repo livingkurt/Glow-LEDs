@@ -5,6 +5,7 @@ import { login } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { validate_login } from '../../utils/validations';
 import MetaTags from 'react-meta-tags';
+import { Loading } from '../../components/UtilityComponents';
 
 const LoginPage = (props) => {
 	const [ email, setEmail ] = useState('');
@@ -64,22 +65,21 @@ const LoginPage = (props) => {
 					content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
 				/>
 			</MetaTags>
+			<Loading loading={loading} error={error} />
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li style={{ display: 'flex', flexDirection: 'column' }}>
 						<h1>Login </h1>
 					</li>
-					<li>
+					{/* <li>
 						<FlexContainer h_center>
-							{/* <Loading loading={loading} error={error}> */}
 							{error && (
 								<label style={{ textAlign: 'center' }}>
 									{error ? 'User Not Found or Not Verified' : 'Logging In'}
 								</label>
 							)}
-							{/* </Loading> */}
 						</FlexContainer>
-					</li>
+					</li> */}
 					<li>
 						<label htmlFor="email">Email</label>
 						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />

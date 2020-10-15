@@ -17,12 +17,16 @@ const Loading = (props) => {
 				<div className="jc-c column">
 					<img src={process.env.PUBLIC_URL + '/loading.gif'} className="loading_gif" alt="loading" />
 					<img src={process.env.PUBLIC_URL + '/loading_overlay.png'} className="loading_png" alt="loading" />
+					<div className="payment_message">
+						<h2 className="ta-c">Wait a moment while we process your Payment</h2>
+						<p className="ta-c">Please Do not Refresh Page</p>
+					</div>
 					{loading_message()}
 				</div>
 			) : props.error ? (
 				<div className="error_message jc-c column">
 					<h2 className="ta-c mv-5px">Error: {props.error}</h2>
-					{/* <p className="ta-c mv-5px">Please Try a Different Card if Error Persists.</p> */}
+					<p className="ta-c mv-5px">Please Try a Different Card if Error Persists.</p>
 				</div>
 			) : (
 				props.children

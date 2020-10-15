@@ -1144,27 +1144,29 @@ video {
 .error_message {
 	z-index: 2;
 	background: #9a4949;
-	padding: 20px;
+	padding: 15px;
 	border-radius: 20px;
 	// font-size: 20px;
 	position: fixed;
+	width: 332px;
 	top: 25%;
 	left: 50%;
 	margin-top: -50px;
-	margin-left: -222px;
+	margin-left: -165px;
 }
 
 .payment_message {
 	z-index: 2;
 	background: #333333;
-	padding: 20px;
+	padding: 15px;
 	border-radius: 20px;
 	// font-size: 20px;
+	width: 332px;
 	position: fixed;
 	top: 25%;
 	left: 50%;
 	margin-top: -50px;
-	margin-left: -222px;
+	margin-left: -165px;
 }
 
 // .payment_message {
