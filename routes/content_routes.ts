@@ -1,40 +1,57 @@
 export {};
 import express from 'express';
+import { Log } from '../models';
 import Content from '../models/content';
+import { log_error, log_request } from '../util';
 const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
-	const category = req.query.category ? { category: req.query.category } : {};
-	const searchKeyword = req.query.searchKeyword
-		? {
-				p: {
-					$regex: req.query.searchKeyword,
-					$options: 'i'
+	try {
+		const category = req.query.category ? { category: req.query.category } : {};
+		const searchKeyword = req.query.searchKeyword
+			? {
+					p: {
+						$regex: req.query.searchKeyword,
+						$options: 'i'
+					}
 				}
-			}
-		: {};
+			: {};
 
-	let sortOrder = {};
-	if (req.query.sortOrder === 'glover name') {
-		sortOrder = { image: 1 };
-	} else if (req.query.sortOrder === 'facebook name') {
-		sortOrder = { p: 1 };
-	} else if (req.query.sortOrder === 'song id') {
-		sortOrder = { link: 1 };
-	} else if (req.query.sortOrder === 'button') {
-		sortOrder = { button: 1 };
-	} else if (req.query.sortOrder === 'instagram handle') {
-		sortOrder = { h2: 1 };
-	} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-		sortOrder = { release_date: -1 };
-	} else if (req.query.sortOrder === 'newest') {
-		sortOrder = { _id: -1 };
+		let sortOrder = {};
+		if (req.query.sortOrder === 'glover name') {
+			sortOrder = { image: 1 };
+		} else if (req.query.sortOrder === 'facebook name') {
+			sortOrder = { p: 1 };
+		} else if (req.query.sortOrder === 'song id') {
+			sortOrder = { link: 1 };
+		} else if (req.query.sortOrder === 'button') {
+			sortOrder = { button: 1 };
+		} else if (req.query.sortOrder === 'instagram handle') {
+			sortOrder = { h2: 1 };
+		} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
+			sortOrder = { release_date: -1 };
+		} else if (req.query.sortOrder === 'newest') {
+			sortOrder = { _id: -1 };
+		}
+
+		const contents = await Content.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Content',
+			data: contents,
+			error: {}
+		});
+		res.send(contents);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Content',
+			error
+		});
 	}
-
-	const contents = await Content.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	// console.log(contents);
-	res.send(contents);
 });
 
 router.get('/:id', async (req, res) => {

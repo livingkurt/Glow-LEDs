@@ -2,6 +2,7 @@ export {};
 import jwt from 'jsonwebtoken';
 const config = require('./config');
 import { Request } from 'express';
+import Log from './models/log';
 export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
@@ -54,4 +55,29 @@ export const isAdmin = (
 		return next();
 	}
 	return res.status(401).send({ msg: 'Admin Token is not valid.' });
+};
+
+export const log_request = async (logs: any) => {
+	await Log.create({
+		method: logs.method,
+		path: logs.path,
+		file: `${logs.collection.toLowerCase()}_routes`,
+		status: logs.status,
+		success: logs.success,
+		outcome: `${logs.success
+			? `Successfully Completed ${logs.method} Request for`
+			: `Unsuccessfully Completed ${logs.method} Request for`} ${logs.data.length} ${logs.collection}s`
+	});
+};
+
+export const log_error = async (logs: any) => {
+	await Log.create({
+		method: logs.method,
+		path: logs.path,
+		error: logs.error,
+		status: logs.status,
+		success: logs.success,
+		file: `${logs.collection.toLowerCase()}_routes`,
+		outcome: `Error Retrieving ${logs.collection}s`
+	});
 };

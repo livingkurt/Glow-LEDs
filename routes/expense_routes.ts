@@ -1,38 +1,56 @@
 export {};
 import express from 'express';
+import { Log } from '../models';
 import Expense from '../models/expense';
+import { log_error, log_request } from '../util';
 const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-	const category = req.query.category ? { category: req.query.category } : {};
-	const searchKeyword = req.query.searchKeyword
-		? {
-				expense_name: {
-					$regex: req.query.searchKeyword,
-					$options: 'i'
+	try {
+		const category = req.query.category ? { category: req.query.category } : {};
+		const searchKeyword = req.query.searchKeyword
+			? {
+					expense_name: {
+						$regex: req.query.searchKeyword,
+						$options: 'i'
+					}
 				}
-			}
-		: {};
+			: {};
 
-	let sortOrder = {};
-	if (req.query.sortOrder === 'lowest') {
-		sortOrder = { amount: 1 };
-	} else if (req.query.sortOrder === 'highest') {
-		sortOrder = { amount: -1 };
-	} else if (req.query.sortOrder === 'newest') {
-		sortOrder = { _id: -1 };
-	} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-		sortOrder = { date_of_purchase: -1 };
-	} else if (req.query.sortOrder === 'category') {
-		sortOrder = { category: 1, createdAt: -1 };
-	} else if (req.query.sortOrder === 'application') {
-		sortOrder = { application: 1, createdAt: -1 };
+		let sortOrder = {};
+		if (req.query.sortOrder === 'lowest') {
+			sortOrder = { amount: 1 };
+		} else if (req.query.sortOrder === 'highest') {
+			sortOrder = { amount: -1 };
+		} else if (req.query.sortOrder === 'newest') {
+			sortOrder = { _id: -1 };
+		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+			sortOrder = { date_of_purchase: -1 };
+		} else if (req.query.sortOrder === 'category') {
+			sortOrder = { category: 1, createdAt: -1 };
+		} else if (req.query.sortOrder === 'application') {
+			sortOrder = { application: 1, createdAt: -1 };
+		}
+
+		const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Expense',
+			data: expenses,
+			error: {}
+		});
+		res.send(expenses);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Expense',
+			error
+		});
 	}
-
-	const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	res.send(expenses);
 });
 
 router.get('/:id', async (req, res) => {

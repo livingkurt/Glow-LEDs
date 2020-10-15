@@ -71,6 +71,19 @@ router.put('/expenses', async (req, res) => {
 	);
 	res.send(expenses);
 });
+router.put('/errors_test', async (req, res) => {
+	try {
+		const products = await Product.find({});
+		if (products.length > 0) {
+			res.send(products);
+		} else {
+			res.status(404).send('Products Not Found.');
+		}
+	} catch (error) {
+		console.log({ error });
+		res.send({ error });
+	}
+});
 
 router.get('/products', async (req, res) => {
 	// const products = await Product.find({});

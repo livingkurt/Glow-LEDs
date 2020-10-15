@@ -1,8 +1,10 @@
 export {};
 import express from 'express';
 import User from '../models/user';
+import Log from '../models/log';
 const { getToken, isAuth } = require('../util');
 import bcrypt from 'bcryptjs';
+import { log_error, log_request } from '../util';
 require('dotenv');
 
 const router = express.Router();
@@ -13,27 +15,43 @@ const router = express.Router();
 // });
 
 router.get('/', async (req, res) => {
-	const category = req.query.category ? { category: req.query.category } : {};
-	const searchKeyword = req.query.searchKeyword
-		? {
-				first_name: {
-					$regex: req.query.searchKeyword,
-					$options: 'i'
+	try {
+		const category = req.query.category ? { category: req.query.category } : {};
+		const searchKeyword = req.query.searchKeyword
+			? {
+					first_name: {
+						$regex: req.query.searchKeyword,
+						$options: 'i'
+					}
 				}
-			}
-		: {};
+			: {};
 
-	let sortOrder = {};
-	if (req.query.sortOrder === 'first name') {
-		sortOrder = { first_name: 1 };
-	} else if (req.query.sortOrder === 'last name') {
-		sortOrder = { last_name: 1 };
-	} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-		sortOrder = { _id: -1 };
+		let sortOrder = {};
+		if (req.query.sortOrder === 'first name') {
+			sortOrder = { first_name: 1 };
+		} else if (req.query.sortOrder === 'last name') {
+			sortOrder = { last_name: 1 };
+		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
+			sortOrder = { _id: -1 };
+		}
+
+		const users = await User.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'User',
+			data: users,
+			error: {}
+		});
+		res.send(users);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'User',
+			error
+		});
 	}
-
-	const users = await User.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-	res.send(users);
 });
 
 router.get('/:id', isAuth, async (req, res) => {

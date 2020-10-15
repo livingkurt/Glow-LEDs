@@ -18,42 +18,60 @@ import {
 	refund_view,
 	invoice_view
 } from '../email_templates/pages/index';
+import e from 'express';
+import { Log } from '../models';
+import { log_error, log_request } from '../util';
 const sgMail = require('@sendgrid/mail');
 const PHE = require('print-html-element');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
-	const email_type = req.query.category ? { email_type: req.query.category } : {};
-	console.log(email_type);
-	const searchKeyword = req.query.searchKeyword
-		? {
-				email_type: {
-					$regex: req.query.searchKeyword,
-					$options: 'i'
+	try {
+		const email_type = req.query.category ? { email_type: req.query.category } : {};
+		console.log(email_type);
+		const searchKeyword = req.query.searchKeyword
+			? {
+					email_type: {
+						$regex: req.query.searchKeyword,
+						$options: 'i'
+					}
 				}
-			}
-		: {};
+			: {};
 
-	let sortOrder = {};
-	if (req.query.sortOrder === 'glover name') {
-		sortOrder = { image: 1 };
-	} else if (req.query.sortOrder === 'facebook name') {
-		sortOrder = { p: 1 };
-	} else if (req.query.sortOrder === 'song id') {
-		sortOrder = { link: 1 };
-	} else if (req.query.sortOrder === 'button') {
-		sortOrder = { button: 1 };
-	} else if (req.query.sortOrder === 'instagram handle') {
-		sortOrder = { h2: 1 };
-	} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-		sortOrder = { release_date: -1 };
-	} else if (req.query.sortOrder === 'newest') {
-		sortOrder = { _id: -1 };
+		let sortOrder = {};
+		if (req.query.sortOrder === 'glover name') {
+			sortOrder = { image: 1 };
+		} else if (req.query.sortOrder === 'facebook name') {
+			sortOrder = { p: 1 };
+		} else if (req.query.sortOrder === 'song id') {
+			sortOrder = { link: 1 };
+		} else if (req.query.sortOrder === 'button') {
+			sortOrder = { button: 1 };
+		} else if (req.query.sortOrder === 'instagram handle') {
+			sortOrder = { h2: 1 };
+		} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
+			sortOrder = { release_date: -1 };
+		} else if (req.query.sortOrder === 'newest') {
+			sortOrder = { _id: -1 };
+		}
+
+		const emails = await Email.find({ deleted: false, ...email_type, ...searchKeyword }).sort(sortOrder);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Email',
+			data: emails,
+			error: {}
+		});
+		res.send(emails);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Email',
+			error
+		});
 	}
-
-	const emails = await Email.find({ deleted: false, ...email_type, ...searchKeyword }).sort(sortOrder);
-	console.log(emails);
-	res.send(emails);
 });
 
 router.get('/:id', async (req, res) => {

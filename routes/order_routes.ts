@@ -3,8 +3,9 @@
 // import { isAuth, isAdmin } from '../util';
 export {};
 const express = require('express');
-import { User } from '../models';
+import { Log, User } from '../models';
 import Order from '../models/order';
+import { log_error, log_request } from '../util';
 const { isAuth, isAdmin } = require('../util');
 require('dotenv').config();
 const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
@@ -76,58 +77,81 @@ router.get('/occurrences', async (req: any, res: any) => {
 // });
 
 router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-	const category = req.query.category ? { category: req.query.category } : {};
-	let user: any;
-	let searchKeyword: any;
-	if (req.query.searchKeyword) {
-		const userSearchKeyword = req.query.searchKeyword
-			? {
-					first_name: {
-						$regex: req.query.searchKeyword,
-						$options: 'i'
+	try {
+		const category = req.query.category ? { category: req.query.category } : {};
+		let user: any;
+		let searchKeyword: any;
+		if (req.query.searchKeyword) {
+			const userSearchKeyword = req.query.searchKeyword
+				? {
+						first_name: {
+							$regex: req.query.searchKeyword,
+							$options: 'i'
+						}
 					}
-				}
-			: {};
-		console.log({ userSearchKeyword });
-		user = await User.findOne({ ...userSearchKeyword });
-		console.log({ user });
-		searchKeyword = { user: user._id };
+				: {};
+			console.log({ userSearchKeyword });
+			user = await User.findOne({ ...userSearchKeyword });
+			console.log({ user });
+			searchKeyword = { user: user._id };
+		}
+		let sortOrder = {};
+		if (req.query.sortOrder === 'lowest') {
+			sortOrder = { totalPrice: 1 };
+		} else if (req.query.sortOrder === 'highest') {
+			sortOrder = { totalPrice: -1 };
+		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+			sortOrder = { createdAt: -1 };
+		} else if (req.query.sortOrder === 'paid') {
+			sortOrder = { isPaid: -1 };
+		} else if (req.query.sortOrder === 'shipped') {
+			sortOrder = { isShipped: -1 };
+		} else if (req.query.sortOrder === 'delivered') {
+			sortOrder = { isDelivered: -1 };
+		}
+		console.log({ searchKeyword });
+		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+			.populate('user')
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.sort(sortOrder);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			data: orders,
+			error: {}
+		});
+		res.send(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error
+		});
 	}
-	let sortOrder = {};
-	if (req.query.sortOrder === 'lowest') {
-		sortOrder = { totalPrice: 1 };
-	} else if (req.query.sortOrder === 'highest') {
-		sortOrder = { totalPrice: -1 };
-	} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-		sortOrder = { createdAt: -1 };
-	} else if (req.query.sortOrder === 'paid') {
-		sortOrder = { isPaid: -1 };
-	} else if (req.query.sortOrder === 'shipped') {
-		sortOrder = { isShipped: -1 };
-	} else if (req.query.sortOrder === 'delivered') {
-		sortOrder = { isDelivered: -1 };
-	}
-	console.log({ searchKeyword });
-	const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-		.populate('user')
-		.populate('orderItems.product')
-		.populate('orderItems.secondary_product')
-		.sort(sortOrder);
-	res.send(orders);
 });
 
-router.get('/mine', isAuth, async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+router.get('/mine', isAuth, async (req: any, res: any) => {
 	const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
+	log_request({
+		method: 'GET',
+		path: req.originalUrl,
+		collection: 'Order',
+		data: orders,
+		error: {}
+	});
 	res.send(orders);
 });
-router.get('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-	const charges = await stripe.charges.list({});
-	res.send(charges);
-});
-router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-	const refunds = await stripe.refunds.list({});
-	res.send(refunds);
-});
+// router.get('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+// 	const charges = await stripe.charges.list({});
+// 	res.send(charges);
+// });
+// router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+// 	const refunds = await stripe.refunds.list({});
+// 	res.send(refunds);
+// });
 
 router.get(
 	'/:id',

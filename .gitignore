@@ -132,6 +132,7 @@ routes/cart_routes.js
 routes/content_routes.js
 routes/device_routes.js
 routes/email_routes_original.js
+routes/log_routes.js
 
 models/user.js
 models/product.js
@@ -145,6 +146,7 @@ models/sponsor.js
 models/content.js
 models/device.js
 models/email.js
+models/log.js
 
 email_templates/HTML
 email_templates/pages/verify_account_view.js
