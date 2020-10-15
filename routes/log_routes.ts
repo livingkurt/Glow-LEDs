@@ -5,10 +5,11 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
+	console.log('/');
 	const category = req.query.category ? { category: req.query.category } : {};
 	const searchKeyword = req.query.searchKeyword
 		? {
-				p: {
+				file: {
 					$regex: req.query.searchKeyword,
 					$options: 'i'
 				}
@@ -16,19 +17,17 @@ router.get('/', async (req, res) => {
 		: {};
 
 	let sortOrder = {};
-	if (req.query.sortOrder === 'glover name') {
-		sortOrder = { image: 1 };
-	} else if (req.query.sortOrder === 'facebook name') {
-		sortOrder = { p: 1 };
-	} else if (req.query.sortOrder === 'song id') {
-		sortOrder = { link: 1 };
-	} else if (req.query.sortOrder === 'button') {
-		sortOrder = { button: 1 };
-	} else if (req.query.sortOrder === 'instagram handle') {
-		sortOrder = { h2: 1 };
-	} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-		sortOrder = { release_date: -1 };
-	} else if (req.query.sortOrder === 'newest') {
+	if (req.query.sortOrder === 'file') {
+		sortOrder = { file: 1 };
+	} else if (req.query.sortOrder === 'method') {
+		sortOrder = { method: 1 };
+	} else if (req.query.sortOrder === 'status') {
+		sortOrder = { status: -1 };
+	} else if (req.query.sortOrder === 'success') {
+		sortOrder = { success: -1 };
+	} else if (req.query.sortOrder === 'error') {
+		sortOrder = { error: -1 };
+	} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
 		sortOrder = { _id: -1 };
 	}
 
@@ -74,9 +73,9 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 });
 
 router.post('/', async (req, res) => {
-	const newProduct = await Log.create(req.body);
-	if (newProduct) {
-		return res.status(201).send({ message: 'New Log Created', data: newProduct });
+	const newLog = await Log.create(req.body);
+	if (newLog) {
+		return res.status(201).send({ message: 'New Log Created', data: newLog });
 	}
 	return res.status(500).send({ message: ' Error in Creating Log.' });
 });

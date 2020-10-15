@@ -72,6 +72,7 @@ import {
 	contentSaveReducer
 } from './reducers/contentReducers';
 import { emailDeleteReducer, emailDetailsReducer, emailListReducer, emailSaveReducer } from './reducers/emailReducers';
+import { logDeleteReducer, logDetailsReducer, logListReducer, logSaveReducer } from './reducers/logReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
@@ -136,7 +137,11 @@ const reducer = combineReducers({
 	emailList: emailListReducer,
 	emailDetails: emailDetailsReducer,
 	emailSave: emailSaveReducer,
-	emailDelete: emailDeleteReducer
+	emailDelete: emailDeleteReducer,
+	logList: logListReducer,
+	logDetails: logDetailsReducer,
+	logSave: logSaveReducer,
+	logDelete: logDeleteReducer
 });
 
 declare global {

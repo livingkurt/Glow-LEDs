@@ -53,7 +53,8 @@ import {
 	MusicPage,
 	DiscountPage,
 	EditEmailPage,
-	EmailsPage
+	EmailsPage,
+	LogsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -126,6 +127,7 @@ const App = () => {
 							{/* Admin Routes */}
 							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
+							<AdminRoute path="/secure/glow/logs" component={LogsPage} />
 							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />
 							<AdminRoute path="/secure/glow/users" component={UsersPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />

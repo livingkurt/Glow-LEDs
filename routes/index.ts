@@ -17,3 +17,4 @@ export { default as promo_routes } from './promo_routes';
 export { default as cart_routes } from './cart_routes';
 export { default as content_routes } from './content_routes';
 export { default as device_routes } from './device_routes';
+export { default as log_routes } from './log_routes';

@@ -23,6 +23,15 @@ export const format_date = (unformatted_date: string) => {
 	const formatted_date = `${month}/${day}/20`;
 	return formatted_date;
 };
+export const format_time = (unformatted_time: any) => {
+	let hour = unformatted_time.slice(11, 13);
+	// let hour_int = parseInt(hour);
+	// hour = (hour_int + 11) % 12 + 1;
+	const minute = unformatted_time.slice(14, 16);
+	const second = unformatted_time.slice(17, 19);
+	const formatted_time = `${hour}:${minute}:${second}`;
+	return formatted_time;
+};
 
 export const unformat_date = (formatted_date: string) => {
 	const date = formatted_date.split('/');

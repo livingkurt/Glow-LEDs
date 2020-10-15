@@ -237,7 +237,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 		}
 	} catch (error) {
 		log_error({
-			method: 'PUT',
+			method: 'DELETE',
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
