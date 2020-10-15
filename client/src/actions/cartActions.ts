@@ -198,7 +198,7 @@ export const listCarts = (category = '', searchKeyword = '', sortOrder = '') => 
 		);
 		dispatch({ type: CART_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: CART_LIST_FAIL, payload: error.message });
+		dispatch({ type: CART_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -236,7 +236,7 @@ export const saveCart = (cart: {
 			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: CART_SAVE_FAIL, payload: error.message });
+		dispatch({ type: CART_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -246,7 +246,7 @@ export const detailsCart = (cart_id: string) => async (dispatch: (arg0: { type: 
 		const { data } = await axios.get('/api/carts/' + cart_id);
 		dispatch({ type: CART_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: CART_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: CART_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -264,6 +264,6 @@ export const deleteCart = (cartId: string) => async (
 		});
 		dispatch({ type: CART_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
-		dispatch({ type: CART_DELETE_FAIL, payload: error.message });
+		dispatch({ type: CART_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

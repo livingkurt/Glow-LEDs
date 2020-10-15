@@ -29,7 +29,7 @@ export const listExpenses = (category = '', searchKeyword = '', sortOrder = '') 
 		);
 		dispatch({ type: EXPENSE_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: EXPENSE_LIST_FAIL, payload: error.message });
+		dispatch({ type: EXPENSE_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -67,7 +67,7 @@ export const saveExpense = (expense: {
 			dispatch({ type: EXPENSE_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: EXPENSE_SAVE_FAIL, payload: error.message });
+		dispatch({ type: EXPENSE_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -79,7 +79,7 @@ export const detailsExpense = (pathname: string) => async (
 		const { data } = await axios.get('/api/expenses/' + pathname);
 		dispatch({ type: EXPENSE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -97,6 +97,6 @@ export const deleteExpense = (expenseId: string) => async (
 		});
 		dispatch({ type: EXPENSE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
-		dispatch({ type: EXPENSE_DELETE_FAIL, payload: error.message });
+		dispatch({ type: EXPENSE_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

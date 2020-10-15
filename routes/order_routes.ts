@@ -3,6 +3,7 @@
 // import { isAuth, isAdmin } from '../util';
 export {};
 const express = require('express');
+import e from 'express';
 import { Log, User } from '../models';
 import Order from '../models/order';
 import { log_error, log_request } from '../util';
@@ -265,6 +266,8 @@ router.post('/', isAuth, async (req: any, res: any) => {
 			deleted: false
 		});
 		const newOrderCreated = await newOrder.save();
+		console.log({ newOrderCreated });
+
 		if (newOrderCreated) {
 			log_request({
 				method: 'POST',
@@ -300,63 +303,85 @@ router.post('/', isAuth, async (req: any, res: any) => {
 });
 
 router.put('/:id/pay', isAuth, async (req: any, res: any) => {
-	try {
-		const order = await Order.findById(req.params.id).populate('user');
-		const charge = await stripe.charges.create({
+	// try {
+	const order = await Order.findById(req.params.id).populate('user');
+	console.log({ order });
+
+	// setTimeout(() => {
+	// 	console.log({ message: 'Error Paying for Order' });
+	// 	// return res.status(500).send({ message: 'Error Paying for Order' });
+	// }, 5000);
+	const charge = await stripe.charges.create(
+		{
 			amount: (order.totalPrice * 100).toFixed(0),
 			currency: 'usd',
 			description: `Order Paid`,
 			source: req.body.token.id
-		});
-		if (charge) {
-			log_request({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ charge ],
-				status: 201,
-				success: true
-			});
-			order.isPaid = true;
-			order.paidAt = Date.now();
-			order.payment = {
-				paymentMethod: 'stripe',
-				charge: charge
-			};
-			const updatedOrder = await order.save();
-			if (updatedOrder) {
+		},
+		async (err: any, result: any) => {
+			if (err) {
+				console.log({ err });
+				// return res.status(500).send({ error, message: 'Error Paying for Order' });
+				return res.status(500).send({ error: err, message: err.raw.message });
+			} else {
+				console.log({ result });
+				// if (charge) {
 				log_request({
 					method: 'PUT',
 					path: req.originalUrl,
 					collection: 'Order',
-					data: [ updatedOrder ],
+					data: [ charge ],
 					status: 201,
 					success: true
 				});
-				res.send({ message: 'Order Paid.', order: updatedOrder });
+				order.isPaid = true;
+				order.paidAt = Date.now();
+				order.payment = {
+					paymentMethod: 'stripe',
+					charge: charge
+				};
+				const updatedOrder = await order.save();
+				if (updatedOrder) {
+					log_request({
+						method: 'PUT',
+						path: req.originalUrl,
+						collection: 'Order',
+						data: [ updatedOrder ],
+						status: 201,
+						success: true
+					});
+					res.send({ message: 'Order Paid.', order: updatedOrder });
+				}
+				// }
 			}
-		} else {
-			log_request({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: [ charge ],
-				status: 404,
-				success: false
-			});
-			res.status(404).send({ message: 'Order not found.' });
 		}
-	} catch (error) {
-		log_error({
-			method: 'PUT',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Paying for Order' });
-	}
+	);
+
+	// 4000000000000002
+	// console.log({ charge });
+
+	// else {
+	// 	log_request({
+	// 		method: 'PUT',
+	// 		path: req.originalUrl,
+	// 		collection: 'Product',
+	// 		data: [ charge ],
+	// 		status: 404,
+	// 		success: false
+	// 	});
+	// 	res.status(404).send({ message: 'Order not found.' });
+	// }
+	// } catch (error) {
+	// 	log_error({
+	// 		method: 'PUT',
+	// 		path: req.originalUrl,
+	// 		collection: 'Order',
+	// 		error,
+	// 		status: 500,
+	// 		success: false
+	// 	});
+	// 	res.status(500).send({ error, message: 'Error Paying for Order' });
+	// }
 });
 
 router.put('/:id/refund', async (req: any, res: any) => {

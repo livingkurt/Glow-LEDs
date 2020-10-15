@@ -171,7 +171,7 @@ router.put('/resetpassword', async (req, res) => {
 						status: 202,
 						success: true
 					});
-					res.status(202).send({ msg: 'Password Saved' });
+					res.status(202).send({ message: 'Password Saved' });
 				});
 			});
 		}
@@ -309,7 +309,7 @@ router.post('/passwordreset', async (req, res) => {
 				status: 500,
 				success: false
 			});
-			res.status(404).send({ msg: 'User Not Found' });
+			res.status(404).send({ message: 'User Not Found' });
 		}
 	} catch (error) {
 		log_error({
@@ -386,7 +386,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
 		} else {
-			res.status(404).send({ msg: 'User Not Found' });
+			res.status(404).send({ message: 'User Not Found' });
 		}
 	} catch (error) {
 		log_error({
@@ -484,7 +484,7 @@ router.put('/verify/:id', async (req, res) => {
 				});
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
-			// res.status(202).send({ msg: 'Verified Account' });
+			// res.status(202).send({ message: 'Verified Account' });
 		} else {
 			log_request({
 				method: 'PUT',
@@ -494,7 +494,7 @@ router.put('/verify/:id', async (req, res) => {
 				status: 404,
 				success: false
 			});
-			res.status(404).send({ msg: 'User Not Found' });
+			res.status(404).send({ message: 'User Not Found' });
 		}
 	} catch (error) {
 		log_error({

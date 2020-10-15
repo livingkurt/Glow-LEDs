@@ -32,7 +32,7 @@ let transporter = nodemailer.createTransport({
 // 	app.post('/api/email/order_confirmation', async (req, res) => {
 // 		const { recipient, orderNumber } = req.body;
 // 		sgMail.setApiKey(process.env.SENDGRID_SECRET);
-// 		const msg = {
+// 		const message = {
 // 			to: recipient,
 // 			from: 'keibooher@gmail.com', // Use the email address or domain you verified above
 // 			subject: 'Sending with Twilio SendGrid is Fun',
@@ -40,7 +40,7 @@ let transporter = nodemailer.createTransport({
 // 			html: confirmationTemplate(orderNumber)
 // 		};
 // 		try {
-// 			sgMail.send(msg);
+// 			sgMail.send(message);
 // 			res.send(200);
 // 		} catch (err) {
 // 			res.status(422).send(err);
@@ -53,7 +53,7 @@ let transporter = nodemailer.createTransport({
 // 	// console.log({ contact: req.body });
 // 	console.log(process.env.SENDGRID_SECRET);
 // 	sgMail.setApiKey(process.env.SENDGRID_SECRET);
-// 	const msg = {
+// 	const message = {
 // 		to: 'info@glow-leds.com',
 // 		from: 'info@glow-leds.com', // Use the email address or domain you verified above
 // 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
@@ -61,7 +61,7 @@ let transporter = nodemailer.createTransport({
 // 		html: contact_view(req.body)
 // 	};
 // 	try {
-// 		sgMail.send(msg);
+// 		sgMail.send(message);
 // 		res.send(200);
 // 	} catch (err) {
 // 		res.status(422).send(err);
@@ -403,7 +403,7 @@ router.post('/shipping', async (req, res) => {
 	try {
 		user = await User.findOne({ _id: req.body.user });
 	} catch (error) {
-		res.send({ msg: error.message });
+		res.send({ message: error.message });
 	}
 
 	let mailOptions = {
@@ -432,7 +432,7 @@ router.post('/delivery', async (req, res) => {
 	try {
 		user = await User.findOne({ _id: req.body.user });
 	} catch (error) {
-		res.send({ msg: error.message });
+		res.send({ message: error.message });
 	}
 
 	let mailOptions = {

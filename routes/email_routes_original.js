@@ -71,7 +71,7 @@ var transporter = nodemailer_1.default.createTransport({
 // 	app.post('/api/email/order_confirmation', async (req, res) => {
 // 		const { recipient, orderNumber } = req.body;
 // 		sgMail.setApiKey(process.env.SENDGRID_SECRET);
-// 		const msg = {
+// 		const message = {
 // 			to: recipient,
 // 			from: 'keibooher@gmail.com', // Use the email address or domain you verified above
 // 			subject: 'Sending with Twilio SendGrid is Fun',
@@ -79,7 +79,7 @@ var transporter = nodemailer_1.default.createTransport({
 // 			html: confirmationTemplate(orderNumber)
 // 		};
 // 		try {
-// 			sgMail.send(msg);
+// 			sgMail.send(message);
 // 			res.send(200);
 // 		} catch (err) {
 // 			res.status(422).send(err);
@@ -91,7 +91,7 @@ var transporter = nodemailer_1.default.createTransport({
 // 	// console.log({ contact: req.body });
 // 	console.log(process.env.SENDGRID_SECRET);
 // 	sgMail.setApiKey(process.env.SENDGRID_SECRET);
-// 	const msg = {
+// 	const message = {
 // 		to: 'info@glow-leds.com',
 // 		from: 'info@glow-leds.com', // Use the email address or domain you verified above
 // 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
@@ -99,7 +99,7 @@ var transporter = nodemailer_1.default.createTransport({
 // 		html: contact_view(req.body)
 // 	};
 // 	try {
-// 		sgMail.send(msg);
+// 		sgMail.send(message);
 // 		res.send(200);
 // 	} catch (err) {
 // 		res.status(422).send(err);
@@ -466,7 +466,7 @@ router.post('/shipping', function (req, res) { return __awaiter(void 0, void 0, 
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
-                res.send({ msg: error_1.message });
+                res.send({ message: error_1.message });
                 return [3 /*break*/, 4];
             case 4:
                 mailOptions = {
@@ -507,7 +507,7 @@ router.post('/delivery', function (req, res) { return __awaiter(void 0, void 0, 
                 return [3 /*break*/, 4];
             case 3:
                 error_2 = _a.sent();
-                res.send({ msg: error_2.message });
+                res.send({ message: error_2.message });
                 return [3 /*break*/, 4];
             case 4:
                 mailOptions = {

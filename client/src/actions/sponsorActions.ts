@@ -29,7 +29,7 @@ export const listSponsors = (category = '', searchKeyword = '', sortOrder = '') 
 		);
 		dispatch({ type: SPONSOR_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: SPONSOR_LIST_FAIL, payload: error.message });
+		dispatch({ type: SPONSOR_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -57,7 +57,7 @@ export const saveSponsor = (sponsor: any) => async (
 			dispatch({ type: SPONSOR_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: SPONSOR_SAVE_FAIL, payload: error.message });
+		dispatch({ type: SPONSOR_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -69,7 +69,7 @@ export const detailsSponsor = (pathname: string) => async (
 		const { data } = await axios.get('/api/sponsors/' + pathname);
 		dispatch({ type: SPONSOR_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: SPONSOR_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: SPONSOR_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -87,6 +87,6 @@ export const deleteSponsor = (sponsorId: string) => async (
 		});
 		dispatch({ type: SPONSOR_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
-		dispatch({ type: SPONSOR_DELETE_FAIL, payload: error.message });
+		dispatch({ type: SPONSOR_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

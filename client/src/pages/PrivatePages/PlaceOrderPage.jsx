@@ -20,11 +20,12 @@ const PlaceOrderPage = (props) => {
 	const { cartItems, shipping, payment } = cart;
 	// console.log({ cartItems });
 	const orderCreate = useSelector((state) => state.orderCreate);
-	const { order } = orderCreate;
-	console.log({ order });
+	const { order, error, loading } = orderCreate;
+	console.log({ orderCreate });
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
+	console.log({ orderPay });
 
 	const promoList = useSelector((state) => state.promoList);
 	const { loading: promo_loading, promos, error: promo_error } = promoList;
@@ -66,6 +67,17 @@ const PlaceOrderPage = (props) => {
 		[ cartItems ]
 	);
 
+	useEffect(
+		() => {
+			if (error) {
+				set_payment_loading(false);
+			}
+			// calculate_shipping();
+			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			return () => {};
+		},
+		[ error ]
+	);
 	useEffect(
 		() => {
 			if (shipping) {
@@ -175,7 +187,7 @@ const PlaceOrderPage = (props) => {
 				token
 			)
 		);
-		empty_cart();
+
 		set_payment_loading(true);
 	};
 
@@ -191,6 +203,7 @@ const PlaceOrderPage = (props) => {
 			if (successPay && order) {
 				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
 				set_payment_loading(false);
+				empty_cart();
 			} else if (errorPay) {
 			}
 		},
@@ -300,19 +313,19 @@ const PlaceOrderPage = (props) => {
 			) : (
 				<CheckoutSteps step1 />
 			)}
-			<Loading loading={payment_loading} />
+			<Loading loading={payment_loading} error={error} />
 			{payment_loading && (
 				<div className="payment_message">
-					<p>Wait a moment while we process your Payment</p>
-					<p>Please Do not Refresh Page</p>
+					<h2 className="ta-c">Wait a moment while we process your Payment</h2>
+					<p className="ta-c">Please Do not Refresh Page</p>
 				</div>
 			)}
-			{errorPay && (
+			{/* {error && (
 				<div className="payment_error_message">
 					<p>Your Payment has Failed</p>
-					<p>Please Check your card number or Contact Support for assistance</p>
+					<p>Please Check your card number or Contact Glow LEDs for assistance</p>
 				</div>
-			)}
+			)} */}
 
 			{/* <Loading loading={loadingPay} error={errorPay} /> */}
 			<div className="placeorder">

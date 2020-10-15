@@ -34,7 +34,7 @@ export const listDevices = (category = '', searchKeyword = '', sortOrder = '') =
 		console.log({ listDevices: data });
 		dispatch({ type: DEVICE_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: DEVICE_LIST_FAIL, payload: error.message });
+		dispatch({ type: DEVICE_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -51,7 +51,7 @@ export const listMyDevices = () => async (
 		});
 		dispatch({ type: MY_DEVICE_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: MY_DEVICE_LIST_FAIL, payload: error.message });
+		dispatch({ type: MY_DEVICE_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -80,7 +80,7 @@ export const saveDevice = (device: any) => async (
 			dispatch({ type: DEVICE_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: DEVICE_SAVE_FAIL, payload: error.message });
+		dispatch({ type: DEVICE_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -91,7 +91,7 @@ export const detailsDevice = (id: string) => async (dispatch: (arg0: { type: str
 		const { data } = await axios.get('/api/devices/' + id);
 		dispatch({ type: DEVICE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: DEVICE_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: DEVICE_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -109,6 +109,6 @@ export const deleteDevice = (deviceId: string) => async (
 		});
 		dispatch({ type: DEVICE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
-		dispatch({ type: DEVICE_DELETE_FAIL, payload: error.message });
+		dispatch({ type: DEVICE_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

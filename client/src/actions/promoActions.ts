@@ -29,7 +29,7 @@ export const listPromos = (category = '', searchKeyword = '', sortOrder = '') =>
 		);
 		dispatch({ type: PROMO_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: PROMO_LIST_FAIL, payload: error.message });
+		dispatch({ type: PROMO_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -57,7 +57,7 @@ export const savePromo = (promo: any) => async (
 			dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: PROMO_SAVE_FAIL, payload: error.message });
+		dispatch({ type: PROMO_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -67,7 +67,7 @@ export const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type
 		const { data } = await axios.get('/api/promos/' + pathname);
 		dispatch({ type: PROMO_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: PROMO_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: PROMO_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -85,6 +85,6 @@ export const deletePromo = (promoId: string) => async (
 		});
 		dispatch({ type: PROMO_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
-		dispatch({ type: PROMO_DELETE_FAIL, payload: error.message });
+		dispatch({ type: PROMO_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

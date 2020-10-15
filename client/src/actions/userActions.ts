@@ -85,7 +85,7 @@ export const update = (userdata: any) => async (
 		dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
-		dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
+		dispatch({ type: USER_UPDATE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -113,7 +113,7 @@ export const saveUser = (user: any) => async (
 			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.message });
+		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -161,7 +161,7 @@ export const updateUser = (userdata: any) => async (
 		dispatch({ type: USER_UPDATE_USER_SUCCESS, payload: data });
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
-		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.message });
+		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -175,7 +175,7 @@ export const login = (email: string, password: string) => async (
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
-		dispatch({ type: USER_LOGIN_FAIL, payload: error.message });
+		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -187,7 +187,7 @@ export const password_reset = (email: string) => async (dispatch: (arg0: { type:
 		dispatch({ type: USER_PASSWORD_RESET_SUCCESS, payload: data });
 		axios.post('/api/emails/passwordreset', data);
 	} catch (error) {
-		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error.message });
+		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -201,7 +201,7 @@ export const reset_password = (user_id: string, password: string, repassword: st
 		dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
 		// axios.post("/api/emails/passwordreset", { email });
 	} catch (error) {
-		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.message });
+		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -216,7 +216,7 @@ export const register = (first_name: string, last_name: string, email: string, p
 		// axios.post('/api/emails/verify', data);
 		// Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
-		dispatch({ type: USER_REGISTER_FAIL, payload: error.message });
+		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -230,7 +230,7 @@ export const verify = (user_id: string) => async (dispatch: (arg0: { type: strin
 		axios.post('/api/emails/verified', data);
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
-		dispatch({ type: USER_VERIFY_FAIL, payload: error.message });
+		dispatch({ type: USER_VERIFY_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -285,7 +285,7 @@ export const contact = (
 		dispatch({ type: USER_CONTACT_SUCCESS, payload: data });
 		dispatch({ type: USER_CONTACT_REMOVE_SUCCESS, payload: {} });
 	} catch (error) {
-		dispatch({ type: USER_CONTACT_FAIL, payload: error.message });
+		dispatch({ type: USER_CONTACT_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -312,7 +312,7 @@ export const listUsers = (category = '', searchKeyword = '', sortOrder = '') => 
 		);
 		dispatch({ type: USER_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: USER_LIST_FAIL, payload: error.message });
+		dispatch({ type: USER_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -328,7 +328,7 @@ export const deleteUser = (userId: string) => async (
 		});
 		dispatch({ type: USER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: USER_DELETE_FAIL, payload: error.message });
+		dispatch({ type: USER_DELETE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -346,7 +346,7 @@ export const detailsUser = (userId: string) => async (
 		});
 		dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: USER_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 

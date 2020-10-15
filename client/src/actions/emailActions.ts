@@ -30,7 +30,7 @@ export const listEmails = (category = '', searchKeyword = '', sortOrder = '') =>
 		console.log({ category });
 		dispatch({ type: EMAIL_LIST_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: EMAIL_LIST_FAIL, payload: error.message });
+		dispatch({ type: EMAIL_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -59,7 +59,7 @@ export const saveEmail = (email: any) => async (
 			dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: EMAIL_SAVE_FAIL, payload: error.message });
+		dispatch({ type: EMAIL_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -69,7 +69,7 @@ export const detailsEmail = (id: string) => async (dispatch: (arg0: { type: stri
 		const { data } = await axios.get('/api/emails/' + id);
 		dispatch({ type: EMAIL_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
-		dispatch({ type: EMAIL_DETAILS_FAIL, payload: error.message });
+		dispatch({ type: EMAIL_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -87,6 +87,6 @@ export const deleteEmail = (emailId: string) => async (
 		});
 		dispatch({ type: EMAIL_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
-		dispatch({ type: EMAIL_DELETE_FAIL, payload: error.message });
+		dispatch({ type: EMAIL_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

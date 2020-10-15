@@ -676,7 +676,7 @@ router.post('/shipping', async (req, res) => {
 	try {
 		user = await User.findOne({ _id: req.body.user });
 	} catch (error) {
-		res.send({ msg: error.message });
+		res.send({ message: error.message });
 	}
 
 	let mailOptions = {
@@ -705,7 +705,7 @@ router.post('/delivery', async (req, res) => {
 	try {
 		user = await User.findOne({ _id: req.body.user });
 	} catch (error) {
-		res.send({ msg: error.message });
+		res.send({ message: error.message });
 	}
 
 	let mailOptions = {
