@@ -5,7 +5,6 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 router.get('/', async (req, res) => {
-	console.log('/');
 	const category = req.query.category ? { category: req.query.category } : {};
 	const searchKeyword = req.query.searchKeyword
 		? {
