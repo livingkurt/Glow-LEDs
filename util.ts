@@ -78,6 +78,6 @@ export const log_error = async (logs: any) => {
 		status: logs.status,
 		success: logs.success,
 		file: `${logs.collection.toLowerCase()}_routes`,
-		outcome: `Error Retrieving ${logs.collection}s`
+		outcome: `Error Completing ${logs.method} Request for ${logs.collection}s`
 	});
 };

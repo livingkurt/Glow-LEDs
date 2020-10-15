@@ -7,6 +7,8 @@ const logSchema = new mongoose.Schema(
 		method: { type: String },
 		path: { type: String },
 		file: { type: String },
+		status: { type: Number },
+		success: { type: Boolean },
 		error: { type: Object },
 		deleted: { type: Boolean, default: false }
 	},

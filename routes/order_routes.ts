@@ -118,9 +118,33 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true
+		});
+		res.send(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			success: false
+		});
+	}
+});
+
+router.get('/mine', isAuth, async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
 			collection: 'Order',
 			data: orders,
-			error: {}
+			status: 200,
+			success: true
 		});
 		res.send(orders);
 	} catch (error) {
@@ -128,21 +152,10 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 			method: 'GET',
 			path: req.originalUrl,
 			collection: 'Order',
-			error
+			error,
+			success: false
 		});
 	}
-});
-
-router.get('/mine', isAuth, async (req: any, res: any) => {
-	const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
-	log_request({
-		method: 'GET',
-		path: req.originalUrl,
-		collection: 'Order',
-		data: orders,
-		error: {}
-	});
-	res.send(orders);
 });
 // router.get('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
 // 	const charges = await stripe.charges.list({});
@@ -153,166 +166,203 @@ router.get('/mine', isAuth, async (req: any, res: any) => {
 // 	res.send(refunds);
 // });
 
-router.get(
-	'/:id',
-	isAuth,
-	async (
-		req: { params: { id: any } },
-		res: {
-			send: (arg0: any) => void;
-			status: (arg0: number) => { (): any; new (): any; send: { (arg0: string): void; new (): any } };
-		}
-	) => {
+router.get('/:id', isAuth, async (req: any, res: any) => {
+	try {
 		console.log('Hello');
 		const order = await Order.findOne({ _id: req.params.id })
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product')
 			.populate('user');
 		if (order) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 200,
+				success: true
+			});
 			res.send(order);
 		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 404,
+				success: false
+			});
 			res.status(404).send('Order Not Found.');
 		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			success: false
+		});
 	}
-);
+});
 
-router.delete(
-	'/:id',
-	isAuth,
-	isAdmin,
-	async (
-		req: { params: { id: any } },
-		res: {
-			send: (arg0: any) => void;
-			status: (arg0: number) => { (): any; new (): any; send: { (arg0: string): void; new (): any } };
-		}
-	) => {
-		// const order = await Order.findOne({ _id: req.params.id });
-		// if (order) {
-		// 	const deletedOrder = await order.remove();
-		// 	res.send(deletedOrder);
-		// } else {
-		// 	res.status(404).send('Order Not Found.');
-		// }
-		const order = await Order.findById(req.params.id);
-		const updated_order = { ...order, deleted: true };
+router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
 		const message: any = { message: 'Order Deleted' };
-		// const deleted_order = await updated_order.save();
 		const deleted_order = await Order.updateOne({ _id: req.params.id }, { deleted: true });
 		if (deleted_order) {
-			// await deletedProduct.remove();
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ deleted_order ],
+				status: 200,
+				success: true
+			});
 			res.send(message);
 		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ deleted_order ],
+				status: 500,
+				success: false
+			});
 			res.send('Error in Deletion.');
 		}
+	} catch (error) {
+		log_error({
+			method: 'DELETE',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			success: false
+		});
 	}
-);
+});
 
-router.post(
-	'/',
-	isAuth,
-	async (
-		req: {
-			body: {
-				orderItems: any;
-				shipping: any;
-				payment: any;
-				itemsPrice: any;
-				taxPrice: any;
-				shippingPrice: any;
-				totalPrice: any;
-				order_note: any;
-				promo_code: any;
-				product: any;
-			};
-			user: { _id: any };
-		},
-		res: {
-			status: (
-				arg0: number
-			) => { (): any; new (): any; send: { (arg0: { message: string; data: any }): void; new (): any } };
-		}
-	) => {
-		try {
-			const newOrder = new Order({
-				orderItems: req.body.orderItems,
-				user: req.user._id,
-				shipping: req.body.shipping,
-				payment: req.body.payment,
-				itemsPrice: req.body.itemsPrice,
-				taxPrice: req.body.taxPrice,
-				shippingPrice: req.body.shippingPrice,
-				totalPrice: req.body.totalPrice,
-				order_note: req.body.order_note,
-				promo_code: req.body.promo_code,
-				// product: req.body.product,
-				deleted: false
-			});
-			// const newOrderCreated = await Order.create(req.body);
-
-			const newOrderCreated = await newOrder.save();
-			res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
-		} catch (error) {
-			console.log({ error });
-		}
-	}
-);
-
-router.put(
-	'/:id/pay',
-	isAuth,
-	async (
-		req: {
-			params: { id: any };
-			body: { token: any };
-		},
-		res: {
-			send: (arg0: { message: string; order: any }) => void;
-			status: (
-				arg0: number
-			) => { (): any; new (): any; send: { (arg0: { message: string }): void; new (): any } };
-		}
-	) => {
-		try {
-			const order = await Order.findById(req.params.id).populate('user');
-			const charge = await stripe.charges.create({
-				amount: (order.totalPrice * 100).toFixed(0),
-				currency: 'usd',
-				description: `Order Paid`,
-				source: req.body.token.id
-			});
-			if (charge) {
-				order.isPaid = true;
-				order.paidAt = Date.now();
-				order.payment = {
-					paymentMethod: 'stripe',
-					charge: charge
-				};
-				const updatedOrder = await order.save();
-				res.send({ message: 'Order Paid.', order: updatedOrder });
-			} else {
-				res.status(404).send({ message: 'Order not found.' });
-			}
-		} catch (error) {
-			console.log({ error });
-			res.send(error);
-		}
-	}
-);
-router.put('/:id/refund', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+router.post('/', isAuth, async (req: any, res: any) => {
 	try {
-		// console.log({ refund: req.body });
-		// const updated_order = req.body;
+		const newOrder = new Order({
+			orderItems: req.body.orderItems,
+			user: req.user._id,
+			shipping: req.body.shipping,
+			payment: req.body.payment,
+			itemsPrice: req.body.itemsPrice,
+			taxPrice: req.body.taxPrice,
+			shippingPrice: req.body.shippingPrice,
+			totalPrice: req.body.totalPrice,
+			order_note: req.body.order_note,
+			promo_code: req.body.promo_code,
+			deleted: false
+		});
+		const newOrderCreated = await newOrder.save();
+		if (newOrderCreated) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 201,
+				success: true
+			});
+			res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Creating Order.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			success: false
+		});
+	}
+});
+
+router.put('/:id/pay', isAuth, async (req: any, res: any) => {
+	try {
+		const order = await Order.findById(req.params.id).populate('user');
+		const charge = await stripe.charges.create({
+			amount: (order.totalPrice * 100).toFixed(0),
+			currency: 'usd',
+			description: `Order Paid`,
+			source: req.body.token.id
+		});
+		if (charge) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ charge ],
+				status: 201,
+				success: true
+			});
+			order.isPaid = true;
+			order.paidAt = Date.now();
+			order.payment = {
+				paymentMethod: 'stripe',
+				charge: charge
+			};
+			const updatedOrder = await order.save();
+			if (updatedOrder) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Order',
+					data: [ updatedOrder ],
+					status: 201,
+					success: true
+				});
+				res.send({ message: 'Order Paid.', order: updatedOrder });
+			}
+		} else {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ charge ],
+				status: 404,
+				success: false
+			});
+			res.status(404).send({ message: 'Order not found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			success: false
+		});
+	}
+});
+
+router.put('/:id/refund', async (req: any, res: any) => {
+	try {
 		const order = await Order.findById(req.params.id);
-		// console.log({ id: order.payment.charge.id });
-		// console.log({ payment: order.payment });
-		// console.log({ refund_amount: req.body.refund_amount });
 		const refund = await stripe.refunds.create({
 			charge: order.payment.charge.id,
 			amount: req.body.refund_amount * 100
 		});
-		// console.log({ refund });
 		if (refund) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ refund ],
+				status: 201,
+				success: true
+			});
 			order.isRefunded = true;
 			order.refundedAt = Date.now();
 			order.payment = {
@@ -322,12 +372,36 @@ router.put('/:id/refund', async (req: { body: any; params: { id: any } }, res: {
 				refund_reason: [ ...order.payment.refund_reason, req.body.refund_reason ]
 			};
 			const updated = await Order.updateOne({ _id: req.params.id }, order);
-			console.log({ refund: updated });
-			// Send the request back to the front end
-			res.send(updated);
+			if (updated) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Order',
+					data: [ updated ],
+					status: 201,
+					success: true
+				});
+				res.send(updated);
+			} else {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updated ],
+					status: 404,
+					success: false
+				});
+				res.status(404).send({ message: 'Order not Updated.' });
+			}
 		}
-	} catch (err) {
-		console.log(err);
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			success: false
+		});
 	}
 });
 
@@ -374,16 +448,39 @@ router.put(
 	}
 );
 
-router.put('/:id/update', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+router.put('/:id/update', async (req: any, res: any) => {
 	try {
-		console.log({ update: req.body });
 		const updated_order = req.body;
 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		console.log({ update: updated_order });
-		// Send the request back to the front end
-		res.send(updated_order);
-	} catch (err) {
-		console.log(err);
+		if (updated) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ updated ],
+				status: 201,
+				success: true
+			});
+			res.send(updated_order);
+		} else {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ updated ],
+				status: 404,
+				success: false
+			});
+			res.status(404).send({ message: 'Order not Updated.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			success: false
+		});
 	}
 });
 
