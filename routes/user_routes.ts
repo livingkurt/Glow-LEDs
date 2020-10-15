@@ -41,7 +41,8 @@ router.get('/', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'User',
 			data: users,
-			error: {}
+			status: 200,
+			success: true
 		});
 		res.send(users);
 	} catch (error) {
@@ -49,39 +50,96 @@ router.get('/', async (req, res) => {
 			method: 'GET',
 			path: req.originalUrl,
 			collection: 'User',
-			error
+			error,
+			status: 500,
+			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Users' });
 	}
 });
 
 router.get('/:id', isAuth, async (req, res) => {
-	console.log(req.params.id);
-	const user = await User.findOne({ _id: req.params.id });
-	if (user) {
+	try {
+		const user = await User.findOne({ _id: req.params.id });
+		if (user) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 200,
+				success: true
+			});
+			res.send(user);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 404,
+				success: false
+			});
+			res.status(404).send('Order Not Found.');
+		}
 		res.send(user);
-	} else {
-		res.status(404).send('Order Not Found.');
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting User' });
 	}
 });
 
 router.delete('/:id', isAuth, async (req, res) => {
-	// const user = await User.findOne({ _id: req.params.id });
-	// if (user) {
-	// 	const deletedUser = await user.remove();
-	// 	res.send(deletedUser);
-	// } else {
-	// 	res.status(404).send('Order Not Found.');
-	// }
-	const user = await User.findById(req.params.id);
-	const updated_user = { ...user, deleted: true };
-	const message: any = { message: 'User Deleted' };
-	// const deleted_user = await updated_user.save();
-	const deleted_user = await User.updateOne({ _id: req.params.id }, { deleted: true });
-	if (deleted_user) {
-		// await deletedProduct.remove();
-		res.send(message);
-	} else {
-		res.send('Error in Deletion.');
+	try {
+		const user = await User.findById(req.params.id);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'User',
+			data: [ user ],
+			status: 200,
+			success: true
+		});
+		const message: any = { message: 'User Deleted' };
+		const deleted_user = await User.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_user) {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ deleted_user ],
+				status: 200,
+				success: true
+			});
+			res.send(message);
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ deleted_user ],
+				status: 404,
+				success: false
+			});
+			res.send('Error in Deletion.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'DELETE',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Deleting User' });
 	}
 });
 
@@ -90,6 +148,14 @@ router.put('/resetpassword', async (req, res) => {
 	try {
 		const user: any = await User.findOne({ _id: req.body.user_id });
 		if (!user) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 400,
+				success: false
+			});
 			return res.status(400).json({ email: 'User Does Not Exist' });
 		} else {
 			bcrypt.genSalt(10, (err: any, salt: any) => {
@@ -97,44 +163,126 @@ router.put('/resetpassword', async (req, res) => {
 					if (err) throw err;
 					user.password = hash;
 					await user.save();
+					log_request({
+						method: 'PUT',
+						path: req.originalUrl,
+						collection: 'User',
+						data: [ user ],
+						status: 202,
+						success: true
+					});
 					res.status(202).send({ msg: 'Password Saved' });
 				});
 			});
 		}
 	} catch (error) {
-		console.log(error);
-		res.send(error);
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Resetting User Password' });
 	}
 });
+
 router.post('/', async (req, res) => {
-	let user: any = {};
-	let hashed_password: string = '';
-	const temporary_password = '123456';
-	bcrypt.genSalt(10, (err: any, salt: any) => {
-		bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
-			if (err) throw err;
-			hashed_password = hash;
-			user = { ...req.body, password: hashed_password };
-			const newUser = await User.create(user);
-			if (newUser) {
-				return res.status(201).send({ message: 'New User Created', data: newUser });
-			}
-			return res.status(500).send({ message: ' Error in Creating User.' });
+	try {
+		let user: any = {};
+		let hashed_password: string = '';
+		const temporary_password = '123456';
+		bcrypt.genSalt(10, (err: any, salt: any) => {
+			bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
+				if (err) throw err;
+				hashed_password = hash;
+				user = { ...req.body, password: hashed_password };
+				const newUser = await User.create(user);
+				if (newUser) {
+					log_request({
+						method: 'POST',
+						path: req.originalUrl,
+						collection: 'User',
+						data: [ newUser ],
+						status: 200,
+						success: true
+					});
+					return res.status(201).send({ message: 'New User Created', data: newUser });
+				} else {
+					log_request({
+						method: 'POST',
+						path: req.originalUrl,
+						collection: 'User',
+						data: [ newUser ],
+						status: 500,
+						success: false
+					});
+					return res.status(500).send({ message: ' Error in Creating User.' });
+				}
+			});
 		});
-	});
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating User' });
+	}
 });
 
 router.put('/:id', isAuth, async (req, res) => {
-	console.log({ user_routes_put: req.body });
-	const userId = req.params.id;
-	const user: any = await User.findById(userId);
-	if (user) {
-		const updatedUser = await User.updateOne({ _id: userId }, req.body);
-		if (updatedUser) {
-			return res.status(200).send({ message: 'User Updated', data: updatedUser });
+	try {
+		console.log({ user_routes_put: req.body });
+		const userId = req.params.id;
+		const user: any = await User.findById(userId);
+		if (user) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 200,
+				success: true
+			});
+			const updatedUser = await User.updateOne({ _id: userId }, req.body);
+			if (updatedUser) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'User',
+					data: [ updatedUser ],
+					status: 200,
+					success: true
+				});
+				return res.status(200).send({ message: 'User Updated', data: updatedUser });
+			}
+		} else {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Updating User.' });
 		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating User' });
 	}
-	return res.status(500).send({ message: ' Error in Updating User.' });
 });
 
 router.post('/passwordreset', async (req, res) => {
@@ -143,51 +291,113 @@ router.post('/passwordreset', async (req, res) => {
 		const user = await User.findOne({ email });
 		console.log({ user });
 		if (user) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 200,
+				success: true
+			});
 			res.send(user);
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 500,
+				success: false
+			});
+			res.status(404).send({ msg: 'User Not Found' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating User' });
+	}
+});
+router.put('/update/:id', isAuth, async (req, res) => {
+	try {
+		console.log({ '/update/:id': req.body });
+		// try {
+		const userId = req.params.id;
+
+		const user: any = await User.findById(userId);
+		console.log('/update/:id');
+		if (user) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 200,
+				success: true
+			});
+			user.first_name = req.body.first_name || user.first_name;
+			user.last_name = req.body.last_name || user.last_name;
+			user.email = req.body.email || user.email;
+			// user.password = req.body.password || user.password;
+			user.isAdmin = req.body.admin || user.isAdmin;
+			user.isVerified = req.body.verified || user.isVerified;
+			user.sponsor = req.body.sponsor || user.sponsor;
+			user.email_subscription = req.body.email_subscription;
+			user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
+			user.deleted = req.body.deleted || false;
+			const updatedUser = await user.save();
+			if (updatedUser) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'User',
+					data: [ updatedUser ],
+					status: 200,
+					success: true
+				});
+				// const updatedUser = await User.updateOne({ _id: userId }, user);
+				console.log({ updatedUser });
+				res.send({
+					_id: updatedUser.id,
+					first_name: updatedUser.first_name,
+					last_name: updatedUser.last_name,
+					email: updatedUser.email,
+					sponsor: updatedUser.sponsor,
+					email_subscription: updatedUser.email_subscription,
+					is_sponsored: updatedUser.is_sponsored,
+					isVerified: updatedUser.isVerified,
+					isAdmin: updatedUser.isAdmin,
+					token: getToken(updatedUser)
+				});
+			} else {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updatedUser ],
+					status: 500,
+					success: false
+				});
+				return res.status(500).send({ message: ' Error in Updating User.' });
+			}
 		} else {
 			res.status(404).send({ msg: 'User Not Found' });
 		}
 	} catch (error) {
-		console.log(error);
-		res.send(error);
-	}
-});
-
-router.put('/update/:id', isAuth, async (req, res) => {
-	console.log({ '/update/:id': req.body });
-	// try {
-	const userId = req.params.id;
-
-	const user: any = await User.findById(userId);
-	console.log('/update/:id');
-	if (user) {
-		user.first_name = req.body.first_name || user.first_name;
-		user.last_name = req.body.last_name || user.last_name;
-		user.email = req.body.email || user.email;
-		// user.password = req.body.password || user.password;
-		user.isAdmin = req.body.admin || user.isAdmin;
-		user.isVerified = req.body.verified || user.isVerified;
-		user.sponsor = req.body.sponsor || user.sponsor;
-		user.email_subscription = req.body.email_subscription;
-		user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
-		user.deleted = req.body.deleted || false;
-		const updatedUser = await user.save();
-		// const updatedUser = await User.updateOne({ _id: userId }, user);
-		console.log({ updatedUser });
-		res.send({
-			_id: updatedUser.id,
-			first_name: updatedUser.first_name,
-			last_name: updatedUser.last_name,
-			email: updatedUser.email,
-			sponsor: updatedUser.sponsor,
-			email_subscription: updatedUser.email_subscription,
-			is_sponsored: updatedUser.is_sponsored,
-			isVerified: updatedUser.isVerified,
-			isAdmin: updatedUser.isAdmin,
-			token: getToken(updatedUser)
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
 		});
-	} else {
-		res.status(404).send({ msg: 'User Not Found' });
+		res.status(500).send({ error, message: 'Error Creating User' });
 	}
 });
 
@@ -223,6 +433,14 @@ router.put('/verify/:id', async (req, res) => {
 		console.log({ verify: userId });
 		const user: any = await User.findById(userId);
 		if (user) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 200,
+				success: true
+			});
 			user.first_name = req.body.first_name || user.first_name;
 			user.last_name = req.body.last_name || user.last_name;
 			user.email = req.body.email || user.email;
@@ -233,63 +451,138 @@ router.put('/verify/:id', async (req, res) => {
 			user.isVerified = true;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
-			res.send({
-				_id: updatedUser.id,
-				first_name: updatedUser.first_name,
-				last_name: updatedUser.last_name,
-				email: updatedUser.email,
-				sponsor: updatedUser.sponsor,
-				email_subscription: updatedUser.email_subscription,
-				is_sponsored: updatedUser.is_sponsored
-				// isVerified: updatedUser.isVerified,
-				// token: getToken(updatedUser)
-			});
+			if (updatedUser) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'User',
+					data: [ updatedUser ],
+					status: 200,
+					success: true
+				});
+				// const updatedUser = await User.updateOne({ _id: userId }, user);
+				console.log({ updatedUser });
+				res.send({
+					_id: updatedUser.id,
+					first_name: updatedUser.first_name,
+					last_name: updatedUser.last_name,
+					email: updatedUser.email,
+					sponsor: updatedUser.sponsor,
+					email_subscription: updatedUser.email_subscription,
+					is_sponsored: updatedUser.is_sponsored
+					// isVerified: updatedUser.isVerified,
+					// token: getToken(updatedUser)
+				});
+			} else {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updatedUser ],
+					status: 500,
+					success: false
+				});
+				return res.status(500).send({ message: ' Error in Updating User.' });
+			}
 			// res.status(202).send({ msg: 'Verified Account' });
 		} else {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ user ],
+				status: 404,
+				success: false
+			});
 			res.status(404).send({ msg: 'User Not Found' });
 		}
 	} catch (error) {
-		console.log(error);
-		res.send(error);
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Verifying User' });
 	}
 });
 
 router.post('/login', async (req, res) => {
-	// try {
-	const email = req.body.email;
-	const password = req.body.password;
+	try {
+		const email = req.body.email;
+		const password = req.body.password;
 
-	const login_user: any = await User.findOne({ email });
-	if (!login_user) {
-		return res.status(404).json({ emailnotfound: 'Email not found' });
-	}
-	if (!login_user.isVerified) {
-		return res.status(404).json({ emailnotfound: 'Account not Verified' });
-	}
-	// Check password
-	const isMatch = await bcrypt.compare(password, login_user.password);
-	if (isMatch) {
-		res.send({
-			_id: login_user.id,
-			first_name: login_user.first_name,
-			last_name: login_user.last_name,
-			email: login_user.email,
-			isAdmin: login_user.isAdmin,
-			sponsor: login_user.sponsor,
-			is_sponsored: login_user.is_sponsored,
-			email_subscription: login_user.email_subscription,
-			isVerified: login_user.isVerified,
-			token: getToken(login_user)
+		const login_user: any = await User.findOne({ email });
+		if (!login_user) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ login_user ],
+				status: 404,
+				success: false
+			});
+			return res.status(404).json({ emailnotfound: 'Email not found' });
+		}
+		if (!login_user.isVerified) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ login_user ],
+				status: 404,
+				success: false
+			});
+			return res.status(404).json({ emailnotfound: 'Account not Verified' });
+		}
+		// Check password
+		const isMatch = await bcrypt.compare(password, login_user.password);
+		if (isMatch) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ isMatch ],
+				status: 200,
+				success: true
+			});
+			res.send({
+				_id: login_user.id,
+				first_name: login_user.first_name,
+				last_name: login_user.last_name,
+				email: login_user.email,
+				isAdmin: login_user.isAdmin,
+				sponsor: login_user.sponsor,
+				is_sponsored: login_user.is_sponsored,
+				email_subscription: login_user.email_subscription,
+				isVerified: login_user.isVerified,
+				token: getToken(login_user)
+			});
+		} else {
+			log_error({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ isMatch ],
+				status: 500,
+				success: false
+			});
+			return res.status(400).json({ passwordincorrect: 'Password incorrect' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
 		});
-	} else {
-		return res.status(400).json({ passwordincorrect: 'Password incorrect' });
+		res.status(500).send({ error, message: 'Error Registering User' });
 	}
-	// } catch (error) {
-	// 	console.log(error);
-	// 	res.send(error);
-	// }
 });
-
 router.post('/register', async (req, res) => {
 	try {
 		const newUser: any = new User({
@@ -305,6 +598,14 @@ router.post('/register', async (req, res) => {
 		});
 		const user = await User.findOne({ email: newUser.email });
 		if (user) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 400,
+				success: false
+			});
 			return res.status(400).json({ email: 'Email already exists' });
 		} else {
 			bcrypt.genSalt(10, (err: any, salt: any) => {
@@ -312,6 +613,14 @@ router.post('/register', async (req, res) => {
 					if (err) throw err;
 					newUser.password = hash;
 					await newUser.save();
+					log_request({
+						method: 'POST',
+						path: req.originalUrl,
+						collection: 'User',
+						data: [ newUser ],
+						status: 200,
+						success: true
+					});
 					res.json({
 						_id: newUser.id,
 						first_name: newUser.first_name,
@@ -327,8 +636,15 @@ router.post('/register', async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.log(error);
-		res.send(error);
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Registering User' });
 	}
 });
 
@@ -336,12 +652,28 @@ router.post('/getuser/:id', async (req, res) => {
 	try {
 		const user: any = await User.findOne({ _id: req.params.id });
 		if (!user) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ user ],
+				status: 400,
+				success: false
+			});
 			return res.status(400).json({ email: "User Doesn't Exist" });
 		}
 		// Check password
 		const isMatch = await bcrypt.compare(req.body.current_password, user.password);
 		if (isMatch) {
 			// console.log({ user })
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				data: [ isMatch ],
+				status: 200,
+				success: true
+			});
 			res.send({
 				_id: user.id,
 				first_name: user.first_name,
@@ -355,11 +687,26 @@ router.post('/getuser/:id', async (req, res) => {
 				token: getToken(user)
 			});
 		} else {
-			return res.send(false);
+			log_error({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'User',
+				status: 500,
+				data: [ isMatch ],
+				success: false
+			});
+			return res.status(500).send({ message: 'Error Getting User' });
 		}
 	} catch (error) {
-		console.log(error);
-		res.send(error);
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'User',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting User' });
 	}
 });
 router.post('/checkemail', async (req, res) => {

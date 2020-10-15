@@ -68,8 +68,10 @@ router.get('/', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Products' });
 	}
 });
 
@@ -91,8 +93,10 @@ router.get('/originalcaps', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Original Caps' });
 	}
 });
 
@@ -114,8 +118,10 @@ router.get('/minicaps', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Mini Caps' });
 	}
 });
 
@@ -157,8 +163,10 @@ router.get('/:pathname', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Product' });
 	}
 });
 
@@ -205,8 +213,10 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Updating Product' });
 	}
 });
 
@@ -241,8 +251,10 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Deleting Product' });
 	}
 });
 
@@ -276,8 +288,10 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Creating Product' });
 	}
 });
 
@@ -342,8 +356,10 @@ router.post('/:pathname/reviews', isAuth, async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Creating Product Review' });
 	}
 });
 

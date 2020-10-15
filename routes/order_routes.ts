@@ -76,7 +76,7 @@ router.get('/occurrences', async (req: any, res: any) => {
 // 	res.send(final_result);
 // });
 
-router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
+router.get('/', isAuth, async (req: any, res: any) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		let user: any;
@@ -130,8 +130,10 @@ router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => 
 			path: req.originalUrl,
 			collection: 'Product',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
 	}
 });
 
@@ -153,8 +155,10 @@ router.get('/mine', isAuth, async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Your Orders' });
 	}
 });
 // router.get('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
@@ -200,8 +204,10 @@ router.get('/:id', isAuth, async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Order' });
 	}
 });
 
@@ -236,8 +242,10 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Deleting Order' });
 	}
 });
 
@@ -284,8 +292,10 @@ router.post('/', isAuth, async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Creating Order' });
 	}
 });
 
@@ -342,8 +352,10 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Paying for Order' });
 	}
 });
 
@@ -400,8 +412,10 @@ router.put('/:id/refund', async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Refunding Order' });
 	}
 });
 
@@ -420,6 +434,7 @@ router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: {
 		console.log(err);
 	}
 });
+
 router.put(
 	'/addsecondaryproduct',
 	async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
@@ -479,8 +494,10 @@ router.put('/:id/update', async (req: any, res: any) => {
 			path: req.originalUrl,
 			collection: 'Order',
 			error,
+			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Updating Order' });
 	}
 });
 

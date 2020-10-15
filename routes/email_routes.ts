@@ -61,7 +61,8 @@ router.get('/', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Email',
 			data: emails,
-			error: {}
+			status: 200,
+			success: true
 		});
 		res.send(emails);
 	} catch (error) {
@@ -69,33 +70,117 @@ router.get('/', async (req, res) => {
 			method: 'GET',
 			path: req.originalUrl,
 			collection: 'Email',
-			error
+			error,
+			status: 500,
+			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Emails' });
 	}
 });
+
+// router.get('/:id', async (req, res) => {
+// 	const email = await Email.findOne({ _id: req.params.id });
+// 	// console.log({ email });
+// 	if (email) {
+// 		res.send(email);
+// 	} else {
+// 		res.status(404).send({ message: 'Email Not Found.' });
+// 	}
+// });
 
 router.get('/:id', async (req, res) => {
-	const email = await Email.findOne({ _id: req.params.id });
-	// console.log({ email });
-	if (email) {
-		res.send(email);
-	} else {
-		res.status(404).send({ message: 'Email Not Found.' });
+	try {
+		const email = await Email.findOne({ _id: req.params.id });
+		console.log({ email });
+		console.log(req.params.id);
+		if (email) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ email ],
+				status: 200,
+				success: true
+			});
+			res.send(email);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ email ],
+				status: 404,
+				success: false
+			});
+			res.status(404).send({ message: 'Email Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Email',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Email' });
 	}
 });
 
+// router.put('/:id', isAuth, isAdmin, async (req, res) => {
+// 	console.log({ put: req.body });
+// 	const emailId = req.params.id;
+// 	const email: any = await Email.findById(emailId);
+// 	if (email) {
+// 		const updatedEmail = await Email.updateOne({ _id: emailId }, req.body);
+// 		console.log({ email_routes_post: updatedEmail });
+// 		if (updatedEmail) {
+// 			return res.status(200).send({ message: 'Email Updated', data: updatedEmail });
+// 		}
+// 	}
+// 	return res.status(500).send({ message: ' Error in Updating Email.' });
+// });
+
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
-	console.log({ put: req.body });
-	const emailId = req.params.id;
-	const email: any = await Email.findById(emailId);
-	if (email) {
-		const updatedEmail = await Email.updateOne({ _id: emailId }, req.body);
-		console.log({ email_routes_post: updatedEmail });
-		if (updatedEmail) {
-			return res.status(200).send({ message: 'Email Updated', data: updatedEmail });
+	try {
+		console.log({ email_routes_put: req.body });
+		const email_id = req.params.id;
+		const email: any = await Email.findById(email_id);
+		if (email) {
+			const updatedEmail = await Email.updateOne({ _id: email_id }, req.body);
+			if (updatedEmail) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Email',
+					data: [ email ],
+					status: 200,
+					success: true
+				});
+				return res.status(200).send({ message: 'Email Updated', data: updatedEmail });
+			}
+		} else {
+			log_error({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ email ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Updating Email.' });
 		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Email',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Email' });
 	}
-	return res.status(500).send({ message: ' Error in Updating Email.' });
 });
 
 router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
@@ -111,12 +196,87 @@ router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res:
 	}
 });
 
-router.post('/', async (req, res) => {
-	const newProduct = await Email.create(req.body);
-	if (newProduct) {
-		return res.status(201).send({ message: 'New Email Created', data: newProduct });
+router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const message: any = { message: 'Email Deleted' };
+		const deleted_email = await Email.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_email) {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ deleted_email ],
+				status: 200,
+				success: true
+			});
+			res.send(message);
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ deleted_email ],
+				status: 500,
+				success: false
+			});
+			res.send('Error in Deletion.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'DELETE',
+			path: req.originalUrl,
+			collection: 'Email',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Deleting Email' });
 	}
-	return res.status(500).send({ message: ' Error in Creating Email.' });
+});
+
+// router.post('/', async (req, res) => {
+// 	const newProduct = await Email.create(req.body);
+// 	if (newProduct) {
+// 		return res.status(201).send({ message: 'New Email Created', data: newProduct });
+// 	}
+// 	return res.status(500).send({ message: ' Error in Creating Email.' });
+// });
+
+router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const newEmail = await Email.create(req.body);
+		if (newEmail) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ newEmail ],
+				status: 201,
+				success: true
+			});
+			return res.status(201).send({ message: 'New Email Created', data: newEmail });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Email',
+				data: [ newEmail ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Creating Email.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Email',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating Email' });
+	}
 });
 
 let transporter = nodemailer.createTransport({

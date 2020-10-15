@@ -42,7 +42,8 @@ router.get('/', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Cart',
 			data: carts,
-			error: {}
+			status: 200,
+			success: true
 		});
 		res.send(carts);
 	} catch (error) {
@@ -50,55 +51,214 @@ router.get('/', async (req, res) => {
 			method: 'GET',
 			path: req.originalUrl,
 			collection: 'Cart',
-			error
+			error,
+			status: 500,
+			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Carts' });
 	}
 });
+
+// router.get('/:id', async (req, res) => {
+// 	const cart = await Cart.findOne({ _id: req.params.id });
+// 	console.log({ cart });
+// 	console.log(req.params.id);
+// 	if (cart) {
+// 		res.send(cart);
+// 	} else {
+// 		res.status(404).send({ message: 'Cart Not Found.' });
+// 	}
+// });
 
 router.get('/:id', async (req, res) => {
-	const cart = await Cart.findOne({ _id: req.params.id });
-	console.log({ cart });
-	console.log(req.params.id);
-	if (cart) {
-		res.send(cart);
-	} else {
-		res.status(404).send({ message: 'Cart Not Found.' });
+	try {
+		const cart = await Cart.findOne({ _id: req.params.id });
+		console.log({ cart });
+		console.log(req.params.id);
+		if (cart) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ cart ],
+				status: 200,
+				success: true
+			});
+			res.send(cart);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ cart ],
+				status: 404,
+				success: false
+			});
+			res.status(404).send({ message: 'Cart Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Cart',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Cart' });
 	}
 });
+
+// router.put('/:id', isAuth, isAdmin, async (req, res) => {
+// 	console.log({ cart_routes_put: req.body });
+// 	const cartId = req.params.id;
+// 	const cart: any = await Cart.findById(cartId);
+// 	if (cart) {
+// 		const updatedCart = await Cart.updateOne({ _id: cartId }, req.body);
+// 		if (updatedCart) {
+// 			return res.status(200).send({ message: 'Cart Updated', data: updatedCart });
+// 		}
+// 	}
+// 	return res.status(500).send({ message: ' Error in Updating Cart.' });
+// });
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
-	console.log({ cart_routes_put: req.body });
-	const cartId = req.params.id;
-	const cart: any = await Cart.findById(cartId);
-	if (cart) {
-		const updatedCart = await Cart.updateOne({ _id: cartId }, req.body);
-		if (updatedCart) {
-			return res.status(200).send({ message: 'Cart Updated', data: updatedCart });
+	try {
+		console.log({ cart_routes_put: req.body });
+		const cart_id = req.params.id;
+		const cart: any = await Cart.findById(cart_id);
+		if (cart) {
+			const updatedCart = await Cart.updateOne({ _id: cart_id }, req.body);
+			if (updatedCart) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Cart',
+					data: [ cart ],
+					status: 200,
+					success: true
+				});
+				return res.status(200).send({ message: 'Cart Updated', data: updatedCart });
+			}
+		} else {
+			log_error({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ cart ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Updating Cart.' });
 		}
-	}
-	return res.status(500).send({ message: ' Error in Updating Cart.' });
-});
-
-router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
-	const cart = await Cart.findById(req.params.id);
-	const updated_cart = { ...cart, deleted: true };
-	const message: any = { message: 'Cart Deleted' };
-	// const deleted_cart = await updated_cart.save();
-	const deleted_cart = await Cart.updateOne({ _id: req.params.id }, { deleted: true });
-	if (deleted_cart) {
-		// await deletedCart.remove();
-		res.send(message);
-	} else {
-		res.send('Error in Deletion.');
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Cart',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Cart' });
 	}
 });
 
-router.post('/', async (req, res) => {
-	const newCart = await Cart.create(req.body);
-	if (newCart) {
-		return res.status(201).send({ message: 'New Cart Created', data: newCart });
+// router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
+// 	const cart = await Cart.findById(req.params.id);
+// 	const updated_cart = { ...cart, deleted: true };
+// 	const message: any = { message: 'Cart Deleted' };
+// 	// const deleted_cart = await updated_cart.save();
+// 	const deleted_cart = await Cart.updateOne({ _id: req.params.id }, { deleted: true });
+// 	if (deleted_cart) {
+// 		// await deletedCart.remove();
+// 		res.send(message);
+// 	} else {
+// 		res.send('Error in Deletion.');
+// 	}
+// });
+
+router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const message: any = { message: 'Cart Deleted' };
+		const deleted_cart = await Cart.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_cart) {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ deleted_cart ],
+				status: 200,
+				success: true
+			});
+			res.send(message);
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ deleted_cart ],
+				status: 500,
+				success: false
+			});
+			res.send('Error in Deletion.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'DELETE',
+			path: req.originalUrl,
+			collection: 'Cart',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Deleting Cart' });
 	}
-	return res.status(500).send({ message: ' Error in Creating Cart.' });
+});
+
+// router.post('/', async (req, res) => {
+// 	const newCart = await Cart.create(req.body);
+// 	if (newCart) {
+// 		return res.status(201).send({ message: 'New Cart Created', data: newCart });
+// 	}
+// 	return res.status(500).send({ message: ' Error in Creating Cart.' });
+// });
+
+router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const newCart = await Cart.create(req.body);
+		if (newCart) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ newCart ],
+				status: 201,
+				success: true
+			});
+			return res.status(201).send({ message: 'New Cart Created', data: newCart });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Cart',
+				data: [ newCart ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Creating Cart.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Cart',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating Cart' });
+	}
 });
 
 // module.exports = router;

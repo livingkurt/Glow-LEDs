@@ -69,7 +69,8 @@ router.get('/', async (req, res) => {
 			path: req.originalUrl,
 			collection: 'Feature',
 			data: features,
-			error: {}
+			status: 200,
+			success: true
 		});
 		res.send(features);
 	} catch (error) {
@@ -77,55 +78,214 @@ router.get('/', async (req, res) => {
 			method: 'GET',
 			path: req.originalUrl,
 			collection: 'Feature',
-			error
+			error,
+			status: 500,
+			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Features' });
 	}
 });
+
+// router.get('/:id', async (req, res) => {
+// 	const feature = await Feature.findOne({ _id: req.params.id });
+// 	console.log({ feature });
+// 	console.log(req.params.id);
+// 	if (feature) {
+// 		res.send(feature);
+// 	} else {
+// 		res.status(404).send({ message: 'Feature Not Found.' });
+// 	}
+// });
 
 router.get('/:id', async (req, res) => {
-	const feature = await Feature.findOne({ _id: req.params.id });
-	console.log({ feature });
-	console.log(req.params.id);
-	if (feature) {
-		res.send(feature);
-	} else {
-		res.status(404).send({ message: 'Feature Not Found.' });
+	try {
+		const feature = await Feature.findOne({ _id: req.params.id });
+		console.log({ feature });
+		console.log(req.params.id);
+		if (feature) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ feature ],
+				status: 200,
+				success: true
+			});
+			res.send(feature);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ feature ],
+				status: 404,
+				success: false
+			});
+			res.status(404).send({ message: 'Feature Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Feature',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Feature' });
 	}
 });
+
+// router.put('/:id', isAuth, isAdmin, async (req, res) => {
+// 	console.log({ feature_routes_put: req.body });
+// 	const featureId = req.params.id;
+// 	const feature: any = await Feature.findById(featureId);
+// 	if (feature) {
+// 		const updatedFeature = await Feature.updateOne({ _id: featureId }, req.body);
+// 		if (updatedFeature) {
+// 			return res.status(200).send({ message: 'Feature Updated', data: updatedFeature });
+// 		}
+// 	}
+// 	return res.status(500).send({ message: ' Error in Updating Feature.' });
+// });
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
-	console.log({ feature_routes_put: req.body });
-	const featureId = req.params.id;
-	const feature: any = await Feature.findById(featureId);
-	if (feature) {
-		const updatedFeature = await Feature.updateOne({ _id: featureId }, req.body);
-		if (updatedFeature) {
-			return res.status(200).send({ message: 'Feature Updated', data: updatedFeature });
+	try {
+		console.log({ feature_routes_put: req.body });
+		const feature_id = req.params.id;
+		const feature: any = await Feature.findById(feature_id);
+		if (feature) {
+			const updatedFeature = await Feature.updateOne({ _id: feature_id }, req.body);
+			if (updatedFeature) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Feature',
+					data: [ feature ],
+					status: 200,
+					success: true
+				});
+				return res.status(200).send({ message: 'Feature Updated', data: updatedFeature });
+			}
+		} else {
+			log_error({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ feature ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Updating Feature.' });
 		}
-	}
-	return res.status(500).send({ message: ' Error in Updating Feature.' });
-});
-
-router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
-	const feature = await Feature.findById(req.params.id);
-	const updated_feature = { ...feature, deleted: true };
-	const message: any = { message: 'Feature Deleted' };
-	// const deleted_feature = await updated_feature.save();
-	const deleted_feature = await Feature.updateOne({ _id: req.params.id }, { deleted: true });
-	if (deleted_feature) {
-		// await deletedFeature.remove();
-		res.send(message);
-	} else {
-		res.send('Error in Deletion.');
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Feature',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Feature' });
 	}
 });
 
-router.post('/', async (req, res) => {
-	const newFeature = await Feature.create(req.body);
-	if (newFeature) {
-		return res.status(201).send({ message: 'New Feature Created', data: newFeature });
+// router.delete('/:id', isAuth, isAdmin, async (req: { params: { id: any } }, res: { send: (arg0: string) => void }) => {
+// 	const feature = await Feature.findById(req.params.id);
+// 	const updated_feature = { ...feature, deleted: true };
+// 	const message: any = { message: 'Feature Deleted' };
+// 	// const deleted_feature = await updated_feature.save();
+// 	const deleted_feature = await Feature.updateOne({ _id: req.params.id }, { deleted: true });
+// 	if (deleted_feature) {
+// 		// await deletedFeature.remove();
+// 		res.send(message);
+// 	} else {
+// 		res.send('Error in Deletion.');
+// 	}
+// });
+
+router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const message: any = { message: 'Feature Deleted' };
+		const deleted_feature = await Feature.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_feature) {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ deleted_feature ],
+				status: 200,
+				success: true
+			});
+			res.send(message);
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ deleted_feature ],
+				status: 500,
+				success: false
+			});
+			res.send('Error in Deletion.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'DELETE',
+			path: req.originalUrl,
+			collection: 'Feature',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Deleting Feature' });
 	}
-	return res.status(500).send({ message: ' Error in Creating Feature.' });
+});
+
+// router.post('/', async (req, res) => {
+// 	const newFeature = await Feature.create(req.body);
+// 	if (newFeature) {
+// 		return res.status(201).send({ message: 'New Feature Created', data: newFeature });
+// 	}
+// 	return res.status(500).send({ message: ' Error in Creating Feature.' });
+// });
+
+router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const newFeature = await Feature.create(req.body);
+		if (newFeature) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ newFeature ],
+				status: 201,
+				success: true
+			});
+			return res.status(201).send({ message: 'New Feature Created', data: newFeature });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: [ newFeature ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Creating Feature.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Feature',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating Feature' });
+	}
 });
 
 // module.exports = router;
