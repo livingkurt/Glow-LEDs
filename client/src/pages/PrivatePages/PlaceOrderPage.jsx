@@ -530,20 +530,20 @@ const PlaceOrderPage = (props) => {
 							<div>
 								<button
 									onClick={create_order_without_paying}
-									className="button primary full-width mb-12px"
+									className="button secondary full-width mb-12px"
 								>
 									Create Order Without Paying
 								</button>
 
 								<div className="ai-c h-25px mv-10px mb-30px jc-c">
-									<div className="custom-select">
+									<div className="custom-select w-100per">
 										<select
-											className="qty_select_dropdown"
+											className="qty_select_dropdown w-100per"
 											defaultValue={user_data.first_name}
 											onChange={(e) => set_user(JSON.parse(e.target.value))}
 										>
 											<option key={1} defaultValue="">
-												---Choose Product as a Template---
+												---Choose User for Order---
 											</option>
 											{users.map((user, index) => (
 												<option key={index} value={JSON.stringify(user)}>

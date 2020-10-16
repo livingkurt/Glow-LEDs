@@ -540,7 +540,7 @@ const PlaceOrderPublicPage = (props) => {
 											onChange={(e) => set_user(JSON.parse(e.target.value))}
 										>
 											<option key={1} defaultValue="">
-												---Choose Product as a Template---
+												---Choose User for Order---
 											</option>
 											{users.map((user, index) => (
 												<option key={index} value={JSON.stringify(user)}>
