@@ -330,7 +330,7 @@ router.post('/announcement', async (req, res) => {
 		transporter.sendMail(mailOptions, (err, data) => {
 			if (err) {
 				console.log('Error Occurs', err);
-				res.send(err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
 			} else {
 				console.log('Announcement Email Sent to ' + email);
 				// res.send('Announcement Email Sent to ' + email);
@@ -361,10 +361,10 @@ router.post('/contact', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Contact Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -390,10 +390,10 @@ router.post('/contactconfirmation', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Contact Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -411,10 +411,10 @@ router.post('/passwordreset', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Password Reset Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -432,10 +432,10 @@ router.post('/verified', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Registration Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -453,10 +453,10 @@ router.post('/verify', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Verification Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -480,10 +480,10 @@ router.post('/order', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Order Email Sent to ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -510,10 +510,10 @@ router.post('/refund', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Order Email Sent to ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -535,10 +535,10 @@ router.post('/order', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Order Email Sent to ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -562,10 +562,10 @@ router.post('/sale', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('New Order Made by ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -588,10 +588,10 @@ router.post('/paid', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('New Order Paid by ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -612,10 +612,10 @@ router.post('/notpaid', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Order Not Complete for ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -634,10 +634,10 @@ router.post('/notverified', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Not Verified Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -660,10 +660,10 @@ router.post('/orderpaid', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('New Order Paid by ' + req.body.shipping.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -691,10 +691,10 @@ router.post('/shipping', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Shipping Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });
@@ -718,10 +718,10 @@ router.post('/delivery', async (req, res) => {
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			res.send(err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Delivery Email Sent to ' + req.body.first_name);
-			res.send('Email Successfully Sent');
+			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 });

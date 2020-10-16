@@ -156,7 +156,7 @@ router.put('/resetpassword', async (req, res) => {
 				status: 400,
 				success: false
 			});
-			return res.status(400).json({ email: 'User Does Not Exist' });
+			return res.status(400).send({ message: 'User Does Not Exist' });
 		} else {
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
@@ -715,8 +715,7 @@ router.post('/checkemail', async (req, res) => {
 		const user: any = await User.findOne({ email: req.body.email });
 		console.log(user);
 		if (user) {
-			return res.send({ message: 'User Already Exists' });
-			// return res.status(400).json({ email: 'User Already Exists' });
+			return res.status(400).send({ message: 'User Already Exists' });
 		}
 		// res.json({ message: "User Already Exists" })
 		res.status(200).send({ message: 'No User Found' });
