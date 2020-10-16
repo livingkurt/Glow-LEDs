@@ -461,32 +461,32 @@ router.post('/verify', async (req, res) => {
 	});
 });
 
-router.post('/order', async (req, res) => {
-	console.log({ order: req.body });
-	// console.log({ order: req.body.token });
-	// console.log({ order: req.body.token.card.last4 });
+// router.post('/order', async (req, res) => {
+// 	console.log({ order: req.body });
+// 	// console.log({ order: req.body.token });
+// 	// console.log({ order: req.body.token.card.last4 });
 
-	const paid = 'Paid';
-	const shipped = 'Not Shipped';
-	// const delivered = "Not Shipped"
-	let user = {};
-	let mailOptions = {
-		from: process.env.DISPLAY_EMAIL,
-		to: req.body.shipping.email,
-		subject: 'Glow LEDs Order Confirmation',
-		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed', paid, shipped }), styles())
-	};
+// 	const paid = 'Paid';
+// 	const shipped = 'Not Shipped';
+// 	// const delivered = "Not Shipped"
+// 	let user = {};
+// 	let mailOptions = {
+// 		from: process.env.DISPLAY_EMAIL,
+// 		to: req.body.shipping.email,
+// 		subject: 'Glow LEDs Order Confirmation',
+// 		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed', paid, shipped }), styles())
+// 	};
 
-	transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			console.log('Error Occurs', err);
-			res.status(500).send({ error: err, message: 'Error Sending Email' });
-		} else {
-			console.log('Order Email Sent to ' + req.body.shipping.first_name);
-			res.status(200).send({ message: 'Email Successfully Sent' });
-		}
-	});
-});
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log('Order Email Sent to ' + req.body.shipping.first_name);
+// 			res.status(200).send({ message: 'Email Successfully Sent' });
+// 		}
+// 	});
+// });
 router.post('/refund', async (req, res) => {
 	console.log({ refund: req.body });
 	// console.log({ order: req.body.token.card.last4 });

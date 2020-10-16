@@ -113,8 +113,8 @@ export const createPayOrderGuest = (
 		console.log({ paid });
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
 
-		// axios.post('/api/emails/order', { ...newOrder, user_data, token });
-		// axios.post('/api/emails/sale', { ...newOrder, user_data, token });
+		axios.post('/api/emails/order', { ...newOrder, token });
+		axios.post('/api/emails/sale', { ...newOrder, token });
 		Cookie.remove('shipping');
 		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
