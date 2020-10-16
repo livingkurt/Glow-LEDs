@@ -4,7 +4,7 @@ import { FlexContainer } from '../ContainerComponents';
 require('dotenv').config();
 // Components
 
-const Loading = (props) => {
+const LoadingPayment = (props) => {
 	const loading_message = () => {
 		setTimeout(() => {
 			return <h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
@@ -26,7 +26,9 @@ const Loading = (props) => {
 			) : props.error ? (
 				<div className="error_message jc-c column">
 					<h2 className="ta-c mv-5px">Error: {props.error}</h2>
-					<p className="ta-c mv-5px">Please Try a Different Card if Error Persists.</p>
+					<p className="ta-c mv-5px fs">
+						Please Try a Different Card if Error Persists and Contact Glow LEDs for Support
+					</p>
 				</div>
 			) : (
 				props.children
@@ -35,4 +37,4 @@ const Loading = (props) => {
 	);
 };
 
-export default Loading;
+export default LoadingPayment;

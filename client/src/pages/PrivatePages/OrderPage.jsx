@@ -9,7 +9,7 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import MetaTags from 'react-meta-tags';
 import API from '../../utils/API';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 
 require('dotenv').config();
 
@@ -170,9 +170,31 @@ const OrderPage = (props) => {
 		// create an order
 		console.log({ cartItems });
 		dispatch(payOrder(order, token));
-		empty_cart();
+		// empty_cart();
 		set_payment_loading(true);
 	};
+
+	useEffect(
+		() => {
+			if (successPay && order) {
+				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+				set_payment_loading(false);
+				empty_cart();
+			} else if (errorPay) {
+				console.log({ errorPay });
+			}
+		},
+		[ successPay ]
+	);
+
+	useEffect(
+		() => {
+			if (errorPay) {
+				set_payment_loading(false);
+			}
+		},
+		[ errorPay ]
+	);
 
 	const handleChangeFor = (type) => ({ error }) => {
 		/* handle error */
@@ -212,19 +234,44 @@ const OrderPage = (props) => {
 					</Link>
 				</FlexContainer>
 			)}
-			<Loading loading={payment_loading} />
-			{payment_loading && (
+			{/* <LoadingPayments loading={payment_loading} error={errorPay} /> */}
+			<div>
+				{payment_loading ? (
+					<div className="jc-c column">
+						<img src={process.env.PUBLIC_URL + '/loading.gif'} className="loading_gif" alt="loading" />
+						<img
+							src={process.env.PUBLIC_URL + '/loading_overlay.png'}
+							className="loading_png"
+							alt="loading"
+						/>
+						<div className="payment_message">
+							<h2 className="ta-c">Wait a moment while we process your Payment</h2>
+							<p className="ta-c">Please Do not Refresh Page</p>
+						</div>
+					</div>
+				) : errorPay ? (
+					<div className="error_message jc-c column">
+						<h2 className="ta-c mv-5px">Error: {errorPay}</h2>
+						<p className="ta-c mv-5px fs">
+							Please Try a Different Card if Error Persists and Contact Glow LEDs for Support
+						</p>
+					</div>
+				) : (
+					''
+				)}
+			</div>
+			{/* {payment_loading && (
 				<div className="payment_message">
 					<p>Wait a moment while we process your Payment</p>
 					<p>Please Do not Refresh Page</p>
 				</div>
-			)}
-			{errorPay && (
+			)} */}
+			{/* {errorPay && (
 				<div className="payment_error_message">
 					<p>Your Payment has Failed</p>
 					<p>Please Check your card number or Contact Support for assistance</p>
 				</div>
-			)}
+			)} */}
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>

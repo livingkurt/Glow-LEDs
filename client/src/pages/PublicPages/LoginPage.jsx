@@ -16,6 +16,7 @@ const LoginPage = (props) => {
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { loading, userInfo, error } = userLogin;
+	console.log({ userLogin });
 	const dispatch = useDispatch();
 	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
 
@@ -65,12 +66,13 @@ const LoginPage = (props) => {
 					content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
 				/>
 			</MetaTags>
-			<Loading loading={loading} error={error} />
+
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li style={{ display: 'flex', flexDirection: 'column' }}>
 						<h1>Login </h1>
 					</li>
+					<Loading loading={loading} error={error} />
 					{/* <li>
 						<FlexContainer h_center>
 							{error && (

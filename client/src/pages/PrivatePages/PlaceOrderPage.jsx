@@ -211,8 +211,7 @@ const PlaceOrderPage = (props) => {
 	);
 	useEffect(
 		() => {
-			if (successPay && order) {
-				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+			if (errorPay) {
 				set_payment_loading(false);
 			}
 		},
@@ -314,20 +313,6 @@ const PlaceOrderPage = (props) => {
 				<CheckoutSteps step1 />
 			)}
 			<LoadingPayments loading={payment_loading} error={error} />
-			{/* {payment_loading && (
-				<div className="payment_message">
-					<h2 className="ta-c">Wait a moment while we process your Payment</h2>
-					<p className="ta-c">Please Do not Refresh Page</p>
-				</div>
-			)} */}
-			{/* {error && (
-				<div className="payment_error_message">
-					<p>Your Payment has Failed</p>
-					<p>Please Check your card number or Contact Glow LEDs for assistance</p>
-				</div>
-			)} */}
-
-			{/* <Loading loading={loadingPay} error={errorPay} /> */}
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
@@ -360,13 +345,6 @@ const PlaceOrderPage = (props) => {
 							</div>
 						</FlexContainer>
 					</div>
-
-					{/* <div>
-						<h1>Payment</h1>
-						
-						<div className="label">Payment Method: paypal</div>
-					</div> */}
-					{/* <div className="label">Payment Method: {cart.payment.paymentMethod}</div> */}
 					<div>
 						<ul className="cart-list-container">
 							<li>

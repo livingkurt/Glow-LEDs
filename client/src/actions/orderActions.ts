@@ -83,6 +83,33 @@ export const createOrder = (
 	}
 };
 
+export const payOrder = (order: any, token: any) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: ORDER_PAY_REQUEST, payload: token });
+		const { userLogin: { userInfo: user_data } } = getState();
+		const { data } = await axios.put(
+			'/api/orders/' + order._id + '/pay',
+			{ token },
+			{
+				headers: { Authorization: 'Bearer ' + user_data.token }
+			}
+		);
+		// const res = await axios.post('api/stripe', user_data.token);
+		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+		console.log({ order: data.order });
+		axios.post('/api/emails/paid', { ...data.order, user_data, token });
+		axios.post('/api/emails/orderpaid', { ...data.order, user_data, token });
+	} catch (error) {
+		console.log({ error_message: error.response.data.message });
+		console.log({ error: error });
+		console.log({ error_response: error.response });
+		dispatch({ type: ORDER_PAY_FAIL, payload: error.response.data.message });
+	}
+};
+
 export const listMyOrders = () => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -140,30 +167,6 @@ export const detailsOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: ORDER_DETAILS_FAIL, payload: error.response.data.message });
-	}
-};
-
-export const payOrder = (order: any, token: any) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
-	try {
-		dispatch({ type: ORDER_PAY_REQUEST, payload: token });
-		const { userLogin: { userInfo: user_data } } = getState();
-		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/pay',
-			{ token },
-			{
-				headers: { Authorization: 'Bearer ' + user_data.token }
-			}
-		);
-		// const res = await axios.post('api/stripe', user_data.token);
-		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-		console.log({ order: data.order });
-		axios.post('/api/emails/paid', { ...data.order, user_data, token });
-		axios.post('/api/emails/orderpaid', { ...data.order, user_data, token });
-	} catch (error) {
-		dispatch({ type: ORDER_PAY_FAIL, payload: error.response.data.message });
 	}
 };
 
