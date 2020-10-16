@@ -24,7 +24,7 @@ const LoadingPayment = (props) => {
 					{loading_message()}
 				</div>
 			) : props.error ? (
-				<div className="error_message jc-c column">
+				<div className="error_message_payment jc-c column">
 					<h2 className="ta-c mv-5px">Error: {props.error}</h2>
 					<p className="ta-c mv-5px fs">
 						Please Try a Different Card if Error Persists and Contact Glow LEDs for Support

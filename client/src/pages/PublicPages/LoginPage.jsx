@@ -73,6 +73,28 @@ const LoginPage = (props) => {
 						<h1>Login </h1>
 					</li>
 					<Loading loading={loading} error={error} />
+					{/* <div>
+						{loading ? (
+							<div className="jc-c column">
+								<img
+									src={process.env.PUBLIC_URL + '/loading.gif'}
+									className="loading_gif"
+									alt="loading"
+								/>
+								<img
+									src={process.env.PUBLIC_URL + '/loading_overlay.png'}
+									className="loading_png"
+									alt="loading"
+								/>
+							</div>
+						) : error ? (
+							<div className="error_message jc-c column">
+								<h2 className="ta-c mv-5px">Error: {error}</h2>
+							</div>
+						) : (
+							''
+						)}
+					</div> */}
 					{/* <li>
 						<FlexContainer h_center>
 							{error && (

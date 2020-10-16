@@ -524,7 +524,7 @@ router.post('/login', async (req, res) => {
 				status: 404,
 				success: false
 			});
-			return res.status(404).json({ emailnotfound: 'Email not found' });
+			return res.status(404).send({ message: 'Email not found' });
 		}
 		if (!login_user.isVerified) {
 			log_request({
@@ -535,7 +535,7 @@ router.post('/login', async (req, res) => {
 				status: 404,
 				success: false
 			});
-			return res.status(404).json({ emailnotfound: 'Account not Verified' });
+			return res.status(404).send({ message: 'Account not Verified' });
 		}
 		// Check password
 		const isMatch = await bcrypt.compare(password, login_user.password);
@@ -569,7 +569,7 @@ router.post('/login', async (req, res) => {
 				status: 500,
 				success: false
 			});
-			return res.status(400).json({ passwordincorrect: 'Password incorrect' });
+			return res.status(400).send({ message: 'Password incorrect' });
 		}
 	} catch (error) {
 		log_error({
@@ -580,7 +580,7 @@ router.post('/login', async (req, res) => {
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Registering User' });
+		res.status(500).send({ error, message: 'Error Logging User' });
 	}
 });
 router.post('/register', async (req, res) => {
@@ -606,7 +606,7 @@ router.post('/register', async (req, res) => {
 				status: 400,
 				success: false
 			});
-			return res.status(400).json({ email: 'Email already exists' });
+			return res.status(400).send({ message: 'Email already exists' });
 		} else {
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(newUser.password, salt, async (err: any, hash: any) => {
@@ -660,7 +660,7 @@ router.post('/getuser/:id', async (req, res) => {
 				status: 400,
 				success: false
 			});
-			return res.status(400).json({ email: "User Doesn't Exist" });
+			return res.status(400).send({ message: "User Doesn't Exist" });
 		}
 		// Check password
 		const isMatch = await bcrypt.compare(req.body.current_password, user.password);
@@ -715,11 +715,11 @@ router.post('/checkemail', async (req, res) => {
 		const user: any = await User.findOne({ email: req.body.email });
 		console.log(user);
 		if (user) {
-			return res.json({ email: 'User Already Exists' });
+			return res.send({ message: 'User Already Exists' });
 			// return res.status(400).json({ email: 'User Already Exists' });
 		}
 		// res.json({ message: "User Already Exists" })
-		res.status(200).json({ email: 'No User Found' });
+		res.status(200).send({ message: 'No User Found' });
 	} catch (error) {
 		console.log(error);
 		res.send(error);
@@ -738,7 +738,7 @@ router.get('/createadmin', async (req, res) => {
 		});
 		const user = await User.findOne({ email: admin.email });
 		if (user) {
-			return res.status(400).json({ email: 'Email already exists' });
+			return res.status(400).send({ message: 'Email already exists' });
 		} else {
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(admin.password, salt, async (err: any, hash: any) => {

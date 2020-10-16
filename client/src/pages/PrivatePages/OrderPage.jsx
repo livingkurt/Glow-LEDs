@@ -234,8 +234,8 @@ const OrderPage = (props) => {
 					</Link>
 				</FlexContainer>
 			)}
-			{/* <LoadingPayments loading={payment_loading} error={errorPay} /> */}
-			<div>
+			<LoadingPayments loading={payment_loading} error={errorPay} />
+			{/* <div>
 				{payment_loading ? (
 					<div className="jc-c column">
 						<img src={process.env.PUBLIC_URL + '/loading.gif'} className="loading_gif" alt="loading" />
@@ -259,7 +259,7 @@ const OrderPage = (props) => {
 				) : (
 					''
 				)}
-			</div>
+			</div> */}
 			{/* {payment_loading && (
 				<div className="payment_message">
 					<p>Wait a moment while we process your Payment</p>
