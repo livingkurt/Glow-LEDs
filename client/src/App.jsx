@@ -199,7 +199,11 @@ const App = () => {
 								exact={true}
 								component={OrderPaymentCompletePublicPage}
 							/>
-							<Route path="/checkout/cart/:pathname?" component={CartPage} />
+							{/* <Route path="/checkout/cart/:pathname?" component={CartPage} /> */}
+							<Route
+								path="/checkout/cart/:pathname?"
+								component={(props) => <CartPage userInfo={userInfo} {...props} />}
+							/>
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
 								path="/collections/all/products/category/:category/subcategory/:subcategory?"

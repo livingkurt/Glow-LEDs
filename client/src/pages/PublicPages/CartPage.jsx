@@ -8,6 +8,7 @@ import MetaTags from 'react-meta-tags';
 import Cookie from 'js-cookie';
 import { humanize } from '../../utils/helper_functions';
 const CartPage = (props) => {
+	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 
 	const { cartItems } = cart;
@@ -23,8 +24,11 @@ const CartPage = (props) => {
 		if (cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 		} else {
-			// props.history.push('/account/login?redirect=/secure/checkout/placeorder');
-			props.history.push('/checkout/decision');
+			if (user_data) {
+				props.history.push('/account/login?redirect=/secure/checkout/placeorder');
+			} else {
+				props.history.push('/checkout/decision');
+			}
 		}
 	};
 	const no_adapters_warning = () => {
