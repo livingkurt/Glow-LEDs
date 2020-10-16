@@ -56,29 +56,25 @@ const LogsPage = (props) => {
 	};
 
 	const colors = [
-		{ name: 'Supplies', color: '#6d3e3e' },
-		{ name: 'Website', color: '#6d3e5c' },
-		{ name: 'Shipping', color: '#3e4c6d' },
-		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
+		{ name: '200-299', color: '#3e4c6d' },
+		{ name: '300-399', color: '#6d3e5c' },
+		{ name: '400-499', color: '#6d3e3e' },
+		{ name: '500-599', color: '#3f6561' }
 	];
 
 	const determine_color = (log) => {
 		let result = '';
-		if (log.category === 'Method') {
+		if (log.status <= 299 && log.status >= 200) {
 			result = colors[0].color;
 		}
-		if (log.category === 'Website') {
+		if (log.status <= 399 && log.status >= 300) {
 			result = colors[1].color;
 		}
-		if (log.category === 'Shipping') {
+		if (log.status <= 499 && log.status >= 400) {
 			result = colors[2].color;
 		}
-		if (log.category === 'Business') {
+		if (log.status <= 599 && log.status >= 500) {
 			result = colors[3].color;
-		}
-		if (log.category === 'Equipment') {
-			result = colors[4].color;
 		}
 		console.log(result);
 		return result;
@@ -90,30 +86,29 @@ const LogsPage = (props) => {
 			<MetaTags>
 				<title>Admin Logs | Glow LEDs</title>
 			</MetaTags>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
-					{colors.map((color) => {
-						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-								<label style={{ marginRight: '1rem' }}>{color.name}</label>
-								<div
-									style={{
-										backgroundColor: color.color,
-										height: '20px',
-										width: '60px',
-										borderRadius: '5px'
-									}}
-								/>
-							</FlexContainer>
-						);
-					})}
-				</FlexContainer>
+
+			<div className="wrap jc-b">
+				{colors.map((color) => {
+					return (
+						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</FlexContainer>
+					);
+				})}
 				<Link to="/secure/glow/editlog">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Log
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Logs</h1>
@@ -144,7 +139,7 @@ const LogsPage = (props) => {
 									<tr
 										key={log._id}
 										style={{
-											backgroundColor: '#3e4c6d',
+											backgroundColor: determine_color(log),
 											fontSize: '1.4rem'
 										}}
 									>
