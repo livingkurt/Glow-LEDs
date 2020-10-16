@@ -148,9 +148,11 @@ const ProductPage = (props) => {
 			<div className="back-to-result">
 				<FlexContainer h_between>
 					<FlexContainer styles={{ marginBottom: 10 }}>
-						<Link to="/collections/all/products">
-							<button class="button secondary">Back to Products</button>
-						</Link>
+						{/* <Link to="/collections/all/products"> */}
+						<button class="button secondary" onClick={() => props.history.goBack()}>
+							Back to Products
+						</button>
+						{/* </Link> */}
 					</FlexContainer>
 					{/* {console.log(props.match.params.pathname)} */}
 					{userInfo &&
