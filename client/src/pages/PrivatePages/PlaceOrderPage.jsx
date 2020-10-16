@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder } from '../../actions/orderActions';
+import { createPayOrder, createOrder } from '../../actions/orderActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
@@ -12,6 +12,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
+import { listUsers } from '../../actions/userActions';
 
 const PlaceOrderPage = (props) => {
 	const discount_percent = 0.2;
@@ -25,7 +26,10 @@ const PlaceOrderPage = (props) => {
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	console.log({ orderPay });
+	// console.log({ orderPay });
+
+	const userList = useSelector((state) => state.userList);
+	const { loading: loading_users, users, error: error_users } = userList;
 
 	const promoList = useSelector((state) => state.promoList);
 	const { loading: promo_loading, promos, error: promo_error } = promoList;
@@ -43,6 +47,13 @@ const PlaceOrderPage = (props) => {
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
+	const [ user, set_user ] = useState(user_data);
+
+	useEffect(() => {
+		dispatch(listPromos());
+		dispatch(listUsers(''));
+		return () => {};
+	}, []);
 
 	useEffect(
 		() => {
@@ -94,11 +105,6 @@ const PlaceOrderPage = (props) => {
 		},
 		[ shipping ]
 	);
-
-	useEffect(() => {
-		dispatch(listPromos());
-		return () => {};
-	}, []);
 
 	useEffect(
 		() => {
@@ -168,9 +174,10 @@ const PlaceOrderPage = (props) => {
 
 	const placeOrderHandler = (token) => {
 		// create an order
-		console.log({ cartItems });
+		console.log({ user_data });
+		console.log({ user });
 		dispatch(
-			createOrder(
+			createPayOrder(
 				{
 					orderItems: cartItems,
 					shipping,
@@ -182,7 +189,6 @@ const PlaceOrderPage = (props) => {
 					user_data,
 					order_note,
 					promo_code
-					// product: diffuser_cap._id
 				},
 				token
 			)
@@ -296,6 +302,28 @@ const PlaceOrderPage = (props) => {
 		console.log({ error });
 	};
 
+	const create_order_without_paying = () => {
+		// create an order
+		console.log({ user });
+		dispatch(
+			createOrder({
+				orderItems: cartItems,
+				shipping,
+				payment,
+				itemsPrice,
+				shippingPrice,
+				taxPrice,
+				totalPrice,
+				user,
+				order_note,
+				promo_code
+			})
+		);
+
+		set_payment_loading(false);
+		props.history.push('/secure/glow/orders');
+		empty_cart();
+	};
 	return (
 		<div>
 			<MetaTags>
@@ -492,10 +520,40 @@ const PlaceOrderPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="button primary full-width" style={{ marginBottom: '12px' }}>
-										Pay for Order
-									</button>
+									<button className="button primary full-width mb-12px">Pay for Order</button>
 								</StripeCheckout>
+							</div>
+						)}
+						{user_data &&
+						user_data.isAdmin &&
+						users && (
+							<div>
+								<button
+									onClick={create_order_without_paying}
+									className="button primary full-width mb-12px"
+								>
+									Create Order Without Paying
+								</button>
+
+								<div className="ai-c h-25px mv-10px mb-30px jc-c">
+									<div className="custom-select">
+										<select
+											className="qty_select_dropdown"
+											defaultValue={user_data.first_name}
+											onChange={(e) => set_user(JSON.parse(e.target.value))}
+										>
+											<option key={1} defaultValue="">
+												---Choose Product as a Template---
+											</option>
+											{users.map((user, index) => (
+												<option key={index} value={JSON.stringify(user)}>
+													{user.first_name} {user.last_name}
+												</option>
+											))}
+										</select>
+										<span className="custom-arrow" />
+									</div>
+								</div>
 							</div>
 						)}
 						<div className="mv-10px">

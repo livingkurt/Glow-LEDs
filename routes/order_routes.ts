@@ -254,7 +254,7 @@ router.post('/', isAuth, async (req: any, res: any) => {
 	try {
 		const newOrder = new Order({
 			orderItems: req.body.orderItems,
-			user: req.user._id,
+			user: req.body.user ? req.body.user._id : req.user._id,
 			shipping: req.body.shipping,
 			payment: req.body.payment,
 			itemsPrice: req.body.itemsPrice,
@@ -265,6 +265,8 @@ router.post('/', isAuth, async (req: any, res: any) => {
 			promo_code: req.body.promo_code,
 			deleted: false
 		});
+		console.log({ user: req.user });
+		console.log({ user: req.body.user });
 		const newOrderCreated = await newOrder.save();
 		console.log({ newOrderCreated });
 
@@ -364,21 +366,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 				}
 			}
 		);
-
 		// 4000000000000002
-		// console.log({ charge });
-
-		// else {
-		// 	log_request({
-		// 		method: 'PUT',
-		// 		path: req.originalUrl,
-		// 		collection: 'Product',
-		// 		data: [ charge ],
-		// 		status: 404,
-		// 		success: false
-		// 	});
-		// 	res.status(404).send({ message: 'Order not found.' });
-		// }
 	} catch (error) {
 		log_error({
 			method: 'PUT',

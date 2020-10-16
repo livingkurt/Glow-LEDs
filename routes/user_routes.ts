@@ -153,10 +153,10 @@ router.put('/resetpassword', async (req, res) => {
 				path: req.originalUrl,
 				collection: 'User',
 				data: [ user ],
-				status: 400,
+				status: 404,
 				success: false
 			});
-			return res.status(400).send({ message: 'User Does Not Exist' });
+			return res.status(404).send({ message: 'User Does Not Exist' });
 		} else {
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {

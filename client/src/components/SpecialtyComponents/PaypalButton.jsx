@@ -18,7 +18,7 @@ const PaypalButton = (props) => {
 		document.body.appendChild(script);
 	};
 
-	const createOrder = (data, actions) =>
+	const createPayOrder = (data, actions) =>
 		actions.order.create({
 			purchase_units: [
 				{
@@ -53,7 +53,7 @@ const PaypalButton = (props) => {
 			{/* {sdkReady && ( */}
 			<Button
 				{...props}
-				createOrder={(data, actions) => createOrder(data, actions)}
+				createPayOrder={(data, actions) => createPayOrder(data, actions)}
 				onApprove={(data, actions) => onApprove(data, actions)}
 			/>
 			{/* )} */}

@@ -31,7 +31,7 @@ import {
 } from '../constants/orderConstants';
 import Cookie from 'js-cookie';
 
-export const createOrder = (
+export const createPayOrder = (
 	order: {
 		orderItems: object;
 		shipping: object;
@@ -79,6 +79,39 @@ export const createOrder = (
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
 		console.log({ error_response: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+	}
+};
+
+export const createOrder = (order: {
+	orderItems: object;
+	shipping: object;
+	payment: any;
+	itemsPrice: number;
+	shippingPrice: number;
+	taxPrice: number;
+	totalPrice: number;
+	user_data: object;
+	order_note: string;
+	promo_code: string;
+}) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+		const { userLogin: { userInfo: user_data } } = getState();
+		const { data: { data: newOrder } } = await axios.post('/api/orders', order, {
+			headers: {
+				Authorization: ' Bearer ' + user_data.token
+			}
+		});
+
+		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+		Cookie.remove('shipping');
+		Cookie.remove('diffuser_cap');
+		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+	} catch (error) {
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
 	}
 };

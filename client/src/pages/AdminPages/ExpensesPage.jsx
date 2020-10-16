@@ -95,8 +95,6 @@ const ExpensesPage = (props) => {
 		return result;
 	};
 
-	// const sort_options = [ 'All Expenses', 'Supplies', 'Website', 'Shipping', 'Business', 'Equipment' ];
-	// const sort_options = [ 'All Expenses', 'Supplies', 'Website', 'Shipping', 'Business', 'Equipment' ];
 	const sort_options = [ 'Date', 'Category', 'Application', 'Newest', 'Lowest', 'Highest' ];
 
 	return (
