@@ -23,7 +23,8 @@ const CartPage = (props) => {
 		if (cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 		} else {
-			props.history.push('/account/login?redirect=/secure/checkout/placeorder');
+			// props.history.push('/account/login?redirect=/secure/checkout/placeorder');
+			props.history.push('/checkout/decision');
 		}
 	};
 	const no_adapters_warning = () => {

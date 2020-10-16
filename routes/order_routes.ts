@@ -380,6 +380,132 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 	}
 });
 
+router.post('/guestcheckout', async (req: any, res: any) => {
+	try {
+		// const newOrder = new Order({
+		// 	orderItems: req.body.orderItems,
+		// 	guest: true,
+		// 	shipping: req.body.shipping,
+		// 	payment: req.body.payment,
+		// 	itemsPrice: req.body.itemsPrice,
+		// 	taxPrice: req.body.taxPrice,
+		// 	shippingPrice: req.body.shippingPrice,
+		// 	totalPrice: req.body.totalPrice,
+		// 	order_note: req.body.order_note,
+		// 	promo_code: req.body.promo_code,
+		// 	deleted: false
+		// });
+		// console.log({ newOrder });
+		const newOrderCreated = await Order.create({ ...req.body, guest: true });
+		// console.log({ user: req.body.user });
+		// const newOrderCreated = await newOrder.save();
+		console.log({ newOrderCreated });
+
+		if (newOrderCreated) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 201,
+				success: true
+			});
+			res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 500,
+				success: false
+			});
+			return res.status(500).send({ message: ' Error in Creating Order.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating Order' });
+	}
+});
+
+router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
+	try {
+		const order = await Order.findById(req.params.id);
+		console.log({ '/guestcheckout/:id/pay': req.body });
+		// console.log({ order });
+		const charge = await stripe.charges.create(
+			{
+				amount: (order.totalPrice * 100).toFixed(0),
+				currency: 'usd',
+				description: `Order Paid`,
+				source: req.body.token.id
+			},
+			async (err: any, result: any) => {
+				if (err) {
+					console.log({ err });
+					log_error({
+						method: 'PUT',
+						path: req.originalUrl,
+						collection: 'Order',
+						error: err,
+						status: 500,
+						success: false
+					});
+					return res.status(500).send({ error: err, message: err.raw.message });
+				} else {
+					console.log({ result });
+					// if (charge) {
+					log_request({
+						method: 'PUT',
+						path: req.originalUrl,
+						collection: 'Order',
+						data: [ charge ],
+						status: 201,
+						success: true
+					});
+					order.isPaid = true;
+					order.paidAt = Date.now();
+					order.payment = {
+						paymentMethod: 'stripe',
+						charge: charge
+					};
+					const updatedOrder = await order.save();
+					if (updatedOrder) {
+						log_request({
+							method: 'PUT',
+							path: req.originalUrl,
+							collection: 'Order',
+							data: [ updatedOrder ],
+							status: 201,
+							success: true
+						});
+						res.send({ message: 'Order Paid.', order: updatedOrder });
+					}
+					// }
+				}
+			}
+		);
+		// 4000000000000002
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Paying for Order' });
+	}
+});
+
 router.put('/:id/refund', async (req: any, res: any) => {
 	try {
 		const order = await Order.findById(req.params.id);

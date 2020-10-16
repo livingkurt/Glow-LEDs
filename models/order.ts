@@ -55,7 +55,7 @@ const orderItemSchema = new mongoose.Schema(
 
 const orderSchema = new mongoose.Schema(
 	{
-		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		orderItems: [ orderItemSchema ],
 		shipping: shippingSchema,
 		payment: paymentSchema,
@@ -63,6 +63,7 @@ const orderSchema = new mongoose.Schema(
 		taxPrice: { type: Number },
 		shippingPrice: { type: Number },
 		totalPrice: { type: Number },
+		guest: { type: Boolean, default: false },
 		isPaid: { type: Boolean, default: false },
 		paidAt: { type: Date },
 		isManufactured: { type: Boolean, default: false },

@@ -71,8 +71,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	try {
 		const content = await Content.findOne({ _id: req.params.id });
-		console.log({ content });
-		console.log(req.params.id);
+		// console.log({ content });
+		// console.log(req.params.id);
 		if (content) {
 			log_request({
 				method: 'GET',
@@ -122,7 +122,7 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	try {
-		console.log({ content_routes_put: req.body });
+		// console.log({ content_routes_put: req.body });
 		const content_id = req.params.id;
 		const content: any = await Content.findById(content_id);
 		if (content) {

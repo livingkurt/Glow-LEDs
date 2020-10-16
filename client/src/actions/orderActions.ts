@@ -83,6 +83,49 @@ export const createPayOrder = (
 	}
 };
 
+export const createPayOrderGuest = (
+	order: {
+		orderItems: object;
+		shipping: object;
+		payment: any;
+		itemsPrice: number;
+		shippingPrice: number;
+		taxPrice: number;
+		totalPrice: number;
+		order_note: string;
+		promo_code: string;
+		// product: string;
+	},
+	token: any
+) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+		const { userLogin: { userInfo: user_data } } = getState();
+		const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
+		console.log({ newOrder });
+
+		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+
+		const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { token });
+		console.log({ paid });
+		dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
+
+		// axios.post('/api/emails/order', { ...newOrder, user_data, token });
+		// axios.post('/api/emails/sale', { ...newOrder, user_data, token });
+		Cookie.remove('shipping');
+		Cookie.remove('diffuser_cap');
+		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+	} catch (error) {
+		console.log({ error_message: error.response.data.message });
+		console.log({ error: error });
+		console.log({ error_response: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+	}
+};
+
 export const createOrder = (order: {
 	orderItems: object;
 	shipping: object;

@@ -54,7 +54,11 @@ import {
 	DiscountPage,
 	EditEmailPage,
 	EmailsPage,
-	LogsPage
+	LogsPage,
+	GuestDecisionPage,
+	PlaceOrderPublicPage,
+	ShippingPublicPage,
+	OrderPaymentCompletePublicPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -181,7 +185,20 @@ const App = () => {
 							<Route path="/account/register" component={RegisterPage} />
 							<Route path="/account/passwordreset" component={PasswordResetPage} />
 							<Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
-
+							<Route path="/checkout/decision" component={GuestDecisionPage} />
+							<Route
+								path="/checkout/placeorder"
+								component={(props) => <PlaceOrderPublicPage userInfo={userInfo} {...props} />}
+							/>
+							<Route
+								path="/checkout/shipping"
+								component={(props) => <ShippingPublicPage userInfo={userInfo} {...props} />}
+							/>
+							<Route
+								path="/checkout/paymentcomplete/:id"
+								exact={true}
+								component={OrderPaymentCompletePublicPage}
+							/>
 							<Route path="/checkout/cart/:pathname?" component={CartPage} />
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
