@@ -449,7 +449,7 @@ const Header = (props) => {
 						</div>
 					</div>
 				</div>
-				<FlexContainer class="nav_bar w-233px jc-e">
+				<FlexContainer class="nav_bar w-233px jc-fe">
 					<Link to="/checkout/cart">
 						<button className=" button nav cart_text w-105px">
 							Cart <i className="fas fa-shopping-cart" />{' '}
