@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder, createPayOrderGuest } from '../../actions/orderActions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import { CheckoutSteps } from '../../components/SpecialtyComponents';
+import { CheckoutSteps, GuestCheckoutSteps } from '../../components/SpecialtyComponents';
 import MetaTags from 'react-meta-tags';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
@@ -334,11 +334,11 @@ const PlaceOrderPublicPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
 			</MetaTags>
 			{successPay ? (
-				<CheckoutSteps step1 step2 step3 step4 />
+				<GuestCheckoutSteps step1 step2 step3 step4 />
 			) : shipping && shipping.hasOwnProperty('first_name') ? (
-				<CheckoutSteps step1 step2 step3 />
+				<GuestCheckoutSteps step1 step2 step3 />
 			) : (
-				<CheckoutSteps step1 />
+				<GuestCheckoutSteps step1 />
 			)}
 			<LoadingPayments loading={payment_loading} error={error} />
 			<div className="placeorder">
