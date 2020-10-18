@@ -104,7 +104,15 @@ const MenuPage = (props) => {
 					{determine_menu_items().map((item) => {
 						return (
 							<div className="home_page_divs m-10px w-300px">
-								<Link to={`/collections/all/products/category/${item.category}`}>
+								<Link
+									to={
+										pathname === 'gloving' || pathname === 'decor' ? (
+											`/collections/all/products/category/${item.category}`
+										) : (
+											`/pages/${item.category}`
+										)
+									}
+								>
 									<h2 className="">{humanize(item.category)}</h2>
 									{/* {console.log({ img: get_category_images(item.category) })} */}
 									<img
