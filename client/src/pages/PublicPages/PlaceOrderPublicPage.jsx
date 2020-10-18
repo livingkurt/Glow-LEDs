@@ -13,6 +13,7 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
+import { register } from '../../serviceWorker';
 
 const PlaceOrderPublicPage = (props) => {
 	const discount_percent = 0.2;
@@ -195,6 +196,34 @@ const PlaceOrderPublicPage = (props) => {
 		);
 
 		set_payment_loading(true);
+	};
+	const placeOrderCreateAccountHandler = async (token) => {
+		await dispatch(
+			createPayOrderGuest(
+				{
+					orderItems: cartItems,
+					shipping,
+					payment,
+					itemsPrice,
+					shippingPrice,
+					taxPrice,
+					totalPrice,
+					user_data,
+					order_note,
+					promo_code
+				},
+				token
+			)
+		);
+
+		set_payment_loading(true);
+		console.log({
+			first_name: shipping.first_name,
+			last_name: shipping.last_name,
+			email: shipping.email,
+			password: 'glowleds'
+		});
+		// await dispatch(register(shipping.first_name, shipping.last_name, shipping.email, 'glowleds'));
 	};
 
 	const empty_cart = () => {
@@ -521,6 +550,23 @@ const PlaceOrderPublicPage = (props) => {
 								</StripeCheckout>
 							</div>
 						)}
+						{/* {shipping &&
+						shipping.hasOwnProperty('first_name') && (
+							<div>
+								<StripeCheckout
+									name="Glow LEDs"
+									description={`Pay for Order`}
+									amount={totalPrice.toFixed(2) * 100}
+									token={(token) => placeOrderCreateAccountHandler(token)}
+									stripeKey={process.env.REACT_APP_STRIPE_KEY}
+									onChange={handleChangeFor('cardNumber')}
+								>
+									<button className="button primary full-width mb-12px">
+										Pay for Order/Create Account
+									</button>
+								</StripeCheckout>
+							</div>
+						)} */}
 						{user_data &&
 						user_data.isAdmin &&
 						users && (

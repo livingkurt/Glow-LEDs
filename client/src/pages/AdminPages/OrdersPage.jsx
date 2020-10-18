@@ -254,7 +254,7 @@ const OrdersPage = (props) => {
 										<td className="min-w-120px">
 											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
 										</td>
-										<td className="min-w-150px">{!order.user ? 'N/A' : order.user.first_name}</td>
+										<td className="min-w-150px">{!order.shipping ? 'N/A' : order.shipping.first_name}</td>
 										<td className="min-w-580px">
 											{order.orderItems.map((item) => {
 												console.log({ item });

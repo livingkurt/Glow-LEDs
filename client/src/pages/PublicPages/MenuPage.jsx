@@ -5,7 +5,7 @@ import { update, reset_password } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import MetaTags from 'react-meta-tags';
 
-const RegisterPage = (props) => {
+const MenuPage = (props) => {
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 	// const userRegister = useSelector((state) => state.userRegister);
@@ -65,4 +65,4 @@ const RegisterPage = (props) => {
 		</div>
 	);
 };
-export default RegisterPage;
+export default MenuPage;
