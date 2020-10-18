@@ -22,6 +22,10 @@ export default {
 		console.log({ not_paid_email: userInfo });
 		return axios.post('/api/emails/notverified', userInfo);
 	},
+	get_category_images: (category: any) => {
+		// console.log({ category });
+		return axios.get('/api/products/images/' + category);
+	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });
 	// 	return axios.post('/api/products/array', array);

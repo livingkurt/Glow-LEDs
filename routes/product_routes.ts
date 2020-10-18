@@ -132,6 +132,7 @@ router.get('/minicaps', async (req, res) => {
 // 	res.send(products);
 // });
 
+
 router.get('/:pathname', async (req, res) => {
 	try {
 		const product = await Product.findOne({ pathname: req.params.pathname });
@@ -168,6 +169,49 @@ router.get('/:pathname', async (req, res) => {
 		});
 		res.status(500).send({ error, message: 'Error Getting Product' });
 	}
+});
+router.get('/images/:category', async (req, res) => {
+	// try {
+    console.log(req.params.category)
+    // const product = await Product.findOne({category: req.params.category});
+    const product = await Product.findOne({category: 'diffuser_caps'}, {}, { sort: { createdAt : -1 } }, function(err:any, product:any) {
+      console.log( product );
+      console.log( product.images[0] );
+      res.json(product.images[0]);
+    });
+  // console.log(product)
+	// 	if (product) {
+	// 		log_request({
+	// 			method: 'GET',
+	// 			path: req.originalUrl,
+	// 			collection: 'Product',
+	// 			data: [ product ],
+	// 			status: 200,
+	// 			success: true
+	// 		});
+	// 		res.send(product);
+	// 	} else {
+	// 		log_request({
+	// 			method: 'GET',
+	// 			path: req.originalUrl,
+	// 			collection: 'Product',
+	// 			data: [ product ],
+	// 			status: 404,
+	// 			success: false
+	// 		});
+	// 		res.status(404).send({ message: 'Product Not Found.' });
+	// 	}
+	// } catch (error) {
+	// 	log_error({
+	// 		method: 'GET',
+	// 		path: req.originalUrl,
+	// 		collection: 'Product',
+	// 		error,
+	// 		status: 500,
+	// 		success: false
+	// 	});
+	// 	res.status(500).send({ error, message: 'Error Getting Product' });
+	// }
 });
 
 router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
