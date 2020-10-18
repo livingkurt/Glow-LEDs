@@ -104,7 +104,9 @@ const Header = (props) => {
 							</button>
 						</Link>
 						<div className="dropdown-nav">
-							<button className="button nav">Gloving</button>
+							<Link to="/pages/menu/gloving">
+								<button className="button nav">Gloving</button>
+							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-300px">
 								<Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="button nav">Frosted Diffusers</button>
@@ -321,9 +323,9 @@ const Header = (props) => {
 						</div> */}
 
 						<div className="dropdown-nav">
-							{/* <Link to="/collections/all/products/category/Diffusers"> */}
-							<button className="button nav">Decor</button>
-							{/* </Link> */}
+							<Link to="/pages/menu/decor">
+								<button className="button nav">Decor</button>
+							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/collections/all/products/category/glow_strings">
 									<button className="button nav">Glow Strings</button>
@@ -334,9 +336,9 @@ const Header = (props) => {
 							</div>
 						</div>
 						<div className="dropdown-nav">
-							{/* <Link to="/collections/all/products/category/Diffusers"> */}
-							<button className="button nav">Community</button>
-							{/* </Link> */}
+							<Link to="/pages/menu/community">
+								<button className="button nav">Community</button>
+							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/pages/featured">
 									<button className="button nav">Featured</button>
@@ -352,9 +354,9 @@ const Header = (props) => {
 							</Link>
 						</div> */}
 						<div className="dropdown-nav">
-							{/* <Link to="/collections/all/products/category/Diffusers"> */}
-							<button className="button nav">Support</button>
-							{/* </Link> */}
+							<Link to="/pages/menu/support">
+								<button className="button nav">Support</button>
+							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-230px">
 								<Link to="/pages/about">
 									<button className="button nav">About</button>

@@ -58,7 +58,8 @@ import {
 	GuestDecisionPage,
 	PlaceOrderPublicPage,
 	ShippingPublicPage,
-	OrderPaymentCompletePublicPage
+	OrderPaymentCompletePublicPage,
+  MenuPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -223,6 +224,7 @@ const App = () => {
 								component={(props) => <GlowControlHomePage userInfo={userInfo} {...props} />}
 							/>
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
+							<Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
 
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />

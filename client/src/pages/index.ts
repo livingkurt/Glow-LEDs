@@ -59,3 +59,4 @@ export { default as GuestDecisionPage } from './PublicPages/GuestDecisionPage';
 export { default as PlaceOrderPublicPage } from './PublicPages/PlaceOrderPublicPage';
 export { default as ShippingPublicPage } from './PublicPages/ShippingPublicPage';
 export { default as OrderPaymentCompletePublicPage } from './PublicPages/OrderPaymentCompletePublicPage';
+export { default as MenuPage } from './PublicPages/MenuPage';
