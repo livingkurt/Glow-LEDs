@@ -54,7 +54,7 @@ const Banner = () => {
 						<label>{content.banner.label}</label>
 					</div>
 				)}
-				<FlexContainer class="big_screen mt-3px">
+				<div className="row mt-3px">
 					<div className="ml-10px">
 						<a
 							rel="noreferrer"
@@ -95,7 +95,7 @@ const Banner = () => {
 							<i class="fab fa-soundcloud" />
 						</a>
 					</div>
-				</FlexContainer>
+				</div>
 			</div>
 		</span>
 	);
