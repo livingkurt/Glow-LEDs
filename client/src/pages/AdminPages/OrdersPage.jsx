@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { listOrders, deleteOrder, update_order } from '../../actions/orderActions';
+import { listOrders, deleteOrder, update_order, update_payment } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
@@ -14,6 +14,7 @@ const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ expandable, set_expandable ] = useState('none');
+	const [ payment_method, set_payment_method ] = useState('');
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
@@ -47,6 +48,15 @@ const OrdersPage = (props) => {
 		},
 		[ successDelete, order_state ]
 	);
+
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listOrders());
+	// 		dispatch(listOrders());
+	// 	},
+	// 	[ orders ]
+	// );
+
 	useEffect(
 		() => {
 			dispatch(listOrders(category, searchKeyword, sortOrder));
@@ -146,6 +156,15 @@ const OrdersPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_order(order, true, is_action, action_at));
+		}
+	};
+	const update_order_payment_state = (order, state, is_action) => {
+		if (state) {
+			set_order_state({ ...order_state, [is_action]: false });
+			dispatch(update_payment(order, false, payment_method));
+		} else {
+			set_order_state({ ...order_state, [is_action]: true });
+			dispatch(update_payment(order, true, payment_method));
 		}
 	};
 	// const print_invoice = async (order) => {
@@ -314,7 +333,7 @@ const OrdersPage = (props) => {
 														<button
 															className="button primary"
 															onClick={() =>
-																update_order_state(
+																update_order_payment_state(
 																	order,
 																	order.isPaid,
 																	'isPaid',
@@ -323,6 +342,18 @@ const OrdersPage = (props) => {
 														>
 															{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 														</button>
+													</div>
+													<label htmlFor="payment_method">Payment Method</label>
+													<div className="row">
+														<input
+															type="text"
+															// value={payment_method}
+															defaultValue={order.payment.paymentMethod}
+															name="payment_method"
+															id="payment_method"
+															className="w-100per"
+															onChange={(e) => set_payment_method(e.target.value)}
+														/>
 													</div>
 												</div>
 												<div className="w-100per">

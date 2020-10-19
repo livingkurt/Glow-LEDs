@@ -83,7 +83,7 @@ const ShippingPage = (props) => {
 					international
 				})
 			);
-			const paymentMethod = 'paypal';
+			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
 			props.history.push('placeorder');
 		}

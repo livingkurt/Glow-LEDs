@@ -66,7 +66,7 @@ const PlaceOrderPage = (props) => {
 			// 	set_diffuser_cap(diffuser_cap_cookie);
 			// 	console.log({ diffuser_cap_cookie });
 			// }
-			dispatch(savePayment({ paymentMethod: 'paypal' }));
+			dispatch(savePayment({ paymentMethod: 'stripe' }));
 			setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)

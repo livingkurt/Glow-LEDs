@@ -359,6 +359,33 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response.data.message });
 	}
 };
+export const update_payment = (order: { _id: string }, result: boolean, payment_method: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.put(
+			'/api/orders/' + order._id + '/update',
+			{
+				...order,
+				isPaid: result,
+				paidAt: result ? Date.now() : '',
+				payment: {
+					paymentMethod: payment_method ? payment_method : 'stripe'
+				}
+			},
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+			}
+		);
+		console.log({ data });
+		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response.data.message });
+	}
+};
 
 export const saveOrder = (order: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
