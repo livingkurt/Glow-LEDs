@@ -43,7 +43,8 @@ router.get('/', async (req, res) => {
 			collection: 'Cart',
 			data: carts,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(carts);
 	} catch (error) {
@@ -82,7 +83,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Cart',
 				data: [ cart ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(cart);
 		} else {
@@ -92,7 +94,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Cart',
 				data: [ cart ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Cart Not Found.' });
 		}
@@ -136,7 +139,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Cart',
 					data: [ cart ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Cart Updated', data: updatedCart });
 			}
@@ -147,7 +151,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Cart',
 				data: [ cart ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Cart.' });
 		}
@@ -189,7 +194,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Cart',
 				data: [ deleted_cart ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -199,7 +205,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Cart',
 				data: [ deleted_cart ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -234,7 +241,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Cart',
 				data: [ newCart ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Cart Created', data: newCart });
 		} else {
@@ -244,7 +252,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Cart',
 				data: [ newCart ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Cart.' });
 		}

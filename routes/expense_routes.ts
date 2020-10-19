@@ -41,7 +41,8 @@ router.get('/', async (req, res) => {
 			collection: 'Expense',
 			data: expenses,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(expenses);
 	} catch (error) {
@@ -80,7 +81,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Expense',
 				data: [ expense ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(expense);
 		} else {
@@ -90,7 +92,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Expense',
 				data: [ expense ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Expense Not Found.' });
 		}
@@ -134,7 +137,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Expense',
 					data: [ expense ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Expense Updated', data: updatedExpense });
 			}
@@ -145,7 +149,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Expense',
 				data: [ expense ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Expense.' });
 		}
@@ -187,7 +192,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Expense',
 				data: [ deleted_expense ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -197,7 +203,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Expense',
 				data: [ deleted_expense ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -232,7 +239,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Expense',
 				data: [ newExpense ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Expense Created', data: newExpense });
 		} else {
@@ -242,7 +250,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Expense',
 				data: [ newExpense ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Expense.' });
 		}

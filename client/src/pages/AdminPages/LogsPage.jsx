@@ -131,6 +131,7 @@ const LogsPage = (props) => {
 									<th>File</th>
 									<th>Success</th>
 									<th>Error</th>
+									<th>IP</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -147,7 +148,7 @@ const LogsPage = (props) => {
 										<td>{format_time(log.createdAt)} </td>
 										<td>{log.method}</td>
 										<td>{log.status}</td>
-										<td>{log.path}%</td>
+										<td className="min-w-300px">{log.path}%</td>
 										<td>{log.file}</td>
 										<td>
 											{log.success ? (
@@ -157,6 +158,7 @@ const LogsPage = (props) => {
 											)}
 										</td>
 										<td>{log.error && log.error.code}</td>
+										<td>{log.ip}</td>
 
 										<td>
 											<FlexContainer h_between>

@@ -43,7 +43,8 @@ router.get('/', async (req, res) => {
 			collection: 'Sponsor',
 			data: sponsors,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(sponsors);
 	} catch (error) {
@@ -71,7 +72,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Sponsor',
 				data: [ sponsor ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(sponsor);
 		} else {
@@ -81,7 +83,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Sponsor',
 				data: [ sponsor ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Sponsor Not Found.' });
 		}
@@ -112,7 +115,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Sponsor',
 					data: [ sponsor ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Sponsor Updated', data: updatedSponsor });
 			}
@@ -123,7 +127,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Sponsor',
 				data: [ sponsor ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Sponsor.' });
 		}
@@ -151,7 +156,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Sponsor',
 				data: [ deleted_sponsor ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -161,7 +167,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Sponsor',
 				data: [ deleted_sponsor ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -188,7 +195,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Sponsor',
 				data: [ newSponsor ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Sponsor Created', data: newSponsor });
 		} else {
@@ -198,7 +206,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Sponsor',
 				data: [ newSponsor ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Sponsor.' });
 		}

@@ -42,7 +42,8 @@ router.get('/', async (req, res) => {
 			collection: 'User',
 			data: users,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(users);
 	} catch (error) {
@@ -68,7 +69,8 @@ router.get('/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(user);
 		} else {
@@ -78,7 +80,8 @@ router.get('/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send('Order Not Found.');
 		}
@@ -105,7 +108,8 @@ router.delete('/:id', isAuth, async (req, res) => {
 			collection: 'User',
 			data: [ user ],
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		const message: any = { message: 'User Deleted' };
 		const deleted_user = await User.updateOne({ _id: req.params.id }, { deleted: true });
@@ -116,7 +120,8 @@ router.delete('/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ deleted_user ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -126,7 +131,8 @@ router.delete('/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ deleted_user ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -154,7 +160,8 @@ router.put('/resetpassword', async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(404).send({ message: 'User Does Not Exist' });
 		} else {
@@ -169,7 +176,8 @@ router.put('/resetpassword', async (req, res) => {
 						collection: 'User',
 						data: [ user ],
 						status: 202,
-						success: true
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					res.status(202).send({ message: 'Password Saved' });
 				});
@@ -206,7 +214,8 @@ router.post('/', async (req, res) => {
 						collection: 'User',
 						data: [ newUser ],
 						status: 200,
-						success: true
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					return res.status(201).send({ message: 'New User Created', data: newUser });
 				} else {
@@ -216,7 +225,8 @@ router.post('/', async (req, res) => {
 						collection: 'User',
 						data: [ newUser ],
 						status: 500,
-						success: false
+						success: false,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					return res.status(500).send({ message: ' Error in Creating User.' });
 				}
@@ -247,7 +257,8 @@ router.put('/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			const updatedUser = await User.updateOne({ _id: userId }, req.body);
 			if (updatedUser) {
@@ -257,7 +268,8 @@ router.put('/:id', isAuth, async (req, res) => {
 					collection: 'User',
 					data: [ updatedUser ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'User Updated', data: updatedUser });
 			}
@@ -268,7 +280,8 @@ router.put('/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating User.' });
 		}
@@ -297,7 +310,8 @@ router.post('/passwordreset', async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(user);
 		} else {
@@ -307,7 +321,8 @@ router.post('/passwordreset', async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'User Not Found' });
 		}
@@ -338,7 +353,8 @@ router.put('/update/:id', isAuth, async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			user.first_name = req.body.first_name || user.first_name;
 			user.last_name = req.body.last_name || user.last_name;
@@ -358,7 +374,8 @@ router.put('/update/:id', isAuth, async (req, res) => {
 					collection: 'User',
 					data: [ updatedUser ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				// const updatedUser = await User.updateOne({ _id: userId }, user);
 				console.log({ updatedUser });
@@ -381,7 +398,8 @@ router.put('/update/:id', isAuth, async (req, res) => {
 					collection: 'Product',
 					data: [ updatedUser ],
 					status: 500,
-					success: false
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
@@ -439,7 +457,8 @@ router.put('/verify/:id', async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			user.first_name = req.body.first_name || user.first_name;
 			user.last_name = req.body.last_name || user.last_name;
@@ -458,7 +477,8 @@ router.put('/verify/:id', async (req, res) => {
 					collection: 'User',
 					data: [ updatedUser ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				// const updatedUser = await User.updateOne({ _id: userId }, user);
 				console.log({ updatedUser });
@@ -480,7 +500,8 @@ router.put('/verify/:id', async (req, res) => {
 					collection: 'Product',
 					data: [ updatedUser ],
 					status: 500,
-					success: false
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
@@ -492,7 +513,8 @@ router.put('/verify/:id', async (req, res) => {
 				collection: 'Product',
 				data: [ user ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'User Not Found' });
 		}
@@ -522,7 +544,8 @@ router.post('/login', async (req, res) => {
 				collection: 'User',
 				data: [ login_user ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(404).send({ message: 'Email not found' });
 		}
@@ -533,7 +556,8 @@ router.post('/login', async (req, res) => {
 				collection: 'User',
 				data: [ login_user ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(404).send({ message: 'Account not Verified' });
 		}
@@ -546,7 +570,8 @@ router.post('/login', async (req, res) => {
 				collection: 'User',
 				data: [ isMatch ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send({
 				_id: login_user.id,
@@ -567,7 +592,8 @@ router.post('/login', async (req, res) => {
 				collection: 'User',
 				data: [ isMatch ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(400).send({ message: 'Password incorrect' });
 		}
@@ -584,7 +610,7 @@ router.post('/login', async (req, res) => {
 	}
 });
 router.post('/register', async (req, res) => {
-  console.log({register: req.body})
+	console.log({ register: req.body });
 	try {
 		const newUser: any = new User({
 			first_name: req.body.first_name,
@@ -605,7 +631,8 @@ router.post('/register', async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 400,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(400).send({ message: 'Email already exists' });
 		} else {
@@ -620,7 +647,8 @@ router.post('/register', async (req, res) => {
 						collection: 'User',
 						data: [ newUser ],
 						status: 200,
-						success: true
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					res.json({
 						_id: newUser.id,
@@ -659,7 +687,8 @@ router.post('/getuser/:id', async (req, res) => {
 				collection: 'User',
 				data: [ user ],
 				status: 400,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(400).send({ message: "User Doesn't Exist" });
 		}
@@ -673,7 +702,8 @@ router.post('/getuser/:id', async (req, res) => {
 				collection: 'User',
 				data: [ isMatch ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send({
 				_id: user.id,
@@ -694,7 +724,8 @@ router.post('/getuser/:id', async (req, res) => {
 				collection: 'User',
 				status: 500,
 				data: [ isMatch ],
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: 'Error Getting User' });
 		}

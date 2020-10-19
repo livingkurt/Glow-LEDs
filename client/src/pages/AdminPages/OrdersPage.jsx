@@ -254,7 +254,9 @@ const OrdersPage = (props) => {
 										<td className="min-w-120px">
 											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
 										</td>
-										<td className="min-w-150px">{!order.shipping ? 'N/A' : order.shipping.first_name}</td>
+										<td className="min-w-150px">
+											{!order.shipping ? 'N/A' : order.shipping.first_name}
+										</td>
 										<td className="min-w-580px">
 											{order.orderItems.map((item) => {
 												console.log({ item });
@@ -308,6 +310,20 @@ const OrdersPage = (props) => {
 														)}
 													</div>
 													<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
+													<div>
+														<button
+															className="button primary"
+															onClick={() =>
+																update_order_state(
+																	order,
+																	order.isPaid,
+																	'isPaid',
+																	'paidAt'
+																)}
+														>
+															{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+														</button>
+													</div>
 												</div>
 												<div className="w-100per">
 													<div>Manufactured</div>

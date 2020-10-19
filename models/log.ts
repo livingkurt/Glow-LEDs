@@ -10,6 +10,7 @@ const logSchema = new mongoose.Schema(
 		status: { type: Number },
 		success: { type: Boolean },
 		error: { type: Object },
+		ip: { type: String },
 		deleted: { type: Boolean, default: false }
 	},
 	{

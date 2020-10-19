@@ -62,7 +62,8 @@ router.get('/', async (req, res) => {
 			collection: 'Email',
 			data: emails,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(emails);
 	} catch (error) {
@@ -100,7 +101,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Email',
 				data: [ email ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(email);
 		} else {
@@ -110,7 +112,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Email',
 				data: [ email ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Email Not Found.' });
 		}
@@ -155,7 +158,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Email',
 					data: [ email ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Email Updated', data: updatedEmail });
 			}
@@ -166,7 +170,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Email',
 				data: [ email ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Email.' });
 		}
@@ -207,7 +212,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Email',
 				data: [ deleted_email ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -217,7 +223,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Email',
 				data: [ deleted_email ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -252,7 +259,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Email',
 				data: [ newEmail ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Email Created', data: newEmail });
 		} else {
@@ -262,7 +270,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Email',
 				data: [ newEmail ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Email.' });
 		}

@@ -64,6 +64,7 @@ export const log_request = async (logs: any) => {
 		file: `${logs.collection.toLowerCase()}_routes`,
 		status: logs.status,
 		success: logs.success,
+		ip: logs.ip,
 		outcome: `${logs.success
 			? `Successfully Completed ${logs.method} Request for`
 			: `Unsuccessfully Completed ${logs.method} Request for`} ${logs.data.length} ${logs.collection}s`

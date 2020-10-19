@@ -59,7 +59,8 @@ router.get('/', async (req, res) => {
 			collection: 'Product',
 			data: products,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(products);
 	} catch (error) {
@@ -84,7 +85,8 @@ router.get('/originalcaps', async (req, res) => {
 			collection: 'Product',
 			data: products,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(products);
 	} catch (error) {
@@ -132,7 +134,6 @@ router.get('/minicaps', async (req, res) => {
 // 	res.send(products);
 // });
 
-
 router.get('/:pathname', async (req, res) => {
 	try {
 		const product = await Product.findOne({ pathname: req.params.pathname });
@@ -144,7 +145,8 @@ router.get('/:pathname', async (req, res) => {
 				collection: 'Product',
 				data: [ product ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(product);
 		} else {
@@ -154,7 +156,8 @@ router.get('/:pathname', async (req, res) => {
 				collection: 'Product',
 				data: [ product ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Product Not Found.' });
 		}
@@ -172,14 +175,17 @@ router.get('/:pathname', async (req, res) => {
 });
 router.get('/images/:category', async (req, res) => {
 	// try {
-    console.log(req.params.category)
-    // const product = await Product.findOne({category: req.params.category});
-    const product = await Product.findOne({category: 'diffuser_caps'}, {}, { sort: { createdAt : -1 } }, function(err:any, product:any) {
-      console.log( product );
-      console.log( product.images[0] );
-      res.json(product.images[0]);
-    });
-  // console.log(product)
+	console.log(req.params.category);
+	// const product = await Product.findOne({category: req.params.category});
+	const product = await Product.findOne({ category: 'diffuser_caps' }, {}, { sort: { createdAt: -1 } }, function(
+		err: any,
+		product: any
+	) {
+		console.log(product);
+		console.log(product.images[0]);
+		res.json(product.images[0]);
+	});
+	// console.log(product)
 	// 	if (product) {
 	// 		log_request({
 	// 			method: 'GET',
@@ -226,7 +232,8 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 				collection: 'Product',
 				data: [ product ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			const updatedProduct = await Product.updateOne({ _id: productId }, req.body);
 			if (updatedProduct) {
@@ -236,7 +243,8 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 					collection: 'Product',
 					data: [ updatedProduct ],
 					status: 200,
-					success: false
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 			}
@@ -247,7 +255,8 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 				collection: 'Product',
 				data: [ product ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Product.' });
 		}
@@ -275,7 +284,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Product',
 				data: [ deleted_product ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -285,7 +295,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Product',
 				data: [ deleted_product ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -312,7 +323,8 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 				collection: 'Product',
 				data: [ newProduct ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Product Created', data: newProduct });
 		} else {
@@ -322,7 +334,8 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
 				collection: 'Product',
 				data: [ newProduct ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Product.' });
 		}
@@ -351,7 +364,8 @@ router.post('/:pathname/reviews', isAuth, async (req, res) => {
 				collection: 'Product',
 				data: [ product ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			product.reviews = [
 				...product.reviews,
@@ -376,7 +390,8 @@ router.post('/:pathname/reviews', isAuth, async (req, res) => {
 					collection: 'Product',
 					data: [ updatedProduct ],
 					status: 201,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				res.status(201).send({
 					data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
@@ -390,7 +405,8 @@ router.post('/:pathname/reviews', isAuth, async (req, res) => {
 				collection: 'Product',
 				data: [ product ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Product Not Found' });
 		}

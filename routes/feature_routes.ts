@@ -70,7 +70,8 @@ router.get('/', async (req, res) => {
 			collection: 'Feature',
 			data: features,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(features);
 	} catch (error) {
@@ -109,7 +110,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Feature',
 				data: [ feature ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(feature);
 		} else {
@@ -119,7 +121,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Feature',
 				data: [ feature ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Feature Not Found.' });
 		}
@@ -163,7 +166,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Feature',
 					data: [ feature ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Feature Updated', data: updatedFeature });
 			}
@@ -174,7 +178,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Feature',
 				data: [ feature ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Feature.' });
 		}
@@ -216,7 +221,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Feature',
 				data: [ deleted_feature ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -226,7 +232,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Feature',
 				data: [ deleted_feature ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -261,7 +268,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Feature',
 				data: [ newFeature ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Feature Created', data: newFeature });
 		} else {
@@ -271,7 +279,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Feature',
 				data: [ newFeature ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Feature.' });
 		}

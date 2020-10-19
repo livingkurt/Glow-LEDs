@@ -122,7 +122,8 @@ router.get('/', isAuth, async (req: any, res: any) => {
 			collection: 'Product',
 			data: orders,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(orders);
 	} catch (error) {
@@ -147,7 +148,8 @@ router.get('/mine', isAuth, async (req: any, res: any) => {
 			collection: 'Order',
 			data: orders,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(orders);
 	} catch (error) {
@@ -185,7 +187,8 @@ router.get('/:id', isAuth, async (req: any, res: any) => {
 				collection: 'Order',
 				data: order,
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(order);
 		} else {
@@ -195,7 +198,8 @@ router.get('/:id', isAuth, async (req: any, res: any) => {
 				collection: 'Order',
 				data: order,
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send('Order Not Found.');
 		}
@@ -223,7 +227,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ deleted_order ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -233,7 +238,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ deleted_order ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -277,7 +283,8 @@ router.post('/', isAuth, async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ newOrderCreated ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
 		} else {
@@ -287,7 +294,8 @@ router.post('/', isAuth, async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ newOrderCreated ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Order.' });
 		}
@@ -330,7 +338,8 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 						collection: 'Order',
 						error: err,
 						status: 500,
-						success: false
+						success: false,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					return res.status(500).send({ error: err, message: err.raw.message });
 				} else {
@@ -342,7 +351,8 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 						collection: 'Order',
 						data: [ charge ],
 						status: 201,
-						success: true
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					order.isPaid = true;
 					order.paidAt = Date.now();
@@ -358,7 +368,8 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 							collection: 'Order',
 							data: [ updatedOrder ],
 							status: 201,
-							success: true
+							success: true,
+							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 						});
 						res.send({ message: 'Order Paid.', order: updatedOrder });
 					}
@@ -408,7 +419,8 @@ router.post('/guestcheckout', async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ newOrderCreated ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
 		} else {
@@ -418,7 +430,8 @@ router.post('/guestcheckout', async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ newOrderCreated ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Order.' });
 		}
@@ -456,7 +469,8 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 						collection: 'Order',
 						error: err,
 						status: 500,
-						success: false
+						success: false,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					return res.status(500).send({ error: err, message: err.raw.message });
 				} else {
@@ -468,7 +482,8 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 						collection: 'Order',
 						data: [ charge ],
 						status: 201,
-						success: true
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					order.isPaid = true;
 					order.paidAt = Date.now();
@@ -484,7 +499,8 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 							collection: 'Order',
 							data: [ updatedOrder ],
 							status: 201,
-							success: true
+							success: true,
+							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 						});
 						res.send({ message: 'Order Paid.', order: updatedOrder });
 					}
@@ -520,7 +536,8 @@ router.put('/:id/refund', async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ refund ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			order.isRefunded = true;
 			order.refundedAt = Date.now();
@@ -538,7 +555,8 @@ router.put('/:id/refund', async (req: any, res: any) => {
 					collection: 'Order',
 					data: [ updated ],
 					status: 201,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				res.send(updated);
 			} else {
@@ -548,7 +566,8 @@ router.put('/:id/refund', async (req: any, res: any) => {
 					collection: 'Product',
 					data: [ updated ],
 					status: 404,
-					success: false
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				res.status(404).send({ message: 'Order not Updated.' });
 			}
@@ -621,7 +640,8 @@ router.put('/:id/update', async (req: any, res: any) => {
 				collection: 'Order',
 				data: [ updated ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(updated_order);
 		} else {
@@ -631,7 +651,8 @@ router.put('/:id/update', async (req: any, res: any) => {
 				collection: 'Product',
 				data: [ updated ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Order not Updated.' });
 		}

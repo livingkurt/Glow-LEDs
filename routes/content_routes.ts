@@ -42,7 +42,8 @@ router.get('/', async (req, res) => {
 			collection: 'Content',
 			data: contents,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(contents);
 	} catch (error) {
@@ -80,7 +81,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Content',
 				data: [ content ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(content);
 		} else {
@@ -90,7 +92,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Content',
 				data: [ content ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Content Not Found.' });
 		}
@@ -134,7 +137,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Content',
 					data: [ content ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Content Updated', data: updatedContent });
 			}
@@ -145,7 +149,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Content',
 				data: [ content ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Content.' });
 		}
@@ -186,7 +191,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Sponsor',
 				data: [ deleted_content ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -196,7 +202,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Sponsor',
 				data: [ deleted_content ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -231,7 +238,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Content',
 				data: [ newContent ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Content Created', data: newContent });
 		} else {
@@ -241,7 +249,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Content',
 				data: [ newContent ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Content.' });
 		}

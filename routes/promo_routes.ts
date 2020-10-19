@@ -70,7 +70,8 @@ router.get('/', async (req, res) => {
 			collection: 'Promo',
 			data: promos,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(promos);
 	} catch (error) {
@@ -108,7 +109,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Promo',
 				data: [ promo ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(promo);
 		} else {
@@ -118,7 +120,8 @@ router.get('/:id', async (req, res) => {
 				collection: 'Promo',
 				data: [ promo ],
 				status: 404,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.status(404).send({ message: 'Promo Not Found.' });
 		}
@@ -162,7 +165,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 					collection: 'Promo',
 					data: [ promo ],
 					status: 200,
-					success: true
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
 			}
@@ -173,7 +177,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 				collection: 'Promo',
 				data: [ promo ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Updating Promo.' });
 		}
@@ -215,7 +220,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Promo',
 				data: [ deleted_promo ],
 				status: 200,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send(message);
 		} else {
@@ -225,7 +231,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Promo',
 				data: [ deleted_promo ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			res.send('Error in Deletion.');
 		}
@@ -260,7 +267,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Promo',
 				data: [ newPromo ],
 				status: 201,
-				success: true
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(201).send({ message: 'New Promo Created', data: newPromo });
 		} else {
@@ -270,7 +278,8 @@ router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 				collection: 'Promo',
 				data: [ newPromo ],
 				status: 500,
-				success: false
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			return res.status(500).send({ message: ' Error in Creating Promo.' });
 		}
