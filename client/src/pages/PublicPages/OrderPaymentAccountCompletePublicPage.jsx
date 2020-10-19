@@ -51,13 +51,13 @@ const OrderPaymentAccountCompletePublicPage = (props) => {
 				</FlexContainer>
 				<h1 style={{ textAlign: 'center' }}>Account Created Successfully</h1>
 				<p style={{ textAlign: 'center' }}>Thank you for signing up with glow-leds</p>
-				<p style={{ textAlign: 'center' }}>
+				{/* <p style={{ textAlign: 'center' }}>
 					Your temporary password is{' '}
 					<label style={{ fontFamily: 'helvetica', color: '#ff4040' }}>glowleds </label>(all lowercase)
 				</p>
 				<p style={{ textAlign: 'center' }}>
 					Be sure to login and change your password to keep your account secure.
-				</p>
+				</p> */}
 			</div>
 			<FlexContainer h_center wrap row h_between styles={{ width: '100%' }}>
 				<Link to="/account/login">
