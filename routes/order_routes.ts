@@ -304,17 +304,17 @@ router.post('/', isAuth, async (req: any, res: any) => {
 	}
 });
 
-router.put('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-	const order = await Order.findById('5f88c4c6d82e0e002acae9bf').populate('user');
-	// const charges = await stripe.charges.list({});
-	const charge = await stripe.charges.retrieve('ch_1HceYpJUIKBwBp0w69pyljh3');
-	order.payment = {
-		paymentMethod: 'stripe',
-		charge: charge
-	};
-	const updatedOrder = await order.save();
-	res.send(updatedOrder);
-});
+// router.put('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+// 	const order = await Order.findById('5f88c4c6d82e0e002acae9bf').populate('user');
+// 	// const charges = await stripe.charges.list({});
+// 	const charge = await stripe.charges.retrieve('ch_1HceYpJUIKBwBp0w69pyljh3');
+// 	order.payment = {
+// 		paymentMethod: 'stripe',
+// 		charge: charge
+// 	};
+// 	const updatedOrder = await order.save();
+// 	res.send(updatedOrder);
+// });
 // router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
 // 	const refunds = await stripe.refunds.list({});
 // 	res.send(refunds);
