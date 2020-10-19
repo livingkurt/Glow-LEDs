@@ -97,6 +97,7 @@ export const createPayOrderGuest = (
 		promo_code: string;
 	},
 	create_account: boolean,
+	password: string,
 	token: any
 ) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
@@ -110,14 +111,14 @@ export const createPayOrderGuest = (
 					first_name: order.shipping.first_name,
 					last_name: order.shipping.last_name,
 					email: order.shipping.email,
-					password: 'glowleds'
+					password: password
 				}
 			});
 			const { data } = await axios.post('/api/users/register', {
 				first_name: order.shipping.first_name,
 				last_name: order.shipping.last_name,
 				email: order.shipping.email,
-				password: 'glowleds'
+				password: password
 			});
 			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 			axios.post('/api/emails/verified', data);

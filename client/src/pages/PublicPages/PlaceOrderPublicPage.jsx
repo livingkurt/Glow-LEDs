@@ -15,7 +15,7 @@ import { listPromos } from '../../actions/promoActions';
 import Cookie, { set } from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
-import { validate_promo_code } from '../../utils/validations';
+import { validate_password_change, validate_promo_code, validate_passwords } from '../../utils/validations';
 import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 
@@ -56,12 +56,23 @@ const PlaceOrderPublicPage = (props) => {
 	const [ create_account, set_create_account ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ account_create, set_account_create ] = useState(false);
+	const [ password, setPassword ] = useState('');
+	const [ rePassword, setRePassword ] = useState('');
+
+	const [ password_validations, setPasswordValidations ] = useState('');
+	const [ re_password_validations, setRePasswordValidations ] = useState('');
+	const [ passwords_complete, set_passwords_complete ] = useState('');
+	const [ passwords_check, set_passwords_check ] = useState(false);
 
 	useEffect(() => {
 		dispatch(listPromos());
 		// dispatch(listUsers(''));
 		return () => {};
 	}, []);
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	useEffect(
 		() => {
@@ -180,10 +191,34 @@ const PlaceOrderPublicPage = (props) => {
 		// console.log({ shippingPrice });
 	};
 
-	const placeOrderHandler = (token, create_account) => {
+	const check_password = async (e) => {
+		e.preventDefault();
+		const validation_data = { password, rePassword };
+		// console.log({ data });
+		const request = await validate_passwords(validation_data);
+		console.log({ request });
+		setPasswordValidations(request.errors.password);
+		setRePasswordValidations(request.errors.rePassword);
+		set_passwords_complete('');
+		set_passwords_check(false);
+		if (request.isValid) {
+			set_passwords_complete('Passwords Verified');
+			set_passwords_check(true);
+		}
+	};
+
+	const placeOrderHandler = async (token, create_account) => {
 		// create an order
 		// console.log({ user_data });
 		// console.log({ user });
+		// const validation_data = { password, rePassword };
+		// // console.log({ data });
+		// const request = await validate_password_change(validation_data);
+		// console.log({ request });
+		// setPasswordValidations(request.errors.password);
+		// setRePasswordValidations(request.errors.rePassword);
+
+		// if (request.isValid) {
 		set_create_account(create_account);
 		dispatch(
 			createPayOrderGuest(
@@ -200,12 +235,15 @@ const PlaceOrderPublicPage = (props) => {
 					promo_code
 				},
 				create_account,
+				password,
 				token
 			)
 		);
 
 		set_payment_loading(true);
+		// }
 	};
+
 	// const placeOrderCreateAccountHandler = (token) => {
 	// 	const create_account = true;
 	// 	dispatch(
@@ -553,7 +591,8 @@ const PlaceOrderPublicPage = (props) => {
 							</div>
 						</li>
 						{shipping &&
-						shipping.hasOwnProperty('first_name') && (
+						shipping.hasOwnProperty('first_name') &&
+						!account_create && (
 							<div>
 								<StripeCheckout
 									name="Glow LEDs"
@@ -567,11 +606,11 @@ const PlaceOrderPublicPage = (props) => {
 								</StripeCheckout>
 							</div>
 						)}
-						{/* {loading_checkboxes ? (
+						{loading_checkboxes ? (
 							<div>Loading...</div>
 						) : (
-							<div>
-								<label htmlFor="account_create">Create Account</label>
+							<li>
+								<label htmlFor="account_create mb-20px">Create Account</label>
 								<input
 									type="checkbox"
 									name="account_create"
@@ -581,10 +620,48 @@ const PlaceOrderPublicPage = (props) => {
 										set_account_create(e.target.checked);
 									}}
 								/>
-							</div>
-						)} */}
+							</li>
+						)}
+						{account_create && (
+							<li className="column">
+								<label htmlFor="password">Password</label>
+								<input
+									className="form_input"
+									type="password"
+									id="password"
+									name="password"
+									onChange={(e) => setPassword(e.target.value)}
+								/>
+								<label className="validation_text fs-16px jc-c ">{password_validations}</label>
+							</li>
+						)}
+						{account_create && (
+							<li className="column">
+								<label htmlFor="rePassword">Re-Enter Password</label>
+								<input
+									className="form_input"
+									type="password"
+									id="rePassword"
+									name="rePassword"
+									onChange={(e) => setRePassword(e.target.value)}
+								/>
+								<label className="validation_text fs-16px jc-c ">{re_password_validations}</label>
+							</li>
+						)}
+						{account_create && (
+							<li className="column">
+								<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
+									{passwords_complete}
+								</label>
+								<button className="button primary" onClick={(e) => check_password(e)}>
+									Check Password
+								</button>
+							</li>
+						)}
+
 						{shipping &&
-						shipping.hasOwnProperty('first_name') && (
+						shipping.hasOwnProperty('first_name') &&
+						passwords_check && (
 							<div>
 								<StripeCheckout
 									name="Glow LEDs"

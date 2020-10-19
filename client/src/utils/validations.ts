@@ -327,3 +327,35 @@ export const validate_password_change = async (data: {
 		isValid: isEmpty(errors)
 	};
 };
+
+export const validate_passwords = async (data: { id: any; password: any; rePassword: any }) => {
+	// console.log({ data })
+	// console.log({ data: data.current_password })
+	let errors: any = {};
+
+	// Convert empty fields to an empty string so we can use validator functions
+	data.password = !isEmpty(data.password) ? data.password : '';
+	data.rePassword = !isEmpty(data.rePassword) ? data.rePassword : '';
+
+	// // Password checks
+	// if (!request.data) {
+	// 	errors.current_password = 'Current Password is Incorrect';
+	// }
+	// Password checks
+	if (Validator.isEmpty(data.password)) {
+		errors.password = 'Password field is required';
+	}
+	if (Validator.isEmpty(data.rePassword)) {
+		errors.rePassword = 'Confirm password field is required';
+	}
+	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+		errors.password = 'Password must be at least 6 characters';
+	}
+	if (!Validator.equals(data.password, data.rePassword)) {
+		errors.rePassword = 'Passwords must match';
+	}
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	};
+};
