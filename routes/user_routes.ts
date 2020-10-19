@@ -584,6 +584,7 @@ router.post('/login', async (req, res) => {
 	}
 });
 router.post('/register', async (req, res) => {
+  console.log({register: req.body})
 	try {
 		const newUser: any = new User({
 			first_name: req.body.first_name,

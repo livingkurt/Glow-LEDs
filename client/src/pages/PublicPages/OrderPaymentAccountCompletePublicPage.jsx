@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
-const OrderPaymentCompletePublicPage = (props) => {
+const OrderPaymentAccountCompletePublicPage = (props) => {
 	const orderPay = useSelector((state) => state.orderPay);
 	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
 	const dispatch = useDispatch();
 	useEffect(
 		() => {
 			if (successPay) {
-				props.history.push('/checkout/paymentcomplete/' + props.match.params.id);
+				props.history.push('/checkout/paymentacccountcomplete/' + props.match.params.id);
 			}
 		},
 		[ successPay ]
@@ -26,23 +26,12 @@ const OrderPaymentCompletePublicPage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/paymentcomplete/" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/paymentcomplete/" />
 			</MetaTags>
-			{/* {props.loadingPay ? (
-				<FlexContainer h_center column>
-					<img src="loading.gif" className="loading_gif" alt="loading" />
-					<img src="loading_overlay.png" className="loading_png" alt="loading" />
-					<h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>
-				</FlexContainer>
-			) : props.errorPay ? (
-				<FlexContainer h_center>
-					<h3 style={{ textAlign: 'center' }}>Payment Not Complete</h3>
-					<label style={{ textAlign: 'center' }}>Maybe try a different card {props.errorPay} </label>
-				</FlexContainer>
-			) : ( */}
 			<div>
 				<h1 style={{ textAlign: 'center' }}>Payment Successful</h1>
 				<p style={{ textAlign: 'center' }}>Thank you for your payment </p>
 				<p style={{ textAlign: 'center' }}>We appreciate your support</p>
 				<p style={{ textAlign: 'center' }}> We will notify you when your order ships!</p>
+
 				<FlexContainer h_center wrap row h_between styles={{ width: '100%' }}>
 					<Link to="/collections/all/products">
 						<button style={{ margin: '15px' }} className="button primary">
@@ -59,20 +48,25 @@ const OrderPaymentCompletePublicPage = (props) => {
 							NTRE Music
 						</button>
 					</Link>
-					<Link to="/account/register">
-						<button style={{ margin: '15px' }} className="button primary">
-							Create Account
-						</button>
-					</Link>
 				</FlexContainer>
+				<h1 style={{ textAlign: 'center' }}>Account Created Successfully</h1>
+				<p style={{ textAlign: 'center' }}>Thank you for signing up with glow-leds</p>
 				<p style={{ textAlign: 'center' }}>
-					{' '}
-					If you are trying to make a new order, Refresh the Page and go back to cart to start checkout
-					process
+					Your temporary password is{' '}
+					<label style={{ fontFamily: 'helvetica', color: '#ff4040' }}>glowleds </label>(all lowercase)
+				</p>
+				<p style={{ textAlign: 'center' }}>
+					Be sure to login and change your password to keep your account secure.
 				</p>
 			</div>
-			{/* )} */}
+			<FlexContainer h_center wrap row h_between styles={{ width: '100%' }}>
+				<Link to="/account/login">
+					<button style={{ margin: '15px' }} className="button primary">
+						Login
+					</button>
+				</Link>
+			</FlexContainer>
 		</FlexContainer>
 	);
 };
-export default OrderPaymentCompletePublicPage;
+export default OrderPaymentAccountCompletePublicPage;

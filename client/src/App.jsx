@@ -59,7 +59,8 @@ import {
 	PlaceOrderPublicPage,
 	ShippingPublicPage,
 	OrderPaymentCompletePublicPage,
-  MenuPage
+	MenuPage,
+	OrderPaymentAccountCompletePublicPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -196,10 +197,16 @@ const App = () => {
 								component={(props) => <ShippingPublicPage userInfo={userInfo} {...props} />}
 							/>
 							<Route
+								path="/checkout/paymentacccountcomplete/:id"
+								exact={true}
+								component={OrderPaymentAccountCompletePublicPage}
+							/>
+							<Route
 								path="/checkout/paymentcomplete/:id"
 								exact={true}
 								component={OrderPaymentCompletePublicPage}
 							/>
+
 							{/* <Route path="/checkout/cart/:pathname?" component={CartPage} /> */}
 							<Route
 								path="/checkout/cart/:pathname?"

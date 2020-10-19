@@ -30,6 +30,7 @@ import {
 	ORDER_REFUND_FAIL
 } from '../constants/orderConstants';
 import Cookie from 'js-cookie';
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from '../constants/userConstants';
 
 export const createPayOrder = (
 	order: {
@@ -86,7 +87,7 @@ export const createPayOrder = (
 export const createPayOrderGuest = (
 	order: {
 		orderItems: object;
-		shipping: object;
+		shipping: any;
 		payment: any;
 		itemsPrice: number;
 		shippingPrice: number;
@@ -94,30 +95,66 @@ export const createPayOrderGuest = (
 		totalPrice: number;
 		order_note: string;
 		promo_code: string;
-		// product: string;
 	},
+	create_account: boolean,
 	token: any
 ) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-		const { userLogin: { userInfo: user_data } } = getState();
-		const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
-		console.log({ newOrder });
+		if (create_account) {
+			dispatch({
+				type: USER_REGISTER_REQUEST,
+				payload: {
+					first_name: order.shipping.first_name,
+					last_name: order.shipping.last_name,
+					email: order.shipping.email,
+					password: 'glowleds'
+				}
+			});
+			const { data } = await axios.post('/api/users/register', {
+				first_name: order.shipping.first_name,
+				last_name: order.shipping.last_name,
+				email: order.shipping.email,
+				password: 'glowleds'
+			});
+			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+			axios.post('/api/emails/verified', data);
+			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+			const { userLogin: { userInfo: user_data } } = getState();
+			const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', { ...order, user: data._id });
+			console.log({ newOrder });
 
-		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
-		const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { token });
-		console.log({ paid });
-		dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
+			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { token });
+			console.log({ paid });
+			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
 
-		axios.post('/api/emails/order', { ...newOrder, token });
-		axios.post('/api/emails/sale', { ...newOrder, token });
-		Cookie.remove('shipping');
-		Cookie.remove('diffuser_cap');
-		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+			axios.post('/api/emails/order', { ...newOrder, token });
+			axios.post('/api/emails/sale', { ...newOrder, token });
+			Cookie.remove('shipping');
+			Cookie.remove('diffuser_cap');
+			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		} else {
+			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+			const { userLogin: { userInfo: user_data } } = getState();
+			const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
+			console.log({ newOrder });
+
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+
+			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { token });
+			console.log({ paid });
+			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
+
+			axios.post('/api/emails/order', { ...newOrder, token });
+			axios.post('/api/emails/sale', { ...newOrder, token });
+			Cookie.remove('shipping');
+			Cookie.remove('diffuser_cap');
+			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		}
 	} catch (error) {
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
