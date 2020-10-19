@@ -164,14 +164,6 @@ router.get('/mine', isAuth, async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Your Orders' });
 	}
 });
-// router.get('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-// 	const charges = await stripe.charges.list({});
-// 	res.send(charges);
-// });
-// router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-// 	const refunds = await stripe.refunds.list({});
-// 	res.send(refunds);
-// });
 
 router.get('/:id', isAuth, async (req: any, res: any) => {
 	try {
@@ -312,6 +304,22 @@ router.post('/', isAuth, async (req: any, res: any) => {
 	}
 });
 
+router.put('/charges', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+	const order = await Order.findById('5f88c4c6d82e0e002acae9bf').populate('user');
+	// const charges = await stripe.charges.list({});
+	const charge = await stripe.charges.retrieve('ch_1HceYpJUIKBwBp0w69pyljh3');
+	order.payment = {
+		paymentMethod: 'stripe',
+		charge: charge
+	};
+	const updatedOrder = await order.save();
+	res.send(updatedOrder);
+});
+// router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+// 	const refunds = await stripe.refunds.list({});
+// 	res.send(refunds);
+// });
+
 router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 	try {
 		const order = await Order.findById(req.params.id).populate('user');
@@ -349,7 +357,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 						method: 'PUT',
 						path: req.originalUrl,
 						collection: 'Order',
-						data: [ charge ],
+						data: [ result ],
 						status: 201,
 						success: true,
 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
@@ -358,7 +366,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 					order.paidAt = Date.now();
 					order.payment = {
 						paymentMethod: 'stripe',
-						charge: charge
+						charge: result
 					};
 					const updatedOrder = await order.save();
 					if (updatedOrder) {
@@ -480,7 +488,7 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 						method: 'PUT',
 						path: req.originalUrl,
 						collection: 'Order',
-						data: [ charge ],
+						data: [ result ],
 						status: 201,
 						success: true,
 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
@@ -489,7 +497,7 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 					order.paidAt = Date.now();
 					order.payment = {
 						paymentMethod: 'stripe',
-						charge: charge
+						charge: result
 					};
 					const updatedOrder = await order.save();
 					if (updatedOrder) {

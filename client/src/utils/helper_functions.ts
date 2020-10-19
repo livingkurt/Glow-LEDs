@@ -203,12 +203,12 @@ export const print_invoice = (order: any) => {
 
         <tr class="details">
         <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
-        ${order.payment.charge.source.brand} 
+        ${order.payment.charge ? order.payment.charge.source.brand : ''} 
         </td>
 
         <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
           align="right">
-          ${order.payment.charge.source.last4}
+          ${order.payment.charge ? order.payment.charge.source.last4 : ''}
         </td>
       </tr>
   
