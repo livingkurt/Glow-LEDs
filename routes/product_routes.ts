@@ -111,7 +111,8 @@ router.get('/minicaps', async (req, res) => {
 			collection: 'Product',
 			data: products,
 			status: 200,
-			success: true
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
 		res.send(products);
 	} catch (error) {
