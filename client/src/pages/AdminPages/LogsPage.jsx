@@ -148,7 +148,7 @@ const LogsPage = (props) => {
 										<td>{format_time(log.createdAt)} </td>
 										<td>{log.method}</td>
 										<td>{log.status}</td>
-										<td className="min-w-300px">{log.path}%</td>
+										<td className="min-w-200px">{log.path}%</td>
 										<td>{log.file}</td>
 										<td>
 											{log.success ? (
