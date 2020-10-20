@@ -9,12 +9,15 @@ import MetaTags from 'react-meta-tags';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import API from '../../utils/API';
 import { print_invoice } from '../../utils/helper_functions';
+import useClipboard from 'react-hook-clipboard';
 
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ expandable, set_expandable ] = useState('none');
 	const [ payment_method, set_payment_method ] = useState('');
+	// const [ isCopied, setCopied ] = useClipboard('');
+	const [ clipboard, copyToClipboard ] = useClipboard();
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
@@ -171,6 +174,21 @@ const OrdersPage = (props) => {
 	// 	const invoice = await API.print_invoice(order);
 	// 	console.log({ invoice });
 	// };
+
+	// function copy_to_clipboard(copyText) {
+	// 	/* Get the text field */
+	// 	// var copyText = document.getElementById("password_area");
+
+	// 	/* Select the text field */
+	// 	copyText.select();
+	// 	// copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+	// 	/* Copy the text inside the text field */
+	// 	document.execCommand('copy');
+
+	// 	/* Alert the copied text */
+	// 	alert('Copied to Clipboard\n' + copyText.value);
+	// }
 
 	return (
 		<div class="main_container">
@@ -511,6 +529,32 @@ const OrdersPage = (props) => {
 														<div>{order.shipping.international && 'International'}</div>
 														<div>{order.shipping.email}</div>
 													</div>
+													<button
+														className="button secondary w-200px mv-10px"
+														onClick={() =>
+															copyToClipboard(`
+${order.shipping.first_name} ${order.shipping.last_name}
+${order.shipping.address}
+${order.shipping.city}, ${order.shipping.state}
+${order.shipping.postalCode} ${order.shipping.country}
+${order.shipping.email}`)}
+													>
+														Copy to clipboard
+													</button>
+													{/* <button
+														onClick={setCopied(`
+															${order.shipping.first_name} ${order.shipping.last_name}
+														
+														${order.shipping.address}
+														
+															${order.shipping.city}, ${order.shipping.state}{' '}
+															${order.shipping.postalCode} ${order.shipping.country}
+														
+														${order.shipping.international && 'International'}
+														${order.shipping.email}`)}
+													>
+														Was it copied? {isCopied ? 'Yes! 👍' : 'Nope! 👎'}
+													</button> */}
 												</div>
 												<div className="column w-100per">
 													<h1>Totals</h1>
