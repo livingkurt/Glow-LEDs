@@ -541,20 +541,6 @@ ${order.shipping.email}`)}
 													>
 														Copy to clipboard
 													</button>
-													{/* <button
-														onClick={setCopied(`
-															${order.shipping.first_name} ${order.shipping.last_name}
-														
-														${order.shipping.address}
-														
-															${order.shipping.city}, ${order.shipping.state}{' '}
-															${order.shipping.postalCode} ${order.shipping.country}
-														
-														${order.shipping.international && 'International'}
-														${order.shipping.email}`)}
-													>
-														Was it copied? {isCopied ? 'Yes! 👍' : 'Nope! 👎'}
-													</button> */}
 												</div>
 												<div className="column w-100per">
 													<h1>Totals</h1>

@@ -231,7 +231,13 @@ export const print_invoice = (order: any) => {
 			.map((item: any) => {
 				let item_item = `<tr class="item">
           <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
-          ${item.qty}x ${item.name}
+          ${item.qty}x - ${item.category === 'diffuser_caps' ||
+				item.category === 'mini_diffuser_caps' ||
+				item.category === 'frosted_diffusers'
+					? `${item.diffuser_cap_color} -`
+					: ''}
+        ${item.name}
+        ${item.secondary_product ? `w (${item.secondary_product.name})` : ''}
           </td>
   
           <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
