@@ -9,12 +9,15 @@ import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
 const EditProfilePage = (props) => {
+	const user_data = props.userInfo;
 	const history = useHistory();
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
+	const [ shipping, set_shipping ] = useState({});
 	const [ email_subscription, set_email_subscription ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ international, setInternational ] = useState(false);
 
 	const [ first_name_validations, setFirstnameValidations ] = useState('');
 	const [ last_name_validations, setLastNameValidations ] = useState('');
@@ -35,12 +38,16 @@ const EditProfilePage = (props) => {
 
 		console.log(request);
 		if (request.isValid) {
-			dispatch(update({ userId: userInfo._id, email, first_name, last_name, email_subscription }));
+			dispatch(update({ ...user_data, email, first_name, last_name, email_subscription, shipping }));
 			history.push('/secure/account/profile');
 		}
 	};
 	const userUpdate = useSelector((state) => state.userUpdate);
 	const { loading, success, error } = userUpdate;
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	useEffect(
 		() => {
@@ -49,16 +56,13 @@ const EditProfilePage = (props) => {
 				set_first_name(userInfo.first_name);
 				set_last_name(userInfo.last_name);
 				set_email_subscription(userInfo.email_subscription);
+				set_shipping(userInfo.shipping);
 				// setPassword(userInfo.password);
 			}
 			return () => {};
 		},
 		[ userInfo ]
 	);
-
-	setTimeout(() => {
-		set_loading_checkboxes(false);
-	}, 500);
 
 	useEffect(
 		() => {
@@ -67,6 +71,7 @@ const EditProfilePage = (props) => {
 				set_first_name(userUpdate.userInfo.first_name);
 				set_last_name(userUpdate.userInfo.last_name);
 				set_email_subscription(userUpdate.userInfo.email_subscription);
+				set_shipping(userUpdate.userInfo.shipping);
 				// setPassword(userUpdate.userInfo.password);
 			}
 
@@ -159,7 +164,124 @@ const EditProfilePage = (props) => {
 									/>
 								</li>
 							)}
+							<li>
+								<h2 style={{ textAlign: 'center' }}>Shipping</h2>
+							</li>
+							<li>
+								<label htmlFor="first_name">First Name</label>
+								<input
+									defaultValue={shipping.first_name}
+									type="first_name"
+									name="first_name"
+									id="first_name"
+									onChange={(e) => set_shipping({ ...shipping, first_name: e.target.value })}
+								/>
+							</li>
+							{/* <label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+								{first_name_validations}
+							</label> */}
+							<li>
+								<label htmlFor="last_name">Last Name</label>
+								<input
+									defaultValue={shipping.last_name}
+									type="last_name"
+									name="last_name"
+									id="last_name"
+									onChange={(e) => set_shipping({ ...shipping, last_name: e.target.value })}
+								/>
+							</li>
+							{/* <label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
+								{last_name_validations}
+							</label> */}
+							<li>
+								<label htmlFor="address">Address</label>
+								<input
+									type="text"
+									value={shipping.address}
+									name="address"
+									id="address"
+									onChange={(e) => set_shipping({ ...shipping, address: e.target.value })}
+								/>
+							</li>
+							{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+							{address_validations
+						</label> */}
+							<li>
+								<label htmlFor="city">City</label>
+								<input
+									type="text"
+									value={shipping.city}
+									name="city"
+									id="city"
+									onChange={(e) => set_shipping({ ...shipping, city: e.target.value })}
+								/>
+							</li>
+							{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+							{city_validations}
+						</label> */}
+							<li>
+								<label htmlFor="state">State</label>
+								<input
+									type="text"
+									value={shipping.state}
+									name="state"
+									id="state"
+									onChange={(e) => set_shipping({ ...shipping, state: e.target.value })}
+								/>
+							</li>
+							{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+							{state_validations}
+						</label> */}
+							<li>
+								<label htmlFor="postalCode">Postal Code</label>
+								<input
+									type="text"
+									value={shipping.postalCode}
+									name="postalCode"
+									id="postalCode"
+									onChange={(e) => set_shipping({ ...shipping, postalCode: e.target.value })}
+								/>
+							</li>
+							{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+							{postal_code_validations}
+						</label> */}
+							{loading ? (
+								<div>Loading...</div>
+							) : (
+								<div>
+									<li>
+										<label htmlFor="international">International</label>
+										<input
+											type="checkbox"
+											name="international"
+											// defaultChecked={international ? 'checked' : 'unchecked'}
+											defaultValue={international}
+											defaultChecked={international}
+											value={shipping.international}
+											id="international"
+											onChange={(e) => {
+												setInternational(e.target.checked);
+											}}
+										/>
+									</li>
+									{international && (
+										<li>
+											<label htmlFor="country">Country</label>
+											<input
+												type="text"
+												value={shipping.country}
+												name="country"
+												id="country"
+												onChange={(e) => set_shipping({ ...shipping, country: e.target.value })}
+											/>
+										</li>
+									)}
+								</div>
+							)}
 
+							{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+							{country_validations}
+						</label> */}
 							<li>
 								<button type="submit" className="button primary">
 									Update

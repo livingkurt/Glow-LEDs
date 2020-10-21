@@ -10,8 +10,8 @@ import Cookie from 'js-cookie';
 
 const ShippingPage = (props) => {
 	const user_data = props.userInfo;
-	// const userLogin = useSelector((state) => state.userLogin);
-	// const { userInfo } = userLogin;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	console.log();
 
 	const cart = useSelector((state) => state.cart);
@@ -29,36 +29,95 @@ const ShippingPage = (props) => {
 	const [ save_shipping, set_save_shipping ] = useState(false);
 	const [ loading, set_loading ] = useState(true);
 
+	const userUpdate = useSelector((state) => state.userUpdate);
+	console.log({ userUpdate });
+
+	// useEffect(
+	// 	() => {
+	// 		// if (shipping) {
+	// 		// set_email(shipping.email || userInfo.email);
+	// 		// set_first_name(shipping.first_name || (userInfo.shipping && userInfo.shipping.first_name));
+	// 		// set_last_name(shipping.last_name || (userInfo.shipping && userInfo.shipping.last_name));
+	// 		// setAddress(shipping.address || (userInfo.shipping && userInfo.shipping.address));
+	// 		// setCity(shipping.city || (userInfo.shipping && userInfo.shipping.city));
+	// 		// setState(shipping.state || (userInfo.shipping && userInfo.shipping.state));
+	// 		// setPostalCode(shipping.postalCode || (userInfo.shipping && userInfo.shipping.postalCode));
+	// 		// setCountry(shipping.country || (userInfo.shipping && userInfo.shipping.country));
+	// 		// setInternational(shipping.international || (userInfo.shipping && userInfo.shipping.international));
+	// 		// set_save_shipping(shipping.save_shipping);
+	// 		if (user_data) {
+	// 			set_email(user_data.email);
+	// 			set_first_name(user_data.shipping ? user_data.shipping.first_name : shipping.first_name);
+	// 			set_last_name(user_data.shipping ? user_data.shipping.last_name : shipping.last_name);
+	// 			setAddress(user_data.shipping ? user_data.shipping.address : shipping.address);
+	// 			setCity(user_data.shipping ? user_data.shipping.city : shipping.city);
+	// 			setState(user_data.shipping ? user_data.shipping.state : shipping.state);
+	// 			setPostalCode(user_data.shipping ? user_data.shipping.postalCode : shipping.postalCode);
+	// 			setCountry(user_data.shipping ? user_data.shipping.country : shipping.country);
+	// 			setInternational(user_data.shipping ? user_data.shipping.international : shipping.international);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ user_data, shipping ]
+	// );
+
 	useEffect(
 		() => {
-			// if (shipping) {
-			// set_email(shipping.email || userInfo.email);
-			// set_first_name(shipping.first_name || (userInfo.shipping && userInfo.shipping.first_name));
-			// set_last_name(shipping.last_name || (userInfo.shipping && userInfo.shipping.last_name));
-			// setAddress(shipping.address || (userInfo.shipping && userInfo.shipping.address));
-			// setCity(shipping.city || (userInfo.shipping && userInfo.shipping.city));
-			// setState(shipping.state || (userInfo.shipping && userInfo.shipping.state));
-			// setPostalCode(shipping.postalCode || (userInfo.shipping && userInfo.shipping.postalCode));
-			// setCountry(shipping.country || (userInfo.shipping && userInfo.shipping.country));
-			// setInternational(shipping.international || (userInfo.shipping && userInfo.shipping.international));
-			// set_save_shipping(shipping.save_shipping);
 			if (user_data) {
 				set_email(user_data.email);
-				set_first_name(user_data.shipping ? user_data.shipping.first_name : shipping.first_name);
-				set_last_name(user_data.shipping ? user_data.shipping.last_name : shipping.last_name);
-				setAddress(user_data.shipping ? user_data.shipping.address : shipping.address);
-				setCity(user_data.shipping ? user_data.shipping.city : shipping.city);
-				setState(user_data.shipping ? user_data.shipping.state : shipping.state);
-				setPostalCode(user_data.shipping ? user_data.shipping.postalCode : shipping.postalCode);
-				setCountry(user_data.shipping ? user_data.shipping.country : shipping.country);
-				setInternational(user_data.shipping ? user_data.shipping.international : shipping.international);
-				set_save_shipping(shipping.save_shipping);
+				set_first_name(user_data.shipping.first_name);
+				set_last_name(user_data.shipping.last_name);
+				setAddress(user_data.shipping.address);
+				setCity(user_data.shipping.city);
+				setState(user_data.shipping.state);
+				setPostalCode(user_data.shipping.postalCode);
+				setCountry(user_data.shipping.country);
+				setInternational(user_data.shipping.international);
 			}
-
 			return () => {};
 		},
-		[ user_data, shipping ]
+		[ user_data ]
 	);
+
+	// useEffect(
+	// 	() => {
+	// 		console.log({ userUpdate });
+	// 		if (userUpdate) {
+	// 			set_email(userUpdate.email);
+	// 			set_first_name(userUpdate.shipping.first_name);
+	// 			set_last_name(userUpdate.shipping.last_name);
+	// 			setAddress(userUpdate.shipping.address);
+	// 			setCity(userUpdate.shipping.city);
+	// 			setState(userUpdate.shipping.state);
+	// 			setPostalCode(userUpdate.shipping.postalCode);
+	// 			setCountry(userUpdate.shipping.country);
+	// 			setInternational(userUpdate.shipping.international);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate.userInfo ]
+	// );
+
+	// useEffect(
+	// 	() => {
+	// 		if (userUpdate.userInfo) {
+	// 			set_email(userUpdate.email);
+	// 			set_first_name(userUpdate.shipping.first_name);
+	// 			set_last_name(userUpdate.shipping.last_name);
+	// 			setAddress(userUpdate.shipping.address);
+	// 			setCity(userUpdate.shipping.city);
+	// 			setState(userUpdate.shipping.state);
+	// 			setPostalCode(userUpdate.shipping.postalCode);
+	// 			setCountry(userUpdate.shipping.country);
+	// 			setInternational(userUpdate.shipping.international);
+	// 			set_save_shipping(shipping.save_shipping);
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate.userInfo ]
+	// );
 
 	const [ email_validations, set_email_validations ] = useState('');
 	const [ first_name_validations, set_first_name_validations ] = useState('');

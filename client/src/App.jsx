@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import {
 	HomePage,
@@ -79,9 +79,12 @@ import {
 } from './components/EmailComponents';
 
 const App = () => {
-	const userLogin = useSelector((state) => state.userLogin);
+	const [ userInfo, set_userInfo ] = useState({});
 
-	let { userInfo } = userLogin;
+	const userLogin = useSelector((state) => state.userLogin);
+	const userUpdate = useSelector((state) => state.userUpdate);
+
+	// let { userInfo } = userLogin;
 
 	const theme_colors = {
 		footer: '#333333',
@@ -89,6 +92,26 @@ const App = () => {
 		content: 'linear-gradient(180deg, #8a8a8a 0%, #272727 100%);',
 		container: '#272727'
 	};
+	useEffect(
+		() => {
+			if (userLogin.userInfo) {
+				set_userInfo(userLogin.userInfo);
+			}
+
+			return () => {};
+		},
+		[ userLogin ]
+	);
+	useEffect(
+		() => {
+			if (userUpdate.userInfo) {
+				set_userInfo(userUpdate.userInfo);
+			}
+
+			return () => {};
+		},
+		[ userUpdate ]
+	);
 
 	return (
 		<Router>
@@ -108,7 +131,11 @@ const App = () => {
 						<Switch>
 							{/* Private Routes */}
 							<PrivateRoute path="/secure/account/profile" component={ProfilePage} />
-							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
+							{/* <PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} /> */}
+							<PrivateRoute
+								path="/secure/account/editprofile"
+								component={(props) => <EditProfilePage userInfo={userInfo} {...props} />}
+							/>
 							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
 							<PrivateRoute
 								path="/secure/checkout/shipping"

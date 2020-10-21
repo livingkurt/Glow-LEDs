@@ -8,6 +8,7 @@ import MetaTags from 'react-meta-tags';
 const ProfilePage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
+	const [ shipping, set_shipping ] = useState({});
 	const [ password, setPassword ] = useState('');
 	const [ email_subscription, set_email_subscription ] = useState(true);
 	const [ email, setEmail ] = useState('');
@@ -26,6 +27,7 @@ const ProfilePage = (props) => {
 				setEmail(userInfo.email);
 				set_first_name(userInfo.first_name);
 				set_last_name(userInfo.last_name);
+				set_shipping(userInfo.shipping);
 				setPassword(userInfo.password);
 				set_email_subscription(userInfo.email_subscription);
 			}
@@ -41,6 +43,7 @@ const ProfilePage = (props) => {
 				setEmail(userUpdate.userInfo.email);
 				set_first_name(userUpdate.userInfo.first_name);
 				set_last_name(userUpdate.userInfo.last_name);
+				set_shipping(userUpdate.userInfo.shipping);
 				setPassword(userUpdate.userInfo.password);
 				set_email_subscription(userUpdate.email_subscription);
 			}
@@ -82,6 +85,18 @@ const ProfilePage = (props) => {
 					<div className="column mb-20px">
 						<h3>Password</h3>
 						<label>**********</label>
+					</div>
+					<div className="label">
+						<h3>Shipping Address</h3>
+						<div>
+							{shipping.first_name} {shipping.last_name}
+						</div>
+						<div>{shipping.address}</div>
+						<div>
+							{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+						</div>
+						<div>{shipping.international && 'International'}</div>
+						<div>{shipping.email}</div>
 					</div>
 					<div className="column mb-20px">
 						<h3>Promotional Emails</h3>
