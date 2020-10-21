@@ -21,7 +21,7 @@ const EditProfilePage = (props) => {
 
 	const [ first_name_validations, setFirstnameValidations ] = useState('');
 	const [ last_name_validations, setLastNameValidations ] = useState('');
-	const [ email_validations, setEmailValidations ] = useState(true);
+	const [ email_validations, setEmailValidations ] = useState(false);
 	const dispatch = useDispatch();
 
 	// const userLogin = useSelector((state) => state.userLogin);

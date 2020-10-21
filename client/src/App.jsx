@@ -130,7 +130,11 @@ const App = () => {
 					<ScrollToTop>
 						<Switch>
 							{/* Private Routes */}
-							<PrivateRoute path="/secure/account/profile" component={ProfilePage} />
+							{/* <PrivateRoute path="/secure/account/profile" component={ProfilePage} /> */}
+							<PrivateRoute
+								path="/secure/account/profile"
+								component={(props) => <ProfilePage userInfo={userInfo} {...props} />}
+							/>
 							{/* <PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} /> */}
 							<PrivateRoute
 								path="/secure/account/editprofile"
