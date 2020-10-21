@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping, savePayment } from '../../actions/cartActions';
-import { update } from '../../actions/userActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
-import API from '../../utils/API';
 import MetaTags from 'react-meta-tags';
-import Cookie from 'js-cookie';
 
 const ShippingPage = (props) => {
-	const user_data = props.userInfo;
-	// const userLogin = useSelector((state) => state.userLogin);
-	// const { userInfo } = userLogin;
-	console.log();
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
@@ -26,38 +21,25 @@ const ShippingPage = (props) => {
 	const [ postalCode, setPostalCode ] = useState('');
 	const [ country, setCountry ] = useState('United States');
 	const [ international, setInternational ] = useState(false);
-	const [ save_shipping, set_save_shipping ] = useState(false);
 	const [ loading, set_loading ] = useState(true);
 
 	useEffect(
 		() => {
-			// if (shipping) {
-			// set_email(shipping.email || userInfo.email);
-			// set_first_name(shipping.first_name || (userInfo.shipping && userInfo.shipping.first_name));
-			// set_last_name(shipping.last_name || (userInfo.shipping && userInfo.shipping.last_name));
-			// setAddress(shipping.address || (userInfo.shipping && userInfo.shipping.address));
-			// setCity(shipping.city || (userInfo.shipping && userInfo.shipping.city));
-			// setState(shipping.state || (userInfo.shipping && userInfo.shipping.state));
-			// setPostalCode(shipping.postalCode || (userInfo.shipping && userInfo.shipping.postalCode));
-			// setCountry(shipping.country || (userInfo.shipping && userInfo.shipping.country));
-			// setInternational(shipping.international || (userInfo.shipping && userInfo.shipping.international));
-			// set_save_shipping(shipping.save_shipping);
-			if (user_data) {
-				set_email(user_data.email);
-				set_first_name(user_data.shipping ? user_data.shipping.first_name : shipping.first_name);
-				set_last_name(user_data.shipping ? user_data.shipping.last_name : shipping.last_name);
-				setAddress(user_data.shipping ? user_data.shipping.address : shipping.address);
-				setCity(user_data.shipping ? user_data.shipping.city : shipping.city);
-				setState(user_data.shipping ? user_data.shipping.state : shipping.state);
-				setPostalCode(user_data.shipping ? user_data.shipping.postalCode : shipping.postalCode);
-				setCountry(user_data.shipping ? user_data.shipping.country : shipping.country);
-				setInternational(user_data.shipping ? user_data.shipping.international : shipping.international);
-				set_save_shipping(shipping.save_shipping);
+			if (shipping) {
+				set_email(shipping.email);
+				set_first_name(shipping.first_name);
+				set_last_name(shipping.last_name);
+				setAddress(shipping.address);
+				setCity(shipping.city);
+				setState(shipping.state);
+				setPostalCode(shipping.postalCode);
+				setCountry(shipping.country);
+				setInternational(shipping.international);
 			}
 
 			return () => {};
 		},
-		[ user_data, shipping ]
+		[ shipping ]
 	);
 
 	const [ email_validations, set_email_validations ] = useState('');
@@ -103,42 +85,6 @@ const ShippingPage = (props) => {
 			);
 			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
-			console.log({ save_shipping });
-			dispatch(
-				update({
-					...user_data,
-					shipping: {
-						first_name,
-						last_name,
-						email,
-						address,
-						city,
-						state,
-						postalCode,
-						country: international ? country : 'United States',
-						international
-					}
-				})
-			);
-			// if (save_shipping) {
-			// 	const data = API.save_user_shipping(
-			// 		{
-			// 			first_name,
-			// 			last_name,
-			// 			address,
-			// 			city,
-			// 			state,
-			// 			postalCode,
-			// 			country: international ? country : 'United States',
-			// 			international
-			// 		},
-			// 		userInfo
-			// 	);
-			// 	console.log({ data });
-			// 	if (data) {
-			// 		Cookie.set('userInfo', JSON.stringify(data));
-			// 	}
-			// }
 			props.history.push('placeorder');
 		}
 	};
@@ -295,27 +241,11 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
-						{loading ? (
-							<div>Loading...</div>
-						) : (
-							<div>
-								<li>
-									<label htmlFor="save_shipping">Save Shipping</label>
-									<input
-										type="checkbox"
-										name="save_shipping"
-										// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
-										defaultValue={save_shipping}
-										defaultChecked={save_shipping}
-										// value={save_shipping}
-										id="save_shipping"
-										onChange={(e) => {
-											set_save_shipping(e.target.checked);
-										}}
-									/>
-								</li>
-							</div>
-						)}
+						{/* <li>
+							<Link to="/cart">
+								<button class="button secondary full-width">Back to Cart</button>
+							</Link>
+						</li> */}
 					</ul>
 				</form>
 			</div>

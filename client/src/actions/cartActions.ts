@@ -20,7 +20,13 @@ import {
 } from '../constants/cartConstants';
 import axios from 'axios';
 
-export const addToCart = (pathname: string, qty: number, diffuser_cap_color: string, diffuser_cap: any) => async (
+export const addToCart = (
+	pathname: string,
+	qty: number,
+	diffuser_cap_color: string,
+	diffuser_cap: any,
+	cart: any
+) => async (
 	dispatch: (
 		arg0: {
 			type: string;
@@ -52,9 +58,6 @@ export const addToCart = (pathname: string, qty: number, diffuser_cap_color: str
 	try {
 		console.log('Add To Cart Before');
 		const { data } = await Axios.get('/api/products/' + pathname);
-
-		console.log({ pathname, qty, diffuser_cap_color, diffuser_cap });
-		console.log({ data });
 
 		let cartItem: any = {
 			product: data._id,
@@ -124,31 +127,23 @@ export const addToCart = (pathname: string, qty: number, diffuser_cap_color: str
 
 		const { cart: { cartItems } } = getState();
 		Cookie.set('cartItems', JSON.stringify(cartItems));
-		// dispatch({ type: CART_SAVE_REQUEST, payload: cartItems });
-		// const { userLogin: { userInfo } } = getState();
-		// if (!userInfo._id) {
-		// 	const { data } = await axios.post(
-		// 		'/api/carts',
-		// 		{ user: userInfo, cartItems },
-		// 		{
-		// 			headers: {
-		// 				Authorization: 'Bearer ' + userInfo.token
-		// 			}
-		// 		}
-		// 	);
-		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		// } else {
-		// 	const { data } = await axios.put(
-		// 		'/api/carts/' + cartItems._id,
-		// 		{ user: userInfo, cartItems },
-		// 		{
-		// 			headers: {
-		// 				Authorization: 'Bearer ' + userInfo.token
-		// 			}
-		// 		}
-		// 	);
-		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		// }
+		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
+		const { userLogin: { userInfo } } = getState();
+		if (!cart._id) {
+			const { data } = await axios.post('/api/carts', cart, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		} else {
+			const { data } = await axios.put('/api/carts/' + cart._id, cart, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		}
 	} catch (error) {
 		console.log({ error });
 	}

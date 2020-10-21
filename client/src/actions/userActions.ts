@@ -43,7 +43,7 @@ export const update = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log(userdata);
+	console.log({ userdata });
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_REQUEST,
@@ -56,13 +56,14 @@ export const update = (userdata: any) => async (
 			is_sponsored: userdata.is_sponsored,
 			email_subscription: userdata.email_subscription,
 			sponsor: userdata.sponsor,
+			shipping: userdata.shipping,
 			verified: userdata.verified,
 			admin: userdata.admin
 		}
 	});
 	try {
 		const { data } = await axios.put(
-			'/api/users/update/' + userdata.userId,
+			'/api/users/update/' + userdata._id,
 			{
 				first_name: userdata.first_name,
 				last_name: userdata.last_name,
@@ -71,6 +72,7 @@ export const update = (userdata: any) => async (
 				is_sponsored: userdata.is_sponsored,
 				email_subscription: userdata.email_subscription,
 				sponsor: userdata.sponsor,
+				shipping: userdata.shipping,
 				verified: userdata.verified,
 				admin: userdata.admin
 			},

@@ -106,32 +106,7 @@ const ProductPage = (props) => {
 	);
 
 	const handleAddToCart = () => {
-		// console.log({ pathname: props.match.params.pathname });
-		// console.log({ qty });
-		console.log({ diffuser_cap_color });
-		// console.log({ diffuser_cap });
-
-		// if (diffuser_cap) {
-		// 	Cookie.set('diffuser_cap', diffuser_cap);
-		// }
-		// if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
-		// 	if (diffuser_cap_color) {
-		// 		Cookie.set('diffuser_cap_color', diffuser_cap_color);
-		// 	} else {
-		// 		Cookie.set('diffuser_cap_color', 'Translucent White');
-		// 		set_diffuser_cap_color('Translucent White');
-		// 	}
-		// } else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
-		// 	if (diffuser_cap_color) {
-		// 		Cookie.set('diffuser_cap_color', diffuser_cap_color);
-		// 	} else {
-		// 		Cookie.set('diffuser_cap_color', 'Black');
-		// 		set_diffuser_cap_color('Black');
-		// 	}
-		// }
-
 		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap));
-		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
 		props.history.push('/checkout/cart');
 	};
 

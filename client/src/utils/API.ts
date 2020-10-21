@@ -9,6 +9,18 @@ export default {
 	send_announcement_email: (template: string, subject: string, test: boolean) => {
 		return axios.post('/api/emails/announcement', { template, subject, test });
 	},
+	save_user_shipping: (shipping: any, user: any) => {
+		console.log({ shipping, user });
+		return axios.put(
+			`/api/users/shipping`,
+			{ shipping, user },
+			{
+				headers: {
+					Authorization: 'Bearer ' + user.token
+				}
+			}
+		);
+	},
 	save_html: (template: string, email: any, token: any) => {
 		console.log({ template, email, token });
 		email = { ...email, html: template };

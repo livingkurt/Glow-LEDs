@@ -245,6 +245,65 @@ router.post('/', async (req, res) => {
 	}
 });
 
+// router.put('/shipping', async (req, res) => {
+// 	try {
+// 		console.log({ shipping: req.body });
+// 		const user_id = req.body.user._id;
+// 		const user: any = await User.findById(user_id);
+
+// 		if (user) {
+// 			const updatedUser = await User.updateOne({ _id: user_id }, { shipping: req.body.shipping });
+// 			if (updatedUser) {
+// 				log_request({
+// 					method: 'PUT',
+// 					path: req.originalUrl,
+// 					collection: 'User',
+// 					data: [ user ],
+// 					status: 200,
+// 					success: true,
+// 					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 				});
+// 				// return res.status(200).send({ message: 'User Updated', data: updatedUser });
+// 				console.log({ updatedUser });
+// 				res.send({
+// 					_id: updatedUser.id,
+// 					first_name: updatedUser.first_name,
+// 					last_name: updatedUser.last_name,
+// 					email: updatedUser.email,
+// 					sponsor: updatedUser.sponsor,
+// 					email_subscription: updatedUser.email_subscription,
+// 					is_sponsored: updatedUser.is_sponsored,
+// 					isVerified: updatedUser.isVerified,
+// 					isAdmin: updatedUser.isAdmin,
+// 					shipping: updatedUser.shipping,
+// 					token: getToken(updatedUser)
+// 				});
+// 			}
+// 		} else {
+// 			log_error({
+// 				method: 'PUT',
+// 				path: req.originalUrl,
+// 				collection: 'User',
+// 				data: [ user ],
+// 				status: 500,
+// 				success: false,
+// 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 			});
+// 			return res.status(500).send({ message: ' Error in Updating User.' });
+// 		}
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'PUT',
+// 			path: req.originalUrl,
+// 			collection: 'User',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Getting User' });
+// 	}
+// });
+
 router.put('/:id', isAuth, async (req, res) => {
 	try {
 		console.log({ user_routes_put: req.body });
@@ -364,6 +423,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 			user.isVerified = req.body.verified || user.isVerified;
 			user.sponsor = req.body.sponsor || user.sponsor;
 			user.email_subscription = req.body.email_subscription;
+			user.shipping = req.body.shipping;
 			user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
@@ -386,6 +446,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 					email: updatedUser.email,
 					sponsor: updatedUser.sponsor,
 					email_subscription: updatedUser.email_subscription,
+					shipping: updatedUser.shipping,
 					is_sponsored: updatedUser.is_sponsored,
 					isVerified: updatedUser.isVerified,
 					isAdmin: updatedUser.isAdmin,
@@ -489,8 +550,9 @@ router.put('/verify/:id', async (req, res) => {
 					email: updatedUser.email,
 					sponsor: updatedUser.sponsor,
 					email_subscription: updatedUser.email_subscription,
-					is_sponsored: updatedUser.is_sponsored
+					is_sponsored: updatedUser.is_sponsored,
 					// isVerified: updatedUser.isVerified,
+					shipping: updatedUser.shipping
 					// token: getToken(updatedUser)
 				});
 			} else {
@@ -583,6 +645,7 @@ router.post('/login', async (req, res) => {
 				is_sponsored: login_user.is_sponsored,
 				email_subscription: login_user.email_subscription,
 				isVerified: login_user.isVerified,
+				shipping: login_user.shipping,
 				token: getToken(login_user)
 			});
 		} else {
@@ -659,6 +722,7 @@ router.post('/register', async (req, res) => {
 						is_sponsored: newUser.is_sponsored,
 						email_subscription: newUser.email_subscription,
 						isVerified: newUser.isVerified,
+						shipping: newUser.shipping,
 						token: getToken(newUser)
 					});
 				});
@@ -715,6 +779,7 @@ router.post('/getuser/:id', async (req, res) => {
 				sponsor: user.sponsor,
 				is_sponsored: user.is_sponsored,
 				email_subscription: user.email_subscription,
+				shipping: user.shipping,
 				token: getToken(user)
 			});
 		} else {
@@ -786,6 +851,7 @@ router.get('/createadmin', async (req, res) => {
 						email_subscription: admin.email_subscription,
 						isAdmin: admin.isAdmin,
 						isVerified: admin.isVerified,
+						shipping: admin.shipping,
 						token: getToken(admin)
 					});
 				});

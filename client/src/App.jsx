@@ -110,7 +110,10 @@ const App = () => {
 							<PrivateRoute path="/secure/account/profile" component={ProfilePage} />
 							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
 							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
-							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
+							<PrivateRoute
+								path="/secure/checkout/shipping"
+								component={(props) => <ShippingPage userInfo={userInfo} {...props} />}
+							/>
 							<PrivateRoute path="/secure/account/glowcontrol/:id" component={GlowControlPage} />
 							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
 							<PrivateRoute

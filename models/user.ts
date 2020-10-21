@@ -43,6 +43,17 @@ const cartSchema = {
 // 	deleted: { type: Boolean, default: false }
 // };
 
+const shippingSchema = {
+	first_name: { type: String },
+	last_name: { type: String },
+	address: { type: String },
+	city: { type: String },
+	state: { type: String },
+	postalCode: { type: String },
+	international: { type: Boolean },
+	country: { type: String }
+};
+
 const userSchema = new mongoose.Schema(
 	{
 		first_name: { type: String, required: true },
@@ -54,6 +65,7 @@ const userSchema = new mongoose.Schema(
 			index: true,
 			dropDups: true
 		},
+		shipping: shippingSchema,
 		password: { type: String, required: true },
 		isAdmin: { type: Boolean, required: true, default: false },
 		isVerified: { type: Boolean, required: true, default: false },
