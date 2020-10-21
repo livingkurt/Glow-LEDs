@@ -19,10 +19,10 @@ export const getToken = (user: { _id: any; first_name: any; last_name: any; emai
 			email: user.email,
 			isAdmin: user.isAdmin
 		},
-		config.JWT_SECRET,
-		{
-			expiresIn: '48h'
-		}
+		config.JWT_SECRET
+		// {
+		// 	expiresIn: '48h'
+		// }
 	);
 };
 
