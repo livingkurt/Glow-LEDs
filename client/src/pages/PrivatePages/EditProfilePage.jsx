@@ -24,8 +24,8 @@ const EditProfilePage = (props) => {
 	const [ email_validations, setEmailValidations ] = useState(true);
 	const dispatch = useDispatch();
 
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
+	// const userLogin = useSelector((state) => state.userLogin);
+	// const { userInfo } = userLogin;
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -51,34 +51,34 @@ const EditProfilePage = (props) => {
 
 	useEffect(
 		() => {
-			if (userInfo) {
-				setEmail(userInfo.email);
-				set_first_name(userInfo.first_name);
-				set_last_name(userInfo.last_name);
-				set_email_subscription(userInfo.email_subscription);
-				set_shipping(userInfo.shipping);
-				// setPassword(userInfo.password);
+			if (user_data) {
+				setEmail(user_data.email);
+				set_first_name(user_data.first_name);
+				set_last_name(user_data.last_name);
+				set_email_subscription(user_data.email_subscription);
+				set_shipping(user_data.shipping);
+				// setPassword(user_data.password);
 			}
 			return () => {};
 		},
-		[ userInfo ]
+		[ user_data ]
 	);
 
-	useEffect(
-		() => {
-			if (userUpdate.userInfo) {
-				setEmail(userUpdate.userInfo.email);
-				set_first_name(userUpdate.userInfo.first_name);
-				set_last_name(userUpdate.userInfo.last_name);
-				set_email_subscription(userUpdate.userInfo.email_subscription);
-				set_shipping(userUpdate.userInfo.shipping);
-				// setPassword(userUpdate.userInfo.password);
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (userUpdate.userInfo) {
+	// 			setEmail(userUpdate.userInfo.email);
+	// 			set_first_name(userUpdate.userInfo.first_name);
+	// 			set_last_name(userUpdate.userInfo.last_name);
+	// 			set_email_subscription(userUpdate.userInfo.email_subscription);
+	// 			set_shipping(userUpdate.userInfo.shipping);
+	// 			// setPassword(userUpdate.userInfo.password);
+	// 		}
 
-			return () => {};
-		},
-		[ userUpdate.userInfo ]
-	);
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate.userInfo ]
+	// );
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
