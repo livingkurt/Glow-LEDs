@@ -26,13 +26,16 @@ export const validate_promo_code = (data: any) => {
 			errors.promo_code = 'Promo Code Not Active';
 		}
 		if (!promo.for_customer) {
-			console.log('Hello');
-			console.log(data.user_data);
-			console.log(promo);
-			console.log(data.user_data._id);
-			console.log(promo.user);
-
-			if (promo.user !== data.user_data._id) {
+			// console.log('Hello');
+			// console.log(data.user_data);
+			// console.log(promo);
+			// console.log(data.user_data._id);
+			// console.log(promo.user);
+			if (data.user_data) {
+				if (promo.user !== data.user_data._id) {
+					errors.promo_code = 'Promo Code Not Active';
+				}
+			} else {
 				errors.promo_code = 'Promo Code Not Active';
 			}
 		}
