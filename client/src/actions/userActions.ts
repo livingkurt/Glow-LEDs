@@ -354,5 +354,6 @@ export const detailsUser = (userId: string) => async (
 
 export const logout = () => (dispatch: (arg0: { type: string }) => void) => {
 	Cookie.remove('userInfo');
+	Cookie.remove('userInfo');
 	dispatch({ type: USER_LOGOUT });
 };

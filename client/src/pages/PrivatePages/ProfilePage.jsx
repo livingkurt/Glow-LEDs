@@ -38,20 +38,20 @@ const ProfilePage = (props) => {
 		[ user_data ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			setEmail(userUpdate.userInfo.email);
-	// 			set_first_name(userUpdate.userInfo.first_name);
-	// 			set_last_name(userUpdate.userInfo.last_name);
-	// 			set_shipping(userUpdate.userInfo.shipping);
-	// 			setPassword(userUpdate.userInfo.password);
-	// 			set_email_subscription(userUpdate.email_subscription);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
+	useEffect(
+		() => {
+			if (userUpdate.userInfo) {
+				setEmail(userUpdate.userInfo.email);
+				set_first_name(userUpdate.userInfo.first_name);
+				set_last_name(userUpdate.userInfo.last_name);
+				set_shipping(userUpdate.userInfo.shipping);
+				setPassword(userUpdate.userInfo.password);
+				set_email_subscription(userUpdate.email_subscription);
+			}
+			return () => {};
+		},
+		[ userUpdate.userInfo ]
+	);
 
 	const container_styles = {
 		marginBottom: '20px'

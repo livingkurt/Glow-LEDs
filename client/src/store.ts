@@ -76,6 +76,7 @@ import { logDeleteReducer, logDetailsReducer, logListReducer, logSaveReducer } f
 
 const cartItems = Cookie.getJSON('cartItems') || [];
 const userInfo = Cookie.getJSON('userInfo') || null;
+console.log({ userInfo });
 
 const initialState: object = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo } };
 const reducer = combineReducers({

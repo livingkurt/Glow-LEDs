@@ -64,21 +64,21 @@ const EditProfilePage = (props) => {
 		[ user_data ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			setEmail(userUpdate.userInfo.email);
-	// 			set_first_name(userUpdate.userInfo.first_name);
-	// 			set_last_name(userUpdate.userInfo.last_name);
-	// 			set_email_subscription(userUpdate.userInfo.email_subscription);
-	// 			set_shipping(userUpdate.userInfo.shipping);
-	// 			// setPassword(userUpdate.userInfo.password);
-	// 		}
+	useEffect(
+		() => {
+			if (userUpdate.userInfo) {
+				setEmail(userUpdate.userInfo.email);
+				set_first_name(userUpdate.userInfo.first_name);
+				set_last_name(userUpdate.userInfo.last_name);
+				set_email_subscription(userUpdate.userInfo.email_subscription);
+				set_shipping(userUpdate.userInfo.shipping);
+				// setPassword(userUpdate.userInfo.password);
+			}
 
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
+			return () => {};
+		},
+		[ userUpdate.userInfo ]
+	);
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>

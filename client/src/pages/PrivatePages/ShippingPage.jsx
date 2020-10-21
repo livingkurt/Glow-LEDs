@@ -10,9 +10,9 @@ import Cookie from 'js-cookie';
 
 const ShippingPage = (props) => {
 	const user_data = props.userInfo;
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
-	console.log();
+	// const userLogin = useSelector((state) => state.userLogin);
+	// const { userInfo } = userLogin;
+	// console.log();
 
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
@@ -30,7 +30,7 @@ const ShippingPage = (props) => {
 	const [ loading, set_loading ] = useState(true);
 
 	const userUpdate = useSelector((state) => state.userUpdate);
-	console.log({ userUpdate });
+	// console.log({ userUpdate });
 
 	// useEffect(
 	// 	() => {
@@ -78,6 +78,26 @@ const ShippingPage = (props) => {
 			return () => {};
 		},
 		[ user_data ]
+	);
+
+	useEffect(
+		() => {
+			if (userUpdate.userInfo) {
+				// console.log({ userUpdate: userUpdate.userInfo.shipping });
+				// set_email(userUpdate.email);
+				set_first_name(userUpdate.userInfo.shipping.first_name);
+				set_last_name(userUpdate.userInfo.shipping.last_name);
+				setAddress(userUpdate.userInfo.shipping.address);
+				setCity(userUpdate.userInfo.shipping.city);
+				setState(userUpdate.userInfo.shipping.state);
+				setPostalCode(userUpdate.userInfo.shipping.postalCode);
+				setCountry(userUpdate.userInfo.shipping.country);
+				setInternational(userUpdate.userInfo.shipping.international);
+			}
+
+			return () => {};
+		},
+		[ userUpdate ]
 	);
 
 	// useEffect(

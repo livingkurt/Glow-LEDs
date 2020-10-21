@@ -99,16 +99,14 @@ export const log_error = async (logs: any) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: 'info.glowleds@gmail.com',
 		subject: data.outcome,
-		html: App(log_error_view(data))
+		html: App({ body: log_error_view(data), title: data.outcome })
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
 			console.log('Error Occurs', err);
-			// res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Error Email Sent');
-			// res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
 };

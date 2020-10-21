@@ -79,39 +79,41 @@ import {
 } from './components/EmailComponents';
 
 const App = () => {
-	const [ userInfo, set_userInfo ] = useState({});
-
-	const userLogin = useSelector((state) => state.userLogin);
-	const userUpdate = useSelector((state) => state.userUpdate);
-
-	// let { userInfo } = userLogin;
-
 	const theme_colors = {
 		footer: '#333333',
 		header: '#333333',
 		content: 'linear-gradient(180deg, #8a8a8a 0%, #272727 100%);',
 		container: '#272727'
 	};
-	useEffect(
-		() => {
-			if (userLogin.userInfo) {
-				set_userInfo(userLogin.userInfo);
-			}
 
-			return () => {};
-		},
-		[ userLogin ]
-	);
-	useEffect(
-		() => {
-			if (userUpdate.userInfo) {
-				set_userInfo(userUpdate.userInfo);
-			}
+	const userLogin = useSelector((state) => state.userLogin);
 
-			return () => {};
-		},
-		[ userUpdate ]
-	);
+	let { userInfo } = userLogin;
+
+	// const [ userInfo, set_userInfo ] = useState({});
+	// const userUpdate = useSelector((state) => state.userUpdate);
+
+	// useEffect(
+	// 	() => {
+	// 		if (userLogin.userInfo) {
+	// 			set_userInfo(userLogin.userInfo);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ userLogin ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		if (userUpdate.userInfo) {
+	// 			set_userInfo(userUpdate.userInfo);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate ]
+	// );
+	// console.log({ userInfo });
 
 	return (
 		<Router>

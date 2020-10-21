@@ -1,21 +1,6 @@
 export default (props: any) => {
 	return `
  
-  <div>
-    <div style="font-family:helvetica;margin:0px;padding:0px;width:100%;border-radius:20px">
-      <div style="background-color:#333333;padding:20px">
-        <div style="display:flex;justify-content:center">
-          <table width="100%" style="max-width:500px">
-            <tr>
-              <td><img src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png" alt="Glow LEDs"
-                  style="text-align:center;width:100%;margin-right:20px" /></td>
-            </tr>
-          </table>
-        </div>
-        <h4
-          style="text-align:center;font-family:helvetica;width:100%;margin:0 auto;line-height:50px;color:white;font-size:2em">
-          Log Error: ${props.outcome}</h4>
-      </div>
       <div style="background-color:#5f5f5f;padding:20px">
         <h4 style="text-align:center;font-family:helvetica;color:white;font-size:1.5em;margin-top:20px;margin-bottom:0">
         Error: ${props.error.code}</h4>
@@ -53,8 +38,6 @@ export default (props: any) => {
             style="text-decoration:underline;color:white">update your preferences</a> or <a rel="noopener noreferrer"
             href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile" target="_blank"
             style="text-decoration:underline;color:white">unsubscribe </a>from this list.</p>
-      </div>
-    </div>
-  </div>
+    
 	`;
 };
