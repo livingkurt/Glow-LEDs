@@ -18,7 +18,6 @@ import {
 	refund_view,
 	invoice_view
 } from '../email_templates/pages/index';
-import e from 'express';
 import { Log } from '../models';
 import { log_error, log_request } from '../util';
 const sgMail = require('@sendgrid/mail');

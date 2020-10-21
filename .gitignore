@@ -160,6 +160,7 @@ email_templates/pages/index.js
 email_templates/pages/contact_view.js
 email_templates/pages/invoice_view.js
 email_templates/pages/contact_confirmation_view.js
+email_templates_2/pages/log_error_view.js
 email_templates/App.js
 email_templates/styles.js
 

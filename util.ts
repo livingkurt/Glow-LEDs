@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 const config = require('./config');
 import { Request } from 'express';
 import Log from './models/log';
+import nodemailer from 'nodemailer';
+import App from './email_templates_2/App';
+import log_error_view from './email_templates_2/pages/log_error_view';
 export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
@@ -70,9 +73,17 @@ export const log_request = async (logs: any) => {
 			: `Unsuccessfully Completed ${logs.method} Request for`} ${logs.data.length} ${logs.collection}s`
 	});
 };
+let transporter = nodemailer.createTransport({
+	service: 'gmail',
+	pool: true,
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.PASSWORD
+	}
+});
 
 export const log_error = async (logs: any) => {
-	await Log.create({
+	const data = {
 		method: logs.method,
 		path: logs.path,
 		error: logs.error,
@@ -80,5 +91,24 @@ export const log_error = async (logs: any) => {
 		success: logs.success,
 		file: `${logs.collection.toLowerCase()}_routes`,
 		outcome: `Error Completing ${logs.method} Request for ${logs.collection}s`
+	};
+
+	await Log.create(data);
+
+	let mailOptions = {
+		from: process.env.DISPLAY_EMAIL,
+		to: 'info.glowleds@gmail.com',
+		subject: data.outcome,
+		html: App(log_error_view(data))
+	};
+
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			// res.status(500).send({ error: err, message: 'Error Sending Email' });
+		} else {
+			console.log('Error Email Sent');
+			// res.status(200).send({ message: 'Email Successfully Sent' });
+		}
 	});
 };
