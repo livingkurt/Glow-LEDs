@@ -74,7 +74,7 @@ const ShippingPage = (props) => {
 				saveShipping({
 					first_name,
 					last_name,
-					email: userInfo ? userInfo.email : email,
+					email,
 					address,
 					city,
 					state,

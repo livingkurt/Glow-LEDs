@@ -12,6 +12,7 @@ const ShippingPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
 
+	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ address, setAddress ] = useState('');
@@ -25,6 +26,7 @@ const ShippingPage = (props) => {
 	useEffect(
 		() => {
 			if (shipping) {
+				set_email(shipping.email);
 				set_first_name(shipping.first_name);
 				set_last_name(shipping.last_name);
 				setAddress(shipping.address);
@@ -40,6 +42,7 @@ const ShippingPage = (props) => {
 		[ shipping ]
 	);
 
+	const [ email_validations, set_email_validations ] = useState('');
 	const [ first_name_validations, set_first_name_validations ] = useState('');
 	const [ last_name_validations, set_last_name_validations ] = useState('');
 	const [ address_validations, set_address_validations ] = useState('');
@@ -52,8 +55,9 @@ const ShippingPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { first_name, last_name, address, city, state, postalCode, country, international };
+		const data = { email, first_name, last_name, address, city, state, postalCode, country, international };
 		const request = validate_shipping(data);
+		set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
 		set_last_name_validations(request.errors.last_name);
 		set_address_validations(request.errors.address);
@@ -70,7 +74,7 @@ const ShippingPage = (props) => {
 				saveShipping({
 					first_name,
 					last_name,
-					email: userInfo.email,
+					email,
 					address,
 					city,
 					state,
@@ -105,6 +109,17 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
+						<li>
+							<label htmlFor="email">Email</label>
+							<input
+								type="text"
+								value={email}
+								name="email"
+								id="email"
+								onChange={(e) => set_email(e.target.value)}
+							/>
+						</li>
+						{email_validations}
 						<li>
 							<label htmlFor="first_name">First Name</label>
 							<input
