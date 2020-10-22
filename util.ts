@@ -5,7 +5,7 @@ import { Request } from 'express';
 import Log from './models/log';
 import nodemailer from 'nodemailer';
 import App from './email_templates_2/App';
-import log_error_view from './email_templates_2/pages/log_error_view';
+import { error } from './email_templates_2/pages';
 export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
@@ -99,7 +99,7 @@ export const log_error = async (logs: any) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: 'info.glowleds@gmail.com',
 		subject: data.outcome,
-		html: App({ body: log_error_view(data), title: data.outcome })
+		html: App({ body: error(data), title: `Log Error: ${data.outcome}` })
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {

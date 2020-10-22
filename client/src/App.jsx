@@ -19,7 +19,6 @@ import {
 	EditProfilePage,
 	EditProductPage,
 	PasswordResetPage,
-	ResetPasswordPage,
 	VerifiedPage,
 	CheckEmailPage,
 	ChangePasswordPage,
@@ -60,7 +59,8 @@ import {
 	ShippingPublicPage,
 	OrderPaymentCompletePublicPage,
 	MenuPage,
-	OrderPaymentAccountCompletePublicPage
+	OrderPaymentAccountCompletePublicPage,
+	ResetPasswordPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';

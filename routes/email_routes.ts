@@ -20,6 +20,8 @@ import {
 } from '../email_templates/pages/index';
 import { Log } from '../models';
 import { log_error, log_request } from '../util';
+import App from '../email_templates_2/App';
+import { account_created, password_reset, reset_password } from '../email_templates_2/pages/index';
 const sgMail = require('@sendgrid/mail');
 const PHE = require('print-html-element');
 
@@ -406,14 +408,14 @@ router.post('/contactconfirmation', async (req, res) => {
 	});
 });
 
-router.post('/passwordreset', async (req, res) => {
+router.post('/password_reset', async (req, res) => {
 	console.log({ passwordreset: req.body });
 
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
-		to: req.body.email,
+		to: req.body.data.email,
 		subject: 'Glow LEDs Password Reset',
-		html: main_layout(reset_password_view(req.body), styles())
+		html: App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' })
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -421,7 +423,27 @@ router.post('/passwordreset', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
-			console.log('Password Reset Email Sent to ' + req.body.first_name);
+			console.log('Password Reset Email Sent to ' + req.body.data.first_name);
+			res.status(200).send({ message: 'Email Successfully Sent' });
+		}
+	});
+});
+router.post('/reset_password', async (req, res) => {
+	console.log({ reset_password: req.body });
+
+	let mailOptions = {
+		from: process.env.DISPLAY_EMAIL,
+		to: req.body.email,
+		subject: 'Glow LEDs Reset Password',
+		html: App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' })
+	};
+
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
+		} else {
+			console.log('Reset Password Email Sent to ' + req.body.first_name);
 			res.status(200).send({ message: 'Email Successfully Sent' });
 		}
 	});
@@ -433,8 +455,8 @@ router.post('/verified', async (req, res) => {
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
-		subject: 'Glow LEDs Account Confirmation',
-		html: main_layout(verified_account_view(req.body), styles())
+		subject: 'Glow LEDs Account Created',
+		html: App({ body: account_created(req.body), title: 'Glow LEDs Account Created' })
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { logout, update, reset_password } from '../../actions/userActions';
+import { logout, update, reset_password, password_reset } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../../utils/validations';
@@ -40,7 +40,7 @@ const ChangePasswordPage = (props) => {
 		setRePasswordValidations(request.errors.rePassword);
 
 		if (request.isValid) {
-			dispatch(reset_password(userInfo._id, password, rePassword));
+			dispatch(password_reset(userInfo._id, password, rePassword));
 			history.push('/secure/account/profile');
 		}
 	};

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { update, reset_password } from '../../actions/userActions';
+import { update, reset_password, password_reset } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import MetaTags from 'react-meta-tags';
 
-const RegisterPage = (props) => {
+const ResetPasswordPage = (props) => {
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 	// const userRegister = useSelector((state) => state.userRegister);
@@ -16,7 +16,7 @@ const RegisterPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(reset_password(props.match.params.id, password, rePassword));
+		dispatch(password_reset(props.match.params.id, password, rePassword));
 		// dispatch(email_registration(name, email, password));
 		props.history.push('/account/login');
 	};
@@ -65,4 +65,4 @@ const RegisterPage = (props) => {
 		</div>
 	);
 };
-export default RegisterPage;
+export default ResetPasswordPage;

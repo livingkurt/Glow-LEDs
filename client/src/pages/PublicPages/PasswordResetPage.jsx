@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { password_reset } from '../../actions/userActions';
+import { password_reset, reset_password } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
-const PasswordResetPage = (props) => {
+const PasswordResetPublicPage = (props) => {
 	const [ email, setEmail ] = useState('');
 	const userPasswordReset = useSelector((state) => state.userPasswordReset);
 	const { loading, userInfo, error } = userPasswordReset;
@@ -15,7 +15,7 @@ const PasswordResetPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(password_reset(email));
+		dispatch(reset_password(email));
 		setWords('Check your Email to Change your Password');
 		// props.history.push(redirect);
 	};
@@ -54,4 +54,4 @@ const PasswordResetPage = (props) => {
 		</div>
 	);
 };
-export default PasswordResetPage;
+export default PasswordResetPublicPage;

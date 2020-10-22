@@ -14,7 +14,7 @@ export default (props: any) => {
       </div>
       <h4
       style="text-align:center;font-family:helvetica;width:100%;margin:0 auto;line-height:50px;color:white;font-size:2em">
-      Log Error: ${props.title}</h4>
+      ${props.title}</h4>
   </div>
   ${props.body}
   <div style="background-color:#333333;padding:20px">

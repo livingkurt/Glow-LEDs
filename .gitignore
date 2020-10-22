@@ -160,9 +160,16 @@ email_templates/pages/index.js
 email_templates/pages/contact_view.js
 email_templates/pages/invoice_view.js
 email_templates/pages/contact_confirmation_view.js
-email_templates_2/pages/log_error_view.js
-email_templates_2/App.js
+
+
 email_templates/App.js
 email_templates/styles.js
+
+email_templates_2/pages/error.js
+email_templates_2/pages/account_created.js
+email_templates_2/pages/reset_password.js
+email_templates_2/pages/password_reset.js
+email_templates_2/pages/index.js
+email_templates_2/App.js
 
 certification/glowleds-key.pem

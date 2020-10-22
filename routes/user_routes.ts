@@ -149,8 +149,8 @@ router.delete('/:id', isAuth, async (req, res) => {
 	}
 });
 
-router.put('/resetpassword', async (req, res) => {
-	console.log({ resetpassword: req.body });
+router.put('/password_reset', async (req, res) => {
+	console.log({ password_reset: req.body });
 	try {
 		const user: any = await User.findOne({ _id: req.body.user_id });
 		if (!user) {
@@ -179,7 +179,7 @@ router.put('/resetpassword', async (req, res) => {
 						success: true,
 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
-					res.status(202).send({ message: 'Password Saved' });
+					res.status(202).send({ message: 'Password Saved', data: user });
 				});
 			});
 		}
@@ -357,7 +357,7 @@ router.put('/:id', isAuth, async (req, res) => {
 	}
 });
 
-router.post('/passwordreset', async (req, res) => {
+router.post('/reset_password', async (req, res) => {
 	try {
 		const email = req.body.email;
 		const user = await User.findOne({ email });
