@@ -188,7 +188,9 @@ const Sidebar = (props) => {
 				</Link>
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary" onClick={closeMenu}>
-						<Link to="/pages/menu/gloving">Gloving</Link>
+						{/* <Link to="/pages/menu/gloving"> */}
+						Gloving
+						{/* </Link> */}
 					</button>
 
 					<ul className="sidebar_dropdown_container">
@@ -386,7 +388,9 @@ const Sidebar = (props) => {
 				</div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary" onClick={closeMenu}>
-						<Link to="/pages/menu/decor">Decor</Link>
+						{/* <Link to="/pages/menu/decor"> */}
+						Decor
+						{/* </Link> */}
 					</button>
 
 					<ul className="sidebar_dropdown_container">
@@ -408,7 +412,9 @@ const Sidebar = (props) => {
 				</div>
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary" onClick={closeMenu}>
-						<Link to="/pages/menu/community">Community</Link>
+						{/* <Link to="/pages/menu/community"> */}
+						Community
+						{/* </Link> */}
 					</button>
 
 					<ul className="sidebar_dropdown_container">
@@ -435,7 +441,9 @@ const Sidebar = (props) => {
 				</Link> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary" onClick={closeMenu}>
-						<Link to="/pages/menu/support">Support</Link>
+						{/* <Link to="/pages/menu/support"> */}
+						Support
+						{/* </Link> */}
 					</button>
 
 					<ul className="sidebar_dropdown_container">
