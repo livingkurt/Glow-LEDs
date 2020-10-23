@@ -362,6 +362,36 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+						<h1 style={{ textAlign: 'center' }} id="featured_content">
+							Diffuser too tight or too loose?
+						</h1>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>
+								Due to the manufacturing process for diffusers, some variations may occur with the
+								tightness of the fit around the bulb.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								Standard bulb size on lights is 5mm and we test each diffuser on a 5mm light before
+								packaging.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								However, bulb sizes DO VARY sometimes by a fraction of a millimeter here and there.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								If your frosted diffusers or diffuser adapters fit too snug or too loose, please contact
+								us right away to discuss replacement options!
+							</li>
+						</ul>
+						<Link to="/pages/contact/submit_content_to_be_featured">
+							<FlexContainer h_center>
+								<button className="button primary " style={{ margin: 'auto' }}>
+									Contact
+								</button>
+							</FlexContainer>
+						</Link>
+					</div>
+
+					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h1 style={{ textAlign: 'center' }} id="processing_shipping">
 							Processing/Shipping
 						</h1>
