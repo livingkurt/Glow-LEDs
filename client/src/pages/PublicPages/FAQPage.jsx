@@ -367,19 +367,24 @@ const FAQPage = () => {
 						</h1>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
-								Due to the manufacturing process for diffusers, some variations may occur with the
-								tightness of the fit around the bulb.
+								Due to the handmade nature of our diffusers, some variations may occur between
+								individual diffusers. This often tends to manifest in some diffusers being too toight or
+								too loose on the bulb.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Standard bulb size on lights is 5mm and we test each diffuser on a 5mm light before
-								packaging.
+								we test each diffuser on a 5mm light before packaging as 5mm is considered Standard bulb
+								size.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								However, bulb sizes DO VARY sometimes by a fraction of a millimeter here and there.
+								Be aware that bulb sizes may vary by an inperceivable amount within sets of microlights
+								due to the manufacturing process. Different brands may also have different size bulbs,
+								although the vast majority are 5mm.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								If your frosted diffusers or diffuser adapters fit too snug or too loose, please contact
-								us right away to discuss replacement options!
+								If one or more of your frosted diffusers or diffuser adapters fit too tight or too
+								loose, please try the diffuser on several different microlights in the set to determine
+								if it is a variant with the diffuser, or the bulb itself. If problem persists please
+								reach out to us and we will discuss replacement options.
 							</li>
 						</ul>
 						<Link to="/pages/contact/submit_content_to_be_featured">
