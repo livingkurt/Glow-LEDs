@@ -5,7 +5,7 @@
 	}
 }
 // Left rem
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.left-#{$i}px {
 		left: $i + px !important;
 	}
@@ -18,7 +18,7 @@
 	}
 }
 // Top px
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.top-#{$i}px {
 		top: $i + px !important;
 	}
@@ -30,7 +30,7 @@
 	}
 }
 // Right px
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.right-#{$i}px {
 		right: $i + px !important;
 	}
@@ -42,7 +42,7 @@
 	}
 }
 // Bottom px
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.bottom-#{$i}px {
 		bottom: $i + px !important;
 	}
@@ -55,7 +55,7 @@
 	}
 }
 // - Left rem
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.left-n#{$i}px {
 		left: -$i + px !important;
 	}
@@ -68,7 +68,7 @@
 	}
 }
 // Top px
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.top-n#{$i}px {
 		top: -$i + px !important;
 	}
@@ -80,7 +80,7 @@
 	}
 }
 // Right px
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.right-n#{$i}px {
 		right: -$i + px !important;
 	}
@@ -92,7 +92,7 @@
 	}
 }
 // Bottom px
-@for $i from 0 to 100 {
+@for $i from 0 to 1000 {
 	.bottom-n#{$i}px {
 		bottom: -$i + px !important;
 	}

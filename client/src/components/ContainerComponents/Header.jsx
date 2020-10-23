@@ -109,20 +109,24 @@ const Header = (props) => {
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-300px">
 								<Link to="/collections/all/products/category/frosted_diffusers">
-									<button className="button nav">Frosted Diffusers</button>
+									<button className="button nav w-100per ta-l">Frosted Diffusers</button>
 								</Link>
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/mini_diffuser_caps">
-										<button className="button nav">Mini Diffuser Caps</button>
+										<button className="button nav w-100per ta-l">Mini Diffuser Caps</button>
+										<i
+											style={{ '-webkitTransform': 'rotate(-180deg)' }}
+											className=" pos-abs right-10px top-8px fas fa-sort-up"
+										/>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Geomotric</button>
+												<button className="button nav w-100per ta-l">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/shapes">
@@ -131,7 +135,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Shapes</button>
+												<button className="button nav w-100per ta-l">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
@@ -140,7 +144,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Abstract</button>
+												<button className="button nav w-100per ta-l">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/patterns">
@@ -149,7 +153,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Patterns</button>
+												<button className="button nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
 									</div>
@@ -157,16 +161,20 @@ const Header = (props) => {
 
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/diffuser_caps">
-										<button className="button nav">Original Diffuser Caps</button>
+										<button className="button nav w-100per ta-l">Original Diffuser Caps</button>
+										<i
+											style={{ '-webkitTransform': 'rotate(-180deg)' }}
+											className=" pos-abs right-10px top-8px fas fa-sort-up"
+										/>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-20px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Geomotric</button>
+												<button className="button nav w-100per ta-l">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
@@ -175,7 +183,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Shapes</button>
+												<button className="button nav w-100per ta-l">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
@@ -184,7 +192,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Abstract</button>
+												<button className="button nav w-100per ta-l">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
@@ -193,7 +201,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Patterns</button>
+												<button className="button nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/emoji">
@@ -202,13 +210,13 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Emojis</button>
+												<button className="button nav w-100per ta-l">Emojis</button>
 											</div>
 										</Link>
 									</div>
 								</div>
 								<Link to="/collections/all/products/category/accessories">
-									<button className="button nav">Accessories</button>
+									<button className="button nav w-100per ta-l">Accessories</button>
 								</Link>
 							</div>
 						</div>
@@ -263,7 +271,7 @@ const Header = (props) => {
 									<Link to="/collections/all/products/category/diffuser_caps">
 										<button className="button nav">Original Diffuser Caps</button>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-20px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
@@ -328,10 +336,10 @@ const Header = (props) => {
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/collections/all/products/category/glow_strings">
-									<button className="button nav">Glow Strings</button>
+									<button className="button nav w-100per ta-l">Glow Strings</button>
 								</Link>
 								<Link to="/collections/all/products/category/infinity_mirrors">
-									<button className="button nav"> Infinity Mirrors</button>
+									<button className="button nav w-100per ta-l"> Infinity Mirrors</button>
 								</Link>
 							</div>
 						</div>
@@ -341,10 +349,10 @@ const Header = (props) => {
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/pages/featured">
-									<button className="button nav">Featured</button>
+									<button className="button nav w-100per ta-l">Featured</button>
 								</Link>
 								<Link to="/pages/music">
-									<button className="button nav">Music</button>
+									<button className="button nav w-100per ta-l">Music</button>
 								</Link>
 							</div>
 						</div>
@@ -359,21 +367,38 @@ const Header = (props) => {
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-230px">
 								<Link to="/pages/about">
-									<button className="button nav">About</button>
+									<button className="button nav w-100per ta-l">About</button>
 								</Link>
 
 								<div className="dropdown-nav-subcategory">
 									<Link to="/pages/faq">
-										<button className="button nav">FAQ</button>
+										<button className="button nav w-100per ta-l w-100per ta-l">FAQ</button>
+										<i
+											style={{ '-webkitTransform': 'rotate(-180deg)' }}
+											className=" pos-abs right-10px top-8px fas fa-sort-up"
+										/>
 									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-20px w-325px top-38px">
+									<div className="dropdown-nav-subcategory-content hover_fade_in w-325px left-n325px top-n5px">
 										<a href="/pages/faq#using_diffuser_caps_and_adapters">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Diffuser Caps Guide</button>
+												<button className="button nav w-100per ta-l">
+													Diffuser Caps Guide
+												</button>
+											</div>
+										</a>
+										<a href="/pages/faq#diffuser_too_tight_too_loose">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav w-100per ta-l">
+													Diffusers Too Tight/Loose?
+												</button>
 											</div>
 										</a>
 										{/* <a href="/pages/faq#orienting_your_diffuser_caps">
@@ -382,7 +407,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Orienting Your Diffuser Caps</button>
+												<button className="button nav w-100per ta-l">Orienting Your Diffuser Caps</button>
 											</div>
 										</a> */}
 										<a href="/pages/faq#ordering_custom_products">
@@ -391,7 +416,9 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Ordering Custom Products</button>
+												<button className="button nav w-100per ta-l">
+													Ordering Custom Products
+												</button>
 											</div>
 										</a>
 										{/* <a href="/pages/faq#custom_diffuser_caps">
@@ -400,7 +427,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Custom Diffuser Caps</button>
+												<button className="button nav w-100per ta-l">Custom Diffuser Caps</button>
 											</div>
 										</a>
 										<a href="/pages/faq#custom_infinity_mirrors">
@@ -409,7 +436,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Custom Infinity Mirrors</button>
+												<button className="button nav w-100per ta-l">Custom Infinity Mirrors</button>
 											</div>
 										</a> */}
 										<a href="/pages/faq#featured_content">
@@ -418,7 +445,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Featured Content</button>
+												<button className="button nav w-100per ta-l">Featured Content</button>
 											</div>
 										</a>
 										<a href="/pages/faq#processing_shipping">
@@ -427,7 +454,9 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Processing/Shipping</button>
+												<button className="button nav w-100per ta-l">
+													Processing/Shipping
+												</button>
 											</div>
 										</a>
 										<a href="/pages/faq#returns_cancellations">
@@ -436,16 +465,18 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav">Returns/Cancellations</button>
+												<button className="button nav w-100per ta-l">
+													Returns/Cancellations
+												</button>
 											</div>
 										</a>
 									</div>
 								</div>
 								<Link to="/pages/contact">
-									<button className="button nav">Contact</button>
+									<button className="button nav w-100per ta-l">Contact</button>
 								</Link>
 								<Link to="/pages/terms">
-									<button className="button nav">Term and Conditions</button>
+									<button className="button nav w-100per ta-l">Term and Conditions</button>
 								</Link>
 							</div>
 						</div>

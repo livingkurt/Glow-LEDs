@@ -362,7 +362,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }} id="featured_content">
+						<h1 style={{ textAlign: 'center' }} id="diffuser_too_tight_too_loose">
 							Diffuser too tight or too loose?
 						</h1>
 						<ul style={{ padding: '18px', margin: 0 }}>
