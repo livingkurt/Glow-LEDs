@@ -444,11 +444,47 @@ const Sidebar = (props) => {
 								About
 							</button>
 						</Link>
-						<Link to="/pages/faq">
-							<button className="sidebar_button secondary" onClick={closeMenu}>
-								FAQ
+						<div className="sidebar_dropdown_secondary">
+							<button className="sidebar_button secondary">
+								<Link to="/pages/faq">FAQ</Link>
 							</button>
-						</Link>
+							<ul className="sidebar_dropdown_secondary_container">
+								<Link to="/pages/faq#using_diffuser_caps_and_adapters">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Diffuser Caps Guide
+									</button>
+								</Link>
+								<Link to="/pages/faq#diffuser_too_tight_too_loose">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Diffusers Too Tight/Loose?
+									</button>
+								</Link>
+								<Link to="/pages/faq#ordering_custom_products">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Ordering Custom Products
+									</button>
+								</Link>
+								<Link to="/pages/faq#featured_content">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Featured Content
+									</button>
+								</Link>
+								<Link to="/pages/faq#processing_shipping">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Processing/Shipping
+									</button>
+								</Link>
+								<Link to="/pages/faq#returns_cancellations">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Returns/Cancellations
+									</button>
+								</Link>
+							</ul>
+							<i
+								style={{ '-webkitTransform': 'rotate(-180deg)' }}
+								className=" pos-abs right-10px top-8px fas fa-sort-up"
+							/>
+						</div>
 						<Link to="/pages/contact">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Contact
