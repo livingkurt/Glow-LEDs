@@ -7,6 +7,8 @@ import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
+import { listUsers } from '../../actions/userActions';
+import { listSponsors } from '../../actions/sponsorActions';
 
 const EditPromoPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -37,6 +39,12 @@ const EditPromoPage = (props) => {
 	const promoDelete = useSelector((state) => state.promoDelete);
 	const { loading: loadingDelete, success: successDelete, error: errorDelete } = promoDelete;
 
+	const userList = useSelector((state) => state.userList);
+	const { loading: loading_users, users, error: error_users } = userList;
+
+	const sponsorList = useSelector((state) => state.sponsorList);
+	const { loading: loading_sponsors, sponsors, error: error_sponsors } = sponsorList;
+
 	// const promoReviewDelete = useSelector((state) => state.promoReviewDelete);
 	// const { success: promoDeleteSuccess } = promoReviewDelete;
 	const promoList = useSelector((state) => state.promoList);
@@ -55,6 +63,8 @@ const EditPromoPage = (props) => {
 		} else {
 			dispatch(detailsPromo(''));
 		}
+		dispatch(listUsers(''));
+		dispatch(listSponsors(''));
 
 		// set_loading_data(false);
 		set_state();
@@ -81,8 +91,8 @@ const EditPromoPage = (props) => {
 
 	const set_state = () => {
 		set_id(promo._id);
-		set_sponsor(promo.sponsor);
-		set_user(promo.user);
+		set_sponsor(promo.sponsor && promo.sponsor._id);
+		set_user(promo.user && promo.user._id);
 		set_promo_code(promo.promo_code);
 		set_for_customer(promo.for_customer);
 		set_excluded_categories(promo.excluded_categories);
@@ -209,6 +219,30 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_sponsor(e.target.value)}
 												/>
 											</li>
+											{sponsors && (
+												<div className="ai-c h-25px mv-10px mb-30px jc-c">
+													<div className="custom-select w-100per">
+														<select
+															className="qty_select_dropdown w-100per"
+															// defaultValue={{
+															// 	label: user.first_name + ' ' + user.last_name,
+															// 	value: user._id
+															// }}
+															onChange={(e) => set_sponsor(e.target.value)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Sponsor---
+															</option>
+															{sponsors.map((sponsor, index) => (
+																<option key={index} value={sponsor._id}>
+																	{sponsor.facebook_name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											)}
 											<li>
 												<label htmlFor="user">For User</label>
 												<input
@@ -219,6 +253,31 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_user(e.target.value)}
 												/>
 											</li>
+
+											{users && (
+												<div className="ai-c h-25px mv-10px mb-30px jc-c">
+													<div className="custom-select w-100per">
+														<select
+															className="qty_select_dropdown w-100per"
+															// defaultValue={{
+															// 	label: user.first_name + ' ' + user.last_name,
+															// 	value: user._id
+															// }}
+															onChange={(e) => set_user(e.target.value)}
+														>
+															<option key={1} defaultValue="">
+																---Choose User---
+															</option>
+															{users.map((user, index) => (
+																<option key={index} value={user._id}>
+																	{user.first_name} {user.last_name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											)}
 
 											{/* <li>
 												<label htmlFor="number_of_orders">Number of Orders</label>

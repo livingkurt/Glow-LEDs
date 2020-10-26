@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, deleteProductReview, listProducts } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
+import { Prompt } from 'react-router';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
@@ -37,6 +38,7 @@ const EditProductPage = (props) => {
 	const [ pathname, setPathname ] = useState();
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
 	// const [ products, set_products ] = useState('');
 
 	const history = useHistory();
@@ -164,6 +166,9 @@ const EditProductPage = (props) => {
 		setPathname('');
 		setOrder('');
 	};
+	window.onbeforeunload = function() {
+		return 'Are you sure you want to leave?';
+	};
 
 	const submitHandler = (e) => {
 		console.log({ hidden });
@@ -233,6 +238,16 @@ const EditProductPage = (props) => {
 		history.push('/secure/glow/products');
 		// }
 	};
+
+	useEffect(() => {
+		if (shouldBlockNavigation) {
+			window.onbeforeunload = () => true;
+		} else {
+			window.onbeforeunload = undefined;
+		}
+
+		return () => {};
+	}, []);
 
 	// const delete_review = (review_id) => {
 	// 	console.log({ review_id, id });
@@ -448,7 +463,10 @@ const EditProductPage = (props) => {
 								<MetaTags>
 									<title>Edit {product.name} | Glow LEDs</title>
 								</MetaTags>
-
+								{/* <Prompt
+									when={shouldBlockNavigation}
+									message="You have unsaved changes, are you sure you want to leave?"
+								/> */}
 								<ul
 									className="edit-form-container"
 									style={{ maxWidth: '105rem', marginBottom: '20px' }}

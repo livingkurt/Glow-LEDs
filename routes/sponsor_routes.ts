@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 			sortOrder = { _id: -1 };
 		}
 
-		const sponsors = await Sponsor.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+		const sponsors = await Sponsor.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder).populate('user');
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		const sponsor = await Sponsor.findOne({ _id: req.params.id });
+		const sponsor = await Sponsor.findOne({ _id: req.params.id }).populate('user');
 		console.log({ sponsor });
 		console.log(req.params.id);
 		if (sponsor) {

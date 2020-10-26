@@ -7,6 +7,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import MetaTags from 'react-meta-tags';
+import { listUsers } from '../../actions/userActions';
 
 const EditSponsorPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -22,6 +23,9 @@ const EditSponsorPage = (props) => {
 	const [ active, set_active ] = useState('');
 	const [ loading_data, set_loading_data ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+
+	const userList = useSelector((state) => state.userList);
+	const { loading: loading_users, users, error: error_users } = userList;
 
 	const history = useHistory();
 
@@ -52,6 +56,7 @@ const EditSponsorPage = (props) => {
 		} else {
 			dispatch(detailsSponsor(''));
 		}
+		dispatch(listUsers(''));
 
 		// set_loading_data(false);
 		set_state();
@@ -78,7 +83,7 @@ const EditSponsorPage = (props) => {
 
 	const set_state = () => {
 		set_id(sponsor._id);
-		set_user(sponsor.user);
+		set_user(sponsor.user && sponsor.user._id);
 		set_glover_name(sponsor.glover_name);
 		set_instagram_handle(sponsor.instagram_handle);
 		set_facebook_name(sponsor.facebook_name);
@@ -182,6 +187,30 @@ const EditSponsorPage = (props) => {
 													onChange={(e) => set_user(e.target.value)}
 												/>
 											</li>
+											{users && (
+												<div className="ai-c h-25px mv-10px mb-30px jc-c">
+													<div className="custom-select w-100per">
+														<select
+															className="qty_select_dropdown w-100per"
+															defaultValue={{
+																label: user.first_name + ' ' + user.last_name,
+																value: user._id
+															}}
+															onChange={(e) => set_user(e.target.value)}
+														>
+															<option key={1} defaultValue="">
+																---Choose User---
+															</option>
+															{users.map((user, index) => (
+																<option key={index} value={user._id}>
+																	{user.first_name} {user.last_name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											)}
 
 											<li>
 												<label htmlFor="glover_name">Glover Name</label>

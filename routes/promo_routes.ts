@@ -99,7 +99,7 @@ router.get('/', async (req, res) => {
 // });
 router.get('/:id', async (req, res) => {
 	try {
-		const promo = await Promo.findOne({ _id: req.params.id });
+		const promo = await Promo.findOne({ _id: req.params.id }).populate('sponsor').populate('user');
 		console.log({ promo });
 		console.log(req.params.id);
 		if (promo) {
