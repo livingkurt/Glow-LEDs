@@ -192,6 +192,11 @@ const Sidebar = (props) => {
 					</button>
 
 					<ul className="sidebar_dropdown_container">
+						{/* <Link to="/collections/all/products/category/glowskins">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Glowskins (New)
+							</button>
+						</Link> */}
 						<Link to="/collections/all/products/category/frosted_diffusers">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Frosted Diffusers
