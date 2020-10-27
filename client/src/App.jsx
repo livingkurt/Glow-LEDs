@@ -60,7 +60,8 @@ import {
 	OrderPaymentCompletePublicPage,
 	MenuPage,
 	OrderPaymentAccountCompletePublicPage,
-	ResetPasswordPage
+	ResetPasswordPage,
+	ProductsDisplayPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -183,6 +184,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/features" component={FeaturesPage} />
 							<AdminRoute path="/secure/glow/carts" component={CartsPage} />
 							<AdminRoute path="/secure/glow/contents" component={ContentsPage} />
+							<AdminRoute path="/secure/glow/display_products" component={ProductsDisplayPage} />
 							<AdminRoute
 								path="/secure/glow/emails/announcement"
 								exact={true}

@@ -101,6 +101,9 @@ const ProductsPage = (props) => {
 					<label style={{ marginRight: '1rem' }}>Hidden</label>
 					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
 				</FlexContainer>
+				<Link to="/secure/glow/display_products">
+					<button className="button primary">Display Products</button>
+				</Link>
 				<Link to="/secure/glow/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product

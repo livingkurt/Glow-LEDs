@@ -21,6 +21,7 @@ export { default as EditCartPage } from './AdminPages/EditCartPage';
 export { default as EditContentPage } from './AdminPages/EditContentPage';
 export { default as EditEmailPage } from './AdminPages/EditEmailPage';
 export { default as LogsPage } from './AdminPages/LogsPage';
+export { default as ProductsDisplayPage } from './AdminPages/ProductsDisplayPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';
