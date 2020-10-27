@@ -567,7 +567,7 @@ const ProductPage = (props) => {
 											width="996"
 											height="560"
 											style={{ borderRadius: '20px' }}
-											src={`${product.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+											src={`https://www.youtube.com/embed/${product.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
 											frameborder="0"
 											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 											allowfullscreen="1"
