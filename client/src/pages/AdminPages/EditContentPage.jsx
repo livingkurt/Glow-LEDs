@@ -18,6 +18,7 @@ const EditContentPage = (props) => {
 
 	const [ active, set_active ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ using_template, set_using_template ] = useState(false);
 
 	const history = useHistory();
 
@@ -56,6 +57,7 @@ const EditContentPage = (props) => {
 
 	const use_template = (e) => {
 		dispatch(detailsContent(e.target.value));
+		set_using_template(true);
 		// history.push('/secure/glow/products');
 	};
 
@@ -105,10 +107,10 @@ const EditContentPage = (props) => {
 		// console.log(format_date(unformat_date(banner_link)));
 		// console.log(format_date(unformat_date(banner_link)));
 
-		console.log({ home_page });
+		console.log({ id });
 		dispatch(
 			saveContent({
-				_id: id,
+				_id: using_template ? null : id,
 				home_page,
 				banner,
 				about_page,
