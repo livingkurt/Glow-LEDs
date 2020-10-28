@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, deleteProductReview, listProducts } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
-import { Prompt } from 'react-router';
+// import { Prompt } from 'react-router';
 import { Loading } from '../../components/UtilityComponents';
 import MetaTags from 'react-meta-tags';
 
@@ -166,9 +166,9 @@ const EditProductPage = (props) => {
 		setPathname('');
 		setOrder('');
 	};
-	window.onbeforeunload = function() {
-		return 'Are you sure you want to leave?';
-	};
+	// window.onbeforeunload = function() {
+	// 	return 'Are you sure you want to leave?';
+	// };
 
 	const submitHandler = (e) => {
 		console.log({ hidden });
