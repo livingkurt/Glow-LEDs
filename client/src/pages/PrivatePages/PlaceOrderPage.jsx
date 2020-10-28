@@ -48,6 +48,7 @@ const PlaceOrderPage = (props) => {
 	const [ show_message, set_show_message ] = useState('');
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ user, set_user ] = useState(user_data);
+	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 
 	useEffect(() => {
 		dispatch(listPromos());
@@ -283,6 +284,10 @@ const PlaceOrderPage = (props) => {
 				// }
 				setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
 				setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
+				if (promo_code === 'freeshipping') {
+					setShippingPrice(0);
+					set_free_shipping_message('Free');
+				}
 				set_show_message(promo.promo_code);
 			}
 		}
@@ -474,7 +479,7 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<li>
 							<div>Items</div>
-							{show_message ? (
+							{show_message && free_shipping_message !== 'Free' ? (
 								<div>
 									<del style={{ color: 'red' }}>
 										<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>
@@ -495,7 +500,7 @@ const PlaceOrderPage = (props) => {
 								{shipping && shipping.hasOwnProperty('first_name') && shippingPrice > 0 ? (
 									'$' + shippingPrice.toFixed(2)
 								) : (
-									'------'
+									free_shipping_message
 								)}
 							</div>
 						</li>
