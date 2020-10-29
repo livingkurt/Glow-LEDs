@@ -36,7 +36,40 @@ const FAQPage = () => {
 							Glowskins
 						</h1>
 						<h2 className="ta-c">How do Glowskins Work?</h2>
-						<div className="ta-c mv-40px">Video Comming Soon!</div>
+						<div className="ta-c mt-40px">Video Comming Soon!</div>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>
+								To use the Glowskins with your desired microlight, first you need to remove your chip
+								from its casing.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								Then squeeze the Glowskins near the point causing the opening in the bottom to expand.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								Next, grip your microlight from the sides where the battery is and place it into the
+								opening at the bottom of the Glowskin.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								Push the microlight all the way in and let your squeezing hand release pressure let the
+								bottom of the Glowskin close up.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								For Nanoskins and Coinskins, To remove your microlight from your Glowskin, squeeze the
+								Glowskin in the same location as you did to put it in.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								This action so push the microlight out of the Glowskins.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								Then pinch the microlight with your other hand to remove it.
+							</li>
+							<li style={{ lineHeight: '25px' }}>
+								For Coffinskins, to remove your microlight from your Glowskin you will need to spread
+								the bottom of the Glowskins and pinch the microlight, as the above method of removing
+								does not work for that style of chip.
+							</li>
+							<li style={{ lineHeight: '25px' }}>All Done! Now go throw some sicks shows!</li>
+						</ul>
 						<h2 className="ta-c" id="glowskins_chip_brand_compatibility">
 							Glowskins Chip Brand Compatibility
 						</h2>
