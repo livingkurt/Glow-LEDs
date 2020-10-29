@@ -123,6 +123,8 @@ const AllProductsPage = (props) => {
 			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
 		glow_strings:
 			'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
+		glowskins:
+			'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.',
 		infinity_mirrors:
 			'Decorate your home and festival with these stunning Infinity Mirrors at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Infinity Mirrors. Click to Shop.'
 	};
@@ -139,6 +141,9 @@ const AllProductsPage = (props) => {
 		}
 		if (category === 'infinity_mirrors') {
 			return descriptions.infinity_mirrors;
+		}
+		if (category === 'glowskins') {
+			return descriptions.glowskins;
 		}
 		if (category === 'glow_strings') {
 			return descriptions.glow_strings;
@@ -172,6 +177,7 @@ const AllProductsPage = (props) => {
 						category === 'diffuser_adapters' ||
 						category === 'mini_diffuser_caps' ||
 						category === 'mini_diffuser_adapters' ||
+						category === 'glowskins' ||
 						category === 'glow_strings' ? (
 							'™'
 						) : (
