@@ -362,9 +362,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }} id="diffuser_too_tight_too_loose">
-							Diffuser too tight or too loose?
-						</h1>
+						<h1 style={{ textAlign: 'center' }}>Diffuser too tight or too loose?</h1>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Due to the handmade nature of our diffusers, some variations may occur between
@@ -386,6 +384,35 @@ const FAQPage = () => {
 								if it is a variant with the diffuser, or the bulb itself. If problem persists please
 								reach out to us and we will discuss replacement options.
 							</li>
+						</ul>
+						<Link to="/pages/contact/submit_content_to_be_featured">
+							<FlexContainer h_center>
+								<button className="button primary " style={{ margin: 'auto' }}>
+									Contact
+								</button>
+							</FlexContainer>
+						</Link>
+					</div>
+
+					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+						<h1 style={{ textAlign: 'center' }} id="glowskins_chip_brand_compatibility">
+							Glowskins Chip Brand Compatibility
+						</h1>
+						<h2>Coinskins</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>Throwlights Apollo (Not Tested)</li>
+						</ul>
+						<h2>Nanoskins</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
+							<li style={{ lineHeight: '25px' }}>Emazings Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
+						</ul>
+						<h2>Coffinskins</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>Micromax</li>
+							<li style={{ lineHeight: '25px' }}>Throwlights Coffin Style Chips</li>
 						</ul>
 						<Link to="/pages/contact/submit_content_to_be_featured">
 							<FlexContainer h_center>
