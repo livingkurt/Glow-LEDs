@@ -454,36 +454,41 @@ const Sidebar = (props) => {
 								<Link to="/pages/faq">FAQ</Link>
 							</button>
 							<ul className="sidebar_dropdown_secondary_container">
-								<Link to="/pages/faq#using_diffuser_caps_and_adapters">
+								<a href="/pages/faq#glowskins">
+									<button className="sidebar_button nested" onClick={closeMenu}>
+										Glowskins
+									</button>
+								</a>
+								<a href="/pages/faq#using_diffuser_caps_and_adapters">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Diffuser Caps Guide
 									</button>
-								</Link>
-								<Link to="/pages/faq#diffuser_too_tight_too_loose">
+								</a>
+								<a href="/pages/faq#diffuser_too_tight_too_loose">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Diffusers Too Tight/Loose?
 									</button>
-								</Link>
-								<Link to="/pages/faq#ordering_custom_products">
+								</a>
+								<a href="/pages/faq#ordering_custom_products">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Ordering Custom Products
 									</button>
-								</Link>
-								<Link to="/pages/faq#featured_content">
+								</a>
+								<a href="/pages/faq#featured_content">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Featured Content
 									</button>
-								</Link>
-								<Link to="/pages/faq#processing_shipping">
+								</a>
+								<a href="/pages/faq#processing_shipping">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Processing/Shipping
 									</button>
-								</Link>
-								<Link to="/pages/faq#returns_cancellations">
+								</a>
+								<a href="/pages/faq#returns_cancellations">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Returns/Cancellations
 									</button>
-								</Link>
+								</a>
 							</ul>
 							<i
 								style={{ '-webkitTransform': 'rotate(-180deg)' }}

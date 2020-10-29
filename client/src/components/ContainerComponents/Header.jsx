@@ -382,6 +382,15 @@ const Header = (props) => {
 										/>
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in w-325px left-n325px top-n5px">
+										<a href="/pages/faq#glowskins">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav w-100per ta-l">Glowskins</button>
+											</div>
+										</a>
 										<a href="/pages/faq#using_diffuser_caps_and_adapters">
 											<div className="row">
 												<i
@@ -451,6 +460,7 @@ const Header = (props) => {
 												<button className="button nav w-100per ta-l">Featured Content</button>
 											</div>
 										</a>
+
 										<a href="/pages/faq#processing_shipping">
 											<div className="row">
 												<i

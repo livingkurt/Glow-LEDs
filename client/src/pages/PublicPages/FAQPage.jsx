@@ -32,6 +32,33 @@ const FAQPage = () => {
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+						<h1 className="ta-c" id="glowskins">
+							Glowskins
+						</h1>
+						<h2 className="ta-c">How do Glowskins Work?</h2>
+						<div className="ta-c mv-40px">Video Comming Soon!</div>
+						<h2 className="ta-c" id="glowskins_chip_brand_compatibility">
+							Glowskins Chip Brand Compatibility
+						</h2>
+						<h2>Coinskins</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
+							<li style={{ lineHeight: '25px' }}>Throwlights Apollo (Not Tested)</li>
+						</ul>
+						<h2>Nanoskins</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
+							<li style={{ lineHeight: '25px' }}>Emazings Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
+						</ul>
+						<h2>Coffinskins</h2>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>Micromax</li>
+							<li style={{ lineHeight: '25px' }}>Throwlights Coffin Style Chips</li>
+						</ul>
+					</div>
+					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h2 style={{ clear: 'both', textAlign: 'center' }} id="using_diffuser_caps_and_adapters">
 							Using Diffuser Caps and Adapters
 						</h2>
@@ -327,7 +354,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }} id="featured_content">
+						<h1 className="ta-c" id="featured_content">
 							Featured Content
 						</h1>
 						<p style={{ lineHeight: '25px' }}>
@@ -362,7 +389,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }}>Diffuser too tight or too loose?</h1>
+						<h1 className="ta-c">Diffuser too tight or too loose?</h1>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Due to the handmade nature of our diffusers, some variations may occur between
@@ -395,36 +422,7 @@ const FAQPage = () => {
 					</div>
 
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }} id="glowskins_chip_brand_compatibility">
-							Glowskins Chip Brand Compatibility
-						</h1>
-						<h2>Coinskins</h2>
-						<ul style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
-							<li style={{ lineHeight: '25px' }}>Throwlights Apollo (Not Tested)</li>
-						</ul>
-						<h2>Nanoskins</h2>
-						<ul style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
-							<li style={{ lineHeight: '25px' }}>Emazings Spectra Evolutions</li>
-							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
-						</ul>
-						<h2>Coffinskins</h2>
-						<ul style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>Micromax</li>
-							<li style={{ lineHeight: '25px' }}>Throwlights Coffin Style Chips</li>
-						</ul>
-						<Link to="/pages/contact/submit_content_to_be_featured">
-							<FlexContainer h_center>
-								<button className="button primary " style={{ margin: 'auto' }}>
-									Contact
-								</button>
-							</FlexContainer>
-						</Link>
-					</div>
-
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }} id="processing_shipping">
+						<h1 className="ta-c" id="processing_shipping">
 							Processing/Shipping
 						</h1>
 
@@ -508,7 +506,7 @@ const FAQPage = () => {
 								</button>
 							</FlexContainer>
 						</Link>
-						<h2 style={{ textAlign: 'center' }} id="international_shipping">
+						<h2 className="ta-c" id="international_shipping">
 							International Shipping
 						</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
@@ -561,7 +559,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center' }} id="returns_cancellations">
+						<h1 className="ta-c" id="returns_cancellations">
 							Returns/Cancellations
 						</h1>
 						<ul style={{ padding: '18px' }}>
