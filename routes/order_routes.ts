@@ -315,6 +315,14 @@ router.post('/', isAuth, async (req: any, res: any) => {
 // 	const updatedOrder = await order.save();
 // 	res.send(updatedOrder);
 // });
+
+router.put('/update_charge_email', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+	const charge = await stripe.charges.update('ch_1HhimVJUIKBwBp0wgil79u96', {
+		metadata: { receipt_email: 'ssdaly1590@gmail.com' }
+	});
+
+	res.send(charge);
+});
 // router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
 // 	const refunds = await stripe.refunds.list({});
 // 	res.send(refunds);

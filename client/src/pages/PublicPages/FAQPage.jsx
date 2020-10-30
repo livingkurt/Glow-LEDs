@@ -77,13 +77,13 @@ const FAQPage = () => {
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
-							<li style={{ lineHeight: '25px' }}>Throwlights Apollo (Not Tested)</li>
 						</ul>
 						<h2>Nanoskins</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
 							<li style={{ lineHeight: '25px' }}>Emazings Spectra Evolutions</li>
 							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
+							<li style={{ lineHeight: '25px' }}>Throwlights Apollo (Not Tested)</li>
 						</ul>
 						<h2>Coffinskins</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
