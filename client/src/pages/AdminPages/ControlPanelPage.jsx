@@ -10,6 +10,8 @@ import { listUsers } from '../../actions/userActions';
 import Chart from 'chart.js';
 import { occurrence, hslToHex } from '../../utils/helper_functions';
 import API from '../../utils/API';
+import { listSponsors } from '../../actions/sponsorActions';
+import { listPromos } from '../../actions/promoActions';
 
 const colors = {
 	hidden: '#333333'
@@ -33,6 +35,12 @@ const ControlPanelPage = (props) => {
 	const userList = useSelector((state) => state.userList);
 	const { loading: loading_users, users, error: error_users } = userList;
 
+	const sponsorList = useSelector((state) => state.sponsorList);
+	const { loading: loading_sponsors, sponsors, error: error_sponsors } = sponsorList;
+
+	const promoList = useSelector((state) => state.promoList);
+	const { loading: loading_promos, promos, error: error_promos } = promoList;
+
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
 
 	useEffect(() => {
@@ -40,6 +48,8 @@ const ControlPanelPage = (props) => {
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
+		dispatch(listSponsors());
+		dispatch(listPromos());
 	}, []);
 
 	useEffect(
@@ -446,6 +456,105 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>Total Expenses</th>
 									<th style={{ padding: '15px' }}>{expenses.length}</th>
 								</tr>
+							</tbody>
+						</table>
+					</div>
+				)}
+				{orders &&
+				promos &&
+				sponsors && (
+					<div className="order-list responsive_table">
+						<h1 className="ta-c w-100per jc-c">Sponsor Revenue</h1>
+						<table className="table">
+							<thead>
+								<tr>
+									<th>Sponsor</th>
+									<th>Number of Uses</th>
+									<th>Revenue</th>
+								</tr>
+							</thead>
+							<tbody>
+								{sponsors.map((sponsor) => {
+									return (
+										<tr
+											style={{
+												backgroundColor: '#626262',
+												fontSize: '1.4rem',
+												height: '50px'
+											}}
+											className=""
+										>
+											<th style={{ padding: '15px' }}>{sponsor.glover_name}</th>
+											<th style={{ padding: '15px' }}>
+												{
+													orders.filter((order) => {
+														return order.promo_code === sponsor.glover_name;
+													}).length
+												}
+											</th>
+											<th style={{ padding: '15px' }}>
+												${orders
+													.filter((order) => order.promo_code === sponsor.glover_name)
+													.reduce((a, order) => a + order.totalPrice, 0)
+													.toFixed(2)}
+											</th>
+										</tr>
+									);
+								})}
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total</th>
+									<th style={{ padding: '15px' }}>
+										{
+											orders.filter((order) => {
+												return order.promo_code;
+											}).length
+										}
+									</th>
+									<th style={{ padding: '15px' }}>
+										${orders
+											.filter((order) => order.promo_code)
+											.reduce((a, order) => a + order.totalPrice, 0)
+											.toFixed(2)}
+									</th>
+								</tr>
+								{/* <tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Orders</th>
+									<th style={{ padding: '15px' }}>{orders.length}</th>
+								</tr>
+
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Users</th>
+									<th style={{ padding: '15px' }}>{users.length}</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Expenses</th>
+									<th style={{ padding: '15px' }}>{expenses.length}</th>
+								</tr> */}
 							</tbody>
 						</table>
 					</div>
