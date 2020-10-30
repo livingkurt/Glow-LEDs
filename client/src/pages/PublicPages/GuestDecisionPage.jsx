@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { update, reset_password } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const GuestCheckoutPage = (props) => {
 	const [ password, setPassword ] = useState('');
@@ -22,13 +22,13 @@ const GuestCheckoutPage = (props) => {
 	};
 	return (
 		<div className="form">
-			<MetaTags>
+			<Helmet>
 				<title>Guest Decision | Glow LEDs</title>
 				<meta property="og:title" content="Guest Decision | Glow LEDs" />
 				<meta name="twitter:title" content="Guest Decision | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/decision" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/decision" />
-			</MetaTags>
+			</Helmet>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					{/* <li>

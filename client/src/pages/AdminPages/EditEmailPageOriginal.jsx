@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const EditEmailPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -226,9 +226,9 @@ const EditEmailPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{email && (
 							<div>
-								<MetaTags>
+								<Helmet>
 									<title>Edit {email.name} | Glow LEDs</title>
-								</MetaTags>
+								</Helmet>
 
 								<ul
 									className="edit-form-container jc-b"

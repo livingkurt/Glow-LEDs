@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { FlexContainer } from '../../components/ContainerComponents';
 // import { listenerCount } from 'cluster';
 import { Link } from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 // import "./form.css";
 
 const SitemapPage = () => {
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Sitemap | Glow LEDs</title>
 				<meta property="og:title" content="Sitemap | Glow LEDs" />
 				<meta name="twitter:title" content="Sitemap | Glow LEDs" />
@@ -27,7 +27,7 @@ const SitemapPage = () => {
 					name="twitter:description"
 					content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
 				/>
-			</MetaTags>
+			</Helmet>
 			<div class="inner_content">
 				<h1 style={{ textAlign: 'center' }}>Glow LEDs Sitemap</h1>
 				<FlexContainer h_between wrap>

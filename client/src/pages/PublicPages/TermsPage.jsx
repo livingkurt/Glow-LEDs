@@ -1,10 +1,10 @@
 import React from 'react';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const TermsPage = () => {
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Terms and Conditions | Glow LEDs</title>
 				<meta property="og:title" content="Terms and Conditions | Glow LEDs" />
 				<meta name="twitter:title" content="Terms and Conditions | Glow LEDs" />
@@ -22,7 +22,7 @@ const TermsPage = () => {
 					name="twitter:description"
 					content="Glow LEDs wants everyone to use our platform for what it was meant to be used for."
 				/>
-			</MetaTags>
+			</Helmet>
 
 			<h1 style={{ textAlign: 'center' }}>Terms & Conditions</h1>
 

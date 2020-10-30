@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Carousel, SuggestedProducts } from '../../components/SpecialtyComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import Cookie from 'js-cookie';
 import { humanize } from '../../utils/helper_functions';
 const CartPage = (props) => {
@@ -128,13 +128,13 @@ const CartPage = (props) => {
 
 	return (
 		<FlexContainer column>
-			<MetaTags>
+			<Helmet>
 				<title>Cart | Glow LEDs </title>
 				<meta property="og:title" content="Cart | Glow LEDs" />
 				<meta name="twitter:title" content="Cart | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/checkout/cart " />
 				<meta property="og:url" content="https://www.glow-leds.com/checkout/cart" />
-			</MetaTags>
+			</Helmet>
 			<div className="cart">
 				<div className="cart-list">
 					<ul className="cart-list-container" style={{ marginRight: '10px' }}>

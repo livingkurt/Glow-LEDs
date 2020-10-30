@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
@@ -81,13 +81,13 @@ const UserOrderPage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
-			<MetaTags>
+			<Helmet>
 				<title>My Orders | Glow LEDs</title>
 				<meta property="og:title" content="My Orders | Glow LEDs" />
 				<meta name="twitter:title" content="My Orders | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
-			</MetaTags>
+			</Helmet>
 			<FlexContainer wrap h_between>
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>

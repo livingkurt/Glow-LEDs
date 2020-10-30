@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 
 const EditSponsorPage = (props) => {
@@ -159,9 +159,9 @@ const EditSponsorPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{sponsor && (
 							<div>
-								<MetaTags>
+								<Helmet>
 									<title>Edit {sponsor.name} | Glow LEDs</title>
-								</MetaTags>
+								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
 									<h1

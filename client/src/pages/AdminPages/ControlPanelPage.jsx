@@ -12,6 +12,7 @@ import { occurrence, hslToHex } from '../../utils/helper_functions';
 import API from '../../utils/API';
 import { listSponsors } from '../../actions/sponsorActions';
 import { listPromos } from '../../actions/promoActions';
+import { Helmet } from 'react-helmet';
 
 const colors = {
 	hidden: '#333333'
@@ -258,6 +259,9 @@ const ControlPanelPage = (props) => {
 
 	return (
 		<div class="main_container">
+			<Helmet>
+				<title>Admin Control Panel | Glow LEDs</title>
+			</Helmet>
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
 			</FlexContainer>

@@ -7,7 +7,7 @@ import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import API from '../../utils/API';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 
@@ -211,7 +211,7 @@ const OrderPage = (props) => {
 		<div>{error}</div>
 	) : (
 		<div>
-			<MetaTags>
+			<Helmet>
 				<title>Your Order | Glow LEDs</title>
 				<meta property="og:title" content="Your Order | Glow LEDs" />
 				<meta name="twitter:title" content="Your Order | Glow LEDs" />
@@ -223,7 +223,7 @@ const OrderPage = (props) => {
 					property="og:url"
 					content={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
 				/>
-			</MetaTags>
+			</Helmet>
 			{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
 
 			{props.userInfo &&

@@ -6,7 +6,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Rating, Reviews, Slideshow, RelatedProducts, RelatedCarousel } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import API from '../../utils/API';
 import { addToCart } from '../../actions/cartActions';
 import Zoom from 'react-medium-image-zoom';
@@ -143,7 +143,7 @@ const ProductPage = (props) => {
 			<Loading loading={loading} error={error}>
 				{product && (
 					<FlexContainer column>
-						<MetaTags>
+						<Helmet>
 							<title>{product.meta_title}</title>
 							<meta property="og:title" content={product.meta_title} />
 							<meta name="twitter:title" content={product.meta_title} />
@@ -200,7 +200,7 @@ const ProductPage = (props) => {
 									)
 								}
 							/>
-						</MetaTags>
+						</Helmet>
 						<div className="details">
 							<FlexContainer column>
 								<h1 class="product_title_top" style={{ display: 'none' }}>

@@ -6,7 +6,7 @@ import { Product, ProductSmallScreen, Search, Sort } from '../../components/Spec
 import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
@@ -157,7 +157,7 @@ const AllProductsPage = (props) => {
 
 	return (
 		<div>
-			<MetaTags>
+			<Helmet>
 				<title>Products | Glow LEDs</title>
 				<meta property="og:title" content="Products | Glow LEDs" />
 				<meta name="twitter:title" content="Products | Glow LEDs" />
@@ -166,7 +166,7 @@ const AllProductsPage = (props) => {
 				<meta name="description" content={description_determination()} />
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
-			</MetaTags>
+			</Helmet>
 			<FlexContainer h_center>
 				<FlexContainer>
 					<h1>

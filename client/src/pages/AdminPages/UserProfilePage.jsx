@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { detailsUser } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import API from '../../utils/API';
 
 const UserProfilePage = (props) => {
@@ -73,9 +73,9 @@ const UserProfilePage = (props) => {
 	};
 	return (
 		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
-			<MetaTags>
+			<Helmet>
 				<title>Admin {first_name}'s Profile | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer>
 				<h1 style={{ textAlign: 'center', width: '100%' }}>{first_name}'s Profile</h1>
 			</FlexContainer>

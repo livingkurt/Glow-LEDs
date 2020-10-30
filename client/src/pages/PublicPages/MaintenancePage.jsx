@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const MaintenancePage = (props) => {
 	const header_styles = {
@@ -29,13 +29,13 @@ const MaintenancePage = (props) => {
 
 	return (
 		<div style={{ padding: 0 }}>
-			<MetaTags>
+			<Helmet>
 				<title>Maintenance | Glow LEDs</title>
 				<meta property="og:title" content="Maintenance | Glow LEDs" />
 				<meta name="twitter:title" content="Maintenance | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/" />
 				<meta property="og:url" content="https://www.glow-leds.com" />
-			</MetaTags>
+			</Helmet>
 			<div style={header_styles}>
 				<FlexContainer h_center column t_center>
 					<div className="brand">

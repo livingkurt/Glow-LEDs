@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../../actions/userActions';
 import { validate_contact } from '../../utils/validations';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
 import ReactFilestack from 'filestack-react';
 import { saveFeature } from '../../actions/featureActions';
@@ -148,7 +148,7 @@ const ContactPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Contact | Glow LEDs</title>
 				<meta property="og:title" content="Contact | Glow LEDs" />
 				<meta name="twitter:title" content="Contact | Glow LEDs" />
@@ -166,7 +166,7 @@ const ContactPage = (props) => {
 					name="twitter:description"
 					content="If you have any questions, do not hesitate to use our contact page for support."
 				/>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer h_center>
 				<h1>Contact</h1>
 			</FlexContainer>

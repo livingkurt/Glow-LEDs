@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { update, reset_password, password_reset } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const ResetPasswordPage = (props) => {
 	const [ password, setPassword ] = useState('');
@@ -22,13 +22,13 @@ const ResetPasswordPage = (props) => {
 	};
 	return (
 		<div className="form">
-			<MetaTags>
+			<Helmet>
 				<title>Reset Password | Glow LEDs</title>
 				<meta property="og:title" content="Reset Password | Glow LEDs" />
 				<meta name="twitter:title" content="Reset Password | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/resetpassword" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/resetpassword" />
-			</MetaTags>
+			</Helmet>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>

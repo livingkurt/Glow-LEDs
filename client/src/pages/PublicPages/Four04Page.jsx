@@ -1,11 +1,11 @@
 import React from 'react';
 import { FlexContainer } from '../../components/ContainerComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const Four04Page = (props) => {
 	return (
 		<FlexContainer h_center column t_center>
-			<MetaTags>
+			<Helmet>
 				<title>404 Not Found | Glow LEDs</title>
 				{/* <meta
 					name="description"
@@ -35,7 +35,7 @@ const Four04Page = (props) => {
 					name="twitter:image"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/> */}
-			</MetaTags>
+			</Helmet>
 			<h1 styles={{ margin: '20px auto' }}>404 Page Not Found</h1>
 			<label>Sorry About that</label>
 		</FlexContainer>

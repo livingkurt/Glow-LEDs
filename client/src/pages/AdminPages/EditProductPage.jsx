@@ -5,7 +5,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Link, useHistory } from 'react-router-dom';
 // import { Prompt } from 'react-router';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -460,9 +460,9 @@ const EditProductPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
-								<MetaTags>
+								<Helmet>
 									<title>Edit {product.name} | Glow LEDs</title>
-								</MetaTags>
+								</Helmet>
 								{/* <Prompt
 									when={shouldBlockNavigation}
 									message="You have unsaved changes, are you sure you want to leave?"

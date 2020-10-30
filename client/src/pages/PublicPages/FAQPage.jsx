@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { FlexContainer } from '../../components/ContainerComponents';
 // import { listenerCount } from 'cluster';
 import { Link } from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 // import "./form.css";
 
 const FAQPage = () => {
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Frequently Asked Questions | Glow LEDs</title>
 				<meta property="og:title" content="Frequently Asked Questions | Glow LEDs" />
 				<meta name="twitter:title" content="Frequently Asked Questions | Glow LEDs" />
@@ -27,7 +27,7 @@ const FAQPage = () => {
 					name="twitter:description"
 					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
 				/>
-			</MetaTags>
+			</Helmet>
 			<div class="inner_content">
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>

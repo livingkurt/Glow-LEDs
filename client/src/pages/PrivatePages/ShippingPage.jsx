@@ -5,7 +5,7 @@ import { update } from '../../actions/userActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
 import API from '../../utils/API';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import Cookie from 'js-cookie';
 
 const ShippingPage = (props) => {
@@ -227,13 +227,13 @@ const ShippingPage = (props) => {
 
 	return (
 		<div>
-			<MetaTags>
+			<Helmet>
 				<title>Shipping | Glow LEDs</title>
 				<meta property="og:title" content="Shipping | Glow LEDs" />
 				<meta name="twitter:title" content="Shipping | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/shipping" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/shipping" />
-			</MetaTags>
+			</Helmet>
 			<CheckoutSteps step1 step2 />
 
 			<div className="form">

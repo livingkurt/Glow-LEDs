@@ -6,7 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
 
@@ -263,9 +263,9 @@ const EditOrderPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{order && (
 							<div>
-								<MetaTags>
+								<Helmet>
 									<title>Edit {order.name} | Glow LEDs</title>
-								</MetaTags>
+								</Helmet>
 
 								<ul
 									className="edit-form-container"

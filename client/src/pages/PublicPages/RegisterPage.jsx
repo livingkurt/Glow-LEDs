@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { validate_registration } from '../../utils/validations';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const RegisterPage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
@@ -57,7 +57,7 @@ const RegisterPage = (props) => {
 
 	return (
 		<div className="form">
-			<MetaTags>
+			<Helmet>
 				<title>Register | Glow LEDs</title>
 				<meta property="og:title" content="Register | Glow LEDs" />
 				<meta name="twitter:title" content="Register | Glow LEDs" />
@@ -75,7 +75,7 @@ const RegisterPage = (props) => {
 					name="twitter:description"
 					content="In order to reap all of the benefits of the Diffuser Caps and other LED accessories at Glow-LEDs.com you must first create a uesr account."
 				/>
-			</MetaTags>
+			</Helmet>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>

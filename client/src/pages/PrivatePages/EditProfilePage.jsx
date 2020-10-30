@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validate_profile } from '../../utils/validations';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const EditProfilePage = (props) => {
 	const user_data = props.userInfo;
@@ -82,13 +82,13 @@ const EditProfilePage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
-			<MetaTags>
+			<Helmet>
 				<title>Edit Profile | Glow LEDs</title>
 				<meta property="og:title" content="Edit Profile | Glow LEDs" />
 				<meta name="twitter:title" content="Edit Profile | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editprofile" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editprofile" />
-			</MetaTags>
+			</Helmet>
 			<FlexContainer styles={{ marginBottom: 10 }}>
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>

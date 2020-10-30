@@ -5,7 +5,7 @@ import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const ProfilePage = (props) => {
 	const history = useHistory();
@@ -53,13 +53,13 @@ const ProfilePage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" wrap styles={{ padding: '20px' }}>
-			<MetaTags>
+			<Helmet>
 				<title>Edit Shipping | Glow LEDs</title>
 				<meta property="og:title" content="Edit Shipping | Glow LEDs" />
 				<meta name="twitter:title" content="Edit Shipping | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editshipping" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editshipping" />
-			</MetaTags>
+			</Helmet>
 			<div className="profile-info">
 				<div className="form">
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>

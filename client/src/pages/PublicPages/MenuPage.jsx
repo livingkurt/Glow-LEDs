@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { update, reset_password } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
 import API from '../../utils/API';
 
@@ -77,7 +77,7 @@ const MenuPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>{humanize(pathname)} | Glow LEDs</title>
 				<meta property="og:title" content={`${humanize(pathname)}| Glow LEDs`} />
 				<meta name="twitter:title" content={`${humanize(pathname)}| Glow LEDs`} />
@@ -95,7 +95,7 @@ const MenuPage = (props) => {
 					name="twitter:description"
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer h_center>
 				<h1> {humanize(pathname)}</h1>
 			</FlexContainer>

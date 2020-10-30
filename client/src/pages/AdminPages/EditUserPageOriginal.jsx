@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validate_profile } from '../../utils/validations';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const EditUserPage = (props) => {
 	const userDetails = useSelector((state) => state.userDetails);
@@ -90,9 +90,9 @@ const EditUserPage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
-			<MetaTags>
+			<Helmet>
 				<title>Edit {first_name}'s Profile | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer styles={{ marginBottom: 10 }}>
 				<Link to={'/secure/glow/userprofile/' + user._id}>
 					<button className="button primary">Back to {user.first_name}'s Profile</button>

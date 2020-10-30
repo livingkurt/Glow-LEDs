@@ -2,18 +2,18 @@ import React from 'react';
 
 import { Link, useHistory } from 'react-router-dom';
 import { FlexContainer } from '../../components/ContainerComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const EmailSentPage = (props) => {
 	return (
 		<FlexContainer h_center column>
-			<MetaTags>
+			<Helmet>
 				<title>Email Sent | Glow LEDs</title>
 				<meta property="og:title" content="Check Email | Glow LEDs" />
 				<meta name="twitter:title" content="Check Email | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/checkemail" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/checkemail" />
-			</MetaTags>
+			</Helmet>
 			<h1 style={{ textAlign: 'center' }}>Email Sent Successfully!</h1>
 			{/* <h1 style={{ textAlign: 'center' }}>Thank You for Contacting Glow LEDs</h1> */}
 			<h2 style={{ textAlign: 'center' }}>Thank You for Contacting Glow LEDs</h2>

@@ -6,7 +6,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { listUsers, deleteUser } from '../../actions/userActions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const UsersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -76,9 +76,9 @@ const UsersPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Admin Users | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer h_between wrap>
 				{colors.map((color) => {
 					return (

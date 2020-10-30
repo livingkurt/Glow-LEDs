@@ -4,7 +4,7 @@ import { listCarts, deleteCart } from '../../actions/cartActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
@@ -96,9 +96,9 @@ const CartsPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Admin Carts | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer wrap h_between>
 				<FlexContainer h_between wrap>
 					{colors.map((color) => {

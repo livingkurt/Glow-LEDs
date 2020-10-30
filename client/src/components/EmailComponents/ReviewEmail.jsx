@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents/index';
 
 import { Link } from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 

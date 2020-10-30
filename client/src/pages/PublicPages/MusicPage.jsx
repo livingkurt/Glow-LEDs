@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { listFeatures } from '../../actions/featureActions';
 import { humanize } from '../../utils/helper_functions';
 
@@ -24,7 +24,7 @@ const MusicPage = (props) => {
 	const today = date.toISOString();
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Featured | Glow LEDs</title>
 				<meta property="og:title" content="Featured | Glow LEDs" />
 				<meta name="twitter:title" content="Featured | Glow LEDs" />
@@ -42,7 +42,7 @@ const MusicPage = (props) => {
 					name="twitter:description"
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer h_center>
 				<h1>Music Produced by NTRE</h1>
 			</FlexContainer>

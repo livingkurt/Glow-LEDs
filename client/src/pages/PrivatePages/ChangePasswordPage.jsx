@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../../utils/validations';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const ChangePasswordPage = (props) => {
 	const history = useHistory();
@@ -72,13 +72,13 @@ const ChangePasswordPage = (props) => {
 
 	return (
 		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
-			<MetaTags>
+			<Helmet>
 				<title>Change Password | Glow LEDs</title>
 				<meta property="og:title" content="Change Password | Glow LEDs" />
 				<meta name="twitter:title" content="Change Password | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/changepassword" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
-			</MetaTags>
+			</Helmet>
 			<FlexContainer styles={{ marginBottom: 10 }}>
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>

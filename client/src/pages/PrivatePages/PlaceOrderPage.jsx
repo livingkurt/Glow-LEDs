@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder } from '../../actions/orderActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
@@ -331,13 +331,13 @@ const PlaceOrderPage = (props) => {
 	};
 	return (
 		<div>
-			<MetaTags>
+			<Helmet>
 				<title>Place Order | Glow LEDs</title>
 				<meta property="og:title" content="Place Order | Glow LEDs" />
 				<meta name="twitter:title" content="Place Order | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
-			</MetaTags>
+			</Helmet>
 			{successPay ? (
 				<CheckoutSteps step1 step2 step3 step4 />
 			) : shipping && shipping.hasOwnProperty('first_name') ? (

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping, savePayment } from '../../actions/cartActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const ShippingPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -94,13 +94,13 @@ const ShippingPage = (props) => {
 
 	return (
 		<div>
-			<MetaTags>
+			<Helmet>
 				<title>Shipping | Glow LEDs</title>
 				<meta property="og:title" content="Shipping | Glow LEDs" />
 				<meta name="twitter:title" content="Shipping | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/shipping" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/shipping" />
-			</MetaTags>
+			</Helmet>
 			<CheckoutSteps step1 step2 />
 
 			<div className="form">

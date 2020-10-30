@@ -5,7 +5,7 @@ import { listOrders, deleteOrder, update_order, update_payment } from '../../act
 import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import API from '../../utils/API';
 import { print_invoice } from '../../utils/helper_functions';
@@ -192,9 +192,9 @@ const OrdersPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Admin Orders | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer h_between wrap>
 				{colors.map((color) => {
 					return (

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents/index';
 
 import { Link } from 'react-router-dom';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import { deleteDevice, listMyDevices } from '../../actions/deviceActions';
 import { Loading } from '../../components/UtilityComponents';
@@ -77,7 +77,7 @@ const GlowControlHomePage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
 				<meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
 				<meta name="twitter:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
@@ -109,7 +109,7 @@ const GlowControlHomePage = (props) => {
 					name="twitter:image"
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
-			</MetaTags>
+			</Helmet>
 
 			<FlexContainer h_center>
 				<h1 className="welcome_text mb-3rem" style={{ fontSize: '6rem' }}>

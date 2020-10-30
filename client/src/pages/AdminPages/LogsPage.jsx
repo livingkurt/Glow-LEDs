@@ -4,7 +4,7 @@ import { listLogs, deleteLog } from '../../actions/logActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { format_date, format_time } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
@@ -83,9 +83,9 @@ const LogsPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Admin Logs | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 
 			<div className="wrap jc-b">
 				{colors.map((color) => {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { FlexContainer } from '../../components/ContainerComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const ProfilePage = (props) => {
 	const user_data = props.userInfo;
@@ -59,13 +59,13 @@ const ProfilePage = (props) => {
 
 	return (
 		<div className="column p-20px inner_content">
-			<MetaTags>
+			<Helmet>
 				<title>Profile | Glow LEDs</title>
 				<meta property="og:title" content="Profile | Glow LEDs" />
 				<meta name="twitter:title" content="Profile | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/profile" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/profile" />
-			</MetaTags>
+			</Helmet>
 			<div>
 				<h1 style={{ textAlign: 'center', width: '100%' }}>User Profile</h1>
 			</div>

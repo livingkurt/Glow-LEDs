@@ -4,7 +4,7 @@ import { listProducts, deleteProduct } from '../../actions/productActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const colors = {
@@ -93,9 +93,9 @@ const ProductsPage = (props) => {
 	};
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Admin Products | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer wrap h_between>
 				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
 					<label style={{ marginRight: '1rem' }}>Hidden</label>

@@ -4,7 +4,7 @@ import { listEmails, deleteEmail } from '../../actions/emailActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
@@ -95,9 +95,9 @@ const EmailsPage = (props) => {
 
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
-			</MetaTags>
+			</Helmet>
 			<FlexContainer wrap h_between>
 				<Link to="/secure/glow/emails/announcement">
 					<button className="button primary">Announcement</button>

@@ -3,7 +3,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { verify } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 
 const VerifiedPage = (props) => {
 	const dispatch = useDispatch();
@@ -23,13 +23,13 @@ const VerifiedPage = (props) => {
 
 	return (
 		<FlexContainer h_center column>
-			<MetaTags>
+			<Helmet>
 				<title>Verified | Glow LEDs</title>
 				<meta property="og:title" content="Verified | Glow LEDs" />
 				<meta name="twitter:title" content="Verified | Glow LEDs" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/verified" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/verified" />
-			</MetaTags>
+			</Helmet>
 			<h1 style={{ textAlign: 'center' }}>Thank You for Verifing your Account.</h1>
 			<h2 style={{ textAlign: 'center' }}>You will be redirected to the login screen shortly.</h2>
 			<FlexContainer h_center>

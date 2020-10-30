@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 
@@ -30,7 +30,7 @@ const AboutPage = () => {
 	);
 	return (
 		<div class="main_container">
-			<MetaTags>
+			<Helmet>
 				<title>About | Glow LEDs</title>
 				<meta property="og:title" content="About | Glow LEDs" />
 				<meta name="twitter:title" content="About | Glow LEDs" />
@@ -39,7 +39,7 @@ const AboutPage = () => {
 				<meta name="description" content="Learn how Glow LEDs got started and more in our About Page" />
 				<meta property="og:description" content="Learn how Glow LEDs got started and more in our About Page" />
 				<meta name="twitter:description" content="Learn how Glow LEDs got started and more in our About Page" />
-			</MetaTags>
+			</Helmet>
 			<MessengerCustomerChat
 				pageId="100365571740684"
 				appId="379385106779969"

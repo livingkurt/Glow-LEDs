@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { validate_login } from '../../utils/validations';
-import MetaTags from 'react-meta-tags';
+import { Helmet } from 'react-helmet';
 import { Loading } from '../../components/UtilityComponents';
 
 const LoginPage = (props) => {
@@ -47,7 +47,7 @@ const LoginPage = (props) => {
 
 	return (
 		<div className="form">
-			<MetaTags>
+			<Helmet>
 				<title>Login | Glow LEDs</title>
 				<meta property="og:title" content="Login | Glow LEDs" />
 				<meta name="twitter:title" content="Login | Glow LEDs" />
@@ -65,7 +65,7 @@ const LoginPage = (props) => {
 					name="twitter:description"
 					content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
 				/>
-			</MetaTags>
+			</Helmet>
 
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
