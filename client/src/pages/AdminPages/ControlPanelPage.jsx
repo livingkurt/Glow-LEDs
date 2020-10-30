@@ -519,7 +519,11 @@ const ControlPanelPage = (props) => {
 									</th>
 									<th style={{ padding: '15px' }}>
 										${orders
-											.filter((order) => order.promo_code)
+											.filter((order) =>
+												sponsors
+													.map((sponsor) => sponsor.glover_name)
+													.includes(order.promo_code)
+											)
 											.reduce((a, order) => a + order.totalPrice, 0)
 											.toFixed(2)}
 									</th>
