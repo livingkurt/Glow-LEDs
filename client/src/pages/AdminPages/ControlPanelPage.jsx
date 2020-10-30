@@ -293,7 +293,7 @@ const ControlPanelPage = (props) => {
 					<button className="button primary">Emails</button>
 				</Link>
 			</div>
-			<FlexContainer>
+			<div className="jc-b">
 				{expenses &&
 				orders && (
 					<div className="order-list responsive_table">
@@ -559,7 +559,7 @@ const ControlPanelPage = (props) => {
 						</table>
 					</div>
 				)}
-			</FlexContainer>
+			</div>
 			<h1 className="ta-c w-100per jc-c">Occurrences</h1>
 			<canvas id="expense_chart" ref={chartRef} />
 			{product_occurrences && (
