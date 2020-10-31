@@ -8,7 +8,7 @@ import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
 // import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
-import { occurrence, hslToHex } from '../../utils/helper_functions';
+import { occurrence, hslToHex, unformat_date } from '../../utils/helper_functions';
 import API from '../../utils/API';
 import { listSponsors } from '../../actions/sponsorActions';
 import { listPromos } from '../../actions/promoActions';
@@ -257,10 +257,25 @@ const ControlPanelPage = (props) => {
 		initialize_occurrence_chart(occurrences);
 	};
 
+	const dates_in_year = [
+		{ month: 'January', number_of_days: 31 },
+		{ month: 'February', number_of_days: 28 },
+		{ month: 'March', number_of_days: 31 },
+		{ month: 'April', number_of_days: 30 },
+		{ month: 'May', number_of_days: 31 },
+		{ month: 'June', number_of_days: 30 },
+		{ month: 'July', number_of_days: 31 },
+		{ month: 'August', number_of_days: 31 },
+		{ month: 'September', number_of_days: 30 },
+		{ month: 'October', number_of_days: 31 },
+		{ month: 'November', number_of_days: 30 },
+		{ month: 'December', number_of_days: 31 }
+	];
+
 	return (
 		<div class="main_container">
 			<Helmet>
-				<title>Admin Control Panel | Glow LEDs</title>
+				<title>Admin Control Panel | Glow LEDs</title>8
 			</Helmet>
 			<FlexContainer h_center>
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
@@ -600,7 +615,46 @@ const ControlPanelPage = (props) => {
 					</table>
 				</div>
 			)}
-			{/* <canvas id="expense_doughnut" ref={expense_doughnut_ref} /> */}
+			{orders && (
+				<div className="order-list responsive_table">
+					<table className="table">
+						<thead>
+							<tr>
+								<th>Category</th>
+								<th>Number of Occurrences</th>
+							</tr>
+						</thead>
+						<tbody>
+							{dates_in_year.map((month, month_number) => {
+								return [ ...Array(month.number_of_days).keys() ].map((day, index) => {
+									return (
+										<tr
+											key={index}
+											style={{
+												backgroundColor: '#626262',
+												fontSize: '1.4rem',
+												height: '50px'
+											}}
+											className=""
+										>
+											<th style={{ padding: '15px' }}>
+												{month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1}/{day + 1}/2020
+											</th>
+											<th style={{ padding: '15px' }}>
+												{unformat_date(
+													`${month_number + 1 < 10
+														? `0${month_number + 1}`
+														: month_number + 1}/${day + 1}/2020`
+												)}
+											</th>
+										</tr>
+									);
+								});
+							})}
+						</tbody>
+					</table>
+				</div>
+			)}
 		</div>
 	);
 };
