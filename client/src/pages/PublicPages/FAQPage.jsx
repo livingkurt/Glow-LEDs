@@ -73,19 +73,30 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="glowskins_chip_brand_compatibility">
 							Glowskins Chip Brand Compatibility
 						</h2>
-						<h2>Coinskins</h2>
-						<ul style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
-							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
-						</ul>
 						<h2>Nanoskins</h2>
+						<label>
+							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
+						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
 							<li style={{ lineHeight: '25px' }}>Emazings Spectra Evolutions</li>
 							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
-							<li style={{ lineHeight: '25px' }}>Throwlights Apollo (Not Tested)</li>
+						</ul>
+						<h2>Coinskins</h2>
+						<label>
+							Maximum Microlight Dimmensions including the bulb for Coinskins: L28mm x W19mm x H8mm
+						</label>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
+							<li style={{ lineHeight: '25px' }}>
+								Throwlights Apollo (Not Tested) May fit a little loose
+							</li>
 						</ul>
 						<h2>Coffinskins</h2>
+						<label>
+							Maximum Microlight Dimmensions including the bulb for Coffinskins: L32mm x W16mm x H8mm
+						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>Micromax</li>
 							<li style={{ lineHeight: '25px' }}>Throwlights Coffin Style Chips</li>

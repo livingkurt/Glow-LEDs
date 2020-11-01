@@ -500,20 +500,15 @@ const ProductPage = (props) => {
 						<FlexContainer column styles={{ padding: '1rem' }}>
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
-							{/* <FlexContainer h_center>
-							<img
-								src="/gifs/product_gifs/BTSM/BTSM.gif"
-								style={{ width: '100%', height: 'auto', borderRadius: '20px' }}
-								alt="loading"
-							/>
-						</FlexContainer> */}
-							{/* {product.category === 'caps' && (
-								// <h1 style={{ marginBottom: '10px', textAlign: 'center' }}>Patent Pending</h1>
-								<img
-									src="/images/optimized_images/logo_images/patent_pending.png"
-									alt="patent pending"
-								/>
-							)} */}
+							{product.category === 'glowskins' && (
+								<a href="/pages/faq#glowskins_chip_brand_compatibility">
+									<FlexContainer h_center>
+										<button className="button primary" style={{ margin: 'auto' }}>
+											Glowskins Microlight Compatibility
+										</button>
+									</FlexContainer>
+								</a>
+							)}
 							<FlexContainer column>
 								<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 								<FlexContainer column styles={{ height: '100%' }}>
