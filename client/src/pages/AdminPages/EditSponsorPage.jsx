@@ -190,10 +190,10 @@ const EditSponsorPage = (props) => {
 													<div className="custom-select w-100per">
 														<select
 															className="qty_select_dropdown w-100per"
-															defaultValue={{
-																label: user.first_name + ' ' + user.last_name,
-																value: user._id
-															}}
+															// defaultValue={{
+															// 	label: user.first_name + ' ' + user.last_name,
+															// 	value: user._id
+															// }}
 															onChange={(e) => set_user(e.target.value)}
 														>
 															<option key={1} defaultValue="">
