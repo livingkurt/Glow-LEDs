@@ -14,3 +14,4 @@ export { default as EmblaCarousel } from './EmblaCarousel';
 export { default as Carousel } from './Carousel';
 export { default as CarouselItem } from './CarouselItem';
 export { default as RelatedCarousel } from './RelatedCarousel';
+export { default as Order } from './Order';

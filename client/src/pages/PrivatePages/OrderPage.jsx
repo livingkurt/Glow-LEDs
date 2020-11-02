@@ -229,9 +229,9 @@ const OrderPage = (props) => {
 			{props.userInfo &&
 			props.userInfo.isAdmin && (
 				<FlexContainer styles={{ marginBottom: 10, marginLeft: '20px' }}>
-					<Link to="/secure/glow/orders">
-						<button className="button primary">Back to Orders</button>
-					</Link>
+					<button class="button secondary" onClick={() => props.history.goBack()}>
+						Back to Orders
+					</button>
 				</FlexContainer>
 			)}
 			<LoadingPayments loading={payment_loading} error={errorPay} />

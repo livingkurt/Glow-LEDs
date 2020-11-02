@@ -7,7 +7,6 @@ import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Order } from '../../components/SpecialtyComponents';
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
@@ -114,7 +113,79 @@ const UserOrderPage = (props) => {
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
 				<Loading loading={loading} error={error}>
-					{orders && orders.map((order) => <Order order={order} />)}
+					{orders && (
+						<div className="order-list responsive_table">
+							<table className="table">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>DATE</th>
+										<th>TOTAL</th>
+										<th>PAID</th>
+										<th>SHIPPED</th>
+										<th>DELIVERED</th>
+										<th>REFUNDED</th>
+										<th>REFUNDED AT</th>
+										<th>REFUND AMOUNT</th>
+										<th>ACTIONS</th>
+									</tr>
+								</thead>
+								<tbody>
+									{orders.map((order) => (
+										<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
+											<td>{order._id}</td>
+											<td>{format_date(order.createdAt)}</td>
+											<td>${order.totalPrice.toFixed(2)}</td>
+											<td>
+												{order.isPaid ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td>
+												{order.isShipped ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td style={{ minWidth: '50px', width: '50px' }}>
+												{order.isDelivered ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td>
+												{order.isRefunded ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</td>
+											<td>{!order.refundedAt ? '' : format_date(order.refundedAt)}</td>
+											<td>
+												{order.isRefunded && (
+													<div>
+														${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+															100).toFixed(2)}
+													</div>
+												)}
+											</td>
+											<td>
+												<Link to={'/secure/account/order/' + order._id}>
+													<button className="button icon">
+														<i className="fas fa-info-circle" />
+													</button>
+												</Link>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					)}
 				</Loading>
 			</div>
 		</FlexContainer>
