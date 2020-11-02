@@ -194,7 +194,6 @@ router.get('/mine', isAuth, async (req: any, res: any) => {
 
 router.get('/:id', isAuth, async (req: any, res: any) => {
 	try {
-		console.log('Hello');
 		const order = await Order.findOne({ _id: req.params.id })
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product')
@@ -343,13 +342,13 @@ router.post('/', isAuth, async (req: any, res: any) => {
 // 	res.send(updatedOrder);
 // });
 
-router.put('/update_charge_email', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
-	const charge = await stripe.charges.update('ch_1HhimVJUIKBwBp0wgil79u96', {
-		metadata: { receipt_email: 'ssdaly1590@gmail.com' }
-	});
+// router.put('/update_charge_email', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
+// 	const charge = await stripe.charges.update('ch_1HhimVJUIKBwBp0wgil79u96', {
+// 		metadata: { receipt_email: 'ssdaly1590@gmail.com' }
+// 	});
 
-	res.send(charge);
-});
+// 	res.send(charge);
+// });
 // router.get('/refunds', async (req: { user: { _id: any } }, res: { send: (arg0: any) => void }) => {
 // 	const refunds = await stripe.refunds.list({});
 // 	res.send(refunds);
@@ -675,7 +674,9 @@ router.put(
 router.put('/:id/update', async (req: any, res: any) => {
 	try {
 		const updated_order = req.body;
+		console.log({ updated_order });
 		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+		console.log({ updated });
 		if (updated) {
 			log_request({
 				method: 'PUT',

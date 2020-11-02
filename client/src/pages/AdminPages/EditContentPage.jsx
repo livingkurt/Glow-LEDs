@@ -143,7 +143,7 @@ const EditContentPage = (props) => {
 						{content && (
 							<div>
 								<Helmet>
-									<title>Edit {content.name} | Glow LEDs</title>
+									<title>Edit Content | Glow LEDs</title>
 								</Helmet>
 
 								<ul

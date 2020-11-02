@@ -403,6 +403,7 @@ export const saveOrder = (order: any) => async (
 			});
 			dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
 		} else {
+			console.log({ order });
 			const { data } = await axios.put('/api/orders/' + order._id + '/update', order, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token

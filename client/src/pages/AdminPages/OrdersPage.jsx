@@ -147,11 +147,6 @@ const OrdersPage = (props) => {
 		// }
 	};
 
-	// const toggleRow = (element) => {
-	// 	element.getElementsByClassName('expanded-row-content')[0].classList.toggle('hide-row');
-	// 	// console.log(event);
-	// };
-
 	const update_order_state = (order, state, is_action, action_at) => {
 		if (state) {
 			set_order_state({ ...order_state, [is_action]: false });
@@ -170,45 +165,17 @@ const OrdersPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 	};
-	// const print_invoice = async (order) => {
-	// 	const invoice = await API.print_invoice(order);
-	// 	console.log({ invoice });
-	// };
-
-	// function copy_to_clipboard(copyText) {
-	// 	/* Get the text field */
-	// 	// var copyText = document.getElementById("password_area");
-
-	// 	/* Select the text field */
-	// 	copyText.select();
-	// 	// copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-
-	// 	/* Copy the text inside the text field */
-	// 	document.execCommand('copy');
-
-	// 	/* Alert the copied text */
-	// 	alert('Copied to Clipboard\n' + copyText.value);
-	// }
 
 	const daysBetween = (date1, date2) => {
 		// console.log({ date1: date1.toISOString() });
-		console.log({ date1 });
-		console.log({ date2: new Date(date2) });
+		// console.log({ date1 });
+		// console.log({ date2: new Date(date2) });
 		const diffTime = Math.abs(new Date(date2) - date1);
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-		console.log(diffTime + ' milliseconds');
-		console.log(diffDays + ' days');
+		// console.log(diffTime + ' milliseconds');
+		// console.log(diffDays + ' days');
 		return diffDays;
 	};
-
-	// //Set the two dates
-	// var y2k  = new Date(2000, 0, 1);
-	// var Jan1st2010 = new Date(y2k.getFullYear() + 10, y2k.getMonth(), y2k.getDate());
-	// var today= new Date();
-	// //displays 726
-	// console.log( 'Days since '
-	//            + Jan1st2010.toLocaleDateString() + ': '
-	//            + daysBetween(Jan1st2010, today));
 
 	const today = new Date();
 
@@ -303,7 +270,7 @@ const OrdersPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{orders.map((order) => (
+								{orders.map((order, index) => (
 									<tr
 										key={order._id}
 										style={{ backgroundColor: determine_color(order) }}
@@ -321,7 +288,6 @@ const OrdersPage = (props) => {
 
 										<td className="min-w-580px">
 											{order.orderItems.map((item) => {
-												console.log({ item });
 												return (
 													<div>
 														<div>
@@ -393,7 +359,6 @@ const OrdersPage = (props) => {
 															// value={payment_method}
 															defaultValue={order.payment.paymentMethod}
 															name="payment_method"
-															id="payment_method"
 															className="w-100per"
 															onChange={(e) => set_payment_method(e.target.value)}
 														/>

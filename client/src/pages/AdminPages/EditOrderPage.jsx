@@ -37,6 +37,7 @@ const EditOrderPage = (props) => {
 	const [ refundedAt, set_refundedAt ] = useState('');
 	const [ order_note, set_order_note ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
 
@@ -251,6 +252,10 @@ const EditOrderPage = (props) => {
 		set_orderItems((items) => [ ...items, {} ]);
 	};
 
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
+
 	return (
 		<div class="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Order' : 'Create Order'}</h1>
@@ -264,7 +269,7 @@ const EditOrderPage = (props) => {
 						{order && (
 							<div>
 								<Helmet>
-									<title>Edit {order.name} | Glow LEDs</title>
+									<title>Edit Order | Glow LEDs</title>
 								</Helmet>
 
 								<ul
@@ -392,20 +397,28 @@ const EditOrderPage = (props) => {
 														set_shipping({ ...shipping, postalCode: e.target.value })}
 												/>
 											</li>
-											<li>
-												<label htmlFor="international">International</label>
-												<input
-													type="checkbox"
-													name="international"
-													// defaultChecked={international ? 'checked' : 'unchecked'}
-													defaultValue={shipping && shipping.international}
-													defaultChecked={shipping && shipping.international}
-													defaultValue={shipping && shipping.international}
-													id="international"
-													onChange={(e) =>
-														set_shipping({ ...shipping, international: e.target.value })}
-												/>
-											</li>
+
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="international">International</label>
+													<input
+														type="checkbox"
+														name="international"
+														// defaultChecked={international ? 'checked' : 'unchecked'}
+														defaultValue={shipping && shipping.international}
+														defaultChecked={shipping && shipping.international}
+														defaultValue={shipping && shipping.international}
+														id="international"
+														onChange={(e) =>
+															set_shipping({
+																...shipping,
+																international: e.target.value
+															})}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="country">Country</label>
 												<input
@@ -497,21 +510,26 @@ const EditOrderPage = (props) => {
 
 										<div className="w-228px m-10px">
 											<h2>Order State</h2>
-											<li>
-												<label htmlFor="isPaid">Paid?</label>
-												<input
-													type="checkbox"
-													name="isPaid"
-													// defaultChecked={isPaid ? 'checked' : 'unchecked'}
-													// defaultValue={isPaid}
-													defaultChecked={isPaid}
-													// value={isPaid ? '1' : '0'}
-													id="isPaid"
-													onChange={(e) => {
-														set_isPaid(e.target.checked);
-													}}
-												/>
-											</li>
+
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="isPaid">Paid?</label>
+													<input
+														type="checkbox"
+														name="isPaid"
+														// defaultChecked={isPaid ? 'checked' : 'unchecked'}
+														// defaultValue={isPaid}
+														defaultChecked={isPaid}
+														// value={isPaid ? '1' : '0'}
+														id="isPaid"
+														onChange={(e) => {
+															set_isPaid(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="paidAt">Paid At</label>
 												<input
@@ -522,46 +540,56 @@ const EditOrderPage = (props) => {
 													onChange={(e) => set_paidAt(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="isManufactured">Manufactured?</label>
-												<input
-													type="checkbox"
-													name="isManufactured"
-													// defaultChecked={isManufactured ? 'checked' : 'unchecked'}
-													// defaultValue={isManufactured}
-													defaultChecked={isManufactured}
-													// value={isManufactured ? '1' : '0'}
-													id="isManufactured"
-													onChange={(e) => {
-														set_isManufactured(e.target.checked);
-													}}
-												/>
-											</li>
+
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="isManufactured">Manufactured?</label>
+													<input
+														type="checkbox"
+														name="isManufactured"
+														// defaultChecked={isManufactured ? 'checked' : 'unchecked'}
+														// defaultValue={isManufactured}
+														defaultChecked={isManufactured}
+														// value={isManufactured ? '1' : '0'}
+														id="isManufactured"
+														onChange={(e) => {
+															set_isManufactured(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="manufacturedAt">Manufactured At</label>
 												<input
 													type="text"
 													name="manufacturedAt"
-													value={paidAt}
+													value={manufacturedAt}
 													id="manufacturedAt"
 													onChange={(e) => set_manufacturedAt(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="isPackaged">Packaged?</label>
-												<input
-													type="checkbox"
-													name="isPackaged"
-													// defaultChecked={isPackaged ? 'checked' : 'unchecked'}
-													// defaultValue={isPackaged}
-													defaultChecked={isPackaged}
-													// value={isPackaged ? '1' : '0'}
-													id="isPackaged"
-													onChange={(e) => {
-														set_isPackaged(e.target.checked);
-													}}
-												/>
-											</li>
+
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="isPackaged">Packaged?</label>
+													<input
+														type="checkbox"
+														name="isPackaged"
+														// defaultChecked={isPackaged ? 'checked' : 'unchecked'}
+														// defaultValue={isPackaged}
+														defaultChecked={isPackaged}
+														// value={isPackaged ? '1' : '0'}
+														id="isPackaged"
+														onChange={(e) => {
+															set_isPackaged(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="packagedAt">Packaged At</label>
 												<input
@@ -573,21 +601,25 @@ const EditOrderPage = (props) => {
 												/>
 											</li>
 
-											<li>
-												<label htmlFor="isShipped">Shipped?</label>
-												<input
-													type="checkbox"
-													name="isShipped"
-													// defaultChecked={isShipped ? 'checked' : 'unchecked'}
-													// defaultValue={isShipped}
-													defaultChecked={isShipped}
-													// value={isShipped ? '1' : '0'}
-													id="isShipped"
-													onChange={(e) => {
-														set_isShipped(e.target.checked);
-													}}
-												/>
-											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="isShipped">Shipped?</label>
+													<input
+														type="checkbox"
+														name="isShipped"
+														// defaultChecked={isShipped ? 'checked' : 'unchecked'}
+														// defaultValue={isShipped}
+														defaultChecked={isShipped}
+														// value={isShipped ? '1' : '0'}
+														id="isShipped"
+														onChange={(e) => {
+															set_isShipped(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="shippedAt">Shipped At</label>
 												<input
@@ -598,21 +630,26 @@ const EditOrderPage = (props) => {
 													onChange={(e) => set_shippedAt(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="isDelivered">Delivered?</label>
-												<input
-													type="checkbox"
-													name="isDelivered"
-													// defaultChecked={isDelivered ? 'checked' : 'unchecked'}
-													// defaultValue={isDelivered}
-													defaultChecked={isDelivered}
-													// value={isDelivered ? '1' : '0'}
-													id="isDelivered"
-													onChange={(e) => {
-														set_isDelivered(e.target.checked);
-													}}
-												/>
-											</li>
+
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="isDelivered">Delivered?</label>
+													<input
+														type="checkbox"
+														name="isDelivered"
+														// defaultChecked={isDelivered ? 'checked' : 'unchecked'}
+														// defaultValue={isDelivered}
+														defaultChecked={isDelivered}
+														// value={isDelivered ? '1' : '0'}
+														id="isDelivered"
+														onChange={(e) => {
+															set_isDelivered(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="deliveredAt">Delivered At</label>
 												<input
