@@ -499,7 +499,79 @@ const OrderPage = (props) => {
 							</FlexContainer>
 						)}
 					</ul>
-					<FlexContainer row v_i_center h_between>
+					<div className="column jc-b h-15rem w-25rem">
+						<div>
+							<div className="row ai-c">
+								<div className="mv-5px">
+									{order.isPaid ? (
+										<i className="fas fa-check-circle" />
+									) : (
+										<i className="fas fa-times-circle" />
+									)}
+								</div>
+								<div className="mh-10px">Paid</div>
+
+								<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
+							</div>
+						</div>
+						<div>
+							<div className="row ai-c">
+								<div className="mv-5px">
+									{order.isManufactured ? (
+										<i className="fas fa-check-circle" />
+									) : (
+										<i className="fas fa-times-circle" />
+									)}
+								</div>
+								<div className="mh-10px">Manufactured</div>
+
+								<div>{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}</div>
+							</div>
+						</div>
+						<div>
+							<div className="row ai-c">
+								<div className="mv-5px">
+									{order.isPackaged ? (
+										<i className="fas fa-check-circle" />
+									) : (
+										<i className="fas fa-times-circle" />
+									)}
+								</div>
+								<div className="mh-10px">Packaged</div>
+
+								<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
+							</div>
+						</div>
+						<div>
+							<div className="row ai-c">
+								<div className="mv-5px">
+									{order.isShipped ? (
+										<i className="fas fa-check-circle" />
+									) : (
+										<i className="fas fa-times-circle" />
+									)}
+								</div>
+								<div className="mh-10px">Shipped</div>
+
+								<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
+							</div>
+						</div>
+						<div>
+							<div className="row ai-c">
+								<div className="mv-5px row">
+									{order.isDelivered ? (
+										<i className="fas fa-check-circle" />
+									) : (
+										<i className="fas fa-times-circle" />
+									)}
+								</div>
+								<div className="mh-10px">Delivered</div>
+
+								<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
+							</div>
+						</div>
+					</div>
+					{/* <FlexContainer row v_i_center h_between>
 						{console.log({ order_product: order.product })}
 						{props.userInfo &&
 						props.userInfo.isAdmin && (
@@ -522,7 +594,7 @@ const OrderPage = (props) => {
 								</div>
 							</div>
 						)}
-					</FlexContainer>
+					</FlexContainer> */}
 					<div className="ship_deliver ai-s wrap w-100per column g-17px">
 						<FlexContainer row v_i_center h_between>
 							{/* {console.log({ shipping_state })} */}
@@ -563,14 +635,14 @@ const OrderPage = (props) => {
 						</FlexContainer>
 						<FlexContainer row v_i_center h_between>
 							{/* {console.log({ delivery_state })} */}
-							{props.userInfo &&
+							{/* {props.userInfo &&
 							props.userInfo.isAdmin && (
 								<FlexContainer h_right>
 									<button className="button primary" onClick={send_not_paid_email}>
 										Still Not Paid
 									</button>
 								</FlexContainer>
-							)}
+							)} */}
 						</FlexContainer>
 					</div>
 				</div>
