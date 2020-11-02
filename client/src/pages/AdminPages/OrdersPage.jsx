@@ -190,6 +190,28 @@ const OrdersPage = (props) => {
 	// 	alert('Copied to Clipboard\n' + copyText.value);
 	// }
 
+	const daysBetween = (date1, date2) => {
+		// console.log({ date1: date1.toISOString() });
+		console.log({ date1 });
+		console.log({ date2: new Date(date2) });
+		const diffTime = Math.abs(new Date(date2) - date1);
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+		console.log(diffTime + ' milliseconds');
+		console.log(diffDays + ' days');
+		return diffDays;
+	};
+
+	// //Set the two dates
+	// var y2k  = new Date(2000, 0, 1);
+	// var Jan1st2010 = new Date(y2k.getFullYear() + 10, y2k.getMonth(), y2k.getDate());
+	// var today= new Date();
+	// //displays 726
+	// console.log( 'Days since '
+	//            + Jan1st2010.toLocaleDateString() + ': '
+	//            + daysBetween(Jan1st2010, today));
+
+	const today = new Date();
+
 	return (
 		<div class="main_container">
 			<Helmet>
@@ -276,7 +298,7 @@ const OrdersPage = (props) => {
 									<th className="min-w-120px">TOTAL</th>
 									<th className="min-w-150px">USER</th>
 									<th className="min-w-580px">ORDER ITEMS</th>
-									{/* <th className="min-w-580px">Time Since Order</th> */}
+									<th className="min-w-120px">Time Since Order</th>
 									<th className="min-w-175px">ACTIONS</th>
 								</tr>
 							</thead>
@@ -295,9 +317,8 @@ const OrdersPage = (props) => {
 										<td className="min-w-150px">
 											{!order.shipping ? 'N/A' : order.shipping.first_name}
 										</td>
-										{/* <td className="min-w-150px">
-											{order.createdAt -}
-										</td> */}
+										{/* {console.log(daysBetween(today, order.createdAt))} */}
+
 										<td className="min-w-580px">
 											{order.orderItems.map((item) => {
 												console.log({ item });
@@ -315,7 +336,7 @@ const OrdersPage = (props) => {
 												);
 											})}
 										</td>
-
+										<td className="min-w-120px">{daysBetween(today, order.createdAt)} Days</td>
 										<td className="min-w-175px">
 											<FlexContainer h_between>
 												<button className="button icon" onClick={() => show_hide(order._id)}>
