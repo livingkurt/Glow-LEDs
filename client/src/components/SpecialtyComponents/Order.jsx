@@ -112,6 +112,7 @@ const Order = (props) => {
 					</div>
 				</div>
 				<div className="column jc-b h-10rem w-25rem">
+					<h2>Order Status</h2>
 					<div>
 						<div className="row ai-c">
 							<div className="mv-5px">
@@ -122,7 +123,6 @@ const Order = (props) => {
 								)}
 							</div>
 							<div className="mh-10px">Paid</div>
-
 							<div>{!props.order.paidAt ? '' : format_date(props.order.paidAt)}</div>
 						</div>
 					</div>
