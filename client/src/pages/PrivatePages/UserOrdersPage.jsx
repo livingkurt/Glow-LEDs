@@ -114,9 +114,12 @@ const UserOrderPage = (props) => {
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
 				<Loading loading={loading} error={error}>
-					<div className="product_big_screen">{orders && orders.map((order) => <Order order={order} />)}</div>
+					<div className="product_big_screen">
+						{orders && orders.map((order) => <Order determine_color={determine_color} order={order} />)}
+					</div>
 					<div className="product_small_screen none column">
-						{orders && orders.map((order) => <OrderSmallScreen order={order} />)}
+						{orders &&
+							orders.map((order) => <OrderSmallScreen determine_color={determine_color} order={order} />)}
 					</div>
 				</Loading>
 			</div>

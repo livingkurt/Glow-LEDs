@@ -51,7 +51,7 @@ const OrderSmallScreen = (props) => {
 	};
 
 	return (
-		<div className="home_page_divs">
+		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row ai-c" style={{ borderTop: '1px solid white' }}>
 				<div className="w-50per jc-b">
 					<div className="column fs-16px">
