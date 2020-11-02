@@ -7,7 +7,7 @@ import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Order } from '../../components/SpecialtyComponents';
+import { Order, OrderSmallScreen } from '../../components/SpecialtyComponents';
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
@@ -114,7 +114,10 @@ const UserOrderPage = (props) => {
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
 				<Loading loading={loading} error={error}>
-					{orders && orders.map((order) => <Order order={order} />)}
+					<div className="product_big_screen">{orders && orders.map((order) => <Order order={order} />)}</div>
+					<div className="product_small_screen none column">
+						{orders && orders.map((order) => <OrderSmallScreen order={order} />)}
+					</div>
 				</Loading>
 			</div>
 		</FlexContainer>
