@@ -54,6 +54,8 @@ const UserOrderPage = (props) => {
 	const colors = [
 		{ name: 'Not Paid', color: '#6d3e3e' },
 		{ name: 'Paid', color: '#3e4c6d' },
+		{ name: 'Manufactured', color: '#4b7188' },
+		{ name: 'Packaged', color: '#6f5f7d' },
 		{ name: 'Shipped', color: '#636363' },
 		{ name: 'Delivered', color: '#333333' },
 		{ name: 'Refunded', color: '#a9a9a9' }
@@ -67,14 +69,20 @@ const UserOrderPage = (props) => {
 		if (order.isPaid) {
 			result = colors[1].color;
 		}
-		if (order.isShipped) {
+		if (order.isManufactured) {
 			result = colors[2].color;
 		}
-		if (order.isDelivered) {
+		if (order.isPackaged) {
 			result = colors[3].color;
 		}
-		if (order.isRefunded) {
+		if (order.isShipped) {
 			result = colors[4].color;
+		}
+		if (order.isDelivered) {
+			result = colors[5].color;
+		}
+		if (order.isRefunded) {
+			result = colors[6].color;
 		}
 		// console.log(result);
 		return result;

@@ -8,54 +8,12 @@ import { addToCart } from '../../actions/cartActions';
 import { format_date, print_invoice } from '../../utils/helper_functions';
 
 const OrderSmallScreen = (props) => {
-	const dispatch = useDispatch();
-
-	// console.log(props.order && props.order.pathname);
-
-	const handleAddToCart = () => {
-		dispatch(addToCart(props.order.pathname, 1));
-	};
-
-	const sale_price_switch = () => {
-		if (props.order.sale_price !== 0) {
-			return (
-				<label className="">
-					<del style={{ color: 'red' }}>
-						<label className="" style={{ color: 'white' }}>
-							${props.order.price ? props.order.price.toFixed(2) : props.order.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${props.order.sale_price ? (
-						props.order.sale_price.toFixed(2)
-					) : (
-						props.order.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!props.order.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }} className="ml-7px">
-							${props.order.price ? props.order.price.toFixed(2) : props.order.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" />
-					<label className="ml-7px">Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${props.order.price ? props.order.price.toFixed(2) : props.order.price}</label>;
-		}
-	};
-
 	return (
-		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
-			<div className="pb-15px mb-10px row ai-c" style={{ borderTop: '1px solid white' }}>
+		<div className="home_page_divs p-15px " style={{ backgroundColor: props.determine_color(props.order) }}>
+			<div className="pb-15px mb-10px row ai-c" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-50per jc-b">
 					<div className="column fs-16px">
-						<h3>Order Place</h3>
+						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
 					</div>
 					<div className="column fs-16px">
@@ -71,7 +29,7 @@ const OrderSmallScreen = (props) => {
 			</div>
 
 			<div className="small_screen_order row jc-b">
-				<div className="">
+				<div className="w-100per">
 					{props.order.orderItems.map((item, index) => {
 						return (
 							<div className="row mt-15px">
@@ -81,12 +39,14 @@ const OrderSmallScreen = (props) => {
 									effect="blur"
 									src={item.display_image && item.display_image} // use normal <img> attributes as props
 								/>
-								<div className="column jc-c">
+								<div className="column jc-c w-100per">
 									<h2 className="">{item.name}</h2>
-									<div className="mv-10px">${item.price}</div>
-									<Link to={'/collections/all/products/category/' + item.category}>
-										<button className="button primary">Buy Again</button>
-									</Link>
+									<div className="ai-c w-100per jc-b">
+										<div className="mv-10px">${item.price}</div>
+										<Link to={'/collections/all/products/category/' + item.category}>
+											<button className="button primary">Buy Again</button>
+										</Link>
+									</div>
 								</div>
 							</div>
 						);

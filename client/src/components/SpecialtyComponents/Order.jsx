@@ -55,7 +55,7 @@ const Order = (props) => {
 			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-50per jc-b ">
 					<div className="column fs-16px">
-						<h3>Order Place</h3>
+						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
 					</div>
 					<div className="column fs-16px">
@@ -87,28 +87,101 @@ const Order = (props) => {
 					</div>
 				</div>
 			</div>
-
-			<div className="small_screen_order row jc-b">
-				<div className="">
-					{props.order.orderItems.map((item, index) => {
-						return (
-							<div className="row mt-15px">
-								<LazyLoadImage
-									className="order-image w-200px h-200px br-10px mr-15px"
-									alt={item.name}
-									effect="blur"
-									src={item.display_image && item.display_image} // use normal <img> attributes as props
-								/>
-								<div className="column jc-c">
-									<h2 className="">{item.name}</h2>
-									<div className="mv-10px">${item.price}</div>
-									<Link to={'/collections/all/products/category/' + item.category}>
-										<button className="button primary">Buy Again</button>
-									</Link>
+			<div className="row jc-b">
+				<div className="small_screen_order row jc-b w-89per">
+					<div className="">
+						{props.order.orderItems.map((item, index) => {
+							return (
+								<div className="row mt-15px">
+									<LazyLoadImage
+										className="order-image w-200px h-200px br-10px mr-15px"
+										alt={item.name}
+										effect="blur"
+										src={item.display_image && item.display_image} // use normal <img> attributes as props
+									/>
+									<div className="column jc-c">
+										<h2 className="">{item.name}</h2>
+										<div className="mv-10px">${item.price}</div>
+										<Link to={'/collections/all/products/category/' + item.category}>
+											<button className="button primary">Buy Again</button>
+										</Link>
+									</div>
 								</div>
+							);
+						})}
+					</div>
+				</div>
+				<div className="column jc-b h-10rem w-25rem">
+					<div>
+						<div className="row ai-c">
+							<div className="mv-5px">
+								{props.order.isPaid ? (
+									<i className="fas fa-check-circle" />
+								) : (
+									<i className="fas fa-times-circle" />
+								)}
 							</div>
-						);
-					})}
+							<div className="mh-10px">Paid</div>
+
+							<div>{!props.order.paidAt ? '' : format_date(props.order.paidAt)}</div>
+						</div>
+					</div>
+					<div>
+						<div className="row ai-c">
+							<div className="mv-5px">
+								{props.order.isManufactured ? (
+									<i className="fas fa-check-circle" />
+								) : (
+									<i className="fas fa-times-circle" />
+								)}
+							</div>
+							<div className="mh-10px">Manufactured</div>
+
+							<div>{!props.order.manufacturedAt ? '' : format_date(props.order.manufacturedAt)}</div>
+						</div>
+					</div>
+					<div>
+						<div className="row ai-c">
+							<div className="mv-5px">
+								{props.order.isPackaged ? (
+									<i className="fas fa-check-circle" />
+								) : (
+									<i className="fas fa-times-circle" />
+								)}
+							</div>
+							<div className="mh-10px">Packaged</div>
+
+							<div>{!props.order.packagedAt ? '' : format_date(props.order.packagedAt)}</div>
+						</div>
+					</div>
+					<div>
+						<div className="row ai-c">
+							<div className="mv-5px">
+								{props.order.isShipped ? (
+									<i className="fas fa-check-circle" />
+								) : (
+									<i className="fas fa-times-circle" />
+								)}
+							</div>
+							<div className="mh-10px">Shipped</div>
+
+							<div>{!props.order.shippedAt ? '' : format_date(props.order.shippedAt)}</div>
+						</div>
+					</div>
+					<div>
+						<div className="row ai-c">
+							<div className="mv-5px row">
+								{props.order.isDelivered ? (
+									<i className="fas fa-check-circle" />
+								) : (
+									<i className="fas fa-times-circle" />
+								)}
+							</div>
+							<div className="mh-10px">Delivered</div>
+
+							<div>{!props.order.deliveredAt ? '' : format_date(props.order.deliveredAt)}</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
