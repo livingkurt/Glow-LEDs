@@ -58,6 +58,59 @@ const ProductsPage = (props) => {
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
+	const colors = [
+		{ name: 'Not Category', color: '#333333' },
+		{ name: 'Infinity Mirrors', color: '#557b68' },
+		{ name: 'Glow Strings', color: '#4b7188' },
+		{ name: 'Glowskins', color: '#736084' },
+		{ name: 'Mini Diffuser Caps', color: '#4b8882' },
+		{ name: 'Frosted Diffusers', color: '#ca9160' },
+		{ name: 'Diffuser Caps', color: '#6c7ea9' },
+		{ name: 'Accessories', color: '#925757' }
+	];
+
+	const determine_color = (product) => {
+		let result = '';
+		if (!product.category) {
+			result = colors[0].color;
+		}
+		if (product.category === 'infinity_mirrors') {
+			result = colors[1].color;
+		}
+		if (product.category === 'glow_strings') {
+			result = colors[2].color;
+		}
+		if (product.category === 'glowskins') {
+			result = colors[3].color;
+		}
+		if (product.category === 'mini_diffuser_caps') {
+			result = colors[4].color;
+		}
+		if (product.category === 'frosted_diffusers') {
+			result = colors[5].color;
+		}
+		if (product.category === 'diffuser_caps') {
+			result = colors[6].color;
+		}
+		if (product.category === 'accessories') {
+			result = colors[7].color;
+		}
+		// console.log(result);
+		return result;
+	};
+
+	// const sort_options = [
+	// 	'No Category',
+	// 	'Infinity Mirrors',
+	// 	'Glow Strings',
+	// 	'Glowskins',
+	// 	'Shipped',
+	// 	'Delievered',
+	// 	'Newest',
+	// 	'Lowest',
+	// 	'Highest'
+	// ];
+
 	const sale_price_switch = (product) => {
 		if (product.sale_price !== 0) {
 			return (
@@ -96,14 +149,22 @@ const ProductsPage = (props) => {
 			<Helmet>
 				<title>Admin Products | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-					<label style={{ marginRight: '1rem' }}>Hidden</label>
-					<div style={{ backgroundColor: '#333333', height: '20px', width: '60px', borderRadius: '5px' }} />
-				</FlexContainer>
-				<Link to="/secure/glow/display_products">
-					<button className="button primary">Display Products</button>
-				</Link>
+			<FlexContainer h_between wrap>
+				{colors.map((color) => {
+					return (
+						<FlexContainer h_between styles={{ margin: '1rem' }}>
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</FlexContainer>
+					);
+				})}
 				<Link to="/secure/glow/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
@@ -141,7 +202,8 @@ const ProductsPage = (props) => {
 								{products.map((product) => (
 									<tr
 										key={product._id}
-										style={{ backgroundColor: product.hidden ? colors.hidden : '#626262' }}
+										// style={{ backgroundColor: product.hidden ? colors.hidden : '#626262' }}
+										style={{ backgroundColor: determine_color(product) }}
 									>
 										<td>
 											<Link to={'/collections/all/products/' + product.pathname}>
