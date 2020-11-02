@@ -202,8 +202,9 @@ const ProductsPage = (props) => {
 								{products.map((product) => (
 									<tr
 										key={product._id}
-										// style={{ backgroundColor: product.hidden ? colors.hidden : '#626262' }}
-										style={{ backgroundColor: determine_color(product) }}
+										style={{
+											backgroundColor: product.hidden ? '#333333' : determine_color(product)
+										}}
 									>
 										<td>
 											<Link to={'/collections/all/products/' + product.pathname}>

@@ -276,6 +276,7 @@ const OrdersPage = (props) => {
 									<th className="min-w-120px">TOTAL</th>
 									<th className="min-w-150px">USER</th>
 									<th className="min-w-580px">ORDER ITEMS</th>
+									{/* <th className="min-w-580px">Time Since Order</th> */}
 									<th className="min-w-175px">ACTIONS</th>
 								</tr>
 							</thead>
@@ -294,6 +295,9 @@ const OrdersPage = (props) => {
 										<td className="min-w-150px">
 											{!order.shipping ? 'N/A' : order.shipping.first_name}
 										</td>
+										{/* <td className="min-w-150px">
+											{order.createdAt -}
+										</td> */}
 										<td className="min-w-580px">
 											{order.orderItems.map((item) => {
 												console.log({ item });
