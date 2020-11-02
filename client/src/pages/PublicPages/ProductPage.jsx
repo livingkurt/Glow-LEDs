@@ -455,7 +455,7 @@ const ProductPage = (props) => {
 										</Link>
 									) : (
 										<li>
-											{product.countInStock > 0 ? (
+											{product.countInStock > 0 && !product.hidden ? (
 												<button onClick={handleAddToCart} className="button primary">
 													Add to Cart
 												</button>
