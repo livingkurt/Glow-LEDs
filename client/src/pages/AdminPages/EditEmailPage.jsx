@@ -160,7 +160,7 @@ const EditEmailPage = (props) => {
 						{email && (
 							<div>
 								<Helmet>
-									<title>Edit {email.name} | Glow LEDs</title>
+									<title>Edit Email | Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '50rem', marginBottom: '20px' }}>
@@ -171,9 +171,7 @@ const EditEmailPage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'Email' : email.name}
-									</h1>
+									/>
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">

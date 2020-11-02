@@ -170,9 +170,7 @@ const EditCartPage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'Cart' : cart.name}
-									</h1>
+									/>
 
 									<FlexContainer row wrap>
 										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>

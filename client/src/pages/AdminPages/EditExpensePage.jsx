@@ -191,7 +191,7 @@ const EditExpensePage = (props) => {
 						{expense && (
 							<div>
 								<Helmet>
-									<title>Edit {expense.name} | Glow LEDs</title>
+									<title>Edit Expense| Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -202,9 +202,7 @@ const EditExpensePage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'Expense' : expense.name}
-									</h1>
+									/>
 
 									<FlexContainer row wrap>
 										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>

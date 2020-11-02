@@ -157,9 +157,7 @@ const EditContentPage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'Content' : content.name}
-									</h1>
+									/>
 									<div className="ai-c h-25px mb-15px jc-c">
 										<div className="custom-select">
 											<select className="qty_select_dropdown" onChange={(e) => use_template(e)}>

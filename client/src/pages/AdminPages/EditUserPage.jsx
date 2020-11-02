@@ -157,7 +157,7 @@ const EditUserPage = (props) => {
 						{user && (
 							<div>
 								<Helmet>
-									<title>Edit {user.name} | Glow LEDs</title>
+									<title>Edit {user.first_name} | Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -168,9 +168,7 @@ const EditUserPage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'User' : user.name}
-									</h1>
+									/>
 
 									<FlexContainer row wrap>
 										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>

@@ -160,7 +160,7 @@ const EditSponsorPage = (props) => {
 						{sponsor && (
 							<div>
 								<Helmet>
-									<title>Edit {sponsor.name} | Glow LEDs</title>
+									<title>Edit Sponsor| Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -171,9 +171,7 @@ const EditSponsorPage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'Sponsor' : sponsor.name}
-									</h1>
+									/>
 
 									<FlexContainer row wrap>
 										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>

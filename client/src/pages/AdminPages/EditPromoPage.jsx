@@ -192,7 +192,7 @@ const EditPromoPage = (props) => {
 						{promo && (
 							<div>
 								<Helmet>
-									<title>Edit {promo.name} | Glow LEDs</title>
+									<title>Edit Promo | Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -203,9 +203,7 @@ const EditPromoPage = (props) => {
 											marginRight: 'auto',
 											justifyContent: 'center'
 										}}
-									>
-										{loading ? 'Promo' : promo.name}
-									</h1>
+									/>
 
 									<FlexContainer row wrap>
 										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
