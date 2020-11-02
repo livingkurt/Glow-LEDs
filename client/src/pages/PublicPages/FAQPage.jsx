@@ -79,8 +79,10 @@ const FAQPage = () => {
 						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
-							<li style={{ lineHeight: '25px' }}>Emazings Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>EL spectra EVOs</li>
 							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
+							<li style={{ lineHeight: '25px' }}>FL Atoms</li>
+							<li style={{ lineHeight: '25px' }}>FL Ions</li>
 						</ul>
 						<h2>Coinskins</h2>
 						<label>

@@ -499,7 +499,8 @@ const OrderPage = (props) => {
 							</FlexContainer>
 						)}
 					</ul>
-					<div className="column jc-b h-15rem w-25rem">
+					<div className="column jc-b h-22rem w-25remm mb-1rem">
+						<h2>Order Status</h2>
 						<div>
 							<div className="row ai-c">
 								<div className="mv-5px">
@@ -595,7 +596,7 @@ const OrderPage = (props) => {
 							</div>
 						)}
 					</FlexContainer> */}
-					<div className="ship_deliver ai-s wrap w-100per column g-17px">
+					<div className="ship_deliver  wrap w-100per column ">
 						<FlexContainer row v_i_center h_between>
 							{/* {console.log({ shipping_state })} */}
 							{props.userInfo &&
