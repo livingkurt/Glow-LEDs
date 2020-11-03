@@ -165,6 +165,99 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	}
 });
+router.get('/daily_income', async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({
+			deleted: false,
+			createdAt: {
+				$gte: new Date(<any>new Date() - 1 * 60 * 60 * 24 * 1000)
+			}
+		});
+		console.log({ orders });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.json(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
+router.get('/weekly_income', async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({
+			deleted: false,
+			createdAt: {
+				$gte: new Date(<any>new Date() - 7 * 60 * 60 * 24 * 1000)
+			}
+		});
+		console.log({ orders });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.json(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
+router.get('/monthly_income', async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({
+			deleted: false,
+			createdAt: {
+				$gte: new Date(<any>new Date() - 30 * 60 * 60 * 24 * 1000)
+			}
+		});
+		console.log({ orders });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.json(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
 
 router.get('/mine', isAuth, async (req: any, res: any) => {
 	try {

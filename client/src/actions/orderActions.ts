@@ -72,7 +72,7 @@ export const createPayOrder = (
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 
 		// axios.post('/api/emails/order', { ...newOrder, token });
-		axios.post('/api/emails/sale', { ...newOrder, token });
+		// axios.post('/api/emails/sale', { ...newOrder, token });
 		Cookie.remove('shipping');
 		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });

@@ -98,7 +98,7 @@ export const occurrence = function(array: any) {
 // };
 
 export const hslToHex = (h: any, s: any, l: any) => {
-	console.log(h);
+	// console.log(h);
 	h /= 360;
 	s /= 100;
 	l /= 100;

@@ -43,14 +43,26 @@ const ControlPanelPage = (props) => {
 	const { loading: loading_promos, promos, error: error_promos } = promoList;
 
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
+	const [ daily_orders, set_daily_orders ] = useState([]);
+	const [ weekly_orders, set_weekly_orders ] = useState([]);
+	const [ monthly_orders, set_monthly_orders ] = useState([]);
 
-	useEffect(() => {
+	useEffect(async () => {
 		dispatch(listOrders());
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
 		dispatch(listSponsors());
 		dispatch(listPromos());
+		const { data: daily } = await API.get_daily_income();
+		console.log({ daily });
+		set_daily_orders(daily);
+		const { data: weekly } = await API.get_weekly_income();
+		console.log({ weekly });
+		set_weekly_orders(weekly);
+		const { data: monthly } = await API.get_monthly_income();
+		console.log({ monthly });
+		set_monthly_orders(monthly);
 	}, []);
 
 	useEffect(
@@ -144,7 +156,7 @@ const ControlPanelPage = (props) => {
 		const start_date = new Date('2020-08-10');
 		var difference_in_time = current_date.getTime() - start_date.getTime();
 		var difference_in_day = difference_in_time / (1000 * 3600 * 24);
-		console.log({ difference_in_day });
+		// console.log({ difference_in_day });
 		return difference_in_day;
 	};
 
@@ -153,14 +165,14 @@ const ControlPanelPage = (props) => {
 		const multiplier = 360 / occurrences.length;
 
 		let num = -multiplier;
-		console.log(
-			occurrences.map((item) => {
-				num += multiplier;
-				// return `hsl(${num}, 100%, 50%)`;
-				let color = hslToHex(num, 100, 50);
-				return color;
-			})
-		);
+		// console.log(
+		// 	occurrences.map((item) => {
+		// 		num += multiplier;
+		// 		// return `hsl(${num}, 100%, 50%)`;
+		// 		let color = hslToHex(num, 100, 50);
+		// 		return color;
+		// 	})
+		// );
 		new Chart(expense_chartRef, {
 			type: 'bar',
 			data: {
@@ -374,6 +386,64 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Total Days Open</th>
 									<th style={{ padding: '15px' }}>{duration_of_opening().toFixed(0)}</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				)}
+				{expenses &&
+				orders &&
+				weekly_orders &&
+				daily_orders &&
+				monthly_orders && (
+					<div className="order-list responsive_table">
+						<h1 className="ta-c w-100per jc-c">Income</h1>
+						<table className="table">
+							<thead>
+								<tr>
+									<th>Category</th>
+									<th>Expense</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Daily Income</th>
+									<th style={{ padding: '15px' }}>
+										${daily_orders &&
+											daily_orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Weekly Income</th>
+									<th style={{ padding: '15px' }}>
+										${weekly_orders &&
+											weekly_orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Monthly Income</th>
+									<th style={{ padding: '15px' }}>
+										${monthly_orders &&
+											monthly_orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+									</th>
 								</tr>
 								<tr
 									style={{
