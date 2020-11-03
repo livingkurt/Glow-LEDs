@@ -313,7 +313,7 @@ const PlaceOrderPage = (props) => {
 		dispatch(
 			createOrder({
 				orderItems: cartItems,
-				shipping,
+				shipping: { ...shipping, email: user.email },
 				payment,
 				itemsPrice,
 				shippingPrice,

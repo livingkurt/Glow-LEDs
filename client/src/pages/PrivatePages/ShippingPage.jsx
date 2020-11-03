@@ -183,22 +183,25 @@ const ShippingPage = (props) => {
 			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
 			console.log({ save_shipping });
-			dispatch(
-				update({
-					...user_data,
-					shipping: {
-						first_name,
-						last_name,
-						email,
-						address,
-						city,
-						state,
-						postalCode,
-						country: international ? country : 'United States',
-						international
-					}
-				})
-			);
+			if (save_shipping) {
+				dispatch(
+					update({
+						...user_data,
+						shipping: {
+							first_name,
+							last_name,
+							email,
+							address,
+							city,
+							state,
+							postalCode,
+							country: international ? country : 'United States',
+							international
+						}
+					})
+				);
+			}
+
 			// if (save_shipping) {
 			// 	const data = API.save_user_shipping(
 			// 		{
