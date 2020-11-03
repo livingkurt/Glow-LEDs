@@ -155,12 +155,12 @@ const ExpensesPage = (props) => {
 										fontSize: '1.4rem'
 									}}
 								>
-									<td>
+									<td className="p-10px">
 										<label>
 											${expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)}
 										</label>
 									</td>
-									<td>
+									<td className="p-10px">
 										<label>
 											${expenses
 												.filter((expense) => expense.category === 'Supplies')
@@ -168,7 +168,7 @@ const ExpensesPage = (props) => {
 												.toFixed(2)}
 										</label>
 									</td>
-									<td>
+									<td className="p-10px">
 										<label>
 											${expenses
 												.filter((expense) => expense.category === 'Website')
@@ -176,7 +176,7 @@ const ExpensesPage = (props) => {
 												.toFixed(2)}
 										</label>
 									</td>
-									<td>
+									<td className="p-10px">
 										<label>
 											${expenses
 												.filter((expense) => expense.category === 'Shipping')
@@ -184,7 +184,7 @@ const ExpensesPage = (props) => {
 												.toFixed(2)}
 										</label>
 									</td>
-									<td>
+									<td className="p-10px">
 										<label>
 											${expenses
 												.filter((expense) => expense.category === 'Business')
@@ -219,16 +219,26 @@ const ExpensesPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td>{expense._id}</td>
-										<td style={{ minWidth: '300px' }}>{expense.expense_name}</td>
-										<td>{format_date(expense.date_of_purchase)}</td>
-										<td>{expense.category}</td>
-										<td>${expense.amount ? expense.amount.toFixed(2) : expense.amount}</td>
-										<td>{expense.card}</td>
-										<td style={{ minWidth: '150px' }}>{expense.place_of_purchase}</td>
-										<td style={{ minWidth: '200px' }}>{expense.application}</td>
-										<td style={{ minWidth: '800px' }}>{expense.url}</td>
-										<td>
+										<td className="p-10px">{expense._id}</td>
+										<td className="p-10px" style={{ minWidth: '300px' }}>
+											{expense.expense_name}
+										</td>
+										<td className="p-10px">{format_date(expense.date_of_purchase)}</td>
+										<td className="p-10px">{expense.category}</td>
+										<td className="p-10px">
+											${expense.amount ? expense.amount.toFixed(2) : expense.amount}
+										</td>
+										<td className="p-10px">{expense.card}</td>
+										<td className="p-10px" style={{ minWidth: '150px' }}>
+											{expense.place_of_purchase}
+										</td>
+										<td className="p-10px" style={{ minWidth: '200px' }}>
+											{expense.application}
+										</td>
+										<td className="p-10px" style={{ minWidth: '800px' }}>
+											{expense.url}
+										</td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editexpense/' + expense._id}>
 													<button className="button icon">

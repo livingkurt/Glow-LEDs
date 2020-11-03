@@ -133,39 +133,41 @@ const UserOrderPage = (props) => {
 								<tbody>
 									{orders.map((order) => (
 										<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
-											<td>{order._id}</td>
-											<td>{format_date(order.createdAt)}</td>
-											<td>${order.totalPrice.toFixed(2)}</td>
-											<td>
+											<td className="p-10px">{order._id}</td>
+											<td className="p-10px">{format_date(order.createdAt)}</td>
+											<td className="p-10px">${order.totalPrice.toFixed(2)}</td>
+											<td className="p-10px">
 												{order.isPaid ? (
 													<i className="fas fa-check-circle" />
 												) : (
 													<i className="fas fa-times-circle" />
 												)}
 											</td>
-											<td>
+											<td className="p-10px">
 												{order.isShipped ? (
 													<i className="fas fa-check-circle" />
 												) : (
 													<i className="fas fa-times-circle" />
 												)}
 											</td>
-											<td style={{ minWidth: '50px', width: '50px' }}>
+											<td className="p-10px" style={{ minWidth: '50px', width: '50px' }}>
 												{order.isDelivered ? (
 													<i className="fas fa-check-circle" />
 												) : (
 													<i className="fas fa-times-circle" />
 												)}
 											</td>
-											<td>
+											<td className="p-10px">
 												{order.isRefunded ? (
 													<i className="fas fa-check-circle" />
 												) : (
 													<i className="fas fa-times-circle" />
 												)}
 											</td>
-											<td>{!order.refundedAt ? '' : format_date(order.refundedAt)}</td>
-											<td>
+											<td className="p-10px">
+												{!order.refundedAt ? '' : format_date(order.refundedAt)}
+											</td>
+											<td className="p-10px">
 												{order.isRefunded && (
 													<div>
 														${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
@@ -173,7 +175,7 @@ const UserOrderPage = (props) => {
 													</div>
 												)}
 											</td>
-											<td>
+											<td className="p-10px">
 												<Link to={'/secure/account/order/' + order._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />

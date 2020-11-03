@@ -240,15 +240,15 @@ const OrdersPage = (props) => {
 										fontSize: '1.4rem'
 									}}
 								>
-									<td>
+									<td className="p-10px">
 										<label>
 											${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
 										</label>
 									</td>
-									<td>
+									<td className="p-10px">
 										<label>{orders.length.toFixed(2)}</label>
 									</td>
-									<td>
+									<td className="p-10px">
 										<label>
 											${(orders.reduce((a, order) => a + order.totalPrice, 0) /
 												orders.length).toFixed(2)}
@@ -276,17 +276,17 @@ const OrdersPage = (props) => {
 										style={{ backgroundColor: determine_color(order) }}
 										className="tr"
 									>
-										<td className="min-w-250px">{order._id}</td>
-										<td className="min-w-125px">{format_date(order.createdAt)}</td>
-										<td className="min-w-120px">
+										<td className="min-w-250px p-10px">{order._id}</td>
+										<td className="min-w-125px p-10px">{format_date(order.createdAt)}</td>
+										<td className="min-w-120px p-10px">
 											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
 										</td>
-										<td className="min-w-150px">
+										<td className="min-w-150px p-10px">
 											{!order.shipping ? 'N/A' : order.shipping.first_name}
 										</td>
 										{/* {console.log(daysBetween(today, order.createdAt))} */}
 
-										<td className="min-w-580px">
+										<td className="min-w-580px p-10px">
 											{order.orderItems.map((item) => {
 												return (
 													<div>
@@ -302,8 +302,10 @@ const OrdersPage = (props) => {
 												);
 											})}
 										</td>
-										<td className="min-w-120px">{daysBetween(today, order.createdAt)} Days</td>
-										<td className="min-w-175px">
+										<td className="min-w-120px p-10px">
+											{daysBetween(today, order.createdAt)} Days
+										</td>
+										<td className="min-w-175px p-10px">
 											<FlexContainer h_between>
 												<button className="button icon" onClick={() => show_hide(order._id)}>
 													<i

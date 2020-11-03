@@ -206,23 +206,29 @@ const ProductsPage = (props) => {
 											backgroundColor: product.hidden ? '#333333' : determine_color(product)
 										}}
 									>
-										<td>
+										<td className="p-10px">
 											<Link to={'/collections/all/products/' + product.pathname}>
 												{product._id}
 											</Link>
 										</td>
-										<td>
+										<td className="p-10px">
 											{product.hidden ? (
 												<i className="fas fa-eye-slash" />
 											) : (
 												<i className="fas fa-eye" />
 											)}
 										</td>
-										<td style={{ minWidth: '420px' }}>{product.name}</td>
-										<td style={{ minWidth: '225px' }}>{sale_price_switch(product)}</td>
-										<td>{product.category}</td>
-										<td style={{ minWidth: '111px' }}>{product.order}</td>
-										<td>
+										<td className="p-10px" style={{ minWidth: '420px' }}>
+											{product.name}
+										</td>
+										<td className="p-10px" style={{ minWidth: '225px' }}>
+											{sale_price_switch(product)}
+										</td>
+										<td className="p-10px">{product.category}</td>
+										<td className="p-10px" style={{ minWidth: '111px' }}>
+											{product.order}
+										</td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editproduct/' + product.pathname}>
 													<button className="button icon">

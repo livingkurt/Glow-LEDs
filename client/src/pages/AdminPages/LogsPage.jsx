@@ -144,23 +144,23 @@ const LogsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td>{format_date(log.createdAt)} </td>
-										<td>{format_time(log.createdAt)} </td>
-										<td>{log.method}</td>
-										<td>{log.status}</td>
-										<td className="min-w-200px">{log.path}%</td>
-										<td>{log.file}</td>
-										<td>
+										<td className="p-10px">{format_date(log.createdAt)} </td>
+										<td className="p-10px">{format_time(log.createdAt)} </td>
+										<td className="p-10px">{log.method}</td>
+										<td className="p-10px">{log.status}</td>
+										<td className="min-w-200px p-10px">{log.path}%</td>
+										<td className="p-10px">{log.file}</td>
+										<td className="p-10px">
 											{log.success ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{log.error && log.error.code}</td>
-										<td>{log.ip}</td>
+										<td className="p-10px">{log.error && log.error.code}</td>
+										<td className="p-10px">{log.ip}</td>
 
-										<td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editlog/' + log._id}>
 													<button className="button icon">

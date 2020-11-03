@@ -157,17 +157,35 @@ const FeaturesPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td style={{ minWidth: '5rem' }}>{feature.user}</td>
-										<td style={{ minWidth: '15rem' }}>{format_date(feature.release_date)}</td>
-										<td style={{ minWidth: '15rem' }}>{feature.glover_name}</td>
-										<td style={{ minWidth: '10rem' }}>{feature.instagram_handle}</td>
-										<td style={{ minWidth: '15rem' }}>{feature.facebook_name}</td>
-										<td style={{ minWidth: '5rem' }}>{feature.product}</td>
-										{/* <td style={{ minWidth: '5rem' }}>{feature.quote}</td> */}
-										<td style={{ minWidth: '10rem' }}>{feature.video}</td>
-										<td style={{ minWidth: '50rem' }}>{feature.song_id}</td>
-										<td style={{ minWidth: '10rem' }}>{feature.picture}</td>
-										<td>
+										<td className="p-10px" style={{ minWidth: '5rem' }}>
+											{feature.user}
+										</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{format_date(feature.release_date)}
+										</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{feature.glover_name}
+										</td>
+										<td className="p-10px" style={{ minWidth: '10rem' }}>
+											{feature.instagram_handle}
+										</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{feature.facebook_name}
+										</td>
+										<td className="p-10px" style={{ minWidth: '5rem' }}>
+											{feature.product}
+										</td>
+										{/* <td className="p-10px" style={{ minWidth: '5rem' }}>{feature.quote}</td> */}
+										<td className="p-10px" style={{ minWidth: '10rem' }}>
+											{feature.video}
+										</td>
+										<td className="p-10px" style={{ minWidth: '50rem' }}>
+											{feature.song_id}
+										</td>
+										<td className="p-10px" style={{ minWidth: '10rem' }}>
+											{feature.picture}
+										</td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editfeature/' + feature._id}>
 													<button className="button icon">

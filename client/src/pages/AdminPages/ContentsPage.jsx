@@ -151,13 +151,17 @@ const ContentsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td style={{ minWidth: '5rem' }}>{content._id}</td>
-										<td style={{ minWidth: '5rem' }}>
+										<td className="p-10px" style={{ minWidth: '5rem' }}>
+											{content._id}
+										</td>
+										<td className="p-10px" style={{ minWidth: '5rem' }}>
 											{content.home_page && content.home_page.h1}
 										</td>
-										<td style={{ minWidth: '15rem' }}>{content.banner && content.banner.label}</td>
-										{/* <td style={{ minWidth: '10rem' }}>{content.about_page}</td> */}
-										<td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{content.banner && content.banner.label}
+										</td>
+										{/* <td className="p-10px" style={{ minWidth: '10rem' }}>{content.about_page}</td> */}
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editcontent/' + content._id}>
 													<button className="button icon">

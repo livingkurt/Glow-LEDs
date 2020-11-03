@@ -154,26 +154,26 @@ const EmailsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td>{email._id}</td>
-										<td className="min-w-16rem">{email.email_type}</td>
-										<td>{email.h1}</td>
-										<td className="min-w-14rem">
+										<td className="p-10px">{email._id}</td>
+										<td className="min-w-16rem p-10px">{email.email_type}</td>
+										<td className="p-10px">{email.h1}</td>
+										<td className="min-w-14rem p-10px">
 											{email.show_image ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{email.h2}</td>
-										<td>{email.button}</td>
-										<td>
+										<td className="p-10px">{email.h2}</td>
+										<td className="p-10px">{email.button}</td>
+										<td className="p-10px">
 											{email.active ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editemail/' + email._id}>
 													<button className="button icon">
