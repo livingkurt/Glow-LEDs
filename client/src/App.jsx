@@ -212,6 +212,7 @@ const App = () => {
 								path="/secure/checkout/placeorder"
 								component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 							/>
+							<PrivateRoute path="/secure/checkout/order/receipt/:id" component={OrderEmail} />
 							{/* Admin Routes */}
 							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
@@ -252,7 +253,11 @@ const App = () => {
 								exact={true}
 								component={PasswordChangedEmail}
 							/>
-							<AdminRoute path="/secure/glow/emails/order/:id?" exact={true} component={OrderEmail} />
+							<AdminRoute
+								path="/secure/glow/emails/order/:id?"
+								exact={true}
+								component={(props) => <OrderEmail userInfo={userInfo} {...props} />}
+							/>
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />

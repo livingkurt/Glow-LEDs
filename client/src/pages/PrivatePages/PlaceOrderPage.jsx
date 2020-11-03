@@ -209,7 +209,7 @@ const PlaceOrderPage = (props) => {
 		() => {
 			if (successPay && order) {
 				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-				props.history.push('/secure/emails/order/' + order._id);
+				props.history.push('/secure/checkout/order/receipt/' + order._id);
 				set_payment_loading(false);
 				empty_cart();
 			} else if (errorPay) {

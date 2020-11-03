@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { FlexContainer } from '../../components/ContainerComponents/index';
-import { ReactComponent as Facebook } from './Icons/facebook-brands.svg';
 
 import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -11,8 +10,11 @@ import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
+import { Loading } from '../UtilityComponents';
 
 const OrderEmail = (props) => {
+	// const user_data = props.userInfo;
+	// console.log({ user_data });
 	const history = useHistory();
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
@@ -24,6 +26,8 @@ const OrderEmail = (props) => {
 
 	const emailList = useSelector((state) => state.emailList);
 	const { loading: loading_emails, emails, error: error_emails } = emailList;
+
+	const [ loading_email, set_loading_email ] = useState(true);
 
 	console.log({ emails });
 
@@ -50,13 +54,13 @@ const OrderEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return <i class="fab fa-cc-amex" />;
+				return '/images/optimized_images/logo_images/Icons/cc-amex-brands.png';
 			case 'Visa':
-				return <i class="fab fa-cc-visa" />;
+				return '/images/optimized_images/logo_images/Icons/cc-visa-brands.png';
 			case 'Mastercard':
-				return <i class="fab fa-cc-mastercard" />;
+				return '/images/optimized_images/logo_images/Icons/cc-mastercard-brands.png';
 			case 'Discover':
-				return <i class="fab fa-cc-discover" />;
+				return '/images/optimized_images/logo_images/Icons/cc-discover-brands.png';
 		}
 	};
 
@@ -283,7 +287,7 @@ const OrderEmail = (props) => {
 													{item.category === 'diffuser_caps' ||
 													item.category === 'mini_diffuser_caps' ||
 													item.category === 'frosted_diffusers' ? (
-														`${item.diffuser_cap_color} -`
+														`${item.diffuser_cap_color} - `
 													) : (
 														''
 													)}
@@ -525,9 +529,13 @@ const OrderEmail = (props) => {
 																		}}
 																	>
 																		{order.payment.charge ? (
-																			determin_card_logo(
-																				order.payment.charge.source.brand
-																			)
+																			<img
+																				src={determin_card_logo(
+																					order.payment.charge.source.brand
+																				)}
+																				style={{ height: '25px' }}
+																				alt="facebook"
+																			/>
 																		) : (
 																			''
 																		)}{' '}
@@ -583,7 +591,8 @@ const OrderEmail = (props) => {
 									maxWidth: '250px',
 									width: '100%',
 									margin: '0 auto',
-									color: 'white'
+									color: 'white',
+									alignItems: 'center'
 								}}
 							>
 								<div
@@ -642,7 +651,7 @@ const OrderEmail = (props) => {
 										{/* <i class="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
 										<img
 											src="/images/optimized_images/logo_images/Icons/youtube-brands.png"
-											style={{ height: '25px' }}
+											style={{ height: '20px' }}
 											alt="facebook"
 										/>
 									</a>
@@ -662,7 +671,7 @@ const OrderEmail = (props) => {
 										{/* <i class="fab fa-soundcloud" style={{ color: 'white' }} /> */}
 										<img
 											src="/images/optimized_images/logo_images/Icons/soundcloud-brands.png"
-											style={{ height: '25px' }}
+											style={{ height: '20px' }}
 											alt="facebook"
 										/>
 									</a>
@@ -724,7 +733,11 @@ const OrderEmail = (props) => {
 	// };
 	const save_html = async () => {
 		console.log({ email_template });
-		const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
+		const { data } = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
+		// if (data) {
+		// 	set_loading_email(false);
+		// 	history.push('/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078');
+		// }
 		// const data = await API.save_html(email_template, email, userInfo.token);
 		// console.log(data);
 		// console.log('Success');
@@ -738,7 +751,10 @@ const OrderEmail = (props) => {
 					// console.log({ email_template });
 
 					// setTimeout(() => {
-					save_html();
+					if (props.match.params.id) {
+						save_html();
+					}
+
 					// }, 2000);
 				}
 				// setTimeout(() => {
@@ -756,17 +772,21 @@ const OrderEmail = (props) => {
 
 	return (
 		<div className="">
-			<div className="jc-b mb-1rem">
-				<Link to="/secure/glow/emails">
-					<button className="button primary">Back to Emails</button>
-				</Link>
-				<button className="button primary mb-1rem" onClick={() => save_html()}>
-					Save HTML
-				</button>
-				{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
+			{userInfo &&
+			userInfo.isAdmin && (
+				<div className="jc-b mb-1rem">
+					<Link to="/secure/glow/emails">
+						<button className="button primary">Back to Emails</button>
+					</Link>
+					<button className="button primary mb-1rem" onClick={() => save_html()}>
+						Save HTML
+					</button>
+					{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
 					Send Order Email
 				</button> */}
-			</div>
+					{/* <Loading loading={loading_email} /> */}
+				</div>
+			)}
 			{jsx}
 		</div>
 	);

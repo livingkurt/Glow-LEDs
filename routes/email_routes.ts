@@ -366,10 +366,11 @@ router.post('/order', async (req, res) => {
 			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
 			console.log('Order Email Sent');
+			res.send('Order Email Sent');
 		}
 	});
 
-	// res.send('Order Email Sent to);
+	// res.send('Order Email Sent to');
 });
 
 router.post('/invoice', async (req, res) => {
