@@ -541,8 +541,8 @@ const FAQPage = () => {
 									style={{ marginRight: '5px' }}
 								>
 									📞
-								</span>️ immediately at info@glow-leds.com or Facebook Chat at the Bottom Right of Your
-								Screen.
+								</span>️ immediately at info.glowleds@gmail.com or Facebook Chat at the Bottom Right of
+								Your Screen.
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
@@ -619,8 +619,8 @@ const FAQPage = () => {
 								To initiate a return please contact{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ info@glow-leds.com or Facebook Chat at the Bottom Right of your Screen and You
-								will be supplied with a prepaid shipping span{' '}
+								</span>️ info.glowleds@gmail.com or Facebook Chat at the Bottom Right of your Screen and
+								You will be supplied with a prepaid shipping span{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🏷️
 								</span>️to send back your product.
@@ -652,8 +652,8 @@ const FAQPage = () => {
 								If item arrives damamged in any way please contact us{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ immediately at info@glow-leds.com or through Facebook Chat at the Bottom right
-								of your screeen.
+								</span>️ immediately at info.glowleds@gmail.com or through Facebook Chat at the Bottom
+								right of your screeen.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Our online orders process immediately{' '}

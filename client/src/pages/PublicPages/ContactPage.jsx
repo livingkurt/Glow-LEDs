@@ -440,7 +440,7 @@ const ContactPage = (props) => {
 							<ol style={{ paddingLeft: '20px' }}>
 								<li>Fill out relevant info above </li>
 								<li>Then upload your content using the WeTransfer button below.</li>
-								<li>For "Email To" put info@glow-leds.com</li>
+								<li>For "Email To" put info.glowleds@gmail.com</li>
 								<li>After completing steps on wetransfer click the send button below.</li>
 							</ol>
 
