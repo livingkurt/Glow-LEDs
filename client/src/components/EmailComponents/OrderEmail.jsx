@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 
-import { Link } from 'react-router-dom';
+import { FlexContainer } from '../../components/ContainerComponents/index';
+import { ReactComponent as Facebook } from './Icons/facebook-brands.svg';
+
+import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import API from '../../utils/API';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 
-const OrderEmail = () => {
+const OrderEmail = (props) => {
+	const history = useHistory();
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 	const orderDetails = useSelector((state) => state.orderDetails);
@@ -28,7 +31,8 @@ const OrderEmail = () => {
 
 	useEffect(() => {
 		dispatch(listEmails('Order'));
-		dispatch(detailsOrder('5f74a250290441002a36d078'));
+		dispatch(detailsOrder(props.match.params.id || '5f74a250290441002a36d078'));
+		// dispatch(detailsOrder('5f74a250290441002a36d078'));
 		return () => {};
 	}, []);
 
@@ -57,664 +61,699 @@ const OrderEmail = () => {
 	};
 
 	const jsx = (
-		<div
-			style={{
-				display: 'flex',
-				flexDirection: 'column',
-				margin: 'auto',
-				fontSize: '16px',
-				fontFamily: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
-				color: '#black'
-			}}
-		>
-			<div style={{ backgroundColor: '#333333', padding: '20px' }}>
-				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<table width="100%" style={{ maxWidth: '500px' }}>
-						<tr>
-							<td>
-								<img
-									src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
-									alt="Glow LEDs"
-									style={{
-										textAlign: 'center',
-										width: '100%',
-										marginRight: '20px'
-									}}
-								/>
-							</td>
-						</tr>
-					</table>
+		<body style={{ padding: 0, margin: 0, fontSize: '16px' }}>
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					margin: 'auto',
+					fontSize: '16px',
+					fontFamily: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
+					color: 'white',
+					backgroundColor: '#5f5f5f'
+				}}
+			>
+				<div style={{ backgroundColor: '#333333', padding: '20px' }}>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<table width="100%" style={{ maxWidth: '500px' }}>
+							<tr>
+								<td>
+									<img
+										src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
+										alt="Glow LEDs"
+										style={{
+											textAlign: 'center',
+											width: '100%',
+											marginRight: '20px'
+										}}
+									/>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<h4
+						style={{
+							textAlign: 'center',
+							fontFamily: 'helvetica',
+							width: '100%',
+							margin: '0 auto',
+							lineHeight: '50px',
+							color: 'white',
+							fontSize: '2em'
+						}}
+					>
+						Thank You for your Purchase!
+					</h4>
 				</div>
-				<h4
-					style={{
-						textAlign: 'center',
-						fontFamily: 'helvetica',
-						width: '100%',
-						margin: '0 auto',
-						lineHeight: '50px',
-						color: 'white',
-						fontSize: '2em'
-					}}
-				>
-					Thank You for your Purchase!
-				</h4>
-			</div>
-			{order && (
-				<div
-					style={{
-						display: 'flex',
-						justifyContent: 'center',
-						flexDirection: 'column'
-					}}
-				>
+				{order && (
 					<div
 						style={{
-							margin: 'auto'
+							display: 'flex',
+							justifyContent: 'center',
+							flexDirection: 'column'
 						}}
 					>
 						<div
 							style={{
-								maxWidth: '600px',
-								lineHeight: '30px',
-								margin: '15px',
-								display: 'flex',
-								flexDirection: 'column'
+								margin: 'auto'
 							}}
 						>
-							<p>
-								Hi Kurt, we're getting your order ready to be shipped. We will notify you when it has
-								been sent.
-							</p>
 							<div
 								style={{
+									maxWidth: '600px',
+									lineHeight: '30px',
+									margin: '15px',
 									display: 'flex',
-									flexDirection: 'row',
-									alignItems: 'center'
+									flexDirection: 'column'
 								}}
 							>
+								<p>
+									Hi {order.shipping.first_name}, we're getting your order ready to be shipped. We
+									will notify you when it has been sent.
+								</p>
 								<div
 									style={{
 										display: 'flex',
-										justifyContent: 'center'
+										flexDirection: 'row',
+										alignItems: 'center'
 									}}
 								>
-									<a
-										href={
-											'https://www.glow-leds.com/account/login?redirect=/secure/account/order/' +
-											order._id
-										}
-										alt="discount image"
+									<div
 										style={{
-											backgroundColor: '#4c4f60',
-											color: 'white',
-											borderRadius: '10px',
-											border: 0,
-											padding: '15px'
+											display: 'flex',
+											justifyContent: 'center'
 										}}
 									>
-										<h4
+										<a
+											href={
+												'https://www.glow-leds.com/account/login?redirect=/secure/account/order/' +
+												order._id
+											}
+											alt="discount image"
 											style={{
-												fontFamily: 'helvetica',
-												margin: 0,
-												fontSize: '1.2em',
-												textAlign: 'center'
+												backgroundColor: '#4c4f60',
+												color: 'white',
+												borderRadius: '10px',
+												border: 0,
+												padding: '15px'
 											}}
 										>
-											View your Order
-										</h4>
-									</a>
-								</div>
-								<div style={{ margin: '0px 10px' }}>or</div>
-
-								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'center'
-									}}
-								>
-									<a
-										href="https://www.glow-leds.com/collections/all/products"
-										alt="discount image"
-										style={{
-											// backgroundColor: '#4c4f60',
-											color: 'white',
-											// borderRadius: '10px',
-											border: 0,
-											fontSize: '13px',
-											padding: '10px'
-										}}
-									>
-										<h4
-											style={{
-												fontFamily: 'helvetica',
-												margin: 0,
-												fontSize: '1.2em',
-												textAlign: 'center'
-											}}
-										>
-											Visit our Store
-										</h4>
-									</a>
-								</div>
-							</div>
-							<div style={{ borderBottom: '1px solid #ddd', paddingBottom: '20px' }} />
-							<table
-								cellPadding={0}
-								cellSpacing={0}
-								style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-								width="100%"
-								align="left"
-							>
-								<tbody>
-									<tr>
-										<td colSpan={2} style={{ verticalAlign: 'top' }} valign="top">
-											<table
-												style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-												width="100%"
-												align="left"
+											<h4
+												style={{
+													fontFamily: 'helvetica',
+													margin: 0,
+													fontSize: '1.2em',
+													textAlign: 'center',
+													textDecoration: 'none'
+												}}
 											>
-												<tbody>
-													<tr>
-														<td
-															style={{
-																verticalAlign: 'top',
-																lineHeight: '45px',
-																color: '#333'
-															}}
-															valign="top"
-														/>
-														<td
-															style={{ verticalAlign: 'top', textAlign: 'right' }}
-															valign="top"
-															align="right"
-														>
-															Order #: {order._id}
-															<br />
-															Created: {order.createdAt && format_date(order.createdAt)}
-															<br />
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-									</tr>
-									<h4
-										style={{
-											fontFamily: 'helvetica',
-											width: '100%',
-											margin: '0 auto',
-											lineHeight: '50px',
-											color: 'white',
-											fontSize: '1.3em'
-										}}
-									>
-										Order Summary
-									</h4>
-									{/* <tr>
-									<td
-										style={{
-											padding: '5px',
-											verticalAlign: 'top',
-											background: '#4d5061',
-											borderBottom: '1px solid #ddd',
-											fontWeight: 'bold'
-										}}
-										valign="top"
-									>
-										Item
-									</td>
-									<td
-										style={{
-											padding: '5px',
-											verticalAlign: 'top',
-											textAlign: 'right',
-											background: '#4d5061',
-											borderBottom: '1px solid #ddd',
-											fontWeight: 'bold'
-										}}
-										valign="top"
-										align="right"
-									>
-										Price
-									</td>
-								</tr> */}
+												View your Order
+											</h4>
+										</a>
+									</div>
+									<div style={{ margin: '0px 10px' }}>or</div>
 
-									{order.orderItems.map((item) => (
+									<div
+										style={{
+											display: 'flex',
+											justifyContent: 'center'
+										}}
+									>
+										<a
+											href="https://www.glow-leds.com/collections/all/products"
+											alt="discount image"
+											style={{
+												// backgroundColor: '#4c4f60',
+												color: 'white',
+												// borderRadius: '10px',
+												border: 0,
+												fontSize: '13px',
+												padding: '10px'
+											}}
+										>
+											<h4
+												style={{
+													fontFamily: 'helvetica',
+													margin: 0,
+													fontSize: '1.2em',
+													textAlign: 'center',
+													textDecoration: 'none'
+												}}
+											>
+												Visit our Store
+											</h4>
+										</a>
+									</div>
+								</div>
+								<div style={{ borderBottom: '1px solid #ddd', paddingBottom: '20px' }} />
+								<table
+									cellPadding={0}
+									cellSpacing={0}
+									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+									width="100%"
+									align="left"
+								>
+									<tbody>
+										<tr>
+											<td colSpan={2} style={{ verticalAlign: 'top' }} valign="top">
+												<table
+													style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+													width="100%"
+													align="left"
+												>
+													<tbody>
+														<tr>
+															<td
+																style={{
+																	verticalAlign: 'top',
+																	lineHeight: '45px',
+																	color: '#333'
+																}}
+																valign="top"
+															/>
+															<td
+																style={{
+																	verticalAlign: 'top',
+																	textAlign: 'right',
+																	color: 'white',
+																	fontSize: '16px'
+																}}
+																valign="top"
+																align="right"
+															>
+																Order #: {order._id}
+																<br />
+																Created:{' '}
+																{order.createdAt && format_date(order.createdAt)}
+																<br />
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+										<h4
+											style={{
+												fontFamily: 'helvetica',
+												width: '100%',
+												margin: '0 auto',
+												lineHeight: '50px',
+												color: 'white',
+												fontSize: '25px'
+											}}
+										>
+											Order Summary
+										</h4>
+
+										{order.orderItems.map((item) => (
+											<tr>
+												<td
+													style={{
+														padding: '5px',
+														verticalAlign: 'top',
+														borderBottom: '1px solid #eee',
+														padding: '20px 0',
+														color: 'white',
+														fontSize: '16px',
+														fontWeight: 800
+													}}
+													valign="top"
+												>
+													{item.qty}x - {' '}
+													{item.category === 'diffuser_caps' ||
+													item.category === 'mini_diffuser_caps' ||
+													item.category === 'frosted_diffusers' ? (
+														`${item.diffuser_cap_color} -`
+													) : (
+														''
+													)}
+													{item.name}
+													{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
+												</td>
+												<td
+													style={{
+														padding: '5px',
+														verticalAlign: 'top',
+														textAlign: 'right',
+														borderBottom: '1px solid #eee',
+														padding: '20px 0',
+														color: 'white',
+														fontSize: '16px',
+														fontWeight: 800
+													}}
+													valign="top"
+													align="right"
+												>
+													${item.price && item.price.toFixed(2)}
+												</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+
+								<table
+									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'right', color: 'white' }}
+									width="100%"
+									align="right"
+								>
+									<tbody>
 										<tr>
 											<td
 												style={{
-													padding: '5px',
 													verticalAlign: 'top',
-													borderBottom: '1px solid #eee',
-													padding: '20px 0'
+													width: '40%',
+													textAlign: 'left',
+													color: 'white'
 												}}
 												valign="top"
-											>
-												{item.qty}x -{' '}
-												{item.category === 'diffuser_caps' ||
-												item.category === 'mini_diffuser_caps' ||
-												item.category === 'frosted_diffusers' ? (
-													`${item.diffuser_cap_color} -`
-												) : (
-													''
-												)}
-												{item.name}
-												{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
-											</td>
+											/>
 											<td
 												style={{
-													padding: '5px',
 													verticalAlign: 'top',
-													textAlign: 'right',
-													borderBottom: '1px solid #eee',
-													padding: '20px 0'
+													width: '30%',
+													textAlign: 'left',
+													color: 'white',
+													fontSize: '16px'
 												}}
 												valign="top"
-												align="right"
 											>
-												${item.price && item.price.toFixed(2)}
+												Subtotal
+												<br />
+												Tax
+												<br />
+												Shipping
+												<br />
+												<br />
+												<div>Total</div>
+											</td>
+
+											<td
+												style={{
+													verticalAlign: 'top',
+													width: '20%',
+													color: 'white',
+													fontSize: '16px'
+												}}
+												valign="top"
+											>
+												${order.itemsPrice && order.itemsPrice.toFixed(2)}
+												<br />
+												${order.taxPrice && order.taxPrice.toFixed(2)}
+												<br />
+												${order.shippingPrice && order.shippingPrice.toFixed(2)}
+												<br />
+												<br />
+												<div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
+													${order.totalPrice && order.totalPrice.toFixed(2)}
+												</div>
 											</td>
 										</tr>
-									))}
-								</tbody>
-							</table>
-
-							<table
-								style={{ width: '100%', lineHeight: 'inherit', textAlign: 'right' }}
-								width="100%"
-								align="right"
-							>
-								<tbody>
-									<tr>
-										<td
-											style={{ verticalAlign: 'top', width: '40%', textAlign: 'left' }}
-											valign="top"
-										/>
-										<td
-											style={{ verticalAlign: 'top', width: '30%', textAlign: 'left' }}
-											valign="top"
+									</tbody>
+								</table>
+								<div
+									style={{
+										verticalAlign: 'top',
+										width: '40%',
+										color: 'white',
+										textAlign: 'right'
+									}}
+									valign="top"
+									align="right"
+								/>
+								<table
+									cellPadding={0}
+									cellSpacing={0}
+									style={{ width: '100%', lineHeight: 'inherit', color: 'white', textAlign: 'left' }}
+									width="100%"
+									align="left"
+								>
+									<tbody>
+										<tr
+											style={{
+												display: 'flex',
+												flexWrap: 'wrap',
+												border: 0
+											}}
 										>
-											Subtotal
-											<br />
-											Tax
-											<br />
-											Shipping
-											<br />
-											<br />
-											<div>Total</div>
-										</td>
-
-										<td style={{ verticalAlign: 'top', width: '20%' }} valign="top">
-											${order.itemsPrice && order.itemsPrice.toFixed(2)}
-											<br />
-											${order.taxPrice && order.taxPrice.toFixed(2)}
-											<br />
-											${order.shippingPrice && order.shippingPrice.toFixed(2)}
-											<br />
-											<br />
-											<div style={{ fontSize: 30, fontWeight: 800 }}>
-												${order.totalPrice && order.totalPrice.toFixed(2)}
-											</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<div
-								style={{
-									verticalAlign: 'top',
-									width: '40%',
-									textAlign: 'right'
-								}}
-								valign="top"
-								align="right"
-							/>
-							<table
-								cellPadding={0}
-								cellSpacing={0}
-								style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-								width="100%"
-								align="left"
-							>
-								<tbody>
-									<tr
-										style={{
-											display: 'flex',
-											flexWrap: 'wrap',
-											border: 0
-										}}
-									>
-										<td
-											style={{ verticalAlign: 'top', width: '50%', maxWidth: '320px' }}
-											valign="top"
-										>
-											<table
-												style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-												width="100%"
-												align="left"
+											<td
+												style={{ verticalAlign: 'top', width: '50%', maxWidth: '320px' }}
+												valign="top"
 											>
-												<tbody>
-													<tr>
-														<td style={{ verticalAlign: 'top', width: '50%' }} valign="top">
-															<h4
-																style={{
-																	fontFamily: 'helvetica',
-																	width: '100%',
-																	margin: '0 auto',
-																	lineHeight: '50px',
-																	color: 'white',
-																	fontSize: '1.3em'
-																}}
+												<table
+													style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+													width="100%"
+													align="left"
+												>
+													<tbody>
+														<tr>
+															<td
+																style={{ verticalAlign: 'top', width: '50%' }}
+																valign="top"
 															>
-																Customer Information
-															</h4>
-														</td>
-													</tr>
-													<tr>
-														<td style={{ verticalAlign: 'top', width: '50%' }} valign="top">
-															<h4
-																style={{
-																	fontFamily: 'helvetica',
-																	width: '100%',
-																	margin: '0 auto',
-																	// lineHeight: '20px',
-																	color: 'white',
-																	fontSize: '1em',
-																	padding: '10px 0 '
-																}}
-															>
-																Shipping Address
-															</h4>
-														</td>
-													</tr>
-													<tr>
-														<td style={{ verticalAlign: 'top', width: '50%' }} valign="top">
-															{order.shipping.first_name} {order.shipping.last_name}
-															<br />
-															{order.shipping.address}
-															<br />
-															{order.shipping.city}, {order.shipping.state}{' '}
-															{order.shipping.postalCode}
-															<br />
-															{order.shipping.email}
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-										<td style={{ verticalAlign: 'top' }} valign="top">
-											<table
-												style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-												width="100%"
-												align="left"
-											>
-												<tbody>
-													<tr>
-														<td style={{ verticalAlign: 'top' }} valign="top">
-															<h4
-																style={{
-																	fontFamily: 'helvetica',
-																	width: '100%',
-																	margin: '0 auto',
-																	// lineHeight: '20px',
-																	color: 'white',
-																	fontSize: '1em',
-																	padding: '10px 0',
-																	marginTop: '50px'
-																}}
-															>
-																Payment Method
-															</h4>
-														</td>
-													</tr>
-													<tr>
-														<td style={{ verticalAlign: 'top' }} valign="top">
-															<div
-																style={{
-																	padding: '5px',
-																	verticalAlign: 'top',
-																	textAlign: 'right',
-																	width: '100%',
-
-																	display: 'flex',
-																	alignItems: 'center'
-																}}
-															>
-																<div
+																<h4
 																	style={{
-																		fontSize: '40px',
-																		marginRight: '11px'
+																		fontFamily: 'helvetica',
+																		width: '100%',
+																		margin: '0 auto',
+																		lineHeight: '50px',
+																		color: 'white',
+																		fontSize: '20px'
 																	}}
 																>
-																	{order.payment.charge ? (
-																		determin_card_logo(
-																			order.payment.charge.source.brand
-																		)
-																	) : (
-																		''
-																	)}{' '}
-																</div>
-																ending with{' '}
-																{order.payment.charge ? order.payment.charge.source.last4 : ''}{' '}
-																<div style={{ margin: '0 10px' }}>-</div>
+																	Customer Information
+																</h4>
+															</td>
+														</tr>
+														<tr>
+															<td
+																style={{ verticalAlign: 'top', width: '50%' }}
+																valign="top"
+															>
+																<h4
+																	style={{
+																		fontFamily: 'helvetica',
+																		width: '100%',
+																		margin: '0 auto',
+																		// lineHeight: '20px',
+																		color: 'white',
+																		fontSize: '18px',
+																		padding: '10px 0 '
+																	}}
+																>
+																	Shipping Address
+																</h4>
+															</td>
+														</tr>
+														<tr>
+															<td
+																style={{
+																	verticalAlign: 'top',
+																	width: '50%',
+																	color: 'white',
+																	fontSize: '16px'
+																}}
+																valign="top"
+															>
+																{order.shipping.first_name} {order.shipping.last_name}
+																<br />
+																{order.shipping.address}
+																<br />
+																{order.shipping.city}, {order.shipping.state}{' '}
+																{order.shipping.postalCode}
+																<br />
+																<label
+																	style={{
+																		color: 'white',
+																		textDecoration: 'none'
+																	}}
+																>
+																	{order.shipping.email}
+																</label>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+											<td style={{ verticalAlign: 'top' }} valign="top">
+												<table
+													style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+													width="100%"
+													align="left"
+												>
+													<tbody>
+														<tr>
+															<td style={{ verticalAlign: 'top' }} valign="top">
+																<h4
+																	style={{
+																		fontFamily: 'helvetica',
+																		width: '100%',
+																		margin: '0 auto',
+																		// lineHeight: '20px',
+																		color: 'white',
+																		fontSize: '1em',
+																		padding: '10px 0',
+																		marginTop: '50px',
+																		fontSize: '18px'
+																	}}
+																>
+																	Payment Method
+																</h4>
+															</td>
+														</tr>
+														<tr>
+															<td
+																style={{ verticalAlign: 'top', color: 'white' }}
+																valign="top"
+															>
 																<div
 																	style={{
 																		padding: '5px',
 																		verticalAlign: 'top',
-																		// textAlign: 'right',
-																		fontWeight: 'bold'
+																		textAlign: 'right',
+																		width: '100%',
+																		color: 'white',
+																		display: 'flex',
+																		alignItems: 'center',
+																		fontSize: '16px'
 																	}}
-																	valign="top"
-																	align="right"
 																>
-																	${order.totalPrice && order.totalPrice.toFixed(2)}
+																	<div
+																		style={{
+																			fontSize: '40px',
+																			marginRight: '11px',
+																			color: 'white'
+																		}}
+																	>
+																		{order.payment.charge ? (
+																			determin_card_logo(
+																				order.payment.charge.source.brand
+																			)
+																		) : (
+																			''
+																		)}{' '}
+																	</div>
+																	ending with{' '}
+																	{order.payment.charge ? order.payment.charge.source.last4 : ''}{' '}
+																	<div style={{ margin: '0 10px', color: 'white' }}>-</div>
+																	<div
+																		style={{
+																			padding: '5px',
+																			verticalAlign: 'top',
+																			// textAlign: 'right',
+																			fontWeight: 'bold',
+																			color: 'white'
+																		}}
+																		valign="top"
+																		align="right"
+																	>
+																		${order.totalPrice && order.totalPrice.toFixed(2)}
+																	</div>
 																</div>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-									</tr>
-									{/* <tr>
-									<td
-										style={{
-											padding: '5px',
-											verticalAlign: 'top',
-											background: '#4d5061',
-											borderBottom: '1px solid #ddd',
-											fontWeight: 'bold'
-										}}
-										valign="top"
-									>
-										Payment Method
-									</td>
-									<td
-										style={{
-											padding: '5px',
-											verticalAlign: 'top',
-											textAlign: 'right',
-											background: '#4d5061',
-											borderBottom: '1px solid #ddd',
-											fontWeight: 'bold'
-										}}
-										valign="top"
-										align="right"
-									>
-										Last 4
-									</td>
-								</tr>
-								<tr>
-									<td
-										style={{ padding: '5px', verticalAlign: 'top', borderBottom: '1px solid #eee' }}
-										valign="top"
-									>
-										{order.payment.charge ? order.payment.charge.source.brand : ''}
-									</td>
-									<td
-										style={{
-											padding: '5px',
-											verticalAlign: 'top',
-											textAlign: 'right',
-											borderBottom: '1px solid #eee'
-										}}
-										valign="top"
-										align="right"
-									>
-										{order.payment.charge ? order.payment.charge.source.last4 : ''}
-									</td>
-								</tr> */}
-								</tbody>
-							</table>
-						</div>
-					</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div style={{ marginBottom: '20px' }}>
+								<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
+									<strong>Tag us in your videos and pictures!</strong>
+									<br />We want to feature you!
+								</p>
 
-					<div style={{ backgroundColor: '#333333', padding: '20px', paddingTop: 10 }}>
-						<div>
+								<p style={{ textAlign: 'center', fontSize: '14px' }}>
+									We are figuring this out as we go so any feedback is welcome.<br />We appreciate you
+									more than you know.
+								</p>
+								<p style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}>
+									<strong>Questions or concerns?:</strong> info.glowleds@gmail.com
+								</p>
+							</div>
+						</div>
+
+						<div style={{ backgroundColor: '#333333', padding: '20px', paddingTop: 10 }}>
+							<div
+								style={{
+									marginLeft: '10px',
+									display: 'flex',
+									justifyContent: 'space-between',
+									maxWidth: '250px',
+									width: '100%',
+									margin: '0 auto',
+									color: 'white'
+								}}
+							>
+								<div
+									style={{
+										fontSize: '30px',
+										color: 'white'
+									}}
+								>
+									<a
+										rel="noreferrer"
+										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{/* <i class="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+										{/* <Facebook fill="white" /> */}
+										<img
+											src="/images/optimized_images/logo_images/Icons/facebook-brands.png"
+											style={{ height: '25px' }}
+											alt="facebook"
+										/>
+									</a>
+								</div>
+								<div
+									style={{
+										fontSize: '30px',
+										color: 'white'
+									}}
+								>
+									<a
+										rel="noreferrer"
+										href="https://www.instagram.com/glow_leds/"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{/* <i class="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
+										<img
+											src="/images/optimized_images/logo_images/Icons/instagram-brands.png"
+											style={{ height: '25px' }}
+											alt="facebook"
+										/>
+									</a>
+								</div>
+								<div
+									style={{
+										fontSize: '30px',
+										color: 'white'
+									}}
+								>
+									<a
+										rel="noreferrer"
+										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{/* <i class="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+										<img
+											src="/images/optimized_images/logo_images/Icons/youtube-brands.png"
+											style={{ height: '25px' }}
+											alt="facebook"
+										/>
+									</a>
+								</div>
+								<div
+									style={{
+										fontSize: '30px',
+										color: 'white'
+									}}
+								>
+									<a
+										rel="noreferrer"
+										href="https://soundcloud.com/ntre/tracks"
+										target="_blank"
+										rel="noopener noreferrer"
+									>
+										{/* <i class="fab fa-soundcloud" style={{ color: 'white' }} /> */}
+										<img
+											src="/images/optimized_images/logo_images/Icons/soundcloud-brands.png"
+											style={{ height: '25px' }}
+											alt="facebook"
+										/>
+									</a>
+								</div>
+							</div>
+							<div
+								style={{
+									borderBottom: '1px white solid',
+									maxWidth: '600px',
+									width: '100%',
+									margin: '15px auto'
+								}}
+							/>
+							{/* <p style={{ textAlign: 'center' }}>Copyright © 2020 Throwlights, Inc., All rights reserved.</p> */}
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								<strong>Tag us in your videos and pictures!</strong>
-								<br />We want to feature you!
+								Our mailing address is: <br />404 Kenniston Dr Apt D, Austin, TX 78752{' '}
 							</p>
-
-							<p style={{ textAlign: 'center', fontSize: '14px' }}>
-								We are figuring this out as we go so any feedback is welcome.<br />We appreciate you
-								more than you know.
-							</p>
-							<p style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}>
-								<strong>Questions or concerns?:</strong> info.glowleds@gmail.com
+							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
+								Want to change how you receive these emails? <br /> You can{' '}
+								<a
+									rel="noreferrer"
+									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
+									target="_blank"
+									rel="noopener noreferrer"
+									style={{
+										textDecoration: 'underline',
+										color: 'white'
+									}}
+								>
+									update your preferences
+								</a>{' '}
+								or{' '}
+								<a
+									rel="noreferrer"
+									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
+									target="_blank"
+									rel="noopener noreferrer"
+									style={{
+										textDecoration: 'underline',
+										color: 'white'
+									}}
+								>
+									unsubscribe{' '}
+								</a>
+								from this list.
 							</p>
 						</div>
-						<div
-							style={{
-								marginLeft: '10px',
-								display: 'flex',
-								justifyContent: 'space-between',
-								maxWidth: '250px',
-								width: '100%',
-								margin: '0 auto',
-								color: 'white'
-							}}
-						>
-							<div
-								style={{
-									fontSize: '30px',
-									color: 'white'
-								}}
-							>
-								<a
-									rel="noreferrer"
-									href="https://www.facebook.com/Glow-LEDscom-100365571740684"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<i class="fab fa-facebook zoom" style={{ color: 'white' }} />
-								</a>
-							</div>
-							<div
-								style={{
-									fontSize: '30px',
-									color: 'white'
-								}}
-							>
-								<a
-									rel="noreferrer"
-									href="https://www.instagram.com/glow_leds/"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<i class="fab fa-instagram zoom" style={{ color: 'white' }} />
-								</a>
-							</div>
-							<div
-								style={{
-									fontSize: '30px',
-									color: 'white'
-								}}
-							>
-								<a
-									rel="noreferrer"
-									href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<i class="fab fa-youtube zoom" style={{ color: 'white' }} />
-								</a>
-							</div>
-							<div
-								style={{
-									fontSize: '30px',
-									color: 'white'
-								}}
-							>
-								<a
-									rel="noreferrer"
-									href="https://soundcloud.com/ntre/tracks"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									<i class="fab fa-soundcloud" style={{ color: 'white' }} />
-								</a>
-							</div>
-						</div>
-						<div
-							style={{
-								borderBottom: '1px white solid',
-								maxWidth: '600px',
-								width: '100%',
-								margin: '15px auto'
-							}}
-						/>
-						{/* <p style={{ textAlign: 'center' }}>Copyright © 2020 Throwlights, Inc., All rights reserved.</p> */}
-						<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-							Our mailing address is: <br />404 Kenniston Dr Apt D, Austin, TX 78752{' '}
-						</p>
-						<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-							Want to change how you receive these emails? <br /> You can{' '}
-							<a
-								rel="noreferrer"
-								href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
-								target="_blank"
-								rel="noopener noreferrer"
-								style={{
-									textDecoration: 'underline',
-									color: 'white'
-								}}
-							>
-								update your preferences
-							</a>{' '}
-							or{' '}
-							<a
-								rel="noreferrer"
-								href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
-								target="_blank"
-								rel="noopener noreferrer"
-								style={{
-									textDecoration: 'underline',
-									color: 'white'
-								}}
-							>
-								unsubscribe{' '}
-							</a>
-							from this list.
-						</p>
 					</div>
-				</div>
-			)}
-		</div>
+				)}
+			</div>
+		</body>
 	);
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_announcement_email = async () => {
-		const data = await API.send_announcement_email(email_template, email.announcement.h1);
-		console.log('Success');
-	};
+	// const send_order_email = async (email_template) => {
+	// 	const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
+	// 	console.log('Success');
+	// };
 	const save_html = async () => {
-		const data = await API.save_html(email_template, email, userInfo.token);
-		console.log(data);
-		console.log('Success');
+		console.log({ email_template });
+		const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
+		// const data = await API.save_html(email_template, email, userInfo.token);
+		// console.log(data);
+		// console.log('Success');
 	};
 
-	console.log({ email_template });
+	useEffect(
+		() => {
+			if (order) {
+				if (order.orderItems.length > 0) {
+					// console.log({ order });
+					// console.log({ email_template });
+
+					// setTimeout(() => {
+					save_html();
+					// }, 2000);
+				}
+				// setTimeout(() => {
+				// 	send_order_email(email_template);
+				// 	// history.push(
+				// 	// 	'/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078'
+				// 	// );
+				// }, 10000);
+			}
+
+			return () => {};
+		},
+		[ order ]
+	);
+
 	return (
 		<div className="">
 			<div className="jc-b mb-1rem">
@@ -724,8 +763,8 @@ const OrderEmail = () => {
 				<button className="button primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>
-				{/* <button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
-					Send Announcement Email
+				{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
+					Send Order Email
 				</button> */}
 			</div>
 			{jsx}

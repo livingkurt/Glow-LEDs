@@ -504,6 +504,9 @@ const OrdersPage = (props) => {
 													>
 														Print Invoice
 													</button>
+													<Link to={'/secure/glow/emails/order/' + order._id}>
+														<button className="button primary">View Email</button>
+													</Link>
 												</div>
 											</div>
 											<div className="jc-b">

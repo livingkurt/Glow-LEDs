@@ -9,6 +9,9 @@ export default {
 	send_announcement_email: (template: string, subject: string, test: boolean) => {
 		return axios.post('/api/emails/announcement', { template, subject, test });
 	},
+	send_order_email: (template: string, subject: string) => {
+		return axios.post('/api/emails/order', { template, subject });
+	},
 	save_user_shipping: (shipping: any, user: any) => {
 		console.log({ shipping, user });
 		return axios.put(

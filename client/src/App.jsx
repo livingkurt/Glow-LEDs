@@ -252,7 +252,7 @@ const App = () => {
 								exact={true}
 								component={PasswordChangedEmail}
 							/>
-							<AdminRoute path="/secure/glow/emails/order" exact={true} component={OrderEmail} />
+							<AdminRoute path="/secure/glow/emails/order/:id?" exact={true} component={OrderEmail} />
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />

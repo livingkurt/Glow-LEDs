@@ -21,7 +21,7 @@ import {
 import { Log } from '../models';
 import { log_error, log_request } from '../util';
 import App from '../email_templates_2/App';
-import { account_created, password_reset, reset_password } from '../email_templates_2/pages/index';
+import { account_created, password_reset, reset_password, order } from '../email_templates_2/pages/index';
 const sgMail = require('@sendgrid/mail');
 const PHE = require('print-html-element');
 
@@ -351,6 +351,27 @@ router.post('/announcement', async (req, res) => {
 	res.send('Announcement Email Sent to ' + all_emails);
 });
 
+router.post('/order', async (req, res) => {
+	console.log({ template: req.body.template });
+	const test = [ 'lavacquek@icloud.com' ];
+	let mailOptions = {
+		to: test,
+		from: process.env.DISPLAY_EMAIL,
+		subject: req.body.subject,
+		html: req.body.template
+	};
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
+		} else {
+			console.log('Order Email Sent');
+		}
+	});
+
+	// res.send('Order Email Sent to);
+});
+
 router.post('/invoice', async (req, res) => {
 	console.log({ invoice: req.body });
 	// PHE.printHtml(invoice_view(req.body));
@@ -547,31 +568,31 @@ router.post('/refund', async (req, res) => {
 		}
 	});
 });
-router.post('/order', async (req, res) => {
-	console.log({ order: req.body.token });
-	console.log({ order: req.body.token.card.last4 });
+// router.post('/order', async (req, res) => {
+// 	console.log({ order: req.body.token });
+// 	console.log({ order: req.body.token.card.last4 });
 
-	const paid = 'Paid';
-	const shipped = 'Not Shipped';
-	// const delivered = "Not Shipped"
-	let user = {};
-	let mailOptions = {
-		from: process.env.DISPLAY_EMAIL,
-		to: req.body.shipping.email,
-		subject: 'Glow LEDs Order Confirmation',
-		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed', paid, shipped }), styles())
-	};
+// 	const paid = 'Paid';
+// 	const shipped = 'Not Shipped';
+// 	// const delivered = "Not Shipped"
+// 	let user = {};
+// 	let mailOptions = {
+// 		from: process.env.DISPLAY_EMAIL,
+// 		to: req.body.shipping.email,
+// 		subject: 'Glow LEDs Order Confirmation',
+// 		html: main_layout(order_view({ ...req.body, title: 'Your Order Has Been Placed', paid, shipped }), styles())
+// 	};
 
-	transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			console.log('Error Occurs', err);
-			res.status(500).send({ error: err, message: 'Error Sending Email' });
-		} else {
-			console.log('Order Email Sent to ' + req.body.shipping.first_name);
-			res.status(200).send({ message: 'Email Successfully Sent' });
-		}
-	});
-});
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log('Order Email Sent to ' + req.body.shipping.first_name);
+// 			res.status(200).send({ message: 'Email Successfully Sent' });
+// 		}
+// 	});
+// });
 
 router.post('/sale', async (req, res) => {
 	// console.log({ sale: req.body });
