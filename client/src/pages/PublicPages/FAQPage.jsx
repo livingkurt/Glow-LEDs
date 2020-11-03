@@ -36,7 +36,20 @@ const FAQPage = () => {
 							Glowskins
 						</h1>
 						<h2 className="ta-c">How do Glowskins Work?</h2>
-						<div className="ta-c mt-40px">Video Comming Soon!</div>
+
+						<FlexContainer h_center styles={{ position: 'relative' }}>
+							<div className="iframe-container">
+								<iframe
+									width="996"
+									height="560"
+									style={{ borderRadius: '20px' }}
+									src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+									frameborder="0"
+									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen="1"
+								/>
+							</div>
+						</FlexContainer>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								To use the Glowskins with your desired microlight, first you need to remove your chip
