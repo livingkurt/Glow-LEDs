@@ -35,7 +35,7 @@ const OrderEmail = (props) => {
 
 	useEffect(() => {
 		dispatch(listEmails('Order'));
-		dispatch(detailsOrder(props.match.params.id || '5f74a250290441002a36d078'));
+		dispatch(detailsOrder(props.match.params.id));
 		// dispatch(detailsOrder('5f74a250290441002a36d078'));
 		return () => {};
 	}, []);
@@ -731,9 +731,10 @@ const OrderEmail = (props) => {
 	// 	const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
 	// 	console.log('Success');
 	// };
-	const save_html = async () => {
+	const save_html = async (email) => {
 		console.log({ email_template });
-		const { data } = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
+		const { data } = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
+		const request = await API.send_order_created_email(email_template, 'New Order Created');
 		// if (data) {
 		// 	set_loading_email(false);
 		// 	history.push('/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078');
@@ -752,7 +753,7 @@ const OrderEmail = (props) => {
 
 					// setTimeout(() => {
 					if (props.match.params.id) {
-						save_html();
+						save_html(order.shipping.email);
 					}
 
 					// }, 2000);
