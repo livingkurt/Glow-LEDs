@@ -268,7 +268,7 @@ const App = () => {
 
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
-							<Route path="/checkout/receipt/:id" component={OrderEmail} />
+							<Route path="/checkout/order/receipt/:id" component={OrderEmail} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
 							<Route path="/account/checkemail" component={CheckEmailPage} />
 							<Route path="/account/emailsent" component={EmailSentPage} />

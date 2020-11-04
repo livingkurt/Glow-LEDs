@@ -92,7 +92,7 @@ const FAQPage = () => {
 						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
-							<li style={{ lineHeight: '25px' }}>EL spectra EVOs</li>
+							<li style={{ lineHeight: '25px' }}>EL spectra and Chroma EVOs</li>
 							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
 							<li style={{ lineHeight: '25px' }}>FL Atoms</li>
 							<li style={{ lineHeight: '25px' }}>FL Ions</li>
@@ -102,11 +102,12 @@ const FAQPage = () => {
 							Maximum Microlight Dimmensions including the bulb for Coinskins: L28mm x W19mm x H8mm
 						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra Evolutions</li>
+							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra and Chroma EVOs</li>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
 							<li style={{ lineHeight: '25px' }}>
 								Throwlights Apollo (Not Tested) May fit a little loose
 							</li>
+							<li style={{ lineHeight: '25px' }}>FL Aethers</li>
 						</ul>
 						<h2>Coffinskins</h2>
 						<label>
