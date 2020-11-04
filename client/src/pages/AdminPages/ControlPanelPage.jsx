@@ -602,7 +602,9 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>
 										{
 											orders.filter((order) => {
-												return order.promo_code;
+												return sponsors
+													.map((sponsor) => sponsor.glover_name)
+													.includes(order.promo_code);
 											}).length
 										}
 									</th>
