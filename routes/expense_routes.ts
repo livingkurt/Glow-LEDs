@@ -229,6 +229,150 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 // 	return res.status(500).send({ message: ' Error in Creating Expense.' });
 // });
 
+router.post('/post_expense', isAuth, isAdmin, async (req: any, res: any) => {
+	console.log({ expense: req.body });
+	try {
+		const determine_category = (place_of_purchase: string) => {
+			if (
+				place_of_purchase.includes('AMAZON') ||
+				place_of_purchase.includes('Amazon') ||
+				place_of_purchase.includes('AMZN')
+			) {
+				return 'Supplies';
+			} else if (place_of_purchase.includes('PIRATE SHIP')) {
+				return 'Shipping';
+			} else if (place_of_purchase.includes('DOLLARTREE')) {
+				return 'Supplies';
+			} else if (place_of_purchase.includes('THE HOME DEPOT')) {
+				return 'Supplies';
+			} else if (place_of_purchase.includes('GLOW-LEDS')) {
+				return 'Business';
+			} else if (place_of_purchase.includes('THROWLIGHTS') || place_of_purchase.includes('Throwlights')) {
+				return 'Equipment';
+			} else if (place_of_purchase.includes('GOOGLE') || place_of_purchase.includes('Google')) {
+				return 'Website';
+			} else if (place_of_purchase.includes('PRUSA') || place_of_purchase.includes('Prusa')) {
+				return 'Equipment';
+			} else if (place_of_purchase.includes('EMAZINGLIGHTS')) {
+				return 'Equipment';
+			} else if (place_of_purchase.includes('HOBBY') || place_of_purchase.includes('Hobby')) {
+				return 'Equipment';
+			} else if (place_of_purchase.includes('DIGI KEY') || place_of_purchase.includes('Digi key')) {
+				return 'Supplies';
+			} else {
+				return 'Not Categorized';
+			}
+		};
+		const determine_place = (place_of_purchase: string) => {
+			if (
+				place_of_purchase.includes('AMAZON') ||
+				place_of_purchase.includes('Amazon') ||
+				place_of_purchase.includes('AMZN')
+			) {
+				return 'Amazon';
+			} else if (place_of_purchase.includes('PIRATE SHIP')) {
+				return 'Pirate Ship';
+			} else if (place_of_purchase.includes('DOLLARTREE')) {
+				return 'DollarTree';
+			} else if (place_of_purchase.includes('THE HOME DEPOT')) {
+				return 'The Home Depot';
+			} else if (place_of_purchase.includes('GLOW-LEDS')) {
+				return 'Glow LEDs';
+			} else if (place_of_purchase.includes('THROWLIGHTS') || place_of_purchase.includes('Throwlights')) {
+				return 'Throwlights';
+			} else if (place_of_purchase.includes('PRUSA') || place_of_purchase.includes('Prusa')) {
+				return 'Prusa';
+			} else if (place_of_purchase.includes('EMAZINGLIGHTS')) {
+				return 'Emazinglights';
+			} else if (place_of_purchase.includes('GOOGLE') || place_of_purchase.includes('Google')) {
+				return 'Google';
+			} else if (place_of_purchase.includes('HOBBY') || place_of_purchase.includes('Hobby')) {
+				return 'Hobby Lobby';
+			} else if (place_of_purchase.includes('DIGI KEY') || place_of_purchase.includes('Digi key')) {
+				return 'Digi Key';
+			} else {
+				return '';
+			}
+		};
+		const determine_application = (place_of_purchase: string) => {
+			if (place_of_purchase.includes('PIRATE SHIP')) {
+				return 'Shipping';
+			} else if (
+				place_of_purchase.includes('AMAZON') ||
+				place_of_purchase.includes('Amazon') ||
+				place_of_purchase.includes('AMZN')
+			) {
+				return 'Products';
+			} else if (place_of_purchase.includes('THE HOME DEPOT')) {
+				return 'Tools';
+			} else if (place_of_purchase.includes('GLOW-LEDS')) {
+				return 'Test Purchases';
+			} else if (place_of_purchase.includes('PRUSA') || place_of_purchase.includes('Prusa')) {
+				return 'Tools';
+			} else if (place_of_purchase.includes('DOLLARTREE')) {
+				return 'Shipping';
+			} else if (place_of_purchase.includes('EMAZINGLIGHTS')) {
+				return 'Tools';
+			} else if (place_of_purchase.includes('THROWLIGHTS') || place_of_purchase.includes('Throwlights')) {
+				return 'Accessories';
+			} else if (place_of_purchase.includes('GOOGLE') || place_of_purchase.includes('Google')) {
+				return 'Website';
+			} else if (place_of_purchase.includes('HOBBY') || place_of_purchase.includes('Hobby')) {
+				return 'Tools';
+			} else if (place_of_purchase.includes('DIGI KEY') || place_of_purchase.includes('Digi key')) {
+				return 'Products';
+			} else {
+				return '';
+			}
+		};
+		const expense = {
+			date_of_purchase: req.body.expense.date,
+			expense_name: req.body.expense.place,
+			place_of_purchase: determine_place(req.body.expense.place),
+			card: req.body.card,
+			application: determine_application(req.body.expense.place),
+			category: determine_category(req.body.expense.place),
+			amount: parseFloat(req.body.expense.amount)
+		};
+
+		console.log({ expense });
+		const newExpense = await Expense.create(expense);
+		console.log({ newExpense });
+		if (newExpense) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Expense',
+				data: [ newExpense ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			return res.status(201).send({ message: 'New Expense Created', data: newExpense });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Expense',
+				data: [ newExpense ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			return res.status(500).send({ message: ' Error in Creating Expense.' });
+		}
+	} catch (error) {
+		// log_error({
+		// 	method: 'POST',
+		// 	path: req.originalUrl,
+		// 	collection: 'Expense',
+		// 	error,
+		// 	status: 500,
+		// 	success: false
+		// });
+		res.status(500).send({ error, message: 'Error Creating Expense' });
+	}
+});
 router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
 	try {
 		const newExpense = await Expense.create(req.body);

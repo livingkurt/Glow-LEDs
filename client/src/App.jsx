@@ -226,7 +226,11 @@ const App = () => {
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
 							<AdminRoute path="/secure/glow/editfeature/:id?" component={EditFeaturePage} />
 							<AdminRoute path="/secure/glow/editcart/:id?" component={EditCartPage} />
-							<AdminRoute path="/secure/glow/expenses" component={ExpensesPage} />
+							{/* <AdminRoute path="/secure/glow/expenses" component={ExpensesPage} /> */}
+							<AdminRoute
+								path="/secure/glow/expenses"
+								component={(props) => <ExpensesPage userInfo={userInfo} {...props} />}
+							/>
 							<AdminRoute path="/secure/glow/features" component={FeaturesPage} />
 							<AdminRoute path="/secure/glow/carts" component={CartsPage} />
 							<AdminRoute path="/secure/glow/contents" component={ContentsPage} />
