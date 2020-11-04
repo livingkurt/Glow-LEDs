@@ -47,13 +47,33 @@ const ControlPanelPage = (props) => {
 	const [ weekly_orders, set_weekly_orders ] = useState([]);
 	const [ monthly_orders, set_monthly_orders ] = useState([]);
 
-	useEffect(async () => {
+	useEffect(() => {
 		dispatch(listOrders());
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
 		dispatch(listSponsors());
 		dispatch(listPromos());
+		get_income();
+	}, []);
+
+	// useEffect(
+	// 	() => {
+	// 		// initialize_chart();
+	// 		return () => {};
+	// 	},
+	// 	[ expenses ]
+	// );
+	useEffect(
+		() => {
+			// initialize_chart();
+			get_occurrences();
+			return () => {};
+		},
+		[ orders ]
+	);
+
+	const get_income = async () => {
 		const { data: daily } = await API.get_daily_income();
 		console.log({ daily });
 		set_daily_orders(daily);
@@ -63,23 +83,7 @@ const ControlPanelPage = (props) => {
 		const { data: monthly } = await API.get_monthly_income();
 		console.log({ monthly });
 		set_monthly_orders(monthly);
-	}, []);
-
-	useEffect(
-		() => {
-			// initialize_chart();
-			return () => {};
-		},
-		[ expenses ]
-	);
-	useEffect(
-		() => {
-			// initialize_chart();
-			get_occurrences();
-			return () => {};
-		},
-		[ orders ]
-	);
+	};
 
 	// const month= ["January","February","March","April","May","June","July",
 	//           "August","September","October","November","December"];
