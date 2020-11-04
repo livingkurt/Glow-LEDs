@@ -105,7 +105,6 @@ const ExpensesPage = (props) => {
 	const sort_options = [ 'Date', 'Category', 'Application', 'Newest', 'Lowest', 'Highest' ];
 
 	const handle_csv_expenses = async (data, fileInfo, properties, card) => {
-		// const properties = [ 'date', 'receipt', 'place', 'amount' ];
 		const expenses = [];
 		for (let line = 1; line < data.length; line++) {
 			const object = {};
@@ -115,71 +114,11 @@ const ExpensesPage = (props) => {
 			expenses.push(object);
 		}
 		expenses.forEach(async (expense) => {
-			// console.log({ date: unformat_date(expense.date) });
 			expense = { ...expense, date: unformat_date(expense.date) };
-			console.log({ expense });
 			const post_expense = await API.post_expense(expense, userInfo, card);
-			console.log({ post_expense });
 		});
-		// expenses.forEach((expense) => {
-		// console.log({ expense: expenses[0] });
-
-		// const expense = { ...expenses[0], date: unformat_date(expenses[0].date) };
-		// console.log({ expense });
-		// const post_expense = await API.post_expense(expense, userInfo);
-		// console.log({ post_expense });
-		// });
-		console.log({ expenses });
 		dispatch(listExpenses(category, searchKeyword, sortOrder));
 	};
-	// const handle_chase_csv_expenses = async (data, fileInfo) => {
-	// 	const properties = [ 'date', 'post_date', 'place', 'category', 'type', 'amount' ];
-	// 	const expenses = [];
-	// 	for (let line = 1; line < data.length; line++) {
-	// 		const object = {};
-	// 		for (let i = 0; i < data[line].length; i++) {
-	// 			object[properties[i]] = data[line][i];
-	// 		}
-	// 		expenses.push(object);
-	// 	}
-	// 	expenses.forEach(async (expense) => {
-	// 		// console.log({ date: unformat_date(expense.date) });
-	// 		expense = { ...expense, date: unformat_date(expense.date) };
-	// 		console.log({ expense });
-	// 		const post_expense = await API.post_expense(expense, userInfo);
-	// 		console.log({ post_expense });
-	// 	});
-	// 	console.log({ expenses });
-	// 	dispatch(listExpenses(category, searchKeyword, sortOrder));
-	// };
-	// const handle_fidelity_csv_expenses = async (data, fileInfo) => {
-	// 	const properties = [ 'date', 'transaction', 'place', 'memo', 'amount' ];
-	// 	const expenses = [];
-	// 	for (let line = 1; line < data.length; line++) {
-	// 		const object = {};
-	// 		for (let i = 0; i < data[line].length; i++) {
-	// 			object[properties[i]] = data[line][i];
-	// 		}
-	// 		expenses.push(object);
-	// 	}
-	// 	expenses.forEach(async (expense) => {
-	// 		// console.log({ date: unformat_date(expense.date) });
-	// 		expense = { ...expense, date: unformat_date(expense.date) };
-	// 		console.log({ expense });
-	// 		const post_expense = await API.post_expense(expense, userInfo);
-	// 		console.log({ post_expense });
-	// 	});
-	// 	// expenses.forEach((expense) => {
-	// 	// console.log({ expense: expenses[0] });
-
-	// 	// const expense = { ...expenses[0], date: unformat_date(expenses[0].date) };
-	// 	// console.log({ expense });
-	// 	// const post_expense = await API.post_expense(expense, userInfo);
-	// 	// console.log({ post_expense });
-	// 	// });
-	// 	console.log({ expenses });
-	// 	dispatch(listExpenses(category, searchKeyword, sortOrder));
-	// };
 
 	const card_types = [ 'FID', 'GL AMEX', 'AMZNK' ];
 
@@ -333,7 +272,7 @@ const ExpensesPage = (props) => {
 									<th>card</th>
 									<th>place</th>
 									<th>application</th>
-									<th>url</th>
+									{/* <th>url</th> */}
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -356,7 +295,7 @@ const ExpensesPage = (props) => {
 										<td className="p-10px min-w-100px">{expense.card}</td>
 										<td className="p-10px min-w-150px">{expense.place_of_purchase}</td>
 										<td className="p-10px min-w-200px">{expense.application}</td>
-										<td className="p-10px min-w-800px">{expense.url}</td>
+										{/* <td className="p-10px min-w-800px">{expense.url}</td> */}
 										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editexpense/' + expense._id}>
