@@ -183,15 +183,11 @@ const OrdersPage = (props) => {
 	return (
 		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<Helmet>
-				<title>Orders | Glow LEDs</title>
-				<meta property="og:title" content="My Orders | Glow LEDs" />
-				<meta name="twitter:title" content="My Orders | Glow LEDs" />
-				<link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
-				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
+				<title>Admin Orders | Glow LEDs</title>
 			</Helmet>
 			<FlexContainer wrap h_between>
-				<Link to="/secure/account/profile">
-					<button className="button primary">Back to Profile</button>
+				<Link to="/secure/glow/controlpanel">
+					<button className="button primary">Back to Control Panel</button>
 				</Link>
 				<Link to="/secure/glow/editorder">
 					<button className="button primary" style={{ width: '160px' }}>
