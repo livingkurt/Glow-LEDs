@@ -193,6 +193,13 @@ const OrdersPage = (props) => {
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
+				<Link to="/secure/glow/editorder">
+					<button className="button primary" style={{ width: '160px' }}>
+						Create Order
+					</button>
+				</Link>
+			</FlexContainer>
+			<FlexContainer wrap h_between>
 				{colors.map((color) => {
 					return (
 						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
