@@ -213,6 +213,10 @@ const OrdersPage = (props) => {
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Orders</h1>
+				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
+					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+					<Sort sortHandler={sortHandler} sort_options={sort_options} />
+				</div>
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
 						{orders &&
