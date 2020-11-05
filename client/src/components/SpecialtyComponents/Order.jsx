@@ -240,30 +240,19 @@ const Order = (props) => {
 										/>
 									</div>
 								</div>
-								<button className="button primary" onClick={update_refund_state}>
-									Refund Customer
-								</button>
-								{props.order.isRefunded && (
-									<div>
-										<div>Refunded</div>
-										<div>
-											${(props.order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-												100).toFixed(2)}
-										</div>
-									</div>
-								)}
+								<div className="column">
+									<button className="button primary mv-5px" onClick={update_refund_state}>
+										Refund Customer
+									</button>
+
+									<button className="button primary mv-5px">
+										<Link to={'/secure/glow/emails/order/' + props.order._id}>View Email</Link>
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
 					<ul className="column">
-						<li className="row mv-10px">
-							<label className="">Order Note: </label>
-							<label className="">{props.order.order_note}</label>
-						</li>
-						<li className="row mv-10px">
-							<label className="">Promo Code: </label>
-							<label className="">{props.order.promo_code}</label>
-						</li>
 						<li className="column ">
 							<h1>Shipping</h1>
 							<div>
@@ -291,52 +280,23 @@ ${props.order.shipping.email}`)}
 								Copy to clipboard
 							</button>
 						</li>
+						<li className="row">
+							<h3 className="">Order Note: </h3>
+							<label className="">{props.order.order_note}</label>
+						</li>
+						<li className="row">
+							<h3 className="">Promo Code: </h3>
+							<label className="">{props.order.promo_code}</label>
+						</li>
 					</ul>
-					{/* <FlexContainer row v_i_center h_between>
-						{props.userInfo &&
-						props.userInfo.isAdmin && (
-							<div>
-								<div className="mv-10px">
-									<label htmlFor="refund_amount">Refund Amount</label>
-									<div className="row">
-										<input
-											type="text"
-											value={refund_amount}
-											name="refund_amount"
-											id="refund_amount"
-											className="w-100per"
-											onChange={(e) => set_refund_amount(e.target.value)}
-										/>
-									</div>
-									<div className="mv-10px">
-										<label htmlFor="refund_reason">Refund Reason</label>
-										<div className="row">
-											<input
-												type="text"
-												value={refund_reason}
-												name="refund_reason"
-												id="refund_reason"
-												className="w-100per"
-												onChange={(e) => set_refund_reason(e.target.value)}
-											/>
-										</div>
-									</div>
-									<button className="button primary" onClick={update_refund_state}>
-										Refund Customer
-									</button>
-								</div>
-							</div>
-						)}
-					</FlexContainer> */}
+
 					<div className="jc-b">
 						<div className="column jc-b w-25rem">
+							<button className="button primary">
+								<Link to={'/secure/account/order/' + props.order._id}>Edit Order</Link>
+							</button>
 							<button className="button primary mv-5px" onClick={() => print_invoice(props.order)}>
 								Print Invoice
-							</button>
-
-							<button className="button primary mv-5px">
-								{' '}
-								<Link to={'/secure/glow/emails/order/' + props.order._id}>View Email</Link>
 							</button>
 							<button
 								className="button primary mv-5px"
