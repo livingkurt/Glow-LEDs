@@ -58,6 +58,23 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.delete('/delete_all', async (req: any, res: any) => {
+	const expenses = await Expense.deleteMany({
+		deleted: false,
+		date_of_purchase: {
+			$gte: new Date(<any>new Date('2020-06-01')),
+			$lte: new Date(<any>new Date('2020-06-16'))
+		}
+	}).sort({ date_of_purchase: -1 });
+	// const expenses = await Expense.deleteMany({
+	// 	createdAt: {
+	// 		$lt: new Date(2020, 6, 1)
+	// 	}
+	// });
+	// console.log({ expenses });
+	res.send(expenses);
+});
+
 // router.get('/:id', async (req, res) => {
 // 	const expense = await Expense.findOne({ _id: req.params.id });
 // 	console.log({ expense });

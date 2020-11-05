@@ -377,7 +377,7 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Total Profit</th>
 									<th style={{ padding: '15px' }}>
-										${(orders.reduce((a, expense) => a + expense.totalPrice, 0) -
+										${(orders.reduce((a, expense) => a + expense.totalPrice, 0) +
 											expenses.reduce((a, order) => a + order.amount, 0)).toFixed(2)}
 									</th>
 								</tr>

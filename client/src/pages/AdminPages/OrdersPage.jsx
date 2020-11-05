@@ -16,6 +16,7 @@ const OrdersPage = (props) => {
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ expandable, set_expandable ] = useState('none');
 	const [ payment_method, set_payment_method ] = useState('');
+	const [ order_note, set_order_note ] = useState('');
 	// const [ isCopied, setCopied ] = useClipboard('');
 	const [ clipboard, copyToClipboard ] = useClipboard();
 
@@ -354,17 +355,6 @@ const OrdersPage = (props) => {
 															{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 														</button>
 													</div>
-													<label htmlFor="payment_method">Payment Method</label>
-													<div className="row">
-														<input
-															type="text"
-															// value={payment_method}
-															defaultValue={order.payment.paymentMethod}
-															name="payment_method"
-															className="w-100per"
-															onChange={(e) => set_payment_method(e.target.value)}
-														/>
-													</div>
 												</div>
 												<div className="w-100per">
 													<div>Manufactured</div>
@@ -507,6 +497,34 @@ const OrdersPage = (props) => {
 													<Link to={'/secure/glow/emails/order/' + order._id}>
 														<button className="button primary">View Email</button>
 													</Link>
+												</div>
+											</div>
+											<div className="row mv-15px">
+												<div className="column">
+													<label htmlFor="payment_method">Payment Method</label>
+													<div className="row">
+														<input
+															type="text"
+															// value={payment_method}
+															defaultValue={order.payment.paymentMethod}
+															name="payment_method"
+															className="w-100per"
+															onChange={(e) => set_payment_method(e.target.value)}
+														/>
+													</div>
+												</div>
+												<div className="column">
+													<label htmlFor="order_note">Order Note</label>
+													<div className="row">
+														<input
+															type="text"
+															// value={order_note}
+															defaultValue={order.order_note}
+															name="order_note"
+															className="w-100per"
+															onChange={(e) => set_order_note(e.target.value)}
+														/>
+													</div>
 												</div>
 											</div>
 											<div className="jc-b">

@@ -36,7 +36,7 @@ const OrderEmail = (props) => {
 	useEffect(() => {
 		dispatch(listEmails('Order'));
 		dispatch(detailsOrder(props.match.params.id));
-		// dispatch(detailsOrder('5f74a250290441002a36d078'));
+		// dispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 		return () => {};
 	}, []);
 
@@ -54,13 +54,82 @@ const OrderEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return '/images/optimized_images/logo_images/Icons/cc-amex-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-amex-brands.png';
 			case 'Visa':
-				return '/images/optimized_images/logo_images/Icons/cc-visa-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-visa-brands.png';
 			case 'Mastercard':
-				return '/images/optimized_images/logo_images/Icons/cc-mastercard-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-mastercard-brands.png';
 			case 'Discover':
-				return '/images/optimized_images/logo_images/Icons/cc-discover-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-discover-brands.png';
+		}
+	};
+
+	const sale_price_switch = (item) => {
+		if (item.sale_price !== 0) {
+			return (
+				<label>
+					<del style={{ color: 'red' }}>
+						<label style={{ color: 'white' }}>${item.price ? item.price.toFixed(2) : item.price}</label>
+					</del>{' '}
+					{'-->'} ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price} On Sale!
+				</label>
+			);
+		} else if (item.countInStock === 0) {
+			return (
+				<label>
+					<del style={{ color: 'red' }}>
+						<label style={{ color: 'white', marginLeft: '7px' }}>
+							${item.price ? item.price.toFixed(2) : item.price}
+						</label>
+					</del>{' '}
+					{'-->'} <label style={{ color: 'white', marginLeft: '7px' }}>Sold Out</label>
+				</label>
+			);
+		} else {
+			return <label>${item.price ? item.price.toFixed(2) : item.price}</label>;
+		}
+	};
+	const sale_price_add = (order_items) => {
+		return order_items
+			.reduce((a, c) => {
+				if (c.sale_price > 0) {
+					return a + c.sale_price * c.qty;
+				} else {
+					return a + c.price * c.qty;
+				}
+			}, 0)
+			.toFixed(2);
+	};
+	const promo_code_switch = (order) => {
+		if (order.promo_code) {
+			return (
+				<div style={{ display: 'flex', marginRight: '-12px' }}>
+					<del style={{ color: 'red' }}>
+						<label style={{ color: 'white' }}>${sale_price_add(order.orderItems)}</label>
+					</del>
+					<label
+						style={{
+							color: 'white',
+							display: 'flex',
+							margin: '0 5px',
+							width: '25px'
+						}}
+					>
+						{' '}
+						{'-->'}{' '}
+					</label>
+					<label
+						style={{
+							color: 'white',
+							display: 'flex'
+						}}
+					>
+						${order.itemsPrice && order.itemsPrice.toFixed(2)}
+					</label>
+				</div>
+			);
+		} else {
+			return <div>${order.itemsPrice && order.itemsPrice.toFixed(2)}</div>;
 		}
 	};
 
@@ -159,20 +228,18 @@ const OrderEmail = (props) => {
 												color: 'white',
 												borderRadius: '10px',
 												border: 0,
-												padding: '15px'
+												padding: '15px',
+												fontFamily: 'helvetica',
+												margin: 0,
+												fontWeight: 800,
+												fontSize: '1.2em',
+												textAlign: 'center',
+												textDecoration: 'none !important',
+												lineHeight: 'inherit !important',
+												color: 'inherit !important;'
 											}}
 										>
-											<h4
-												style={{
-													fontFamily: 'helvetica',
-													margin: 0,
-													fontSize: '1.2em',
-													textAlign: 'center',
-													textDecoration: 'none'
-												}}
-											>
-												View your Order
-											</h4>
+											View your Order
 										</a>
 									</div>
 									<div style={{ margin: '0px 10px' }}>or</div>
@@ -192,20 +259,18 @@ const OrderEmail = (props) => {
 												// borderRadius: '10px',
 												border: 0,
 												fontSize: '13px',
-												padding: '10px'
+												padding: '10px',
+												fontFamily: 'helvetica',
+												margin: 0,
+												fontWeight: 800,
+												fontSize: '1.2em',
+												textAlign: 'center',
+												textDecoration: 'none !important',
+												lineHeight: 'inherit !important',
+												color: 'inherit !important;'
 											}}
 										>
-											<h4
-												style={{
-													fontFamily: 'helvetica',
-													margin: 0,
-													fontSize: '1.2em',
-													textAlign: 'center',
-													textDecoration: 'none'
-												}}
-											>
-												Visit our Store
-											</h4>
+											Visit our Store
 										</a>
 									</div>
 								</div>
@@ -302,13 +367,14 @@ const OrderEmail = (props) => {
 														borderBottom: '1px solid #eee',
 														padding: '20px 0',
 														color: 'white',
-														fontSize: '16px',
-														fontWeight: 800
+														fontSize: '16px'
+														// fontWeight: 800
 													}}
 													valign="top"
 													align="right"
 												>
-													${item.price && item.price.toFixed(2)}
+													{/* ${item.price && item.price.toFixed(2)} */}
+													{sale_price_switch(item)}
 												</td>
 											</tr>
 										))}
@@ -360,8 +426,7 @@ const OrderEmail = (props) => {
 												}}
 												valign="top"
 											>
-												${order.itemsPrice && order.itemsPrice.toFixed(2)}
-												<br />
+												{promo_code_switch(order)}
 												${order.taxPrice && order.taxPrice.toFixed(2)}
 												<br />
 												${order.shippingPrice && order.shippingPrice.toFixed(2)}
@@ -370,6 +435,45 @@ const OrderEmail = (props) => {
 												<div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
 													${order.totalPrice && order.totalPrice.toFixed(2)}
 												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table
+									style={{
+										width: '100%',
+										lineHeight: 'inherit',
+										textAlign: 'left',
+										borderBottom: '1px white solid'
+									}}
+									width="100%"
+									align="left"
+								>
+									<tbody>
+										<tr>
+											<td
+												style={{
+													verticalAlign: 'top',
+													lineHeight: '45px',
+													color: '#333',
+													padding: 0
+												}}
+												valign="top"
+											/>
+											<td
+												style={{
+													verticalAlign: 'top',
+													textAlign: 'left',
+													color: 'white',
+													fontSize: '16px'
+												}}
+												valign="top"
+												align="right"
+											>
+												<strong>Promo Code:</strong> {order.promo_code}
+												<br />
+												<strong>Order Note:</strong> {order.order_note}
+												<br />
 											</td>
 										</tr>
 									</tbody>
@@ -387,7 +491,13 @@ const OrderEmail = (props) => {
 								<table
 									cellPadding={0}
 									cellSpacing={0}
-									style={{ width: '100%', lineHeight: 'inherit', color: 'white', textAlign: 'left' }}
+									style={{
+										width: '100%',
+										lineHeight: 'inherit',
+										color: 'white',
+										textAlign: 'left',
+										borderBottom: '1px white solid'
+									}}
 									width="100%"
 									align="left"
 								>
@@ -465,14 +575,19 @@ const OrderEmail = (props) => {
 																{order.shipping.city}, {order.shipping.state}{' '}
 																{order.shipping.postalCode}
 																<br />
-																<label
+																<a
+																	href="#"
 																	style={{
-																		color: 'white',
-																		textDecoration: 'none'
+																		textDecoration: 'none !important',
+																		fontSize: 'inherit !important',
+																		fontFamily: 'inherit !important',
+																		fontWeight: 'inherit !important',
+																		lineHeight: 'inherit !important',
+																		color: 'inherit !important;'
 																	}}
 																>
 																	{order.shipping.email}
-																</label>
+																</a>
 															</td>
 														</tr>
 													</tbody>
@@ -577,7 +692,20 @@ const OrderEmail = (props) => {
 									more than you know.
 								</p>
 								<p style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}>
-									<strong>Questions or concerns?:</strong> info.glowleds@gmail.com
+									<strong>Questions or concerns?:</strong>{' '}
+									<a
+										href="#"
+										style={{
+											textDecoration: 'none !important',
+											fontSize: 'inherit !important',
+											fontFamily: 'inherit !important',
+											fontWeight: 'inherit !important',
+											lineHeight: 'inherit !important',
+											color: 'inherit !important;'
+										}}
+									>
+										info.glowleds@gmail.com
+									</a>
 								</p>
 							</div>
 						</div>
@@ -610,7 +738,7 @@ const OrderEmail = (props) => {
 										{/* <i class="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
 										{/* <Facebook fill="white" /> */}
 										<img
-											src="/images/optimized_images/logo_images/Icons/facebook-brands.png"
+											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/facebook-brands.png"
 											style={{ height: '25px' }}
 											alt="facebook"
 										/>
@@ -630,7 +758,7 @@ const OrderEmail = (props) => {
 									>
 										{/* <i class="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
 										<img
-											src="/images/optimized_images/logo_images/Icons/instagram-brands.png"
+											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/instagram-brands.png"
 											style={{ height: '25px' }}
 											alt="facebook"
 										/>
@@ -650,7 +778,7 @@ const OrderEmail = (props) => {
 									>
 										{/* <i class="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
 										<img
-											src="/images/optimized_images/logo_images/Icons/youtube-brands.png"
+											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/youtube-brands.png"
 											style={{ height: '20px' }}
 											alt="facebook"
 										/>
@@ -670,7 +798,7 @@ const OrderEmail = (props) => {
 									>
 										{/* <i class="fab fa-soundcloud" style={{ color: 'white' }} /> */}
 										<img
-											src="/images/optimized_images/logo_images/Icons/soundcloud-brands.png"
+											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/soundcloud-brands.png"
 											style={{ height: '20px' }}
 											alt="facebook"
 										/>
@@ -779,8 +907,8 @@ const OrderEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="button primary">Back to Emails</button>
 					</Link>
-					<button className="button primary mb-1rem" onClick={() => save_html()}>
-						Save HTML
+					<button className="button primary mb-1rem" onClick={() => save_html('lavacquek@icloud.com')}>
+						Send Test Email
 					</button>
 					{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
 					Send Order Email
