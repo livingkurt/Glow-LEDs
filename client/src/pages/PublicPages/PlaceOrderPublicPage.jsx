@@ -287,12 +287,12 @@ const PlaceOrderPublicPage = (props) => {
 			if (successPay && order) {
 				if (create_account) {
 					console.log('account');
-					// props.history.push('/checkout/paymentacccountcomplete/' + order._id);
-					props.history.push('/checkout/order/receipt/' + order._id);
+					props.history.push('/checkout/paymentacccountcomplete/' + order._id);
+					// props.history.push('/checkout/order/receipt/' + order._id);
 				} else {
 					console.log('order');
-					// props.history.push('/checkout/paymentcomplete/' + order._id);
-					props.history.push('/checkout/order/receipt/' + order._id);
+					props.history.push('/checkout/paymentcomplete/' + order._id);
+					// props.history.push('/checkout/order/receipt/' + order._id);
 				}
 				set_payment_loading(false);
 				empty_cart();

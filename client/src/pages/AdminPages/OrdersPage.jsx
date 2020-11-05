@@ -513,7 +513,7 @@ const OrdersPage = (props) => {
 														/>
 													</div>
 												</div>
-												<div className="column">
+												{/* <div className="column">
 													<label htmlFor="order_note">Order Note</label>
 													<div className="row">
 														<input
@@ -525,7 +525,15 @@ const OrdersPage = (props) => {
 															onChange={(e) => set_order_note(e.target.value)}
 														/>
 													</div>
-												</div>
+												</div> */}
+											</div>
+											<div className="row w-100per">
+												<label className="w-100per">Order Note: </label>
+												<label className="w-100per">{order.order_note}</label>
+											</div>
+											<div className="row">
+												<label className="w-100per">Promo Code: </label>
+												<label className="w-100per">{order.promo_code}</label>
 											</div>
 											<div className="jc-b">
 												<div className="column w-100per">

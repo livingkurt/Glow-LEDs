@@ -364,7 +364,21 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Total Income</th>
 									<th style={{ padding: '15px' }}>
-										${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+										${orders
+											.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+											.toFixed(2)}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Taxes Collected</th>
+									<th style={{ padding: '15px' }}>
+										${orders.reduce((a, order) => a + order.taxPrice, 0).toFixed(2)}
 									</th>
 								</tr>
 
@@ -377,7 +391,7 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Total Profit</th>
 									<th style={{ padding: '15px' }}>
-										${(orders.reduce((a, expense) => a + expense.totalPrice, 0) +
+										${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) +
 											expenses.reduce((a, order) => a + order.amount, 0)).toFixed(2)}
 									</th>
 								</tr>
@@ -420,7 +434,9 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>Daily Income</th>
 									<th style={{ padding: '15px' }}>
 										${daily_orders &&
-											daily_orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+											daily_orders
+												.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+												.toFixed(2)}
 									</th>
 								</tr>
 								<tr
@@ -433,7 +449,9 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>Weekly Income</th>
 									<th style={{ padding: '15px' }}>
 										${weekly_orders &&
-											weekly_orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+											weekly_orders
+												.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+												.toFixed(2)}
 									</th>
 								</tr>
 								<tr
@@ -446,7 +464,9 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>Monthly Income</th>
 									<th style={{ padding: '15px' }}>
 										${monthly_orders &&
-											monthly_orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
+											monthly_orders
+												.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+												.toFixed(2)}
 									</th>
 								</tr>
 								<tr
@@ -458,7 +478,7 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Average Daily Income</th>
 									<th style={{ padding: '15px' }}>
-										${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+										${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) /
 											duration_of_opening()).toFixed(2)}
 									</th>
 								</tr>
@@ -471,7 +491,7 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Average Weekly Income</th>
 									<th style={{ padding: '15px' }}>
-										${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+										${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) /
 											(duration_of_opening() / 7)).toFixed(2)}
 									</th>
 								</tr>
@@ -484,7 +504,7 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Average Monthly Income</th>
 									<th style={{ padding: '15px' }}>
-										${(orders.reduce((a, order) => a + order.totalPrice, 0) /
+										${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) /
 											(duration_of_opening() / 30)).toFixed(2)}
 									</th>
 								</tr>
@@ -588,7 +608,7 @@ const ControlPanelPage = (props) => {
 											<th style={{ padding: '15px' }}>
 												${orders
 													.filter((order) => order.promo_code === sponsor.glover_name)
-													.reduce((a, order) => a + order.totalPrice, 0)
+													.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 													.toFixed(2)}
 											</th>
 										</tr>
@@ -619,7 +639,7 @@ const ControlPanelPage = (props) => {
 													.map((sponsor) => sponsor.glover_name)
 													.includes(order.promo_code)
 											)
-											.reduce((a, order) => a + order.totalPrice, 0)
+											.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 											.toFixed(2)}
 									</th>
 								</tr>

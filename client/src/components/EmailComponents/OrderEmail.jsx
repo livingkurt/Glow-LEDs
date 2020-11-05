@@ -876,22 +876,10 @@ const OrderEmail = (props) => {
 		() => {
 			if (order) {
 				if (order.orderItems.length > 0) {
-					// console.log({ order });
-					// console.log({ email_template });
-
-					// setTimeout(() => {
 					if (props.match.params.id) {
 						save_html(order.shipping.email);
 					}
-
-					// }, 2000);
 				}
-				// setTimeout(() => {
-				// 	send_order_email(email_template);
-				// 	// history.push(
-				// 	// 	'/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078'
-				// 	// );
-				// }, 10000);
 			}
 
 			return () => {};
@@ -901,17 +889,35 @@ const OrderEmail = (props) => {
 
 	return (
 		<div>
-			<div className="w-500px jc-c m-auto">
-				<Link to={'/secure/account/order/' + props.match.params.id}>
-					<button className="button primary mh-10px">View Order</button>
-				</Link>
-				<Link to="/secure/account/orders">
-					<button className="button primary mh-10px">Your Orders</button>
-				</Link>
-				<Link to="/collections/all/products">
-					<button className="button primary mh-10px">Products</button>
-				</Link>
-			</div>
+			{userInfo ? (
+				<div className="w-500px jc-c m-auto">
+					<Link to={'/secure/account/order/' + props.match.params.id}>
+						<button className="button primary mh-10px">View Order</button>
+					</Link>
+					<Link to="/secure/account/orders">
+						<button className="button primary mh-10px">Your Orders</button>
+					</Link>
+					<Link to="/collections/all/products">
+						<button className="button primary mh-10px">Products</button>
+					</Link>
+				</div>
+			) : (
+				<div className="w-1000px jc-c m-auto">
+					<Link to="/collections/all/products">
+						<button className="button primary mh-10px">Products</button>
+					</Link>
+					<Link to="/pages/featured">
+						<button className="button primary mh-10px">Featured Videos</button>
+					</Link>
+					<Link to="/pages/music">
+						<button className="button primary mh-10px">NTRE Music</button>
+					</Link>
+					<Link to="/account/register">
+						<button className="button primary mh-10px">Create Account</button>
+					</Link>
+				</div>
+			)}
+
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
