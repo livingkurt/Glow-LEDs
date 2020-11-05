@@ -70,7 +70,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		} else if (req.query.sortOrder === 'highest') {
 			sortOrder = { totalPrice: -1 };
 		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-			sortOrder = { createdAt: 1 };
+			sortOrder = { createdAt: -1 };
 		} else if (req.query.sortOrder === 'paid') {
 			sortOrder = { isPaid: -1, createdAt: -1 };
 		} else if (req.query.sortOrder === 'manufactured') {

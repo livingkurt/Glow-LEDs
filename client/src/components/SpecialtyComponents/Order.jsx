@@ -13,6 +13,7 @@ const Order = (props) => {
 	const dispatch = useDispatch();
 	const [ clipboard, copyToClipboard ] = useClipboard();
 	const [ payment_method, set_payment_method ] = useState('');
+	const [ expandable, set_expandable ] = useState('none');
 
 	const [ refund_state, set_refund_state ] = useState({});
 	const [ refund_amount, set_refund_amount ] = useState(0);
@@ -22,6 +23,16 @@ const Order = (props) => {
 	const update_refund_state = () => {
 		set_refund_state(true);
 		dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
+		// }
+	};
+	const show_hide = (id) => {
+		const row = document.getElementById(id);
+		console.log(row);
+		row.classList.toggle('hide-row');
+		// if (expandable === 'flex') {
+		// 	set_expandable('none');
+		// } else if (expandable === 'none') {
+		// 	set_expandable('flex');
 		// }
 	};
 
@@ -103,6 +114,7 @@ const Order = (props) => {
 					</div>
 				</div>
 			</div>
+
 			<div className="row jc-b">
 				<div className="small_screen_order row jc-b w-89per">
 					<div className="">
@@ -199,165 +211,174 @@ const Order = (props) => {
 						</div>
 					</div>
 				</div>
+				{props.admin && (
+					<div className="jc-fe column ">
+						<button className="button icon h-3rem " onClick={() => show_hide(props.order._id)}>
+							<i style={{ '-webkitTransform': 'rotate(-180deg)' }} className="top-8px fas fa-sort-up" />
+						</button>
+					</div>
+				)}
 			</div>
 
 			{props.admin && (
-				<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
-					<div className="row ai-c jc-b">
-						<div>
-							<div className="mv-10px">
-								<label htmlFor="payment_method">Payment Method</label>
-								<li className="row mv-10px">
-									<input
-										type="text"
-										defaultValue={props.order.payment.paymentMethod}
-										name="payment_method"
-										className=""
-										onChange={(e) => set_payment_method(e.target.value)}
-									/>
-								</li>
-								<label htmlFor="refund_amount">Refund Amount</label>
-								<div className="row">
-									<input
-										type="text"
-										value={refund_amount}
-										name="refund_amount"
-										id="refund_amount"
-										className="w-100per"
-										onChange={(e) => set_refund_amount(e.target.value)}
-									/>
-								</div>
+				<div id={props.order._id} className="expanded-row-content hide-row">
+					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
+						<div className="row ai-c jc-b">
+							<div>
 								<div className="mv-10px">
-									<label htmlFor="refund_reason">Refund Reason</label>
+									<label htmlFor="payment_method">Payment Method</label>
+									<li className="row mv-10px">
+										<input
+											type="text"
+											defaultValue={props.order.payment.paymentMethod}
+											name="payment_method"
+											className=""
+											onChange={(e) => set_payment_method(e.target.value)}
+										/>
+									</li>
+									<label htmlFor="refund_amount">Refund Amount</label>
 									<div className="row">
 										<input
 											type="text"
-											value={refund_reason}
-											name="refund_reason"
-											id="refund_reason"
+											value={refund_amount}
+											name="refund_amount"
+											id="refund_amount"
 											className="w-100per"
-											onChange={(e) => set_refund_reason(e.target.value)}
+											onChange={(e) => set_refund_amount(e.target.value)}
 										/>
 									</div>
-								</div>
-								<div className="column">
-									<button className="button primary mv-5px" onClick={update_refund_state}>
-										Refund Customer
-									</button>
+									<div className="mv-10px">
+										<label htmlFor="refund_reason">Refund Reason</label>
+										<div className="row">
+											<input
+												type="text"
+												value={refund_reason}
+												name="refund_reason"
+												id="refund_reason"
+												className="w-100per"
+												onChange={(e) => set_refund_reason(e.target.value)}
+											/>
+										</div>
+									</div>
+									<div className="column">
+										<button className="button primary mv-5px" onClick={update_refund_state}>
+											Refund Customer
+										</button>
 
-									<button className="button primary mv-5px">
-										<Link to={'/secure/glow/emails/order/' + props.order._id}>View Email</Link>
-									</button>
+										<button className="button primary mv-5px">
+											<Link to={'/secure/glow/emails/order/' + props.order._id}>View Email</Link>
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<ul className="column">
-						<li className="column ">
-							<h1>Shipping</h1>
-							<div>
+						<ul className="column">
+							<li className="column ">
+								<h1>Shipping</h1>
 								<div>
-									{props.order.shipping.first_name} {props.order.shipping.last_name}
+									<div>
+										{props.order.shipping.first_name} {props.order.shipping.last_name}
+									</div>
+									<div>{props.order.shipping.address}</div>
+									<div>
+										{props.order.shipping.city}, {props.order.shipping.state}{' '}
+										{props.order.shipping.postalCode} {props.order.shipping.country}
+									</div>
+									<div>{props.order.shipping.international && 'International'}</div>
+									<div>{props.order.shipping.email}</div>
 								</div>
-								<div>{props.order.shipping.address}</div>
-								<div>
-									{props.order.shipping.city}, {props.order.shipping.state}{' '}
-									{props.order.shipping.postalCode} {props.order.shipping.country}
-								</div>
-								<div>{props.order.shipping.international && 'International'}</div>
-								<div>{props.order.shipping.email}</div>
-							</div>
-							<button
-								className="button secondary w-200px mv-10px"
-								onClick={() =>
-									copyToClipboard(`
+								<button
+									className="button secondary w-200px mv-10px"
+									onClick={() =>
+										copyToClipboard(`
 ${props.order.shipping.first_name} ${props.order.shipping.last_name}
 ${props.order.shipping.address}
 ${props.order.shipping.city}, ${props.order.shipping.state}
 ${props.order.shipping.postalCode} ${props.order.shipping.country}
 ${props.order.shipping.email}`)}
-							>
-								Copy to clipboard
-							</button>
-						</li>
-						<li className="row">
-							<h3 className="">Order Note: </h3>
-							<label className="">{props.order.order_note}</label>
-						</li>
-						<li className="row">
-							<h3 className="">Promo Code: </h3>
-							<label className="">{props.order.promo_code}</label>
-						</li>
-					</ul>
+								>
+									Copy to clipboard
+								</button>
+							</li>
+							<li className="row">
+								<h3 className="">Order Note: </h3>
+								<label className="">{props.order.order_note}</label>
+							</li>
+							<li className="row">
+								<h3 className="">Promo Code: </h3>
+								<label className="">{props.order.promo_code}</label>
+							</li>
+						</ul>
 
-					<div className="jc-b">
-						<div className="column jc-b w-25rem">
-							<button className="button primary">
-								<Link to={'/secure/account/order/' + props.order._id}>Edit Order</Link>
-							</button>
-							<button className="button primary mv-5px" onClick={() => print_invoice(props.order)}>
-								Print Invoice
-							</button>
-							<button
-								className="button primary mv-5px"
-								onClick={() =>
-									props.update_order_state(
-										props.order,
-										props.order.isDelivered,
-										'isDelivered',
-										'deliveredAt'
-									)}
-							>
-								{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-							</button>
-							<button
-								className="button primary mv-5px"
-								onClick={() =>
-									props.update_order_state(
-										props.order,
-										props.order.isShipped,
-										'isShipped',
-										'shippedAt'
-									)}
-							>
-								{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-							</button>
-							<button
-								className="button primary mv-5px"
-								onClick={() =>
-									props.update_order_state(
-										props.order,
-										props.order.isPackaged,
-										'isPackaged',
-										'packagedAt'
-									)}
-							>
-								{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-							</button>
-							<button
-								className="button primary mv-5px"
-								onClick={() =>
-									props.update_order_state(
-										props.order,
-										props.order.isManufactured,
-										'isManufactured',
-										'manufacturedAt'
-									)}
-							>
-								{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
-							</button>
-							<button
-								className="button primary mv-5px"
-								onClick={() =>
-									props.update_order_payment_state(
-										props.order,
-										props.order.isPaid,
-										'isPaid',
-										'paidAt'
-									)}
-							>
-								{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-							</button>
+						<div className="jc-b">
+							<div className="column jc-b w-25rem">
+								<button className="button primary">
+									<Link to={'/secure/account/order/' + props.order._id}>Edit Order</Link>
+								</button>
+								<button className="button primary mv-5px" onClick={() => print_invoice(props.order)}>
+									Print Invoice
+								</button>
+								<button
+									className="button primary mv-5px"
+									onClick={() =>
+										props.update_order_state(
+											props.order,
+											props.order.isDelivered,
+											'isDelivered',
+											'deliveredAt'
+										)}
+								>
+									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+								</button>
+								<button
+									className="button primary mv-5px"
+									onClick={() =>
+										props.update_order_state(
+											props.order,
+											props.order.isShipped,
+											'isShipped',
+											'shippedAt'
+										)}
+								>
+									{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+								</button>
+								<button
+									className="button primary mv-5px"
+									onClick={() =>
+										props.update_order_state(
+											props.order,
+											props.order.isPackaged,
+											'isPackaged',
+											'packagedAt'
+										)}
+								>
+									{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+								</button>
+								<button
+									className="button primary mv-5px"
+									onClick={() =>
+										props.update_order_state(
+											props.order,
+											props.order.isManufactured,
+											'isManufactured',
+											'manufacturedAt'
+										)}
+								>
+									{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+								</button>
+								<button
+									className="button primary mv-5px"
+									onClick={() =>
+										props.update_order_payment_state(
+											props.order,
+											props.order.isPaid,
+											'isPaid',
+											'paidAt'
+										)}
+								>
+									{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
