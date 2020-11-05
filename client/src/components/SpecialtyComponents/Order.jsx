@@ -1,53 +1,28 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { addToCart } from '../../actions/cartActions';
 import { format_date, print_invoice } from '../../utils/helper_functions';
+import useClipboard from 'react-hook-clipboard';
+import { refundOrder } from '../../actions/orderActions';
 
 const Order = (props) => {
 	const dispatch = useDispatch();
+	const [ clipboard, copyToClipboard ] = useClipboard();
+	const [ payment_method, set_payment_method ] = useState('');
 
+	const [ refund_state, set_refund_state ] = useState({});
+	const [ refund_amount, set_refund_amount ] = useState(0);
+	const [ refund_reason, set_refund_reason ] = useState('');
 	// console.log(props.order && props.order.pathname);
 
-	const handleAddToCart = () => {
-		dispatch(addToCart(props.order.pathname, 1));
-	};
-
-	const sale_price_switch = () => {
-		if (props.order.sale_price !== 0) {
-			return (
-				<label className="">
-					<del style={{ color: 'red' }}>
-						<label className="" style={{ color: 'white' }}>
-							${props.order.price ? props.order.price.toFixed(2) : props.order.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${props.order.sale_price ? (
-						props.order.sale_price.toFixed(2)
-					) : (
-						props.order.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!props.order.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }} className="ml-7px">
-							${props.order.price ? props.order.price.toFixed(2) : props.order.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" />
-					<label className="ml-7px">Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${props.order.price ? props.order.price.toFixed(2) : props.order.price}</label>;
-		}
+	const update_refund_state = () => {
+		set_refund_state(true);
+		dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
+		// }
 	};
 
 	return (
@@ -60,7 +35,48 @@ const Order = (props) => {
 					</div>
 					<div className="column fs-16px">
 						<h3>Total</h3>
-						<div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div>
+						{/* <div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div> */}
+						{!props.order.isRefunded && (
+							<div>
+								<div>
+									${props.order.totalPrice ? (
+										props.order.totalPrice.toFixed(2)
+									) : (
+										props.order.totalPrice
+									)}
+								</div>
+							</div>
+						)}
+						{props.order.isRefunded && (
+							<div>
+								<del style={{ color: 'red' }}>
+									<label style={{ color: 'white' }}>
+										<div>
+											${props.order.totalPrice ? (
+												props.order.totalPrice.toFixed(2)
+											) : (
+												props.order.totalPrice
+											)}
+										</div>
+									</label>
+								</del>
+							</div>
+						)}
+						{props.order.isRefunded && (
+							<div>
+								<div>
+									-${(props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+								</div>
+							</div>
+						)}
+						{props.order.isRefunded && (
+							<div>
+								<div>
+									${(props.order.totalPrice -
+										props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+								</div>
+							</div>
+						)}
 					</div>
 					<div className="column fs-16px">
 						<h3>Ship To</h3>
@@ -184,6 +200,208 @@ const Order = (props) => {
 					</div>
 				</div>
 			</div>
+
+			{props.admin && (
+				<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
+					<div className="row ai-c jc-b">
+						<div>
+							<div className="mv-10px">
+								<label htmlFor="payment_method">Payment Method</label>
+								<li className="row mv-10px">
+									<input
+										type="text"
+										defaultValue={props.order.payment.paymentMethod}
+										name="payment_method"
+										className=""
+										onChange={(e) => set_payment_method(e.target.value)}
+									/>
+								</li>
+								<label htmlFor="refund_amount">Refund Amount</label>
+								<div className="row">
+									<input
+										type="text"
+										value={refund_amount}
+										name="refund_amount"
+										id="refund_amount"
+										className="w-100per"
+										onChange={(e) => set_refund_amount(e.target.value)}
+									/>
+								</div>
+								<div className="mv-10px">
+									<label htmlFor="refund_reason">Refund Reason</label>
+									<div className="row">
+										<input
+											type="text"
+											value={refund_reason}
+											name="refund_reason"
+											id="refund_reason"
+											className="w-100per"
+											onChange={(e) => set_refund_reason(e.target.value)}
+										/>
+									</div>
+								</div>
+								<button className="button primary" onClick={update_refund_state}>
+									Refund Customer
+								</button>
+								{props.order.isRefunded && (
+									<div>
+										<div>Refunded</div>
+										<div>
+											${(props.order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+												100).toFixed(2)}
+										</div>
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+					<ul className="column">
+						<li className="row mv-10px">
+							<label className="">Order Note: </label>
+							<label className="">{props.order.order_note}</label>
+						</li>
+						<li className="row mv-10px">
+							<label className="">Promo Code: </label>
+							<label className="">{props.order.promo_code}</label>
+						</li>
+						<li className="column ">
+							<h1>Shipping</h1>
+							<div>
+								<div>
+									{props.order.shipping.first_name} {props.order.shipping.last_name}
+								</div>
+								<div>{props.order.shipping.address}</div>
+								<div>
+									{props.order.shipping.city}, {props.order.shipping.state}{' '}
+									{props.order.shipping.postalCode} {props.order.shipping.country}
+								</div>
+								<div>{props.order.shipping.international && 'International'}</div>
+								<div>{props.order.shipping.email}</div>
+							</div>
+							<button
+								className="button secondary w-200px mv-10px"
+								onClick={() =>
+									copyToClipboard(`
+${props.order.shipping.first_name} ${props.order.shipping.last_name}
+${props.order.shipping.address}
+${props.order.shipping.city}, ${props.order.shipping.state}
+${props.order.shipping.postalCode} ${props.order.shipping.country}
+${props.order.shipping.email}`)}
+							>
+								Copy to clipboard
+							</button>
+						</li>
+					</ul>
+					{/* <FlexContainer row v_i_center h_between>
+						{props.userInfo &&
+						props.userInfo.isAdmin && (
+							<div>
+								<div className="mv-10px">
+									<label htmlFor="refund_amount">Refund Amount</label>
+									<div className="row">
+										<input
+											type="text"
+											value={refund_amount}
+											name="refund_amount"
+											id="refund_amount"
+											className="w-100per"
+											onChange={(e) => set_refund_amount(e.target.value)}
+										/>
+									</div>
+									<div className="mv-10px">
+										<label htmlFor="refund_reason">Refund Reason</label>
+										<div className="row">
+											<input
+												type="text"
+												value={refund_reason}
+												name="refund_reason"
+												id="refund_reason"
+												className="w-100per"
+												onChange={(e) => set_refund_reason(e.target.value)}
+											/>
+										</div>
+									</div>
+									<button className="button primary" onClick={update_refund_state}>
+										Refund Customer
+									</button>
+								</div>
+							</div>
+						)}
+					</FlexContainer> */}
+					<div className="jc-b">
+						<div className="column jc-b w-25rem">
+							<button className="button primary mv-5px" onClick={() => print_invoice(props.order)}>
+								Print Invoice
+							</button>
+
+							<button className="button primary mv-5px">
+								{' '}
+								<Link to={'/secure/glow/emails/order/' + props.order._id}>View Email</Link>
+							</button>
+							<button
+								className="button primary mv-5px"
+								onClick={() =>
+									props.update_order_state(
+										props.order,
+										props.order.isDelivered,
+										'isDelivered',
+										'deliveredAt'
+									)}
+							>
+								{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+							</button>
+							<button
+								className="button primary mv-5px"
+								onClick={() =>
+									props.update_order_state(
+										props.order,
+										props.order.isShipped,
+										'isShipped',
+										'shippedAt'
+									)}
+							>
+								{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+							</button>
+							<button
+								className="button primary mv-5px"
+								onClick={() =>
+									props.update_order_state(
+										props.order,
+										props.order.isPackaged,
+										'isPackaged',
+										'packagedAt'
+									)}
+							>
+								{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+							</button>
+							<button
+								className="button primary mv-5px"
+								onClick={() =>
+									props.update_order_state(
+										props.order,
+										props.order.isManufactured,
+										'isManufactured',
+										'manufacturedAt'
+									)}
+							>
+								{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+							</button>
+							<button
+								className="button primary mv-5px"
+								onClick={() =>
+									props.update_order_payment_state(
+										props.order,
+										props.order.isPaid,
+										'isPaid',
+										'paidAt'
+									)}
+							>
+								{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };

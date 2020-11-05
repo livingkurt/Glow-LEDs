@@ -643,37 +643,6 @@ const ControlPanelPage = (props) => {
 											.toFixed(2)}
 									</th>
 								</tr>
-								{/* <tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Orders</th>
-									<th style={{ padding: '15px' }}>{orders.length}</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Users</th>
-									<th style={{ padding: '15px' }}>{users.length}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Expenses</th>
-									<th style={{ padding: '15px' }}>{expenses.length}</th>
-								</tr> */}
 							</tbody>
 						</table>
 					</div>

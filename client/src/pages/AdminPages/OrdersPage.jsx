@@ -6,7 +6,7 @@ import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Search, Sort } from '../../components/SpecialtyComponents';
+import { Order, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
 import API from '../../utils/API';
 import { print_invoice } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
@@ -181,14 +181,21 @@ const OrdersPage = (props) => {
 	const today = new Date();
 
 	return (
-		<div class="main_container">
+		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
 			<Helmet>
-				<title>Admin Orders | Glow LEDs</title>
+				<title>Orders | Glow LEDs</title>
+				<meta property="og:title" content="My Orders | Glow LEDs" />
+				<meta name="twitter:title" content="My Orders | Glow LEDs" />
+				<link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
+				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
 			</Helmet>
-			<FlexContainer h_between wrap>
+			<FlexContainer wrap h_between>
+				<Link to="/secure/account/profile">
+					<button className="button primary">Back to Profile</button>
+				</Link>
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem' }}>
+						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -201,424 +208,31 @@ const OrdersPage = (props) => {
 						</FlexContainer>
 					);
 				})}
-				<Link to="/secure/glow/editorder">
-					<button className="button primary" style={{ width: '160px' }}>
-						Create Order
-					</button>
-				</Link>
 			</FlexContainer>
-			<div className="order-header">
-				<h1
-					style={{
-						textAlign: 'center',
-						width: '100%',
-						margin: '20px auto',
-						justifyContent: 'center'
-					}}
-				>
-					Orders
-				</h1>
-			</div>
-			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
-				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-			</div>
-			<Loading loading={loading} error={error}>
-				{orders && (
-					<div className="order-list responsive_table">
-						<table className="table">
-							<thead>
-								<tr>
-									<th>Total</th>
-									<th>Number of Orders</th>
-									<th>Average Total Per Orders</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem'
-									}}
-								>
-									<td className="p-10px">
-										<label>
-											${orders.reduce((a, order) => a + order.totalPrice, 0).toFixed(2)}
-										</label>
-									</td>
-									<td className="p-10px">
-										<label>{orders.length.toFixed(2)}</label>
-									</td>
-									<td className="p-10px">
-										<label>
-											${(orders.reduce((a, order) => a + order.totalPrice, 0) /
-												orders.length).toFixed(2)}
-										</label>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table className="table">
-							<thead>
-								<tr className="tr">
-									<th className="min-w-250px">ID</th>
-									<th className="min-w-125px">DATE</th>
-									<th className="min-w-120px">TOTAL</th>
-									<th className="min-w-150px">USER</th>
-									<th className="min-w-580px">ORDER ITEMS</th>
-									<th className="min-w-120px">Time Since Order</th>
-									<th className="min-w-175px">ACTIONS</th>
-								</tr>
-							</thead>
-							<tbody>
-								{orders.map((order, index) => (
-									<tr
-										key={order._id}
-										style={{ backgroundColor: determine_color(order) }}
-										className="tr"
-									>
-										<td className="min-w-250px p-10px">{order._id}</td>
-										<td className="min-w-125px p-10px">{format_date(order.createdAt)}</td>
-										<td className="min-w-120px p-10px">
-											${!order.totalPrice ? '' : order.totalPrice.toFixed(2)}
-										</td>
-										<td className="min-w-150px p-10px">
-											{!order.shipping ? 'N/A' : order.shipping.first_name}
-										</td>
-										{/* {console.log(daysBetween(today, order.createdAt))} */}
+			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
+				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
-										<td className="min-w-580px p-10px">
-											{order.orderItems.map((item) => {
-												return (
-													<div>
-														<div>
-															{item.qty}x -{' '}
-															{item.diffuser_cap_color &&
-																` ${item.diffuser_cap_color} - `}{' '}
-															{item.name}
-														</div>
-														{item.secondary_product &&
-															'> 1x - ' + item.secondary_product.name + ''}
-													</div>
-												);
-											})}
-										</td>
-										<td className="min-w-120px p-10px">
-											{daysBetween(today, order.createdAt)} Days
-										</td>
-										<td className="min-w-175px p-10px">
-											<FlexContainer h_between>
-												<button className="button icon" onClick={() => show_hide(order._id)}>
-													<i
-														style={{ '-webkitTransform': 'rotate(-180deg)' }}
-														className="top-8px fas fa-sort-up"
-													/>
-												</button>
-												<Link to={'/secure/glow/editorder/' + order._id}>
-													<button className="button icon">
-														<i className="fas fa-info-circle" />
-													</button>
-												</Link>
-												<Link to={'/secure/account/order/' + order._id}>
-													<button className="button icon">
-														<i class="fas fa-mountain" />
-													</button>
-												</Link>
-												<button className="button icon" onClick={() => deleteHandler(order)}>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</FlexContainer>
-										</td>
-										<td id={order._id} className="expanded-row-content hide-row">
-											<div className="row jc-b w-100per">
-												<div className="w-100per">
-													<div>Paid</div>
-													<div className="mv-5px">
-														{order.isPaid ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
-													<div>
-														<button
-															className="button primary"
-															onClick={() =>
-																update_order_payment_state(
-																	order,
-																	order.isPaid,
-																	'isPaid',
-																	'paidAt'
-																)}
-														>
-															{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-														</button>
-													</div>
-												</div>
-												<div className="w-100per">
-													<div>Manufactured</div>
-													<div className="mv-5px">
-														{order.isManufactured ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>
-														{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}
-													</div>
-
-													<div>
-														<button
-															className="button primary"
-															onClick={() =>
-																update_order_state(
-																	order,
-																	order.isManufactured,
-																	'isManufactured',
-																	'manufacturedAt'
-																)}
-														>
-															{order.isManufactured ? (
-																'Unset to Manufactured'
-															) : (
-																'Set to Manufactured'
-															)}
-														</button>
-													</div>
-												</div>
-												<div className="w-100per">
-													<div>Packaged</div>
-													<div className="mv-5px">
-														{order.isPackaged ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
-
-													<div>
-														<button
-															className="button primary"
-															onClick={() =>
-																update_order_state(
-																	order,
-																	order.isPackaged,
-																	'isPackaged',
-																	'packagedAt'
-																)}
-														>
-															{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-														</button>
-													</div>
-												</div>
-												<div className="w-100per">
-													<div>Shipped</div>
-													<div className="mv-5px">
-														{order.isShipped ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
-
-													<div>
-														<button
-															className="button primary"
-															onClick={() =>
-																update_order_state(
-																	order,
-																	order.isShipped,
-																	'isShipped',
-																	'shippedAt'
-																)}
-														>
-															{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-														</button>
-													</div>
-												</div>
-												<div className="w-100per">
-													<div>Delivered</div>
-													<div className="mv-5px">
-														{order.isDelivered ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div>
-														{!order.deliveredAt ? '' : format_date(order.deliveredAt)}
-													</div>
-
-													<button
-														className="button primary"
-														onClick={() =>
-															update_order_state(
-																order,
-																order.isDelivered,
-																'isDelivered',
-																'deliveredAt'
-															)}
-													>
-														{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-													</button>
-												</div>
-												<div className="w-100per">
-													<div>Refund</div>
-													<div className="mv-5px">
-														{order.isRefunded ? (
-															<i className="fas fa-check-circle" />
-														) : (
-															<i className="fas fa-times-circle" />
-														)}
-													</div>
-													<div style={{ minWidth: '125px' }}>
-														{!order.refundedAt ? '' : format_date(order.refundedAt)}
-													</div>
-													<div style={{ minWidth: '150px' }}>
-														{order.isRefunded && (
-															<div>
-																${(order.payment.refund.reduce(
-																	(a, c) => a + c.amount,
-																	0
-																) / 100).toFixed(2)}
-															</div>
-														)}
-													</div>
-													<button
-														className="button primary"
-														onClick={() => print_invoice(order)}
-													>
-														Print Invoice
-													</button>
-													<Link to={'/secure/glow/emails/order/' + order._id}>
-														<button className="button primary">View Email</button>
-													</Link>
-												</div>
-											</div>
-											<div className="row mv-15px">
-												<div className="column">
-													<label htmlFor="payment_method">Payment Method</label>
-													<div className="row">
-														<input
-															type="text"
-															// value={payment_method}
-															defaultValue={order.payment.paymentMethod}
-															name="payment_method"
-															className="w-100per"
-															onChange={(e) => set_payment_method(e.target.value)}
-														/>
-													</div>
-												</div>
-												{/* <div className="column">
-													<label htmlFor="order_note">Order Note</label>
-													<div className="row">
-														<input
-															type="text"
-															// value={order_note}
-															defaultValue={order.order_note}
-															name="order_note"
-															className="w-100per"
-															onChange={(e) => set_order_note(e.target.value)}
-														/>
-													</div>
-												</div> */}
-											</div>
-											<div className="row w-100per">
-												<label className="w-100per">Order Note: </label>
-												<label className="w-100per">{order.order_note}</label>
-											</div>
-											<div className="row">
-												<label className="w-100per">Promo Code: </label>
-												<label className="w-100per">{order.promo_code}</label>
-											</div>
-											<div className="jc-b">
-												<div className="column w-100per">
-													<h1>Shipping</h1>
-													<div>
-														<div>
-															{order.shipping.first_name} {order.shipping.last_name}
-														</div>
-														<div>{order.shipping.address}</div>
-														<div>
-															{order.shipping.city}, {order.shipping.state}{' '}
-															{order.shipping.postalCode} {order.shipping.country}
-														</div>
-														<div>{order.shipping.international && 'International'}</div>
-														<div>{order.shipping.email}</div>
-													</div>
-													<button
-														className="button secondary w-200px mv-10px"
-														onClick={() =>
-															copyToClipboard(`
-${order.shipping.first_name} ${order.shipping.last_name}
-${order.shipping.address}
-${order.shipping.city}, ${order.shipping.state}
-${order.shipping.postalCode} ${order.shipping.country}
-${order.shipping.email}`)}
-													>
-														Copy to clipboard
-													</button>
-												</div>
-												<div className="column w-100per">
-													<h1>Totals</h1>
-													<div className="row w-100per jc-b">
-														<div>Items - </div>
-														{/* <div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div> */}
-														{order.promo_code ? (
-															<div>
-																<del style={{ color: 'red' }}>
-																	<label style={{ color: 'white' }}>
-																		${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
-																	</label>
-																</del>{' '}
-																<i class="fas fa-arrow-right" /> ${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}
-															</div>
-														) : (
-															<div>
-																${order.itemsPrice ? (
-																	order.itemsPrice.toFixed(2)
-																) : (
-																	order.itemsPrice
-																)}
-															</div>
-														)}
-													</div>
-													<div className="row w-100per jc-b">
-														<div>Shipping - </div>
-														{/* <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div> */}
-														<div>
-															${order.shippingPrice ? (
-																order.shippingPrice.toFixed(2)
-															) : (
-																order.shippingPrice
-															)}
-														</div>
-													</div>
-													<div className="row w-100per jc-b">
-														<div>Tax - </div>
-														<div>
-															${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}
-														</div>
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-
-									// <tr>
-
-									// </tr>
-								))}
-							</tbody>
-						</table>
+				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Orders</h1>
+				<Loading loading={loading} error={error}>
+					<div className="product_big_screen">
+						{orders &&
+							orders.map((order) => (
+								<Order
+									determine_color={determine_color}
+									update_order_payment_state={update_order_payment_state}
+									update_order_state={update_order_state}
+									admin={true}
+									order={order}
+								/>
+							))}
 					</div>
-				)}
-			</Loading>
-		</div>
+					<div className="product_small_screen none column">
+						{orders &&
+							orders.map((order) => <OrderSmallScreen determine_color={determine_color} order={order} />)}
+					</div>
+				</Loading>
+			</div>
+		</FlexContainer>
 	);
 };
 export default OrdersPage;

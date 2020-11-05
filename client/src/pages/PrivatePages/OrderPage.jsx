@@ -596,9 +596,8 @@ const OrderPage = (props) => {
 							</div>
 						)}
 					</FlexContainer> */}
-					<div className="ship_deliver  wrap w-100per column ">
+					{/* <div className="ship_deliver  wrap w-100per column ">
 						<FlexContainer row v_i_center h_between>
-							{/* {console.log({ shipping_state })} */}
 							{props.userInfo &&
 							props.userInfo.isAdmin && (
 								<div>
@@ -634,18 +633,7 @@ const OrderPage = (props) => {
 								</div>
 							)}
 						</FlexContainer>
-						<FlexContainer row v_i_center h_between>
-							{/* {console.log({ delivery_state })} */}
-							{/* {props.userInfo &&
-							props.userInfo.isAdmin && (
-								<FlexContainer h_right>
-									<button className="button primary" onClick={send_not_paid_email}>
-										Still Not Paid
-									</button>
-								</FlexContainer>
-							)} */}
-						</FlexContainer>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>
