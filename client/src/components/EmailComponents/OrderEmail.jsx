@@ -900,13 +900,25 @@ const OrderEmail = (props) => {
 	);
 
 	return (
-		<div className="">
+		<div>
+			<div className="w-500px jc-c m-auto">
+				<Link to={'/secure/account/order/' + props.match.params.id}>
+					<button className="button primary mh-10px">View Order</button>
+				</Link>
+				<Link to="/secure/account/orders">
+					<button className="button primary mh-10px">Your Orders</button>
+				</Link>
+				<Link to="/collections/all/products">
+					<button className="button primary mh-10px">Products</button>
+				</Link>
+			</div>
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
 					<Link to="/secure/glow/emails">
 						<button className="button primary">Back to Emails</button>
 					</Link>
+
 					<button className="button primary mb-1rem" onClick={() => save_html('lavacquek@icloud.com')}>
 						Send Test Email
 					</button>
