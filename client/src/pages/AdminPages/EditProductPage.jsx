@@ -204,39 +204,8 @@ const EditProductPage = (props) => {
 			})
 		);
 		e.target.reset();
-		setId('');
-		setName('');
-		setPrice('');
-		setDescription('');
-		setFacts('');
-		setIncludedItems('');
-		// setDisplayImage('');
-		set_subcategories('');
-		set_subcategory('');
-		set_images([]);
-		set_image('');
-		setVideo('');
-		setBrand('');
-		setCategory('');
-		setCountInStock('');
-		setHidden();
-		setSalePrice('');
-		setVolume('');
-		set_meta_title('');
-		set_meta_description('');
-		set_meta_keywords('');
-		set_length('');
-		set_width('');
-		set_height('');
-		set_weight_pounds('');
-		set_weight_ounces('');
-		setPathname('');
-		setOrder('');
-		// if (pathname) {
-		// history.push('/collections/all/products/' + pathname);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/products');
-		// }
 	};
 
 	useEffect(() => {

@@ -128,21 +128,8 @@ const EditFeaturePage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_user('');
-		set_glover_name('');
-		set_instagram_handle('');
-		set_facebook_name('');
-		set_product('');
-		set_song_id('');
-		set_video('');
-		set_picture('');
-		set_release_date('');
-		// if (id) {
-		// 	history.push('/collections/all/features/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/features');
-		// }
 	};
 
 	return (

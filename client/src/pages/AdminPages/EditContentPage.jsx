@@ -100,13 +100,6 @@ const EditContentPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(banner_link);
-		// console.log(format_date(banner_link));
-		// console.log(unformat_date(format_date(banner_link)));
-		// console.log(unformat_date(banner_link));
-		// console.log(format_date(unformat_date(banner_link)));
-		// console.log(format_date(unformat_date(banner_link)));
-
 		console.log({ id });
 		dispatch(
 			saveContent({
@@ -118,16 +111,8 @@ const EditContentPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_home_page('');
-		set_banner('');
-		set_about_page('');
-		set_active(true);
-		// if (id) {
-		// 	history.push('/collections/all/contents/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/contents');
-		// }
 	};
 
 	return (

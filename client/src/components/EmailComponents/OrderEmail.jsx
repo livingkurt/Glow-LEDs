@@ -35,8 +35,8 @@ const OrderEmail = (props) => {
 
 	useEffect(() => {
 		dispatch(listEmails('Order'));
-		dispatch(detailsOrder(props.match.params.id));
-		// dispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+		// dispatch(detailsOrder(props.match.params.id));
+		dispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 		return () => {};
 	}, []);
 
@@ -686,7 +686,23 @@ const OrderEmail = (props) => {
 									<strong>Tag us in your videos and pictures!</strong>
 									<br />We want to feature you!
 								</p>
+								{/* <Link to="/pages/contact/submit_content_to_be_featured">
+							<div className="jc-c">
+							
+							</div> */}
 
+								<a
+									rel="noreferrer"
+									href="https://www.glow-leds.com/pages/contact/submit_content_to_be_featured"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									{/* <i class="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+									{/* <Facebook fill="white" /> */}
+									<button className="button primary " style={{ margin: 'auto' }}>
+										Feature Content
+									</button>
+								</a>
 								<p style={{ textAlign: 'center', fontSize: '14px' }}>
 									We are figuring this out as we go so any feedback is welcome.<br />We appreciate you
 									more than you know.

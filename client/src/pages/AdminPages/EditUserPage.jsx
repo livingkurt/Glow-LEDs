@@ -86,14 +86,6 @@ const EditUserPage = (props) => {
 		set_is_sponsored(user.is_sponsored);
 		set_isVerified(user.isVerified);
 		set_isAdmin(user.isAdmin);
-		// set_video(user.video);
-		// set_picture(user.picture);
-		// if (user.release_date) {
-		// 	set_release_date(format_date(user.release_date));
-		// }
-
-		// fuser.release_date);
-		// console.log(format_date(user.release_date));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -103,9 +95,6 @@ const EditUserPage = (props) => {
 		set_is_sponsored('');
 		set_isVerified('');
 		set_isAdmin('');
-		// set_video('');
-		// set_picture('');
-		// set_release_date('');
 	};
 
 	const submitHandler = (e) => {
@@ -121,27 +110,11 @@ const EditUserPage = (props) => {
 				is_sponsored,
 				isVerified,
 				isAdmin
-				// video,
-				// picture,
-				// release_date: unformat_date(release_date)
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_first_name('');
-		set_last_name('');
-		set_email('');
-		set_is_sponsored('');
-		set_isVerified('');
-		set_isAdmin('');
-		// set_video('');
-		// set_picture('');
-		// set_release_date('');
-		// if (id) {
-		// 	history.push('/collections/all/users/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/users');
-		// }
 	};
 
 	return (
@@ -150,9 +123,6 @@ const EditUserPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					{/* {loading_data ? (
-						<div>Loading...</div>
-					) : ( */}
 					<Loading loading={loading} error={error}>
 						{user && (
 							<div>
@@ -182,17 +152,6 @@ const EditUserPage = (props) => {
 													onChange={(e) => set_first_name(e.target.value)}
 												/>
 											</li>
-
-											{/* <li>
-												<label htmlFor="release_date">Release Date</label>
-												<input
-													type="text"
-													name="release_date"
-													value={release_date}
-													id="release_date"
-													onChange={(e) => set_release_date(e.target.value)}
-												/>
-											</li> */}
 											<li>
 												<label htmlFor="last_name">Last Name</label>
 												<input
@@ -221,10 +180,7 @@ const EditUserPage = (props) => {
 													<input
 														type="checkbox"
 														name="is_sponsored"
-														// defaultChecked={is_sponsored ? 'checked' : 'unchecked'}
-														// defaultValue={is_sponsored}
 														defaultChecked={is_sponsored}
-														// value={is_sponsored ? '1' : '0'}
 														id="is_sponsored"
 														onChange={(e) => {
 															set_is_sponsored(e.target.checked);
@@ -240,10 +196,7 @@ const EditUserPage = (props) => {
 													<input
 														type="checkbox"
 														name="isVerified"
-														// defaultChecked={isVerified ? 'checked' : 'unchecked'}
-														// defaultValue={isVerified}
 														defaultChecked={isVerified}
-														// value={isVerified ? '1' : '0'}
 														id="isVerified"
 														onChange={(e) => {
 															set_isVerified(e.target.checked);
@@ -251,17 +204,6 @@ const EditUserPage = (props) => {
 													/>
 												</li>
 											)}
-
-											{/* <li>
-												<label htmlFor="video">Video</label>
-												<input
-													type="text"
-													name="video"
-													value={video}
-													id="video"
-													onChange={(e) => set_video(e.target.value)}
-												/>
-											</li> */}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -270,10 +212,7 @@ const EditUserPage = (props) => {
 													<input
 														type="checkbox"
 														name="isAdmin"
-														// defaultChecked={isAdmin ? 'checked' : 'unchecked'}
-														// defaultValue={isAdmin}
 														defaultChecked={isAdmin}
-														// value={isAdmin ? '1' : '0'}
 														id="isAdmin"
 														onChange={(e) => {
 															set_isAdmin(e.target.checked);
@@ -281,16 +220,6 @@ const EditUserPage = (props) => {
 													/>
 												</li>
 											)}
-											{/* <li>
-												<label htmlFor="picture">Picture</label>
-												<input
-													type="text"
-													name="picture"
-													value={picture}
-													id="picture"
-													onChange={(e) => set_picture(e.target.value)}
-												/>
-											</li> */}
 										</FlexContainer>
 									</FlexContainer>
 									<li>

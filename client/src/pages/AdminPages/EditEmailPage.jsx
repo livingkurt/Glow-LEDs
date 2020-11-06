@@ -125,16 +125,7 @@ const EditEmailPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_email_type('');
-		set_email_h1('');
-		set_email_image('');
-		set_email_show_image('');
-		set_email_h2('');
-		set_email_p('');
-		set_email_button('');
-		set_email_link('');
-		set_email_active('');
+		unset_state();
 		history.push('/secure/glow/emails');
 	};
 

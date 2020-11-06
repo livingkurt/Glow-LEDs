@@ -109,14 +109,6 @@ const EditSponsorPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(release_date);
-		// console.log(format_date(release_date));
-		// console.log(unformat_date(format_date(release_date)));
-		// console.log(unformat_date(release_date));
-		// console.log(format_date(unformat_date(release_date)));
-		// console.log(format_date(unformat_date(release_date)));
-
-		console.log({ id });
 		dispatch(
 			saveSponsor({
 				_id: id,
@@ -131,20 +123,8 @@ const EditSponsorPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_user('');
-		set_glover_name('');
-		set_instagram_handle('');
-		set_facebook_name('');
-		set_percentage_off('');
-		set_promo_code('');
-		set_funds_generated('');
-		set_active('');
-		// if (id) {
-		// 	history.push('/collections/all/sponsors/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/sponsors');
-		// }
 	};
 
 	return (

@@ -217,34 +217,8 @@ const EditOrderPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_user('');
-		set_orderItems('');
-		set_shipping('');
-		set_payment('');
-		set_itemsPrice('');
-		set_taxPrice('');
-		set_shippingPrice('');
-		set_totalPrice('');
-		set_isPaid('');
-		set_paidAt('');
-		set_isManufactured('');
-		set_manufacturedAt('');
-		set_isPackaged('');
-		set_packagedAt('');
-		set_isShipped('');
-		set_shippedAt('');
-		set_isDelivered('');
-		set_deliveredAt('');
-		set_isRefunded('');
-		set_refundedAt('');
-		set_order_note('');
-		set_promo_code('');
-		// if (id) {
-		// 	history.push('/collections/all/orders/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/orders');
-		// }
 	};
 
 	const add_order_item = (e) => {

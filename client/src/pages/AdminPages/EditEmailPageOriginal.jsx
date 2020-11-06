@@ -199,19 +199,8 @@ const EditEmailPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_announcement('');
-		set_account_created('');
-		set_order('');
-		set_review('');
-		set_reset_password('');
-		set_password_changed('');
-		set_active(true);
-		// if (id) {
-		// 	history.push('/collections/all/emails/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/emails');
-		// }
 	};
 
 	return (

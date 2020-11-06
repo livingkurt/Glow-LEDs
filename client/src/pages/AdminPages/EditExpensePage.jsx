@@ -125,24 +125,6 @@ const EditExpensePage = (props) => {
 		set_amount('');
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		set_id(expense._id);
-	// 		set_expense_name(expense.expense_name);
-	// 		set_application(expense.application);
-	// 		set_url(expense.url);
-	// 		set_place_of_purchase(expense.place_of_purchase);
-	// 		set_date_of_purchase(format_date(expense.date_of_purchase));
-	// 		set_category(expense.category);
-	// 		set_card(expense.card);
-	// 		set_amount(expense.amount);
-	// 		return () => {
-	// 			//
-	// 		};
-	// 	},
-	// 	[ successSave, successDelete ]
-	// );
-
 	const submitHandler = (e) => {
 		e.preventDefault();
 		console.log(unformat_date(date_of_purchase));
@@ -162,20 +144,8 @@ const EditExpensePage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_expense_name('');
-		set_application('');
-		set_url('');
-		set_place_of_purchase('');
-		set_date_of_purchase('');
-		set_category('');
-		set_card('');
-		set_amount('');
-		// if (id) {
-		// 	history.push('/collections/all/expenses/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/expenses');
-		// }
 	};
 
 	return (
