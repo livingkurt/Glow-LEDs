@@ -140,6 +140,8 @@ const PromosPage = (props) => {
 									<th>sponsor</th>
 									<th>Promo Code</th>
 									<th>Percentage Off</th>
+									<th>Amount Off</th>
+									<th>Free Shipping</th>
 									<th>Funds Generated</th>
 									<th>For Customer</th>
 									<th>Excluded Categories</th>
@@ -159,32 +161,40 @@ const PromosPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td>
+										<td className="p-10px">
 											{promo.active ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{promo.sponsor}</td>
-										<td>{promo.promo_code}</td>
-										<td>{promo.percentage_off}%</td>
-										<td>${promo.funds_generated}</td>
-										<td>
+										<td className="p-10px">{promo.sponsor}</td>
+										<td className="p-10px">{promo.promo_code}</td>
+										<td className="p-10px">{promo.percentage_off}%</td>
+										<td className="p-10px">${promo.amount_off}</td>
+										<td className="p-10px">
+											{promo.free_shipping ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">${promo.funds_generated}</td>
+										<td className="p-10px">
 											{promo.for_customer ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{promo.excluded_categories}</td>
-										<td>{promo.excluded_products}</td>
+										<td className="p-10px">{promo.excluded_categories}</td>
+										<td className="p-10px">{promo.excluded_products}</td>
 
-										<td>{promo.number_of_uses}</td>
+										<td className="p-10px">{promo.number_of_uses}</td>
 
-										<td>{promo.number_of_orders}</td>
+										<td className="p-10px">{promo.number_of_orders}</td>
 
-										<td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editpromo/' + promo._id}>
 													<button className="button icon">

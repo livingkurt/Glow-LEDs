@@ -829,6 +829,7 @@ const ControlPanelPage = (props) => {
 					</table>
 				</div>
 			)}
+			<h1 className="ta-c w-100per jc-c">Daily Income</h1>
 			{daily_income && (
 				<div className="order-list responsive_table">
 					<table className="table">

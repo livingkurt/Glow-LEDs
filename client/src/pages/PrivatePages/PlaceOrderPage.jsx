@@ -280,11 +280,17 @@ const PlaceOrderPage = (props) => {
 			if (show_message) {
 				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
-				// else if (user_data._id && promo.user === user_data._id){
-
-				// }
-				setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
-				setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
+				if (promo.percentage_off) {
+					setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
+					setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
+				} else if (promo.amount_off) {
+					setItemsPrice(items_price - items_price * (promo.amount_off / 100));
+					setTaxPrice(0.0875 * (items_price - items_price * (promo.amount_off / 100)));
+				}
+				if (promo.free_shipping) {
+					setShippingPrice(0);
+					set_free_shipping_message('Free');
+				}
 				if (promo_code === 'freeshipping') {
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
@@ -300,7 +306,17 @@ const PlaceOrderPage = (props) => {
 	const remove_promo = () => {
 		setItemsPrice(items_price);
 		setTaxPrice(0.0875 * items_price);
+		setShippingPrice(shippingPrice);
+		set_free_shipping_message('');
 		set_show_message('');
+		if (shipping) {
+			if (shipping.international) {
+				calculate_international();
+			} else {
+				calculate_shipping();
+				calculate_shipping();
+			}
+		}
 	};
 	const handleChangeFor = (type) => ({ error }) => {
 		/* handle error */
@@ -480,7 +496,7 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<li>
 							<div>Items</div>
-							{show_message && free_shipping_message !== 'Free' ? (
+							{show_message ? (
 								<div>
 									<del style={{ color: 'red' }}>
 										<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>

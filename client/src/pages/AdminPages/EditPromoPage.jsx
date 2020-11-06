@@ -20,7 +20,9 @@ const EditPromoPage = (props) => {
 	const [ for_customer, set_for_customer ] = useState('');
 	const [ excluded_categories, set_excluded_categories ] = useState('');
 	const [ excluded_products, set_excluded_products ] = useState('');
-	const [ percentage_off, set_percentage_off ] = useState('');
+	const [ percentage_off, set_percentage_off ] = useState(0);
+	const [ amount_off, set_amount_off ] = useState(0);
+	const [ free_shipping, set_free_shipping ] = useState(false);
 	const [ number_of_uses, set_number_of_uses ] = useState('');
 	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ number_of_orders, set_number_of_orders ] = useState('');
@@ -98,6 +100,8 @@ const EditPromoPage = (props) => {
 		set_excluded_categories(promo.excluded_categories);
 		set_excluded_products(promo.excluded_products);
 		set_percentage_off(promo.percentage_off);
+		set_amount_off(promo.amount_off);
+		set_free_shipping(promo.free_shipping);
 		set_number_of_uses(promo.number_of_uses);
 		set_funds_generated(promo.funds_generated);
 		set_active(promo.active);
@@ -114,6 +118,8 @@ const EditPromoPage = (props) => {
 		set_excluded_categories('');
 		set_excluded_products('');
 		set_percentage_off('');
+		set_amount_off('');
+		set_free_shipping('');
 		set_number_of_uses('');
 		set_funds_generated('');
 		set_number_of_orders('');
@@ -122,27 +128,6 @@ const EditPromoPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(number_of_orders);
-		// console.log(format_date(number_of_orders));
-		// console.log(unformat_date(format_date(number_of_orders)));
-		// console.log(unformat_date(number_of_orders));
-		// console.log(format_date(unformat_date(number_of_orders)));
-		// console.log(format_date(unformat_date(number_of_orders)));
-
-		console.log({
-			_id: id,
-			sponsor,
-			user,
-			promo_code,
-			for_customer,
-			excluded_categories,
-			excluded_products,
-			percentage_off,
-			number_of_uses,
-			funds_generated,
-			number_of_orders,
-			active
-		});
 		dispatch(
 			savePromo({
 				_id: id,
@@ -153,6 +138,8 @@ const EditPromoPage = (props) => {
 				excluded_categories,
 				excluded_products,
 				percentage_off,
+				amount_off,
+				free_shipping,
 				number_of_uses,
 				funds_generated,
 				number_of_orders,
@@ -160,23 +147,8 @@ const EditPromoPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_sponsor('');
-		set_user('');
-		set_promo_code('');
-		set_for_customer('');
-		set_excluded_categories('');
-		set_excluded_products('');
-		set_percentage_off('');
-		set_number_of_uses('');
-		set_funds_generated('');
-		set_number_of_orders('');
-		set_active('');
-		// if (id) {
-		// 	history.push('/collections/all/promos/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/promos');
-		// }
 	};
 
 	return (
@@ -367,6 +339,35 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_percentage_off(e.target.value)}
 												/>
 											</li>
+											<li>
+												<label htmlFor="amount_off">Amount Off</label>
+												<input
+													type="text"
+													name="amount_off"
+													value={amount_off}
+													id="amount_off"
+													onChange={(e) => set_amount_off(e.target.value)}
+												/>
+											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="free_shipping">Free Shipping</label>
+													<input
+														type="checkbox"
+														name="free_shipping"
+														// defaultChecked={free_shipping ? 'checked' : 'unchecked'}
+														// defaultValue={free_shipping}
+														defaultChecked={free_shipping}
+														// value={free_shipping ? '1' : '0'}
+														id="free_shipping"
+														onChange={(e) => {
+															set_free_shipping(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											{/* <li>
 												<label htmlFor="funds_generated">Funds Generated</label>
 												<input

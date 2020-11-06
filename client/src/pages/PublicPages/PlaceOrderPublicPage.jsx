@@ -63,6 +63,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ re_password_validations, setRePasswordValidations ] = useState('');
 	const [ passwords_complete, set_passwords_complete ] = useState('');
 	const [ passwords_check, set_passwords_check ] = useState(false);
+	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 
 	useEffect(() => {
 		dispatch(listPromos());
@@ -364,11 +365,21 @@ const PlaceOrderPublicPage = (props) => {
 			if (show_message) {
 				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
-				// else if (user_data._id && promo.user === user_data._id){
-
-				// }
-				setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
-				setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
+				if (promo.percentage_off) {
+					setItemsPrice(items_price - items_price * (promo.percentage_off / 100));
+					setTaxPrice(0.0875 * (items_price - items_price * (promo.percentage_off / 100)));
+				} else if (promo.amount_off) {
+					setItemsPrice(items_price - items_price * (promo.amount_off / 100));
+					setTaxPrice(0.0875 * (items_price - items_price * (promo.amount_off / 100)));
+				}
+				if (promo.free_shipping) {
+					setShippingPrice(0);
+					set_free_shipping_message('Free');
+				}
+				if (promo_code === 'freeshipping') {
+					setShippingPrice(0);
+					set_free_shipping_message('Free');
+				}
 				set_show_message(promo.promo_code);
 			}
 		}
