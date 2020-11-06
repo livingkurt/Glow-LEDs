@@ -144,34 +144,34 @@ const UsersPage = (props) => {
 											backgroundColor: determine_color(user)
 										}}
 									>
-										<td>{user._id}</td>
-										<td>{format_date(user.createdAt)}</td>
-										<td>{user.first_name}</td>
-										<td>{user.last_name}</td>
-										<td>{user.email}</td>
-										<td>{user.sponsor}</td>
-										<td>
+										<td className="p-10px">{user._id}</td>
+										<td className="p-10px">{format_date(user.createdAt)}</td>
+										<td className="p-10px">{user.first_name}</td>
+										<td className="p-10px">{user.last_name}</td>
+										<td className="p-10px">{user.email}</td>
+										<td className="p-10px">{user.sponsor}</td>
+										<td className="p-10px">
 											{user.is_sponsored ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>
+										<td className="p-10px">
 											{user.isVerified ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>
+										<td className="p-10px">
 											{user.isAdmin ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/edituser/' + user._id}>
 													<button className="button icon">

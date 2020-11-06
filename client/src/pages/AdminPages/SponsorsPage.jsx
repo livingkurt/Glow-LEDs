@@ -155,21 +155,21 @@ const SponsorsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td>{sponsor._id}</td>
-										<td>{sponsor.glover_name}</td>
-										<td>{sponsor.instagram_handle}</td>
-										<td>{sponsor.facebook_name}</td>
-										<td>{sponsor.percentage_off}%</td>
-										<td>{sponsor.promo_code}</td>
-										<td>${sponsor.funds_generated}</td>
-										<td>
+										<td className="p-10px">{sponsor._id}</td>
+										<td className="p-10px">{sponsor.glover_name}</td>
+										<td className="p-10px">{sponsor.instagram_handle}</td>
+										<td className="p-10px">{sponsor.facebook_name}</td>
+										<td className="p-10px">{sponsor.percentage_off}%</td>
+										<td className="p-10px">{sponsor.promo_code}</td>
+										<td className="p-10px">${sponsor.funds_generated}</td>
+										<td className="p-10px">
 											{sponsor.active ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>
+										<td className="p-10px">
 											<FlexContainer h_between>
 												<Link to={'/secure/glow/editsponsor/' + sponsor._id}>
 													<button className="button icon">
