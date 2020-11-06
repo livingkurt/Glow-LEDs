@@ -82,7 +82,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		} else if (req.query.sortOrder === 'delivered') {
 			sortOrder = { isDelivered: -1, createdAt: -1 };
 		}
-		console.log({ searchKeyword });
+		// console.log({ searchKeyword });
 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
 			.populate('user')
 			.populate('orderItems.product')
@@ -110,6 +110,93 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	}
 });
+router.get('/each_day_income/:date', async (req: any, res: any) => {
+	try {
+		const date = req.params.date;
+		const orders = await Order.find({
+			deleted: false,
+			createdAt: {
+				$gt: new Date(<any>new Date(date).setHours(0, 0, 0)),
+				$lt: new Date(<any>new Date(date).setHours(23, 59, 59))
+			}
+		});
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.json(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
+
+const dates_in_year = [
+	{ month: 1, number_of_days: 31 },
+	{ month: 2, number_of_days: 28 },
+	{ month: 3, number_of_days: 31 },
+	{ month: 4, number_of_days: 30 },
+	{ month: 5, number_of_days: 31 },
+	{ month: 6, number_of_days: 30 },
+	{ month: 7, number_of_days: 31 },
+	{ month: 8, number_of_days: 31 },
+	{ month: 9, number_of_days: 30 },
+	{ month: 10, number_of_days: 31 },
+	{ month: 11, number_of_days: 30 },
+	{ month: 12, number_of_days: 31 }
+];
+router.get('/each_month_income/:date', async (req: any, res: any) => {
+	try {
+		const start_date = req.params.date;
+		const year = start_date.split('-')[0];
+		const month = start_date.split('-')[1];
+		const day = dates_in_year[parseInt(start_date.split('-')[1]) - 1].number_of_days;
+		// console.log({ year, month, day });
+		// console.log(dates_in_year[parseInt(start_date.split('-')[1]) - 1].number_of_days);
+		const end_date = year + '-' + month + '-' + day;
+		console.log({ start_date, end_date });
+		const orders = await Order.find({
+			deleted: false,
+			createdAt: {
+				$gt: new Date(<any>new Date(start_date).setHours(0, 0, 0) - 30 * 60 * 60 * 24 * 1000),
+				$lt: new Date(<any>new Date(end_date).setHours(23, 59, 59))
+			}
+		});
+
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.json(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
 router.get('/daily_income', async (req: any, res: any) => {
 	try {
 		const orders = await Order.find({
@@ -118,7 +205,7 @@ router.get('/daily_income', async (req: any, res: any) => {
 				$gte: new Date(<any>new Date() - 1 * 60 * 60 * 24 * 1000)
 			}
 		});
-		console.log({ orders });
+
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -149,7 +236,7 @@ router.get('/weekly_income', async (req: any, res: any) => {
 				$gte: new Date(<any>new Date() - 7 * 60 * 60 * 24 * 1000)
 			}
 		});
-		console.log({ orders });
+
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -180,7 +267,7 @@ router.get('/monthly_income', async (req: any, res: any) => {
 				$gte: new Date(<any>new Date() - 30 * 60 * 60 * 24 * 1000)
 			}
 		});
-		console.log({ orders });
+
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,

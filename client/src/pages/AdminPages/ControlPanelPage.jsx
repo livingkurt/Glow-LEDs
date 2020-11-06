@@ -21,8 +21,8 @@ const colors = {
 const ControlPanelPage = (props) => {
 	const dispatch = useDispatch();
 
-	const chartRef = useRef();
-	const expense_doughnut_ref = useRef();
+	const occurrence_chart_ref = useRef();
+	const monthly_income_chart_ref = useRef();
 
 	const expenseList = useSelector((state) => state.expenseList);
 	const { loading: loading_expenses, expenses, error: error_expenses } = expenseList;
@@ -46,6 +46,8 @@ const ControlPanelPage = (props) => {
 	const [ daily_orders, set_daily_orders ] = useState([]);
 	const [ weekly_orders, set_weekly_orders ] = useState([]);
 	const [ monthly_orders, set_monthly_orders ] = useState([]);
+	const [ daily_income, set_daily_income ] = useState([]);
+	const [ monthly_income, set_monthly_income ] = useState([]);
 
 	useEffect(() => {
 		dispatch(listOrders());
@@ -55,6 +57,8 @@ const ControlPanelPage = (props) => {
 		dispatch(listSponsors());
 		dispatch(listPromos());
 		get_income();
+		get_daily_income();
+		get_monthly_income();
 	}, []);
 
 	// useEffect(
@@ -68,92 +72,35 @@ const ControlPanelPage = (props) => {
 		() => {
 			// initialize_chart();
 			get_occurrences();
+
+			// initialize_monthly_income_chart(monthly_income);
 			return () => {};
 		},
 		[ orders ]
 	);
+	useEffect(
+		() => {
+			// initialize_chart();
+			// get_occurrences();
+			console.log({ monthly_income });
 
-	const get_income = async () => {
-		const { data: daily } = await API.get_daily_income();
-		console.log({ daily });
-		set_daily_orders(daily);
-		const { data: weekly } = await API.get_weekly_income();
-		console.log({ weekly });
-		set_weekly_orders(weekly);
-		const { data: monthly } = await API.get_monthly_income();
-		console.log({ monthly });
-		set_monthly_orders(monthly);
-	};
+			setTimeout(() => {
+				initialize_monthly_income_chart(monthly_income);
+			}, 3000);
 
-	// const month= ["January","February","March","April","May","June","July",
-	//           "August","September","October","November","December"];
-	const month = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
-
-	// const initialize_chart = () => {
-	// 	const expense_chartRef = chartRef.current.getContext('2d');
-
-	// 	new Chart(expense_chartRef, {
-	// 		type: 'line',
-	// 		data: {
-	// 			//Bring in data
-	// 			labels: expenses.map((expense) => expense.expense_name),
-	// 			datasets: [
-	// 				{
-	// 					label: 'Sales',
-	// 					data: expenses.map((expense) => expense.amount),
-	// 					fill: true,
-	// 					borderColor: 'black'
-	// 				}
-	// 			]
-	// 		},
-	// 		options: {
-	// 			// // Responsive Design
-	// 			// responsive: true,
-	// 			// maintainAspectRatio: false
-	// 			// // Customize the Layout
-	// 			// layout: {
-	// 			// 	padding: {
-	// 			// 		top: 5,
-	// 			// 		left: 15,
-	// 			// 		right: 15,
-	// 			// 		bottom: 15
-	// 			// 	}
-	// 			// }
-	// 		}
-	// 		// // Removing Data Ticks, Graph Lines, and Borders
-	// 		// scales: {
-	// 		// 	xAxes: [
-	// 		// 		{
-	// 		// 			ticks: { display: false },
-	// 		// 			gridLines: {
-	// 		// 				display: false,
-	// 		// 				drawBorder: false
-	// 		// 			}
-	// 		// 		}
-	// 		// 	],
-	// 		// 	yAxes: [
-	// 		// 		{
-	// 		// 			ticks: { display: false },
-	// 		// 			gridLines: {
-	// 		// 				display: false,
-	// 		// 				drawBorder: false
-	// 		// 			}
-	// 		// 		}
-	// 		// 	]
-	// 		// }
-	// 	});
-	// 	// const expense_doughnut_chart = expense_doughnut_ref.current.getContext('2d');
-	// 	// new Chart(expense_doughnut_chart, {
-	// 	// 	type: 'doughnut',
-	// 	// 	data: [
-	// 	// 		expenses.filter((expense) => expense === 'Supplies').map((expense) => expense.amount),
-	// 	// 		expenses.filter((expense) => expense === 'Business').map((expense) => expense.amount),
-	// 	// 		expenses.filter((expense) => expense === 'Website').map((expense) => expense.amount)
-	// 	// 	],
-	// 	// 	labels: [ 'Supplies', 'Business', 'Website' ],
-	// 	// 	options: {}
-	// 	// });
-	// };
+			// initialize_monthly_income_chart(monthly_income);
+			return () => {};
+		},
+		[ monthly_income ]
+	);
+	// useEffect(
+	// 	() => {
+	// 		// initialize_chart();
+	// 		initialize_monthly_income_chart(monthly_income);
+	// 		return () => {};
+	// 	},
+	// 	[ monthly_income ]
+	// );
 
 	const duration_of_opening = () => {
 		const current_date = new Date();
@@ -164,8 +111,13 @@ const ControlPanelPage = (props) => {
 		return difference_in_day;
 	};
 
+	const get_occurrences = async () => {
+		const { data: occurrences } = await API.get_occurrences();
+		set_product_occurrences(occurrences);
+		initialize_occurrence_chart(occurrences);
+	};
 	const initialize_occurrence_chart = (occurrences) => {
-		const expense_chartRef = chartRef.current.getContext('2d');
+		const occurrence_occurrence_chart_ref = occurrence_chart_ref.current.getContext('2d');
 		const multiplier = 360 / occurrences.length;
 
 		let num = -multiplier;
@@ -177,7 +129,7 @@ const ControlPanelPage = (props) => {
 		// 		return color;
 		// 	})
 		// );
-		new Chart(expense_chartRef, {
+		new Chart(occurrence_occurrence_chart_ref, {
 			type: 'bar',
 			data: {
 				//Bring in data
@@ -267,10 +219,175 @@ const ControlPanelPage = (props) => {
 		// 	options: {}
 		// });
 	};
-	const get_occurrences = async () => {
-		const { data: occurrences } = await API.get_occurrences();
-		set_product_occurrences(occurrences);
-		initialize_occurrence_chart(occurrences);
+
+	const get_income = async () => {
+		const { data: daily } = await API.get_daily_income();
+		// console.log({ daily });
+		set_daily_orders(daily);
+		const { data: weekly } = await API.get_weekly_income();
+		// console.log({ weekly });
+		set_weekly_orders(weekly);
+		const { data: monthly } = await API.get_monthly_income();
+		// console.log({ monthly });
+		set_monthly_orders(monthly);
+	};
+	const get_each_day_income = async (date) => {
+		// console.log({ date });
+		const data = await API.get_each_day_income(date);
+		return data;
+		// console.log({ data });
+		// return daily;
+	};
+	const get_each_month_income = async (date) => {
+		// console.log({ date });
+		const data = await API.get_each_month_income(date);
+		return data;
+		// console.log({ data });
+		// return daily;
+	};
+
+	// const month= ["January","February","March","April","May","June","July",
+	//           "August","September","October","November","December"];
+	const months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+
+	const get_daily_income = async () => {
+		const income_each_day = [];
+		dates_in_year.forEach(async (month, month_number) => {
+			[ ...Array(month.number_of_days).keys() ].map(async (day, index) => {
+				const formatted_date =
+					(month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1) + '/' + (day + 1) + '/' + 2020;
+				const unformatted_date = unformat_date(
+					`${month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1}/${day + 1}/2020`
+				);
+				const { data } = await get_each_day_income(unformatted_date);
+				// console.log({ data });
+				let income = 0;
+				if (data.length > 1) {
+					income = data.reduce((a, c) => a + c.totalPrice, 0);
+					// console.log({ income });
+				}
+				income_each_day.push({ date: formatted_date, income });
+			});
+		});
+		// console.log({ income_each_day });
+		set_daily_income(income_each_day);
+	};
+	const get_monthly_income = async () => {
+		const income_each_month = [];
+		dates_in_year.map(async (month, month_number) => {
+			const formatted_date = (month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1) + '/01/' + 2020;
+			const unformatted_date = unformat_date(
+				(month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1) + '/01/' + 2020
+			);
+			const { data } = await get_each_month_income(unformatted_date);
+			console.log({ data });
+			let income = 0;
+			if (data.length > 1) {
+				income = data.reduce((a, c) => a + c.totalPrice, 0);
+				console.log({ month: dates_in_year[month_number].month, income });
+			}
+			income_each_month.push({ month: dates_in_year[month_number].month, income });
+			// return unformatted_date;
+		});
+		console.log({ income_each_month });
+		set_monthly_income(income_each_month);
+		// initialize_monthly_income_chart(income_each_month);
+	};
+	console.log({ monthly_income });
+
+	const initialize_monthly_income_chart = () => {
+		const monthly_income_monthly_income_chart_ref = monthly_income_chart_ref.current.getContext('2d');
+		const multiplier = 360 / monthly_income.length;
+		console.log({ month: monthly_income.map((month) => month.month) });
+		console.log({ monthly_income });
+
+		let num = -multiplier;
+		new Chart(monthly_income_monthly_income_chart_ref, {
+			type: 'bar',
+			data: {
+				//Bring in data
+				labels: monthly_income.map((month) => month.month),
+				datasets: [
+					{
+						label: 'Income',
+						data: monthly_income.map((month) => month.income),
+						fill: true,
+						borderColor: '#3e4c6d',
+						backgroundColor: monthly_income.map((item) => {
+							num += multiplier;
+							let color = hslToHex(num, 100, 50);
+							return color;
+						}),
+						color: 'white'
+					}
+				]
+			},
+			options: {
+				// Responsive Design
+				responsive: true,
+				maintainAspectRatio: true,
+				// Customize the Layout
+				layout: {
+					padding: {
+						top: 5,
+						left: 15,
+						right: 15,
+						bottom: 15
+					}
+				},
+				legend: {
+					labels: {
+						display: true,
+						fontColor: 'white'
+					}
+				},
+				title: {
+					display: false,
+					fontColor: 'white',
+					text: 'Occurrences'
+				},
+				scales: {
+					xAxes: [
+						{
+							ticks: {
+								display: true,
+								fontColor: 'white'
+							},
+							gridLines: {
+								display: true,
+								// drawBorder: false,
+								fontColor: 'white'
+							}
+						}
+					],
+					yAxes: [
+						{
+							ticks: {
+								display: true,
+								fontColor: 'white'
+							},
+							gridLines: {
+								display: true,
+								// drawBorder: false,
+								fontColor: 'white'
+							}
+						}
+					]
+				}
+			}
+			// // Removing Data Ticks, Graph Lines, and Borders
+		});
+		// const expense_doughnut_chart = expense_doughnut_ref.current.getContext('2d');
+		// new Chart(expense_doughnut_chart, {
+		// 	type: 'doughnut',
+		// 	data: [
+		// 		expenses.filter((expense) => expense === 'Supplies').map((expense) => expense.amount),
+		// 		expenses.filter((expense) => expense === 'Business').map((expense) => expense.amount),
+		// 		expenses.filter((expense) => expense === 'Website').map((expense) => expense.amount)
+		// 	],
+		// 	labels: [ 'Supplies', 'Business', 'Website' ],
+		// 	options: {}
+		// });
 	};
 
 	const dates_in_year = [
@@ -649,8 +766,8 @@ const ControlPanelPage = (props) => {
 				)}
 			</div>
 			<h1 className="ta-c w-100per jc-c">Occurrences</h1>
-			<canvas id="expense_chart" ref={chartRef} />
-			{product_occurrences && (
+			<canvas id="occurrence_chart" ref={occurrence_chart_ref} />
+			{/* {product_occurrences && (
 				<div className="order-list responsive_table">
 					<table className="table">
 						<thead>
@@ -679,42 +796,64 @@ const ControlPanelPage = (props) => {
 						</tbody>
 					</table>
 				</div>
-			)}
-			{orders && (
+			)} */}
+			<h1 className="ta-c w-100per jc-c">Monthly Income</h1>
+			<canvas id="monthly_income_chart" ref={monthly_income_chart_ref} />
+			{monthly_income.length > 1 && (
 				<div className="order-list responsive_table">
 					<table className="table">
 						<thead>
 							<tr>
-								<th>Category</th>
-								<th>Number of Occurrences</th>
+								<th>Date</th>
+								<th>Daily Income</th>
 							</tr>
 						</thead>
 						<tbody>
-							{dates_in_year.map((month, month_number) => {
-								return [ ...Array(month.number_of_days).keys() ].map((day, index) => {
-									return (
-										<tr
-											key={index}
-											style={{
-												backgroundColor: '#626262',
-												fontSize: '1.4rem',
-												height: '50px'
-											}}
-											className=""
-										>
-											<th style={{ padding: '15px' }}>
-												{month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1}/{day + 1}/2020
-											</th>
-											<th style={{ padding: '15px' }}>
-												{unformat_date(
-													`${month_number + 1 < 10
-														? `0${month_number + 1}`
-														: month_number + 1}/${day + 1}/2020`
-												)}
-											</th>
-										</tr>
-									);
-								});
+							{monthly_income.map((month, index) => {
+								return (
+									<tr
+										key={index}
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+										className=""
+									>
+										<th style={{ padding: '15px' }}>{month.month}</th>
+										<th style={{ padding: '15px' }}>${month.income.toFixed(2)}</th>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
+			)}
+			{daily_income && (
+				<div className="order-list responsive_table">
+					<table className="table">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Daily Income</th>
+							</tr>
+						</thead>
+						<tbody>
+							{daily_income.map((day, index) => {
+								return (
+									<tr
+										key={index}
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+										className=""
+									>
+										<th style={{ padding: '15px' }}>{day.date}</th>
+										<th style={{ padding: '15px' }}>${day.income.toFixed(2)}</th>
+									</tr>
+								);
 							})}
 						</tbody>
 					</table>

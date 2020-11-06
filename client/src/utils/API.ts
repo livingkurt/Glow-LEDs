@@ -15,9 +15,16 @@ export default {
 	send_order_created_email: (template: string, subject: string, email: string) => {
 		return axios.post('/api/emails/order_created', { template, subject, email });
 	},
+	get_each_day_income: (date: any) => {
+		return axios.get('/api/orders/each_day_income/' + date);
+	},
+	get_each_month_income: (date: any) => {
+		return axios.get('/api/orders/each_month_income/' + date);
+	},
 	get_daily_income: () => {
 		return axios.get('/api/orders/daily_income');
 	},
+
 	get_weekly_income: () => {
 		return axios.get('/api/orders/weekly_income');
 	},
