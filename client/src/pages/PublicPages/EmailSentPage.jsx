@@ -1,12 +1,10 @@
 import React from 'react';
-
-import { Link, useHistory } from 'react-router-dom';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 const EmailSentPage = (props) => {
 	return (
-		<FlexContainer h_center column>
+		<div className="column jc-c">
 			<Helmet>
 				<title>Email Sent | Glow LEDs</title>
 				<meta property="og:title" content="Check Email | Glow LEDs" />
@@ -15,7 +13,6 @@ const EmailSentPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/account/checkemail" />
 			</Helmet>
 			<h1 style={{ textAlign: 'center' }}>Email Sent Successfully!</h1>
-			{/* <h1 style={{ textAlign: 'center' }}>Thank You for Contacting Glow LEDs</h1> */}
 			<h2 style={{ textAlign: 'center' }}>Thank You for Contacting Glow LEDs</h2>
 			<p style={{ textAlign: 'center' }}>We'll answer your questions/requests as soon as possible.</p>
 			<p style={{ textAlign: 'center' }}>Thank you for your patience and support!</p>
@@ -23,13 +20,13 @@ const EmailSentPage = (props) => {
 				Check out our Frequently Asked Questions page to learn more about our process
 			</p>
 			<Link to="/pages/faq">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<button className="button primary " style={{ margin: 'auto' }}>
 						Frequently Asked Questions
 					</button>
-				</FlexContainer>
+				</div>
 			</Link>
-		</FlexContainer>
+		</div>
 	);
 };
 export default EmailSentPage;

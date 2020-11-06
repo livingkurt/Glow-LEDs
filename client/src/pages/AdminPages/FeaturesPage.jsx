@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listFeatures, deleteFeature } from '../../actions/featureActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const FeaturesPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -94,15 +89,15 @@ const FeaturesPage = (props) => {
 	];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Features | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
+				<div className="wrap jc-b">
 					{colors.map((color) => {
 						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<div className="wrap jc-b w-16rem m-1rem">
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -112,20 +107,20 @@ const FeaturesPage = (props) => {
 										borderRadius: '5px'
 									}}
 								/>
-							</FlexContainer>
+							</div>
 						);
 					})}
-				</FlexContainer>
+				</div>
 				<Link to="/secure/glow/editfeature">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Feature
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Features</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -186,7 +181,7 @@ const FeaturesPage = (props) => {
 											{feature.picture}
 										</td>
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editfeature/' + feature._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -195,7 +190,7 @@ const FeaturesPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(feature)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

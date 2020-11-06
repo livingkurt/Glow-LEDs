@@ -2,38 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder } from '../../actions/orderActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
-import { Loading, LoadingPayments } from '../../components/UtilityComponents';
+import { LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
-import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
+import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 
 const PlaceOrderPage = (props) => {
-	const discount_percent = 0.2;
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
-	// console.log({ cartItems });
 	const orderCreate = useSelector((state) => state.orderCreate);
-	const { order, error, loading } = orderCreate;
-	console.log({ orderCreate });
+	const { order, error } = orderCreate;
 
 	const orderPay = useSelector((state) => state.orderPay);
-	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	// console.log({ orderPay });
+	const { success: successPay, error: errorPay } = orderPay;
 
 	const userList = useSelector((state) => state.userList);
-	const { loading: loading_users, users, error: error_users } = userList;
+	const { users } = userList;
 
 	const promoList = useSelector((state) => state.promoList);
-	const { loading: promo_loading, promos, error: promo_error } = promoList;
-	// console.log({ orderPay });
+	const { promos } = promoList;
 	const items_price =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
@@ -46,7 +40,6 @@ const PlaceOrderPage = (props) => {
 	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
-	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ user, set_user ] = useState(user_data);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 
@@ -62,11 +55,6 @@ const PlaceOrderPage = (props) => {
 			if (shipping_cookie) {
 				dispatch(saveShipping(shipping_cookie));
 			}
-			// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
-			// if (diffuser_cap_cookie) {
-			// 	set_diffuser_cap(diffuser_cap_cookie);
-			// 	console.log({ diffuser_cap_cookie });
-			// }
 			dispatch(savePayment({ paymentMethod: 'stripe' }));
 			setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
@@ -84,8 +72,6 @@ const PlaceOrderPage = (props) => {
 			if (error) {
 				set_payment_loading(false);
 			}
-			// calculate_shipping();
-			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 			return () => {};
 		},
 		[ error ]
@@ -100,8 +86,6 @@ const PlaceOrderPage = (props) => {
 					calculate_shipping();
 				}
 			}
-			// calculate_shipping();
-			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 			return () => {};
 		},
 		[ shipping ]
@@ -114,9 +98,6 @@ const PlaceOrderPage = (props) => {
 		},
 		[ shippingPrice ]
 	);
-
-	// const taxPrice = 0.0875 * itemsPrice;
-	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
 	const [ order_note, set_order_note ] = useState('');
 
@@ -367,7 +348,7 @@ const PlaceOrderPage = (props) => {
 				<div className="placeorder-info">
 					<div>
 						<h1>Shipping</h1>
-						<FlexContainer h_between wrap>
+						<div className="wrap jc-b">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
 								<div className="label">
@@ -393,13 +374,13 @@ const PlaceOrderPage = (props) => {
 									</button>
 								</Link>
 							</div>
-						</FlexContainer>
+						</div>
 					</div>
 					<div>
 						<ul className="cart-list-container">
 							<li>
 								<h1>Shopping Cart</h1>
-								<FlexContainer column>
+								<div className="column">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
 											<button className="button secondary full-width" style={{ marginBottom: 0 }}>
@@ -408,7 +389,7 @@ const PlaceOrderPage = (props) => {
 										</li>
 									</Link>
 									<label style={{ textAlign: 'right' }}>Price</label>
-								</FlexContainer>
+								</div>
 							</li>
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
@@ -431,7 +412,7 @@ const PlaceOrderPage = (props) => {
 												</Link>
 											</div>
 											{/* <div>Qty: {item.qty}</div> */}
-											<FlexContainer v_i_center styles={{ height: '25px' }}>
+											<div className="ai-c h-25px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -456,7 +437,7 @@ const PlaceOrderPage = (props) => {
 													</select>
 													<span className="custom-arrow" />
 												</div>
-											</FlexContainer>
+											</div>
 										</div>
 										<div className=" cart_item">
 											<div className="cart-price ">
@@ -605,7 +586,7 @@ const PlaceOrderPage = (props) => {
 								{show_message}
 							</div>
 						)}
-						<FlexContainer column>
+						<div className="column">
 							<div htmlFor="order_note">Add a note</div>
 							<textarea
 								name="order_note"
@@ -615,7 +596,7 @@ const PlaceOrderPage = (props) => {
 								onChange={(e) => set_order_note(e.target.value)}
 							/>
 							<h4>{no_note_warning()}</h4>
-						</FlexContainer>
+						</div>
 					</ul>
 				</div>
 			</div>

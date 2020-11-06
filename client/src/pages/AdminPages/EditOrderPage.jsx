@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveOrder, detailsOrder, listOrders } from '../../actions/orderActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveOrder, detailsOrder } from '../../actions/orderActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
 
 const EditOrderPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ orderItems, set_orderItems ] = useState([ {} ]);
 	const [ shipping, set_shipping ] = useState({});
 	const [ user, set_user ] = useState('');
-	// const [ loading, set_loading ] = useState(true);
 	const [ payment, set_payment ] = useState({});
 	const [ itemsPrice, set_itemsPrice ] = useState(0);
 	const [ taxPrice, set_taxPrice ] = useState(0);
@@ -45,16 +40,12 @@ const EditOrderPage = (props) => {
 	const { order, loading, error } = orderDetails;
 
 	const userList = useSelector((state) => state.userList);
-	const { loading: loading_users, users, error: error_users } = userList;
-
-	const orderList = useSelector((state) => state.orderList);
-	const { orders } = orderList;
+	const { users } = userList;
 
 	const productList = useSelector((state) => state.productList);
-	const { loading: products_loading, products, error: error_loading } = productList;
+	const { products } = productList;
 
 	const dispatch = useDispatch();
-	const order_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ order });
 
@@ -68,8 +59,6 @@ const EditOrderPage = (props) => {
 		} else {
 			dispatch(detailsOrder(''));
 		}
-
-		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);
@@ -157,13 +146,6 @@ const EditOrderPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(isManufactured);
-		// console.log(format_date(isManufactured));
-		// console.log(unformat_date(format_date(isManufactured)));
-		// console.log(unformat_date(isManufactured));
-		// console.log(format_date(unformat_date(isManufactured)));
-		// console.log(format_date(unformat_date(isManufactured)));
-
 		console.log({
 			_id: id,
 			user,
@@ -231,7 +213,7 @@ const EditOrderPage = (props) => {
 	}, 500);
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Order' : 'Create Order'}</h1>
 
 			<div className="form">

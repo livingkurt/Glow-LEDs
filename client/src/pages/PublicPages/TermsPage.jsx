@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 const TermsPage = () => {
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Terms and Conditions | Glow LEDs</title>
 				<meta property="og:title" content="Terms and Conditions | Glow LEDs" />

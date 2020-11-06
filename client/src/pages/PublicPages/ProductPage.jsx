@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { detailsProduct, listProducts } from '../../actions/productActions';
-import { FlexContainer } from '../../components/ContainerComponents';
-import { Rating, Reviews, Slideshow, RelatedProducts, RelatedCarousel } from '../../components/SpecialtyComponents';
+import { detailsProduct } from '../../actions/productActions';
+import { Rating, Reviews, Slideshow, RelatedProducts } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import { Helmet } from 'react-helmet';
@@ -119,16 +118,16 @@ const ProductPage = (props) => {
 	};
 
 	return (
-		<FlexContainer column>
+		<div className="column">
 			<div className="back-to-result">
-				<FlexContainer h_between>
-					<FlexContainer styles={{ marginBottom: 10 }}>
+				<div className="jc-b">
+					<div className="mb-10px">
 						{/* <Link to="/collections/all/products"> */}
 						<button class="button secondary" onClick={() => props.history.goBack()}>
 							Back to Products
 						</button>
 						{/* </Link> */}
-					</FlexContainer>
+					</div>
 					{/* {console.log(props.match.params.pathname)} */}
 					{userInfo &&
 					userInfo.isAdmin && (
@@ -138,11 +137,11 @@ const ProductPage = (props) => {
 							</button>
 						</Link>
 					)}
-				</FlexContainer>
+				</div>
 			</div>
 			<Loading loading={loading} error={error}>
 				{product && (
-					<FlexContainer column>
+					<div className="column">
 						<Helmet>
 							<title>{product.meta_title}</title>
 							<meta property="og:title" content={product.meta_title} />
@@ -202,7 +201,7 @@ const ProductPage = (props) => {
 							/>
 						</Helmet>
 						<div className="details">
-							<FlexContainer column>
+							<div className="column">
 								<h1 class="product_title_top" style={{ display: 'none' }}>
 									{product.name}
 								</h1>
@@ -222,7 +221,7 @@ const ProductPage = (props) => {
 										/>
 									</Zoom>
 								</div>
-							</FlexContainer>
+							</div>
 							<Slideshow product={product} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
 								<h1 class="product_title_side" styles={{ display: 'flex' }}>
@@ -239,7 +238,7 @@ const ProductPage = (props) => {
 										Price: $549.99 - $<i class="fas fa-arrow-up" />
 									</h3>
 								) : (
-									<FlexContainer>
+									<div className="row">
 										<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
 										{product.sale_price !== 0 ? (
 											<label>
@@ -254,11 +253,11 @@ const ProductPage = (props) => {
 										) : (
 											<label>${product.price ? product.price.toFixed(2) : product.price}</label>
 										)}
-									</FlexContainer>
+									</div>
 								)}
 
-								<FlexContainer column>
-									<FlexContainer column styles={{ height: '100%' }}>
+								<div className="column">
+									<div className="column h-100per">
 										<div>
 											<ul style={{ marginLeft: '10px' }}>
 												{product.facts ? (
@@ -274,8 +273,8 @@ const ProductPage = (props) => {
 												)}
 											</ul>
 										</div>
-									</FlexContainer>
-								</FlexContainer>
+									</div>
+								</div>
 								<Slideshow product={product} show_hide="alt_pictures_hidden" set_image={set_image} />
 							</div>
 							<div className="details-action">
@@ -285,7 +284,7 @@ const ProductPage = (props) => {
 											Price: $549.99 - $<i class="fas fa-arrow-up" />
 										</label>
 									) : (
-										<FlexContainer>
+										<div className="row">
 											<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
 											{product.sale_price !== 0 ? (
 												<label>
@@ -302,11 +301,11 @@ const ProductPage = (props) => {
 													${product.price ? product.price.toFixed(2) : product.price}
 												</label>
 											)}
-										</FlexContainer>
+										</div>
 									)}
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
-										<FlexContainer v_i_center styles={{ height: '25px' }}>
+										<div className="ai-c h-25px">
 											<label
 												aria-label="sortOrder"
 												htmlFor="sortOrder"
@@ -330,7 +329,7 @@ const ProductPage = (props) => {
 												</select>
 												<span className="custom-arrow" />
 											</div>
-										</FlexContainer>
+										</div>
 
 										<h4 style={{ marginBottom: 0, marginTop: 11 }}>
 											Shipping Calculated at Checkout
@@ -497,21 +496,21 @@ const ProductPage = (props) => {
 							</div>
 						)}
 
-						<FlexContainer column styles={{ padding: '1rem' }}>
+						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
 							{product.category === 'glowskins' && (
 								<a href="/pages/faq#glowskins_chip_brand_compatibility">
-									<FlexContainer h_center>
+									<div className="jc-c">
 										<button className="button primary" style={{ margin: 'auto' }}>
 											Glowskins Microlight Compatibility
 										</button>
-									</FlexContainer>
+									</div>
 								</a>
 							)}
-							<FlexContainer column>
+							<div className="column">
 								<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
-								<FlexContainer column styles={{ height: '100%' }}>
+								<div className="column h-100per">
 									<ul style={{ marginLeft: '10px' }}>
 										{product.included_items ? (
 											product.included_items.split('\n').map((line, index) => {
@@ -525,8 +524,8 @@ const ProductPage = (props) => {
 											product.included_items
 										)}
 									</ul>
-								</FlexContainer>
-							</FlexContainer>
+								</div>
+							</div>
 
 							{!product.video ? (
 								<h1
@@ -539,7 +538,7 @@ const ProductPage = (props) => {
 									Video Coming Soon!
 								</h1>
 							) : (
-								<FlexContainer h_center column styles={{ margin: 0 }}>
+								<div className="jc-c column m-0px">
 									<h2
 										style={{
 											textAlign: 'center',
@@ -568,9 +567,9 @@ const ProductPage = (props) => {
 											allowfullscreen="1"
 										/>
 									</div>
-								</FlexContainer>
+								</div>
 							)}
-						</FlexContainer>
+						</div>
 						<div className="content-margined">
 							<h1
 								style={{
@@ -586,7 +585,7 @@ const ProductPage = (props) => {
 							)}
 							<Reviews product={product} pathname={props.match.params.pathname} />
 						</div>
-					</FlexContainer>
+					</div>
 				)}
 			</Loading>
 			<RelatedProducts product={product} product_pathname={props.match.params.pathname} />
@@ -595,7 +594,7 @@ const ProductPage = (props) => {
 				product_category={product && product.category}
 				product_pathname={props.match.params.pathname}
 			/> */}
-		</FlexContainer>
+		</div>
 	);
 };
 export default ProductPage;

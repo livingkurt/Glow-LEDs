@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveSponsor, detailsSponsor, listSponsors } from '../../actions/sponsorActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveSponsor, detailsSponsor } from '../../actions/sponsorActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 
 const EditSponsorPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ glover_name, set_glover_name ] = useState('');
@@ -21,32 +16,18 @@ const EditSponsorPage = (props) => {
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ active, set_active ] = useState('');
-	const [ loading_data, set_loading_data ] = useState(true);
+
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const userList = useSelector((state) => state.userList);
-	const { loading: loading_users, users, error: error_users } = userList;
+	const { users } = userList;
 
 	const history = useHistory();
 
 	const sponsorDetails = useSelector((state) => state.sponsorDetails);
 	const { sponsor, loading, error } = sponsorDetails;
 
-	const sponsorSave = useSelector((state) => state.sponsorSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = sponsorSave;
-
-	const sponsorDelete = useSelector((state) => state.sponsorDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = sponsorDelete;
-
-	// const sponsorReviewDelete = useSelector((state) => state.sponsorReviewDelete);
-	// const { success: sponsorDeleteSuccess } = sponsorReviewDelete;
-	const sponsorList = useSelector((state) => state.sponsorList);
-	const { sponsors } = sponsorList;
-
 	const dispatch = useDispatch();
-	const sponsor_id = props.match.params.id ? props.match.params.id : '';
-
-	console.log({ sponsor });
 
 	useEffect(() => {
 		if (props.match.params.id) {
@@ -57,8 +38,6 @@ const EditSponsorPage = (props) => {
 			dispatch(detailsSponsor(''));
 		}
 		dispatch(listUsers(''));
-
-		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);
@@ -91,9 +70,6 @@ const EditSponsorPage = (props) => {
 		set_promo_code(sponsor.promo_code);
 		set_funds_generated(sponsor.funds_generated);
 		set_active(sponsor.active);
-
-		// fsponsor.release_date);
-		// console.log(format_date(sponsor.release_date));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -128,7 +104,7 @@ const EditSponsorPage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Sponsor' : 'Create Sponsor'}</h1>
 
 			<div className="form">
@@ -153,8 +129,8 @@ const EditSponsorPage = (props) => {
 										}}
 									/>
 
-									<FlexContainer row wrap>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="user">User</label>
 												<input
@@ -270,8 +246,8 @@ const EditSponsorPage = (props) => {
 													/>
 												</li>
 											)}
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}

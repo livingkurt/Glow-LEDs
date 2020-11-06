@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { logout, update, token } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { format_date } from '../../utils/helper_functions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
@@ -80,7 +78,7 @@ const UserOrderPage = (props) => {
 	};
 
 	return (
-		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
+		<div className="profile_container wrap column p-20px">
 			<Helmet>
 				<title>My Orders | Glow LEDs</title>
 				<meta property="og:title" content="My Orders | Glow LEDs" />
@@ -88,13 +86,13 @@ const UserOrderPage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
 			</Helmet>
-			<FlexContainer wrap h_between>
+			<div className="wrap jc-b">
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+						<div className="wrap jc-b w-16rem m-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -104,10 +102,10 @@ const UserOrderPage = (props) => {
 									borderRadius: '5px'
 								}}
 							/>
-						</FlexContainer>
+						</div>
 					);
 				})}
-			</FlexContainer>
+			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
@@ -190,7 +188,7 @@ const UserOrderPage = (props) => {
 					)}
 				</Loading>
 			</div>
-		</FlexContainer>
+		</div>
 	);
 };
 

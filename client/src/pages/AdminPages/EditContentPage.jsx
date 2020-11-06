@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveContent, detailsContent, listContents } from '../../actions/contentActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveContent, detailsContent } from '../../actions/contentActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditContentPage = (props) => {
@@ -116,7 +113,7 @@ const EditContentPage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Content' : 'Create Content'}</h1>
 
 			<div className="form">

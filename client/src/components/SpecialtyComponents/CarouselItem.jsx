@@ -37,7 +37,7 @@ const CarouselItem = (props) => {
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${props.product.sale_price ? (
+					<i className="fas fa-arrow-right" /> ${props.product.sale_price ? (
 						props.product.sale_price.toFixed(2)
 					) : (
 						props.product.sale_price
@@ -53,7 +53,7 @@ const CarouselItem = (props) => {
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
-					<i class="fas fa-arrow-right" />
+					<i className="fas fa-arrow-right" />
 					<label className="ml-7px">Sold Out</label>
 				</label>
 			);
@@ -88,7 +88,7 @@ const CarouselItem = (props) => {
 							<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 							{product.name === 'Custom Infinity Mirror' ? (
 								<label className="product-price">
-									$549.99 - $<i class="fas fa-arrow-up" />
+									$549.99 - $<i className="fas fa-arrow-up" />
 								</label>
 							) : (
 								<label className="product-price">{sale_price_switch()}</label>

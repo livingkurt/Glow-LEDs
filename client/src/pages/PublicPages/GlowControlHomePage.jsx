@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -76,7 +75,7 @@ const GlowControlHomePage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
 				<meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
@@ -111,15 +110,15 @@ const GlowControlHomePage = (props) => {
 				/>
 			</Helmet>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 className="welcome_text mb-3rem" style={{ fontSize: '6rem' }}>
 					Welcome to Glow Control
 				</h1>
-			</FlexContainer>
+			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h1>
-			</FlexContainer>
+			</div>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Control your Glow LEDs Infinity Mirrors and Glow Strings with ease!
 			</p>
@@ -169,7 +168,7 @@ const GlowControlHomePage = (props) => {
 													</Link>
 												</td>
 												<td>
-													<FlexContainer h_between>
+													<div className="jc-b">
 														<Link to={'/secure/account/editdevice/' + device._id}>
 															<button className="button icon">
 																<i className="fas fa-edit" />
@@ -181,7 +180,7 @@ const GlowControlHomePage = (props) => {
 														>
 															<i className="fas fa-trash-alt" />
 														</button>
-													</FlexContainer>
+													</div>
 												</td>
 											</tr>
 										))}
@@ -202,10 +201,10 @@ const GlowControlHomePage = (props) => {
 				)}
 			</div>
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Infinity Mirrors</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Infinity Mirrors Promo Video"
@@ -218,26 +217,26 @@ const GlowControlHomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity mirrors
 					are the perfect addition to any chill space. Look into another dimension as vibrant LEDs go on for
 					miles of rainbow bliss. Order a custom infinity mirror to add that personal touch that will only be
 					found in your space.
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/infinity_mirrors">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Infinity Mirrors</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1>Glow Strings</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Glow Strings Promo Video"
@@ -250,20 +249,20 @@ const GlowControlHomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
 					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
 					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/glow_strings">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glow Strings</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 		</div>
 	);

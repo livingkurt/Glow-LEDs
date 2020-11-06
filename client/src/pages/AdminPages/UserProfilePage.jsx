@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-// import { listMyOrders } from '../../actions/orderActions';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { detailsUser } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { API_Emails } from '../../utils';
 
 const UserProfilePage = (props) => {
-	// const history = useHistory();
 	const userDetails = useSelector((state) => state.userDetails);
 	const { loading, user, error } = userDetails;
 	console.log({ user });
@@ -72,43 +69,43 @@ const UserProfilePage = (props) => {
 		console.log(request);
 	};
 	return (
-		<FlexContainer column styles={{ padding: '20px' }} class="inner_content">
+		<div className="column p-20px inner_content">
 			<Helmet>
 				<title>Admin {first_name}'s Profile | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer>
+			<div className="row">
 				<h1 style={{ textAlign: 'center', width: '100%' }}>{first_name}'s Profile</h1>
-			</FlexContainer>
+			</div>
 			<Loading loading={loading} error={error}>
 				{user && (
-					<FlexContainer class="profile_container" row h_between wrap>
-						<FlexContainer column>
-							<FlexContainer column styles={container_styles}>
+					<div className="profile_container row jc-b wrap">
+						<div className="column">
+							<div className="column" style={container_styles}>
 								<h3>First Name</h3>
 								<label>{first_name}</label>
-							</FlexContainer>
-							<FlexContainer column styles={container_styles}>
+							</div>
+							<div className="column" style={container_styles}>
 								<h3>Last Name</h3>
 								<label>{last_name}</label>
-							</FlexContainer>
-							<FlexContainer column styles={container_styles}>
+							</div>
+							<div className="column" style={container_styles}>
 								<h3>Email</h3>
 								<label>{email}</label>
-							</FlexContainer>
-							<FlexContainer column styles={container_styles}>
+							</div>
+							<div className="column" style={container_styles}>
 								<h3>Password</h3>
 								<label>**********</label>
-							</FlexContainer>
-							<FlexContainer column styles={container_styles}>
+							</div>
+							<div className="column" style={container_styles}>
 								<h3>Verified</h3>
 								<label>{verified === true ? 'Verified' : 'Not Verified'}</label>
-							</FlexContainer>
-							<FlexContainer column styles={container_styles}>
+							</div>
+							<div className="column" style={container_styles}>
 								<h3>Admin</h3>
 								<label>{admin === true ? 'Admin' : 'Not Admin'}</label>
-							</FlexContainer>
-						</FlexContainer>
-						<FlexContainer>
+							</div>
+						</div>
+						<div className="row">
 							<div style={{ height: 50 }}>
 								<Link to={'/secure/glow/edituserprofile'}>
 									<button
@@ -150,11 +147,11 @@ const UserProfilePage = (props) => {
 								</button>
 								{/* </Link> */}
 							</div>
-						</FlexContainer>
-					</FlexContainer>
+						</div>
+					</div>
 				)}
 			</Loading>
-		</FlexContainer>
+		</div>
 	);
 };
 

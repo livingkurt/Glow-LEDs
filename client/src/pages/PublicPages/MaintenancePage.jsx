@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { FlexContainer } from '../../components/ContainerComponents/index';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 
 const MaintenancePage = (props) => {
@@ -37,7 +35,7 @@ const MaintenancePage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com" />
 			</Helmet>
 			<div style={header_styles}>
-				<FlexContainer h_center column t_center>
+				<div className="jc-c column ta-c">
 					<div className="brand">
 						<img
 							className="zoom logo"
@@ -46,14 +44,14 @@ const MaintenancePage = (props) => {
 							alt="Glow LEDs"
 						/>
 					</div>
-					<FlexContainer h_center v_i_center class="logo_text">
+					<div className="jc-c ai-c logo_text">
 						<img
 							className="logo_2"
 							style={{ display: 'none', height: '80px' }}
 							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
 							alt="Glow LEDs"
 						/>
-					</FlexContainer>
+					</div>
 					<h1
 						class="glow_leds_text"
 						styles={{
@@ -68,17 +66,17 @@ const MaintenancePage = (props) => {
 					>
 						Glow LEDs
 					</h1>
-				</FlexContainer>
+				</div>
 			</div>
 			<div style={content_styles}>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
 						Glow LEDs Coming Soon!
 					</h1>
-				</FlexContainer>
-				<FlexContainer h_center>
+				</div>
+				<div className="jc-c">
 					<h1>From a Glover that just wants the world to stay lit</h1>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items
 					are handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up
@@ -88,14 +86,15 @@ const MaintenancePage = (props) => {
 					into a relaxing retreat, you decide.
 				</p>
 				<div className="home_page_divs">
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<h1>Diffuser Caps</h1>
-					</FlexContainer>
-					<FlexContainer h_center styles={video_wrapper}>
+					</div>
+					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">
 							<iframe
 								width="996"
 								height="560"
+								title="Diffuser Caps"
 								style={{ borderRadius: '20px' }}
 								src="https://www.youtube.com/embed/CaC-86DAql4?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 								frameborder="0"
@@ -103,7 +102,7 @@ const MaintenancePage = (props) => {
 								allowfullscreen="1"
 							/>
 						</div>
-					</FlexContainer>
+					</div>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						It's been too long since a truly new element has been introduced to gloving. We are here to
 						change lightshows forever. This new technology puts designs on the outside of your glove for
@@ -113,14 +112,15 @@ const MaintenancePage = (props) => {
 					</p>
 				</div>
 				<div className="home_page_divs">
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<h1>Infinity Mirrors</h1>
-					</FlexContainer>
-					<FlexContainer h_center styles={video_wrapper}>
+					</div>
+					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">
 							<iframe
 								width="996"
 								height="560"
+								title="Infinity Mirrors"
 								style={{ borderRadius: '20px' }}
 								src="https://www.youtube.com/embed/RLiFZahHbjU?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 								frameborder="0"
@@ -128,7 +128,7 @@ const MaintenancePage = (props) => {
 								allowfullscreen="1"
 							/>
 						</div>
-					</FlexContainer>
+					</div>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity
 						mirrors are the perfect addition to any chill space. Look into another dimension as vibrant LEDs
@@ -137,14 +137,15 @@ const MaintenancePage = (props) => {
 					</p>
 				</div>
 				<div className="home_page_divs">
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<h1>Glow Strings</h1>
-					</FlexContainer>
-					<FlexContainer h_center styles={video_wrapper}>
+					</div>
+					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">
 							<iframe
 								width="996"
 								height="560"
+								title="Glow Strings"
 								style={{ borderRadius: '20px' }}
 								src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 								frameborder="0"
@@ -152,7 +153,7 @@ const MaintenancePage = (props) => {
 								allowfullscreen="1"
 							/>
 						</div>
-					</FlexContainer>
+					</div>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your
 						home into a festival. Strobes, fades, flashes, they have it all. fill your universe with a

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { logout, update, reset_password, password_reset } from '../../actions/userActions';
+import { password_reset } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../../utils/validations';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
@@ -23,16 +22,9 @@ const ChangePasswordPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();
-	// 	dispatch(update({ userId: userInfo._id, email, name, password }));
-	// 	history.push('/secure/account/profile');
-	// };
-
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		const validation_data = { id: userInfo._id, current_password, password, rePassword };
-		// console.log({ data });
 		const request = await validate_password_change(validation_data);
 		console.log({ request });
 		setCurrentPasswordValidations(request.errors.current_password);
@@ -71,7 +63,7 @@ const ChangePasswordPage = (props) => {
 	);
 
 	return (
-		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
+		<div className="profile_container column p-20px">
 			<Helmet>
 				<title>Change Password | Glow LEDs</title>
 				<meta property="og:title" content="Change Password | Glow LEDs" />
@@ -79,11 +71,11 @@ const ChangePasswordPage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/changepassword" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
 			</Helmet>
-			<FlexContainer styles={{ marginBottom: 10 }}>
+			<div className="mb-10px">
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
-			</FlexContainer>
+			</div>
 			<div className="profile-info">
 				<div className="form">
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>
@@ -93,9 +85,7 @@ const ChangePasswordPage = (props) => {
 							</li>
 							<li>
 								<Loading loading={loading} error={error}>
-									<FlexContainer h_center>
-										{success && <h3>Profile Saved Successfully</h3>}
-									</FlexContainer>
+									<div className="jc-c">{success && <h3>Profile Saved Successfully</h3>}</div>
 								</Loading>
 							</li>
 							<li>
@@ -154,7 +144,7 @@ const ChangePasswordPage = (props) => {
 					</form>
 				</div>
 			</div>
-		</FlexContainer>
+		</div>
 	);
 };
 

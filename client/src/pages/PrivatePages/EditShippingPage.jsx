@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { logout, update } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
@@ -52,7 +51,7 @@ const ProfilePage = (props) => {
 	);
 
 	return (
-		<FlexContainer class="profile_container" wrap styles={{ padding: '20px' }}>
+		<div className="profile_container wrap p-20px">
 			<Helmet>
 				<title>Edit Shipping | Glow LEDs</title>
 				<meta property="og:title" content="Edit Shipping | Glow LEDs" />
@@ -68,11 +67,11 @@ const ProfilePage = (props) => {
 								<h1 style={{ textAlign: 'center' }}>User Profile</h1>
 							</li>
 							<li>
-								<FlexContainer h_center>
+								<div className="jc-c">
 									<Loading loading={loading} error={error}>
 										{success && <h3 style={{ textAlign: 'center' }}>Profile Saved Successfully</h3>}
 									</Loading>
-								</FlexContainer>
+								</div>
 							</li>
 							<li>
 								<label htmlFor="name">Name</label>
@@ -121,7 +120,7 @@ const ProfilePage = (props) => {
 					</form>
 				</div>
 			</div>
-		</FlexContainer>
+		</div>
 	);
 };
 

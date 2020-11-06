@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 		sortOrder = { _id: -1 };
 	}
 
-	const logs = await Log.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+	const logs = await Log.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder).limit(100);
 	// console.log(logs);
 	res.send(logs);
 });

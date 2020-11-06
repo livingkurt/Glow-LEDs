@@ -1,22 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts, deleteProduct } from '../../actions/productActions';
-import { FlexContainer } from '../../components/ContainerComponents';
-import { Link, useHistory } from 'react-router-dom';
+import { listProducts } from '../../actions/productActions';
+import { Link } from 'react-router-dom';
 import { listOrders } from '../../actions/orderActions';
 import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
-// import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
-import { occurrence, hslToHex, unformat_date } from '../../utils/helper_functions';
+import { hslToHex, unformat_date } from '../../utils/helper_functions';
 import { API_Revenue, API_Products } from '../../utils';
 import { listSponsors } from '../../actions/sponsorActions';
 import { listPromos } from '../../actions/promoActions';
 import { Helmet } from 'react-helmet';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const ControlPanelPage = (props) => {
 	const dispatch = useDispatch();
@@ -406,13 +400,13 @@ const ControlPanelPage = (props) => {
 	];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Control Panel | Glow LEDs</title>8
 			</Helmet>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
-			</FlexContainer>
+			</div>
 			<div className="jc-b">
 				<Link to="/secure/glow/orders">
 					<button className="button primary">Orders</button>

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -32,7 +31,7 @@ const HomePage = (props) => {
 	);
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
 				<meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
@@ -67,17 +66,17 @@ const HomePage = (props) => {
 				/>
 			</Helmet>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 className="welcome_text mb-3rem" style={{ fontSize: '6rem' }}>
 					Welcome to Glow-LEDs
 				</h1>
-			</FlexContainer>
+			</div>
 			{content &&
 			content.home_page && (
 				<div className="home_page_divs">
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<h1 style={{ textAlign: 'center' }}>{content.home_page.h1}</h1>
-					</FlexContainer>
+					</div>
 					{content.home_page.show_image && (
 						<Link to={content.home_page.link}>
 							<img
@@ -88,7 +87,7 @@ const HomePage = (props) => {
 						</Link>
 					)}
 					{content.home_page.show_video && (
-						<FlexContainer h_center styles={{ position: 'relative' }}>
+						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
 									title="Mini Diffuser Caps Promo Video"
@@ -102,27 +101,27 @@ const HomePage = (props) => {
 									allowfullscreen="1"
 								/>
 							</div>
-						</FlexContainer>
+						</div>
 					)}
 
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<h2 style={{ marginBottom: 0, textAlign: 'center' }}>{content.home_page.h2}</h2>
-					</FlexContainer>
+					</div>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						{content.home_page.p}
 					</p>
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<Link to={content.home_page.link}>
 							<button className="button primary" style={{ background: 'transparent' }}>
 								<h2>{content.home_page.button}</h2>
 							</button>
 						</Link>
-					</FlexContainer>
+					</div>
 				</div>
 			)}
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h1>
-			</FlexContainer>
+			</div>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
 				handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
@@ -133,10 +132,10 @@ const HomePage = (props) => {
 			</p>
 
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Mini Diffuser Caps</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Mini Diffuser Caps Promo Video"
@@ -149,25 +148,25 @@ const HomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Get the same Diffuser Caps that you know and love in a smaller size. We Call them Mini Diffuser
 					Caps!
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/mini_diffuser_caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Mini Diffuser Caps</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Diffuser Caps</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Diffuser Caps Promo Video"
@@ -180,7 +179,7 @@ const HomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					It's been too long since a truly new element has been introduced to gloving. We are here to change
 					lightshows forever. This new technology puts designs on the outside of your glove for ultimate
@@ -188,19 +187,19 @@ const HomePage = (props) => {
 					gloves to the adapter and start throwing heat right away. Mix and match the cap designs create truly
 					ridiculous light shows. 100% facemelt guarantee.
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/diffuser_caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Diffuser Caps</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Frosted Diffusers</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Frosted Diffusers Promo Video"
@@ -213,26 +212,26 @@ const HomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
 					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
 					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/frosted_diffusers">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Frosted Diffusers</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Infinity Mirrors</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Infinity Mirrors Promo Video"
@@ -245,26 +244,26 @@ const HomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity mirrors
 					are the perfect addition to any chill space. Look into another dimension as vibrant LEDs go on for
 					miles of rainbow bliss. Order a custom infinity mirror to add that personal touch that will only be
 					found in your space.
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/infinity_mirrors">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Infinity Mirrors</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 			<div className="home_page_divs">
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<h1>Glow Strings</h1>
-				</FlexContainer>
-				<FlexContainer h_center styles={{ position: 'relative' }}>
+				</div>
+				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
 							title="Glow Strings Promo Video"
@@ -277,20 +276,20 @@ const HomePage = (props) => {
 							allowfullscreen="1"
 						/>
 					</div>
-				</FlexContainer>
+				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
 					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
 					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
-				<FlexContainer h_center>
+				<div className="jc-c">
 					<Link to="/collections/all/products/category/glow_strings">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glow Strings</h2>
 						</button>
 					</Link>
-				</FlexContainer>
+				</div>
 			</div>
 		</div>
 	);

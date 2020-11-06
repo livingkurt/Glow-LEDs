@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-// import emailjs from 'emailjs-com';
-import { FlexContainer } from '../../components/ContainerComponents';
-// import { listenerCount } from 'cluster';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-// import "./form.css";
 
 const SitemapPage = () => {
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Sitemap | Glow LEDs</title>
 				<meta property="og:title" content="Sitemap | Glow LEDs" />
@@ -30,7 +26,7 @@ const SitemapPage = () => {
 			</Helmet>
 			<div class="inner_content">
 				<h1 style={{ textAlign: 'center' }}>Glow LEDs Sitemap</h1>
-				<FlexContainer h_between wrap>
+				<div className="wrap jc-b">
 					<div style={{ width: '50%' }}>
 						<h2 style={{ textAlign: 'left' }}>Home</h2>
 						<ul>
@@ -348,7 +344,7 @@ const SitemapPage = () => {
 							</ul>
 						</ul>
 					</div>
-				</FlexContainer>
+				</div>
 			</div>
 		</div>
 	);

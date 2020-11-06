@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { listFeatures } from '../../actions/featureActions';
@@ -8,10 +7,8 @@ import { humanize } from '../../utils/helper_functions';
 
 const FeaturedPage = (props) => {
 	const featureList = useSelector((state) => state.featureList);
-	const { loading, features, error } = featureList;
+	const { features } = featureList;
 
-	const productDetails = useSelector((state) => state.productDetails);
-	const { product, loading: loading_products, error: error_products } = productDetails;
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -23,7 +20,7 @@ const FeaturedPage = (props) => {
 
 	const today = date.toISOString();
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Featured | Glow LEDs</title>
 				<meta property="og:title" content="Featured | Glow LEDs" />
@@ -43,9 +40,9 @@ const FeaturedPage = (props) => {
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
 			</Helmet>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1> Featured</h1>
-			</FlexContainer>
+			</div>
 
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here is an archive of the lightshows and product reviews that you have so graciously given to us. We
@@ -55,7 +52,7 @@ const FeaturedPage = (props) => {
 				features.filter((feature) => feature.release_date <= today).map((feature) => {
 					return (
 						<div className="home_page_divs">
-							<FlexContainer h_center column>
+							<div className="column jc-c">
 								<h1 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h1>
 								<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
 									Check out {feature.glover_name} with the {humanize(feature.product)}!
@@ -65,7 +62,7 @@ const FeaturedPage = (props) => {
 									Instagram
 								</p>
 								<Link to={`/collections/all/products/${feature.product}`}>
-									<FlexContainer h_center column>
+									<div className="column jc-c">
 										<div className="p_descriptions" style={{ textAlign: 'center' }}>
 											<button
 												className="button primary "
@@ -74,10 +71,10 @@ const FeaturedPage = (props) => {
 												{humanize(feature.product)}
 											</button>
 										</div>
-									</FlexContainer>
+									</div>
 								</Link>
-							</FlexContainer>
-							<FlexContainer h_center styles={{ position: 'relative' }}>
+							</div>
+							<div className="jc-c pos-rel">
 								<div className="iframe-container">
 									<iframe
 										width="996"
@@ -89,7 +86,7 @@ const FeaturedPage = (props) => {
 										allowfullscreen="1"
 									/>
 								</div>
-							</FlexContainer>
+							</div>
 
 							<p className="p_descriptions" style={{ textAlign: 'center' }}>
 								{feature.song_id}
@@ -99,14 +96,14 @@ const FeaturedPage = (props) => {
 								Questions page.
 							</p>
 							<Link to="/pages/faq">
-								<FlexContainer h_center>
+								<div className="jc-c">
 									<button
 										className="button primary "
 										style={{ margin: 'auto', marginBottom: '10px' }}
 									>
 										Frequently Asked Questions
 									</button>
-								</FlexContainer>
+								</div>
 							</Link>
 						</div>
 					);

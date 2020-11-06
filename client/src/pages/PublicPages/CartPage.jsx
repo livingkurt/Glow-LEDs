@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FlexContainer } from '../../components/ContainerComponents';
-import { Carousel, SuggestedProducts } from '../../components/SpecialtyComponents';
+import { Carousel } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import Cookie from 'js-cookie';
-import { humanize } from '../../utils/helper_functions';
+
 const CartPage = (props) => {
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
@@ -35,9 +33,9 @@ const CartPage = (props) => {
 		const categories = cartItems.map((cartItem) => {
 			return cartItem.category;
 		});
-		const names = cartItems.map((cartItem) => {
-			return cartItem.name;
-		});
+		// const names = cartItems.map((cartItem) => {
+		// 	return cartItem.name;
+		// });
 		if (
 			!categories.includes('Custom Diffuser Caps Final Payment') ||
 			!categories.includes('Custom Diffuser Caps Deposit')
@@ -52,7 +50,7 @@ const CartPage = (props) => {
 	};
 
 	return (
-		<FlexContainer column>
+		<div className="column">
 			<Helmet>
 				<title>Cart | Glow LEDs </title>
 				<meta property="og:title" content="Cart | Glow LEDs" />
@@ -68,9 +66,9 @@ const CartPage = (props) => {
 							<div>Price</div>
 						</li>
 						{cartItems.length === 0 ? (
-							<FlexContainer column v_between>
+							<div className="column ai-b">
 								<div>Cart is empty</div>
-							</FlexContainer>
+							</div>
 						) : (
 							<div>
 								<h4>{no_adapters_warning()}</h4>
@@ -93,7 +91,7 @@ const CartPage = (props) => {
 												</Link>
 											</div>
 											<div>
-												<FlexContainer v_i_center styles={{ height: '25px' }}>
+												<div className="ai-c h-25px">
 													<label
 														aria-label="sortOrder"
 														htmlFor="sortOrder"
@@ -117,11 +115,11 @@ const CartPage = (props) => {
 														</select>
 														<span className="custom-arrow" />
 													</div>
-												</FlexContainer>
+												</div>
 											</div>
 										</div>
 
-										<FlexContainer column>
+										<div className="column">
 											<div className="cart-price">
 												{item.sale_price !== 0 ? (
 													<label>
@@ -145,7 +143,7 @@ const CartPage = (props) => {
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>
-										</FlexContainer>
+										</div>
 									</li>
 								))}
 							</div>
@@ -153,7 +151,7 @@ const CartPage = (props) => {
 					</ul>
 				</div>
 
-				<FlexContainer h_center class="cart-action-container">
+				<div className="cart-action-container jc-c">
 					<div className="cart-action">
 						<h3 className="subtotal_h3">
 							Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
@@ -167,11 +165,11 @@ const CartPage = (props) => {
 							Proceed to Checkout
 						</button>
 					</div>
-				</FlexContainer>
+				</div>
 			</div>
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
 			<Carousel />
-		</FlexContainer>
+		</div>
 	);
 };
 

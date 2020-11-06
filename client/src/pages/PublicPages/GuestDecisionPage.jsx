@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { update, reset_password } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Helmet } from 'react-helmet';
 
 const GuestCheckoutPage = (props) => {
@@ -31,21 +30,12 @@ const GuestCheckoutPage = (props) => {
 			</Helmet>
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
-					{/* <li>
-						<h1 styles={{ width: '100%' }}>Guest Decision</h1>{' '}
-					</li> */}
 					<li>
 						<h2>Continue as User</h2>
 						<Link to="/account/login?redirect=/secure/checkout/placeorder">
 							<button className="button primary full-width">Login</button>
 						</Link>
 					</li>
-					{/* <li>
-						<h2>Continue as User</h2>
-						<Link to="/account/register?redirect=/account/login?redirect=/secure/checkout/placeorder">
-							<button className="button primary full-width">Register</button>
-						</Link>
-					</li> */}
 					<li>
 						<h2>Continue as Guest</h2>
 						<Link to="/checkout/placeorder">

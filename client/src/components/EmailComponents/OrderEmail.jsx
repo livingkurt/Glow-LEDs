@@ -1,33 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { FlexContainer } from '../../components/ContainerComponents/index';
-
 import { Link, useHistory } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
-import { Loading } from '../UtilityComponents';
 
 const OrderEmail = (props) => {
-	// const user_data = props.userInfo;
-	// console.log({ user_data });
-	const history = useHistory();
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email, loading, error } = emailDetails;
 	const orderDetails = useSelector((state) => state.orderDetails);
-	const { order, loading: loading_order, error: error_order } = orderDetails;
+	const { order } = orderDetails;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	const emailList = useSelector((state) => state.emailList);
-	const { loading: loading_emails, emails, error: error_emails } = emailList;
-
-	const [ loading_email, set_loading_email ] = useState(true);
+	const { emails } = emailList;
 
 	console.log({ emails });
 
@@ -697,7 +685,7 @@ const OrderEmail = (props) => {
 									target="_blank"
 									rel="noopener noreferrer"
 								>
-									{/* <i class="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+									{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
 									{/* <Facebook fill="white" /> */}
 									<button className="button primary " style={{ margin: 'auto' }}>
 										Feature Content
@@ -751,7 +739,7 @@ const OrderEmail = (props) => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										{/* <i class="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+										{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
 										{/* <Facebook fill="white" /> */}
 										<img
 											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/facebook-brands.png"
@@ -772,7 +760,7 @@ const OrderEmail = (props) => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										{/* <i class="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
+										{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
 										<img
 											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/instagram-brands.png"
 											style={{ height: '25px' }}
@@ -792,7 +780,7 @@ const OrderEmail = (props) => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										{/* <i class="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+										{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
 										<img
 											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/youtube-brands.png"
 											style={{ height: '20px' }}
@@ -812,7 +800,7 @@ const OrderEmail = (props) => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										{/* <i class="fab fa-soundcloud" style={{ color: 'white' }} /> */}
+										{/* <i className="fab fa-soundcloud" style={{ color: 'white' }} /> */}
 										<img
 											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/soundcloud-brands.png"
 											style={{ height: '20px' }}

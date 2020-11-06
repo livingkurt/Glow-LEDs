@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listDevices, deleteDevice, listMyDevices } from '../../actions/deviceActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { deleteDevice, listMyDevices } from '../../actions/deviceActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const DevicesPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -99,15 +93,15 @@ const DevicesPage = (props) => {
 	// ];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Devices | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
+				<div className="wrap jc-b">
 					{/* {colors.map((color) => {
 						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<div className="wrap jc-b w-16rem m-1rem">
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -117,21 +111,21 @@ const DevicesPage = (props) => {
 										borderRadius: '5px'
 									}}
 								/>
-							</FlexContainer>
+							</div>
 						);
 					})} */}
-				</FlexContainer>
+				</div>
 				<div className=" jc-fe w-500px">
 					<label className="p-10px ">Click Here to Get Started!</label>
 					<Link to="/secure/account/editdevice">
 						<button className="button primary">Add Device</button>
 					</Link>
 				</div>
-			</FlexContainer>
+			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Devices</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
@@ -169,7 +163,7 @@ const DevicesPage = (props) => {
 											</Link>
 										</td>
 										<td>
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/account/editdevice/' + device._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -178,7 +172,7 @@ const DevicesPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(device)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

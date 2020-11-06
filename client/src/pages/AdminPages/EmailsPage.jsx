@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listEmails, deleteEmail } from '../../actions/emailActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const EmailsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -56,49 +50,42 @@ const EmailsPage = (props) => {
 	};
 
 	const colors = [
-		{ name: 'Supplies', color: '#6d3e3e' },
-		{ name: 'Website', color: '#6d3e5c' },
-		{ name: 'Shipping', color: '#3e4c6d' },
-		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
+		{ name: 'Announcements', color: '#6d3e3e' },
+		{ name: 'Reviews', color: '#6d3e5c' },
+		{ name: 'Reset Password', color: '#3e4c6d' },
+		{ name: 'Password Change', color: '#6d5a3e' },
+		{ name: 'Account Created', color: '#3f6561' }
 	];
 
 	const determine_color = (email) => {
 		let result = '';
-		if (email.category === 'Supplies') {
+		if (email.email_type === 'Announcements') {
 			result = colors[0].color;
 		}
-		if (email.category === 'Website') {
+		if (email.email_type === 'Reviews') {
 			result = colors[1].color;
 		}
-		if (email.category === 'Shipping') {
+		if (email.email_type === 'Reset Password') {
 			result = colors[2].color;
 		}
-		if (email.category === 'Business') {
+		if (email.email_type === 'Password Change') {
 			result = colors[3].color;
 		}
-		if (email.category === 'Equipment') {
+		if (email.email_type === 'Account Created') {
 			result = colors[4].color;
 		}
 		console.log(result);
 		return result;
 	};
-	const sort_options = [
-		'Release Date',
-		'Glover Name',
-		'Facebook Name',
-		'Instagram Handle',
-		'Product',
-		'Song ID',
-		'Newest'
-	];
+
+	const sort_options = [ 'Announcements', 'Reviews', 'Reset Password', 'Password Change', 'Account Created' ];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
+			<div className="wrap jc-b">
 				<Link to="/secure/glow/emails/announcement">
 					<button className="button primary">Announcement</button>
 				</Link>
@@ -120,11 +107,27 @@ const EmailsPage = (props) => {
 				<Link to="/secure/glow/editemail">
 					<button className="button primary">Create Email</button>
 				</Link>
-			</FlexContainer>
-
-			<FlexContainer h_center>
+			</div>
+			<div className="wrap jc-b">
+				{colors.map((color) => {
+					return (
+						<div className="wrap jc-b m-1rem">
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</div>
+					);
+				})}
+			</div>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Emails</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -150,7 +153,7 @@ const EmailsPage = (props) => {
 									<tr
 										key={email._id}
 										style={{
-											backgroundColor: '#3e4c6d',
+											backgroundColor: determine_color(email),
 											fontSize: '1.4rem'
 										}}
 									>
@@ -174,7 +177,7 @@ const EmailsPage = (props) => {
 											)}
 										</td>
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editemail/' + email._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -183,7 +186,7 @@ const EmailsPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(email)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { update, reset_password, password_reset } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { password_reset } from '../../actions/userActions';
 import { Helmet } from 'react-helmet';
 
 const ResetPasswordPage = (props) => {
@@ -32,9 +30,9 @@ const ResetPasswordPage = (props) => {
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>
-						<FlexContainer>
+						<div className="row">
 							<h1 styles={{ width: '100%' }}>Reset Password</h1>{' '}
-						</FlexContainer>
+						</div>
 					</li>
 					<li />
 					<li>

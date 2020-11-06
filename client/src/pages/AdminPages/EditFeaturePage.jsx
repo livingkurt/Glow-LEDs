@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveFeature, detailsFeature, listFeatures } from '../../actions/featureActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveFeature, detailsFeature } from '../../actions/featureActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditFeaturePage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ glover_name, set_glover_name ] = useState('');
@@ -133,7 +129,7 @@ const EditFeaturePage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Feature' : 'Create Feature'}</h1>
 
 			<div className="form">
@@ -158,8 +154,8 @@ const EditFeaturePage = (props) => {
 										}}
 									/>
 
-									<FlexContainer row wrap>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="user">User</label>
 												<input
@@ -253,8 +249,8 @@ const EditFeaturePage = (props) => {
 													onChange={(e) => set_picture(e.target.value)}
 												/>
 											</li>
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}

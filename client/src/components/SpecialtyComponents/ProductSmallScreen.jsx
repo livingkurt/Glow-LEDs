@@ -24,7 +24,7 @@ const ProductSmallScreen = (props) => {
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${props.product.sale_price ? (
+					<i className="fas fa-arrow-right" /> ${props.product.sale_price ? (
 						props.product.sale_price.toFixed(2)
 					) : (
 						props.product.sale_price
@@ -40,7 +40,7 @@ const ProductSmallScreen = (props) => {
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
-					<i class="fas fa-arrow-right" />
+					<i className="fas fa-arrow-right" />
 					<label className="ml-7px">Sold Out</label>
 				</label>
 			);
@@ -68,7 +68,7 @@ const ProductSmallScreen = (props) => {
 						<div className="product_text mt-10px">
 							{props.product.name === 'Custom Infinity Mirror' ? (
 								<div className="">
-									$549.99 - $<i class="fas fa-arrow-up" />
+									$549.99 - $<i className="fas fa-arrow-up" />
 								</div>
 							) : (
 								<div className="">{sale_price_switch()}</div>

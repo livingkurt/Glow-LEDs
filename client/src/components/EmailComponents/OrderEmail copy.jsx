@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -52,7 +51,7 @@ const OrderEmail = () => {
 				order.orderItems && (
 					<body>
 						<div
-							class="invoice-box"
+							className="invoice-box"
 							style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #black;"
 						>
 							<table
@@ -62,7 +61,7 @@ const OrderEmail = () => {
 								width="100%"
 								align="left"
 							>
-								<tr class="top">
+								<tr className="top">
 									<td colspan="2" style=" vertical-align: top;" valign="top">
 										<table
 											style="width: 100%; line-height: inherit; text-align: left;"
@@ -71,7 +70,7 @@ const OrderEmail = () => {
 										>
 											<tr>
 												<td
-													class="title"
+													className="title"
 													style="vertical-align: top;   line-height: 45px; color: #333; "
 													valign="top"
 												>
@@ -96,7 +95,7 @@ const OrderEmail = () => {
 									</td>
 								</tr>
 
-								<tr class="information">
+								<tr className="information">
 									<td colspan="2" style="vertical-align: top;" valign="top">
 										<table
 											style="width: 100%; line-height: inherit; text-align: left;"
@@ -129,7 +128,7 @@ const OrderEmail = () => {
 									</td>
 								</tr>
 
-								<tr class="heading">
+								<tr className="heading">
 									<td
 										style="padding: 5px; vertical-align: top; background: #eee; border-bottom: 1px solid #ddd; font-weight: bold;"
 										valign="top"
@@ -146,7 +145,7 @@ const OrderEmail = () => {
 									</td>
 								</tr>
 
-								{/* <tr class="details">
+								{/* <tr className="details">
 									<td
 										style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;"
 										valign="top"
@@ -163,7 +162,7 @@ const OrderEmail = () => {
 									</td>
 								</tr> */}
 
-								<tr class="heading">
+								<tr className="heading">
 									<td
 										style="padding: 5px; vertical-align: top; background: #eee; border-bottom: 1px solid #ddd; font-weight: bold;"
 										valign="top"
@@ -181,7 +180,7 @@ const OrderEmail = () => {
 								</tr>
 								{order.orderItems
 									.map((item) => {
-										let item_item = `<tr class="item">
+										let item_item = `<tr className="item">
                   <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
                   {item.qty}x {item.name}
                   </td>
@@ -195,7 +194,7 @@ const OrderEmail = () => {
 									})
 									.join('')}
 							</table>
-							<div class="total" style=" width: 100%;">
+							<div className="total" style=" width: 100%;">
 								<div style="vertical-align: top;" valign="top" />
 								<div style="display: flex; flex-direction: column; justify-content: flex-end; padding-right: 9px;">
 									{/* <div

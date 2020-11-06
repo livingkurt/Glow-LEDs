@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listSponsors, deleteSponsor } from '../../actions/sponsorActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const SponsorsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -55,34 +49,6 @@ const SponsorsPage = (props) => {
 		dispatch(deleteSponsor(sponsor._id));
 	};
 
-	const colors = [
-		{ name: 'Supplies', color: '#6d3e3e' },
-		{ name: 'Website', color: '#6d3e5c' },
-		{ name: 'Shipping', color: '#3e4c6d' },
-		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
-	];
-
-	const determine_color = (sponsor) => {
-		let result = '';
-		if (sponsor.category === 'Supplies') {
-			result = colors[0].color;
-		}
-		if (sponsor.category === 'Website') {
-			result = colors[1].color;
-		}
-		if (sponsor.category === 'Shipping') {
-			result = colors[2].color;
-		}
-		if (sponsor.category === 'Business') {
-			result = colors[3].color;
-		}
-		if (sponsor.category === 'Equipment') {
-			result = colors[4].color;
-		}
-		console.log(result);
-		return result;
-	};
 	const sort_options = [
 		'Release Date',
 		'Glover Name',
@@ -94,38 +60,21 @@ const SponsorsPage = (props) => {
 	];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Sponsors | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
-					{colors.map((color) => {
-						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
-								<label style={{ marginRight: '1rem' }}>{color.name}</label>
-								<div
-									style={{
-										backgroundColor: color.color,
-										height: '20px',
-										width: '60px',
-										borderRadius: '5px'
-									}}
-								/>
-							</FlexContainer>
-						);
-					})}
-				</FlexContainer>
+			<div className="wrap jc-fe">
 				<Link to="/secure/glow/editsponsor">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Sponsor
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Sponsors</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -170,7 +119,7 @@ const SponsorsPage = (props) => {
 											)}
 										</td>
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editsponsor/' + sponsor._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -179,7 +128,7 @@ const SponsorsPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(sponsor)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

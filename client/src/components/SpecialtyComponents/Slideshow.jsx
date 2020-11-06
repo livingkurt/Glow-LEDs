@@ -1,26 +1,6 @@
-// React
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { imagesProduct } from '../../actions/productActions';
-import { Loading } from '../UtilityComponents';
-// Components
+import React from 'react';
 
 const Slideshow = (props) => {
-	const dispatch = useDispatch();
-
-	const productImages = useSelector((state) => state.productImages);
-	// const { images, loading: loadingImages, error: errorImages } = productImages;
-
-	// useEffect(
-	// 	() => {
-	// 		if (props.product) {
-	// 			dispatch(imagesProduct(props.product.display_image));
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ props.product ]
-	// );
-
 	const classes = 'details-image ' + props.show_hide;
 
 	const change_image = (e) => {
@@ -32,7 +12,6 @@ const Slideshow = (props) => {
 
 	return (
 		<div className={classes}>
-			{/* <Loading loading={loadingImages} error={errorImages}> */}
 			{props.product.images &&
 				props.product.images.map((image, index) => {
 					return (
@@ -41,7 +20,6 @@ const Slideshow = (props) => {
 						</div>
 					);
 				})}
-			{/* </Loading> */}
 		</div>
 	);
 };

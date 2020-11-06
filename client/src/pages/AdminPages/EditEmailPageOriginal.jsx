@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveEmail, detailsEmail, listEmails } from '../../actions/emailActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveEmail, detailsEmail } from '../../actions/emailActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditEmailPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ announcement, set_announcement ] = useState({});
 	const [ order, set_order ] = useState({});
@@ -204,7 +199,7 @@ const EditEmailPage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Email' : 'Create Email'}</h1>
 
 			<div className="form">

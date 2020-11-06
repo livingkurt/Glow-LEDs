@@ -1,6 +1,5 @@
 // React
 import React from 'react';
-import { FlexContainer } from '../ContainerComponents';
 
 const Search = (props) => {
 	return (
@@ -23,7 +22,7 @@ const Search = (props) => {
 				/>
 				<button type="submit" className="button primary w-50px">
 					{/* Search {props.category && 'Category'} */}
-					<i class="fas fa-search" />
+					<i className="fas fa-search" />
 				</button>
 			</div>
 		</form>

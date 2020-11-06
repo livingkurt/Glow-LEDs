@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, payOrder, refundOrder, update_order } from '../../actions/orderActions';
+import { detailsOrder, payOrder, refundOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
-import { Loading, LoadingPayments } from '../../components/UtilityComponents';
+import { LoadingPayments } from '../../components/UtilityComponents';
 import { API_Emails, API_Products } from '../../utils';
 
 require('dotenv').config();
@@ -203,10 +202,10 @@ const OrderPage = (props) => {
 	};
 
 	return loading ? (
-		<FlexContainer h_center column>
+		<div className="column jc-c">
 			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
 			<h3 style={{ textAlign: 'center' }}>If payment element doesn't show in 5 seconds, refresh the page.</h3>
-		</FlexContainer>
+		</div>
 	) : error ? (
 		<div>{error}</div>
 	) : (
@@ -228,11 +227,11 @@ const OrderPage = (props) => {
 
 			{props.userInfo &&
 			props.userInfo.isAdmin && (
-				<FlexContainer styles={{ marginBottom: 10, marginLeft: '20px' }}>
+				<div className="mb-10px ml-20px">
 					<button class="button secondary" onClick={() => props.history.goBack()}>
 						Back to Orders
 					</button>
-				</FlexContainer>
+				</div>
 			)}
 			<LoadingPayments loading={payment_loading} error={errorPay} />
 			{/* <div>
@@ -281,8 +280,8 @@ const OrderPage = (props) => {
 								{format_date(order.refundedAt)}
 							</h1>
 						)}
-						<FlexContainer h_between wrap>
-							<FlexContainer column styles={{ width: '100%' }}>
+						<div className="wrap jc-b">
+							<div className="column w-100per">
 								<h1>Shipping</h1>
 								<div>
 									<div>
@@ -301,8 +300,8 @@ const OrderPage = (props) => {
 										</p>
 									</div>
 								</div>
-							</FlexContainer>
-						</FlexContainer>
+							</div>
+						</div>
 					</div>
 
 					<div>
@@ -477,7 +476,7 @@ const OrderPage = (props) => {
 						)}
 
 						{order.promo_code && (
-							<FlexContainer column>
+							<div className="column">
 								<div
 									style={{ borderTop: '.1rem white solid' }}
 									className="pt-1rem"
@@ -485,10 +484,10 @@ const OrderPage = (props) => {
 								>
 									Promo Code: {order.promo_code}
 								</div>
-							</FlexContainer>
+							</div>
 						)}
 						{order.order_note && (
-							<FlexContainer column>
+							<div className="column">
 								<div
 									style={{ borderTop: '.1rem white solid' }}
 									className="pt-1rem"
@@ -496,7 +495,7 @@ const OrderPage = (props) => {
 								>
 									Order Note: {order.order_note}
 								</div>
-							</FlexContainer>
+							</div>
 						)}
 					</ul>
 					<div className="column jc-b h-22rem w-25remm mb-1rem">
@@ -572,68 +571,6 @@ const OrderPage = (props) => {
 							</div>
 						</div>
 					</div>
-					{/* <FlexContainer row v_i_center h_between>
-						{console.log({ order_product: order.product })}
-						{props.userInfo &&
-						props.userInfo.isAdmin && (
-							<div className="row">
-								<div className="mv-10px ">
-									<label htmlFor="product">Product</label>
-									<div className="row">
-										<input
-											type="text"
-											value={product}
-											name="product"
-											id="product"
-											className="w-100per"
-											onChange={(e) => set_product(e.target.value)}
-										/>
-										<button className="button primary" onClick={save_product}>
-											Add
-										</button>
-									</div>
-								</div>
-							</div>
-						)}
-					</FlexContainer> */}
-					{/* <div className="ship_deliver  wrap w-100per column ">
-						<FlexContainer row v_i_center h_between>
-							{props.userInfo &&
-							props.userInfo.isAdmin && (
-								<div>
-									<div className="mv-10px">
-										<label htmlFor="refund_amount">Refund Amount</label>
-										<div className="row">
-											<input
-												type="text"
-												value={refund_amount}
-												name="refund_amount"
-												id="refund_amount"
-												className="w-100per"
-												onChange={(e) => set_refund_amount(e.target.value)}
-											/>
-										</div>
-										<div className="mv-10px">
-											<label htmlFor="refund_reason">Refund Reason</label>
-											<div className="row">
-												<input
-													type="text"
-													value={refund_reason}
-													name="refund_reason"
-													id="refund_reason"
-													className="w-100per"
-													onChange={(e) => set_refund_reason(e.target.value)}
-												/>
-											</div>
-										</div>
-										<button className="button primary" onClick={update_refund_state}>
-											Refund Customer
-										</button>
-									</div>
-								</div>
-							)}
-						</FlexContainer>
-					</div> */}
 				</div>
 			</div>
 		</div>

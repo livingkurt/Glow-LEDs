@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { validate_login } from '../../utils/validations';
 import { Helmet } from 'react-helmet';
 import { Loading } from '../../components/UtilityComponents';
@@ -73,37 +72,6 @@ const LoginPage = (props) => {
 						<h1>Login </h1>
 					</li>
 					<Loading loading={loading} error={error} />
-					{/* <div>
-						{loading ? (
-							<div className="jc-c column">
-								<img
-									src={process.env.PUBLIC_URL + '/loading.gif'}
-									className="loading_gif"
-									alt="loading"
-								/>
-								<img
-									src={process.env.PUBLIC_URL + '/loading_overlay.png'}
-									className="loading_png"
-									alt="loading"
-								/>
-							</div>
-						) : error ? (
-							<div className="error_message jc-c column">
-								<h2 className="ta-c mv-5px">Error: {error}</h2>
-							</div>
-						) : (
-							''
-						)}
-					</div> */}
-					{/* <li>
-						<FlexContainer h_center>
-							{error && (
-								<label style={{ textAlign: 'center' }}>
-									{error ? 'User Not Found or Not Verified' : 'Logging In'}
-								</label>
-							)}
-						</FlexContainer>
-					</li> */}
 					<li>
 						<label htmlFor="email">Email</label>
 						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />

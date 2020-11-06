@@ -1,6 +1,5 @@
 // React
 import React, { useEffect } from 'react';
-import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import Product from './Product';
@@ -30,7 +29,7 @@ const SuggestedProducts = (props) => {
 	// };
 
 	return (
-		<FlexContainer column styles={{ margin: '0 10px' }}>
+		<div className="column mh-10px">
 			<h1
 				style={{
 					textAlign: 'center',
@@ -43,7 +42,7 @@ const SuggestedProducts = (props) => {
 			{/* <Slider /> */}
 
 			<Loading loading={loading} error={error}>
-				<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
+				<div className="row p-10px" style={{ overflowX: 'scroll' }}>
 					{/* <EmblaCarousel> */}
 					{products &&
 						products.map(
@@ -66,9 +65,9 @@ const SuggestedProducts = (props) => {
 								)
 						)}
 					{/* </EmblaCarousel> */}
-				</FlexContainer>
+				</div>
 			</Loading>
-		</FlexContainer>
+		</div>
 	);
 };
 

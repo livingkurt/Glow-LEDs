@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { listCarts, deleteCart } from '../../actions/cartActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const CartsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -95,15 +88,15 @@ const CartsPage = (props) => {
 	];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Carts | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
+			<div className="wrap jc-c">
+				<div className="wrap jc-c">
 					{colors.map((color) => {
 						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<div className="jc-c m-1rem w-16rem">
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -113,78 +106,24 @@ const CartsPage = (props) => {
 										borderRadius: '5px'
 									}}
 								/>
-							</FlexContainer>
+							</div>
 						);
 					})}
-				</FlexContainer>
+				</div>
 				<Link to="/secure/glow/editcart">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Cart
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Carts</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
-			{/* <Loading loading={loading} error={error}>
-				{carts && (
-					<div className="cart-list responsive_table">
-						<table className="table">
-							<thead>
-								<tr>
-									<th>user</th>
-									<th>Release Date</th>
-									<th>glover name</th>
-									<th>instagram handle</th>
-									<th>facebook name</th>
-									<th>product</th>
-									<th>video</th>
-									<th>song id</th>
-									<th>picture</th>
-								</tr>
-							</thead>
-							<tbody>
-								{carts.map((cart) => (
-									<tr
-										key={cart._id}
-										style={{
-											backgroundColor: '#3e4c6d',
-											fontSize: '1.4rem'
-										}}
-									>
-										<td style={{ minWidth: '5rem' }}>{cart.user}</td>
-										<td style={{ minWidth: '15rem' }}>{format_date(cart.release_date)}</td>
-										<td style={{ minWidth: '15rem' }}>{cart.glover_name}</td>
-										<td style={{ minWidth: '10rem' }}>{cart.instagram_handle}</td>
-										<td style={{ minWidth: '15rem' }}>{cart.facebook_name}</td>
-										<td style={{ minWidth: '5rem' }}>{cart.product}</td>
-										<td style={{ minWidth: '10rem' }}>{cart.video}</td>
-										<td style={{ minWidth: '50rem' }}>{cart.song_id}</td>
-										<td style={{ minWidth: '10rem' }}>{cart.picture}</td>
-										<td>
-											<FlexContainer h_between>
-												<Link to={'/secure/glow/editcart/' + cart._id}>
-													<button className="button icon">
-														<i className="fas fa-edit" />
-													</button>
-												</Link>
-												<button className="button icon" onClick={() => deleteHandler(cart)}>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</FlexContainer>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				)}
-			</Loading> */}
 		</div>
 	);
 };

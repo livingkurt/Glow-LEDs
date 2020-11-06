@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { password_reset, reset_password } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { reset_password } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 

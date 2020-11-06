@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, deleteProduct } from '../../actions/productActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -145,14 +140,14 @@ const ProductsPage = (props) => {
 		}
 	};
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Products | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem' }}>
+						<div className="jc-b p-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -162,7 +157,7 @@ const ProductsPage = (props) => {
 									borderRadius: '5px'
 								}}
 							/>
-						</FlexContainer>
+						</div>
 					);
 				})}
 				<Link to="/secure/glow/editproduct">
@@ -170,15 +165,15 @@ const ProductsPage = (props) => {
 						Create Product
 					</button>
 				</Link>
-			</FlexContainer>
-			<FlexContainer h_center>
+			</div>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
 				{/* <Link to="/editproduct">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Product
 					</button>
 				</Link> */}
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -229,7 +224,7 @@ const ProductsPage = (props) => {
 											{product.order}
 										</td>
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editproduct/' + product.pathname}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -238,7 +233,7 @@ const ProductsPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(product)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

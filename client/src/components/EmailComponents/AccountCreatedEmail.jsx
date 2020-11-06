@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 
 import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 
 const AccountCreatedEmail = () => {
 	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email, loading, error } = emailDetails;
+	const { email } = emailDetails;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	const emailList = useSelector((state) => state.emailList);
-	const { loading: loading_emails, emails, error: error_emails } = emailList;
+	const { emails } = emailList;
 
 	console.log({ emails });
 
@@ -181,7 +179,7 @@ const AccountCreatedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i class="fab fa-facebook zoom" style={{ color: 'white' }} />
+										<i className="fab fa-facebook zoom" style={{ color: 'white' }} />
 									</a>
 								</div>
 								<div
@@ -196,7 +194,7 @@ const AccountCreatedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i class="fab fa-instagram zoom" style={{ color: 'white' }} />
+										<i className="fab fa-instagram zoom" style={{ color: 'white' }} />
 									</a>
 								</div>
 								<div
@@ -211,7 +209,7 @@ const AccountCreatedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i class="fab fa-youtube zoom" style={{ color: 'white' }} />
+										<i className="fab fa-youtube zoom" style={{ color: 'white' }} />
 									</a>
 								</div>
 								<div
@@ -226,7 +224,7 @@ const AccountCreatedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i class="fab fa-soundcloud" style={{ color: 'white' }} />
+										<i className="fab fa-soundcloud" style={{ color: 'white' }} />
 									</a>
 								</div>
 							</div>

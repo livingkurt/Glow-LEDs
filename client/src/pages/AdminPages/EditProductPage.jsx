@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveProduct, detailsProduct, deleteProductReview, listProducts } from '../../actions/productActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveProduct, detailsProduct, listProducts } from '../../actions/productActions';
 import { Link, useHistory } from 'react-router-dom';
-// import { Prompt } from 'react-router';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
@@ -421,7 +419,7 @@ const EditProductPage = (props) => {
 	const move_right = () => {};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
 
 			<div className="form">

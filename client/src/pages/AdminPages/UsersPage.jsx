@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { format_date } from '../../utils/helper_functions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { listUsers, deleteUser } from '../../actions/userActions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
@@ -75,14 +74,14 @@ const UsersPage = (props) => {
 	const sort_options = [ 'Date', 'First Name', 'Last Name' ];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Users | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem', width: '20rem' }}>
+						<div className="wrap jc-b w-20rem m-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -92,7 +91,7 @@ const UsersPage = (props) => {
 									borderRadius: '5px'
 								}}
 							/>
-						</FlexContainer>
+						</div>
 					);
 				})}
 				<Link to="/secure/glow/edituser">
@@ -100,7 +99,7 @@ const UsersPage = (props) => {
 						Create User
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 			<div className="order-header">
 				<h1
 					style={{
@@ -172,7 +171,7 @@ const UsersPage = (props) => {
 											)}
 										</td>
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/edituser/' + user._id}>
 													<button className="button icon">
 														<i className="fas fa-info-circle" />
@@ -186,7 +185,7 @@ const UsersPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(user)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

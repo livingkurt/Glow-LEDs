@@ -1,13 +1,9 @@
 // React
-import React, { useState } from 'react';
-import { FlexContainer } from '../ContainerComponents';
+import React from 'react';
 
 const Sort = (props) => {
 	return (
 		<div className="ai-c">
-			{/* <label aria-label="sortOrder" htmlFor="sortOrder" className="select-label w-100per">
-				Sort By
-			</label> */}
 			<div className="custom-select">
 				<select name="sortOrder" className="sort_select" onChange={props.sortHandler}>
 					<option className="grey_option" disabled="disabled" selected="selected" value="">

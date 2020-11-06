@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder, update_order, update_payment } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
@@ -180,14 +179,14 @@ const OrdersPage = (props) => {
 	const today = new Date();
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Orders | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem' }}>
+						<div className="jc-b p-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -197,7 +196,7 @@ const OrdersPage = (props) => {
 									borderRadius: '5px'
 								}}
 							/>
-						</FlexContainer>
+						</div>
 					);
 				})}
 				<Link to="/secure/glow/editorder">
@@ -205,7 +204,7 @@ const OrdersPage = (props) => {
 						Create Order
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 			<div className="order-header">
 				<h1
 					style={{
@@ -306,7 +305,7 @@ const OrdersPage = (props) => {
 											{daysBetween(today, order.createdAt)} Days
 										</td>
 										<td className="min-w-175px p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<button className="button icon" onClick={() => show_hide(order._id)}>
 													<i
 														style={{ '-webkitTransform': 'rotate(-180deg)' }}
@@ -326,7 +325,7 @@ const OrdersPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(order)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 										<td id={order._id} className="expanded-row-content hide-row">
 											<div className="row jc-b w-100per">

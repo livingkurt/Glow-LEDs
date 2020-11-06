@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { logout, update } from '../../actions/userActions';
-import { listMyOrders } from '../../actions/orderActions';
+import { update } from '../../actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_profile } from '../../utils/validations';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
@@ -81,7 +79,7 @@ const EditProfilePage = (props) => {
 	);
 
 	return (
-		<FlexContainer class="profile_container" column styles={{ padding: '20px' }}>
+		<div className="profile_container column p-20px">
 			<Helmet>
 				<title>Edit Profile | Glow LEDs</title>
 				<meta property="og:title" content="Edit Profile | Glow LEDs" />
@@ -89,11 +87,11 @@ const EditProfilePage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editprofile" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editprofile" />
 			</Helmet>
-			<FlexContainer styles={{ marginBottom: 10 }}>
+			<div className="mb-10px">
 				<Link to="/secure/account/profile">
 					<button className="button primary">Back to Profile</button>
 				</Link>
-			</FlexContainer>
+			</div>
 			<div className="profile-info">
 				<div className="form">
 					<form onSubmit={submitHandler} style={{ width: '100%' }}>
@@ -102,11 +100,11 @@ const EditProfilePage = (props) => {
 								<h1 style={{ textAlign: 'center' }}>User Profile</h1>
 							</li>
 							<li>
-								<FlexContainer h_center>
+								<div className="jc-c">
 									<Loading loading={loading} error={error}>
 										{success && <h3 style={{ textAlign: 'center' }}>Profile Saved Successfully</h3>}
 									</Loading>
-								</FlexContainer>
+								</div>
 							</li>
 
 							<li>
@@ -298,7 +296,7 @@ const EditProfilePage = (props) => {
 					</form>
 				</div>
 			</div>
-		</FlexContainer>
+		</div>
 	);
 };
 

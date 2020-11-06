@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { savePromo, detailsPromo, listPromos } from '../../actions/promoActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { savePromo, detailsPromo } from '../../actions/promoActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listSponsors } from '../../actions/sponsorActions';
@@ -152,7 +149,7 @@ const EditPromoPage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Promo' : 'Create Promo'}</h1>
 
 			<div className="form">
@@ -177,8 +174,8 @@ const EditPromoPage = (props) => {
 										}}
 									/>
 
-									<FlexContainer row wrap>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="sponsor">Sponsor</label>
 												<input
@@ -407,8 +404,8 @@ const EditPromoPage = (props) => {
 													/>
 												</li>
 											)}
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}

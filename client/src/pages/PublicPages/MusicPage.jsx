@@ -1,29 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents/index';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { listFeatures } from '../../actions/featureActions';
-import { humanize } from '../../utils/helper_functions';
 
 const MusicPage = (props) => {
-	const featureList = useSelector((state) => state.featureList);
-	const { loading, features, error } = featureList;
-
-	const productDetails = useSelector((state) => state.productDetails);
-	const { product, loading: loading_products, error: error_products } = productDetails;
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(listFeatures());
-		return () => {};
-	}, []);
-
-	const date = new Date();
-
-	const today = date.toISOString();
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Featured | Glow LEDs</title>
 				<meta property="og:title" content="Featured | Glow LEDs" />
@@ -43,9 +25,9 @@ const MusicPage = (props) => {
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
 			</Helmet>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1>Music Produced by NTRE</h1>
-			</FlexContainer>
+			</div>
 
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here at Glow LEDs we produce all of the videos, music, and pictures in house here is all of the music
@@ -53,6 +35,7 @@ const MusicPage = (props) => {
 			</p>
 
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -93,6 +76,7 @@ const MusicPage = (props) => {
 				</a>
 			</div>
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -133,6 +117,7 @@ const MusicPage = (props) => {
 				</a>
 			</div>
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -173,6 +158,7 @@ const MusicPage = (props) => {
 				</a>
 			</div>
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -213,6 +199,7 @@ const MusicPage = (props) => {
 				</a>
 			</div>
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -253,6 +240,7 @@ const MusicPage = (props) => {
 				</a>
 			</div>
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -294,6 +282,7 @@ const MusicPage = (props) => {
 			</div>
 
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"
@@ -334,6 +323,7 @@ const MusicPage = (props) => {
 				</a>
 			</div>
 			<iframe
+				title="music"
 				width="100%"
 				height="166"
 				scrolling="no"

@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listLogs, deleteLog } from '../../actions/logActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, format_time } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const LogsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -82,7 +77,7 @@ const LogsPage = (props) => {
 	const sort_options = [ 'Newest', 'File', 'Method', 'Status', 'Success', 'Error', 'Newest' ];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Logs | Glow LEDs</title>
 			</Helmet>
@@ -90,7 +85,7 @@ const LogsPage = (props) => {
 			<div className="wrap jc-b">
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+						<div className="wrap jc-b w-16rem m-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -100,7 +95,7 @@ const LogsPage = (props) => {
 									borderRadius: '5px'
 								}}
 							/>
-						</FlexContainer>
+						</div>
 					);
 				})}
 				<Link to="/secure/glow/editlog">
@@ -110,9 +105,9 @@ const LogsPage = (props) => {
 				</Link>
 			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Logs</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -161,7 +156,7 @@ const LogsPage = (props) => {
 										<td className="p-10px">{log.ip}</td>
 
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editlog/' + log._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -170,7 +165,7 @@ const LogsPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(log)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

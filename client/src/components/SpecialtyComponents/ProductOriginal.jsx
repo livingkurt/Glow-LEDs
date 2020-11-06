@@ -24,7 +24,7 @@ const Product = (props) => {
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${props.product.sale_price ? (
+					<i className="fas fa-arrow-right" /> ${props.product.sale_price ? (
 						props.product.sale_price.toFixed(2)
 					) : (
 						props.product.sale_price
@@ -40,7 +40,7 @@ const Product = (props) => {
 							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
 						</label>
 					</del>{' '}
-					<i class="fas fa-arrow-right" />
+					<i className="fas fa-arrow-right" />
 					<label className="ml-7px">Sold Out</label>
 				</label>
 			);
@@ -51,9 +51,9 @@ const Product = (props) => {
 
 	return (
 		<li key={props.product.pathname} style={props.styles}>
-			<div class="tooltip">
-				<div class="tooltipoverlay">
-					{/* <span class="tooltiptext">
+			<div className="tooltip">
+				<div className="tooltipoverlay">
+					{/* <span className="tooltiptext">
 						{props.product.name === 'Diffuser Caps + Adapters Starter Kit' ||
 						props.product.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
 							<div />
@@ -90,7 +90,7 @@ const Product = (props) => {
 						</Link>
 						{props.product.name === 'Custom Infinity Mirror' ? (
 							<label className="product-price">
-								$549.99 - $<i class="fas fa-arrow-up" />
+								$549.99 - $<i className="fas fa-arrow-up" />
 							</label>
 						) : (
 							<label className="product-price">{sale_price_switch()}</label>

@@ -6,10 +6,10 @@ import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 const AboutPage = () => {
 	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content, loading, error } = contentDetails;
+	const { content } = contentDetails;
 
 	const contentList = useSelector((state) => state.contentList);
-	const { loading: loading_contents, contents, error: error_contents } = contentList;
+	const { contents } = contentList;
 
 	const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const AboutPage = () => {
 		[ contents ]
 	);
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>About | Glow LEDs</title>
 				<meta property="og:title" content="About | Glow LEDs" />
@@ -64,8 +64,6 @@ const AboutPage = () => {
 						<img
 							alt="picture of founder"
 							style={{
-								// float: 'left',
-								// height: '200px',
 								borderRadius: '15px',
 								width: '100%',
 								height: 'auto',

@@ -1,10 +1,9 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { format_date } from '../../utils/helper_functions';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlexContainer } from '../ContainerComponents';
 import { saveProductReview, detailsProduct } from '../../actions/productActions';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../../constants/productConstants';
 // Components
@@ -19,24 +18,9 @@ const Review = (props) => {
 	const productReviewSave = useSelector((state) => state.productReviewSave);
 	const { success: productSaveSuccess } = productReviewSave;
 
-	const productReviewDelete = useSelector((state) => state.productReviewDelete);
-	const { success: productDeleteSuccess } = productReviewDelete;
-
 	const [ review_modal, setReviewModal ] = useState('none');
 	const [ rating, setRating ] = useState(5);
 	const [ comment, setComment ] = useState('');
-
-	// useEffect(() => {
-	// 	// setRating(0);
-	// 	// setComment('');
-	// 	// dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-	// 	if (productReviewSave) {
-	// 		dispatch(detailsProduct(props.pathname));
-	// 	}
-
-	// 	// setReviewModal('none');
-	// }, []);
-
 	const show_write_review = () => {
 		setReviewModal('block');
 	};
@@ -126,7 +110,7 @@ const Review = (props) => {
 								>
 									{productSaveSuccess ? 'Review Saved Successfully' : ''}
 								</h3>
-								<FlexContainer v_i_center>
+								<div className="ai-c">
 									<h3 htmlFor="rating">Rating</h3>
 									<div className="review_select_dropdown_container">
 										<select
@@ -144,7 +128,7 @@ const Review = (props) => {
 										</select>
 										<i className="fas fa-sort-up review_icon_styles" />
 									</div>
-								</FlexContainer>
+								</div>
 							</li>
 							<li>
 								<label htmlFor="comment" id="comment" />

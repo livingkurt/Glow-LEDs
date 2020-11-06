@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder, update_order, update_payment } from '../../actions/orderActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Order, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
@@ -178,11 +177,11 @@ const OrdersPage = (props) => {
 	const today = new Date();
 
 	return (
-		<FlexContainer class="profile_container" wrap column styles={{ padding: '20px' }}>
+		<div className="profile_container wrap column p-20px">
 			<Helmet>
 				<title>Admin Orders | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
+			<div className="wrap jc-b">
 				<Link to="/secure/glow/controlpanel">
 					<button className="button primary">Back to Control Panel</button>
 				</Link>
@@ -191,11 +190,11 @@ const OrdersPage = (props) => {
 						Create Order
 					</button>
 				</Link>
-			</FlexContainer>
-			<FlexContainer wrap h_between>
+			</div>
+			<div className="wrap jc-b">
 				{colors.map((color) => {
 					return (
-						<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+						<div className="wrap jc-b w-16rem m-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -205,10 +204,10 @@ const OrdersPage = (props) => {
 									borderRadius: '5px'
 								}}
 							/>
-						</FlexContainer>
+						</div>
 					);
 				})}
-			</FlexContainer>
+			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
@@ -225,6 +224,7 @@ const OrdersPage = (props) => {
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
 									update_order_state={update_order_state}
+									set_payment_method={set_payment_method}
 									admin={true}
 									order={order}
 								/>
@@ -236,7 +236,7 @@ const OrdersPage = (props) => {
 					</div>
 				</Loading>
 			</div>
-		</FlexContainer>
+		</div>
 	);
 };
 export default OrdersPage;

@@ -1,9 +1,7 @@
 // React
 import React, { useEffect, useState } from 'react';
-import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts, detailsProduct } from '../../actions/productActions';
-import Product from './Product';
+import { listProducts } from '../../actions/productActions';
 import { Loading } from '../UtilityComponents';
 import { CarouselItem } from '.';
 
@@ -22,36 +20,8 @@ const RelatedProducts = (props) => {
 		[ props.product ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		dispatch(detailsProduct(props.product_pathname));
-	// 		return () => {};
-	// 	},
-	// 	[ props.product_pathname ]
-	// );
-
-	// let random_order_products;
-
-	// const [ random_order_products, set_random_order_products ] = useState(products);
-
-	// useEffect(() => {
-	// 	dispatch(listProducts(''));
-	// 	// random_order_products = shuffle(products);
-
-	// 	// }
-	// }, []);
-
-	// useEffect(
-	// 	() => {
-	// 		// set_random_order_products(shuffle(products));
-	// 		random_order_products = shuffle(products);
-	// 	},
-	// 	[ products ]
-	// );
-
 	const [ product_number, set_product_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);
-	// const [ width, setWidth ] = useState(window.innerWidth);
 
 	const move_left = () => {
 		if (product_number != 0) {
@@ -120,7 +90,7 @@ const RelatedProducts = (props) => {
 			<h1 className="ta-c w-100per jc-c">Related Products</h1>
 			<Loading loading={loading} error={error}>
 				{products && (
-					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
+					<div className="row p-10px" style={{ overflowX: 'scroll' }}>
 						<div className="row jc-b w-100per">
 							{/* {product_number != 0 && ( */}
 							<div className="ai-c">
@@ -160,7 +130,7 @@ const RelatedProducts = (props) => {
 
 						{/* )
 						)} */}
-					</FlexContainer>
+					</div>
 				)}
 			</Loading>
 		</div>

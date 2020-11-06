@@ -6,11 +6,8 @@ import { validate_shipping } from '../../utils/validations';
 import { Helmet } from 'react-helmet';
 
 const ShippingPage = (props) => {
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
-
 	const cart = useSelector((state) => state.cart);
-	const { cartItems, shipping, payment } = cart;
+	const { shipping } = cart;
 
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');

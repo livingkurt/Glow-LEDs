@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { div } from '../../components/ContainerComponents';
 import { validate_registration } from '../../utils/validations';
 import { Helmet } from 'react-helmet';
 
@@ -80,19 +80,19 @@ const RegisterPage = (props) => {
 				<ul className="form-container">
 					<li>
 						{/* <h2>Create Account</h2> */}
-						<FlexContainer>
+						<div className="row">
 							<h1 style={{ width: '100%', marginRight: '-40px' }}>Create</h1>{' '}
 							<h1 style={{ width: '100%' }}>Account</h1>
-						</FlexContainer>
+						</div>
 					</li>
 					<li>
-						<FlexContainer h_center>
+						<div className="jc-c">
 							{error && (
 								<label style={{ textAlign: 'center' }}>
 									{error ? 'Already a Member' : 'Registration Complete'}
 								</label>
 							)}
-						</FlexContainer>
+						</div>
 					</li>
 
 					<li>

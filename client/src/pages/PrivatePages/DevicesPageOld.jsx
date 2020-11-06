@@ -259,7 +259,7 @@ const DevicesPage = (props) => {
 										<td>{device.number_of_orders}</td>
 
 										<td>
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editdevice/' + device._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -268,7 +268,7 @@ const DevicesPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(device)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

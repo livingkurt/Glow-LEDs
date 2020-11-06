@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Helmet } from 'react-helmet';
 
 const ProfilePage = (props) => {
@@ -14,11 +13,6 @@ const ProfilePage = (props) => {
 	const [ email_subscription, set_email_subscription ] = useState(true);
 	const [ email, setEmail ] = useState('');
 	const dispatch = useDispatch();
-
-	// const userLogin = useSelector((state) => state.userLogin);
-	// const { userInfo } = userLogin;
-
-	// console.log({ userInfo });
 
 	const userUpdate = useSelector((state) => state.userUpdate);
 

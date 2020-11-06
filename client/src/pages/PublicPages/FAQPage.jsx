@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-// import emailjs from 'emailjs-com';
-import { FlexContainer } from '../../components/ContainerComponents';
-// import { listenerCount } from 'cluster';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-// import "./form.css";
 
 const FAQPage = () => {
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Frequently Asked Questions | Glow LEDs</title>
 				<meta property="og:title" content="Frequently Asked Questions | Glow LEDs" />
@@ -37,7 +33,7 @@ const FAQPage = () => {
 						</h1>
 						<h2 className="ta-c">How do Glowskins Work?</h2>
 
-						<FlexContainer h_center styles={{ position: 'relative' }}>
+						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
 									width="996"
@@ -49,7 +45,7 @@ const FAQPage = () => {
 									allowfullscreen="1"
 								/>
 							</div>
-						</FlexContainer>
+						</div>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								To use the Glowskins with your desired microlight, first you need to remove your chip
@@ -122,7 +118,7 @@ const FAQPage = () => {
 						<h2 style={{ clear: 'both', textAlign: 'center' }} id="using_diffuser_caps_and_adapters">
 							Using Diffuser Caps and Adapters
 						</h2>
-						<FlexContainer h_center styles={{ position: 'relative' }}>
+						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
 									width="996"
@@ -134,7 +130,7 @@ const FAQPage = () => {
 									allowfullscreen="1"
 								/>
 							</div>
-						</FlexContainer>
+						</div>
 
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
@@ -187,7 +183,7 @@ const FAQPage = () => {
 						<h2 style={{ clear: 'both', textAlign: 'center' }} id="orienting_your_diffuser_caps">
 							Orienting Your Diffuser Caps
 						</h2>
-						<FlexContainer h_center styles={{ position: 'relative' }}>
+						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
 									width="996"
@@ -199,7 +195,7 @@ const FAQPage = () => {
 									allowfullscreen="1"
 								/>
 							</div>
-						</FlexContainer>
+						</div>
 
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
@@ -406,11 +402,11 @@ const FAQPage = () => {
 							</li>
 						</ul>
 						<Link to="/pages/contact/custom_orders">
-							<FlexContainer h_center>
+							<div className="jc-c">
 								<button className="button primary " style={{ margin: 'auto' }}>
 									Contact
 								</button>
-							</FlexContainer>
+							</div>
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
@@ -441,11 +437,11 @@ const FAQPage = () => {
 							</span>️.
 						</p>
 						<Link to="/pages/contact/submit_content_to_be_featured">
-							<FlexContainer h_center>
+							<div className="jc-c">
 								<button className="button primary " style={{ margin: 'auto' }}>
 									Contact
 								</button>
-							</FlexContainer>
+							</div>
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
@@ -473,11 +469,11 @@ const FAQPage = () => {
 							</li>
 						</ul>
 						<Link to="/pages/contact/submit_content_to_be_featured">
-							<FlexContainer h_center>
+							<div className="jc-c">
 								<button className="button primary " style={{ margin: 'auto' }}>
 									Contact
 								</button>
-							</FlexContainer>
+							</div>
 						</Link>
 					</div>
 
@@ -560,11 +556,11 @@ const FAQPage = () => {
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
-							<FlexContainer h_center>
+							<div className="jc-c">
 								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
 									Contact
 								</button>
-							</FlexContainer>
+							</div>
 						</Link>
 						<h2 className="ta-c" id="international_shipping">
 							International Shipping
@@ -611,11 +607,11 @@ const FAQPage = () => {
 							</li>
 						</ul>
 						<Link to="/pages/contact/order_issues">
-							<FlexContainer h_center>
+							<div className="jc-c">
 								<button className="button primary " style={{ margin: 'auto', marginBottom: '10px' }}>
 									Contact
 								</button>
-							</FlexContainer>
+							</div>
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
@@ -690,11 +686,11 @@ const FAQPage = () => {
 								so in another order.
 							</li>
 							<Link to="/pages/contact/returns">
-								<FlexContainer h_center>
+								<div className="jc-c">
 									<button className="button primary " style={{ margin: 'auto' }}>
 										Contact
 									</button>
-								</FlexContainer>
+								</div>
 							</Link>
 						</ul>
 					</div>

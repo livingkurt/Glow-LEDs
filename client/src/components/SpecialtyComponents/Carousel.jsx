@@ -1,11 +1,9 @@
 // React
 import React, { useEffect, useState } from 'react';
-import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import CarouselItem from './CarouselItem';
 import { Loading } from '../UtilityComponents';
-import { shuffle } from '../../utils/helper_functions';
 
 const Carousel = (props) => {
 	const dispatch = useDispatch();
@@ -13,28 +11,14 @@ const Carousel = (props) => {
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 
-	// let random_order_products;
-
-	// const [ random_order_products, set_random_order_products ] = useState(products);
-
 	useEffect(() => {
 		dispatch(listProducts(''));
-		// random_order_products = shuffle(products);
 
 		// }
 	}, []);
 
-	// useEffect(
-	// 	() => {
-	// 		// set_random_order_products(shuffle(products));
-	// 		random_order_products = shuffle(products);
-	// 	},
-	// 	[ products ]
-	// );
-
 	const [ product_number, set_product_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);
-	// const [ width, setWidth ] = useState(window.innerWidth);
 
 	const move_left = () => {
 		if (product_number != 0) {
@@ -99,7 +83,7 @@ const Carousel = (props) => {
 	let width = useCurrentWidth();
 
 	return (
-		<FlexContainer column styles={{ margin: '0 10px' }}>
+		<div className="column mh-10px">
 			<h1
 				style={{
 					textAlign: 'center',
@@ -112,7 +96,7 @@ const Carousel = (props) => {
 
 			<Loading loading={loading} error={error}>
 				{products && (
-					<FlexContainer row styles={{ overflowX: 'scroll', padding: '10px' }}>
+					<div className="row p-10px" style={{ overflowX: 'scroll' }}>
 						<div className="row jc-b w-100per">
 							{/* {product_number != 0 && ( */}
 							<div className="ai-c">
@@ -152,10 +136,10 @@ const Carousel = (props) => {
 
 						{/* )
 						)} */}
-					</FlexContainer>
+					</div>
 				)}
 			</Loading>
-		</FlexContainer>
+		</div>
 	);
 };
 

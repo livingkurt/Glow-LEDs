@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listExpenses, deleteExpense } from '../../actions/expenseActions';
 import { useHistory } from 'react-router-dom';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Search, Sort } from '../../components/SpecialtyComponents/index';
@@ -10,10 +9,6 @@ import { Helmet } from 'react-helmet';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { API_Revenue } from '../../utils';
 import CSVReader from 'react-csv-reader';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const ExpensesPage = (props) => {
 	// const user_data = props.userinfo;
@@ -143,11 +138,11 @@ const ExpensesPage = (props) => {
 				<title>Admin Expenses | Glow LEDs</title>
 			</Helmet>
 
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
+				<div className="wrap jc-b">
 					{colors.map((color) => {
 						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<div className="wrap jc-b w-16rem m-1rem">
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -157,16 +152,16 @@ const ExpensesPage = (props) => {
 										borderRadius: '5px'
 									}}
 								/>
-							</FlexContainer>
+							</div>
 						);
 					})}
-				</FlexContainer>
+				</div>
 				<Link to="/secure/glow/editexpense">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Expense
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 			<div className="ai-c w-325px jc-b">
 				<div className="">
 					<div className="custom-select">
@@ -193,9 +188,9 @@ const ExpensesPage = (props) => {
 				</label>
 			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Expenses</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -297,7 +292,7 @@ const ExpensesPage = (props) => {
 										<td className="p-10px min-w-200px">{expense.application}</td>
 										{/* <td className="p-10px min-w-800px">{expense.url}</td> */}
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editexpense/' + expense._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -306,7 +301,7 @@ const ExpensesPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(expense)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

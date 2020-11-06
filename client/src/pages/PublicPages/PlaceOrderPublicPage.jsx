@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-	createPayOrder,
-	createOrder,
-	createPayOrderGuest,
-	createPayOrderGuestAccount
-} from '../../actions/orderActions';
-import { FlexContainer } from '../../components/ContainerComponents';
-import { CheckoutSteps, GuestCheckoutSteps } from '../../components/SpecialtyComponents';
+import { createOrder, createPayOrderGuest } from '../../actions/orderActions';
+import { GuestCheckoutSteps } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
-import Cookie, { set } from 'js-cookie';
+import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
-import { Loading, LoadingPayments } from '../../components/UtilityComponents';
-import { validate_password_change, validate_promo_code, validate_passwords } from '../../utils/validations';
-import { SuggestedProducts, Carousel } from '../../components/SpecialtyComponents';
-import { listUsers } from '../../actions/userActions';
+import { LoadingPayments } from '../../components/UtilityComponents';
+import { validate_promo_code, validate_passwords } from '../../utils/validations';
+import { Carousel } from '../../components/SpecialtyComponents';
 
 const PlaceOrderPublicPage = (props) => {
 	const discount_percent = 0.2;
@@ -399,7 +392,7 @@ const PlaceOrderPublicPage = (props) => {
 				<div className="placeorder-info">
 					<div>
 						<h1>Shipping</h1>
-						<FlexContainer h_between wrap>
+						<div className="wrap jc-b">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
 								<div className="label">
@@ -425,13 +418,13 @@ const PlaceOrderPublicPage = (props) => {
 									</button>
 								</Link>
 							</div>
-						</FlexContainer>
+						</div>
 					</div>
 					<div>
 						<ul className="cart-list-container">
 							<li>
 								<h1>Shopping Cart</h1>
-								<FlexContainer column>
+								<div className="column">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
 											<button className="button secondary full-width" style={{ marginBottom: 0 }}>
@@ -440,7 +433,7 @@ const PlaceOrderPublicPage = (props) => {
 										</li>
 									</Link>
 									<label style={{ textAlign: 'right' }}>Price</label>
-								</FlexContainer>
+								</div>
 							</li>
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
@@ -462,7 +455,7 @@ const PlaceOrderPublicPage = (props) => {
 													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
 												</Link>
 											</div>
-											<FlexContainer v_i_center styles={{ height: '25px' }}>
+											<div className="ai-c h-25px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -485,7 +478,7 @@ const PlaceOrderPublicPage = (props) => {
 													</select>
 													<span className="custom-arrow" />
 												</div>
-											</FlexContainer>
+											</div>
 										</div>
 										<div className=" cart_item">
 											<div className="cart-price ">
@@ -706,7 +699,7 @@ const PlaceOrderPublicPage = (props) => {
 								{show_message}
 							</div>
 						)}
-						<FlexContainer column>
+						<div className="column">
 							<div htmlFor="order_note">Add a note</div>
 							<textarea
 								name="order_note"
@@ -716,7 +709,7 @@ const PlaceOrderPublicPage = (props) => {
 								onChange={(e) => set_order_note(e.target.value)}
 							/>
 							<h4>{no_note_warning()}</h4>
-						</FlexContainer>
+						</div>
 					</ul>
 				</div>
 			</div>

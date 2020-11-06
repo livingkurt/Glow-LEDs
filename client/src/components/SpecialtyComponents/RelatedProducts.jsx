@@ -1,6 +1,5 @@
 // React
 import React, { useEffect } from 'react';
-import { FlexContainer } from '../ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, detailsProduct } from '../../actions/productActions';
 import Product from './Product';

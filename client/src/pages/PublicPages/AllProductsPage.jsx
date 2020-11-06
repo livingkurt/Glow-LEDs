@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
 import { Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
-import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
@@ -167,8 +166,8 @@ const AllProductsPage = (props) => {
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
 			</Helmet>
-			<FlexContainer h_center>
-				<FlexContainer>
+			<div className="jc-c">
+				<div>
 					<h1>
 						{category === 'diffuser_caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}
 					</h1>
@@ -184,8 +183,8 @@ const AllProductsPage = (props) => {
 							''
 						)}{' '}
 					</label>
-				</FlexContainer>
-			</FlexContainer>
+				</div>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />

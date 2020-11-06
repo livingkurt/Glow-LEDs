@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { detailsContent, listContents } from '../../actions/contentActions';
-import { FlexContainer } from './index';
 
 const Banner = () => {
 	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content, loading, error } = contentDetails;
+	const { content } = contentDetails;
 
 	const contentList = useSelector((state) => state.contentList);
-	const { loading: loading_contents, contents, error: error_contents } = contentList;
+	const { contents } = contentList;
 
 	const dispatch = useDispatch();
 
@@ -31,23 +29,6 @@ const Banner = () => {
 	return (
 		<span className="banner">
 			<div className="max-w-1500px m-auto jc-b">
-				{/* <div className="small_screen ml-10px none ta-c w-100per">
-					<Link to="/pages/contact/submit_content_to_be_featured">
-						<button className="banner-button">Submit content to be featured on our pages</button>
-					</Link>
-				</div>
-				<div className="smaller_screen ml-10px none ta-c w-100per">
-					<Link to="/pages/contact/submit_content_to_be_featured">
-						<button className="banner-button">Submit content to be featured</button>
-					</Link>
-				</div>
-				<div className="big_screen  ml-10px">
-					<label>Submit content to be featured on our pages </label>
-					<i style={{ margin: '0 10px ' }} className="fas fa-arrow-right" />
-					<Link to="/pages/contact/submit_content_to_be_featured">
-						<button className="banner-button">Send us a message!</button>
-					</Link>
-				</div> */}
 				{content &&
 				content.banner && (
 					<div className="ml-10px mt-5px">
@@ -62,7 +43,7 @@ const Banner = () => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<i class="fab fa-facebook zoom" />
+							<i className="fab fa-facebook zoom" />
 						</a>
 					</div>
 					<div className="ml-10px">
@@ -72,7 +53,7 @@ const Banner = () => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<i class="fab fa-instagram zoom" />
+							<i className="fab fa-instagram zoom" />
 						</a>
 					</div>
 					<div className="mh-10px">
@@ -82,7 +63,7 @@ const Banner = () => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<i class="fab fa-youtube zoom" />
+							<i className="fab fa-youtube zoom" />
 						</a>
 					</div>
 					<div className="mr-10px">
@@ -92,7 +73,7 @@ const Banner = () => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<i class="fab fa-soundcloud" />
+							<i className="fab fa-soundcloud" />
 						</a>
 					</div>
 				</div>

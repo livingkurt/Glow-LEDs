@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FlexContainer } from './index';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
@@ -89,12 +88,12 @@ const Header = (props) => {
 							</div>
 						</Link>
 						<Link to="/">
-							<FlexContainer>
+							<div className="row">
 								<h1 className="glow_leds_text">Glow LEDs</h1>
 								<label className="tm" style={{ color: '#9a9898' }}>
 									™
 								</label>
-							</FlexContainer>
+							</div>
 						</Link>
 					</div>
 					<div className="jc-b nav_bar">
@@ -495,7 +494,7 @@ const Header = (props) => {
 						</div>
 					</div>
 				</div>
-				<FlexContainer class="nav_bar w-233px jc-fe">
+				<div className="nav_bar w-233px jc-fe">
 					<Link to="/checkout/cart">
 						<button className=" button nav cart_text w-105px">
 							Cart <i className="fas fa-shopping-cart" />{' '}
@@ -578,7 +577,7 @@ const Header = (props) => {
 							</ul>
 						</div>
 					)}
-				</FlexContainer>
+				</div>
 			</header>
 		</div>
 	);

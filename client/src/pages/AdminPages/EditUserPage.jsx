@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveUser, detailsUser, listUsers } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveUser, detailsUser } from '../../actions/userActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditUserPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
@@ -19,29 +14,13 @@ const EditUserPage = (props) => {
 	const [ isVerified, set_isVerified ] = useState(false);
 	const [ isAdmin, set_isAdmin ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-	// const [ video, set_video ] = useState('');
-	// const [ picture, set_picture ] = useState('');
-	// const [ release_date, set_release_date ] = useState('');
-	// const [ loading_data, set_loading_data ] = useState(true);
 
 	const history = useHistory();
 
 	const userDetails = useSelector((state) => state.userDetails);
 	const { user, loading, error } = userDetails;
 
-	// const userSave = useSelector((state) => state.userSave);
-	// const { loading: loadingSave, success: successSave, error: errorSave } = userSave;
-
-	// const userDelete = useSelector((state) => state.userDelete);
-	// const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;
-
-	// const userReviewDelete = useSelector((state) => state.userReviewDelete);
-	// const { success: userDeleteSuccess } = userReviewDelete;
-	const userList = useSelector((state) => state.userList);
-	const { users } = userList;
-
 	const dispatch = useDispatch();
-	const user_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ user });
 
@@ -53,8 +32,6 @@ const EditUserPage = (props) => {
 		} else {
 			dispatch(detailsUser(''));
 		}
-
-		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);
@@ -118,7 +95,7 @@ const EditUserPage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit User' : 'Create User'}</h1>
 
 			<div className="form">
@@ -140,8 +117,8 @@ const EditUserPage = (props) => {
 										}}
 									/>
 
-									<FlexContainer row wrap>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="first_name">First Name</label>
 												<input
@@ -220,8 +197,8 @@ const EditUserPage = (props) => {
 													/>
 												</li>
 											)}
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}

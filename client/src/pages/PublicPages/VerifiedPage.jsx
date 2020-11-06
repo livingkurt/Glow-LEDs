@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { verify } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
@@ -22,7 +21,7 @@ const VerifiedPage = (props) => {
 	}, []);
 
 	return (
-		<FlexContainer h_center column>
+		<div className="column jc-c">
 			<Helmet>
 				<title>Verified | Glow LEDs</title>
 				<meta property="og:title" content="Verified | Glow LEDs" />
@@ -32,10 +31,10 @@ const VerifiedPage = (props) => {
 			</Helmet>
 			<h1 style={{ textAlign: 'center' }}>Thank You for Verifing your Account.</h1>
 			<h2 style={{ textAlign: 'center' }}>You will be redirected to the login screen shortly.</h2>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<Loading loading={loading} error={error} />
-			</FlexContainer>
-		</FlexContainer>
+			</div>
+		</div>
 	);
 };
 export default VerifiedPage;

@@ -2,9 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { addToCart } from '../../actions/cartActions';
 import { format_date, print_invoice } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { refundOrder } from '../../actions/orderActions';
@@ -12,13 +10,10 @@ import { refundOrder } from '../../actions/orderActions';
 const Order = (props) => {
 	const dispatch = useDispatch();
 	const [ clipboard, copyToClipboard ] = useClipboard();
-	const [ payment_method, set_payment_method ] = useState('');
-	const [ expandable, set_expandable ] = useState('none');
 
 	const [ refund_state, set_refund_state ] = useState({});
 	const [ refund_amount, set_refund_amount ] = useState(0);
 	const [ refund_reason, set_refund_reason ] = useState('');
-	// console.log(props.order && props.order.pathname);
 
 	const update_refund_state = () => {
 		set_refund_state(true);
@@ -29,11 +24,6 @@ const Order = (props) => {
 		const row = document.getElementById(id);
 		console.log(row);
 		row.classList.toggle('hide-row');
-		// if (expandable === 'flex') {
-		// 	set_expandable('none');
-		// } else if (expandable === 'none') {
-		// 	set_expandable('flex');
-		// }
 	};
 
 	return (
@@ -233,7 +223,7 @@ const Order = (props) => {
 											defaultValue={props.order.payment.paymentMethod}
 											name="payment_method"
 											className=""
-											onChange={(e) => set_payment_method(e.target.value)}
+											onChange={(e) => props.set_payment_method(e.target.value)}
 										/>
 									</li>
 									<label htmlFor="refund_amount">Refund Amount</label>

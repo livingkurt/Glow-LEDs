@@ -1,28 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { update, reset_password } from '../../actions/userActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
 
 const MenuPage = (props) => {
-	const [ password, setPassword ] = useState('');
-	const [ rePassword, setRePassword ] = useState('');
-
 	const pathname = props.match.params.pathname;
-
-	// const gloving = [ 'frosted_diffusers', 'mini_diffuser_caps', 'diffuser_caps', 'accessories' ];
-	// const mini_diffuser_caps = [ 'geometric', 'shapes', 'abstract', 'patterns' ];
-	// const diffuser_caps = [ 'geometric', 'shapes', 'abstract', 'patterns', 'emojis' ];
-	// const decor = [ 'glow_strings', 'infinity_mirrors' ];
-	// const community = [ 'featured', 'music' ];
-	// const support = [ 'about', 'faq', 'contact', 'terms' ];
-
-	useEffect(() => {
-		// get_category_images('frosted_diffusers');
-		return () => {};
-	}, []);
 
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
@@ -68,7 +50,7 @@ const MenuPage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>{humanize(pathname)} | Glow LEDs</title>
 				<meta property="og:title" content={`${humanize(pathname)}| Glow LEDs`} />
@@ -88,9 +70,9 @@ const MenuPage = (props) => {
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
 			</Helmet>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1> {humanize(pathname)}</h1>
-			</FlexContainer>
+			</div>
 			<div className="jc-c">
 				<div className="jc-c wrap">
 					{determine_menu_items().map((item) => {

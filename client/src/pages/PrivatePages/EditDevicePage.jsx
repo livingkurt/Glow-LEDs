@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveDevice, detailsDevice, listDevices } from '../../actions/deviceActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveDevice, detailsDevice } from '../../actions/deviceActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditDevicePage = (props) => {
@@ -132,7 +129,7 @@ const EditDevicePage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Device' : 'Create Device'}</h1>
 
 			<div className="form">
@@ -159,8 +156,8 @@ const EditDevicePage = (props) => {
 										{loading ? 'Device' : device.name}
 									</h1>
 
-									<FlexContainer row wrap>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="device_name">Device Name</label>
 												<input
@@ -212,8 +209,8 @@ const EditDevicePage = (props) => {
 													onChange={(e) => set_palette_order(e.target.value)}
 												/>
 											</li> */}
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}

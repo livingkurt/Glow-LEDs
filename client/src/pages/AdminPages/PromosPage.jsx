@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listPromos, deletePromo } from '../../actions/promoActions';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-
-const colors = {
-	hidden: '#333333'
-};
 
 const PromosPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -56,53 +50,43 @@ const PromosPage = (props) => {
 	};
 
 	const colors = [
-		{ name: 'Supplies', color: '#6d3e3e' },
-		{ name: 'Website', color: '#6d3e5c' },
-		{ name: 'Shipping', color: '#3e4c6d' },
-		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
+		{ name: 'Percentage Off', color: '#6d3e3e' },
+		{ name: 'Amount Off', color: '#6d3e5c' },
+		{ name: 'Free Shipping', color: '#3e4c6d' },
+		{ name: 'For Customers', color: '#6d5a3e' },
+		{ name: 'Active', color: '#3f6561' }
 	];
 
 	const determine_color = (promo) => {
 		let result = '';
-		if (promo.category === 'Supplies') {
-			result = colors[0].color;
+
+		if (promo.percentage_off > 0) {
+			result = colors[4].color;
 		}
-		if (promo.category === 'Website') {
-			result = colors[1].color;
-		}
-		if (promo.category === 'Shipping') {
-			result = colors[2].color;
-		}
-		if (promo.category === 'Business') {
+		if (promo.amount_off > 0) {
 			result = colors[3].color;
 		}
-		if (promo.category === 'Equipment') {
-			result = colors[4].color;
+		if (promo.free_shipping) {
+			result = colors[0].color;
+		}
+		if (!promo.for_customer) {
+			result = colors[1].color;
 		}
 		console.log(result);
 		return result;
 	};
-	const sort_options = [
-		'Release Date',
-		'Glover Name',
-		'Facebook Name',
-		'Instagram Handle',
-		'Product',
-		'Song ID',
-		'Newest'
-	];
+	const sort_options = [ 'Percentage Off', 'Amount Off', 'Free Shipping', 'For Customers', 'Active' ];
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Admin Promos | Glow LEDs</title>
 			</Helmet>
-			<FlexContainer wrap h_between>
-				<FlexContainer h_between wrap>
+			<div className="wrap jc-b">
+				<div className="wrap jc-b">
 					{colors.map((color) => {
 						return (
-							<FlexContainer h_between styles={{ margin: '1rem', width: '16rem' }}>
+							<div className="wrap jc-b  m-1rem">
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -112,20 +96,20 @@ const PromosPage = (props) => {
 										borderRadius: '5px'
 									}}
 								/>
-							</FlexContainer>
+							</div>
 						);
 					})}
-				</FlexContainer>
+				</div>
 				<Link to="/secure/glow/editpromo">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Promo
 					</button>
 				</Link>
-			</FlexContainer>
+			</div>
 
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Promos</h1>
-			</FlexContainer>
+			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
@@ -146,9 +130,7 @@ const PromosPage = (props) => {
 									<th>For Customer</th>
 									<th>Excluded Categories</th>
 									<th>Excluded Products</th>
-
 									<th>Number of Uses</th>
-
 									<th>Number of Orders</th>
 								</tr>
 							</thead>
@@ -157,7 +139,7 @@ const PromosPage = (props) => {
 									<tr
 										key={promo._id}
 										style={{
-											backgroundColor: '#3e4c6d',
+											backgroundColor: determine_color(promo),
 											fontSize: '1.4rem'
 										}}
 									>
@@ -195,7 +177,7 @@ const PromosPage = (props) => {
 										<td className="p-10px">{promo.number_of_orders}</td>
 
 										<td className="p-10px">
-											<FlexContainer h_between>
+											<div className="jc-b">
 												<Link to={'/secure/glow/editpromo/' + promo._id}>
 													<button className="button icon">
 														<i className="fas fa-edit" />
@@ -204,7 +186,7 @@ const PromosPage = (props) => {
 												<button className="button icon" onClick={() => deleteHandler(promo)}>
 													<i className="fas fa-trash-alt" />
 												</button>
-											</FlexContainer>
+											</div>
 										</td>
 									</tr>
 								))}

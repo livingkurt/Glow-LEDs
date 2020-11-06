@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 const CheckEmailPage = (props) => {
 	return (
-		<FlexContainer h_center column>
+		<div className="column jc-c">
 			<Helmet>
 				<title>Check Email | Glow LEDs</title>
 				<meta property="og:title" content="Check Email | Glow LEDs" />
@@ -16,22 +15,22 @@ const CheckEmailPage = (props) => {
 			</Helmet>
 			<h1 style={{ textAlign: 'center' }}>Thank You for Registering your Account.</h1>
 			<h2 style={{ textAlign: 'center' }}>Check your Email for a Link to Verifiy your Account</h2>
-			<FlexContainer h_center>
-				<FlexContainer v_i_center wrap>
+			<div className="jc-c">
+				<div className="jc-c wrap">
 					<p style={{ textAlign: 'center', width: '100%' }}>
 						If you do not recieve a verification email, make sure to check your spam folder.
 					</p>
 					<p style={{ textAlign: 'center', width: '100%' }}>If still not there please contact support.</p>
-					<FlexContainer h_center>
+					<div className="jc-c">
 						<Link to="/pages/contact/did_not_recieve_verification_email">
 							<button style={{ marginLeft: '10px' }} className="button primary">
 								Contact Support
 							</button>
 						</Link>
-					</FlexContainer>
-				</FlexContainer>
-			</FlexContainer>
-		</FlexContainer>
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 };
 export default CheckEmailPage;

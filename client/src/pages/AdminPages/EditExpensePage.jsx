@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveExpense, detailsExpense, listExpenses } from '../../actions/expenseActions';
-import { FlexContainer } from '../../components/ContainerComponents';
+import { saveExpense, detailsExpense } from '../../actions/expenseActions';
 import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { Rating } from '../../components/SpecialtyComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
@@ -149,7 +147,7 @@ const EditExpensePage = (props) => {
 	};
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Expense' : 'Create Expense'}</h1>
 
 			<div className="form">
@@ -174,8 +172,8 @@ const EditExpensePage = (props) => {
 										}}
 									/>
 
-									<FlexContainer row wrap>
-										<FlexContainer column styles={{ width: '228px', margin: '10px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="expense_name">Expense</label>
 												<input
@@ -257,8 +255,8 @@ const EditExpensePage = (props) => {
 													onChange={(e) => set_amount(e.target.value)}
 												/>
 											</li>
-										</FlexContainer>
-									</FlexContainer>
+										</div>
+									</div>
 									<li>
 										<button type="submit" className="button primary">
 											{id ? 'Update' : 'Create'}
@@ -287,40 +285,6 @@ const EditExpensePage = (props) => {
 											</Link>
 										)}
 									</li>
-									{/* <li> */}
-									{/* {expense.reviews.map((review) => {
-									return (
-										<li
-											key={review._id}
-											style={{
-												listStyleType: 'none',
-												background: '#616161',
-												padding: '5px',
-												borderRadius: '15px',
-												boxShadow:
-													'0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
-											}}
-										>
-											<div>
-												<div>{review.name}</div>
-												<div>
-													<Rating value={review.rating} />
-												</div>
-												<div>{format_date(review.createdAt.substring(0, 10))}</div>
-												<div>{review.comment}</div>
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-													onClick={() => delete_review(review._id)}
-												>
-													X
-												</button>
-											</div>
-										</li>
-									);
-								})} */}
-									{/* </li> */}
 								</ul>
 							</div>
 						)}

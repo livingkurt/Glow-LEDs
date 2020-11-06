@@ -1,11 +1,8 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { addToCart } from '../../actions/cartActions';
-import { format_date, print_invoice } from '../../utils/helper_functions';
+import { format_date } from '../../utils/helper_functions';
 
 const OrderSmallScreen = (props) => {
 	return (

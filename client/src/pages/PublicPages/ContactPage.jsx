@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FlexContainer } from '../../components/ContainerComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../../actions/userActions';
 import { validate_contact } from '../../utils/validations';
@@ -147,7 +146,7 @@ const ContactPage = (props) => {
 	// console.log(process.env.REACT_APP_FILESTACK_API);
 
 	return (
-		<div class="main_container">
+		<div className="main_container">
 			<Helmet>
 				<title>Contact | Glow LEDs</title>
 				<meta property="og:title" content="Contact | Glow LEDs" />
@@ -167,9 +166,9 @@ const ContactPage = (props) => {
 					content="If you have any questions, do not hesitate to use our contact page for support."
 				/>
 			</Helmet>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<h1>Contact</h1>
-			</FlexContainer>
+			</div>
 			<div className="column jc-c">
 				<div className="ta-c">We are avaiable from 9 AM to 8 PM on Weekdays</div>
 				<div className="ta-c mt-1rem">
@@ -177,7 +176,7 @@ const ContactPage = (props) => {
 					right of your screen to chat with us instantly! 💨
 				</div>
 			</div>
-			<FlexContainer h_center>
+			<div className="jc-c">
 				<Loading loading={loading} error={error}>
 					{/* {completed && (
 						<h3 style={{ textAlign: 'center' }}>
@@ -185,7 +184,7 @@ const ContactPage = (props) => {
 						</h3>
 					)} */}
 				</Loading>
-			</FlexContainer>
+			</div>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form">
 				<label>First Name</label>
 				<input
@@ -331,7 +330,7 @@ const ContactPage = (props) => {
 							)}
 							onSuccess={finishUploading}
 						/>
-						<FlexContainer>
+						<div className="row">
 							{inspirational_pictures.map((picture) => {
 								return (
 									<img
@@ -348,13 +347,13 @@ const ContactPage = (props) => {
 									/>
 								);
 							})}
-						</FlexContainer>
+						</div>
 					</div>
 				)}
 
 				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 					<div>
-						<FlexContainer wrap h_between styles={{ gap: '10px' }}>
+						<div className="wrap jc-b" style={{ gap: '10px' }}>
 							<div style={{ width: '330px' }}>
 								<label>Instagram Handle</label>
 								<input
@@ -391,7 +390,7 @@ const ContactPage = (props) => {
 									placeholder="Glover Name (optional)"
 								/>
 							</div>
-						</FlexContainer>
+						</div>
 						<label>Song ID</label>
 						<input
 							onChange={(e) => set_song_id(e.target.value)}
