@@ -25,6 +25,18 @@ const Order = (props) => {
 		console.log(row);
 		row.classList.toggle('hide-row');
 	};
+	const daysBetween = (date1, date2) => {
+		// console.log({ date1: date1.toISOString() });
+		// console.log({ date1 });
+		// console.log({ date2: new Date(date2) });
+		const diffTime = Math.abs(new Date(date2) - date1);
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+		// console.log(diffTime + ' milliseconds');
+		// console.log(diffDays + ' days');
+		return diffDays;
+	};
+
+	const today = new Date();
 
 	return (
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
@@ -77,6 +89,14 @@ const Order = (props) => {
 										props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
 								</div>
 							</div>
+						)}
+					</div>
+					<div className="column fs-16px">
+						<h3>Since Order</h3>
+						{daysBetween(today, props.order.createdAt) > 1 ? (
+							`${daysBetween(today, props.order.createdAt)} Days`
+						) : (
+							`${daysBetween(today, props.order.createdAt)} Day`
 						)}
 					</div>
 					<div className="column fs-16px">

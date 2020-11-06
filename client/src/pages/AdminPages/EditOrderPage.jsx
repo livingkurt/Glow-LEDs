@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveOrder, detailsOrder } from '../../actions/orderActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -48,36 +48,6 @@ const EditOrderPage = (props) => {
 	const dispatch = useDispatch();
 
 	console.log({ order });
-
-	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsOrder(props.match.params.id));
-			dispatch(detailsOrder(props.match.params.id));
-			dispatch(listProducts(''));
-			dispatch(listUsers(''));
-		} else {
-			dispatch(detailsOrder(''));
-		}
-		set_state();
-		return () => {};
-	}, []);
-
-	useEffect(
-		() => {
-			if (order) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
-				set_orderItems([ {} ]);
-			}
-
-			return () => {};
-		},
-		[ order ]
-	);
 
 	const set_state = () => {
 		set_id(order._id);
@@ -143,6 +113,44 @@ const EditOrderPage = (props) => {
 		set_order_note('');
 		set_promo_code('');
 	};
+
+	const stableDispatch = useCallback(dispatch, []);
+	const stable_set_state = useCallback(set_state, []);
+	const stable_unset_state = useCallback(unset_state, []);
+	const stable_set_orderItems = useCallback(set_orderItems, []);
+
+	useEffect(
+		() => {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				stableDispatch(detailsOrder(props.match.params.id));
+				stableDispatch(detailsOrder(props.match.params.id));
+				stableDispatch(listProducts(''));
+				stableDispatch(listUsers(''));
+			} else {
+				stableDispatch(detailsOrder(''));
+			}
+			stable_set_state();
+			return () => {};
+		},
+		[ stableDispatch, stable_set_state, props.match.params.id ]
+	);
+
+	useEffect(
+		() => {
+			if (order) {
+				console.log('Set');
+				stable_set_state();
+			} else {
+				console.log('UnSet');
+				stable_unset_state();
+				stable_set_orderItems([ {} ]);
+			}
+
+			return () => {};
+		},
+		[ order, stable_set_state, stable_unset_state, set_orderItems ]
+	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();

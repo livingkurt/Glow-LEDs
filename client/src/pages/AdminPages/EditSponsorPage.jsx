@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveSponsor, detailsSponsor } from '../../actions/sponsorActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -27,39 +27,6 @@ const EditSponsorPage = (props) => {
 	const sponsorDetails = useSelector((state) => state.sponsorDetails);
 	const { sponsor, loading, error } = sponsorDetails;
 
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsSponsor(props.match.params.id));
-			dispatch(detailsSponsor(props.match.params.id));
-		} else {
-			dispatch(detailsSponsor(''));
-		}
-		dispatch(listUsers(''));
-		set_state();
-		return () => {};
-	}, []);
-
-	useEffect(
-		() => {
-			if (sponsor) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
-			}
-
-			return () => {};
-		},
-		[ sponsor ]
-	);
-	setTimeout(() => {
-		set_loading_checkboxes(false);
-	}, 500);
-
 	const set_state = () => {
 		set_id(sponsor._id);
 		set_user(sponsor.user && sponsor.user._id);
@@ -82,6 +49,45 @@ const EditSponsorPage = (props) => {
 		set_funds_generated('');
 		set_active('');
 	};
+
+	const dispatch = useDispatch();
+	const stableDispatch = useCallback(dispatch, []);
+	const stable_set_state = useCallback(set_state, []);
+	const stable_unset_state = useCallback(unset_state, []);
+
+	useEffect(
+		() => {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				stableDispatch(detailsSponsor(props.match.params.id));
+				stableDispatch(detailsSponsor(props.match.params.id));
+			} else {
+				stableDispatch(detailsSponsor(''));
+			}
+			stableDispatch(listUsers(''));
+			stable_set_state();
+			return () => {};
+		},
+		[ stableDispatch, stable_set_state, props.match.params.id ]
+	);
+
+	useEffect(
+		() => {
+			if (sponsor) {
+				console.log('Set');
+				stable_set_state();
+			} else {
+				console.log('UnSet');
+				stable_unset_state();
+			}
+
+			return () => {};
+		},
+		[ sponsor, stable_set_state, stable_unset_state ]
+	);
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const submitHandler = (e) => {
 		e.preventDefault();

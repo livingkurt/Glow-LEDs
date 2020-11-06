@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { listCarts, deleteCart } from '../../actions/cartActions';
 import { Link } from 'react-router-dom';
@@ -29,26 +29,25 @@ const CartsPage = (props) => {
 	// 	},
 	// 	[ successSave, successDelete ]
 	// );
+
+	const stableDispatch = useCallback(dispatch, []);
+
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listCarts(category, searchKeyword, sortOrder));
+		stableDispatch(listCarts(category, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listCarts(category, searchKeyword, e.target.value));
+		stableDispatch(listCarts(category, searchKeyword, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			dispatch(listCarts(category, searchKeyword, sortOrder));
+			stableDispatch(listCarts(category, searchKeyword, sortOrder));
 		},
-		[ sortOrder ]
+		[ sortOrder, stableDispatch, category, searchKeyword ]
 	);
-	const deleteHandler = (cart) => {
-		dispatch(deleteCart(cart._id));
-	};
-
 	const colors = [
 		{ name: 'Supplies', color: '#6d3e3e' },
 		{ name: 'Website', color: '#6d3e5c' },

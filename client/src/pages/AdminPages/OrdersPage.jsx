@@ -133,17 +133,6 @@ const OrdersPage = (props) => {
 		'Highest'
 	];
 
-	const show_hide = (id) => {
-		const row = document.getElementById(id);
-		console.log(row);
-		row.classList.toggle('hide-row');
-		// if (expandable === 'flex') {
-		// 	set_expandable('none');
-		// } else if (expandable === 'none') {
-		// 	set_expandable('flex');
-		// }
-	};
-
 	const update_order_state = (order, state, is_action, action_at) => {
 		if (state) {
 			set_order_state({ ...order_state, [is_action]: false });
@@ -162,19 +151,6 @@ const OrdersPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 	};
-
-	const daysBetween = (date1, date2) => {
-		// console.log({ date1: date1.toISOString() });
-		// console.log({ date1 });
-		// console.log({ date2: new Date(date2) });
-		const diffTime = Math.abs(new Date(date2) - date1);
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-		// console.log(diffTime + ' milliseconds');
-		// console.log(diffDays + ' days');
-		return diffDays;
-	};
-
-	const today = new Date();
 
 	return (
 		<div className="profile_container wrap column p-20px">

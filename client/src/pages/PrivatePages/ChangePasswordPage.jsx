@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { password_reset } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
@@ -40,15 +40,17 @@ const ChangePasswordPage = (props) => {
 	const userUpdate = useSelector((state) => state.userUpdate);
 	const { loading, success, error } = userUpdate;
 
+	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(
 		() => {
 			if (userInfo) {
 				setPassword(userInfo.password);
 			}
-			dispatch(listMyOrders());
+			stableDispatch(listMyOrders());
 			return () => {};
 		},
-		[ userInfo ]
+		[ userInfo, stableDispatch ]
 	);
 
 	useEffect(

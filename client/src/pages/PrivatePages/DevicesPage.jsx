@@ -4,14 +4,11 @@ import { deleteDevice, listMyDevices } from '../../actions/deviceActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Search, Sort } from '../../components/SpecialtyComponents';
+import { Search } from '../../components/SpecialtyComponents';
 
 const DevicesPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
-	// const deviceList = useSelector((state) => state.deviceList);
-	// const { loading, devices, error } = deviceList;
 
 	const myDeviceList = useSelector((state) => state.myDeviceList);
 	const { loading, devices, error } = myDeviceList;
@@ -26,71 +23,21 @@ const DevicesPage = (props) => {
 
 	useEffect(
 		() => {
-			// dispatch(listDevices());
 			dispatch(listMyDevices());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listMyDevices(category, searchKeyword, sortOrder));
+		dispatch(listMyDevices(category, searchKeyword));
 	};
 
-	const sortHandler = (e) => {
-		setSortOrder(e.target.value);
-		dispatch(listMyDevices(category, searchKeyword, e.target.value));
-	};
-
-	useEffect(
-		() => {
-			dispatch(listMyDevices(category, searchKeyword, sortOrder));
-		},
-		[ sortOrder ]
-	);
 	const deleteHandler = (device) => {
 		dispatch(deleteDevice(device._id));
 	};
-
-	const colors = [
-		{ name: 'Supplies', color: '#6d3e3e' },
-		{ name: 'Website', color: '#6d3e5c' },
-		{ name: 'Shipping', color: '#3e4c6d' },
-		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
-	];
-
-	const determine_color = (device) => {
-		let result = '';
-		if (device.category === 'Supplies') {
-			result = colors[0].color;
-		}
-		if (device.category === 'Website') {
-			result = colors[1].color;
-		}
-		if (device.category === 'Shipping') {
-			result = colors[2].color;
-		}
-		if (device.category === 'Business') {
-			result = colors[3].color;
-		}
-		if (device.category === 'Equipment') {
-			result = colors[4].color;
-		}
-		console.log(result);
-		return result;
-	};
-	// const sort_options = [
-	// 	'Release Date',
-	// 	'Glover Name',
-	// 	'Facebook Name',
-	// 	'Instagram Handle',
-	// 	'Product',
-	// 	'Song ID',
-	// 	'Newest'
-	// ];
 
 	return (
 		<div className="main_container">
