@@ -402,7 +402,7 @@ router.post('/invoice', async (req, res) => {
 router.post('/contact', async (req, res) => {
 	// const data = req.body;
 	console.log({ contact: req.body });
-	console.log(process.env.SENDGRID_SECRET);
+	// console.log(process.env.SENDGRID_SECRET);
 	// sgMail.setApiKey(process.env.SENDGRID_SECRET);
 	let mailOptions = {
 		to: process.env.DISPLAY_EMAIL,
@@ -424,7 +424,7 @@ router.post('/contact', async (req, res) => {
 router.post('/contactconfirmation', async (req, res) => {
 	// const data = req.body;
 	console.log({ contact: req.body });
-	console.log(process.env.SENDGRID_SECRET);
+	// console.log(process.env.SENDGRID_SECRET);
 	// sgMail.setApiKey(process.env.SENDGRID_SECRET);
 	let mailOptions = {
 		from: process.env.DISPLAY_EMAIL,

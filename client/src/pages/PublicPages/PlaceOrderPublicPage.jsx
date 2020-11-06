@@ -209,17 +209,6 @@ const PlaceOrderPublicPage = (props) => {
 	};
 
 	const placeOrderHandler = async (token, create_account) => {
-		// create an order
-		// console.log({ user_data });
-		// console.log({ user });
-		// const validation_data = { password, rePassword };
-		// // console.log({ data });
-		// const request = await validate_password_change(validation_data);
-		// console.log({ request });
-		// setPasswordValidations(request.errors.password);
-		// setRePasswordValidations(request.errors.rePassword);
-
-		// if (request.isValid) {
 		set_create_account(create_account);
 		dispatch(
 			createPayOrderGuest(
@@ -242,39 +231,7 @@ const PlaceOrderPublicPage = (props) => {
 		);
 
 		set_payment_loading(true);
-		// }
 	};
-
-	// const placeOrderCreateAccountHandler = (token) => {
-	// 	const create_account = true;
-	// 	dispatch(
-	// 		createPayOrderGuest(
-	// 			{
-	// 				orderItems: cartItems,
-	// 				shipping,
-	// 				payment,
-	// 				itemsPrice,
-	// 				shippingPrice,
-	// 				taxPrice,
-	// 				totalPrice,
-	// 				user_data,
-	// 				order_note,
-	// 				promo_code
-	// 			},
-	// 			create_account,
-	// 			token
-	// 		)
-	// 	);
-
-	// 	set_payment_loading(true);
-	// 	console.log({
-	// 		first_name: shipping.first_name,
-	// 		last_name: shipping.last_name,
-	// 		email: shipping.email,
-	// 		password: 'glowleds'
-	// 	});
-	// 	// dispatch(register(shipping.first_name, shipping.last_name, shipping.email, 'glowleds'));
-	// };
 
 	const empty_cart = () => {
 		console.log(cartItems);

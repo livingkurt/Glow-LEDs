@@ -106,14 +106,6 @@ const EditCartPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log(release_date);
-		console.log(format_date(release_date));
-		console.log(unformat_date(format_date(release_date)));
-		// console.log(unformat_date(release_date));
-		// console.log(format_date(unformat_date(release_date)));
-		// console.log(format_date(unformat_date(release_date)));
-
-		console.log({ id });
 		dispatch(
 			saveCart({
 				_id: id,
@@ -129,19 +121,7 @@ const EditCartPage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_user('');
-		set_glover_name('');
-		set_instagram_handle('');
-		set_facebook_name('');
-		set_product('');
-		set_song_id('');
-		set_video('');
-		set_picture('');
-		set_release_date('');
-		// if (id) {
-		// 	history.push('/collections/all/carts/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/glow/carts');
 		// }
 	};

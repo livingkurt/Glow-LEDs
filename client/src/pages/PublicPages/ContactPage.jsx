@@ -122,19 +122,19 @@ const ContactPage = (props) => {
 					})
 				);
 			}
-			set_last_name_Validations('');
-			set_first_name_Validations('');
-			set_email_validations('');
-			set_order_number_validations('');
-			set_reason_for_contact_validations('');
-			set_message_validations('');
-			// e.target.reset();
-			document.getElementsByName('first_name').value = '';
-			document.getElementsByName('last_name').value = '';
-			document.getElementsByName('email').value = '';
-			document.getElementsByName('order_number').value = '';
-			document.getElementsByName('reason_for_contact').value = '';
-			document.getElementsByName('message').value = '';
+			// set_last_name_Validations('');
+			// set_first_name_Validations('');
+			// set_email_validations('');
+			// set_order_number_validations('');
+			// set_reason_for_contact_validations('');
+			// set_message_validations('');
+			// // e.target.reset();
+			// document.getElementsByName('first_name').value = '';
+			// document.getElementsByName('last_name').value = '';
+			// document.getElementsByName('email').value = '';
+			// document.getElementsByName('order_number').value = '';
+			// document.getElementsByName('reason_for_contact').value = '';
+			// document.getElementsByName('message').value = '';
 		}
 	};
 
@@ -179,11 +179,11 @@ const ContactPage = (props) => {
 			</div>
 			<FlexContainer h_center>
 				<Loading loading={loading} error={error}>
-					{completed && (
+					{/* {completed && (
 						<h3 style={{ textAlign: 'center' }}>
 							{completed ? completed : request.isValid ? 'Error Sending Email' : ''}
 						</h3>
-					)}
+					)} */}
 				</Loading>
 			</FlexContainer>
 			<form style={{ display: 'flex', flexDirection: 'column' }} className="contact-form">

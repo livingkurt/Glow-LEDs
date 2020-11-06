@@ -7,33 +7,6 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
-// router.get('/', async (req, res) => {
-// 	const category = req.query.category ? { category: req.query.category } : {};
-// 	const searchKeyword = req.query.searchKeyword
-// 		? {
-// 				name: {
-// 					$regex: req.query.searchKeyword,
-// 					$options: 'i'
-// 				}
-// 			}
-// 		: {};
-
-// 	let sortOrder = {};
-// 	if (req.query.sortOrder === 'lowest') {
-// 		sortOrder = { price: 1 };
-// 	} else if (req.query.sortOrder === 'highest') {
-// 		sortOrder = { price: -1 };
-// 	} else if (req.query.sortOrder === 'newest') {
-// 		sortOrder = { _id: -1 };
-// 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-// 		sortOrder = { category: -1, createdAt: -1 };
-// 	}
-
-// 	// const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-// 	const features = await Feature.find({ deleted: false }).sort({ release_date: -1 });
-// 	// console.log(features);
-// 	res.send(features);
-// });
 router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
@@ -258,7 +231,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 // 	return res.status(500).send({ message: ' Error in Creating Feature.' });
 // });
 
-router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
+router.post('/', async (req: any, res: any) => {
 	try {
 		const newFeature = await Feature.create(req.body);
 		if (newFeature) {
