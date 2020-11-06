@@ -4,7 +4,7 @@ import { saveDevice, detailsDevice, listDevices } from '../../actions/deviceActi
 import { useSelector, useDispatch } from 'react-redux';
 
 import { ToggleSwitch } from '../../components/UtilityComponents';
-import API from '../../utils/API';
+import { API_Glow_Control } from '../../utils';
 import {
 	SettingSlider,
 	RGBSlider,
@@ -96,7 +96,7 @@ const GlowControl = (props) => {
 			// 		palette_order
 			// 	})
 			// );
-			const res = await API.update_leds(device.query_url, field_name, value);
+			const res = await API_Glow_Control.update_leds(device.query_url, field_name, value);
 			if (field_name === 'pattern') {
 				let pattern = camelize(patterns[value]);
 				console.log(pattern);
@@ -134,7 +134,7 @@ const GlowControl = (props) => {
 					palette_order
 				})
 			);
-			const res = await API.update_leds(device.query_url, field_name, value);
+			const res = await API_Glow_Control.update_leds(device.query_url, field_name, value);
 			if (field_name === 'pattern') {
 				let pattern = camelize(patterns[value]);
 				console.log(pattern);
@@ -170,7 +170,7 @@ const GlowControl = (props) => {
 			}
 			console.log(field_name, value, red, green, blue);
 			set_rgb({ red, green, blue });
-			const res = await API.update_rgb(device.query_url, red, green, blue);
+			const res = await API_Glow_Control.update_rgb(device.query_url, red, green, blue);
 		} catch (err) {
 			console.log(err);
 		}
@@ -185,7 +185,7 @@ const GlowControl = (props) => {
 			console.log(field_name, field_value);
 			console.log(field_name, field_value, hue, saturation, value);
 			set_hsv({ hue, saturation, value });
-			const res = await API.update_hsv(device.query_url, hue, saturation, value);
+			const res = await API_Glow_Control.update_hsv(device.query_url, hue, saturation, value);
 		} catch (err) {
 			console.log(err);
 		}
@@ -193,7 +193,7 @@ const GlowControl = (props) => {
 
 	const get_all_settings = async (query_url) => {
 		try {
-			const res = await API.get_all_settings(query_url);
+			const res = await API_Glow_Control.get_all_settings(query_url);
 			console.log({ res });
 			console.log({ query_url });
 
@@ -233,7 +233,7 @@ const GlowControl = (props) => {
 
 	const reset_device = async () => {
 		try {
-			const res = await API.reset_device(device.query_url);
+			const res = await API_Glow_Control.reset_device(device.query_url);
 		} catch (err) {
 			console.log(err);
 		}

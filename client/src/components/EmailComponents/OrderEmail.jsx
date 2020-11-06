@@ -7,7 +7,7 @@ import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
-import API from '../../utils/API';
+import { API_Emails } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 import { Loading } from '../UtilityComponents';
@@ -861,8 +861,8 @@ const OrderEmail = (props) => {
 	// };
 	const save_html = async (email) => {
 		console.log({ email_template });
-		const { data } = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
-		const request = await API.send_order_created_email(email_template, 'New Order Created');
+		const { data } = await API_Emails.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
+		const request = await API_Emails.send_order_created_email(email_template, 'New Order Created');
 		// if (data) {
 		// 	set_loading_email(false);
 		// 	history.push('/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078');

@@ -7,7 +7,7 @@ import { Rating, Reviews, Slideshow, RelatedProducts, RelatedCarousel } from '..
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import { Helmet } from 'react-helmet';
-import API from '../../utils/API';
+import { API_Products } from '../../utils';
 import { addToCart } from '../../actions/cartActions';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
@@ -68,13 +68,13 @@ const ProductPage = (props) => {
 	}, []);
 
 	const get_original_diffuser_caps = async () => {
-		const { data } = await API.get_original_diffuser_caps();
+		const { data } = await API_Products.get_original_diffuser_caps();
 		// console.log(data);
 		set_original_diffuser_caps(data);
 		// set_diffuser_caps(data);
 	};
 	const get_mini_diffuser_caps = async () => {
-		const { data } = await API.get_mini_diffuser_caps();
+		const { data } = await API_Products.get_mini_diffuser_caps();
 		// console.log(data);
 		set_mini_diffuser_caps(data);
 		// set_diffuser_caps(data);

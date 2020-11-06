@@ -7,7 +7,6 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-import API from '../../utils/API';
 import { print_invoice } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 

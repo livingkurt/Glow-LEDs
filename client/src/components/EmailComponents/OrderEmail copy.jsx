@@ -6,7 +6,7 @@ import { FlexContainer } from '../../components/ContainerComponents/index';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
-import API from '../../utils/API';
+import { API_Emails } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 
@@ -274,11 +274,11 @@ const OrderEmail = () => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const send_announcement_email = async () => {
-		const data = await API.send_announcement_email(email_template, email.announcement.h1);
+		const data = await API_Emails.send_announcement_email(email_template, email.announcement.h1);
 		console.log('Success');
 	};
 	const save_html = async () => {
-		const data = await API.save_html(email_template, email, userInfo.token);
+		const data = await API_Emails.save_html(email_template, email, userInfo.token);
 		console.log(data);
 		console.log('Success');
 	};

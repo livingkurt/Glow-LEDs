@@ -2,13 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, deleteOrder, update_order, update_payment } from '../../actions/orderActions';
-import { format_date } from '../../utils/helper_functions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Order, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
-import API from '../../utils/API';
-import { print_invoice } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 
 const OrdersPage = (props) => {

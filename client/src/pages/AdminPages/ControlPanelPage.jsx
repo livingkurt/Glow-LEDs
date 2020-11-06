@@ -9,7 +9,7 @@ import { listUsers } from '../../actions/userActions';
 // import { Doughnut } from 'react-chartjs-2';
 import Chart from 'chart.js';
 import { occurrence, hslToHex, unformat_date } from '../../utils/helper_functions';
-import API from '../../utils/API';
+import { API_Revenue, API_Products } from '../../utils';
 import { listSponsors } from '../../actions/sponsorActions';
 import { listPromos } from '../../actions/promoActions';
 import { Helmet } from 'react-helmet';
@@ -112,7 +112,7 @@ const ControlPanelPage = (props) => {
 	};
 
 	const get_occurrences = async () => {
-		const { data: occurrences } = await API.get_occurrences();
+		const { data: occurrences } = await API_Products.get_occurrences();
 		set_product_occurrences(occurrences);
 		initialize_occurrence_chart(occurrences);
 	};
@@ -221,26 +221,26 @@ const ControlPanelPage = (props) => {
 	};
 
 	const get_income = async () => {
-		const { data: daily } = await API.get_daily_income();
+		const { data: daily } = await API_Revenue.get_daily_income();
 		// console.log({ daily });
 		set_daily_orders(daily);
-		const { data: weekly } = await API.get_weekly_income();
+		const { data: weekly } = await API_Revenue.get_weekly_income();
 		// console.log({ weekly });
 		set_weekly_orders(weekly);
-		const { data: monthly } = await API.get_monthly_income();
+		const { data: monthly } = await API_Revenue.get_monthly_income();
 		// console.log({ monthly });
 		set_monthly_orders(monthly);
 	};
 	const get_each_day_income = async (date) => {
 		// console.log({ date });
-		const data = await API.get_each_day_income(date);
+		const data = await API_Revenue.get_each_day_income(date);
 		return data;
 		// console.log({ data });
 		// return daily;
 	};
 	const get_each_month_income = async (date) => {
 		// console.log({ date });
-		const data = await API.get_each_month_income(date);
+		const data = await API_Revenue.get_each_month_income(date);
 		return data;
 		// console.log({ data });
 		// return daily;
@@ -263,7 +263,7 @@ const ControlPanelPage = (props) => {
 				// console.log({ data });
 				let income = 0;
 				if (data.length > 1) {
-					income = data.reduce((a, c) => a + c.totalPrice, 0);
+					income = data.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
 					// console.log({ income });
 				}
 				income_each_day.push({ date: formatted_date, income });
@@ -283,7 +283,7 @@ const ControlPanelPage = (props) => {
 			console.log({ data });
 			let income = 0;
 			if (data.length > 1) {
-				income = data.reduce((a, c) => a + c.totalPrice, 0);
+				income = data.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
 				console.log({ month: dates_in_year[month_number].month, income });
 			}
 			income_each_month.push({ month: dates_in_year[month_number].month, income });

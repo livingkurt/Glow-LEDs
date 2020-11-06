@@ -17,6 +17,7 @@ export const humanize = (str: string) => {
 };
 
 export const format_date = (unformatted_date: string) => {
+	console.log({ unformatted_date });
 	const month = unformatted_date.slice(5, 7);
 	const day = unformatted_date.slice(8, 10);
 	const year = unformatted_date.slice(0, 4);
@@ -34,6 +35,7 @@ export const format_time = (unformatted_time: any) => {
 };
 
 export const unformat_date = (formatted_date: string) => {
+	console.log({ formatted_date });
 	const date = formatted_date.split('/');
 	const day = date[1];
 	const month = date[0];

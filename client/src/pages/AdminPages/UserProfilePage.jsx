@@ -6,7 +6,7 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { detailsUser } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import API from '../../utils/API';
+import { API_Emails } from '../../utils';
 
 const UserProfilePage = (props) => {
 	// const history = useHistory();
@@ -67,7 +67,7 @@ const UserProfilePage = (props) => {
 	};
 
 	const send_not_verified_email = async () => {
-		const request = await API.not_verified_email(user);
+		const request = await API_Emails.not_verified_email(user);
 
 		console.log(request);
 	};

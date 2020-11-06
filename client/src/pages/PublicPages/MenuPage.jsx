@@ -5,7 +5,6 @@ import { update, reset_password } from '../../actions/userActions';
 import { FlexContainer } from '../../components/ContainerComponents';
 import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
-import API from '../../utils/API';
 
 const MenuPage = (props) => {
 	const [ password, setPassword ] = useState('');
@@ -25,13 +24,6 @@ const MenuPage = (props) => {
 		return () => {};
 	}, []);
 
-	const get_category_images = async (category) => {
-		const { data } = await API.get_category_images(category);
-		// console.log({ data });
-		// console.log({ image: data.images[0] });
-		// console.log('Success');
-		return data.PromiseResult;
-	};
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
 			return [

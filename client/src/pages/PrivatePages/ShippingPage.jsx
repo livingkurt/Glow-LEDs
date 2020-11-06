@@ -4,7 +4,6 @@ import { saveShipping, savePayment } from '../../actions/cartActions';
 import { update } from '../../actions/userActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
-import API from '../../utils/API';
 import { Helmet } from 'react-helmet';
 import Cookie from 'js-cookie';
 

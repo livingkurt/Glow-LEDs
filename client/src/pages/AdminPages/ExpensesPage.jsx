@@ -8,7 +8,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Helmet } from 'react-helmet';
 import { format_date, unformat_date } from '../../utils/helper_functions';
-import API from '../../utils/API';
+import { API_Revenue } from '../../utils';
 import CSVReader from 'react-csv-reader';
 
 const colors = {
@@ -115,7 +115,7 @@ const ExpensesPage = (props) => {
 		}
 		expenses.forEach(async (expense) => {
 			expense = { ...expense, date: unformat_date(expense.date) };
-			const post_expense = await API.post_expense(expense, userInfo, card);
+			const post_expense = await API_Revenue.post_expense(expense, userInfo, card);
 		});
 		dispatch(listExpenses(category, searchKeyword, sortOrder));
 	};

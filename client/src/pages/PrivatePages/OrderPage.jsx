@@ -8,8 +8,8 @@ import { FlexContainer } from '../../components/ContainerComponents';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
-import API from '../../utils/API';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
+import { API_Emails, API_Products } from '../../utils';
 
 require('dotenv').config();
 
@@ -88,16 +88,16 @@ const OrderPage = (props) => {
 	);
 
 	const send_not_paid_email = async () => {
-		const request = await API.not_paid_email(order, user_data);
+		const request = await API_Emails.not_paid_email(order, user_data);
 		console.log(request);
 	};
 	const save_product = async () => {
-		const request = await API.save_product(order, user_data, product);
+		const request = await API_Products.save_product(order, user_data, product);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
 	const save_secondary_product = async () => {
-		const request = await API.save_secondary_product(order, user_data, secondary_product);
+		const request = await API_Products.save_secondary_product(order, user_data, secondary_product);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
