@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { savePromo, detailsPromo } from '../../actions/promoActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -8,8 +8,6 @@ import { listUsers } from '../../actions/userActions';
 import { listSponsors } from '../../actions/sponsorActions';
 
 const EditPromoPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ user, set_user ] = useState('');
@@ -24,7 +22,6 @@ const EditPromoPage = (props) => {
 	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ number_of_orders, set_number_of_orders ] = useState('');
 	const [ active, set_active ] = useState('');
-	const [ loading_data, set_loading_data ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
@@ -32,43 +29,32 @@ const EditPromoPage = (props) => {
 	const promoDetails = useSelector((state) => state.promoDetails);
 	const { promo, loading, error } = promoDetails;
 
-	const promoSave = useSelector((state) => state.promoSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = promoSave;
-
-	const promoDelete = useSelector((state) => state.promoDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = promoDelete;
-
 	const userList = useSelector((state) => state.userList);
-	const { loading: loading_users, users, error: error_users } = userList;
+	const { users } = userList;
 
 	const sponsorList = useSelector((state) => state.sponsorList);
-	const { loading: loading_sponsors, sponsors, error: error_sponsors } = sponsorList;
-
-	// const promoReviewDelete = useSelector((state) => state.promoReviewDelete);
-	// const { success: promoDeleteSuccess } = promoReviewDelete;
-	const promoList = useSelector((state) => state.promoList);
-	const { promos } = promoList;
+	const { sponsors } = sponsorList;
 
 	const dispatch = useDispatch();
-	const promo_id = props.match.params.id ? props.match.params.id : '';
 
-	console.log({ promo });
+	const stableDispatch = useCallback(dispatch, []);
 
-	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsPromo(props.match.params.id));
-			dispatch(detailsPromo(props.match.params.id));
-		} else {
-			dispatch(detailsPromo(''));
-		}
-		dispatch(listUsers(''));
-		dispatch(listSponsors(''));
-
-		// set_loading_data(false);
-		set_state();
-		return () => {};
-	}, []);
+	useEffect(
+		() => {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				stableDispatch(detailsPromo(props.match.params.id));
+				stableDispatch(detailsPromo(props.match.params.id));
+			} else {
+				stableDispatch(detailsPromo(''));
+			}
+			stableDispatch(listUsers(''));
+			stableDispatch(listSponsors(''));
+			set_state();
+			return () => {};
+		},
+		[ stableDispatch, props.match.params.id ]
+	);
 
 	useEffect(
 		() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listEmails, deleteEmail } from '../../actions/emailActions';
 import { Link } from 'react-router-dom';
@@ -20,14 +20,16 @@ const EmailsPage = (props) => {
 	const { success: successDelete } = emailDelete;
 	const dispatch = useDispatch();
 
+	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(
 		() => {
-			dispatch(listEmails());
+			stableDispatch(listEmails());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, stableDispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -41,9 +43,9 @@ const EmailsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listEmails(category, searchKeyword, sortOrder));
+			stableDispatch(listEmails(category, searchKeyword, sortOrder));
 		},
-		[ sortOrder ]
+		[ stableDispatch, category, searchKeyword, sortOrder ]
 	);
 	const deleteHandler = (email) => {
 		dispatch(deleteEmail(email._id));

@@ -26,7 +26,6 @@ const ContactPage = (props) => {
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
 	const [ glover_name, set_glover_name ] = useState('');
-	const [ quote, set_quote ] = useState('');
 	const [ inspirational_pictures, set_inspirational_pictures ] = useState([]);
 
 	const [ first_name_validations, set_first_name_Validations ] = useState('');
@@ -38,7 +37,6 @@ const ContactPage = (props) => {
 
 	const userContact = useSelector((state) => state.userContact);
 	const { loading, completed, error } = userContact;
-	console.log({ completed });
 
 	useEffect(
 		() => {
@@ -55,7 +53,7 @@ const ContactPage = (props) => {
 
 			return () => {};
 		},
-		[ completed ]
+		[ completed, props.history ]
 	);
 
 	let request;
@@ -65,13 +63,10 @@ const ContactPage = (props) => {
 		if ([ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact)) {
 			set_order_number_validations('55555555');
 		}
-
-		// console.log();
 		const data = {
 			first_name,
 			last_name,
 			email,
-			// order_number,
 			reason_for_contact,
 			message
 		};
@@ -104,8 +99,7 @@ const ContactPage = (props) => {
 					glover_name,
 					instagram_handle,
 					facebook_name,
-					song_id,
-					quote
+					song_id
 				)
 			);
 			if (reason_for_contact === 'submit_content_to_be_featured') {
@@ -401,16 +395,6 @@ const ContactPage = (props) => {
 							name="song_id"
 							placeholder="Song ID (optional)"
 						/>
-						{/* <label>Quote</label>
-						<input
-							onChange={(e) => set_quote(e.target.value)}
-							defaultValue={quote}
-							value={quote}
-							className="zoom_f form_input"
-							type="text"
-							name="quote"
-							placeholder="Quote"
-						/> */}
 					</div>
 				)}
 				<label>Message</label>

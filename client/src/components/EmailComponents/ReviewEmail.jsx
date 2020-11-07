@@ -171,7 +171,6 @@ const ReviewEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -186,7 +185,6 @@ const ReviewEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.instagram.com/glow_leds/"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -201,7 +199,6 @@ const ReviewEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -216,7 +213,6 @@ const ReviewEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://soundcloud.com/ntre/tracks"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -240,7 +236,6 @@ const ReviewEmail = () => {
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								Want to change how you receive these emails? <br /> You can{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -253,7 +248,6 @@ const ReviewEmail = () => {
 								</a>{' '}
 								or{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"

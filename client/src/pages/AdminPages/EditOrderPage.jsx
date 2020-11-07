@@ -115,9 +115,6 @@ const EditOrderPage = (props) => {
 	};
 
 	const stableDispatch = useCallback(dispatch, []);
-	const stable_set_state = useCallback(set_state, []);
-	const stable_unset_state = useCallback(unset_state, []);
-	const stable_set_orderItems = useCallback(set_orderItems, []);
 
 	useEffect(
 		() => {
@@ -130,26 +127,26 @@ const EditOrderPage = (props) => {
 			} else {
 				stableDispatch(detailsOrder(''));
 			}
-			stable_set_state();
+			set_state();
 			return () => {};
 		},
-		[ stableDispatch, stable_set_state, props.match.params.id ]
+		[ stableDispatch ]
 	);
 
 	useEffect(
 		() => {
 			if (order) {
 				console.log('Set');
-				stable_set_state();
+				set_state();
 			} else {
 				console.log('UnSet');
-				stable_unset_state();
-				stable_set_orderItems([ {} ]);
+				unset_state();
+				set_orderItems([ {} ]);
 			}
 
 			return () => {};
 		},
-		[ order, stable_set_state, stable_unset_state, set_orderItems ]
+		[ order ]
 	);
 
 	const submitHandler = (e) => {

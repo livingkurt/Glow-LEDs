@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listSponsors, deleteSponsor } from '../../actions/sponsorActions';
 import { Link } from 'react-router-dom';
@@ -20,14 +20,15 @@ const SponsorsPage = (props) => {
 	const { success: successDelete } = sponsorDelete;
 	const dispatch = useDispatch();
 
+	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			dispatch(listSponsors());
+			stableDispatch(listSponsors());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, stableDispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -41,9 +42,9 @@ const SponsorsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listSponsors(category, searchKeyword, sortOrder));
+			stableDispatch(listSponsors(category, searchKeyword, sortOrder));
 		},
-		[ sortOrder ]
+		[ stableDispatch, category, searchKeyword, sortOrder ]
 	);
 	const deleteHandler = (sponsor) => {
 		dispatch(deleteSponsor(sponsor._id));

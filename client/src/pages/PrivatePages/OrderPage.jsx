@@ -23,21 +23,10 @@ const OrderPage = (props) => {
 
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { loading, order, error } = orderDetails;
-	console.log({ order: order });
 
-	const orderRefund = useSelector((state) => state.orderRefund);
-	const { order: refund } = orderRefund;
-
-	const [ refund_state, set_refund_state ] = useState({});
-	const [ refund_amount, set_refund_amount ] = useState(0);
-	const [ refund_reason, set_refund_reason ] = useState('');
 	const [ product, set_product ] = useState('');
 	const [ secondary_product, set_secondary_product ] = useState('');
 	const [ product_object, set_product_object ] = useState('');
-	const [ shipping_state, set_shipping_state ] = useState({});
-	const [ packaged_state, set_packaged_state ] = useState({});
-	const [ manufactured_state, set_manufactured_state ] = useState({});
-	const [ delivery_state, set_delivery_state ] = useState({});
 	const [ payment_loading, set_payment_loading ] = useState(false);
 
 	const [ order_state, set_order_state ] = useState({});
@@ -46,13 +35,6 @@ const OrderPage = (props) => {
 		() => {
 			if (order) {
 				set_order_state(order);
-				console.log({ order });
-				set_shipping_state(order.isRefunded);
-				set_shipping_state(order.isShipped);
-				set_manufactured_state(order.isManufactured);
-				set_packaged_state(order.isPackaged);
-				set_delivery_state(order.isDelivered);
-				set_product_object(order.product);
 			}
 		},
 		[ order ]
@@ -67,48 +49,11 @@ const OrderPage = (props) => {
 		},
 		[ product_object ]
 	);
-	// useEffect(
-	// 	() => {
-	// 		dispatch(detailsOrder(props.match.params.id));
-	// 		return () => {};
-	// 	},
-	// 	[ product ]
-	// );
 
-	useEffect(
-		() => {
-			if (refund) {
-				set_refund_state(refund.isRefunded);
-				dispatch(detailsOrder(props.match.params.id));
-				set_order_state(refund);
-			}
-		},
-		[ refund ]
-	);
-
-	const send_not_paid_email = async () => {
-		const request = await API_Emails.not_paid_email(order, user_data);
-		console.log(request);
-	};
-	const save_product = async () => {
-		const request = await API_Products.save_product(order, user_data, product);
-		console.log(request);
-		dispatch(detailsOrder(props.match.params.id));
-	};
 	const save_secondary_product = async () => {
 		const request = await API_Products.save_secondary_product(order, user_data, secondary_product);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-	};
-
-	const update_refund_state = () => {
-		// if (order_state.isRefunded) {
-		// 	set_refund_state(false);
-		// 	dispatch(refundOrder(order, false));
-		// } else {
-		set_refund_state(true);
-		dispatch(refundOrder(order, true, refund_amount, refund_reason));
-		// }
 	};
 
 	useEffect(
@@ -294,11 +239,11 @@ const OrderPage = (props) => {
 									</div>
 									<div>{order.shipping.international && 'International'}</div>
 									<div>{order.shipping.email}</div>
-									<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
+									{/* <div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 										<p style={{ marginBottom: '0px' }}>
 											{shipping_state ? 'Shipped' : 'Not Shipped'}
 										</p>
-									</div>
+									</div> */}
 								</div>
 							</div>
 						</div>

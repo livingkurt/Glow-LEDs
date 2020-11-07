@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listContents, deleteContent } from '../../actions/contentActions';
 import { Link } from 'react-router-dom';
@@ -19,14 +19,16 @@ const ContentsPage = (props) => {
 	const { success: successDelete } = contentDelete;
 	const dispatch = useDispatch();
 
+	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(
 		() => {
-			dispatch(listContents());
+			stableDispatch(listContents());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, stableDispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();

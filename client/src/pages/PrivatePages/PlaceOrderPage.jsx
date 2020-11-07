@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder } from '../../actions/orderActions';
@@ -42,66 +42,9 @@ const PlaceOrderPage = (props) => {
 	const [ show_message, set_show_message ] = useState('');
 	const [ user, set_user ] = useState(user_data);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
-
-	useEffect(() => {
-		dispatch(listPromos());
-		dispatch(listUsers(''));
-		return () => {};
-	}, []);
-
-	useEffect(
-		() => {
-			const shipping_cookie = Cookie.getJSON('shipping');
-			if (shipping_cookie) {
-				dispatch(saveShipping(shipping_cookie));
-			}
-			dispatch(savePayment({ paymentMethod: 'stripe' }));
-			setItemsPrice(
-				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
-			);
-
-			return () => {};
-		},
-		[ cartItems ]
-	);
-
-	useEffect(
-		() => {
-			if (error) {
-				set_payment_loading(false);
-			}
-			return () => {};
-		},
-		[ error ]
-	);
-	useEffect(
-		() => {
-			if (shipping) {
-				if (shipping.international) {
-					calculate_international();
-				} else {
-					calculate_shipping();
-					calculate_shipping();
-				}
-			}
-			return () => {};
-		},
-		[ shipping ]
-	);
-
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-			return () => {};
-		},
-		[ shippingPrice ]
-	);
+	const dispatch = useDispatch();
 
 	const [ order_note, set_order_note ] = useState('');
-
-	const dispatch = useDispatch();
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
@@ -153,6 +96,71 @@ const PlaceOrderPage = (props) => {
 		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 		// console.log({ shippingPrice });
 	};
+
+	const stableDispatch = useCallback(dispatch, []);
+	const stable_setItemsPrice = useCallback(setItemsPrice, []);
+	const stable_set_payment_loading = useCallback(set_payment_loading, []);
+	const stable_calculate_international = useCallback(calculate_international, []);
+	const stable_calculate_shipping = useCallback(calculate_shipping, []);
+
+	useEffect(
+		() => {
+			stableDispatch(listPromos());
+			stableDispatch(listUsers(''));
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
+
+	useEffect(
+		() => {
+			const shipping_cookie = Cookie.getJSON('shipping');
+			if (shipping_cookie) {
+				stableDispatch(saveShipping(shipping_cookie));
+			}
+			stableDispatch(savePayment({ paymentMethod: 'stripe' }));
+			stable_setItemsPrice(
+				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
+					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
+			);
+
+			return () => {};
+		},
+		[ cartItems, stableDispatch, stable_setItemsPrice ]
+	);
+
+	useEffect(
+		() => {
+			if (error) {
+				stable_set_payment_loading(false);
+			}
+			return () => {};
+		},
+		[ error, stable_set_payment_loading ]
+	);
+	useEffect(
+		() => {
+			if (shipping) {
+				if (shipping.international) {
+					stable_calculate_international();
+				} else {
+					stable_calculate_shipping();
+					stable_calculate_shipping();
+				}
+			}
+			return () => {};
+		},
+		[ shipping, stable_calculate_international, stable_calculate_shipping ]
+	);
+
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			return () => {};
+		},
+		[ shippingPrice ]
+	);
 
 	const placeOrderHandler = (token) => {
 		// create an order
@@ -425,7 +433,14 @@ const PlaceOrderPage = (props) => {
 														defaultValue={item.qty}
 														className="qty_select_dropdown"
 														onChange={(e) =>
-															dispatch(addToCart(item.pathname, e.target.value))}
+															dispatch(
+																addToCart(
+																	item.pathname,
+																	e.target.value,
+																	item.diffuser_cap_color && item.diffuser_cap_color,
+																	item.diffuser_cap && item.diffuser_cap.name
+																)
+															)}
 														// >
 														// onChange={(e) => console.log(e.target.value)}
 													>

@@ -338,7 +338,7 @@ const App = () => {
 					</ScrollToTop>
 				</Content>
 
-				<Footer backgroundColor={theme_colors.footer} />
+				<Footer />
 			</Container>
 		</Router>
 	);

@@ -4,17 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { addToCart } from '../../actions/cartActions';
 
 const Product = (props) => {
-	const dispatch = useDispatch();
-
-	console.log(props.product && props.product.pathname);
-
-	const handleAddToCart = () => {
-		dispatch(addToCart(props.product.pathname, 1));
-	};
-
 	const sale_price_switch = () => {
 		if (props.product.sale_price !== 0) {
 			return (

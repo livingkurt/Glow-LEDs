@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
@@ -20,23 +20,27 @@ const OrderEmail = (props) => {
 	console.log({ emails });
 
 	const dispatch = useDispatch();
+	const stableDispatch = useCallback(dispatch, []);
 
-	useEffect(() => {
-		dispatch(listEmails('Order'));
-		// dispatch(detailsOrder(props.match.params.id));
-		dispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
-		return () => {};
-	}, []);
+	useEffect(
+		() => {
+			stableDispatch(listEmails('Order'));
+			// stableDispatch(detailsOrder(props.match.params.id));
+			stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
 
 	useEffect(
 		() => {
 			const active_email = emails.find((email) => email.active === true);
 			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+				stableDispatch(detailsEmail(active_email._id));
 			}
 			return () => {};
 		},
-		[ emails ]
+		[ emails, stableDispatch ]
 	);
 
 	const determin_card_logo = (card_type) => {
@@ -223,8 +227,7 @@ const OrderEmail = (props) => {
 												fontSize: '1.2em',
 												textAlign: 'center',
 												textDecoration: 'none !important',
-												lineHeight: 'inherit !important',
-												color: 'inherit !important;'
+												lineHeight: 'inherit !important'
 											}}
 										>
 											View your Order
@@ -242,11 +245,8 @@ const OrderEmail = (props) => {
 											href="https://www.glow-leds.com/collections/all/products"
 											alt="discount image"
 											style={{
-												// backgroundColor: '#4c4f60',
 												color: 'white',
-												// borderRadius: '10px',
 												border: 0,
-												fontSize: '13px',
 												padding: '10px',
 												fontFamily: 'helvetica',
 												margin: 0,
@@ -254,8 +254,7 @@ const OrderEmail = (props) => {
 												fontSize: '1.2em',
 												textAlign: 'center',
 												textDecoration: 'none !important',
-												lineHeight: 'inherit !important',
-												color: 'inherit !important;'
+												lineHeight: 'inherit !important'
 											}}
 										>
 											Visit our Store
@@ -322,11 +321,10 @@ const OrderEmail = (props) => {
 											Order Summary
 										</h4>
 
-										{order.orderItems.map((item) => (
+										{order.orderItems.map((item, index) => (
 											<tr>
 												<td
 													style={{
-														padding: '5px',
 														verticalAlign: 'top',
 														borderBottom: '1px solid #eee',
 														padding: '20px 0',
@@ -334,6 +332,7 @@ const OrderEmail = (props) => {
 														fontSize: '16px',
 														fontWeight: 800
 													}}
+													key={index}
 													valign="top"
 												>
 													{item.qty}x - {' '}
@@ -349,7 +348,6 @@ const OrderEmail = (props) => {
 												</td>
 												<td
 													style={{
-														padding: '5px',
 														verticalAlign: 'top',
 														textAlign: 'right',
 														borderBottom: '1px solid #eee',
@@ -597,7 +595,6 @@ const OrderEmail = (props) => {
 																		margin: '0 auto',
 																		// lineHeight: '20px',
 																		color: 'white',
-																		fontSize: '1em',
 																		padding: '10px 0',
 																		marginTop: '50px',
 																		fontSize: '18px'
@@ -680,7 +677,6 @@ const OrderEmail = (props) => {
 							</div> */}
 
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/pages/contact/submit_content_to_be_featured"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -734,7 +730,6 @@ const OrderEmail = (props) => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -755,7 +750,6 @@ const OrderEmail = (props) => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.instagram.com/glow_leds/"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -775,7 +769,6 @@ const OrderEmail = (props) => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -795,7 +788,6 @@ const OrderEmail = (props) => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://soundcloud.com/ntre/tracks"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -824,7 +816,6 @@ const OrderEmail = (props) => {
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								Want to change how you receive these emails? <br /> You can{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -837,7 +828,6 @@ const OrderEmail = (props) => {
 								</a>{' '}
 								or{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -866,7 +856,9 @@ const OrderEmail = (props) => {
 	const save_html = async (email) => {
 		console.log({ email_template });
 		const { data } = await API_Emails.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
-		const request = await API_Emails.send_order_created_email(email_template, 'New Order Created');
+		const { data: request } = await API_Emails.send_order_created_email(email_template, 'New Order Created');
+		console.log({ data });
+		console.log({ request });
 		// if (data) {
 		// 	set_loading_email(false);
 		// 	history.push('/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078');

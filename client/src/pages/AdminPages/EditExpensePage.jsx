@@ -7,8 +7,6 @@ import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditExpensePage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ expense_name, set_expense_name ] = useState('');
 	const [ application, set_application ] = useState('');
@@ -18,58 +16,15 @@ const EditExpensePage = (props) => {
 	const [ category, set_category ] = useState('');
 	const [ card, set_card ] = useState('');
 	const [ amount, set_amount ] = useState('');
-	const [ loading_data, set_loading_data ] = useState(true);
 
 	const history = useHistory();
 
 	const expenseDetails = useSelector((state) => state.expenseDetails);
 	const { expense, loading, error } = expenseDetails;
 
-	const expenseSave = useSelector((state) => state.expenseSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = expenseSave;
-
-	const expenseDelete = useSelector((state) => state.expenseDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = expenseDelete;
-
-	// const expenseReviewDelete = useSelector((state) => state.expenseReviewDelete);
-	// const { success: expenseDeleteSuccess } = expenseReviewDelete;
-	const expenseList = useSelector((state) => state.expenseList);
-	const { expenses } = expenseList;
-
 	const dispatch = useDispatch();
-	const expense_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ expense });
-
-	// console.log({ ID: props.match.params.id })
-
-	// useEffect(() => {
-	// 	// dispatch(detailsExpense(expense_id));
-	// 	dispatch(listExpenses());
-	// 	if (expense) {
-	// 		// console.log({ expense })
-	// 		set_id(expense._id);
-	// 		set_expense_name(expense.expense_name);
-	// 		set_application(expense.application);
-	// 		set_url(expense.url);
-	// 		set_place_of_purchase(expense.place_of_purchase);
-	// 		set_date_of_purchase(format_date(expense.date_of_purchase));
-	// 		set_category(expense.category);
-	// 		set_card(expense.card);
-	// 		set_amount(expense.amount);
-	// 	} else {
-	// 		set_id('');
-	// 		set_expense_name('');
-	// 		set_application('');
-	// 		set_url('');
-	// 		set_place_of_purchase('');
-	// 		set_date_of_purchase('');
-	// 		set_category('');
-	// 		set_card('');
-	// 		set_amount('');
-	// 	}
-	// 	return () => {};
-	// }, []);
 
 	useEffect(() => {
 		if (props.match.params.id) {

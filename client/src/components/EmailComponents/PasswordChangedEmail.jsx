@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -173,7 +173,6 @@ const PasswordChangedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -188,7 +187,6 @@ const PasswordChangedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.instagram.com/glow_leds/"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -203,7 +201,6 @@ const PasswordChangedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -218,7 +215,6 @@ const PasswordChangedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://soundcloud.com/ntre/tracks"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -241,7 +237,6 @@ const PasswordChangedEmail = () => {
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								If you have any questions or concerns <br /> You can visit our {' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/pages/faq"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -254,7 +249,6 @@ const PasswordChangedEmail = () => {
 								</a>{' '}
 								page or contact us{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/pages/contact"
 									target="_blank"
 									rel="noopener noreferrer"

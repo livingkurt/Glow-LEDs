@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveContent, detailsContent } from '../../actions/contentActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -6,8 +6,6 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
 const EditContentPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ home_page, set_home_page ] = useState({});
 	const [ about_page, set_about_page ] = useState({});
@@ -22,40 +20,48 @@ const EditContentPage = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);
 	const { content, loading, error } = contentDetails;
 
-	const contentSave = useSelector((state) => state.contentSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = contentSave;
-
-	const contentDelete = useSelector((state) => state.contentDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = contentDelete;
-
-	// const contentReviewDelete = useSelector((state) => state.contentReviewDelete);
-	// const { success: contentDeleteSuccess } = contentReviewDelete;
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
 
 	const dispatch = useDispatch();
-	const content_id = props.match.params.id ? props.match.params.id : '';
 
-	// console.log({ content });
+	const stableDispatch = useCallback(dispatch, []);
 
-	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsContent(props.match.params.id));
-			dispatch(detailsContent(props.match.params.id));
-		} else {
-			dispatch(detailsContent(''));
-		}
+	const set_state = () => {
+		set_id(content._id);
+		set_home_page(content.home_page);
+		set_banner(content.banner);
+		set_about_page(content.about_page);
+		set_active(content.active);
+	};
+	const unset_state = () => {
+		set_id('');
+		set_home_page('');
+		set_banner('');
+		set_about_page('');
+		set_active(true);
+	};
 
-		// set_loading_data(false);
-		set_state();
-		return () => {};
-	}, []);
+	useEffect(
+		() => {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				stableDispatch(detailsContent(props.match.params.id));
+				stableDispatch(detailsContent(props.match.params.id));
+			} else {
+				stableDispatch(detailsContent(''));
+			}
+
+			// set_loading_data(false);
+			set_state();
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
 
 	const use_template = (e) => {
 		dispatch(detailsContent(e.target.value));
 		set_using_template(true);
-		// history.push('/secure/glow/products');
 	};
 
 	useEffect(
@@ -76,24 +82,6 @@ const EditContentPage = (props) => {
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
-
-	const set_state = () => {
-		set_id(content._id);
-		set_home_page(content.home_page);
-		set_banner(content.banner);
-		set_about_page(content.about_page);
-		set_active(content.active);
-
-		// fcontent.banner_link);
-		// console.log(format_date(content.banner_link));
-	};
-	const unset_state = () => {
-		set_id('');
-		set_home_page('');
-		set_banner('');
-		set_about_page('');
-		set_active(true);
-	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();

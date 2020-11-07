@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listPromos, deletePromo } from '../../actions/promoActions';
 import { Link } from 'react-router-dom';
@@ -20,14 +20,16 @@ const PromosPage = (props) => {
 	const { success: successDelete } = promoDelete;
 	const dispatch = useDispatch();
 
+	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(
 		() => {
-			dispatch(listPromos());
+			stableDispatch(listPromos());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, stableDispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -41,9 +43,9 @@ const PromosPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPromos(category, searchKeyword, sortOrder));
+			stableDispatch(listPromos(category, searchKeyword, sortOrder));
 		},
-		[ sortOrder ]
+		[ stableDispatch, category, searchKeyword, sortOrder ]
 	);
 	const deleteHandler = (promo) => {
 		dispatch(deletePromo(promo._id));

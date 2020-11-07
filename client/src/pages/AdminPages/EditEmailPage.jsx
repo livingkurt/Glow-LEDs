@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveEmail, detailsEmail, listEmails } from '../../actions/emailActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -6,8 +6,6 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
 const EditEmailPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ email_type, set_email_type ] = useState('');
 	const [ email_h1, set_email_h1 ] = useState('');
@@ -25,60 +23,10 @@ const EditEmailPage = (props) => {
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
 
-	const emailSave = useSelector((state) => state.emailSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = emailSave;
-
-	const emailDelete = useSelector((state) => state.emailDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = emailDelete;
-
-	// const emailReviewDelete = useSelector((state) => state.emailReviewDelete);
-	// const { success: emailDeleteSuccess } = emailReviewDelete;
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
 	const dispatch = useDispatch();
-	const email_id = props.match.params.id ? props.match.params.id : '';
-
-	console.log({ email });
-
-	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsEmail(props.match.params.id));
-			dispatch(detailsEmail(props.match.params.id));
-		} else {
-			dispatch(detailsEmail(''));
-		}
-		dispatch(listEmails(''));
-
-		// set_loading_data(false);
-		set_state();
-		return () => {};
-	}, []);
-
-	const use_template = (e) => {
-		dispatch(detailsEmail(e.target.value));
-		// history.push('/secure/glow/products');
-	};
-
-	useEffect(
-		() => {
-			if (email) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
-			}
-
-			return () => {};
-		},
-		[ email ]
-	);
-
-	setTimeout(() => {
-		set_loading_checkboxes(false);
-	}, 500);
 
 	const set_state = () => {
 		props.match.params.id && set_id(email._id);
@@ -104,6 +52,48 @@ const EditEmailPage = (props) => {
 		set_email_link('');
 		set_email_active('');
 	};
+
+	const stableDispatch = useCallback(dispatch, []);
+
+	useEffect(
+		() => {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				stableDispatch(detailsEmail(props.match.params.id));
+				stableDispatch(detailsEmail(props.match.params.id));
+			} else {
+				stableDispatch(detailsEmail(''));
+			}
+			stableDispatch(listEmails(''));
+
+			set_state();
+			return () => {};
+		},
+		[ stableDispatch, props.match.params.id ]
+	);
+
+	const use_template = (e) => {
+		dispatch(detailsEmail(e.target.value));
+	};
+
+	useEffect(
+		() => {
+			if (email) {
+				console.log('Set');
+				set_state();
+			} else {
+				console.log('UnSet');
+				unset_state();
+			}
+
+			return () => {};
+		},
+		[ email ]
+	);
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const submitHandler = (e) => {
 		e.preventDefault();

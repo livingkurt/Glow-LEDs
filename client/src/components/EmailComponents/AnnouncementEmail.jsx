@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -21,21 +21,25 @@ const AnnouncementEmail = () => {
 	console.log({ emails });
 
 	const dispatch = useDispatch();
+	const stableDispatch = useCallback(dispatch, []);
 
-	useEffect(() => {
-		dispatch(listEmails('Announcements'));
-		return () => {};
-	}, []);
+	useEffect(
+		() => {
+			stableDispatch(listEmails('Announcements'));
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
 
 	useEffect(
 		() => {
 			const active_email = emails.find((email) => email.active === true);
 			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+				stableDispatch(detailsEmail(active_email._id));
 			}
 			return () => {};
 		},
-		[ emails ]
+		[ emails, stableDispatch ]
 	);
 
 	setTimeout(() => {
@@ -181,7 +185,6 @@ const AnnouncementEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -196,7 +199,6 @@ const AnnouncementEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.instagram.com/glow_leds/"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -211,7 +213,6 @@ const AnnouncementEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -226,7 +227,6 @@ const AnnouncementEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://soundcloud.com/ntre/tracks"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -250,7 +250,6 @@ const AnnouncementEmail = () => {
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								Want to change how you receive these emails? <br /> You can{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -263,7 +262,6 @@ const AnnouncementEmail = () => {
 								</a>{' '}
 								or{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
 									target="_blank"
 									rel="noopener noreferrer"

@@ -29,8 +29,6 @@ const Sidebar = (props) => {
 	const wrapperRef = useRef(null);
 	useOutsideAlerter(wrapperRef);
 
-	const cart = useSelector((state) => state.cart);
-
 	const closeMenu = () => {
 		document.querySelector('.sidebar').classList.remove('open');
 	};
@@ -40,13 +38,6 @@ const Sidebar = (props) => {
 		dispatch(logout());
 		closeMenu();
 		history.push('/account/login');
-	};
-
-	const icon_styles = {
-		position: 'absolute',
-		right: '10px',
-		top: '8px',
-		'-webkitTransform': 'rotate(-180deg)'
 	};
 
 	const [ first_name, set_first_name ] = useState('');

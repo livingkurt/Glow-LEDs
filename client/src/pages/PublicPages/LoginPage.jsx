@@ -28,7 +28,7 @@ const LoginPage = (props) => {
 				//
 			};
 		},
-		[ userInfo ]
+		[ userInfo, props.history, redirect ]
 	);
 
 	const submitHandler = (e) => {

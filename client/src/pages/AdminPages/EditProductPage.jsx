@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, listProducts } from '../../actions/productActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -23,7 +23,7 @@ const EditProductPage = (props) => {
 	const [ hidden, setHidden ] = useState();
 	const [ sale_price, setSalePrice ] = useState();
 	const [ volume, setVolume ] = useState();
-	const [ subcategories, set_subcategories ] = useState('');
+	// const [ subcategories, set_subcategories ] = useState('');
 	const [ subcategory, set_subcategory ] = useState('');
 	const [ meta_title, set_meta_title ] = useState();
 	const [ meta_description, set_meta_description ] = useState();
@@ -36,47 +36,43 @@ const EditProductPage = (props) => {
 	const [ pathname, setPathname ] = useState();
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-	const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
-	// const [ products, set_products ] = useState('');
+	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
 
 	const history = useHistory();
 
 	const productDetails = useSelector((state) => state.productDetails);
 	const { product, loading, error } = productDetails;
 
-	// const productSave = useSelector((state) => state.productSave);
-	// const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
-
-	// const productDelete = useSelector((state) => state.productDelete);
-	// const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
-
 	const productList = useSelector((state) => state.productList);
-	const { products, loading: loading_products, error: error_products } = productList;
+	const { products } = productList;
 
 	const productReviewDelete = useSelector((state) => state.productReviewDelete);
 	const { success: productDeleteSuccess } = productReviewDelete;
 
 	const dispatch = useDispatch();
-	const product_pathname = props.match.params.pathname ? props.match.params.pathname : '';
 
 	console.log({ product });
 
 	// console.log({ ID: id });
+	const stableDispatch = useCallback(dispatch, []);
 
-	useEffect(() => {
-		if (props.match.params.pathname) {
-			console.log('Is ID');
-			dispatch(detailsProduct(props.match.params.pathname));
-			dispatch(detailsProduct(props.match.params.pathname));
-		} else {
-			dispatch(detailsProduct(''));
-		}
-		dispatch(listProducts(''));
+	useEffect(
+		() => {
+			if (props.match.params.pathname) {
+				console.log('Is ID');
+				stableDispatch(detailsProduct(props.match.params.pathname));
+				stableDispatch(detailsProduct(props.match.params.pathname));
+			} else {
+				stableDispatch(detailsProduct(''));
+			}
+			stableDispatch(listProducts(''));
 
-		// set_loading_data(false);
-		set_state();
-		return () => {};
-	}, []);
+			// set_loading_data(false);
+			set_state();
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
 
 	useEffect(() => {
 		return () => {};
@@ -147,7 +143,7 @@ const EditProductPage = (props) => {
 		setVideo('');
 		setBrand('');
 		setCategory('');
-		set_subcategories('');
+		// set_subcategories('');
 		set_subcategory('');
 		setCountInStock('');
 		setHidden();
@@ -206,15 +202,15 @@ const EditProductPage = (props) => {
 		history.push('/secure/glow/products');
 	};
 
-	useEffect(() => {
-		if (shouldBlockNavigation) {
-			window.onbeforeunload = () => true;
-		} else {
-			window.onbeforeunload = undefined;
-		}
+	// useEffect(() => {
+	// 	if (shouldBlockNavigation) {
+	// 		window.onbeforeunload = () => true;
+	// 	} else {
+	// 		window.onbeforeunload = undefined;
+	// 	}
 
-		return () => {};
-	}, []);
+	// 	return () => {};
+	// }, []);
 
 	// const delete_review = (review_id) => {
 	// 	console.log({ review_id, id });

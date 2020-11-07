@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listLogs, deleteLog } from '../../actions/logActions';
 import { Link } from 'react-router-dom';
@@ -20,15 +20,16 @@ const LogsPage = (props) => {
 	const logDelete = useSelector((state) => state.logDelete);
 	const { success: successDelete } = logDelete;
 	const dispatch = useDispatch();
+	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
-			dispatch(listLogs(''));
+			stableDispatch(listLogs(''));
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, stableDispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -42,9 +43,9 @@ const LogsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listLogs(category, searchKeyword, sortOrder));
+			stableDispatch(listLogs(category, searchKeyword, sortOrder));
 		},
-		[ sortOrder ]
+		[ category, searchKeyword, sortOrder, stableDispatch ]
 	);
 	const deleteHandler = (log) => {
 		dispatch(deleteLog(log._id));

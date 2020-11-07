@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -25,21 +25,25 @@ const OrderEmail = () => {
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(listEmails('Order'));
-		dispatch(detailsOrder('5f74a250290441002a36d078'));
-		return () => {};
-	}, []);
+	const stableDispatch = useCallback(dispatch, []);
+	useEffect(
+		() => {
+			stableDispatch(listEmails('Order'));
+			stableDispatch(detailsOrder('5f74a250290441002a36d078'));
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
 
 	useEffect(
 		() => {
 			const active_email = emails.find((email) => email.active === true);
 			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+				stableDispatch(detailsEmail(active_email._id));
 			}
 			return () => {};
 		},
-		[ emails ]
+		[ emails, stableDispatch ]
 	);
 
 	const jsx = (

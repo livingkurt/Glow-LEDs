@@ -1,7 +1,7 @@
 // React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { format_date, print_invoice } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
@@ -15,11 +15,22 @@ const Order = (props) => {
 	const [ refund_amount, set_refund_amount ] = useState(0);
 	const [ refund_reason, set_refund_reason ] = useState('');
 
+	const orderRefund = useSelector((state) => state.orderRefund);
+	const { order: refund } = orderRefund;
+
 	const update_refund_state = () => {
 		set_refund_state(true);
 		dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
 		// }
 	};
+	useEffect(
+		() => {
+			if (refund) {
+				set_refund_state(refund.isRefunded);
+			}
+		},
+		[ refund ]
+	);
 	const show_hide = (id) => {
 		const row = document.getElementById(id);
 		console.log(row);

@@ -19,24 +19,24 @@ const ControlPanelPage = (props) => {
 	const monthly_income_chart_ref = useRef();
 
 	const expenseList = useSelector((state) => state.expenseList);
-	const { loading: loading_expenses, expenses, error: error_expenses } = expenseList;
+	const { expenses } = expenseList;
 
 	const orderList = useSelector((state) => state.orderList);
-	const { loading, orders, error } = orderList;
+	const { orders } = orderList;
 
 	const productList = useSelector((state) => state.productList);
-	const { loading: loading_products, products, error: error_products } = productList;
+	const { products } = productList;
 
 	const userList = useSelector((state) => state.userList);
-	const { loading: loading_users, users, error: error_users } = userList;
+	const { users } = userList;
 
 	const sponsorList = useSelector((state) => state.sponsorList);
-	const { loading: loading_sponsors, sponsors, error: error_sponsors } = sponsorList;
+	const { sponsors } = sponsorList;
 
 	const promoList = useSelector((state) => state.promoList);
-	const { loading: loading_promos, promos, error: error_promos } = promoList;
+	const { promos } = promoList;
 
-	const [ product_occurrences, set_product_occurrences ] = useState([]);
+	// const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ daily_orders, set_daily_orders ] = useState([]);
 	const [ weekly_orders, set_weekly_orders ] = useState([]);
 	const [ monthly_orders, set_monthly_orders ] = useState([]);
@@ -55,59 +55,34 @@ const ControlPanelPage = (props) => {
 		get_monthly_income();
 	}, []);
 
-	// useEffect(
-	// 	() => {
-	// 		// initialize_chart();
-	// 		return () => {};
-	// 	},
-	// 	[ expenses ]
-	// );
 	useEffect(
 		() => {
-			// initialize_chart();
 			get_occurrences();
-
-			// initialize_monthly_income_chart(monthly_income);
 			return () => {};
 		},
 		[ orders ]
 	);
 	useEffect(
 		() => {
-			// initialize_chart();
-			// get_occurrences();
-			console.log({ monthly_income });
-
 			setTimeout(() => {
 				initialize_monthly_income_chart(monthly_income);
 			}, 3000);
-
-			// initialize_monthly_income_chart(monthly_income);
 			return () => {};
 		},
 		[ monthly_income ]
 	);
-	// useEffect(
-	// 	() => {
-	// 		// initialize_chart();
-	// 		initialize_monthly_income_chart(monthly_income);
-	// 		return () => {};
-	// 	},
-	// 	[ monthly_income ]
-	// );
 
 	const duration_of_opening = () => {
 		const current_date = new Date();
 		const start_date = new Date('2020-08-10');
 		var difference_in_time = current_date.getTime() - start_date.getTime();
 		var difference_in_day = difference_in_time / (1000 * 3600 * 24);
-		// console.log({ difference_in_day });
 		return difference_in_day;
 	};
 
 	const get_occurrences = async () => {
 		const { data: occurrences } = await API_Products.get_occurrences();
-		set_product_occurrences(occurrences);
+		// set_product_occurrences(occurrences);
 		initialize_occurrence_chart(occurrences);
 	};
 	const initialize_occurrence_chart = (occurrences) => {

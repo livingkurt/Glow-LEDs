@@ -468,7 +468,14 @@ const PlaceOrderPublicPage = (props) => {
 														defaultValue={item.qty}
 														className="qty_select_dropdown"
 														onChange={(e) =>
-															dispatch(addToCart(item.pathname, e.target.value))}
+															dispatch(
+																addToCart(
+																	item.pathname,
+																	e.target.value,
+																	item.diffuser_cap_color && item.diffuser_cap_color,
+																	item.diffuser_cap && item.diffuser_cap.name
+																)
+															)}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x) => (
 															<option key={x + 1} defaultValue={parseInt(x + 1)}>

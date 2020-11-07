@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,11 +16,12 @@ const UserOrderPage = (props) => {
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading, orders, error } = myOrderList;
 
+	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			dispatch(listMyOrders());
+			stableDispatch(listMyOrders());
 		},
-		[ userInfo ]
+		[ userInfo, stableDispatch ]
 	);
 
 	// const colors = [

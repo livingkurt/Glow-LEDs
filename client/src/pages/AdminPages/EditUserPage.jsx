@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveUser, detailsUser } from '../../actions/userActions';
 import { Link, useHistory } from 'react-router-dom';
@@ -24,17 +24,41 @@ const EditUserPage = (props) => {
 
 	console.log({ user });
 
-	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsUser(props.match.params.id));
-			dispatch(detailsUser(props.match.params.id));
-		} else {
-			dispatch(detailsUser(''));
-		}
-		set_state();
-		return () => {};
-	}, []);
+	const set_state = () => {
+		set_id(user._id);
+		set_first_name(user.first_name);
+		set_last_name(user.last_name);
+		set_email(user.email);
+		set_is_sponsored(user.is_sponsored);
+		set_isVerified(user.isVerified);
+		set_isAdmin(user.isAdmin);
+	};
+	const unset_state = () => {
+		set_id('');
+		set_first_name('');
+		set_last_name('');
+		set_email('');
+		set_is_sponsored('');
+		set_isVerified('');
+		set_isAdmin('');
+	};
+
+	const stableDispatch = useCallback(dispatch, []);
+
+	useEffect(
+		() => {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				stableDispatch(detailsUser(props.match.params.id));
+				stableDispatch(detailsUser(props.match.params.id));
+			} else {
+				stableDispatch(detailsUser(''));
+			}
+			set_state();
+			return () => {};
+		},
+		[ stableDispatch, props.match.params.id ]
+	);
 
 	useEffect(
 		() => {
@@ -54,25 +78,6 @@ const EditUserPage = (props) => {
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
-
-	const set_state = () => {
-		set_id(user._id);
-		set_first_name(user.first_name);
-		set_last_name(user.last_name);
-		set_email(user.email);
-		set_is_sponsored(user.is_sponsored);
-		set_isVerified(user.isVerified);
-		set_isAdmin(user.isAdmin);
-	};
-	const unset_state = () => {
-		set_id('');
-		set_first_name('');
-		set_last_name('');
-		set_email('');
-		set_is_sponsored('');
-		set_isVerified('');
-		set_isAdmin('');
-	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();

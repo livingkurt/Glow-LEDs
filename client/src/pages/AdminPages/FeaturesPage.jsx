@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listFeatures, deleteFeature } from '../../actions/featureActions';
 import { Link } from 'react-router-dom';
@@ -21,14 +21,16 @@ const FeaturesPage = (props) => {
 	const { success: successDelete } = featureDelete;
 	const dispatch = useDispatch();
 
+	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(
 		() => {
-			dispatch(listFeatures());
+			stableDispatch(listFeatures());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ successSave, successDelete, stableDispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -42,9 +44,9 @@ const FeaturesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listFeatures(category, searchKeyword, sortOrder));
+			stableDispatch(listFeatures(category, searchKeyword, sortOrder));
 		},
-		[ sortOrder ]
+		[ category, searchKeyword, sortOrder, stableDispatch ]
 	);
 	const deleteHandler = (feature) => {
 		dispatch(deleteFeature(feature._id));

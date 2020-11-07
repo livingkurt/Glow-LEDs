@@ -52,8 +52,6 @@ const EditSponsorPage = (props) => {
 
 	const dispatch = useDispatch();
 	const stableDispatch = useCallback(dispatch, []);
-	const stable_set_state = useCallback(set_state, []);
-	const stable_unset_state = useCallback(unset_state, []);
 
 	useEffect(
 		() => {
@@ -65,25 +63,25 @@ const EditSponsorPage = (props) => {
 				stableDispatch(detailsSponsor(''));
 			}
 			stableDispatch(listUsers(''));
-			stable_set_state();
+			set_state();
 			return () => {};
 		},
-		[ stableDispatch, stable_set_state, props.match.params.id ]
+		[ stableDispatch, props.match.params.id ]
 	);
 
 	useEffect(
 		() => {
 			if (sponsor) {
 				console.log('Set');
-				stable_set_state();
+				set_state();
 			} else {
 				console.log('UnSet');
-				stable_unset_state();
+				unset_state();
 			}
 
 			return () => {};
 		},
-		[ sponsor, stable_set_state, stable_unset_state ]
+		[ sponsor ]
 	);
 	setTimeout(() => {
 		set_loading_checkboxes(false);

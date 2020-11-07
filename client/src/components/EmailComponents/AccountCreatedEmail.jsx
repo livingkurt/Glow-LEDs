@@ -174,7 +174,6 @@ const AccountCreatedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -189,7 +188,6 @@ const AccountCreatedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.instagram.com/glow_leds/"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -204,7 +202,6 @@ const AccountCreatedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -219,7 +216,6 @@ const AccountCreatedEmail = () => {
 									}}
 								>
 									<a
-										rel="noreferrer"
 										href="https://soundcloud.com/ntre/tracks"
 										target="_blank"
 										rel="noopener noreferrer"
@@ -243,7 +239,6 @@ const AccountCreatedEmail = () => {
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								If you have any questions or concerns <br /> You can visit our {' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/pages/faq"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -256,7 +251,6 @@ const AccountCreatedEmail = () => {
 								</a>{' '}
 								page or contact us{' '}
 								<a
-									rel="noreferrer"
 									href="https://www.glow-leds.com/pages/contact"
 									target="_blank"
 									rel="noopener noreferrer"
@@ -278,10 +272,6 @@ const AccountCreatedEmail = () => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_announcement_email = async () => {
-		const data = await API_Emails.send_announcement_email(email_template, email.announcement.h1);
-		console.log('Success');
-	};
 	const save_html = async () => {
 		const data = await API_Emails.save_html(email_template, email, userInfo.token);
 		console.log(data);

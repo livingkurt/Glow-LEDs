@@ -19,26 +19,15 @@ const EditCartPage = (props) => {
 	const [ video, set_video ] = useState('');
 	const [ picture, set_picture ] = useState('');
 	const [ release_date, set_release_date ] = useState('');
-	const [ loading_data, set_loading_data ] = useState(true);
 
 	const history = useHistory();
 
 	const cartDetails = useSelector((state) => state.cartDetails);
 	const { cart, loading, error } = cartDetails;
-
-	const cartSave = useSelector((state) => state.cartSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = cartSave;
-
-	const cartDelete = useSelector((state) => state.cartDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = cartDelete;
-
-	// const cartReviewDelete = useSelector((state) => state.cartReviewDelete);
-	// const { success: cartDeleteSuccess } = cartReviewDelete;
 	const cartList = useSelector((state) => state.cartList);
 	const { carts } = cartList;
 
 	const dispatch = useDispatch();
-	const cart_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ cart });
 
@@ -48,11 +37,6 @@ const EditCartPage = (props) => {
 			dispatch(detailsCart(props.match.params.id));
 			dispatch(detailsCart(props.match.params.id));
 		}
-		// else {
-		// 	dispatch(detailsCart(''));
-		// }
-
-		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);
@@ -85,9 +69,6 @@ const EditCartPage = (props) => {
 		if (cart.release_date) {
 			set_release_date(format_date(cart.release_date));
 		}
-
-		// fcart.release_date);
-		// console.log(format_date(cart.release_date));
 	};
 	const unset_state = () => {
 		set_id('');

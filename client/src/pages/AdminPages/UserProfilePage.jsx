@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsUser } from '../../actions/userActions';
@@ -9,26 +9,26 @@ import { API_Emails } from '../../utils';
 const UserProfilePage = (props) => {
 	const userDetails = useSelector((state) => state.userDetails);
 	const { loading, user, error } = userDetails;
-	console.log({ user });
-	console.log({ id: props.match.params.id });
+
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const [ verified, set_verified ] = useState();
 	const [ admin, set_admin ] = useState();
-	// const [ password, setPassword ] = useState('');
 
 	const dispatch = useDispatch();
-
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
+	const stableDispatch = useCallback(dispatch, []);
 
 	const userUpdateUser = useSelector((state) => state.userUpdateUser);
-	const { loading: userLoading, userInfo: userUpdate, error: userError } = userUpdateUser;
-	useEffect(() => {
-		dispatch(detailsUser(props.match.params.id));
-		return () => {};
-	}, []);
+	const { userInfo: userUpdate } = userUpdateUser;
+
+	useEffect(
+		() => {
+			stableDispatch(detailsUser(props.match.params.id));
+			return () => {};
+		},
+		[ stableDispatch ]
+	);
 
 	useEffect(
 		() => {
