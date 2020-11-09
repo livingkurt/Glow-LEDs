@@ -131,7 +131,7 @@ const Order = (props) => {
 							</Link>
 							<div>|</div>
 							<button className="button secondary">
-								<Link to={'/secure/glow/emails/invoice/' + props.order._id}>Print Invoice</Link>
+								<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>
 							</button>
 						</div>
 					</div>
@@ -338,8 +338,8 @@ ${props.order.shipping.email}`)}
 								<button className="button primary">
 									<Link to={'/secure/account/order/' + props.order._id}>Edit Order</Link>
 								</button>
-								<button className="button primary mv-5px" onClick={() => print_invoice(props.order)}>
-									Print Invoice
+								<button className="button primary mv-5px">
+									<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>
 								</button>
 								<button
 									className="button primary mv-5px"

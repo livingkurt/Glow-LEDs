@@ -611,39 +611,16 @@ const InvoiceEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	// // const send_order_email = async (email_template) => {
-	// // 	const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
-	// // 	console.log('Success');
-	// // };
 	const print_invoice = async () => {
-		// const mywindow = window.open('', 'PRINT', 'height=600,width=800');
-		// mywindow.document.close(); // necessary for IE >= 10
-		// mywindow.focus(); // necessary for IE >= 10*/
-
-		// mywindow.print();
 		var prtContent = document.getElementById('invoice');
 		var WinPrint = window.open('', 'PRINT', 'height=600,width=800');
 		WinPrint.document.write(prtContent.innerHTML);
 		WinPrint.document.close();
 		WinPrint.focus();
-		WinPrint.print();
-		// WinPrint.close();
+		setTimeout(() => {
+			WinPrint.print();
+		}, 500);
 	};
-
-	// useEffect(
-	// 	() => {
-	// 		if (order) {
-	// 			if (order.orderItems.length > 0) {
-	// 				if (props.match.params.id) {
-	// 					save_html(order.shipping.email);
-	// 				}
-	// 			}
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ order ]
-	// );
 
 	return (
 		<div>
