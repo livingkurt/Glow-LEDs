@@ -102,14 +102,16 @@ const Order = (props) => {
 							</div>
 						)}
 					</div>
-					<div className="column fs-16px">
-						<h3>Since Order</h3>
-						{daysBetween(today, props.order.createdAt) > 1 ? (
-							`${daysBetween(today, props.order.createdAt)} Days`
-						) : (
-							`${daysBetween(today, props.order.createdAt)} Day`
-						)}
-					</div>
+					{props.admin && (
+						<div className="column fs-16px">
+							<h3>Since Order</h3>
+							{daysBetween(today, props.order.createdAt) > 1 ? (
+								`${daysBetween(today, props.order.createdAt)} Days`
+							) : (
+								`${daysBetween(today, props.order.createdAt)} Day`
+							)}
+						</div>
+					)}
 					<div className="column fs-16px">
 						<h3>Ship To</h3>
 						{props.order.shipping.first_name} {props.order.shipping.last_name}

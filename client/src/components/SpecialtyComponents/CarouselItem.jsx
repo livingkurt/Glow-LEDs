@@ -4,21 +4,12 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { addToCart } from '../../actions/cartActions';
 
 const CarouselItem = (props) => {
-	// console.log(product && product.pathname);
-	// const pathname = product && product.pathname
 	const [ product, set_product ] = useState(props.product);
 	const [ loading, set_loading ] = useState(true);
 
 	const dispatch = useDispatch();
-
-	// console.log(props.product && props.product.pathname);
-
-	const handleAddToCart = () => {
-		dispatch(addToCart(props.product.pathname, 1));
-	};
 
 	useEffect(
 		() => {
