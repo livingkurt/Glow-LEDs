@@ -647,8 +647,7 @@ const InvoiceEmail = (props) => {
 
 	return (
 		<div>
-			{' '}
-			<div className="jc-b mb-1rem">
+			<div className="jc-b mb-2rem">
 				{userInfo &&
 				userInfo.isAdmin && (
 					<Link to="/secure/glow/emails">
