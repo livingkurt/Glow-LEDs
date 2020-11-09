@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
-import { format_date } from '../../utils/helper_functions';
+import { format_date, print_invoice } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 
 const InvoiceEmail = (props) => {
@@ -59,13 +59,13 @@ const InvoiceEmail = (props) => {
 		if (item.sale_price !== 0) {
 			return (
 				<label>
+					<label style={{ marginRight: '3px' }}>On Sale!</label>
 					<del style={{ color: 'red' }}>
 						<label style={{ color: 'black' }}>
 							${item.price ? item.price && item.price.toFixed(2) : item.price}
 						</label>
 					</del>{' '}
-					{'-->'} ${item.sale_price ? item.sale_price && item.sale_price.toFixed(2) : item.sale_price} On
-					Sale!
+					{'-->'} ${item.sale_price ? item.sale_price && item.sale_price.toFixed(2) : item.sale_price}
 				</label>
 			);
 		} else if (item.countInStock === 0) {
@@ -109,7 +109,13 @@ const InvoiceEmail = (props) => {
 						}}
 					>
 						{' '}
-						{'-->'}{' '}
+						<label
+							style={{
+								width: '12px'
+							}}
+						>
+							{'-->'}
+						</label>{' '}
 					</label>
 					<label
 						style={{
@@ -127,7 +133,10 @@ const InvoiceEmail = (props) => {
 	};
 
 	const jsx = (
-		<body style={{ padding: 0, margin: 0, fontSize: '16px', backgroundColor: 'transparent' }}>
+		<body
+			id="invoice"
+			style={{ padding: 0, margin: 0, fontSize: '8px', backgroundColor: 'transparent', zoom: '200%' }}
+		>
 			{order && (
 				<div
 					style={{
@@ -144,26 +153,26 @@ const InvoiceEmail = (props) => {
 					<table
 						cellpadding="0"
 						cellspacing="0"
-						style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+						style={{ fontSize: '8px', width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
 						width="100%"
 						align="left"
 					>
 						<tr>
-							<td colspan="2" style={{ padding: 0 }} valign="top">
+							<td colspan="2" style={{ fontSize: '8px', padding: 0 }} valign="top">
 								<table
-									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+									style={{ fontSize: '8px', width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
 									width="100%"
 									align="left"
 								>
 									<tr>
-										<td style={{ color: '#333' }} valign="top">
+										<td style={{ fontSize: '8px', color: '#333' }} valign="top">
 											<img
 												src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
-												style={{ width: '100px', marginLeft: '-5px' }}
+												style={{ fontSize: '8px', width: '100px', marginLeft: '-5px' }}
 											/>
 										</td>
 
-										<td style={{ textAlign: 'right' }} valign="top" align="right">
+										<td style={{ fontSize: '8px', textAlign: 'right' }} valign="top" align="right">
 											<strong>Invoice #:</strong> {order._id}
 											<br />
 											<strong>Created:</strong> {order.createdAt && format_date(order.createdAt)}
@@ -176,7 +185,7 @@ const InvoiceEmail = (props) => {
 						<tr>
 							<td colspan="2" valign="top">
 								<table
-									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
+									style={{ fontSize: '8px', width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
 									width="100%"
 									align="left"
 								>
@@ -188,7 +197,7 @@ const InvoiceEmail = (props) => {
 											info.glowleds@gmail.com
 										</td>
 
-										<td style={{ textAlign: 'right' }} valign="top" align="right">
+										<td style={{ fontSize: '8px', textAlign: 'right' }} valign="top" align="right">
 											{order.shipping.first_name} {order.shipping.last_name}
 											<br />
 											{order.shipping.address}
@@ -205,6 +214,7 @@ const InvoiceEmail = (props) => {
 						<tr>
 							<td
 								style={{
+									fontSize: '8px',
 									padding: '5px',
 									verticalAlign: 'top',
 									background: '#eee',
@@ -218,6 +228,7 @@ const InvoiceEmail = (props) => {
 
 							<td
 								style={{
+									fontSize: '8px',
 									padding: '5px',
 									verticalAlign: 'top',
 									textAlign: 'right',
@@ -234,7 +245,12 @@ const InvoiceEmail = (props) => {
 
 						<tr>
 							<td
-								style={{ padding: '5px', verticalAlign: 'top', borderBottom: '1px solid black' }}
+								style={{
+									fontSize: '8px',
+									padding: '5px',
+									verticalAlign: 'top',
+									borderBottom: '1px solid black'
+								}}
 								valign="top"
 							>
 								{order.payment.charge ? order.payment.charge.source.brand : ''}
@@ -242,6 +258,7 @@ const InvoiceEmail = (props) => {
 
 							<td
 								style={{
+									fontSize: '8px',
 									padding: '5px',
 									verticalAlign: 'top',
 									textAlign: 'right',
@@ -257,6 +274,7 @@ const InvoiceEmail = (props) => {
 						<tr>
 							<td
 								style={{
+									fontSize: '8px',
 									padding: '5px',
 									verticalAlign: 'top',
 									background: '#eee',
@@ -270,6 +288,7 @@ const InvoiceEmail = (props) => {
 
 							<td
 								style={{
+									fontSize: '8px',
 									padding: '5px',
 									verticalAlign: 'top',
 									textAlign: 'right',
@@ -288,6 +307,7 @@ const InvoiceEmail = (props) => {
 								<tr>
 									<td
 										style={{
+											fontSize: '8px',
 											padding: '5px',
 											verticalAlign: 'top',
 											borderBottom: '1px solid black'
@@ -308,6 +328,7 @@ const InvoiceEmail = (props) => {
 
 									<td
 										style={{
+											fontSize: '8px',
 											padding: '5px',
 											verticalAlign: 'top',
 											textAlign: 'right',
@@ -323,11 +344,12 @@ const InvoiceEmail = (props) => {
 							);
 						})}
 					</table>
-					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-						<div style={{ width: '50%' }}>
-							<div style={{ verticalAlign: 'top' }} valign="top" />
+					<div style={{ fontSize: '8px', display: 'flex', justifyContent: 'space-between' }}>
+						<div style={{ fontSize: '8px', width: '50%' }}>
+							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
+									fontSize: '8px',
 									display: 'flex',
 									flexDirection: 'column',
 									justifyContent: 'flex-end'
@@ -335,6 +357,7 @@ const InvoiceEmail = (props) => {
 							>
 								<div
 									style={{
+										fontSize: '8px',
 										padding: '5px',
 										verticalAlign: 'top',
 										textAlign: 'left',
@@ -343,28 +366,29 @@ const InvoiceEmail = (props) => {
 									valign="top"
 									align="right"
 								>
-									<strong style={{ marginRight: '3px' }}>Promo Code: </strong> {order.promo_code}
+									<strong style={{ fontSize: '8px', marginRight: '3px' }}>Promo Code: </strong>{' '}
+									{order.promo_code}
 								</div>
 								<div
-									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
+									style={{ fontSize: '8px', padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
 									valign="top"
 									align="right"
 								>
-									<strong style={{ marginRight: '3px' }}>Order Note: </strong> {order.order_note}
+									<strong style={{ fontSize: '8px', marginRight: '3px' }}>Order Note: </strong>{' '}
+									{order.order_note}
 								</div>
 							</div>
 						</div>
 						<div>
-							<div style={{ verticalAlign: 'top' }} valign="top" />
+							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
-									display: 'flex',
-									flexDirection: 'column',
-									justifyContent: 'flex-end'
+									fontSize: '8px'
 								}}
 							>
 								<div
 									style={{
+										fontSize: '8px',
 										padding: '5px',
 										verticalAlign: 'top',
 										textAlign: 'left',
@@ -376,14 +400,14 @@ const InvoiceEmail = (props) => {
 									Subtotal:
 								</div>
 								<div
-									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
+									style={{ fontSize: '8px', padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
 									valign="top"
 									align="right"
 								>
 									Tax:
 								</div>
 								<div
-									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
+									style={{ fontSize: '8px', padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
 									valign="top"
 									align="right"
 								>
@@ -391,10 +415,11 @@ const InvoiceEmail = (props) => {
 								</div>
 							</div>
 						</div>
-						<div>
-							<div style={{ verticalAlign: 'top' }} valign="top" />
+						<div style={{ width: '83px' }}>
+							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
+									fontSize: '8px',
 									display: 'flex',
 									flexDirection: 'column',
 									justifyContent: 'flex-end'
@@ -402,6 +427,7 @@ const InvoiceEmail = (props) => {
 							>
 								<div
 									style={{
+										fontSize: '8px',
 										padding: '5px',
 										verticalAlign: 'top',
 										textAlign: 'right',
@@ -414,14 +440,24 @@ const InvoiceEmail = (props) => {
 									{promo_code_switch(order)}
 								</div>
 								<div
-									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'right' }}
+									style={{
+										fontSize: '8px',
+										padding: '5px',
+										verticalAlign: 'top',
+										textAlign: 'right'
+									}}
 									valign="top"
 									align="right"
 								>
 									${order.taxPrice && order.taxPrice.toFixed(2)}
 								</div>
 								<div
-									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'right' }}
+									style={{
+										fontSize: '8px',
+										padding: '5px',
+										verticalAlign: 'top',
+										textAlign: 'right'
+									}}
 									valign="top"
 									align="right"
 								>
@@ -432,6 +468,7 @@ const InvoiceEmail = (props) => {
 					</div>
 					<div
 						style={{
+							fontSize: '8px',
 							verticalAlign: 'top',
 							width: '46%',
 							marginLeft: 'auto',
@@ -439,11 +476,12 @@ const InvoiceEmail = (props) => {
 						}}
 						valign="top"
 					/>
-					<div style={{ display: 'flex', justifyContent: 'space-between' }}>
+					<div style={{ fontSize: '8px', display: 'flex', justifyContent: 'space-between' }}>
 						<div>
-							<div style={{ verticalAlign: 'top' }} valign="top" />
+							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
+									fontSize: '8px',
 									display: 'flex',
 									flexDirection: 'column',
 									justifyContent: 'flex-end'
@@ -451,24 +489,24 @@ const InvoiceEmail = (props) => {
 							>
 								<div
 									style={{
+										fontSize: '8px',
 										paddingLeft: '70px',
 										verticalAlign: 'top',
 										textAlign: 'left',
-										width: '33%',
+										width: '90px',
 										color: 'white',
 										fontWeight: 'bold'
 									}}
 									valign="top"
 									align="right"
-								>
-									Total
-								</div>
+								/>
 							</div>
 						</div>
 						<div>
-							<div style={{ verticalAlign: 'top' }} valign="top" />
+							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
+									fontSize: '8px',
 									display: 'flex',
 									flexDirection: 'column',
 									justifyContent: 'flex-end'
@@ -476,6 +514,7 @@ const InvoiceEmail = (props) => {
 							>
 								<div
 									style={{
+										fontSize: '8px',
 										padding: '5px',
 										verticalAlign: 'top',
 										textAlign: 'left',
@@ -490,9 +529,10 @@ const InvoiceEmail = (props) => {
 							</div>
 						</div>
 						<div>
-							<div style={{ verticalAlign: 'top' }} valign="top" />
+							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
+									fontSize: '8px',
 									display: 'flex',
 									flexDirection: 'column',
 									justifyContent: 'flex-end'
@@ -500,6 +540,7 @@ const InvoiceEmail = (props) => {
 							>
 								<div
 									style={{
+										fontSize: '8px',
 										padding: '5px',
 										verticalAlign: 'top',
 										textAlign: 'right',
@@ -515,40 +556,51 @@ const InvoiceEmail = (props) => {
 						</div>
 					</div>
 					<div>
-						<h3 style={{ textAlign: 'center' }}>Welcome to the Glow LEDs family!</h3>
-						<div style={{ textAlign: 'center' }}>We are so happy to share our art with you.</div>
-						<div style={{ textAlign: 'center' }}>
+						<h3 style={{ fontSize: '8px', textAlign: 'center' }}>Welcome to the Glow LEDs family!</h3>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>
+							We are so happy to share our art with you.
+						</div>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>
 							The code below will take you to our <strong>FAQ page</strong> for all kinds of helpful
 							information.
 						</div>
-						<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-							<div style={{ textAlign: 'center', width: '125px' }}>
-								<div style={{ textAlign: 'center' }}>
+						<div
+							style={{
+								fontSize: '8px',
+								display: 'flex',
+								justifyContent: 'space-between',
+								alignItems: 'center'
+							}}
+						>
+							<div style={{ fontSize: '8px', textAlign: 'center', width: '125px' }}>
+								<div style={{ fontSize: '8px', textAlign: 'center' }}>
 									<strong>Facebook</strong>
 								</div>
-								<div style={{ textAlign: 'center' }}>@GlowLEDsOfficial</div>
+								<div style={{ fontSize: '8px', textAlign: 'center' }}>@GlowLEDsOfficial</div>
 							</div>
 							<img
 								src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png"
-								style={{ width: '50px', textAlign: 'center' }}
+								style={{ fontSize: '8px', width: '50px', textAlign: 'center' }}
 							/>
-							<div style={{ textAlign: 'center', width: '125px' }}>
-								<div style={{ textAlign: 'center' }}>
+							<div style={{ fontSize: '8px', textAlign: 'center', width: '125px' }}>
+								<div style={{ fontSize: '8px', textAlign: 'center' }}>
 									<strong>Instagram</strong>
 								</div>
-								<div style={{ textAlign: 'center' }}>@glow_leds</div>
+								<div style={{ fontSize: '8px', textAlign: 'center' }}>@glow_leds</div>
 							</div>
 						</div>
-						<div style={{ textAlign: 'center' }}>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>
 							<strong>Tag us in your videos and pictures!</strong>
 						</div>
 
-						<div style={{ textAlign: 'center' }}>We want to feature you!</div>
-						<div style={{ textAlign: 'center' }}>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>We want to feature you!</div>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>
 							We are figuring this out as we go so any feedback is welcome.
 						</div>
-						<div style={{ textAlign: 'center' }}>We appreciate you more than you know.</div>
-						<div style={{ textAlign: 'center' }}>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>
+							We appreciate you more than you know.
+						</div>
+						<div style={{ fontSize: '8px', textAlign: 'center' }}>
 							<strong>Questions or concerns?:</strong> info.glowleds@gmail.com
 						</div>
 					</div>
@@ -559,71 +611,76 @@ const InvoiceEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	// const send_order_email = async (email_template) => {
-	// 	const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
-	// 	console.log('Success');
-	// };
-	const save_html = async (email) => {
-		console.log({ email_template });
-		const { data } = await API_Emails.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
-		const { data: request } = await API_Emails.send_order_created_email(email_template, 'New Order Created');
-		console.log({ data });
-		console.log({ request });
-		// if (data) {
-		// 	set_loading_email(false);
-		// 	history.push('/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078');
-		// }
-		// const data = await API.save_html(email_template, email, userInfo.token);
-		// console.log(data);
-		// console.log('Success');
+	// // const send_order_email = async (email_template) => {
+	// // 	const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
+	// // 	console.log('Success');
+	// // };
+	const print_invoice = async () => {
+		// const mywindow = window.open('', 'PRINT', 'height=600,width=800');
+		// mywindow.document.close(); // necessary for IE >= 10
+		// mywindow.focus(); // necessary for IE >= 10*/
+
+		// mywindow.print();
+		var prtContent = document.getElementById('invoice');
+		var WinPrint = window.open('', 'PRINT', 'height=600,width=800');
+		WinPrint.document.write(prtContent.innerHTML);
+		WinPrint.document.close();
+		WinPrint.focus();
+		WinPrint.print();
+		// WinPrint.close();
 	};
 
-	useEffect(
-		() => {
-			if (order) {
-				if (order.orderItems.length > 0) {
-					if (props.match.params.id) {
-						save_html(order.shipping.email);
-					}
-				}
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (order) {
+	// 			if (order.orderItems.length > 0) {
+	// 				if (props.match.params.id) {
+	// 					save_html(order.shipping.email);
+	// 				}
+	// 			}
+	// 		}
 
-			return () => {};
-		},
-		[ order ]
-	);
+	// 		return () => {};
+	// 	},
+	// 	[ order ]
+	// );
 
 	return (
 		<div>
-			<div className="w-500px jc-c m-auto">
+			{' '}
+			<div className="jc-b mb-1rem">
+				{userInfo &&
+				userInfo.isAdmin && (
+					<Link to="/secure/glow/emails">
+						<button className="button primary">Back to Emails</button>
+					</Link>
+				)}
+				<Link to={'/secure/account/orders'}>
+					<button className="button primary mh-10px">Back to Orders</button>
+				</Link>
+
 				<Link to={'/secure/account/order/' + props.match.params.id}>
 					<button className="button primary mh-10px">View Order</button>
 				</Link>
 				<Link to="/secure/account/orders">
 					<button className="button primary mh-10px">Your Orders</button>
 				</Link>
-				<Link to="/collections/all/products">
-					<button className="button primary mh-10px">Products</button>
-				</Link>
+
+				<button className="button primary mh-10px" onClick={() => print_invoice()}>
+					Print Invoice
+				</button>
 			</div>
-
-			{userInfo &&
-			userInfo.isAdmin && (
-				<div className="jc-b mb-1rem">
-					<Link to="/secure/glow/emails">
-						<button className="button primary">Back to Emails</button>
-					</Link>
-
-					<button className="button primary mb-1rem" onClick={() => save_html('lavacquek@icloud.com')}>
-						Send Test Email
-					</button>
-					{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
-					Send Order Email
-				</button> */}
-					{/* <Loading loading={loading_email} /> */}
-				</div>
-			)}
-			{jsx}
+			<div
+				style={{
+					backgroundColor: 'white',
+					padding: '39px',
+					margin: 'auto',
+					width: '680px',
+					borderRadius: '20px'
+				}}
+			>
+				{jsx}
+			</div>
 		</div>
 	);
 };

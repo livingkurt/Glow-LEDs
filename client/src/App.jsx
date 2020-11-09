@@ -264,6 +264,11 @@ const App = () => {
 								exact={true}
 								component={(props) => <OrderEmail userInfo={userInfo} {...props} />}
 							/>
+							<AdminRoute
+								path="/secure/glow/emails/invoice/:id?"
+								exact={true}
+								component={(props) => <InvoiceEmail userInfo={userInfo} {...props} />}
+							/>
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />
