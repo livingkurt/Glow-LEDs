@@ -25,8 +25,7 @@ const InvoiceEmail = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listEmails('Invoice'));
-			// stableDispatch(detailsOrder(props.match.params.id));
-			stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+			stableDispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
 		[ stableDispatch ]
@@ -150,32 +149,24 @@ const InvoiceEmail = (props) => {
 						align="left"
 					>
 						<tr>
-							<td colspan="2" style={{ verticalAlign: 'top' }} valign="top">
+							<td colspan="2" style={{ padding: 0 }} valign="top">
 								<table
 									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
 									width="100%"
 									align="left"
 								>
 									<tr>
-										<td
-											style={{ verticalAlign: 'top', lineHeight: '45px', color: '#333' }}
-											valign="top"
-										>
+										<td style={{ color: '#333' }} valign="top">
 											<img
 												src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
 												style={{ width: '100px', marginLeft: '-5px' }}
 											/>
 										</td>
 
-										<td
-											style={{ verticalAlign: 'top', textAlign: 'right' }}
-											valign="top"
-											align="right"
-										>
-											Invoice #: {order._id}
+										<td style={{ textAlign: 'right' }} valign="top" align="right">
+											<strong>Invoice #:</strong> {order._id}
 											<br />
-											Created: {order.createdAt && format_date(order.createdAt)}
-											<br />
+											<strong>Created:</strong> {order.createdAt && format_date(order.createdAt)}
 										</td>
 									</tr>
 								</table>
@@ -183,25 +174,21 @@ const InvoiceEmail = (props) => {
 						</tr>
 
 						<tr>
-							<td colspan="2" style={{ verticalAlign: 'top' }} valign="top">
+							<td colspan="2" valign="top">
 								<table
 									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
 									width="100%"
 									align="left"
 								>
 									<tr>
-										<td style={{ verticalAlign: 'top' }} valign="top">
+										<td valign="top">
 											Glow LEDs<br />
 											404 Kenniston Dr<br />
 											Austin, TX 78752<br />
 											info.glowleds@gmail.com
 										</td>
 
-										<td
-											style={{ verticalAlign: 'top', textAlign: 'right' }}
-											valign="top"
-											align="right"
-										>
+										<td style={{ textAlign: 'right' }} valign="top" align="right">
 											{order.shipping.first_name} {order.shipping.last_name}
 											<br />
 											{order.shipping.address}
@@ -221,7 +208,7 @@ const InvoiceEmail = (props) => {
 									padding: '5px',
 									verticalAlign: 'top',
 									background: '#eee',
-									borderBottom: '1px solid #ddd',
+									borderBottom: '1px solid black',
 									fontWeight: 'bold'
 								}}
 								valign="top"
@@ -235,7 +222,7 @@ const InvoiceEmail = (props) => {
 									verticalAlign: 'top',
 									textAlign: 'right',
 									background: '#eee',
-									borderBottom: '1px solid #ddd',
+									borderBottom: '1px solid black',
 									fontWeight: 'bold'
 								}}
 								valign="top"
@@ -247,7 +234,7 @@ const InvoiceEmail = (props) => {
 
 						<tr>
 							<td
-								style={{ padding: '5px', verticalAlign: 'top', borderBottom: '1px solid #eee' }}
+								style={{ padding: '5px', verticalAlign: 'top', borderBottom: '1px solid black' }}
 								valign="top"
 							>
 								{order.payment.charge ? order.payment.charge.source.brand : ''}
@@ -258,7 +245,7 @@ const InvoiceEmail = (props) => {
 									padding: '5px',
 									verticalAlign: 'top',
 									textAlign: 'right',
-									borderBottom: '1px solid #eee'
+									borderBottom: '1px solid black'
 								}}
 								valign="top"
 								align="right"
@@ -273,7 +260,7 @@ const InvoiceEmail = (props) => {
 									padding: '5px',
 									verticalAlign: 'top',
 									background: '#eee',
-									borderBottom: '1px solid #ddd',
+									borderBottom: '1px solid black',
 									fontWeight: 'bold'
 								}}
 								valign="top"
@@ -287,7 +274,7 @@ const InvoiceEmail = (props) => {
 									verticalAlign: 'top',
 									textAlign: 'right',
 									background: '#eee',
-									borderBottom: '1px solid #ddd',
+									borderBottom: '1px solid black',
 									fontWeight: 'bold'
 								}}
 								valign="top"
@@ -300,7 +287,11 @@ const InvoiceEmail = (props) => {
 							return (
 								<tr>
 									<td
-										style={{ padding: '5px', verticalAlign: 'top', borderBottom: '1px solid #eee' }}
+										style={{
+											padding: '5px',
+											verticalAlign: 'top',
+											borderBottom: '1px solid black'
+										}}
 										valign="top"
 									>
 										{item.qty}x -{' '}
@@ -320,7 +311,7 @@ const InvoiceEmail = (props) => {
 											padding: '5px',
 											verticalAlign: 'top',
 											textAlign: 'right',
-											borderBottom: '1px solid #eee'
+											borderBottom: '1px solid black'
 										}}
 										valign="top"
 										align="right"
@@ -352,14 +343,14 @@ const InvoiceEmail = (props) => {
 									valign="top"
 									align="right"
 								>
-									Promo Code: {order.promo_code}
+									<strong style={{ marginRight: '3px' }}>Promo Code: </strong> {order.promo_code}
 								</div>
 								<div
 									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
 									valign="top"
 									align="right"
 								>
-									Order Note: {order.order_note}
+									<strong style={{ marginRight: '3px' }}>Order Note: </strong> {order.order_note}
 								</div>
 							</div>
 						</div>
@@ -442,9 +433,9 @@ const InvoiceEmail = (props) => {
 					<div
 						style={{
 							verticalAlign: 'top',
-							width: '50%',
+							width: '46%',
 							marginLeft: 'auto',
-							borderTop: '1px solid #eee'
+							borderTop: '1px solid black'
 						}}
 						valign="top"
 					/>
@@ -539,7 +530,7 @@ const InvoiceEmail = (props) => {
 							</div>
 							<img
 								src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png"
-								style={{ width: '75px', textAlign: 'center' }}
+								style={{ width: '50px', textAlign: 'center' }}
 							/>
 							<div style={{ textAlign: 'center', width: '125px' }}>
 								<div style={{ textAlign: 'center' }}>
@@ -604,34 +595,17 @@ const InvoiceEmail = (props) => {
 
 	return (
 		<div>
-			{userInfo ? (
-				<div className="w-500px jc-c m-auto">
-					<Link to={'/secure/account/order/' + props.match.params.id}>
-						<button className="button primary mh-10px">View Order</button>
-					</Link>
-					<Link to="/secure/account/orders">
-						<button className="button primary mh-10px">Your Orders</button>
-					</Link>
-					<Link to="/collections/all/products">
-						<button className="button primary mh-10px">Products</button>
-					</Link>
-				</div>
-			) : (
-				<div className="w-1000px jc-c m-auto">
-					<Link to="/collections/all/products">
-						<button className="button primary mh-10px">Products</button>
-					</Link>
-					<Link to="/pages/featured">
-						<button className="button primary mh-10px">Featured Videos</button>
-					</Link>
-					<Link to="/pages/music">
-						<button className="button primary mh-10px">NTRE Music</button>
-					</Link>
-					<Link to="/account/register">
-						<button className="button primary mh-10px">Create Account</button>
-					</Link>
-				</div>
-			)}
+			<div className="w-500px jc-c m-auto">
+				<Link to={'/secure/account/order/' + props.match.params.id}>
+					<button className="button primary mh-10px">View Order</button>
+				</Link>
+				<Link to="/secure/account/orders">
+					<button className="button primary mh-10px">Your Orders</button>
+				</Link>
+				<Link to="/collections/all/products">
+					<button className="button primary mh-10px">Products</button>
+				</Link>
+			</div>
 
 			{userInfo &&
 			userInfo.isAdmin && (
