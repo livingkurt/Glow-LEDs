@@ -1,43 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { listOrders, deleteOrder, update_order, update_payment } from '../../actions/orderActions';
+import { listOrders, update_order, update_payment } from '../../actions/orderActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Order, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
-import useClipboard from 'react-hook-clipboard';
 
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ expandable, set_expandable ] = useState('none');
 	const [ payment_method, set_payment_method ] = useState('');
-	const [ order_note, set_order_note ] = useState('');
-	// const [ isCopied, setCopied ] = useClipboard('');
-	const [ clipboard, copyToClipboard ] = useClipboard();
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, error } = orderList;
 
 	const orderDelete = useSelector((state) => state.orderDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = orderDelete;
-
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
-	// console.log({ orderspage: userInfo });
-
-	const row_ref = useRef();
-
-	// const userToken = useSelector(state => state.userToken);
-	// // const { to } = userToken;
-	// console.log({ userToken })
+	const { success: successDelete } = orderDelete;
 
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	//   // dispatch(token(userInfo.refreshToken));
-	// }, [error]);
 
 	const [ order_state, set_order_state ] = useState({});
 
@@ -48,14 +29,6 @@ const OrdersPage = (props) => {
 		},
 		[ successDelete, order_state ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listOrders());
-	// 		dispatch(listOrders());
-	// 	},
-	// 	[ orders ]
-	// );
 
 	useEffect(
 		() => {
@@ -74,16 +47,6 @@ const OrdersPage = (props) => {
 		dispatch(listOrders(category, searchKeyword, e.target.value));
 	};
 
-	const deleteHandler = (order) => {
-		dispatch(deleteOrder(order._id));
-	};
-
-	// const colors = [
-	// 	{ name: 'Not Paid', color: '#333333' },
-	// 	{ name: 'Paid', color: '#626262' },
-	// 	{ name: 'Shipped', color: '#8e8e8e' },
-	// 	{ name: 'Delivered', color: '#ababab' }
-	// ];
 	const colors = [
 		{ name: 'Not Paid', color: '#6d3e3e' },
 		{ name: 'Paid', color: '#3e4c6d' },
@@ -117,7 +80,6 @@ const OrdersPage = (props) => {
 		if (order.isRefunded) {
 			result = colors[6].color;
 		}
-		// console.log(result);
 		return result;
 	};
 
@@ -185,8 +147,6 @@ const OrdersPage = (props) => {
 				})}
 			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
-				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
-
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Orders</h1>
 				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />

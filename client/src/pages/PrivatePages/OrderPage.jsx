@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrder, payOrder, refundOrder } from '../../actions/orderActions';
+import { detailsOrder, payOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
-import { API_Emails, API_Products } from '../../utils';
+import { API_Products } from '../../utils';
 
 require('dotenv').config();
 
@@ -18,7 +18,7 @@ const OrderPage = (props) => {
 	const { cartItems } = cart;
 
 	const orderPay = useSelector((state) => state.orderPay);
-	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
+	const { success: successPay, error: errorPay } = orderPay;
 	const dispatch = useDispatch();
 
 	const orderDetails = useSelector((state) => state.orderDetails);
@@ -59,8 +59,6 @@ const OrderPage = (props) => {
 	useEffect(
 		() => {
 			if (successPay) {
-				// set_paypal_state('none');
-				// console.log('successPay');
 				dispatch(detailsOrder(props.match.params.id));
 			} else {
 				dispatch(detailsOrder(props.match.params.id));
@@ -69,26 +67,6 @@ const OrderPage = (props) => {
 		},
 		[ successPay ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		if (successPay && order) {
-	// 			props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-	// 			set_payment_loading(false);
-	// 		} else if (errorPay) {
-	// 		}
-	// 	},
-	// 	[ successPay ]
-	// );
-	// useEffect(
-	// 	() => {
-	// 		if (successPay && order) {
-	// 			props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-	// 			set_payment_loading(false);
-	// 		}
-	// 	},
-	// 	[ errorPay ]
-	// );
 
 	useEffect(
 		() => {
@@ -104,17 +82,13 @@ const OrderPage = (props) => {
 	}, []);
 
 	const empty_cart = () => {
-		// console.log(cartItems);
 		for (let item of cartItems) {
 			dispatch(removeFromCart(item.pathname));
 		}
 	};
 
 	const pay_order = (token) => {
-		// create an order
-		console.log({ cartItems });
 		dispatch(payOrder(order, token));
-		// empty_cart();
 		set_payment_loading(true);
 	};
 
@@ -144,6 +118,42 @@ const OrderPage = (props) => {
 		/* handle error */
 		console.log({ type });
 		console.log({ error });
+	};
+
+	const colors = [
+		{ name: 'Not Paid', color: '#6d3e3e' },
+		{ name: 'Paid', color: '#3e4c6d' },
+		{ name: 'Manufactured', color: '#4b7188' },
+		{ name: 'Packaged', color: '#6f5f7d' },
+		{ name: 'Shipped', color: '#636363' },
+		{ name: 'Delivered', color: '#333333' },
+		{ name: 'Refunded', color: '#a9a9a9' }
+	];
+
+	const determine_color = (order) => {
+		let result = '';
+		if (!order.isPaid) {
+			result = colors[0].color;
+		}
+		if (order.isPaid) {
+			result = colors[1].color;
+		}
+		if (order.isManufactured) {
+			result = colors[2].color;
+		}
+		if (order.isPackaged) {
+			result = colors[3].color;
+		}
+		if (order.isShipped) {
+			result = colors[4].color;
+		}
+		if (order.isDelivered) {
+			result = colors[5].color;
+		}
+		if (order.isRefunded) {
+			result = colors[6].color;
+		}
+		return result;
 	};
 
 	return loading ? (
@@ -179,46 +189,9 @@ const OrderPage = (props) => {
 				</div>
 			)}
 			<LoadingPayments loading={payment_loading} error={errorPay} />
-			{/* <div>
-				{payment_loading ? (
-					<div className="jc-c column">
-						<img src={process.env.PUBLIC_URL + '/loading.gif'} className="loading_gif" alt="loading" />
-						<img
-							src={process.env.PUBLIC_URL + '/loading_overlay.png'}
-							className="loading_png"
-							alt="loading"
-						/>
-						<div className="payment_message">
-							<h2 className="ta-c">Wait a moment while we process your Payment</h2>
-							<p className="ta-c">Please Do not Refresh Page</p>
-						</div>
-					</div>
-				) : errorPay ? (
-					<div className="error_message jc-c column">
-						<h2 className="ta-c mv-5px">Error: {errorPay}</h2>
-						<p className="ta-c mv-5px fs">
-							Please Try a Different Card if Error Persists and Contact Glow LEDs for Support
-						</p>
-					</div>
-				) : (
-					''
-				)}
-			</div> */}
-			{/* {payment_loading && (
-				<div className="payment_message">
-					<p>Wait a moment while we process your Payment</p>
-					<p>Please Do not Refresh Page</p>
-				</div>
-			)} */}
-			{/* {errorPay && (
-				<div className="payment_error_message">
-					<p>Your Payment has Failed</p>
-					<p>Please Check your card number or Contact Support for assistance</p>
-				</div>
-			)} */}
 			<div className="placeorder">
 				<div className="placeorder-info">
-					<div>
+					<div style={{ backgroundColor: determine_color(order) }}>
 						{order.isRefunded && (
 							<h1>
 								Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
@@ -239,28 +212,21 @@ const OrderPage = (props) => {
 									</div>
 									<div>{order.shipping.international && 'International'}</div>
 									<div>{order.shipping.email}</div>
-									{/* <div style={{ borderTop: '.1rem white solid', width: '100%' }}>
-										<p style={{ marginBottom: '0px' }}>
-											{shipping_state ? 'Shipped' : 'Not Shipped'}
-										</p>
-									</div> */}
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div>
+					<div style={{ backgroundColor: determine_color(order) }}>
 						<h1>Payment</h1>
-						{/* <div>Payment Method: {order.payment.paymentMethod}</div> */}
 						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 							<p style={{ marginBottom: '0px' }}>
 								{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}
 							</p>
 						</div>
-						{/* <div>{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}</div> */}
 					</div>
-					<div>
-						<ul style={{ marginTop: 0 }} className="cart-list-container">
+					<div style={{ backgroundColor: determine_color(order) }}>
+						<ul className="cart-list-container mt-0px">
 							<li>
 								<h1>Shopping Cart</h1>
 								<div>Price</div>
@@ -336,14 +302,13 @@ const OrderPage = (props) => {
 						</ul>
 					</div>
 				</div>
-				<div className="placeorder-action">
+				<div className="placeorder-action" style={{ backgroundColor: determine_color(order) }}>
 					<ul>
 						<li>
 							<h1 style={{ marginTop: 0 }}>Order Summary</h1>
 						</li>
 						<li>
 							<div>Items</div>
-							{/* <div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div> */}
 							{order.promo_code ? (
 								<div>
 									<del style={{ color: 'red' }}>
@@ -359,7 +324,6 @@ const OrderPage = (props) => {
 						</li>
 						<li>
 							<div>Shipping</div>
-							{/* <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div> */}
 							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
 						</li>
 						<li>
