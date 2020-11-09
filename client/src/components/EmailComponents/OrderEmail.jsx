@@ -25,8 +25,8 @@ const OrderEmail = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listEmails('Order'));
-			stableDispatch(detailsOrder(props.match.params.id));
-			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+			// stableDispatch(detailsOrder(props.match.params.id));
+			stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
 		[ stableDispatch ]
@@ -200,7 +200,8 @@ const OrderEmail = (props) => {
 									style={{
 										display: 'flex',
 										flexDirection: 'row',
-										alignItems: 'center'
+										alignItems: 'center',
+										flexWrap: 'wrap'
 									}}
 								>
 									<div
@@ -233,7 +234,7 @@ const OrderEmail = (props) => {
 											View your Order
 										</a>
 									</div>
-									<div style={{ margin: '0px 10px' }}>or</div>
+									<div style={{ margin: '0px 10px', width: '5px' }}>or</div>
 
 									<div
 										style={{
@@ -683,9 +684,30 @@ const OrderEmail = (props) => {
 								>
 									{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
 									{/* <Facebook fill="white" /> */}
-									<button className="button primary " style={{ margin: 'auto' }}>
-										Feature Content
-									</button>
+									<div style={{ display: 'flex', justifyContent: 'center' }}>
+										<a
+											href={
+												'https://www.glow-leds.com/pages/contact/submit_content_to_be_featured'
+											}
+											alt="discount image"
+											style={{
+												backgroundColor: '#4c4f60',
+												color: 'white',
+												borderRadius: '10px',
+												border: 0,
+												padding: '15px',
+												fontFamily: 'helvetica',
+												margin: 0,
+												fontWeight: 800,
+												fontSize: '1em',
+												textAlign: 'center',
+												textDecoration: 'none !important',
+												lineHeight: 'inherit !important'
+											}}
+										>
+											Feature Content
+										</a>
+									</div>
 								</a>
 								<p style={{ textAlign: 'center', fontSize: '14px' }}>
 									We are figuring this out as we go so any feedback is welcome.<br />We appreciate you
@@ -849,23 +871,16 @@ const OrderEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	// const send_order_email = async (email_template) => {
-	// 	const data = await API.send_order_email(email_template, 'Glow LEDs Order Confirmation');
-	// 	console.log('Success');
-	// };
-	const save_html = async (email) => {
+	const send_order_email = async (email, first_name) => {
 		console.log({ email_template });
 		const { data } = await API_Emails.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
-		const { data: request } = await API_Emails.send_order_created_email(email_template, 'New Order Created');
+		const { data: request } = await API_Emails.send_order_created_email(
+			email_template,
+			'New Order Created',
+			first_name
+		);
 		console.log({ data });
 		console.log({ request });
-		// if (data) {
-		// 	set_loading_email(false);
-		// 	history.push('/secure/checkout/paymentcomplete/' + props.match.params.id || '5f74a250290441002a36d078');
-		// }
-		// const data = await API.save_html(email_template, email, userInfo.token);
-		// console.log(data);
-		// console.log('Success');
 	};
 
 	useEffect(
@@ -873,7 +888,7 @@ const OrderEmail = (props) => {
 			if (order) {
 				if (order.orderItems.length > 0) {
 					if (props.match.params.id) {
-						save_html(order.shipping.email);
+						send_order_email(order.shipping.email, order.shipping.first_name);
 					}
 				}
 			}
@@ -921,7 +936,7 @@ const OrderEmail = (props) => {
 						<button className="button primary">Back to Emails</button>
 					</Link>
 
-					<button className="button primary mb-1rem" onClick={() => save_html('lavacquek@icloud.com')}>
+					<button className="button primary mb-1rem" onClick={() => send_order_email('lavacquek@icloud.com')}>
 						Send Test Email
 					</button>
 					{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
