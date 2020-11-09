@@ -73,6 +73,7 @@ import MessengerCustomerChat from 'react-messenger-customer-chat';
 import {
 	AccountCreatedEmail,
 	AnnouncementEmail,
+	InvoiceEmail,
 	OrderEmail,
 	PasswordChangedEmail,
 	ResetPasswordEmail,
@@ -247,6 +248,7 @@ const App = () => {
 								component={AccountCreatedEmail}
 							/>
 							<AdminRoute path="/secure/glow/emails/order" exact={true} component={OrderEmail} />
+							<AdminRoute path="/secure/glow/emails/invoice" exact={true} component={InvoiceEmail} />
 							<AdminRoute
 								path="/secure/glow/emails/reset_password"
 								exact={true}
