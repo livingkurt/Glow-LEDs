@@ -9,7 +9,6 @@ const sponsorSchema = new mongoose.Schema(
 		facebook_name: { type: String },
 		percentage_off: { type: Number },
 		promo_code: { type: String },
-		funds_generated: { type: Number },
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }
 	},

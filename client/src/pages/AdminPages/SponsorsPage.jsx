@@ -92,7 +92,6 @@ const SponsorsPage = (props) => {
 									<th>Facebook Name</th>
 									<th>Percentage Off</th>
 									<th>Promo Code</th>
-									<th>Funds Generated</th>
 									<th>active</th>
 								</tr>
 							</thead>
@@ -111,7 +110,6 @@ const SponsorsPage = (props) => {
 										<td className="p-10px">{sponsor.facebook_name}</td>
 										<td className="p-10px">{sponsor.percentage_off}%</td>
 										<td className="p-10px">{sponsor.promo_code}</td>
-										<td className="p-10px">${sponsor.funds_generated}</td>
 										<td className="p-10px">
 											{sponsor.active ? (
 												<i className="fas fa-check-circle" />

@@ -12,9 +12,6 @@ const promoSchema = new mongoose.Schema(
 		percentage_off: { type: Number },
 		free_shipping: { type: Boolean },
 		amount_off: { type: Number },
-		number_of_uses: { type: Number },
-		funds_generated: { type: Number },
-		number_of_orders: { type: Number },
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }
 	},

@@ -129,12 +129,9 @@ const PromosPage = (props) => {
 									<th>Percentage Off</th>
 									<th>Amount Off</th>
 									<th>Free Shipping</th>
-									<th>Funds Generated</th>
 									<th>For Customer</th>
 									<th>Excluded Categories</th>
 									<th>Excluded Products</th>
-									<th>Number of Uses</th>
-									<th>Number of Orders</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -165,7 +162,6 @@ const PromosPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td className="p-10px">${promo.funds_generated}</td>
 										<td className="p-10px">
 											{promo.for_customer ? (
 												<i className="fas fa-check-circle" />
@@ -179,10 +175,6 @@ const PromosPage = (props) => {
 										<td className="p-10px">
 											{promo.excluded_products.map((item) => <div>{item}</div>)}
 										</td>
-
-										<td className="p-10px">{promo.number_of_uses}</td>
-
-										<td className="p-10px">{promo.number_of_orders}</td>
 
 										<td className="p-10px">
 											<div className="jc-b">

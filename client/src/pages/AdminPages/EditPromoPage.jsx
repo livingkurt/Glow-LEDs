@@ -104,8 +104,6 @@ const EditPromoPage = (props) => {
 		set_funds_generated(promo.funds_generated);
 		set_active(promo.active);
 		set_number_of_orders(promo.number_of_orders);
-
-		// console.log(format_date(promo.number_of_orders));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -202,22 +200,6 @@ const EditPromoPage = (props) => {
 			);
 		}
 	};
-	// const remove_category = (category_index, e) => {
-	// 	e.preventDefault();
-	// 	set_excluded_categories((excluded_categories) =>
-	// 		excluded_categories.filter((category, index) => {
-	// 			return category_index !== index;
-	// 		})
-	// 	);
-	// };
-	// const remove_product = (product_index, e) => {
-	// 	e.preventDefault();
-	// 	set_excluded_products((excluded_products) =>
-	// 		excluded_products.filter((product, index) => {
-	// 			return product_index !== index;
-	// 		})
-	// 	);
-	// };
 
 	const excluded_list = (items, type) => {
 		return (
@@ -238,44 +220,6 @@ const EditPromoPage = (props) => {
 			</div>
 		);
 	};
-	// const categories_excluded = (categories) => {
-	// 	return (
-	// 		<div>
-	// 			{categories &&
-	// 				categories.map((category, index) => {
-	// 					return (
-	// 						<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-	// 							<div>
-	// 								<button className="button icon" onClick={(e) => remove_category(index, e)}>
-	// 									<i className="fas fa-times mr-5px" />
-	// 								</button>
-	// 								{category}
-	// 							</div>
-	// 						</div>
-	// 					);
-	// 				})}
-	// 		</div>
-	// 	);
-	// };
-	// const products_excluded = (products) => {
-	// 	return (
-	// 		<div>
-	// 			{products &&
-	// 				products.map((pathname, index) => {
-	// 					return (
-	// 						<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-	// 							<div>
-	// 								<button className="button icon" onClick={(e) => remove_product(index, e)}>
-	// 									<i className="fas fa-times mr-5px" />
-	// 								</button>
-	// 								{pathname}
-	// 							</div>
-	// 						</div>
-	// 					);
-	// 				})}
-	// 		</div>
-	// 	);
-	// };
 
 	return (
 		<div className="main_container">

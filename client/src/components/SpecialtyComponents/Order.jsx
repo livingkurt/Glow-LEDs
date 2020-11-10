@@ -354,29 +354,30 @@ ${props.order.shipping.email}`)}
 								<button className="button primary mv-5px">
 									<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>
 								</button>
+
 								<button
 									className="button primary mv-5px"
 									onClick={() =>
-										props.update_order_state(
+										props.update_order_payment_state(
 											props.order,
-											props.order.isDelivered,
-											'isDelivered',
-											'deliveredAt'
+											props.order.isPaid,
+											'isPaid',
+											'paidAt'
 										)}
 								>
-									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+									{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 								</button>
 								<button
 									className="button primary mv-5px"
 									onClick={() =>
 										props.update_order_state(
 											props.order,
-											props.order.isShipped,
-											'isShipped',
-											'shippedAt'
+											props.order.isManufactured,
+											'isManufactured',
+											'manufacturedAt'
 										)}
 								>
-									{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+									{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
 								</button>
 								<button
 									className="button primary mv-5px"
@@ -395,24 +396,24 @@ ${props.order.shipping.email}`)}
 									onClick={() =>
 										props.update_order_state(
 											props.order,
-											props.order.isManufactured,
-											'isManufactured',
-											'manufacturedAt'
+											props.order.isShipped,
+											'isShipped',
+											'shippedAt'
 										)}
 								>
-									{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+									{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 								</button>
 								<button
 									className="button primary mv-5px"
 									onClick={() =>
-										props.update_order_payment_state(
+										props.update_order_state(
 											props.order,
-											props.order.isPaid,
-											'isPaid',
-											'paidAt'
+											props.order.isDelivered,
+											'isDelivered',
+											'deliveredAt'
 										)}
 								>
-									{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 								</button>
 							</div>
 						</div>
