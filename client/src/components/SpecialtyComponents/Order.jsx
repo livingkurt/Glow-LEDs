@@ -338,11 +338,11 @@ ${props.order.shipping.email}`)}
 							</li>
 							<li className="row">
 								<h3 className="">Order Note: </h3>
-								<label className="">{props.order.order_note}</label>
+								<label className="mv-2rem ml-1rem">{props.order.order_note}</label>
 							</li>
 							<li className="row">
 								<h3 className="">Promo Code: </h3>
-								<label className="">{props.order.promo_code}</label>
+								<label className="mv-2rem ml-1rem">{props.order.promo_code}</label>
 							</li>
 						</ul>
 
