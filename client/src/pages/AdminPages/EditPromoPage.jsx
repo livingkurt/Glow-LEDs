@@ -186,104 +186,51 @@ const EditPromoPage = (props) => {
 		set_excluded_product('');
 	};
 
-	const remove_category = (category_index, e) => {
+	const remove_item = (item_index, e, type) => {
 		e.preventDefault();
-		set_excluded_categories((excluded_categories) =>
-			excluded_categories.filter((category, index) => {
-				return category_index !== index;
-			})
-		);
+		if (type === 'categories') {
+			set_excluded_categories((excluded_categories) =>
+				excluded_categories.filter((category, index) => {
+					return item_index !== index;
+				})
+			);
+		} else {
+			set_excluded_products((excluded_products) =>
+				excluded_products.filter((product, index) => {
+					return item_index !== index;
+				})
+			);
+		}
 	};
-	const remove_product = (product_index, e) => {
-		e.preventDefault();
-		set_excluded_products((excluded_products) =>
-			excluded_products.filter((product, index) => {
-				return product_index !== index;
-			})
-		);
-	};
+	// const remove_category = (category_index, e) => {
+	// 	e.preventDefault();
+	// 	set_excluded_categories((excluded_categories) =>
+	// 		excluded_categories.filter((category, index) => {
+	// 			return category_index !== index;
+	// 		})
+	// 	);
+	// };
+	// const remove_product = (product_index, e) => {
+	// 	e.preventDefault();
+	// 	set_excluded_products((excluded_products) =>
+	// 		excluded_products.filter((product, index) => {
+	// 			return product_index !== index;
+	// 		})
+	// 	);
+	// };
 
-	const move_excluded_category_up = (excluded_category_index, e) => {
-		e.preventDefault();
-		const new_array = move(excluded_categories, excluded_category_index, excluded_category_index - 1);
-		set_excluded_categories(new_array);
-		// set_new_array(new_array);
-		categories_excluded(new_array);
-	};
-	const move_excluded_category_down = (excluded_category_index, e) => {
-		e.preventDefault();
-		const new_array = move(excluded_categories, excluded_category_index, excluded_category_index + 1);
-		set_excluded_categories(new_array);
-		// set_new_array(new_array);
-		categories_excluded(new_array);
-	};
-	const move_excluded_product_up = (excluded_product_index, e) => {
-		e.preventDefault();
-		const new_array = move(excluded_products, excluded_product_index, excluded_product_index - 1);
-		set_excluded_products(new_array);
-		// set_new_array(new_array);
-		products_excluded(new_array);
-	};
-	const move_excluded_product_down = (excluded_product_index, e) => {
-		e.preventDefault();
-		const new_array = move(excluded_products, excluded_product_index, excluded_product_index + 1);
-		set_excluded_products(new_array);
-		// set_new_array(new_array);
-		products_excluded(new_array);
-	};
-	function move(arr, old_index, new_index) {
-		console.log({ arr, old_index, new_index });
-		while (old_index < 0) {
-			old_index += arr.length;
-		}
-		while (new_index < 0) {
-			new_index += arr.length;
-		}
-		if (new_index >= arr.length) {
-			var k = new_index - arr.length;
-			while (k-- + 1) {
-				arr.push(undefined);
-			}
-		}
-		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-		console.log({ arr });
-		return arr;
-	}
-
-	const categories_excluded = (categories) => {
+	const excluded_list = (items, type) => {
 		return (
 			<div>
-				{categories &&
-					categories.map((picture, index) => {
+				{items &&
+					items.map((item, index) => {
 						return (
 							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
 								<div>
-									<button className="button icon" onClick={(e) => remove_category(index, e)}>
+									<button className="button icon" onClick={(e) => remove_item(index, e, type)}>
 										<i className="fas fa-times mr-5px" />
 									</button>
-									{picture}
-								</div>
-								<div>
-									{index > 0 && (
-										<button
-											className="button icon"
-											onClick={(e) => move_excluded_category_up(index, e)}
-										>
-											<i className=" fas fa-sort-up" />
-										</button>
-									)}
-
-									{index < categories.length - 1 && (
-										<button
-											className="button icon"
-											onClick={(e) => move_excluded_category_down(index, e)}
-										>
-											<i
-												style={{ '-webkitTransform': 'rotate(-180deg)' }}
-												className=" fas fa-sort-up"
-											/>
-										</button>
-									)}
+									{item}
 								</div>
 							</div>
 						);
@@ -291,47 +238,44 @@ const EditPromoPage = (props) => {
 			</div>
 		);
 	};
-	const products_excluded = (products) => {
-		return (
-			<div>
-				{products &&
-					products.map((picture, index) => {
-						return (
-							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-								<div>
-									<button className="button icon" onClick={(e) => remove_product(index, e)}>
-										<i className="fas fa-times mr-5px" />
-									</button>
-									{picture}
-								</div>
-								<div>
-									{index > 0 && (
-										<button
-											className="button icon"
-											onClick={(e) => move_excluded_product_up(index, e)}
-										>
-											<i className=" fas fa-sort-up" />
-										</button>
-									)}
-
-									{index < products.length - 1 && (
-										<button
-											className="button icon"
-											onClick={(e) => move_excluded_product_down(index, e)}
-										>
-											<i
-												style={{ '-webkitTransform': 'rotate(-180deg)' }}
-												className=" fas fa-sort-up"
-											/>
-										</button>
-									)}
-								</div>
-							</div>
-						);
-					})}
-			</div>
-		);
-	};
+	// const categories_excluded = (categories) => {
+	// 	return (
+	// 		<div>
+	// 			{categories &&
+	// 				categories.map((category, index) => {
+	// 					return (
+	// 						<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+	// 							<div>
+	// 								<button className="button icon" onClick={(e) => remove_category(index, e)}>
+	// 									<i className="fas fa-times mr-5px" />
+	// 								</button>
+	// 								{category}
+	// 							</div>
+	// 						</div>
+	// 					);
+	// 				})}
+	// 		</div>
+	// 	);
+	// };
+	// const products_excluded = (products) => {
+	// 	return (
+	// 		<div>
+	// 			{products &&
+	// 				products.map((pathname, index) => {
+	// 					return (
+	// 						<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+	// 							<div>
+	// 								<button className="button icon" onClick={(e) => remove_product(index, e)}>
+	// 									<i className="fas fa-times mr-5px" />
+	// 								</button>
+	// 								{pathname}
+	// 							</div>
+	// 						</div>
+	// 					);
+	// 				})}
+	// 		</div>
+	// 	);
+	// };
 
 	return (
 		<div className="main_container">
@@ -497,7 +441,7 @@ const EditPromoPage = (props) => {
 													<label className="mt-15px">Excluded Categories</label>
 												)}
 
-												{categories_excluded(excluded_categories)}
+												{excluded_list(excluded_categories, 'categories')}
 											</li>
 											<li>
 												<li>
@@ -534,7 +478,7 @@ const EditPromoPage = (props) => {
 												{excluded_products.length > 0 && (
 													<label className="mt-15px">Excluded Products</label>
 												)}
-												{products_excluded(excluded_products)}
+												{excluded_list(excluded_products, 'products')}
 											</li>
 
 											<li>
