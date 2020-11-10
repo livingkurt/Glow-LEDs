@@ -455,8 +455,6 @@ const PlaceOrderPage = (props) => {
 																	item.diffuser_cap && item.diffuser_cap.name
 																)
 															)}
-														// >
-														// onChange={(e) => console.log(e.target.value)}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x) => (
 															<option key={x + 1} defaultValue={parseInt(x + 1)}>

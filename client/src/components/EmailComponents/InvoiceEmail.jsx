@@ -367,7 +367,7 @@ const InvoiceEmail = (props) => {
 									align="right"
 								>
 									<strong style={{ fontSize: '8px', marginRight: '3px' }}>Promo Code: </strong>{' '}
-									{order.promo_code}
+									{order.promo_code && order.promo_code.toUpperCase()}
 								</div>
 								<div
 									style={{ fontSize: '8px', padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
