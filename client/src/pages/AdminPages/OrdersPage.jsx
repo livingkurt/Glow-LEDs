@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, update_order, update_payment } from '../../actions/orderActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Order, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
+import { Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
 
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
+	const [ block_list_view, set_block_list_view ] = useState(false);
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
@@ -113,6 +114,13 @@ const OrdersPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 	};
+	const change_view = () => {
+		if (block_list_view) {
+			set_block_list_view(false);
+		} else {
+			set_block_list_view(true);
+		}
+	};
 
 	return (
 		<div className="profile_container wrap column p-20px">
@@ -123,6 +131,15 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/controlpanel">
 					<button className="button primary">Back to Control Panel</button>
 				</Link>
+				<button
+					className="button primary"
+					onClick={() => {
+						change_view();
+					}}
+					style={{ width: '160px' }}
+				>
+					{block_list_view ? 'Block' : 'List'}
+				</button>
 				<Link to="/secure/glow/editorder">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Order
@@ -154,7 +171,22 @@ const OrdersPage = (props) => {
 				</div>
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
-						{orders &&
+						{!block_list_view &&
+							orders &&
+							orders.map((order) => (
+								<OrderListItem
+									determine_color={determine_color}
+									update_order_payment_state={update_order_payment_state}
+									update_order_state={update_order_state}
+									set_payment_method={set_payment_method}
+									admin={true}
+									order={order}
+								/>
+							))}
+					</div>
+					<div className="product_big_screen">
+						{block_list_view &&
+							orders &&
 							orders.map((order) => (
 								<Order
 									determine_color={determine_color}
