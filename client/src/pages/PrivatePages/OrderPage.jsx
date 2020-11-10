@@ -307,21 +307,42 @@ const OrderPage = (props) => {
 						<li>
 							<h1 style={{ marginTop: 0 }}>Order Summary</h1>
 						</li>
-						<li>
-							<div>Items</div>
-							{order.promo_code ? (
+						{!order.promo_code && (
+							<li>
+								<div>Subtotal</div>
+								<div>${order.itemsPrice && order.itemsPrice.toFixed(2)}</div>
+							</li>
+						)}
+
+						{order.promo_code && (
+							<li>
+								<del style={{ color: 'red' }}>
+									<div style={{ color: 'white' }}>Subtotal</div>
+								</del>
 								<div>
 									<del style={{ color: 'red' }}>
 										<label style={{ color: 'white' }}>
-											${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)}
+											${order.itemsPrice && order.itemsPrice.toFixed(2)}
 										</label>
-									</del>{' '}
-									<i class="fas fa-arrow-right" /> ${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}
+									</del>
 								</div>
-							) : (
-								<div>${order.itemsPrice ? order.itemsPrice.toFixed(2) : order.itemsPrice}</div>
-							)}
-						</li>
+							</li>
+						)}
+						{order.promo_code && (
+							<li>
+								<div>Discount</div>
+								<div>
+									-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
+										order.itemsPrice).toFixed(2)}
+								</div>
+							</li>
+						)}
+						{order.promo_code && (
+							<li>
+								<div>New Subtotal</div>
+								<div>${order.itemsPrice.toFixed(2)}</div>
+							</li>
+						)}
 						<li>
 							<div>Shipping</div>
 							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
