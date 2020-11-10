@@ -21,6 +21,7 @@ const EditPromoPage = (props) => {
 	const [ excluded_product, set_excluded_product ] = useState('');
 	const [ percentage_off, set_percentage_off ] = useState(0);
 	const [ amount_off, set_amount_off ] = useState(0);
+	const [ minimum_total, set_minimum_total ] = useState(0);
 	const [ free_shipping, set_free_shipping ] = useState(false);
 	const [ number_of_uses, set_number_of_uses ] = useState('');
 	const [ funds_generated, set_funds_generated ] = useState('');
@@ -99,6 +100,7 @@ const EditPromoPage = (props) => {
 		set_excluded_products(promo.excluded_products);
 		set_percentage_off(promo.percentage_off);
 		set_amount_off(promo.amount_off);
+		set_minimum_total(promo.minimum_total);
 		set_free_shipping(promo.free_shipping);
 		set_number_of_uses(promo.number_of_uses);
 		set_funds_generated(promo.funds_generated);
@@ -115,6 +117,7 @@ const EditPromoPage = (props) => {
 		set_excluded_products('');
 		set_percentage_off('');
 		set_amount_off('');
+		set_minimum_total('');
 		set_free_shipping('');
 		set_number_of_uses('');
 		set_funds_generated('');
@@ -135,6 +138,7 @@ const EditPromoPage = (props) => {
 				excluded_products,
 				percentage_off,
 				amount_off,
+				minimum_total,
 				free_shipping,
 				number_of_uses,
 				funds_generated,
@@ -453,6 +457,16 @@ const EditPromoPage = (props) => {
 													value={amount_off}
 													id="amount_off"
 													onChange={(e) => set_amount_off(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="minimum_total">Order Total Minimum</label>
+												<input
+													type="text"
+													name="minimum_total"
+													value={minimum_total}
+													id="minimum_total"
+													onChange={(e) => set_minimum_total(e.target.value)}
 												/>
 											</li>
 											{loading_checkboxes ? (

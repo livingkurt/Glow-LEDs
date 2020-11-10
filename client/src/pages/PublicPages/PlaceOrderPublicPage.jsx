@@ -303,7 +303,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
 	const check_code = () => {
-		const data = { promo_code, promos, user_data };
+		const data = { promo_code, promos, user_data, items_price };
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);
@@ -723,6 +723,7 @@ const PlaceOrderPublicPage = (props) => {
 									name="promo_code"
 									id="promo_code"
 									className="w-100per"
+									style={{ textTransform: 'uppercase' }}
 									onChange={(e) => set_promo_code(e.target.value)}
 								/>
 								<button className="button primary" onClick={() => check_code()}>

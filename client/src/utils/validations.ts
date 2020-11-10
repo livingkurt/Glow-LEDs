@@ -20,17 +20,18 @@ export const validate_promo_code = (data: any) => {
 	if (Validator.isEmpty(data.promo_code)) {
 		errors.promo_code = 'Promo Code Field Empty';
 	}
+	console.log({ items_price: data.items_price });
+	console.log({ minimum_total: promo.minimum_total });
+	console.log({ promo });
+	if (promo.minimum_total > data.items_price) {
+		errors.promo_code = 'Minimum Order Total Not Met';
+	}
 	if (promo) {
 		// errors.promo_code = 'Promo Code Not Active Start';
 		if (!promo.active) {
 			errors.promo_code = 'Promo Code Not Active';
 		}
 		if (!promo.for_customer) {
-			// console.log('Hello');
-			// console.log(data.user_data);
-			// console.log(promo);
-			// console.log(data.user_data._id);
-			// console.log(promo.user);
 			if (data.user_data) {
 				if (promo.user !== data.user_data._id) {
 					errors.promo_code = 'Promo Code Not Active';

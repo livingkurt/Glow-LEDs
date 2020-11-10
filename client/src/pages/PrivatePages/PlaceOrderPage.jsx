@@ -215,10 +215,6 @@ const PlaceOrderPage = (props) => {
 		[ errorPay ]
 	);
 
-	const checkoutHandler = () => {
-		props.history.push('/account/login?redirect=shipping');
-	};
-
 	const no_note_warning = () => {
 		const name = cartItems.map((cartItem) => {
 			return cartItem.name;
@@ -230,15 +226,6 @@ const PlaceOrderPage = (props) => {
 		// 	// }
 		// }
 	};
-
-	// const handleSuccessPayment = (paymentResult, token) => {
-	// 	console.log('handleSuccessPayment');
-	// 	dispatch(payOrder(order, paymentResult, user_data, token));
-	// 	set_payment_loading(false);
-	// 	// if (successPay) {
-	// 	props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-	// 	// }
-	// };
 
 	useEffect(
 		() => {
@@ -257,7 +244,7 @@ const PlaceOrderPage = (props) => {
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
 	const check_code = () => {
-		const data = { promo_code, promos, user_data };
+		const data = { promo_code, promos, user_data, items_price };
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);
@@ -614,6 +601,7 @@ const PlaceOrderPage = (props) => {
 									name="promo_code"
 									id="promo_code"
 									className="w-100per"
+									style={{ textTransform: 'uppercase' }}
 									onChange={(e) => set_promo_code(e.target.value)}
 								/>
 								<button className="button primary" onClick={() => check_code()}>
