@@ -218,27 +218,9 @@ const EditExpensePage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to="/secure/glow/expenses">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Expense
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/glow/expenses">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Expenses
-												</button>
-											</Link>
-										)}
+										<button className="button secondary" onClick={() => history.goBack()}>
+											Back to Expenses
+										</button>
 									</li>
 								</ul>
 							</div>

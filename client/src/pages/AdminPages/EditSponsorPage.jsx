@@ -258,27 +258,9 @@ const EditSponsorPage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to="/secure/glow/sponsors">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Sponsor
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/glow/sponsors">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Sponsors
-												</button>
-											</Link>
-										)}
+										<button className="button secondary" onClick={() => history.goBack()}>
+											Back to Sponsors
+										</button>
 									</li>
 								</ul>
 							</div>

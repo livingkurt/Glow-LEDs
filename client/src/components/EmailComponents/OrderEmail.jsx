@@ -1,13 +1,14 @@
 import React, { useEffect, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 
 const OrderEmail = (props) => {
+	const history = useHistory();
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { order } = orderDetails;
 
@@ -953,9 +954,9 @@ const OrderEmail = (props) => {
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
-					<Link to="/secure/glow/emails">
-						<button className="button primary">Back to Emails</button>
-					</Link>
+					<button className="button primary" onClick={() => history.goBack()}>
+						Back to Emails
+					</button>
 
 					<button className="button primary mb-1rem" onClick={() => send_order_email('lavacquek@icloud.com')}>
 						Send Test Email

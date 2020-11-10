@@ -355,27 +355,9 @@ const EditContentPage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to="/secure/glow/contents">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Content
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/glow/contents">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Contents
-												</button>
-											</Link>
-										)}
+										<button className="button secondary" onClick={() => history.goBack()}>
+											Back to Contents
+										</button>
 									</li>
 								</ul>
 							</div>

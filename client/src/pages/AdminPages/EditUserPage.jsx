@@ -210,27 +210,9 @@ const EditUserPage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to="/secure/glow/users">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to User
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/glow/users">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Users
-												</button>
-											</Link>
-										)}
+										<button className="button secondary" onClick={() => history.goBack()}>
+											Back to Users
+										</button>
 									</li>
 								</ul>
 							</div>

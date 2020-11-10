@@ -15,6 +15,7 @@ import {
 } from '../../components/ColorComponents';
 
 const GlowControl = (props) => {
+	const history = useHistory();
 	const device_id = props.match.params.id ? props.match.params.id : '';
 	console.log({ device_id });
 	// const devices = {
@@ -241,9 +242,9 @@ const GlowControl = (props) => {
 	return (
 		<div>
 			<div className="jc-b w-100per">
-				<Link to="/secure/account/devices">
-					<button className="button primary">Back to Devices</button>
-				</Link>
+				<button className="button primary" onClick={() => history.goBack()}>
+					Back to Devices
+				</button>
 
 				<Link to={'/secure/account/editdevice/' + device_id}>
 					<button className="button primary">Edit Device</button>

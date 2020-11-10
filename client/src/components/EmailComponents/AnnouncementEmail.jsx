@@ -2,11 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 
 const AnnouncementEmail = () => {
+	const history = useHistory();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ test, set_test ] = useState(true);
 	const emailDetails = useSelector((state) => state.emailDetails);
@@ -299,9 +300,9 @@ const AnnouncementEmail = () => {
 	return (
 		<div className="">
 			<div className="jc-b mb-1rem ai-c">
-				<Link to="/secure/glow/emails">
-					<button className="button primary">Back to Emails</button>
-				</Link>
+				<button className="button primary" onClick={() => history.goBack()}>
+					Back to Emails
+				</button>
 				<button className="button primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>

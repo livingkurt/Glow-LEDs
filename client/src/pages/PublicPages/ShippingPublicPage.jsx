@@ -237,11 +237,6 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
-						{/* <li>
-							<Link to="/cart">
-								<button class="button secondary full-width">Back to Cart</button>
-							</Link>
-						</li> */}
 					</ul>
 				</form>
 			</div>

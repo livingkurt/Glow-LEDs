@@ -1,12 +1,12 @@
 import React, { useEffect, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 
 const ResetPasswordEmail = () => {
+	const history = useHistory();
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
 
@@ -285,15 +285,12 @@ const ResetPasswordEmail = () => {
 	return (
 		<div className="">
 			<div className="jc-b mb-1rem">
-				<Link to="/secure/glow/emails">
-					<button className="button primary">Back to Emails</button>
-				</Link>
+				<button className="button primary" onClick={() => history.goBack()}>
+					Back to Emails
+				</button>
 				<button className="button primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>
-				{/* <button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
-					Send Announcement Email
-				</button> */}
 			</div>
 			{jsx}
 		</div>

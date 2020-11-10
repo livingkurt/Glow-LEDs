@@ -257,27 +257,9 @@ const EditFeaturePage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to="/secure/glow/features">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Feature
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/glow/features">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Features
-												</button>
-											</Link>
-										)}
+                  <button className="button secondary" onClick={() => history.goBack()}>
+											Back to Features
+										</button>
 									</li>
 								</ul>
 							</div>

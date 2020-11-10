@@ -122,13 +122,10 @@ const ProductPage = (props) => {
 			<div className="back-to-result">
 				<div className="jc-b">
 					<div className="mb-10px">
-						{/* <Link to="/collections/all/products"> */}
 						<button class="button secondary" onClick={() => props.history.goBack()}>
 							Back to Products
 						</button>
-						{/* </Link> */}
 					</div>
-					{/* {console.log(props.match.params.pathname)} */}
 					{userInfo &&
 					userInfo.isAdmin && (
 						<Link to={'/secure/glow/editproduct/' + props.match.params.pathname}>

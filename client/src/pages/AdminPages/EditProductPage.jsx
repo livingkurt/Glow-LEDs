@@ -790,26 +790,9 @@ const EditProductPage = (props) => {
 										</button>
 									</li>
 									<li>
-										<Link to={'/collections/all/products/' + props.match.params.pathname}>
-											<button
-												style={{ width: '100%' }}
-												type="button"
-												className="button secondary"
-											>
-												Back to Product
-											</button>
-										</Link>
-									</li>
-									<li>
-										<Link to="/secure/glow/products">
-											<button
-												style={{ width: '100%' }}
-												type="button"
-												className="button secondary"
-											>
-												Back to Products
-											</button>
-										</Link>
+										<button className="button secondary" onClick={() => history.goBack()}>
+											Back to Products
+										</button>
 									</li>
 								</ul>
 							</div>

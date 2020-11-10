@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { listUserOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../../components/UtilityComponents';
@@ -8,7 +8,7 @@ import { Order, OrderListItem, OrderSmallScreen } from '../../components/Special
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
-
+	const history = useHistory();
 	const [ block_list_view, set_block_list_view ] = useState(false);
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -79,9 +79,9 @@ const UserOrderPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
 			</Helmet>
 			<div className="wrap jc-b">
-				<Link to={'/secure/glow/userprofile/' + props.match.params.id}>
-					<button className="button primary">Back to Profile</button>
-				</Link>
+				<button className="button secondary" onClick={() => history.goBack()}>
+					Back to User Profile
+				</button>
 				{colors.map((color) => {
 					return (
 						<div className="wrap jc-b w-16rem m-1rem">

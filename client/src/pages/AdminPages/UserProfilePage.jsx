@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsUser } from '../../actions/userActions';
 import { Loading } from '../../components/UtilityComponents';
@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { API_Emails } from '../../utils';
 
 const UserProfilePage = (props) => {
+	const history = useHistory();
 	const userDetails = useSelector((state) => state.userDetails);
 	const { loading, user, error } = userDetails;
 
@@ -73,9 +74,9 @@ const UserProfilePage = (props) => {
 			<Helmet>
 				<title>Admin User Profile | Glow LEDs</title>
 			</Helmet>
-			<Link to={'/secure/glow/users'}>
-				<button className="button primary">Back to Users</button>
-			</Link>
+			<button className="button secondary" onClick={() => history.goBack()}>
+				Back to Users
+			</button>
 			<div className="row">
 				<h1 style={{ textAlign: 'center', width: '100%' }}>{first_name}'s Profile</h1>
 			</div>
@@ -110,7 +111,7 @@ const UserProfilePage = (props) => {
 						</div>
 						<div className="row">
 							<div style={{ height: 50 }}>
-								<Link to={'/secure/glow/edituserprofile'}>
+								<Link to={'/secure/glow/edituser/' + props.match.params.id}>
 									<button
 										style={{ marginRight: '10px', maxWidth: '225px' }}
 										className="button primary"

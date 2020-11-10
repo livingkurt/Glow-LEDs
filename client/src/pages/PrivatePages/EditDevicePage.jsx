@@ -217,27 +217,9 @@ const EditDevicePage = (props) => {
 										</button>
 									</li>
 									<li>
-										{id ? (
-											<Link to={'/secure/account/glowcontrol/' + id}>
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Device
-												</button>
-											</Link>
-										) : (
-											<Link to="/secure/account/devices">
-												<button
-													style={{ width: '100%' }}
-													type="button"
-													className="button secondary"
-												>
-													Back to Devices
-												</button>
-											</Link>
-										)}
+										<button className="button secondary" onClick={() => history.goBack()}>
+											Back to Devices
+										</button>
 									</li>
 								</ul>
 							</div>
