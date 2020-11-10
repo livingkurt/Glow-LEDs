@@ -114,11 +114,11 @@ const OrdersPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 	};
-	const change_view = () => {
-		if (block_list_view) {
-			set_block_list_view(false);
-		} else {
+	const change_view = (e) => {
+		if (e.target.value === 'Block View') {
 			set_block_list_view(true);
+		} else {
+			set_block_list_view(false);
 		}
 	};
 
@@ -131,7 +131,7 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/controlpanel">
 					<button className="button primary">Back to Control Panel</button>
 				</Link>
-				<button
+				{/* <button
 					className="button primary"
 					onClick={() => {
 						change_view();
@@ -139,7 +139,8 @@ const OrdersPage = (props) => {
 					style={{ width: '160px' }}
 				>
 					{block_list_view ? 'Block' : 'List'}
-				</button>
+				</button> */}
+
 				<Link to="/secure/glow/editorder">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Order
@@ -168,6 +169,18 @@ const OrdersPage = (props) => {
 				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
+					<div className="ml-1rem">
+						<div className="custom-select w-100per">
+							<select className="qty_select_dropdown w-100per" onChange={(e) => change_view(e)}>
+								{[ 'List View', 'Block View' ].map((view, index) => (
+									<option key={index} value={view}>
+										{view}
+									</option>
+								))}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					</div>
 				</div>
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
