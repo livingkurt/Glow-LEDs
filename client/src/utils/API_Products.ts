@@ -5,6 +5,9 @@ export default {
 		// console.log({ category });
 		return axios.get('/api/products/images/' + category);
 	},
+	get_categories: () => {
+		return axios.get('/api/products/categories');
+	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });
 	// 	return axios.post('/api/products/array', array);

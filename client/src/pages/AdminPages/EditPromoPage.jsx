@@ -6,6 +6,8 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listSponsors } from '../../actions/sponsorActions';
+import { listProducts } from '../../actions/productActions';
+import { API_Products } from '../../utils';
 
 const EditPromoPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -13,8 +15,10 @@ const EditPromoPage = (props) => {
 	const [ user, set_user ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ for_customer, set_for_customer ] = useState('');
-	const [ excluded_categories, set_excluded_categories ] = useState('');
-	const [ excluded_products, set_excluded_products ] = useState('');
+	const [ excluded_categories, set_excluded_categories ] = useState([]);
+	const [ excluded_products, set_excluded_products ] = useState([]);
+	const [ excluded_category, set_excluded_category ] = useState('');
+	const [ excluded_product, set_excluded_product ] = useState('');
 	const [ percentage_off, set_percentage_off ] = useState(0);
 	const [ amount_off, set_amount_off ] = useState(0);
 	const [ free_shipping, set_free_shipping ] = useState(false);
@@ -23,6 +27,7 @@ const EditPromoPage = (props) => {
 	const [ number_of_orders, set_number_of_orders ] = useState('');
 	const [ active, set_active ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ categories, set_categories ] = useState([]);
 
 	const history = useHistory();
 
@@ -34,6 +39,9 @@ const EditPromoPage = (props) => {
 
 	const sponsorList = useSelector((state) => state.sponsorList);
 	const { sponsors } = sponsorList;
+
+	const productList = useSelector((state) => state.productList);
+	const { products } = productList;
 
 	const dispatch = useDispatch();
 
@@ -48,6 +56,8 @@ const EditPromoPage = (props) => {
 			} else {
 				stableDispatch(detailsPromo(''));
 			}
+			stableDispatch(listProducts(''));
+			get_categories();
 			stableDispatch(listUsers(''));
 			stableDispatch(listSponsors(''));
 			set_state();
@@ -55,6 +65,11 @@ const EditPromoPage = (props) => {
 		},
 		[ stableDispatch, props.match.params.id ]
 	);
+	const get_categories = async () => {
+		const { data } = await API_Products.get_categories();
+		console.log(data);
+		set_categories(data);
+	};
 
 	useEffect(
 		() => {
@@ -134,15 +149,196 @@ const EditPromoPage = (props) => {
 		history.push('/secure/glow/promos');
 	};
 
+	const exclude_category = (e) => {
+		e.preventDefault();
+		console.log(excluded_category);
+		if (excluded_category.indexOf(' ') >= 0) {
+			console.log('indexOf');
+			excluded_category.split(' ').map((excluded_category) => {
+				set_excluded_categories((excluded_categories) => [ ...excluded_categories, excluded_category ]);
+			});
+		} else if (excluded_categories) {
+			console.log('excluded_categories.length > 0');
+			set_excluded_categories((excluded_categories) => [ ...excluded_categories, excluded_category ]);
+		} else {
+			console.log('excluded_categories.length === 0');
+			set_excluded_categories([ excluded_category ]);
+		}
+
+		set_excluded_category('');
+	};
+	const exclude_product = (e) => {
+		e.preventDefault();
+		console.log(excluded_product);
+		if (excluded_product.indexOf(' ') >= 0) {
+			console.log('indexOf');
+			excluded_product.split(' ').map((excluded_product) => {
+				set_excluded_products((excluded_products) => [ ...excluded_products, excluded_product ]);
+			});
+		} else if (excluded_products) {
+			console.log('excluded_products.length > 0');
+			set_excluded_products((excluded_products) => [ ...excluded_products, excluded_product ]);
+		} else {
+			console.log('excluded_products.length === 0');
+			set_excluded_products([ excluded_product ]);
+		}
+
+		set_excluded_product('');
+	};
+
+	const remove_category = (category_index, e) => {
+		e.preventDefault();
+		set_excluded_categories((excluded_categories) =>
+			excluded_categories.filter((category, index) => {
+				return category_index !== index;
+			})
+		);
+	};
+	const remove_product = (product_index, e) => {
+		e.preventDefault();
+		set_excluded_products((excluded_products) =>
+			excluded_products.filter((product, index) => {
+				return product_index !== index;
+			})
+		);
+	};
+
+	const move_excluded_category_up = (excluded_category_index, e) => {
+		e.preventDefault();
+		const new_array = move(excluded_categories, excluded_category_index, excluded_category_index - 1);
+		set_excluded_categories(new_array);
+		// set_new_array(new_array);
+		categories_excluded(new_array);
+	};
+	const move_excluded_category_down = (excluded_category_index, e) => {
+		e.preventDefault();
+		const new_array = move(excluded_categories, excluded_category_index, excluded_category_index + 1);
+		set_excluded_categories(new_array);
+		// set_new_array(new_array);
+		categories_excluded(new_array);
+	};
+	const move_excluded_product_up = (excluded_product_index, e) => {
+		e.preventDefault();
+		const new_array = move(excluded_products, excluded_product_index, excluded_product_index - 1);
+		set_excluded_products(new_array);
+		// set_new_array(new_array);
+		products_excluded(new_array);
+	};
+	const move_excluded_product_down = (excluded_product_index, e) => {
+		e.preventDefault();
+		const new_array = move(excluded_products, excluded_product_index, excluded_product_index + 1);
+		set_excluded_products(new_array);
+		// set_new_array(new_array);
+		products_excluded(new_array);
+	};
+	function move(arr, old_index, new_index) {
+		console.log({ arr, old_index, new_index });
+		while (old_index < 0) {
+			old_index += arr.length;
+		}
+		while (new_index < 0) {
+			new_index += arr.length;
+		}
+		if (new_index >= arr.length) {
+			var k = new_index - arr.length;
+			while (k-- + 1) {
+				arr.push(undefined);
+			}
+		}
+		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+		console.log({ arr });
+		return arr;
+	}
+
+	const categories_excluded = (categories) => {
+		return (
+			<div>
+				{categories &&
+					categories.map((picture, index) => {
+						return (
+							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+								<div>
+									<button className="button icon" onClick={(e) => remove_category(index, e)}>
+										<i className="fas fa-times mr-5px" />
+									</button>
+									{picture}
+								</div>
+								<div>
+									{index > 0 && (
+										<button
+											className="button icon"
+											onClick={(e) => move_excluded_category_up(index, e)}
+										>
+											<i className=" fas fa-sort-up" />
+										</button>
+									)}
+
+									{index < categories.length - 1 && (
+										<button
+											className="button icon"
+											onClick={(e) => move_excluded_category_down(index, e)}
+										>
+											<i
+												style={{ '-webkitTransform': 'rotate(-180deg)' }}
+												className=" fas fa-sort-up"
+											/>
+										</button>
+									)}
+								</div>
+							</div>
+						);
+					})}
+			</div>
+		);
+	};
+	const products_excluded = (products) => {
+		return (
+			<div>
+				{products &&
+					products.map((picture, index) => {
+						return (
+							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+								<div>
+									<button className="button icon" onClick={(e) => remove_product(index, e)}>
+										<i className="fas fa-times mr-5px" />
+									</button>
+									{picture}
+								</div>
+								<div>
+									{index > 0 && (
+										<button
+											className="button icon"
+											onClick={(e) => move_excluded_product_up(index, e)}
+										>
+											<i className=" fas fa-sort-up" />
+										</button>
+									)}
+
+									{index < products.length - 1 && (
+										<button
+											className="button icon"
+											onClick={(e) => move_excluded_product_down(index, e)}
+										>
+											<i
+												style={{ '-webkitTransform': 'rotate(-180deg)' }}
+												className=" fas fa-sort-up"
+											/>
+										</button>
+									)}
+								</div>
+							</div>
+						);
+					})}
+			</div>
+		);
+	};
+
 	return (
 		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Promo' : 'Create Promo'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					{/* {loading_data ? (
-						<div>Loading...</div>
-					) : ( */}
 					<Loading loading={loading} error={error}>
 						{promo && (
 							<div>
@@ -150,7 +346,7 @@ const EditPromoPage = (props) => {
 									<title>Edit Promo | Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
+								<ul className="edit-form-container" style={{ maxWidth: '48rem', marginBottom: '20px' }}>
 									<h1
 										style={{
 											textAlign: 'center',
@@ -161,7 +357,7 @@ const EditPromoPage = (props) => {
 									/>
 
 									<div className="row wrap">
-										<div className="column w-228px m-10px">
+										<div className="column  m-10px">
 											<li>
 												<label htmlFor="sponsor">Sponsor</label>
 												<input
@@ -231,17 +427,6 @@ const EditPromoPage = (props) => {
 													</div>
 												</div>
 											)}
-
-											{/* <li>
-												<label htmlFor="number_of_orders">Number of Orders</label>
-												<input
-													type="text"
-													name="number_of_orders"
-													value={number_of_orders}
-													id="number_of_orders"
-													onChange={(e) => set_number_of_orders(e.target.value)}
-												/>
-											</li> */}
 											<li>
 												<label htmlFor="promo_code">Promo Code</label>
 												<input
@@ -252,16 +437,6 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
 											</li>
-											{/* <li>
-												<label htmlFor="for_customer">For Customer</label>
-												<input
-													type="text"
-													name="for_customer"
-													value={for_customer}
-													id="for_customer"
-													onChange={(e) => set_for_customer(e.target.value)}
-												/>
-											</li> */}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -270,10 +445,7 @@ const EditPromoPage = (props) => {
 													<input
 														type="checkbox"
 														name="for_customer"
-														// defaultChecked={for_customer ? 'checked' : 'unchecked'}
-														// defaultValue={for_customer}
 														defaultChecked={for_customer}
-														// value={for_customer ? '1' : '0'}
 														id="for_customer"
 														onChange={(e) => {
 															set_for_customer(e.target.checked);
@@ -281,28 +453,91 @@ const EditPromoPage = (props) => {
 													/>
 												</li>
 											)}
-											{/* <li>
-												<label htmlFor="excluded_categories">Excluded Categories</label>
+
+											<li>
+												{/* <label htmlFor="excluded_category">Excluded Category</label>
 												<input
 													type="text"
-													name="excluded_categories"
-													value={excluded_categories}
-													id="excluded_categories"
-													onChange={(e) => set_excluded_categories(e.target.value)}
-												/>
+													name="excluded_category"
+													value={excluded_category}
+													id="excluded_category"
+													onChange={(e) => set_excluded_category(e.target.value)}
+												/> */}
+												<li>
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label mb-15px"
+													>
+														Exclude Category
+													</label>
+													<div className="ai-c h-25px mb-15px">
+														<div className="custom-select ">
+															<select
+																className="qty_select_dropdown"
+																onChange={(e) => set_excluded_category(e.target.value)}
+															>
+																<option key={1} defaultValue="">
+																	---Choose Category---
+																</option>
+																{categories.map((category, index) => (
+																	<option key={index} value={category}>
+																		{category}
+																	</option>
+																))}
+															</select>
+															<span className="custom-arrow" />
+														</div>
+													</div>
+												</li>
+												<button className="button primary" onClick={(e) => exclude_category(e)}>
+													Exclude Category
+												</button>
+												{excluded_categories.length > 0 && (
+													<label className="mt-15px">Excluded Categories</label>
+												)}
+
+												{categories_excluded(excluded_categories)}
 											</li>
 											<li>
-												<label htmlFor="excluded_products">Excluded Products</label>
-												<input
-													type="text"
-													name="excluded_products"
-													value={excluded_products}
-													id="excluded_products"
-													onChange={(e) => set_excluded_products(e.target.value)}
-												/>
-											</li> */}
+												<li>
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label mb-15px"
+													>
+														Exclude Product
+													</label>
+													<div className="ai-c h-25px mb-15px">
+														<div className="custom-select">
+															<select
+																defaultValue={excluded_products}
+																className="qty_select_dropdown"
+																onChange={(e) => set_excluded_product(e.target.value)}
+															>
+																<option key={1} defaultValue="">
+																	---Choose Product---
+																</option>
+																{products.map((product, index) => (
+																	<option key={index} value={product.pathname}>
+																		{product.name}
+																	</option>
+																))}
+															</select>
+															<span className="custom-arrow" />
+														</div>
+													</div>
+												</li>
+												<button className="button primary" onClick={(e) => exclude_product(e)}>
+													Exclude Product
+												</button>
+												{excluded_products.length > 0 && (
+													<label className="mt-15px">Excluded Products</label>
+												)}
+												{products_excluded(excluded_products)}
+											</li>
 
-											{/* <li>
+											<li>
 												<label htmlFor="number_of_uses">Number of Uses</label>
 												<input
 													type="text"
@@ -311,7 +546,7 @@ const EditPromoPage = (props) => {
 													id="number_of_uses"
 													onChange={(e) => set_number_of_uses(e.target.value)}
 												/>
-											</li> */}
+											</li>
 											<li>
 												<label htmlFor="percentage_off">Percentage Off</label>
 												<input
@@ -340,10 +575,7 @@ const EditPromoPage = (props) => {
 													<input
 														type="checkbox"
 														name="free_shipping"
-														// defaultChecked={free_shipping ? 'checked' : 'unchecked'}
-														// defaultValue={free_shipping}
 														defaultChecked={free_shipping}
-														// value={free_shipping ? '1' : '0'}
 														id="free_shipping"
 														onChange={(e) => {
 															set_free_shipping(e.target.checked);
@@ -361,16 +593,6 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_funds_generated(e.target.value)}
 												/>
 											</li> */}
-											{/* <li>
-												<label htmlFor="active">Active</label>
-												<input
-													type="text"
-													name="active"
-													value={active}
-													id="active"
-													onChange={(e) => set_active(e.target.value)}
-												/>
-											</li> */}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -379,10 +601,7 @@ const EditPromoPage = (props) => {
 													<input
 														type="checkbox"
 														name="active"
-														// defaultChecked={active ? 'checked' : 'unchecked'}
-														// defaultValue={active}
 														defaultChecked={active}
-														// value={active ? '1' : '0'}
 														id="active"
 														onChange={(e) => {
 															set_active(e.target.checked);

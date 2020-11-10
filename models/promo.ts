@@ -8,7 +8,7 @@ const promoSchema = new mongoose.Schema(
 		promo_code: { type: String },
 		for_customer: { type: Boolean },
 		excluded_categories: { type: Array },
-		excluded_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+		excluded_products: { type: Array },
 		percentage_off: { type: Number },
 		free_shipping: { type: Boolean },
 		amount_off: { type: Number },
