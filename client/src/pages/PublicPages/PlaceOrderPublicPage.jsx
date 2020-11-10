@@ -302,7 +302,6 @@ const PlaceOrderPublicPage = (props) => {
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
-	// const promo_codes = [ '' ];
 	const check_code = () => {
 		const data = { promo_code, promos, user_data };
 		const request = validate_promo_code(data);
@@ -344,7 +343,11 @@ const PlaceOrderPublicPage = (props) => {
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
-				set_show_message(promo.promo_code);
+				set_show_message(
+					`${promo.promo_code} ${promo.percentage_off
+						? `${promo.percentage_off}% Off`
+						: `$${promo.amount_off} Off`}`
+				);
 			}
 		}
 	};
@@ -536,15 +539,36 @@ const PlaceOrderPublicPage = (props) => {
 						</li>
 						<li>
 							<div>Items</div>
-							{show_message ? (
-								<div>
+							{!show_message && (
+								<li>
+									<div>Subtotal</div>
+									<div>${itemsPrice.toFixed(2)}</div>
+								</li>
+							)}
+
+							{show_message && (
+								<li>
 									<del style={{ color: 'red' }}>
-										<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>
-									</del>{' '}
-									<i class="fas fa-arrow-right" /> ${itemsPrice.toFixed(2)}
-								</div>
-							) : (
-								<div>${itemsPrice.toFixed(2)}</div>
+										<div style={{ color: 'white' }}>Subtotal</div>
+									</del>
+									<div>
+										<del style={{ color: 'red' }}>
+											<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>
+										</del>
+									</div>
+								</li>
+							)}
+							{show_message && (
+								<li>
+									<div>Discount</div>
+									<div>-${(items_price - itemsPrice).toFixed(2)}</div>
+								</li>
+							)}
+							{show_message && (
+								<li>
+									<div>New Subtotal</div>
+									<div>${itemsPrice.toFixed(2)}</div>
+								</li>
 							)}
 						</li>
 						<li>
