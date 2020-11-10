@@ -1,14 +1,15 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Order, OrderSmallScreen } from '../../components/SpecialtyComponents';
+import { Order, OrderListItem, OrderSmallScreen } from '../../components/SpecialtyComponents';
 
 const UserOrderPage = (props) => {
 	const dispatch = useDispatch();
 
+	const [ block_list_view, set_block_list_view ] = useState(false);
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	console.log({ user_orders_page: userInfo });
@@ -23,31 +24,13 @@ const UserOrderPage = (props) => {
 		},
 		[ userInfo, stableDispatch ]
 	);
-
-	// const colors = [
-	// 	{ name: 'Not Paid', color: '#333333' },
-	// 	{ name: 'Paid', color: '#626262' },
-	// 	{ name: 'Shipped', color: '#8e8e8e' },
-	// 	{ name: 'Delivered', color: '#ababab' }
-	// ];
-
-	// const determine_color = (order) => {
-	// 	let result = '';
-	// 	if (!order.isPaid) {
-	// 		result = colors[0].color;
-	// 	}
-	// 	if (order.isPaid) {
-	// 		result = colors[1].color;
-	// 	}
-	// 	if (order.isShipped) {
-	// 		result = colors[2].color;
-	// 	}
-	// 	if (order.isDelivered) {
-	// 		result = colors[3].color;
-	// 	}
-	// 	console.log(result);
-	// 	return result;
-	// };
+	const change_view = (e) => {
+		if (e.target.value === 'Block View') {
+			set_block_list_view(true);
+		} else {
+			set_block_list_view(false);
+		}
+	};
 
 	const colors = [
 		{ name: 'Not Paid', color: '#6d3e3e' },
@@ -119,9 +102,30 @@ const UserOrderPage = (props) => {
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
+				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
+					<div className="mb-1rem">
+						<div className="custom-select w-100per">
+							<select className="qty_select_dropdown w-100per" onChange={(e) => change_view(e)}>
+								{[ 'List View', 'Block View' ].map((view, index) => (
+									<option key={index} value={view}>
+										{view}
+									</option>
+								))}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					</div>
+				</div>
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
-						{orders && orders.map((order) => <Order determine_color={determine_color} order={order} />)}
+						{!block_list_view &&
+							orders &&
+							orders.map((order) => <OrderListItem determine_color={determine_color} order={order} />)}
+					</div>
+					<div className="product_big_screen">
+						{block_list_view &&
+							orders &&
+							orders.map((order) => <Order determine_color={determine_color} order={order} />)}
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
