@@ -101,7 +101,7 @@ const FAQPage = () => {
 							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra and Chroma EVOs</li>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
 							<li style={{ lineHeight: '25px' }}>
-								Throwlights Apollo (Not Tested) May fit a little loose
+								Throwlights Apollo's (Not Tested) May fit a little loose
 							</li>
 							<li style={{ lineHeight: '25px' }}>FL Aethers</li>
 						</ul>

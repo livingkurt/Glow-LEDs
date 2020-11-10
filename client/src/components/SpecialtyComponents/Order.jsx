@@ -349,7 +349,7 @@ ${props.order.shipping.email}`)}
 						<div className="jc-b">
 							<div className="column jc-b w-25rem">
 								<button className="button primary">
-									<Link to={'/secure/account/order/' + props.order._id}>Edit Order</Link>
+									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>
 								<button className="button primary mv-5px">
 									<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>

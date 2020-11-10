@@ -38,8 +38,8 @@ const OrderListItem = (props) => {
 	};
 	const daysBetween = (date1, date2) => {
 		// console.log({ date1: date1.toISOString() });
-		console.log({ date1 });
-		console.log({ date2: new Date(date2).getDay() });
+		// console.log({ date1 });
+		// console.log({ date2: new Date(date2).getDay() });
 
 		const diffTime = Math.abs(new Date(date2) - date1);
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -289,7 +289,7 @@ ${props.order.shipping.email}`)}
 						<div className="jc-b">
 							<div className="column jc-b w-25rem">
 								<button className="button primary">
-									<Link to={'/secure/account/order/' + props.order._id}>Edit Order</Link>
+									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>
 								<button className="button primary mv-5px">
 									<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>

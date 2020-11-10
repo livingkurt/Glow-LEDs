@@ -30,6 +30,7 @@ const EditOrderPage = (props) => {
 	const [ deliveredAt, set_deliveredAt ] = useState();
 	const [ isRefunded, set_isRefunded ] = useState(false);
 	const [ refundedAt, set_refundedAt ] = useState('');
+	const [ createdAt, set_createdAt ] = useState('');
 	const [ order_note, set_order_note ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -60,6 +61,10 @@ const EditOrderPage = (props) => {
 		set_shippingPrice(order.shippingPrice);
 		set_totalPrice(order.totalPrice);
 		set_isPaid(order.isPaid);
+
+		if (order.createdAt) {
+			set_createdAt(format_date(order.createdAt));
+		}
 		if (order.paidAt) {
 			set_paidAt(format_date(order.paidAt));
 		}
@@ -173,6 +178,7 @@ const EditOrderPage = (props) => {
 			deliveredAt,
 			isRefunded,
 			refundedAt,
+			createdAt,
 			order_note,
 			promo_code
 		});
@@ -190,15 +196,16 @@ const EditOrderPage = (props) => {
 				isPaid,
 				paidAt,
 				isManufactured,
-				manufacturedAt: unformat_date(manufacturedAt),
+				manufacturedAt: manufacturedAt && unformat_date(manufacturedAt),
 				isPackaged,
-				packagedAt: unformat_date(packagedAt),
+				packagedAt: packagedAt && unformat_date(packagedAt),
 				isShipped,
-				shippedAt: unformat_date(shippedAt),
+				shippedAt: shippedAt && unformat_date(shippedAt),
 				isDelivered,
-				deliveredAt: unformat_date(deliveredAt),
+				deliveredAt: deliveredAt && unformat_date(deliveredAt),
 				isRefunded,
-				refundedAt: unformat_date(refundedAt),
+				refundedAt: refundedAt && unformat_date(refundedAt),
+				createdAt: createdAt && unformat_date(createdAt),
 				order_note,
 				promo_code
 			})
@@ -293,6 +300,17 @@ const EditOrderPage = (props) => {
 
 											<h2>Shipping</h2>
 											<li>
+												<label htmlFor="email">Email</label>
+												<input
+													type="text"
+													defaultValue={shipping && shipping.email}
+													name="email"
+													id="email"
+													onChange={(e) =>
+														set_shipping({ ...shipping, email: e.target.value })}
+												/>
+											</li>
+											<li>
 												<label htmlFor="first_name">First Name</label>
 												<input
 													type="text"
@@ -384,7 +402,7 @@ const EditOrderPage = (props) => {
 												<label htmlFor="country">Country</label>
 												<input
 													type="text"
-													value={shipping.country}
+													value={shipping && shipping.country}
 													name="country"
 													id="country"
 													onChange={(e) =>
@@ -471,7 +489,16 @@ const EditOrderPage = (props) => {
 
 										<div className="w-228px m-10px">
 											<h2>Order State</h2>
-
+											<li>
+												<label htmlFor="createdAt">Created At</label>
+												<input
+													type="text"
+													name="createdAt"
+													value={createdAt}
+													id="createdAt"
+													onChange={(e) => set_createdAt(e.target.value)}
+												/>
+											</li>
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -774,16 +801,20 @@ const EditOrderPage = (props) => {
 																	})}
 															/>
 														</li>
-														{/* <li>
-														<label htmlFor="product">Product</label>
-														<input
-															type="text"
-															name="product"
-															defaultValue={item.product}
-															id="product"
-															onChange={(e) => set_product(e.target.value)}
-														/>
-													</li> */}
+														<li>
+															<label htmlFor="product">Product</label>
+															<input
+																type="text"
+																name="product"
+																defaultValue={item.product && item.product.pathname}
+																id="product"
+																onChange={(e) =>
+																	set_orderItems({
+																		...orderItems[index],
+																		product: e.target.value
+																	})}
+															/>
+														</li>
 
 														<li>
 															<label
@@ -821,16 +852,23 @@ const EditOrderPage = (props) => {
 																</div>
 															</div>
 														</li>
-														{/* <li>
-														<label htmlFor="secondary_product">Secondary Product</label>
-														<input
-															type="text"
-															name="secondary_product"
-															defaultValue={item.secondary_product}
-															id="secondary_product"
-															onChange={(e) => set_secondary_product(e.target.value)}
-														/>
-													</li> */}
+														<li>
+															<label htmlFor="secondary_product">Secondary Product</label>
+															<input
+																type="text"
+																name="secondary_product"
+																defaultValue={
+																	item.secondary_product &&
+																	item.secondary_product.pathname
+																}
+																id="secondary_product"
+																onChange={(e) =>
+																	set_orderItems({
+																		...orderItems[index],
+																		secondary_product: e.target.value
+																	})}
+															/>
+														</li>
 														<li>
 															<label
 																aria-label="sortOrder"
