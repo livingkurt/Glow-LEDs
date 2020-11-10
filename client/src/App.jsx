@@ -14,7 +14,7 @@ import {
 	ProfilePage,
 	OrdersPage,
 	ContactPage,
-	UserOrdersPage,
+	MyOrdersPage,
 	Four04Page,
 	EditProfilePage,
 	EditProductPage,
@@ -61,7 +61,8 @@ import {
 	MenuPage,
 	OrderPaymentAccountCompletePublicPage,
 	ResetPasswordPage,
-	ProductsDisplayPage
+	ProductsDisplayPage,
+	UserOrdersPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -189,7 +190,7 @@ const App = () => {
 								path="/secure/account/editprofile"
 								component={(props) => <EditProfilePage userInfo={userInfo} {...props} />}
 							/>
-							<PrivateRoute path="/secure/account/orders" component={UserOrdersPage} />
+							<PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
 							<PrivateRoute
 								path="/secure/checkout/shipping"
 								component={(props) => <ShippingPage userInfo={userInfo} {...props} />}
@@ -221,6 +222,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />
 							<AdminRoute path="/secure/glow/users" component={UsersPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
+							<AdminRoute path="/secure/glow/userorders/:id" component={UserOrdersPage} />
 							<AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
 							<AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />

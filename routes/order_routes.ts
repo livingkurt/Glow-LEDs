@@ -316,6 +316,31 @@ router.get('/mine', isAuth, async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Your Orders' });
 	}
 });
+router.get('/user/:id', isAuth, async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({ deleted: false, user: req.params.id }).sort({ _id: -1 });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Your Orders' });
+	}
+});
 
 router.get('/:id', isAuth, async (req: any, res: any) => {
 	try {

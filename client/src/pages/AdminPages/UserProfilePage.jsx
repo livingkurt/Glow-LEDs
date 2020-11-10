@@ -71,8 +71,11 @@ const UserProfilePage = (props) => {
 	return (
 		<div className="column p-20px inner_content">
 			<Helmet>
-				<title>Admin {first_name}'s Profile | Glow LEDs</title>
+				<title>Admin User Profile | Glow LEDs</title>
 			</Helmet>
+			<Link to={'/secure/glow/users'}>
+				<button className="button primary">Back to Users</button>
+			</Link>
 			<div className="row">
 				<h1 style={{ textAlign: 'center', width: '100%' }}>{first_name}'s Profile</h1>
 			</div>
@@ -127,7 +130,7 @@ const UserProfilePage = (props) => {
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
-								<Link to={'/secure/account/orders'}>
+								<Link to={'/secure/glow/userorders/' + props.match.params.id}>
 									<button
 										style={{ maxWidth: '225px', marginRight: '10px' }}
 										className="button primary"

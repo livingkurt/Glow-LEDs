@@ -85,7 +85,6 @@ router.get('/:id', isAuth, async (req, res) => {
 			});
 			res.status(404).send('Order Not Found.');
 		}
-		res.send(user);
 	} catch (error) {
 		log_error({
 			method: 'GET',

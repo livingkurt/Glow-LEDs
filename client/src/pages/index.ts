@@ -22,11 +22,12 @@ export { default as EditContentPage } from './AdminPages/EditContentPage';
 export { default as EditEmailPage } from './AdminPages/EditEmailPage';
 export { default as LogsPage } from './AdminPages/LogsPage';
 export { default as ProductsDisplayPage } from './AdminPages/ProductsDisplayPage';
+export { default as UserOrdersPage } from './AdminPages/UserOrdersPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';
 export { default as GlowControlPage } from './PrivatePages/GlowControlPage';
-export { default as UserOrdersPage } from './PrivatePages/UserOrdersPage';
+export { default as MyOrdersPage } from './PrivatePages/MyOrdersPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';
 export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPage';
 export { default as ProfilePage } from './PrivatePages/ProfilePage';
