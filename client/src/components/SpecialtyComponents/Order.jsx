@@ -38,14 +38,27 @@ const Order = (props) => {
 	};
 	const daysBetween = (date1, date2) => {
 		// console.log({ date1: date1.toISOString() });
-		// console.log({ date1 });
-		// console.log({ date2: new Date(date2) });
+		console.log({ date1 });
+		console.log({ date2: new Date(date2).getDay() });
+
 		const diffTime = Math.abs(new Date(date2) - date1);
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 		// console.log(diffTime + ' milliseconds');
 		// console.log(diffDays + ' days');
 		return diffDays;
 	};
+
+	// function dates(current) {
+	// 	var week = new Array();
+	// 	// Starting Monday not Sunday
+	// 	current.setDate(current.getDate() - current.getDay() + 1);
+	// 	for (var i = 0; i < 7; i++) {
+	// 		week.push(new Date(current));
+	// 		current.setDate(current.getDate() + 1);
+	// 	}
+	// 	return week;
+	// }
+	// console.log(dates(new Date(2020, 1, 27)));
 
 	const today = new Date();
 

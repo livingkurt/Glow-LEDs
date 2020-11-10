@@ -873,11 +873,10 @@ const OrderEmail = (props) => {
 
 	const send_order_email = async (email, first_name) => {
 		console.log({ email_template });
-		const { data } = await API_Emails.send_order_email(email_template, 'Glow LEDs Order Confirmation', email);
+		const { data } = await API_Emails.send_order_email(email_template, 'Your Glow LEDs Order', email);
 		const { data: request } = await API_Emails.send_order_created_email(
 			email_template,
-			'New Order Created',
-			first_name
+			'New Order Created by ' + first_name
 		);
 		console.log({ data });
 		console.log({ request });
