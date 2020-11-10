@@ -30,6 +30,7 @@ const orderItemSchema = new mongoose.Schema(
 		diffuser_cap_name: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
+		pathname: { type: String, required: true },
 		sale_price: { type: Number },
 		volume: { type: Number },
 		weight_pounds: { type: Number },
