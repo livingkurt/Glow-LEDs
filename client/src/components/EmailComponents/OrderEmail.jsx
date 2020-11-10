@@ -394,8 +394,14 @@ const OrderEmail = (props) => {
 												}}
 												valign="top"
 											>
-												Subtotal
-												<br />
+												{!order.promo_code && 'Subtotal'}
+												{order.promo_code && (
+													<del style={{ color: 'red' }}>
+														<div style={{ color: 'white' }}>Subtotal</div>
+													</del>
+												)}
+												{order.promo_code && <div>Discount</div>}
+												{order.promo_code && <div>New Subtotal</div>}
 												Tax
 												<br />
 												Shipping
@@ -413,7 +419,23 @@ const OrderEmail = (props) => {
 												}}
 												valign="top"
 											>
-												{promo_code_switch(order)}
+												{/* {promo_code_switch(order)} */}
+												{!order.promo_code && (order.itemsPrice && order.itemsPrice.toFixed(2))}
+												{order.promo_code && (
+													<del style={{ color: 'red' }}>
+														<label style={{ color: 'white' }}>
+															${order.itemsPrice && order.itemsPrice.toFixed(2)}
+														</label>
+													</del>
+												)}
+												<br />
+												{order.promo_code && (
+													<div>
+														-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
+															order.itemsPrice).toFixed(2)}
+													</div>
+												)}
+												{order.promo_code && <div>${order.itemsPrice.toFixed(2)}</div>}
 												${order.taxPrice && order.taxPrice.toFixed(2)}
 												<br />
 												${order.shippingPrice && order.shippingPrice.toFixed(2)}

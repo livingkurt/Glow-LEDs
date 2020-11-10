@@ -386,19 +386,67 @@ const InvoiceEmail = (props) => {
 									fontSize: '8px'
 								}}
 							>
-								<div
-									style={{
-										fontSize: '8px',
-										padding: '5px',
-										verticalAlign: 'top',
-										textAlign: 'left',
-										display: 'flex'
-									}}
-									valign="top"
-									align="right"
-								>
-									Subtotal:
-								</div>
+								{!order.promo_code && (
+									<div
+										style={{
+											fontSize: '8px',
+											padding: '5px',
+											verticalAlign: 'top',
+											textAlign: 'left',
+											display: 'flex'
+										}}
+										valign="top"
+										align="right"
+									>
+										Subtotal:
+									</div>
+								)}
+								{order.promo_code && (
+									<del style={{ color: 'red' }}>
+										<div
+											style={{
+												fontSize: '8px',
+												padding: '5px',
+												verticalAlign: 'top',
+												textAlign: 'left',
+												display: 'flex',
+												color: 'black'
+											}}
+											valign="top"
+											align="right"
+										>
+											Subtotal:
+										</div>
+									</del>
+								)}
+								{order.promo_code && (
+									<div
+										style={{
+											fontSize: '8px',
+											padding: '5px',
+											verticalAlign: 'top',
+											textAlign: 'left'
+										}}
+										valign="top"
+										align="right"
+									>
+										Discount:
+									</div>
+								)}
+								{order.promo_code && (
+									<div
+										style={{
+											fontSize: '8px',
+											padding: '5px',
+											verticalAlign: 'top',
+											textAlign: 'left'
+										}}
+										valign="top"
+										align="right"
+									>
+										New Subtotal:
+									</div>
+								)}
 								<div
 									style={{ fontSize: '8px', padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
 									valign="top"
@@ -428,7 +476,7 @@ const InvoiceEmail = (props) => {
 								<div
 									style={{
 										fontSize: '8px',
-										padding: '5px',
+
 										verticalAlign: 'top',
 										textAlign: 'right',
 										display: 'flex',
@@ -437,8 +485,70 @@ const InvoiceEmail = (props) => {
 									valign="top"
 									align="right"
 								>
-									{promo_code_switch(order)}
+									{/* {promo_code_switch(order)} */}
 								</div>
+								{!order.promo_code && (
+									<div
+										style={{
+											fontSize: '8px',
+											padding: '5px',
+											verticalAlign: 'top',
+											textAlign: 'right'
+										}}
+										valign="top"
+										align="right"
+									>
+										${order.itemsPrice && order.itemsPrice.toFixed(2)}
+									</div>
+								)}
+								{order.promo_code && (
+									<del style={{ color: 'red' }}>
+										<div
+											style={{
+												fontSize: '8px',
+												padding: '5px',
+												verticalAlign: 'top',
+												textAlign: 'right',
+												color: 'black'
+											}}
+											valign="top"
+											align="right"
+										>
+											${order.itemsPrice && order.itemsPrice}
+										</div>
+									</del>
+								)}
+								{order.promo_code && (
+									<div
+										style={{
+											fontSize: '8px',
+											padding: '5px',
+											verticalAlign: 'top',
+											textAlign: 'right'
+										}}
+										valign="top"
+										align="right"
+									>
+										<div>
+											-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
+												order.itemsPrice).toFixed(2)}
+										</div>
+									</div>
+								)}
+								{order.promo_code && (
+									<div
+										style={{
+											fontSize: '8px',
+											padding: '5px',
+											verticalAlign: 'top',
+											textAlign: 'right'
+										}}
+										valign="top"
+										align="right"
+									>
+										<div>${order.itemsPrice.toFixed(2)}</div>
+									</div>
+								)}
 								<div
 									style={{
 										fontSize: '8px',
@@ -470,7 +580,7 @@ const InvoiceEmail = (props) => {
 						style={{
 							fontSize: '8px',
 							verticalAlign: 'top',
-							width: '46%',
+							width: '50%',
 							marginLeft: 'auto',
 							borderTop: '1px solid black'
 						}}
@@ -493,7 +603,7 @@ const InvoiceEmail = (props) => {
 										paddingLeft: '70px',
 										verticalAlign: 'top',
 										textAlign: 'left',
-										width: '90px',
+										width: '81px',
 										color: 'white',
 										fontWeight: 'bold'
 									}}
