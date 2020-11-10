@@ -25,8 +25,8 @@ const OrderEmail = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listEmails('Order'));
-			// stableDispatch(detailsOrder(props.match.params.id));
-			stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+			stableDispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
+			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
 		[ stableDispatch ]
@@ -234,7 +234,7 @@ const OrderEmail = (props) => {
 											View your Order
 										</a>
 									</div>
-									<div style={{ margin: '0px 10px', width: '5px' }}>or</div>
+									<div style={{ marginLeft: '20px', width: '20px' }}>or</div>
 
 									<div
 										style={{

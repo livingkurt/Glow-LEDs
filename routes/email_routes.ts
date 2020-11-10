@@ -365,8 +365,8 @@ router.post('/order', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
-			console.log('Order Email Sent');
-			res.send('Order Email Sent');
+			console.log(req.body.subject);
+			res.send(req.body.subject);
 		}
 	});
 
@@ -385,8 +385,8 @@ router.post('/order_created', async (req, res) => {
 			console.log('Error Occurs', err);
 			res.status(500).send({ error: err, message: 'Error Sending Email' });
 		} else {
-			console.log('New Order Created');
-			res.send('New Order Created');
+			console.log(req.body.subject);
+			res.send(req.body.subject);
 		}
 	});
 
