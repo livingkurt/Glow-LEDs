@@ -38,8 +38,8 @@ const Order = (props) => {
 	};
 	const daysBetween = (date1, date2) => {
 		// console.log({ date1: date1.toISOString() });
-		console.log({ date1 });
-		console.log({ date2: new Date(date2).getDay() });
+		// console.log({ date1 });
+		// console.log({ date2: new Date(date2).getDay() });
 
 		const diffTime = Math.abs(new Date(date2) - date1);
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

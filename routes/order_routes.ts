@@ -797,45 +797,45 @@ router.put(
 );
 
 router.put('/:id/update', async (req: any, res: any) => {
-	// try {
-	const updated_order = req.body;
-	console.log({ updated_order });
-	const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-	console.log({ updated });
-	// 	if (updated) {
-	// 		log_request({
-	// 			method: 'PUT',
-	// 			path: req.originalUrl,
-	// 			collection: 'Order',
-	// 			data: [ updated ],
-	// 			status: 201,
-	// 			success: true,
-	// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-	// 		});
-	// 		res.send(updated_order);
-	// 	} else {
-	// 		log_request({
-	// 			method: 'PUT',
-	// 			path: req.originalUrl,
-	// 			collection: 'Product',
-	// 			data: [ updated ],
-	// 			status: 404,
-	// 			success: false,
-	// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-	// 		});
-	// 		res.status(404).send({ message: 'Order not Updated.' });
-	// 	}
-	// } catch (error) {
-	// 	log_error({
-	// 		method: 'PUT',
-	// 		path: req.originalUrl,
-	// 		collection: 'Order',
-	// 		error,
-	// 		status: 500,
-	// 		success: false
-	// 	});
-	// 	res.status(500).send({ error, message: 'Error Updating Order' });
-	// }
+	try {
+		const updated_order = req.body;
+		console.log({ updated_order });
+		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+		console.log({ updated });
+		if (updated) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ updated ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(updated_order);
+		} else {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ updated ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Order not Updated.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Updating Order' });
+	}
 });
 
 export default router;
