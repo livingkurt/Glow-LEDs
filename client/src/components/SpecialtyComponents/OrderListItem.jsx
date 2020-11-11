@@ -151,9 +151,9 @@ const OrderListItem = (props) => {
 				</div>
 			</div>
 
-			<div className="row">
-				<div className="small_screen_order jc-b">
-					<div className="row">
+			<div className="row ">
+				<div className="small_screen_order jc-b ">
+					<div className="wrap">
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div className="row mt-15px">
@@ -177,7 +177,7 @@ const OrderListItem = (props) => {
 								<div>
 									<div>
 										{item.qty > 1 && item.qty + 'x - '}{' '}
-										{item.diffuser_cap_color && ` ${item.diffuser_cap_color} - `} {item.name}
+										{item.diffuser_cap_color && ` ${item.diffuser_cap_color} `} {item.name}
 									</div>
 									{item.secondary_product && '> 1x - ' + item.secondary_product.name + ''}
 								</div>
