@@ -292,7 +292,6 @@ const OrderEmail = (props) => {
 													key={index}
 													valign="top"
 												>
-													{item.qty}x - {' '}
 													{item.category === 'diffuser_caps' ||
 													item.category === 'mini_diffuser_caps' ||
 													item.category === 'frosted_diffusers' ? (
@@ -300,7 +299,7 @@ const OrderEmail = (props) => {
 													) : (
 														''
 													)}
-													{item.name}
+													{item.name} {item.qty > 1 && item.qty + 'x'}
 													{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
 												</td>
 												<td
