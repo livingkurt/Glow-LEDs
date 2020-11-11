@@ -507,14 +507,14 @@ const PlaceOrderPublicPage = (props) => {
 													<div>
 														<del style={{ color: 'red' }}>
 															<label style={{ color: 'white' }}>
-																${item.price ? item.price.toFixed(2) : item.price}
+																${item.price && (item.price * item.qty).toFixed(2)}
 															</label>
 														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+														<i class="fas fa-arrow-right" /> ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}{' '}
 														On Sale!
 													</div>
 												) : (
-													<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+													<label>${item.price && (item.price * item.qty).toFixed(2)}</label>
 												)}
 											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>

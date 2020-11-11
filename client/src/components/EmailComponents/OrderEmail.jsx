@@ -62,7 +62,7 @@ const OrderEmail = (props) => {
 					<del style={{ color: 'red' }}>
 						<label style={{ color: 'white' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 					</del>{' '}
-					{'-->'} ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price} On Sale!
+					{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)} On Sale!
 				</label>
 			);
 		} else if (item.countInStock === 0) {
