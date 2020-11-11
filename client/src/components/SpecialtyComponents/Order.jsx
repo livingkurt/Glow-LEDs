@@ -72,7 +72,6 @@ const Order = (props) => {
 					</div>
 					<div className="column fs-16px">
 						<h3>Total</h3>
-						{/* <div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div> */}
 						{!props.order.isRefunded && (
 							<div>
 								<div>
@@ -164,7 +163,9 @@ const Order = (props) => {
 										src={item.display_image && item.display_image} // use normal <img> attributes as props
 									/>
 									<div className="column jc-c">
-										<h2 className="">{item.name}</h2>
+										<h2 className="">
+											{item.name} {item.qty > 1 && item.qty + 'x'}
+										</h2>
 										<div className="mv-10px">${item.price}</div>
 										<Link to={'/collections/all/products/category/' + item.category}>
 											<button className="button primary">Buy Again</button>

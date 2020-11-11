@@ -37,7 +37,10 @@ const OrderSmallScreen = (props) => {
 									src={item.display_image && item.display_image} // use normal <img> attributes as props
 								/>
 								<div className="column jc-c w-100per">
-									<h2 className="">{item.name}</h2>
+									<h2 className="">
+										{item.qty > 1 && item.qty + 'x - '}
+										{item.name}
+									</h2>
 									<div className="ai-c w-100per jc-b">
 										<div className="mv-10px">${item.price}</div>
 										<Link to={'/collections/all/products/category/' + item.category}>

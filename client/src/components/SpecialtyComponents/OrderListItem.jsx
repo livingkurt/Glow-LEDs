@@ -66,11 +66,11 @@ const OrderListItem = (props) => {
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-50per jc-b ">
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
 					</div>
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Total</h3>
 						{/* <div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div> */}
 						{!props.order.isRefunded && (
@@ -151,14 +151,13 @@ const OrderListItem = (props) => {
 				</div>
 			</div>
 
-			<div className="row jc-b">
-				<div className="small_screen_order row jc-b">
+			<div className="row">
+				<div className="small_screen_order jc-b">
 					<div className="row">
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div className="row mt-15px">
 									<div className="column ai-c">
-										{/* <div className="">{item.name}</div> */}
 										<LazyLoadImage
 											className="order-image w-100px h-100px br-10px mr-15px"
 											alt={item.name}
@@ -171,14 +170,14 @@ const OrderListItem = (props) => {
 						})}
 					</div>
 				</div>
-				<div className="small_screen_order row jc-b">
+				<div className="small_screen_order jc-b">
 					<div className="mv-auto">
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div>
 									<div>
-										{item.qty}x - {item.diffuser_cap_color && ` ${item.diffuser_cap_color} - `}{' '}
-										{item.name}
+										{item.qty > 1 && item.qty + 'x - '}{' '}
+										{item.diffuser_cap_color && ` ${item.diffuser_cap_color} - `} {item.name}
 									</div>
 									{item.secondary_product && '> 1x - ' + item.secondary_product.name + ''}
 								</div>
@@ -199,7 +198,7 @@ const OrderListItem = (props) => {
 			{props.admin && (
 				<div id={props.order._id} className="expanded-row-content hide-row">
 					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
-						<div className="row ai-c jc-b">
+						<div className="ai-c jc-b">
 							<div>
 								<div className="mv-10px">
 									<label htmlFor="payment_method">Payment Method</label>
