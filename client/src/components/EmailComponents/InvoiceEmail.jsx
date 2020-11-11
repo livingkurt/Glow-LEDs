@@ -331,7 +331,7 @@ const InvoiceEmail = (props) => {
 								</div>
 							</div>
 						</div>
-						<div>
+						<div style={{ width: '65px' }}>
 							<div style={{ fontSize: '8px', verticalAlign: 'top' }} valign="top" />
 							<div
 								style={{
@@ -606,7 +606,7 @@ const InvoiceEmail = (props) => {
 										padding: '5px',
 										verticalAlign: 'top',
 										textAlign: 'right',
-										width: '33%',
+										width: '48px',
 										fontWeight: 'bold'
 									}}
 									valign="top"
