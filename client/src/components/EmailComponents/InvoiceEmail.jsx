@@ -45,13 +45,13 @@ const InvoiceEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-amex-brands.svg';
+				return '/images/optimized_images/logo_images/icons/card_types_black/cc-amex-brands.png';
 			case 'Visa':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-visa-brands.svg';
+				return '/images/optimized_images/logo_images/icons/card_types_black/cc-visa-brands.png';
 			case 'Mastercard':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-mastercard-brands.svg';
+				return '/images/optimized_images/logo_images/icons/card_types_black/cc-mastercard-brands.png';
 			case 'Discover':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-discover-brands.svg';
+				return '/images/optimized_images/logo_images/icons/card_types_black/cc-discover-brands.png';
 		}
 	};
 
@@ -213,7 +213,7 @@ const InvoiceEmail = (props) => {
 											''
 										)
 									}
-									style={{ fontSize: '8px', width: '100px', marginLeft: '-5px' }}
+									style={{ fontSize: '8px', width: '15px' }}
 								/>
 							</td>
 
