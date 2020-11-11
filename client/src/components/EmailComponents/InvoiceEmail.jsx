@@ -274,7 +274,7 @@ const InvoiceEmail = (props) => {
 										{item.category === 'diffuser_caps' ||
 										item.category === 'mini_diffuser_caps' ||
 										item.category === 'frosted_diffusers' ? (
-											`${item.diffuser_cap_color} -`
+											`${item.diffuser_cap_color} - `
 										) : (
 											''
 										)}
