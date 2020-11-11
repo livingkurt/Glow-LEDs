@@ -48,7 +48,7 @@ const OrderEmail = (props) => {
 				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-amex-brands.png';
 			case 'Visa':
 				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-visa-brands.png';
-			case 'Mastercard':
+			case 'MasterCard':
 				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-mastercard-brands.png';
 			case 'Discover':
 				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-discover-brands.png';
