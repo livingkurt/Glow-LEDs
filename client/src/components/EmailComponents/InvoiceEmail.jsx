@@ -45,13 +45,13 @@ const InvoiceEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return '/images/optimized_images/logo_images/icons/card_types_black/cc-amex-brands.png';
+				return 'https://thumbs2.imgbox.com/c9/a5/0AsOySyq_b.png';
 			case 'Visa':
-				return '/images/optimized_images/logo_images/icons/card_types_black/cc-visa-brands.png';
+				return 'https://images2.imgbox.com/73/a0/efpzYR25_o.png';
 			case 'Mastercard':
-				return '/images/optimized_images/logo_images/icons/card_types_black/cc-mastercard-brands.png';
+				return 'https://images2.imgbox.com/63/92/Z3KHgTl4_o.png';
 			case 'Discover':
-				return '/images/optimized_images/logo_images/icons/card_types_black/cc-discover-brands.png';
+				return 'https://images2.imgbox.com/96/cd/hXyv0MRB_o.png';
 		}
 	};
 
