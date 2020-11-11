@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { savePromo, detailsPromo } from '../../actions/promoActions';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
@@ -519,7 +519,7 @@ const EditPromoPage = (props) => {
 										</button>
 									</li>
 									<li>
-                  <button className="button secondary" onClick={() => history.goBack()}>
+										<button className="button secondary" onClick={() => history.goBack()}>
 											Back to Promos
 										</button>
 									</li>

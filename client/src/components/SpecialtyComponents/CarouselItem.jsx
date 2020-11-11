@@ -1,15 +1,12 @@
 // React
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const CarouselItem = (props) => {
 	const [ product, set_product ] = useState(props.product);
 	const [ loading, set_loading ] = useState(true);
-
-	const dispatch = useDispatch();
 
 	useEffect(
 		() => {

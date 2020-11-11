@@ -52,34 +52,6 @@ const FeaturesPage = (props) => {
 		dispatch(deleteFeature(feature._id));
 	};
 
-	const colors = [
-		{ name: 'Supplies', color: '#6d3e3e' },
-		{ name: 'Website', color: '#6d3e5c' },
-		{ name: 'Shipping', color: '#3e4c6d' },
-		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
-	];
-
-	const determine_color = (feature) => {
-		let result = '';
-		if (feature.category === 'Supplies') {
-			result = colors[0].color;
-		}
-		if (feature.category === 'Website') {
-			result = colors[1].color;
-		}
-		if (feature.category === 'Shipping') {
-			result = colors[2].color;
-		}
-		if (feature.category === 'Business') {
-			result = colors[3].color;
-		}
-		if (feature.category === 'Equipment') {
-			result = colors[4].color;
-		}
-		console.log(result);
-		return result;
-	};
 	const sort_options = [
 		'Release Date',
 		'Glover Name',
@@ -96,23 +68,6 @@ const FeaturesPage = (props) => {
 				<title>Admin Features | Glow LEDs</title>
 			</Helmet>
 			<div className="wrap jc-b">
-				<div className="wrap jc-b">
-					{colors.map((color) => {
-						return (
-							<div className="wrap jc-b w-16rem m-1rem">
-								<label style={{ marginRight: '1rem' }}>{color.name}</label>
-								<div
-									style={{
-										backgroundColor: color.color,
-										height: '20px',
-										width: '60px',
-										borderRadius: '5px'
-									}}
-								/>
-							</div>
-						);
-					})}
-				</div>
 				<Link to="/secure/glow/editfeature">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Feature

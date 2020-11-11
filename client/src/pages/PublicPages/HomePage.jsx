@@ -7,10 +7,10 @@ import { detailsContent, listContents } from '../../actions/contentActions';
 
 const HomePage = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content, loading, error } = contentDetails;
+	const { content } = contentDetails;
 
 	const contentList = useSelector((state) => state.contentList);
-	const { loading: loading_contents, contents, error: error_contents } = contentList;
+	const { contents } = contentList;
 
 	const dispatch = useDispatch();
 

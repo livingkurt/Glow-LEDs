@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
-import { div } from '../../components/ContainerComponents';
 import { validate_registration } from '../../utils/validations';
 import { Helmet } from 'react-helmet';
 
@@ -20,7 +19,7 @@ const RegisterPage = (props) => {
 	const [ re_password_validations, setRePasswordValidations ] = useState('');
 
 	const userRegister = useSelector((state) => state.userRegister);
-	const { loading, userInfo, error } = userRegister;
+	const { userInfo, error } = userRegister;
 	const dispatch = useDispatch();
 
 	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
@@ -39,8 +38,6 @@ const RegisterPage = (props) => {
 		console.log(request.errors.email);
 		if (request.isValid) {
 			dispatch(register(first_name, last_name, email, password));
-
-			// props.history.push('/account/checkemail');
 		}
 	};
 

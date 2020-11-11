@@ -1,13 +1,10 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Product = (props) => {
-	const dispatch = useDispatch();
-
 	const sale_price_switch = () => {
 		if (props.product.sale_price !== 0) {
 			return (

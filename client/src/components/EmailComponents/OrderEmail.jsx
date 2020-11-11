@@ -18,8 +18,6 @@ const OrderEmail = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
-
 	const dispatch = useDispatch();
 	const stableDispatch = useCallback(dispatch, []);
 
@@ -47,13 +45,13 @@ const OrderEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-amex-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-amex-brands.png';
 			case 'Visa':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-visa-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-visa-brands.png';
 			case 'Mastercard':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-mastercard-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-mastercard-brands.png';
 			case 'Discover':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-discover-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-discover-brands.png';
 		}
 	};
 
@@ -80,49 +78,6 @@ const OrderEmail = (props) => {
 			);
 		} else {
 			return <label>${item.price ? item.price.toFixed(2) : item.price}</label>;
-		}
-	};
-	const sale_price_add = (order_items) => {
-		return order_items
-			.reduce((a, c) => {
-				if (c.sale_price > 0) {
-					return a + c.sale_price * c.qty;
-				} else {
-					return a + c.price * c.qty;
-				}
-			}, 0)
-			.toFixed(2);
-	};
-	const promo_code_switch = (order) => {
-		if (order.promo_code) {
-			return (
-				<div style={{ display: 'flex', marginRight: '-12px' }}>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>${sale_price_add(order.orderItems)}</label>
-					</del>
-					<label
-						style={{
-							color: 'white',
-							display: 'flex',
-							margin: '0 5px',
-							width: '25px'
-						}}
-					>
-						{' '}
-						{'-->'}{' '}
-					</label>
-					<label
-						style={{
-							color: 'white',
-							display: 'flex'
-						}}
-					>
-						${order.itemsPrice && order.itemsPrice.toFixed(2)}
-					</label>
-				</div>
-			);
-		} else {
-			return <div>${order.itemsPrice && order.itemsPrice.toFixed(2)}</div>;
 		}
 	};
 

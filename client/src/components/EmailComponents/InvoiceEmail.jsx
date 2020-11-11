@@ -45,13 +45,13 @@ const InvoiceEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-amex-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-amex-brands.svg';
 			case 'Visa':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-visa-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-visa-brands.svg';
 			case 'Mastercard':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-mastercard-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-mastercard-brands.svg';
 			case 'Discover':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/Icons/cc-discover-brands.png';
+				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/card_types_black/cc-discover-brands.svg';
 		}
 	};
 
@@ -81,54 +81,6 @@ const InvoiceEmail = (props) => {
 			);
 		} else {
 			return <label>${item.price ? item.price && item.price.toFixed(2) : item.price}</label>;
-		}
-	};
-	const sale_price_add = (order_items) => {
-		return order_items
-			.reduce((a, c) => {
-				if (c.sale_price > 0) {
-					return a + c.sale_price * c.qty;
-				} else {
-					return a + c.price * c.qty;
-				}
-			}, 0)
-			.toFixed(2);
-	};
-	const promo_code_switch = (order) => {
-		if (order.promo_code) {
-			return (
-				<div style={{ display: 'flex', color: 'black', marginLeft: '2px' }}>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'black' }}> ${sale_price_add(order.orderItems)}</label>
-					</del>
-					<label
-						style={{
-							color: 'black',
-							display: 'flex',
-							margin: '0 5px'
-						}}
-					>
-						{' '}
-						<label
-							style={{
-								width: '12px'
-							}}
-						>
-							{'-->'}
-						</label>{' '}
-					</label>
-					<label
-						style={{
-							color: 'black',
-							display: 'flex'
-						}}
-					>
-						${order.itemsPrice && order.itemsPrice && order.itemsPrice.toFixed(2)}
-					</label>
-				</div>
-			);
-		} else {
-			return <div>${order.itemsPrice && order.itemsPrice && order.itemsPrice.toFixed(2)}</div>;
 		}
 	};
 
@@ -253,7 +205,16 @@ const InvoiceEmail = (props) => {
 								}}
 								valign="top"
 							>
-								{order.payment.charge ? order.payment.charge.source.brand : ''}
+								<img
+									src={
+										order.payment.charge ? (
+											determin_card_logo(order.payment.charge.source.brand)
+										) : (
+											''
+										)
+									}
+									style={{ fontSize: '8px', width: '100px', marginLeft: '-5px' }}
+								/>
 							</td>
 
 							<td

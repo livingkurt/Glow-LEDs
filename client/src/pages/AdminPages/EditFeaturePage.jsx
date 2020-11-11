@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveFeature, detailsFeature } from '../../actions/featureActions';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
@@ -24,19 +24,7 @@ const EditFeaturePage = (props) => {
 	const featureDetails = useSelector((state) => state.featureDetails);
 	const { feature, loading, error } = featureDetails;
 
-	const featureSave = useSelector((state) => state.featureSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = featureSave;
-
-	const featureDelete = useSelector((state) => state.featureDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = featureDelete;
-
-	// const featureReviewDelete = useSelector((state) => state.featureReviewDelete);
-	// const { success: featureDeleteSuccess } = featureReviewDelete;
-	const featureList = useSelector((state) => state.featureList);
-	const { features } = featureList;
-
 	const dispatch = useDispatch();
-	const feature_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ feature });
 
@@ -48,8 +36,6 @@ const EditFeaturePage = (props) => {
 		} else {
 			dispatch(detailsFeature(''));
 		}
-
-		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);
@@ -82,9 +68,6 @@ const EditFeaturePage = (props) => {
 		if (feature.release_date) {
 			set_release_date(format_date(feature.release_date));
 		}
-
-		// ffeature.release_date);
-		// console.log(format_date(feature.release_date));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -101,14 +84,6 @@ const EditFeaturePage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log(release_date);
-		console.log(format_date(release_date));
-		console.log(unformat_date(format_date(release_date)));
-		// console.log(unformat_date(release_date));
-		// console.log(format_date(unformat_date(release_date)));
-		// console.log(format_date(unformat_date(release_date)));
-
-		console.log({ id });
 		dispatch(
 			saveFeature({
 				_id: id,
@@ -134,9 +109,6 @@ const EditFeaturePage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					{/* {loading_data ? (
-						<div>Loading...</div>
-					) : ( */}
 					<Loading loading={loading} error={error}>
 						{feature && (
 							<div>
@@ -257,7 +229,7 @@ const EditFeaturePage = (props) => {
 										</button>
 									</li>
 									<li>
-                  <button className="button secondary" onClick={() => history.goBack()}>
+										<button className="button secondary" onClick={() => history.goBack()}>
 											Back to Features
 										</button>
 									</li>

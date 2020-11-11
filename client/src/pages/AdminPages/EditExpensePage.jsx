@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveExpense, detailsExpense } from '../../actions/expenseActions';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
@@ -34,8 +34,6 @@ const EditExpensePage = (props) => {
 		} else {
 			dispatch(detailsExpense(''));
 		}
-
-		// set_loading_data(false);
 		set_state();
 		return () => {};
 	}, []);

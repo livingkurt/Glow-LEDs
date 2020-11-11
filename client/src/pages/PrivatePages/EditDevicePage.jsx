@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveDevice, detailsDevice } from '../../actions/deviceActions';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
 const EditDevicePage = (props) => {
 	const user_data = props.userInfo;
-	// const [modalVisible, setModalVisible] = useState(false);
 
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState(user_data._id);
@@ -17,26 +16,16 @@ const EditDevicePage = (props) => {
 	const [ pathname, set_pathname ] = useState('');
 	const [ pattern_order, set_pattern_order ] = useState('');
 	const [ palette_order, set_palette_order ] = useState('');
-	const [ loading_data, set_loading_data ] = useState(true);
 
 	const history = useHistory();
 
 	const deviceDetails = useSelector((state) => state.deviceDetails);
 	const { device, loading, error } = deviceDetails;
 
-	const deviceSave = useSelector((state) => state.deviceSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = deviceSave;
-
-	const deviceDelete = useSelector((state) => state.deviceDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = deviceDelete;
-
-	// const deviceReviewDelete = useSelector((state) => state.deviceReviewDelete);
-	// const { success: deviceDeleteSuccess } = deviceReviewDelete;
 	const deviceList = useSelector((state) => state.deviceList);
 	const { devices } = deviceList;
 
 	const dispatch = useDispatch();
-	const device_id = props.match.params.id ? props.match.params.id : '';
 
 	console.log({ device });
 
@@ -78,9 +67,6 @@ const EditDevicePage = (props) => {
 		set_pathname(device.location);
 		set_pattern_order(device.pattern_order);
 		set_palette_order(device.palette_order);
-
-		// fdevice.release_date);
-		// console.log(format_date(device.release_date));
 	};
 	const unset_state = () => {
 		set_id('');
@@ -95,11 +81,6 @@ const EditDevicePage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		// console.log(unformat_date(release_date));
-		// console.log(format_date(unformat_date(release_date)));
-		// console.log(format_date(unformat_date(release_date)));
-
-		console.log({ id });
 		dispatch(
 			saveDevice({
 				_id: id,
@@ -113,19 +94,8 @@ const EditDevicePage = (props) => {
 			})
 		);
 		e.target.reset();
-		set_id('');
-		set_user('');
-		set_device_name('');
-		set_query_url('');
-		set_location('');
-		set_pathname('');
-		set_pattern_order('');
-		set_palette_order('');
-		// if (id) {
-		// 	history.push('/collections/all/devices/' + id);
-		// } else {
+		unset_state();
 		history.push('/secure/account/devices');
-		// }
 	};
 
 	return (
@@ -134,9 +104,6 @@ const EditDevicePage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					{/* {loading_data ? (
-						<div>Loading...</div>
-					) : ( */}
 					<Loading loading={loading} error={error}>
 						{device && (
 							<div>
