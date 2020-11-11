@@ -48,7 +48,7 @@ const InvoiceEmail = (props) => {
 				return 'https://thumbs2.imgbox.com/c9/a5/0AsOySyq_b.png';
 			case 'Visa':
 				return 'https://images2.imgbox.com/73/a0/efpzYR25_o.png';
-			case 'Mastercard':
+			case 'MasterCard':
 				return 'https://images2.imgbox.com/63/92/Z3KHgTl4_o.png';
 			case 'Discover':
 				return 'https://images2.imgbox.com/96/cd/hXyv0MRB_o.png';
