@@ -72,7 +72,6 @@ const OrderListItem = (props) => {
 					</div>
 					<div className="fs-16px">
 						<h3>Total</h3>
-						{/* <div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div> */}
 						{!props.order.isRefunded && (
 							<div>
 								<div>
@@ -176,10 +175,10 @@ const OrderListItem = (props) => {
 							return (
 								<div>
 									<div>
-										{item.qty > 1 && item.qty + 'x - '}{' '}
 										{item.diffuser_cap_color && ` ${item.diffuser_cap_color} `} {item.name}
 									</div>
-									{item.secondary_product && '> 1x - ' + item.secondary_product.name + ''}
+									{item.secondary_product && '> ' + item.secondary_product.name + ''}{' '}
+									{item.qty > 1 && item.qty + 'x'}
 								</div>
 							);
 						})}
