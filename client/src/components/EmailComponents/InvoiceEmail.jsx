@@ -61,9 +61,7 @@ const InvoiceEmail = (props) => {
 				<label>
 					<label style={{ marginRight: '3px' }}>On Sale!</label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'black' }}>
-							${item.price ? item.price && item.price.toFixed(2) : item.price}
-						</label>
+						<label style={{ color: 'black' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 					</del>{' '}
 					{'-->'} ${item.sale_price ? item.sale_price && item.sale_price.toFixed(2) : item.sale_price}
 				</label>
@@ -73,14 +71,14 @@ const InvoiceEmail = (props) => {
 				<label>
 					<del style={{ color: 'red' }}>
 						<label style={{ color: 'black', marginLeft: '7px' }}>
-							${item.price ? item.price && item.price.toFixed(2) : item.price}
+							${item.price && (item.price * item.qty).toFixed(2)}
 						</label>
 					</del>{' '}
 					{'-->'} <label style={{ color: 'black', marginLeft: '7px' }}>Sold Out</label>
 				</label>
 			);
 		} else {
-			return <label>${item.price ? item.price && item.price.toFixed(2) : item.price}</label>;
+			return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
 		}
 	};
 
@@ -273,7 +271,7 @@ const InvoiceEmail = (props) => {
 										{item.category === 'diffuser_caps' ||
 										item.category === 'mini_diffuser_caps' ||
 										item.category === 'frosted_diffusers' ? (
-											`${item.diffuser_cap_color} - `
+											`${item.diffuser_cap_color} `
 										) : (
 											''
 										)}
@@ -292,7 +290,6 @@ const InvoiceEmail = (props) => {
 										valign="top"
 										align="right"
 									>
-										{/* ${item.price && item.price.toFixed(2)} */}
 										{sale_price_switch(item)}
 									</td>
 								</tr>

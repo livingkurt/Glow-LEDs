@@ -60,7 +60,7 @@ const OrderEmail = (props) => {
 			return (
 				<label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>${item.price ? item.price.toFixed(2) : item.price}</label>
+						<label style={{ color: 'white' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 					</del>{' '}
 					{'-->'} ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price} On Sale!
 				</label>
@@ -70,14 +70,14 @@ const OrderEmail = (props) => {
 				<label>
 					<del style={{ color: 'red' }}>
 						<label style={{ color: 'white', marginLeft: '7px' }}>
-							${item.price ? item.price.toFixed(2) : item.price}
+							${item.price && (item.price * item.qty).toFixed(2)}
 						</label>
 					</del>{' '}
 					{'-->'} <label style={{ color: 'white', marginLeft: '7px' }}>Sold Out</label>
 				</label>
 			);
 		} else {
-			return <label>${item.price ? item.price.toFixed(2) : item.price}</label>;
+			return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
 		}
 	};
 
