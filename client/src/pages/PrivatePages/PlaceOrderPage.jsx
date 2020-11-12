@@ -108,7 +108,7 @@ const PlaceOrderPage = (props) => {
 		() => {
 			stableDispatch(listPromos());
 			stableDispatch(listUsers(''));
-			get_tax_rates();
+
 			return () => {};
 		},
 		[ stableDispatch ]
@@ -155,6 +155,7 @@ const PlaceOrderPage = (props) => {
 					stable_calculate_shipping();
 					stable_calculate_shipping();
 				}
+				get_tax_rates();
 			}
 			return () => {};
 		},

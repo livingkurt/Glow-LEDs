@@ -198,16 +198,19 @@ const InvoiceEmail = (props) => {
 								style={{
 									fontSize: '8px',
 									padding: '5px',
+									display: 'flex',
 									verticalAlign: 'top',
-									borderBottom: '1px solid black'
+									borderBottom: '1px solid black',
+									alignItems: 'center'
 								}}
 								valign="top"
 							>
 								<img
 									src={order.payment.charge && determin_card_logo(order.payment.charge.source.brand)}
 									alt={order.payment.charge && order.payment.charge.source.brand}
-									style={{ fontSize: '8px', width: '15px' }}
-								/>
+									style={{ fontSize: '8px', width: '15px', marginRight: '0.5rem' }}
+								/>{' '}
+								<div>{order.payment.charge && order.payment.charge.source.brand}</div>
 							</td>
 
 							<td
