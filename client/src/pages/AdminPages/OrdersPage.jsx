@@ -169,7 +169,7 @@ const OrdersPage = (props) => {
 				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
-					<div className="ml-1rem">
+					<div className="ml-1rem product_big_screen">
 						<div className="custom-select w-100per">
 							<select className="qty_select_dropdown w-100per" onChange={(e) => change_view(e)}>
 								{[ 'List View', 'Block View' ].map((view, index) => (

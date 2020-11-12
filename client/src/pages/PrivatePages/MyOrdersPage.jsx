@@ -103,7 +103,7 @@ const UserOrderPage = (props) => {
 				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
-				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
+				<div className="search_and_sort product_big_screen row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<div className="mb-1rem">
 						<div className="custom-select w-100per">
 							<select className="qty_select_dropdown w-100per" onChange={(e) => change_view(e)}>

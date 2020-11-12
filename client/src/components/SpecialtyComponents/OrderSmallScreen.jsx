@@ -30,17 +30,28 @@ const OrderSmallScreen = (props) => {
 					{props.order.orderItems.map((item, index) => {
 						return (
 							<div className="row mt-15px">
-								<LazyLoadImage
-									className="order-image w-100px h-100px br-10px mr-15px"
-									alt={item.name}
-									effect="blur"
-									src={item.display_image && item.display_image} // use normal <img> attributes as props
-								/>
+								<div className="column ai-c pos-rel">
+									<LazyLoadImage
+										className="order-image w-100px h-100px br-10px mr-15px"
+										alt={item.name}
+										effect="blur"
+										src={item.display_image && item.display_image} // use normal <img> attributes as props
+									/>
+									{item.qty > 1 && (
+										<div
+											className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c bottom-0px right-5px"
+											style={{
+												backgroundColor: 'white',
+												color: 'black',
+												border: '1px solid #ccc'
+											}}
+										>
+											<div className="mt-3px ml-2px">{item.qty}</div>
+										</div>
+									)}
+								</div>
 								<div className="column jc-c w-100per">
-									<h2 className="">
-										{item.qty > 1 && item.qty + 'x - '}
-										{item.name}
-									</h2>
+									<h2 className="">{item.name}</h2>
 									<div className="ai-c w-100per jc-b">
 										<div className="mv-10px">${item.price}</div>
 										<Link to={'/collections/all/products/category/' + item.category}>

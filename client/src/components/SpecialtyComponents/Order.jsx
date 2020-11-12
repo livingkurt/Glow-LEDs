@@ -156,12 +156,26 @@ const Order = (props) => {
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div className="row mt-15px">
-									<LazyLoadImage
-										className="order-image w-200px h-200px br-10px mr-15px"
-										alt={item.name}
-										effect="blur"
-										src={item.display_image && item.display_image} // use normal <img> attributes as props
-									/>
+									<div className="column ai-c pos-rel">
+										<LazyLoadImage
+											className="order-image w-200px h-200px br-10px mr-15px"
+											alt={item.name}
+											effect="blur"
+											src={item.display_image && item.display_image} // use normal <img> attributes as props
+										/>
+										{item.qty > 1 && (
+											<div
+												className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c bottom-0px right-5px"
+												style={{
+													backgroundColor: 'white',
+													color: 'black',
+													border: '1px solid #ccc'
+												}}
+											>
+												<div className="mt-3px ml-2px">{item.qty}</div>
+											</div>
+										)}
+									</div>
 									<div className="column jc-c">
 										<h2 className="">
 											{item.name} {item.qty > 1 && item.qty + 'x'}
