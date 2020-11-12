@@ -38,8 +38,8 @@ const PlaceOrderPage = (props) => {
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
-	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
 	const [ tax_rate, set_tax_rate ] = useState(0);
+	const [ taxPrice, setTaxPrice ] = useState(0);
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
 	const [ user, set_user ] = useState(user_data);
@@ -165,6 +165,10 @@ const PlaceOrderPage = (props) => {
 		const tax_rate = parseFloat(data[shipping.state]) / 100;
 		console.log({ [shipping.state]: tax_rate });
 		set_tax_rate(tax_rate);
+		if (shipping.international) {
+			setTaxPrice(0);
+			return;
+		}
 		setTaxPrice(tax_rate * itemsPrice);
 	};
 
@@ -284,11 +288,11 @@ const PlaceOrderPage = (props) => {
 					}
 					setItemsPrice(items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100));
 					setTaxPrice(
-						0.0875 * (items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100))
+						tax_rate * (items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100))
 					);
 				} else if (promo.amount_off) {
 					setItemsPrice(items_price - promo.amount_off);
-					setTaxPrice(0.0875 * (items_price - promo.amount_off));
+					setTaxPrice(tax_rate * (items_price - promo.amount_off));
 				}
 				if (promo.free_shipping) {
 					setShippingPrice(0);
@@ -309,7 +313,7 @@ const PlaceOrderPage = (props) => {
 
 	const remove_promo = () => {
 		setItemsPrice(items_price);
-		setTaxPrice(0.0875 * items_price);
+		setTaxPrice(tax_rate * items_price);
 		setShippingPrice(shippingPrice);
 		set_free_shipping_message('');
 		set_show_message('');
