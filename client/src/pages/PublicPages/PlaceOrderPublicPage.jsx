@@ -11,6 +11,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
+import { API_External } from '../../utils';
 
 const PlaceOrderPublicPage = (props) => {
 	const discount_percent = 0.2;
@@ -44,6 +45,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
+	const [ tax_rate, set_tax_rate ] = useState(0);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ user, set_user ] = useState(user_data);
 	const [ create_account, set_create_account ] = useState();
@@ -114,10 +116,25 @@ const PlaceOrderPublicPage = (props) => {
 			}
 			// calculate_shipping();
 			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			get_tax_rates();
 			return () => {};
 		},
 		[ shipping ]
 	);
+
+	const get_tax_rates = async () => {
+		const { data } = await API_External.get_tax_rates();
+		console.log({ data });
+
+		const tax_rate = parseFloat(data[shipping.state]) / 100;
+		console.log({ [shipping.state]: tax_rate });
+		set_tax_rate(tax_rate);
+		if (shipping.international) {
+			setTaxPrice(0);
+			return;
+		}
+		setTaxPrice(tax_rate * itemsPrice);
+	};
 
 	useEffect(
 		() => {
