@@ -24,7 +24,7 @@ const OrderEmail = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listEmails('Order'));
-			stableDispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
+			stableDispatch(detailsOrder(props.match.params.id));
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
@@ -45,13 +45,13 @@ const OrderEmail = (props) => {
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'American Express':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-amex-brands.png';
+				return 'https://images2.imgbox.com/ea/c8/r82jUQW8_o.png';
 			case 'Visa':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-visa-brands.png';
+				return 'https://images2.imgbox.com/18/a3/wHEnyn5x_o.png';
 			case 'MasterCard':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-mastercard-brands.png';
+				return 'https://images2.imgbox.com/84/a2/oPcysx6p_o.png';
 			case 'Discover':
-				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-discover-brands.png';
+				return 'https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png';
 		}
 	};
 	const sale_price_switch = (item) => {
@@ -742,7 +742,7 @@ const OrderEmail = (props) => {
 										{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
 										{/* <Facebook fill="white" /> */}
 										<img
-											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/facebook-brands.png"
+											src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
 											style={{ height: '25px' }}
 											alt="facebook"
 										/>
@@ -761,7 +761,7 @@ const OrderEmail = (props) => {
 									>
 										{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
 										<img
-											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/instagram-brands.png"
+											src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
 											style={{ height: '25px' }}
 											alt="facebook"
 										/>
@@ -780,7 +780,7 @@ const OrderEmail = (props) => {
 									>
 										{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
 										<img
-											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/youtube-brands.png"
+											src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
 											style={{ height: '20px' }}
 											alt="facebook"
 										/>
@@ -799,7 +799,7 @@ const OrderEmail = (props) => {
 									>
 										{/* <i className="fab fa-soundcloud" style={{ color: 'white' }} /> */}
 										<img
-											src="https://www.glow-leds.com/images/optimized_images/logo_images/Icons/soundcloud-brands.png"
+											src="https://images2.imgbox.com/ed/d9/eyAcj7D2_o.png"
 											style={{ height: '20px' }}
 											alt="facebook"
 										/>
