@@ -179,15 +179,19 @@ const OrderPage = (props) => {
 				/>
 			</Helmet>
 			{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
+			<div className="mb-10px ml-20px">
+				{props.userInfo &&
+				props.userInfo.isAdmin && (
+					<Link to="/secure/glow/orders">
+						<button className="button secondary">Back to Admin Orders</button>
+					</Link>
+				)}
 
-			{props.userInfo &&
-			props.userInfo.isAdmin && (
-				<div className="mb-10px ml-20px">
-					<button class="button secondary" onClick={() => props.history.goBack()}>
-						Back to Orders
-					</button>
-				</div>
-			)}
+				<Link to="/secure/account/orders">
+					<button className="button secondary">Back to Orders</button>
+				</Link>
+			</div>
+
 			<LoadingPayments loading={payment_loading} error={errorPay} />
 			<div className="placeorder">
 				<div className="placeorder-info">

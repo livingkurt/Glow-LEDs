@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../../components/UtilityComponents';
@@ -80,9 +80,9 @@ const UserOrderPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
 			</Helmet>
 			<div className="wrap jc-b">
-				<button className="button primary" onClick={() => history.goBack()}>
-					Back to Profile
-				</button>
+				<Link to="/secure/account/profile">
+					<button className="button secondary">Back to Profile</button>
+				</Link>
 				{colors.map((color) => {
 					return (
 						<div className="wrap jc-b w-16rem m-1rem">
