@@ -103,7 +103,7 @@ const ShippingPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					<ul className="form-container">
+					<ul className="form-container w-36rem max-w-36rem">
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>

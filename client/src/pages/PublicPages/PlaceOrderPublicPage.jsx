@@ -555,40 +555,38 @@ const PlaceOrderPublicPage = (props) => {
 						<li>
 							<h1 style={{ marginTop: '0px' }}>Order Summary</h1>
 						</li>
-						<li>
-							<div>Items</div>
-							{!show_message && (
-								<li>
-									<div>Subtotal</div>
-									<div>${itemsPrice.toFixed(2)}</div>
-								</li>
-							)}
+						{!show_message && (
+							<li>
+								<div>Subtotal</div>
+								<div>${itemsPrice.toFixed(2)}</div>
+							</li>
+						)}
 
-							{show_message && (
-								<li>
+						{show_message && (
+							<li>
+								<del style={{ color: 'red' }}>
+									<div style={{ color: 'white' }}>Subtotal</div>
+								</del>
+								<div>
 									<del style={{ color: 'red' }}>
-										<div style={{ color: 'white' }}>Subtotal</div>
+										<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>
 									</del>
-									<div>
-										<del style={{ color: 'red' }}>
-											<label style={{ color: 'white' }}>${items_price.toFixed(2)}</label>
-										</del>
-									</div>
-								</li>
-							)}
-							{show_message && (
-								<li>
-									<div>Discount</div>
-									<div>-${(items_price - itemsPrice).toFixed(2)}</div>
-								</li>
-							)}
-							{show_message && (
-								<li>
-									<div>New Subtotal</div>
-									<div>${itemsPrice.toFixed(2)}</div>
-								</li>
-							)}
-						</li>
+								</div>
+							</li>
+						)}
+						{show_message && (
+							<li>
+								<div>Discount</div>
+								<div>-${(items_price - itemsPrice).toFixed(2)}</div>
+							</li>
+						)}
+						{show_message && (
+							<li>
+								<div>New Subtotal</div>
+								<div>${itemsPrice.toFixed(2)}</div>
+							</li>
+						)}
+
 						<li>
 							<div>Tax</div>
 							<div>${taxPrice.toFixed(2)}</div>
