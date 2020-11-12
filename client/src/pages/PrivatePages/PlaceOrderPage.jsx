@@ -39,6 +39,7 @@ const PlaceOrderPage = (props) => {
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
 	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
+	const [ tax_rate, set_tax_rate ] = useState(0);
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
 	const [ user, set_user ] = useState(user_data);
@@ -114,11 +115,6 @@ const PlaceOrderPage = (props) => {
 		[ stableDispatch ]
 	);
 
-	const get_tax_rates = async () => {
-		const request = await API_External.get_tax_rates();
-		console.log(request);
-	};
-
 	useEffect(
 		() => {
 			const shipping_cookie = Cookie.getJSON('shipping');
@@ -161,6 +157,16 @@ const PlaceOrderPage = (props) => {
 		},
 		[ shipping, stable_calculate_international, stable_calculate_shipping ]
 	);
+
+	const get_tax_rates = async () => {
+		const { data } = await API_External.get_tax_rates();
+		console.log({ data });
+
+		const tax_rate = parseFloat(data[shipping.state]) / 100;
+		console.log({ [shipping.state]: tax_rate });
+		set_tax_rate(tax_rate);
+		setTaxPrice(tax_rate * itemsPrice);
+	};
 
 	useEffect(
 		() => {
@@ -532,7 +538,9 @@ const PlaceOrderPage = (props) => {
 
 						<li>
 							<div>Tax</div>
-							<div>${taxPrice.toFixed(2)}</div>
+							<div>
+								${shipping && shipping.hasOwnProperty('first_name') ? taxPrice.toFixed(2) : '------'}
+							</div>
 						</li>
 						<li>
 							<div>Shipping</div>
