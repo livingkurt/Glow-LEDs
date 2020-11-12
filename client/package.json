@@ -42,6 +42,7 @@
 		"react-stripe-checkout": "^2.6.3",
 		"redux": "^4.0.5",
 		"redux-thunk": "^2.3.0",
+		"sales-tax": "^2.2.4",
 		"typescript": "^3.9.7",
 		"validator": "^13.1.1"
 	},

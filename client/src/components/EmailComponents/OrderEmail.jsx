@@ -54,26 +54,26 @@ const OrderEmail = (props) => {
 				return 'https://www.glow-leds.com/images/optimized_images/logo_images/icons/cc-discover-brands.png';
 		}
 	};
-
 	const sale_price_switch = (item) => {
 		if (item.sale_price !== 0) {
 			return (
 				<label>
+					<label style={{ marginRight: '3px' }}>On Sale!</label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
+						<label style={{ color: 'black' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 					</del>{' '}
-					{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)} On Sale!
+					{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
 				</label>
 			);
 		} else if (item.countInStock === 0) {
 			return (
 				<label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white', marginLeft: '7px' }}>
+						<label style={{ color: 'black', marginLeft: '7px' }}>
 							${item.price && (item.price * item.qty).toFixed(2)}
 						</label>
 					</del>{' '}
-					{'-->'} <label style={{ color: 'white', marginLeft: '7px' }}>Sold Out</label>
+					{'-->'} <label style={{ color: 'black', marginLeft: '7px' }}>Sold Out</label>
 				</label>
 			);
 		} else {
@@ -374,12 +374,18 @@ const OrderEmail = (props) => {
 												}}
 												valign="top"
 											>
-												{/* {promo_code_switch(order)} */}
-												{!order.promo_code && (order.itemsPrice && order.itemsPrice.toFixed(2))}
+												{!order.promo_code &&
+													(order.orderItems &&
+														order.orderItems
+															.reduce((a, c) => a + c.price * c.qty, 0)
+															.toFixed(2))}
 												{order.promo_code && (
 													<del style={{ color: 'red' }}>
 														<label style={{ color: 'white' }}>
-															${order.itemsPrice && order.itemsPrice.toFixed(2)}
+															${order.orderItems &&
+																order.orderItems
+																	.reduce((a, c) => a + c.price * c.qty, 0)
+																	.toFixed(2)}
 														</label>
 													</del>
 												)}

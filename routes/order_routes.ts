@@ -3,20 +3,18 @@
 // import { isAuth, isAdmin } from '../util';
 export {};
 const express = require('express');
-import e from 'express';
-import { Log, User } from '../models';
+import { User } from '../models';
 import Order from '../models/order';
 import { log_error, log_request } from '../util';
+import axios from 'axios';
 const { isAuth, isAdmin } = require('../util');
+const salesTax = require('state-sales-tax');
+const scraper = require('table-scraper');
+
 require('dotenv').config();
 const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 const router = express.Router();
-
-// router.get('/', isAuth, async (req: any, res: { send: (arg0: any) => void }) => {
-// 	const orders = await Order.find({ deleted: false }).populate('user').sort({ createdAt: -1 });
-// 	res.send(orders);
-// });
 
 router.get('/occurrences', async (req: any, res: any) => {
 	const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
@@ -43,6 +41,20 @@ router.get('/occurrences', async (req: any, res: any) => {
 	}
 	final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
 	res.send(final_result);
+});
+router.get('/tax_rates', async (req: any, res: any) => {
+	let updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
+	let result: any = {};
+
+	const tableData = await scraper.get(updatedSalesTaxes);
+
+	let tempData = tableData[0];
+	tempData.map((state: any) => {
+		let percentage = state['State Rate'];
+		result[state['State']] = percentage.slice(0, percentage.indexOf('%') + 1);
+	});
+	console.log({ result });
+	res.send(result);
 });
 
 router.get('/', isAuth, async (req: any, res: any) => {

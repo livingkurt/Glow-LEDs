@@ -12,6 +12,7 @@ import { LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
+import { API_External } from '../../utils';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -107,10 +108,16 @@ const PlaceOrderPage = (props) => {
 		() => {
 			stableDispatch(listPromos());
 			stableDispatch(listUsers(''));
+			get_tax_rates();
 			return () => {};
 		},
 		[ stableDispatch ]
 	);
+
+	const get_tax_rates = async () => {
+		const request = await API_External.get_tax_rates();
+		console.log(request);
+	};
 
 	useEffect(
 		() => {
@@ -417,7 +424,8 @@ const PlaceOrderPage = (props) => {
 														item.category === 'mini_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
 														item.diffuser_cap_color}{' '}
-													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
+													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}{' '}
+													{item.qty > 1 && item.qty + 'x'}
 												</Link>
 											</div>
 											{/* <div>Qty: {item.qty}</div> */}

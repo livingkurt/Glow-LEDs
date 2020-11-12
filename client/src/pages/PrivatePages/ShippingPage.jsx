@@ -4,6 +4,7 @@ import { saveShipping, savePayment } from '../../actions/cartActions';
 import { update } from '../../actions/userActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
+import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const ShippingPage = (props) => {
@@ -161,7 +162,7 @@ const ShippingPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					<ul className="form-container">
+					<ul className="form-container w-36rem max-w-36rem">
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
@@ -228,16 +229,38 @@ const ShippingPage = (props) => {
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{city_validations}
 						</label>
-						<li>
-							<label htmlFor="state">State</label>
-							<input
-								type="text"
-								value={state}
-								name="state"
-								id="state"
-								onChange={(e) => setState(e.target.value)}
-							/>
-						</li>
+						{!international && (
+							<li>
+								<div className="ai-c h-25px mb-15px jc-c">
+									<div className="custom-select">
+										<select
+											className="qty_select_dropdown"
+											onChange={(e) => setState(e.target.value)}
+											value={state}
+										>
+											{state_names.map((state, index) => (
+												<option key={index} value={state}>
+													{state}
+												</option>
+											))}
+										</select>
+										<span className="custom-arrow" />
+									</div>
+								</div>
+							</li>
+						)}
+						{international && (
+							<li>
+								<label htmlFor="state">State</label>
+								<input
+									type="text"
+									value={state}
+									name="state"
+									id="state"
+									onChange={(e) => setState(e.target.value)}
+								/>
+							</li>
+						)}
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{state_validations}
 						</label>
@@ -273,6 +296,7 @@ const ShippingPage = (props) => {
 										}}
 									/>
 								</li>
+
 								{international && (
 									<li>
 										<label htmlFor="country">Country</label>
