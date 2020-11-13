@@ -497,7 +497,7 @@ const ProductPage = (props) => {
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
 							{product.category === 'glowskins' && (
-								<a href="/pages/faq#glowskins_chip_brand_compatibility">
+								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
 									<div className="jc-c">
 										<button className="button primary" style={{ margin: 'auto' }}>
 											Glowskins Microlight Compatibility
