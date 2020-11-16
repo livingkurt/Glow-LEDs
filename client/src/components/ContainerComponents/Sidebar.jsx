@@ -435,6 +435,11 @@ const Sidebar = (props) => {
 					</button>
 
 					<ul className="sidebar_dropdown_container">
+						<Link to="/pages/track_your_order">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Track Your Order
+							</button>
+						</Link>
 						<Link to="/pages/about">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								About

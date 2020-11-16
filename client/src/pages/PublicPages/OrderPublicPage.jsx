@@ -200,6 +200,11 @@ const OrderPublicPage = (props) => {
 
 	let width = useCurrentWidth();
 
+	useEffect(() => {
+		handleWindowResize(getWidth());
+		return () => {};
+	}, []);
+
 	return loading ? (
 		<div className="column jc-c">
 			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
@@ -237,15 +242,16 @@ const OrderPublicPage = (props) => {
 			</div>
 			<div className="jc-c mb-1rem">
 				<div className="ai-c m-auto">
-					<h3 className="mv-0px mr-10px">Track another Order</h3>
+					<h3 className="mv-0px mr-10px">Track Order</h3>
 					<input
 						type="order_number"
 						id="order_number"
 						name="order_number"
+						defaultValue={props.match.params.id}
 						onChange={(e) => set_order_number(e.target.value)}
 					/>
 					<Link to={'/checkout/order/' + order_number}>
-						<button className="button primary ">View Order</button>
+						<button className="button primary ">Track</button>
 					</Link>
 				</div>
 			</div>
