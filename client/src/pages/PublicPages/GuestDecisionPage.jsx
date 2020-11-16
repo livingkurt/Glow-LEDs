@@ -32,6 +32,7 @@ const GuestCheckoutPage = (props) => {
 				<ul className="form-container">
 					<li>
 						<h2>Continue as User</h2>
+						<p>Track Orders with Ease!</p>
 						<Link to="/account/login?redirect=/secure/checkout/placeorder">
 							<button className="button primary full-width">Login</button>
 						</Link>
