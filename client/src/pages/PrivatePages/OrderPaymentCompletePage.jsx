@@ -36,8 +36,8 @@ const OrderPaymentCompletePage = (props) => {
 				</div>
 				<p style={{ textAlign: 'center' }}>
 					{' '}
-					Make sure to check your spam for the confirmation email. If you do not recieve a confirmation email
-					please contact support
+					Make sure to check your spam folder for the confirmation email. If you do not recieve a confirmation
+					email please contact support
 				</p>
 			</div>
 		</div>

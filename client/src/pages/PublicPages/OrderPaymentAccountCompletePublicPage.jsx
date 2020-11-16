@@ -13,32 +13,43 @@ const OrderPaymentAccountCompletePublicPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/paymentcomplete/" />
 			</Helmet>
 			<div>
-				<h1 style={{ textAlign: 'center' }}>Payment Successful</h1>
-				<p style={{ textAlign: 'center' }}>Thank you for your payment </p>
-				<p style={{ textAlign: 'center' }}>We appreciate your support</p>
-				<p style={{ textAlign: 'center' }}> We will notify you when your order ships!</p>
-
-				<div className="wrap row jc-b w-100per">
-					<Link to="/collections/all/products">
-						<button style={{ margin: '15px' }} className="button primary">
-							Products
-						</button>
-					</Link>
-					<Link to="/pages/featured">
-						<button style={{ margin: '15px' }} className="button primary">
-							Featured Videos
-						</button>
-					</Link>
-					<Link to="/pages/music">
-						<button style={{ margin: '15px' }} className="button primary">
-							NTRE Music
-						</button>
-					</Link>
+				<h1 className="ta-c">Payment Successful</h1>
+				<p className="ta-c">Thank you for your payment </p>
+				<p className="ta-c">We appreciate your support</p>
+				<p className="ta-c"> We will notify you when your order ships!</p>
+				<div className="jc-c">
+					<div className="wrap row jc-c max-w-800px">
+						<Link to={'/checkout/order/' + props.match.params.id}>
+							<button style={{ margin: '15px' }} className="button primary">
+								View Order
+							</button>
+						</Link>
+						<Link to="/collections/all/products">
+							<button style={{ margin: '15px' }} className="button primary">
+								Products
+							</button>
+						</Link>
+						<Link to="/pages/featured">
+							<button style={{ margin: '15px' }} className="button primary">
+								Featured Videos
+							</button>
+						</Link>
+						<Link to="/pages/music">
+							<button style={{ margin: '15px' }} className="button primary">
+								NTRE Music
+							</button>
+						</Link>
+					</div>
 				</div>
-				<h1 style={{ textAlign: 'center' }}>Account Created Successfully</h1>
-				<p style={{ textAlign: 'center' }}>Thank you for signing up with glow-leds</p>
+				<p className="ta-c mv-2rem">
+					{' '}
+					Make sure to check your spam folder for the confirmation email. If you do not recieve a confirmation
+					email please contact support
+				</p>
+				<h1 className="ta-c">Account Created Successfully</h1>
+				<p className="ta-c">Thank you for signing up with glow-leds</p>
 			</div>
-			<div className="wrap row jc-b w-100per">
+			<div className="wrap row jc-c w-100per ">
 				<Link to="/account/login">
 					<button style={{ margin: '15px' }} className="button primary">
 						Login

@@ -19,6 +19,11 @@ const OrderPaymentCompletePublicPage = (props) => {
 				<p style={{ textAlign: 'center' }}> We will notify you when your order ships!</p>
 				<div className="jc-c w-800px m-auto">
 					<div className="wrap jc-b">
+						<Link to={'/checkout/order/' + props.match.params.id}>
+							<button style={{ margin: '15px' }} className="button primary">
+								View Order
+							</button>
+						</Link>
 						<Link to="/collections/all/products">
 							<button style={{ margin: '15px' }} className="button primary">
 								Products
@@ -43,8 +48,8 @@ const OrderPaymentCompletePublicPage = (props) => {
 				</div>
 				<p style={{ textAlign: 'center' }}>
 					{' '}
-					If you are trying to make a new order, Refresh the Page and go back to cart to start checkout
-					process
+					Make sure to check your spam folder for the confirmation email. If you do not recieve a confirmation
+					email please contact support
 				</p>
 			</div>
 			{/* )} */}

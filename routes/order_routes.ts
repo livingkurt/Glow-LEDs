@@ -42,6 +42,7 @@ router.get('/occurrences', async (req: any, res: any) => {
 	final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
 	res.send(final_result);
 });
+
 router.get('/tax_rates', async (req: any, res: any) => {
 	let updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
 	let result: any = {};

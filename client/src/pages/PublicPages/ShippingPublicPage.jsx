@@ -176,7 +176,7 @@ const ShippingPage = (props) => {
 										<select
 											className="qty_select_dropdown"
 											onChange={(e) => setState(e.target.value)}
-											value={state}
+											value={state && state}
 										>
 											{state_names.map((state, index) => (
 												<option key={index} value={state}>
