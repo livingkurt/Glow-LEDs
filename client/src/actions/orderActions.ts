@@ -27,7 +27,10 @@ import {
 	ORDER_SAVE_FAIL,
 	ORDER_REFUND_REQUEST,
 	ORDER_REFUND_SUCCESS,
-	ORDER_REFUND_FAIL
+	ORDER_REFUND_FAIL,
+	ORDER_DETAILS_PUBLIC_REQUEST,
+	ORDER_DETAILS_PUBLIC_SUCCESS,
+	ORDER_DETAILS_PUBLIC_FAIL
 } from '../constants/orderConstants';
 import Cookie from 'js-cookie';
 import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS } from '../constants/userConstants';
@@ -297,6 +300,19 @@ export const detailsOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: ORDER_DETAILS_FAIL, payload: error.response.data.message });
+	}
+};
+export const detailsOrderPublic = (orderId: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: ORDER_DETAILS_PUBLIC_REQUEST, payload: orderId });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/orders/track_order/' + orderId);
+		dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response.data.message });
 	}
 };
 

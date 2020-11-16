@@ -26,7 +26,10 @@ import {
 	ORDER_UPDATE_FAIL,
 	ORDER_SAVE_REQUEST,
 	ORDER_SAVE_SUCCESS,
-	ORDER_SAVE_FAIL
+	ORDER_SAVE_FAIL,
+	ORDER_DETAILS_PUBLIC_REQUEST,
+	ORDER_DETAILS_PUBLIC_SUCCESS,
+	ORDER_DETAILS_PUBLIC_FAIL
 } from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {
@@ -60,6 +63,27 @@ export const orderDetailsReducer = (
 		case ORDER_DETAILS_SUCCESS:
 			return { loading: false, order: action.payload };
 		case ORDER_DETAILS_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+export const orderDetailsPublicReducer = (
+	state = {
+		order: {
+			orderItems: [],
+			shipping: {},
+			payment: {}
+		}
+	},
+	action: { type: any; payload: any }
+) => {
+	switch (action.type) {
+		case ORDER_DETAILS_PUBLIC_REQUEST:
+			return { loading: true };
+		case ORDER_DETAILS_PUBLIC_SUCCESS:
+			return { loading: false, order: action.payload };
+		case ORDER_DETAILS_PUBLIC_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;

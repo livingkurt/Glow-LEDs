@@ -56,7 +56,8 @@ import {
 	myOrderListReducer,
 	orderListReducer,
 	orderDeleteReducer,
-	orderRefundReducer
+	orderRefundReducer,
+	orderDetailsPublicReducer
 } from './reducers/orderReducers';
 import { promoDeleteReducer, promoDetailsReducer, promoListReducer, promoSaveReducer } from './reducers/promoReducers';
 import {
@@ -95,6 +96,7 @@ const reducer = combineReducers({
 	productReviewSave: productReviewSaveReducer,
 	orderCreate: orderCreateReducer,
 	orderDetails: orderDetailsReducer,
+	orderDetailsPublic: orderDetailsPublicReducer,
 	orderPay: orderPayReducer,
 	userUpdate: userUpdateReducer,
 	myOrderList: myOrderListReducer,

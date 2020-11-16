@@ -14,8 +14,13 @@ const OrderPaymentAccountCompletePublicPage = (props) => {
 			</Helmet>
 			<div>
 				<h1 className="ta-c">Payment Successful</h1>
+				<div className="jc-c">
+					<h3 className="mr-1rem mv-0px">Order Number: </h3>
+					<h4 className="mv-0px">{props.match.params.id}</h4>
+				</div>
 				<p className="ta-c">Thank you for your payment </p>
 				<p className="ta-c">We appreciate your support</p>
+
 				<p className="ta-c"> We will notify you when your order ships!</p>
 				<div className="jc-c">
 					<div className="wrap row jc-c max-w-800px">

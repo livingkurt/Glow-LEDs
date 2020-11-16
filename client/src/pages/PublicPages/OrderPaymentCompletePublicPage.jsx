@@ -15,6 +15,7 @@ const OrderPaymentCompletePublicPage = (props) => {
 			<div>
 				<h1 style={{ textAlign: 'center' }}>Payment Successful</h1>
 				<p style={{ textAlign: 'center' }}>Thank you for your payment </p>
+				<p style={{ textAlign: 'center' }}>Order Number: {props.match.params.id}</p>
 				<p style={{ textAlign: 'center' }}>We appreciate your support</p>
 				<p style={{ textAlign: 'center' }}> We will notify you when your order ships!</p>
 				<div className="jc-c w-800px m-auto">

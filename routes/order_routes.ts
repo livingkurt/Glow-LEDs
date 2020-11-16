@@ -396,6 +396,47 @@ router.get('/:id', isAuth, async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Order' });
 	}
 });
+router.get('/track_order/:id', async (req: any, res: any) => {
+	try {
+		const order = await Order.findOne({ _id: req.params.id })
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.populate('user');
+		if (order) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(order);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send('Order Not Found.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Order' });
+	}
+});
 
 router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 	try {

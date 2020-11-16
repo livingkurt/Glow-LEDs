@@ -64,3 +64,4 @@ export { default as OrderPaymentCompletePublicPage } from './PublicPages/OrderPa
 export { default as OrderPaymentAccountCompletePublicPage } from './PublicPages/OrderPaymentAccountCompletePublicPage';
 export { default as MenuPage } from './PublicPages/MenuPage';
 export { default as TrackOrderPage } from './PublicPages/TrackOrderPage';
+export { default as OrderPublicPage } from './PublicPages/OrderPublicPage';
