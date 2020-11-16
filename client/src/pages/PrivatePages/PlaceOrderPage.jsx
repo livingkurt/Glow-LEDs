@@ -261,7 +261,8 @@ const PlaceOrderPage = (props) => {
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
-	const check_code = () => {
+	const check_code = (e) => {
+		e.preventDefault();
 		const data = { promo_code, promos, user_data, items_price };
 		const request = validate_promo_code(data);
 
@@ -543,7 +544,11 @@ const PlaceOrderPage = (props) => {
 						<li>
 							<div>Tax</div>
 							<div>
-								${shipping && shipping.hasOwnProperty('first_name') ? taxPrice.toFixed(2) : '------'}
+								{shipping && shipping.hasOwnProperty('first_name') ? (
+									`$${taxPrice.toFixed(2)}`
+								) : (
+									'------'
+								)}
 							</div>
 						</li>
 						<li>
@@ -615,7 +620,8 @@ const PlaceOrderPage = (props) => {
 						)}
 						<div className="mv-10px">
 							<label htmlFor="promo_code">Promo Code</label>
-							<div className="row">
+
+							<form onSubmit={(e) => check_code(e)} className="row">
 								<input
 									type="text"
 									value={promo_code}
@@ -627,13 +633,14 @@ const PlaceOrderPage = (props) => {
 								/>
 								<button
 									className="button primary"
-									onTouchStart={() => check_code()}
-									onClick={() => check_code()}
+									// onTouchStart={() => (e)()}
+									// onClick={() => check_code()}
 									style={{ curser: 'pointer' }}
+									react-tappable={true}
 								>
 									Apply
 								</button>
-							</div>
+							</form>
 						</div>
 						<label className="validation_text" style={{ textAlign: 'center' }}>
 							{promo_code_validations}
