@@ -36,8 +36,8 @@ const OrderPaymentCompletePage = (props) => {
 				</div>
 				<p style={{ textAlign: 'center' }}>
 					{' '}
-					If you are trying to make a new order, Refresh the Page and go back to cart to start checkout
-					process
+					Make sure to check your spam for the confirmation email. If you do not recieve a confirmation email
+					please contact support
 				</p>
 			</div>
 		</div>

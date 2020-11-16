@@ -883,7 +883,7 @@ const OrderEmail = (props) => {
 	return (
 		<div>
 			{userInfo ? (
-				<div className="w-500px jc-c m-auto">
+				<div className="jc-c m-auto wrap">
 					<Link to={'/secure/account/order/' + props.match.params.id}>
 						<button className="button primary mh-10px">View Order</button>
 					</Link>
@@ -910,7 +910,13 @@ const OrderEmail = (props) => {
 					</Link>
 				</div>
 			)}
-
+			<div className="jc-c">
+				<p className="max-w-600px mv-2rem">
+					{' '}
+					Make sure to check your spam folder for the confirmation email. If you do not recieve a confirmation
+					email please contact support.
+				</p>
+			</div>
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">

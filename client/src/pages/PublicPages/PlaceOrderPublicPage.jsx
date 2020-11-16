@@ -742,7 +742,12 @@ const PlaceOrderPublicPage = (props) => {
 									style={{ textTransform: 'uppercase' }}
 									onChange={(e) => set_promo_code(e.target.value)}
 								/>
-								<button className="button primary" onClick={() => check_code()}>
+								<button
+									className="button primary"
+									onTouchStart={() => check_code()}
+									onClick={() => check_code()}
+									style={{ curser: 'pointer' }}
+								>
 									Apply
 								</button>
 							</div>
