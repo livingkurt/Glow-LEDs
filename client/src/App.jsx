@@ -62,7 +62,8 @@ import {
 	OrderPaymentAccountCompletePublicPage,
 	ResetPasswordPage,
 	ProductsDisplayPage,
-	UserOrdersPage
+	UserOrdersPage,
+	TrackOrderPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -341,6 +342,8 @@ const App = () => {
 							<Route path="/pages/featured" exact={true} component={FeaturedPage} />
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/" exact={true} component={HomePage} />
+							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
+							<Route path="/checkout/order/:id" exact={true} component={OrderPage} />
 
 							<Route component={Four04Page} />
 						</Switch>
