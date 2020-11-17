@@ -20,7 +20,7 @@ export const validate_promo_code = (data: any) => {
 	if (Validator.isEmpty(data.promo_code)) {
 		errors.promo_code = 'Promo Code Field Empty';
 	}
-	if (promo.minimum_total && promo.minimum_total > data.items_price) {
+	if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
 		errors.promo_code = 'Minimum Order Total Not Met';
 	}
 	// errors.promo_code = 'Promo Code Not Active Start';
