@@ -44,6 +44,7 @@ const PlaceOrderPage = (props) => {
 	const [ show_message, set_show_message ] = useState('');
 	const [ user, set_user ] = useState(user_data);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
+	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 	const dispatch = useDispatch();
 
 	const [ order_note, set_order_note ] = useState('');
@@ -160,6 +161,7 @@ const PlaceOrderPage = (props) => {
 
 	const get_tax_rates = async () => {
 		setTaxPrice(0);
+		set_loading_tax_rate(true);
 		const { data } = await API_External.get_tax_rates();
 		const tax_rate = parseFloat(data[shipping.state]) / 100;
 
@@ -174,6 +176,7 @@ const PlaceOrderPage = (props) => {
 			}
 			setTaxPrice(tax_rate * itemsPrice);
 		}
+		set_loading_tax_rate(false);
 	};
 
 	useEffect(
@@ -548,8 +551,10 @@ const PlaceOrderPage = (props) => {
 						<li>
 							<div>Tax</div>
 							<div>
-								{shipping && shipping.hasOwnProperty('first_name') && taxPrice !== NaN ? (
+								{!loading_tax_rate ? shipping && shipping.hasOwnProperty('first_name') ? (
 									`$${taxPrice.toFixed(2)}`
+								) : (
+									'------'
 								) : (
 									'------'
 								)}
@@ -568,8 +573,10 @@ const PlaceOrderPage = (props) => {
 						<li>
 							<div>Order Total</div>
 							<div>
-								{shipping && shipping.hasOwnProperty('first_name') && totalPrice !== NaN ? (
+								{!loading_tax_rate ? shipping && shipping.hasOwnProperty('first_name') ? (
 									'$' + totalPrice.toFixed(2)
+								) : (
+									'------'
 								) : (
 									'------'
 								)}

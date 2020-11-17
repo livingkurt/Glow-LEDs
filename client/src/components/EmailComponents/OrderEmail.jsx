@@ -357,6 +357,7 @@ const OrderEmail = (props) => {
 												)}
 												{order.promo_code && <div>Discount</div>}
 												{order.promo_code && <div>New Subtotal</div>}
+												{!order.promo_code && <br />}
 												Tax
 												<br />
 												Shipping
@@ -389,11 +390,11 @@ const OrderEmail = (props) => {
 														</label>
 													</del>
 												)}
-												<br />
+												{!order.promo_code && <br />}
 												{order.promo_code && (
 													<div>
-														-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
-															order.itemsPrice).toFixed(2)}
+														-${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
+															order.itemsPrice}
 													</div>
 												)}
 												{order.promo_code && <div>${order.itemsPrice.toFixed(2)}</div>}
