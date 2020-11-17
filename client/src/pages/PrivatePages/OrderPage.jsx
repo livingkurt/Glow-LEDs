@@ -533,9 +533,6 @@ ${props.order.shipping.email}`)}
 							</div>
 						)}
 					</ul>
-					<button className="button secondary w-100per">
-						<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
-					</button>
 					<div className="column jc-b h-22rem w-25remm mb-1rem">
 						<h2>Order Status</h2>
 						<div>
@@ -609,90 +606,106 @@ ${props.order.shipping.email}`)}
 							</div>
 						</div>
 					</div>
-					<div className="jc-b">
-						<div className="column jc-b w-100per">
-							<button
-								className="button primary mv-5px "
-								onClick={() => update_order_payment_state(order, order.isPaid, 'isPaid', 'paidAt')}
-							>
-								{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-							</button>
-							<button
-								className="button primary mv-5px "
-								onClick={() =>
-									update_order_state(order, order.isManufactured, 'isManufactured', 'manufacturedAt')}
-							>
-								{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
-							</button>
-							<button
-								className="button primary mv-5px "
-								onClick={() => update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
-							>
-								{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-							</button>
-							<button
-								className="button primary mv-5px "
-								onClick={() => update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
-							>
-								{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-							</button>
-							<button
-								className="button primary mv-5px "
-								onClick={() =>
-									update_order_state(order, order.isDelivered, 'isDelivered', 'deliveredAt')}
-							>
-								{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-							</button>
-							<button className="button primary">
-								<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
-							</button>
-						</div>
-					</div>
-					<div className="mv-10px">
-						<label htmlFor="payment_method">Payment Method</label>
-						<li className="row mv-10px">
-							<input
-								type="text"
-								defaultValue={order.payment.paymentMethod}
-								name="payment_method"
-								className="w-100per"
-								onChange={(e) => set_payment_method(e.target.value)}
-							/>
-						</li>
-						<label htmlFor="refund_amount">Refund Amount</label>
-						<div className="row">
-							<input
-								type="text"
-								value={refund_amount}
-								name="refund_amount"
-								id="refund_amount"
-								className="w-100per"
-								onChange={(e) => set_refund_amount(e.target.value)}
-							/>
-						</div>
-						<div className="mv-10px">
-							<label htmlFor="refund_reason">Refund Reason</label>
-							<div className="row">
-								<input
-									type="text"
-									value={refund_reason}
-									name="refund_reason"
-									id="refund_reason"
-									className="w-100per"
-									onChange={(e) => set_refund_reason(e.target.value)}
-								/>
+					<button className="button secondary w-100per mv-5px ">
+						<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
+					</button>
+					{user_data &&
+					user_data.isAdmin && (
+						<div>
+							<div className="jc-b">
+								<div className="column jc-b w-100per">
+									<button
+										className="button primary mv-5px "
+										onClick={() =>
+											update_order_payment_state(order, order.isPaid, 'isPaid', 'paidAt')}
+									>
+										{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+									</button>
+									<button
+										className="button primary mv-5px "
+										onClick={() =>
+											update_order_state(
+												order,
+												order.isManufactured,
+												'isManufactured',
+												'manufacturedAt'
+											)}
+									>
+										{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+									</button>
+									<button
+										className="button primary mv-5px "
+										onClick={() =>
+											update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
+									>
+										{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+									</button>
+									<button
+										className="button primary mv-5px "
+										onClick={() =>
+											update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
+									>
+										{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+									</button>
+									<button
+										className="button primary mv-5px "
+										onClick={() =>
+											update_order_state(order, order.isDelivered, 'isDelivered', 'deliveredAt')}
+									>
+										{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+									</button>
+									<button className="button primary">
+										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
+									</button>
+								</div>
+							</div>
+							<div className="mv-10px">
+								<label htmlFor="payment_method">Payment Method</label>
+								<li className="row mv-10px">
+									<input
+										type="text"
+										defaultValue={order.payment.paymentMethod}
+										name="payment_method"
+										className="w-100per"
+										onChange={(e) => set_payment_method(e.target.value)}
+									/>
+								</li>
+								<label htmlFor="refund_amount">Refund Amount</label>
+								<div className="row">
+									<input
+										type="text"
+										value={refund_amount}
+										name="refund_amount"
+										id="refund_amount"
+										className="w-100per"
+										onChange={(e) => set_refund_amount(e.target.value)}
+									/>
+								</div>
+								<div className="mv-10px">
+									<label htmlFor="refund_reason">Refund Reason</label>
+									<div className="row">
+										<input
+											type="text"
+											value={refund_reason}
+											name="refund_reason"
+											id="refund_reason"
+											className="w-100per"
+											onChange={(e) => set_refund_reason(e.target.value)}
+										/>
+									</div>
+								</div>
+								<div className="column">
+									<button className="button primary mv-5px" onClick={update_refund_state}>
+										Refund Customer
+									</button>
+
+									<button className="button primary mv-5px">
+										<Link to={'/secure/glow/emails/order/' + order._id}>View Email</Link>
+									</button>
+								</div>
 							</div>
 						</div>
-						<div className="column">
-							<button className="button primary mv-5px" onClick={update_refund_state}>
-								Refund Customer
-							</button>
-
-							<button className="button primary mv-5px">
-								<Link to={'/secure/glow/emails/order/' + order._id}>View Email</Link>
-							</button>
-						</div>
-					</div>
+					)}
 				</div>
 			</div>
 		</div>
