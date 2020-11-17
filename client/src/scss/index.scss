@@ -1426,14 +1426,14 @@ video {
 	--multiplier: calc(21rem - 100%);
 }
 
-.cart_item {
-	margin: 10px;
-	min-width: 50%;
-	max-width: 100%;
-	border-radius: 20px;
-	flex-grow: 1;
-	flex-basis: calc(var(--multiplier) * 999);
-}
+// .cart_item {
+// 	margin: 10px;
+// 	min-width: 50%;
+// 	max-width: 100%;
+// 	border-radius: 20px;
+// 	flex-grow: 1;
+// 	flex-basis: calc(var(--multiplier) * 999);
+// }
 
 
 .csv-input {
