@@ -430,13 +430,13 @@ const PlaceOrderPage = (props) => {
 								<div>Cart is empty</div>
 							) : (
 								cartItems.map((item, index) => (
-									<li className=" row cart_items" key={index}>
+									<li className="row cart_items" key={index}>
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
 												<img src={item.display_image} alt="product" />
 											</Link>
 										</div>
-										<div className=" label cart-name">
+										<div className=" abel cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{(item.category === 'diffuser_caps' ||
@@ -480,7 +480,7 @@ const PlaceOrderPage = (props) => {
 												</div>
 											</div>
 										</div>
-										<div className=" cart_item">
+										<div className="">
 											<div className="cart-price ">
 												{item.sale_price !== 0 ? (
 													<div>

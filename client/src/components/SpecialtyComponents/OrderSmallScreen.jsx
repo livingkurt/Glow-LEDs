@@ -8,7 +8,7 @@ const OrderSmallScreen = (props) => {
 	return (
 		<div className="home_page_divs p-15px " style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row ai-c" style={{ borderBottom: '1px solid white' }}>
-				<div className="w-50per jc-b">
+				<div className="w-100per jc-b">
 					<div className="column fs-16px">
 						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
@@ -17,11 +17,25 @@ const OrderSmallScreen = (props) => {
 						<h3>Total</h3>
 						<div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div>
 					</div>
-				</div>
-				<div className="w-50per jc-fe">
-					<Link to={'/secure/account/order/' + props.order._id}>
-						<button className="button primary">Order Details</button>
-					</Link>
+					{props.admin && (
+						<div className="column fs-16px">
+							<h3>Ship To</h3>
+							{props.order.shipping.first_name} {props.order.shipping.last_name}
+						</div>
+					)}
+					{/* <div className="jc-fe">
+						<Link to={'/secure/account/order/' + props.order._id}>
+							<button className="button primary">Order Details</button>
+						</Link>
+					</div> */}
+
+					<div className="jc-fe">
+						<Link to={'/secure/account/order/' + props.order._id} className="m-auto">
+							<button className="button icon fs-25px">
+								<i className="fas fa-info-circle" />
+							</button>
+						</Link>
+					</div>
 				</div>
 			</div>
 

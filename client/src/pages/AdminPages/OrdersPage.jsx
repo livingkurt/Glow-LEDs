@@ -213,7 +213,9 @@ const OrdersPage = (props) => {
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
-							orders.map((order) => <OrderSmallScreen determine_color={determine_color} order={order} />)}
+							orders.map((order) => (
+								<OrderSmallScreen determine_color={determine_color} order={order} admin={true} />
+							))}
 					</div>
 				</Loading>
 			</div>
