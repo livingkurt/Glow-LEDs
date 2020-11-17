@@ -12,7 +12,7 @@ const promoSchema = new mongoose.Schema(
 		percentage_off: { type: Number },
 		free_shipping: { type: Boolean },
 		amount_off: { type: Number },
-		minimum_total: { type: Number },
+		minimum_total: { type: Number, default: 0 },
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }
 	},

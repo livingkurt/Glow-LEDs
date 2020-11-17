@@ -20,25 +20,20 @@ export const validate_promo_code = (data: any) => {
 	if (Validator.isEmpty(data.promo_code)) {
 		errors.promo_code = 'Promo Code Field Empty';
 	}
-	console.log({ items_price: data.items_price });
-	console.log({ minimum_total: promo.minimum_total });
-	console.log({ promo });
-	if (promo.minimum_total > data.items_price) {
+	if (promo.minimum_total && promo.minimum_total > data.items_price) {
 		errors.promo_code = 'Minimum Order Total Not Met';
 	}
-	if (promo) {
-		// errors.promo_code = 'Promo Code Not Active Start';
-		if (!promo.active) {
-			errors.promo_code = 'Promo Code Not Active';
-		}
-		if (!promo.for_customer) {
-			if (data.user_data) {
-				if (promo.user !== data.user_data._id) {
-					errors.promo_code = 'Promo Code Not Active';
-				}
-			} else {
+	// errors.promo_code = 'Promo Code Not Active Start';
+	if (promo && !promo.active) {
+		errors.promo_code = 'Promo Code Not Active';
+	}
+	if (promo && !promo.for_customer) {
+		if (data.user_data) {
+			if (promo.user !== data.user_data._id) {
 				errors.promo_code = 'Promo Code Not Active';
 			}
+		} else {
+			errors.promo_code = 'Promo Code Not Active';
 		}
 	}
 

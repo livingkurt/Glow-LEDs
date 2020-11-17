@@ -636,7 +636,6 @@ const PlaceOrderPage = (props) => {
 									// onTouchStart={() => (e)()}
 									// onClick={() => check_code()}
 									style={{ curser: 'pointer' }}
-									react-tappable={true}
 								>
 									Apply
 								</button>
