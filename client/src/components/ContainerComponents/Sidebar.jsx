@@ -408,6 +408,11 @@ const Sidebar = (props) => {
 					</button>
 
 					<ul className="sidebar_dropdown_container">
+						<Link to="/pages/announcements">
+							<button className="sidebar_button secondary" onClick={closeMenu}>
+								Announcements
+							</button>
+						</Link>
 						<Link to="/pages/featured">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Featured

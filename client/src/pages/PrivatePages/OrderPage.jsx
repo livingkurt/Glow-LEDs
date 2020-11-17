@@ -8,7 +8,9 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
+import { listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Products } from '../../utils';
+import useClipboard from 'react-hook-clipboard';
 
 require('dotenv').config();
 
@@ -28,8 +30,31 @@ const OrderPage = (props) => {
 	const [ secondary_product, set_secondary_product ] = useState('');
 	const [ product_object, set_product_object ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
+	const [ payment_method, set_payment_method ] = useState('');
 
 	const [ order_state, set_order_state ] = useState({});
+	const [ clipboard, copyToClipboard ] = useClipboard();
+
+	const [ refund_state, set_refund_state ] = useState({});
+	const [ refund_amount, set_refund_amount ] = useState(0);
+	const [ refund_reason, set_refund_reason ] = useState('');
+
+	const orderRefund = useSelector((state) => state.orderRefund);
+	const { order: refund } = orderRefund;
+
+	const update_refund_state = () => {
+		set_refund_state(true);
+		dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
+		// }
+	};
+	useEffect(
+		() => {
+			if (refund) {
+				set_refund_state(refund.isRefunded);
+			}
+		},
+		[ refund ]
+	);
 
 	useEffect(
 		() => {
@@ -66,15 +91,6 @@ const OrderPage = (props) => {
 			set_payment_loading(false);
 		},
 		[ successPay ]
-	);
-
-	useEffect(
-		() => {
-			if (order) {
-				set_order_state(order);
-			}
-		},
-		[ order ]
 	);
 
 	useEffect(() => {
@@ -205,6 +221,27 @@ const OrderPage = (props) => {
 		return () => {};
 	}, []);
 
+	const update_order_state = (order, state, is_action, action_at) => {
+		if (state) {
+			set_order_state({ ...order_state, [is_action]: false });
+			dispatch(update_order(order, false, is_action, action_at));
+		} else {
+			set_order_state({ ...order_state, [is_action]: true });
+			dispatch(update_order(order, true, is_action, action_at));
+		}
+		dispatch(detailsOrder(props.match.params.id));
+	};
+	const update_order_payment_state = (order, state, is_action) => {
+		if (state) {
+			set_order_state({ ...order_state, [is_action]: false });
+			dispatch(update_payment(order, false, payment_method));
+		} else {
+			set_order_state({ ...order_state, [is_action]: true });
+			dispatch(update_payment(order, true, payment_method));
+		}
+		dispatch(detailsOrder(props.match.params.id));
+	};
+
 	return loading ? (
 		<div className="column jc-c">
 			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
@@ -267,6 +304,21 @@ const OrderPage = (props) => {
 									<div>{order.shipping.email}</div>
 								</div>
 							</div>
+							{user_data &&
+							user_data.isAdmin && (
+								<button
+									className="button secondary w-200px mv-10px"
+									onClick={() =>
+										copyToClipboard(`
+${props.order.shipping.first_name} ${props.order.shipping.last_name}
+${props.order.shipping.address}
+${props.order.shipping.city}, ${props.order.shipping.state}
+${props.order.shipping.postalCode} ${props.order.shipping.country}
+${props.order.shipping.email}`)}
+								>
+									Copy to clipboard
+								</button>
+							)}
 						</div>
 					</div>
 
@@ -481,6 +533,9 @@ const OrderPage = (props) => {
 							</div>
 						)}
 					</ul>
+					<button className="button secondary w-100per">
+						<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
+					</button>
 					<div className="column jc-b h-22rem w-25remm mb-1rem">
 						<h2>Order Status</h2>
 						<div>
@@ -552,6 +607,90 @@ const OrderPage = (props) => {
 
 								<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
 							</div>
+						</div>
+					</div>
+					<div className="jc-b">
+						<div className="column jc-b w-100per">
+							<button
+								className="button primary mv-5px "
+								onClick={() => update_order_payment_state(order, order.isPaid, 'isPaid', 'paidAt')}
+							>
+								{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+							</button>
+							<button
+								className="button primary mv-5px "
+								onClick={() =>
+									update_order_state(order, order.isManufactured, 'isManufactured', 'manufacturedAt')}
+							>
+								{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+							</button>
+							<button
+								className="button primary mv-5px "
+								onClick={() => update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
+							>
+								{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+							</button>
+							<button
+								className="button primary mv-5px "
+								onClick={() => update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
+							>
+								{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+							</button>
+							<button
+								className="button primary mv-5px "
+								onClick={() =>
+									update_order_state(order, order.isDelivered, 'isDelivered', 'deliveredAt')}
+							>
+								{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+							</button>
+							<button className="button primary">
+								<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
+							</button>
+						</div>
+					</div>
+					<div className="mv-10px">
+						<label htmlFor="payment_method">Payment Method</label>
+						<li className="row mv-10px">
+							<input
+								type="text"
+								defaultValue={order.payment.paymentMethod}
+								name="payment_method"
+								className="w-100per"
+								onChange={(e) => set_payment_method(e.target.value)}
+							/>
+						</li>
+						<label htmlFor="refund_amount">Refund Amount</label>
+						<div className="row">
+							<input
+								type="text"
+								value={refund_amount}
+								name="refund_amount"
+								id="refund_amount"
+								className="w-100per"
+								onChange={(e) => set_refund_amount(e.target.value)}
+							/>
+						</div>
+						<div className="mv-10px">
+							<label htmlFor="refund_reason">Refund Reason</label>
+							<div className="row">
+								<input
+									type="text"
+									value={refund_reason}
+									name="refund_reason"
+									id="refund_reason"
+									className="w-100per"
+									onChange={(e) => set_refund_reason(e.target.value)}
+								/>
+							</div>
+						</div>
+						<div className="column">
+							<button className="button primary mv-5px" onClick={update_refund_state}>
+								Refund Customer
+							</button>
+
+							<button className="button primary mv-5px">
+								<Link to={'/secure/glow/emails/order/' + order._id}>View Email</Link>
+							</button>
 						</div>
 					</div>
 				</div>

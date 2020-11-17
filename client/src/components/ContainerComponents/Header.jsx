@@ -350,6 +350,9 @@ const Header = (props) => {
 								<button className="button nav">Community</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
+								<Link to="/pages/announcements">
+									<button className="button nav w-100per ta-l">Announcements</button>
+								</Link>
 								<Link to="/pages/featured">
 									<button className="button nav w-100per ta-l">Featured</button>
 								</Link>

@@ -64,7 +64,8 @@ import {
 	ProductsDisplayPage,
 	UserOrdersPage,
 	TrackOrderPage,
-	OrderPublicPage
+	OrderPublicPage,
+	AnnouncementsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -343,6 +344,7 @@ const App = () => {
 							<Route path="/" exact={true} component={HomePage} />
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
 							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
+							<Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
 
 							<Route component={Four04Page} />
 						</Switch>
