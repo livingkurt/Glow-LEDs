@@ -5,12 +5,12 @@ import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
-import { detailsOrder } from '../../actions/orderActions';
+import { detailsOrder, detailsOrderPublic } from '../../actions/orderActions';
 
 const OrderEmail = (props) => {
 	const history = useHistory();
-	const orderDetails = useSelector((state) => state.orderDetails);
-	const { order } = orderDetails;
+	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
+	const { order } = orderDetailsPublic;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -24,7 +24,7 @@ const OrderEmail = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listEmails('Order'));
-			stableDispatch(detailsOrder(props.match.params.id));
+			stableDispatch(detailsOrderPublic(props.match.params.id));
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
@@ -897,6 +897,9 @@ const OrderEmail = (props) => {
 				</div>
 			) : (
 				<div className="w-1000px jc-c m-auto">
+					<Link to={'/checkout/order/' + props.match.params.id}>
+						<button className="button primary">View Order</button>
+					</Link>
 					<Link to="/collections/all/products">
 						<button className="button primary mh-10px">Products</button>
 					</Link>
@@ -906,9 +909,9 @@ const OrderEmail = (props) => {
 					<Link to="/pages/music">
 						<button className="button primary mh-10px">NTRE Music</button>
 					</Link>
-					<Link to="/account/register">
+					{/* <Link to="/account/register">
 						<button className="button primary mh-10px">Create Account</button>
-					</Link>
+					</Link> */}
 				</div>
 			)}
 			<div className="jc-c">

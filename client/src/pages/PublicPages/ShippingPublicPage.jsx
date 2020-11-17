@@ -171,6 +171,9 @@ const ShippingPage = (props) => {
 						</label>
 						{!international && (
 							<li>
+								<label className="mb-1rem" htmlFor="state">
+									State
+								</label>
 								<div className="ai-c h-25px mb-15px jc-c">
 									<div className="custom-select">
 										<select

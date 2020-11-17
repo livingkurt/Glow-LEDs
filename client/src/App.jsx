@@ -324,6 +324,7 @@ const App = () => {
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
+							<PrivateRoute path="/checkout/order/receipt/:id" component={OrderEmail} />
 							<Route
 								path="/pages/contact/:reason?"
 								exact={true}

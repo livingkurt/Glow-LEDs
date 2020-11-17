@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createOrder, createPayOrderGuest } from '../../actions/orderActions';
@@ -14,24 +14,19 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External } from '../../utils';
 
 const PlaceOrderPublicPage = (props) => {
-	const discount_percent = 0.2;
+	const dispatch = useDispatch();
 	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
-	// console.log({ cartItems });
 	const orderCreate = useSelector((state) => state.orderCreate);
-	const { order, error, loading } = orderCreate;
+	const { order, error } = orderCreate;
 	console.log({ orderCreate });
 
 	const orderPay = useSelector((state) => state.orderPay);
-	const { loading: loadingPay, success: successPay, error: errorPay } = orderPay;
-	// console.log({ orderPay });
-
-	const userList = useSelector((state) => state.userList);
-	const { loading: loading_users, users, error: error_users } = userList;
+	const { success: successPay, error: errorPay } = orderPay;
 
 	const promoList = useSelector((state) => state.promoList);
-	const { loading: promo_loading, promos, error: promo_error } = promoList;
+	const { promos } = promoList;
 	// console.log({ orderPay });
 	const items_price =
 		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
@@ -53,6 +48,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ account_create, set_account_create ] = useState(false);
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
+	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 
 	const [ password_validations, setPasswordValidations ] = useState('');
 	const [ re_password_validations, setRePasswordValidations ] = useState('');
@@ -69,87 +65,6 @@ const PlaceOrderPublicPage = (props) => {
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
-
-	useEffect(
-		() => {
-			const shipping_cookie = Cookie.getJSON('shipping');
-			if (shipping_cookie) {
-				dispatch(saveShipping(shipping_cookie));
-			}
-			// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
-			// if (diffuser_cap_cookie) {
-			// 	set_diffuser_cap(diffuser_cap_cookie);
-			// 	console.log({ diffuser_cap_cookie });
-			// }
-			dispatch(savePayment({ paymentMethod: 'stripe' }));
-			setItemsPrice(
-				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
-			);
-
-			return () => {};
-		},
-		[ cartItems ]
-	);
-
-	useEffect(
-		() => {
-			if (error) {
-				set_payment_loading(false);
-			}
-			// calculate_shipping();
-			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-			return () => {};
-		},
-		[ error ]
-	);
-	useEffect(
-		() => {
-			if (shipping) {
-				if (shipping.international) {
-					calculate_international();
-				} else {
-					calculate_shipping();
-					calculate_shipping();
-				}
-			}
-			// calculate_shipping();
-			// setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-			get_tax_rates();
-			return () => {};
-		},
-		[ shipping ]
-	);
-
-	const get_tax_rates = async () => {
-		const { data } = await API_External.get_tax_rates();
-		console.log({ data });
-
-		const tax_rate = parseFloat(data[shipping.state]) / 100;
-		console.log({ [shipping.state]: tax_rate });
-		set_tax_rate(tax_rate);
-		if (shipping.international) {
-			setTaxPrice(0);
-			return;
-		}
-		setTaxPrice(tax_rate * itemsPrice);
-	};
-
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-			return () => {};
-		},
-		[ shippingPrice ]
-	);
-
-	// const taxPrice = 0.0875 * itemsPrice;
-	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
-
-	const [ order_note, set_order_note ] = useState('');
-
-	const dispatch = useDispatch();
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
@@ -201,6 +116,88 @@ const PlaceOrderPublicPage = (props) => {
 		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 		// console.log({ shippingPrice });
 	};
+
+	const stableDispatch = useCallback(dispatch, []);
+	const stable_setItemsPrice = useCallback(setItemsPrice, []);
+	const stable_set_payment_loading = useCallback(set_payment_loading, []);
+	const stable_calculate_international = useCallback(calculate_international, []);
+	const stable_calculate_shipping = useCallback(calculate_shipping, []);
+
+	useEffect(
+		() => {
+			const shipping_cookie = Cookie.getJSON('shipping');
+			if (shipping_cookie) {
+				stableDispatch(saveShipping(shipping_cookie));
+			}
+			stableDispatch(savePayment({ paymentMethod: 'stripe' }));
+			stable_setItemsPrice(
+				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
+					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
+			);
+
+			return () => {};
+		},
+		[ cartItems, stableDispatch, stable_setItemsPrice ]
+	);
+
+	useEffect(
+		() => {
+			if (error) {
+				stable_set_payment_loading(false);
+			}
+			return () => {};
+		},
+		[ error, stable_set_payment_loading ]
+	);
+	useEffect(
+		() => {
+			if (shipping) {
+				if (shipping.international) {
+					stable_calculate_international();
+				} else {
+					stable_calculate_shipping();
+					stable_calculate_shipping();
+				}
+				get_tax_rates();
+			}
+			return () => {};
+		},
+		[ shipping ]
+	);
+
+	const get_tax_rates = async () => {
+		setTaxPrice(0);
+		set_loading_tax_rate(true);
+		const { data } = await API_External.get_tax_rates();
+		const tax_rate = parseFloat(data[shipping.state]) / 100;
+
+		if (isNaN(tax_rate)) {
+			console.log('Not a Number');
+		} else {
+			console.log({ [shipping.state]: tax_rate });
+			set_tax_rate(tax_rate);
+			if (shipping.international) {
+				setTaxPrice(0);
+				return;
+			}
+			setTaxPrice(tax_rate * itemsPrice);
+		}
+		set_loading_tax_rate(false);
+	};
+
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			return () => {};
+		},
+		[ shippingPrice ]
+	);
+
+	// const taxPrice = 0.0875 * itemsPrice;
+	// const totalPrice = itemsPrice + shippingPrice + taxPrice;
+
+	const [ order_note, set_order_note ] = useState('');
 
 	const check_password = async (e) => {
 		e.preventDefault();
@@ -255,12 +252,12 @@ const PlaceOrderPublicPage = (props) => {
 			if (successPay && order) {
 				if (create_account) {
 					console.log('account');
-					props.history.push('/checkout/paymentacccountcomplete/' + order._id);
-					// props.history.push('/checkout/order/receipt/' + order._id);
+					// props.history.push('/checkout/paymentacccountcomplete/' + order._id);
+					props.history.push('/checkout/order/receipt/' + order._id);
 				} else {
 					console.log('order');
-					props.history.push('/checkout/paymentcomplete/' + order._id);
-					// props.history.push('/checkout/order/receipt/' + order._id);
+					// props.history.push('/checkout/paymentcomplete/' + order._id);
+					props.history.push('/checkout/order/receipt/' + order._id);
 				}
 				set_payment_loading(false);
 				empty_cart();
@@ -319,7 +316,8 @@ const PlaceOrderPublicPage = (props) => {
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
-	const check_code = () => {
+	const check_code = (e) => {
+		e.preventDefault();
 		const data = { promo_code, promos, user_data, items_price };
 		const request = validate_promo_code(data);
 
@@ -346,11 +344,11 @@ const PlaceOrderPublicPage = (props) => {
 					}
 					setItemsPrice(items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100));
 					setTaxPrice(
-						0.0875 * (items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100))
+						tax_rate * (items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100))
 					);
 				} else if (promo.amount_off) {
 					setItemsPrice(items_price - promo.amount_off);
-					setTaxPrice(0.0875 * (items_price - promo.amount_off));
+					setTaxPrice(tax_rate * (items_price - promo.amount_off));
 				}
 				if (promo.free_shipping) {
 					setShippingPrice(0);
@@ -698,41 +696,10 @@ const PlaceOrderPublicPage = (props) => {
 								</StripeCheckout>
 							</div>
 						)}
-						{user_data &&
-						user_data.isAdmin &&
-						users && (
-							<div>
-								<button
-									onClick={create_order_without_paying}
-									className="button primary full-width mb-12px"
-								>
-									Create Order Without Paying
-								</button>
-
-								<div className="ai-c h-25px mv-10px mb-30px jc-c">
-									<div className="custom-select">
-										<select
-											className="qty_select_dropdown"
-											defaultValue={user_data.first_name}
-											onChange={(e) => set_user(JSON.parse(e.target.value))}
-										>
-											<option key={1} defaultValue="">
-												---Choose User for Order---
-											</option>
-											{users.map((user, index) => (
-												<option key={index} value={JSON.stringify(user)}>
-													{user.first_name} {user.last_name}
-												</option>
-											))}
-										</select>
-										<span className="custom-arrow" />
-									</div>
-								</div>
-							</div>
-						)}
 						<div className="mv-10px">
 							<label htmlFor="promo_code">Promo Code</label>
-							<div className="row">
+
+							<form onSubmit={(e) => check_code(e)} className="row">
 								<input
 									type="text"
 									value={promo_code}
@@ -744,13 +711,13 @@ const PlaceOrderPublicPage = (props) => {
 								/>
 								<button
 									className="button primary"
-									onTouchStart={() => check_code()}
-									onClick={() => check_code()}
+									// onTouchStart={() => (e)()}
+									// onClick={() => check_code()}
 									style={{ curser: 'pointer' }}
 								>
 									Apply
 								</button>
-							</div>
+							</form>
 						</div>
 						<label className="validation_text" style={{ textAlign: 'center' }}>
 							{promo_code_validations}

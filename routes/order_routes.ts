@@ -639,23 +639,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 
 router.post('/guestcheckout', async (req: any, res: any) => {
 	try {
-		// const newOrder = new Order({
-		// 	orderItems: req.body.orderItems,
-		// 	guest: true,
-		// 	shipping: req.body.shipping,
-		// 	payment: req.body.payment,
-		// 	itemsPrice: req.body.itemsPrice,
-		// 	taxPrice: req.body.taxPrice,
-		// 	shippingPrice: req.body.shippingPrice,
-		// 	totalPrice: req.body.totalPrice,
-		// 	order_note: req.body.order_note,
-		// 	promo_code: req.body.promo_code,
-		// 	deleted: false
-		// });
-		// console.log({ newOrder });
 		const newOrderCreated = await Order.create({ ...req.body, guest: true });
-		// console.log({ user: req.body.user });
-		// const newOrderCreated = await newOrder.save();
 		console.log({ newOrderCreated });
 
 		if (newOrderCreated) {
