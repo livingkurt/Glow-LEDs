@@ -393,8 +393,8 @@ const OrderEmail = (props) => {
 												{!order.promo_code && <br />}
 												{order.promo_code && (
 													<div>
-														-${order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
-															order.itemsPrice}
+														-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
+															order.itemsPrice).toFixed(2)}
 													</div>
 												)}
 												{order.promo_code && <div>${order.itemsPrice.toFixed(2)}</div>}

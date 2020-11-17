@@ -352,7 +352,7 @@ router.post('/announcement', async (req, res) => {
 });
 
 router.post('/order', async (req, res) => {
-	console.log({ template: req.body.template });
+	// console.log({ template: req.body.template });
 	const test = [ 'lavacquek@icloud.com' ];
 	let mailOptions = {
 		to: req.body.email,
@@ -373,7 +373,7 @@ router.post('/order', async (req, res) => {
 	// res.send('Order Email Sent to');
 });
 router.post('/order_created', async (req, res) => {
-	console.log({ template: req.body.template });
+	// console.log({ template: req.body.template });
 	let mailOptions = {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
