@@ -296,10 +296,7 @@ const App = () => {
 								path="/checkout/placeorder"
 								component={(props) => <PlaceOrderPublicPage userInfo={userInfo} {...props} />}
 							/>
-							<Route
-								path="/checkout/shipping"
-								component={(props) => <ShippingPublicPage userInfo={userInfo} {...props} />}
-							/>
+							<Route path="/checkout/shipping" component={ShippingPage} />
 							<Route
 								path="/checkout/paymentacccountcomplete/:id"
 								exact={true}

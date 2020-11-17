@@ -6,7 +6,7 @@ import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
-const ShippingPage = (props) => {
+const ShippingPublicPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 	const { shipping } = cart;
 
@@ -269,4 +269,4 @@ const ShippingPage = (props) => {
 		</div>
 	);
 };
-export default ShippingPage;
+export default ShippingPublicPage;

@@ -10,6 +10,9 @@ import { Helmet } from 'react-helmet';
 const ShippingPage = (props) => {
 	const user_data = props.userInfo;
 
+	const cart = useSelector((state) => state.cart);
+	const { shipping } = cart;
+
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
@@ -58,6 +61,25 @@ const ShippingPage = (props) => {
 			return () => {};
 		},
 		[ userUpdate ]
+	);
+
+	useEffect(
+		() => {
+			if (shipping) {
+				set_email(shipping.email);
+				set_first_name(shipping.first_name);
+				set_last_name(shipping.last_name);
+				setAddress(shipping.address);
+				setCity(shipping.city);
+				setState(shipping.state);
+				setPostalCode(shipping.postalCode);
+				setCountry(shipping.country);
+				setInternational(shipping.international);
+			}
+
+			return () => {};
+		},
+		[ shipping ]
 	);
 
 	const [ email_validations, set_email_validations ] = useState('');
@@ -324,7 +346,7 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
-						{loading ? (
+						{user_data && loading ? (
 							<div>Loading...</div>
 						) : (
 							<div>
