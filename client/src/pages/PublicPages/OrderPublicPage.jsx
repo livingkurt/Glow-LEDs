@@ -265,6 +265,9 @@ const OrderPublicPage = (props) => {
 								{format_date(order.refundedAt)}
 							</h1>
 						)}
+						<div className="column w-100per">
+							<label>Order #: {order._id}</label>
+						</div>
 						<div className="wrap jc-b">
 							<div className="column w-100per">
 								<h1>Shipping</h1>
