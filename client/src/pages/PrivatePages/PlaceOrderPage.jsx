@@ -155,21 +155,25 @@ const PlaceOrderPage = (props) => {
 			}
 			return () => {};
 		},
-		[ shipping, stable_calculate_international, stable_calculate_shipping ]
+		[ shipping ]
 	);
 
 	const get_tax_rates = async () => {
+		setTaxPrice(0);
 		const { data } = await API_External.get_tax_rates();
-		console.log({ data });
-
 		const tax_rate = parseFloat(data[shipping.state]) / 100;
-		console.log({ [shipping.state]: tax_rate });
-		set_tax_rate(tax_rate);
-		if (shipping.international) {
-			setTaxPrice(0);
-			return;
+
+		if (isNaN(tax_rate)) {
+			console.log('Not a Number');
+		} else {
+			console.log({ [shipping.state]: tax_rate });
+			set_tax_rate(tax_rate);
+			if (shipping.international) {
+				setTaxPrice(0);
+				return;
+			}
+			setTaxPrice(tax_rate * itemsPrice);
 		}
-		setTaxPrice(tax_rate * itemsPrice);
 	};
 
 	useEffect(
@@ -544,7 +548,7 @@ const PlaceOrderPage = (props) => {
 						<li>
 							<div>Tax</div>
 							<div>
-								{shipping && shipping.hasOwnProperty('first_name') ? (
+								{shipping && shipping.hasOwnProperty('first_name') && taxPrice !== NaN ? (
 									`$${taxPrice.toFixed(2)}`
 								) : (
 									'------'
@@ -564,7 +568,7 @@ const PlaceOrderPage = (props) => {
 						<li>
 							<div>Order Total</div>
 							<div>
-								{shipping && shipping.hasOwnProperty('first_name') ? (
+								{shipping && shipping.hasOwnProperty('first_name') && totalPrice !== NaN ? (
 									'$' + totalPrice.toFixed(2)
 								) : (
 									'------'
