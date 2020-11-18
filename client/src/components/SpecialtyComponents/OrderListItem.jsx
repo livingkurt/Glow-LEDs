@@ -361,11 +361,11 @@ ${props.order.shipping.email}`)}
 								>
 									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 								</button>
-								<button className="button primary mv-5px">
+								<button className="button secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>
 								<button
-									className="button primary mv-5px"
+									className="button secondary mv-5px"
 									onClick={() => dispatch(deleteOrder(props.order._id))}
 								>
 									Delete Order
