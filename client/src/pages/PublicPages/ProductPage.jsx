@@ -517,9 +517,7 @@ const ProductPage = (props) => {
 											<h3 className="colored_caps_images">Colored Caps</h3>
 											<Zoom>
 												<img
-													// className="m-10px w-100per"
 													className="colored_caps_images"
-													// style={{ borderRadius: '20px', minWidth: '450px', flexBasis:  }}
 													src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
 													alt="promo"
 												/>
@@ -529,9 +527,7 @@ const ProductPage = (props) => {
 											<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
 											<Zoom>
 												<img
-													// className="m-10px w-100per"
 													className="colored_caps_images"
-													// style={{ borderRadius: '20px', minWidth: '450px' }}
 													src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
 													alt="promo"
 												/>

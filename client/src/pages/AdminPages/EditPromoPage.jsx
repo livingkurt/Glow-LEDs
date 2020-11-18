@@ -385,7 +385,8 @@ const EditPromoPage = (props) => {
 												<button className="button primary" onClick={(e) => exclude_category(e)}>
 													Exclude Category
 												</button>
-												{excluded_categories.length > 0 && (
+												{excluded_categories &&
+												excluded_categories.length > 0 && (
 													<label className="mt-15px">Excluded Categories</label>
 												)}
 
@@ -423,7 +424,8 @@ const EditPromoPage = (props) => {
 												<button className="button primary" onClick={(e) => exclude_product(e)}>
 													Exclude Product
 												</button>
-												{excluded_products.length > 0 && (
+												{excluded_categories &&
+												excluded_products.length > 0 && (
 													<label className="mt-15px">Excluded Products</label>
 												)}
 												{excluded_list(excluded_products, 'products')}
