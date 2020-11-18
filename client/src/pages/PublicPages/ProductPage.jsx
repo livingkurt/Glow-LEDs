@@ -464,47 +464,9 @@ const ProductPage = (props) => {
 							</div>
 						</div>
 						<Slideshow product={product} show_hide="alt_pictures_shown" set_image={set_image} />
-
-						{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
-							<div>
-								<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
-								<div className="colored_caps">
-									<div className="column colored_caps_item">
-										<h3 className="colored_caps_images">Colored Caps</h3>
-										<img
-											// className="m-10px w-100per"
-											className="colored_caps_images"
-											// style={{ borderRadius: '20px', minWidth: '450px', flexBasis:  }}
-											src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
-											alt="promo"
-										/>
-									</div>
-									<div className="column colored_caps_item">
-										<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
-										<img
-											// className="m-10px w-100per"
-											className="colored_caps_images"
-											// style={{ borderRadius: '20px', minWidth: '450px' }}
-											src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
-											alt="promo"
-										/>
-									</div>
-								</div>
-							</div>
-						)}
-
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
-							{product.category === 'glowskins' && (
-								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
-									<div className="jc-c">
-										<button className="button primary" style={{ margin: 'auto' }}>
-											Glowskins Microlight Compatibility
-										</button>
-									</div>
-								</a>
-							)}
 							<div className="column">
 								<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 								<div className="column h-100per">
@@ -523,7 +485,55 @@ const ProductPage = (props) => {
 									</ul>
 								</div>
 							</div>
+						</div>
+						{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
+							<div className="column m-2rem">
+								<img
+									className="max-w-800px w-100per h-auto m-auto"
+									src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
+									alt="promo"
+								/>
+							</div>
+						)}
 
+						<div className="column p-1rem">
+							{product.category === 'glowskins' && (
+								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
+									<div className="jc-c">
+										<button className="button primary" style={{ margin: 'auto' }}>
+											Glowskins Microlight Compatibility
+										</button>
+									</div>
+								</a>
+							)}
+
+							{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
+								<div>
+									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
+									<div className="colored_caps">
+										<div className="column colored_caps_item">
+											<h3 className="colored_caps_images">Colored Caps</h3>
+											<img
+												// className="m-10px w-100per"
+												className="colored_caps_images"
+												// style={{ borderRadius: '20px', minWidth: '450px', flexBasis:  }}
+												src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
+												alt="promo"
+											/>
+										</div>
+										<div className="column colored_caps_item">
+											<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
+											<img
+												// className="m-10px w-100per"
+												className="colored_caps_images"
+												// style={{ borderRadius: '20px', minWidth: '450px' }}
+												src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
+												alt="promo"
+											/>
+										</div>
+									</div>
+								</div>
+							)}
 							{!product.video ? (
 								<h1
 									style={{
