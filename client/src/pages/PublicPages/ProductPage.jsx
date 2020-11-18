@@ -487,15 +487,15 @@ const ProductPage = (props) => {
 							</div>
 						</div>
 						{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
-							<Zoom>
-								<div className="column m-2rem">
+							<div className=" m-2rem  h-auto m-auto jc-c">
+								<Zoom className="m-auto">
 									<img
-										className="max-w-800px w-100per h-auto m-auto"
+										className="max-w-800px w-100per h-auto"
 										src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
 										alt="promo"
 									/>
-								</div>
-							</Zoom>
+								</Zoom>
+							</div>
 						)}
 
 						<div className="column p-1rem">
