@@ -513,7 +513,7 @@ const ProductPage = (props) => {
 								<div>
 									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
 									<div className="colored_caps">
-										<div className="column colored_caps_item">
+										<div className="column colored_caps_item m-1rem">
 											<h3 className="colored_caps_images">Colored Caps</h3>
 											<Zoom>
 												<img
@@ -525,7 +525,7 @@ const ProductPage = (props) => {
 												/>
 											</Zoom>
 										</div>
-										<div className="column colored_caps_item">
+										<div className="column colored_caps_item m-1rem">
 											<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
 											<Zoom>
 												<img
