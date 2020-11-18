@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
-import { refundOrder } from '../../actions/orderActions';
+import { deleteOrder, refundOrder } from '../../actions/orderActions';
 
 const OrderListItem = (props) => {
 	const dispatch = useDispatch();
@@ -59,6 +59,10 @@ const OrderListItem = (props) => {
 	// 	return week;
 	// }
 	// console.log(dates(new Date(2020, 1, 27)));
+
+	const deleteHandler = (order) => {
+		dispatch(deleteOrder(order._id));
+	};
 
 	const today = new Date();
 
@@ -357,8 +361,14 @@ ${props.order.shipping.email}`)}
 								>
 									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 								</button>
-								<button className="button primary">
+								<button className="button primary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
+								</button>
+								<button
+									className="button primary mv-5px"
+									onClick={() => dispatch(deleteOrder(props.order._id))}
+								>
+									Delete Order
 								</button>
 							</div>
 							<div className="column jc-b h-10rem w-20rem ml-1rem">
