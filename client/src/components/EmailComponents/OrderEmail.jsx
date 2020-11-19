@@ -936,10 +936,10 @@ const OrderEmail = (props) => {
 	useEffect(
 		() => {
 			if (props.match.params.send === 'true' && order) {
+				console.log({ 'props.match.params.send === true && order': order });
 				if (order.orderItems.length > 0) {
-					if (props.match.params.id) {
-						send_order_email(order.shipping.email, order.shipping.first_name);
-					}
+					console.log({ 'order.orderItems.length > 0': order });
+					send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
 				}
 			}
 
@@ -991,9 +991,12 @@ const OrderEmail = (props) => {
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
-					<button className="button primary" onClick={() => history.goBack()}>
-						Back to Emails
-					</button>
+					<Link to="/secure/glow/emails">
+						<button className="button primary mh-10px">Back to Emails</button>
+					</Link>
+					<Link to="/secure/glow/orders">
+						<button className="button primary mh-10px">Back to Orders</button>
+					</Link>
 
 					<button
 						className="button primary mb-1rem"

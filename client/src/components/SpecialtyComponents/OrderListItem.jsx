@@ -255,7 +255,9 @@ const OrderListItem = (props) => {
 										</button>
 
 										<button className="button primary mv-5px">
-											<Link to={'/secure/glow/emails/order/' + props.order._id}>View Email</Link>
+											<Link to={'/secure/glow/emails/order/' + props.order._id + '/order/false'}>
+												View Email
+											</Link>
 										</button>
 									</div>
 								</div>
