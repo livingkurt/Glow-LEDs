@@ -297,7 +297,6 @@ const App = () => {
 
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
-							<Route path="/checkout/order/receipt/:id/true" component={OrderEmail} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
 							<Route path="/account/checkemail" component={CheckEmailPage} />
 							<Route path="/account/emailsent" component={EmailSentPage} />
@@ -335,7 +334,7 @@ const App = () => {
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
-							<Route path="/checkout/order/receipt/:id/true" component={OrderEmail} />
+							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
 							<Route
 								path="/pages/contact/:reason?"
 								exact={true}
