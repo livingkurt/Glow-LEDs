@@ -39,8 +39,8 @@ const UserOrderPage = (props) => {
 		{ name: 'Manufactured', color: '#4b7188' },
 		{ name: 'Packaged', color: '#6f5f7d' },
 		{ name: 'Shipped', color: '#636363' },
-		{ name: 'Delivered', color: '#333333' },
-		{ name: 'Refunded', color: '#a9a9a9' }
+		{ name: 'Delivered', color: '#333333' }
+		// { name: 'Refunded', color: '#a9a9a9' }
 	];
 
 	const determine_color = (order) => {
@@ -63,9 +63,9 @@ const UserOrderPage = (props) => {
 		if (order.isDelivered) {
 			result = colors[5].color;
 		}
-		if (order.isRefunded) {
-			result = colors[6].color;
-		}
+		// if (order.isRefunded) {
+		// 	result = colors[6].color;
+		// }
 		// console.log(result);
 		return result;
 	};
