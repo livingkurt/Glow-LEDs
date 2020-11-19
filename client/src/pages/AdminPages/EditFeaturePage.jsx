@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveFeature, detailsFeature } from '../../actions/featureActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { listProducts } from '../../actions/productActions';
 
 const EditFeaturePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -17,25 +18,35 @@ const EditFeaturePage = (props) => {
 	const [ video, set_video ] = useState('');
 	const [ picture, set_picture ] = useState('');
 	const [ release_date, set_release_date ] = useState('');
-	const [ loading_data, set_loading_data ] = useState(true);
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const history = useHistory();
 
 	const featureDetails = useSelector((state) => state.featureDetails);
 	const { feature, loading, error } = featureDetails;
 
+	const productList = useSelector((state) => state.productList);
+	const { products } = productList;
+
 	const dispatch = useDispatch();
 
 	console.log({ feature });
 
+	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(() => {
 		if (props.match.params.id) {
 			console.log('Is ID');
-			dispatch(detailsFeature(props.match.params.id));
-			dispatch(detailsFeature(props.match.params.id));
+			stableDispatch(detailsFeature(props.match.params.id));
+			stableDispatch(detailsFeature(props.match.params.id));
 		} else {
-			dispatch(detailsFeature(''));
+			stableDispatch(detailsFeature(''));
 		}
+		stableDispatch(listProducts(''));
 		set_state();
 		return () => {};
 	}, []);
@@ -116,7 +127,7 @@ const EditFeaturePage = (props) => {
 									<title>Edit Feature| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
+								<ul className="edit-form-container" style={{ maxWidth: '48rem', marginBottom: '20px' }}>
 									<h1
 										style={{
 											textAlign: 'center',
@@ -127,7 +138,7 @@ const EditFeaturePage = (props) => {
 									/>
 
 									<div className="row wrap">
-										<div className="column w-228px m-10px">
+										<div className="column  m-10px">
 											<li>
 												<label htmlFor="user">User</label>
 												<input
@@ -179,6 +190,34 @@ const EditFeaturePage = (props) => {
 													id="facebook_name"
 													onChange={(e) => set_facebook_name(e.target.value)}
 												/>
+											</li>
+											<li>
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mb-15px"
+												>
+													Product
+												</label>
+												<div className="ai-c h-25px mb-15px">
+													<div className="custom-select">
+														<select
+															defaultValue={product}
+															className="qty_select_dropdown"
+															onChange={(e) => set_product(e.target.value)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Product---
+															</option>
+															{products.map((product, index) => (
+																<option key={index} value={product.pathname}>
+																	{product.name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
 											</li>
 											<li>
 												<label htmlFor="product">Product</label>
