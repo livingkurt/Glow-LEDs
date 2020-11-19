@@ -154,9 +154,10 @@ const OrderStatusEmail = (props) => {
 								}}
 							>
 								<p>{email.p ? email.p : email.h2}</p>
-								<p style={{ textAlign: 'right', margin: '0px' }}>
+								<p style={{ textAlign: 'right', margin: '1rem 0' }}>
 									<strong>Order #:</strong> {order._id}
 								</p>
+
 								<div
 									style={{
 										display: 'flex',
@@ -223,6 +224,27 @@ const OrderStatusEmail = (props) => {
 										</a>
 									</div>
 								</div>
+								{order.tracking_number && (
+									<p style={{ textAlign: 'right', marginTop: '1rem' }}>
+										<strong>USPS Tracking Number: </strong>{' '}
+										<a
+											href={
+												'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+												order.tracking_number
+											}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="mv-2rem ml-1rem"
+											style={{
+												textDecoration: 'underline',
+												color: 'white'
+											}}
+										>
+											{order.tracking_number}
+										</a>
+									</p>
+								)}
+
 								<div style={{ borderBottom: '1px solid #ddd', paddingBottom: '20px' }} />
 								<table
 									cellPadding={0}
