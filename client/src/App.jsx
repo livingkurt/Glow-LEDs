@@ -79,6 +79,7 @@ import {
 	AnnouncementEmail,
 	InvoiceEmail,
 	OrderEmail,
+	OrderStatusEmail,
 	PasswordChangedEmail,
 	ResetPasswordEmail,
 	ReviewEmail
@@ -253,6 +254,11 @@ const App = () => {
 								component={AccountCreatedEmail}
 							/>
 							<AdminRoute path="/secure/glow/emails/order" exact={true} component={OrderEmail} />
+							<AdminRoute
+								path="/secure/glow/emails/order_status/:id?/:status?"
+								exact={true}
+								component={OrderStatusEmail}
+							/>
 							<AdminRoute path="/secure/glow/emails/invoice" exact={true} component={InvoiceEmail} />
 							<AdminRoute
 								path="/secure/glow/emails/reset_password"
@@ -264,11 +270,11 @@ const App = () => {
 								exact={true}
 								component={PasswordChangedEmail}
 							/>
-							<AdminRoute
+							{/* <AdminRoute
 								path="/secure/glow/emails/order/:id?"
 								exact={true}
 								component={(props) => <OrderEmail userInfo={userInfo} {...props} />}
-							/>
+							/> */}
 							<AdminRoute
 								path="/secure/glow/emails/invoice/:id?"
 								exact={true}
@@ -322,7 +328,7 @@ const App = () => {
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
-							<PrivateRoute path="/checkout/order/receipt/:id" component={OrderEmail} />
+							<Route path="/checkout/order/receipt/:id" component={OrderEmail} />
 							<Route
 								path="/pages/contact/:reason?"
 								exact={true}

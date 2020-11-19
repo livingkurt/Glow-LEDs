@@ -313,7 +313,7 @@ ${props.order.shipping.email}`)}
 								>
 									{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 								</button>
-								<button
+								{/* <button
 									className="button primary mv-5px"
 									onClick={() =>
 										props.update_order_state(
@@ -324,20 +324,46 @@ ${props.order.shipping.email}`)}
 										)}
 								>
 									{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
-								</button>
-								<button
-									className="button primary mv-5px"
-									onClick={() =>
-										props.update_order_state(
-											props.order,
-											props.order.isPackaged,
-											'isPackaged',
-											'packagedAt'
-										)}
-								>
-									{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-								</button>
-								<button
+								</button> */}
+								<div className="row">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
+												props.order.isManufactured,
+												'isManufactured',
+												'manufacturedAt'
+											)}
+									>
+										{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+									</button>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
+								<div className="row">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
+												props.order.isPackaged,
+												'isPackaged',
+												'packagedAt'
+											)}
+									>
+										{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+									</button>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
+								{/* <button
 									className="button primary mv-5px"
 									onClick={() =>
 										props.update_order_state(
@@ -348,8 +374,46 @@ ${props.order.shipping.email}`)}
 										)}
 								>
 									{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-								</button>
-								<button
+								</button> */}
+								<div className="row">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
+												props.order.isShipped,
+												'isShipped',
+												'shippedAt'
+											)}
+									>
+										{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+									</button>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
+								<div className="row">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
+												props.order.isDelivered,
+												'isDelivered',
+												'deliveredAt'
+											)}
+									>
+										{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+									</button>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
+								{/* <button
 									className="button primary mv-5px"
 									onClick={() =>
 										props.update_order_state(
@@ -360,7 +424,7 @@ ${props.order.shipping.email}`)}
 										)}
 								>
 									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-								</button>
+								</button> */}
 								<button className="button secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>

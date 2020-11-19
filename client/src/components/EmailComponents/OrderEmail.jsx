@@ -254,9 +254,9 @@ const OrderEmail = (props) => {
 																valign="top"
 																align="right"
 															>
-																Order #: {order._id}
+																<strong>Order #:</strong> {order._id}
 																<br />
-																Created:{' '}
+																<strong>Created:</strong>{' '}
 																{order.createdAt && format_date(order.createdAt)}
 																<br />
 															</td>

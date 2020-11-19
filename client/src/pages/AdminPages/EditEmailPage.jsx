@@ -119,7 +119,12 @@ const EditEmailPage = (props) => {
 	const email_types = [
 		'Announcements',
 		'Reviews',
-		'Orders',
+		'Order',
+		'Reassurance',
+		'Manufactured',
+		'Packaged',
+		'Shipped',
+		'Delivered',
 		'Account Created',
 		'Reset Password',
 		'Password Changed'
