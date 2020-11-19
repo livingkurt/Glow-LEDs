@@ -33,6 +33,7 @@ const EditOrderPage = (props) => {
 	const [ createdAt, set_createdAt ] = useState('');
 	const [ order_note, set_order_note ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
+	const [ tracking_number, set_tracking_number ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
@@ -90,6 +91,7 @@ const EditOrderPage = (props) => {
 		}
 		set_order_note(order.order_note);
 		set_promo_code(order.promo_code);
+		set_tracking_number(order.tracking_number);
 
 		// console.log(format_date(order.isManufactured));
 	};
@@ -117,6 +119,7 @@ const EditOrderPage = (props) => {
 		set_refundedAt('');
 		set_order_note('');
 		set_promo_code('');
+		set_tracking_number('');
 	};
 
 	const stableDispatch = useCallback(dispatch, []);
@@ -156,32 +159,6 @@ const EditOrderPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		console.log({
-			_id: id,
-			user,
-			orderItems,
-			shipping,
-			payment,
-			itemsPrice,
-			taxPrice,
-			shippingPrice,
-			totalPrice,
-			isPaid,
-			paidAt,
-			isManufactured,
-			manufacturedAt,
-			isPackaged,
-			packagedAt,
-			isShipped,
-			shippedAt,
-			isDelivered,
-			deliveredAt,
-			isRefunded,
-			refundedAt,
-			createdAt,
-			order_note,
-			promo_code
-		});
 		dispatch(
 			saveOrder({
 				_id: id,
@@ -207,7 +184,8 @@ const EditOrderPage = (props) => {
 				refundedAt: refundedAt && unformat_date(refundedAt),
 				createdAt: createdAt && unformat_date(createdAt),
 				order_note,
-				promo_code
+				promo_code,
+				tracking_number
 			})
 		);
 		e.target.reset();
@@ -483,6 +461,17 @@ const EditOrderPage = (props) => {
 													value={promo_code}
 													id="promo_code"
 													onChange={(e) => set_promo_code(e.target.value)}
+												/>
+											</li>
+
+											<li>
+												<label htmlFor="tracking_number">Tracking Number</label>
+												<input
+													type="text"
+													name="tracking_number"
+													value={tracking_number}
+													id="tracking_number"
+													onChange={(e) => set_tracking_number(e.target.value)}
 												/>
 											</li>
 										</div>
@@ -915,7 +904,7 @@ const EditOrderPage = (props) => {
 										</button>
 									</li>
 									<li>
-                  <button className="button secondary" onClick={() => history.goBack()}>
+										<button className="button secondary" onClick={() => history.goBack()}>
 											Back to Orders
 										</button>
 									</li>

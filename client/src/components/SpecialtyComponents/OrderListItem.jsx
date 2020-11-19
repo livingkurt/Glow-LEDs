@@ -278,6 +278,7 @@ const OrderListItem = (props) => {
 									<div>{props.order.shipping.international && 'International'}</div>
 									<div>{props.order.shipping.email}</div>
 								</div>
+
 								<button
 									className="button secondary w-200px mv-10px"
 									onClick={() =>
@@ -298,6 +299,25 @@ ${props.order.shipping.email}`)}
 							<li className="row">
 								<h3 className="">Promo Code: </h3>
 								<label className="mv-2rem ml-1rem">{props.order.promo_code}</label>
+							</li>
+							<li className="row">
+								<h3 className="">Tracking Number: </h3>
+
+								<a
+									href={
+										'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+										props.order.tracking_number
+									}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="mv-2rem ml-1rem"
+									style={{
+										textDecoration: 'underline',
+										color: 'white'
+									}}
+								>
+									{props.order.tracking_number}
+								</a>
 							</li>
 						</ul>
 
@@ -365,18 +385,6 @@ ${props.order.shipping.email}`)}
 										</button>
 									</Link>
 								</div>
-								{/* <button
-									className="button primary mv-5px"
-									onClick={() =>
-										props.update_order_state(
-											props.order,
-											props.order.isShipped,
-											'isShipped',
-											'shippedAt'
-										)}
-								>
-									{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-								</button> */}
 								<div className="row">
 									<button
 										className="button primary mv-5px w-100per"
@@ -434,18 +442,6 @@ ${props.order.shipping.email}`)}
 										</button>
 									</Link>
 								</div>
-								{/* <button
-									className="button primary mv-5px"
-									onClick={() =>
-										props.update_order_state(
-											props.order,
-											props.order.isDelivered,
-											'isDelivered',
-											'deliveredAt'
-										)}
-								>
-									{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-								</button> */}
 								<button className="button secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>

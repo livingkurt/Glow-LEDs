@@ -79,6 +79,7 @@ const orderSchema = new mongoose.Schema(
 		refundedAt: { type: Date },
 		order_note: { type: String },
 		promo_code: { type: String },
+		tracking_number: { type: String },
 		deleted: { type: Boolean, default: false }
 	},
 	{
