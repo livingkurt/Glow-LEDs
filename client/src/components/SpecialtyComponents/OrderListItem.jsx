@@ -323,7 +323,7 @@ ${props.order.shipping.email}`)}
 
 						<div className="jc-b">
 							<div className="column jc-b w-25rem">
-								<button
+								{/* <button
 									className="button primary mv-5px"
 									onClick={() =>
 										props.update_order_payment_state(
@@ -334,20 +334,27 @@ ${props.order.shipping.email}`)}
 										)}
 								>
 									{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-								</button>
-								{/* <button
-									className="button primary mv-5px"
-									onClick={() =>
-										props.update_order_state(
-											props.order,
-											props.order.isManufactured,
-											'isManufactured',
-											'manufacturedAt'
-										)}
-								>
-									{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
 								</button> */}
-								<div className="row">
+								<div className="row ai-c">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
+												props.order.isPaid,
+												'isPaid',
+												'paidAt'
+											)}
+									>
+										{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+									</button>
+									<Link to={`/secure/glow/emails/order/${props.order._id}/order/false`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
+								<div className="row ai-c">
 									<button
 										className="button primary mv-5px w-100per"
 										onClick={() =>
@@ -360,13 +367,13 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured/false`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
-								<div className="row">
+								<div className="row ai-c">
 									<button
 										className="button primary mv-5px w-100per"
 										onClick={() =>
@@ -379,13 +386,13 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged/false`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
-								<div className="row">
+								<div className="row ai-c">
 									<button
 										className="button primary mv-5px w-100per"
 										onClick={() =>
@@ -398,13 +405,13 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped/false`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
-								<div className="row">
+								<div className="row ai-c">
 									<button
 										className="button primary mv-5px w-100per"
 										onClick={() =>
@@ -417,13 +424,13 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered/false`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
-								<div className="row">
+								<div className="row ai-c">
 									<button
 										className="button primary mv-5px w-100per"
 										onClick={() =>
