@@ -335,7 +335,6 @@ const OrderEmail = (props) => {
 															) : (
 																''
 															)}
-															{' x ' + item.qty}
 														</div>
 													</div>
 												</td>
