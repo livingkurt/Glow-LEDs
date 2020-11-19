@@ -360,6 +360,25 @@ ${props.order.shipping.email}`)}
 										onClick={() =>
 											props.update_order_state(
 												props.order,
+												props.order.isReassured,
+												'isReassured',
+												'reassuredAt'
+											)}
+									>
+										{props.order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
+									</button>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/reassured`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
+								<div className="row ai-c">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
 												props.order.isManufactured,
 												'isManufactured',
 												'manufacturedAt'

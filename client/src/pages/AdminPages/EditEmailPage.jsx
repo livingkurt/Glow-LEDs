@@ -120,7 +120,7 @@ const EditEmailPage = (props) => {
 		'Announcements',
 		'Reviews',
 		'Order',
-		'Reassurance',
+		'Reassured',
 		'Manufactured',
 		'Packaged',
 		'Shipped',
