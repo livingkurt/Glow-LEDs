@@ -367,7 +367,7 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured/false`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
@@ -386,7 +386,7 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged/false`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
@@ -405,7 +405,7 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped/false`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
@@ -424,7 +424,7 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered/false`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered`}>
 										<button className="button secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
