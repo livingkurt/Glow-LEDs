@@ -4,13 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
-import { format_date } from '../../utils/helper_functions';
-import { detailsOrder, detailsOrderPublic } from '../../actions/orderActions';
+import { format_date, toCapitlize } from '../../utils/helper_functions';
+import { detailsOrderPublic } from '../../actions/orderActions';
 
 const OrderEmail = (props) => {
 	const history = useHistory();
 	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
 	const { order } = orderDetailsPublic;
+
+	const emailDetails = useSelector((state) => state.emailDetails);
+	const { email } = emailDetails;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -23,7 +26,7 @@ const OrderEmail = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listEmails('Order'));
+			stableDispatch(listEmails(toCapitlize(props.match.params.status)));
 			stableDispatch(detailsOrderPublic(props.match.params.id));
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
@@ -60,7 +63,7 @@ const OrderEmail = (props) => {
 				<label>
 					<label style={{ marginRight: '3px' }}>On Sale!</label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'black' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
+						<label style={{ color: 'white' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 					</del>{' '}
 					{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
 				</label>
@@ -69,11 +72,11 @@ const OrderEmail = (props) => {
 			return (
 				<label>
 					<del style={{ color: 'red' }}>
-						<label style={{ color: 'black', marginLeft: '7px' }}>
+						<label style={{ color: 'white', marginLeft: '7px' }}>
 							${item.price && (item.price * item.qty).toFixed(2)}
 						</label>
 					</del>{' '}
-					{'-->'} <label style={{ color: 'black', marginLeft: '7px' }}>Sold Out</label>
+					{'-->'} <label style={{ color: 'white', marginLeft: '7px' }}>Sold Out</label>
 				</label>
 			);
 		} else {
@@ -123,7 +126,7 @@ const OrderEmail = (props) => {
 							fontSize: '2em'
 						}}
 					>
-						Thank You for your Purchase!
+						{email && email.h1}
 					</h4>
 				</div>
 				{order && (
@@ -136,7 +139,9 @@ const OrderEmail = (props) => {
 					>
 						<div
 							style={{
-								margin: 'auto'
+								margin: 'auto',
+								maxWidth: '600px',
+								width: '100%'
 							}}
 						>
 							<div
@@ -148,10 +153,18 @@ const OrderEmail = (props) => {
 									flexDirection: 'column'
 								}}
 							>
-								<p>
-									Hi {order.shipping.first_name}, we're getting your order ready to be shipped. We
-									will notify you when it has been sent.
-								</p>
+								{order.isRefunded ? (
+									<h3 style={{ fontFamily: 'helvetica' }}>
+										Your Order has been refunded for{' '}
+										{order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
+										{format_date(order.refundedAt)}
+									</h3>
+								) : (
+									<p>
+										Hi {order.shipping.first_name}, we're getting your order ready to be shipped. We
+										will notify you when it has been sent.
+									</p>
+								)}
 								<div
 									style={{
 										display: 'flex',
@@ -292,24 +305,49 @@ const OrderEmail = (props) => {
 													key={index}
 													valign="top"
 												>
-													{item.category === 'diffuser_caps' ||
-													item.category === 'mini_diffuser_caps' ||
-													item.category === 'frosted_diffusers' ? (
-														`${item.diffuser_cap_color} - `
-													) : (
-														''
-													)}
-													{item.name} {item.qty > 1 && item.qty + 'x'}
-													{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
+													<div style={{ display: 'flex', alignItems: 'center' }}>
+														<table width="100%" style={{ maxWidth: '75px' }}>
+															<tr>
+																<td>
+																	<img
+																		src={item.display_image}
+																		alt="Glow LEDs"
+																		style={{
+																			textAlign: 'center',
+																			width: '100%',
+																			borderRadius: '10px'
+																		}}
+																	/>
+																</td>
+															</tr>
+														</table>
+														<div style={{ marginBottom: '1rem', marginLeft: '1rem' }}>
+															{item.category === 'diffuser_caps' ||
+															item.category === 'mini_diffuser_caps' ||
+															item.category === 'frosted_diffusers' ? (
+																`${item.diffuser_cap_color} - `
+															) : (
+																''
+															)}
+															{item.name} {item.qty > 1 && item.qty + 'x'}
+															{item.secondary_product ? (
+																`w (${item.secondary_product.name})`
+															) : (
+																''
+															)}
+															{' x ' + item.qty}
+														</div>
+													</div>
 												</td>
 												<td
 													style={{
 														verticalAlign: 'top',
 														textAlign: 'right',
 														borderBottom: '1px solid #eee',
-														padding: '20px 0',
+														padding: '40px 0',
 														color: 'white',
 														fontSize: '16px'
+
 														// fontWeight: 800
 													}}
 													valign="top"
@@ -363,7 +401,14 @@ const OrderEmail = (props) => {
 												Shipping
 												<br />
 												<br />
-												<div>Total</div>
+												{!order.isRefunded && <div>Total</div>}
+												{order.isRefunded && <div>Total</div>}
+												{order.isRefunded && <div>Refund Amount</div>}
+												{order.isRefunded && (
+													<div style={{ fontWeight: 800, marginTop: '30px' }}>
+														New Order Total
+													</div>
+												)}
 											</td>
 
 											<td
@@ -403,9 +448,36 @@ const OrderEmail = (props) => {
 												${order.shippingPrice && order.shippingPrice.toFixed(2)}
 												<br />
 												<br />
-												<div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
+												{/* <div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
 													${order.totalPrice && order.totalPrice.toFixed(2)}
-												</div>
+												</div> */}
+												{!order.isRefunded && (
+													<div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
+														${order.totalPrice && order.totalPrice.toFixed(2)}
+													</div>
+												)}
+												{order.isRefunded && (
+													<del style={{ color: 'red' }}>
+														<label style={{ color: 'white' }}>
+															<div>
+																${order.totalPrice && order.totalPrice.toFixed(2)}
+															</div>
+														</label>
+													</del>
+												)}
+												{order.isRefunded && (
+													<div>
+														-${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+															100).toFixed(2)}
+													</div>
+												)}
+												{order.isRefunded && (
+													<div style={{ fontSize: 30, fontWeight: 800, marginTop: '30px' }}>
+														${(order.totalPrice -
+															order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+																100).toFixed(2)}
+													</div>
+												)}
 											</td>
 										</tr>
 									</tbody>
@@ -656,11 +728,6 @@ const OrderEmail = (props) => {
 									<strong>Tag us in your videos and pictures!</strong>
 									<br />We want to feature you!
 								</p>
-								{/* <Link to="/pages/contact/submit_content_to_be_featured">
-							<div className="jc-c">
-							
-							</div> */}
-
 								<a
 									href="https://www.glow-leds.com/pages/contact/submit_content_to_be_featured"
 									target="_blank"
@@ -855,12 +922,12 @@ const OrderEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_order_email = async (email, first_name) => {
+	const send_order_email = async (email, first_name, subject, refunded) => {
 		console.log({ email_template });
-		const { data } = await API_Emails.send_order_email(email_template, 'Your Glow LEDs Order', email);
+		const { data } = await API_Emails.send_order_email(email_template, subject, email);
 		const { data: request } = await API_Emails.send_order_created_email(
 			email_template,
-			'New Order Created by ' + first_name
+			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
 		);
 		console.log({ data });
 		console.log({ request });
@@ -868,7 +935,7 @@ const OrderEmail = (props) => {
 
 	useEffect(
 		() => {
-			if (order) {
+			if (props.match.params.send === 'true' && order) {
 				if (order.orderItems.length > 0) {
 					if (props.match.params.id) {
 						send_order_email(order.shipping.email, order.shipping.first_name);
@@ -928,8 +995,23 @@ const OrderEmail = (props) => {
 						Back to Emails
 					</button>
 
-					<button className="button primary mb-1rem" onClick={() => send_order_email('lavacquek@icloud.com')}>
+					<button
+						className="button primary mb-1rem"
+						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h2, order.isRefunded)}
+					>
 						Send Test Email
+					</button>
+					<button
+						className="button primary mb-1rem"
+						onClick={() =>
+							send_order_email(
+								order.shipping.email,
+								order.shipping.first_name,
+								email.h2,
+								order.isRefunded
+							)}
+					>
+						Send Order Email
 					</button>
 					{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
 					Send Order Email

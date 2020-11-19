@@ -125,6 +125,7 @@ const EditEmailPage = (props) => {
 		'Packaged',
 		'Shipped',
 		'Delivered',
+		'Refunded',
 		'Account Created',
 		'Reset Password',
 		'Password Changed'

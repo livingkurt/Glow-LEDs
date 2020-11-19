@@ -218,7 +218,7 @@ const App = () => {
 								path="/secure/checkout/placeorder"
 								component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 							/>
-							<PrivateRoute path="/secure/checkout/order/receipt/:id" component={OrderEmail} />
+							<PrivateRoute path="/secure/checkout/order/receipt/:id/true" component={OrderEmail} />
 							{/* Admin Routes */}
 							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
@@ -253,7 +253,11 @@ const App = () => {
 								exact={true}
 								component={AccountCreatedEmail}
 							/>
-							<AdminRoute path="/secure/glow/emails/order" exact={true} component={OrderEmail} />
+							<AdminRoute
+								path="/secure/glow/emails/order/:id?/:status?/false"
+								exact={true}
+								component={OrderEmail}
+							/>
 							<AdminRoute
 								path="/secure/glow/emails/order_status/:id?/:status?"
 								exact={true}
@@ -290,7 +294,7 @@ const App = () => {
 
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
-							<Route path="/checkout/order/receipt/:id" component={OrderEmail} />
+							<Route path="/checkout/order/receipt/:id/true" component={OrderEmail} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
 							<Route path="/account/checkemail" component={CheckEmailPage} />
 							<Route path="/account/emailsent" component={EmailSentPage} />
@@ -328,7 +332,7 @@ const App = () => {
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
-							<Route path="/checkout/order/receipt/:id" component={OrderEmail} />
+							<Route path="/checkout/order/receipt/:id/true" component={OrderEmail} />
 							<Route
 								path="/pages/contact/:reason?"
 								exact={true}

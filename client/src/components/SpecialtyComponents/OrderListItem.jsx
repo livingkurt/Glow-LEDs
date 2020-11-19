@@ -413,6 +413,25 @@ ${props.order.shipping.email}`)}
 										</button>
 									</Link>
 								</div>
+								<div className="row">
+									<button
+										className="button primary mv-5px w-100per"
+										onClick={() =>
+											props.update_order_state(
+												props.order,
+												props.order.isRefunded,
+												'isRefunded',
+												'refundedAt'
+											)}
+									>
+										{props.order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
+									</button>
+									<Link to={`/secure/glow/emails/order/${props.order._id}/refunded/false`}>
+										<button className="button secondary">
+											<i class="fas fa-paper-plane" />
+										</button>
+									</Link>
+								</div>
 								{/* <button
 									className="button primary mv-5px"
 									onClick={() =>

@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
-import { format_date } from '../../utils/helper_functions';
-import { detailsOrder, detailsOrderPublic } from '../../actions/orderActions';
+import { toCapitlize } from '../../utils/helper_functions';
+import { detailsOrder } from '../../actions/orderActions';
 
 const OrderStatusEmail = (props) => {
 	const history = useHistory();
@@ -27,16 +27,11 @@ const OrderStatusEmail = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listEmails(toCapitlize(props.match.params.status)));
-			// stableDispatch(detailsOrderPublic(props.match.params.id));
 			stableDispatch(detailsOrder(props.match.params.id));
 			return () => {};
 		},
 		[ stableDispatch ]
 	);
-
-	function toCapitlize(string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
 
 	useEffect(
 		() => {
@@ -144,7 +139,9 @@ const OrderStatusEmail = (props) => {
 					>
 						<div
 							style={{
-								margin: 'auto'
+								margin: 'auto',
+								maxWidth: '600px',
+								width: '100%'
 							}}
 						>
 							<div

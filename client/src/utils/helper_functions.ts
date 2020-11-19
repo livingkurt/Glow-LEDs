@@ -15,6 +15,9 @@ export const humanize = (str: string) => {
 	}
 	return frags.join(' ');
 };
+export const toCapitlize = (string: string) => {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 export const format_date = (unformatted_date: string) => {
 	// console.log({ unformatted_date });
