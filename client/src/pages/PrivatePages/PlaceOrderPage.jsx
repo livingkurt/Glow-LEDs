@@ -582,7 +582,8 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						</li>
-						{shipping &&
+						{!loading_tax_rate &&
+						shipping &&
 						shipping.hasOwnProperty('first_name') && (
 							<div>
 								<StripeCheckout

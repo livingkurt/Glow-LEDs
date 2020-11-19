@@ -587,7 +587,15 @@ const PlaceOrderPublicPage = (props) => {
 
 						<li>
 							<div>Tax</div>
-							<div>${taxPrice.toFixed(2)}</div>
+							<div>
+								{!loading_tax_rate ? shipping && shipping.hasOwnProperty('first_name') ? (
+									`$${taxPrice.toFixed(2)}`
+								) : (
+									'------'
+								) : (
+									'------'
+								)}
+							</div>
 						</li>
 						<li>
 							<div>Shipping</div>
@@ -595,21 +603,24 @@ const PlaceOrderPublicPage = (props) => {
 								{shipping && shipping.hasOwnProperty('first_name') && shippingPrice > 0 ? (
 									'$' + shippingPrice.toFixed(2)
 								) : (
-									'------'
+									free_shipping_message
 								)}
 							</div>
 						</li>
 						<li>
 							<div>Order Total</div>
 							<div>
-								{shipping && shipping.hasOwnProperty('first_name') ? (
+								{!loading_tax_rate ? shipping && shipping.hasOwnProperty('first_name') ? (
 									'$' + totalPrice.toFixed(2)
+								) : (
+									'------'
 								) : (
 									'------'
 								)}
 							</div>
 						</li>
-						{shipping &&
+						{!loading_tax_rate &&
+						shipping &&
 						shipping.hasOwnProperty('first_name') &&
 						!account_create && (
 							<div>
