@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
@@ -325,6 +326,12 @@ const AnnouncementEmail = () => {
 				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
 				</button>
+
+				{email && (
+					<Link to={'/secure/glow/editemail/' + email._id}>
+						<button className="button primary">Edit Email</button>
+					</Link>
+				)}
 			</div>
 			{jsx}
 		</div>

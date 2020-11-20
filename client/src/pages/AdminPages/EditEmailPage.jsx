@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveEmail, detailsEmail, listEmails } from '../../actions/emailActions';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
@@ -312,8 +312,13 @@ const EditEmailPage = (props) => {
 										</button>
 									</li>
 									<li>
+										<Link to="/secure/glow/emails/">
+											<button className="button secondary w-100per">Back to Emails</button>
+										</Link>
+									</li>
+									<li>
 										<button className="button secondary" onClick={() => history.goBack()}>
-											Back to Emails
+											Back to Template
 										</button>
 									</li>
 								</ul>
