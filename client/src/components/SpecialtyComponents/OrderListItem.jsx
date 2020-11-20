@@ -140,6 +140,12 @@ const OrderListItem = (props) => {
 								<h3 className="mr-10px">Order Number: </h3>
 								<div>{props.order._id}</div>
 							</div>
+							{props.order.tracking_number && (
+								<div className="row ai-c mb-2rem">
+									<h3 className="mr-10px  mv-0px">Tracking Number: </h3>
+									<div className="mt-0px">{props.order.tracking_number}</div>
+								</div>
+							)}
 						</div>
 						<div className="row fs-16px jc-b ai-c">
 							<Link to={'/secure/account/order/' + props.order._id}>
@@ -161,12 +167,14 @@ const OrderListItem = (props) => {
 							return (
 								<div className="row mt-15px">
 									<div className="column ai-c pos-rel">
-										<LazyLoadImage
-											className="order-image w-100px h-100px br-10px mr-15px"
-											alt={item.name}
-											effect="blur"
-											src={item.display_image && item.display_image} // use normal <img> attributes as props
-										/>
+										<Link to={'/collections/all/products/' + item.pathname}>
+											<LazyLoadImage
+												className="order-image w-100px h-100px br-10px mr-15px"
+												alt={item.name}
+												effect="blur"
+												src={item.display_image && item.display_image} // use normal <img> attributes as props
+											/>
+										</Link>
 										{item.qty > 1 && (
 											<div
 												className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c bottom-0px right-5px"

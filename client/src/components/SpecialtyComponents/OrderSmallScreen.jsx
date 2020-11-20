@@ -45,12 +45,14 @@ const OrderSmallScreen = (props) => {
 						return (
 							<div className="row mt-15px">
 								<div className="column ai-c pos-rel">
-									<LazyLoadImage
-										className="order-image w-100px h-100px br-10px mr-15px"
-										alt={item.name}
-										effect="blur"
-										src={item.display_image && item.display_image} // use normal <img> attributes as props
-									/>
+									<Link to={'/collections/all/products/' + item.pathname}>
+										<LazyLoadImage
+											className="order-image w-100px h-100px br-10px mr-15px"
+											alt={item.name}
+											effect="blur"
+											src={item.display_image && item.display_image} // use normal <img> attributes as props
+										/>
+									</Link>
 									{item.qty > 1 && (
 										<div
 											className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c bottom-0px right-5px"
