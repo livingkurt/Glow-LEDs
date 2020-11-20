@@ -84,15 +84,7 @@ const Carousel = (props) => {
 
 	return (
 		<div className="column mh-10px">
-			<h1
-				style={{
-					textAlign: 'center',
-					width: '100%',
-					justifyContent: 'center'
-				}}
-			>
-				Suggested Products
-			</h1>
+			<h1 className="jc-c w-100per ta-c">Suggested Products</h1>
 
 			<Loading loading={loading} error={error}>
 				{products && (

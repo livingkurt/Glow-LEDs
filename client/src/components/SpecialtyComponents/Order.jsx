@@ -61,7 +61,6 @@ const Order = (props) => {
 	// console.log(dates(new Date(2020, 1, 27)));
 
 	const today = new Date();
-
 	return (
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>

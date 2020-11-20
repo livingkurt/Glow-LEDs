@@ -168,7 +168,7 @@ const AnnouncementEmail = () => {
 								</a>
 							</div>
 						</div>
-						<div style={{ backgroundColor: '#333333', padding: '20px' }}>
+						<div style={{ backgroundColor: '#333333', padding: '20px', paddingTop: 10 }}>
 							<div
 								style={{
 									marginLeft: '10px',
@@ -177,7 +177,8 @@ const AnnouncementEmail = () => {
 									maxWidth: '250px',
 									width: '100%',
 									margin: '0 auto',
-									color: 'white'
+									color: 'white',
+									alignItems: 'center'
 								}}
 							>
 								<div
@@ -191,7 +192,13 @@ const AnnouncementEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-facebook zoom" style={{ color: 'white' }} />
+										{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+										{/* <Facebook fill="white" /> */}
+										<img
+											src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
+											style={{ height: '25px' }}
+											alt="facebook"
+										/>
 									</a>
 								</div>
 								<div
@@ -205,7 +212,12 @@ const AnnouncementEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-instagram zoom" style={{ color: 'white' }} />
+										{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
+										<img
+											src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
+											style={{ height: '25px' }}
+											alt="facebook"
+										/>
 									</a>
 								</div>
 								<div
@@ -219,7 +231,12 @@ const AnnouncementEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-youtube zoom" style={{ color: 'white' }} />
+										{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+										<img
+											src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
+											style={{ height: '20px' }}
+											alt="facebook"
+										/>
 									</a>
 								</div>
 								<div
@@ -233,7 +250,12 @@ const AnnouncementEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-soundcloud" style={{ color: 'white' }} />
+										{/* <i className="fab fa-soundcloud" style={{ color: 'white' }} /> */}
+										<img
+											src="https://images2.imgbox.com/ed/d9/eyAcj7D2_o.png"
+											style={{ height: '20px' }}
+											alt="facebook"
+										/>
 									</a>
 								</div>
 							</div>
