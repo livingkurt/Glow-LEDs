@@ -207,7 +207,12 @@ const OrderListItem = (props) => {
 						})}
 					</div>
 				</div>
-
+				<Link
+					to={'/collections/all/products/category/' + props.order.orderItems[0].category}
+					className="ai-c ml-1rem"
+				>
+					<button className="button primary">Buy Again</button>
+				</Link>
 				{props.admin && (
 					<div className="jc-fe column ml-auto ">
 						<button className="button icon h-3rem " onClick={() => show_hide(props.order._id)}>

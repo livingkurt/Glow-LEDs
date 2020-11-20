@@ -167,7 +167,7 @@ const AllProductsPage = (props) => {
 				<meta name="twitter:description" content={description_determination()} />
 			</Helmet>
 			<div className="jc-c">
-				<div>
+				<div className="row">
 					<h1>
 						{category === 'diffuser_caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}
 					</h1>
