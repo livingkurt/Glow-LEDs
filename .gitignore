@@ -127,7 +127,7 @@ routes/batch_routes.js
 routes/expense_routes.js
 routes/feature_routes.js
 routes/promo_routes.js
-routes/sponsor_routes.js
+routes/affiliate_routes.js
 routes/cart_routes.js
 routes/content_routes.js
 routes/device_routes.js
@@ -142,7 +142,7 @@ models/feature.js
 models/cart.js
 models/expense.js
 models/promo.js
-models/sponsor.js
+models/affiliate.js
 models/content.js
 models/device.js
 models/email.js

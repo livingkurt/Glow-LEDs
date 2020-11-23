@@ -5,13 +5,13 @@ import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
-import { listSponsors } from '../../actions/sponsorActions';
+import { listAffiliates } from '../../actions/affiliateActions';
 import { listProducts } from '../../actions/productActions';
 import { API_Products } from '../../utils';
 
 const EditPromoPage = (props) => {
 	const [ id, set_id ] = useState('');
-	const [ sponsor, set_sponsor ] = useState('');
+	const [ affiliate, set_affiliate ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ for_customer, set_for_customer ] = useState('');
@@ -38,8 +38,8 @@ const EditPromoPage = (props) => {
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
 
-	const sponsorList = useSelector((state) => state.sponsorList);
-	const { sponsors } = sponsorList;
+	const affiliateList = useSelector((state) => state.affiliateList);
+	const { affiliates } = affiliateList;
 
 	const productList = useSelector((state) => state.productList);
 	const { products } = productList;
@@ -60,7 +60,7 @@ const EditPromoPage = (props) => {
 			stableDispatch(listProducts(''));
 			get_categories();
 			stableDispatch(listUsers(''));
-			stableDispatch(listSponsors(''));
+			stableDispatch(listAffiliates(''));
 			set_state();
 			return () => {};
 		},
@@ -92,7 +92,7 @@ const EditPromoPage = (props) => {
 
 	const set_state = () => {
 		set_id(promo._id);
-		set_sponsor(promo.sponsor && promo.sponsor._id);
+		set_affiliate(promo.affiliate && promo.affiliate._id);
 		set_user(promo.user && promo.user._id);
 		set_promo_code(promo.promo_code);
 		set_for_customer(promo.for_customer);
@@ -109,7 +109,7 @@ const EditPromoPage = (props) => {
 	};
 	const unset_state = () => {
 		set_id('');
-		set_sponsor('');
+		set_affiliate('');
 		set_user('');
 		set_promo_code('');
 		set_for_customer('');
@@ -130,7 +130,7 @@ const EditPromoPage = (props) => {
 		dispatch(
 			savePromo({
 				_id: id,
-				sponsor,
+				affiliate,
 				user,
 				promo_code,
 				for_customer,
@@ -251,16 +251,16 @@ const EditPromoPage = (props) => {
 									<div className="row wrap">
 										<div className="column  m-10px">
 											<li>
-												<label htmlFor="sponsor">Sponsor</label>
+												<label htmlFor="affiliate">Affiliate</label>
 												<input
 													type="text"
-													name="sponsor"
-													value={sponsor}
-													id="sponsor"
-													onChange={(e) => set_sponsor(e.target.value)}
+													name="affiliate"
+													value={affiliate}
+													id="affiliate"
+													onChange={(e) => set_affiliate(e.target.value)}
 												/>
 											</li>
-											{sponsors && (
+											{affiliates && (
 												<div className="ai-c h-25px mv-10px mb-30px jc-c">
 													<div className="custom-select w-100per">
 														<select
@@ -269,14 +269,14 @@ const EditPromoPage = (props) => {
 															// 	label: user.first_name + ' ' + user.last_name,
 															// 	value: user._id
 															// }}
-															onChange={(e) => set_sponsor(e.target.value)}
+															onChange={(e) => set_affiliate(e.target.value)}
 														>
 															<option key={1} defaultValue="">
-																---Choose Sponsor---
+																---Choose Affiliate---
 															</option>
-															{sponsors.map((sponsor, index) => (
-																<option key={index} value={sponsor._id}>
-																	{sponsor.facebook_name}
+															{affiliates.map((affiliate, index) => (
+																<option key={index} value={affiliate._id}>
+																	{affiliate.facebook_name}
 																</option>
 															))}
 														</select>

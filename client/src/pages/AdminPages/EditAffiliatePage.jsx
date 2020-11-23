@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveSponsor, detailsSponsor } from '../../actions/sponsorActions';
+import { saveAffiliate, detailsAffiliate } from '../../actions/affiliateActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 
-const EditSponsorPage = (props) => {
+const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ glover_name, set_glover_name ] = useState('');
@@ -15,6 +15,8 @@ const EditSponsorPage = (props) => {
 	const [ percentage_off, set_percentage_off ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ funds_generated, set_funds_generated ] = useState('');
+	const [ sponsor, set_sponsor ] = useState('');
+	const [ promoter, set_promoter ] = useState('');
 	const [ active, set_active ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -24,19 +26,21 @@ const EditSponsorPage = (props) => {
 
 	const history = useHistory();
 
-	const sponsorDetails = useSelector((state) => state.sponsorDetails);
-	const { sponsor, loading, error } = sponsorDetails;
+	const affiliateDetails = useSelector((state) => state.affiliateDetails);
+	const { affiliate, loading, error } = affiliateDetails;
 
 	const set_state = () => {
-		set_id(sponsor._id);
-		set_user(sponsor.user && sponsor.user._id);
-		set_glover_name(sponsor.glover_name);
-		set_instagram_handle(sponsor.instagram_handle);
-		set_facebook_name(sponsor.facebook_name);
-		set_percentage_off(sponsor.percentage_off);
-		set_promo_code(sponsor.promo_code);
-		set_funds_generated(sponsor.funds_generated);
-		set_active(sponsor.active);
+		set_id(affiliate._id);
+		set_user(affiliate.user && affiliate.user._id);
+		set_glover_name(affiliate.glover_name);
+		set_instagram_handle(affiliate.instagram_handle);
+		set_facebook_name(affiliate.facebook_name);
+		set_percentage_off(affiliate.percentage_off);
+		set_promo_code(affiliate.promo_code);
+		set_funds_generated(affiliate.funds_generated);
+		set_promoter(affiliate.promoter);
+		set_sponsor(affiliate.sponsor);
+		set_active(affiliate.active);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -47,6 +51,8 @@ const EditSponsorPage = (props) => {
 		set_percentage_off('');
 		set_promo_code('');
 		set_funds_generated('');
+		set_promoter('');
+		set_sponsor('');
 		set_active('');
 	};
 
@@ -57,10 +63,10 @@ const EditSponsorPage = (props) => {
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsSponsor(props.match.params.id));
-				stableDispatch(detailsSponsor(props.match.params.id));
+				stableDispatch(detailsAffiliate(props.match.params.id));
+				stableDispatch(detailsAffiliate(props.match.params.id));
 			} else {
-				stableDispatch(detailsSponsor(''));
+				stableDispatch(detailsAffiliate(''));
 			}
 			stableDispatch(listUsers(''));
 			set_state();
@@ -71,7 +77,7 @@ const EditSponsorPage = (props) => {
 
 	useEffect(
 		() => {
-			if (sponsor) {
+			if (affiliate) {
 				console.log('Set');
 				set_state();
 			} else {
@@ -81,7 +87,7 @@ const EditSponsorPage = (props) => {
 
 			return () => {};
 		},
-		[ sponsor ]
+		[ affiliate ]
 	);
 	setTimeout(() => {
 		set_loading_checkboxes(false);
@@ -90,7 +96,7 @@ const EditSponsorPage = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(
-			saveSponsor({
+			saveAffiliate({
 				_id: id,
 				user,
 				glover_name,
@@ -99,17 +105,19 @@ const EditSponsorPage = (props) => {
 				percentage_off,
 				promo_code,
 				funds_generated,
+				sponsor,
+				promoter,
 				active
 			})
 		);
 		e.target.reset();
 		unset_state();
-		history.push('/secure/glow/sponsors');
+		history.push('/secure/glow/affiliates');
 	};
 
 	return (
 		<div className="main_container">
-			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Sponsor' : 'Create Sponsor'}</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Affiliate' : 'Create Affiliate'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
@@ -117,10 +125,10 @@ const EditSponsorPage = (props) => {
 						<div>Loading...</div>
 					) : ( */}
 					<Loading loading={loading} error={error}>
-						{sponsor && (
+						{affiliate && (
 							<div>
 								<Helmet>
-									<title>Edit Sponsor| Glow LEDs</title>
+									<title>Edit Affiliate| Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -235,6 +243,44 @@ const EditSponsorPage = (props) => {
 												<div>Loading...</div>
 											) : (
 												<li>
+													<label htmlFor="sponsor">Sponsor</label>
+													<input
+														type="checkbox"
+														name="sponsor"
+														// defaultChecked={sponsor ? 'checked' : 'unchecked'}
+														// defaultValue={sponsor}
+														defaultChecked={sponsor}
+														// value={sponsor ? '1' : '0'}
+														id="sponsor"
+														onChange={(e) => {
+															set_sponsor(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="promoter">Promoter</label>
+													<input
+														type="checkbox"
+														name="promoter"
+														// defaultChecked={promoter ? 'checked' : 'unchecked'}
+														// defaultValue={promoter}
+														defaultChecked={promoter}
+														// value={promoter ? '1' : '0'}
+														id="promoter"
+														onChange={(e) => {
+															set_promoter(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
 													<label htmlFor="active">Active</label>
 													<input
 														type="checkbox"
@@ -259,7 +305,7 @@ const EditSponsorPage = (props) => {
 									</li>
 									<li>
 										<button className="button secondary" onClick={() => history.goBack()}>
-											Back to Sponsors
+											Back to Affiliates
 										</button>
 									</li>
 								</ul>
@@ -272,4 +318,4 @@ const EditSponsorPage = (props) => {
 		</div>
 	);
 };
-export default EditSponsorPage;
+export default EditAffiliatePage;

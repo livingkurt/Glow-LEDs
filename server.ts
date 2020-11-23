@@ -20,7 +20,7 @@ import {
 	expense_routes,
 	feature_routes,
 	promo_routes,
-	sponsor_routes,
+	affiliate_routes,
 	cart_routes,
 	content_routes,
 	device_routes,
@@ -96,7 +96,7 @@ app.use(sslRedirect());
 app.use('/api/promos', promo_routes);
 app.use('/api/carts', cart_routes);
 app.use('/api/contents', content_routes);
-app.use('/api/sponsors', sponsor_routes);
+app.use('/api/affiliates', affiliate_routes);
 app.use('/api/expenses', expense_routes);
 app.use('/api/features', feature_routes);
 app.use('/api/users', user_routes);

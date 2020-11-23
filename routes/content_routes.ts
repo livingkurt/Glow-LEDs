@@ -188,7 +188,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 			log_request({
 				method: 'DELETE',
 				path: req.originalUrl,
-				collection: 'Sponsor',
+				collection: 'Affiliate',
 				data: [ deleted_content ],
 				status: 200,
 				success: true,
@@ -199,7 +199,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 			log_request({
 				method: 'DELETE',
 				path: req.originalUrl,
-				collection: 'Sponsor',
+				collection: 'Affiliate',
 				data: [ deleted_content ],
 				status: 500,
 				success: false,

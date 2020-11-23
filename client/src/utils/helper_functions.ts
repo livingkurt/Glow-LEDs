@@ -69,6 +69,40 @@ export const occurrence = function(array: any) {
 	return result;
 };
 
+const diffuser_cap_colors = [
+	{ color: 'Black', price: 11.99 },
+	{ color: 'White', price: 15.99 },
+	{ color: 'Red', price: 15.99 },
+	{ color: 'Green', price: 15.99 },
+	{ color: 'Blue', price: 15.99 },
+	{ color: 'Violet', price: 15.99 },
+	{ color: 'Purple', price: 15.99 }
+];
+const diffuser_colors = [
+	{ color: 'Translucent White', price: 11.99 },
+	{ color: 'Red', price: 11.99 },
+	{ color: 'Green', price: 11.99 },
+	{ color: 'Blue', price: 11.99 },
+	{ color: 'Violet', price: 11.99 },
+	{ color: 'Purple', price: 11.99 }
+];
+
+export const determine_price = (diffuser_cap_color: any, diffuser_cap: any) => {
+	console.log(diffuser_cap_color);
+	console.log(diffuser_cap);
+	let price: any = 11.99;
+	if (diffuser_cap) {
+		price = diffuser_cap_colors.filter((cap_color: any) => {
+			return cap_color.color === diffuser_cap_colors;
+		});
+	} else {
+		price = diffuser_colors.filter((cap_color: any) => {
+			return cap_color.color === diffuser_cap_colors;
+		});
+	}
+	return price;
+};
+
 // export const hsvToRgb = (h, s, v) => {
 // 	var r, g, b;
 

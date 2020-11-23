@@ -38,9 +38,9 @@ import {
 	FeaturesPage,
 	EmailSentPage,
 	EditPromoPage,
-	EditSponsorPage,
+	EditAffiliatePage,
 	PromosPage,
-	SponsorsPage,
+	AffiliatesPage,
 	EditOrderPage,
 	EditCartPage,
 	CartsPage,
@@ -289,11 +289,11 @@ const App = () => {
 							/>
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-							<AdminRoute path="/secure/glow/editsponsor/:id?" component={EditSponsorPage} />
+							<AdminRoute path="/secure/glow/editaffiliate/:id?" component={EditAffiliatePage} />
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
 							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
-							<AdminRoute path="/secure/glow/sponsors" component={SponsorsPage} />
+							<AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
 
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />

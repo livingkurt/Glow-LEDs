@@ -53,9 +53,9 @@ export const update = (userdata: any) => async (
 			last_name: userdata.last_name,
 			email: userdata.email,
 			password: userdata.password,
-			is_sponsored: userdata.is_sponsored,
+			is_affiliateed: userdata.is_affiliateed,
 			email_subscription: userdata.email_subscription,
-			sponsor: userdata.sponsor,
+			affiliate: userdata.affiliate,
 			shipping: userdata.shipping,
 			verified: userdata.verified,
 			admin: userdata.admin
@@ -69,9 +69,9 @@ export const update = (userdata: any) => async (
 				last_name: userdata.last_name,
 				email: userdata.email,
 				password: userdata.password,
-				is_sponsored: userdata.is_sponsored,
+				is_affiliateed: userdata.is_affiliateed,
 				email_subscription: userdata.email_subscription,
-				sponsor: userdata.sponsor,
+				affiliate: userdata.affiliate,
 				shipping: userdata.shipping,
 				verified: userdata.verified,
 				admin: userdata.admin
@@ -133,9 +133,9 @@ export const updateUser = (userdata: any) => async (
 			last_name: userdata.last_name,
 			email: userdata.email,
 			password: userdata.password,
-			is_sponsored: userdata.is_sponsored,
+			is_affiliateed: userdata.is_affiliateed,
 			email_subscription: userdata.email_subscription,
-			sponsor: userdata.sponsor,
+			affiliate: userdata.affiliate,
 			verified: userdata.verified,
 			admin: userdata.admin
 		}
@@ -148,9 +148,9 @@ export const updateUser = (userdata: any) => async (
 				last_name: userdata.last_name,
 				email: userdata.email,
 				password: userdata.password,
-				is_sponsored: userdata.is_sponsored,
+				is_affiliateed: userdata.is_affiliateed,
 				email_subscription: userdata.email_subscription,
-				sponsor: userdata.sponsor,
+				affiliate: userdata.affiliate,
 				verified: userdata.verified,
 				admin: userdata.admin
 			},

@@ -8,7 +8,7 @@ import { listUsers } from '../../actions/userActions';
 import Chart from 'chart.js';
 import { hslToHex, unformat_date } from '../../utils/helper_functions';
 import { API_Revenue, API_Products } from '../../utils';
-import { listSponsors } from '../../actions/sponsorActions';
+import { listAffiliates } from '../../actions/affiliateActions';
 import { listPromos } from '../../actions/promoActions';
 import { Helmet } from 'react-helmet';
 
@@ -30,8 +30,8 @@ const ControlPanelPage = (props) => {
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
 
-	const sponsorList = useSelector((state) => state.sponsorList);
-	const { sponsors } = sponsorList;
+	const affiliateList = useSelector((state) => state.affiliateList);
+	const { affiliates } = affiliateList;
 
 	const promoList = useSelector((state) => state.promoList);
 	const { promos } = promoList;
@@ -48,7 +48,7 @@ const ControlPanelPage = (props) => {
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
-		dispatch(listSponsors());
+		dispatch(listAffiliates());
 		dispatch(listPromos());
 		get_income();
 		get_daily_income();
@@ -398,8 +398,8 @@ const ControlPanelPage = (props) => {
 				<Link to="/secure/glow/features">
 					<button className="button primary"> Features</button>
 				</Link>
-				<Link to="/secure/glow/sponsors">
-					<button className="button primary"> Sponsors</button>
+				<Link to="/secure/glow/affiliates">
+					<button className="button primary"> Affiliates</button>
 				</Link>
 				<Link to="/secure/glow/promos">
 					<button className="button primary">Promos</button>
@@ -661,19 +661,19 @@ const ControlPanelPage = (props) => {
 				)}
 				{orders &&
 				promos &&
-				sponsors && (
+				affiliates && (
 					<div className="order-list responsive_table">
-						<h1 className="ta-c w-100per jc-c">Sponsor Revenue</h1>
+						<h1 className="ta-c w-100per jc-c">Affiliate Revenue</h1>
 						<table className="table">
 							<thead>
 								<tr>
-									<th>Sponsor</th>
+									<th>Affiliate</th>
 									<th>Number of Uses</th>
 									<th>Revenue</th>
 								</tr>
 							</thead>
 							<tbody>
-								{sponsors.map((sponsor) => {
+								{affiliates.map((affiliate) => {
 									return (
 										<tr
 											style={{
@@ -683,17 +683,17 @@ const ControlPanelPage = (props) => {
 											}}
 											className=""
 										>
-											<th style={{ padding: '15px' }}>{sponsor.glover_name}</th>
+											<th style={{ padding: '15px' }}>{affiliate.glover_name}</th>
 											<th style={{ padding: '15px' }}>
 												{
 													orders.filter((order) => {
-														return order.promo_code === sponsor.glover_name;
+														return order.promo_code === affiliate.glover_name;
 													}).length
 												}
 											</th>
 											<th style={{ padding: '15px' }}>
 												${orders
-													.filter((order) => order.promo_code === sponsor.glover_name)
+													.filter((order) => order.promo_code === affiliate.glover_name)
 													.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 													.toFixed(2)}
 											</th>
@@ -712,8 +712,8 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>
 										{
 											orders.filter((order) => {
-												return sponsors
-													.map((sponsor) => sponsor.glover_name)
+												return affiliates
+													.map((affiliate) => affiliate.glover_name)
 													.includes(order.promo_code);
 											}).length
 										}
@@ -721,8 +721,8 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>
 										${orders
 											.filter((order) =>
-												sponsors
-													.map((sponsor) => sponsor.glover_name)
+												affiliates
+													.map((affiliate) => affiliate.glover_name)
 													.includes(order.promo_code)
 											)
 											.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)

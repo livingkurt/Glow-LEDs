@@ -12,7 +12,7 @@ export { default as email_routes } from './email_routes';
 export { default as batch_routes } from './batch_routes';
 export { default as expense_routes } from './expense_routes';
 export { default as feature_routes } from './feature_routes';
-export { default as sponsor_routes } from './sponsor_routes';
+export { default as affiliate_routes } from './affiliate_routes';
 export { default as promo_routes } from './promo_routes';
 export { default as cart_routes } from './cart_routes';
 export { default as content_routes } from './content_routes';

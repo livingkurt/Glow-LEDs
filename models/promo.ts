@@ -3,7 +3,7 @@ export {};
 
 const promoSchema = new mongoose.Schema(
 	{
-		sponsor: { type: mongoose.Schema.Types.ObjectId, ref: 'Sponsor' },
+		affiliate: { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' },
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		promo_code: { type: String },
 		for_customer: { type: Boolean },

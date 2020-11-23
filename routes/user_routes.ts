@@ -269,9 +269,9 @@ router.post('/', async (req, res) => {
 // 					first_name: updatedUser.first_name,
 // 					last_name: updatedUser.last_name,
 // 					email: updatedUser.email,
-// 					sponsor: updatedUser.sponsor,
+// 					affiliate: updatedUser.affiliate,
 // 					email_subscription: updatedUser.email_subscription,
-// 					is_sponsored: updatedUser.is_sponsored,
+// 					is_affiliateed: updatedUser.is_affiliateed,
 // 					isVerified: updatedUser.isVerified,
 // 					isAdmin: updatedUser.isAdmin,
 // 					shipping: updatedUser.shipping,
@@ -420,10 +420,10 @@ router.put('/update/:id', isAuth, async (req, res) => {
 			// user.password = req.body.password || user.password;
 			user.isAdmin = req.body.admin || user.isAdmin;
 			user.isVerified = req.body.verified || user.isVerified;
-			user.sponsor = req.body.sponsor || user.sponsor;
+			user.affiliate = req.body.affiliate || user.affiliate;
 			user.email_subscription = req.body.email_subscription;
 			user.shipping = req.body.shipping;
-			user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
+			user.is_affiliateed = req.body.is_affiliateed || user.is_affiliateed;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
 			if (updatedUser) {
@@ -443,10 +443,10 @@ router.put('/update/:id', isAuth, async (req, res) => {
 					first_name: updatedUser.first_name,
 					last_name: updatedUser.last_name,
 					email: updatedUser.email,
-					sponsor: updatedUser.sponsor,
+					affiliate: updatedUser.affiliate,
 					email_subscription: updatedUser.email_subscription,
 					shipping: updatedUser.shipping,
-					is_sponsored: updatedUser.is_sponsored,
+					is_affiliateed: updatedUser.is_affiliateed,
 					isVerified: updatedUser.isVerified,
 					isAdmin: updatedUser.isAdmin,
 					token: getToken(updatedUser)
@@ -492,9 +492,9 @@ router.put('/update/:id', isAuth, async (req, res) => {
 // 				first_name: updatedUser.first_name,
 // 				last_name: updatedUser.last_name,
 // 				email: updatedUser.email,
-// 				sponsor: updatedUser.sponsor,
+// 				affiliate: updatedUser.affiliate,
 // 				email_subscription: updatedUser.email_subscription,
-// 				is_sponsored: updatedUser.is_sponsored,
+// 				is_affiliateed: updatedUser.is_affiliateed,
 // 				isVerified: updatedUser.isVerified,
 // 				isAdmin: updatedUser.isAdmin,
 // 				token: getToken(updatedUser)
@@ -526,7 +526,7 @@ router.put('/verify/:id', async (req, res) => {
 			user.password = req.body.password || user.password;
 			user.isAdmin = req.body.isAdmin || user.isAdmin;
 			user.email_subscription = req.body.email_subscription || user.email_subscription;
-			user.is_sponsored = req.body.is_sponsored || user.is_sponsored;
+			user.is_affiliateed = req.body.is_affiliateed || user.is_affiliateed;
 			user.isVerified = true;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
@@ -547,9 +547,9 @@ router.put('/verify/:id', async (req, res) => {
 					first_name: updatedUser.first_name,
 					last_name: updatedUser.last_name,
 					email: updatedUser.email,
-					sponsor: updatedUser.sponsor,
+					affiliate: updatedUser.affiliate,
 					email_subscription: updatedUser.email_subscription,
-					is_sponsored: updatedUser.is_sponsored,
+					is_affiliateed: updatedUser.is_affiliateed,
 					// isVerified: updatedUser.isVerified,
 					shipping: updatedUser.shipping
 					// token: getToken(updatedUser)
@@ -640,8 +640,8 @@ router.post('/login', async (req, res) => {
 				last_name: login_user.last_name,
 				email: login_user.email,
 				isAdmin: login_user.isAdmin,
-				sponsor: login_user.sponsor,
-				is_sponsored: login_user.is_sponsored,
+				affiliate: login_user.affiliate,
+				is_affiliateed: login_user.is_affiliateed,
 				email_subscription: login_user.email_subscription,
 				isVerified: login_user.isVerified,
 				shipping: login_user.shipping,
@@ -679,8 +679,8 @@ router.post('/register', async (req, res) => {
 			last_name: req.body.last_name,
 			email: req.body.email,
 			password: req.body.password,
-			sponsor: req.body.sponsor,
-			is_sponsored: req.body.is_sponsored,
+			affiliate: req.body.affiliate,
+			is_affiliateed: req.body.is_affiliateed,
 			email_subscription: req.body.email_subscription,
 			isAdmin: false,
 			isVerified: true
@@ -718,7 +718,7 @@ router.post('/register', async (req, res) => {
 						last_name: newUser.last_name,
 						email: newUser.email,
 						isAdmin: newUser.isAdmin,
-						is_sponsored: newUser.is_sponsored,
+						is_affiliateed: newUser.is_affiliateed,
 						email_subscription: newUser.email_subscription,
 						isVerified: newUser.isVerified,
 						shipping: newUser.shipping,
@@ -775,8 +775,8 @@ router.post('/getuser/:id', async (req, res) => {
 				email: user.email,
 				password: user.password,
 				isAdmin: user.isAdmin,
-				sponsor: user.sponsor,
-				is_sponsored: user.is_sponsored,
+				affiliate: user.affiliate,
+				is_affiliateed: user.is_affiliateed,
 				email_subscription: user.email_subscription,
 				shipping: user.shipping,
 				token: getToken(user)
@@ -845,8 +845,8 @@ router.get('/createadmin', async (req, res) => {
 						first_name: admin.first_name,
 						last_name: admin.last_name,
 						email: admin.email,
-						sponsor: admin.sponsor,
-						is_sponsored: admin.is_sponsored,
+						affiliate: admin.affiliate,
+						is_affiliateed: admin.is_affiliateed,
 						email_subscription: admin.email_subscription,
 						isAdmin: admin.isAdmin,
 						isVerified: admin.isVerified,

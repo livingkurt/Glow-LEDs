@@ -140,9 +140,9 @@ const Sidebar = (props) => {
 									Expenses
 								</button>
 							</Link>
-							<Link to="/secure/glow/sponsors">
+							<Link to="/secure/glow/affiliates">
 								<button className="sidebar_button secondary" onClick={closeMenu}>
-									Sponsors
+									Affiliates
 								</button>
 							</Link>
 							<Link to="/secure/glow/promos">

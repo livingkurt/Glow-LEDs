@@ -61,11 +61,11 @@ import {
 } from './reducers/orderReducers';
 import { promoDeleteReducer, promoDetailsReducer, promoListReducer, promoSaveReducer } from './reducers/promoReducers';
 import {
-	sponsorDeleteReducer,
-	sponsorDetailsReducer,
-	sponsorListReducer,
-	sponsorSaveReducer
-} from './reducers/sponsorReducers';
+	affiliateDeleteReducer,
+	affiliateDetailsReducer,
+	affiliateListReducer,
+	affiliateSaveReducer
+} from './reducers/affiliateReducers';
 import {
 	contentDeleteReducer,
 	contentDetailsReducer,
@@ -129,10 +129,10 @@ const reducer = combineReducers({
 	promoDetails: promoDetailsReducer,
 	promoSave: promoSaveReducer,
 	promoDelete: promoDeleteReducer,
-	sponsorList: sponsorListReducer,
-	sponsorDetails: sponsorDetailsReducer,
-	sponsorSave: sponsorSaveReducer,
-	sponsorDelete: sponsorDeleteReducer,
+	affiliateList: affiliateListReducer,
+	affiliateDetails: affiliateDetailsReducer,
+	affiliateSave: affiliateSaveReducer,
+	affiliateDelete: affiliateDeleteReducer,
 	contentList: contentListReducer,
 	contentDetails: contentDetailsReducer,
 	contentSave: contentSaveReducer,

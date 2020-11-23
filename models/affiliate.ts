@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 export {};
 
-const sponsorSchema = new mongoose.Schema(
+const affiliateSchema = new mongoose.Schema(
 	{
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		glover_name: { type: String },
@@ -9,6 +9,8 @@ const sponsorSchema = new mongoose.Schema(
 		facebook_name: { type: String },
 		percentage_off: { type: Number },
 		promo_code: { type: String },
+		promoter: { type: Boolean, default: true },
+		sponsor: { type: Boolean, default: false },
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }
 	},
@@ -17,6 +19,6 @@ const sponsorSchema = new mongoose.Schema(
 	}
 );
 
-const sponsorModel = mongoose.model('Sponsor', sponsorSchema);
+const affiliateModel = mongoose.model('Affiliate', affiliateSchema);
 
-export default sponsorModel;
+export default affiliateModel;

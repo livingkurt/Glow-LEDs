@@ -211,7 +211,7 @@ const DevicesPage = (props) => {
 							<thead>
 								<tr>
 									<th>Active</th>
-									<th>sponsor</th>
+									<th>affiliate</th>
 									<th>Promo Code</th>
 									<th>Percentage Off</th>
 									<th>Funds Generated</th>
@@ -240,7 +240,7 @@ const DevicesPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td>{device.sponsor}</td>
+										<td>{device.affiliate}</td>
 										<td>{device.device_code}</td>
 										<td>{device.percentage_off}%</td>
 										<td>${device.funds_generated}</td>

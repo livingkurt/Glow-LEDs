@@ -14,8 +14,8 @@ const EditUserPage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
-	const [ is_sponsored, set_is_sponsored ] = useState('');
-	const [ sponsor, set_sponsor ] = useState('');
+	const [ is_affiliateed, set_is_affiliateed ] = useState('');
+	const [ affiliate, set_affiliate ] = useState('');
 	const [ verified, set_verified ] = useState('');
 	const [ admin, set_admin ] = useState('');
 
@@ -39,7 +39,16 @@ const EditUserPage = (props) => {
 		console.log(request);
 		if (request.isValid) {
 			dispatch(
-				updateUser({ userId: user._id, email, first_name, last_name, is_sponsored, sponsor, verified, admin })
+				updateUser({
+					userId: user._id,
+					email,
+					first_name,
+					last_name,
+					is_affiliateed,
+					affiliate,
+					verified,
+					admin
+				})
 			);
 			history.push('/secure/glow/userprofile/' + user._id);
 		}
@@ -56,8 +65,8 @@ const EditUserPage = (props) => {
 				set_email(user.email);
 				set_first_name(user.first_name);
 				set_last_name(user.last_name);
-				set_is_sponsored(user.isSponsored);
-				set_sponsor(user.sponsor);
+				set_is_affiliateed(user.isAffiliateed);
+				set_affiliate(user.affiliate);
 				set_verified(user.isVerified);
 				set_admin(user.isAdmin);
 				// setPassword(user.password);
@@ -75,8 +84,8 @@ const EditUserPage = (props) => {
 				set_email(userUpdate.email);
 				set_first_name(userUpdate.first_name);
 				set_last_name(userUpdate.last_name);
-				set_is_sponsored(userUpdate.isSponsored);
-				set_sponsor(userUpdate.sponsor);
+				set_is_affiliateed(userUpdate.isAffiliateed);
+				set_affiliate(userUpdate.affiliate);
 				set_verified(userUpdate.isVerified);
 				set_admin(userUpdate.isAdmin);
 				// setPassword(userUpdate.password);
@@ -154,27 +163,27 @@ const EditUserPage = (props) => {
 								{console.log({ verified })}
 
 								<li>
-									<label htmlFor="is_sponsored"> Sponsored</label>
+									<label htmlFor="is_affiliateed"> Affiliateed</label>
 									<input
 										type="checkbox"
-										name="is_sponsored"
-										// defaultChecked={is_sponsored === true ? 'checked' : 'unchecked'}
-										defaultChecked={is_sponsored}
-										// checked={is_sponsored}
-										id="is_sponsored"
+										name="is_affiliateed"
+										// defaultChecked={is_affiliateed === true ? 'checked' : 'unchecked'}
+										defaultChecked={is_affiliateed}
+										// checked={is_affiliateed}
+										id="is_affiliateed"
 										onChange={(e) => {
-											set_is_sponsored(e.target.checked);
+											set_is_affiliateed(e.target.checked);
 										}}
 									/>
 								</li>
 								<li>
-									<label htmlFor="sponsor">Sponsor</label>
+									<label htmlFor="affiliate">Affiliate</label>
 									<input
-										defaultValue={sponsor}
+										defaultValue={affiliate}
 										type="text"
-										name="sponsor"
-										id="sponsor"
-										onChange={(e) => set_sponsor(e.target.value)}
+										name="affiliate"
+										id="affiliate"
+										onChange={(e) => set_affiliate(e.target.value)}
 									/>
 								</li>
 								<li>
