@@ -93,6 +93,13 @@ const FAQPage = () => {
 							<li style={{ lineHeight: '25px' }}>FL Atoms</li>
 							<li style={{ lineHeight: '25px' }}>FL Ions</li>
 						</ul>
+						<h2>Apolloskins</h2>
+						<label>
+							Maximum Microlight Dimmensions including the bulb for Nanoskins: L27mm x W15mm x H10mm
+						</label>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>TL Apollos</li>
+						</ul>
 						<h2>Coinskins</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Coinskins: L28mm x W19mm x H8mm
@@ -100,10 +107,8 @@ const FAQPage = () => {
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra and Chroma EVOs</li>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
-							<li style={{ lineHeight: '25px' }}>
-								Throwlights Apollo's (Not Tested) May fit a little loose
-							</li>
 							<li style={{ lineHeight: '25px' }}>FL Aethers</li>
+							<li style={{ lineHeight: '25px' }}>OSM 2s</li>
 						</ul>
 						<h2>Coffinskins</h2>
 						<label>
@@ -111,7 +116,7 @@ const FAQPage = () => {
 						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>Micromax</li>
-							<li style={{ lineHeight: '25px' }}>Throwlights Coffin Style Chips</li>
+							<li style={{ lineHeight: '25px' }}>Coffin Style Chips</li>
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>

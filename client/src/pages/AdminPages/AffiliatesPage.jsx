@@ -72,7 +72,6 @@ const AffiliatesPage = (props) => {
 					</button>
 				</Link>
 			</div>
-
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Affiliates</h1>
 			</div>
