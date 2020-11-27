@@ -37,7 +37,7 @@ router.put('/products', async (req, res) => {
 		{
 			// $rename: { shipping_price: 'volume' }
 			$set: {
-				hidden: false
+				sale_price: 9.59
 			}
 			// $unset: { shipping_price: 1 }
 		}

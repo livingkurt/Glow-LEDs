@@ -340,9 +340,9 @@ const Header = (props) => {
 								<Link to="/collections/all/products/category/glow_strings">
 									<button className="button nav w-100per ta-l">Glow Strings</button>
 								</Link>
-								<Link to="/collections/all/products/category/infinity_mirrors">
+								{/* <Link to="/collections/all/products/category/infinity_mirrors">
 									<button className="button nav w-100per ta-l"> Infinity Mirrors</button>
-								</Link>
+								</Link> */}
 							</div>
 						</div>
 						<div className="dropdown-nav">

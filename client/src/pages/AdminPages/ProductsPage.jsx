@@ -69,9 +69,9 @@ const ProductsPage = (props) => {
 		if (!product.category) {
 			result = colors[0].color;
 		}
-		if (product.category === 'infinity_mirrors') {
-			result = colors[1].color;
-		}
+		// if (product.category === 'infinity_mirrors') {
+		// 	result = colors[1].color;
+		// }
 		if (product.category === 'glow_strings') {
 			result = colors[2].color;
 		}

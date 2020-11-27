@@ -96,9 +96,9 @@ const SitemapPage = () => {
 							<li>
 								<Link to="/collections/all/products/category/glow_strings">Glow Strings</Link>
 							</li>
-							<li>
+							{/* <li>
 								<Link to="/collections/all/products/category/infinity_mirrors">Infinity Mirrors</Link>
-							</li>
+							</li> */}
 						</ul>
 					</div>
 					<div style={{ width: '50%' }}>
@@ -320,7 +320,7 @@ const SitemapPage = () => {
 								Large Custom Infinity Mirror
 							</Link>
 						</li> */}
-									<li>
+									{/* <li>
 										<Link to="/collections/all/products/serotonin_molecule_infinity_mirror">
 											Serotonin Molecule Infinity Mirror
 										</Link>
@@ -329,12 +329,12 @@ const SitemapPage = () => {
 										<Link to="/collections/all/products/triforce_infinity_mirror">
 											Triforce Infinity Mirror
 										</Link>
-									</li>
-									<li>
+									</li> */}
+									{/* <li>
 										<Link to="/collections/all/products/custom_infinity_mirror">
 											Custom Infinity Mirrors
 										</Link>
-									</li>
+									</li> */}
 									<li>
 										<Link to="/collections/all/products/coin_battery_storage">
 											Coin Battery Storage

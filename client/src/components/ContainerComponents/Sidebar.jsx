@@ -391,11 +391,11 @@ const Sidebar = (props) => {
 								Glow Strings
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/infinity_mirrors">
+						{/* <Link to="/collections/all/products/category/infinity_mirrors">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Infinity Mirrors
 							</button>
-						</Link>
+						</Link> */}
 					</ul>
 					<i
 						style={{ '-webkitTransform': 'rotate(-180deg)' }}

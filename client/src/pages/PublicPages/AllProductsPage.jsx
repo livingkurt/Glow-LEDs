@@ -123,9 +123,9 @@ const AllProductsPage = (props) => {
 		glow_strings:
 			'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
 		glowskins:
-			'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.',
-		infinity_mirrors:
-			'Decorate your home and festival with these stunning Infinity Mirrors at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Infinity Mirrors. Click to Shop.'
+			'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
+		// infinity_mirrors:
+		// 	'Decorate your home and festival with these stunning Infinity Mirrors at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Infinity Mirrors. Click to Shop.'
 	};
 
 	const description_determination = () => {
@@ -138,9 +138,9 @@ const AllProductsPage = (props) => {
 		if (category.toLowerCase() === 'diffuser_caps') {
 			return descriptions.diffuser_caps;
 		}
-		if (category === 'infinity_mirrors') {
-			return descriptions.infinity_mirrors;
-		}
+		// if (category === 'infinity_mirrors') {
+		// 	return descriptions.infinity_mirrors;
+		// }
 		if (category === 'glowskins') {
 			return descriptions.glowskins;
 		}

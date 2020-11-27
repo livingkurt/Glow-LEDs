@@ -133,6 +133,40 @@ const HomePage = (props) => {
 
 			<div className="home_page_divs">
 				<div className="jc-c">
+					<h1 style={{ textAlign: 'center' }}>Glowskins</h1>
+				</div>
+				<div className="jc-c pos-rel">
+					<div className="iframe-container">
+						<iframe
+							title="Mini Diffuser Caps Promo Video"
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/3Yk0QOMBlAo?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</div>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip
+					inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which
+					create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin
+					chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel
+					comfortable! They do not inhibit access to your microlight button for mode switching. Our light and
+					streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.
+				</p>
+				<div className="jc-c">
+					<Link to="/collections/all/products/category/glowskins">
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Glowskins</h2>
+						</button>
+					</Link>
+				</div>
+			</div>
+			<div className="home_page_divs">
+				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Mini Diffuser Caps</h1>
 				</div>
 				<div className="jc-c pos-rel">
@@ -227,7 +261,7 @@ const HomePage = (props) => {
 					</Link>
 				</div>
 			</div>
-			<div className="home_page_divs">
+			{/* <div className="home_page_divs">
 				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Infinity Mirrors</h1>
 				</div>
@@ -258,7 +292,7 @@ const HomePage = (props) => {
 						</button>
 					</Link>
 				</div>
-			</div>
+			</div> */}
 			<div className="home_page_divs">
 				<div className="jc-c">
 					<h1>Glow Strings</h1>

@@ -371,12 +371,12 @@ const FAQPage = () => {
 								</span>️!
 							</li>
 						</ul>
-						<h2 style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
+						{/* <h2 style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
 							Custom Infinity Mirrors
 						</h2>
 						<ul style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
-								Before ordering a custom infinity mirror a consultation must be had{' '}
+								Before ordering a custom  mirror a consultation must be had{' '}
 								<span aria-label="emoji" role="img">
 									📝
 								</span>️.
@@ -404,8 +404,8 @@ const FAQPage = () => {
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Pricing begins at $549. The price may vary depending on the size and hardware used ⚙️ .
-							</li>
-						</ul>
+							</li> */}
+						{/* </ul> */}
 						<Link to="/pages/contact/custom_orders">
 							<div className="jc-c">
 								<button className="button primary " style={{ margin: 'auto' }}>
@@ -506,7 +506,7 @@ const FAQPage = () => {
 								</span>️will be sent via Priority Mail.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								Shipping time is 1-3 business days{' '}
+								Shipping time is 1-3 business days, but may be delayed due to pandemic.{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🚚
 								</span>️.
@@ -542,10 +542,10 @@ const FAQPage = () => {
 									✉️{' '}
 								</span>️within approximately 1 week after the order is placed.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							{/* <li style={{ lineHeight: '25px' }}>
 								For infinity mirrors, expect a longer processing time. Assembly of infinity mirrors is
 								much more intensive than other products.
-							</li>
+							</li> */}
 							<li style={{ lineHeight: '25px' }}>
 								If a custom order is placed, processing times will be discussed during consultation.
 							</li>

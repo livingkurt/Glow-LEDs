@@ -111,7 +111,7 @@ const MaintenancePage = (props) => {
 						designs create truly ridiculous light shows. 100% facemelt guarantee.
 					</p>
 				</div>
-				<div className="home_page_divs">
+				{/* <div className="home_page_divs">
 					<div className="jc-c">
 						<h1>Infinity Mirrors</h1>
 					</div>
@@ -135,7 +135,7 @@ const MaintenancePage = (props) => {
 						go on for miles of rainbow bliss. Order a custom infinity mirror to add that personal touch that
 						will only be found in your space.
 					</p>
-				</div>
+				</div> */}
 				<div className="home_page_divs">
 					<div className="jc-c">
 						<h1>Glow Strings</h1>

@@ -200,7 +200,7 @@ const GlowControlHomePage = (props) => {
 					</div>
 				)}
 			</div>
-			<div className="home_page_divs">
+			{/* <div className="home_page_divs">
 				<div className="jc-c">
 					<h1 style={{ textAlign: 'center' }}>Infinity Mirrors</h1>
 				</div>
@@ -231,7 +231,7 @@ const GlowControlHomePage = (props) => {
 						</button>
 					</Link>
 				</div>
-			</div>
+			</div> */}
 			<div className="home_page_divs">
 				<div className="jc-c">
 					<h1>Glow Strings</h1>
