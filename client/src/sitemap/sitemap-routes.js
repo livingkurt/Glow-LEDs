@@ -19,7 +19,7 @@ export default (
 		<Route path="/collections/all/products/category/diffuser_caps/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/frosted_diffusers/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/glow_strings/subcategory/:subcategory" />
-		<Route path="/collections/all/products/category/infinity_mirrors/subcategory/:subcategory" />
+		{/* <Route path="/collections/all/products/category/infinity_mirrors/subcategory/:subcategory" /> */}
 		<Route path="/collections/all/products/category/mini_diffuser_caps/subcategory/:subcategory" />
 		<Route path="/collections/all/products/:pathname" />
 		<Route exact path="/pages/contact/:reason" />
