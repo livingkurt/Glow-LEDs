@@ -380,28 +380,28 @@ const Sidebar = (props) => {
 						className=" pos-abs right-10px top-8px fas fa-sort-up"
 					/>
 				</div> */}
-				<div className="sidebar_dropdown">
-					<button className="sidebar_button primary">
+				{/* <div className="sidebar_dropdown"> */}
+				{/* <button className="sidebar_button primary">
 						<Link to="/pages/menu/decor">Decor</Link>
+					</button> */}
+				<Link to="/collections/all/products/category/glow_strings">
+					<button className="sidebar_button primary" onClick={closeMenu}>
+						Glow Strings
 					</button>
+				</Link>
 
-					<ul className="sidebar_dropdown_container">
+				{/* <ul className="sidebar_dropdown_container">
 						<Link to="/collections/all/products/category/glow_strings">
 							<button className="sidebar_button secondary" onClick={closeMenu}>
 								Glow Strings
 							</button>
 						</Link>
-						{/* <Link to="/collections/all/products/category/infinity_mirrors">
-							<button className="sidebar_button secondary" onClick={closeMenu}>
-								Infinity Mirrors
-							</button>
-						</Link> */}
 					</ul>
 					<i
 						style={{ '-webkitTransform': 'rotate(-180deg)' }}
 						className=" pos-abs right-10px top-8px fas fa-sort-up"
-					/>
-				</div>
+					/> */}
+				{/* </div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar_button primary">
 						<Link to="/pages/menu/community">Community</Link>

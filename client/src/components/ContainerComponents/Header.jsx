@@ -333,17 +333,17 @@ const Header = (props) => {
 						</div> */}
 
 						<div className="dropdown-nav">
-							<Link to="/pages/menu/decor">
+							{/* <Link to="/pages/menu/decor">
 								<button className="button nav">Decor</button>
+							</Link> */}
+							{/* <div className="dropdown-nav-content hover_fade_in w-200px"> */}
+							<Link to="/collections/all/products/category/glow_strings">
+								<button className="button nav w-100per ta-l">Glow Strings</button>
 							</Link>
-							<div className="dropdown-nav-content hover_fade_in w-200px">
-								<Link to="/collections/all/products/category/glow_strings">
-									<button className="button nav w-100per ta-l">Glow Strings</button>
-								</Link>
-								{/* <Link to="/collections/all/products/category/infinity_mirrors">
+							{/* <Link to="/collections/all/products/category/infinity_mirrors">
 									<button className="button nav w-100per ta-l"> Infinity Mirrors</button>
 								</Link> */}
-							</div>
+							{/* </div> */}
 						</div>
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/community">
