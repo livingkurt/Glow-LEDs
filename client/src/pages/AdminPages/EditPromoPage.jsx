@@ -15,6 +15,8 @@ const EditPromoPage = (props) => {
 	const [ user, set_user ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ for_customer, set_for_customer ] = useState('');
+	const [ single_use, set_single_use ] = useState('');
+	const [ used_once, set_used_once ] = useState('');
 	const [ excluded_categories, set_excluded_categories ] = useState([]);
 	const [ excluded_products, set_excluded_products ] = useState([]);
 	const [ excluded_category, set_excluded_category ] = useState('');
@@ -96,6 +98,8 @@ const EditPromoPage = (props) => {
 		set_user(promo.user && promo.user._id);
 		set_promo_code(promo.promo_code);
 		set_for_customer(promo.for_customer);
+		set_single_use(promo.single_use);
+		set_used_once(promo.used_once);
 		set_excluded_categories(promo.excluded_categories);
 		set_excluded_products(promo.excluded_products);
 		set_percentage_off(promo.percentage_off);
@@ -113,6 +117,8 @@ const EditPromoPage = (props) => {
 		set_user('');
 		set_promo_code('');
 		set_for_customer('');
+		set_single_use('');
+		set_used_once('');
 		set_excluded_categories('');
 		set_excluded_products('');
 		set_percentage_off('');
@@ -134,6 +140,8 @@ const EditPromoPage = (props) => {
 				user,
 				promo_code,
 				for_customer,
+				single_use,
+				used_once,
 				excluded_categories,
 				excluded_products,
 				percentage_off,
@@ -341,6 +349,38 @@ const EditPromoPage = (props) => {
 														id="for_customer"
 														onChange={(e) => {
 															set_for_customer(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="single_use">Single Use</label>
+													<input
+														type="checkbox"
+														name="single_use"
+														defaultChecked={single_use}
+														id="single_use"
+														onChange={(e) => {
+															set_single_use(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="used_once">Used Once</label>
+													<input
+														type="checkbox"
+														name="used_once"
+														defaultChecked={used_once}
+														id="used_once"
+														onChange={(e) => {
+															set_used_once(e.target.checked);
 														}}
 													/>
 												</li>

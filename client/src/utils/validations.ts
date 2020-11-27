@@ -13,6 +13,7 @@ export const validate_promo_code = (data: any) => {
 	}
 	const promo_codes = data.promos.map((promo: any) => promo.promo_code);
 	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code);
+	console.log({ promo });
 
 	// Convert empty fields to an empty string so we can use validator functions
 	data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : '';
@@ -25,6 +26,10 @@ export const validate_promo_code = (data: any) => {
 	}
 	// errors.promo_code = 'Promo Code Not Active Start';
 	if (promo && !promo.active) {
+		errors.promo_code = 'Promo Code Not Active';
+	}
+	console.log({ single_use: promo.single_use, used_once: promo.used_once });
+	if (promo && promo.single_use && promo.used_once) {
 		errors.promo_code = 'Promo Code Not Active';
 	}
 	if (promo && !promo.for_customer) {

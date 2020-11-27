@@ -12,7 +12,7 @@ import { LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
-import { API_External } from '../../utils';
+import { API_External, API_Products } from '../../utils';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -187,7 +187,7 @@ const PlaceOrderPage = (props) => {
 		[ shippingPrice ]
 	);
 
-	const placeOrderHandler = (token) => {
+	const placeOrderHandler = async (token) => {
 		// create an order
 		console.log({ user_data });
 		console.log({ user });
@@ -210,6 +210,32 @@ const PlaceOrderPage = (props) => {
 		);
 
 		set_payment_loading(true);
+		const request = await API_Products.promo_code_used(promo_code);
+		console.log(request);
+	};
+
+	const create_order_without_paying = async () => {
+		// create an order
+		console.log({ user });
+		dispatch(
+			createOrder({
+				orderItems: cartItems,
+				shipping: { ...shipping, email: user.email },
+				payment,
+				itemsPrice,
+				shippingPrice,
+				taxPrice,
+				totalPrice,
+				user,
+				order_note,
+				promo_code
+			})
+		);
+
+		set_payment_loading(false);
+		props.history.push('/secure/glow/orders');
+		empty_cart();
+		const request = await API_Products.promo_code_used(promo_code);
 	};
 
 	const empty_cart = () => {
@@ -340,28 +366,6 @@ const PlaceOrderPage = (props) => {
 		console.log({ error });
 	};
 
-	const create_order_without_paying = () => {
-		// create an order
-		console.log({ user });
-		dispatch(
-			createOrder({
-				orderItems: cartItems,
-				shipping: { ...shipping, email: user.email },
-				payment,
-				itemsPrice,
-				shippingPrice,
-				taxPrice,
-				totalPrice,
-				user,
-				order_note,
-				promo_code
-			})
-		);
-
-		set_payment_loading(false);
-		props.history.push('/secure/glow/orders');
-		empty_cart();
-	};
 	return (
 		<div>
 			<Helmet>

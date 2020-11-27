@@ -8,7 +8,7 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
-import { listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
+import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Products } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
 
@@ -617,14 +617,130 @@ ${props.order.shipping.email}`)}
 						<div>
 							<div className="jc-b">
 								<div className="column jc-b w-100per">
-									<button
-										className="button primary mv-5px "
-										onClick={() =>
-											update_order_payment_state(order, order.isPaid, 'isPaid', 'paidAt')}
-									>
-										{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_payment_state(order, order.isPaid, 'isPaid', 'paidAt')}
+										>
+											{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+										</button>
+										<Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_state(
+													order,
+													order.isReassured,
+													'isReassured',
+													'reassuredAt'
+												)}
+										>
+											{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
+										</button>
+										<Link to={`/secure/glow/emails/order_status/${order._id}/reassured`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_state(
+													order,
+													order.isManufactured,
+													'isManufactured',
+													'manufacturedAt'
+												)}
+										>
+											{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+										</button>
+										<Link to={`/secure/glow/emails/order_status/${order._id}/manufactured`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
+										>
+											{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+										</button>
+										<Link to={`/secure/glow/emails/order_status/${order._id}/packaged`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
+										>
+											{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+										</button>
+										<Link to={`/secure/glow/emails/order_status/${order._id}/shipped`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_state(
+													order,
+													order.isDelivered,
+													'isDelivered',
+													'deliveredAt'
+												)}
+										>
+											{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+										</button>
+										<Link to={`/secure/glow/emails/order_status/${order._id}/delivered`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<div className="row ai-c">
+										<button
+											className="button primary mv-5px w-100per"
+											onClick={() =>
+												update_order_state(order, order.isRefunded, 'isRefunded', 'refundedAt')}
+										>
+											{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
+										</button>
+										<Link to={`/secure/glow/emails/order/${order._id}/refunded/false`}>
+											<button className="button secondary">
+												<i class="fas fa-paper-plane" />
+											</button>
+										</Link>
+									</div>
+									<button className="button secondary mv-5px">
+										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
 									</button>
 									<button
+										className="button secondary mv-5px"
+										onClick={() => dispatch(deleteOrder(order._id))}
+									>
+										Delete Order
+									</button>
+
+									{/* <button
 										className="button primary mv-5px "
 										onClick={() =>
 											update_order_state(
@@ -659,7 +775,7 @@ ${props.order.shipping.email}`)}
 									</button>
 									<button className="button primary">
 										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
-									</button>
+									</button> */}
 								</div>
 							</div>
 							<div className="mv-10px">

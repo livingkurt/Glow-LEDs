@@ -31,5 +31,9 @@ export default {
 	get_occurrences: () => {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/orders/occurrences');
+	},
+	promo_code_used: (promo_code: any) => {
+		console.log({ promo_code_used: promo_code });
+		return axios.put('/api/promos/used', { promo_code });
 	}
 };
