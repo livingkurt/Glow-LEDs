@@ -562,6 +562,12 @@ const OrderStatusEmail = (props) => {
 					<Link to="/secure/glow/orders">
 						<button className="button primary">Back to Orders</button>
 					</Link>
+					{order && (
+						<Link to={'/secure/account/order/' + order._id}>
+							<button className="button primary">Back to Order</button>
+						</Link>
+					)}
+
 					<button
 						className="button primary mb-1rem"
 						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h1)}
