@@ -322,7 +322,8 @@ router.post('/announcement', async (req, res) => {
 	console.log({ subject: req.body.subject });
 	console.log({ test: req.body.test });
 	const users = await User.find({ email_subscription: true });
-	const all_emails = users.map((user: any) => user.email);
+	const all_emails = users.map((user: any) => user.email).reverse();
+	console.log({ all_emails });
 	// const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
 	const test = [ 'lavacquek@icloud.com', 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
 	// const test = [ 'keith.booher@yahoo.com', 'keibooher@gmail.com' ];
@@ -343,7 +344,6 @@ router.post('/announcement', async (req, res) => {
 				res.status(500).send({ error: err, message: 'Error Sending Email' });
 			} else {
 				console.log('Announcement Email Sent to ' + email);
-				// res.send('Announcement Email Sent to ' + email);
 			}
 		});
 	});
