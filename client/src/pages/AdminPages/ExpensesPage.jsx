@@ -73,7 +73,8 @@ const ExpensesPage = (props) => {
 		{ name: 'Website', color: '#6d3e5c' },
 		{ name: 'Shipping', color: '#3e4c6d' },
 		{ name: 'Business', color: '#6d5a3e' },
-		{ name: 'Equipment', color: '#3f6561' }
+		{ name: 'Equipment', color: '#3f6561' },
+		{ name: 'Refunds', color: '#4a4a4a' }
 	];
 
 	const determine_color = (expense) => {
@@ -92,6 +93,9 @@ const ExpensesPage = (props) => {
 		}
 		if (expense.category === 'Equipment') {
 			result = colors[4].color;
+		}
+		if (expense.amount < 0) {
+			result = colors[5].color;
 		}
 		// console.log(result);
 		return result;
