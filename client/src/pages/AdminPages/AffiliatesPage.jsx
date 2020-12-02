@@ -60,12 +60,43 @@ const AffiliatesPage = (props) => {
 		'Newest'
 	];
 
+	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promotor', color: '#7d5555' } ];
+
+	const determine_color = (affiliate) => {
+		let result = '';
+
+		if (affiliate.sponsor) {
+			result = colors[0].color;
+		}
+		if (affiliate.promoter) {
+			result = colors[1].color;
+		}
+		return result;
+	};
+
 	return (
 		<div className="main_container">
 			<Helmet>
 				<title>Admin Affiliates | Glow LEDs</title>
 			</Helmet>
-			<div className="wrap jc-fe">
+			<div className="wrap jc-b">
+				<div className="wrap jc-b">
+					{colors.map((color) => {
+						return (
+							<div className="wrap jc-b  m-1rem">
+								<label style={{ marginRight: '1rem' }}>{color.name}</label>
+								<div
+									style={{
+										backgroundColor: color.color,
+										height: '20px',
+										width: '60px',
+										borderRadius: '5px'
+									}}
+								/>
+							</div>
+						);
+					})}
+				</div>
 				<Link to="/secure/glow/editaffiliate">
 					<button className="button primary" style={{ width: '160px' }}>
 						Create Affiliate
@@ -101,7 +132,7 @@ const AffiliatesPage = (props) => {
 									<tr
 										key={affiliate._id}
 										style={{
-											backgroundColor: '#3e4c6d',
+											backgroundColor: determine_color(affiliate),
 											fontSize: '1.4rem'
 										}}
 									>

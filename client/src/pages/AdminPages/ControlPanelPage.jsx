@@ -693,7 +693,7 @@ const ControlPanelPage = (props) => {
 											</th>
 											<th style={{ padding: '15px' }}>
 												${orders
-													.filter((order) => order.promo_code === affiliate.glover_name)
+													.filter((order) => order.promo_code === affiliate.promo_code)
 													.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 													.toFixed(2)}
 											</th>
