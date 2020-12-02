@@ -313,11 +313,11 @@ const OrderPage = (props) => {
 									className="button secondary w-200px mv-10px"
 									onClick={() =>
 										copyToClipboard(`
-${props.order.shipping.first_name} ${props.order.shipping.last_name}
-${props.order.shipping.address}
-${props.order.shipping.city}, ${props.order.shipping.state}
-${props.order.shipping.postalCode} ${props.order.shipping.country}
-${props.order.shipping.email}`)}
+${order.shipping.first_name} ${order.shipping.last_name}
+${order.shipping.address}
+${order.shipping.city}, ${order.shipping.state}
+${order.shipping.postalCode} ${order.shipping.country}
+${order.shipping.email}`)}
 								>
 									Copy to clipboard
 								</button>
