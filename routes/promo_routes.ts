@@ -46,19 +46,13 @@ router.get('/', async (req, res) => {
 			: {};
 
 		let sortOrder = {};
-		if (req.query.sortOrder === 'glover name') {
-			sortOrder = { glover_name: 1 };
-		} else if (req.query.sortOrder === 'facebook name') {
-			sortOrder = { facebook_name: 1 };
-		} else if (req.query.sortOrder === 'song id') {
-			sortOrder = { song_id: 1 };
-		} else if (req.query.sortOrder === 'product') {
-			sortOrder = { product: 1 };
-		} else if (req.query.sortOrder === 'instagram handle') {
-			sortOrder = { instagram_handle: 1 };
-		} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-			sortOrder = { release_date: -1 };
-		} else if (req.query.sortOrder === 'newest') {
+		if (req.query.sortOrder === 'admin only') {
+			sortOrder = { admin_only: -1 };
+		} else if (req.query.sortOrder === 'affiliate only') {
+			sortOrder = { affiliate_only: -1 };
+		} else if (req.query.sortOrder === 'active') {
+			sortOrder = { active: -1 };
+		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
 			sortOrder = { _id: -1 };
 		}
 

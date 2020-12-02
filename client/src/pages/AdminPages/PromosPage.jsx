@@ -88,7 +88,7 @@ const PromosPage = (props) => {
 		// }
 		return result;
 	};
-	const sort_options = [ 'Percentage Off', 'Amount Off', 'Free Shipping', 'For Customers', 'Active' ];
+	const sort_options = [ 'Newest', 'Admin Only', 'Affiliate Only', 'Active' ];
 
 	return (
 		<div className="main_container">

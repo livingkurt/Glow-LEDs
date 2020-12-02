@@ -50,17 +50,9 @@ const AffiliatesPage = (props) => {
 		dispatch(deleteAffiliate(affiliate._id));
 	};
 
-	const sort_options = [
-		'Release Date',
-		'Glover Name',
-		'Facebook Name',
-		'Instagram Handle',
-		'Product',
-		'Song ID',
-		'Newest'
-	];
+	const sort_options = [ 'Newest', 'Glover Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
-	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promotor', color: '#7d5555' } ];
+	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promoter', color: '#7d5555' } ];
 
 	const determine_color = (affiliate) => {
 		let result = '';
