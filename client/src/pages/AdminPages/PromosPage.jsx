@@ -52,29 +52,40 @@ const PromosPage = (props) => {
 	};
 
 	const colors = [
-		{ name: 'Percentage Off', color: '#6d3e3e' },
-		{ name: 'Amount Off', color: '#6d3e5c' },
-		{ name: 'Free Shipping', color: '#3e4c6d' },
-		{ name: 'For Customers', color: '#6d5a3e' },
-		{ name: 'Active', color: '#3f6561' }
+		// { name: 'Percentage Off', color: '#6d3e3e' },
+		// { name: 'Amount Off', color: '#6d3e5c' },
+		// { name: 'Free Shipping', color: '#3e4c6d' },
+		{ name: 'Admin Only', color: '#525252' },
+		{ name: 'Affiliate Only', color: '#7d5555' },
+		{ name: 'No Restrictions', color: '#3e4c6d' }
+		// { name: 'Specific User', color: '#3d7f79' }
+		// { name: 'Active', color: '#3f6561' }
 	];
 
 	const determine_color = (promo) => {
 		let result = '';
 
-		if (promo.percentage_off > 0) {
-			result = colors[4].color;
-		}
-		if (promo.amount_off > 0) {
-			result = colors[3].color;
-		}
-		if (promo.free_shipping) {
+		// if (promo.percentage_off > 0) {
+		// 	result = colors[4].color;
+		// }
+		// if (promo.amount_off > 0) {
+		// 	result = colors[3].color;
+		// }
+		// if (promo.free_shipping) {
+		// 	result = colors[0].color;
+		// }
+		if (promo.admin_only) {
 			result = colors[0].color;
 		}
-		if (!promo.for_customer) {
+		if (promo.affiliate_only) {
 			result = colors[1].color;
 		}
-		console.log(result);
+		if (!promo.affiliate_only && !promo.admin_only) {
+			result = colors[2].color;
+		}
+		// if (promo.user) {
+		// 	result = colors[3].color;
+		// }
 		return result;
 	};
 	const sort_options = [ 'Percentage Off', 'Amount Off', 'Free Shipping', 'For Customers', 'Active' ];
