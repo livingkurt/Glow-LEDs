@@ -10,7 +10,7 @@ const EditUserPage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
-	const [ is_affiliateed, set_is_affiliateed ] = useState(false);
+	const [ is_affiliated, set_is_affiliated ] = useState(false);
 	const [ isVerified, set_isVerified ] = useState(false);
 	const [ isAdmin, set_isAdmin ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -29,7 +29,7 @@ const EditUserPage = (props) => {
 		set_first_name(user.first_name);
 		set_last_name(user.last_name);
 		set_email(user.email);
-		set_is_affiliateed(user.is_affiliateed);
+		set_is_affiliated(user.is_affiliated);
 		set_isVerified(user.isVerified);
 		set_isAdmin(user.isAdmin);
 	};
@@ -38,7 +38,7 @@ const EditUserPage = (props) => {
 		set_first_name('');
 		set_last_name('');
 		set_email('');
-		set_is_affiliateed('');
+		set_is_affiliated('');
 		set_isVerified('');
 		set_isAdmin('');
 	};
@@ -89,7 +89,7 @@ const EditUserPage = (props) => {
 				first_name,
 				last_name,
 				email,
-				is_affiliateed,
+				is_affiliated,
 				isVerified,
 				isAdmin
 			})
@@ -158,14 +158,14 @@ const EditUserPage = (props) => {
 												<div>Loading...</div>
 											) : (
 												<li>
-													<label htmlFor="is_affiliateed">Affiliateed</label>
+													<label htmlFor="is_affiliated">Affiliated</label>
 													<input
 														type="checkbox"
-														name="is_affiliateed"
-														defaultChecked={is_affiliateed}
-														id="is_affiliateed"
+														name="is_affiliated"
+														defaultChecked={is_affiliated}
+														id="is_affiliated"
 														onChange={(e) => {
-															set_is_affiliateed(e.target.checked);
+															set_is_affiliated(e.target.checked);
 														}}
 													/>
 												</li>

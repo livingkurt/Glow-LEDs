@@ -129,7 +129,7 @@ const UsersPage = (props) => {
 									<th>LAST</th>
 									<th>EMAIL</th>
 									<th>Affiliate</th>
-									<th>Affiliateed</th>
+									<th>Affiliated</th>
 									<th>VERIFIED</th>
 									<th>ADMIN</th>
 									<th>ACTIONS</th>
@@ -150,7 +150,7 @@ const UsersPage = (props) => {
 										<td>{user.email}</td>
 										<td>{user.affiliate}</td>
 										<td>
-											{user.is_affiliateed ? (
+											{user.is_affiliated ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />

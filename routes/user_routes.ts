@@ -271,7 +271,7 @@ router.post('/', async (req, res) => {
 // 					email: updatedUser.email,
 // 					affiliate: updatedUser.affiliate,
 // 					email_subscription: updatedUser.email_subscription,
-// 					is_affiliateed: updatedUser.is_affiliateed,
+// 					is_affiliated: updatedUser.is_affiliated,
 // 					isVerified: updatedUser.isVerified,
 // 					isAdmin: updatedUser.isAdmin,
 // 					shipping: updatedUser.shipping,
@@ -423,7 +423,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 			user.affiliate = req.body.affiliate || user.affiliate;
 			user.email_subscription = req.body.email_subscription;
 			user.shipping = req.body.shipping;
-			user.is_affiliateed = req.body.is_affiliateed || user.is_affiliateed;
+			user.is_affiliated = req.body.is_affiliated || user.is_affiliated;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
 			if (updatedUser) {
@@ -446,7 +446,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 					affiliate: updatedUser.affiliate,
 					email_subscription: updatedUser.email_subscription,
 					shipping: updatedUser.shipping,
-					is_affiliateed: updatedUser.is_affiliateed,
+					is_affiliated: updatedUser.is_affiliated,
 					isVerified: updatedUser.isVerified,
 					isAdmin: updatedUser.isAdmin,
 					token: getToken(updatedUser)
@@ -494,7 +494,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 // 				email: updatedUser.email,
 // 				affiliate: updatedUser.affiliate,
 // 				email_subscription: updatedUser.email_subscription,
-// 				is_affiliateed: updatedUser.is_affiliateed,
+// 				is_affiliated: updatedUser.is_affiliated,
 // 				isVerified: updatedUser.isVerified,
 // 				isAdmin: updatedUser.isAdmin,
 // 				token: getToken(updatedUser)
@@ -526,7 +526,7 @@ router.put('/verify/:id', async (req, res) => {
 			user.password = req.body.password || user.password;
 			user.isAdmin = req.body.isAdmin || user.isAdmin;
 			user.email_subscription = req.body.email_subscription || user.email_subscription;
-			user.is_affiliateed = req.body.is_affiliateed || user.is_affiliateed;
+			user.is_affiliated = req.body.is_affiliated || user.is_affiliated;
 			user.isVerified = true;
 			user.deleted = req.body.deleted || false;
 			const updatedUser = await user.save();
@@ -549,7 +549,7 @@ router.put('/verify/:id', async (req, res) => {
 					email: updatedUser.email,
 					affiliate: updatedUser.affiliate,
 					email_subscription: updatedUser.email_subscription,
-					is_affiliateed: updatedUser.is_affiliateed,
+					is_affiliated: updatedUser.is_affiliated,
 					// isVerified: updatedUser.isVerified,
 					shipping: updatedUser.shipping
 					// token: getToken(updatedUser)
@@ -641,7 +641,7 @@ router.post('/login', async (req, res) => {
 				email: login_user.email,
 				isAdmin: login_user.isAdmin,
 				affiliate: login_user.affiliate,
-				is_affiliateed: login_user.is_affiliateed,
+				is_affiliated: login_user.is_affiliated,
 				email_subscription: login_user.email_subscription,
 				isVerified: login_user.isVerified,
 				shipping: login_user.shipping,
@@ -680,7 +680,7 @@ router.post('/register', async (req, res) => {
 			email: req.body.email,
 			password: req.body.password,
 			affiliate: req.body.affiliate,
-			is_affiliateed: req.body.is_affiliateed,
+			is_affiliated: req.body.is_affiliated,
 			email_subscription: req.body.email_subscription,
 			isAdmin: false,
 			isVerified: true
@@ -718,7 +718,7 @@ router.post('/register', async (req, res) => {
 						last_name: newUser.last_name,
 						email: newUser.email,
 						isAdmin: newUser.isAdmin,
-						is_affiliateed: newUser.is_affiliateed,
+						is_affiliated: newUser.is_affiliated,
 						email_subscription: newUser.email_subscription,
 						isVerified: newUser.isVerified,
 						shipping: newUser.shipping,
@@ -776,7 +776,7 @@ router.post('/getuser/:id', async (req, res) => {
 				password: user.password,
 				isAdmin: user.isAdmin,
 				affiliate: user.affiliate,
-				is_affiliateed: user.is_affiliateed,
+				is_affiliated: user.is_affiliated,
 				email_subscription: user.email_subscription,
 				shipping: user.shipping,
 				token: getToken(user)
@@ -846,7 +846,7 @@ router.get('/createadmin', async (req, res) => {
 						last_name: admin.last_name,
 						email: admin.email,
 						affiliate: admin.affiliate,
-						is_affiliateed: admin.is_affiliateed,
+						is_affiliated: admin.is_affiliated,
 						email_subscription: admin.email_subscription,
 						isAdmin: admin.isAdmin,
 						isVerified: admin.isVerified,

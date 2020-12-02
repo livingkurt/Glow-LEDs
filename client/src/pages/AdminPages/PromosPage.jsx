@@ -129,7 +129,8 @@ const PromosPage = (props) => {
 									<th>Percentage Off</th>
 									<th>Amount Off</th>
 									<th>Free Shipping</th>
-									<th>For Customer</th>
+									<th>Affiliate Only</th>
+									<th>Admin Only</th>
 									<th>Excluded Categories</th>
 									<th>Excluded Products</th>
 								</tr>
@@ -153,8 +154,8 @@ const PromosPage = (props) => {
 										<td className="p-10px">{promo.user}</td>
 										<td className="p-10px">{promo.affiliate}</td>
 										<td className="p-10px">{promo.promo_code}</td>
-										<td className="p-10px">{promo.percentage_off}%</td>
-										<td className="p-10px">${promo.amount_off}</td>
+										<td className="p-10px">{promo.percentage_off && promo.percentage_off + '%'}</td>
+										<td className="p-10px">{promo.amount_off && '$' + promo.amount_off}</td>
 										<td className="p-10px">
 											{promo.free_shipping ? (
 												<i className="fas fa-check-circle" />
@@ -163,7 +164,14 @@ const PromosPage = (props) => {
 											)}
 										</td>
 										<td className="p-10px">
-											{promo.for_customer ? (
+											{promo.affiliate_only ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">
+											{promo.admin_only ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />

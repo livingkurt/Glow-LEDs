@@ -14,7 +14,7 @@ const EditUserPage = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
-	const [ is_affiliateed, set_is_affiliateed ] = useState('');
+	const [ is_affiliated, set_is_affiliated ] = useState('');
 	const [ affiliate, set_affiliate ] = useState('');
 	const [ verified, set_verified ] = useState('');
 	const [ admin, set_admin ] = useState('');
@@ -44,7 +44,7 @@ const EditUserPage = (props) => {
 					email,
 					first_name,
 					last_name,
-					is_affiliateed,
+					is_affiliated,
 					affiliate,
 					verified,
 					admin
@@ -65,7 +65,7 @@ const EditUserPage = (props) => {
 				set_email(user.email);
 				set_first_name(user.first_name);
 				set_last_name(user.last_name);
-				set_is_affiliateed(user.isAffiliateed);
+				set_is_affiliated(user.isAffiliated);
 				set_affiliate(user.affiliate);
 				set_verified(user.isVerified);
 				set_admin(user.isAdmin);
@@ -84,7 +84,7 @@ const EditUserPage = (props) => {
 				set_email(userUpdate.email);
 				set_first_name(userUpdate.first_name);
 				set_last_name(userUpdate.last_name);
-				set_is_affiliateed(userUpdate.isAffiliateed);
+				set_is_affiliated(userUpdate.isAffiliated);
 				set_affiliate(userUpdate.affiliate);
 				set_verified(userUpdate.isVerified);
 				set_admin(userUpdate.isAdmin);
@@ -163,16 +163,16 @@ const EditUserPage = (props) => {
 								{console.log({ verified })}
 
 								<li>
-									<label htmlFor="is_affiliateed"> Affiliateed</label>
+									<label htmlFor="is_affiliated"> Affiliated</label>
 									<input
 										type="checkbox"
-										name="is_affiliateed"
-										// defaultChecked={is_affiliateed === true ? 'checked' : 'unchecked'}
-										defaultChecked={is_affiliateed}
-										// checked={is_affiliateed}
-										id="is_affiliateed"
+										name="is_affiliated"
+										// defaultChecked={is_affiliated === true ? 'checked' : 'unchecked'}
+										defaultChecked={is_affiliated}
+										// checked={is_affiliated}
+										id="is_affiliated"
 										onChange={(e) => {
-											set_is_affiliateed(e.target.checked);
+											set_is_affiliated(e.target.checked);
 										}}
 									/>
 								</li>

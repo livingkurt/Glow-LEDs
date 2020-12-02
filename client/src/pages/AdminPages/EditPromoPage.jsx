@@ -15,6 +15,8 @@ const EditPromoPage = (props) => {
 	const [ user, set_user ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ for_customer, set_for_customer ] = useState('');
+	const [ admin_only, set_admin_only ] = useState('');
+	const [ affiliate_only, set_affiliate_only ] = useState('');
 	const [ single_use, set_single_use ] = useState('');
 	const [ used_once, set_used_once ] = useState('');
 	const [ excluded_categories, set_excluded_categories ] = useState([]);
@@ -25,9 +27,6 @@ const EditPromoPage = (props) => {
 	const [ amount_off, set_amount_off ] = useState(0);
 	const [ minimum_total, set_minimum_total ] = useState(0);
 	const [ free_shipping, set_free_shipping ] = useState(false);
-	const [ number_of_uses, set_number_of_uses ] = useState('');
-	const [ funds_generated, set_funds_generated ] = useState('');
-	const [ number_of_orders, set_number_of_orders ] = useState('');
 	const [ active, set_active ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ categories, set_categories ] = useState([]);
@@ -98,6 +97,8 @@ const EditPromoPage = (props) => {
 		set_user(promo.user && promo.user._id);
 		set_promo_code(promo.promo_code);
 		set_for_customer(promo.for_customer);
+		set_affiliate_only(promo.affiliate_only);
+		set_admin_only(promo.admin_only);
 		set_single_use(promo.single_use);
 		set_used_once(promo.used_once);
 		set_excluded_categories(promo.excluded_categories);
@@ -106,10 +107,7 @@ const EditPromoPage = (props) => {
 		set_amount_off(promo.amount_off);
 		set_minimum_total(promo.minimum_total);
 		set_free_shipping(promo.free_shipping);
-		set_number_of_uses(promo.number_of_uses);
-		set_funds_generated(promo.funds_generated);
 		set_active(promo.active);
-		set_number_of_orders(promo.number_of_orders);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -117,6 +115,8 @@ const EditPromoPage = (props) => {
 		set_user('');
 		set_promo_code('');
 		set_for_customer('');
+		set_affiliate_only('');
+		set_admin_only('');
 		set_single_use('');
 		set_used_once('');
 		set_excluded_categories('');
@@ -125,9 +125,6 @@ const EditPromoPage = (props) => {
 		set_amount_off('');
 		set_minimum_total('');
 		set_free_shipping('');
-		set_number_of_uses('');
-		set_funds_generated('');
-		set_number_of_orders('');
 		set_active('');
 	};
 
@@ -140,6 +137,8 @@ const EditPromoPage = (props) => {
 				user,
 				promo_code,
 				for_customer,
+				admin_only,
+				affiliate_only,
 				single_use,
 				used_once,
 				excluded_categories,
@@ -148,9 +147,6 @@ const EditPromoPage = (props) => {
 				amount_off,
 				minimum_total,
 				free_shipping,
-				number_of_uses,
-				funds_generated,
-				number_of_orders,
 				active
 			})
 		);
@@ -357,6 +353,38 @@ const EditPromoPage = (props) => {
 												<div>Loading...</div>
 											) : (
 												<li>
+													<label htmlFor="affiliate_only">Affiliate Only</label>
+													<input
+														type="checkbox"
+														name="affiliate_only"
+														defaultChecked={affiliate_only}
+														id="affiliate_only"
+														onChange={(e) => {
+															set_affiliate_only(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="admin_only">Admin Only</label>
+													<input
+														type="checkbox"
+														name="admin_only"
+														defaultChecked={admin_only}
+														id="admin_only"
+														onChange={(e) => {
+															set_admin_only(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
 													<label htmlFor="single_use">Single Use</label>
 													<input
 														type="checkbox"
@@ -472,16 +500,6 @@ const EditPromoPage = (props) => {
 											</li>
 
 											<li>
-												<label htmlFor="number_of_uses">Number of Uses</label>
-												<input
-													type="text"
-													name="number_of_uses"
-													value={number_of_uses}
-													id="number_of_uses"
-													onChange={(e) => set_number_of_uses(e.target.value)}
-												/>
-											</li>
-											<li>
 												<label htmlFor="percentage_off">Percentage Off</label>
 												<input
 													type="text"
@@ -527,16 +545,6 @@ const EditPromoPage = (props) => {
 													/>
 												</li>
 											)}
-											{/* <li>
-												<label htmlFor="funds_generated">Funds Generated</label>
-												<input
-													type="text"
-													name="funds_generated"
-													value={funds_generated}
-													id="funds_generated"
-													onChange={(e) => set_funds_generated(e.target.value)}
-												/>
-											</li> */}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (

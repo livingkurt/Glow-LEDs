@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		isAdmin: { type: Boolean, required: true, default: false },
 		isVerified: { type: Boolean, required: true, default: false },
-		is_affiliateed: { type: Boolean, required: true, default: false },
+		is_affiliated: { type: Boolean, required: true, default: false },
 		devices: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Device' } ],
 		cart: cartSchema,
 		affiliate: { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' },
