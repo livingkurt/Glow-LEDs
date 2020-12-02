@@ -14,7 +14,6 @@ const EditPromoPage = (props) => {
 	const [ affiliate, set_affiliate ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
-	const [ for_customer, set_for_customer ] = useState('');
 	const [ admin_only, set_admin_only ] = useState('');
 	const [ affiliate_only, set_affiliate_only ] = useState('');
 	const [ single_use, set_single_use ] = useState('');
@@ -96,7 +95,6 @@ const EditPromoPage = (props) => {
 		set_affiliate(promo.affiliate && promo.affiliate._id);
 		set_user(promo.user && promo.user._id);
 		set_promo_code(promo.promo_code);
-		set_for_customer(promo.for_customer);
 		set_affiliate_only(promo.affiliate_only);
 		set_admin_only(promo.admin_only);
 		set_single_use(promo.single_use);
@@ -114,7 +112,6 @@ const EditPromoPage = (props) => {
 		set_affiliate('');
 		set_user('');
 		set_promo_code('');
-		set_for_customer('');
 		set_affiliate_only('');
 		set_admin_only('');
 		set_single_use('');
@@ -136,7 +133,6 @@ const EditPromoPage = (props) => {
 				affiliate,
 				user,
 				promo_code,
-				for_customer,
 				admin_only,
 				affiliate_only,
 				single_use,
@@ -333,22 +329,6 @@ const EditPromoPage = (props) => {
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
 											</li>
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="for_customer">For Customer</label>
-													<input
-														type="checkbox"
-														name="for_customer"
-														defaultChecked={for_customer}
-														id="for_customer"
-														onChange={(e) => {
-															set_for_customer(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
