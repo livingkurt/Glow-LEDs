@@ -63,7 +63,7 @@ const ProductsDisplayPage = (props) => {
 			// 		'frosted_diffusers',
 			// 		'diffuser_adapters',
 			// 		'glow_strings',
-			// 		'mini_diffuser_caps',
+			// 		'mega_diffuser_caps',
 			// 		'mini_diffuser_adapters'
 			// 	].includes(category)
 			// ) {
@@ -169,7 +169,7 @@ const ProductsDisplayPage = (props) => {
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
-						category === 'mini_diffuser_caps' ||
+						category === 'mega_diffuser_caps' ||
 						category === 'mini_diffuser_adapters' ||
 						category === 'glow_strings' ? (
 							'™'

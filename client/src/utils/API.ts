@@ -87,7 +87,7 @@ export default {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/originalcaps');
 	},
-	get_mini_diffuser_caps: () => {
+	get_mega_diffuser_caps: () => {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/minicaps');
 	},

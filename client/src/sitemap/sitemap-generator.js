@@ -46,7 +46,7 @@ async function generateSitemap() {
 		'/collections/all/products/category/frosted_diffusers/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/glow_strings/subcategory/:subcategory': subcategoryMap,
 		// '/collections/all/products/category/infinity_mirrors/subcategory/:subcategory': subcategoryMap,
-		'/collections/all/products/category/mini_diffuser_caps/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/mega_diffuser_caps/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/:category': categoryMap,
 		'/collections/all/products/:pathname': productMap,
 		'/pages/contact/:reason': contact_reason

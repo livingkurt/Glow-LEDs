@@ -158,11 +158,11 @@ const CartPage = (props) => {
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{(item.category === 'diffuser_caps' ||
-														item.category === 'mini_diffuser_caps') &&
+														item.category === 'mega_diffuser_caps') &&
 														item.diffuser_cap_color}{' '}
 													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
 													{/* {item.name === 'Diffuser Caps + Adapters Starter Kit' ||
-														(item.name === 'Mini Diffuser Caps + Adapters Starter Kit' &&
+														(item.name === 'Mega Diffuser Caps + Adapters Starter Kit' &&
 															` w (${JSON.parse(item.diffuser_cap).name})`)} */}
 												</Link>
 											</div>

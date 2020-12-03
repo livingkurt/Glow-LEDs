@@ -108,7 +108,7 @@ const EditDevicePage = (props) => {
 						{device && (
 							<div>
 								<Helmet>
-									<title>Edit {device.name} | Glow LEDs</title>
+									<title>Edit Device | Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>

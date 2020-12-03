@@ -33,11 +33,12 @@ router.put('/products', async (req, res) => {
 	// }
 	// res.send(products);
 	const product = await Product.updateMany(
-		{},
+		{ category: 'diffuser_caps' },
 		{
 			// $rename: { shipping_price: 'volume' }
 			$set: {
-				sale_price: 0
+				description:
+					'Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we mean.'
 			}
 			// $unset: { shipping_price: 1 }
 		}
@@ -256,13 +257,13 @@ router.put('/orders_original', async (req, res) => {
 router.put('/orders_mini', async (req, res) => {
 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 	const order = await Order.updateMany(
-		{ 'orderItems.name': 'Mini Diffuser Caps + Adapters Starter Kit' },
+		{ 'orderItems.name': 'Mega Diffuser Caps + Adapters Starter Kit' },
 		{
 			// $rename: { shipping_price: 'volume' }
 			$set: {
 				'orderItems.$.diffuser_cap_color': 'Black',
 				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392',
-				'orderItems.$.category': 'mini_diffuser_caps'
+				'orderItems.$.category': 'mega_diffuser_caps'
 			}
 			// $unset: { shipping_price: 1 }
 		},
@@ -318,14 +319,14 @@ router.put('/orders_mini_caps', async (req, res) => {
 	//     {
 	//       orderItems: {
 	//         name: item.name, {
-	//           $regex: 'Mini Diffuser Caps',
+	//           $regex: 'Mega Diffuser Caps',
 	//           $options: 'i'
 	//         }
 	//       }
 	//     },
 	//         {$set: {
 	//           'orderItems.$.diffuser_cap_color': 'Black',
-	//           'orderItems.$.category': 'mini_diffuser_caps'
+	//           'orderItems.$.category': 'mega_diffuser_caps'
 	//         }}
 	//     )
 	// });
@@ -335,7 +336,7 @@ router.put('/orders_mini_caps', async (req, res) => {
 	const order = await Order.updateMany(
 		{
 			'orderItems.name': {
-				$regex: 'Mini Diffuser Caps',
+				$regex: 'Mega Diffuser Caps',
 				$options: 'i'
 			}
 		},
@@ -343,7 +344,7 @@ router.put('/orders_mini_caps', async (req, res) => {
 			// $rename: { shipping_price: 'volume' }
 			$set: {
 				'orderItems.$.diffuser_cap_color': 'Black',
-				'orderItems.$.category': 'mini_diffuser_caps'
+				'orderItems.$.category': 'mega_diffuser_caps'
 			}
 			// $unset: { shipping_price: 1 }
 		},
@@ -356,7 +357,7 @@ router.put('/orders_mini_caps', async (req, res) => {
 // router.put('/orders_mini_caps', async (req, res) => {
 // 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 // 	const order = await Order.updateMany(
-// 		{ 'orderItems.name': 'Mini Diffuser Caps + Adapters Starter Kit' },
+// 		{ 'orderItems.name': 'Mega Diffuser Caps + Adapters Starter Kit' },
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
@@ -374,7 +375,7 @@ router.put('/orders_mini_caps', async (req, res) => {
 // router.put('/orders_mini', async (req, res) => {
 // 	const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 // 	const order = await Order.updateMany(
-// 		{ 'orderItems.name': 'Mini Diffuser Caps + Adapters Starter Kit' },
+// 		{ 'orderItems.name': 'Mega Diffuser Caps + Adapters Starter Kit' },
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {

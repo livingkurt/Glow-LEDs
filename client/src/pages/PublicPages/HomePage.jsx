@@ -90,7 +90,7 @@ const HomePage = (props) => {
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
-									title="Mini Diffuser Caps Promo Video"
+									title="Content Video"
 									width="996"
 									height="560"
 									style={{ borderRadius: '20px' }}
@@ -138,7 +138,7 @@ const HomePage = (props) => {
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
-							title="Mini Diffuser Caps Promo Video"
+							title="Mega Diffuser Caps Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -167,12 +167,12 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Mini Diffuser Caps</h1>
+					<h1 style={{ textAlign: 'center' }}>Mega Diffuser Caps</h1>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
-							title="Mini Diffuser Caps Promo Video"
+							title="Mega Diffuser Caps Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -184,13 +184,13 @@ const HomePage = (props) => {
 					</div>
 				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					Get the same Diffuser Caps that you know and love in a smaller size. We Call them Mini Diffuser
+					Get the same Diffuser Caps that you know and love in a smaller size. We Call them Mega Diffuser
 					Caps!
 				</p>
 				<div className="jc-c">
-					<Link to="/collections/all/products/category/mini_diffuser_caps">
+					<Link to="/collections/all/products/category/mega_diffuser_caps">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Mini Diffuser Caps</h2>
+							<h2>Shop Mega Diffuser Caps</h2>
 						</button>
 					</Link>
 				</div>

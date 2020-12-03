@@ -102,9 +102,9 @@ router.get('/originalcaps', async (req, res) => {
 	}
 });
 
-router.get('/minicaps', async (req, res) => {
+router.get('/megaaps', async (req, res) => {
 	try {
-		const products = await Product.find({ deleted: false, hidden: false, category: 'mini_diffuser_caps' });
+		const products = await Product.find({ deleted: false, hidden: false, category: 'mega_diffuser_caps' });
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -124,7 +124,7 @@ router.get('/minicaps', async (req, res) => {
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Getting Mini Caps' });
+		res.status(500).send({ error, message: 'Error Getting Mega Caps' });
 	}
 });
 

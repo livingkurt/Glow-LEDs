@@ -10,11 +10,11 @@ const MenuPage = (props) => {
 		if (pathname === 'gloving') {
 			return [
 				{ category: 'frosted_diffusers', image: 'https://thumbs2.imgbox.com/1f/c9/qXeP6Rtb_t.jpg' },
-				{ category: 'mini_diffuser_caps', image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg' },
+				{ category: 'mega_diffuser_caps', image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg' },
 				{ category: 'diffuser_caps', image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg' },
 				{ category: 'accessories', image: 'https://thumbs2.imgbox.com/68/f6/GBGPpTs0_t.jpg' }
 			];
-		} else if (pathname === 'mini_diffuser_caps') {
+		} else if (pathname === 'mega_diffuser_caps') {
 			return [
 				{ category: 'geometric', image: '' },
 				{ category: 'shapes', image: '' },

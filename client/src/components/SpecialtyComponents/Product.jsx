@@ -78,7 +78,7 @@ const Product = (props) => {
 				<div className="tooltipoverlay">
 					{/* <span className="tooltiptext">
 						{props.product.name === 'Diffuser Caps + Adapters Starter Kit' ||
-						props.product.name === 'Mini Diffuser Caps + Adapters Starter Kit' ? (
+						props.product.name === 'Mega Diffuser Caps + Adapters Starter Kit' ? (
 							<div />
 						) : props.product.name === 'Custom Infinity Mirror' ? (
 							<Link to="/pages/contact/custom_orders">

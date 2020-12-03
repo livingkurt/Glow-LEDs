@@ -843,7 +843,7 @@ router.put(
 				.populate('user');
 			for (let item of order.orderItems) {
 				if (
-					item.name === 'Mini Diffuser Caps + Adapters Starter Kit' ||
+					item.name === 'Mega Diffuser Caps + Adapters Starter Kit' ||
 					item.name === 'Diffuser Caps + Adapters Starter Kit'
 				) {
 					item.secondary_product = product_id;

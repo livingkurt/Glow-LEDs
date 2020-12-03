@@ -114,56 +114,8 @@ const Header = (props) => {
 									<button className="button nav w-100per ta-l">Frosted Diffusers</button>
 								</Link>
 								<div className="dropdown-nav-subcategory">
-									<Link to="/collections/all/products/category/mini_diffuser_caps">
-										<button className="button nav w-100per ta-l">Mini Diffuser Caps</button>
-										<i
-											style={{ '-webkitTransform': 'rotate(-180deg)' }}
-											className=" pos-abs right-10px top-8px fas fa-sort-up"
-										/>
-									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/geometric">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Geomotric</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/shapes">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Shapes</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Abstract</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/patterns">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Patterns</button>
-											</div>
-										</Link>
-									</div>
-								</div>
-
-								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/diffuser_caps">
-										<button className="button nav w-100per ta-l">Original Diffuser Caps</button>
+										<button className="button nav w-100per ta-l">Diffuser Caps</button>
 										<i
 											style={{ '-webkitTransform': 'rotate(-180deg)' }}
 											className=" pos-abs right-10px top-8px fas fa-sort-up"
@@ -206,7 +158,55 @@ const Header = (props) => {
 												<button className="button nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/emoji">
+									</div>
+								</div>
+
+								<div className="dropdown-nav-subcategory">
+									<Link to="/collections/all/products/category/mega_diffuser_caps">
+										<button className="button nav w-100per ta-l">Mega Diffuser Caps</button>
+										<i
+											style={{ '-webkitTransform': 'rotate(-180deg)' }}
+											className=" pos-abs right-10px top-8px fas fa-sort-up"
+										/>
+									</Link>
+									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav w-100per ta-l">Geomotric</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav w-100per ta-l">Shapes</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav w-100per ta-l">Abstract</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
+											<div className="row">
+												<i
+													style={{ '-webkitTransform': 'rotate(90deg)' }}
+													className="mr-30px fas fa-sort-up"
+												/>{' '}
+												<button className="button nav w-100per ta-l">Patterns</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -226,11 +226,11 @@ const Header = (props) => {
 							<button className="button nav">Diffuser Caps</button>
 							<div className="dropdown-nav-content hover_fade_in w-300px">
 								<div className="dropdown-nav-subcategory">
-									<Link to="/collections/all/products/category/mini_diffuser_caps">
-										<button className="button nav">Mini Diffuser Caps</button>
+									<Link to="/collections/all/products/category/mega_diffuser_caps">
+										<button className="button nav">Mega Diffuser Caps</button>
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-10px top-38px">
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/geometric">
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -239,7 +239,7 @@ const Header = (props) => {
 												<button className="button nav">Geomotric</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/shapes">
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -248,7 +248,7 @@ const Header = (props) => {
 												<button className="button nav">Shapes</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/abstract">
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -257,7 +257,7 @@ const Header = (props) => {
 												<button className="button nav">Abstract</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/mini_diffuser_caps/subcategory/patterns">
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -271,7 +271,7 @@ const Header = (props) => {
 
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/diffuser_caps">
-										<button className="button nav">Original Diffuser Caps</button>
+										<button className="button nav">Diffuser Caps</button>
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">

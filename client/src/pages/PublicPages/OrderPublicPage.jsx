@@ -318,7 +318,7 @@ const OrderPublicPage = (props) => {
 												{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{(item.category === 'diffuser_caps' ||
-														item.category === 'mini_diffuser_caps') &&
+														item.category === 'mega_diffuser_caps') &&
 														item.diffuser_cap_color}{' '}
 													{item.name}{' '}
 													{item.secondary_product && `w (${item.secondary_product.name})`}

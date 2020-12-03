@@ -20,7 +20,7 @@ const ProductPage = (props) => {
 
 	const [ qty, setQty ] = useState(1);
 	const [ original_diffuser_caps, set_original_diffuser_caps ] = useState([]);
-	const [ mini_diffuser_caps, set_mini_diffuser_caps ] = useState([]);
+	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
@@ -46,7 +46,7 @@ const ProductPage = (props) => {
 	const determine_colors = () => {
 		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
 			return diffuser_cap_colors;
-		} else if (product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') {
+		} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
 			return diffuser_colors;
 		}
 	};
@@ -58,7 +58,7 @@ const ProductPage = (props) => {
 		video.autoplay = true;
 		// dispatch(listProducts(''));
 		get_original_diffuser_caps();
-		get_mini_diffuser_caps();
+		get_mega_diffuser_caps();
 
 		// if (diffuser_cap_cookie) {
 		// 	set_diffuser_cap(diffuser_cap_cookie);
@@ -72,10 +72,10 @@ const ProductPage = (props) => {
 		set_original_diffuser_caps(data);
 		// set_diffuser_caps(data);
 	};
-	const get_mini_diffuser_caps = async () => {
-		const { data } = await API_Products.get_mini_diffuser_caps();
+	const get_mega_diffuser_caps = async () => {
+		const { data } = await API_Products.get_mega_diffuser_caps();
 		// console.log(data);
-		set_mini_diffuser_caps(data);
+		set_mega_diffuser_caps(data);
 		// set_diffuser_caps(data);
 	};
 
@@ -86,7 +86,7 @@ const ProductPage = (props) => {
 				set_diffuser_cap_color(
 					product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
 						? 'Translucent White'
-						: product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps'
+						: product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps'
 							? 'Black'
 							: ''
 				);
@@ -369,7 +369,7 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)) ||
-										(product.name === 'Mini Diffuser Caps + Adapters Starter Kit' && (
+										(product.name === 'Mega Diffuser Caps + Adapters Starter Kit' && (
 											<li>
 												<div className="ai-c h-25px mb-15px">
 													<label
@@ -391,11 +391,11 @@ const ProductPage = (props) => {
 															<option key={1} defaultValue="">
 																---Choose Cap---
 															</option>
-															{mini_diffuser_caps.map(
+															{mega_diffuser_caps.map(
 																(cap, index) =>
-																	cap.name === 'Custom Mini Diffuser Caps Deposit' ||
+																	cap.name === 'Custom Mega Diffuser Caps Deposit' ||
 																	cap.name ===
-																		'Mini Diffuser Caps + Adapters Starter Kit' ? (
+																		'Mega Diffuser Caps + Adapters Starter Kit' ? (
 																		''
 																	) : (
 																		<option key={index} value={JSON.stringify(cap)}>
@@ -410,7 +410,7 @@ const ProductPage = (props) => {
 											</li>
 										))}
 									{(product.category === 'diffuser_caps' ||
-										product.category === 'mini_diffuser_caps' ||
+										product.category === 'mega_diffuser_caps' ||
 										product.category === 'frosted_diffusers') && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
@@ -442,7 +442,7 @@ const ProductPage = (props) => {
 										</li>
 									)}
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' ||
-										product.name === 'Mini Diffuser Caps + Adapters Starter Kit') &&
+										product.name === 'Mega Diffuser Caps + Adapters Starter Kit') &&
 									!diffuser_cap ? (
 										<div />
 									) : product.name === 'Custom Infinity Mirror' ? (
@@ -486,7 +486,7 @@ const ProductPage = (props) => {
 								</div>
 							</div>
 						</div>
-						{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
+						{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
 							<div className=" m-2rem  h-auto m-auto jc-c">
 								<Zoom className="m-auto">
 									<img
@@ -509,7 +509,7 @@ const ProductPage = (props) => {
 								</a>
 							)}
 
-							{(product.category === 'diffuser_caps' || product.category === 'mini_diffuser_caps') && (
+							{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
 								<div>
 									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
 									<div className="colored_caps">

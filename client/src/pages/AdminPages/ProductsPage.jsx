@@ -58,7 +58,7 @@ const ProductsPage = (props) => {
 		{ name: 'Infinity Mirrors', color: '#557b68' },
 		{ name: 'Glow Strings', color: '#4b7188' },
 		{ name: 'Glowskins', color: '#736084' },
-		{ name: 'Mini Diffuser Caps', color: '#4b8882' },
+		{ name: 'Mega Diffuser Caps', color: '#4b8882' },
 		{ name: 'Frosted Diffusers', color: '#ca9160' },
 		{ name: 'Diffuser Caps', color: '#6c7ea9' },
 		{ name: 'Accessories', color: '#925757' }
@@ -78,7 +78,7 @@ const ProductsPage = (props) => {
 		if (product.category === 'glowskins') {
 			result = colors[3].color;
 		}
-		if (product.category === 'mini_diffuser_caps') {
+		if (product.category === 'mega_diffuser_caps') {
 			result = colors[4].color;
 		}
 		if (product.category === 'frosted_diffusers') {

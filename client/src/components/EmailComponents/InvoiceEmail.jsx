@@ -272,7 +272,7 @@ const InvoiceEmail = (props) => {
 										valign="top"
 									>
 										{item.category === 'diffuser_caps' ||
-										item.category === 'mini_diffuser_caps' ||
+										item.category === 'mega_diffuser_caps' ||
 										item.category === 'frosted_diffusers' ? (
 											`${item.diffuser_cap_color} `
 										) : (

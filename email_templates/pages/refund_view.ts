@@ -119,7 +119,7 @@ export default (props: {
 					? 'http://glow-leds.com'
 					: 'http://localhost:3000'}/collections/all/products/${item.pathname}"
                           style="box-sizing: border-box;text-decoration: none;color: white;">  ${item.category ===
-								'diffuser_caps' || item.category === 'mini_diffuser_caps'
+								'diffuser_caps' || item.category === 'mega_diffuser_caps'
 								? item.diffuser_cap_color
 								: ''}
                         ${item.name}
