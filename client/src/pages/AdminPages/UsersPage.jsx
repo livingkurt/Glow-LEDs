@@ -52,8 +52,9 @@ const UsersPage = (props) => {
 
 	const colors = [
 		{ name: 'Not Verified', color: '#333333' },
-		{ name: 'Verified', color: '#626262' },
-		{ name: 'Admin', color: '#8e8e8e' }
+		{ name: 'Verified', color: '#3e4c6d' },
+		{ name: 'Admin', color: '#525252' },
+		{ name: 'Affiliated', color: '#7d5555' }
 	];
 
 	const determine_color = (order) => {
@@ -66,6 +67,9 @@ const UsersPage = (props) => {
 		}
 		if (order.isAdmin) {
 			result = colors[2].color;
+		}
+		if (order.is_affiliated) {
+			result = colors[3].color;
 		}
 		console.log(result);
 		return result;
