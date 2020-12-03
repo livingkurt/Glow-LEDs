@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createPayOrder, createOrder } from '../../actions/orderActions';
+import { createPayOrder, createOrder, createOrderGuest } from '../../actions/orderActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
@@ -45,9 +45,14 @@ const PlaceOrderPage = (props) => {
 	const [ user, set_user ] = useState(user_data);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
+	const [ no_user, set_no_user ] = useState(false);
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const dispatch = useDispatch();
 
 	const [ order_note, set_order_note ] = useState('');
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const calculate_shipping = () => {
 		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
@@ -210,8 +215,9 @@ const PlaceOrderPage = (props) => {
 		);
 
 		set_payment_loading(true);
-		const request = await API_Products.promo_code_used(promo_code);
-		console.log(request);
+		if (promo_code) {
+			await API_Products.promo_code_used(promo_code);
+		}
 	};
 
 	const create_order_without_paying = async () => {
@@ -235,7 +241,31 @@ const PlaceOrderPage = (props) => {
 		set_payment_loading(false);
 		props.history.push('/secure/glow/orders');
 		empty_cart();
-		const request = await API_Products.promo_code_used(promo_code);
+		if (promo_code) {
+			await API_Products.promo_code_used(promo_code);
+		}
+	};
+
+	const create_order_without_user = async () => {
+		dispatch(
+			createOrderGuest({
+				orderItems: cartItems,
+				shipping,
+				payment,
+				itemsPrice,
+				shippingPrice,
+				taxPrice,
+				totalPrice,
+				order_note,
+				promo_code
+			})
+		);
+
+		props.history.push('/secure/glow/orders');
+		empty_cart();
+		if (promo_code) {
+			await API_Products.promo_code_used(promo_code);
+		}
 	};
 
 	const empty_cart = () => {
@@ -602,9 +632,26 @@ const PlaceOrderPage = (props) => {
 								</StripeCheckout>
 							</div>
 						)}
+						{user_data && user_data.isAdmin && users && loading_checkboxes ? (
+							<div>Loading...</div>
+						) : (
+							<li>
+								<label htmlFor="no_user mb-20px">No User</label>
+								<input
+									type="checkbox"
+									name="no_user"
+									defaultChecked={no_user}
+									id="no_user"
+									onChange={(e) => {
+										set_no_user(e.target.checked);
+									}}
+								/>
+							</li>
+						)}
 						{user_data &&
 						user_data.isAdmin &&
-						users && (
+						users &&
+						!no_user && (
 							<div>
 								<button
 									onClick={create_order_without_paying}
@@ -632,6 +679,19 @@ const PlaceOrderPage = (props) => {
 										<span className="custom-arrow" />
 									</div>
 								</div>
+							</div>
+						)}
+						{user_data &&
+						user_data.isAdmin &&
+						users &&
+						no_user && (
+							<div>
+								<button
+									onClick={create_order_without_user}
+									className="button secondary full-width mb-12px"
+								>
+									Create Order Without User
+								</button>
 							</div>
 						)}
 						<div className="mv-10px">

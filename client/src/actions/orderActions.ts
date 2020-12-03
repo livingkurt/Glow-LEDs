@@ -126,7 +126,6 @@ export const createPayOrderGuest = (
 			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 			axios.post('/api/emails/verified', data);
 			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-			const { userLogin: { userInfo: user_data } } = getState();
 			const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', { ...order, user: data._id });
 			console.log({ newOrder });
 
@@ -143,7 +142,6 @@ export const createPayOrderGuest = (
 			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 		} else {
 			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-			const { userLogin: { userInfo: user_data } } = getState();
 			const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
 			console.log({ newOrder });
 
@@ -159,6 +157,35 @@ export const createPayOrderGuest = (
 			Cookie.remove('diffuser_cap');
 			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 		}
+	} catch (error) {
+		console.log({ error_message: error.response.data.message });
+		console.log({ error: error });
+		console.log({ error_response: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+	}
+};
+export const createOrderGuest = (order: {
+	orderItems: object;
+	shipping: any;
+	payment: any;
+	itemsPrice: number;
+	shippingPrice: number;
+	taxPrice: number;
+	totalPrice: number;
+	order_note: string;
+	promo_code: string;
+}) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+		const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
+		console.log({ newOrder });
+		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+		Cookie.remove('shipping');
+		Cookie.remove('diffuser_cap');
+		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });

@@ -378,28 +378,6 @@ const PlaceOrderPublicPage = (props) => {
 		console.log({ error });
 	};
 
-	const create_order_without_paying = () => {
-		// create an order
-		console.log({ user });
-		dispatch(
-			createOrder({
-				orderItems: cartItems,
-				shipping,
-				payment,
-				itemsPrice,
-				shippingPrice,
-				taxPrice,
-				totalPrice,
-				user,
-				order_note,
-				promo_code
-			})
-		);
-
-		set_payment_loading(false);
-		props.history.push('/secure/glow/orders');
-		empty_cart();
-	};
 	return (
 		<div>
 			<Helmet>
