@@ -40,19 +40,9 @@ router.get('/', async (req, res) => {
 			: {};
 
 		let sortOrder = {};
-		if (req.query.sortOrder === 'glover name') {
-			sortOrder = { image: 1 };
-		} else if (req.query.sortOrder === 'facebook name') {
-			sortOrder = { p: 1 };
-		} else if (req.query.sortOrder === 'song id') {
-			sortOrder = { link: 1 };
-		} else if (req.query.sortOrder === 'button') {
-			sortOrder = { button: 1 };
-		} else if (req.query.sortOrder === 'instagram handle') {
-			sortOrder = { h2: 1 };
-		} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-			sortOrder = { release_date: -1 };
-		} else if (req.query.sortOrder === 'newest') {
+		if (req.query.sortOrder === 'email type') {
+			sortOrder = { email_type: 1 };
+		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
 			sortOrder = { _id: -1 };
 		}
 

@@ -51,36 +51,20 @@ const EmailsPage = (props) => {
 		dispatch(deleteEmail(email._id));
 	};
 
-	const colors = [
-		{ name: 'Announcements', color: '#6d3e3e' },
-		{ name: 'Reviews', color: '#6d3e5c' },
-		{ name: 'Reset Password', color: '#3e4c6d' },
-		{ name: 'Password Change', color: '#6d5a3e' },
-		{ name: 'Account Created', color: '#3f6561' }
-	];
+	const colors = [ { name: 'Announcements', color: '#7d5555' }, { name: 'General', color: '#3e4c6d' } ];
 
 	const determine_color = (email) => {
 		let result = '';
 		if (email.email_type === 'Announcements') {
 			result = colors[0].color;
-		}
-		if (email.email_type === 'Reviews') {
+		} else {
 			result = colors[1].color;
-		}
-		if (email.email_type === 'Reset Password') {
-			result = colors[2].color;
-		}
-		if (email.email_type === 'Password Change') {
-			result = colors[3].color;
-		}
-		if (email.email_type === 'Account Created') {
-			result = colors[4].color;
 		}
 		console.log(result);
 		return result;
 	};
 
-	const sort_options = [ 'Announcements', 'Reviews', 'Reset Password', 'Password Change', 'Account Created' ];
+	const sort_options = [ 'Email Type' ];
 
 	return (
 		<div className="main_container">
@@ -162,8 +146,9 @@ const EmailsPage = (props) => {
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>H1</th>
+
 									<th>Email Type</th>
+									<th>H1</th>
 									<th>Show Image</th>
 									<th>H2</th>
 									<th>Button</th>
