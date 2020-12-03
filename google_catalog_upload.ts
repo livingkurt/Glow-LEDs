@@ -1,16 +1,12 @@
 import axios from 'axios';
-// import keys = require('./config/keys');
-// import Product from './models/product';
-// const axios = require('axios');
-// const Product = require('./models/product');
 
-const facebook_catalog_upload = async () => {
+const google_catalog_upload = async () => {
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		const doc = new GoogleSpreadsheet('1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8');
+		const doc = new GoogleSpreadsheet('1V9vSROcN0RA-OFRGOIbvt_raXh3ZG2BYDY9DSOudaqU');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -35,19 +31,17 @@ const facebook_catalog_upload = async () => {
 			'id',
 			'title',
 			'description',
-			'availability',
+			'link',
 			'condition',
 			'price',
-			'link',
+			'availability',
 			'image_link',
+			'mpn',
 			'brand',
-			'inventory',
-			'fb_product_category',
 			'google_product_category',
 			'sale_price',
 			'sale_price_effective_date'
 		]);
-
 		const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');
 
 		const new_rows = data.map((product: any, i: number) => {
@@ -60,8 +54,7 @@ const facebook_catalog_upload = async () => {
 			const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
 			const image_link = product.images[0];
 			const brand = 'Glow LEDs';
-			const inventory = product.countInStock;
-			const fb_product_category = 'toys & games > electronic toys';
+			const mpn = product.pathname;
 			const google_product_category = 'Toys & Games > Toys > Visual Toys';
 			const sale_price = product.sale_price;
 			const sale_price_effective_date = '';
@@ -70,14 +63,13 @@ const facebook_catalog_upload = async () => {
 				id,
 				title,
 				description,
-				availability,
+				link,
 				condition,
 				price,
-				link,
+				availability,
 				image_link,
+				mpn,
 				brand,
-				inventory,
-				fb_product_category,
 				google_product_category,
 				sale_price,
 				sale_price_effective_date
@@ -94,4 +86,4 @@ const facebook_catalog_upload = async () => {
 	}
 };
 
-facebook_catalog_upload();
+google_catalog_upload();
