@@ -96,7 +96,8 @@ const OrderPublicPage = (props) => {
 	useEffect(
 		() => {
 			if (successPay && order) {
-				props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+				props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
 				set_payment_loading(false);
 				empty_cart();
 			} else if (errorPay) {

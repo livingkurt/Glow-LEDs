@@ -690,7 +690,7 @@ const OrderEmail = (props) => {
 																					order.payment.charge.source.brand
 																				)}
 																				style={{ height: '25px' }}
-																				alt="facebook"
+																				alt="card_logo"
 																			/>
 																		) : (
 																			''
