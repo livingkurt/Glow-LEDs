@@ -458,8 +458,8 @@ const FAQPage = () => {
 								too loose on the bulb.
 							</li>
 							<li style={{ lineHeight: '25px' }}>
-								we test each diffuser on a 5mm light before packaging as 5mm is considered Standard bulb
-								size.
+								we test each diffuser on a 5mm rgb 4 prong led before packaging as 5mm is considered
+								Standard bulb size. (Note 2 prong bulbs are more varied in size)
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Be aware that bulb sizes may vary by an inperceivable amount within sets of microlights
