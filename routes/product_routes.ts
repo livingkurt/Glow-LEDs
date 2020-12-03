@@ -75,6 +75,31 @@ router.get('/', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Getting Products' });
 	}
 });
+router.get('/shown', async (req, res) => {
+	try {
+		const products = await Product.find({ deleted: false, hidden: false });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: products,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(products);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Products' });
+	}
+});
 
 router.get('/originalcaps', async (req, res) => {
 	try {

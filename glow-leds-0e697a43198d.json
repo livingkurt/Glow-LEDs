@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "glow-leds",
+  "private_key_id": "0e697a43198d5306d317ae99522b3f779633f26d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCphBOo0n+vHWZm\nYs94LpQ0okwN7L1O3do8KtAezN+RrEPkj0zvfbxdeWUcWyMdUkPgumSs1IpztNTK\nVY6XhZ3Y/iVOjJddx5deSQpvwUCoVSH2JGrwlBVXO+U71hsEjYq68V7MG3JiQXOP\n72X6b8rwD7l9pWMlZyR12j+0LuMd3hv85IiKHQAsNbh6FTxlOIKk4X0bMMQYSpfF\nkFaeslWvX5FnWzqF4Xxd7Ty1CscE2teTRaDciMHYHxXnFj4rEaj4kJVbRsWtGYv9\nivKMoarn7OvZ78n295fcGZttXwVWHYWv5SWIq/nratiPhzyr3IpvZrWSl5CZmHN9\nEnmiYYwdAgMBAAECggEAH/t2DRZH9lVM7ljKrXFWT3bmdAMcNW7If60RLpp3PN/8\nQDlkKdQ2b4lZkQfF4ICWo2XvXCdOhuWRdyo8uKxCO4A5sC/41/3x+l07/Zk/tnK3\ncV3uGj1KKHb5uTgcSVfeGoazHL257z1LjRa9Dgq9Bl1lIQZM5i/nUl/uwHNPMOFZ\niw/mb4ejTdym7HlvgG1XmMS/LFc+kTy2DOer0MvByJ9JyKqXiDIA6NuxyIo18nsE\ngA5rgas28o6msoy0Ko32+7xcZmaL7utyiWWdwBj8JHHoYKG9UPAjU5aq4tcHVthd\n+XUor+T3H6e9IyN0U2ZXcscfQYQN0jukjPUKQatwMQKBgQDqoWm1hspJvTVKCoIb\nW+R1w5AG1oeBWBRHEvLuJOUkSgm5f1/6h/yCrZmAwtHtfhHGTm70ULZpcI/RONWV\nZ84eqDXO5BxalD+na2QdpstKHhbQjEYdAQXt50DBUBWoeQeuLJoGRhTT11UqlD2d\nxdW4jTAXh/+fZESwtaVUiXWtMQKBgQC49HfWd4HhO+Zf6MtjNZYdyF4w5HTcXAev\nDx2nkmwa4KbyuVfRljqK+haSUjIXEgadoAVNpxQ/vYvrWAcOYhDsYSYV/UhBm18q\nX1819tNLG4sxXiv83+KDb+V3abuVRjn1ZHO5kOka7+w8BifBPTp+u9zlUoyRmK0Z\nFjlVd8sirQKBgQDEg1CwMya2P/yj+M0j8QEWCSdWMtPnZ0gEh0BkaQ5qKICglqhi\ngwbgxFlu2L1OtmpYt1SC2B8PjLFHwNxSeFDQqH34vGFrFAOES5PcqdhWSYE+Rl5q\n6HJ44VkBD/wz0Lq4DK8sVgIXs6CnOuWogQwRuF7xNnzImQhXIKxKc57V4QKBgQCz\n2vdWFSy1zDwAdC6kMQ3jtF70CJUjXFMUhwx9UcPSdzehvV6Krx4K25treoa/LIZG\nbb/6fUkRms8fcqCZ+f8e/nG83GqRcfefCtNZdMaPuR8oSL1Z0JVC32MzNhx10q61\n1JM8lpA346vDyvCJ13K0nxb14cpUIzXguV3ToQRmmQKBgDFST2XmJMYuozgyJN57\nmcijCeizMuHZJmwkAT6bcFuoFIH1r7wBHN3/iMrchqzYzoCeilP7CIYSI4nJOR9X\nwuYHFE8FIS+Ux2Usk+v+je4gBL2xkbBBRkfxiFH41b52va7mMTYA+TWHUIqVwnIt\nD05yPIzg5q4ClWWP8iMEGY9c\n-----END PRIVATE KEY-----\n",
+  "client_email": "glow-leds-product-sheet@glow-leds.iam.gserviceaccount.com",
+  "client_id": "115043701663126970487",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/glow-leds-product-sheet%40glow-leds.iam.gserviceaccount.com"
+}
