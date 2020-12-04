@@ -6,14 +6,14 @@ const { isAuth, isAdmin } = require('../util');
 import nodemailer from 'nodemailer';
 require('dotenv').config();
 import { log_error, log_request } from '../util';
-import App from '../email_templates_2/App';
+import App from '../email_templates/App';
 import {
 	account_created,
 	password_reset,
 	reset_password,
 	contact,
 	contact_confirmation
-} from '../email_templates_2/pages/index';
+} from '../email_templates/pages/index';
 const sgMail = require('@sendgrid/mail');
 const PHE = require('print-html-element');
 

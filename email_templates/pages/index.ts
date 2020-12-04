@@ -6,10 +6,10 @@
 //   order_view: require("./order_view")
 // };
 
-export { default as verify_account_view } from './verify_account_view';
-export { default as not_verified_view } from './not_verified_view';
-export { default as verified_account_view } from './verified_account_view';
-export { default as reset_password_view } from './reset_password_view';
-export { default as order_view } from './order_view';
-export { default as refund_view } from './refund_view';
-export { default as invoice_view } from './invoice_view';
+export { default as account_created } from './account_created';
+export { default as reset_password } from './reset_password';
+export { default as password_reset } from './password_reset';
+export { default as error } from './error';
+export { default as order } from './order';
+export { default as contact } from './contact';
+export { default as contact_confirmation } from './contact_confirmation';

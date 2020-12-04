@@ -4,8 +4,8 @@ const config = require('./config');
 import { Request } from 'express';
 import Log from './models/log';
 import nodemailer from 'nodemailer';
-import App from './email_templates_2/App';
-import { error } from './email_templates_2/pages';
+import App from './email_templates/App';
+import { error } from './email_templates/pages';
 export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
