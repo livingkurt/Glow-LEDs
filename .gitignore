@@ -173,6 +173,8 @@ email_templates_2/pages/account_created.js
 email_templates_2/pages/reset_password.js
 email_templates_2/pages/password_reset.js
 email_templates_2/pages/order.js
+email_templates_2/pages/contact.js
+email_templates_2/pages/contact_confirmation.js
 email_templates_2/pages/index.js
 email_templates_2/App.js
 
