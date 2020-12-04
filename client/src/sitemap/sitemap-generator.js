@@ -35,7 +35,8 @@ async function generateSitemap() {
 		{ reason: 'product_suggestions' },
 		{ reason: 'submit_content_to_be_featured' }
 	];
-	// });
+	const menu_types = [ { pathname: 'gloving' }, { pathname: 'community' }, { pathname: 'support' } ];
+
 	console.log({ productMap });
 	console.log({ categoryMap });
 	console.log({ subcategoryMap });
@@ -49,7 +50,8 @@ async function generateSitemap() {
 		'/collections/all/products/category/mega_diffuser_caps/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/:category': categoryMap,
 		'/collections/all/products/:pathname': productMap,
-		'/pages/contact/:reason': contact_reason
+		'/pages/contact/:reason': contact_reason,
+		'/pages/menu/:pathname': menu_types
 	};
 	return new Sitemap(router)
 		.applyParams(paramsConfig)
