@@ -351,7 +351,8 @@ const App = () => {
 							<Route path="/pages/about" exact={true} component={AboutPage} />
 							<Route path="/pages/faq" exact={true} component={FAQPage} />
 							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
-							<Route path="/pages/featured" exact={true} component={FeaturedPage} />
+							{/* <Route path="/pages/featured" exact={true} component={FeaturedPage} /> */}
+							<Route path="/pages/featured/:pathname?" exact={true} component={FeaturedPage} />
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/" exact={true} component={HomePage} />
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />

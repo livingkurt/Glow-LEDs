@@ -46,6 +46,22 @@ const MenuPage = (props) => {
 				{ category: 'contact', image: 'https://thumbs2.imgbox.com/6b/a4/JLxNKDWE_t.png' },
 				{ category: 'terms', image: 'https://thumbs2.imgbox.com/a0/11/BlKmYy5J_t.png' }
 			];
+		} else if (pathname === 'featured') {
+			return [
+				{ category: 'glovers', image: 'https://thumbs2.imgbox.com/1f/c9/qXeP6Rtb_t.jpg' },
+				{ category: 'artists', image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg' },
+				{ category: 'producers', image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg' }
+			];
+		}
+	};
+
+	const decide_url = (item) => {
+		if (pathname === 'gloving' || pathname === 'decor') {
+			return `/collections/all/products/category/${item.category}`;
+		} else if (pathname === 'featured') {
+			return `/pages/featured/${item.category}`;
+		} else {
+			return `/pages/${item.category}`;
 		}
 	};
 
@@ -79,12 +95,12 @@ const MenuPage = (props) => {
 						return (
 							<div className="home_page_divs m-10px w-300px">
 								<Link
-									to={
-										pathname === 'gloving' || pathname === 'decor' ? (
-											`/collections/all/products/category/${item.category}`
-										) : (
-											`/pages/${item.category}`
-										)
+									to={decide_url(item)
+									// pathname === 'gloving' || pathname === 'decor' ? (
+									// 	`/collections/all/products/category/${item.category}`
+									// ) : (
+									// 	`/pages/${item.category}`
+									// )
 									}
 								>
 									<h2 className="">{humanize(item.category)}</h2>

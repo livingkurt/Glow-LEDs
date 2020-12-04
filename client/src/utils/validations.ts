@@ -38,7 +38,7 @@ export const validate_promo_code = (data: any) => {
 	if (promo && !promo.active) {
 		errors.promo_code = 'Promo Code Not Active';
 	}
-	console.log({ single_use: promo.single_use, used_once: promo.used_once });
+	// console.log({ single_use: promo.single_use, used_once: promo.used_once });
 	if (promo && promo.single_use && promo.used_once) {
 		errors.promo_code = 'Promo Code Not Active';
 	}

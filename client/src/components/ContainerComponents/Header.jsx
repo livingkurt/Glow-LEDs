@@ -353,7 +353,7 @@ const Header = (props) => {
 								<Link to="/pages/announcements">
 									<button className="button nav w-100per ta-l">Announcements</button>
 								</Link>
-								<Link to="/pages/featured">
+								<Link to="/pages/menu/featured">
 									<button className="button nav w-100per ta-l">Featured</button>
 								</Link>
 								<Link to="/pages/music">
