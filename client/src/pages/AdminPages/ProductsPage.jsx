@@ -160,16 +160,17 @@ const ProductsPage = (props) => {
 						</div>
 					);
 				})}
+				<Link to="/secure/glow/product_display">
+					<button className="button primary">Display Products</button>
+				</Link>
 				<Link to="/secure/glow/editproduct">
-					<button className="button primary" style={{ width: '160px' }}>
-						Create Product
-					</button>
+					<button className="button primary">Create Product</button>
 				</Link>
 			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
 				{/* <Link to="/editproduct">
-					<button className="button primary" style={{ width: '160px' }}>
+					<button className="button primary" >
 						Create Product
 					</button>
 				</Link> */}

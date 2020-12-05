@@ -294,6 +294,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
 							<AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
+							<AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 
 							{/* Public Routes */}
 							<Route path="/account/login" component={LoginPage} />
