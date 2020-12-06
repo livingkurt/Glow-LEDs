@@ -96,7 +96,7 @@ const AnnouncementEmail = () => {
 						<div style={{ backgroundColor: '#5f5f5f', padding: '20px' }}>
 							<div style={{ display: 'flex', justifyContent: 'center' }}>
 								{email.show_image && (
-									<table width="100%" style={{ maxWidth: '900px' }}>
+									<table width="100%" style={{ maxWidth: '800px' }}>
 										<tr>
 											<td>
 												<img
