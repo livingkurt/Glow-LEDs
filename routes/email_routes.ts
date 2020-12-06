@@ -324,9 +324,9 @@ router.post('/announcement', async (req, res) => {
 	// console.log({ all_emails });
 	const emails_split = split_array(all_emails);
 	// const all_emails = [ 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
-	// console.log({ emails_split });
+	console.log({ emails_split });
 	let split_emails: any = req.body.test ? test : emails_split;
-	console.log({ split_emails: split_emails[0] });
+	// console.log({ split_emails: split_emails[0] });
 	// split_emails[0].forEach((emails: any, index: any) => {
 	split_emails[0].forEach((email: any) => {
 		let mailOptions = {
@@ -353,9 +353,10 @@ router.post('/announcement', async (req, res) => {
 const split_array = (all_emails: any) => {
 	let chunk;
 	let array: Array<string> = [];
-
+	console.log(all_emails.length / 4);
+	const amount = all_emails.length / 4;
 	while (all_emails.length > 0) {
-		chunk = all_emails.splice(0, 25);
+		chunk = all_emails.splice(0, amount);
 		array = [ ...array, chunk ];
 	}
 	return shuffleArray(array);
