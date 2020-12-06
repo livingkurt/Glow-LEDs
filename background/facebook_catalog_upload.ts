@@ -45,7 +45,8 @@ const facebook_catalog_upload = async () => {
 			'fb_product_category',
 			'google_product_category',
 			'sale_price',
-			'sale_price_effective_date'
+			'sale_price_effective_date',
+			'product_type'
 		]);
 
 		const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');
@@ -65,6 +66,7 @@ const facebook_catalog_upload = async () => {
 			const google_product_category = 'Toys & Games > Toys > Visual Toys';
 			const sale_price = product.sale_price;
 			const sale_price_effective_date = '';
+			const product_type = product.category;
 
 			return {
 				id,
@@ -80,7 +82,8 @@ const facebook_catalog_upload = async () => {
 				fb_product_category,
 				google_product_category,
 				sale_price,
-				sale_price_effective_date
+				sale_price_effective_date,
+				product_type
 			};
 		});
 

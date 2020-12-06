@@ -307,8 +307,8 @@ const AnnouncementEmail = () => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_announcement_email = async () => {
-		const data = await API_Emails.send_announcement_email(email_template, email.h1, test);
+	const send_announcement_email = async (chunk) => {
+		const data = await API_Emails.send_announcement_email(email_template, email.h1, test, chunk);
 		console.log('Announcement Email Sent Successfully');
 		console.log(data);
 	};
@@ -345,8 +345,17 @@ const AnnouncementEmail = () => {
 						/>
 					</div>
 				)}
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
-					Send Announcement Email
+				<button className="button primary mb-1rem" onClick={() => send_announcement_email(0)}>
+					Send 1/4
+				</button>
+				<button className="button primary mb-1rem" onClick={() => send_announcement_email(1)}>
+					Send 2/4
+				</button>
+				<button className="button primary mb-1rem" onClick={() => send_announcement_email(2)}>
+					Send 3/4
+				</button>
+				<button className="button primary mb-1rem" onClick={() => send_announcement_email(3)}>
+					Send 4/4
 				</button>
 
 				{email && (

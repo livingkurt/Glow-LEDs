@@ -6,8 +6,8 @@ export default {
 		console.log({ not_paid_email: user_data });
 		return axios.post('/api/emails/notpaid', order, user_data);
 	},
-	send_announcement_email: (template: string, subject: string, test: boolean) => {
-		return axios.post('/api/emails/announcement', { template, subject, test });
+	send_announcement_email: (template: string, subject: string, test: boolean, chunk: number) => {
+		return axios.post('/api/emails/announcement', { template, subject, test, chunk });
 	},
 	send_order_email: (template: string, subject: string, email: string) => {
 		return axios.post('/api/emails/order', { template, subject, email });
