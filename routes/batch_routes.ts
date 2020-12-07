@@ -2,10 +2,11 @@ export {};
 import express from 'express';
 import { Affiliate, Email, Expense, Feature, Content, Product, Order, User } from '../models';
 require('dotenv');
+const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
-router.put('/users', async (req, res) => {
+router.put('/users', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ users: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -28,7 +29,7 @@ router.put('/users', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/expenses', async (req, res) => {
+router.put('/expenses', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ expenses: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -51,7 +52,7 @@ router.put('/expenses', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/products', async (req, res) => {
+router.put('/products', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ products: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -74,7 +75,7 @@ router.put('/products', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/features', async (req, res) => {
+router.put('/features', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ features: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -97,7 +98,7 @@ router.put('/features', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/orders', async (req, res) => {
+router.put('/orders', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ orders: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -120,7 +121,7 @@ router.put('/orders', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/emails', async (req, res) => {
+router.put('/emails', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ emails: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -143,7 +144,7 @@ router.put('/emails', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/affiliates', async (req, res) => {
+router.put('/affiliates', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ affiliates: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
@@ -166,7 +167,7 @@ router.put('/affiliates', async (req, res) => {
 		console.log({ error });
 	}
 });
-router.put('/contents', async (req, res) => {
+router.put('/contents', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ contents: req.body });
 		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;

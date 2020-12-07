@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
 
 const EditAllDataPage = (props) => {
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
 	const [ collection, set_collection ] = useState('');
 	const [ search_parameter_field, set_search_parameter_field ] = useState('');
 	const [ search_parameter, set_search_parameter ] = useState('');
@@ -23,7 +27,8 @@ const EditAllDataPage = (props) => {
 			search_parameter,
 			action,
 			property,
-			value
+			value,
+			userInfo
 		});
 		e.preventDefault();
 		const request = await API_Products.batch_request(
@@ -33,7 +38,8 @@ const EditAllDataPage = (props) => {
 			search_parameter,
 			action,
 			property,
-			value
+			value,
+			userInfo
 		);
 		console.log({ request });
 		set_request(request);

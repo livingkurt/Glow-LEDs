@@ -43,16 +43,25 @@ export default {
 		search_parameter: string,
 		action: string,
 		property: string,
-		value: string
+		value: string,
+		user: any
 	) => {
-		return axios.put('/api/all/' + collection, {
-			method,
-			collection,
-			search_parameter_field,
-			search_parameter,
-			action,
-			property,
-			value
-		});
+		return axios.put(
+			'/api/all/' + collection,
+			{
+				method,
+				collection,
+				search_parameter_field,
+				search_parameter,
+				action,
+				property,
+				value
+			},
+			{
+				headers: {
+					Authorization: 'Bearer ' + user.token
+				}
+			}
+		);
 	}
 };
