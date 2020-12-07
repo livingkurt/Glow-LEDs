@@ -244,8 +244,23 @@ export const payOrder = (order: any, token: any) => async (
 		// const res = await axios.post('api/stripe', user_data.token);
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		console.log({ order: data.order });
-		axios.post('/api/emails/paid', { ...data.order, user_data, token });
-		axios.post('/api/emails/orderpaid', { ...data.order, user_data, token });
+		// axios.post('/api/emails/paid', { ...data.order, user_data, token });
+		// axios.post('/api/emails/orderpaid', { ...data.order, user_data, token });
+	} catch (error) {
+		console.log({ error_message: error.response.data.message });
+		console.log({ error: error });
+		console.log({ error_response: error.response });
+		dispatch({ type: ORDER_PAY_FAIL, payload: error.response.data.message });
+	}
+};
+export const payOrderGuest = (order: any, token: any) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void
+) => {
+	try {
+		dispatch({ type: ORDER_PAY_REQUEST, payload: token });
+		const { data } = await axios.put('/api/orders/guestcheckout/' + order._id + '/pay', { token });
+		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+		console.log({ order: data.order });
 	} catch (error) {
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });

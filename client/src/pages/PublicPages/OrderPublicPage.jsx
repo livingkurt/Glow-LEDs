@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { detailsOrderPublic, payOrder } from '../../actions/orderActions';
+import { detailsOrderPublic, payOrder, payOrderGuest } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
@@ -89,7 +89,7 @@ const OrderPublicPage = (props) => {
 	};
 
 	const pay_order = (token) => {
-		dispatch(payOrder(order, token));
+		dispatch(payOrderGuest(order, token));
 		set_payment_loading(true);
 	};
 
