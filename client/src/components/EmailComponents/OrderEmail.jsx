@@ -58,32 +58,6 @@ const OrderEmail = (props) => {
 				return 'https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png';
 		}
 	};
-	// const sale_price_switch = (item) => {
-	// 	if (item.sale_price !== 0) {
-	// 		return (
-	// 			<label>
-	// 				<label style={{ marginRight: '3px' }}>On Sale!</label>
-	// 				<del style={{ color: 'red' }}>
-	// 					<label style={{ color: 'white' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
-	// 				</del>{' '}
-	// 				{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
-	// 			</label>
-	// 		);
-	// 	} else if (item.countInStock === 0) {
-	// 		return (
-	// 			<label>
-	// 				<del style={{ color: 'red' }}>
-	// 					<label style={{ color: 'white', marginLeft: '7px' }}>
-	// 						${item.price && (item.price * item.qty).toFixed(2)}
-	// 					</label>
-	// 				</del>{' '}
-	// 				{'-->'} <label style={{ color: 'white', marginLeft: '7px' }}>Sold Out</label>
-	// 			</label>
-	// 		);
-	// 	} else {
-	// 		return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
-	// 	}
-	// };
 
 	const jsx = (
 		<body style={{ padding: 0, margin: 0, fontSize: '16px' }}>
