@@ -427,8 +427,12 @@ const InvoiceEmail = (props) => {
 										valign="top"
 										align="right"
 									>
-										${order.orderItems &&
-											order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
+										${(order.orderItems &&
+										order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+											? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)
+											: order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0)).toFixed(
+											2
+										)}
 									</div>
 								)}
 								{order.promo_code && (
@@ -444,8 +448,13 @@ const InvoiceEmail = (props) => {
 											valign="top"
 											align="right"
 										>
-											${order.itemsPrice &&
-												order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
+											${(order.orderItems &&
+											order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+												? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)
+												: order.orderItems.reduce(
+														(a, c) => a + c.sale_price * c.qty,
+														0
+													)).toFixed(2)}
 										</div>
 									</del>
 								)}

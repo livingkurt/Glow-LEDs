@@ -191,6 +191,40 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 	}
 });
 
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.get('/caps', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.find(
+		{
+			'orderItems.name': {
+				$regex: 'Diffuser Caps',
+				$options: 'i'
+			}
+		}
+		// { upsert: true },
+	);
+	// const order = await Order.updateMany(
+	// 	{
+	// 		'orderItems.name': {
+	// 			$regex: 'Diffuser Caps',
+	// 			$options: 'i'
+	// 		}
+	// 	},
+	// 	{
+	// 		// $rename: { shipping_price: 'volume' }
+	// 		$set: {
+	// 			// 'orderItems.$.diffuser_cap_color': 'Black',
+	// 			'orderItems.$.category': 'diffuser_caps'
+	// 		}
+	// 		// $unset: { shipping_price: 1 }
+	// 	},
+	// 	{ multi: true }
+	// 	// { upsert: true },
+	// );
+	console.log({ order });
+	res.send(order);
+});
+
 // router.put('/products', async (req, res) => {
 // 	// const products = await Product.find({});
 // 	// for (let product of products) {

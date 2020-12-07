@@ -820,7 +820,9 @@ ${order.shipping.email}`)}
 									</button>
 
 									<button className="button primary mv-5px">
-										<Link to={'/secure/glow/emails/order/' + order._id}>View Email</Link>
+										<Link to={'/secure/glow/emails/order/' + order._id + '/order/false'}>
+											View Email
+										</Link>
 									</button>
 								</div>
 							</div>

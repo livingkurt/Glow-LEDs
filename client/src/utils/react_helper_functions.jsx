@@ -43,7 +43,7 @@ export const email_sale_price_switch = (item, color) => {
 	if (item.sale_price !== 0) {
 		return (
 			<label>
-				<label style={{ marginRight: '3px' }}>On Sale!</label>
+				{/* <label style={{ marginRight: '3px' }}>On Sale!</label> */}
 				<del style={{ color: 'red' }}>
 					<label style={{ color: color }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 				</del>{' '}

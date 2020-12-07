@@ -394,18 +394,30 @@ const OrderEmail = (props) => {
 												}}
 												valign="top"
 											>
-												{!order.promo_code &&
+												${!order.promo_code &&
 													(order.orderItems &&
-														order.orderItems
-															.reduce((a, c) => a + c.price * c.qty, 0)
-															.toFixed(2))}
+													order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
+														? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)
+														: order.orderItems.reduce(
+																(a, c) => a + c.sale_price * c.qty,
+																0
+															)).toFixed(2)}
 												{order.promo_code && (
 													<del style={{ color: 'red' }}>
 														<label style={{ color: 'white' }}>
-															${order.orderItems &&
-																order.orderItems
-																	.reduce((a, c) => a + c.price * c.qty, 0)
-																	.toFixed(2)}
+															${(order.orderItems &&
+															order.orderItems.reduce(
+																(a, c) => a + c.sale_price * c.qty,
+																0
+															) === 0
+																? order.orderItems.reduce(
+																		(a, c) => a + c.price * c.qty,
+																		0
+																	)
+																: order.orderItems.reduce(
+																		(a, c) => a + c.sale_price * c.qty,
+																		0
+																	)).toFixed(2)}
 														</label>
 													</del>
 												)}
