@@ -3,44 +3,10 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-// import { ImageLoad } from '../UtilityComponents';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 // import Resizer from 'react-image-file-resizer';
 
 const Product = (props) => {
-	const sale_price_switch = () => {
-		if (props.product.sale_price !== 0) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>
-							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" /> ${props.product.sale_price ? (
-						props.product.sale_price.toFixed(2)
-					) : (
-						props.product.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!props.product.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }} className="ml-7px">
-							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" />
-					<label className="ml-7px">Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${props.product.price ? props.product.price.toFixed(2) : props.product.price}</label>;
-		}
-	};
-
 	// useEffect(
 	// 	() => {
 	// 		onChange();
@@ -123,7 +89,7 @@ const Product = (props) => {
 								$549.99 - $<i className="fas fa-arrow-up" />
 							</label>
 						) : (
-							<label className="product-price">{sale_price_switch()}</label>
+							<label className="product-price">{sale_price_switch(props.product)}</label>
 						)}
 
 						{props.product.rating ? (

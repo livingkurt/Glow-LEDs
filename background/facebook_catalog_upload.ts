@@ -65,7 +65,7 @@ const facebook_catalog_upload = async () => {
 			const fb_product_category = 'toys & games > electronic toys';
 			const google_product_category = 'Toys & Games > Toys > Visual Toys';
 			const sale_price = product.sale_price;
-			const sale_price_effective_date = '';
+			const sale_price_effective_date = product.sale_price_effective_date;
 			const product_type = product.category;
 
 			return {

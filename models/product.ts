@@ -36,6 +36,8 @@ const productSchema = new mongoose.Schema(
 		reviews: [ reviewSchema ],
 		hidden: { type: Boolean, default: false },
 		sale_price: { type: Number, default: 0 },
+		sale_start_date: { type: Date },
+		sale_end_date: { type: Date },
 		volume: { type: Number, required: true },
 		deleted: { type: Boolean, default: false },
 		pathname: { type: String },
@@ -58,3 +60,5 @@ const productModel = mongoose.model('Product', productSchema);
 
 export default productModel;
 // module.exports = productModel;
+
+// 2020-11-27T00:00-0800/2020-11-30T23:59-0808

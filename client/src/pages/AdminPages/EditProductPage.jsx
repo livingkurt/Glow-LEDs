@@ -4,6 +4,7 @@ import { saveProduct, detailsProduct, listProducts } from '../../actions/product
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
+import { format_date, unformat_date } from '../../utils/helper_functions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -20,9 +21,12 @@ const EditProductPage = (props) => {
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
 	const [ included_items, setIncludedItems ] = useState('');
-	const [ hidden, setHidden ] = useState();
-	const [ sale_price, setSalePrice ] = useState();
-	const [ volume, setVolume ] = useState();
+	const [ hidden, setHidden ] = useState(false);
+	const [ sale_price, setSalePrice ] = useState(0);
+	const [ sale_start_date, set_sale_start_date ] = useState('');
+	const [ sale_end_date, set_sale_end_date ] = useState('');
+
+	const [ volume, setVolume ] = useState(0);
 	// const [ subcategories, set_subcategories ] = useState('');
 	const [ subcategory, set_subcategory ] = useState('');
 	const [ meta_title, set_meta_title ] = useState();
@@ -110,6 +114,12 @@ const EditProductPage = (props) => {
 		setIncludedItems(product.included_items);
 		setHidden(product.hidden);
 		setSalePrice(product.sale_price);
+		if (product.sale_start_date) {
+			set_sale_start_date(format_date(product.sale_start_date));
+		}
+		if (product.sale_end_date) {
+			set_sale_end_date(format_date(product.sale_end_date));
+		}
 		setVolume(product.volume);
 		set_meta_title(product.meta_title);
 		set_meta_description(product.meta_description);
@@ -148,6 +158,8 @@ const EditProductPage = (props) => {
 		setCountInStock('');
 		setHidden();
 		setSalePrice('');
+		// sale_start_date('');
+		// sale_end_date('');
 		setVolume('');
 		set_meta_title('');
 		set_meta_description('');
@@ -183,6 +195,8 @@ const EditProductPage = (props) => {
 				description,
 				hidden,
 				sale_price,
+				sale_start_date: unformat_date(sale_start_date),
+				sale_end_date: unformat_date(sale_end_date),
 				volume,
 				subcategory,
 				meta_title,
@@ -201,6 +215,11 @@ const EditProductPage = (props) => {
 		unset_state();
 		history.push('/secure/glow/products');
 	};
+
+	// const format_effective_date = (start_date, end_date) => {
+	//   console.log()
+	//   return unformat_date(start_date) + 'T00:00-0800/' + unformat_date(end_date) + 'T23:59-0808'
+	// }
 
 	// useEffect(() => {
 	// 	if (shouldBlockNavigation) {
@@ -523,6 +542,36 @@ const EditProductPage = (props) => {
 													onChange={(e) => setSalePrice(e.target.value)}
 												/>
 											</li>
+											<li>
+												<div className="jc-b">
+													<div>
+														<label htmlFor="sale_start_date">Start Date</label>
+														<input
+															type="text"
+															className="w-100per"
+															name="sale_start_date"
+															value={sale_start_date}
+															id="sale_start_date"
+															onChange={(e) => set_sale_start_date(e.target.value)}
+														/>
+													</div>
+													<div className="m-7px pt-22px">
+														<i className="fas fa-minus" />
+													</div>
+													<div>
+														<label htmlFor="sale_end_date">End Date</label>
+														<input
+															type="text"
+															className="w-100per"
+															name="sale_end_date"
+															value={sale_end_date}
+															id="sale_end_date"
+															onChange={(e) => set_sale_end_date(e.target.value)}
+														/>
+													</div>
+												</div>
+											</li>
+											<li />
 											<li>
 												<label htmlFor="category">Category</label>
 												<input

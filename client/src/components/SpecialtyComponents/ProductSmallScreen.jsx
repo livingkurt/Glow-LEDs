@@ -3,42 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 
 const ProductSmallScreen = (props) => {
-	const sale_price_switch = () => {
-		if (props.product.sale_price !== 0) {
-			return (
-				<label className="">
-					<del style={{ color: 'red' }}>
-						<label className="" style={{ color: 'white' }}>
-							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" /> ${props.product.sale_price ? (
-						props.product.sale_price.toFixed(2)
-					) : (
-						props.product.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!props.product.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }} className="ml-7px">
-							${props.product.price ? props.product.price.toFixed(2) : props.product.price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" />
-					<label className="ml-7px">Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${props.product.price ? props.product.price.toFixed(2) : props.product.price}</label>;
-		}
-	};
-
 	return (
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
 			<Link to={'/collections/all/products/' + props.product.pathname}>
@@ -61,27 +28,9 @@ const ProductSmallScreen = (props) => {
 									$549.99 - $<i className="fas fa-arrow-up" />
 								</div>
 							) : (
-								<div className="">{sale_price_switch()}</div>
+								<div className="">{sale_price_switch(props.product)}</div>
 							)}
 						</div>
-						{/* <div className="h-100per">
-							<div>
-								<ul style={{ marginLeft: '10px' }}>
-									{props.product.included_items ? (
-										props.product.included_items.split('\n').map((line, index) => {
-											return (
-												<li key={index} style={{ listStyleType: 'disc' }}>
-													{line}
-												</li>
-											);
-										})
-									) : (
-										props.product.included_items
-									)}
-								</ul>
-							</div>
-						</div> */}
-
 						{props.product.rating ? (
 							<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
 						) : (

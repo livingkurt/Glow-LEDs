@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
+import { email_sale_price_switch } from '../../utils/react_helper_functions';
 
 const InvoiceEmail = (props) => {
 	const history = useHistory();
@@ -52,33 +53,6 @@ const InvoiceEmail = (props) => {
 				return 'https://images2.imgbox.com/63/92/Z3KHgTl4_o.png';
 			case 'Discover':
 				return 'https://images2.imgbox.com/96/cd/hXyv0MRB_o.png';
-		}
-	};
-
-	const sale_price_switch = (item) => {
-		if (item.sale_price !== 0) {
-			return (
-				<label>
-					<label style={{ marginRight: '3px' }}>On Sale!</label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'black' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
-					</del>{' '}
-					{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
-				</label>
-			);
-		} else if (item.countInStock === 0) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'black', marginLeft: '7px' }}>
-							${item.price && (item.price * item.qty).toFixed(2)}
-						</label>
-					</del>{' '}
-					{'-->'} <label style={{ color: 'black', marginLeft: '7px' }}>Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
 		}
 	};
 
@@ -293,7 +267,7 @@ const InvoiceEmail = (props) => {
 										valign="top"
 										align="right"
 									>
-										{sale_price_switch(item)}
+										{email_sale_price_switch(item, 'black')}
 									</td>
 								</tr>
 							);

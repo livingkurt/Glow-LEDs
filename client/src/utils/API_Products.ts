@@ -26,7 +26,7 @@ export default {
 	},
 	get_mega_diffuser_caps: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/minicaps');
+		return axios.get('/api/products/mega_caps');
 	},
 	get_occurrences: () => {
 		// console.log({ not_paid_email: array });

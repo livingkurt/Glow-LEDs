@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 
 const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -90,55 +91,9 @@ const ProductsPage = (props) => {
 		if (product.category === 'accessories') {
 			result = colors[7].color;
 		}
-		// console.log(result);
 		return result;
 	};
 
-	// const sort_options = [
-	// 	'No Category',
-	// 	'Infinity Mirrors',
-	// 	'Glow Strings',
-	// 	'Glowskins',
-	// 	'Shipped',
-	// 	'Delievered',
-	// 	'Newest',
-	// 	'Lowest',
-	// 	'Highest'
-	// ];
-
-	const sale_price_switch = (product) => {
-		if (product.sale_price !== 0) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>
-							${product.price ? product.price.toFixed(2) : product.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" /> ${product.sale_price ? (
-						product.sale_price.toFixed(2)
-					) : (
-						product.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!product.countInStock) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white', marginRight: '7px' }}>
-							${product.price ? product.price.toFixed(2) : product.price}
-						</label>
-					</del>{' '}
-					<i class="fas fa-arrow-right" />
-					<label style={{ marginLeft: '7px' }}>Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
-		}
-	};
 	return (
 		<div className="main_container">
 			<Helmet>
