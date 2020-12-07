@@ -35,5 +35,8 @@ export default {
 	promo_code_used: (promo_code: any) => {
 		console.log({ promo_code_used: promo_code });
 		return axios.put('/api/promos/used', { promo_code });
+	},
+	batch_get_request: (method: string, collection: string, parameter: string, action: string, value: string) => {
+		return axios.put('/api/batch/' + collection, { method, parameter, action, value });
 	}
 };

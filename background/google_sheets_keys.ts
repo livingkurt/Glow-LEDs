@@ -1,13 +1,10 @@
 import axios from 'axios';
-const google_sheets_json = require('./glow-leds-0e697a43198d.json');
-import dotenv from 'dotenv';
-dotenv.config();
+// import keys = require('./config/keys');
+// import Product from './models/product';
+// const axios = require('axios');
+// const Product = require('./models/product');
 
 const facebook_catalog_upload = async () => {
-	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
-
-	console.log(google_sheets_json);
-
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -21,7 +18,7 @@ const facebook_catalog_upload = async () => {
 		//   private_key: process.env.GOOGLE_PRIVATE_KEY,
 		// });
 		// OR load directly from json file if not in secure environment
-		await doc.useServiceAccountAuth(google_sheets_json);
+		await doc.useServiceAccountAuth(require('./glow-leds-0e697a43198d.json'));
 		// OR use service account to impersonate a user (see https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority)
 		// await doc.useServiceAccountAuth(require('./creds-from-google.json'), 'some-user@my-domain.com');
 		// OR use API key -- only for read-only access to public sheets

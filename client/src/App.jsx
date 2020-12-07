@@ -65,7 +65,8 @@ import {
 	UserOrdersPage,
 	TrackOrderPage,
 	OrderPublicPage,
-	AnnouncementsPage
+	AnnouncementsPage,
+	EditAllDataPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -224,6 +225,7 @@ const App = () => {
 							/>
 							{/* Admin Routes */}
 							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
+							<AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
 							<AdminRoute path="/secure/glow/logs" component={LogsPage} />
 							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />

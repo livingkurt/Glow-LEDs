@@ -471,6 +471,9 @@ const Header = (props) => {
 								<Link to="/secure/glow/logs">
 									<button className="button nav">Logs</button>
 								</Link>
+								<Link to="/secure/glow/edit_all_data">
+									<button className="button nav">Edit All Data</button>
+								</Link>
 							</ul>
 						</div>
 					)}
