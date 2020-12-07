@@ -1,24 +1,42 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { saveAffiliate, detailsAffiliate } from '../../actions/affiliateActions';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { listUsers } from '../../actions/userActions';
 import { API_Products } from '../../utils';
 
 const EditAllDataPage = (props) => {
 	const [ collection, set_collection ] = useState('');
-	const [ parameter, set_parameter ] = useState('');
+	const [ search_parameter_field, set_search_parameter_field ] = useState('');
+	const [ search_parameter, set_search_parameter ] = useState('');
 	const [ value, set_value ] = useState('');
 	const [ method, set_method ] = useState('');
+	const [ property, set_property ] = useState('');
 	const [ action, set_action ] = useState('');
+	const [ request, set_request ] = useState('');
 
 	const history = useHistory();
 
 	const batch_request = async (e) => {
+		console.log({
+			method,
+			collection,
+			search_parameter_field,
+			search_parameter,
+			action,
+			property,
+			value
+		});
 		e.preventDefault();
-		const request = await API_Products.batch_request(method, collection, parameter, action, value);
+		const request = await API_Products.batch_request(
+			method,
+			collection,
+			search_parameter_field,
+			search_parameter,
+			action,
+			property,
+			value
+		);
+		console.log({ request });
+		set_request(request);
 
 		// unset_state();
 		// history.push('/secure/glow/affiliates');
@@ -38,16 +56,16 @@ const EditAllDataPage = (props) => {
 		'carts',
 		'affiliates'
 	];
-	const methods = [ 'get', 'post', 'put', 'delete' ];
+	const methods = [ 'get', 'updateMany' ];
 
-	const actions = [ 'rename', 'set', 'unset' ];
+	const actions = [ '$rename', '$set', '$unset' ];
 
 	return (
 		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>Edit All Data</h1>
 
 			<div className="form">
-				<form onSubmit={batch_request} style={{ width: '100%' }}>
+				<form style={{ width: '100%' }}>
 					{/* {loading_data ? (
 						<div>Loading...</div>
 					) : ( */}
@@ -156,13 +174,33 @@ const EditAllDataPage = (props) => {
 									</div>
 
 									<li>
-										<label htmlFor="parameter">Parameter</label>
+										<label htmlFor="search_parameter_field">Search Parameter Field</label>
 										<input
 											type="text"
-											name="parameter"
-											value={parameter}
-											id="parameter"
-											onChange={(e) => set_parameter(e.target.value)}
+											name="search_parameter_field"
+											value={search_parameter_field}
+											id="search_parameter_field"
+											onChange={(e) => set_search_parameter_field(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="search_parameter">Search Parameter</label>
+										<input
+											type="text"
+											name="search_parameter"
+											value={search_parameter}
+											id="search_parameter"
+											onChange={(e) => set_search_parameter(e.target.value)}
+										/>
+									</li>
+									<li>
+										<label htmlFor="property">Property</label>
+										<input
+											type="text"
+											name="property"
+											value={property}
+											id="property"
+											onChange={(e) => set_property(e.target.value)}
 										/>
 									</li>
 									<li>
@@ -178,7 +216,7 @@ const EditAllDataPage = (props) => {
 								</div>
 							</div>
 							<li>
-								<button type="submit" className="button primary">
+								<button onClick={(e) => batch_request(e)} className="button primary">
 									Complete
 								</button>
 							</li>
@@ -187,12 +225,28 @@ const EditAllDataPage = (props) => {
 									Back
 								</button>
 							</li>
+							{/* <li>
+								<label htmlFor="request">Results</label>
+								<textarea
+									type="text"
+									name="request"
+									value={JSON.stringify(request.data)}
+									id="request"
+								/>
+							</li> */}
 						</ul>
 					</div>
-					{/* )} */}
-					{/* </Loading> */}
-					{/* )} */}
 				</form>
+			</div>
+			<div>
+				<label htmlFor="request">Results</label>
+				<textarea
+					type="text"
+					className="w-100per h-99rem"
+					name="request"
+					value={JSON.stringify(request.data, undefined, 4)}
+					id="request"
+				/>
 			</div>
 		</div>
 	);
