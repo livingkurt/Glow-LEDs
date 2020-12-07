@@ -23,6 +23,7 @@ export { default as EditEmailPage } from './AdminPages/EditEmailPage';
 export { default as LogsPage } from './AdminPages/LogsPage';
 export { default as ProductsDisplayPage } from './AdminPages/ProductsDisplayPage';
 export { default as UserOrdersPage } from './AdminPages/UserOrdersPage';
+export { default as EditAllDataPage } from './AdminPages/EditAllDataPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';
