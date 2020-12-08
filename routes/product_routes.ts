@@ -101,7 +101,7 @@ router.get('/shown', async (req, res) => {
 	}
 });
 
-router.get('/originalcaps', async (req, res) => {
+router.get('/caps', async (req, res) => {
 	try {
 		const products = await Product.find({ deleted: false, hidden: false, category: 'diffuser_caps' });
 		log_request({
@@ -127,7 +127,7 @@ router.get('/originalcaps', async (req, res) => {
 	}
 });
 
-router.get('/megaaps', async (req, res) => {
+router.get('/mega_caps', async (req, res) => {
 	try {
 		const products = await Product.find({ deleted: false, hidden: false, category: 'mega_diffuser_caps' });
 		log_request({
