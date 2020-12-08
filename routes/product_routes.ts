@@ -262,6 +262,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
 			const updatedProduct = await Product.updateOne({ _id: productId }, req.body);
+			console.log({ updatedProduct });
 			if (updatedProduct) {
 				log_request({
 					method: 'PUT',
@@ -284,6 +285,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 				success: false,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
+			console.log('Error in Updating Product.');
 			return res.status(500).send({ message: ' Error in Updating Product.' });
 		}
 	} catch (error) {
