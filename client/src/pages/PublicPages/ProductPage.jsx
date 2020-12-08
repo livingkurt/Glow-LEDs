@@ -541,7 +541,7 @@ const ProductPage = (props) => {
 								</div>
 							)}
 							{!product.video ? (
-								<h1
+								<h2
 									style={{
 										textAlign: 'center',
 										width: '100%',
@@ -549,7 +549,7 @@ const ProductPage = (props) => {
 									}}
 								>
 									Video Coming Soon!
-								</h1>
+								</h2>
 							) : (
 								<div className="jc-c column m-0px">
 									<h2
@@ -584,7 +584,7 @@ const ProductPage = (props) => {
 							)}
 						</div>
 						<div className="content-margined">
-							<h1
+							<h2
 								style={{
 									textAlign: 'center',
 									width: '100%',
@@ -592,7 +592,7 @@ const ProductPage = (props) => {
 								}}
 							>
 								Reviews
-							</h1>
+							</h2>
 							{!product.reviews.length && (
 								<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 							)}

@@ -84,7 +84,7 @@ const Carousel = (props) => {
 
 	return (
 		<div className="column mh-10px">
-			<h1 className="jc-c w-100per ta-c">Suggested Products</h1>
+			<h2 className="jc-c w-100per ta-c">Suggested Products</h2>
 
 			<Loading loading={loading} error={error}>
 				{products && (

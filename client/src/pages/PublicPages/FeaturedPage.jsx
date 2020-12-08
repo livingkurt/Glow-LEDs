@@ -53,7 +53,7 @@ const FeaturedPage = (props) => {
 					return (
 						<div className="home_page_divs">
 							<div className="column jc-c">
-								<h1 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h1>
+								<h2 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h2>
 								<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
 									Check out {feature.glover_name} with the {humanize(feature.product)}!
 								</p>

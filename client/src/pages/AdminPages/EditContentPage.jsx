@@ -120,14 +120,6 @@ const EditContentPage = (props) => {
 									className="edit-form-container jc-b"
 									style={{ maxWidth: '105rem', marginBottom: '20px' }}
 								>
-									<h1
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											marginRight: 'auto',
-											justifyContent: 'center'
-										}}
-									/>
 									<div className="ai-c h-25px mb-15px jc-c">
 										<div className="custom-select">
 											<select className="qty_select_dropdown" onChange={(e) => use_template(e)}>

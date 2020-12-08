@@ -398,7 +398,7 @@ const PlaceOrderPublicPage = (props) => {
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
-						<h1>Shipping</h1>
+						<h2>Shipping</h2>
 						<div className="wrap jc-b">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
@@ -430,7 +430,7 @@ const PlaceOrderPublicPage = (props) => {
 					<div>
 						<ul className="cart-list-container">
 							<li>
-								<h1>Shopping Cart</h1>
+								<h2>Shopping Cart</h2>
 								<div className="column">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
@@ -529,7 +529,7 @@ const PlaceOrderPublicPage = (props) => {
 				<div className="placeorder-action">
 					<ul>
 						<li>
-							<h1 style={{ marginTop: '0px' }}>Order Summary</h1>
+							<h2 style={{ marginTop: '0px' }}>Order Summary</h2>
 						</li>
 						{!show_message && (
 							<li>

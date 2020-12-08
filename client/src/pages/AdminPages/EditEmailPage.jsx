@@ -148,14 +148,6 @@ const EditEmailPage = (props) => {
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '50rem', marginBottom: '20px' }}>
-									<h1
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											marginRight: 'auto',
-											justifyContent: 'center'
-										}}
-									/>
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">

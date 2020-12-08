@@ -89,7 +89,7 @@ const Header = (props) => {
 						</Link>
 						<Link to="/">
 							<div className="row">
-								<h1 className="glow_leds_text">Glow LEDs</h1>
+								<label className="glow_leds_text">Glow LEDs</label>
 								<label className="tm" style={{ color: '#9a9898' }}>
 									™
 								</label>

@@ -290,7 +290,7 @@ const GlowControl = (props) => {
 				</Link>
 			</div>
 			{loading ? (
-				<h1 className="ta-c">Loading... Make Sure Device is Turned On</h1>
+				<h2 className="ta-c">Loading... Make Sure Device is Turned On</h2>
 			) : (
 				settings && (
 					<div className="column w-100per">

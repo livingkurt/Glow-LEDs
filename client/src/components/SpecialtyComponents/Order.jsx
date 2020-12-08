@@ -326,7 +326,7 @@ const Order = (props) => {
 						</div>
 						<ul className="column">
 							<li className="column ">
-								<h1>Shipping</h1>
+								<h2>Shipping</h2>
 								<div>
 									<div>
 										{props.order.shipping.first_name} {props.order.shipping.last_name}

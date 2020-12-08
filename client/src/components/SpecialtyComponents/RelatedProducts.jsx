@@ -30,7 +30,7 @@ const RelatedProducts = (props) => {
 
 	return (
 		<div className="column mh-10px">
-			<h1 className="ta-c w-100per jc-c">Related Products</h1>
+			<h2 className="ta-c w-100per jc-c">Related Products</h2>
 			<Loading loading={loading} error={error}>
 				<div className="row p-10px overflow-s">
 					{products &&

@@ -77,10 +77,10 @@ const RegisterPage = (props) => {
 				<ul className="form-container">
 					<li>
 						{/* <h2>Create Account</h2> */}
-						<div className="row">
-							<h1 style={{ width: '100%', marginRight: '-40px' }}>Create</h1>{' '}
-							<h1 style={{ width: '100%' }}>Account</h1>
-						</div>
+						<h1 className="row">
+							<label style={{ width: '100%', marginRight: '-40px' }}>Create</label>{' '}
+							<label style={{ width: '100%' }}>Account</label>
+						</h1>
 					</li>
 					<li>
 						<div className="jc-c">

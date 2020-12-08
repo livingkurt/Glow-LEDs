@@ -117,7 +117,7 @@ const GlowControlHomePage = (props) => {
 			</div>
 
 			<div className="jc-c">
-				<h1 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h1>
+				<h2 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h2>
 			</div>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Control your Glow LEDs Glowskins and Glow Strings with ease!
@@ -125,8 +125,8 @@ const GlowControlHomePage = (props) => {
 
 			<div className="home_page_divs">
 				<div className="wrap jc-b">
-					<h1 className=" w-500px" />
-					<h1 className="ta-c">Devices</h1>
+					<h2 className=" w-500px" />
+					<h2 className="ta-c">Devices</h2>
 					<div className=" jc-fe w-500px">
 						<label className="p-10px ">Click Here to Get Started!</label>
 						<Link to="/secure/account/editdevice">
@@ -202,7 +202,7 @@ const GlowControlHomePage = (props) => {
 			</div>
 			{/* <div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Glowskins</h1>
+					<h2 style={{ textAlign: 'center' }}>Glowskins</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
@@ -234,7 +234,7 @@ const GlowControlHomePage = (props) => {
 			</div> */}
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1>Glow Strings</h1>
+					<h2>Glow Strings</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">

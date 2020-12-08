@@ -28,9 +28,9 @@ const FAQPage = () => {
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 className="ta-c" id="glowskins">
+						<h2 className="ta-c" id="glowskins">
 							Glowskins
-						</h1>
+						</h2>
 						<h2 className="ta-c">How do Glowskins Work?</h2>
 
 						<div className="jc-c pos-rel">
@@ -240,9 +240,9 @@ const FAQPage = () => {
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 style={{ textAlign: 'center', marginBottom: '30px' }} id="ordering_custom_products">
+						<h2 style={{ textAlign: 'center', marginBottom: '30px' }} id="ordering_custom_products">
 							Ordering Custom Products
-						</h1>
+						</h2>
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }} id="custom_diffuser_caps">
 							Custom Diffuser Caps
 						</h2>
@@ -415,9 +415,9 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 className="ta-c" id="featured_content">
+						<h2 className="ta-c" id="featured_content">
 							Featured Content
-						</h1>
+						</h2>
 						<p style={{ lineHeight: '25px' }}>
 							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
 							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
@@ -450,7 +450,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 className="ta-c">Diffuser too tight or too loose?</h1>
+						<h2 className="ta-c">Diffuser too tight or too loose?</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Due to the handmade nature of our diffusers, some variations may occur between
@@ -483,9 +483,9 @@ const FAQPage = () => {
 					</div>
 
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 className="ta-c" id="processing_shipping">
+						<h2 className="ta-c" id="processing_shipping">
 							Processing/Shipping
-						</h1>
+						</h2>
 
 						<ul style={{ padding: '18px', marginBottom: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
@@ -620,9 +620,9 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h1 className="ta-c" id="returns_cancellations">
+						<h2 className="ta-c" id="returns_cancellations">
 							Returns/Cancellations
-						</h1>
+						</h2>
 						<ul style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								100% satisfaction guarantee{' '}

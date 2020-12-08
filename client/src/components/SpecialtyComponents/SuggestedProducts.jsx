@@ -30,7 +30,7 @@ const SuggestedProducts = (props) => {
 
 	return (
 		<div className="column mh-10px">
-			<h1
+			<h2
 				style={{
 					textAlign: 'center',
 					width: '100%',
@@ -38,7 +38,7 @@ const SuggestedProducts = (props) => {
 				}}
 			>
 				Suggested Products
-			</h1>
+			</h2>
 			{/* <Slider /> */}
 
 			<Loading loading={loading} error={error}>

@@ -112,7 +112,7 @@ const EditDevicePage = (props) => {
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
-									<h1
+									<h2
 										style={{
 											textAlign: 'center',
 											width: '100%',
@@ -121,7 +121,7 @@ const EditDevicePage = (props) => {
 										}}
 									>
 										{loading ? 'Device' : device.name}
-									</h1>
+									</h2>
 
 									<div className="row wrap">
 										<div className="column w-228px m-10px">

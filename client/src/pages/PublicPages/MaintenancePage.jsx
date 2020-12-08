@@ -70,12 +70,12 @@ const MaintenancePage = (props) => {
 			</div>
 			<div style={content_styles}>
 				<div className="jc-c">
-					<h1 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
+					<h2 className="welcome_text" style={{ fontSize: '6rem', marginBottom: '3vh' }}>
 						Glow LEDs Coming Soon!
-					</h1>
+					</h2>
 				</div>
 				<div className="jc-c">
-					<h1>From a Glover that just wants the world to stay lit</h1>
+					<h2>From a Glover that just wants the world to stay lit</h2>
 				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items
@@ -87,7 +87,7 @@ const MaintenancePage = (props) => {
 				</p>
 				<div className="home_page_divs">
 					<div className="jc-c">
-						<h1>Diffuser Caps</h1>
+						<h2>Diffuser Caps</h2>
 					</div>
 					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">
@@ -113,7 +113,7 @@ const MaintenancePage = (props) => {
 				</div>
 				{/* <div className="home_page_divs">
 					<div className="jc-c">
-						<h1>Infinity Mirrors</h1>
+						<h2>Infinity Mirrors</h2>
 					</div>
 					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">
@@ -138,7 +138,7 @@ const MaintenancePage = (props) => {
 				</div> */}
 				<div className="home_page_divs">
 					<div className="jc-c">
-						<h1>Glow Strings</h1>
+						<h2>Glow Strings</h2>
 					</div>
 					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">

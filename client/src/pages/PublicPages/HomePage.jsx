@@ -75,7 +75,7 @@ const HomePage = (props) => {
 			content.home_page && (
 				<div className="home_page_divs">
 					<div className="jc-c">
-						<h1 style={{ textAlign: 'center' }}>{content.home_page.h1}</h1>
+						<h2 className="ta-c fs-30px">{content.home_page.h1}</h2>
 					</div>
 					{content.home_page.show_image && (
 						<Link to={content.home_page.link}>
@@ -121,7 +121,7 @@ const HomePage = (props) => {
 				</div>
 			)}
 			<div className="jc-c">
-				<h1 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h1>
+				<h2 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h2>
 			</div>
 			<p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
@@ -134,7 +134,7 @@ const HomePage = (props) => {
 
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Glowskins</h1>
+					<h2 style={{ textAlign: 'center' }}>Glowskins</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
@@ -168,7 +168,7 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Mega Diffuser Caps</h1>
+					<h2 style={{ textAlign: 'center' }}>Mega Diffuser Caps</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
@@ -199,7 +199,7 @@ const HomePage = (props) => {
 
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Diffuser Caps</h1>
+					<h2 style={{ textAlign: 'center' }}>Diffuser Caps</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
@@ -232,7 +232,7 @@ const HomePage = (props) => {
 			</div>
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Frosted Diffusers</h1>
+					<h2 style={{ textAlign: 'center' }}>Frosted Diffusers</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
@@ -264,7 +264,7 @@ const HomePage = (props) => {
 			</div>
 			{/* <div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Glowskins</h1>
+					<h2 style={{ textAlign: 'center' }}>Glowskins</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
@@ -296,7 +296,7 @@ const HomePage = (props) => {
 			</div> */}
 			<div className="home_page_divs">
 				<div className="jc-c">
-					<h1>Glow Strings</h1>
+					<h2>Glow Strings</h2>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">

@@ -271,7 +271,7 @@ const OrderPublicPage = (props) => {
 						</div>
 						<div className="wrap jc-b">
 							<div className="column w-100per">
-								<h1>Shipping</h1>
+								<h2>Shipping</h2>
 								<div>
 									<div>
 										{order.shipping.first_name} {order.shipping.last_name}
@@ -289,7 +289,7 @@ const OrderPublicPage = (props) => {
 					</div>
 
 					<div style={{ backgroundColor: determine_color(order) }}>
-						<h1>Payment</h1>
+						<h2>Payment</h2>
 						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 							<p style={{ marginBottom: '0px' }}>
 								{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}
@@ -299,7 +299,7 @@ const OrderPublicPage = (props) => {
 					<div style={{ backgroundColor: determine_color(order) }}>
 						<ul className="cart-list-container mt-0px">
 							<li>
-								<h1>Shopping Cart</h1>
+								<h2>Shopping Cart</h2>
 								<div>Price</div>
 							</li>
 							{console.log({ orderItems: order.orderItems })}
@@ -376,7 +376,7 @@ const OrderPublicPage = (props) => {
 				<div className="placeorder-action" style={{ backgroundColor: determine_color(order) }}>
 					<ul>
 						<li>
-							<h1 style={{ marginTop: 0 }}>Order Summary</h1>
+							<h2 style={{ marginTop: 0 }}>Order Summary</h2>
 						</li>
 						{!order.promo_code && (
 							<li>

@@ -51,7 +51,7 @@ const OrderPaymentAccountCompletePublicPage = (props) => {
 					Make sure to check your spam folder for the confirmation email. If you do not recieve a confirmation
 					email please contact support
 				</p>
-				<h1 className="ta-c">Account Created Successfully</h1>
+				<h2 className="ta-c">Account Created Successfully</h2>
 				<p className="ta-c">Thank you for signing up with glow-leds</p>
 			</div>
 			<div className="wrap row jc-c w-100per ">

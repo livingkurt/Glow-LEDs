@@ -250,7 +250,7 @@ const GlowControl = (props) => {
 				</Link>
 			</div>
 			{loading ? (
-				<h1 className="ta-c">Loading... Make Sure Device is Turned On</h1>
+				<h2 className="ta-c">Loading... Make Sure Device is Turned On</h2>
 			) : (
 				settings && (
 					<div className="column w-100per">
@@ -282,7 +282,6 @@ const GlowControl = (props) => {
 								/>
 								{[ 'shootingStar', 'beat' ].includes(mode_specific_settings) && (
 									<div>
-										{/* <h1 className="ta-c">Palettes</h1> */}
 										<SettingSlider
 											update_function={update_leds}
 											set_settings={set_settings}

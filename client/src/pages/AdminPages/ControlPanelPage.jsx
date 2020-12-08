@@ -418,7 +418,7 @@ const ControlPanelPage = (props) => {
 				{expenses &&
 				orders && (
 					<div className="order-list responsive_table">
-						<h1 className="ta-c w-100per jc-c">Expenses</h1>
+						<h2 className="ta-c w-100per jc-c">Expenses</h2>
 						<table className="table">
 							<thead>
 								<tr>
@@ -501,7 +501,7 @@ const ControlPanelPage = (props) => {
 				daily_orders &&
 				monthly_orders && (
 					<div className="order-list responsive_table">
-						<h1 className="ta-c w-100per jc-c">Income</h1>
+						<h2 className="ta-c w-100per jc-c">Income</h2>
 						<table className="table">
 							<thead>
 								<tr>
@@ -603,7 +603,7 @@ const ControlPanelPage = (props) => {
 				products &&
 				users && (
 					<div className="order-list responsive_table">
-						<h1 className="ta-c w-100per jc-c">Metrics</h1>
+						<h2 className="ta-c w-100per jc-c">Metrics</h2>
 						<table className="table">
 							<thead>
 								<tr>
@@ -663,7 +663,7 @@ const ControlPanelPage = (props) => {
 				promos &&
 				affiliates && (
 					<div className="order-list responsive_table">
-						<h1 className="ta-c w-100per jc-c">Affiliate Revenue</h1>
+						<h2 className="ta-c w-100per jc-c">Affiliate Revenue</h2>
 						<table className="table">
 							<thead>
 								<tr>
@@ -734,7 +734,7 @@ const ControlPanelPage = (props) => {
 					</div>
 				)}
 			</div>
-			<h1 className="ta-c w-100per jc-c">Occurrences</h1>
+			<h2 className="ta-c w-100per jc-c">Occurrences</h2>
 			<canvas id="occurrence_chart" ref={occurrence_chart_ref} />
 			{/* {product_occurrences && (
 				<div className="order-list responsive_table">
@@ -766,7 +766,7 @@ const ControlPanelPage = (props) => {
 					</table>
 				</div>
 			)} */}
-			<h1 className="ta-c w-100per jc-c">Monthly Income</h1>
+			<h2 className="ta-c w-100per jc-c">Monthly Income</h2>
 			<canvas id="monthly_income_chart" ref={monthly_income_chart_ref} />
 			{monthly_income.length > 1 && (
 				<div className="order-list responsive_table">
@@ -798,7 +798,7 @@ const ControlPanelPage = (props) => {
 					</table>
 				</div>
 			)}
-			<h1 className="ta-c w-100per jc-c">Daily Income</h1>
+			<h2 className="ta-c w-100per jc-c">Daily Income</h2>
 			{daily_income && (
 				<div className="order-list responsive_table">
 					<table className="table">

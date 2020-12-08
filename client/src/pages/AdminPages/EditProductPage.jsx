@@ -463,7 +463,7 @@ const EditProductPage = (props) => {
 												<i className="fas fa-arrow-circle-left fs-40px" />
 											</button>
 										</div>
-										<h1
+										<h2
 											style={{
 												textAlign: 'center',
 												width: '100%',
@@ -472,7 +472,7 @@ const EditProductPage = (props) => {
 											}}
 										>
 											{loading ? 'Product' : product.name}
-										</h1>
+										</h2>
 										<div className="ai-c">
 											<button
 												style={{ borderRadius: '50%' }}

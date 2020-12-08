@@ -222,16 +222,6 @@ const EditOrderPage = (props) => {
 									className="edit-form-container"
 									style={{ maxWidth: '105rem', marginBottom: '20px' }}
 								>
-									<h1
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											marginRight: 'auto',
-											justifyContent: 'center'
-										}}
-									>
-										{loading ? 'Order' : order.name}
-									</h1>
 									<div className="row wrap jc-b">
 										<div className="w-228px m-10px">
 											{/* <h2>User</h2> */}

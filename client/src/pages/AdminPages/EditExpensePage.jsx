@@ -116,15 +116,6 @@ const EditExpensePage = (props) => {
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
-									<h1
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											marginRight: 'auto',
-											justifyContent: 'center'
-										}}
-									/>
-
 									<div className="row wrap">
 										<div className="column w-228px m-10px">
 											<li>

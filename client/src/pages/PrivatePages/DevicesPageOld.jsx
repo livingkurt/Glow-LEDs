@@ -194,7 +194,7 @@ const DevicesPage = (props) => {
 	return (
 		<div className="p-20px">
 			<div className="wrap jc-b">
-				<h1 className=" w-500px" />
+				<h2 className=" w-500px" />
 				<h1 className="ta-c">Devices</h1>
 				<div className=" jc-fe w-500px">
 					<label className="p-10px ">Click Here to Get Started!</label>
