@@ -249,9 +249,9 @@ router.get('/images/:category', async (req, res) => {
 router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ product_routes_put: req.body });
-		const productId = req.params.pathname;
-		console.log({ productId });
-		const product = await Product.findById(productId);
+		const pathname = req.params.pathname;
+		console.log({ pathname });
+		const product = await Product.findOne({ _id: pathname });
 		console.log({ product });
 		if (product) {
 			log_request({
@@ -263,7 +263,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 				success: true,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-			const updatedProduct = await Product.updateOne({ _id: productId }, req.body);
+			const updatedProduct = await Product.updateOne({ _id: product._id }, req.body);
 			console.log({ updatedProduct });
 			if (updatedProduct) {
 				log_request({
