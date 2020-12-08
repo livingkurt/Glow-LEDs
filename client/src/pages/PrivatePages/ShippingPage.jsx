@@ -175,8 +175,8 @@ const ShippingPage = (props) => {
 		<div>
 			<Helmet>
 				<title>Shipping | Glow LEDs</title>
-				<meta property="og:title" content="Shipping | Glow LEDs" />
-				<meta name="twitter:title" content="Shipping | Glow LEDs" />
+				<meta property="og:title" content="Shipping" />
+				<meta name="twitter:title" content="Shipping" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/shipping" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/shipping" />
 			</Helmet>

@@ -7,8 +7,8 @@ const FAQPage = () => {
 		<div className="main_container">
 			<Helmet>
 				<title>Frequently Asked Questions | Glow LEDs</title>
-				<meta property="og:title" content="Frequently Asked Questions | Glow LEDs" />
-				<meta name="twitter:title" content="Frequently Asked Questions | Glow LEDs" />
+				<meta property="og:title" content="Frequently Asked Questions" />
+				<meta name="twitter:title" content="Frequently Asked Questions" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/faq" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/faq" />
 				<meta

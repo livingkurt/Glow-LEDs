@@ -48,8 +48,8 @@ const LoginPage = (props) => {
 		<div className="form">
 			<Helmet>
 				<title>Login | Glow LEDs</title>
-				<meta property="og:title" content="Login | Glow LEDs" />
-				<meta name="twitter:title" content="Login | Glow LEDs" />
+				<meta property="og:title" content="Login" />
+				<meta name="twitter:title" content="Login" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/login" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/login" />
 				<meta

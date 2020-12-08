@@ -82,8 +82,8 @@ const EditProfilePage = (props) => {
 		<div className="profile_container column p-20px">
 			<Helmet>
 				<title>Edit Profile | Glow LEDs</title>
-				<meta property="og:title" content="Edit Profile | Glow LEDs" />
-				<meta name="twitter:title" content="Edit Profile | Glow LEDs" />
+				<meta property="og:title" content="Edit Profile" />
+				<meta name="twitter:title" content="Edit Profile" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editprofile" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editprofile" />
 			</Helmet>

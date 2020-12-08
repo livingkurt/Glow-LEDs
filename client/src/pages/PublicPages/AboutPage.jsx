@@ -32,8 +32,8 @@ const AboutPage = () => {
 		<div className="main_container">
 			<Helmet>
 				<title>About | Glow LEDs</title>
-				<meta property="og:title" content="About | Glow LEDs" />
-				<meta name="twitter:title" content="About | Glow LEDs" />
+				<meta property="og:title" content="About" />
+				<meta name="twitter:title" content="About" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/about" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/about" />
 				<meta name="description" content="Learn how Glow LEDs got started and more in our About Page" />

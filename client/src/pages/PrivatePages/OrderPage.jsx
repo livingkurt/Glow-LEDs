@@ -254,8 +254,8 @@ const OrderPage = (props) => {
 		<div>
 			<Helmet>
 				<title>Your Order | Glow LEDs</title>
-				<meta property="og:title" content="Your Order | Glow LEDs" />
-				<meta name="twitter:title" content="Your Order | Glow LEDs" />
+				<meta property="og:title" content="Your Order" />
+				<meta name="twitter:title" content="Your Order" />
 				<link
 					rel="canonical"
 					href={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}

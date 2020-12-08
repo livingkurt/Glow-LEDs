@@ -29,8 +29,8 @@ const MaintenancePage = (props) => {
 		<div style={{ padding: 0 }}>
 			<Helmet>
 				<title>Maintenance | Glow LEDs</title>
-				<meta property="og:title" content="Maintenance | Glow LEDs" />
-				<meta name="twitter:title" content="Maintenance | Glow LEDs" />
+				<meta property="og:title" content="Maintenance" />
+				<meta name="twitter:title" content="Maintenance" />
 				<link rel="canonical" href="https://www.glow-leds.com/" />
 				<meta property="og:url" content="https://www.glow-leds.com" />
 			</Helmet>

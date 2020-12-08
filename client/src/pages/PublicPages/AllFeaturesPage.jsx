@@ -158,8 +158,8 @@ const AllFeaturesPage = (props) => {
 		<div>
 			<Helmet>
 				<title>Products | Glow LEDs</title>
-				<meta property="og:title" content="Products | Glow LEDs" />
-				<meta name="twitter:title" content="Products | Glow LEDs" />
+				<meta property="og:title" content="Products" />
+				<meta name="twitter:title" content="Products" />
 				<link rel="canonical" href="https://www.glow-leds.com/collections/all/products" />
 				<meta property="og:url" content="https://www.glow-leds.com/collections/all/products" />
 				<meta name="description" content={description_determination()} />

@@ -8,8 +8,8 @@ const ViewOrder = (props) => {
 		<div className="form">
 			<Helmet>
 				<title>Track Order | Glow LEDs</title>
-				<meta property="og:title" content="Guest Decision | Glow LEDs" />
-				<meta name="twitter:title" content="Guest Decision | Glow LEDs" />
+				<meta property="og:title" content="Guest Decision" />
+				<meta name="twitter:title" content="Guest Decision" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/decision" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/decision" />
 			</Helmet>

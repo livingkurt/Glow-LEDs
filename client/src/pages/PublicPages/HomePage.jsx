@@ -139,7 +139,7 @@ const HomePage = (props) => {
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
-							title="Mega Diffuser Caps Promo Video"
+							title="Glowskins Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -162,6 +162,39 @@ const HomePage = (props) => {
 					<Link to="/collections/all/products/category/glowskins">
 						<button className="button primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glowskins</h2>
+						</button>
+					</Link>
+				</div>
+			</div>
+			<div className="home_page_divs">
+				<div className="jc-c">
+					<h2 style={{ textAlign: 'center' }}>Diffuser Caps</h2>
+				</div>
+				<div className="jc-c pos-rel">
+					<div className="iframe-container">
+						<iframe
+							title="Diffuser Caps Promo Video"
+							width="996"
+							height="560"
+							style={{ borderRadius: '20px' }}
+							src="https://www.youtube.com/embed/0b1cn_3EczE?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+							frameborder="0"
+							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen="1"
+						/>
+					</div>
+				</div>
+				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					It's been too long since a truly new element has been introduced to gloving. We are here to change
+					lightshows forever. This new technology puts designs on the outside of your glove for ultimate
+					definition. Using a propriety design, you will be able to simply screw on the caps through the
+					gloves to the adapter and start throwing heat right away. Mix and match the cap designs create truly
+					ridiculous light shows. 100% facemelt guarantee.
+				</p>
+				<div className="jc-c">
+					<Link to="/collections/all/products/category/diffuser_caps">
+						<button className="button primary" style={{ background: 'transparent' }}>
+							<h2>Shop Diffuser Caps</h2>
 						</button>
 					</Link>
 				</div>
@@ -197,39 +230,6 @@ const HomePage = (props) => {
 				</div>
 			</div>
 
-			<div className="home_page_divs">
-				<div className="jc-c">
-					<h2 style={{ textAlign: 'center' }}>Diffuser Caps</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Diffuser Caps Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/0b1cn_3EczE?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
-					It's been too long since a truly new element has been introduced to gloving. We are here to change
-					lightshows forever. This new technology puts designs on the outside of your glove for ultimate
-					definition. Using a propriety design, you will be able to simply screw on the caps through the
-					gloves to the adapter and start throwing heat right away. Mix and match the cap designs create truly
-					ridiculous light shows. 100% facemelt guarantee.
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/diffuser_caps">
-						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Diffuser Caps</h2>
-						</button>
-					</Link>
-				</div>
-			</div>
 			<div className="home_page_divs">
 				<div className="jc-c">
 					<h2 style={{ textAlign: 'center' }}>Frosted Diffusers</h2>

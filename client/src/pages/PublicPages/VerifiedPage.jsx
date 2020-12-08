@@ -24,8 +24,8 @@ const VerifiedPage = (props) => {
 		<div className="column jc-c">
 			<Helmet>
 				<title>Verified | Glow LEDs</title>
-				<meta property="og:title" content="Verified | Glow LEDs" />
-				<meta name="twitter:title" content="Verified | Glow LEDs" />
+				<meta property="og:title" content="Verified" />
+				<meta name="twitter:title" content="Verified" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/verified" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/verified" />
 			</Helmet>

@@ -23,8 +23,8 @@ const FeaturedPage = (props) => {
 		<div className="main_container">
 			<Helmet>
 				<title>Featured | Glow LEDs</title>
-				<meta property="og:title" content="Featured | Glow LEDs" />
-				<meta name="twitter:title" content="Featured | Glow LEDs" />
+				<meta property="og:title" content="Featured" />
+				<meta name="twitter:title" content="Featured" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/featured" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/featured" />
 				<meta

@@ -143,8 +143,8 @@ const ContactPage = (props) => {
 		<div className="main_container">
 			<Helmet>
 				<title>Contact | Glow LEDs</title>
-				<meta property="og:title" content="Contact | Glow LEDs" />
-				<meta name="twitter:title" content="Contact | Glow LEDs" />
+				<meta property="og:title" content="Contact" />
+				<meta name="twitter:title" content="Contact" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/contact" />
 				<meta

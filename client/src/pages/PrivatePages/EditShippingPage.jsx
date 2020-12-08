@@ -54,8 +54,8 @@ const ProfilePage = (props) => {
 		<div className="profile_container wrap p-20px">
 			<Helmet>
 				<title>Edit Shipping | Glow LEDs</title>
-				<meta property="og:title" content="Edit Shipping | Glow LEDs" />
-				<meta name="twitter:title" content="Edit Shipping | Glow LEDs" />
+				<meta property="og:title" content="Edit Shipping" />
+				<meta name="twitter:title" content="Edit Shipping" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/editshipping" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editshipping" />
 			</Helmet>

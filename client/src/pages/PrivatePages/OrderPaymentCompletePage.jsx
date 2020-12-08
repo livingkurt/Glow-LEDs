@@ -7,8 +7,8 @@ const OrderPaymentCompletePage = (props) => {
 		<div className="column jc-c">
 			<Helmet>
 				<title>Payment Complete | Glow LEDs</title>
-				<meta property="og:title" content="Payment Complete | Glow LEDs" />
-				<meta name="twitter:title" content="Payment Complete | Glow LEDs" />
+				<meta property="og:title" content="Payment Complete" />
+				<meta name="twitter:title" content="Payment Complete" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/paymentcomplete/" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/paymentcomplete/" />
 			</Helmet>

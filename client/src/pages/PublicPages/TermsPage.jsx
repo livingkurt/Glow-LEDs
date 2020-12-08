@@ -6,8 +6,8 @@ const TermsPage = () => {
 		<div className="main_container">
 			<Helmet>
 				<title>Terms and Conditions | Glow LEDs</title>
-				<meta property="og:title" content="Terms and Conditions | Glow LEDs" />
-				<meta name="twitter:title" content="Terms and Conditions | Glow LEDs" />
+				<meta property="og:title" content="Terms and Conditions" />
+				<meta name="twitter:title" content="Terms and Conditions" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/terms" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/terms" />
 				<meta

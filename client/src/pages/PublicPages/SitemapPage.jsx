@@ -7,8 +7,8 @@ const SitemapPage = () => {
 		<div className="main_container">
 			<Helmet>
 				<title>Sitemap | Glow LEDs</title>
-				<meta property="og:title" content="Sitemap | Glow LEDs" />
-				<meta name="twitter:title" content="Sitemap | Glow LEDs" />
+				<meta property="og:title" content="Sitemap" />
+				<meta name="twitter:title" content="Sitemap" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/sitemap" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/sitemap" />
 				<meta

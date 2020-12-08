@@ -382,8 +382,8 @@ const PlaceOrderPublicPage = (props) => {
 		<div>
 			<Helmet>
 				<title>Place Order | Glow LEDs</title>
-				<meta property="og:title" content="Place Order | Glow LEDs" />
-				<meta name="twitter:title" content="Place Order | Glow LEDs" />
+				<meta property="og:title" content="Place Order" />
+				<meta name="twitter:title" content="Place Order" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
 			</Helmet>

@@ -56,8 +56,8 @@ const RegisterPage = (props) => {
 		<div className="form">
 			<Helmet>
 				<title>Register | Glow LEDs</title>
-				<meta property="og:title" content="Register | Glow LEDs" />
-				<meta name="twitter:title" content="Register | Glow LEDs" />
+				<meta property="og:title" content="Register" />
+				<meta name="twitter:title" content="Register" />
 				<link rel="canonical" href="https://www.glow-leds.com/account/register" />
 				<meta property="og:url" content="https://www.glow-leds.com/account/register" />
 				<meta

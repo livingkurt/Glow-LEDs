@@ -55,8 +55,8 @@ const ProfilePage = (props) => {
 		<div className="column p-20px inner_content">
 			<Helmet>
 				<title>Profile | Glow LEDs</title>
-				<meta property="og:title" content="Profile | Glow LEDs" />
-				<meta name="twitter:title" content="Profile | Glow LEDs" />
+				<meta property="og:title" content="Profile" />
+				<meta name="twitter:title" content="Profile" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/profile" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/profile" />
 			</Helmet>

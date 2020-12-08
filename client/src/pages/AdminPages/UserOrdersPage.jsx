@@ -73,8 +73,8 @@ const UserOrderPage = (props) => {
 		<div className="profile_container wrap column p-20px">
 			<Helmet>
 				<title>My Orders | Glow LEDs</title>
-				<meta property="og:title" content="My Orders | Glow LEDs" />
-				<meta name="twitter:title" content="My Orders | Glow LEDs" />
+				<meta property="og:title" content="My Orders" />
+				<meta name="twitter:title" content="My Orders" />
 				<link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
 			</Helmet>
