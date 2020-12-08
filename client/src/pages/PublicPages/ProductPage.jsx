@@ -151,26 +151,30 @@ const ProductPage = (props) => {
 								property="og:url"
 								content={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
 							/>
-							<meta
-								property="og:image"
-								content={'https://www.glow-leds.com' + (product.images && product.images[0])}
-							/>
+							{product.images && (
+								<div>
+									<meta
+										property="og:image"
+										content={'https://www.glow-leds.com/' + product.images[0]}
+									/>
 
-							<meta
-								property="og:image:secure_url"
-								content={'https://www.glow-leds.com' + (product.images && product.images[0])}
-							/>
-							<meta
-								name="twitter:image"
-								content={'https://www.glow-leds.com' + (product.images && product.images[0])}
-							/>
+									<meta
+										property="og:image:secure_url"
+										content={'https://www.glow-leds.com/' + product.images[0]}
+									/>
+									<meta
+										name="twitter:image"
+										content={'https://www.glow-leds.com/' + product.images[0]}
+									/>
+								</div>
+							)}
 							<meta
 								name="description"
 								content={
-									loading ? (
-										'Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world.'
-									) : (
+									product.meta_description ? (
 										product.meta_description
+									) : (
+										'Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings.'
 									)
 								}
 							/>
@@ -178,10 +182,10 @@ const ProductPage = (props) => {
 							<meta
 								property="og:description"
 								content={
-									loading ? (
-										'Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world.'
-									) : (
+									product.meta_description ? (
 										product.meta_description
+									) : (
+										'Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings.'
 									)
 								}
 							/>
@@ -189,10 +193,10 @@ const ProductPage = (props) => {
 							<meta
 								name="twitter:description"
 								content={
-									loading ? (
-										'Glow LEDs offers a full selection of hand made LED products and accessories that are made to light up your world.'
-									) : (
+									product.meta_description ? (
 										product.meta_description
+									) : (
+										'Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings.'
 									)
 								}
 							/>

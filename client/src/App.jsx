@@ -131,7 +131,7 @@ const App = () => {
 					<title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
 					<meta
 						name="description"
-						content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
+						content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
 					/>
 					<link rel="canonical" href="https://www.glow-leds.com" />
 					<meta charset="utf-8" />
@@ -154,7 +154,7 @@ const App = () => {
 					<meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
 					<meta
 						property="og:description"
-						content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
+						content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
 					/>
 					<meta property="og:url" content="https://www.glow-leds.com" />
 
@@ -162,7 +162,7 @@ const App = () => {
 					<meta name="twitter:card" content="summary" />
 					<meta
 						name="twitter:description"
-						content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
+						content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
 					/>
 					<meta name="twitter:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />
 					<meta

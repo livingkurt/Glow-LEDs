@@ -40,16 +40,16 @@ const HomePage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com" />
 				<meta
 					name="description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
 				/>
 
 				<meta
 					property="og:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
 				/>
 				<meta
 					name="twitter:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Infinity Mirrors, and Glow Strings."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
 				/>
 				<meta
 					property="og:image"
@@ -264,12 +264,12 @@ const HomePage = (props) => {
 			</div>
 			{/* <div className="home_page_divs">
 				<div className="jc-c">
-					<h1 style={{ textAlign: 'center' }}>Infinity Mirrors</h1>
+					<h1 style={{ textAlign: 'center' }}>Glowskins</h1>
 				</div>
 				<div className="jc-c pos-rel">
 					<div className="iframe-container">
 						<iframe
-							title="Infinity Mirrors Promo Video"
+							title="Glowskins Promo Video"
 							width="996"
 							height="560"
 							style={{ borderRadius: '20px' }}
@@ -289,7 +289,7 @@ const HomePage = (props) => {
 				<div className="jc-c">
 					<Link to="/collections/all/products/category/infinity_mirrors">
 						<button className="button primary" style={{ background: 'transparent' }}>
-							<h2>Shop Infinity Mirrors</h2>
+							<h2>Shop Glowskins</h2>
 						</button>
 					</Link>
 				</div>
