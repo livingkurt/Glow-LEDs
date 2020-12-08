@@ -251,6 +251,7 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 		console.log({ product_routes_put: req.body });
 		const productId = req.params.pathname;
 		const product = await Product.findById(productId);
+		console.log({ product });
 		if (product) {
 			log_request({
 				method: 'GET',
