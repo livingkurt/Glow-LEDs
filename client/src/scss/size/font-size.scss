@@ -26,6 +26,11 @@
 		font-size: \. + $i + rem !important;
 	}
 }
+@for $i from 0 to 10 {
+	.fs-#{$i}em {
+		font-size: $i + em !important;
+	}
+}
 
 @for $i from 0 to 100 {
 	.fs-#{$i}px {

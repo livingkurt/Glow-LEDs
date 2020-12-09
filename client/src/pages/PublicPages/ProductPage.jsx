@@ -203,9 +203,7 @@ const ProductPage = (props) => {
 						</Helmet>
 						<div className="details">
 							<div className="column">
-								<h1 class="product_title_top" style={{ display: 'none' }}>
-									{product.name}
-								</h1>
+								<label className="product_title_top none fs-2em ff-h mb-2rem">{product.name}</label>
 								<div className="details-image">
 									<Zoom>
 										<img
