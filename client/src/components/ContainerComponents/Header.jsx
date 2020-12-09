@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import Banner from './Banner';
+import { HashLink } from 'react-router-hash-link';
 
 const Header = (props) => {
 	const history = useHistory();
@@ -278,7 +279,7 @@ const Header = (props) => {
 										/>
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in w-325px left-n325px top-n5px">
-										<a href="/pages/faq#glowskins">
+										<HashLink to="/pages/faq#glowskins">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -286,8 +287,8 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav w-100per ta-l">Glowskins</button>
 											</div>
-										</a>
-										<a href="/pages/faq#using_diffuser_caps_and_adapters">
+										</HashLink>
+										<HashLink to="/pages/faq#using_diffuser_caps_and_adapters">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -297,8 +298,8 @@ const Header = (props) => {
 													Diffuser Caps Guide
 												</button>
 											</div>
-										</a>
-										<a href="/pages/faq#diffuser_too_tight_too_loose">
+										</HashLink>
+										<HashLink to="/pages/faq#diffuser_too_tight_too_loose">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -308,8 +309,8 @@ const Header = (props) => {
 													Diffusers Too Tight/Loose?
 												</button>
 											</div>
-										</a>
-										{/* <a href="/pages/faq#orienting_your_diffuser_caps">
+										</HashLink>
+										{/* <HashLink to="/pages/faq#orienting_your_diffuser_caps">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -317,8 +318,8 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav w-100per ta-l">Orienting Your Diffuser Caps</button>
 											</div>
-										</a> */}
-										<a href="/pages/faq#ordering_custom_products">
+										</HashLink> */}
+										<HashLink to="/pages/faq#ordering_custom_products">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -328,8 +329,8 @@ const Header = (props) => {
 													Ordering Custom Products
 												</button>
 											</div>
-										</a>
-										{/* <a href="/pages/faq#custom_diffuser_caps">
+										</HashLink>
+										{/* <HashLink to="/pages/faq#custom_diffuser_caps">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -337,8 +338,8 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav w-100per ta-l">Custom Diffuser Caps</button>
 											</div>
-										</a>
-										<a href="/pages/faq#custom_infinity_mirrors">
+										</HashLink>
+										<HashLink to="/pages/faq#custom_infinity_mirrors">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -346,8 +347,8 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav w-100per ta-l">Custom Infinity Mirrors</button>
 											</div>
-										</a> */}
-										<a href="/pages/faq#featured_content">
+										</HashLink> */}
+										<HashLink to="/pages/faq#featured_content">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -355,9 +356,9 @@ const Header = (props) => {
 												/>{' '}
 												<button className="button nav w-100per ta-l">Featured Content</button>
 											</div>
-										</a>
+										</HashLink>
 
-										<a href="/pages/faq#processing_shipping">
+										<HashLink to="/pages/faq#processing_shipping">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -367,8 +368,8 @@ const Header = (props) => {
 													Processing/Shipping
 												</button>
 											</div>
-										</a>
-										<a href="/pages/faq#returns_cancellations">
+										</HashLink>
+										<HashLink to="/pages/faq#returns_cancellations">
 											<div className="row">
 												<i
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
@@ -378,7 +379,7 @@ const Header = (props) => {
 													Returns/Cancellations
 												</button>
 											</div>
-										</a>
+										</HashLink>
 									</div>
 								</div>
 								<Link to="/pages/contact">

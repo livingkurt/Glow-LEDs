@@ -253,43 +253,44 @@ router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 		console.log({ pathname });
 		const product = await Product.findOne({ _id: pathname });
 		console.log({ product });
-		if (product) {
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: [ product ],
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			const updatedProduct = await Product.updateOne({ _id: product._id }, req.body);
-			console.log({ updatedProduct });
-			if (updatedProduct) {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ updatedProduct ],
-					status: 200,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
-				return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
-			}
-		} else {
-			log_request({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: [ product ],
-				status: 500,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			console.log('Error in Updating Product.');
-			return res.status(500).send({ message: ' Error in Updating Product.' });
-		}
+		const updatedProduct = await Product.updateOne({ _id: product._id }, req.body);
+		// if (product) {
+		// 	log_request({
+		// 		method: 'GET',
+		// 		path: req.originalUrl,
+		// 		collection: 'Product',
+		// 		data: [ product ],
+		// 		status: 200,
+		// 		success: true,
+		// 		ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		// 	});
+		// 	const updatedProduct = await Product.updateOne({ _id: product._id }, req.body);
+		// 	console.log({ updatedProduct });
+		// 	if (updatedProduct) {
+		// 		log_request({
+		// 			method: 'PUT',
+		// 			path: req.originalUrl,
+		// 			collection: 'Product',
+		// 			data: [ updatedProduct ],
+		// 			status: 200,
+		// 			success: false,
+		// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		// 		});
+		return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+		// 	}
+		// } else {
+		// 	log_request({
+		// 		method: 'DELETE',
+		// 		path: req.originalUrl,
+		// 		collection: 'Product',
+		// 		data: [ product ],
+		// 		status: 500,
+		// 		success: false,
+		// 		ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		// 	});
+		// 	console.log('Error in Updating Product.');
+		// 	return res.status(500).send({ message: ' Error in Updating Product.' });
+		// }
 	} catch (error) {
 		log_error({
 			method: 'PUT',
