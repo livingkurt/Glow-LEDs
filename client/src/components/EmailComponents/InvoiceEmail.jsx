@@ -135,73 +135,79 @@ const InvoiceEmail = (props) => {
 							</td>
 						</tr>
 
-						<tr>
-							<td
-								style={{
-									fontSize: '8px',
-									padding: '5px',
-									verticalAlign: 'top',
-									background: '#eee',
-									borderBottom: '1px solid black',
-									fontWeight: 'bold'
-								}}
-								valign="top"
-							>
-								Payment Method
-							</td>
+						{order.payment.charge && (
+							<tr>
+								<td
+									style={{
+										fontSize: '8px',
+										padding: '5px',
+										verticalAlign: 'top',
+										background: '#eee',
+										borderBottom: '1px solid black',
+										fontWeight: 'bold'
+									}}
+									valign="top"
+								>
+									Payment Method
+								</td>
 
-							<td
-								style={{
-									fontSize: '8px',
-									padding: '5px',
-									verticalAlign: 'top',
-									textAlign: 'right',
-									background: '#eee',
-									borderBottom: '1px solid black',
-									fontWeight: 'bold'
-								}}
-								valign="top"
-								align="right"
-							>
-								Last 4
-							</td>
-						</tr>
+								<td
+									style={{
+										fontSize: '8px',
+										padding: '5px',
+										verticalAlign: 'top',
+										textAlign: 'right',
+										background: '#eee',
+										borderBottom: '1px solid black',
+										fontWeight: 'bold'
+									}}
+									valign="top"
+									align="right"
+								>
+									Last 4
+								</td>
+							</tr>
+						)}
+						{order.payment.charge && (
+							<tr>
+								<td
+									style={{
+										fontSize: '8px',
+										padding: '5px',
+										display: 'flex',
+										verticalAlign: 'top',
+										borderBottom: '1px solid black',
+										alignItems: 'center'
+									}}
+									valign="top"
+								>
+									<img
+										src={
+											order.payment.charge &&
+											determin_card_logo(order.payment.charge.source.brand)
+										}
+										alt={order.payment.charge && order.payment.charge.source.brand}
+										title="Card Type Image"
+										style={{ fontSize: '8px', width: '15px', marginRight: '0.5rem' }}
+									/>{' '}
+									<div>{order.payment.charge && order.payment.charge.source.brand}</div>
+								</td>
 
-						<tr>
-							<td
-								style={{
-									fontSize: '8px',
-									padding: '5px',
-									display: 'flex',
-									verticalAlign: 'top',
-									borderBottom: '1px solid black',
-									alignItems: 'center'
-								}}
-								valign="top"
-							>
-								<img
-									src={order.payment.charge && determin_card_logo(order.payment.charge.source.brand)}
-									alt={order.payment.charge && order.payment.charge.source.brand}
-									title="Card Type Image"
-									style={{ fontSize: '8px', width: '15px', marginRight: '0.5rem' }}
-								/>{' '}
-								<div>{order.payment.charge && order.payment.charge.source.brand}</div>
-							</td>
-
-							<td
-								style={{
-									fontSize: '8px',
-									padding: '5px',
-									verticalAlign: 'top',
-									textAlign: 'right',
-									borderBottom: '1px solid black'
-								}}
-								valign="top"
-								align="right"
-							>
-								{order.payment.charge ? order.payment.charge.source.last4 : ''}
-							</td>
-						</tr>
+								<td
+									style={{
+										fontSize: '8px',
+										padding: '5px',
+										verticalAlign: 'top',
+										textAlign: 'right',
+										borderBottom: '1px solid black'
+									}}
+									valign="top"
+									align="right"
+								>
+									{order.payment.charge ? order.payment.charge.source.last4 : ''}
+								</td>
+							</tr>
+						)}
 
 						<tr>
 							<td

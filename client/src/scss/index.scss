@@ -13,6 +13,7 @@
 @import './spacing/margin.scss';
 @import './spacing/padding.scss';
 @import './spacing/border_radius.scss';
+@import './spacing/z_index.scss';
 
 @import './elements/button.scss';
 @import './elements/table.scss';
@@ -63,6 +64,31 @@ body {
 	color: $font_color;
 	scroll-padding-top: 220px; /* height of sticky header */
 	scroll-margin-top: 220px;
+}
+
+footer {
+  background: linear-gradient(0deg, #4d5060 0%, #272727 100%);
+}
+
+.footer-image {
+  position: relative;
+  // max-width: 200px;
+ 
+  img {
+    // position: absolute;
+    // top: 100%;
+    // left: 50%;
+    // height: 100px;
+    // width: 100%;
+    // height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0px 0px -50px;
+    // transform: translate(-50%, -50%);
+    // z-index: -10;
+    opacity: .2;
+  }
 }
 
 button {

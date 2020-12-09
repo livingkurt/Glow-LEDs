@@ -312,15 +312,6 @@ const Header = (props) => {
 												</button>
 											</div>
 										</HashLink>
-										{/* <HashLink to="/pages/faq#orienting_your_diffuser_caps">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Orienting Your Diffuser Caps</button>
-											</div>
-										</HashLink> */}
 										<HashLink to="/pages/faq#ordering_custom_products">
 											<div className="row">
 												<i
@@ -332,24 +323,6 @@ const Header = (props) => {
 												</button>
 											</div>
 										</HashLink>
-										{/* <HashLink to="/pages/faq#custom_diffuser_caps">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Custom Diffuser Caps</button>
-											</div>
-										</HashLink>
-										<HashLink to="/pages/faq#custom_infinity_mirrors">
-											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
-												<button className="button nav w-100per ta-l">Custom Infinity Mirrors</button>
-											</div>
-										</HashLink> */}
 										<HashLink to="/pages/faq#featured_content">
 											<div className="row">
 												<i
