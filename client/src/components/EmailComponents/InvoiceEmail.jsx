@@ -550,7 +550,7 @@ const InvoiceEmail = (props) => {
 										paddingLeft: '70px',
 										verticalAlign: 'top',
 										textAlign: 'left',
-										width: '81px',
+										width: '24px',
 										color: 'white',
 										fontWeight: 'bold'
 									}}
