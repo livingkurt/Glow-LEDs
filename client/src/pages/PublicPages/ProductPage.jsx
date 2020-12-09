@@ -140,7 +140,7 @@ const ProductPage = (props) => {
 				{product && (
 					<div className="column">
 						<Helmet>
-							<title>{product.meta_title}</title>
+							<title>{product.meta_title + ' | Glow LEDs'}</title>
 							<meta property="og:title" content={product.meta_title} />
 							<meta name="twitter:title" content={product.meta_title} />
 							<link
