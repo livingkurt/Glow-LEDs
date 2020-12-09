@@ -450,7 +450,9 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 className="ta-c">Diffuser too tight or too loose?</h2>
+						<h2 className="ta-c" id="diffuser_too_tight_too_loose">
+							Diffuser too tight or too loose?
+						</h2>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Due to the handmade nature of our diffusers, some variations may occur between
