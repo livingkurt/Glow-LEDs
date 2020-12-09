@@ -62,7 +62,8 @@ const AboutPage = () => {
 							Hi, My Name is Kurt!
 						</h2>
 						<img
-							alt="picture of founder"
+							alt="Picture of Kurt"
+							title="Founder Picture"
 							style={{
 								borderRadius: '15px',
 								width: '100%',
@@ -93,7 +94,8 @@ const AboutPage = () => {
 							Hi, My Name is Destanye!
 						</h2>
 						<img
-							alt="picture of partner"
+							alt="Picture of Destanye"
+							title="Partner Picture"
 							style={{
 								borderRadius: '15px',
 								width: '100%',

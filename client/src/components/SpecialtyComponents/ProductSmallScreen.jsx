@@ -14,6 +14,7 @@ const ProductSmallScreen = (props) => {
 						<LazyLoadImage
 							className="product-image w-200px h-200px "
 							alt={props.product.name}
+							title="Product Image"
 							effect="blur"
 							src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
 						/>

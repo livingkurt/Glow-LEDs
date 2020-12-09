@@ -543,7 +543,8 @@ const GlowControl = (props) => {
 												marginRight: '10px'
 											}}
 											src="https://images2.imgbox.com/f5/31/yXxteuO4_o.jpg"
-											alt="hsv"
+											alt="HSV Gradient"
+											title="HSV Gradient"
 											// className="w-100per"
 										/>
 										<div

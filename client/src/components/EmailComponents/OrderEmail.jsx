@@ -79,7 +79,8 @@ const OrderEmail = (props) => {
 								<td>
 									<img
 										src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
-										alt="Glow LEDs"
+										alt="Glow LEDs Logo"
+										title="Glow LEDs Logo"
 										style={{
 											textAlign: 'center',
 											width: '100%',
@@ -159,7 +160,6 @@ const OrderEmail = (props) => {
 												'https://www.glow-leds.com/account/login?redirect=/secure/account/order/' +
 												order._id
 											}
-											alt="discount image"
 											style={{
 												backgroundColor: '#4c4f60',
 												color: 'white',
@@ -188,7 +188,6 @@ const OrderEmail = (props) => {
 									>
 										<a
 											href="https://www.glow-leds.com/collections/all/products"
-											alt="discount image"
 											style={{
 												color: 'white',
 												border: 0,
@@ -286,7 +285,8 @@ const OrderEmail = (props) => {
 																<td>
 																	<img
 																		src={item.display_image}
-																		alt="Glow LEDs"
+																		alt={item.name}
+																		title="Product Image"
 																		style={{
 																			textAlign: 'center',
 																			width: '100%',
@@ -726,7 +726,6 @@ const OrderEmail = (props) => {
 											href={
 												'https://www.glow-leds.com/pages/contact/submit_content_to_be_featured'
 											}
-											alt="discount image"
 											style={{
 												backgroundColor: '#4c4f60',
 												color: 'white',
@@ -798,7 +797,8 @@ const OrderEmail = (props) => {
 										<img
 											src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
 											style={{ height: '25px' }}
-											alt="facebook"
+											alt="Facebook"
+											title="Facebook Logo"
 										/>
 									</a>
 								</div>
@@ -817,7 +817,8 @@ const OrderEmail = (props) => {
 										<img
 											src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
 											style={{ height: '25px' }}
-											alt="facebook"
+											alt="Instagram"
+											title="Instagram Logo"
 										/>
 									</a>
 								</div>
@@ -836,7 +837,8 @@ const OrderEmail = (props) => {
 										<img
 											src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
 											style={{ height: '20px' }}
-											alt="facebook"
+											alt="Youtube"
+											title="Youtube Logo"
 										/>
 									</a>
 								</div>
@@ -855,7 +857,8 @@ const OrderEmail = (props) => {
 										<img
 											src="https://images2.imgbox.com/ed/d9/eyAcj7D2_o.png"
 											style={{ height: '20px' }}
-											alt="facebook"
+											alt="Soundcloud"
+											title="Soundcloud Logo"
 										/>
 									</a>
 								</div>

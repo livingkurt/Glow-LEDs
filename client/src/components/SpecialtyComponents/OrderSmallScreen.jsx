@@ -49,6 +49,7 @@ const OrderSmallScreen = (props) => {
 										<LazyLoadImage
 											className="order-image w-100px h-100px br-10px mr-15px"
 											alt={item.name}
+											title="Product Image"
 											effect="blur"
 											src={item.display_image && item.display_image} // use normal <img> attributes as props
 										/>

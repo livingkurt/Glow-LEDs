@@ -349,7 +349,11 @@ ${order.shipping.email}`)}
 										{console.log({ item })}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.product.images[0]} alt="product" />
+												<img
+													src={item.product.images[0]}
+													alt={item.name}
+													title="Product Image"
+												/>
 											</Link>
 										</div>
 										<div className="cart-name">

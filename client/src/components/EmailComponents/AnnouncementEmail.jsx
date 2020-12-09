@@ -69,6 +69,7 @@ const AnnouncementEmail = () => {
 											<img
 												src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
 												alt="Glow LEDs"
+												title="Email Logo"
 												style={{
 													textAlign: 'center',
 													width: '100%',
@@ -102,6 +103,7 @@ const AnnouncementEmail = () => {
 												<img
 													src={email.image}
 													alt="Glow LEDs"
+													title="Email Image"
 													style={{
 														textAlign: 'center',
 														width: '100%',
@@ -146,7 +148,6 @@ const AnnouncementEmail = () => {
 							>
 								<a
 									href={email.link}
-									alt="discount image"
 									style={{
 										backgroundColor: '#4c4f60',
 										color: 'white',
@@ -198,6 +199,7 @@ const AnnouncementEmail = () => {
 											src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
 											style={{ height: '25px' }}
 											alt="facebook"
+											title="facebook_logo"
 										/>
 									</a>
 								</div>
@@ -216,7 +218,8 @@ const AnnouncementEmail = () => {
 										<img
 											src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
 											style={{ height: '25px' }}
-											alt="facebook"
+											alt="instagram"
+											title="instagram_logo"
 										/>
 									</a>
 								</div>
@@ -235,7 +238,8 @@ const AnnouncementEmail = () => {
 										<img
 											src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
 											style={{ height: '20px' }}
-											alt="facebook"
+											alt="youtube"
+											title="youtube_logo"
 										/>
 									</a>
 								</div>
@@ -254,7 +258,8 @@ const AnnouncementEmail = () => {
 										<img
 											src="https://images2.imgbox.com/ed/d9/eyAcj7D2_o.png"
 											style={{ height: '20px' }}
-											alt="facebook"
+											alt="soundcloud"
+											title="soundcloud_logo"
 										/>
 									</a>
 								</div>

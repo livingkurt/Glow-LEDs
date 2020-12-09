@@ -41,7 +41,8 @@ const MaintenancePage = (props) => {
 							className="zoom logo"
 							height="125px"
 							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-							alt="Glow LEDs"
+							alt="Glow LEDs Logo"
+							title="Glow LEDs"
 						/>
 					</div>
 					<div className="jc-c ai-c logo_text">
@@ -49,7 +50,8 @@ const MaintenancePage = (props) => {
 							className="logo_2"
 							style={{ display: 'none', height: '80px' }}
 							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-							alt="Glow LEDs"
+							alt="Glow LEDs Logo"
+							title="Glow LEDs"
 						/>
 					</div>
 					<h1

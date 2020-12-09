@@ -83,7 +83,8 @@ const HomePage = (props) => {
 								style={{ borderRadius: '20px', width: '100%' }}
 								src={content.home_page.image}
 								className="max-w-800px jc-c m-auto"
-								alt="promo"
+								alt="Promo Image"
+								title="Promo Image"
 							/>
 						</Link>
 					)}

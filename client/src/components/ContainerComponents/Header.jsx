@@ -64,7 +64,8 @@ const Header = (props) => {
 								<img
 									className="zoom logo_s"
 									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-									alt="Glow LEDs"
+									alt="Glow LEDs Logo"
+									title="Big Logo"
 								/>
 							</div>
 						</div>
@@ -84,7 +85,8 @@ const Header = (props) => {
 								<img
 									className="zoom logo_s"
 									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-									alt="Glow LEDs"
+									alt="Glow LEDs Logo"
+									title="Small Logo"
 								/>
 							</div>
 						</Link>

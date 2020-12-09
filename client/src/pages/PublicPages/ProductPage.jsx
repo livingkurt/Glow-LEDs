@@ -210,7 +210,8 @@ const ProductPage = (props) => {
 									<Zoom>
 										<img
 											id="expandedImg"
-											alt=""
+											alt="Product Image"
+											title={product.name}
 											className="details-image-img"
 											src={image}
 											style={{
@@ -496,7 +497,8 @@ const ProductPage = (props) => {
 									<img
 										className="max-w-800px w-100per h-auto"
 										src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
-										alt="promo"
+										alt="Graphic Timeline"
+										title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"
 									/>
 								</Zoom>
 							</div>
@@ -523,7 +525,8 @@ const ProductPage = (props) => {
 												<img
 													className="colored_caps_images"
 													src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
-													alt="promo"
+													alt="Colored Caps"
+													title="Colored Caps"
 												/>
 											</Zoom>
 										</div>
@@ -533,7 +536,8 @@ const ProductPage = (props) => {
 												<img
 													className="colored_caps_images"
 													src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
-													alt="promo"
+													alt="Colored Caps Under Blacklight"
+													title="Colored Caps Under Blacklight"
 												/>
 											</Zoom>
 										</div>

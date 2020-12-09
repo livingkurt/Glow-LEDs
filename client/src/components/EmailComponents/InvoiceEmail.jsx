@@ -182,6 +182,7 @@ const InvoiceEmail = (props) => {
 								<img
 									src={order.payment.charge && determin_card_logo(order.payment.charge.source.brand)}
 									alt={order.payment.charge && order.payment.charge.source.brand}
+									title="Card Type Image"
 									style={{ fontSize: '8px', width: '15px', marginRight: '0.5rem' }}
 								/>{' '}
 								<div>{order.payment.charge && order.payment.charge.source.brand}</div>

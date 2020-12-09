@@ -12,8 +12,18 @@ const Error = (props) => {
 		<div>
 			{props.loading ? (
 				<div className="column jc-c">
-					<img src={process.env.PUBLIC_URL + '/loading.gif'} className="loading_gif" alt="loading" />
-					<img src={process.env.PUBLIC_URL + '/loading_overlay.png'} className="loading_png" alt="loading" />
+					<img
+						src={process.env.PUBLIC_URL + '/loading.gif'}
+						className="loading_gif"
+						alt="Loading Circle"
+						title="Loading Circle"
+					/>
+					<img
+						src={process.env.PUBLIC_URL + '/loading_overlay.png'}
+						className="loading_png"
+						alt="Loading Overlay"
+						title="Loading Overlay"
+					/>
 					{loading_message()}
 				</div>
 			) : props.error ? (

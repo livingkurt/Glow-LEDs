@@ -16,7 +16,13 @@ const Slideshow = (props) => {
 				props.product.images.map((image, index) => {
 					return (
 						<div className="img_column" key={index}>
-							<img src={image} alt="" style={{ width: '100%' }} onClick={(e) => change_image(e)} />
+							<img
+								src={image}
+								alt="Slideshow Image"
+								title="Slideshow Image"
+								style={{ width: '100%' }}
+								onClick={(e) => change_image(e)}
+							/>
 						</div>
 					);
 				})}

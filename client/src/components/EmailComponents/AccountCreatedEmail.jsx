@@ -56,7 +56,8 @@ const AccountCreatedEmail = () => {
 										<td>
 											<img
 												src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
-												alt="Glow LEDs"
+												alt="Glow LEDs Logo"
+												title="Glow LEDs Logo"
 												style={{
 													textAlign: 'center',
 													width: '100%',
@@ -89,7 +90,8 @@ const AccountCreatedEmail = () => {
 											<td>
 												<img
 													src={email.image}
-													alt="Glow LEDs"
+													alt="Promo Image"
+													title="Promo Image"
 													style={{
 														textAlign: 'center',
 														width: '100%',
@@ -133,7 +135,6 @@ const AccountCreatedEmail = () => {
 							>
 								<a
 									href={email.link}
-									alt="discount image"
 									style={{
 										backgroundColor: '#4c4f60',
 										color: 'white',

@@ -110,6 +110,7 @@ const MenuPage = (props) => {
 										width="200px"
 										src={item.image}
 										alt={item.category}
+										title="Menu Item Images"
 									/>
 								</Link>
 							</div>

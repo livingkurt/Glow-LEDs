@@ -449,7 +449,7 @@ const PlaceOrderPublicPage = (props) => {
 									<li className=" row cart_items" key={index}>
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} alt="product" />
+												<img src={item.display_image} title="Product Image" alt={item.name} />
 											</Link>
 										</div>
 										<div className=" label cart-name">

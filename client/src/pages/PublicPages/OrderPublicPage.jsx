@@ -311,7 +311,11 @@ const OrderPublicPage = (props) => {
 										{console.log({ item })}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.product.images[0]} alt="product" />
+												<img
+													src={item.product.images[0]}
+													title="Product Image"
+													alt={item.name}
+												/>
 											</Link>
 										</div>
 										<div className="cart-name">

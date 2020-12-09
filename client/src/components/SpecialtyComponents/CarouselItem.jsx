@@ -26,6 +26,7 @@ const CarouselItem = (props) => {
 							<LazyLoadImage
 								className="product-image"
 								alt={product.name}
+								title="Product Image"
 								style={{ height: props.size, width: props.size }}
 								effect="blur"
 								src={product.images && product.images[0]} // use normal <img> attributes as props
