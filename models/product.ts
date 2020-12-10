@@ -59,6 +59,3 @@ const productSchema = new mongoose.Schema(
 const productModel = mongoose.model('Product', productSchema);
 
 export default productModel;
-// module.exports = productModel;
-
-// 2020-11-27T00:00-0800/2020-11-30T23:59-0808
