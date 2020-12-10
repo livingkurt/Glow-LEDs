@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
+import { HashLink } from 'react-router-hash-link';
 
 const Sidebar = (props) => {
 	const history = useHistory();
@@ -472,41 +473,41 @@ const Sidebar = (props) => {
 								<Link to="/pages/faq">FAQ</Link>
 							</button>
 							<ul className="sidebar_dropdown_secondary_container">
-								<a href="/pages/faq#glowskins">
+								<HashLink href="/pages/faq#glowskins">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Glowskins
 									</button>
-								</a>
-								<a href="/pages/faq#using_diffuser_caps_and_adapters">
+								</HashLink>
+								<HashLink href="/pages/faq#using_diffuser_caps_and_adapters">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Diffuser Caps Guide
 									</button>
-								</a>
-								<a href="/pages/faq#diffuser_too_tight_too_loose">
+								</HashLink>
+								<HashLink href="/pages/faq#diffuser_too_tight_too_loose">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Diffusers Too Tight/Loose?
 									</button>
-								</a>
-								<a href="/pages/faq#ordering_custom_products">
+								</HashLink>
+								<HashLink href="/pages/faq#ordering_custom_products">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Ordering Custom Products
 									</button>
-								</a>
-								<a href="/pages/faq#featured_content">
+								</HashLink>
+								<HashLink href="/pages/faq#featured_content">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Featured Content
 									</button>
-								</a>
-								<a href="/pages/faq#processing_shipping">
+								</HashLink>
+								<HashLink href="/pages/faq#processing_shipping">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Processing/Shipping
 									</button>
-								</a>
-								<a href="/pages/faq#returns_cancellations">
+								</HashLink>
+								<HashLink href="/pages/faq#returns_cancellations">
 									<button className="sidebar_button nested" onClick={closeMenu}>
 										Returns/Cancellations
 									</button>
-								</a>
+								</HashLink>
 							</ul>
 							<i
 								style={{ '-webkitTransform': 'rotate(-180deg)' }}
