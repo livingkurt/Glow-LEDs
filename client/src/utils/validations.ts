@@ -11,7 +11,8 @@ export const validate_promo_code = (data: any) => {
 	interface errors {
 		promo_code: string;
 	}
-	const promo_codes = data.promos.map((promo: any) => promo.promo_code);
+	const promo_codes = data.promos.map((promo: any) => promo.promo_code.toLowerCase());
+	console.log({ promo_codes });
 	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code);
 	console.log({ promo });
 
@@ -23,13 +24,13 @@ export const validate_promo_code = (data: any) => {
 	}
 	if (data.user_data) {
 		if (promo && promo.admin_only && promo.admin_only && data.user_data.isAdmin === false) {
-			errors.promo_code = 'Promo Code Not Active Admin';
+			errors.promo_code = 'Promo Code Not Active';
 		}
 		if (promo && promo.affiliate_only && promo.affiliate_only && data.user_data.is_affiliated === false) {
-			errors.promo_code = 'Promo Code Not Active Affiliate';
+			errors.promo_code = 'Promo Code Not Active';
 		}
 	} else if ((!data.user_data && promo.admin_only) || promo.affiliate_only) {
-		errors.promo_code = 'Promo Code Not Active Admin/Affiliate';
+		errors.promo_code = 'Promo Code Not Active';
 	}
 	if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
 		errors.promo_code = 'Minimum Order Total Not Met';
