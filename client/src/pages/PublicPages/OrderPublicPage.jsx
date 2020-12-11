@@ -268,6 +268,26 @@ const OrderPublicPage = (props) => {
 						)}
 						<div className="column w-100per">
 							<label>Order #: {order._id}</label>
+							{order.tracking_number && (
+								<label>
+									USPS Tracking #:{' '}
+									<a
+										href={
+											'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+											order.tracking_number
+										}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="mv-2rem"
+										style={{
+											textDecoration: 'underline',
+											color: 'white'
+										}}
+									>
+										{order.tracking_number}
+									</a>
+								</label>
+							)}
 						</div>
 						<div className="wrap jc-b">
 							<div className="column w-100per">

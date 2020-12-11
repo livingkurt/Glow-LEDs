@@ -372,6 +372,8 @@ const PlaceOrderPage = (props) => {
 						: `$${promo.amount_off} Off`}`
 				);
 			}
+		} else {
+			set_promo_code('');
 		}
 	};
 

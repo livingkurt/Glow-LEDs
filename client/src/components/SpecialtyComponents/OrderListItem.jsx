@@ -143,7 +143,24 @@ const OrderListItem = (props) => {
 							{props.order.tracking_number && (
 								<div className="row ai-c mb-2rem">
 									<h3 className="mr-10px  mv-0px">Tracking Number: </h3>
-									<div className="mt-0px">{props.order.tracking_number}</div>
+									<div className="mt-0px">
+										{' '}
+										<a
+											href={
+												'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+												props.order.tracking_number
+											}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="mv-2rem"
+											style={{
+												textDecoration: 'underline',
+												color: 'white'
+											}}
+										>
+											{props.order.tracking_number}
+										</a>
+									</div>
 								</div>
 							)}
 						</div>
