@@ -43,6 +43,16 @@ router.get('/occurrences', async (req: any, res: any) => {
 	res.send(final_result);
 });
 
+router.get('/all_shipping', async (req: any, res: any) => {
+	const orders = await Order.find({ deleted: false });
+	let all_shipping: any = [];
+	orders.forEach((order: any) => {
+		all_shipping = [ order.shipping, ...all_shipping ];
+	});
+	console.log({ all_shipping });
+	res.send(all_shipping);
+});
+
 router.get('/tax_rates', async (req: any, res: any) => {
 	let updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
 	let result: any = {};

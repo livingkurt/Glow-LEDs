@@ -6,6 +6,7 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { API_Orders } from '../../utils';
 
 const ShippingPage = (props) => {
 	const user_data = props.userInfo;
@@ -23,6 +24,7 @@ const ShippingPage = (props) => {
 	const [ country, setCountry ] = useState('United States');
 	const [ international, setInternational ] = useState(false);
 	const [ save_shipping, set_save_shipping ] = useState(false);
+	const [ all_shipping, set_all_shipping ] = useState([]);
 	const [ loading, set_loading ] = useState(true);
 
 	const userUpdate = useSelector((state) => state.userUpdate);
@@ -81,6 +83,23 @@ const ShippingPage = (props) => {
 		},
 		[ shipping ]
 	);
+
+	useEffect(() => {
+		get_all_shipping();
+
+		return () => {};
+	}, []);
+
+	const get_all_shipping = async () => {
+		const { data } = await API_Orders.get_all_shipping();
+		set_all_shipping(data);
+		console.log({ data });
+	};
+
+	// const get_all_shipping = async () => {
+	// 	const request = await API_Orders.all_shipping();
+	// 	console.log(request);
+	// };
 
 	const [ email_validations, set_email_validations ] = useState('');
 	const [ first_name_validations, set_first_name_validations ] = useState('');
@@ -144,32 +163,25 @@ const ShippingPage = (props) => {
 					})
 				);
 			}
-
-			// if (save_shipping) {
-			// 	const data = API.save_user_shipping(
-			// 		{
-			// 			first_name,
-			// 			last_name,
-			// 			address,
-			// 			city,
-			// 			state,
-			// 			postalCode,
-			// 			country: international ? country : 'United States',
-			// 			international
-			// 		},
-			// 		userInfo
-			// 	);
-			// 	console.log({ data });
-			// 	if (data) {
-			// 		Cookie.set('userInfo', JSON.stringify(data));
-			// 	}
-			// }
 			props.history.push('placeorder');
 		}
 	};
 	setTimeout(() => {
 		set_loading(false);
 	}, 500);
+
+	const update_shipping = (shipping) => {
+		shipping = JSON.parse(shipping);
+		set_email(shipping.email);
+		set_first_name(shipping.first_name);
+		set_last_name(shipping.last_name);
+		setAddress(shipping.address);
+		setCity(shipping.city);
+		setState(shipping.state);
+		setPostalCode(shipping.postalCode);
+		setCountry(shipping.country);
+		setInternational(shipping.international);
+	};
 
 	return (
 		<div>
@@ -188,6 +200,30 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
+						{user_data &&
+						user_data.isAdmin && (
+							<li>
+								<div className="ai-c h-25px mv-10px mb-30px jc-c">
+									<div className="custom-select w-100per">
+										<select
+											className="qty_select_dropdown w-100per"
+											onChange={(e) => update_shipping(e.target.value)}
+										>
+											<option key={1} defaultValue="">
+												---Choose Shipping for Order---
+											</option>
+											{all_shipping &&
+												all_shipping.map((shipping, index) => (
+													<option key={index} value={JSON.stringify(shipping)}>
+														{shipping.first_name} {shipping.last_name}
+													</option>
+												))}
+										</select>
+										<span className="custom-arrow" />
+									</div>
+								</div>
+							</li>
+						)}
 						<li>
 							<label htmlFor="email">Email</label>
 							<input
