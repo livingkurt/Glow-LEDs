@@ -178,7 +178,7 @@ const App = () => {
 						pageId="100365571740684"
 						appId="379385106779969"
 						greetingDialogDisplay="show"
-						shouldShowDialog={true}
+						shouldShowDialog={false}
 						loggedInGreeting="Hi! How can we help you?"
 						loggedOutGreeting="Hi! How can we help you?"
 					/>
