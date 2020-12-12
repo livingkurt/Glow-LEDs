@@ -31,11 +31,11 @@ const Banner = () => {
 			<div className="max-w-1500px m-auto jc-b">
 				{content &&
 				content.banner && (
-					<div className="ml-10px mt-5px">
+					<div className="ml-10px mt-5px fs-12px">
 						<label>{content.banner.label}</label>
 					</div>
 				)}
-				<div className="row mt-3px">
+				<div className="row mt-3px social_media_banner">
 					<div className="ml-10px">
 						<a
 							rel="noreferrer"

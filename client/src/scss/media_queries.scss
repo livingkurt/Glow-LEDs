@@ -258,6 +258,7 @@
   .footer_small {
     display: flex !important;
   }
+  
   // .footer-image {
 
   //   img {
@@ -398,7 +399,10 @@
 	.product-image {
 		height: 125px !important;
 		width: 125px !important;
-	}
+  }
+  .social_media_banner {
+    display: none !important;
+  }
 	.product_title_top {
 		font-size: 3rem !important;
 	}
