@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const FAQPage = () => {
 	return (
@@ -79,10 +81,15 @@ const FAQPage = () => {
 							</li>
 							<li style={{ lineHeight: '25px' }}>All Done! Now go throw some sicks shows!</li>
 						</ul>
-						<h2 className="ta-c" id="glowskins_chip_brand_compatibility">
-							Glowskins Chip Brand Compatibility
-						</h2>
-						<h2>Nanoskins V1</h2>
+						<Zoom>
+							<img
+								className="colored_caps_images"
+								src="https://images2.imgbox.com/82/8c/QWA07w4X_o.png"
+								alt="Colored Caps"
+								title="Colored Caps"
+							/>
+						</Zoom>
+						{/* <h2>Nanoskins V1</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
 						</label>
@@ -124,7 +131,7 @@ const FAQPage = () => {
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>Micromax</li>
 							<li style={{ lineHeight: '25px' }}>Coffin Style Chips</li>
-						</ul>
+						</ul> */}
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
 						<h2 style={{ clear: 'both', textAlign: 'center' }} id="using_diffuser_caps_and_adapters">
