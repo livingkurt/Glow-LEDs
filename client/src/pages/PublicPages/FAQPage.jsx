@@ -82,13 +82,20 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="glowskins_chip_brand_compatibility">
 							Glowskins Chip Brand Compatibility
 						</h2>
-						<h2>Nanoskins</h2>
+						<h2>Nanoskins V1</h2>
+						<label>
+							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
+						</label>
+						<ul style={{ padding: '18px', margin: 0 }}>
+							<li style={{ lineHeight: '25px' }}>spectra EVOs </li>
+							<li style={{ lineHeight: '25px' }}>chroma EVOs</li>
+						</ul>
+						<h2>Nanoskins V2</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
 						</label>
 						<ul style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
-							<li style={{ lineHeight: '25px' }}>EL spectra and Chroma EVOs</li>
 							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
 							<li style={{ lineHeight: '25px' }}>FL Atoms</li>
 							<li style={{ lineHeight: '25px' }}>FL Ions</li>

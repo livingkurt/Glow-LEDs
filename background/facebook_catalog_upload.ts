@@ -6,8 +6,6 @@ dotenv.config();
 const facebook_catalog_upload = async () => {
 	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
 
-	console.log(google_sheets_json);
-
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 

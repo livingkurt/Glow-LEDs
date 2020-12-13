@@ -61,7 +61,7 @@ const google_catalog_upload = async () => {
 			const brand = 'Glow LEDs';
 			const mpn = product.pathname;
 			const google_product_category = 'Toys & Games > Toys > Visual Toys';
-			const sale_price = product.sale_price;
+			const sale_price = product.sale_price + ' USD';
 			const sale_price_effective_date = '';
 
 			return {
