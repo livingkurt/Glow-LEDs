@@ -503,7 +503,7 @@ const ProductPage = (props) => {
 						)}
 
 						<div className="column p-1rem">
-							{product.category === 'glowskins' && (
+							{/* {product.category === 'glowskins' && (
 								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
 									<div className="jc-c">
 										<button className="button primary" style={{ margin: 'auto' }}>
@@ -511,6 +511,16 @@ const ProductPage = (props) => {
 										</button>
 									</div>
 								</a>
+							)} */}
+							{product.category === 'glowskins' && (
+								<Zoom>
+									<img
+										className="colored_caps_images"
+										src="https://images2.imgbox.com/82/8c/QWA07w4X_o.png"
+										alt="Colored Caps"
+										title="Colored Caps"
+									/>
+								</Zoom>
 							)}
 
 							{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
