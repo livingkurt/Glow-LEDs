@@ -47,7 +47,15 @@ const OrderStatusEmail = (props) => {
 
 	const order_status_steps = () => {
 		return (
-			<div className="order-status-steps">
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					maxWidth: '58rem',
+					width: '100%',
+					margin: '1rem auto'
+				}}
+			>
 				<div
 					style={
 						order ? (
