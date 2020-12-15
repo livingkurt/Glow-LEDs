@@ -17,3 +17,4 @@ export { default as RelatedCarousel } from './RelatedCarousel';
 export { default as Order } from './Order';
 export { default as OrderSmallScreen } from './OrderSmallScreen';
 export { default as OrderListItem } from './OrderListItem';
+export { default as OrderStatusSteps } from './OrderStatusSteps';

@@ -6,6 +6,7 @@ import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { toCapitlize } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
+import { OrderStatusSteps } from '../SpecialtyComponents';
 
 const OrderStatusEmail = (props) => {
 	const history = useHistory();
@@ -44,43 +45,130 @@ const OrderStatusEmail = (props) => {
 		[ emails, stableDispatch ]
 	);
 
-	const determin_card_logo = (card_type) => {
-		switch (card_type) {
-			case 'American Express':
-				return 'https://images2.imgbox.com/ea/c8/r82jUQW8_o.png';
-			case 'Visa':
-				return 'https://images2.imgbox.com/18/a3/wHEnyn5x_o.png';
-			case 'MasterCard':
-				return 'https://images2.imgbox.com/84/a2/oPcysx6p_o.png';
-			case 'Discover':
-				return 'https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png';
-		}
-	};
-	const sale_price_switch = (item) => {
-		if (item.sale_price !== 0) {
-			return (
-				<label>
-					<label style={{ marginRight: '3px' }}>On Sale!</label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white' }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
-					</del>{' '}
-					{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
-				</label>
-			);
-		} else if (item.countInStock === 0) {
-			return (
-				<label>
-					<del style={{ color: 'red' }}>
-						<label style={{ color: 'white', marginLeft: '7px' }}>
-							${item.price && (item.price * item.qty).toFixed(2)}
-						</label>
-					</del>{' '}
-					{'-->'} <label style={{ color: 'black', marginLeft: '7px' }}>Sold Out</label>
-				</label>
-			);
-		} else {
-			return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
-		}
+	const order_status_steps = () => {
+		return (
+			<div className="order-status-steps">
+				<div
+					style={
+						order ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Ordered</div>
+					{/* <i class="fas fa-check-square" /> */}
+				</div>
+				<div
+					style={
+						order.isPaid ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Paid </div>
+					{/* <i class="fas fa-money-bill-wave" /> */}
+				</div>
+				<div
+					style={
+						order.isManufactured ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Manufactured </div>
+					{/* <i class="fas fa-hammer" /> */}
+				</div>
+				<div
+					style={
+						order.isPackaged ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Packaged </div>
+					{/* <i class="fas fa-box" /> */}
+				</div>
+				<div
+					style={
+						order.isShipped ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Shipped</div>
+				</div>
+			</div>
+		);
 	};
 
 	const jsx = (
@@ -129,6 +217,7 @@ const OrderStatusEmail = (props) => {
 						{email && email.h1}
 					</h4>
 				</div>
+
 				{order &&
 				email && (
 					<div
@@ -138,6 +227,16 @@ const OrderStatusEmail = (props) => {
 							flexDirection: 'column'
 						}}
 					>
+						{/* {(order.isPaid &&
+						order.isManufactured &&
+						order.isPackaged &&
+						order.isShipped && <OrderStatusSteps step1 step2 step3 step4 step5 />) ||
+							(order.isPaid &&
+							order.isManufactured &&
+							order.isPackaged && <OrderStatusSteps step1 step2 step3 step4 />) ||
+							(order.isPaid && order.isManufactured && <OrderStatusSteps step1 step2 step3 />) ||
+							(order.isPaid && <OrderStatusSteps step1 step2 />)} */}
+						{order_status_steps(order)}
 						<div
 							style={{
 								margin: 'auto',
