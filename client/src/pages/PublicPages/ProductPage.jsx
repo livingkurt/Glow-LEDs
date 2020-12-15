@@ -470,6 +470,13 @@ const ProductPage = (props) => {
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
+							{product.category === 'glow_strings' && (
+								<Link to="/Glow_Strings_Manual.pdf" target="_blank" download>
+									<button className="button primary full-width fs-20px mb-2rem">
+										Download Glow Strings Manual
+									</button>
+								</Link>
+							)}
 							<div className="column">
 								<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 								<div className="column h-100per">
