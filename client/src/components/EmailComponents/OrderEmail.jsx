@@ -499,7 +499,7 @@ const OrderEmail = (props) => {
 												valign="top"
 												align="right"
 											>
-												<strong>Promo Code:</strong> {order.promo_code}
+												<strong>Promo Code:</strong> {order.promo_code.toUpperCase()}
 												<br />
 												<strong>Order Note:</strong> {order.order_note}
 												<br />
