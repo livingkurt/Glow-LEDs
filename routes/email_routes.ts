@@ -294,10 +294,10 @@ let transporter = nodemailer.createTransport({
 
 // var transporter = nodemailer.createTransport(`smtps://${process.env.EMAIL}:${process.env.PASSWORD}@smtp.gmail.com`);
 
-console.log({
-	user: process.env.EMAIL,
-	pass: process.env.PASSWORD
-});
+// console.log({
+// 	user: process.env.EMAIL,
+// 	pass: process.env.PASSWORD
+// });
 
 router.post('/announcement', async (req, res) => {
 	console.log({ template: req.body.template });
