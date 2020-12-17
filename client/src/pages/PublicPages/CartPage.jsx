@@ -29,6 +29,21 @@ const CartPage = (props) => {
 			}
 		}
 	};
+
+	const decide_warning = () => {
+		if (new Date() > new Date('2020-12-18') && new Date() < new Date('2021-01-02')) {
+			const confirm = window.confirm('Orders will not be shipped until after January 2nd 2021');
+			if (confirm) {
+				checkoutHandler();
+			}
+		} else {
+			if (cartItems.length === 0) {
+				set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
+			} else {
+				checkoutHandler();
+			}
+		}
+	};
 	const no_adapters_warning = () => {
 		const categories = cartItems.map((cartItem) => {
 			return cartItem.category;
@@ -169,7 +184,7 @@ const CartPage = (props) => {
 								cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 							)}
 						</h3>
-						<button onClick={checkoutHandler} className="button primary full-width">
+						<button onClick={decide_warning} className="button primary full-width">
 							Proceed to Checkout
 						</button>
 					</div>
