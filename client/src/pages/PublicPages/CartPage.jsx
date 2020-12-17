@@ -31,7 +31,7 @@ const CartPage = (props) => {
 	};
 
 	const decide_warning = () => {
-		if (new Date() > new Date('2020-12-18') && new Date() < new Date('2021-01-02')) {
+		if (new Date() > new Date('2020-12-17') && new Date() < new Date('2021-01-02')) {
 			const confirm = window.confirm(
 				'Glow LEDs is Out of Office, Orders will not be shipped until after January 2nd 2021'
 			);
