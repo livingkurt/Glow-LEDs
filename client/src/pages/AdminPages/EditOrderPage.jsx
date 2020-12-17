@@ -11,6 +11,7 @@ import { listUsers } from '../../actions/userActions';
 const EditOrderPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ orderItems, set_orderItems ] = useState([ {} ]);
+	const [ order_items, set_order_items ] = useState([ {} ]);
 	const [ shipping, set_shipping ] = useState({});
 	const [ user, set_user ] = useState('');
 	const [ payment, set_payment ] = useState({});
@@ -55,6 +56,7 @@ const EditOrderPage = (props) => {
 		set_id(order._id);
 		set_user(order.user);
 		set_orderItems(order.orderItems);
+		set_order_items(order.orderItems);
 		set_shipping(order.shipping);
 		set_payment(order.payment);
 		set_itemsPrice(order.itemsPrice);
@@ -660,8 +662,8 @@ const EditOrderPage = (props) => {
 										</button>
 									</li>
 									<div className="row wrap jc-b">
-										{orderItems &&
-											orderItems.map((item, index) => {
+										{order.orderItems &&
+											order.orderItems.map((item, index) => {
 												return (
 													<div key={index} className="w-410px m-10px">
 														<h2>Order Item {index + 1}</h2>

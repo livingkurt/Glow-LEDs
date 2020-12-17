@@ -192,15 +192,16 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 });
 
 // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
-router.get('/caps', async (req, res) => {
+router.get('/nanoskins', async (req, res) => {
 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 	const order = await Order.find(
-		{
-			'orderItems.name': {
-				$regex: 'Diffuser Caps',
-				$options: 'i'
-			}
-		}
+		{ 'orderItems.name': 'Nanoskins' }
+		// {
+		// 	'orderItems.name': {
+		// 		$regex: 'Nanoskins',
+		// 		$options: 'i'
+		// 	}
+		// }
 		// { upsert: true },
 	);
 	// const order = await Order.updateMany(
