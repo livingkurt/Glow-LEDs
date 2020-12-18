@@ -211,12 +211,12 @@ const EditOrderPage = (props) => {
 		new_order_items[index] = {
 			...new_order_items[index],
 			name: order_item.name,
-			qty: orderItems[index].qty,
+			// qty: orderItems[index].qty,
 			display_image: order_item.images[0],
 			price: order_item.price,
 			category: order_item.category,
 			pathname: order_item.pathname,
-			sale_price: orderItems[index].sale_price,
+			// sale_price: orderItems[index].sale_price,
 			volume: order_item.volume,
 			weight_pounds: order_item.weight_pounds,
 			weight_ounces: order_item.weight_ounces,
@@ -224,8 +224,8 @@ const EditOrderPage = (props) => {
 			width: order_item.width,
 			height: order_item.height,
 			reviewed: order_item.reviewed,
-			product: order_item._id,
-			secondary_product: orderItems[index].secondary_product
+			product: order_item._id
+			// secondary_product: orderItems[index].secondary_product
 		};
 		set_orderItems(new_order_items);
 		console.log({ orderItems });
@@ -894,8 +894,8 @@ const EditOrderPage = (props) => {
 															<input
 																type="text"
 																name="product"
-																// defaultValue={item.product && item.product.pathname}
-																value={item.product && item.product.pathname}
+																defaultValue={item.pathname}
+																value={item.pathname}
 																id="product"
 																onChange={(e) =>
 																	update_order_item_property(
