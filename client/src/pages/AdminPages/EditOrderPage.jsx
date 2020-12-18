@@ -204,6 +204,44 @@ const EditOrderPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
+	const update_order_item = (e, index) => {
+		const order_item = JSON.parse(e.target.value);
+		console.log({ order_item });
+		let new_order_items = [ ...orderItems ];
+		new_order_items[index] = {
+			...new_order_items[index],
+			name: order_item.name,
+			qty: orderItems[index].qty,
+			display_image: order_item.images[0],
+			price: order_item.price,
+			category: order_item.category,
+			pathname: order_item.pathname,
+			sale_price: orderItems[index].sale_price,
+			volume: order_item.volume,
+			weight_pounds: order_item.weight_pounds,
+			weight_ounces: order_item.weight_ounces,
+			length: order_item.length,
+			width: order_item.width,
+			height: order_item.height,
+			reviewed: order_item.reviewed,
+			product: order_item._id,
+			secondary_product: orderItems[index].secondary_product
+		};
+		set_orderItems(new_order_items);
+		console.log({ orderItems });
+	};
+
+	const update_order_item_property = (value, field_name, index) => {
+		console.log({ value, field_name, index });
+		let new_order_items = [ ...orderItems ];
+		new_order_items[index] = {
+			...new_order_items[index],
+			[field_name]: value
+		};
+		set_orderItems(new_order_items);
+		console.log({ orderItems });
+	};
+
 	return (
 		<div className="main_container">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Order' : 'Create Order'}</h1>
@@ -662,138 +700,26 @@ const EditOrderPage = (props) => {
 										</button>
 									</li>
 									<div className="row wrap jc-b">
-										{order.orderItems &&
-											order.orderItems.map((item, index) => {
+										{orderItems &&
+											orderItems.map((item, index) => {
 												return (
 													<div key={index} className="w-410px m-10px">
 														<h2>Order Item {index + 1}</h2>
-
-														<li>
-															<label htmlFor="name">Order Item Name</label>
-															<input
-																type="text"
-																name="name"
-																defaultValue={item.name}
-																id="name"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		name: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="qty">Quantity</label>
-															<input
-																type="text"
-																name="qty"
-																defaultValue={item.qty}
-																id="qty"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		qty: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="display_image">Display Image</label>
-															<input
-																type="text"
-																name="display_image"
-																defaultValue={item.display_image}
-																id="display_image"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		display_image: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="diffuser_cap_color">
-																Diffuser Cap Color
-															</label>
-															<input
-																type="text"
-																name="diffuser_cap_color"
-																defaultValue={item.diffuser_cap_color}
-																id="diffuser_cap_color"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		diffuser_cap_color: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="diffuser_cap_name">Diffuser Cap Name</label>
-															<input
-																type="text"
-																name="diffuser_cap_name"
-																defaultValue={item.diffuser_cap_name}
-																id="diffuser_cap_name"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		diffuser_cap_name: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="price">Price</label>
-															<input
-																type="text"
-																name="price"
-																defaultValue={item.price}
-																id="price"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		price: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="category">Category</label>
-															<input
-																type="text"
-																name="category"
-																defaultValue={item.category}
-																id="category"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		category: e.target.value
-																	})}
-															/>
-														</li>
-														<li>
-															<label htmlFor="sale_price">Sale Price</label>
-															<input
-																type="text"
-																name="sale_price"
-																defaultValue={item.sale_price}
-																id="sale_price"
-																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		sale_price: e.target.value
-																	})}
-															/>
-														</li>
 														<li>
 															<label htmlFor="product">Product</label>
+															{console.log({ product: item.product })}
 															<input
 																type="text"
 																name="product"
-																defaultValue={item.product && item.product.pathname}
+																defaultValue={item.product && item.product._id}
+																value={item.product && item.product._id}
 																id="product"
 																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		product: e.target.value
-																	})}
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
 															/>
 														</li>
 
@@ -808,14 +734,8 @@ const EditOrderPage = (props) => {
 															<div className="ai-c h-25px mb-15px">
 																<div className="custom-select">
 																	<select
-																		defaultValue={item.product}
-																		// defaultValue={item.product}
 																		className="qty_select_dropdown"
-																		onChange={(e) =>
-																			set_orderItems({
-																				...orderItems[index],
-																				product: e.target.value
-																			})}
+																		onChange={(e) => update_order_item(e, index)}
 																	>
 																		<option key={1} defaultValue="">
 																			---Choose Product---
@@ -823,7 +743,7 @@ const EditOrderPage = (props) => {
 																		{products.map((product, index) => (
 																			<option
 																				key={index}
-																				defaultValue={product._id}
+																				value={JSON.stringify(product)}
 																			>
 																				{product.name}
 																			</option>
@@ -834,20 +754,174 @@ const EditOrderPage = (props) => {
 															</div>
 														</li>
 														<li>
+															<label htmlFor="name">Order Item Name</label>
+															<input
+																type="text"
+																name="name"
+																defaultValue={item.name}
+																value={item.name}
+																id="name"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+																// set_orderItems([
+																// 	{
+																// 		...orderItems[index],
+																// 		name: e.target.value
+																// 	}
+																// ]) }
+															/>
+														</li>
+														<li>
+															<label htmlFor="qty">Quantity</label>
+															<input
+																type="text"
+																name="qty"
+																defaultValue={item.qty}
+																value={item.qty}
+																id="qty"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="display_image">Display Image</label>
+															<input
+																type="text"
+																name="display_image"
+																defaultValue={item.display_image}
+																value={item.display_image}
+																id="display_image"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="diffuser_cap_color">
+																Diffuser Cap Color
+															</label>
+															<input
+																type="text"
+																name="diffuser_cap_color"
+																defaultValue={item.diffuser_cap_color}
+																value={item.diffuser_cap_color}
+																id="diffuser_cap_color"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="diffuser_cap_name">Diffuser Cap Name</label>
+															<input
+																type="text"
+																name="diffuser_cap_name"
+																defaultValue={item.diffuser_cap_name}
+																value={item.diffuser_cap_name}
+																id="diffuser_cap_name"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="price">Price</label>
+															<input
+																type="text"
+																name="price"
+																defaultValue={item.price}
+																value={item.price}
+																id="price"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="category">Category</label>
+															<input
+																type="text"
+																name="category"
+																defaultValue={item.category}
+																value={item.category}
+																id="category"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="sale_price">Sale Price</label>
+															<input
+																type="text"
+																name="sale_price"
+																defaultValue={item.sale_price}
+																value={item.sale_price}
+																id="sale_price"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="product">Pathname</label>
+															<input
+																type="text"
+																name="product"
+																// defaultValue={item.product && item.product.pathname}
+																value={item.product && item.product.pathname}
+																id="product"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+
+														<li>
 															<label htmlFor="secondary_product">Secondary Product</label>
 															<input
 																type="text"
 																name="secondary_product"
 																defaultValue={
-																	item.secondary_product &&
-																	item.secondary_product.pathname
+																	item.secondary_product && item.secondary_product
 																}
+																value={item.secondary_product && item.secondary_product}
 																id="secondary_product"
 																onChange={(e) =>
-																	set_orderItems({
-																		...orderItems[index],
-																		secondary_product: e.target.value
-																	})}
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
 															/>
 														</li>
 														<li>
@@ -862,13 +936,15 @@ const EditOrderPage = (props) => {
 																<div className="custom-select">
 																	<select
 																		defaultValue={item.secondary_product}
+																		value={item.secondary_product}
 																		// defaultValue={item.secondary_product}
 																		className="qty_select_dropdown"
 																		onChange={(e) =>
-																			set_orderItems({
-																				...orderItems[index],
-																				secondary_product: e.target.value
-																			})}
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
 																	>
 																		<option key={1} defaultValue="">
 																			---Choose Product---
