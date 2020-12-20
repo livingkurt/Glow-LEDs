@@ -73,11 +73,14 @@ const Review = (props) => {
 							<div>{format_date(review.createdAt.substring(0, 10))}</div>
 							<div>{review.comment}</div>
 						</div>
-						<div className="ta-r">
-							<button className="button icon" onClick={() => remove_review(review._id)}>
-								<i className="fas fa-trash-alt" />
-							</button>
-						</div>
+						{userInfo &&
+						userInfo.isAdmin && (
+							<div className="ta-r">
+								<button className="button icon" onClick={() => remove_review(review._id)}>
+									<i className="fas fa-trash-alt" />
+								</button>
+							</div>
+						)}
 					</div>
 				</li>
 			))}
