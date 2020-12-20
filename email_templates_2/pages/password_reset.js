@@ -1,5 +1,0 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (function (props) {
-    return "\n \n  <div style=\"background-color:#5f5f5f;padding:20px\">\n        <div style=\"display:flex;justify-content:center\"></div>\n        <h4 style=\"text-align:center;font-family:helvetica;color:white;font-size:1.5em;margin-top:20px;margin-bottom:0\">\n          Hi " + props.data.first_name + "</h4>\n        <p\n          style=\"font-size:16px;line-height:30px;max-width:800px;width:100%;text-align:center;margin:20px auto;color:white\">\n          Your Password Was Successfully Changed. If you didn\u2019t request this, please contact Glow LEDs using the link\n          below.</p>\n        <div style=\"display:flex;justify-content:center\"><a href=\"https://www.glow-leds.com/pages/contact\"\n            alt=\"discount image\" style=\"background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px\">\n            <h4 style=\"font-family:helvetica;margin:0;font-size:1.2em;text-align:center\">Contact</h4>\n          </a></div>\n      </div>\n      \n    \n\t";
-});
