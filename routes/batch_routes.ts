@@ -79,14 +79,16 @@ router.put('/products', isAuth, isAdmin, async (req, res) => {
 router.put('/product_sale_price', async (req, res) => {
 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
   const products = await Product.find({});
+  console.log({discount_percentage: req.body.discount_percentage})
 
   products.forEach(async (product: any) => {
-    product.sale_price = product.price * (req.body.discount || .5)
-    // const products = await Product.update({_id: product._id}, product);
+    const discount = product.price * req.body.discount_percentage
+    console.log({discount})
+    product.sale_price = product.price - discount
     const result = await product.save();
     console.log({result})
   })
-	console.log({ products });
+	// console.log({ products });
 	res.send(products);
 });
 

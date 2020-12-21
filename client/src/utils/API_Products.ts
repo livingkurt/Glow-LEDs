@@ -63,5 +63,9 @@ export default {
 				}
 			}
 		);
-	}
+  },
+  set_sale_price: (discount_percentage: any) => {
+		console.log({ set_sale_price: discount_percentage });
+		return axios.put('/api/all/product_sale_price', { discount_percentage });
+	},
 };

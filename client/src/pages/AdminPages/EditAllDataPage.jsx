@@ -16,7 +16,13 @@ const EditAllDataPage = (props) => {
 	const [ property, set_property ] = useState('');
 	const [ action, set_action ] = useState('');
 	const [ request, set_request ] = useState('');
+	const [ sale_price_request, set_sale_price_request ] = useState('');
+	const [ discount_precentage, set_discount_precentage ] = useState('');
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 	const history = useHistory();
 
 	const batch_request = async (e) => {
@@ -41,11 +47,17 @@ const EditAllDataPage = (props) => {
 			value,
 			userInfo
 		);
+
 		console.log({ request });
 		set_request(request);
+	};
 
-		// unset_state();
-		// history.push('/secure/glow/affiliates');
+	const update_sale_price = async (e) => {
+		e.preventDefault();
+		const request = await API_Products.set_sale_price(parseInt(discount_precentage.trim() / 100));
+
+		console.log({ request });
+		set_request(request);
 	};
 
 	const collections = [
@@ -81,7 +93,38 @@ const EditAllDataPage = (props) => {
 						<Helmet>
 							<title>Edit Affiliate| Glow LEDs</title>
 						</Helmet>
-
+						<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
+							{/* {loading_checkboxes ? (
+								<div>Loading...</div>
+							) : (
+								<li>
+									<label htmlFor="sale_price_request">Sale Price Update</label>
+									<input
+										type="checkbox"
+										name="sale_price_request"
+										id="sale_price_request"
+										onChange={(e) => {
+											set_sale_price_request(e.target.checked);
+										}}
+									/>
+								</li>
+							)} */}
+							<li>
+								<label htmlFor="discount_precentage">Discount Percentage</label>
+								<input
+									type="text"
+									name="discount_precentage"
+									value={discount_precentage}
+									id="discount_precentage"
+									onChange={(e) => set_discount_precentage(e.target.value)}
+								/>
+							</li>
+							<li>
+								<button onClick={(e) => update_sale_price(e)} className="button primary">
+									Update Sale Price
+								</button>
+							</li>
+						</ul>
 						<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
 							<div className="row wrap">
 								<div className="column w-228px m-10px">
@@ -141,6 +184,7 @@ const EditAllDataPage = (props) => {
 											<span className="custom-arrow" />
 										</div>
 									</div>
+
 									<li>
 										<label htmlFor="action">Action</label>
 										<input
@@ -212,6 +256,7 @@ const EditAllDataPage = (props) => {
 									</li>
 								</div>
 							</div>
+
 							<li>
 								<button onClick={(e) => batch_request(e)} className="button primary">
 									Complete
