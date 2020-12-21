@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { listProducts } from '../../actions/productActions';
-import { Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Feature, FeatureSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { listFeatures } from '../../actions/featureActions';
 
 const AllFeaturesPage = (props) => {
 	const history = useHistory();
@@ -20,34 +20,34 @@ const AllFeaturesPage = (props) => {
 
 	console.log({ subcategory });
 	// console.log(props.match.params);
-	const productList = useSelector((state) => state.productList);
-	const { products, loading, error } = productList;
+	const featureList = useSelector((state) => state.featureList);
+	const { features, loading, error } = featureList;
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			// dispatch(listProducts(''));
+			// dispatch(listFeatures(''));
 			// console.log({ search: search.substring(8) });
-			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listFeatures(category, subcategory, searchKeyword));
 		},
 		[ searchKeyword ]
 	);
 
-	useEffect(
-		() => {
-			// dispatch(listProducts(''));
-			console.log(props.location);
-			// let params = new URLSearchParams(props.location);
-			// params.delete('search');
+	// useEffect(
+	// 	() => {
+	// 		// dispatch(listFeatures(''));
+	// 		console.log(props.location);
+	// 		// let params = new URLSearchParams(props.location);
+	// 		// params.delete('search');
 
-			// let params = new URLSearchParams(props.location.pathmame + props.location.search);
+	// 		// let params = new URLSearchParams(props.location.pathmame + props.location.search);
 
-			// params.delete('searcj'); //Query string is now: 'bar=2'
-			setSearchKeyword('');
-			dispatch(listProducts(category, subcategory));
-		},
-		[ props.location.pathname ]
-	);
+	// 		// params.delete('searcj'); //Query string is now: 'bar=2'
+	// 		setSearchKeyword('');
+	// 		dispatch(listFeatures(category, subcategory));
+	// 	},
+	// 	[ props.location.pathname ]
+	// );
 
 	useEffect(
 		() => {
@@ -78,10 +78,10 @@ const AllFeaturesPage = (props) => {
 			// 	});
 			// }
 
-			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listFeatures(category, subcategory, searchKeyword));
 			// } else {
 
-			// 	dispatch(listProducts(''));
+			// 	dispatch(listFeatures(''));
 			// }
 		},
 		[ category, subcategory, searchKeyword ]
@@ -89,7 +89,7 @@ const AllFeaturesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
+			dispatch(listFeatures(category, subcategory, searchKeyword, sortOrder));
 		},
 		[ sortOrder ]
 	);
@@ -98,21 +98,21 @@ const AllFeaturesPage = (props) => {
 		console.log({ searchKeyword });
 		e.preventDefault();
 		// history.push(
-		// 	'/collections/all/products/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
+		// 	'/collections/all/features/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
 		// );
 		history.push({
 			search: '?search=' + searchKeyword
 		});
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
+		dispatch(listFeatures(category, subcategory, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value));
+		dispatch(listFeatures(category, subcategory, searchKeyword, e.target.value));
 	};
 
 	const descriptions = {
-		all_products:
+		features:
 			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskins, and Glow Strings. Click to Shop.',
 		frosted_diffusers:
 			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
@@ -147,7 +147,7 @@ const AllFeaturesPage = (props) => {
 		if (category === 'glow_strings') {
 			return descriptions.glow_strings;
 		} else {
-			return descriptions.all_products;
+			return descriptions.features;
 		}
 	};
 	// console.log({ category });
@@ -160,8 +160,8 @@ const AllFeaturesPage = (props) => {
 				<title>Products | Glow LEDs</title>
 				<meta property="og:title" content="Products" />
 				<meta name="twitter:title" content="Products" />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/products" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/products" />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/all/features" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/all/features" />
 				<meta name="description" content={description_determination()} />
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
@@ -191,31 +191,31 @@ const AllFeaturesPage = (props) => {
 			</div>
 			<Loading loading={loading} error={error}>
 				<div>
-					<div className="product_big_screen">
-						{products && (
-							<ul className="products" style={{ marginTop: 0 }}>
-								{products.map(
-									(product, index) =>
-										!product.hidden && <Product size="300px" key={index} product={product} />
+					<div className="feature_big_screen">
+						{features && (
+							<ul className="features" style={{ marginTop: 0 }}>
+								{features.map(
+									(feature, index) =>
+										!feature.hidden && <Feature size="300px" key={index} feature={feature} />
 								)}
 							</ul>
 						)}
 					</div>
 
-					<div className="product_small_screen none">
-						{products && (
-							<ul className="products" style={{ marginTop: 0 }}>
-								{products.map(
-									(product, index) =>
-										!product.hidden && (
-											<ProductSmallScreen size="300px" key={index} product={product} />
+					<div className="feature_small_screen none">
+						{features && (
+							<ul className="features" style={{ marginTop: 0 }}>
+								{features.map(
+									(feature, index) =>
+										!feature.hidden && (
+											<FeatureSmallScreen size="300px" key={index} feature={feature} />
 										)
 								)}
 							</ul>
 						)}
 					</div>
 				</div>
-				{products.length === 0 && (
+				{features.length === 0 && (
 					<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
 				)}
 			</Loading>

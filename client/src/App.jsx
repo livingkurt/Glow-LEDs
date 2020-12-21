@@ -66,7 +66,8 @@ import {
 	TrackOrderPage,
 	OrderPublicPage,
 	AnnouncementsPage,
-	EditAllDataPage
+	EditAllDataPage,
+	AllFeaturesPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -355,7 +356,8 @@ const App = () => {
 							<Route path="/pages/faq" exact={true} component={FAQPage} />
 							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
 							{/* <Route path="/pages/featured" exact={true} component={FeaturedPage} /> */}
-							<Route path="/pages/featured/:pathname?" exact={true} component={FeaturedPage} />
+							{/* <Route path="/pages/featured/:pathname?" exact={true} component={FeaturedPage} /> */}
+							<Route path="/pages/featured/:pathname?" exact={true} component={AllFeaturesPage} />
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/" exact={true} component={HomePage} />
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />

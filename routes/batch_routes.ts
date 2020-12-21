@@ -75,6 +75,21 @@ router.put('/products', isAuth, isAdmin, async (req, res) => {
 		console.log({ error });
 	}
 });
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/product_sale_price', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+  const products = await Product.find({});
+
+  products.forEach(async (product: any) => {
+    product.sale_price = product.price * (req.body.discount || .5)
+    // const products = await Product.update({_id: product._id}, product);
+    const result = await product.save();
+    console.log({result})
+  })
+	console.log({ products });
+	res.send(products);
+});
+
 router.put('/features', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ features: req.body });

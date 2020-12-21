@@ -43,6 +43,7 @@ export { default as ProductPage } from './PublicPages/ProductPage';
 export { default as RegisterPage } from './PublicPages/RegisterPage';
 export { default as LoginPage } from './PublicPages/LoginPage';
 export { default as AllProductsPage } from './PublicPages/AllProductsPage';
+export { default as AllFeaturesPage } from './PublicPages/AllFeaturesPage';
 export { default as ContactPage } from './PublicPages/ContactPage';
 export { default as PasswordResetPage } from './PublicPages/PasswordResetPage';
 export { default as Four04Page } from './PublicPages/Four04Page';
