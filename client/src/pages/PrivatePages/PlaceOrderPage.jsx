@@ -183,8 +183,12 @@ const PlaceOrderPage = (props) => {
 			return rate.carrier + ' ' + rate.rate;
 		});
 		console.log({ rates });
-		const lowest_rate = data.lowestRate();
-		console.log({ lowest_rate });
+		const sorted_rates = data.rates.sort((a, b) => a.rate - b.rate);
+		console.log({ sorted_rates });
+		console.log(sorted_rates[0], sorted_rates[1], sorted_rates[2]);
+		if (sorted_rates[0]) {
+			console.log(sorted_rates[0].rate, sorted_rates[1].rate, sorted_rates[2].rate);
+		}
 	};
 
 	const get_tax_rates = async () => {
