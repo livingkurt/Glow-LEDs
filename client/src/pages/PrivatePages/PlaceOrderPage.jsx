@@ -12,7 +12,7 @@ import { LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
-import { API_External, API_Products } from '../../utils';
+import { API_External, API_Orders, API_Products } from '../../utils';
 
 const PlaceOrderPage = (props) => {
 	const user_data = props.userInfo;
@@ -156,6 +156,9 @@ const PlaceOrderPage = (props) => {
 				} else {
 					stable_calculate_shipping();
 					stable_calculate_shipping();
+					// if (shipping != {}) {
+					get_shipping_rates();
+					// }
 				}
 				get_tax_rates();
 			}
@@ -163,6 +166,26 @@ const PlaceOrderPage = (props) => {
 		},
 		[ shipping ]
 	);
+	const get_shipping_rates = async () => {
+		const { data } = await API_Orders.get_shipping_rates({
+			orderItems: cartItems,
+			shipping,
+			payment,
+			itemsPrice,
+			shippingPrice,
+			taxPrice,
+			totalPrice,
+			user_data,
+			order_note,
+			promo_code
+		});
+		const rates = data.rates.map((rate) => {
+			return rate.carrier + ' ' + rate.rate;
+		});
+		console.log({ rates });
+		const lowest_rate = data.lowestRate();
+		console.log({ lowest_rate });
+	};
 
 	const get_tax_rates = async () => {
 		setTaxPrice(0);

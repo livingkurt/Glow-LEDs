@@ -69,35 +69,8 @@ const OrderListItem = (props) => {
 
 	const create_label = async () => {
 		const { data } = await API_Orders.create_label(props.order);
-		// console.log(data);
-		console.log(data.postage_label.label_url);
-		print_invoice(data.postage_label.label_url);
+		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
-
-	const print_invoice = async (label_image) => {
-		// const label = `<body>
-		// <img src="${label_image}" alt="label"/>
-		// </body>`;
-		// console.log(label);
-		// var prtContent = document.getElementById('invoice');
-		// var WinPrint = window.open('', 'PRINT', 'height=600,width=800');
-		window.open(label_image, '_blank', 'width=600,height=400');
-		// WinPrint.document.write(label_image);
-		// WinPrint.document.close();
-		// WinPrint.focus();
-		// setTimeout(() => {
-		// 	WinPrint.print();
-		// }, 500);
-	};
-
-	// 	const label = `<body
-	//   id="label"
-	//   style={{ padding: 0, margin: 0, fontSize: '8px', backgroundColor: 'transparent', zoom: '200%' }}
-	// ><img
-	// src="${label}
-	// style={{ fontSize: '8px', width: '100px', marginLeft: '-5px' }}
-	// >
-	// </body>`;
 
 	return (
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>

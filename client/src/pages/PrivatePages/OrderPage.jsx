@@ -9,7 +9,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
-import { API_Products } from '../../utils';
+import { API_Orders, API_Products } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
 
 require('dotenv').config();
@@ -241,6 +241,11 @@ const OrderPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 		dispatch(detailsOrder(props.match.params.id));
+	};
+
+	const create_label = async () => {
+		const { data } = await API_Orders.create_label(props.order);
+		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 
 	return loading ? (
@@ -757,6 +762,9 @@ ${order.shipping.email}`)}
 											</button>
 										</Link>
 									</div>
+									<button className="button secondary mv-5px" onClick={() => create_label()}>
+										Create Label
+									</button>
 									<button className="button secondary mv-5px">
 										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
 									</button>
