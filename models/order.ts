@@ -7,7 +7,7 @@ const shippingSchema = {
 	last_name: { type: String, required: true },
 	email: { type: String, required: true },
 	address_1: { type: String, required: true },
-	address_2: { type: String, required: true },
+	address_2: { type: String },
 	city: { type: String, required: true },
 	state: { type: String, required: true },
 	postalCode: { type: String, required: true },
