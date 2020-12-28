@@ -503,8 +503,8 @@ router.post('/', isAuth, async (req: any, res: any) => {
 			promo_code: req.body.promo_code,
 			deleted: false
 		});
-		console.log({ user: req.user });
-		console.log({ user: req.body.user });
+		console.log({ newOrder });
+		// console.log({ user: req.body.user });
 		const newOrderCreated = await newOrder.save();
 		console.log({ newOrderCreated });
 
