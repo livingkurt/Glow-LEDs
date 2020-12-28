@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { deleteOrder, refundOrder } from '../../actions/orderActions';
+import { API_Orders } from '../../utils';
 
 const OrderListItem = (props) => {
 	const dispatch = useDispatch();
@@ -66,51 +67,37 @@ const OrderListItem = (props) => {
 
 	const today = new Date();
 
-	// const Easypost = require('@easypost/api');
+	const create_label = async () => {
+		const { data } = await API_Orders.create_label(props.order);
+		// console.log(data);
+		console.log(data.postage_label.label_url);
+		print_invoice(data.postage_label.label_url);
+	};
 
-	// const api = new Easypost(process.env.API_KEY);
+	const print_invoice = async (label_image) => {
+		// const label = `<body>
+		// <img src="${label_image}" alt="label"/>
+		// </body>`;
+		// console.log(label);
+		// var prtContent = document.getElementById('invoice');
+		// var WinPrint = window.open('', 'PRINT', 'height=600,width=800');
+		window.open(label_image, '_blank', 'width=600,height=400');
+		// WinPrint.document.write(label_image);
+		// WinPrint.document.close();
+		// WinPrint.focus();
+		// setTimeout(() => {
+		// 	WinPrint.print();
+		// }, 500);
+	};
 
-	// /* Either objects or ids can be passed in. If the object does
-	//  * not have an id, it will be created. */
-
-	// const toAddress = new api.Address({
-	// 	name: props.order.shipping.first_name + ' ' + props.order.shipping.last_name,
-	// 	street1: props.order.shipping.street,
-	// 	street2: 'Apt D',
-	// 	city: 'Austin',
-	// 	state: 'TX',
-	// 	zip: '78752',
-	// 	country: 'US',
-	// 	company: 'Glow LEDs',
-	// 	phone: '906-284-2208'
-	// });
-	// const fromAddress = new api.Address({
-	// 	name: 'Glow LEDs',
-	// 	street1: '404 Kenniston Dr',
-	// 	street2: 'Apt D',
-	// 	city: 'Austin',
-	// 	state: 'TX',
-	// 	zip: '78752',
-	// 	country: 'US',
-	// 	company: 'Glow LEDs',
-	// 	phone: '906-284-2208'
-	// });
-	// const parcel = new api.Parcel({
-	// 	length: 20.2,
-	// 	width: 10.9,
-	// 	height: 5,
-	// 	weight: 65.9
-	// });
-	// // const customsInfo = new api.CustomsInfo({ ... });
-
-	// const shipment = new api.Shipment({
-	// 	to_address: toAddress,
-	// 	from_address: fromAddress,
-	// 	parcel: parcel
-	// 	// customs_info: customsInfo
-	// });
-
-	// shipment.save().then(console.log);
+	// 	const label = `<body
+	//   id="label"
+	//   style={{ padding: 0, margin: 0, fontSize: '8px', backgroundColor: 'transparent', zoom: '200%' }}
+	// ><img
+	// src="${label}
+	// style={{ fontSize: '8px', width: '100px', marginLeft: '-5px' }}
+	// >
+	// </body>`;
 
 	return (
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
@@ -547,6 +534,9 @@ ${props.order.shipping.email}`)}
 										</button>
 									</Link>
 								</div>
+								<button className="button secondary mv-5px" onClick={() => create_label()}>
+									Create Label
+								</button>
 								<button className="button secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>

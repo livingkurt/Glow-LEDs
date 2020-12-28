@@ -11,6 +11,8 @@ const { isAuth, isAdmin } = require('../util');
 const salesTax = require('state-sales-tax');
 const scraper = require('table-scraper');
 
+const easy_post_api = require('@easypost/api');
+
 require('dotenv').config();
 const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
@@ -836,6 +838,65 @@ router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: {
 		order.orderItems.product._id = product_id;
 		const updated = await Order.updateOne({ _id: order_id }, order);
 		res.send(updated);
+	} catch (err) {
+		console.log(err);
+	}
+});
+router.put('/create_label', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+	try {
+		const EasyPost = new easy_post_api(process.env.EASY_POST);
+		const order = req.body.order;
+
+		const toAddress = new EasyPost.Address({
+			name: order.shipping.first_name + ' ' + order.shipping.last_name,
+			street1: order.shipping.address_1,
+			street2: order.shipping.address_2,
+			city: order.shipping.city,
+			state: order.shipping.state,
+			zip: order.shipping.postalCode,
+			country: order.shipping.country
+		});
+		const fromAddress = new EasyPost.Address({
+			// name: 'Kurt LaVacque',
+			street1: '404 Kenniston Dr',
+			street2: 'Apt D',
+			city: 'Austin',
+			state: 'TX',
+			zip: '78752',
+			country: 'United States',
+			company: 'Glow LEDs',
+			phone: '906-284-2208',
+			email: 'info.glowleds@gmail.com'
+		});
+		const parcel = new EasyPost.Parcel({
+			length: order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0),
+			width: order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0),
+			height: order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0),
+			weight: order.orderItems.reduce(
+				(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
+					c.weight_pounds * 16 + c.weight_ounces + a,
+				0
+			)
+		});
+		// const customsInfo = new EasyPost.CustomsInfo({ ... });
+
+		const shipment = new EasyPost.Shipment({
+			to_address: toAddress,
+			from_address: fromAddress,
+			parcel: parcel
+			// customs_info: customsInfo
+		});
+
+		// shipment.save().then((i: any) => console.log({i}));
+		const saved_shipment = await shipment.save();
+		console.log({ saved_shipment });
+		// const label = EasyPost.Shipment.retrieve(ship.id).then((s: any) => {
+		// 	s.buy(s.lowestRate(), 0).then(console.log);
+		// });
+		const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
+		const label = await created_shipment.buy(created_shipment.lowestRate(), 0);
+		console.log({ label });
+		res.send(label);
 	} catch (err) {
 		console.log(err);
 	}

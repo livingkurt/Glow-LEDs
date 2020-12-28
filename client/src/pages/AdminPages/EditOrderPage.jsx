@@ -853,6 +853,102 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
+															<label htmlFor="length">Length</label>
+															<input
+																type="text"
+																name="length"
+																defaultValue={item.length}
+																value={item.length}
+																id="length"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="width">Width</label>
+															<input
+																type="text"
+																name="width"
+																defaultValue={item.width}
+																value={item.width}
+																id="width"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="height">Height</label>
+															<input
+																type="text"
+																name="height"
+																defaultValue={item.height}
+																value={item.height}
+																id="height"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="volume">Volume</label>
+															<input
+																type="text"
+																name="volume"
+																defaultValue={item.volume}
+																value={item.volume}
+																id="volume"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="weight_pounds">Weight Pounds</label>
+															<input
+																type="text"
+																name="weight_pounds"
+																defaultValue={item.weight_pounds}
+																value={item.weight_pounds}
+																id="weight_pounds"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="weight_ounces">Weight Ounces</label>
+															<input
+																type="text"
+																name="weight_ounces"
+																defaultValue={item.weight_ounces}
+																value={item.weight_ounces}
+																id="weight_ounces"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
 															<label htmlFor="price">Price</label>
 															<input
 																type="text"
