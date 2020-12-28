@@ -296,7 +296,9 @@ const OrderPublicPage = (props) => {
 									<div>
 										{order.shipping.first_name} {order.shipping.last_name}
 									</div>
-									<div>{order.shipping.address}</div>
+									<div>
+										{order.shipping.address_1} {order.shipping.address_2}
+									</div>
 									<div>
 										{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}{' '}
 										{order.shipping.country}

@@ -137,7 +137,7 @@ export const validate_registration = (data: {
 export const validate_shipping = (data: {
 	first_name: any;
 	last_name: any;
-	address: any;
+	address_1: any;
 	city: any;
 	state: any;
 	postalCode: any;
@@ -148,7 +148,7 @@ export const validate_shipping = (data: {
 	// Convert empty fields to an empty string so we can use validator functions
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
-	data.address = !isEmpty(data.address) ? data.address : '';
+	data.address_1 = !isEmpty(data.address_1) ? data.address_1 : '';
 	data.city = !isEmpty(data.city) ? data.city : '';
 	data.state = !isEmpty(data.state) ? data.state : '';
 	data.postalCode = !isEmpty(data.postalCode) ? data.postalCode : '';
@@ -163,8 +163,8 @@ export const validate_shipping = (data: {
 		errors.last_name = 'Last Name field is required';
 	}
 	// Address checks
-	if (Validator.isEmpty(data.address)) {
-		errors.address = 'Address field is required';
+	if (Validator.isEmpty(data.address_1)) {
+		errors.address_1 = 'Address field is required';
 	}
 	// City checks
 	if (Validator.isEmpty(data.city)) {

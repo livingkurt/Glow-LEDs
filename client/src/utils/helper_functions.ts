@@ -282,7 +282,7 @@ export const print_invoice = (order: any) => {
                 <td style=" vertical-align: top; text-align: right;" valign="top"
                   align="right">
                   ${order.shipping.first_name} ${order.shipping.last_name}<br>
-                  ${order.shipping.address}<br>
+                  ${order.shipping.address_1} ${order.shipping.address_2}<br>
                   ${order.shipping.city}, ${order.shipping.state} ${order.shipping.postalCode}<br>
                   ${order.shipping.email}
                 </td>

@@ -17,7 +17,8 @@ const ShippingPage = (props) => {
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
-	const [ address, setAddress ] = useState('');
+	const [ address_1, set_address_1 ] = useState('');
+	const [ address_2, set_address_2 ] = useState('');
 	const [ city, setCity ] = useState('');
 	const [ state, setState ] = useState('');
 	const [ postalCode, setPostalCode ] = useState('');
@@ -35,7 +36,8 @@ const ShippingPage = (props) => {
 				set_email(user_data.email);
 				set_first_name(user_data.shipping.first_name);
 				set_last_name(user_data.shipping.last_name);
-				setAddress(user_data.shipping.address);
+				set_address_1(user_data.shipping.address_1);
+				set_address_2(user_data.shipping.address_2);
 				setCity(user_data.shipping.city);
 				setState(user_data.shipping.state);
 				setPostalCode(user_data.shipping.postalCode);
@@ -52,7 +54,8 @@ const ShippingPage = (props) => {
 			if (userUpdate.userInfo) {
 				set_first_name(userUpdate.userInfo.shipping.first_name);
 				set_last_name(userUpdate.userInfo.shipping.last_name);
-				setAddress(userUpdate.userInfo.shipping.address);
+				set_address_1(userUpdate.userInfo.shipping.address_1);
+				set_address_2(userUpdate.userInfo.shipping.address_2);
 				setCity(userUpdate.userInfo.shipping.city);
 				setState(userUpdate.userInfo.shipping.state);
 				setPostalCode(userUpdate.userInfo.shipping.postalCode);
@@ -71,7 +74,8 @@ const ShippingPage = (props) => {
 				set_email(shipping.email);
 				set_first_name(shipping.first_name);
 				set_last_name(shipping.last_name);
-				setAddress(shipping.address);
+				set_address_1(shipping.address_1);
+				set_address_2(shipping.address_2);
 				setCity(shipping.city);
 				setState(shipping.state);
 				setPostalCode(shipping.postalCode);
@@ -114,12 +118,23 @@ const ShippingPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = { email, first_name, last_name, address, city, state, postalCode, country, international };
+		const data = {
+			email,
+			first_name,
+			last_name,
+			address_1,
+			address_2,
+			city,
+			state,
+			postalCode,
+			country,
+			international
+		};
 		const request = validate_shipping(data);
 		set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
 		set_last_name_validations(request.errors.last_name);
-		set_address_validations(request.errors.address);
+		set_address_validations(request.errors.address_1);
 		set_city_validations(request.errors.city);
 		set_state_validations(request.errors.state);
 		set_postal_code_validations(request.errors.postalCode);
@@ -134,7 +149,8 @@ const ShippingPage = (props) => {
 					first_name,
 					last_name,
 					email,
-					address,
+					address_1,
+					address_2,
 					city,
 					state,
 					postalCode,
@@ -153,7 +169,8 @@ const ShippingPage = (props) => {
 							first_name,
 							last_name,
 							email,
-							address,
+							address_1,
+							address_2,
 							city,
 							state,
 							postalCode,
@@ -175,7 +192,8 @@ const ShippingPage = (props) => {
 		set_email(shipping.email);
 		set_first_name(shipping.first_name);
 		set_last_name(shipping.last_name);
-		setAddress(shipping.address);
+		set_address_1(shipping.address_1);
+		set_address_2(shipping.address_2);
 		setCity(shipping.city);
 		setState(shipping.state);
 		setPostalCode(shipping.postalCode);
@@ -262,18 +280,28 @@ const ShippingPage = (props) => {
 							{last_name_validations}
 						</label>
 						<li>
-							<label htmlFor="address">Address</label>
+							<label htmlFor="address_1">Address</label>
 							<input
 								type="text"
-								value={address}
-								name="address"
-								id="address"
-								onChange={(e) => setAddress(e.target.value)}
+								value={address_1}
+								name="address_1"
+								id="address_1"
+								onChange={(e) => set_address_1(e.target.value)}
 							/>
 						</li>
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{address_validations}
 						</label>
+						<li>
+							<label htmlFor="address_2">Apt/Suite</label>
+							<input
+								type="text"
+								value={address_2}
+								name="address_2"
+								id="address_2"
+								onChange={(e) => set_address_2(e.target.value)}
+							/>
+						</li>
 						<li>
 							<label htmlFor="city">City</label>
 							<input

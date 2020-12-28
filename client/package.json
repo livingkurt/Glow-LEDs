@@ -4,6 +4,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@easypost/api": "^3.9.1",
 		"@fortawesome/free-solid-svg-icons": "^5.14.0",
 		"@fortawesome/react-fontawesome": "^0.1.11",
 		"@sendgrid/mail": "^7.2.4",

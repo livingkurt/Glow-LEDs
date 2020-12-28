@@ -332,7 +332,9 @@ const Order = (props) => {
 									<div>
 										{props.order.shipping.first_name} {props.order.shipping.last_name}
 									</div>
-									<div>{props.order.shipping.address}</div>
+									<div>
+										{props.order.shipping.address_1} {props.order.shipping.address_2}
+									</div>
 									<div>
 										{props.order.shipping.city}, {props.order.shipping.state}{' '}
 										{props.order.shipping.postalCode} {props.order.shipping.country}
@@ -345,7 +347,7 @@ const Order = (props) => {
 									onClick={() =>
 										copyToClipboard(`
 ${props.order.shipping.first_name} ${props.order.shipping.last_name}
-${props.order.shipping.address}
+${props.order.shipping.address_1} ${props.order.shipping.address_2}
 ${props.order.shipping.city}, ${props.order.shipping.state}
 ${props.order.shipping.postalCode} ${props.order.shipping.country}
 ${props.order.shipping.email}`)}

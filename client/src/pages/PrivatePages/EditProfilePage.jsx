@@ -192,13 +192,23 @@ const EditProfilePage = (props) => {
 								{last_name_validations}
 							</label> */}
 							<li>
-								<label htmlFor="address">Address</label>
+								<label htmlFor="address_1">Address</label>
 								<input
 									type="text"
-									value={shipping.address}
-									name="address"
-									id="address"
-									onChange={(e) => set_shipping({ ...shipping, address: e.target.value })}
+									value={shipping.address_1}
+									name="address_1"
+									id="address_1"
+									onChange={(e) => set_shipping({ ...shipping, address_1: e.target.value })}
+								/>
+							</li>
+							<li>
+								<label htmlFor="address_2">Apt/Suite</label>
+								<input
+									type="text"
+									value={shipping.address_2}
+									name="address_2"
+									id="address_2"
+									onChange={(e) => set_shipping({ ...shipping, address_2: e.target.value })}
 								/>
 							</li>
 							{/* <label className="validation_text" style={{ justifyContent: 'center' }}>

@@ -161,7 +161,8 @@ export const removeFromCart = (productId: string) => (
 export const saveShipping = (data: {
 	first_name: string;
 	last_name: string;
-	address: string;
+	address_1: string;
+	address_2: string;
 	city: string;
 	state: string;
 	postalCode: string;

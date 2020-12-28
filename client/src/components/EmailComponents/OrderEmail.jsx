@@ -600,7 +600,7 @@ const OrderEmail = (props) => {
 															>
 																{order.shipping.first_name} {order.shipping.last_name}
 																<br />
-																{order.shipping.address}
+																{order.shipping.address_1} {order.shipping.address_2}
 																<br />
 																{order.shipping.city}, {order.shipping.state}{' '}
 																{order.shipping.postalCode}

@@ -408,7 +408,9 @@ const PlaceOrderPublicPage = (props) => {
 									<div>
 										{shipping.first_name} {shipping.last_name}
 									</div>
-									<div>{shipping.address}</div>
+									<div>
+										{shipping.address_1} {shipping.address_2}
+									</div>
 									<div>
 										{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
 									</div>

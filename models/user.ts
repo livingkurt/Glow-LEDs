@@ -46,7 +46,8 @@ const cartSchema = {
 const shippingSchema = {
 	first_name: { type: String },
 	last_name: { type: String },
-	address: { type: String },
+	address_1: { type: String },
+	address_2: { type: String },
 	city: { type: String },
 	state: { type: String },
 	postalCode: { type: String },

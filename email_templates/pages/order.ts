@@ -115,7 +115,7 @@ export default (props: any) => {
                     </tr>
                     <tr>
                       <td style="vertical-align:top;width:50%; color:white;" valign="top">${props.shipping
-							.first_name} ${props.shipping.last_name}<br />${props.shipping.address}<br />${props.shipping
+							.first_name} ${props.shipping.last_name}<br />${props.shipping.address_1} ${props.shipping.address_2}<br />${props.shipping
 		.city}, ${props.shipping.state}
                       ${props.shipping.postalCode} ${props.shipping.country}<br />${props.shipping.email}</td>
                     </tr>

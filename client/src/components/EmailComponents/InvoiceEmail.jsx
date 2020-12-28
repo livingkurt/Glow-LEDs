@@ -124,7 +124,7 @@ const InvoiceEmail = (props) => {
 										<td style={{ fontSize: '8px', textAlign: 'right' }} valign="top" align="right">
 											{order.shipping.first_name} {order.shipping.last_name}
 											<br />
-											{order.shipping.address}
+											{order.shipping.address_1} {order.shipping.address_2}
 											<br />
 											{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}
 											<br />

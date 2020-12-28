@@ -414,7 +414,7 @@ const FAQPage = () => {
 								</span>️ . Also include your preferred method of contact{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️å (an e-mail address, phone number or social media username).
+								</span>️å (an e-mail address_1, phone number or social media username).
 							</li>
 							<li style={{ lineHeight: '25px' }}>
 								Pricing begins at $549. The price may vary depending on the size and hardware used ⚙️ .
