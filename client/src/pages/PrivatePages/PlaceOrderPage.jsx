@@ -36,10 +36,12 @@ const PlaceOrderPage = (props) => {
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ shipping_rates, set_shipping_rates ] = useState({});
+	const [ current_shipping_speed, set_current_shipping_speed ] = useState('');
 	const [ loading_shipping, set_loading_shipping ] = useState(false);
 	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
 	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
-	const [ easy_post_id, set_easy_post_id ] = useState('');
+	const [ shipment_id, set_shipment_id ] = useState('');
+	const [ shipping_rate, set_shipping_rate ] = useState({});
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
@@ -50,6 +52,7 @@ const PlaceOrderPage = (props) => {
 	const [ user, set_user ] = useState(user_data);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
+	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
 	const [ no_user, set_no_user ] = useState(false);
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -60,62 +63,62 @@ const PlaceOrderPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const calculate_shipping = () => {
-		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-		console.log(volume);
-		if (volume === 0) {
-			console.log(0);
-			setShippingPrice(0);
-		} else if (volume <= 10) {
-			console.log(5);
-			setShippingPrice(5);
-		} else if (volume > 10 && volume <= 165) {
-			console.log(8);
-			setShippingPrice(7);
-		} else if (volume > 165 && volume <= 250) {
-			console.log(8);
-			setShippingPrice(9);
-		} else if (volume > 250 && volume <= 405) {
-			console.log(10);
-			setShippingPrice(10);
-			console.log(12);
-		} else if (volume > 405 && volume < 500) {
-			setShippingPrice(12);
-			console.log(500);
-		} else if (volume > 500) {
-			setShippingPrice(15);
-		}
+	// const calculate_shipping = () => {
+	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+	// 	console.log(volume);
+	// 	if (volume === 0) {
+	// 		console.log(0);
+	// 		setShippingPrice(0);
+	// 	} else if (volume <= 10) {
+	// 		console.log(5);
+	// 		setShippingPrice(5);
+	// 	} else if (volume > 10 && volume <= 165) {
+	// 		console.log(8);
+	// 		setShippingPrice(7);
+	// 	} else if (volume > 165 && volume <= 250) {
+	// 		console.log(8);
+	// 		setShippingPrice(9);
+	// 	} else if (volume > 250 && volume <= 405) {
+	// 		console.log(10);
+	// 		setShippingPrice(10);
+	// 		console.log(12);
+	// 	} else if (volume > 405 && volume < 500) {
+	// 		setShippingPrice(12);
+	// 		console.log(500);
+	// 	} else if (volume > 500) {
+	// 		setShippingPrice(15);
+	// 	}
 
-		// if (itemsPrice >= 50) {
-		// 	setShippingPrice(0);
-		// }
-		// console.log({ shippingPrice });
-		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-	};
-	const calculate_international = () => {
-		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-		if (volume === 0) {
-			setShippingPrice(0);
-		} else if (volume <= 10) {
-			setShippingPrice(17);
-		} else if (volume > 10 && volume < 250) {
-			setShippingPrice(17);
-		} else if (volume > 250 && volume < 405) {
-			setShippingPrice(20);
-		} else if (volume > 405 && volume < 500) {
-			setShippingPrice(40);
-		} else if (volume > 500) {
-			setShippingPrice(80);
-		}
-		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-		// console.log({ shippingPrice });
-	};
+	// 	// if (itemsPrice >= 50) {
+	// 	// 	setShippingPrice(0);
+	// 	// }
+	// 	// console.log({ shippingPrice });
+	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+	// };
+	// const calculate_international = () => {
+	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+	// 	if (volume === 0) {
+	// 		setShippingPrice(0);
+	// 	} else if (volume <= 10) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 10 && volume < 250) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 250 && volume < 405) {
+	// 		setShippingPrice(20);
+	// 	} else if (volume > 405 && volume < 500) {
+	// 		setShippingPrice(40);
+	// 	} else if (volume > 500) {
+	// 		setShippingPrice(80);
+	// 	}
+	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+	// 	// console.log({ shippingPrice });
+	// };
 
 	const stableDispatch = useCallback(dispatch, []);
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
 	const stable_set_payment_loading = useCallback(set_payment_loading, []);
-	const stable_calculate_international = useCallback(calculate_international, []);
-	const stable_calculate_shipping = useCallback(calculate_shipping, []);
+	// const stable_calculate_international = useCallback(calculate_international, []);
+	// const stable_calculate_shipping = useCallback(calculate_shipping, []);
 
 	useEffect(
 		() => {
@@ -157,16 +160,9 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (shipping) {
-				// if (shipping.international) {
-				// 	stable_calculate_international();
-				// } else {
-				// 	// stable_calculate_shipping();
-				// 	// stable_calculate_shipping();
-				// 	// if (shipping != {}) {
 				set_loading_shipping(true);
 				get_shipping_rates();
-				// }
-				// }
+				// get_shipping_rates();
 				get_tax_rates();
 			}
 			return () => {};
@@ -187,14 +183,31 @@ const PlaceOrderPage = (props) => {
 			order_note,
 			promo_code
 		});
-		const sorted_rates = data.rates.sort((a, b) => a.rate - b.rate);
-		set_shipping_rates(data);
-		if (sorted_rates[0]) {
-			// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
-			setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost);
-			set_easy_post_id(data.id);
+		if (data) {
+			set_shipping_rates(data);
+			set_shipment_id(data.id);
+			set_loading_shipping(false);
+			// set_loading_shipping(false);
 		}
-		set_loading_shipping(false);
+
+		// if (sorted_rates[0]) {
+		// 	// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
+		// 	setShippingPrice(parseFloat(sorted_rates[0].retail_rate) + packaging_cost);
+		// 	// set_shipment_id(data.id);
+		// }
+	};
+
+	const choose_shipping_rate = (rate, speed) => {
+		setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
+		set_hide_pay_button(false);
+		set_shipping_rate(rate);
+		set_current_shipping_speed({ rate, speed });
+	};
+
+	const re_choose_shipping_rate = () => {
+		setShippingPrice(0);
+		set_hide_pay_button(true);
+		set_shipping_rate({});
 	};
 
 	const get_tax_rates = async () => {
@@ -233,10 +246,11 @@ const PlaceOrderPage = (props) => {
 			createPayOrder(
 				{
 					orderItems: cartItems,
-					shipping: easy_post_id
+					shipping: shipment_id
 						? {
 								...shipping,
-								easy_post_id
+								shipment_id,
+								shipping_rate
 							}
 						: shipping,
 					payment,
@@ -257,11 +271,11 @@ const PlaceOrderPage = (props) => {
 			await API_Products.promo_code_used(promo_code);
 		}
 	};
-	// 	const save_easy_post_id = (easy_post_id) => {
+	// 	const save_shipment_id = (shipment_id) => {
 	// 	dispatch(
 	// 		saveShipping({
 	// 			...shipping,
-	// 			easy_post_id
+	// 			shipment_id
 	// 		})
 	// 	);
 	// };
@@ -272,7 +286,12 @@ const PlaceOrderPage = (props) => {
 		dispatch(
 			createOrder({
 				orderItems: cartItems,
-				shipping: { ...shipping, email: user.email, easy_post_id: easy_post_id && easy_post_id },
+				shipping: {
+					...shipping,
+					email: user.email,
+					shipment_id: shipment_id && shipment_id,
+					shipping_rate: shipping_rate && shipping_rate
+				},
 				payment,
 				itemsPrice,
 				shippingPrice,
@@ -296,10 +315,11 @@ const PlaceOrderPage = (props) => {
 		dispatch(
 			createOrderGuest({
 				orderItems: cartItems,
-				shipping: easy_post_id
+				shipping: shipment_id
 					? {
 							...shipping,
-							easy_post_id
+							shipment_id,
+							shipping_rate
 						}
 					: shipping,
 				payment,
@@ -435,12 +455,14 @@ const PlaceOrderPage = (props) => {
 		set_free_shipping_message('');
 		set_show_message('');
 		if (shipping) {
-			if (shipping.international) {
-				calculate_international();
-			} else {
-				calculate_shipping();
-				calculate_shipping();
-			}
+			// if (shipping.international) {
+			// 	calculate_international();
+			// } else {
+			// 	calculate_shipping();
+			// 	calculate_shipping();
+			// }
+			set_loading_shipping(true);
+			get_shipping_rates();
 		}
 	};
 	const handleChangeFor = (type) => ({ error }) => {
@@ -500,41 +522,8 @@ const PlaceOrderPage = (props) => {
 								</Link>
 							</div>
 						</div>
-						{/* <div>
-							{shipping_rates &&
-								shipping_rates.rates &&
-								shipping_rates.rates.map((rate, index) => {
-									return (
-										<div>
-											{rate.service === 'First' && (
-												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
-													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
-													{rate.est_delivery_days} Days
-												</div>
-											)}
-											{rate.service === 'Priority' && (
-												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
-													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
-													{rate.est_delivery_days} Days
-												</div>
-											)}
-											{rate.service === 'Express' && (
-												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
-													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
-													{rate.est_delivery_days} Days
-												</div>
-											)}
-											{rate.service === 'Ground' && (
-												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
-													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
-													{rate.est_delivery_days} Days
-												</div>
-											)}
-										</div>
-									);
-								})}
-						</div> */}
 					</div>
+
 					<div>
 						<ul className="cart-list-container">
 							<li>
@@ -707,7 +696,132 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						</li>
+						<div>
+							{console.log(shipping_rates)}
+							{hide_pay_button &&
+							shipping_rates.rates && (
+								<div>
+									{shipping_rates.rates.map((rate, index) => {
+										return (
+											rate.service === 'First' && (
+												<div className=" mv-1rem jc-b  ai-c">
+													<div className="shipping_rates jc-b w-100per ">
+														<div>Standard</div>
+														<div>
+															{' '}
+															${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+																2
+															)}{' '}
+														</div>
+														<div> 1-{rate.est_delivery_days} Days</div>
+													</div>
+													<button
+														className="custom-select-shipping_rates"
+														onClick={() => choose_shipping_rate(rate, 'Standard')}
+													>
+														Select
+													</button>
+												</div>
+											)
+										);
+									})}
+									{shipping_rates.rates.map((rate, index) => {
+										return (
+											rate.service === 'Priority' && (
+												<div className=" mv-1rem jc-b  ai-c">
+													<div className="shipping_rates jc-b w-100per ">
+														<div>Priority</div>
+														<div>
+															{' '}
+															${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+																2
+															)}{' '}
+														</div>
+														<div> 1-{rate.est_delivery_days} Days</div>
+													</div>
+													<button
+														className="custom-select-shipping_rates"
+														onClick={() => choose_shipping_rate(rate, 'Priority')}
+													>
+														Select
+													</button>
+												</div>
+											)
+										);
+									})}
+									{shipping_rates.rates.map((rate, index) => {
+										return (
+											rate.service === 'Ground' && (
+												<div className=" mv-1rem jc-b  ai-c">
+													<div className="shipping_rates jc-b w-100per ">
+														<div>Ground</div>
+														<div>
+															{' '}
+															${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+																2
+															)}{' '}
+														</div>
+														<div> 3-{rate.est_delivery_days} Days</div>
+													</div>
+													<button
+														className="custom-select-shipping_rates"
+														onClick={() => choose_shipping_rate(rate, 'Ground')}
+													>
+														Select
+													</button>
+												</div>
+											)
+										);
+									})}
+									{shipping_rates.rates.map((rate, index) => {
+										return (
+											rate.service === 'Express' && (
+												<div className=" mv-1rem jc-b ai-c">
+													<div className="shipping_rates jc-b w-100per ">
+														<div>Express</div>
+														<div>
+															{' '}
+															${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+																2
+															)}{' '}
+														</div>
+														<div> 1-2 Days</div>
+													</div>
+													<button
+														className="custom-select-shipping_rates"
+														onClick={() => choose_shipping_rate(rate, 'Express')}
+													>
+														Select
+													</button>
+												</div>
+											)
+										);
+									})}
+								</div>
+							)}
+						</div>
+
+						<li>
+							{!hide_pay_button && (
+								<div className=" mv-1rem jc-b ai-c w-100per">
+									<div className="shipping_rates jc-b w-100per ">
+										<div>
+											{current_shipping_speed.speed} ${(parseFloat(
+												current_shipping_speed.rate.retail_rate
+											) + packaging_cost).toFixed(2)}
+										</div>
+									</div>
+									<button
+										className="custom-select-shipping_rates w-10rem"
+										onClick={() => re_choose_shipping_rate()}
+									>
+										Change
+									</button>
+								</div>
+							)}
+						</li>
 						{!loading_tax_rate &&
+						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') && (
 							<div>

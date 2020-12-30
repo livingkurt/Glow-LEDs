@@ -3,7 +3,8 @@ export {};
 const mongoose = require('mongoose');
 
 const shippingSchema = {
-	easy_post_id: { type: String },
+	shipment_id: { type: String },
+	shipping_rate: { type: Object },
 	first_name: { type: String, required: true },
 	last_name: { type: String, required: true },
 	email: { type: String, required: true },

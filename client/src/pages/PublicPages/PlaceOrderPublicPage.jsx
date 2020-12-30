@@ -38,7 +38,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
 	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
 	const [ shippingPrice, setShippingPrice ] = useState(0);
-	const [ easy_post_id, set_easy_post_id ] = useState('');
+	const [ shipment_id, set_shipment_id ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
@@ -191,7 +191,7 @@ const PlaceOrderPublicPage = (props) => {
 		if (sorted_rates[0]) {
 			// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
 			setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost);
-			set_easy_post_id(data.id);
+			set_shipment_id(data.id);
 		}
 		set_loading_shipping(false);
 	};
@@ -251,10 +251,10 @@ const PlaceOrderPublicPage = (props) => {
 			createPayOrderGuest(
 				{
 					orderItems: cartItems,
-					shipping: easy_post_id
+					shipping: shipment_id
 						? {
 								...shipping,
-								easy_post_id
+								shipment_id
 							}
 						: shipping,
 					payment,

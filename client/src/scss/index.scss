@@ -95,13 +95,13 @@ button {
 	border: 1px solid #757575;
 }
 
-.shipping_rates {
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-	padding: 1rem;
-	background: #4d5061;
-	border-radius: 10px;
-	border: 1px solid #757575;
-}
+// .shipping_rates {
+// 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+// 	padding: .1rem;
+// 	background: #4d5061;
+// 	border-radius: 10px;
+// 	border: 1px solid #757575;
+// }
 
 .inactive {
 	display: none;
@@ -751,112 +751,79 @@ th {
 	flex-direction: column;
 }
 
-/* Select Dropdowns */
+// Shipping Rates
 
-// .select_dropdown_container {
+.shipping_rates {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	font-size: 1.5rem;
+	padding: .75em 2em 0.55em 1em;
+	background: #6a6c80;
+	color: white;
+	border: 0;
+	// position: relative;
+	border-radius: 10px;
+	transition: all .5s ease;
+  font-family: "main_font";
+  border-radius: 10px 0 0 10px;
+}
+
+.select-label {
+	margin-right: 5px;
+}
+
+// .custom-shipping_rates {
 // 	position: relative;
 // }
 
-// .select_dropdown {
-// 	-webkit-appearance: button;
-// 	box-shadow: $bs_shallow;
-// 	background-color: #6a6c80;
-// 	background-position: center right;
-// 	background-repeat: no-repeat;
-// 	border-radius: $br_small_containers;
-// 	border: 0;
-// 	color: $font_color;
-// 	padding-top: 9px;
-// 	padding-bottom: 5px;
-// 	padding-left: 10px;
-// 	padding-right: 8px;
-// 	font-size: $font_size;
-// 	margin: 0;
-// 	width: 123px;
-// 	overflow: hidden;
-// 	text-overflow: ellipsis;
-// 	white-space: nowrap;
-// 	margin: 10px;
-// 	font-family: $main_font;
-// 	transition: all .5s ease-out;
+// .shipping_rates:hover {
+// 	background-color: #393e55;
 // }
 
-// .qty_select_dropdown_container {
-// 	position: relative;
-// 	width: 65px;
+.custom-select-shipping_rates {
+	// position: absolute;
+	top: 0;
+	right: 0;
+	display: block;
+	background: #4d5061;
+	height: 100%;
+  width: 8rem;
+  color: white;
+  font-family: 'main_font';
+  // pointer-events: none;
+  padding: 1rem;
+  border-radius: 0 10px 10px 0;
+  border: 0;
+}
+.custom-select-shipping_rates:hover {
+	background-color: #393e55;
+}
+
+.custom-select-shipping_rates::before,
+.custom-select-shipping_rates::after {
+	--size: .4em;
+
+	content: '';
+	// position: absolute;
+	width: 0;
+	height: 0;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// .custom-select-shipping_rates::before {
+// 	border-left: var(--size) solid transparent;
+// 	border-right: var(--size) solid transparent;
+// 	border-bottom: var(--size) solid rgba(255, 255, 255, 0.5);
+// 	top: 35%;
 // }
 
-// .qty_select_dropdown {
-// 	-webkit-appearance: button;
-// 	box-shadow: $bs_shallow;
-// 	background-color: #6a6c80;
-// 	background-position: center right;
-// 	background-repeat: no-repeat;
-// 	border-radius: $br_small_containers;
-// 	border: 0;
-// 	color: $font_color;
-// 	padding-top: 9px;
-// 	padding-bottom: 5px;
-// 	padding-left: 10px;
-// 	padding-right: 8px;
-// 	font-size: $font_size;
-// 	margin: 0;
-// 	width: 50px;
-// 	overflow: hidden;
-// 	text-overflow: ellipsis;
-// 	white-space: nowrap;
-// 	margin: 10px;
-// 	font-family: $main_font;
-// 	transition: all .5s ease-out;
+// .custom-select-shipping_rates::after {
+// 	border-left: var(--size) solid transparent;
+// 	border-right: var(--size) solid transparent;
+// 	border-top: var(--size) solid rgba(255, 255, 255, 0.5);
+// 	top: 65%;
 // }
 
-// .icon_styles {
-// 	position: absolute;
-// 	right: 13px;
-// 	top: 1.6rem;
-// 	transform: rotate(-180deg);
-// }
-
-// .review_select_dropdown_container {
-// 	position: relative;
-// 	margin-left: 15px;
-// }
-
-// .review_select_dropdown {
-// 	-webkit-appearance: button;
-// 	box-shadow: $bs_shallow;
-// 	background-color: #6a6c80;
-// 	background-position: center right;
-// 	background-repeat: no-repeat;
-// 	border-radius: 9px;
-// 	border: 0;
-// 	color: $font_color;
-// 	padding-top: $br_small_containers;
-// 	padding-bottom: 5px;
-// 	padding-left: 10px;
-// 	padding-right: 8px;
-// 	font-size: $font_size;
-// 	margin: 0;
-// 	width: 160px;
-// 	overflow: hidden;
-// 	text-overflow: ellipsis;
-// 	white-space: nowrap;
-// 	font-family: $main_font;
-// 	transition: all .5s ease-out;
-// }
-
-// .review_icon_styles {
-// 	position: absolute;
-// 	right: 9px;
-// 	top: 6px;
-// 	transform: rotate(-180deg);
-// }
-
-// .select_dropdown:hover,
-// .qty_select_dropdown:hover,
-// .review_select_dropdown:hover {
-// 	background-color: #494c6b;
-// }
 
 // Categories
 

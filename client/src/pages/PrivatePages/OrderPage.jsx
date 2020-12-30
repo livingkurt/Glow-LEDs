@@ -244,11 +244,11 @@ const OrderPage = (props) => {
 	};
 
 	const create_label = async () => {
-		const { data } = await API_Orders.create_label(props.order);
+		const { data } = await API_Orders.create_label(order);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 	const buy_label = async () => {
-		const { data } = await API_Orders.buy_label(props.order);
+		const { data } = await API_Orders.buy_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 
