@@ -7,7 +7,7 @@ import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
-import { LoadingPayments } from '../../components/UtilityComponents';
+import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Orders, API_Products } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
@@ -247,535 +247,586 @@ const OrderPage = (props) => {
 		const { data } = await API_Orders.create_label(props.order);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
+	const buy_label = async () => {
+		const { data } = await API_Orders.buy_label(props.order);
+		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+	};
 
-	return loading ? (
-		<div className="column jc-c">
-			<h2 style={{ textAlign: 'center' }}>Loading...</h2>
-			<h3 style={{ textAlign: 'center' }}>If payment element doesn't show in 5 seconds, refresh the page.</h3>
-		</div>
-	) : error ? (
-		<div>{error}</div>
-	) : (
-		<div>
-			<Helmet>
-				<title>Your Order | Glow LEDs</title>
-				<meta property="og:title" content="Your Order" />
-				<meta name="twitter:title" content="Your Order" />
-				<link
-					rel="canonical"
-					href={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
-				/>
-				<meta
-					property="og:url"
-					content={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
-				/>
-			</Helmet>
-			{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
-			<div className="mb-10px ml-20px">
-				{props.userInfo &&
-				props.userInfo.isAdmin && (
-					<Link to="/secure/glow/orders">
-						<button className="button secondary">Back to Admin Orders</button>
-					</Link>
-				)}
-
-				<Link to="/secure/account/orders">
-					<button className="button secondary">Back to Orders</button>
-				</Link>
-			</div>
-
-			<LoadingPayments loading={payment_loading} error={errorPay} />
-			<div className="placeorder br-20px" style={{ backgroundColor: show_color && determine_color(order) }}>
-				<div className="placeorder-info">
-					<div style={{ backgroundColor: determine_color(order) }}>
-						{order.isRefunded && (
-							<h1>
-								Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
-								{format_date(order.refundedAt)}
-							</h1>
+	return (
+		<Loading loading={loading} error={error}>
+			{order && (
+				<div>
+					<Helmet>
+						<title>Your Order | Glow LEDs</title>
+						<meta property="og:title" content="Your Order" />
+						<meta name="twitter:title" content="Your Order" />
+						<link
+							rel="canonical"
+							href={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
+						/>
+						<meta
+							property="og:url"
+							content={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
+						/>
+					</Helmet>
+					{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
+					<div className="mb-10px ml-20px">
+						{props.userInfo &&
+						props.userInfo.isAdmin && (
+							<Link to="/secure/glow/orders">
+								<button className="button secondary">Back to Admin Orders</button>
+							</Link>
 						)}
-						<div className="column w-100per">
-							<label>Order #: {order._id}</label>
-							{order.tracking_number && (
-								<label>
-									USPS Tracking #:{' '}
-									<a
-										href={
-											'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
-											order.tracking_number
-										}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="mv-2rem"
-										style={{
-											textDecoration: 'underline',
-											color: 'white'
-										}}
-									>
-										{order.tracking_number}
-									</a>
-								</label>
-							)}
-						</div>
-						<div className="wrap jc-b">
-							<div className="column w-100per">
-								<h2>Shipping</h2>
-								<div>
-									<div>
-										{order.shipping.first_name} {order.shipping.last_name}
-									</div>
-									<div>
-										{order.shipping.address_1} {order.shipping.address_2}
-									</div>
-									<div>
-										{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}{' '}
-										{order.shipping.country}
-									</div>
-									<div>{order.shipping.international && 'International'}</div>
-									<div>{order.shipping.email}</div>
+
+						<Link to="/secure/account/orders">
+							<button className="button secondary">Back to Orders</button>
+						</Link>
+					</div>
+
+					<LoadingPayments loading={payment_loading} error={errorPay} />
+					<div
+						className="placeorder br-20px"
+						style={{ backgroundColor: show_color && determine_color(order) }}
+					>
+						<div className="placeorder-info">
+							<div style={{ backgroundColor: determine_color(order) }}>
+								{order.isRefunded && (
+									<h1>
+										Refunded: {
+											order.payment.refund_reason[order.payment.refund_reason.length - 1]
+										}{' '}
+										on {format_date(order.refundedAt)}
+									</h1>
+								)}
+								<div className="column w-100per">
+									<label>Order #: {order._id}</label>
+									{order.tracking_number && (
+										<label>
+											USPS Tracking #:{' '}
+											<a
+												href={
+													'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+													order.tracking_number
+												}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="mv-2rem"
+												style={{
+													textDecoration: 'underline',
+													color: 'white'
+												}}
+											>
+												{order.tracking_number}
+											</a>
+										</label>
+									)}
 								</div>
-							</div>
-							{user_data &&
-							user_data.isAdmin && (
-								<button
-									className="button secondary w-200px mv-10px"
-									onClick={() =>
-										copyToClipboard(`
+								<div className="wrap jc-b">
+									<div className="column w-100per">
+										<h2>Shipping</h2>
+										<div>
+											<div>
+												{order.shipping.first_name} {order.shipping.last_name}
+											</div>
+											<div>
+												{order.shipping.address_1} {order.shipping.address_2}
+											</div>
+											<div>
+												{order.shipping.city}, {order.shipping.state}{' '}
+												{order.shipping.postalCode} {order.shipping.country}
+											</div>
+											<div>{order.shipping.international && 'International'}</div>
+											<div>{order.shipping.email}</div>
+										</div>
+									</div>
+									{user_data &&
+									user_data.isAdmin && (
+										<button
+											className="button secondary w-200px mv-10px"
+											onClick={() =>
+												copyToClipboard(`
 ${order.shipping.first_name} ${order.shipping.last_name}
 ${order.shipping.address_1} ${order.shipping.address_2}
 ${order.shipping.city}, ${order.shipping.state}
 ${order.shipping.postalCode} ${order.shipping.country}
 ${order.shipping.email}`)}
-								>
-									Copy to clipboard
-								</button>
-							)}
-						</div>
-					</div>
+										>
+											Copy to clipboard
+										</button>
+									)}
+								</div>
+							</div>
 
-					<div style={{ backgroundColor: determine_color(order) }}>
-						<h2>Payment</h2>
-						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
-							<p style={{ marginBottom: '0px' }}>
-								{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}
-							</p>
-						</div>
-					</div>
-					<div style={{ backgroundColor: determine_color(order) }}>
-						<ul className="cart-list-container mt-0px">
-							<li>
-								<h2>Shopping Cart</h2>
-								<div>Price</div>
-							</li>
-							{console.log({ orderItems: order.orderItems })}
-							{order.orderItems.length === 0 ? (
-								<div>Cart is empty</div>
-							) : (
-								order.orderItems.map((item) => (
-									<li key={item._id}>
-										{console.log({ item })}
-										<div className="cart-image">
-											<Link to={'/collections/all/products/' + item.pathname}>
-												<img
-													src={item.product.images[0]}
-													alt={item.name}
-													title="Product Image"
-												/>
-											</Link>
-										</div>
-										<div className="cart-name">
-											<div>
-												{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
-												<Link to={'/collections/all/products/' + item.pathname}>
-													{(item.category === 'diffuser_caps' ||
-														item.category === 'mega_diffuser_caps') &&
-														item.diffuser_cap_color}{' '}
-													{item.name}{' '}
-													{item.secondary_product && `w (${item.secondary_product.name})`}
-												</Link>
-											</div>
-											<div>Qty: {item.qty}</div>
-											{props.userInfo &&
-											props.userInfo.isAdmin &&
-											item.secondary_product && (
-												<div className="row">
-													<div className="mv-10px ">
-														<label htmlFor="secondary_product">Secondary Product</label>
-														<div className="row">
-															<input
-																type="text"
-																value={item.secondary_product._id}
-																name="secondary_product"
-																id="secondary_product"
-																className="w-100per"
-																onChange={(e) => set_secondary_product(e.target.value)}
-															/>
-															<button
-																className="button primary"
-																onClick={save_secondary_product}
-															>
-																Add
-															</button>
-														</div>
+							<div style={{ backgroundColor: determine_color(order) }}>
+								<h2>Payment</h2>
+								<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
+									<p style={{ marginBottom: '0px' }}>
+										{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}
+									</p>
+								</div>
+							</div>
+							<div style={{ backgroundColor: determine_color(order) }}>
+								<ul className="cart-list-container mt-0px">
+									<li>
+										<h2>Shopping Cart</h2>
+										<div>Price</div>
+									</li>
+									{console.log({ orderItems: order.orderItems })}
+									{order.orderItems.length === 0 ? (
+										<div>Cart is empty</div>
+									) : (
+										order.orderItems.map((item) => (
+											<li key={item._id}>
+												{console.log({ item })}
+												<div className="cart-image">
+													<Link to={'/collections/all/products/' + item.pathname}>
+														<img
+															src={item.product.images[0]}
+															alt={item.name}
+															title="Product Image"
+														/>
+													</Link>
+												</div>
+												<div className="cart-name">
+													<div>
+														{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
+														<Link to={'/collections/all/products/' + item.pathname}>
+															{(item.category === 'diffuser_caps' ||
+																item.category === 'mega_diffuser_caps') &&
+																item.diffuser_cap_color}{' '}
+															{item.name}{' '}
+															{item.secondary_product &&
+																`w (${item.secondary_product.name})`}
+														</Link>
 													</div>
+													<div>Qty: {item.qty}</div>
+													{props.userInfo &&
+													props.userInfo.isAdmin &&
+													item.secondary_product && (
+														<div className="row">
+															<div className="mv-10px ">
+																<label htmlFor="secondary_product">
+																	Secondary Product
+																</label>
+																<div className="row">
+																	<input
+																		type="text"
+																		value={item.secondary_product._id}
+																		name="secondary_product"
+																		id="secondary_product"
+																		className="w-100per"
+																		onChange={(e) =>
+																			set_secondary_product(e.target.value)}
+																	/>
+																	<button
+																		className="button primary"
+																		onClick={save_secondary_product}
+																	>
+																		Add
+																	</button>
+																</div>
+															</div>
+														</div>
+													)}
 												</div>
-											)}
-										</div>
-										<div className="cart-price">
-											{item.sale_price !== 0 ? (
-												<div style={{ width: '230px' }}>
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															${item.price ? item.price : item.price}
+												<div className="cart-price">
+													{item.sale_price !== 0 ? (
+														<div style={{ width: '230px' }}>
+															<del style={{ color: 'red' }}>
+																<label style={{ color: 'white' }}>
+																	${item.price ? item.price : item.price}
+																</label>
+															</del>{' '}
+															<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+															On Sale!
+														</div>
+													) : (
+														<label>
+															${item.price ? item.price.toFixed(2) : item.price}
 														</label>
-													</del>{' '}
-													<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
-													On Sale!
+													)}
 												</div>
-											) : (
-												<label>${item.price ? item.price.toFixed(2) : item.price}</label>
+											</li>
+										))
+									)}
+								</ul>
+							</div>
+						</div>
+						<div className="placeorder-action" style={{ backgroundColor: determine_color(order) }}>
+							<ul>
+								<li>
+									<h2 style={{ marginTop: 0 }}>Order Summary</h2>
+								</li>
+								{!order.promo_code && (
+									<li>
+										<div>Subtotal</div>
+										<div>${order.itemsPrice && order.itemsPrice.toFixed(2)}</div>
+									</li>
+								)}
+
+								{order.promo_code && (
+									<li>
+										<del style={{ color: 'red' }}>
+											<div style={{ color: 'white' }}>Subtotal</div>
+										</del>
+										<div>
+											<del style={{ color: 'red' }}>
+												<label style={{ color: 'white' }}>
+													${order.itemsPrice && order.itemsPrice.toFixed(2)}
+												</label>
+											</del>
+										</div>
+									</li>
+								)}
+								{order.promo_code && (
+									<li>
+										<div>Discount</div>
+										<div>
+											-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
+												order.itemsPrice).toFixed(2)}
+										</div>
+									</li>
+								)}
+								{order.promo_code && (
+									<li>
+										<div>New Subtotal</div>
+										<div>${order.itemsPrice.toFixed(2)}</div>
+									</li>
+								)}
+								<li>
+									<div>Shipping</div>
+									<div>
+										${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}
+									</div>
+								</li>
+								<li>
+									<div>Tax</div>
+									<div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
+								</li>
+
+								{!order.isRefunded && (
+									<li>
+										<div>Order Total</div>
+										<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
+									</li>
+								)}
+								{order.isRefunded && (
+									<li>
+										<div>Order Total</div>
+										<del style={{ color: 'red' }}>
+											<label style={{ color: 'white' }}>
+												<div>
+													${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}
+												</div>
+											</label>
+										</del>
+									</li>
+								)}
+								{order.isRefunded && (
+									<li>
+										<div>Refund Amount</div>
+										<div>
+											${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+										</div>
+									</li>
+								)}
+								{order.isRefunded && (
+									<li>
+										<div>New Order Total</div>
+										<div>
+											${(order.totalPrice -
+												order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(
+												2
 											)}
 										</div>
 									</li>
-								))
-							)}
-						</ul>
-					</div>
-				</div>
-				<div className="placeorder-action" style={{ backgroundColor: determine_color(order) }}>
-					<ul>
-						<li>
-							<h2 style={{ marginTop: 0 }}>Order Summary</h2>
-						</li>
-						{!order.promo_code && (
-							<li>
-								<div>Subtotal</div>
-								<div>${order.itemsPrice && order.itemsPrice.toFixed(2)}</div>
-							</li>
-						)}
+								)}
 
-						{order.promo_code && (
-							<li>
-								<del style={{ color: 'red' }}>
-									<div style={{ color: 'white' }}>Subtotal</div>
-								</del>
+								<li
+									className="placeorder-actions-payment"
+									style={{ display: 'flex', justifyContent: 'center' }}
+								/>
+								{!order.isPaid && (
+									<div>
+										<StripeCheckout
+											name="Glow LEDs"
+											description={`Pay for Order`}
+											amount={
+												(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) *
+												100
+											}
+											token={(token) => pay_order(token)}
+											stripeKey={process.env.REACT_APP_STRIPE_KEY}
+											onChange={handleChangeFor('cardNumber')}
+										>
+											<button
+												className="button primary full-width"
+												style={{ marginBottom: '12px' }}
+											>
+												Pay for Order
+											</button>
+										</StripeCheckout>
+									</div>
+								)}
+
+								{order.promo_code && (
+									<div className="column">
+										<div
+											style={{ borderTop: '.1rem white solid' }}
+											className="pt-1rem"
+											htmlFor="promo_code"
+										>
+											Promo Code: {order.promo_code}
+										</div>
+									</div>
+								)}
+								{order.order_note && (
+									<div className="column">
+										<div
+											style={{ borderTop: '.1rem white solid' }}
+											className="pt-1rem"
+											htmlFor="order_note"
+										>
+											Order Note: {order.order_note}
+										</div>
+									</div>
+								)}
+							</ul>
+							<div className="column jc-b h-22rem w-25remm mb-1rem">
+								<h2>Order Status</h2>
 								<div>
-									<del style={{ color: 'red' }}>
-										<label style={{ color: 'white' }}>
-											${order.itemsPrice && order.itemsPrice.toFixed(2)}
-										</label>
-									</del>
+									<div className="row ai-c">
+										<div className="mv-5px">
+											{order.isPaid ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</div>
+										<div className="mh-10px">Paid</div>
+
+										<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
+									</div>
 								</div>
-							</li>
-						)}
-						{order.promo_code && (
-							<li>
-								<div>Discount</div>
 								<div>
-									-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
-										order.itemsPrice).toFixed(2)}
-								</div>
-							</li>
-						)}
-						{order.promo_code && (
-							<li>
-								<div>New Subtotal</div>
-								<div>${order.itemsPrice.toFixed(2)}</div>
-							</li>
-						)}
-						<li>
-							<div>Shipping</div>
-							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
-						</li>
-						<li>
-							<div>Tax</div>
-							<div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
-						</li>
+									<div className="row ai-c">
+										<div className="mv-5px">
+											{order.isManufactured ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</div>
+										<div className="mh-10px">Manufactured</div>
 
-						{!order.isRefunded && (
-							<li>
-								<div>Order Total</div>
-								<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
-							</li>
-						)}
-						{order.isRefunded && (
-							<li>
-								<div>Order Total</div>
-								<del style={{ color: 'red' }}>
-									<label style={{ color: 'white' }}>
-										<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
-									</label>
-								</del>
-							</li>
-						)}
-						{order.isRefunded && (
-							<li>
-								<div>Refund Amount</div>
-								<div>${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
-							</li>
-						)}
-						{order.isRefunded && (
-							<li>
-								<div>New Order Total</div>
+										<div>{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}</div>
+									</div>
+								</div>
 								<div>
-									${(order.totalPrice -
-										order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
-								</div>
-							</li>
-						)}
-
-						<li
-							className="placeorder-actions-payment"
-							style={{ display: 'flex', justifyContent: 'center' }}
-						/>
-						{!order.isPaid && (
-							<div>
-								<StripeCheckout
-									name="Glow LEDs"
-									description={`Pay for Order`}
-									amount={(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) * 100}
-									token={(token) => pay_order(token)}
-									stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									onChange={handleChangeFor('cardNumber')}
-								>
-									<button className="button primary full-width" style={{ marginBottom: '12px' }}>
-										Pay for Order
-									</button>
-								</StripeCheckout>
-							</div>
-						)}
-
-						{order.promo_code && (
-							<div className="column">
-								<div
-									style={{ borderTop: '.1rem white solid' }}
-									className="pt-1rem"
-									htmlFor="promo_code"
-								>
-									Promo Code: {order.promo_code}
-								</div>
-							</div>
-						)}
-						{order.order_note && (
-							<div className="column">
-								<div
-									style={{ borderTop: '.1rem white solid' }}
-									className="pt-1rem"
-									htmlFor="order_note"
-								>
-									Order Note: {order.order_note}
-								</div>
-							</div>
-						)}
-					</ul>
-					<div className="column jc-b h-22rem w-25remm mb-1rem">
-						<h2>Order Status</h2>
-						<div>
-							<div className="row ai-c">
-								<div className="mv-5px">
-									{order.isPaid ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</div>
-								<div className="mh-10px">Paid</div>
-
-								<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
-							</div>
-						</div>
-						<div>
-							<div className="row ai-c">
-								<div className="mv-5px">
-									{order.isManufactured ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</div>
-								<div className="mh-10px">Manufactured</div>
-
-								<div>{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}</div>
-							</div>
-						</div>
-						<div>
-							<div className="row ai-c">
-								<div className="mv-5px">
-									{order.isPackaged ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</div>
-								<div className="mh-10px">Packaged</div>
-
-								<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
-							</div>
-						</div>
-						<div>
-							<div className="row ai-c">
-								<div className="mv-5px">
-									{order.isShipped ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</div>
-								<div className="mh-10px">Shipped</div>
-
-								<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
-							</div>
-						</div>
-						<div>
-							<div className="row ai-c">
-								<div className="mv-5px row">
-									{order.isDelivered ? (
-										<i className="fas fa-check-circle" />
-									) : (
-										<i className="fas fa-times-circle" />
-									)}
-								</div>
-								<div className="mh-10px">Delivered</div>
-
-								<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
-							</div>
-						</div>
-					</div>
-					<button className="button secondary w-100per mv-5px ">
-						<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
-					</button>
-					{user_data &&
-					user_data.isAdmin && (
-						<div>
-							<div className="jc-b">
-								<div className="column jc-b w-100per">
 									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_payment_state(order, order.isPaid, 'isPaid', 'paidAt')}
-										>
-											{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-										</button>
-										<Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_state(
-													order,
-													order.isReassured,
-													'isReassured',
-													'reassuredAt'
-												)}
-										>
-											{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
-										</button>
-										<Link to={`/secure/glow/emails/order_status/${order._id}/reassured`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_state(
-													order,
-													order.isManufactured,
-													'isManufactured',
-													'manufacturedAt'
-												)}
-										>
-											{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
-										</button>
-										<Link to={`/secure/glow/emails/order_status/${order._id}/manufactured`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
-										>
-											{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-										</button>
-										<Link to={`/secure/glow/emails/order_status/${order._id}/packaged`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
-										>
-											{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-										</button>
-										<Link to={`/secure/glow/emails/order_status/${order._id}/shipped`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_state(
-													order,
-													order.isDelivered,
-													'isDelivered',
-													'deliveredAt'
-												)}
-										>
-											{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-										</button>
-										<Link to={`/secure/glow/emails/order_status/${order._id}/delivered`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<div className="row ai-c">
-										<button
-											className="button primary mv-5px w-100per"
-											onClick={() =>
-												update_order_state(order, order.isRefunded, 'isRefunded', 'refundedAt')}
-										>
-											{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
-										</button>
-										<Link to={`/secure/glow/emails/order/${order._id}/refunded/false`}>
-											<button className="button secondary">
-												<i class="fas fa-paper-plane" />
-											</button>
-										</Link>
-									</div>
-									<button className="button secondary mv-5px" onClick={() => create_label()}>
-										Create Label
-									</button>
-									<button className="button secondary mv-5px">
-										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
-									</button>
-									<button
-										className="button secondary mv-5px"
-										onClick={() => dispatch(deleteOrder(order._id))}
-									>
-										Delete Order
-									</button>
+										<div className="mv-5px">
+											{order.isPackaged ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</div>
+										<div className="mh-10px">Packaged</div>
 
-									{/* <button
+										<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
+									</div>
+								</div>
+								<div>
+									<div className="row ai-c">
+										<div className="mv-5px">
+											{order.isShipped ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</div>
+										<div className="mh-10px">Shipped</div>
+
+										<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
+									</div>
+								</div>
+								<div>
+									<div className="row ai-c">
+										<div className="mv-5px row">
+											{order.isDelivered ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</div>
+										<div className="mh-10px">Delivered</div>
+
+										<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
+									</div>
+								</div>
+							</div>
+							<button className="button secondary w-100per mv-5px ">
+								<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
+							</button>
+							{user_data &&
+							user_data.isAdmin && (
+								<div>
+									<div className="jc-b">
+										<div className="column jc-b w-100per">
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_payment_state(
+															order,
+															order.isPaid,
+															'isPaid',
+															'paidAt'
+														)}
+												>
+													{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
+												</button>
+												<Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_state(
+															order,
+															order.isReassured,
+															'isReassured',
+															'reassuredAt'
+														)}
+												>
+													{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
+												</button>
+												<Link to={`/secure/glow/emails/order_status/${order._id}/reassured`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_state(
+															order,
+															order.isManufactured,
+															'isManufactured',
+															'manufacturedAt'
+														)}
+												>
+													{order.isManufactured ? (
+														'Unset to Manufactured'
+													) : (
+														'Set to Manufactured'
+													)}
+												</button>
+												<Link to={`/secure/glow/emails/order_status/${order._id}/manufactured`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_state(
+															order,
+															order.isPackaged,
+															'isPackaged',
+															'packagedAt'
+														)}
+												>
+													{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
+												</button>
+												<Link to={`/secure/glow/emails/order_status/${order._id}/packaged`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_state(
+															order,
+															order.isShipped,
+															'isShipped',
+															'shippedAt'
+														)}
+												>
+													{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
+												</button>
+												<Link to={`/secure/glow/emails/order_status/${order._id}/shipped`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_state(
+															order,
+															order.isDelivered,
+															'isDelivered',
+															'deliveredAt'
+														)}
+												>
+													{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
+												</button>
+												<Link to={`/secure/glow/emails/order_status/${order._id}/delivered`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<div className="row ai-c">
+												<button
+													className="button primary mv-5px w-100per"
+													onClick={() =>
+														update_order_state(
+															order,
+															order.isRefunded,
+															'isRefunded',
+															'refundedAt'
+														)}
+												>
+													{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
+												</button>
+												<Link to={`/secure/glow/emails/order/${order._id}/refunded/false`}>
+													<button className="button secondary">
+														<i class="fas fa-paper-plane" />
+													</button>
+												</Link>
+											</div>
+											<button className="button secondary mv-5px" onClick={() => create_label()}>
+												Create Label
+											</button>
+											<button className="button secondary mv-5px" onClick={() => buy_label()}>
+												Buy Label
+											</button>
+											<button className="button secondary mv-5px">
+												<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
+											</button>
+											<button
+												className="button secondary mv-5px"
+												onClick={() => dispatch(deleteOrder(order._id))}
+											>
+												Delete Order
+											</button>
+
+											{/* <button
 										className="button primary mv-5px "
 										onClick={() =>
 											update_order_state(
@@ -811,60 +862,62 @@ ${order.shipping.email}`)}
 									<button className="button primary">
 										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
 									</button> */}
-								</div>
-							</div>
-							<div className="mv-10px">
-								<label htmlFor="payment_method">Payment Method</label>
-								<li className="row mv-10px">
-									<input
-										type="text"
-										defaultValue={order.payment.paymentMethod}
-										name="payment_method"
-										className="w-100per"
-										onChange={(e) => set_payment_method(e.target.value)}
-									/>
-								</li>
-								<label htmlFor="refund_amount">Refund Amount</label>
-								<div className="row">
-									<input
-										type="text"
-										value={refund_amount}
-										name="refund_amount"
-										id="refund_amount"
-										className="w-100per"
-										onChange={(e) => set_refund_amount(e.target.value)}
-									/>
-								</div>
-								<div className="mv-10px">
-									<label htmlFor="refund_reason">Refund Reason</label>
-									<div className="row">
-										<input
-											type="text"
-											value={refund_reason}
-											name="refund_reason"
-											id="refund_reason"
-											className="w-100per"
-											onChange={(e) => set_refund_reason(e.target.value)}
-										/>
+										</div>
+									</div>
+									<div className="mv-10px">
+										<label htmlFor="payment_method">Payment Method</label>
+										<li className="row mv-10px">
+											<input
+												type="text"
+												defaultValue={order.payment.paymentMethod}
+												name="payment_method"
+												className="w-100per"
+												onChange={(e) => set_payment_method(e.target.value)}
+											/>
+										</li>
+										<label htmlFor="refund_amount">Refund Amount</label>
+										<div className="row">
+											<input
+												type="text"
+												value={refund_amount}
+												name="refund_amount"
+												id="refund_amount"
+												className="w-100per"
+												onChange={(e) => set_refund_amount(e.target.value)}
+											/>
+										</div>
+										<div className="mv-10px">
+											<label htmlFor="refund_reason">Refund Reason</label>
+											<div className="row">
+												<input
+													type="text"
+													value={refund_reason}
+													name="refund_reason"
+													id="refund_reason"
+													className="w-100per"
+													onChange={(e) => set_refund_reason(e.target.value)}
+												/>
+											</div>
+										</div>
+										<div className="column">
+											<button className="button primary mv-5px" onClick={update_refund_state}>
+												Refund Customer
+											</button>
+
+											<button className="button primary mv-5px">
+												<Link to={'/secure/glow/emails/order/' + order._id + '/order/false'}>
+													View Email
+												</Link>
+											</button>
+										</div>
 									</div>
 								</div>
-								<div className="column">
-									<button className="button primary mv-5px" onClick={update_refund_state}>
-										Refund Customer
-									</button>
-
-									<button className="button primary mv-5px">
-										<Link to={'/secure/glow/emails/order/' + order._id + '/order/false'}>
-											View Email
-										</Link>
-									</button>
-								</div>
-							</div>
+							)}
 						</div>
-					)}
+					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</Loading>
 	);
 };
 

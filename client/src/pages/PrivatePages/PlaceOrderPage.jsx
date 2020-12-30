@@ -8,7 +8,7 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
-import { LoadingPayments } from '../../components/UtilityComponents';
+import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
@@ -35,7 +35,11 @@ const PlaceOrderPage = (props) => {
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
+	const [ shipping_rates, set_shipping_rates ] = useState({});
+	const [ loading_shipping, set_loading_shipping ] = useState(false);
 	const [ promo_code, set_promo_code ] = useState('');
+	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
+	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
 	const [ tax_rate, set_tax_rate ] = useState(0);
@@ -46,6 +50,7 @@ const PlaceOrderPage = (props) => {
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 	const [ no_user, set_no_user ] = useState(false);
+	const [ easy_post_id, set_easy_post_id ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const dispatch = useDispatch();
 
@@ -151,21 +156,23 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (shipping) {
-				if (shipping.international) {
-					stable_calculate_international();
-				} else {
-					stable_calculate_shipping();
-					stable_calculate_shipping();
-					// if (shipping != {}) {
-					get_shipping_rates();
-					// }
-				}
+				// if (shipping.international) {
+				// 	stable_calculate_international();
+				// } else {
+				// 	// stable_calculate_shipping();
+				// 	// stable_calculate_shipping();
+				// 	// if (shipping != {}) {
+				set_loading_shipping(true);
+				get_shipping_rates();
+				// }
+				// }
 				get_tax_rates();
 			}
 			return () => {};
 		},
 		[ shipping ]
 	);
+
 	const get_shipping_rates = async () => {
 		const { data } = await API_Orders.get_shipping_rates({
 			orderItems: cartItems,
@@ -179,16 +186,14 @@ const PlaceOrderPage = (props) => {
 			order_note,
 			promo_code
 		});
-		const rates = data.rates.map((rate) => {
-			return rate.carrier + ' ' + rate.rate;
-		});
-		console.log({ rates });
 		const sorted_rates = data.rates.sort((a, b) => a.rate - b.rate);
-		console.log({ sorted_rates });
-		console.log(sorted_rates[0], sorted_rates[1], sorted_rates[2]);
+		set_shipping_rates(data);
 		if (sorted_rates[0]) {
-			console.log(sorted_rates[0].rate, sorted_rates[1].rate, sorted_rates[2].rate);
+			// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
+			setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost);
+			set_easy_post_id(data.id);
 		}
+		set_loading_shipping(false);
 	};
 
 	const get_tax_rates = async () => {
@@ -227,7 +232,12 @@ const PlaceOrderPage = (props) => {
 			createPayOrder(
 				{
 					orderItems: cartItems,
-					shipping,
+					shipping: easy_post_id
+						? {
+								...shipping,
+								easy_post_id
+							}
+						: shipping,
 					payment,
 					itemsPrice,
 					shippingPrice,
@@ -246,6 +256,14 @@ const PlaceOrderPage = (props) => {
 			await API_Products.promo_code_used(promo_code);
 		}
 	};
+	// 	const save_easy_post_id = (easy_post_id) => {
+	// 	dispatch(
+	// 		saveShipping({
+	// 			...shipping,
+	// 			easy_post_id
+	// 		})
+	// 	);
+	// };
 
 	const create_order_without_paying = async () => {
 		// create an order
@@ -425,6 +443,15 @@ const PlaceOrderPage = (props) => {
 		console.log({ error });
 	};
 
+	const determine_shipping_type = (index) => {
+		if (index === 0) {
+			return 'Standard Shipping (5-8 Business Days)';
+		}
+		if (index === 1) {
+			return 'Expedited Shipping (2-3 Business Days)';
+		}
+	};
+
 	return (
 		<div>
 			<Helmet>
@@ -442,6 +469,7 @@ const PlaceOrderPage = (props) => {
 				<CheckoutSteps step1 />
 			)}
 			<LoadingPayments loading={payment_loading} error={error} />
+
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div>
@@ -475,6 +503,40 @@ const PlaceOrderPage = (props) => {
 								</Link>
 							</div>
 						</div>
+						{/* <div>
+							{shipping_rates &&
+								shipping_rates.rates &&
+								shipping_rates.rates.map((rate, index) => {
+									return (
+										<div>
+											{rate.service === 'First' && (
+												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
+													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
+													{rate.est_delivery_days} Days
+												</div>
+											)}
+											{rate.service === 'Priority' && (
+												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
+													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
+													{rate.est_delivery_days} Days
+												</div>
+											)}
+											{rate.service === 'Express' && (
+												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
+													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
+													{rate.est_delivery_days} Days
+												</div>
+											)}
+											{rate.service === 'Ground' && (
+												<div className="shipping_rates mv-1rem row jc-b max-w-55rem w-100per">
+													{rate.carrier} {rate.service} {rate.retail_rate}{' '}
+													{rate.est_delivery_days} Days
+												</div>
+											)}
+										</div>
+									);
+								})}
+						</div> */}
 					</div>
 					<div>
 						<ul className="cart-list-container">
@@ -625,8 +687,9 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						</li>
-						<li>
+						<li className="pos-rel">
 							<div>Shipping</div>
+							<Loading loading={loading_shipping} />
 							<div>
 								{shipping && shipping.hasOwnProperty('first_name') && shippingPrice > 0 ? (
 									'$' + shippingPrice.toFixed(2)

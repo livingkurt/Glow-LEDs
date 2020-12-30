@@ -66,7 +66,7 @@ router.get('/tax_rates', async (req: any, res: any) => {
 		let percentage = state['State Rate'];
 		result[state['State']] = percentage.slice(0, percentage.indexOf('%') + 1);
 	});
-	console.log({ result });
+	// console.log({ result });
 	res.send(result);
 });
 
@@ -78,7 +78,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		if (req.query.searchKeyword) {
 			const userSearchKeyword = req.query.searchKeyword
 				? {
-						first_name: {
+						'shipping.first_name': {
 							$regex: req.query.searchKeyword,
 							$options: 'i'
 						}
