@@ -35,7 +35,6 @@ router.get('/', async (req, res) => {
 					}
 				}
 			: {};
-		console.log({ searchKeyword });
 
 		let sortOrder = {};
 		if (req.query.sortOrder === 'lowest') {

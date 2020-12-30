@@ -84,9 +84,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 						}
 					}
 				: {};
-			console.log({ userSearchKeyword });
 			user = await User.findOne({ ...userSearchKeyword });
-			console.log({ user });
 			searchKeyword = { user: user._id };
 		}
 		let sortOrder = {};

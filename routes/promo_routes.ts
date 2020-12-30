@@ -6,33 +6,6 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
-// router.get('/', async (req, res) => {
-// 	const category = req.query.category ? { category: req.query.category } : {};
-// 	const searchKeyword = req.query.searchKeyword
-// 		? {
-// 				name: {
-// 					$regex: req.query.searchKeyword,
-// 					$options: 'i'
-// 				}
-// 			}
-// 		: {};
-
-// 	let sortOrder = {};
-// 	if (req.query.sortOrder === 'lowest') {
-// 		sortOrder = { price: 1 };
-// 	} else if (req.query.sortOrder === 'highest') {
-// 		sortOrder = { price: -1 };
-// 	} else if (req.query.sortOrder === 'newest') {
-// 		sortOrder = { _id: -1 };
-// 	} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-// 		sortOrder = { category: -1, createdAt: -1 };
-// 	}
-
-// 	// const promos = await Promo.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-// 	const promos = await Promo.find({ deleted: false }).sort({ release_date: -1 });
-// 	// console.log(promos);
-// 	res.send(promos);
-// });
 router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
@@ -80,16 +53,6 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// router.get('/:id', async (req, res) => {
-// 	const promo = await Promo.findOne({ _id: req.params.id });
-// 	console.log({ promo });
-// 	console.log(req.params.id);
-// 	if (promo) {
-// 		res.send(promo);
-// 	} else {
-// 		res.status(404).send({ message: 'Promo Not Found.' });
-// 	}
-// });
 router.get('/:id', async (req, res) => {
 	try {
 		const promo = await Promo.findOne({ _id: req.params.id }).populate('sponsor').populate('user');
