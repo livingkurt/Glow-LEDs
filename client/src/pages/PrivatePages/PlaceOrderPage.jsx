@@ -37,9 +37,10 @@ const PlaceOrderPage = (props) => {
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ shipping_rates, set_shipping_rates ] = useState({});
 	const [ loading_shipping, set_loading_shipping ] = useState(false);
-	const [ promo_code, set_promo_code ] = useState('');
 	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
 	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
+	const [ easy_post_id, set_easy_post_id ] = useState('');
+	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
 	const [ tax_rate, set_tax_rate ] = useState(0);
@@ -50,7 +51,7 @@ const PlaceOrderPage = (props) => {
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 	const [ no_user, set_no_user ] = useState(false);
-	const [ easy_post_id, set_easy_post_id ] = useState('');
+
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const dispatch = useDispatch();
 
@@ -271,7 +272,7 @@ const PlaceOrderPage = (props) => {
 		dispatch(
 			createOrder({
 				orderItems: cartItems,
-				shipping: { ...shipping, email: user.email },
+				shipping: { ...shipping, email: user.email, easy_post_id: easy_post_id && easy_post_id },
 				payment,
 				itemsPrice,
 				shippingPrice,
@@ -295,7 +296,12 @@ const PlaceOrderPage = (props) => {
 		dispatch(
 			createOrderGuest({
 				orderItems: cartItems,
-				shipping,
+				shipping: easy_post_id
+					? {
+							...shipping,
+							easy_post_id
+						}
+					: shipping,
 				payment,
 				itemsPrice,
 				shippingPrice,
@@ -441,15 +447,6 @@ const PlaceOrderPage = (props) => {
 		/* handle error */
 		console.log({ type });
 		console.log({ error });
-	};
-
-	const determine_shipping_type = (index) => {
-		if (index === 0) {
-			return 'Standard Shipping (5-8 Business Days)';
-		}
-		if (index === 1) {
-			return 'Expedited Shipping (2-3 Business Days)';
-		}
 	};
 
 	return (

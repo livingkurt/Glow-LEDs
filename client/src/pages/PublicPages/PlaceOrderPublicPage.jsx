@@ -8,10 +8,10 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
-import { LoadingPayments } from '../../components/UtilityComponents';
+import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
-import { API_External } from '../../utils';
+import { API_External, API_Orders } from '../../utils';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -33,7 +33,12 @@ const PlaceOrderPublicPage = (props) => {
 			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
+	const [ shipping_rates, set_shipping_rates ] = useState({});
+	const [ loading_shipping, set_loading_shipping ] = useState(false);
+	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
+	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
 	const [ shippingPrice, setShippingPrice ] = useState(0);
+	const [ easy_post_id, set_easy_post_id ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
@@ -153,18 +158,43 @@ const PlaceOrderPublicPage = (props) => {
 	useEffect(
 		() => {
 			if (shipping) {
-				if (shipping.international) {
-					stable_calculate_international();
-				} else {
-					stable_calculate_shipping();
-					stable_calculate_shipping();
-				}
+				// if (shipping.international) {
+				// 	stable_calculate_international();
+				// } else {
+				// 	stable_calculate_shipping();
+				// 	stable_calculate_shipping();
+				// }
+				set_loading_shipping(true);
+				get_shipping_rates();
 				get_tax_rates();
 			}
 			return () => {};
 		},
 		[ shipping ]
 	);
+
+	const get_shipping_rates = async () => {
+		const { data } = await API_Orders.get_shipping_rates({
+			orderItems: cartItems,
+			shipping,
+			payment,
+			itemsPrice,
+			shippingPrice,
+			taxPrice,
+			totalPrice,
+			user_data,
+			order_note,
+			promo_code
+		});
+		const sorted_rates = data.rates.sort((a, b) => a.rate - b.rate);
+		set_shipping_rates(data);
+		if (sorted_rates[0]) {
+			// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
+			setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost);
+			set_easy_post_id(data.id);
+		}
+		set_loading_shipping(false);
+	};
 
 	const get_tax_rates = async () => {
 		setTaxPrice(0);
@@ -221,7 +251,12 @@ const PlaceOrderPublicPage = (props) => {
 			createPayOrderGuest(
 				{
 					orderItems: cartItems,
-					shipping,
+					shipping: easy_post_id
+						? {
+								...shipping,
+								easy_post_id
+							}
+						: shipping,
 					payment,
 					itemsPrice,
 					shippingPrice,
@@ -401,6 +436,7 @@ const PlaceOrderPublicPage = (props) => {
 				<div className="placeorder-info">
 					<div>
 						<h2>Shipping</h2>
+
 						<div className="wrap jc-b">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
@@ -579,8 +615,9 @@ const PlaceOrderPublicPage = (props) => {
 								)}
 							</div>
 						</li>
-						<li>
+						<li className="pos-rel">
 							<div>Shipping</div>
+							<Loading loading={loading_shipping} />
 							<div>
 								{shipping && shipping.hasOwnProperty('first_name') && shippingPrice > 0 ? (
 									'$' + shippingPrice.toFixed(2)
