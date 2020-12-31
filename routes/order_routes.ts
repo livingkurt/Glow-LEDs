@@ -972,10 +972,7 @@ router.put('/buy_label', async (req: { body: any; params: { id: any } }, res: { 
 	try {
 		const EasyPost = new easy_post_api(process.env.EASY_POST);
 		const order = req.body.order;
-		// const shipping_rate = req.body.shipping_rate;
-		console.log({ order });
 		const created_shipment = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
-		console.log({ created_shipment });
 		const label = await created_shipment.buy(order.shipping.shipping_rate, 0);
 		console.log({ label });
 		res.send(label);

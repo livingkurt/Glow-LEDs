@@ -34,11 +34,15 @@ const PlaceOrderPublicPage = (props) => {
 			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
 
 	const [ shipping_rates, set_shipping_rates ] = useState({});
+	const [ current_shipping_speed, set_current_shipping_speed ] = useState('');
 	const [ loading_shipping, set_loading_shipping ] = useState(false);
 	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
 	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
-	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ shipment_id, set_shipment_id ] = useState('');
+	const [ shipping_rate, set_shipping_rate ] = useState({});
+	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
+
+	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
@@ -186,14 +190,30 @@ const PlaceOrderPublicPage = (props) => {
 			order_note,
 			promo_code
 		});
-		const sorted_rates = data.rates.sort((a, b) => a.rate - b.rate);
-		set_shipping_rates(data);
-		if (sorted_rates[0]) {
-			// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
-			setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost);
+		if (data) {
+			set_shipping_rates(data);
 			set_shipment_id(data.id);
+			set_loading_shipping(false);
+			// set_loading_shipping(false);
 		}
-		set_loading_shipping(false);
+
+		// if (sorted_rates[0]) {
+		// 	// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
+		// 	setShippingPrice(parseFloat(sorted_rates[0].retail_rate) + packaging_cost);
+		// 	// set_shipment_id(data.id);
+		// }
+	};
+	const choose_shipping_rate = (rate, speed) => {
+		setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
+		set_hide_pay_button(false);
+		set_shipping_rate(rate);
+		set_current_shipping_speed({ rate, speed });
+	};
+
+	const re_choose_shipping_rate = () => {
+		setShippingPrice(0);
+		set_hide_pay_button(true);
+		set_shipping_rate({});
 	};
 
 	const get_tax_rates = async () => {
@@ -254,7 +274,8 @@ const PlaceOrderPublicPage = (props) => {
 					shipping: shipment_id
 						? {
 								...shipping,
-								shipment_id
+								shipment_id,
+								shipping_rate
 							}
 						: shipping,
 					payment,
@@ -638,7 +659,130 @@ const PlaceOrderPublicPage = (props) => {
 								)}
 							</div>
 						</li>
+						{console.log(shipping_rates)}
+						{hide_pay_button &&
+						shipping_rates.rates && (
+							<div>
+								{shipping_rates.rates.map((rate, index) => {
+									return (
+										rate.service === 'First' && (
+											<div className=" mv-1rem jc-b  ai-c">
+												<div className="shipping_rates jc-b w-100per wrap ">
+													<div className="service">Standard</div>
+													<div>
+														{' '}
+														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+															2
+														)}{' '}
+													</div>
+													<div> 2-{rate.est_delivery_days} Days</div>
+												</div>
+												<button
+													className="custom-select-shipping_rates"
+													onClick={() => choose_shipping_rate(rate, 'Standard')}
+												>
+													Select
+												</button>
+											</div>
+										)
+									);
+								})}
+								{shipping_rates.rates.map((rate, index) => {
+									return (
+										rate.service === 'Priority' && (
+											<div className=" mv-1rem jc-b  ai-c">
+												<div className="shipping_rates jc-b w-100per wrap ">
+													<div className="service">Priority</div>
+													<div>
+														{' '}
+														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+															2
+														)}{' '}
+													</div>
+													<div> 1-{rate.est_delivery_days} Days</div>
+												</div>
+												<button
+													className="custom-select-shipping_rates"
+													onClick={() => choose_shipping_rate(rate, 'Priority')}
+												>
+													Select
+												</button>
+											</div>
+										)
+									);
+								})}
+								{shipping_rates.rates.map((rate, index) => {
+									return (
+										rate.service === 'Ground' && (
+											<div className=" mv-1rem jc-b  ai-c">
+												<div className="shipping_rates jc-b w-100per wrap ">
+													<div className="service">Ground</div>
+													<div>
+														{' '}
+														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+															2
+														)}{' '}
+													</div>
+													<div> 3-{rate.est_delivery_days} Days</div>
+												</div>
+												<button
+													className="custom-select-shipping_rates"
+													onClick={() => choose_shipping_rate(rate, 'Ground')}
+												>
+													Select
+												</button>
+											</div>
+										)
+									);
+								})}
+								{shipping_rates.rates.map((rate, index) => {
+									return (
+										rate.service === 'Express' && (
+											<div className=" mv-1rem jc-b ai-c">
+												<div className="shipping_rates jc-b w-100per wrap">
+													<div className="service">Express</div>
+													<div>
+														{' '}
+														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
+															2
+														)}{' '}
+													</div>
+													<div> 1-2 Days</div>
+												</div>
+												<button
+													className="custom-select-shipping_rates"
+													onClick={() => choose_shipping_rate(rate, 'Express')}
+												>
+													Select
+												</button>
+											</div>
+										)
+									);
+								})}
+							</div>
+						)}
+
+						<li>
+							{!hide_pay_button && (
+								<div className=" mv-1rem jc-b ai-c w-100per">
+									<div className="shipping_rates jc-b w-100per ">
+										<div>
+											{current_shipping_speed.speed} ${(parseFloat(
+												current_shipping_speed.rate.retail_rate
+											) + packaging_cost).toFixed(2)}
+										</div>
+									</div>
+									<button
+										className="custom-select-shipping_rates w-10rem"
+										onClick={() => re_choose_shipping_rate()}
+									>
+										Change
+									</button>
+								</div>
+							)}
+						</li>
 						{!loading_tax_rate &&
+						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
 						!account_create && (
