@@ -44,6 +44,7 @@ const PlaceOrderPage = (props) => {
 	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
+	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
@@ -201,6 +202,7 @@ const PlaceOrderPage = (props) => {
 
 	const choose_shipping_rate = (rate, speed) => {
 		setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
+		setPreviousShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
 		set_hide_pay_button(false);
 		set_shipping_rate(rate);
 		set_current_shipping_speed({ rate, speed });
@@ -208,6 +210,7 @@ const PlaceOrderPage = (props) => {
 
 	const re_choose_shipping_rate = () => {
 		setShippingPrice(0);
+		setPreviousShippingPrice(0);
 		set_hide_pay_button(true);
 		set_shipping_rate({});
 	};
@@ -432,10 +435,12 @@ const PlaceOrderPage = (props) => {
 					setTaxPrice(tax_rate * (items_price - promo.amount_off));
 				}
 				if (promo.free_shipping) {
+					setPreviousShippingPrice(shippingPrice);
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
 				if (promo_code === 'freeshipping') {
+					setPreviousShippingPrice(shippingPrice);
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
@@ -463,14 +468,26 @@ const PlaceOrderPage = (props) => {
 			// 	calculate_shipping();
 			// 	calculate_shipping();
 			// }
-			set_loading_shipping(true);
-			get_shipping_rates();
+			// set_loading_shipping(true);
+			// get_shipping_rates();
+			setShippingPrice(previousShippingPrice);
 		}
 	};
 	const handleChangeFor = (type) => ({ error }) => {
 		/* handle error */
 		console.log({ type });
 		console.log({ error });
+	};
+
+	const determine_delivery_speed = (speed) => {
+		switch (speed) {
+			case 'Standard':
+				return '2-3 Days';
+			case 'Priority':
+				return '1-3 Days';
+			case 'Express':
+				return '1-2 Days';
+		}
 	};
 
 	return (
@@ -698,7 +715,6 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						</li>
-						{console.log(shipping_rates)}
 						{hide_pay_button &&
 						shipping_rates.rates && (
 							<div>
@@ -750,7 +766,7 @@ const PlaceOrderPage = (props) => {
 										)
 									);
 								})}
-								{shipping_rates.rates.map((rate, index) => {
+								{/* {shipping_rates.rates.map((rate, index) => {
 									return (
 										rate.service === 'Ground' && (
 											<div className=" mv-1rem jc-b  ai-c">
@@ -773,7 +789,7 @@ const PlaceOrderPage = (props) => {
 											</div>
 										)
 									);
-								})}
+								})} */}
 								{shipping_rates.rates.map((rate, index) => {
 									return (
 										rate.service === 'Express' && (
@@ -808,7 +824,9 @@ const PlaceOrderPage = (props) => {
 										<div>
 											{current_shipping_speed.speed} ${(parseFloat(
 												current_shipping_speed.rate.retail_rate
-											) + packaging_cost).toFixed(2)}
+											) + packaging_cost).toFixed(2)}{' '}
+											{determine_delivery_speed(current_shipping_speed.speed)}{' '}
+											{/* {current_shipping_speed.rate.est_delivery_days} */}
 										</div>
 									</div>
 									<button
