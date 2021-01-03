@@ -34,7 +34,7 @@ ul {
 
 a {
 	text-decoration: none;
-	color: $font_color;
+	color: $theme_color_main_font;
 }
 
 textarea {
@@ -92,7 +92,7 @@ textarea {
 
 // header {
 // 	background-color: $theme_color_header;
-// 	color: $font_color;
+// 	color: $theme_color_main_font;
 // 	display: flex;
 // 	align-items: center;
 // 	justify-content: space-between;
@@ -113,7 +113,7 @@ textarea {
 // 	height: 22px;
 // 	width: 100%;
 // 	font-size: 14px;
-// 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+// 	box-shadow: $bs_deep;
 // 	position: fixed;
 // 	right: 0;
 // 	left: 0;
@@ -376,7 +376,6 @@ textarea {
 .tooltip .tooltiptext {
 	visibility: hidden;
 	width: 100%;
-	// background-color: black;
 	// color: #fff;
 	text-align: center;
 	padding: 5px 0;
@@ -422,7 +421,7 @@ textarea {
 
 .product-brand {
 	font-size: 1.2rem;
-	color: $font_color;
+	color: $theme_color_main_font;
 }
 
 .product-price {
@@ -462,13 +461,13 @@ ul.review {
 /* Rating */
 
 .rating span {
-	color: $font_color;
+	color: $theme_color_main_font;
 	font-size: 1.6rem;
 	margin: 0.1rem;
 }
 
 .rating span:last-child {
-	color: $font_color;
+	color: $theme_color_main_font;
 	font-size: 1.4rem;
 	margin-left: 5px;
 }
@@ -477,7 +476,7 @@ ul.review {
 }
 
 .rating_textarea a > .rating > span:last-child {
-	color: $font_color;
+	color: $theme_color_main_font;
 }
 
 .content-margined {
@@ -515,14 +514,14 @@ th {
 
 .checkout-steps > div {
 	border-top: .3rem #c0c0c0 solid;
-	color: $font_color;
+	color: $theme_color_main_font;
 	flex: 1 1;
 	padding-top: 1rem;
 }
 
 .checkout-steps > div.active {
 	border-top: .3rem white solid;
-	color: $font_color;
+	color: $theme_color_main_font;
 	/* border: 10px solid; */
 	/* border-image-source: linear-gradient(45deg, rgb(0, 143, 104), rgb(250, 224, 66)); */
 	/* border-image-slice: 1; */
@@ -536,7 +535,7 @@ th {
 	flex-grow: wrap;
 	padding: 1rem;
 	justify-content: space-between;
-	color: $font_color;
+	color: $theme_color_main_font;
 }
 
 .placeorder-info {
@@ -580,7 +579,7 @@ th {
 .placeorder-action > ul > li:last-child {
 	font-size: 2rem;
 	font-weight: bold;
-	color: $font_color;
+	color: $theme_color_main_font;
 }
 
 .placeorder-actions-payment > div {
@@ -678,11 +677,11 @@ th {
 // Shipping Rates
 
 .shipping_rates {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: $bs_deep;
 	font-size: 1.5rem;
 	padding: .75em 2em 0.55em 1em;
 	background: $theme_color_secondary;
-	color: white;
+	color: $theme_color_main_font;
 	border: 0;
 	// position: relative;
 	border-radius: 10px;
@@ -703,7 +702,7 @@ th {
 	background: $theme_color_primary;
 	height: 100%;
 	width: 8rem;
-	color: white;
+	color: $theme_color_main_font;
 	font-family: 'main_font';
 	// pointer-events: none;
 	padding: 1rem;
@@ -900,7 +899,7 @@ video {
 }
 
 .options {
-	color: black;
+	color: $theme_color_secondary_font;
 }
 .grey_option {
 	color: gray;

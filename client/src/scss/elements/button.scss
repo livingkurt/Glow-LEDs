@@ -1,13 +1,7 @@
-$font_color: white;
-$font_size: 1.6rem;
-$main_font: main_font;
-$heading_font: heading_font;
-$bs_shallow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-$bs_deep: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-$br_small_containers: 1rem;
-
 @import '../appearance/colors.scss';
 @import './appearance/box_shadow.scss';
+@import './appearance/border_radius.scss';
+@import './appearance/font.scss';
 
 // Button
 
@@ -18,7 +12,7 @@ button {
 .btn {
 	box-shadow: $bs_shallow;
 	background-color: transparent;
-	color: $font_color;
+	color: $theme_color_main_font;
 	border: 0px;
 	font-family: $main_font;
 	border-radius: $br_small_containers;
@@ -96,13 +90,13 @@ button {
 	top: 1.5rem;
 	background-color: transparent;
 	border: 0;
-	color: $font_color;
+	color: $theme_color_main_font;
 }
 
 .sidebar-btn {
 	box-shadow: $bs_shallow;
 	background-color: transparent;
-	color: $font_color;
+	color: $theme_color_main_font;
 	border: 0px;
 	font-family: $main_font;
 	border-radius: $br_small_containers;

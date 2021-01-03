@@ -21,7 +21,7 @@ html {
 	height: 22px;
 	width: 100%;
 	font-size: 14px;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: $bs_deep;
 	position: fixed;
 	right: 0;
 	left: 0;
@@ -31,7 +31,7 @@ html {
 
 header {
 	background-color: $theme_color_header;
-	color: $font_color;
+	color: $theme_color_main_font;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -51,7 +51,7 @@ body {
 	font-family: $main_font;
 	margin: 0;
 	background-color: $theme_color_dark;
-	color: $font_color;
+	color: $theme_color_main_font;
 	scroll-padding-top: 220px; /* height of sticky header */
 	scroll-margin-top: 220px;
 }
@@ -67,5 +67,5 @@ body {
 }
 
 footer {
-	background: linear-gradient(0deg, #4d5060 0%, #272727 100%);
+	background: linear-gradient(0deg, $theme_color_primary 0%, $theme_color_dark 100%);
 }

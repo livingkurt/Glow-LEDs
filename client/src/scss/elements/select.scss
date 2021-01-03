@@ -1,9 +1,13 @@
+@import './appearance/box_shadow.scss';
+@import './appearance/colors.scss';
+@import '../appearance/font.scss';
+
 select {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: $bs_deep;
 	font-size: 1.5rem;
 	padding: .75em 2em 0.55em 1em;
 	background: #4d5061;
-	color: white;
+	color: $theme_color_main_font;
 	border: 0;
 	position: relative;
 	border-radius: 10px;
@@ -20,7 +24,7 @@ select {
 }
 
 select:hover {
-	background-color: #393e55;
+	background-color: $theme_color_primary_hover;
 }
 
 .custom-arrow {
