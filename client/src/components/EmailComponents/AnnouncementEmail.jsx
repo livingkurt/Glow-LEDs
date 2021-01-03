@@ -328,10 +328,10 @@ const AnnouncementEmail = () => {
 	return (
 		<div className="">
 			<div className="jc-b mb-1rem ai-c">
-				<button className="button primary" onClick={() => history.goBack()}>
+				<button className="btn primary" onClick={() => history.goBack()}>
 					Back to Emails
 				</button>
-				<button className="button primary mb-1rem" onClick={() => save_html()}>
+				<button className="btn primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>
 				{loading_checkboxes ? (
@@ -350,22 +350,22 @@ const AnnouncementEmail = () => {
 						/>
 					</div>
 				)}
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email(0)}>
+				<button className="btn primary mb-1rem" onClick={() => send_announcement_email(0)}>
 					Send 1/4
 				</button>
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email(1)}>
+				<button className="btn primary mb-1rem" onClick={() => send_announcement_email(1)}>
 					Send 2/4
 				</button>
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email(2)}>
+				<button className="btn primary mb-1rem" onClick={() => send_announcement_email(2)}>
 					Send 3/4
 				</button>
-				<button className="button primary mb-1rem" onClick={() => send_announcement_email(3)}>
+				<button className="btn primary mb-1rem" onClick={() => send_announcement_email(3)}>
 					Send 4/4
 				</button>
 
 				{email && (
 					<Link to={'/secure/glow/editemail/' + email._id}>
-						<button className="button primary">Edit Email</button>
+						<button className="btn primary">Edit Email</button>
 					</Link>
 				)}
 			</div>

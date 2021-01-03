@@ -317,7 +317,7 @@ const ContactPage = (props) => {
 							apikey={process.env.REACT_APP_FILESTACK_API}
 							customRender={({ onPick }) => (
 								<div>
-									<button class="button primary mv-10px" onClick={onPick}>
+									<button class="btn primary mv-10px" onClick={onPick}>
 										Upload image
 									</button>
 								</div>
@@ -427,7 +427,7 @@ const ContactPage = (props) => {
 								<li>After completing steps on wetransfer click the send button below.</li>
 							</ol>
 
-							<button className="zoom_b button primary">
+							<button className="zoom_b btn primary">
 								<a
 									target="_blank"
 									href="https://wetransfer.com/"
@@ -441,7 +441,7 @@ const ContactPage = (props) => {
 					)}
 					<button
 						style={{ width: '100px', marginTop: '10px' }}
-						className="zoom_b button primary"
+						className="zoom_b btn primary"
 						id="button"
 						onClick={(e) => sendEmail(e)}
 					>

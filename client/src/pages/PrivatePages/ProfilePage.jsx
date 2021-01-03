@@ -104,21 +104,21 @@ const ProfilePage = (props) => {
 				<div className="row">
 					<div className="h-20px">
 						<Link to={'/secure/account/editprofile'}>
-							<button style={{ marginRight: '10px', maxWidth: '150px' }} className="button primary">
+							<button style={{ marginRight: '10px', maxWidth: '150px' }} className="btn primary">
 								Edit Profile
 							</button>
 						</Link>
 					</div>
 					<div className="h-20px">
 						<Link to={'/account/changepassword'}>
-							<button style={{ marginRight: '10px', maxWidth: '210px' }} className="button primary">
+							<button style={{ marginRight: '10px', maxWidth: '210px' }} className="btn primary">
 								Change Password
 							</button>
 						</Link>
 					</div>
 					<div className="h-20px">
 						<Link to={'/secure/account/orders'}>
-							<button style={{ maxWidth: '150px' }} className="button primary">
+							<button style={{ maxWidth: '150px' }} className="btn primary">
 								View Orders
 							</button>
 						</Link>

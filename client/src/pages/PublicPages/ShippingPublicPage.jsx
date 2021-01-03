@@ -283,7 +283,7 @@ const ShippingPublicPage = (props) => {
 						</label>
 
 						<li>
-							<button type="submit" className="button primary">
+							<button type="submit" className="btn primary">
 								Continue
 							</button>
 						</li>

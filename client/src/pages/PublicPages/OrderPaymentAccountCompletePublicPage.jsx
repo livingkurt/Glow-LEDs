@@ -25,22 +25,22 @@ const OrderPaymentAccountCompletePublicPage = (props) => {
 				<div className="jc-c">
 					<div className="wrap row jc-c max-w-800px">
 						<Link to={'/checkout/order/' + props.match.params.id}>
-							<button style={{ margin: '15px' }} className="button primary">
+							<button style={{ margin: '15px' }} className="btn primary">
 								View Order
 							</button>
 						</Link>
 						<Link to="/collections/all/products">
-							<button style={{ margin: '15px' }} className="button primary">
+							<button style={{ margin: '15px' }} className="btn primary">
 								Products
 							</button>
 						</Link>
 						<Link to="/pages/featured">
-							<button style={{ margin: '15px' }} className="button primary">
+							<button style={{ margin: '15px' }} className="btn primary">
 								Featured Videos
 							</button>
 						</Link>
 						<Link to="/pages/music">
-							<button style={{ margin: '15px' }} className="button primary">
+							<button style={{ margin: '15px' }} className="btn primary">
 								NTRE Music
 							</button>
 						</Link>
@@ -56,7 +56,7 @@ const OrderPaymentAccountCompletePublicPage = (props) => {
 			</div>
 			<div className="wrap row jc-c w-100per ">
 				<Link to="/account/login">
-					<button style={{ margin: '15px' }} className="button primary">
+					<button style={{ margin: '15px' }} className="btn primary">
 						Login
 					</button>
 				</Link>

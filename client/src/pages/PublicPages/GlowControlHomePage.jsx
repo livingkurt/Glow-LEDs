@@ -130,7 +130,7 @@ const GlowControlHomePage = (props) => {
 					<div className=" jc-fe w-500px">
 						<label className="p-10px ">Click Here to Get Started!</label>
 						<Link to="/secure/account/editdevice">
-							<button className="button primary">Add Device</button>
+							<button className="btn primary">Add Device</button>
 						</Link>
 					</div>
 				</div>
@@ -162,7 +162,7 @@ const GlowControlHomePage = (props) => {
 												<td>{device.location}</td>
 												<td>
 													<Link to={'/secure/account/glowcontrol/' + device._id}>
-														<button className="button icon">
+														<button className="btn icon">
 															<i class="fas fa-eye" />
 														</button>
 													</Link>
@@ -170,12 +170,12 @@ const GlowControlHomePage = (props) => {
 												<td>
 													<div className="jc-b">
 														<Link to={'/secure/account/editdevice/' + device._id}>
-															<button className="button icon">
+															<button className="btn icon">
 																<i className="fas fa-edit" />
 															</button>
 														</Link>
 														<button
-															className="button icon"
+															className="btn icon"
 															onClick={() => deleteHandler(device)}
 														>
 															<i className="fas fa-trash-alt" />
@@ -195,7 +195,7 @@ const GlowControlHomePage = (props) => {
 					<div className="row jc-c ai-c">
 						<h2 className="p-10px ta-c">Login to View Devices</h2>
 						<Link to="/account/login?redirect=/pages/glowcontrol">
-							<button className="button primary">Login</button>
+							<button className="btn primary">Login</button>
 						</Link>
 					</div>
 				)}
@@ -226,7 +226,7 @@ const GlowControlHomePage = (props) => {
 				</p>
 				<div className="jc-c">
 					<Link to="/collections/all/products/category/infinity_mirrors">
-						<button className="button primary" style={{ background: 'transparent' }}>
+						<button className="btn primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glowskins</h2>
 						</button>
 					</Link>
@@ -258,7 +258,7 @@ const GlowControlHomePage = (props) => {
 				</p>
 				<div className="jc-c">
 					<Link to="/collections/all/products/category/glow_strings">
-						<button className="button primary" style={{ background: 'transparent' }}>
+						<button className="btn primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glow Strings</h2>
 						</button>
 					</Link>

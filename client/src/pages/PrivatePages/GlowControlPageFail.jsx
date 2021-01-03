@@ -282,11 +282,11 @@ const GlowControl = (props) => {
 		<div>
 			<div className="jc-b w-100per">
 				<Link to="/secure/account/devices">
-					<button className="button primary">Back to Devices</button>
+					<button className="btn primary">Back to Devices</button>
 				</Link>
 
 				<Link to={'/secure/account/editdevice/' + device_id}>
-					<button className="button primary">Edit Device</button>
+					<button className="btn primary">Edit Device</button>
 				</Link>
 			</div>
 			{loading ? (

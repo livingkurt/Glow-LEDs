@@ -286,13 +286,13 @@ const PasswordChangedEmail = () => {
 	return (
 		<div className="">
 			<div className="jc-b mb-1rem">
-				<button className="button primary" onClick={() => history.goBack()}>
+				<button className="btn primary" onClick={() => history.goBack()}>
 					Back to Emails
 				</button>
-				<button className="button primary mb-1rem" onClick={() => save_html()}>
+				<button className="btn primary mb-1rem" onClick={() => save_html()}>
 					Save HTML
 				</button>
-				{/* <button className="button primary mb-1rem" onClick={() => send_announcement_email()}>
+				{/* <button className="btn primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
 				</button> */}
 			</div>

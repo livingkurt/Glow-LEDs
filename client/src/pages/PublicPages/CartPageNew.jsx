@@ -213,7 +213,7 @@ const CartPage = (props) => {
 											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
-													className="button icon"
+													className="btn icon"
 													onClick={() => removeFromCartHandler(item.pathname)}
 												>
 													<i className="fas fa-trash-alt" />
@@ -245,7 +245,7 @@ const CartPage = (props) => {
 						</h3>
 						<button
 							onClick={checkoutHandler}
-							className="button primary full-width"
+							className="btn primary full-width"
 							// disabled={cart.cartItems.length === 0}
 						>
 							Proceed to Checkout

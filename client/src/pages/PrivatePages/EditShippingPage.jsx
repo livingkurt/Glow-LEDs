@@ -105,13 +105,13 @@ const ProfilePage = (props) => {
 							</li>
 
 							<li>
-								<button type="submit" className="button primary">
+								<button type="submit" className="btn primary">
 									Update
 								</button>
 							</li>
 							<li>
 								<Link to="/secure/account/profile">
-									<button type="button" className="button secondary full-width">
+									<button type="button" className="btn secondary full-width">
 										Cancel
 									</button>
 								</Link>

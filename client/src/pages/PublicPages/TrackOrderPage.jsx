@@ -27,7 +27,7 @@ const ViewOrder = (props) => {
 					</li>
 					<li>
 						<Link to={'/checkout/order/' + order_number}>
-							<button className="button primary w-100per">View Order</button>
+							<button className="btn primary w-100per">View Order</button>
 						</Link>
 					</li>
 					<li>
@@ -35,7 +35,7 @@ const ViewOrder = (props) => {
 					</li>
 					<li>
 						<Link to="/pages/contact">
-							<button className="button primary w-100per" style={{ margin: 'auto' }}>
+							<button className="btn primary w-100per" style={{ margin: 'auto' }}>
 								Contact
 							</button>
 						</Link>

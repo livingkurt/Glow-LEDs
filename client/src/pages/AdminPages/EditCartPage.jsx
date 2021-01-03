@@ -220,7 +220,7 @@ const EditCartPage = (props) => {
 										</div>
 									</div>
 									<li>
-										<button type="submit" className="button primary">
+										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
 										</button>
 									</li>
@@ -230,7 +230,7 @@ const EditCartPage = (props) => {
 												<button
 													style={{ width: '100%' }}
 													type="button"
-													className="button secondary"
+													className="btn secondary"
 												>
 													Back to Cart
 												</button>
@@ -240,7 +240,7 @@ const EditCartPage = (props) => {
 												<button
 													style={{ width: '100%' }}
 													type="button"
-													className="button secondary"
+													className="btn secondary"
 												>
 													Back to Carts
 												</button>

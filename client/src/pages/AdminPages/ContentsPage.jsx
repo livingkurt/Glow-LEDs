@@ -46,7 +46,7 @@ const ContentsPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-fe">
 				<Link to="/secure/glow/editcontent">
-					<button className="button primary" style={{ width: '160px' }}>
+					<button className="btn primary" style={{ width: '160px' }}>
 						Create Content
 					</button>
 				</Link>
@@ -92,11 +92,11 @@ const ContentsPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-c">
 												<Link to={'/secure/glow/editcontent/' + content._id}>
-													<button className="button icon">
+													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="button icon" onClick={() => deleteHandler(content)}>
+												<button className="btn icon" onClick={() => deleteHandler(content)}>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

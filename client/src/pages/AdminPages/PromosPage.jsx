@@ -114,7 +114,7 @@ const PromosPage = (props) => {
 					})}
 				</div>
 				<Link to="/secure/glow/editpromo">
-					<button className="button primary" style={{ width: '160px' }}>
+					<button className="btn primary" style={{ width: '160px' }}>
 						Create Promo
 					</button>
 				</Link>
@@ -199,11 +199,11 @@ const PromosPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editpromo/' + promo._id}>
-													<button className="button icon">
+													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="button icon" onClick={() => deleteHandler(promo)}>
+												<button className="btn icon" onClick={() => deleteHandler(promo)}>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

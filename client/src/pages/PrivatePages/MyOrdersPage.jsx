@@ -81,7 +81,7 @@ const UserOrderPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-b">
 				<Link to="/secure/account/profile">
-					<button className="button secondary">Back to Profile</button>
+					<button className="btn secondary">Back to Profile</button>
 				</Link>
 				{colors.map((color) => {
 					return (
@@ -100,7 +100,7 @@ const UserOrderPage = (props) => {
 				})}
 			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
-				{/* <button type="button" onClick={handleLogout} className="button secondary full-width">Logout</button> */}
+				{/* <button type="button" onClick={handleLogout} className="btn secondary full-width">Logout</button> */}
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
 				<div className="search_and_sort product_big_screen row jc-c ai-c" style={{ overflowX: 'scroll' }}>

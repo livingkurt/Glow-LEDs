@@ -103,7 +103,7 @@ const EditUserPage = (props) => {
 			</Helmet>
 			<div className="m-10px">
 				<Link to={'/secure/glow/userprofile/' + user._id}>
-					<button className="button primary">Back to {user.first_name}'s Profile</button>
+					<button className="btn primary">Back to {user.first_name}'s Profile</button>
 				</Link>
 			</div>
 			<div className="profile-info">
@@ -217,13 +217,13 @@ const EditUserPage = (props) => {
 								</li>
 							</Loading>
 							<li>
-								<button type="submit" className="button primary">
+								<button type="submit" className="btn primary">
 									Update
 								</button>
 							</li>
 							<li>
 								<Link to={'/secure/glow/userprofile/' + user._id}>
-									<button type="button" className="button secondary full-width">
+									<button type="button" className="btn secondary full-width">
 										Cancel
 									</button>
 								</Link>

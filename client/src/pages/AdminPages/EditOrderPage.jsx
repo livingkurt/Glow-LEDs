@@ -706,7 +706,7 @@ const EditOrderPage = (props) => {
 										</div>
 									</div>
 									<li>
-										<button className="button primary" onClick={(e) => add_order_item(e)}>
+										<button className="btn primary" onClick={(e) => add_order_item(e)}>
 											Add Another Order Item
 										</button>
 									</li>
@@ -1074,12 +1074,12 @@ const EditOrderPage = (props) => {
 											})}
 									</div>
 									<li>
-										<button type="submit" className="button primary">
+										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
 										</button>
 									</li>
 									<li>
-										<button className="button secondary" onClick={() => history.goBack()}>
+										<button className="btn secondary" onClick={() => history.goBack()}>
 											Back to Orders
 										</button>
 									</li>

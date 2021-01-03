@@ -122,14 +122,14 @@ const ProductPage = (props) => {
 			<div className="back-to-result">
 				<div className="jc-b">
 					<div className="mb-10px">
-						<button class="button secondary" onClick={() => props.history.goBack()}>
+						<button class="btn secondary" onClick={() => props.history.goBack()}>
 							Back to Products
 						</button>
 					</div>
 					{userInfo &&
 					userInfo.isAdmin && (
 						<Link to={'/secure/glow/editproduct/' + props.match.params.pathname}>
-							<button className="button secondary" style={{ width: '156px' }}>
+							<button className="btn secondary" style={{ width: '156px' }}>
 								Edit Product
 							</button>
 						</Link>
@@ -450,16 +450,16 @@ const ProductPage = (props) => {
 										<div />
 									) : product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
-											<button className="button primary full-width">Contact</button>
+											<button className="btn primary full-width">Contact</button>
 										</Link>
 									) : (
 										<li>
 											{product.countInStock > 0 && !product.hidden ? (
-												<button onClick={handleAddToCart} className="button primary">
+												<button className="btn primary" onClick={handleAddToCart}>
 													Add to Cart
 												</button>
 											) : (
-												<button className="button inactive">Out of Stock</button>
+												<button className="btn inactive">Out of Stock</button>
 											)}
 										</li>
 									)}
@@ -472,7 +472,7 @@ const ProductPage = (props) => {
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
 							{product.category === 'glow_strings' && (
 								<Link to="/Glow_Strings_Manual.pdf" target="_blank" download>
-									<button className="button primary full-width fs-20px mb-2rem">
+									<button className="btn primary full-width fs-20px mb-2rem">
 										Download Glow Strings Manual
 									</button>
 								</Link>
@@ -513,7 +513,7 @@ const ProductPage = (props) => {
 							{/* {product.category === 'glowskins' && (
 								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
 									<div className="jc-c">
-										<button className="button primary" style={{ margin: 'auto' }}>
+										<button className="btn primary" style={{ margin: 'auto' }}>
 											Glowskins Microlight Compatibility
 										</button>
 									</div>

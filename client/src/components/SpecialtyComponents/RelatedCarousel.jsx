@@ -96,7 +96,7 @@ const RelatedProducts = (props) => {
 							<div className="ai-c">
 								<button
 									style={{ borderRadius: '50%' }}
-									className="button icon h-59px"
+									className="btn icon h-59px"
 									onClick={() => move_left()}
 								>
 									<i className="fas fa-arrow-circle-left fs-40px" />
@@ -119,7 +119,7 @@ const RelatedProducts = (props) => {
 							<div className="ai-c">
 								<button
 									style={{ borderRadius: '50%' }}
-									className="button icon h-59px"
+									className="btn icon h-59px"
 									onClick={() => move_right()}
 								>
 									<i className="fas fa-arrow-circle-right fs-40px" />

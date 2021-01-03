@@ -233,12 +233,12 @@ const OrderPublicPage = (props) => {
 				{props.userInfo &&
 				props.userInfo.isAdmin && (
 					<Link to="/secure/glow/orders">
-						<button className="button secondary">Back to Admin Orders</button>
+						<button className="btn secondary">Back to Admin Orders</button>
 					</Link>
 				)}
 
 				<Link to="/secure/account/orders">
-					<button className="button secondary">Back to Orders</button>
+					<button className="btn secondary">Back to Orders</button>
 				</Link>
 			</div>
 			<div className="jc-c mb-1rem">
@@ -252,7 +252,7 @@ const OrderPublicPage = (props) => {
 						onChange={(e) => set_order_number(e.target.value)}
 					/>
 					<Link to={'/checkout/order/' + order_number}>
-						<button className="button primary ">Track</button>
+						<button className="btn primary ">Track</button>
 					</Link>
 				</div>
 			</div>
@@ -368,7 +368,7 @@ const OrderPublicPage = (props) => {
 																onChange={(e) => set_secondary_product(e.target.value)}
 															/>
 															<button
-																className="button primary"
+																className="btn primary"
 																onClick={save_secondary_product}
 															>
 																Add
@@ -495,7 +495,7 @@ const OrderPublicPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="button primary full-width" style={{ marginBottom: '12px' }}>
+									<button className="btn primary full-width" style={{ marginBottom: '12px' }}>
 										Pay for Order
 									</button>
 								</StripeCheckout>

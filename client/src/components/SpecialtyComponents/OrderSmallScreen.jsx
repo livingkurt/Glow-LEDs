@@ -25,13 +25,13 @@ const OrderSmallScreen = (props) => {
 					)}
 					{/* <div className="jc-fe">
 						<Link to={'/secure/account/order/' + props.order._id}>
-							<button className="button primary">Order Details</button>
+							<button className="btn primary">Order Details</button>
 						</Link>
 					</div> */}
 
 					<div className="jc-fe">
 						<Link to={'/secure/account/order/' + props.order._id} className="m-auto">
-							<button className="button icon fs-25px">
+							<button className="btn icon fs-25px">
 								<i className="fas fa-info-circle" />
 							</button>
 						</Link>
@@ -72,7 +72,7 @@ const OrderSmallScreen = (props) => {
 									<div className="ai-c w-100per jc-b">
 										<div className="mv-10px">${item.price}</div>
 										<Link to={'/collections/all/products/category/' + item.category}>
-											<button className="button primary">Buy Again</button>
+											<button className="btn primary">Buy Again</button>
 										</Link>
 									</div>
 								</div>

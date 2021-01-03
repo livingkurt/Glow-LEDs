@@ -512,7 +512,7 @@ const PlaceOrderPublicPage = (props) => {
 						}
 					}}
 				/>
-				<button type="submit" className="button primary full-width mb-12px" disabled={!stripe}>
+				<button type="submit" className="btn primary full-width mb-12px" disabled={!stripe}>
 					Pay for Order
 				</button>
 			</form>
@@ -560,7 +560,7 @@ const PlaceOrderPublicPage = (props) => {
 							)}
 							<div style={{ marginTop: '5px' }}>
 								<Link to="/checkout/shipping">
-									<button className="button primary">
+									<button className="btn primary">
 										{shipping && shipping.hasOwnProperty('first_name') ? (
 											'Edit Shipping'
 										) : (
@@ -578,7 +578,7 @@ const PlaceOrderPublicPage = (props) => {
 								<div className="column">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
-											<button className="button secondary full-width" style={{ marginBottom: 0 }}>
+											<button className="btn secondary full-width" style={{ marginBottom: 0 }}>
 												Continue Shopping
 											</button>
 										</li>
@@ -657,7 +657,7 @@ const PlaceOrderPublicPage = (props) => {
 											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
-													className="button icon"
+													className="btn icon"
 													onClick={() => dispatch(removeFromCart(item.pathname))}
 												>
 													<i className="fas fa-trash-alt" />
@@ -899,7 +899,7 @@ const PlaceOrderPublicPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="button secondary full-width mb-12px">Pay for Order</button>
+									<button className="btn secondary full-width mb-12px">Pay for Order</button>
 								</StripeCheckout>
 							</div>
 						)} */}
@@ -950,7 +950,7 @@ const PlaceOrderPublicPage = (props) => {
 								<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
 									{passwords_complete}
 								</label>
-								<button className="button primary" onClick={(e) => check_password(e)}>
+								<button className="btn primary" onClick={(e) => check_password(e)}>
 									Check Password
 								</button>
 							</li>
@@ -968,7 +968,7 @@ const PlaceOrderPublicPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="button primary full-width mb-12px">
+									<button className="btn primary full-width mb-12px">
 										Pay for Order/Create Account
 									</button>
 								</StripeCheckout>
@@ -999,7 +999,7 @@ const PlaceOrderPublicPage = (props) => {
 									onChange={(e) => set_promo_code(e.target.value)}
 								/>
 								<button
-									className="button primary"
+									className="btn primary"
 									// onTouchStart={() => (e)()}
 									// onClick={() => check_code()}
 									style={{ curser: 'pointer' }}
@@ -1013,7 +1013,7 @@ const PlaceOrderPublicPage = (props) => {
 						</label>
 						{show_message && (
 							<div className="promo_code mv-1rem">
-								<button className="button icon" onClick={() => remove_promo()}>
+								<button className="btn icon" onClick={() => remove_promo()}>
 									<i className="fas fa-times mr-5px" />
 								</button>
 								{show_message}

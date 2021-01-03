@@ -384,34 +384,34 @@ const ControlPanelPage = (props) => {
 			</div>
 			<div className="jc-b">
 				<Link to="/secure/glow/orders">
-					<button className="button primary">Orders</button>
+					<button className="btn primary">Orders</button>
 				</Link>
 				<Link to="/secure/glow/products">
-					<button className="button primary"> Products</button>
+					<button className="btn primary"> Products</button>
 				</Link>
 				<Link to="/secure/glow/users">
-					<button className="button primary"> Users</button>
+					<button className="btn primary"> Users</button>
 				</Link>
 				<Link to="/secure/glow/expenses">
-					<button className="button primary"> Expenses</button>
+					<button className="btn primary"> Expenses</button>
 				</Link>
 				<Link to="/secure/glow/features">
-					<button className="button primary"> Features</button>
+					<button className="btn primary"> Features</button>
 				</Link>
 				<Link to="/secure/glow/affiliates">
-					<button className="button primary"> Affiliates</button>
+					<button className="btn primary"> Affiliates</button>
 				</Link>
 				<Link to="/secure/glow/promos">
-					<button className="button primary">Promos</button>
+					<button className="btn primary">Promos</button>
 				</Link>
 				<Link to="/secure/glow/carts">
-					<button className="button primary">Carts</button>
+					<button className="btn primary">Carts</button>
 				</Link>
 				<Link to="/secure/glow/contents">
-					<button className="button primary">Contents</button>
+					<button className="btn primary">Contents</button>
 				</Link>
 				<Link to="/secure/glow/emails">
-					<button className="button primary">Emails</button>
+					<button className="btn primary">Emails</button>
 				</Link>
 			</div>
 			<div className="jc-b">

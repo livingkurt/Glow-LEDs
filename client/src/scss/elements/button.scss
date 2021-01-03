@@ -11,9 +11,11 @@ $br_large_containers: 2rem;
 
 @import '../appearance/colors.scss';
 
+// Button
+
 .btn {
 	box-shadow: $bs_shallow;
-	// background-color: transparent;
+	background-color: transparent;
 	color: $font_color;
 	border: 0px;
 	font-family: $main_font;
@@ -27,27 +29,38 @@ $br_large_containers: 2rem;
 	background-color: #bebcbc;
 }
 
+// .btn.primary {
+// 	background-color: #586086;
+// }
 .btn.primary {
-	background-color: #888888;
+	background-color: $theme_color_primary;
 }
 
 .btn.primary:hover {
 	box-shadow: $bs_deep;
-	background-color: #a5a5a5;
+	background-color: $theme_color_primary_hover;
 }
+// .btn.primary {
+// 	background-color: #865858;
+// }
+
+// .btn.primary:hover {
+// 	box-shadow: $bs_deep;
+// 	background-color: #6b3636;
+// }
 
 .btn.secondary {
-	background-color: #686767;
+	background-color: $theme_color_secondary;
 }
 
 .btn.secondary:hover {
 	box-shadow: $bs_deep;
-	background-color: #7c7c7c;
+	background-color: $theme_color_secondary_hover;
 }
 
-.btn-nav {
-	background-color: #3a3a3a;
-	// box-shadow: unset;
+.btn.nav {
+	background-color: transparent;
+	box-shadow: unset;
 }
 
 .btn.icon {
@@ -60,86 +73,13 @@ $br_large_containers: 2rem;
 	box-shadow: $bs_deep;
 }
 
-.button.mobile.nav {
+.btn.mobile.nav {
 	background-color: transparent;
 	box-shadow: unset;
 }
 
-.button.nav:hover,
-.button.mobile.nav:hover {
-	box-shadow: $bs_deep;
-	background-color: gray;
-}
-
-// Button
-
-.button {
-	box-shadow: $bs_shallow;
-	background-color: transparent;
-	color: $font_color;
-	border: 0px;
-	font-family: $main_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
-}
-
-.button:hover {
-	box-shadow: $bs_deep;
-	background-color: #bebcbc;
-}
-
-// .button.primary {
-// 	background-color: #586086;
-// }
-.button.primary {
-	background-color: $theme_color_primary;
-}
-
-.button.primary:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_primary_hover;
-}
-// .button.primary {
-// 	background-color: #865858;
-// }
-
-// .button.primary:hover {
-// 	box-shadow: $bs_deep;
-// 	background-color: #6b3636;
-// }
-
-.button.secondary {
-	background-color: $theme_color_secondary;
-}
-
-.button.secondary:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_secondary_hover;
-}
-
-.button.nav {
-	background-color: transparent;
-	box-shadow: unset;
-}
-
-.button.icon {
-	box-shadow: unset;
-	padding: 6px 10px;
-}
-
-.button.icon:hover {
-	background-color: gray;
-	box-shadow: $bs_deep;
-}
-
-.button.mobile.nav {
-	background-color: transparent;
-	box-shadow: unset;
-}
-
-.button.nav:hover,
-.button.mobile.nav:hover {
+.btn.nav:hover,
+.btn.mobile.nav:hover {
 	box-shadow: $bs_deep;
 	background-color: gray;
 }

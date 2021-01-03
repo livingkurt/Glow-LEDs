@@ -365,26 +365,20 @@ const EditProductPage = (props) => {
 								return (
 									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
 										<div>
-											<button className="button icon" onClick={(e) => remove_image(index, e)}>
+											<button className="btn icon" onClick={(e) => remove_image(index, e)}>
 												<i className="fas fa-times mr-5px" />
 											</button>
 											{picture}
 										</div>
 										<div>
 											{index > 0 && (
-												<button
-													className="button icon"
-													onClick={(e) => move_image_up(index, e)}
-												>
+												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
 													<i className=" fas fa-sort-up" />
 												</button>
 											)}
 
 											{index < images.length - 1 && (
-												<button
-													className="button icon"
-													onClick={(e) => move_image_down(index, e)}
-												>
+												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
 													<i
 														style={{ '-webkitTransform': 'rotate(-180deg)' }}
 														className=" fas fa-sort-up"
@@ -418,7 +412,7 @@ const EditProductPage = (props) => {
 	// 					return (
 	// 						<div className="promo_code mv-1rem w-100per row jc-b max-w-55rem w-100per">
 	// 							<div className=" w-100per">
-	// 								<button className="button icon" onClick={(e) => remove_subcategory(index, e)}>
+	// 								<button className="btn icon" onClick={(e) => remove_subcategory(index, e)}>
 	// 									<i className="fas fa-times mr-5px" />
 	// 								</button>
 	// 								{subcategory}
@@ -457,7 +451,7 @@ const EditProductPage = (props) => {
 										<div className="ai-c">
 											<button
 												style={{ borderRadius: '50%' }}
-												className="button icon h-59px"
+												className="btn icon h-59px"
 												onClick={() => move_left()}
 											>
 												<i className="fas fa-arrow-circle-left fs-40px" />
@@ -476,7 +470,7 @@ const EditProductPage = (props) => {
 										<div className="ai-c">
 											<button
 												style={{ borderRadius: '50%' }}
-												className="button icon h-59px"
+												className="btn icon h-59px"
 												onClick={() => move_right()}
 											>
 												<i className="fas fa-arrow-circle-right fs-40px" />
@@ -591,7 +585,7 @@ const EditProductPage = (props) => {
 													id="subcategory"
 													onChange={(e) => set_subcategory(e.target.value)}
 												/>
-												{/* <button className="button primary" onClick={(e) => add_subcategory(e)}>
+												{/* <button className="btn primary" onClick={(e) => add_subcategory(e)}>
 													Add Subcategory
 												</button>
 												{subcategory_display(subcategories)} */}
@@ -664,7 +658,7 @@ const EditProductPage = (props) => {
 													id="image"
 													onChange={(e) => set_image(e.target.value)}
 												/>
-												<button className="button primary" onClick={(e) => add_image(e)}>
+												<button className="btn primary" onClick={(e) => add_image(e)}>
 													Add Image
 												</button>
 											</li>
@@ -834,12 +828,12 @@ const EditProductPage = (props) => {
 									</div>
 									{image_display(images)}
 									<li>
-										<button type="submit" className="button primary">
+										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
 										</button>
 									</li>
 									<li>
-										<button className="button secondary" onClick={() => history.goBack()}>
+										<button className="btn secondary" onClick={() => history.goBack()}>
 											Back to Products
 										</button>
 									</li>

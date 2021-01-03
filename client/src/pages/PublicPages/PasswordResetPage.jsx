@@ -44,7 +44,7 @@ const PasswordResetPublicPage = (props) => {
 					</li>
 
 					<li>
-						<button type="submit" className="button primary">
+						<button type="submit" className="btn primary">
 							Verify Email
 						</button>
 					</li>

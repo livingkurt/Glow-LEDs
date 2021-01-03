@@ -7,7 +7,7 @@ const ColorBoxRGB = (props) => {
 	return (
 		<div>
 			<button
-				className="button zoom"
+				className="btn zoom"
 				name="rgb"
 				style={{
 					backgroundColor: `rgb(${props.color})`,

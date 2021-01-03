@@ -21,7 +21,7 @@ const EmailSentPage = (props) => {
 			</p>
 			<Link to="/pages/faq">
 				<div className="jc-c">
-					<button className="button primary " style={{ margin: 'auto' }}>
+					<button className="btn primary " style={{ margin: 'auto' }}>
 						Frequently Asked Questions
 					</button>
 				</div>

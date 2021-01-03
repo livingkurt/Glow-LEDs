@@ -946,31 +946,31 @@ const OrderEmail = (props) => {
 			{userInfo ? (
 				<div className="jc-c m-auto wrap">
 					<Link to={'/secure/account/order/' + props.match.params.id}>
-						<button className="button primary mh-10px">View Order</button>
+						<button className="btn primary mh-10px">View Order</button>
 					</Link>
 					<Link to="/secure/account/orders">
-						<button className="button primary mh-10px">Your Orders</button>
+						<button className="btn primary mh-10px">Your Orders</button>
 					</Link>
 					<Link to="/collections/all/products">
-						<button className="button primary mh-10px">Products</button>
+						<button className="btn primary mh-10px">Products</button>
 					</Link>
 				</div>
 			) : (
 				<div className="w-1000px jc-c m-auto">
 					<Link to={'/checkout/order/' + props.match.params.id}>
-						<button className="button primary">View Order</button>
+						<button className="btn primary">View Order</button>
 					</Link>
 					<Link to="/collections/all/products">
-						<button className="button primary mh-10px">Products</button>
+						<button className="btn primary mh-10px">Products</button>
 					</Link>
 					<Link to="/pages/featured">
-						<button className="button primary mh-10px">Featured Videos</button>
+						<button className="btn primary mh-10px">Featured Videos</button>
 					</Link>
 					<Link to="/pages/music">
-						<button className="button primary mh-10px">NTRE Music</button>
+						<button className="btn primary mh-10px">NTRE Music</button>
 					</Link>
 					{/* <Link to="/account/register">
-						<button className="button primary mh-10px">Create Account</button>
+						<button className="btn primary mh-10px">Create Account</button>
 					</Link> */}
 				</div>
 			)}
@@ -985,20 +985,20 @@ const OrderEmail = (props) => {
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
 					<Link to="/secure/glow/emails">
-						<button className="button primary mh-10px">Back to Emails</button>
+						<button className="btn primary mh-10px">Back to Emails</button>
 					</Link>
 					<Link to="/secure/glow/orders">
-						<button className="button primary mh-10px">Back to Orders</button>
+						<button className="btn primary mh-10px">Back to Orders</button>
 					</Link>
 
 					<button
-						className="button primary mb-1rem"
+						className="btn primary mb-1rem"
 						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h2, order.isRefunded)}
 					>
 						Send Test Email
 					</button>
 					<button
-						className="button primary mb-1rem"
+						className="btn primary mb-1rem"
 						onClick={() =>
 							send_order_email(
 								order.shipping.email,
@@ -1009,7 +1009,7 @@ const OrderEmail = (props) => {
 					>
 						Send Order Email
 					</button>
-					{/* <button className="button primary mb-1rem" onClick={() => send_order_email()}>
+					{/* <button className="btn primary mb-1rem" onClick={() => send_order_email()}>
 					Send Order Email
 				</button> */}
 					{/* <Loading loading={loading_email} /> */}

@@ -71,7 +71,7 @@ const Header = (props) => {
 						</div>
 					</Link>
 					<button
-						className="button mobile nav none fs-30px h-50px w-50px p-10px"
+						className="btn mobile nav none fs-30px h-50px w-50px p-10px"
 						onClick={openMenu}
 						aria-label="sidebar"
 					>
@@ -101,24 +101,24 @@ const Header = (props) => {
 					</div>
 					<div className="jc-b nav_bar">
 						<Link to="/collections/all/products">
-							<button className="button nav" onClick={() => dispatch(listProducts(''))}>
+							<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
 								Products
 							</button>
 						</Link>
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/gloving">
-								<button className="button nav">Gloving</button>
+								<button className="btn nav">Gloving</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-300px">
 								<Link to="/collections/all/products/category/glowskins">
-									<button className="button nav w-100per ta-l">Glowskins (New)</button>
+									<button className="btn nav w-100per ta-l">Glowskins (New)</button>
 								</Link>
 								<Link to="/collections/all/products/category/frosted_diffusers">
-									<button className="button nav w-100per ta-l">Frosted Diffusers</button>
+									<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
 								</Link>
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/diffuser_caps">
-										<button className="button nav w-100per ta-l">Diffuser Caps</button>
+										<button className="btn nav w-100per ta-l">Diffuser Caps</button>
 										<i
 											style={{ '-webkitTransform': 'rotate(-180deg)' }}
 											className=" pos-abs right-10px top-8px fas fa-sort-up"
@@ -131,7 +131,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Geomotric</button>
+												<button className="btn nav w-100per ta-l">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
@@ -140,7 +140,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Shapes</button>
+												<button className="btn nav w-100per ta-l">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
@@ -149,7 +149,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Abstract</button>
+												<button className="btn nav w-100per ta-l">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
@@ -158,7 +158,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Patterns</button>
+												<button className="btn nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
 									</div>
@@ -166,7 +166,7 @@ const Header = (props) => {
 
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/mega_diffuser_caps">
-										<button className="button nav w-100per ta-l">Mega Diffuser Caps</button>
+										<button className="btn nav w-100per ta-l">Mega Diffuser Caps</button>
 										<i
 											style={{ '-webkitTransform': 'rotate(-180deg)' }}
 											className=" pos-abs right-10px top-8px fas fa-sort-up"
@@ -179,7 +179,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Geomotric</button>
+												<button className="btn nav w-100per ta-l">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
@@ -188,7 +188,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Shapes</button>
+												<button className="btn nav w-100per ta-l">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
@@ -197,7 +197,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Abstract</button>
+												<button className="btn nav w-100per ta-l">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
@@ -206,7 +206,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Patterns</button>
+												<button className="btn nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
@@ -215,66 +215,66 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Emojis</button>
+												<button className="btn nav w-100per ta-l">Emojis</button>
 											</div>
 										</Link>
 									</div>
 								</div>
 								<Link to="/collections/all/products/category/accessories">
-									<button className="button nav w-100per ta-l">Accessories</button>
+									<button className="btn nav w-100per ta-l">Accessories</button>
 								</Link>
 							</div>
 						</div>
 
 						<div className="dropdown-nav">
 							{/* <Link to="/pages/menu/decor">
-								<button className="button nav">Decor</button>
+								<button className="btn nav">Decor</button>
 							</Link> */}
 							{/* <div className="dropdown-nav-content hover_fade_in w-200px"> */}
 							<Link to="/collections/all/products/category/glow_strings">
-								<button className="button nav w-100per ta-l">Glow Strings</button>
+								<button className="btn nav w-100per ta-l">Glow Strings</button>
 							</Link>
 							{/* <Link to="/collections/all/products/category/infinity_mirrors">
-									<button className="button nav w-100per ta-l"> Infinity Mirrors</button>
+									<button className="btn nav w-100per ta-l"> Infinity Mirrors</button>
 								</Link> */}
 							{/* </div> */}
 						</div>
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/community">
-								<button className="button nav">Community</button>
+								<button className="btn nav">Community</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
 								<Link to="/pages/announcements">
-									<button className="button nav w-100per ta-l">Announcements</button>
+									<button className="btn nav w-100per ta-l">Announcements</button>
 								</Link>
 								<Link to="/pages/menu/featured">
-									<button className="button nav w-100per ta-l">Featured</button>
+									<button className="btn nav w-100per ta-l">Featured</button>
 								</Link>
 								<Link to="/pages/music">
-									<button className="button nav w-100per ta-l">Music</button>
+									<button className="btn nav w-100per ta-l">Music</button>
 								</Link>
 							</div>
 						</div>
 						{/* <div className="dropdown-nav">
 							<Link to="/pages/glowcontrol">
-								<button className="button nav">Glow Control</button>
+								<button className="btn nav">Glow Control</button>
 							</Link>
 						</div> */}
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/support">
-								<button className="button nav">Support</button>
+								<button className="btn nav">Support</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-230px">
 								<Link to="/pages/track_your_order">
-									<button className="button nav w-100per ta-l">Track Your Order</button>
+									<button className="btn nav w-100per ta-l">Track Your Order</button>
 								</Link>
 								<Link to="/pages/about">
-									<button className="button nav w-100per ta-l">About</button>
+									<button className="btn nav w-100per ta-l">About</button>
 								</Link>
 
 								<div className="dropdown-nav-subcategory">
 									<Link to="/pages/faq">
-										<button className="button nav w-100per ta-l w-100per ta-l">FAQ</button>
+										<button className="btn nav w-100per ta-l w-100per ta-l">FAQ</button>
 										<i
 											style={{ '-webkitTransform': 'rotate(-180deg)' }}
 											className=" pos-abs right-10px top-8px fas fa-sort-up"
@@ -287,7 +287,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Glowskins</button>
+												<button className="btn nav w-100per ta-l">Glowskins</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#using_diffuser_caps_and_adapters">
@@ -296,9 +296,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">
-													Diffuser Caps Guide
-												</button>
+												<button className="btn nav w-100per ta-l">Diffuser Caps Guide</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#diffuser_too_tight_too_loose">
@@ -307,7 +305,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">
+												<button className="btn nav w-100per ta-l">
 													Diffusers Too Tight/Loose?
 												</button>
 											</div>
@@ -318,7 +316,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">
+												<button className="btn nav w-100per ta-l">
 													Ordering Custom Products
 												</button>
 											</div>
@@ -329,7 +327,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">Featured Content</button>
+												<button className="btn nav w-100per ta-l">Featured Content</button>
 											</div>
 										</HashLink>
 
@@ -339,9 +337,7 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">
-													Processing/Shipping
-												</button>
+												<button className="btn nav w-100per ta-l">Processing/Shipping</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#returns_cancellations">
@@ -350,18 +346,16 @@ const Header = (props) => {
 													style={{ '-webkitTransform': 'rotate(90deg)' }}
 													className="mr-30px fas fa-sort-up"
 												/>{' '}
-												<button className="button nav w-100per ta-l">
-													Returns/Cancellations
-												</button>
+												<button className="btn nav w-100per ta-l">Returns/Cancellations</button>
 											</div>
 										</HashLink>
 									</div>
 								</div>
 								<Link to="/pages/contact">
-									<button className="button nav w-100per ta-l">Contact</button>
+									<button className="btn nav w-100per ta-l">Contact</button>
 								</Link>
 								<Link to="/pages/terms">
-									<button className="button nav w-100per ta-l">Term and Conditions</button>
+									<button className="btn nav w-100per ta-l">Term and Conditions</button>
 								</Link>
 							</div>
 						</div>
@@ -369,31 +363,31 @@ const Header = (props) => {
 				</div>
 				<div className="nav_bar w-233px jc-fe">
 					<Link to="/checkout/cart">
-						<button className=" button nav cart_text w-105px">
+						<button className="btn nav cart_text w-105px">
 							Cart <i className="fas fa-shopping-cart" />{' '}
 							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 						</button>
 					</Link>
 					<Link to="/checkout/cart">
-						<button className=" button mobile nav cart_icon none">
+						<button className="btn mobile nav cart_icon none">
 							<i className="fas fa-shopping-cart" />{' '}
 							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 						</button>
 					</Link>
 					{props.userInfo ? (
 						<div className="dropdown">
-							<button className="button nav">{first_name}</button>
+							<button className="btn nav">{first_name}</button>
 							<ul className="dropdown-content hover_fade_in w-110px">
 								<Link to="/secure/account/profile">
-									<button className="button nav">Profile</button>
+									<button className="btn nav">Profile</button>
 								</Link>
 								<Link to="/secure/account/orders">
-									<button className="button nav">Orders</button>
+									<button className="btn nav">Orders</button>
 								</Link>
 								{/* <Link to="/secure/account/devices">
-									<button className="button nav">Devices</button>
+									<button className="btn nav">Devices</button>
 								</Link> */}
-								<button className="button nav mr-auto" onClick={handleLogout}>
+								<button className="btn nav mr-auto" onClick={handleLogout}>
 									{' '}
 									Logout
 								</button>
@@ -402,53 +396,53 @@ const Header = (props) => {
 					) : (
 						<div>
 							<Link to="/account/login">
-								<button className="button nav">Login</button>
+								<button className="btn nav">Login</button>
 							</Link>
 						</div>
 					)}
 					{props.userInfo &&
 					props.userInfo.isAdmin && (
 						<div className="dropdown ">
-							<button className="button nav">Admin</button>
+							<button className="btn nav">Admin</button>
 							<ul className="dropdown-content hover_fade_in">
 								<Link to="/secure/glow/controlpanel">
-									<button className="button nav w-152px">Control Panel</button>
+									<button className="btn nav w-152px">Control Panel</button>
 								</Link>
 								<Link to="/secure/glow/orders">
-									<button className="button nav">Orders</button>
+									<button className="btn nav">Orders</button>
 								</Link>
 								<Link to="/secure/glow/products">
-									<button className="button nav"> Products</button>
+									<button className="btn nav"> Products</button>
 								</Link>
 								<Link to="/secure/glow/users">
-									<button className="button nav"> Users</button>
+									<button className="btn nav"> Users</button>
 								</Link>
 								<Link to="/secure/glow/expenses">
-									<button className="button nav"> Expenses</button>
+									<button className="btn nav"> Expenses</button>
 								</Link>
 								<Link to="/secure/glow/features">
-									<button className="button nav"> Features</button>
+									<button className="btn nav"> Features</button>
 								</Link>
 								<Link to="/secure/glow/affiliates">
-									<button className="button nav"> Affiliates</button>
+									<button className="btn nav"> Affiliates</button>
 								</Link>
 								<Link to="/secure/glow/promos">
-									<button className="button nav">Promos</button>
+									<button className="btn nav">Promos</button>
 								</Link>
 								<Link to="/secure/glow/carts">
-									<button className="button nav">Carts</button>
+									<button className="btn nav">Carts</button>
 								</Link>
 								<Link to="/secure/glow/contents">
-									<button className="button nav">Contents</button>
+									<button className="btn nav">Contents</button>
 								</Link>
 								<Link to="/secure/glow/emails">
-									<button className="button nav">Emails</button>
+									<button className="btn nav">Emails</button>
 								</Link>
 								<Link to="/secure/glow/logs">
-									<button className="button nav">Logs</button>
+									<button className="btn nav">Logs</button>
 								</Link>
 								<Link to="/secure/glow/edit_all_data">
-									<button className="button nav">Edit All Data</button>
+									<button className="btn nav">Edit All Data</button>
 								</Link>
 							</ul>
 						</div>

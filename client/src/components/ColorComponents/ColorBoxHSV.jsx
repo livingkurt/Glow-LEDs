@@ -7,7 +7,7 @@ const ColorBoxHSV = (props) => {
 	return (
 		<div>
 			<button
-				className="button zoom"
+				className="btn zoom"
 				name="hsv"
 				style={{
 					backgroundColor: `rgb(${props.rgb} )`,

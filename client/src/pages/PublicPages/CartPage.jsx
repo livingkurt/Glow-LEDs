@@ -158,7 +158,7 @@ const CartPage = (props) => {
 											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
-													className="button icon"
+													className="btn icon"
 													onClick={() => removeFromCartHandler(item.pathname)}
 												>
 													<i className="fas fa-trash-alt" />
@@ -182,7 +182,7 @@ const CartPage = (props) => {
 								cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 							)}
 						</h3>
-						<button onClick={decide_warning} className="button primary full-width">
+						<button onClick={decide_warning} className="btn primary full-width">
 							Proceed to Checkout
 						</button>
 					</div>

@@ -74,7 +74,7 @@ const ChangePasswordPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
 			</Helmet>
 			<div className="mb-10px">
-				<button className="button secondary" onClick={() => history.goBack()}>
+				<button className="btn secondary" onClick={() => history.goBack()}>
 					Back to Profile
 				</button>
 			</div>
@@ -131,13 +131,13 @@ const ChangePasswordPage = (props) => {
 								{re_password_validations}
 							</label>
 							<li>
-								<button type="submit" className="button primary">
+								<button type="submit" className="btn primary">
 									Update
 								</button>
 							</li>
 							<li>
 								<Link to="/secure/account/profile">
-									<button type="button" className="button secondary full-width">
+									<button type="button" className="btn secondary full-width">
 										Cancel
 									</button>
 								</Link>

@@ -93,20 +93,20 @@ const LoginPage = (props) => {
 					</label>
 
 					<li>
-						<button type="submit" className="button primary">
+						<button type="submit" className="btn primary">
 							Login
 						</button>
 					</li>
 					<li>
 						<Link to="/account/passwordreset" style={{ fontFamily: 'heading_font' }}>
-							<button className="button secondary full-width">Forgot Password?</button>
+							<button className="btn secondary full-width">Forgot Password?</button>
 						</Link>
 					</li>
 					<li>New to Glow LEDs?</li>
 					<li>
 						<Link
 							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-							className="button primary text-center"
+							className="btn primary text-center"
 						>
 							Create Account
 						</Link>
@@ -114,7 +114,7 @@ const LoginPage = (props) => {
 					{/* <li style={{ marginBottom: '-20px' }}>
 							<Link
 								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-								className="button secondary text-center"
+								className="btn secondary text-center"
 							>
 								New User
 							</Link>

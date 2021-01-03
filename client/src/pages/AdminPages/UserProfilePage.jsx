@@ -74,7 +74,7 @@ const UserProfilePage = (props) => {
 			<Helmet>
 				<title>Admin User Profile | Glow LEDs</title>
 			</Helmet>
-			<button className="button secondary" onClick={() => history.goBack()}>
+			<button className="btn secondary" onClick={() => history.goBack()}>
 				Back to Users
 			</button>
 			<div className="row">
@@ -112,30 +112,21 @@ const UserProfilePage = (props) => {
 						<div className="row">
 							<div style={{ height: 50 }}>
 								<Link to={'/secure/glow/edituser/' + props.match.params.id}>
-									<button
-										style={{ marginRight: '10px', maxWidth: '225px' }}
-										className="button primary"
-									>
+									<button style={{ marginRight: '10px', maxWidth: '225px' }} className="btn primary">
 										Edit Profile
 									</button>
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
 								<Link to={'/account/changepassword'}>
-									<button
-										style={{ marginRight: '10px', maxWidth: '210px' }}
-										className="button primary"
-									>
+									<button style={{ marginRight: '10px', maxWidth: '210px' }} className="btn primary">
 										Change Password
 									</button>
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
 								<Link to={'/secure/glow/userorders/' + props.match.params.id}>
-									<button
-										style={{ maxWidth: '225px', marginRight: '10px' }}
-										className="button primary"
-									>
+									<button style={{ maxWidth: '225px', marginRight: '10px' }} className="btn primary">
 										View Orders
 									</button>
 								</Link>
@@ -145,7 +136,7 @@ const UserProfilePage = (props) => {
 								<button
 									style={{ maxWidth: '225px' }}
 									onClick={send_not_verified_email}
-									className="button primary"
+									className="btn primary"
 								>
 									Still Not Verified
 								</button>

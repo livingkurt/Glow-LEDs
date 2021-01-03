@@ -183,10 +183,10 @@ const OrderListItem = (props) => {
 						</div>
 						<div className="row fs-16px jc-b ai-c">
 							<Link to={'/secure/account/order/' + props.order._id}>
-								<button className="button primary">Order Details</button>
+								<button className="btn primary">Order Details</button>
 							</Link>
 							<div>|</div>
-							<button className="button secondary">
+							<button className="btn secondary">
 								<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>
 							</button>
 						</div>
@@ -246,11 +246,11 @@ const OrderListItem = (props) => {
 					to={'/collections/all/products/category/' + props.order.orderItems[0].category}
 					className="ai-c ml-1rem"
 				>
-					<button className="button primary">Buy Again</button>
+					<button className="btn primary">Buy Again</button>
 				</Link>
 				{props.admin && (
 					<div className="jc-fe column ml-auto ">
-						<button className="button icon h-3rem " onClick={() => show_hide(props.order._id)}>
+						<button className="btn icon h-3rem " onClick={() => show_hide(props.order._id)}>
 							<i style={{ '-webkitTransform': 'rotate(-180deg)' }} className="top-8px fas fa-sort-up" />
 						</button>
 					</div>
@@ -298,11 +298,11 @@ const OrderListItem = (props) => {
 										</div>
 									</div>
 									<div className="column">
-										<button className="button primary mv-5px" onClick={update_refund_state}>
+										<button className="btn primary mv-5px" onClick={update_refund_state}>
 											Refund Customer
 										</button>
 
-										<button className="button primary mv-5px">
+										<button className="btn primary mv-5px">
 											<Link to={'/secure/glow/emails/order/' + props.order._id + '/order/false'}>
 												View Email
 											</Link>
@@ -330,7 +330,7 @@ const OrderListItem = (props) => {
 								</div>
 
 								<button
-									className="button secondary w-200px mv-10px"
+									className="btn secondary w-200px mv-10px"
 									onClick={() =>
 										copyToClipboard(`
 ${props.order.shipping.first_name} ${props.order.shipping.last_name}
@@ -374,7 +374,7 @@ ${props.order.shipping.email}`)}
 						<div className="jc-b">
 							<div className="column jc-b w-25rem">
 								{/* <button
-									className="button primary mv-5px"
+									className="btn primary mv-5px"
 									onClick={() =>
 										props.update_order_payment_state(
 											props.order,
@@ -387,7 +387,7 @@ ${props.order.shipping.email}`)}
 								</button> */}
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -399,14 +399,14 @@ ${props.order.shipping.email}`)}
 										{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 									</button>
 									<Link to={`/secure/glow/emails/order/${props.order._id}/order/false`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -418,14 +418,14 @@ ${props.order.shipping.email}`)}
 										{props.order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
 									</button>
 									<Link to={`/secure/glow/emails/order_status/${props.order._id}/reassured`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -437,14 +437,14 @@ ${props.order.shipping.email}`)}
 										{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
 									</button>
 									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -456,14 +456,14 @@ ${props.order.shipping.email}`)}
 										{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 									</button>
 									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -475,14 +475,14 @@ ${props.order.shipping.email}`)}
 										{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 									</button>
 									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -494,14 +494,14 @@ ${props.order.shipping.email}`)}
 										{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 									</button>
 									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
-										className="button primary mv-5px w-100per"
+										className="btn primary mv-5px w-100per"
 										onClick={() =>
 											props.update_order_state(
 												props.order,
@@ -513,22 +513,22 @@ ${props.order.shipping.email}`)}
 										{props.order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
 									</button>
 									<Link to={`/secure/glow/emails/order/${props.order._id}/refunded/false`}>
-										<button className="button secondary">
+										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
 									</Link>
 								</div>
-								<button className="button secondary mv-5px" onClick={() => create_label()}>
+								<button className="btn secondary mv-5px" onClick={() => create_label()}>
 									Create Label
 								</button>
-								<button className="button secondary mv-5px" onClick={() => buy_label()}>
+								<button className="btn secondary mv-5px" onClick={() => buy_label()}>
 									Buy Label
 								</button>
-								<button className="button secondary mv-5px">
+								<button className="btn secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>
 								<button
-									className="button secondary mv-5px"
+									className="btn secondary mv-5px"
 									onClick={() => dispatch(deleteOrder(props.order._id))}
 								>
 									Delete Order

@@ -299,17 +299,17 @@ const EditEmailPage = (props) => {
 										</div>
 									</div>
 									<li>
-										<button type="submit" className="button primary">
+										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
 										</button>
 									</li>
 									<li>
 										<Link to="/secure/glow/emails/">
-											<button className="button secondary w-100per">Back to Emails</button>
+											<button className="btn secondary w-100per">Back to Emails</button>
 										</Link>
 									</li>
 									<li>
-										<button className="button secondary" onClick={() => history.goBack()}>
+										<button className="btn secondary" onClick={() => history.goBack()}>
 											Back to Template
 										</button>
 									</li>

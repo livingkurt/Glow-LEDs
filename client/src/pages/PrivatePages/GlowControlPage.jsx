@@ -242,12 +242,12 @@ const GlowControl = (props) => {
 	return (
 		<div>
 			<div className="jc-b w-100per">
-				<button className="button primary" onClick={() => history.goBack()}>
+				<button className="btn primary" onClick={() => history.goBack()}>
 					Back to Devices
 				</button>
 
 				<Link to={'/secure/account/editdevice/' + device_id}>
-					<button className="button primary">Edit Device</button>
+					<button className="btn primary">Edit Device</button>
 				</Link>
 			</div>
 			{loading ? (

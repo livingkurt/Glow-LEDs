@@ -667,25 +667,25 @@ const OrderStatusEmail = (props) => {
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
 					<Link to="/secure/glow/emails">
-						<button className="button primary">Back to Emails</button>
+						<button className="btn primary">Back to Emails</button>
 					</Link>
 					<Link to="/secure/glow/orders">
-						<button className="button primary">Back to Orders</button>
+						<button className="btn primary">Back to Orders</button>
 					</Link>
 					{order && (
 						<Link to={'/secure/account/order/' + order._id}>
-							<button className="button primary">Back to Order</button>
+							<button className="btn primary">Back to Order</button>
 						</Link>
 					)}
 
 					<button
-						className="button primary mb-1rem"
+						className="btn primary mb-1rem"
 						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h1)}
 					>
 						Send Test Email
 					</button>
 					<button
-						className="button primary mb-1rem"
+						className="btn primary mb-1rem"
 						onClick={() => send_order_email(order.shipping.email, order.shipping.first_name, email.h1)}
 					>
 						Send Order Status Email

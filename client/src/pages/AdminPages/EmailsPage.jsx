@@ -73,46 +73,46 @@ const EmailsPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-b">
 				<Link to="/secure/glow/emails/announcement">
-					<button className="button primary">Announcement</button>
+					<button className="btn primary">Announcement</button>
 				</Link>
 				<Link to="/secure/glow/emails/review">
-					<button className="button primary">Review</button>
+					<button className="btn primary">Review</button>
 				</Link>
 				<Link to="/secure/glow/emails/account_created">
-					<button className="button primary">Account Created</button>
+					<button className="btn primary">Account Created</button>
 				</Link>
 				<Link to="/secure/glow/emails/reset_password">
-					<button className="button primary">Reset Password</button>
+					<button className="btn primary">Reset Password</button>
 				</Link>
 				<Link to="/secure/glow/emails/password_changed">
-					<button className="button primary">Password Changed</button>
+					<button className="btn primary">Password Changed</button>
 				</Link>
 				<Link to="/secure/glow/emails/order/5fa43d5f248dcacd5d8e2d3f/order/false">
-					<button className="button primary">Order</button>
+					<button className="btn primary">Order</button>
 				</Link>
 				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/reassurance">
-					<button className="button primary">Reassurance</button>
+					<button className="btn primary">Reassurance</button>
 				</Link>
 				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/manufactured">
-					<button className="button primary">Manufactured</button>
+					<button className="btn primary">Manufactured</button>
 				</Link>
 				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/packaged">
-					<button className="button primary">Packaged</button>
+					<button className="btn primary">Packaged</button>
 				</Link>
 				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/shipped">
-					<button className="button primary">Shipped</button>
+					<button className="btn primary">Shipped</button>
 				</Link>
 				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/delivered">
-					<button className="button primary">Delivered</button>
+					<button className="btn primary">Delivered</button>
 				</Link>
 				<Link to="/secure/glow/emails/order/5fb354daca1b495d41e1375b/refunded/false">
-					<button className="button primary">Refunded</button>
+					<button className="btn primary">Refunded</button>
 				</Link>
 				<Link to="/secure/glow/emails/invoice">
-					<button className="button primary">Invoice</button>
+					<button className="btn primary">Invoice</button>
 				</Link>
 				<Link to="/secure/glow/editemail">
-					<button className="button primary">Create Email</button>
+					<button className="btn primary">Create Email</button>
 				</Link>
 			</div>
 			<div className="wrap jc-b">
@@ -187,11 +187,11 @@ const EmailsPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editemail/' + email._id}>
-													<button className="button icon">
+													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="button icon" onClick={() => deleteHandler(email)}>
+												<button className="btn icon" onClick={() => deleteHandler(email)}>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

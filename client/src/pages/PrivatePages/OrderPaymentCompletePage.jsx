@@ -19,17 +19,17 @@ const OrderPaymentCompletePage = (props) => {
 				<p style={{ textAlign: 'center' }}> We will notify you when your order ships!</p>
 				<div h_center wrap row h_between styles={{ width: '100%' }}>
 					<Link to={'/secure/account/order/' + props.match.params.id}>
-						<button style={{ margin: '15px' }} className="button primary">
+						<button style={{ margin: '15px' }} className="btn primary">
 							View Order
 						</button>
 					</Link>
 					<Link to="/secure/account/orders">
-						<button style={{ margin: '15px' }} className="button primary">
+						<button style={{ margin: '15px' }} className="btn primary">
 							Your Orders
 						</button>
 					</Link>
 					<Link to="/collections/all/products">
-						<button style={{ margin: '15px' }} className="button primary">
+						<button style={{ margin: '15px' }} className="btn primary">
 							Products
 						</button>
 					</Link>

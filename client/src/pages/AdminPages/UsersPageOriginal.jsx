@@ -95,7 +95,7 @@ const UsersPage = (props) => {
 					);
 				})}
 				<Link to="/secure/glow/edituser">
-					<button className="button primary" style={{ width: '160px' }}>
+					<button className="btn primary" style={{ width: '160px' }}>
 						Create User
 					</button>
 				</Link>
@@ -173,16 +173,16 @@ const UsersPage = (props) => {
 										<td>
 											<div className="jc-b">
 												<Link to={'/secure/glow/edituser/' + user._id}>
-													<button className="button icon">
+													<button className="btn icon">
 														<i className="fas fa-info-circle" />
 													</button>
 												</Link>
 												{/* <Link to={'/secure/glow/userprofile/' + user._id}>
-													<button className="button icon">
+													<button className="btn icon">
 														<i class="fas fa-mountain" />
 													</button>
 												</Link> */}
-												<button className="button icon" onClick={() => deleteHandler(user)}>
+												<button className="btn icon" onClick={() => deleteHandler(user)}>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

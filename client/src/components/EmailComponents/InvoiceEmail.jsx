@@ -684,22 +684,22 @@ const InvoiceEmail = (props) => {
 			<div className="jc-b mb-2rem">
 				{userInfo &&
 				userInfo.isAdmin && (
-					<button className="button primary" onClick={() => history.goBack()}>
+					<button className="btn primary" onClick={() => history.goBack()}>
 						Back to Emails
 					</button>
 				)}
-				<button className="button primary" onClick={() => history.goBack()}>
+				<button className="btn primary" onClick={() => history.goBack()}>
 					Back to Orders
 				</button>
 
 				<Link to={'/secure/account/order/' + props.match.params.id}>
-					<button className="button primary mh-10px">View Order</button>
+					<button className="btn primary mh-10px">View Order</button>
 				</Link>
 				<Link to="/secure/account/orders">
-					<button className="button primary mh-10px">Your Orders</button>
+					<button className="btn primary mh-10px">Your Orders</button>
 				</Link>
 
-				<button className="button primary mh-10px" onClick={() => print_invoice()}>
+				<button className="btn primary mh-10px" onClick={() => print_invoice()}>
 					Print Invoice
 				</button>
 			</div>

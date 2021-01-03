@@ -129,10 +129,10 @@ const OrdersPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-b">
 				<Link to="/secure/glow/controlpanel">
-					<button className="button primary">Back to Control Panel</button>
+					<button className="btn primary">Back to Control Panel</button>
 				</Link>
 				{/* <button
-					className="button primary"
+					className="btn primary"
 					onClick={() => {
 						change_view();
 					}}
@@ -142,7 +142,7 @@ const OrdersPage = (props) => {
 				</button> */}
 
 				<Link to="/secure/glow/editorder">
-					<button className="button primary" style={{ width: '160px' }}>
+					<button className="btn primary" style={{ width: '160px' }}>
 						Create Order
 					</button>
 				</Link>

@@ -34,13 +34,13 @@ const GuestCheckoutPage = (props) => {
 						<h2>Continue as User</h2>
 						<p>Track Orders with Ease!</p>
 						<Link to="/account/login?redirect=/secure/checkout/placeorder">
-							<button className="button primary full-width">Login</button>
+							<button className="btn primary full-width">Login</button>
 						</Link>
 					</li>
 					<li>
 						<h2>Continue as Guest</h2>
 						<Link to="/checkout/placeorder">
-							<button className="button primary full-width">Guest Checkout</button>
+							<button className="btn primary full-width">Guest Checkout</button>
 						</Link>
 					</li>
 				</ul>

@@ -149,7 +149,7 @@ const RegisterPage = (props) => {
 						{re_password_validations}
 					</label>
 					<li>
-						<button type="submit" className="button primary">
+						<button type="submit" className="btn primary">
 							Register
 						</button>
 					</li>
@@ -157,7 +157,7 @@ const RegisterPage = (props) => {
 						Already have an account?
 						<Link
 							to={redirect === '/' ? 'login' : 'login?redirect=' + redirect}
-							className="button secondary text-center"
+							className="btn secondary text-center"
 						>
 							Login
 						</Link>

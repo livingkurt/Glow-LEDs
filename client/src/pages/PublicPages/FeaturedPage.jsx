@@ -65,7 +65,7 @@ const FeaturedPage = (props) => {
 									<div className="column jc-c">
 										<div className="p_descriptions" style={{ textAlign: 'center' }}>
 											<button
-												className="button primary "
+												className="btn primary "
 												style={{ margin: 'auto', marginBottom: '10px' }}
 											>
 												{humanize(feature.product)}
@@ -97,10 +97,7 @@ const FeaturedPage = (props) => {
 							</p>
 							<Link to="/pages/faq">
 								<div className="jc-c">
-									<button
-										className="button primary "
-										style={{ margin: 'auto', marginBottom: '10px' }}
-									>
+									<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
 										Frequently Asked Questions
 									</button>
 								</div>

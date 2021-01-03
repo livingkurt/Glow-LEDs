@@ -116,16 +116,16 @@ const ProductsPage = (props) => {
 					);
 				})}
 				<Link to="/secure/glow/product_display">
-					<button className="button primary">Display Products</button>
+					<button className="btn primary">Display Products</button>
 				</Link>
 				<Link to="/secure/glow/editproduct">
-					<button className="button primary">Create Product</button>
+					<button className="btn primary">Create Product</button>
 				</Link>
 			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
 				{/* <Link to="/editproduct">
-					<button className="button primary" >
+					<button className="btn primary" >
 						Create Product
 					</button>
 				</Link> */}
@@ -182,11 +182,11 @@ const ProductsPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editproduct/' + product.pathname}>
-													<button className="button icon">
+													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="button icon" onClick={() => deleteHandler(product)}>
+												<button className="btn icon" onClick={() => deleteHandler(product)}>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

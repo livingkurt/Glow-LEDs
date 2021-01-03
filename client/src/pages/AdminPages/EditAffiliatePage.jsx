@@ -290,12 +290,12 @@ const EditAffiliatePage = (props) => {
 										</div>
 									</div>
 									<li>
-										<button type="submit" className="button primary">
+										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
 										</button>
 									</li>
 									<li>
-										<button className="button secondary" onClick={() => history.goBack()}>
+										<button className="btn secondary" onClick={() => history.goBack()}>
 											Back to Affiliates
 										</button>
 									</li>

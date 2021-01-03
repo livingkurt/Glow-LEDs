@@ -54,7 +54,7 @@ const ResetPasswordPage = (props) => {
 						/>
 					</li>
 					<li>
-						<button type="submit" className="button primary">
+						<button type="submit" className="btn primary">
 							Reset Password
 						</button>
 					</li>

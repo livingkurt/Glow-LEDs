@@ -120,7 +120,7 @@ const EditAllDataPage = (props) => {
 								/>
 							</li>
 							<li>
-								<button onClick={(e) => update_sale_price(e)} className="button primary">
+								<button onClick={(e) => update_sale_price(e)} className="btn primary">
 									Update Sale Price
 								</button>
 							</li>
@@ -258,12 +258,12 @@ const EditAllDataPage = (props) => {
 							</div>
 
 							<li>
-								<button onClick={(e) => batch_request(e)} className="button primary">
+								<button onClick={(e) => batch_request(e)} className="btn primary">
 									Complete
 								</button>
 							</li>
 							<li>
-								<button className="button secondary" onClick={() => history.goBack()}>
+								<button className="btn secondary" onClick={() => history.goBack()}>
 									Back
 								</button>
 							</li>

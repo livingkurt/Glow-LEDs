@@ -88,7 +88,7 @@ const EditProfilePage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/account/editprofile" />
 			</Helmet>
 			<div className="mb-10px">
-				<button className="button primary" onClick={() => history.goBack()}>
+				<button className="btn primary" onClick={() => history.goBack()}>
 					Back to Profile
 				</button>
 			</div>
@@ -291,13 +291,13 @@ const EditProfilePage = (props) => {
 							{country_validations}
 						</label> */}
 							<li>
-								<button type="submit" className="button primary">
+								<button type="submit" className="btn primary">
 									Update
 								</button>
 							</li>
 							<li>
 								<Link to="/secure/account/profile">
-									<button type="button" className="button secondary full-width">
+									<button type="button" className="btn secondary full-width">
 										Cancel
 									</button>
 								</Link>

@@ -48,16 +48,16 @@ const Feature = (props) => {
 							<div />
 						) : props.feature.name === 'Custom Infinity Mirror' ? (
 							<Link to="/pages/contact/custom_orders">
-								<button className="button primary">Contact</button>
+								<button className="btn primary">Contact</button>
 							</Link>
 						) : (
 							<li>
 								{props.feature.countInStock > 0 ? (
-									<button onClick={handleAddToCart} className="button primary">
+									<button onClick={handleAddToCart} className="btn primary">
 										Quick Add to Cart
 									</button>
 								) : (
-									<button className="button inactive">Out of Stock</button>
+									<button className="btn inactive">Out of Stock</button>
 								)}
 							</li>
 						)}

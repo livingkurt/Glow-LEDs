@@ -23,7 +23,7 @@ const CheckEmailPage = (props) => {
 					<p style={{ textAlign: 'center', width: '100%' }}>If still not there please contact support.</p>
 					<div className="jc-c">
 						<Link to="/pages/contact/did_not_recieve_verification_email">
-							<button style={{ marginLeft: '10px' }} className="button primary">
+							<button style={{ marginLeft: '10px' }} className="btn primary">
 								Contact Support
 							</button>
 						</Link>
