@@ -245,7 +245,7 @@ const PlaceOrderPage = (props) => {
 		[ shippingPrice ]
 	);
 
-	const placeOrderHandler = async (token) => {
+	const placeOrderHandler = async (paymentMethod) => {
 		// create an order
 		console.log({ user_data });
 		console.log({ user });
@@ -269,7 +269,7 @@ const PlaceOrderPage = (props) => {
 					order_note,
 					promo_code
 				},
-				token
+				paymentMethod
 			)
 		);
 

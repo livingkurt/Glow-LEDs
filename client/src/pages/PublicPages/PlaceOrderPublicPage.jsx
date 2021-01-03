@@ -269,7 +269,7 @@ const PlaceOrderPublicPage = (props) => {
 		}
 	};
 
-	const placeOrderHandler = async (token, create_account) => {
+	const placeOrderHandler = async (paymentMethod, create_account) => {
 		set_create_account(create_account);
 		dispatch(
 			createPayOrderGuest(
@@ -293,7 +293,7 @@ const PlaceOrderPublicPage = (props) => {
 				},
 				create_account,
 				password,
-				token
+				paymentMethod
 			)
 		);
 
@@ -972,6 +972,17 @@ const PlaceOrderPublicPage = (props) => {
 										Pay for Order/Create Account
 									</button>
 								</StripeCheckout>
+							</div>
+						)}
+
+						{!hide_pay_button &&
+						shipping &&
+						shipping.hasOwnProperty('first_name') &&
+						!account_create && (
+							<div>
+								<Elements stripe={stripePromise}>
+									<Form />
+								</Elements>
 							</div>
 						)}
 						<div className="mv-10px">

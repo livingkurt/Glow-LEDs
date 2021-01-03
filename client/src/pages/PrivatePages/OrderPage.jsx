@@ -105,8 +105,8 @@ const OrderPage = (props) => {
 		}
 	};
 
-	const pay_order = (token) => {
-		dispatch(payOrder(order, token));
+	const pay_order = (paymentMethod) => {
+		dispatch(payOrder(order, paymentMethod));
 		set_payment_loading(true);
 	};
 

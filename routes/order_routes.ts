@@ -51,7 +51,7 @@ router.get('/all_shipping', async (req: any, res: any) => {
 	orders.forEach((order: any) => {
 		all_shipping = [ order.shipping, ...all_shipping ];
 	});
-	console.log({ all_shipping });
+	// console.log({ all_shipping });
 	res.send(all_shipping);
 });
 
@@ -105,7 +105,6 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		} else if (req.query.sortOrder === 'delivered') {
 			sortOrder = { isDelivered: -1, createdAt: -1 };
 		}
-		// console.log({ searchKeyword });
 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
 			.populate('user')
 			.populate('orderItems.product')
@@ -503,10 +502,10 @@ router.post('/', isAuth, async (req: any, res: any) => {
 			promo_code: req.body.promo_code,
 			deleted: false
 		});
-		console.log({ newOrder });
+		// console.log({ newOrder });
 		// console.log({ user: req.body.user });
 		const newOrderCreated = await newOrder.save();
-		console.log({ newOrderCreated });
+		// console.log({ newOrderCreated });
 
 		if (newOrderCreated) {
 			log_request({
@@ -571,7 +570,7 @@ router.post('/', isAuth, async (req: any, res: any) => {
 router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 	try {
 		const order = await Order.findById(req.params.id).populate('user');
-		console.log({ order });
+		// console.log({ order });
 		const intent = await stripe.paymentIntents.create(
 			{
 				amount: (order.totalPrice * 100).toFixed(0),
@@ -593,7 +592,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 					});
 					return res.status(500).send({ error: err, message: err.raw.message });
 				} else {
-					console.log({ result });
+					// console.log({ result });
 					// if (charge) {
 					log_request({
 						method: 'PUT',
@@ -615,6 +614,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 					// const charge = await stripe.paymentIntents.confirm(result.id, {
 					// 	payment_method: 'pm_card_' + req.body.paymentMethod.card.brand
 					// });
+					console.log({ payment_method: req.body.payment_method.paymentMethod });
 					const charge = await stripe.paymentIntents.confirm(result.id, {
 						payment_method:
 							process.env.NODE_ENV === 'production'
