@@ -20,6 +20,7 @@ const shippingSchema = {
 
 const paymentSchema = {
 	paymentMethod: { type: String, required: true },
+	payment: { type: Object },
 	charge: { type: Object },
 	refund: { type: Array },
 	refund_reason: { type: Array }
