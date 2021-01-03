@@ -142,7 +142,7 @@
   .logo_2 {
     height: 70px !important;
   }
-  .main_container, .profile_container, .table_container {
+  .main_container p-20px, .profile_container, .table_container {
     padding: 0px !important;
   }
   .sidebar {
@@ -194,7 +194,7 @@
   .sidebar {
     top: 92px !important;
   }
-  .main_container {
+  .main_container p-20px {
     padding: 0px !important;
   }
   .search_container {

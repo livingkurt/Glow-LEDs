@@ -450,7 +450,7 @@ const ProductPage = (props) => {
 										<div />
 									) : product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
-											<button className="btn primary full-width">Contact</button>
+											<button className="btn primary 100per">Contact</button>
 										</Link>
 									) : (
 										<li>
@@ -472,7 +472,7 @@ const ProductPage = (props) => {
 							<p style={{ lineHeight: '30px' }}>{product.description}</p>
 							{product.category === 'glow_strings' && (
 								<Link to="/Glow_Strings_Manual.pdf" target="_blank" download>
-									<button className="btn primary full-width fs-20px mb-2rem">
+									<button className="btn primary 100per fs-20px mb-2rem">
 										Download Glow Strings Manual
 									</button>
 								</Link>

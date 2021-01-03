@@ -295,7 +295,7 @@ const OrderPage = (props) => {
 						}
 					}}
 				/>
-				<button type="submit" className="btn primary full-width mb-12px" disabled={!stripe}>
+				<button type="submit" className="btn primary 100per mb-12px" disabled={!stripe}>
 					Pay for Order
 				</button>
 			</form>
@@ -610,7 +610,7 @@ ${order.shipping.email}`)}
 											onChange={handleChangeFor('cardNumber')}
 										>
 											<button
-												className="btn primary full-width"
+												className="btn primary 100per"
 												style={{ marginBottom: '12px' }}
 											>
 												Pay for Order

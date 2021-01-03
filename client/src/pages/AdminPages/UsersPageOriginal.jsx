@@ -74,7 +74,7 @@ const UsersPage = (props) => {
 	const sort_options = [ 'Date', 'First Name', 'Last Name' ];
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Users | Glow LEDs</title>
 			</Helmet>

@@ -140,7 +140,7 @@ const ContactPage = (props) => {
 	// console.log(process.env.REACT_APP_FILESTACK_API);
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Contact | Glow LEDs</title>
 				<meta property="og:title" content="Contact" />
@@ -222,7 +222,7 @@ const ContactPage = (props) => {
 						onChange={(e) => set_reason_for_contact(e.target.value)}
 						defaultValue={reason_for_contact}
 						value={reason_for_contact}
-						className=" contact_dropdown full-width"
+						className=" contact_dropdown 100per"
 						name="reason_for_contact"
 						placeholder="----Click Here to Choose Reason----"
 					>
@@ -297,12 +297,12 @@ const ContactPage = (props) => {
 				<label className="validation_text">{reason_for_contact_validations}</label>
 				{/* {console.log({ reason_for_contact })} */}
 				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (
-					<div className="full-width">
+					<div className="100per">
 						<label>Order Number</label>
 						<input
 							onChange={(e) => set_order_number(e.target.value)}
 							defaultValue={order_number}
-							className="zoom_f form_input full-width"
+							className="zoom_f form_input 100per"
 							type="text"
 							name="order_number"
 							placeholder="Order Number"
@@ -311,7 +311,7 @@ const ContactPage = (props) => {
 					</div>
 				)}
 				{[ 'custom_orders' ].includes(reason_for_contact) && (
-					<div className="full-width">
+					<div className="100per">
 						<label>Upload your Pictures</label>
 						<ReactFilestack
 							apikey={process.env.REACT_APP_FILESTACK_API}

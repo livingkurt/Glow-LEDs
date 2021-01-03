@@ -31,7 +31,7 @@ const HomePage = (props) => {
 	);
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
 				<meta property="og:title" content="Glow LEDs | Home of the LED Glove Diffuser Caps" />

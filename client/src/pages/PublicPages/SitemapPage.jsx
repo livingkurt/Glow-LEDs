@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 
 const SitemapPage = () => {
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Sitemap | Glow LEDs</title>
 				<meta property="og:title" content="Sitemap" />

@@ -95,7 +95,7 @@ const ProductsPage = (props) => {
 	};
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Products | Glow LEDs</title>
 			</Helmet>

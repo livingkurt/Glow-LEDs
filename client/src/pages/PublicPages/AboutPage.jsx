@@ -29,7 +29,7 @@ const AboutPage = () => {
 		[ contents ]
 	);
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>About | Glow LEDs</title>
 				<meta property="og:title" content="About" />

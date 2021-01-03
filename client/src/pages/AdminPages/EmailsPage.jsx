@@ -67,7 +67,7 @@ const EmailsPage = (props) => {
 	const sort_options = [ 'Email Type' ];
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>

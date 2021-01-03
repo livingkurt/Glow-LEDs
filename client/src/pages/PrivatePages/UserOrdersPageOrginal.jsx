@@ -107,7 +107,7 @@ const UserOrderPage = (props) => {
 				})}
 			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
-				{/* <button type="button" onClick={handleLogout} className="btn secondary full-width">Logout</button> */}
+				{/* <button type="button" onClick={handleLogout} className="btn secondary 100per">Logout</button> */}
 
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
 				<Loading loading={loading} error={error}>

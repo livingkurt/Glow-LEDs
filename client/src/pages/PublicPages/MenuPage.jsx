@@ -66,7 +66,7 @@ const MenuPage = (props) => {
 	};
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>{humanize(pathname)} | Glow LEDs</title>
 				<meta property="og:title" content={`${humanize(pathname)}| Glow LEDs`} />

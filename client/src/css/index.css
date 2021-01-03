@@ -90,11 +90,11 @@ header {
   top: 0;
 }
 
-.full-width {
+.100per {
   width: 100%;
 }
 
-.main_container {
+.main_container p-20px {
   padding: 20px;
 }
 
@@ -796,7 +796,7 @@ video {
   color: $font_color;
 }
 
-.sidebar_button {
+.sidebar-btn {
   box-shadow: $bs_shallow;
   background-color: transparent;
   color: $font_color;
@@ -807,14 +807,14 @@ video {
   padding: 10px;
 }
 
-.sidebar_button.primary {
+.sidebar-btn.primary {
   border-bottom: 1px white solid;
   width: 100%;
   border-radius: 0px;
   text-align: start;
 }
 
-.sidebar_button.secondary {
+.sidebar-btn.secondary {
   border-bottom: 1px white solid;
   width: 100%;
   border-radius: 0px;
@@ -838,11 +838,11 @@ video {
   width: 100%;
 }
 
-.sidebar_button:hover {
+.sidebar-btn:hover {
   background: gray;
 }
 
-.sidebar_button:focus+.sidebar_dropdown_container {
+.sidebar-btn:focus+.sidebar_dropdown_container {
   max-height: 600px;
 }
 

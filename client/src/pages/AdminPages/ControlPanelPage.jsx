@@ -375,7 +375,7 @@ const ControlPanelPage = (props) => {
 	];
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Control Panel | Glow LEDs</title>8
 			</Helmet>

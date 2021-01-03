@@ -99,7 +99,7 @@ const EditDevicePage = (props) => {
 	};
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Device' : 'Create Device'}</h1>
 
 			<div className="form">

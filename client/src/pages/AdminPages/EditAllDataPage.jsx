@@ -79,7 +79,7 @@ const EditAllDataPage = (props) => {
 	const actions = [ '$rename', '$set', '$unset' ];
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>Edit All Data</h1>
 
 			<div className="form">

@@ -13,7 +13,7 @@ const StripeButton = () => {
 			token={(token) => handleSuccessPayment(token)}
 			stripeKey={process.env.REACT_APP_STRIPE_KEY}
 		>
-			<button className="btn full-width" style={{ backgroundColor: '#804747' }}>
+			<button className="btn 100per" style={{ backgroundColor: '#804747' }}>
 				Pay for Order
 			</button>
 		</StripeCheckout>

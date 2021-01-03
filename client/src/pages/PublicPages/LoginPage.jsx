@@ -99,7 +99,7 @@ const LoginPage = (props) => {
 					</li>
 					<li>
 						<Link to="/account/passwordreset" style={{ fontFamily: 'heading_font' }}>
-							<button className="btn secondary full-width">Forgot Password?</button>
+							<button className="btn secondary 100per">Forgot Password?</button>
 						</Link>
 					</li>
 					<li>New to Glow LEDs?</li>

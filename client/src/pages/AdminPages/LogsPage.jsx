@@ -78,7 +78,7 @@ const LogsPage = (props) => {
 	const sort_options = [ 'Newest', 'File', 'Method', 'Status', 'Success', 'Error', 'Newest' ];
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Logs | Glow LEDs</title>
 			</Helmet>

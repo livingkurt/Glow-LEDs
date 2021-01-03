@@ -91,7 +91,7 @@ const PromosPage = (props) => {
 	const sort_options = [ 'Newest', 'Admin Only', 'Affiliate Only', 'Active' ];
 
 	return (
-		<div className="main_container">
+		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Promos | Glow LEDs</title>
 			</Helmet>

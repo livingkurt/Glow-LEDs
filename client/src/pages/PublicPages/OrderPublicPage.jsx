@@ -495,7 +495,7 @@ const OrderPublicPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="btn primary full-width" style={{ marginBottom: '12px' }}>
+									<button className="btn primary 100per" style={{ marginBottom: '12px' }}>
 										Pay for Order
 									</button>
 								</StripeCheckout>
