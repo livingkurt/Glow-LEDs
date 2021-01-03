@@ -49,7 +49,8 @@ export const createPayOrder = (
 		promo_code: string;
 		// product: string;
 	},
-	token: any
+	paymentMethod: any
+	// token: any
 ) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -67,7 +68,7 @@ export const createPayOrder = (
 
 		const { data } = await axios.put(
 			'/api/orders/' + newOrder._id + '/pay',
-			{ token },
+			{ paymentMethod },
 			{
 				headers: { Authorization: 'Bearer ' + user_data.token }
 			}
@@ -101,7 +102,7 @@ export const createPayOrderGuest = (
 	},
 	create_account: boolean,
 	password: string,
-	token: any
+	paymentMethod: any
 ) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -131,7 +132,7 @@ export const createPayOrderGuest = (
 
 			dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
-			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { token });
+			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { paymentMethod });
 			console.log({ paid });
 			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
 
@@ -147,7 +148,7 @@ export const createPayOrderGuest = (
 
 			dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
-			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { token });
+			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { paymentMethod });
 			console.log({ paid });
 			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
 
@@ -227,16 +228,16 @@ export const createOrder = (order: {
 	}
 };
 
-export const payOrder = (order: any, token: any) => async (
+export const payOrder = (order: any, paymentMethod: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		dispatch({ type: ORDER_PAY_REQUEST, payload: token });
+		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
 		const { userLogin: { userInfo: user_data } } = getState();
 		const { data } = await axios.put(
 			'/api/orders/' + order._id + '/pay',
-			{ token },
+			{ paymentMethod },
 			{
 				headers: { Authorization: 'Bearer ' + user_data.token }
 			}
@@ -253,12 +254,12 @@ export const payOrder = (order: any, token: any) => async (
 		dispatch({ type: ORDER_PAY_FAIL, payload: error.response.data.message });
 	}
 };
-export const payOrderGuest = (order: any, token: any) => async (
+export const payOrderGuest = (order: any, paymentMethod: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	try {
-		dispatch({ type: ORDER_PAY_REQUEST, payload: token });
-		const { data } = await axios.put('/api/orders/guestcheckout/' + order._id + '/pay', { token });
+		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
+		const { data } = await axios.put('/api/orders/guestcheckout/' + order._id + '/pay', { paymentMethod });
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		console.log({ order: data.order });
 	} catch (error) {

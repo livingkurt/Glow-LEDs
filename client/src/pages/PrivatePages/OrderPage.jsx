@@ -6,6 +6,8 @@ import { detailsOrder, payOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
+import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Helmet } from 'react-helmet';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
@@ -250,6 +252,54 @@ const OrderPage = (props) => {
 	const buy_label = async () => {
 		const { data } = await API_Orders.buy_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+	};
+
+	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
+	// console.log(process.env.REACT_APP_STRIPE_KEY);
+
+	const Form = () => {
+		const stripe = useStripe();
+		const elements = useElements();
+
+		const handleSubmit = async (event) => {
+			event.preventDefault();
+			const { error, paymentMethod } = await stripe.createPaymentMethod({
+				type: 'card',
+				card: elements.getElement(CardElement)
+			});
+
+			// console.log({ error });
+			if (error) {
+				console.log({ error });
+				return;
+			}
+			console.log({ paymentMethod });
+			pay_order(paymentMethod);
+		};
+
+		return (
+			<form onSubmit={handleSubmit}>
+				<CardElement
+					options={{
+						style: {
+							base: {
+								fontSize: '20px',
+								color: 'white',
+								'::placeholder': {
+									color: 'white'
+								}
+							},
+							invalid: {
+								color: '#9e2146'
+							}
+						}
+					}}
+				/>
+				<button type="submit" className="button primary full-width mb-12px" disabled={!stripe}>
+					Pay for Order
+				</button>
+			</form>
+		);
 	};
 
 	return (
@@ -546,7 +596,7 @@ ${order.shipping.email}`)}
 									className="placeorder-actions-payment"
 									style={{ display: 'flex', justifyContent: 'center' }}
 								/>
-								{!order.isPaid && (
+								{/* {!order.isPaid && (
 									<div>
 										<StripeCheckout
 											name="Glow LEDs"
@@ -566,6 +616,14 @@ ${order.shipping.email}`)}
 												Pay for Order
 											</button>
 										</StripeCheckout>
+									</div>
+								)} */}
+
+								{!order.isPaid && (
+									<div>
+										<Elements stripe={stripePromise}>
+											<Form />
+										</Elements>
 									</div>
 								)}
 

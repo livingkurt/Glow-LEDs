@@ -208,39 +208,72 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 	}
 });
 
-router.get('/address_1', async (req, res) => {
-	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
-	// const order = await Order.updateMany(
-	//   {},{$rename:
-	//     {shipping: { address: 'address_1' }},
-	// }
+// router.get('/address_1', async (req, res) => {
+// 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+// 	// const order = await Order.updateMany(
+// 	//   {},{$rename:
+// 	//     {shipping: { address: 'address_1' }},
+// 	// }
 
-	// );
-	const order = await Order.updateMany(
-		{
-			// 'orderItems.name': {
-			// 	$regex: 'Diffuser Caps',
-			// 	$options: 'i'
-			// }
-		},
-		{
-			$set: {
-				'shipping.address_2': '',
-				'shipping.shipping_rate': {},
-				'shipping.shipment_id': ''
-			}
-		},
-		// {
-		// 	$rename: {
-		// 		'shipping.address': 'shipping.address_1'
-		// 	}
-		// },
-		{ multi: true }
-		// { upsert: true },
-	);
-	console.log({ order });
-	res.send(order);
-});
+// 	// );
+// 	const order = await Order.updateMany(
+// 		{
+// 			// 'orderItems.name': {
+// 			// 	$regex: 'Diffuser Caps',
+// 			// 	$options: 'i'
+// 			// }
+// 		},
+// 		{
+// 			$set: {
+// 				'shipping.address_2': '',
+// 				'shipping.shipping_rate': {},
+// 				'shipping.shipment_id': ''
+// 			}
+// 		},
+// 		// {
+// 		// 	$rename: {
+// 		// 		'shipping.address': 'shipping.address_1'
+// 		// 	}
+// 		// },
+// 		{ multi: true }
+// 		// { upsert: true },
+// 	);
+// 	console.log({ order });
+// 	res.send(order);
+// });
+// router.get('/address_1', async (req, res) => {
+// 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+// 	// const order = await Order.updateMany(
+// 	//   {},{$rename:
+// 	//     {shipping: { address: 'address_1' }},
+// 	// }
+
+// 	// );
+// 	const order = await Order.updateMany(
+// 		{
+// 			// 'orderItems.name': {
+// 			// 	$regex: 'Diffuser Caps',
+// 			// 	$options: 'i'
+// 			// }
+// 		},
+// 		{
+// 			$set: {
+// 				'shipping.address_2': '',
+// 				'shipping.shipping_rate': {},
+// 				'shipping.shipment_id': ''
+// 			}
+// 		},
+// 		// {
+// 		// 	$rename: {
+// 		// 		'shipping.address': 'shipping.address_1'
+// 		// 	}
+// 		// },
+// 		{ multi: true }
+// 		// { upsert: true },
+// 	);
+// 	console.log({ order });
+// 	res.send(order);
+// });
 
 // router.put('/products', async (req, res) => {
 // 	// const products = await Product.find({});

@@ -572,17 +572,11 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 	try {
 		const order = await Order.findById(req.params.id).populate('user');
 		console.log({ order });
-
-		// setTimeout(() => {
-		// 	console.log({ message: 'Error Paying for Order' });
-		// 	// return res.status(500).send({ message: 'Error Paying for Order' });
-		// }, 5000);
-		const charge = await stripe.charges.create(
+		const intent = await stripe.paymentIntents.create(
 			{
 				amount: (order.totalPrice * 100).toFixed(0),
 				currency: 'usd',
-				description: `Order Paid`,
-				source: req.body.token.id
+				payment_method_types: [ 'card' ]
 			},
 			async (err: any, result: any) => {
 				if (err) {
@@ -614,8 +608,13 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 					order.paidAt = Date.now();
 					order.payment = {
 						paymentMethod: 'stripe',
-						charge: result
+						charge: result,
+						payment: req.body.paymentMethod
+						// payment_intent: result
 					};
+					const charge = await stripe.paymentIntents.confirm(result.id, {
+						payment_method: 'pm_card_' + req.body.paymentMethod.card.brand
+					});
 					const updatedOrder = await order.save();
 					if (updatedOrder) {
 						log_request({
@@ -633,7 +632,6 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 				}
 			}
 		);
-		// 4000000000000002
 	} catch (error) {
 		log_error({
 			method: 'PUT',
@@ -643,6 +641,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 			status: 500,
 			success: false
 		});
+		console.log({ error });
 		res.status(500).send({ error, message: 'Error Paying for Order' });
 	}
 });
@@ -693,12 +692,18 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 		const order = await Order.findById(req.params.id);
 		console.log({ '/guestcheckout/:id/pay': req.body });
 		// console.log({ order });
-		const charge = await stripe.charges.create(
+		// const charge = await stripe.charges.create(
+		// 	{
+		// 		amount: (order.totalPrice * 100).toFixed(0),
+		// 		currency: 'usd',
+		// 		description: `Order Paid`,
+		// 		source: req.body.token.id
+		//   },
+		const intent = await stripe.paymentIntents.create(
 			{
 				amount: (order.totalPrice * 100).toFixed(0),
 				currency: 'usd',
-				description: `Order Paid`,
-				source: req.body.token.id
+				payment_method_types: [ 'card' ]
 			},
 			async (err: any, result: any) => {
 				if (err) {
@@ -729,8 +734,14 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 					order.paidAt = Date.now();
 					order.payment = {
 						paymentMethod: 'stripe',
-						charge: result
+						charge: result,
+						payment: req.body.paymentMethod
+						// payment_intent: result
 					};
+					console.log(req.body.paymentMethod.card.brand);
+					const charge = await stripe.paymentIntents.confirm(result.id, {
+						payment_method: 'pm_card_' + req.body.paymentMethod.card.brand
+					});
 					const updatedOrder = await order.save();
 					if (updatedOrder) {
 						log_request({
@@ -765,10 +776,12 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 router.put('/:id/refund', async (req: any, res: any) => {
 	try {
 		const order = await Order.findById(req.params.id);
+		console.log({ order });
 		const refund = await stripe.refunds.create({
-			charge: order.payment.charge.id,
+			payment_intent: order.payment.charge.id,
 			amount: req.body.refund_amount * 100
 		});
+		console.log({ refund });
 		if (refund) {
 			log_request({
 				method: 'PUT',
@@ -824,6 +837,263 @@ router.put('/:id/refund', async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Refunding Order' });
 	}
 });
+
+// router.put('/:id/pay', isAuth, async (req: any, res: any) => {
+// 	try {
+// 		const order = await Order.findById(req.params.id).populate('user');
+// 		console.log({ order });
+
+// 		// setTimeout(() => {
+// 		// 	console.log({ message: 'Error Paying for Order' });
+// 		// 	// return res.status(500).send({ message: 'Error Paying for Order' });
+// 		// }, 5000);
+// 		const charge = await stripe.charges.create(
+// 			{
+// 				amount: (order.totalPrice * 100).toFixed(0),
+// 				currency: 'usd',
+// 				description: `Order Paid`,
+// 				source: req.body.token.id
+// 			},
+// 			async (err: any, result: any) => {
+// 				if (err) {
+// 					console.log({ err });
+// 					// return res.status(500).send({ error, message: 'Error Paying for Order' });
+// 					log_error({
+// 						method: 'PUT',
+// 						path: req.originalUrl,
+// 						collection: 'Order',
+// 						error: err,
+// 						status: 500,
+// 						success: false,
+// 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 					});
+// 					return res.status(500).send({ error: err, message: err.raw.message });
+// 				} else {
+// 					console.log({ result });
+// 					// if (charge) {
+// 					log_request({
+// 						method: 'PUT',
+// 						path: req.originalUrl,
+// 						collection: 'Order',
+// 						data: [ result ],
+// 						status: 201,
+// 						success: true,
+// 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 					});
+// 					order.isPaid = true;
+// 					order.paidAt = Date.now();
+// 					order.payment = {
+// 						paymentMethod: 'stripe',
+// 						charge: result
+// 					};
+// 					const updatedOrder = await order.save();
+// 					if (updatedOrder) {
+// 						log_request({
+// 							method: 'PUT',
+// 							path: req.originalUrl,
+// 							collection: 'Order',
+// 							data: [ updatedOrder ],
+// 							status: 201,
+// 							success: true,
+// 							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 						});
+// 						res.send({ message: 'Order Paid.', order: updatedOrder });
+// 					}
+// 					// }
+// 				}
+// 			}
+// 		);
+// 		// 4000000000000002
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'PUT',
+// 			path: req.originalUrl,
+// 			collection: 'Order',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Paying for Order' });
+// 	}
+// });
+
+// router.post('/guestcheckout', async (req: any, res: any) => {
+// 	try {
+// 		const newOrderCreated = await Order.create({ ...req.body, guest: true });
+// 		console.log({ newOrderCreated });
+
+// 		if (newOrderCreated) {
+// 			log_request({
+// 				method: 'POST',
+// 				path: req.originalUrl,
+// 				collection: 'Order',
+// 				data: [ newOrderCreated ],
+// 				status: 201,
+// 				success: true,
+// 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 			});
+// 			res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
+// 		} else {
+// 			log_request({
+// 				method: 'POST',
+// 				path: req.originalUrl,
+// 				collection: 'Order',
+// 				data: [ newOrderCreated ],
+// 				status: 500,
+// 				success: false,
+// 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 			});
+// 			return res.status(500).send({ message: ' Error in Creating Order.' });
+// 		}
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'POST',
+// 			path: req.originalUrl,
+// 			collection: 'Order',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Creating Order' });
+// 	}
+// });
+
+// router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
+// 	try {
+// 		const order = await Order.findById(req.params.id);
+// 		console.log({ '/guestcheckout/:id/pay': req.body });
+// 		// console.log({ order });
+// 		const charge = await stripe.charges.create(
+// 			{
+// 				amount: (order.totalPrice * 100).toFixed(0),
+// 				currency: 'usd',
+// 				description: `Order Paid`,
+// 				source: req.body.token.id
+// 			},
+// 			async (err: any, result: any) => {
+// 				if (err) {
+// 					console.log({ err });
+// 					log_error({
+// 						method: 'PUT',
+// 						path: req.originalUrl,
+// 						collection: 'Order',
+// 						error: err,
+// 						status: 500,
+// 						success: false,
+// 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 					});
+// 					return res.status(500).send({ error: err, message: err.raw.message });
+// 				} else {
+// 					console.log({ result });
+// 					// if (charge) {
+// 					log_request({
+// 						method: 'PUT',
+// 						path: req.originalUrl,
+// 						collection: 'Order',
+// 						data: [ result ],
+// 						status: 201,
+// 						success: true,
+// 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 					});
+// 					order.isPaid = true;
+// 					order.paidAt = Date.now();
+// 					order.payment = {
+// 						paymentMethod: 'stripe',
+// 						charge: result
+// 					};
+// 					const updatedOrder = await order.save();
+// 					if (updatedOrder) {
+// 						log_request({
+// 							method: 'PUT',
+// 							path: req.originalUrl,
+// 							collection: 'Order',
+// 							data: [ updatedOrder ],
+// 							status: 201,
+// 							success: true,
+// 							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 						});
+// 						res.send({ message: 'Order Paid.', order: updatedOrder });
+// 					}
+// 					// }
+// 				}
+// 			}
+// 		);
+// 		// 4000000000000002
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'PUT',
+// 			path: req.originalUrl,
+// 			collection: 'Order',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Paying for Order' });
+// 	}
+// });
+
+// router.put('/:id/refund', async (req: any, res: any) => {
+// 	try {
+// 		const order = await Order.findById(req.params.id);
+// 		const refund = await stripe.refunds.create({
+// 			charge: order.payment.charge.id,
+// 			amount: req.body.refund_amount * 100
+// 		});
+// 		if (refund) {
+// 			log_request({
+// 				method: 'PUT',
+// 				path: req.originalUrl,
+// 				collection: 'Order',
+// 				data: [ refund ],
+// 				status: 201,
+// 				success: true,
+// 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 			});
+// 			order.isRefunded = true;
+// 			order.refundedAt = Date.now();
+// 			order.payment = {
+// 				paymentMethod: order.payment.paymentMethod,
+// 				charge: order.payment.charge,
+// 				refund: [ ...order.payment.refund, refund ],
+// 				refund_reason: [ ...order.payment.refund_reason, req.body.refund_reason ]
+// 			};
+// 			const updated = await Order.updateOne({ _id: req.params.id }, order);
+// 			if (updated) {
+// 				log_request({
+// 					method: 'PUT',
+// 					path: req.originalUrl,
+// 					collection: 'Order',
+// 					data: [ updated ],
+// 					status: 201,
+// 					success: true,
+// 					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 				});
+// 				res.send(updated);
+// 			} else {
+// 				log_request({
+// 					method: 'PUT',
+// 					path: req.originalUrl,
+// 					collection: 'Product',
+// 					data: [ updated ],
+// 					status: 404,
+// 					success: false,
+// 					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 				});
+// 				res.status(404).send({ message: 'Order not Updated.' });
+// 			}
+// 		}
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'PUT',
+// 			path: req.originalUrl,
+// 			collection: 'Order',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Refunding Order' });
+// 	}
+// });
 
 router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
 	try {

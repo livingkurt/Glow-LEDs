@@ -48,14 +48,16 @@ const OrderEmail = (props) => {
 
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
-			case 'American Express':
+			case 'amex':
 				return 'https://images2.imgbox.com/ea/c8/r82jUQW8_o.png';
-			case 'Visa':
+			case 'visa':
 				return 'https://images2.imgbox.com/18/a3/wHEnyn5x_o.png';
-			case 'MasterCard':
+			case 'mastercard':
 				return 'https://images2.imgbox.com/84/a2/oPcysx6p_o.png';
-			case 'Discover':
+			case 'discover':
 				return 'https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png';
+			default:
+				return '';
 		}
 	};
 
@@ -672,10 +674,10 @@ const OrderEmail = (props) => {
 																			color: 'white'
 																		}}
 																	>
-																		{order.payment.charge ? (
+																		{order.payment.payment ? (
 																			<img
 																				src={determin_card_logo(
-																					order.payment.charge.source.brand
+																					order.payment.payment.card.brand
 																				)}
 																				style={{ height: '25px' }}
 																				alt="card_logo"
@@ -684,8 +686,9 @@ const OrderEmail = (props) => {
 																			''
 																		)}{' '}
 																	</div>
+																	{/* {console.log(order.payment.payment && order.payment.payment.card)} */}
 																	ending with{' '}
-																	{order.payment.charge ? order.payment.charge.source.last4 : ''}{' '}
+																	{order.payment.payment ? order.payment.payment.card.last4 : ''}{' '}
 																	<div style={{ margin: '0 10px', color: 'white' }}>-</div>
 																	<div
 																		style={{

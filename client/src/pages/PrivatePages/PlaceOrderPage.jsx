@@ -8,6 +8,8 @@ import { addToCart, removeFromCart, saveShipping, savePayment } from '../../acti
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
+import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
@@ -490,6 +492,75 @@ const PlaceOrderPage = (props) => {
 		}
 	};
 
+	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
+	// console.log(process.env.REACT_APP_STRIPE_KEY);
+
+	const Form = () => {
+		const stripe = useStripe();
+		const elements = useElements();
+
+		const handleSubmit = async (event) => {
+			event.preventDefault();
+			const { error, paymentMethod } = await stripe.createPaymentMethod({
+				type: 'card',
+				card: elements.getElement(CardElement)
+			});
+
+			// console.log({ error });
+			if (error) {
+				console.log({ error });
+				return;
+			}
+			console.log({ paymentMethod });
+			placeOrderHandler(paymentMethod);
+		};
+
+		return (
+			<form onSubmit={handleSubmit}>
+				<CardElement
+					// options={{
+					// 	style: {
+					// 		base: {
+					// 			fontSize: '20px',
+					// 			color: 'white',
+					// 			backgroundColor: '#4d5061',
+					// 			padding: '1rem',
+					// 			'::placeholder': {
+					// 				color: 'white'
+					// 			}
+					// 		},
+					// 		invalid: {
+					// 			color: '#9e2146'
+					// 		}
+					// 	}
+					// }}
+					options={{
+						iconStyle: 'solid',
+						style: {
+							base: {
+								iconColor: '#c4f0ff',
+								color: '#fff',
+								fontWeight: 500,
+								fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+								fontSize: '1.2rem',
+								fontSmoothing: 'antialiased',
+								':-webkit-autofill': { color: 'white' },
+								'::placeholder': { color: 'white' }
+							},
+							invalid: {
+								iconColor: '#ffc7ee',
+								color: '#ffc7ee'
+							}
+						}
+					}}
+				/>
+				<button type="submit" className="button primary full-width mb-12px" disabled={!stripe}>
+					Pay for Order
+				</button>
+			</form>
+		);
+	};
+
 	return (
 		<div>
 			<Helmet>
@@ -730,7 +801,11 @@ const PlaceOrderPage = (props) => {
 															2
 														)}{' '}
 													</div>
-													<div> 2-{rate.est_delivery_days} Days</div>
+													<div>
+														{' '}
+														{rate.est_delivery_days}{' '}
+														{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+													</div>
 												</div>
 												<button
 													className="custom-select-shipping_rates"
@@ -754,7 +829,11 @@ const PlaceOrderPage = (props) => {
 															2
 														)}{' '}
 													</div>
-													<div> 1-{rate.est_delivery_days} Days</div>
+													<div>
+														{' '}
+														{rate.est_delivery_days}{' '}
+														{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+													</div>
 												</div>
 												<button
 													className="custom-select-shipping_rates"
@@ -825,8 +904,9 @@ const PlaceOrderPage = (props) => {
 											{current_shipping_speed.speed} ${(parseFloat(
 												current_shipping_speed.rate.retail_rate
 											) + packaging_cost).toFixed(2)}{' '}
-											{determine_delivery_speed(current_shipping_speed.speed)}{' '}
-											{/* {current_shipping_speed.rate.est_delivery_days} */}
+											{/* {determine_delivery_speed(current_shipping_speed.speed)}{' '} */}
+											{current_shipping_speed.rate.est_delivery_days}{' '}
+											{current_shipping_speed.rate.est_delivery_days === 1 ? 'Day' : 'Days'}
 										</div>
 									</div>
 									<button
@@ -838,7 +918,7 @@ const PlaceOrderPage = (props) => {
 								</div>
 							)}
 						</li>
-						{!loading_tax_rate &&
+						{/* {!loading_tax_rate &&
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') && (
@@ -853,6 +933,16 @@ const PlaceOrderPage = (props) => {
 								>
 									<button className="button primary full-width mb-12px">Pay for Order</button>
 								</StripeCheckout>
+							</div>
+						)} */}
+						{!loading_tax_rate &&
+						!hide_pay_button &&
+						shipping &&
+						shipping.hasOwnProperty('first_name') && (
+							<div>
+								<Elements stripe={stripePromise}>
+									<Form />
+								</Elements>
 							</div>
 						)}
 						{user_data && user_data.isAdmin && users && loading_checkboxes ? (
