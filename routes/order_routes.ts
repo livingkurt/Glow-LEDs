@@ -623,6 +623,9 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 									? req.body.paymentMethod.id
 									: 'pm_card_' + req.body.paymentMethod.card.brand
 						},
+						// {
+						// 	payment_method: req.body.paymentMethod.id
+						// },
 						async (err: any, result: any) => {
 							if (err) {
 								console.log({ err });
@@ -777,6 +780,7 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 			async (err: any, result: any) => {
 				if (err) {
 					console.log({ err });
+					// return res.status(500).send({ error, message: 'Error Paying for Order' });
 					log_error({
 						method: 'PUT',
 						path: req.originalUrl,
@@ -788,7 +792,7 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 					});
 					return res.status(500).send({ error: err, message: err.raw.message });
 				} else {
-					console.log({ result });
+					// console.log({ result });
 					// if (charge) {
 					log_request({
 						method: 'PUT',
@@ -799,41 +803,107 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 						success: true,
 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
-					order.isPaid = true;
-					order.paidAt = Date.now();
-					order.payment = {
-						paymentMethod: 'stripe',
-						charge: result,
-						payment: req.body.paymentMethod
-						// payment_intent: result
-					};
+					// order.isPaid = true;
+					// order.paidAt = Date.now();
+					// order.payment = {
+					// 	paymentMethod: 'stripe',
+					// 	charge: result,
+					// 	payment: req.body.paymentMethod
+					// 	// payment_intent: result
+					// };
 					// const charge = await stripe.paymentIntents.confirm(result.id, {
 					// 	payment_method: 'pm_card_' + req.body.paymentMethod.card.brand
 					// });
-					const charge = await stripe.paymentIntents.confirm(result.id, {
-						payment_method:
-							process.env.NODE_ENV === 'production'
-								? req.body.paymentMethod.id
-								: 'pm_card_' + req.body.paymentMethod.card.brand
-					});
-					const updatedOrder = await order.save();
-					if (updatedOrder) {
-						log_request({
-							method: 'PUT',
-							path: req.originalUrl,
-							collection: 'Order',
-							data: [ updatedOrder ],
-							status: 201,
-							success: true,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
-						res.send({ message: 'Order Paid.', order: updatedOrder });
-					}
+					console.log({ payment_method: req.body.paymentMethod.id });
+					const charge = await stripe.paymentIntents.confirm(
+						result.id,
+						{
+							payment_method:
+								process.env.NODE_ENV === 'production'
+									? req.body.paymentMethod.id
+									: 'pm_card_' + req.body.paymentMethod.card.brand
+						},
+						// {
+						// 	payment_method: req.body.paymentMethod.id
+						// },
+						async (err: any, result: any) => {
+							if (err) {
+								console.log({ err });
+								// return res.status(500).send({ error, message: 'Error Paying for Order' });
+								log_error({
+									method: 'PUT',
+									path: req.originalUrl,
+									collection: 'Order',
+									error: err,
+									status: 500,
+									success: false,
+									ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+								});
+								return res.status(500).send({ error: err, message: err.raw.message });
+							} else {
+								// console.log({ result });
+								// if (charge) {
+								log_request({
+									method: 'PUT',
+									path: req.originalUrl,
+									collection: 'Order',
+									data: [ result ],
+									status: 201,
+									success: true,
+									ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+								});
+								order.isPaid = true;
+								order.paidAt = Date.now();
+								order.payment = {
+									paymentMethod: 'stripe',
+									charge: result,
+									payment: req.body.paymentMethod
+									// payment_intent: result
+								};
+								// const charge = await stripe.paymentIntents.confirm(result.id, {
+								// 	payment_method: 'pm_card_' + req.body.paymentMethod.card.brand
+								// });
+								// console.log({ payment_method: req.body.paymentMethod.id });
+								// const charge = await stripe.paymentIntents.confirm(result.id, {
+								// 	payment_method:
+								// 		process.env.NODE_ENV === 'production'
+								// 			? req.body.paymentMethod.id
+								// 			: 'pm_card_' + req.body.paymentMethod.card.brand
+								// });
+								const updatedOrder = await order.save();
+								if (updatedOrder) {
+									log_request({
+										method: 'PUT',
+										path: req.originalUrl,
+										collection: 'Order',
+										data: [ updatedOrder ],
+										status: 201,
+										success: true,
+										ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+									});
+									res.send({ message: 'Order Paid.', order: updatedOrder });
+								}
+								// }
+							}
+						}
+					);
+					// const updatedOrder = await order.save();
+					// if (updatedOrder) {
+					// 	log_request({
+					// 		method: 'PUT',
+					// 		path: req.originalUrl,
+					// 		collection: 'Order',
+					// 		data: [ updatedOrder ],
+					// 		status: 201,
+					// 		success: true,
+					// 		ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+					// 	});
+					// 	res.send({ message: 'Order Paid.', order: updatedOrder });
+					// }
 					// }
 				}
 			}
 		);
-		// 4000000000000002
 	} catch (error) {
 		log_error({
 			method: 'PUT',
