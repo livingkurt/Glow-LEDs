@@ -618,7 +618,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 					const charge = await stripe.paymentIntents.confirm(result.id, {
 						payment_method:
 							process.env.NODE_ENV === 'production'
-								? req.body.paymentMethod.card.brand
+								? req.body.payment_method.paymentMethod.id
 								: 'pm_card_' + req.body.paymentMethod.card.brand
 					});
 					const updatedOrder = await order.save();
@@ -744,14 +744,13 @@ router.put('/guestcheckout/:id/pay', async (req: any, res: any) => {
 						payment: req.body.paymentMethod
 						// payment_intent: result
 					};
-					console.log(req.body.paymentMethod.card.brand);
 					// const charge = await stripe.paymentIntents.confirm(result.id, {
 					// 	payment_method: 'pm_card_' + req.body.paymentMethod.card.brand
 					// });
 					const charge = await stripe.paymentIntents.confirm(result.id, {
 						payment_method:
 							process.env.NODE_ENV === 'production'
-								? req.body.paymentMethod.card.brand
+								? req.body.payment_method.paymentMethod.id
 								: 'pm_card_' + req.body.paymentMethod.card.brand
 					});
 					const updatedOrder = await order.save();
