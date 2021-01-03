@@ -1,5 +1,3 @@
-$background_color: #272727;
-$content_bg_color: #272727;
 $font_color: white;
 $font_size: 1.6rem;
 $validation_color: #ff4a4a;
@@ -10,6 +8,8 @@ $bs_deep: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $br_small_containers: 1rem;
 $br_medium_containers: 1.5rem;
 $br_large_containers: 2rem;
+
+@import '../appearance/colors.scss';
 
 .btn {
 	box-shadow: $bs_shallow;
@@ -93,12 +93,12 @@ $br_large_containers: 2rem;
 // 	background-color: #586086;
 // }
 .button.primary {
-	background-color: #4d5061;
+	background-color: $theme_color_primary;
 }
 
 .button.primary:hover {
 	box-shadow: $bs_deep;
-	background-color: #393e55;
+	background-color: $theme_color_primary_hover;
 }
 // .button.primary {
 // 	background-color: #865858;
@@ -110,12 +110,12 @@ $br_large_containers: 2rem;
 // }
 
 .button.secondary {
-	background-color: #6a6c80;
+	background-color: $theme_color_secondary;
 }
 
 .button.secondary:hover {
 	box-shadow: $bs_deep;
-	background-color: #4d5061;
+	background-color: $theme_color_secondary_hover;
 }
 
 .button.nav {

@@ -15,6 +15,8 @@
 @import './spacing/border_radius.scss';
 @import './spacing/z_index.scss';
 
+@import './appearance/colors.scss';
+
 @import './elements/button.scss';
 @import './elements/table.scss';
 
@@ -60,7 +62,7 @@ body {
 	font: 1.6rem Helvetica;
 	font-family: $main_font;
 	margin: 0;
-	background-color: $background_color;
+	background-color: $theme_color_dark;
 	color: $font_color;
 	scroll-padding-top: 220px; /* height of sticky header */
 	scroll-margin-top: 220px;
@@ -90,15 +92,15 @@ button {
 .promo_code {
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 	padding: .5rem;
-	background: #4d5061;
+	background: $theme_color_primary;
 	border-radius: 10px;
-	border: 1px solid #757575;
+	border: $theme_color_border;
 }
 
 // .shipping_rates {
 // 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 // 	padding: .1rem;
-// 	background: #4d5061;
+// 	background: $theme_color_primary;
 // 	border-radius: 10px;
 // 	border: 1px solid #757575;
 // }
@@ -111,9 +113,9 @@ button {
 }
 
 .content {
-	background-color: $content_bg_color;
+	background-color: $theme_color_dark;
 	box-shadow: $bs_deep;
-	background: linear-gradient(180deg, rgba(138, 138, 138, 1) 0%, rgba(39, 39, 39, 1) 100%);
+	background: linear-gradient(180deg, $theme_color_light 0%, $theme_color_dark 100%);
 	border-radius: 20px;
 	margin: 205px auto 20px;
 	padding: 2rem;
@@ -141,7 +143,7 @@ h3 {
 }
 
 header {
-	background-color: #333333;
+	background-color: $theme_color_header;
 	color: $font_color;
 	display: flex;
 	align-items: center;
@@ -158,7 +160,7 @@ header {
 }
 
 .banner {
-	background-color: #4d5061;
+	background-color: $theme_color_primary;
 	z-index: 101;
 	height: 22px;
 	width: 100%;
@@ -232,7 +234,7 @@ header {
 .details-action {
 	box-shadow: $bs_deep;
 	border-radius: $br_medium_containers;
-	background-color: #585858;
+	background-color: $theme_color_action;
 	padding: 1rem;
 	flex: 1 1 30rem;
 	li {
@@ -272,7 +274,7 @@ header {
 .cart-action {
 	box-shadow: $bs_deep;
 	border-radius: $br_small_containers;
-	background-color: #585858;
+	background-color: $theme_color_action;
 	padding: 1rem;
 }
 
@@ -356,7 +358,7 @@ header {
 	max-width: 32rem;
 	padding: 2rem;
 	box-shadow: $bs_deep;
-	background-color: #5a5a5a;
+	background-color: $theme_color_form;
 	border-radius: $br_small_containers;
 	list-style-type: none;
 	margin: 0 auto;
@@ -374,7 +376,7 @@ header {
 	max-width: 32rem;
 	padding: 2rem;
 	box-shadow: $bs_deep;
-	background-color: #5a5a5a;
+	background-color: $theme_color_form;
 	border-radius: $br_small_containers;
 	list-style-type: none;
 	margin: 0 auto;
@@ -622,7 +624,7 @@ th {
 	flex: 1 0 34rem;
 	box-shadow: $bs_deep;
 	border-radius: $br_small_containers;
-	background-color: #fcfcfc;
+	// background-color: #fcfcfc;
 	padding: 2rem;
 	background-color: transparent;
 	margin-bottom: 10px;
@@ -631,7 +633,7 @@ th {
 .placeorder-info > div {
 	box-shadow: $bs_deep;
 	border-radius: $br_small_containers;
-	background-color: #fcfcfc;
+	// background-color: #fcfcfc;
 	padding: 2rem;
 	margin: 1rem;
 	background-color: transparent;
@@ -691,7 +693,7 @@ th {
 	padding: 1rem;
 	list-style-type: none;
 	z-index: 1;
-	background-color: #333333;
+	background-color: $theme_color_header;
 	margin: 0;
 	border-radius: $br_small_containers;
 	box-shadow: $bs_deep;
@@ -714,7 +716,7 @@ th {
 	padding: 1rem;
 	list-style-type: none;
 	z-index: 1;
-	background-color: #333333;
+	background-color: $theme_color_header;
 	margin: 0;
 	border-radius: $br_small_containers;
 	/* margin-top: 0.4rem; */
@@ -734,7 +736,7 @@ th {
 	padding: 1rem;
 	list-style-type: none;
 	z-index: 1;
-	background-color: #333333;
+	background-color: $theme_color_header;
 	margin: 0;
 	border-radius: $br_small_containers;
 	/* margin-top: 0.4rem; */
@@ -756,7 +758,7 @@ th {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	font-size: 1.5rem;
 	padding: .75em 2em 0.55em 1em;
-	background: #6a6c80;
+	background: $theme_color_secondary;
 	color: white;
 	border: 0;
 	// position: relative;
@@ -770,20 +772,12 @@ th {
 	margin-right: 5px;
 }
 
-// .custom-shipping_rates {
-// 	position: relative;
-// }
-
-// .shipping_rates:hover {
-// 	background-color: #393e55;
-// }
-
 .custom-select-shipping_rates {
 	// position: absolute;
 	top: 0;
 	right: 0;
 	display: block;
-	background: #4d5061;
+	background: $theme_color_primary;
 	height: 100%;
 	width: 8rem;
 	color: white;
@@ -794,7 +788,7 @@ th {
 	border: 0;
 }
 .custom-select-shipping_rates:hover {
-	background-color: #393e55;
+	background-color: $theme_color_primary_hover;
 }
 
 .custom-select-shipping_rates::before,
@@ -829,7 +823,7 @@ th {
 	margin: 0 15px 20px;
 	padding: 0;
 	border-style: none;
-	background-color: #7795f8;
+	// background-color: #7795f8;
 	will-change: opacity, transform;
 	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #829fff;
 	border-radius: 4px;
@@ -841,7 +835,7 @@ th {
 	-ms-flex-align: center;
 	align-items: center;
 	margin-left: 15px;
-	border-top: 1px solid #819efc;
+	// border-top: 1px solid #819efc;
 }
 
 .StripeElement--webkit-autofill {
@@ -851,7 +845,7 @@ th {
 .StripeElement {
 	width: 100%;
 	padding: 11px 15px 11px 15px;
-	background-color: #6a6c80;
+	background-color: $theme_color_secondary;
 	border-radius: 10px;
 	margin-bottom: 1rem;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -929,7 +923,7 @@ video {
 	transition: all .5s;
 	transform: translateX(-32rem);
 	width: 30rem;
-	background-color: #2d2d2de6;
+	background-color: $theme_color_sidebar;
 	height: 100%;
 	top: 129px;
 	padding: 10px;
@@ -1000,7 +994,7 @@ video {
 	transition: all 0.5s;
 	left: 0;
 	list-style-type: none;
-	background-color: #969696;
+	background-color: $theme_color_sidebar_primary;
 	margin: 0;
 	width: 100%;
 }
@@ -1012,13 +1006,13 @@ video {
 	transition: all 0.5s;
 	left: 0;
 	list-style-type: none;
-	background-color: #5d5d5d;
+	background-color: $theme_color_sidebar_secondary;
 	margin: 0;
 	width: 100%;
 }
 
 .sidebar_button:hover {
-	background: gray;
+	background: $theme_color_sidebar_hover;
 }
 
 .sidebar_button:hover + .sidebar_dropdown_container {
@@ -1030,7 +1024,7 @@ video {
 }
 
 .sidebar_button.secondary:hover {
-	background: gray;
+	background: $theme_color_sidebar_hover;
 }
 
 .sidebar_button.secondary:hover + .sidebar_dropdown_secondary_container {
@@ -1197,7 +1191,7 @@ video {
 
 .payment_message {
 	z-index: 2;
-	background: #333333;
+	background: $theme_color_header;
 	padding: 15px;
 	border-radius: 20px;
 	// font-size: 20px;
