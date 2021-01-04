@@ -28,6 +28,7 @@ const OrderPage = (props) => {
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { loading, order, error } = orderDetails;
 
+	const [ loading_label, set_loading_label ] = useState(false);
 	const [ product, set_product ] = useState('');
 	const [ secondary_product, set_secondary_product ] = useState('');
 	const [ product_object, set_product_object ] = useState('');
@@ -246,12 +247,30 @@ const OrderPage = (props) => {
 	};
 
 	const create_label = async () => {
-		const { data } = await API_Orders.create_label(order);
+		set_loading_label(true);
+		const { data } = await API_Orders.create_label(props.order, props.order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		console.log({ data });
+		if (data) {
+			set_loading_label(false);
+		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		console.log(request);
+		dispatch(detailsOrder(props.match.params.id));
 	};
+
 	const buy_label = async () => {
-		const { data } = await API_Orders.buy_label(order, order.shipping.shipping_rate);
+		set_loading_label(true);
+		const { data } = await API_Orders.buy_label(props.order, props.order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		if (data) {
+			set_loading_label(false);
+		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		console.log(request);
+		dispatch(detailsOrder(props.match.params.id));
 	};
 
 	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
@@ -332,7 +351,7 @@ const OrderPage = (props) => {
 							<button className="btn secondary">Back to Orders</button>
 						</Link>
 					</div>
-
+					<Loading loading={loading_label} />
 					<LoadingPayments loading={payment_loading} error={errorPay} />
 					<div
 						className="placeorder br-20px"

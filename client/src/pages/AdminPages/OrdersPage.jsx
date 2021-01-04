@@ -26,7 +26,7 @@ const OrdersPage = (props) => {
 	useEffect(
 		() => {
 			dispatch(listOrders());
-			dispatch(listOrders());
+			// dispatch(listOrders());
 		},
 		[ successDelete, order_state ]
 	);

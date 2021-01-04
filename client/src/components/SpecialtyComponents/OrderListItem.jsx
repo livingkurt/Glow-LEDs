@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
-import { deleteOrder, refundOrder } from '../../actions/orderActions';
+import { deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
 import { Loading } from '../UtilityComponents';
 
@@ -78,7 +78,12 @@ const OrderListItem = (props) => {
 		if (data) {
 			set_loading_label(false);
 		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		console.log(request);
+		dispatch(listOrders());
 	};
+
 	const buy_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Orders.buy_label(props.order, props.order.shipping.shipping_rate);
@@ -89,6 +94,7 @@ const OrderListItem = (props) => {
 		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
 		console.log(request);
+		dispatch(listOrders());
 	};
 
 	return (
