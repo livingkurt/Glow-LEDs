@@ -2,8 +2,100 @@ export {};
 import express from 'express';
 import Device from '../models/device';
 const { isAuth, isAdmin } = require('../util');
+import axios from 'axios';
+const fetch = require('node-fetch');
 
 const router = express.Router();
+
+router.post('/update_leds', async (req: any, res: any) => {
+	try {
+		const response = await fetch(`http://${req.body.query_url}/${req.body.field}?value=${req.body.value}`, {
+			method: 'POST'
+		});
+		const settings = await response.json();
+		console.log({ settings });
+		if (settings) {
+			return res.status(201).send({ message: 'LEDs Updated', data: settings });
+		}
+		return res.status(500).send({ message: ' Error Updating LEDs' });
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post('/update_rgb', async (req: any, res: any) => {
+	try {
+		const response = await fetch(
+			`http://${req.body.query_url}/rgb?r=${req.body.red_value}&g=${req.body.green_value}&b=${req.body
+				.blue_value}`,
+			{ method: 'POST' }
+		);
+		const settings = await response.json();
+		console.log({ settings });
+		if (settings) {
+			return res.status(201).send({ message: 'LEDs Updated', data: settings });
+		}
+		return res.status(500).send({ message: ' Error Updating LEDs' });
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post('/update_hsv', async (req: any, res: any) => {
+	try {
+		const response = await fetch(
+			`http://${req.body.query_url}/hsv?h=${req.body.hue}&s=${req.body.saturation}&v=${req.body.value}`,
+			{ method: 'POST' }
+		);
+		// console.log({ response });
+		// const settings = await response.json();
+		// console.log({ settings });
+		// if (settings) {
+		return res.status(201).send({ message: 'LEDs Updated', data: 'complete' });
+		// }
+		// return res.status(500).send({ message: ' Error Updating LEDs' });
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post('/settings', async (req: any, res: any) => {
+	console.log({ query_url: req.body.query_url });
+	try {
+		const response = await fetch(`http://${req.body.query_url}/all`);
+		const settings = await response.json();
+		console.log({ settings });
+		if (settings) {
+			return res.status(201).send({ message: 'LEDs Updated', data: settings });
+		}
+		return res.status(500).send({ message: ' Error Updating LEDs' });
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post('/device_name', async (req: any, res: any) => {
+	try {
+		const response = await fetch(`http://${req.body.query_url}/device`);
+		const settings = await response.json();
+		console.log({ settings });
+		if (settings) {
+			return res.status(201).send({ message: 'LEDs Updated', data: settings });
+		}
+		return res.status(500).send({ message: ' Error Updating LEDs' });
+	} catch (error) {
+		console.log(error);
+	}
+});
+router.post('/reset', async (req: any, res: any) => {
+	try {
+		const response = await fetch(`http://${req.body.query_url}/reset`);
+		const settings = await response.json();
+		console.log({ settings });
+		if (settings) {
+			return res.status(201).send({ message: 'LEDs Updated', data: settings });
+		}
+		return res.status(500).send({ message: ' Error Updating LEDs' });
+	} catch (error) {
+		console.log(error);
+	}
+});
 
 router.get('/', async (req, res) => {
 	const category = req.query.category ? { category: req.query.category } : {};

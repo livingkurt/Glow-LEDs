@@ -93,7 +93,7 @@ void wifi_setup()
       WiFi.begin(ssid, password);
     }
   }
-  wifi_loop();
+  // wifi_loop();
   // WiFiClientSecure client;
   // Serial.print("connecting to ");
   // Serial.println(host);

@@ -41,7 +41,7 @@ ESP8266HTTPUpdateServer httpUpdateServer;
 
 #define MY_NAME "String Lights" //burn kitchen
 #define DATA_PIN D2
-#define SYSTEM_MAX_LEDS 50
+#define SYSTEM_MAX_LEDS 100
 #define LED_TYPE WS2811 //LED String
 #define COLOR_ORDER RGB // LED String
 
@@ -396,7 +396,7 @@ void hold(int period)
 
 void loop()
 {
-  wifi_loop();
+  // wifi_loop();
   // Add entropy to random number generator; we use a lot of it.
   random16_add_entropy(random(65535));
 
