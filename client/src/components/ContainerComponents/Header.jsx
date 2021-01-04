@@ -304,6 +304,12 @@ const Header = (props) => {
 						</div>
 					</div>
 				</div>
+				<Link to="/checkout/cart">
+					<button className="btn mobile nav cart_icon none">
+						<i className="fas fa-shopping-cart" />{' '}
+						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+					</button>
+				</Link>
 				<div className="nav_bar w-233px jc-fe">
 					<Link to="/checkout/cart">
 						<button className="btn nav cart_text w-105px">
