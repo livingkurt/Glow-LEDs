@@ -182,7 +182,7 @@ const CartPage = (props) => {
 								cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 							)}
 						</h3>
-						<button onClick={decide_warning} className="btn primary 100per">
+						<button onClick={decide_warning} className="btn primary w-100per">
 							Proceed to Checkout
 						</button>
 					</div>

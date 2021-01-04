@@ -450,7 +450,7 @@ const ProductPage = (props) => {
 										<div />
 									) : product.name === 'Custom Infinity Mirror' ? (
 										<Link to="/pages/contact/custom_orders">
-											<button className="btn primary 100per">Contact</button>
+											<button className="btn primary w-100per">Contact</button>
 										</Link>
 									) : (
 										<li>

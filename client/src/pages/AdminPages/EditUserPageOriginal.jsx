@@ -223,7 +223,7 @@ const EditUserPage = (props) => {
 							</li>
 							<li>
 								<Link to={'/secure/glow/userprofile/' + user._id}>
-									<button type="button" className="btn secondary 100per">
+									<button type="button" className="btn secondary w-100per">
 										Cancel
 									</button>
 								</Link>

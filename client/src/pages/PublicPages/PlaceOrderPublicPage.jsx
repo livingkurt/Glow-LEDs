@@ -578,7 +578,7 @@ const PlaceOrderPublicPage = (props) => {
 								<div className="column">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
-											<button className="btn secondary 100per" style={{ marginBottom: 0 }}>
+											<button className="btn secondary w-100per" style={{ marginBottom: 0 }}>
 												Continue Shopping
 											</button>
 										</li>

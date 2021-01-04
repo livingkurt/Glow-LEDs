@@ -111,7 +111,7 @@ const ProfilePage = (props) => {
 							</li>
 							<li>
 								<Link to="/secure/account/profile">
-									<button type="button" className="btn secondary 100per">
+									<button type="button" className="btn secondary w-100per">
 										Cancel
 									</button>
 								</Link>

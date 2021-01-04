@@ -222,7 +222,7 @@ const ContactPage = (props) => {
 						onChange={(e) => set_reason_for_contact(e.target.value)}
 						defaultValue={reason_for_contact}
 						value={reason_for_contact}
-						className=" contact_dropdown 100per"
+						className=" contact_dropdown w-100per"
 						name="reason_for_contact"
 						placeholder="----Click Here to Choose Reason----"
 					>
@@ -302,7 +302,7 @@ const ContactPage = (props) => {
 						<input
 							onChange={(e) => set_order_number(e.target.value)}
 							defaultValue={order_number}
-							className="zoom_f form_input 100per"
+							className="zoom_f form_input w-100per"
 							type="text"
 							name="order_number"
 							placeholder="Order Number"

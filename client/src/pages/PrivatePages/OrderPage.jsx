@@ -610,7 +610,7 @@ ${order.shipping.email}`)}
 											onChange={handleChangeFor('cardNumber')}
 										>
 											<button
-												className="btn primary 100per"
+												className="btn primary w-100per"
 												style={{ marginBottom: '12px' }}
 											>
 												Pay for Order
