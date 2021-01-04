@@ -119,45 +119,30 @@ const Header = (props) => {
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/diffuser_caps">
 										<button className="btn nav w-100per ta-l">Diffuser Caps</button>
-										<i
-											style={{ '-webkitTransform': 'rotate(-180deg)' }}
-											className=" pos-abs right-10px top-8px fas fa-sort-up"
-										/>
+										<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="mr-30px trans-neg-90 fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
@@ -167,54 +152,36 @@ const Header = (props) => {
 								<div className="dropdown-nav-subcategory">
 									<Link to="/collections/all/products/category/mega_diffuser_caps">
 										<button className="btn nav w-100per ta-l">Mega Diffuser Caps</button>
-										<i
-											style={{ '-webkitTransform': 'rotate(-180deg)' }}
-											className=" pos-abs right-10px top-8px fas fa-sort-up"
-										/>
+										<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Patterns</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Emojis</button>
 											</div>
 										</Link>
@@ -275,36 +242,24 @@ const Header = (props) => {
 								<div className="dropdown-nav-subcategory">
 									<Link to="/pages/faq">
 										<button className="btn nav w-100per ta-l w-100per ta-l">FAQ</button>
-										<i
-											style={{ '-webkitTransform': 'rotate(-180deg)' }}
-											className=" pos-abs right-10px top-8px fas fa-sort-up"
-										/>
+										<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in w-325px left-n325px top-n5px">
 										<HashLink to="/pages/faq#glowskins">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Glowskins</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#using_diffuser_caps_and_adapters">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Diffuser Caps Guide</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#diffuser_too_tight_too_loose">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">
 													Diffusers Too Tight/Loose?
 												</button>
@@ -312,10 +267,7 @@ const Header = (props) => {
 										</HashLink>
 										<HashLink to="/pages/faq#ordering_custom_products">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">
 													Ordering Custom Products
 												</button>
@@ -323,29 +275,20 @@ const Header = (props) => {
 										</HashLink>
 										<HashLink to="/pages/faq#featured_content">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Featured Content</button>
 											</div>
 										</HashLink>
 
 										<HashLink to="/pages/faq#processing_shipping">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Processing/Shipping</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#returns_cancellations">
 											<div className="row">
-												<i
-													style={{ '-webkitTransform': 'rotate(90deg)' }}
-													className="mr-30px fas fa-sort-up"
-												/>{' '}
+												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 												<button className="btn nav w-100per ta-l">Returns/Cancellations</button>
 											</div>
 										</HashLink>

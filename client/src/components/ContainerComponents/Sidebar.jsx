@@ -118,10 +118,7 @@ const Sidebar = (props) => {
 								Logout
 							</button>
 						</ul>
-						<i
-							style={{ '-webkitTransform': 'rotate(-180deg)' }}
-							className=" pos-abs right-10px top-8px fas fa-sort-up"
-						/>
+						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 					</div>
 				) : (
 					<Link to="/account/login">
@@ -186,10 +183,7 @@ const Sidebar = (props) => {
 								</button>
 							</Link>
 						</ul>
-						<i
-							style={{ '-webkitTransform': 'rotate(-180deg)' }}
-							className=" pos-abs right-10px top-8px fas fa-sort-up"
-						/>
+						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 					</div>
 				)}
 				<Link to="/collections/all/products">
@@ -240,10 +234,7 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<i
-								style={{ '-webkitTransform': 'rotate(-180deg)' }}
-								className=" pos-abs right-10px top-8px fas fa-sort-up"
-							/>
+							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 						</div>
 						<div className="sidebar_dropdown_secondary">
 							<button className="sidebar-btn secondary">
@@ -283,10 +274,7 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<i
-								style={{ '-webkitTransform': 'rotate(-180deg)' }}
-								className=" pos-abs right-10px top-8px fas fa-sort-up"
-							/>
+							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 						</div>
 						<Link to="/collections/all/products/category/accessories">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -294,10 +282,7 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i
-						style={{ '-webkitTransform': 'rotate(-180deg)' }}
-						className=" pos-abs right-10px top-8px fas fa-sort-up"
-					/>
+					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
 				{/* <div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">Diffuser Caps</button>
@@ -331,8 +316,8 @@ const Sidebar = (props) => {
 								</Link>
 							</ul>
 							<i
-								style={{ '-webkitTransform': 'rotate(-180deg)' }}
-								className=" pos-abs right-10px top-8px fas fa-sort-up"
+								
+								className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
 							/>
 						</div>
 						<div className="sidebar_dropdown_secondary">
@@ -374,14 +359,14 @@ const Sidebar = (props) => {
 								</Link>
 							</ul>
 							<i
-								style={{ '-webkitTransform': 'rotate(-180deg)' }}
-								className=" pos-abs right-10px top-8px fas fa-sort-up"
+								
+								className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
 							/>
 						</div>
 					</ul>
 					<i
-						style={{ '-webkitTransform': 'rotate(-180deg)' }}
-						className=" pos-abs right-10px top-8px fas fa-sort-up"
+						
+						className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
 					/>
 				</div>
 				<div className="sidebar_dropdown">
@@ -394,8 +379,8 @@ const Sidebar = (props) => {
 						</Link>
 					</ul>
 					<i
-						style={{ '-webkitTransform': 'rotate(-180deg)' }}
-						className=" pos-abs right-10px top-8px fas fa-sort-up"
+						
+						className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
 					/>
 				</div> */}
 				{/* <div className="sidebar_dropdown"> */}
@@ -416,8 +401,8 @@ const Sidebar = (props) => {
 						</Link>
 					</ul>
 					<i
-						style={{ '-webkitTransform': 'rotate(-180deg)' }}
-						className=" pos-abs right-10px top-8px fas fa-sort-up"
+						
+						className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
 					/> */}
 				{/* </div> */}
 				<div className="sidebar_dropdown">
@@ -442,10 +427,7 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i
-						style={{ '-webkitTransform': 'rotate(-180deg)' }}
-						className=" pos-abs right-10px top-8px fas fa-sort-up"
-					/>
+					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
 				{/* <Link to="/pages/glowcontrol">
 					<button className="sidebar-btn primary" onClick={closeMenu}>
@@ -509,10 +491,7 @@ const Sidebar = (props) => {
 									</button>
 								</HashLink>
 							</ul>
-							<i
-								style={{ '-webkitTransform': 'rotate(-180deg)' }}
-								className=" pos-abs right-10px top-8px fas fa-sort-up"
-							/>
+							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 						</div>
 						<Link to="/pages/contact">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -525,10 +504,7 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<i
-						style={{ '-webkitTransform': 'rotate(-180deg)' }}
-						className=" pos-abs right-10px top-8px fas fa-sort-up"
-					/>
+					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
 			</div>
 		</aside>
