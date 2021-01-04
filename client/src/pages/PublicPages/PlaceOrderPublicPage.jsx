@@ -512,7 +512,7 @@ const PlaceOrderPublicPage = (props) => {
 						}
 					}}
 				/>
-				<button type="submit" className="btn primary 100per mb-12px" disabled={!stripe}>
+				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
 					Pay for Order
 				</button>
 			</form>
@@ -899,7 +899,7 @@ const PlaceOrderPublicPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="btn secondary 100per mb-12px">Pay for Order</button>
+									<button className="btn secondary w-100per mb-12px">Pay for Order</button>
 								</StripeCheckout>
 							</div>
 						)} */}
@@ -968,7 +968,9 @@ const PlaceOrderPublicPage = (props) => {
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="btn primary 100per mb-12px">Pay for Order/Create Account</button>
+									<button className="btn primary w-100per mb-12px">
+										Pay for Order/Create Account
+									</button>
 								</StripeCheckout>
 							</div>
 						)}

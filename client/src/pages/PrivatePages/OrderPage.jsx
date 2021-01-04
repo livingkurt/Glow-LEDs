@@ -295,7 +295,7 @@ const OrderPage = (props) => {
 						}
 					}}
 				/>
-				<button type="submit" className="btn primary 100per mb-12px" disabled={!stripe}>
+				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
 					Pay for Order
 				</button>
 			</form>
