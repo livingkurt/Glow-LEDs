@@ -1239,7 +1239,7 @@ router.put('/:id/refund', async (req: any, res: any) => {
 // 	}
 // });
 
-router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+router.put('/addproduct', async (req: any, res: any) => {
 	try {
 		const order_id = req.body.order._id;
 		const product_id = req.body.product;
@@ -1255,7 +1255,7 @@ router.put('/addproduct', async (req: { body: any; params: { id: any } }, res: {
 	}
 });
 
-router.put('/create_label', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+router.put('/create_label', async (req: any, res: any) => {
 	try {
 		const EasyPost = new easy_post_api(process.env.EASY_POST);
 		const order = req.body.order;
@@ -1331,58 +1331,55 @@ router.put('/create_label', async (req: { body: any; params: { id: any } }, res:
 	}
 });
 
-router.put(
-	'/get_shipping_rates',
-	async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
-		try {
-			const EasyPost = new easy_post_api(process.env.EASY_POST);
-			const order = req.body.order;
-			// console.log(order);
+router.put('/get_shipping_rates', async (req: any, res: any) => {
+	try {
+		const EasyPost = new easy_post_api(process.env.EASY_POST);
+		const order = req.body.order;
+		// console.log(order);
 
-			const toAddress = new EasyPost.Address({
-				name: order.shipping.first_name + ' ' + order.shipping.last_name,
-				street1: order.shipping.address_1,
-				street2: order.shipping.address_2,
-				city: order.shipping.city,
-				state: order.shipping.state,
-				zip: order.shipping.postalCode,
-				country: order.shipping.country
-			});
-			const fromAddress = new EasyPost.Address({
-				street1: '404 Kenniston Dr',
-				street2: 'Apt D',
-				city: 'Austin',
-				state: 'TX',
-				zip: '78752',
-				country: 'United States',
-				company: 'Glow LEDs',
-				phone: '906-284-2208',
-				email: 'info.glowleds@gmail.com'
-			});
-			const parcel = new EasyPost.Parcel({
-				length: order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0),
-				width: order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0),
-				height: order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0),
-				weight: order.orderItems.reduce(
-					(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
-						c.weight_pounds * 16 + c.weight_ounces + a,
-					0
-				)
-			});
-			const shipment = new EasyPost.Shipment({
-				to_address: toAddress,
-				from_address: fromAddress,
-				parcel: parcel
-			});
-			const saved_shipment = await shipment.save();
-			console.log({ saved_shipment });
-			res.send(saved_shipment);
-		} catch (err) {
-			console.log(err);
-		}
+		const toAddress = new EasyPost.Address({
+			name: order.shipping.first_name + ' ' + order.shipping.last_name,
+			street1: order.shipping.address_1,
+			street2: order.shipping.address_2,
+			city: order.shipping.city,
+			state: order.shipping.state,
+			zip: order.shipping.postalCode,
+			country: order.shipping.country
+		});
+		const fromAddress = new EasyPost.Address({
+			street1: '404 Kenniston Dr',
+			street2: 'Apt D',
+			city: 'Austin',
+			state: 'TX',
+			zip: '78752',
+			country: 'United States',
+			company: 'Glow LEDs',
+			phone: '906-284-2208',
+			email: 'info.glowleds@gmail.com'
+		});
+		const parcel = new EasyPost.Parcel({
+			length: order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0),
+			width: order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0),
+			height: order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0),
+			weight: order.orderItems.reduce(
+				(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
+					c.weight_pounds * 16 + c.weight_ounces + a,
+				0
+			)
+		});
+		const shipment = new EasyPost.Shipment({
+			to_address: toAddress,
+			from_address: fromAddress,
+			parcel: parcel
+		});
+		const saved_shipment = await shipment.save();
+		console.log({ saved_shipment });
+		res.send(saved_shipment);
+	} catch (err) {
+		console.log(err);
 	}
-);
-router.put('/buy_label', async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
+});
+router.put('/buy_label', async (req: any, res: any) => {
 	try {
 		const EasyPost = new easy_post_api(process.env.EASY_POST);
 		const order = req.body.order;
@@ -1395,33 +1392,149 @@ router.put('/buy_label', async (req: { body: any; params: { id: any } }, res: { 
 	}
 });
 
-router.put(
-	'/addsecondaryproduct',
-	async (req: { body: any; params: { id: any } }, res: { send: (arg0: any) => void }) => {
-		try {
-			const order_id = req.body.order._id;
-			const product_id = req.body.secondary_product;
-			const order = await Order.findById(order_id)
-				.populate('orderItems.product')
-				.populate('orderItems.secondary_product')
-				.populate('user');
-			for (let item of order.orderItems) {
-				if (
-					item.name === 'Mega Diffuser Caps + Adapters Starter Kit' ||
-					item.name === 'Diffuser Caps + Adapters Starter Kit'
-				) {
-					item.secondary_product = product_id;
-				}
-			}
-			console.log({ order });
+router.put('/tracking_number', async (req: any, res: any) => {
+	try {
+		console.log(req.body);
+		const order = await Order.findById(req.body.order._id);
+		if (order) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ order ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
 
-			const updated = await Order.updateOne({ _id: order_id }, order);
-			res.send(updated);
-		} catch (err) {
-			console.log(err);
+			order.tracking_number = req.body.tracking_number;
+			const updated = await Order.updateOne({ _id: req.body.order._id }, order);
+			if (updated) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Order',
+					data: [ updated ],
+					status: 201,
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				res.send(updated);
+			} else {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updated ],
+					status: 404,
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				res.status(404).send({ message: 'Order not Updated.' });
+			}
 		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Refunding Order' });
 	}
-);
+});
+
+router.put('/:id/refund', async (req: any, res: any) => {
+	try {
+		const order = await Order.findById(req.params.id);
+		console.log({ order });
+		const refund = await stripe.refunds.create({
+			payment_intent: order.payment.charge.id,
+			amount: req.body.refund_amount * 100
+		});
+		console.log({ refund });
+		if (refund) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ refund ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			order.isRefunded = true;
+			order.refundedAt = Date.now();
+			order.payment = {
+				paymentMethod: order.payment.paymentMethod,
+				charge: order.payment.charge,
+				refund: [ ...order.payment.refund, refund ],
+				refund_reason: [ ...order.payment.refund_reason, req.body.refund_reason ]
+			};
+			const updated = await Order.updateOne({ _id: req.params.id }, order);
+			if (updated) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Order',
+					data: [ updated ],
+					status: 201,
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				res.send(updated);
+			} else {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updated ],
+					status: 404,
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				res.status(404).send({ message: 'Order not Updated.' });
+			}
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Refunding Order' });
+	}
+});
+
+router.put('/addsecondaryproduct', async (req: any, res: any) => {
+	try {
+		const order_id = req.body.order._id;
+		const product_id = req.body.secondary_product;
+		const order = await Order.findById(order_id)
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.populate('user');
+		for (let item of order.orderItems) {
+			if (
+				item.name === 'Mega Diffuser Caps + Adapters Starter Kit' ||
+				item.name === 'Diffuser Caps + Adapters Starter Kit'
+			) {
+				item.secondary_product = product_id;
+			}
+		}
+		console.log({ order });
+
+		const updated = await Order.updateOne({ _id: order_id }, order);
+		res.send(updated);
+	} catch (err) {
+		console.log(err);
+	}
+});
 
 router.put('/:id/update', async (req: any, res: any) => {
 	try {

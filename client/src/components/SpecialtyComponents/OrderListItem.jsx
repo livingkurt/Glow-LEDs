@@ -34,6 +34,7 @@ const OrderListItem = (props) => {
 		},
 		[ refund ]
 	);
+
 	const show_hide = (id) => {
 		const row = document.getElementById(id);
 		console.log(row);
@@ -70,8 +71,13 @@ const OrderListItem = (props) => {
 	const today = new Date();
 
 	const create_label = async () => {
+		set_loading_label(true);
 		const { data } = await API_Orders.create_label(props.order, props.order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		console.log({ data });
+		if (data) {
+			set_loading_label(false);
+		}
 	};
 	const buy_label = async () => {
 		set_loading_label(true);
@@ -80,6 +86,9 @@ const OrderListItem = (props) => {
 		if (data) {
 			set_loading_label(false);
 		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		console.log(request);
 	};
 
 	return (
