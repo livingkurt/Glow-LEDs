@@ -956,7 +956,7 @@ const PlaceOrderPublicPage = (props) => {
 							</li>
 						)}
 
-						{shipping &&
+						{/* {shipping &&
 						shipping.hasOwnProperty('first_name') &&
 						passwords_check && (
 							<div>
@@ -973,12 +973,13 @@ const PlaceOrderPublicPage = (props) => {
 									</button>
 								</StripeCheckout>
 							</div>
-						)}
+						)} */}
 
 						{!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						!account_create && (
+						account_create &&
+						passwords_check && (
 							<div>
 								<Elements stripe={stripePromise}>
 									<Form />
