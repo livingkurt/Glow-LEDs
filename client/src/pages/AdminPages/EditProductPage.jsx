@@ -197,7 +197,7 @@ const EditProductPage = (props) => {
 				sale_price,
 				sale_start_date: unformat_date(sale_start_date),
 				sale_end_date: unformat_date(sale_end_date),
-				volume,
+				volume: length * width * height,
 				subcategory,
 				meta_title,
 				meta_description,
@@ -819,7 +819,7 @@ const EditProductPage = (props) => {
 												<input
 													type="text"
 													name="volume"
-													value={volume}
+													value={length * width * height}
 													id="volume"
 													onChange={(e) => setVolume(e.target.value)}
 												/>
