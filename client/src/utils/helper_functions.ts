@@ -27,7 +27,7 @@ export const format_date = (unformatted_date: string) => {
 	const month = unformatted_date.slice(5, 7);
 	const day = unformatted_date.slice(8, 10);
 	const year = unformatted_date.slice(0, 4);
-	const formatted_date = `${month}/${day}/20`;
+	const formatted_date = `${month}/${day}/${year}`;
 	return formatted_date;
 };
 export const format_time = (unformatted_time: any) => {
@@ -46,7 +46,7 @@ export const unformat_date = (formatted_date: string) => {
 	const day = date[1];
 	const month = date[0];
 	const year = date[2];
-	const unformat_date = `2020-${month}-${day}`;
+	const unformat_date = `${year}-${month}-${day}`;
 	return unformat_date;
 };
 

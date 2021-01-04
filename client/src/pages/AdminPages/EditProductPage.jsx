@@ -143,7 +143,7 @@ const EditProductPage = (props) => {
 	const unset_state = () => {
 		setId('');
 		setName('');
-		setPrice('');
+		setPrice(0);
 		setDescription('');
 		setFacts('');
 		setIncludedItems('');
@@ -155,22 +155,22 @@ const EditProductPage = (props) => {
 		setCategory('');
 		// set_subcategories('');
 		set_subcategory('');
-		setCountInStock('');
-		setHidden();
+		setCountInStock(0);
+		setHidden(false);
 		setSalePrice('');
-		// sale_start_date('');
-		// sale_end_date('');
-		setVolume('');
+		set_sale_start_date(format_date('2021-01-01'));
+		set_sale_end_date(format_date('2021-01-01'));
+		setVolume(1);
 		set_meta_title('');
 		set_meta_description('');
 		set_meta_keywords('');
-		set_length('');
-		set_width('');
-		set_height('');
-		set_weight_pounds('');
-		set_weight_ounces('');
+		set_length(1);
+		set_width(1);
+		set_height(1);
+		set_weight_pounds(0);
+		set_weight_ounces(0);
 		setPathname('');
-		setOrder('');
+		setOrder(0);
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -790,10 +790,20 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="height">
-													Calculated Volume {length * width * height}
-												</label>
+												<label htmlFor="volume">Product Volume</label>
+												<input
+													type="text"
+													name="volume"
+													value={length && width && height && length * width * height}
+													id="volume"
+													onChange={(e) => setVolume(e.target.value)}
+												/>
 											</li>
+											{/* <li>
+												<label htmlFor="height">
+													Calculated Volume {length && length * width * height}
+												</label>
+											</li> */}
 											<li>
 												<label htmlFor="weight_pounds">Product lbs</label>
 												<input
@@ -812,16 +822,6 @@ const EditProductPage = (props) => {
 													value={weight_ounces}
 													id="weight_ounces"
 													onChange={(e) => set_weight_ounces(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="volume">Product Volume</label>
-												<input
-													type="text"
-													name="volume"
-													value={length * width * height}
-													id="volume"
-													onChange={(e) => setVolume(e.target.value)}
 												/>
 											</li>
 										</div>
