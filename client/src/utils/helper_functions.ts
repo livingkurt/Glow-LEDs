@@ -15,6 +15,9 @@ export const humanize = (str: string) => {
 	}
 	return frags.join(' ');
 };
+export const snake_case = (str: string) => {
+	return str.toLowerCase().split(' ').join('_');
+};
 export const toCapitlize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };

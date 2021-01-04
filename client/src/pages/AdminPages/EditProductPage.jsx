@@ -4,7 +4,7 @@ import { saveProduct, detailsProduct, listProducts } from '../../actions/product
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { format_date, unformat_date } from '../../utils/helper_functions';
+import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -199,7 +199,7 @@ const EditProductPage = (props) => {
 				sale_end_date: unformat_date(sale_end_date),
 				volume: length * width * height,
 				subcategory,
-				meta_title,
+				meta_title: `${name} | Glow LEDs`,
 				meta_description,
 				meta_keywords,
 				length,
@@ -207,7 +207,7 @@ const EditProductPage = (props) => {
 				height,
 				weight_pounds,
 				weight_ounces,
-				pathname,
+				pathname: pathname ? pathname : snake_case(name),
 				order
 			})
 		);
@@ -712,7 +712,7 @@ const EditProductPage = (props) => {
 												<input
 													type="text"
 													name="pathname"
-													defaultValue={pathname}
+													defaultValue={pathname ? pathname : name && snake_case(name)}
 													id="pathname"
 													onChange={(e) => setPathname(e.target.value)}
 												/>
@@ -732,7 +732,7 @@ const EditProductPage = (props) => {
 												<input
 													type="text"
 													name="meta_title"
-													value={meta_title}
+													value={name && `${name} | Glow LEDs`}
 													id="meta_title"
 													onChange={(e) => set_meta_title(e.target.value)}
 												/>
