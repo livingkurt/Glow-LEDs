@@ -71,7 +71,7 @@ export const addToCart = (
 			weight_ounces: data.weight_ounces,
 			length: data.length,
 			width: data.width,
-			height: data.volume,
+			height: data.height,
 			pathname: data.pathname,
 			category: data.category,
 			qty
@@ -91,7 +91,7 @@ export const addToCart = (
 				weight_ounces: data.weight_ounces,
 				length: data.length,
 				width: data.width,
-				height: data.volume,
+				height: data.height,
 				pathname: data.pathname,
 				category: data.category,
 				qty
@@ -114,7 +114,7 @@ export const addToCart = (
 				weight_ounces: data.weight_ounces,
 				length: data.length,
 				width: data.width,
-				height: data.volume,
+				height: data.height,
 				pathname: data.pathname,
 				category: data.category,
 				qty

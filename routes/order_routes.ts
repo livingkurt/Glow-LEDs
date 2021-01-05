@@ -70,11 +70,77 @@ router.get('/tax_rates', async (req: any, res: any) => {
 	res.send(result);
 });
 
+// router.get('/', isAuth, async (req: any, res: any) => {
+// 	try {
+// 		const category = req.query.category ? { category: req.query.category } : {};
+// 		let user: any;
+//     let searchKeyword: any;
+// 		if (req.query.searchKeyword) {
+// 			const userSearchKeyword = req.query.searchKeyword
+// 				? {
+// 						'shipping.first_name': {
+// 							$regex: req.query.searchKeyword,
+// 							$options: 'i'
+// 						}
+// 					}
+// 				: {};
+// 			user = await User.findOne({ ...userSearchKeyword });
+// 			searchKeyword = { user: user._id };
+// 		}
+// 		let sortOrder = {};
+// 		if (req.query.sortOrder === 'lowest') {
+// 			sortOrder = { totalPrice: 1 };
+// 		} else if (req.query.sortOrder === 'highest') {
+// 			sortOrder = { totalPrice: -1 };
+// 		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+// 			sortOrder = { createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'paid') {
+// 			sortOrder = { isPaid: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'manufactured') {
+// 			sortOrder = { isManufactured: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'packaged') {
+// 			sortOrder = { isPackaged: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'shipped') {
+// 			sortOrder = { isShipped: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'delivered') {
+// 			sortOrder = { isDelivered: -1, createdAt: -1 };
+//     }
+
+// 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+// 			.populate('user')
+// 			.populate('orderItems.product')
+// 			.populate('orderItems.secondary_product')
+// 			.sort(sortOrder);
+// 		log_request({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			data: orders,
+// 			status: 200,
+// 			success: true,
+// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 		});
+// 		res.send(orders);
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Getting Orders' });
+// 	}
+// });
 router.get('/', isAuth, async (req: any, res: any) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		let user: any;
 		let searchKeyword: any;
+		let last_product_id = req.params.last_product_id;
+		let direction = req.params.direction;
+		let orders: any;
 		if (req.query.searchKeyword) {
 			const userSearchKeyword = req.query.searchKeyword
 				? {
@@ -105,11 +171,112 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		} else if (req.query.sortOrder === 'delivered') {
 			sortOrder = { isDelivered: -1, createdAt: -1 };
 		}
-		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-			.populate('user')
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.sort(sortOrder);
+
+		// if (category === 'none' || category === 'None' || category === 'all' || category === 'All') {
+		if (last_product_id === 'none') {
+			// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
+			orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+				.limit(10)
+				.populate('user')
+				.populate('orderItems.product')
+				.populate('orderItems.secondary_product')
+				.sort(sortOrder);
+		} else {
+			if (direction === 'next') {
+				// products = await Product.find({_id: {$lt: last_product_id}, deleted_at: null}).sort({_id:-1}).limit(10)
+				orders = await Order.find({
+					deleted: false,
+					...category,
+					...searchKeyword,
+					_id: { $lt: last_product_id }
+				})
+					.limit(10)
+					.populate('user')
+					.populate('orderItems.product')
+					.populate('orderItems.secondary_product')
+					.sort(sortOrder);
+			} else if (direction === 'from_here') {
+				// products = await Product.find({_id: {$lte: last_product_id}, deleted_at: null}).sort({_id:-1}).limit(10)
+				orders = await Order.find({
+					deleted: false,
+					...category,
+					...searchKeyword,
+					_id: { $lte: last_product_id }
+				})
+					.limit(10)
+					.populate('user')
+					.populate('orderItems.product')
+					.populate('orderItems.secondary_product')
+					.sort(sortOrder);
+			} else {
+				// products = await Product.find({_id: {$gt: last_product_id}, deleted_at: null}).limit(10)
+				orders = await Order.find({
+					deleted: false,
+					...category,
+					...searchKeyword,
+					_id: { $gt: last_product_id }
+				})
+					.limit(10)
+					.populate('user')
+					.populate('orderItems.product')
+					.populate('orderItems.secondary_product')
+					.sort(sortOrder);
+				orders = orders.reverse();
+			}
+		}
+		// } else {
+		// 	if (last_product_id === 'none') {
+		// 		// products = await Product.find({ deleted_at: null, categories: category }).sort({_id:-1}).limit(10)
+		// 		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+		// 			.limit(10)
+		// 			.populate('user')
+		// 			.populate('orderItems.product')
+		// 			.populate('orderItems.secondary_product')
+		// 			.sort(sortOrder);
+		// 	} else {
+		// 		if (direction === 'next') {
+		// 			// products = await Product.find({_id: {$lt: last_product_id}, deleted_at: null, categories: category }).sort({_id:-1}).limit(10)
+		// 			orders = await Order.find({
+		// 				deleted: false,
+		// 				...category,
+		// 				...searchKeyword,
+		// 				_id: { $lt: last_product_id }
+		// 			})
+		// 				.limit(10)
+		// 				.populate('user')
+		// 				.populate('orderItems.product')
+		// 				.populate('orderItems.secondary_product')
+		// 				.sort(sortOrder);
+		// 		} else if (direction === 'from_here') {
+		// 			// products = await Product.find({_id: {$lte: last_product_id}, deleted_at: null, categories: category }).sort({_id:-1}).limit(10)
+		// 			orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+		// 				.limit(10)
+		// 				.populate('user')
+		// 				.populate('orderItems.product')
+		// 				.populate('orderItems.secondary_product')
+		// 				.sort(sortOrder);
+		// 		} else {
+		// 			// products = await Product.find({_id: {$gt: last_product_id}, deleted_at: null, categories: category }).limit(10)
+		// 			orders = await Order.find({
+		// 				deleted: false,
+		// 				...category,
+		// 				...searchKeyword,
+		// 				_id: { $lte: last_product_id }
+		// 			})
+		// 				.limit(10)
+		// 				.populate('user')
+		// 				.populate('orderItems.product')
+		// 				.populate('orderItems.secondary_product')
+		// 				.sort(sortOrder);
+		// 			orders = orders.reverse();
+		// 		}
+		// 	}
+		// }
+		// orders = await Order.find({ deleted: false, ...category, ...searchKeyword }).limit(10)
+		// 	.populate('user')
+		// 	.populate('orderItems.product')
+		// 	.populate('orderItems.secondary_product')
+		// 	.sort(sortOrder);
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -132,6 +299,67 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	}
 });
+
+// app.get('/api/products/all/:last_product_id/:direction/:category', requireLogin, adminRequired, async (req, res) => {
+// 	try {
+// 		let last_product_id = req.params.last_product_id;
+// 		let direction = req.params.direction;
+// 		let category = req.params.category;
+// 		let products;
+// 		if (category === 'none' || category === 'None' || category === 'all' || category === 'All') {
+// 			if (last_product_id === 'none') {
+// 				products = await Product.find({ deleted_at: null }).sort({ _id: -1 }).limit(10);
+// 			} else {
+// 				if (direction === 'next') {
+// 					products = await Product.find({ _id: { $lt: last_product_id }, deleted_at: null })
+// 						.sort({ _id: -1 })
+// 						.limit(10);
+// 				} else if (direction === 'from_here') {
+// 					products = await Product.find({ _id: { $lte: last_product_id }, deleted_at: null })
+// 						.sort({ _id: -1 })
+// 						.limit(10);
+// 				} else {
+// 					products = await Product.find({ _id: { $gt: last_product_id }, deleted_at: null }).limit(10);
+// 					products = products.reverse();
+// 				}
+// 			}
+// 		} else {
+// 			if (last_product_id === 'none') {
+// 				products = await Product.find({ deleted_at: null, categories: category }).sort({ _id: -1 }).limit(10);
+// 			} else {
+// 				if (direction === 'next') {
+// 					products = await Product.find({
+// 						_id: { $lt: last_product_id },
+// 						deleted_at: null,
+// 						categories: category
+// 					})
+// 						.sort({ _id: -1 })
+// 						.limit(10);
+// 				} else if (direction === 'from_here') {
+// 					products = await Product.find({
+// 						_id: { $lte: last_product_id },
+// 						deleted_at: null,
+// 						categories: category
+// 					})
+// 						.sort({ _id: -1 })
+// 						.limit(10);
+// 				} else {
+// 					products = await Product.find({
+// 						_id: { $gt: last_product_id },
+// 						deleted_at: null,
+// 						categories: category
+// 					}).limit(10);
+// 					products = products.reverse();
+// 				}
+// 			}
+// 		}
+// 		res.send(products);
+// 	} catch (err) {
+// 		req.bugsnag.notify(err);
+// 		res.status(422).send(err);
+// 	}
+// });
+
 router.get('/each_day_income/:date', async (req: any, res: any) => {
 	try {
 		const date = req.params.date;
@@ -1280,10 +1508,15 @@ router.put('/create_label', async (req: any, res: any) => {
 			phone: '906-284-2208',
 			email: 'info.glowleds@gmail.com'
 		});
+		const cube_root_volume = Math.cbrt(
+			order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0) *
+				order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
+				order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
+		);
 		const parcel = new EasyPost.Parcel({
-			length: order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0),
-			width: order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0),
-			height: order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0),
+			length: cube_root_volume,
+			width: cube_root_volume,
+			height: cube_root_volume,
 			weight: order.orderItems.reduce(
 				(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
 					c.weight_pounds * 16 + c.weight_ounces + a,
@@ -1321,10 +1554,10 @@ router.put('/create_label', async (req: any, res: any) => {
 			customsInfo: order.shipping.international ? customsInfo : {}
 		});
 		const saved_shipment = await shipment.save();
-		console.log({ saved_shipment });
+		// console.log({ saved_shipment });
 		const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
 		const label = await created_shipment.buy(created_shipment.lowestRate(), 0);
-		console.log({ label });
+		// console.log({ label });
 		res.send(label);
 	} catch (err) {
 		console.log(err);
@@ -1357,10 +1590,22 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 			phone: '906-284-2208',
 			email: 'info.glowleds@gmail.com'
 		});
+		const cube_root_volume = Math.cbrt(
+			order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0) *
+				order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
+				order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
+		);
+		// console.log(
+		// 	Math.cbrt(
+		// 		order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0) *
+		// 			order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
+		// 			order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
+		// 	)
+		// );
 		const parcel = new EasyPost.Parcel({
-			length: order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0),
-			width: order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0),
-			height: order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0),
+			length: cube_root_volume,
+			width: cube_root_volume,
+			height: cube_root_volume,
 			weight: order.orderItems.reduce(
 				(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
 					c.weight_pounds * 16 + c.weight_ounces + a,
@@ -1373,7 +1618,7 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 			parcel: parcel
 		});
 		const saved_shipment = await shipment.save();
-		console.log({ saved_shipment });
+		// console.log({ saved_shipment });
 		res.send(saved_shipment);
 	} catch (err) {
 		console.log(err);

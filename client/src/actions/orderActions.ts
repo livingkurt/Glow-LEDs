@@ -303,7 +303,13 @@ export const listUserOrders = (user_id: string) => async (
 	}
 };
 
-export const listOrders = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listOrders = (
+	category = '',
+	searchKeyword = '',
+	sortOrder = '',
+	last_product_id = '',
+	direction = ''
+) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -319,7 +325,11 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '') =>
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +
-				sortOrder.toLowerCase(),
+				sortOrder.toLowerCase() +
+				'&lastID=' +
+				last_product_id +
+				'&direction=' +
+				direction,
 			{
 				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
