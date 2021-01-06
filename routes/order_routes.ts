@@ -74,7 +74,7 @@ router.get('/tax_rates', async (req: any, res: any) => {
 // 	try {
 // 		const category = req.query.category ? { category: req.query.category } : {};
 // 		let user: any;
-//     let searchKeyword: any;
+// 		let searchKeyword: any;
 // 		if (req.query.searchKeyword) {
 // 			const userSearchKeyword = req.query.searchKeyword
 // 				? {
@@ -104,7 +104,7 @@ router.get('/tax_rates', async (req: any, res: any) => {
 // 			sortOrder = { isShipped: -1, createdAt: -1 };
 // 		} else if (req.query.sortOrder === 'delivered') {
 // 			sortOrder = { isDelivered: -1, createdAt: -1 };
-//     }
+// 		}
 
 // 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
 // 			.populate('user')
@@ -138,8 +138,10 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		const category = req.query.category ? { category: req.query.category } : {};
 		let user: any;
 		let searchKeyword: any;
-		let last_product_id = req.params.last_product_id;
-		let direction = req.params.direction;
+		let last_id = req.query.lastID;
+		let direction = req.query.direction;
+		console.log('hello');
+		console.log(req.query);
 		let orders: any;
 		if (req.query.searchKeyword) {
 			const userSearchKeyword = req.query.searchKeyword
@@ -173,7 +175,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		}
 
 		// if (category === 'none' || category === 'None' || category === 'all' || category === 'All') {
-		if (last_product_id === 'none') {
+		if (last_id === 'none') {
 			// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
 			orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
 				.limit(10)
@@ -183,25 +185,25 @@ router.get('/', isAuth, async (req: any, res: any) => {
 				.sort(sortOrder);
 		} else {
 			if (direction === 'next') {
-				// products = await Product.find({_id: {$lt: last_product_id}, deleted_at: null}).sort({_id:-1}).limit(10)
+				// products = await Product.find({_id: {$lt: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
 				orders = await Order.find({
 					deleted: false,
 					...category,
 					...searchKeyword,
-					_id: { $lt: last_product_id }
+					_id: { $lt: last_id }
 				})
 					.limit(10)
 					.populate('user')
 					.populate('orderItems.product')
 					.populate('orderItems.secondary_product')
 					.sort(sortOrder);
-			} else if (direction === 'from_here') {
-				// products = await Product.find({_id: {$lte: last_product_id}, deleted_at: null}).sort({_id:-1}).limit(10)
+			} else if (direction === 'previous') {
+				// products = await Product.find({_id: {$lte: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
 				orders = await Order.find({
 					deleted: false,
 					...category,
 					...searchKeyword,
-					_id: { $lte: last_product_id }
+					_id: { $gt: last_id }
 				})
 					.limit(10)
 					.populate('user')
@@ -209,12 +211,12 @@ router.get('/', isAuth, async (req: any, res: any) => {
 					.populate('orderItems.secondary_product')
 					.sort(sortOrder);
 			} else {
-				// products = await Product.find({_id: {$gt: last_product_id}, deleted_at: null}).limit(10)
+				// products = await Product.find({_id: {$gt: last_id}, deleted_at: null}).limit(10)
 				orders = await Order.find({
 					deleted: false,
 					...category,
 					...searchKeyword,
-					_id: { $gt: last_product_id }
+					_id: { $gt: last_id }
 				})
 					.limit(10)
 					.populate('user')
@@ -224,59 +226,6 @@ router.get('/', isAuth, async (req: any, res: any) => {
 				orders = orders.reverse();
 			}
 		}
-		// } else {
-		// 	if (last_product_id === 'none') {
-		// 		// products = await Product.find({ deleted_at: null, categories: category }).sort({_id:-1}).limit(10)
-		// 		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-		// 			.limit(10)
-		// 			.populate('user')
-		// 			.populate('orderItems.product')
-		// 			.populate('orderItems.secondary_product')
-		// 			.sort(sortOrder);
-		// 	} else {
-		// 		if (direction === 'next') {
-		// 			// products = await Product.find({_id: {$lt: last_product_id}, deleted_at: null, categories: category }).sort({_id:-1}).limit(10)
-		// 			orders = await Order.find({
-		// 				deleted: false,
-		// 				...category,
-		// 				...searchKeyword,
-		// 				_id: { $lt: last_product_id }
-		// 			})
-		// 				.limit(10)
-		// 				.populate('user')
-		// 				.populate('orderItems.product')
-		// 				.populate('orderItems.secondary_product')
-		// 				.sort(sortOrder);
-		// 		} else if (direction === 'from_here') {
-		// 			// products = await Product.find({_id: {$lte: last_product_id}, deleted_at: null, categories: category }).sort({_id:-1}).limit(10)
-		// 			orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-		// 				.limit(10)
-		// 				.populate('user')
-		// 				.populate('orderItems.product')
-		// 				.populate('orderItems.secondary_product')
-		// 				.sort(sortOrder);
-		// 		} else {
-		// 			// products = await Product.find({_id: {$gt: last_product_id}, deleted_at: null, categories: category }).limit(10)
-		// 			orders = await Order.find({
-		// 				deleted: false,
-		// 				...category,
-		// 				...searchKeyword,
-		// 				_id: { $lte: last_product_id }
-		// 			})
-		// 				.limit(10)
-		// 				.populate('user')
-		// 				.populate('orderItems.product')
-		// 				.populate('orderItems.secondary_product')
-		// 				.sort(sortOrder);
-		// 			orders = orders.reverse();
-		// 		}
-		// 	}
-		// }
-		// orders = await Order.find({ deleted: false, ...category, ...searchKeyword }).limit(10)
-		// 	.populate('user')
-		// 	.populate('orderItems.product')
-		// 	.populate('orderItems.secondary_product')
-		// 	.sort(sortOrder);
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -286,6 +235,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
+		console.log({ orders });
 		res.send(orders);
 	} catch (error) {
 		log_error({
@@ -314,7 +264,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 // 					products = await Product.find({ _id: { $lt: last_product_id }, deleted_at: null })
 // 						.sort({ _id: -1 })
 // 						.limit(10);
-// 				} else if (direction === 'from_here') {
+// 				} else if (direction === 'previous') {
 // 					products = await Product.find({ _id: { $lte: last_product_id }, deleted_at: null })
 // 						.sort({ _id: -1 })
 // 						.limit(10);
@@ -335,7 +285,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 // 					})
 // 						.sort({ _id: -1 })
 // 						.limit(10);
-// 				} else if (direction === 'from_here') {
+// 				} else if (direction === 'previous') {
 // 					products = await Product.find({
 // 						_id: { $lte: last_product_id },
 // 						deleted_at: null,

@@ -189,6 +189,7 @@ const ShippingPage = (props) => {
 
 	const update_shipping = (shipping) => {
 		shipping = JSON.parse(shipping);
+		console.log({ shipping });
 		set_email(shipping.email);
 		set_first_name(shipping.first_name);
 		set_last_name(shipping.last_name);

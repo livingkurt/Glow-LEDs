@@ -9,6 +9,8 @@ import { Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../comp
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
+	const [ last_product_id, set_last_product_id ] = useState('');
+	const [ direction, set_direction ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ block_list_view, set_block_list_view ] = useState(false);
 
@@ -25,7 +27,8 @@ const OrdersPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listOrders());
+			dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
+			dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
 			// dispatch(listOrders());
 		},
 		[ successDelete, order_state ]
@@ -33,19 +36,19 @@ const OrdersPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listOrders(category, searchKeyword, sortOrder));
+			dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listOrders(category, searchKeyword, sortOrder));
+		dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listOrders(category, searchKeyword, e.target.value));
+		dispatch(listOrders(category, searchKeyword, e.target.value, 'none'));
 	};
 
 	const colors = [
@@ -121,6 +124,12 @@ const OrdersPage = (props) => {
 			set_block_list_view(false);
 		}
 	};
+	const next_set_of_orders = (direction) => {
+		dispatch(listOrders(category, searchKeyword, sortOrder, orders[9]._id, direction));
+	};
+	const previous_set_of_orders = (direction) => {
+		dispatch(listOrders(category, searchKeyword, sortOrder, orders[0]._id, direction));
+	};
 
 	return (
 		<div className="profile_container wrap column p-20px">
@@ -169,7 +178,21 @@ const OrdersPage = (props) => {
 				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
-					<div className="ml-1rem product_big_screen">
+					<div className="wrap jc-b">
+						{/* {orders &&
+							[ ...Array(10).keys() ].map((x) => (
+								<option key={x + 1} defaultValue={parseInt(x + 1)}>
+									{parseInt(x + 1)}
+								</option>
+							))} */}
+						<button className="btn icon primary" onClick={() => previous_set_of_orders('previous')}>
+							<i className="fas fa-arrow-left fs-22px" />
+						</button>
+						<button className="btn icon primary" onClick={() => next_set_of_orders('next')}>
+							<i className="fas fa-arrow-right fs-22px" />
+						</button>
+					</div>
+					{/* <div className="ml-1rem product_big_screen">
 						<div className="custom-select w-100per">
 							<select className="qty_select_dropdown w-100per" onChange={(e) => change_view(e)}>
 								{[ 'List View', 'Block View' ].map((view, index) => (
@@ -180,7 +203,7 @@ const OrdersPage = (props) => {
 							</select>
 							<span className="custom-arrow" />
 						</div>
-					</div>
+					</div> */}
 				</div>
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">

@@ -64,10 +64,20 @@ button {
 	padding: 6px 10px;
 }
 
+
 .btn.icon:hover {
-	background-color: gray;
 	box-shadow: $bs_deep;
+	background-color: $theme_color_primary_hover;
 }
+.btn.icon.primary:hover {
+	box-shadow: $bs_deep;
+	background-color: $theme_color_primary_hover;
+}
+
+// .btn.icon:hover {
+// 	background-color: gray;
+// 	box-shadow: $bs_deep;
+// }
 
 .btn.mobile.nav {
 	background-color: transparent;
