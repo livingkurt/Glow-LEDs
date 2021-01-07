@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "main_font";
+  font-family: "phrase_font";
   src: url("/fonts/Neou-Bold.otf");
 }
 
@@ -13,7 +13,7 @@ $content_bg_color: #272727;
 $font_color: white;
 $font_size: 1.6rem;
 $validation_color: #ff4a4a;
-$main_font: main_font;
+$phrase_font: phrase_font;
 $heading_font: heading_font;
 $bs_shallow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 $bs_deep: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -37,7 +37,7 @@ textarea {
 
 body {
   font: 1.6rem Helvetica;
-  font-family: $main_font;
+  font-family: $phrase_font;
   margin: 0;
   background-color: $background_color;
   color: $font_color;
@@ -567,7 +567,7 @@ tbody>tr:nth-child(odd) {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 10px;
-  font-family: $main_font;
+  font-family: $phrase_font;
   transition: all .5s ease-out;
 }
 
@@ -596,7 +596,7 @@ tbody>tr:nth-child(odd) {
   text-overflow: ellipsis;
   white-space: nowrap;
   margin: 10px;
-  font-family: $main_font;
+  font-family: $phrase_font;
   transition: all .5s ease-out;
 }
 
@@ -632,7 +632,7 @@ tbody>tr:nth-child(odd) {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: $main_font;
+  font-family: $phrase_font;
   transition: all .5s ease-out;
 }
 
@@ -702,7 +702,7 @@ video {
   background-color: transparent;
   color: $font_color;
   border: 0px;
-  font-family: $main_font;
+  font-family: $phrase_font;
   border-radius: $br_small_containers;
   transition: all .5s ease;
   padding: 10px;
@@ -801,7 +801,7 @@ video {
   background-color: transparent;
   color: $font_color;
   border: 0px;
-  font-family: $main_font;
+  font-family: $phrase_font;
   border-radius: $br_small_containers;
   transition: all .5s ease;
   padding: 10px;

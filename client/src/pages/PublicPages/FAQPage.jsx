@@ -26,7 +26,7 @@ const FAQPage = () => {
 					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
 				/>
 			</Helmet>
-			<div class="inner_content">
+			<div className="inner_content">
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
@@ -48,7 +48,7 @@ const FAQPage = () => {
 								/>
 							</div>
 						</div>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								To use the Glowskins with your desired microlight, first you need to remove your chip
 								from its casing.
@@ -93,7 +93,7 @@ const FAQPage = () => {
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
 						</label>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>spectra EVOs </li>
 							<li style={{ lineHeight: '25px' }}>chroma EVOs</li>
 						</ul>
@@ -101,7 +101,7 @@ const FAQPage = () => {
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
 						</label>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
 							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
 							<li style={{ lineHeight: '25px' }}>FL Atoms</li>
@@ -111,14 +111,14 @@ const FAQPage = () => {
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L27mm x W15mm x H10mm
 						</label>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>TL Apollos</li>
 						</ul>
 						<h2>Coinskins</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Coinskins: L28mm x W19mm x H8mm
 						</label>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra and Chroma EVOs</li>
 							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
 							<li style={{ lineHeight: '25px' }}>FL Aethers</li>
@@ -128,7 +128,7 @@ const FAQPage = () => {
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Coffinskins: L32mm x W16mm x H8mm
 						</label>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>Micromax</li>
 							<li style={{ lineHeight: '25px' }}>Coffin Style Chips</li>
 						</ul> */}
@@ -151,7 +151,7 @@ const FAQPage = () => {
 							</div>
 						</div>
 
-						<ul style={{ padding: '18px' }}>
+						<ul className="paragraph_font" style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								With your microlights outside of your gloves, place the Diffuser Adapters onto your
 								microlight bulbs{' '}
@@ -216,7 +216,7 @@ const FAQPage = () => {
 							</div>
 						</div>
 
-						<ul style={{ padding: '18px' }}>
+						<ul className="paragraph_font" style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								To place your Diffuser Caps right-side-up, put the Diffuser Adapters onto your
 								microlight bulbs with the notch facing the back of the microlight. Then place the light
@@ -260,7 +260,7 @@ const FAQPage = () => {
 						<h2 style={{ textAlign: 'center', marginBottom: 0 }} id="custom_diffuser_caps">
 							Custom Diffuser Caps
 						</h2>
-						<ul style={{ padding: '0 18px' }}>
+						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								A single 100% refundable deposit of $9.99{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
@@ -388,7 +388,7 @@ const FAQPage = () => {
 						{/* <h2 style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
 							Custom Infinity Mirrors
 						</h2>
-						<ul style={{ padding: '0 18px' }}>
+						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								Before ordering a custom  mirror a consultation must be had{' '}
 								<span aria-label="emoji" role="img">
@@ -432,7 +432,7 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="featured_content">
 							Featured Content
 						</h2>
-						<p style={{ lineHeight: '25px' }}>
+						<p className="paragraph_font" style={{ lineHeight: '25px' }}>
 							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
 							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
 							<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
@@ -467,7 +467,7 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="diffuser_too_tight_too_loose">
 							Diffuser too tight or too loose?
 						</h2>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Due to the handmade nature of our diffusers, some variations may occur between
 								individual diffusers. This often tends to manifest in some diffusers being too toight or
@@ -503,7 +503,7 @@ const FAQPage = () => {
 							Processing/Shipping
 						</h2>
 
-						<ul style={{ padding: '18px', marginBottom: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', marginBottom: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								Glow-LEDs.com is headquartered in Austin, Texas{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
@@ -586,7 +586,7 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="international_shipping">
 							International Shipping
 						</h2>
-						<ul style={{ padding: '18px', margin: 0 }}>
+						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li style={{ lineHeight: '25px' }}>
 								We ship internationally!{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
@@ -639,7 +639,7 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="returns_cancellations">
 							Returns/Cancellations
 						</h2>
-						<ul style={{ padding: '18px' }}>
+						<ul className="paragraph_font" style={{ padding: '18px' }}>
 							<li style={{ lineHeight: '25px' }}>
 								100% satisfaction guarantee{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>

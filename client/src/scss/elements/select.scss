@@ -7,12 +7,12 @@ select {
 	font-size: 1.5rem;
 	padding: .75em 2em 0.55em 1em;
 	background: #4d5061;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	border: 0;
 	position: relative;
 	border-radius: 10px;
 	transition: all .5s ease;
-	font-family: "main_font";
+	font-family: "phrase_font";
 }
 
 .select-label {

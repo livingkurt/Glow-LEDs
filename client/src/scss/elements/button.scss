@@ -12,9 +12,9 @@ button {
 .btn {
 	box-shadow: $bs_shallow;
 	background-color: transparent;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	border: 0px;
-	font-family: $main_font;
+	font-family: $phrase_font;
 	border-radius: $br_small_containers;
 	transition: all .5s ease;
 	padding: 10px;
@@ -100,15 +100,15 @@ button {
 	top: 1.5rem;
 	background-color: transparent;
 	border: 0;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 }
 
 .sidebar-btn {
 	box-shadow: $bs_shallow;
 	background-color: transparent;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	border: 0px;
-	font-family: $main_font;
+	font-family: $phrase_font;
 	border-radius: $br_small_containers;
 	transition: all .5s ease;
 	padding: 10px;
@@ -185,6 +185,6 @@ button {
 // 	font-size: 14px;
 // 	border-radius: 5px;
 // 	border: 1px white solid;
-// 	font-family: 'main_font';
+// 	font-family: 'phrase_font';
 // 	padding-top: 3px;
 // }

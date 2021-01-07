@@ -35,7 +35,7 @@ ul {
 
 a {
 	text-decoration: none;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 }
 
 textarea {
@@ -85,6 +85,10 @@ textarea {
 	display: block;
 }
 
+.p_descriptions{
+  font-family: $paragraph_font;
+}
+
 // h1,
 // h2,
 // h3 {
@@ -93,7 +97,7 @@ textarea {
 
 // header {
 // 	background-color: $theme_color_header;
-// 	color: $theme_color_main_font;
+// 	color: $theme_color_phrase_font;
 // 	display: flex;
 // 	align-items: center;
 // 	justify-content: space-between;
@@ -422,7 +426,7 @@ textarea {
 
 .product-brand {
 	font-size: 1.2rem;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 }
 
 .product-price {
@@ -462,13 +466,13 @@ ul.review {
 /* Rating */
 
 .rating span {
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	font-size: 1.6rem;
 	margin: 0.1rem;
 }
 
 .rating span:last-child {
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	font-size: 1.4rem;
 	margin-left: 5px;
 }
@@ -477,7 +481,7 @@ ul.review {
 }
 
 .rating_textarea a > .rating > span:last-child {
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 }
 
 .content-margined {
@@ -515,14 +519,14 @@ th {
 
 .checkout-steps > div {
 	border-top: .3rem #c0c0c0 solid;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	flex: 1 1;
 	padding-top: 1rem;
 }
 
 .checkout-steps > div.active {
 	border-top: .3rem white solid;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	/* border: 10px solid; */
 	/* border-image-source: linear-gradient(45deg, rgb(0, 143, 104), rgb(250, 224, 66)); */
 	/* border-image-slice: 1; */
@@ -536,7 +540,7 @@ th {
 	flex-grow: wrap;
 	padding: 1rem;
 	justify-content: space-between;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 }
 
 .placeorder-info {
@@ -580,7 +584,7 @@ th {
 .placeorder-action > ul > li:last-child {
 	font-size: 2rem;
 	font-weight: bold;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 }
 
 .placeorder-actions-payment > div {
@@ -682,12 +686,12 @@ th {
 	font-size: 1.5rem;
 	padding: .75em 2em 0.55em 1em;
 	background: $theme_color_secondary;
-	color: $theme_color_main_font;
+	color: $theme_color_phrase_font;
 	border: 0;
 	// position: relative;
 	border-radius: 10px;
 	transition: all .5s ease;
-	font-family: "main_font";
+	font-family: "phrase_font";
 	border-radius: 10px 0 0 10px;
 }
 
@@ -703,8 +707,8 @@ th {
 	background: $theme_color_primary;
 	height: 100%;
 	width: 8rem;
-	color: $theme_color_main_font;
-	font-family: 'main_font';
+	color: $theme_color_phrase_font;
+	font-family: 'phrase_font';
 	// pointer-events: none;
 	padding: 1rem;
 	border-radius: 0 10px 10px 0;
@@ -1193,8 +1197,10 @@ video {
 // }
 
 .inner_content {
+  font-family: $paragraph_font;
 	li {
-		margin: 10px 0;
+    margin: 10px 0;
+    
 		// box-shadow: $bs_deep;
 	}
 }

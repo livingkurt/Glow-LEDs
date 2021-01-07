@@ -257,22 +257,20 @@ const ProductPage = (props) => {
 								)}
 
 								<div className="column">
-									<div className="column h-100per">
-										<div>
-											<ul style={{ marginLeft: '10px' }}>
-												{product.facts ? (
-													product.facts.split('\n').map((line, index) => {
-														return (
-															<li key={index} style={{ listStyleType: 'disc' }}>
-																{line}
-															</li>
-														);
-													})
-												) : (
-													product.facts
-												)}
-											</ul>
-										</div>
+									<div className="column h-100per paragraph_font">
+										<ul style={{ marginLeft: '10px' }}>
+											{product.facts ? (
+												product.facts.split('\n').map((line, index) => {
+													return (
+														<li key={index} style={{ listStyleType: 'disc' }}>
+															{line}
+														</li>
+													);
+												})
+											) : (
+												product.facts
+											)}
+										</ul>
 									</div>
 								</div>
 								<Slideshow product={product} show_hide="alt_pictures_hidden" set_image={set_image} />
@@ -469,7 +467,9 @@ const ProductPage = (props) => {
 						<Slideshow product={product} show_hide="alt_pictures_shown" set_image={set_image} />
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
-							<p style={{ lineHeight: '30px' }}>{product.description}</p>
+							<p className="paragraph_font" style={{ lineHeight: '30px' }}>
+								{product.description}
+							</p>
 							{product.category === 'glow_strings' && (
 								<Link to="/Glow_Strings_Manual.pdf" target="_blank" download>
 									<button className="btn primary w-100per fs-20px mb-2rem">

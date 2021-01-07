@@ -109,7 +109,7 @@ const HomePage = (props) => {
 					<div className="jc-c">
 						<h2 style={{ marginBottom: 0, textAlign: 'center' }}>{content.home_page.h2}</h2>
 					</div>
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+					<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 						{content.home_page.p}
 					</p>
 					<div className="jc-c">
@@ -124,7 +124,7 @@ const HomePage = (props) => {
 			<div className="jc-c">
 				<h2 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h2>
 			</div>
-			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+			<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
 				handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
 				the intention of turning your home into a glowing rainbow dreamland with infinite hours of
@@ -151,7 +151,7 @@ const HomePage = (props) => {
 						/>
 					</div>
 				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 					What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip
 					inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which
 					create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin
@@ -185,7 +185,7 @@ const HomePage = (props) => {
 						/>
 					</div>
 				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 					It's been too long since a truly new element has been introduced to gloving. We are here to change
 					lightshows forever. This new technology puts designs on the outside of your glove for ultimate
 					definition. Using a propriety design, you will be able to simply screw on the caps through the
@@ -218,7 +218,7 @@ const HomePage = (props) => {
 						/>
 					</div>
 				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 					Get the same Diffuser Caps that you know and love in a smaller size. We Call them Mega Diffuser
 					Caps!
 				</p>
@@ -249,7 +249,7 @@ const HomePage = (props) => {
 						/>
 					</div>
 				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
 					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
 					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
@@ -281,7 +281,7 @@ const HomePage = (props) => {
 						/>
 					</div>
 				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 					Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity mirrors
 					are the perfect addition to any chill space. Look into another dimension as vibrant LEDs go on for
 					miles of rainbow bliss. Order a custom infinity mirror to add that personal touch that will only be
@@ -313,7 +313,7 @@ const HomePage = (props) => {
 						/>
 					</div>
 				</div>
-				<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
 					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
 					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150

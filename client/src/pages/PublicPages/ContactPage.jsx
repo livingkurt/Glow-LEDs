@@ -420,7 +420,7 @@ const ContactPage = (props) => {
 					{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 						<div>
 							<h2>Steps to Ensure Content Gets Featured </h2>
-							<ol style={{ paddingLeft: '20px' }}>
+							<ol className="paragraph_font" style={{ paddingLeft: '20px' }}>
 								<li>Fill out relevant info above </li>
 								<li>Then upload your content using the WeTransfer button below.</li>
 								<li>For "Email To" put info.glowleds@gmail.com</li>
@@ -450,9 +450,9 @@ const ContactPage = (props) => {
 					{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 						<div>
 							<h2>Content includes: </h2>
-							<ul style={{ lineHeight: '25px', paddingLeft: '20px' }}>
+							<ul className="paragraph_font" style={{ lineHeight: '25px', paddingLeft: '20px' }}>
 								<li>Pictures or Video of your Lightshow with Glow LEDs Diffusers or Diffuser Caps. </li>
-								<li>Pictures or Video of your Glow LEDs Infintiy Mirror.</li>
+								<li>Pictures or Video of art or music.</li>
 								<li>Pictures or Video of your Glow LEDs Glow Strings.</li>
 							</ul>
 						</div>

@@ -1,6 +1,10 @@
 @font-face {
-	font-family: "main_font";
+	font-family: "phrase_font";
 	src: url("/fonts/Neou-Bold.otf");
+}
+@font-face {
+	font-family: "paragraph_font";
+	src: url("/fonts/UniNeue-Light.otf");
 }
 
 @font-face {
@@ -8,6 +12,19 @@
 	src: url("/fonts/beyond_the_mountains.otf");
 }
 
-$main_font: main_font;
+$phrase_font: phrase_font;
+$paragraph_font: paragraph_font;
 $heading_font: heading_font;
 $font_size: 1.6rem;
+
+
+.phrase_font {
+  font-family: $phrase_font;
+}
+.paragraph_font {
+  font-family: $paragraph_font;
+  -webkit-text-stroke: 1px white;
+}
+.heading_font {
+  font-family: $heading_font;
+}
