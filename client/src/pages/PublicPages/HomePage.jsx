@@ -60,14 +60,14 @@ const HomePage = (props) => {
 			category: 'frosted_diffusers',
 			video: 'uY2xjrGrZd0',
 			description:
-				'tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.'
+				'Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.'
 		},
 		{
 			name: 'Glow Strings',
 			category: 'glow_strings',
 			video: 'TCArM88Ll1s',
 			description:
-				'Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150 LED), and 46 ft (200 LED) options so there’s a size for every need.'
+				'Make your space glow! Our Glow Strings come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150 LED), and 46 ft (200 LED) options so there’s a size for every need.'
 		}
 	];
 
@@ -108,7 +108,7 @@ const HomePage = (props) => {
 			</Helmet>
 
 			<div className="jc-c">
-				<h1 className="welcome_text mb-3rem" style={{ fontSize: '6rem' }}>
+				<h1 className="welcome_text mb-1rem" style={{ fontSize: '4rem' }}>
 					Welcome to Glow-LEDs
 				</h1>
 			</div>
@@ -179,7 +179,7 @@ const HomePage = (props) => {
 				{homepage_videos.map((card) => {
 					return (
 						<Link to={`/collections/all/products/category/${card.category}`}>
-							<div className="home_page_divs h-59rem">
+							<div className="home_page_divs max-h-66rem">
 								<div className="jc-c">
 									<h2 className="ta-c">{card.name}</h2>
 								</div>

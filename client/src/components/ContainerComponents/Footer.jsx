@@ -94,7 +94,7 @@ const Footer = () => {
 						</div>
 						<div>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Services</Link>
+								<Link to="/collections/all/products">Support</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">

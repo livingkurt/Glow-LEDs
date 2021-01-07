@@ -100,6 +100,9 @@ const Header = (props) => {
 						</Link>
 					</div>
 					<div className="jc-b nav_bar">
+						<Link to="/">
+							<button className="btn nav">Home</button>
+						</Link>
 						<Link to="/collections/all/products">
 							<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
 								Products
