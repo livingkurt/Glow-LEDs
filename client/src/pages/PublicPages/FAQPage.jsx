@@ -49,37 +49,33 @@ const FAQPage = () => {
 							</div>
 						</div>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								To use the Glowskins with your desired microlight, first you need to remove your chip
 								from its casing.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Then squeeze the Glowskins near the point causing the opening in the bottom to expand.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Next, grip your microlight from the sides where the battery is and place it into the
 								opening at the bottom of the Glowskin.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Push the microlight all the way in and let your squeezing hand release pressure let the
 								bottom of the Glowskin close up.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								For Nanoskins and Coinskins, To remove your microlight from your Glowskin, squeeze the
 								Glowskin in the same location as you did to put it in.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
-								This action so push the microlight out of the Glowskins.
-							</li>
-							<li style={{ lineHeight: '25px' }}>
-								Then pinch the microlight with your other hand to remove it.
-							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>This action so push the microlight out of the Glowskins.</li>
+							<li>Then pinch the microlight with your other hand to remove it.</li>
+							<li>
 								For Coffinskins, to remove your microlight from your Glowskin you will need to spread
 								the bottom of the Glowskins and pinch the microlight, as the above method of removing
 								does not work for that style of chip.
 							</li>
-							<li style={{ lineHeight: '25px' }}>All Done! Now go throw some sicks shows!</li>
+							<li>All Done! Now go throw some sicks shows!</li>
 						</ul>
 						<Zoom>
 							<img
@@ -94,43 +90,43 @@ const FAQPage = () => {
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>spectra EVOs </li>
-							<li style={{ lineHeight: '25px' }}>chroma EVOs</li>
+							<li >spectra EVOs </li>
+							<li >chroma EVOs</li>
 						</ul>
 						<h2>Nanoskins V2</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>All LEDGloves Nano chips</li>
-							<li style={{ lineHeight: '25px' }}>QtLite 6 Mode</li>
-							<li style={{ lineHeight: '25px' }}>FL Atoms</li>
-							<li style={{ lineHeight: '25px' }}>FL Ions</li>
+							<li >All LEDGloves Nano chips</li>
+							<li >QtLite 6 Mode</li>
+							<li >FL Atoms</li>
+							<li >FL Ions</li>
 						</ul>
 						<h2>Apolloskins</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L27mm x W15mm x H10mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>TL Apollos</li>
+							<li >TL Apollos</li>
 						</ul>
 						<h2>Coinskins</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Coinskins: L28mm x W19mm x H8mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>All elite chips except the Spectra and Chroma EVOs</li>
-							<li style={{ lineHeight: '25px' }}>All LEDGloves non-nano chips</li>
-							<li style={{ lineHeight: '25px' }}>FL Aethers</li>
-							<li style={{ lineHeight: '25px' }}>OSM 2s</li>
+							<li >All elite chips except the Spectra and Chroma EVOs</li>
+							<li >All LEDGloves non-nano chips</li>
+							<li >FL Aethers</li>
+							<li >OSM 2s</li>
 						</ul>
 						<h2>Coffinskins</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Coffinskins: L32mm x W16mm x H8mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>Micromax</li>
-							<li style={{ lineHeight: '25px' }}>Coffin Style Chips</li>
+							<li >Micromax</li>
+							<li >Coffin Style Chips</li>
 						</ul> */}
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
@@ -152,21 +148,19 @@ const FAQPage = () => {
 						</div>
 
 						<ul className="paragraph_font" style={{ padding: '18px' }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								With your microlights outside of your gloves, place the Diffuser Adapters onto your
 								microlight bulbs{' '}
 								<span aria-label="emoji" role="img">
 									💡
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Then place them inside of the glove 🧤, pushing it as far you can so the glove is tight
 								over the diffuser adapter
 							</li>
-							<li style={{ lineHeight: '25px' }}>
-								Now it should look like you have flat top domes inside your gloves.
-							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>Now it should look like you have flat top domes inside your gloves.</li>
+							<li>
 								Grip{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
 									🤏
@@ -174,7 +168,7 @@ const FAQPage = () => {
 								the diffuser adapter might spin on the bulb and wont screw in properly or you risk
 								causing extra stress to the bulb.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Take your cap{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
 									👑
@@ -186,7 +180,7 @@ const FAQPage = () => {
 									🍯
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								The threads should catch and only needs a single turn{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🌀
@@ -217,7 +211,7 @@ const FAQPage = () => {
 						</div>
 
 						<ul className="paragraph_font" style={{ padding: '18px' }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								To place your Diffuser Caps right-side-up, put the Diffuser Adapters onto your
 								microlight bulbs with the notch facing the back of the microlight. Then place the light
 								and Adapter inside the glove.{' '}
@@ -225,7 +219,7 @@ const FAQPage = () => {
 									💡
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Take your cap{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
 									👑
@@ -238,7 +232,7 @@ const FAQPage = () => {
 									🍯
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								The threads should catch and only needs a half turn{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🌀
@@ -247,7 +241,7 @@ const FAQPage = () => {
 									💫
 								</span>️ .
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								To put Diffuser Caps in a different orientation, follow the same steps but change the
 								placement of the notch.
 							</li>
@@ -261,7 +255,7 @@ const FAQPage = () => {
 							Custom Diffuser Caps
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								A single 100% refundable deposit of $9.99{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💸
@@ -270,7 +264,7 @@ const FAQPage = () => {
 									👨‍⚕️
 								</span>️. The deposit will be deducted from the total price.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								The total price{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💸
@@ -284,13 +278,13 @@ const FAQPage = () => {
 									✨
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								This includes 10 custom diffuser caps{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🧢
 								</span>️ and 10 diffuser adapters.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								As soon as you pay your deposit{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💸
@@ -309,7 +303,7 @@ const FAQPage = () => {
 								</span>️ or social media username <i class="fab fa-facebook" />{' '}
 								<i class="fab fa-instagram" />.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								A design will be drafted by us{' '}
 								<span aria-label="emoji" role="img">
 									📝
@@ -321,7 +315,7 @@ const FAQPage = () => {
 									🔥
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								If we determine we are unable to produce what you are desiring, or you are unsatisfied
 								with the results, we will refund your $10 deposit{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
@@ -333,7 +327,7 @@ const FAQPage = () => {
 								</span>️.
 							</li>
 
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Processing{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📦
@@ -351,7 +345,7 @@ const FAQPage = () => {
 									📞
 								</span>.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								We respect others intellectual property{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🏘️
@@ -364,7 +358,7 @@ const FAQPage = () => {
 									🚫
 								</span>.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Sometimes your custom requests are already in our make list{' '}
 								<span aria-label="emoji" role="img">
 									📝
@@ -389,13 +383,13 @@ const FAQPage = () => {
 							Custom Infinity Mirrors
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li >
 								Before ordering a custom  mirror a consultation must be had{' '}
 								<span aria-label="emoji" role="img">
 									📝
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li >
 								Use the contact button{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
@@ -416,7 +410,7 @@ const FAQPage = () => {
 									📞
 								</span>️å (an e-mail address_1, phone number or social media username).
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li >
 								Pricing begins at $549. The price may vary depending on the size and hardware used ⚙️ .
 							</li> */}
 						{/* </ul> */}
@@ -432,7 +426,7 @@ const FAQPage = () => {
 						<h2 className="ta-c" id="featured_content">
 							Featured Content
 						</h2>
-						<p className="paragraph_font" style={{ lineHeight: '25px' }}>
+						<p className="paragraph_font">
 							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
 							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
 							<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
@@ -468,21 +462,21 @@ const FAQPage = () => {
 							Diffuser too tight or too loose?
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Due to the handmade nature of our diffusers, some variations may occur between
 								individual diffusers. This often tends to manifest in some diffusers being too toight or
 								too loose on the bulb.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								we test each diffuser on a 5mm rgb 4 prong led before packaging as 5mm is considered
 								Standard bulb size. (Note 2 prong bulbs are more varied in size)
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Be aware that bulb sizes may vary by an inperceivable amount within sets of microlights
 								due to the manufacturing process. Different brands may also have different size bulbs,
 								although the vast majority are 5mm.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								If one or more of your frosted diffusers or diffuser adapters fit too tight or too
 								loose, please try the diffuser on several different microlights in the set to determine
 								if it is a variant with the diffuser, or the bulb itself. If problem persists please
@@ -504,7 +498,7 @@ const FAQPage = () => {
 						</h2>
 
 						<ul className="paragraph_font" style={{ padding: '18px', marginBottom: 0 }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Glow-LEDs.com is headquartered in Austin, Texas{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
 									🇨🇱
@@ -514,32 +508,32 @@ const FAQPage = () => {
 								</span>️. Products are not stocked waiting to be shipped at this time. Each order will
 								be filled as it is received. Some orders may take longer than others to be shipped.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Small packages will be sent via USPS <i class="fab fa-usps" /> First Class and large
 								packages{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📦
 								</span>️will be sent via Priority Mail.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Shipping time is 1-3 business days, but may be delayed due to pandemic.{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🚚
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								All shipments come with tracking numbers{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🔢
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Not responsible for delays due to post office{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🏤
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								For glove accessories (caps, adapters, diffusers, battery storage) we will get your
 								order in the mail{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
@@ -549,7 +543,7 @@ const FAQPage = () => {
 									🗓{' '}
 								</span>️after the order is placed.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								For string lights{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💡
@@ -558,14 +552,14 @@ const FAQPage = () => {
 									✉️{' '}
 								</span>️within approximately 1 week after the order is placed.
 							</li>
-							{/* <li style={{ lineHeight: '25px' }}>
+							{/* <li >
 								For infinity mirrors, expect a longer processing time. Assembly of infinity mirrors is
 								much more intensive than other products.
 							</li> */}
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								If a custom order is placed, processing times will be discussed during consultation.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								If the address on your order is incorrect, please contact us<span
 									aria-label="emoji"
 									role="img"
@@ -587,13 +581,13 @@ const FAQPage = () => {
 							International Shipping
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								We ship internationally!{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🌎
 								</span>️
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								IMPORTANT: If you live outside of the United States{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🇺🇸
@@ -602,22 +596,20 @@ const FAQPage = () => {
 									🚚
 								</span>️ information. A country field will show for you to input your country.
 							</li>
-							{/* <li style={{ lineHeight: '25px' }}>
+							{/* <li >
 								Shipping will not be calculated correctly if you do not input your country correctly.
 							</li> */}
-							<li style={{ lineHeight: '25px' }}>
-								Shipping times will vary, and will depend on the country.
-							</li>
-							{/* <li style={{ lineHeight: '25px' }}>
+							<li>Shipping times will vary, and will depend on the country.</li>
+							{/* <li >
 								Shipping times will vary, and will depend on the country.
 							</li> */}
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								All shipments come with tracking numbers{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🔢
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Please contact us{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
@@ -640,13 +632,13 @@ const FAQPage = () => {
 							Returns/Cancellations
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '18px' }}>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								100% satisfaction guarantee{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💯
 								</span>️. We accept returns within 14 days of delivery .
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								To initiate a return please contact{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
@@ -656,37 +648,37 @@ const FAQPage = () => {
 									🏷️
 								</span>️to send back your product.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Please include your full name and order number{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
 									🔢
 								</span>️in the return shipment and you will be refunded the full amount minus original
 								shipping costs.
 							</li>
-							{/* <li style={{ lineHeight: '25px' }}>
+							{/* <li >
 							You will be refunded your full amount and you'll only be resonsible for return shipping.
 						</li> */}
-							<li style={{ lineHeight: '25px' }}>Custom items are non-refundable .</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>Custom items are non-refundable .</li>
+							<li>
 								Refunds are returned to the original form of payment{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💳
 								</span>️
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								We do not refund damaged{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🤕
 								</span>️items unless they arrived damaged at our own fault.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								If item arrives damamged in any way please contact us{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
 								</span>️ immediately at info.glowleds@gmail.com or through Facebook Chat at the Bottom
 								right of your screeen.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								Our online orders process immediately{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '10px' }}>
 									💨
@@ -702,7 +694,7 @@ const FAQPage = () => {
 									💳
 								</span>️.
 							</li>
-							<li style={{ lineHeight: '25px' }}>
+							<li>
 								We are not able to modify orders. If you would like to add an item you will need to do
 								so in another order.
 							</li>

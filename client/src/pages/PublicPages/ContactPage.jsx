@@ -409,7 +409,7 @@ const ContactPage = (props) => {
 				<label className="validation_text">{message_validations}</label>
 
 				{[ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact) && (
-					<p style={{ lineHeight: '25px' }}>
+					<p className="paragraph_font">
 						You can find your order number by logging in and going to the drop down with your name on it and
 						clicking orders. The order Number will be in the far left column. Or by checking the email you
 						recieved for making your order.

@@ -73,7 +73,7 @@ const AboutPage = () => {
 							src="/images/optimized_images/personal_images/IMG_8989_optimized.jpeg"
 						/>
 					</div>
-					{content && content.banner && <p style={{ lineHeight: '25px' }}>{content.about_page.kurt_p}</p>}
+					{content && content.banner && <p className="paragraph_font">{content.about_page.kurt_p}</p>}
 					<div
 						className="about_pictures"
 						style={{
@@ -105,12 +105,12 @@ const AboutPage = () => {
 							src="/images/optimized_images/personal_images/img_0345_optimized.jpg"
 						/>
 					</div>
-					{/* <p style={{ lineHeight: '25px' }}>
+					{/* <p >
 						I (Destanye) help with orders, designs, marketing, customer service and anything that doesn’t
 						involve coding or engineering. This business is truly a labor of love and we hope that something
 						here brings happiness into your life.
 					</p> */}
-					{content && content.banner && <p style={{ lineHeight: '25px' }}>{content.about_page.destanye_p}</p>}
+					{content && content.banner && <p className="paragraph_font">{content.about_page.destanye_p}</p>}
 				</div>
 			</div>
 		</div>
