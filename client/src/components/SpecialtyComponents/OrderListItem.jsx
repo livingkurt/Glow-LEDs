@@ -81,7 +81,7 @@ const OrderListItem = (props) => {
 		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
 		console.log(request);
-		dispatch(listOrders());
+		dispatch(listOrders('', '', '', 'none'));
 	};
 
 	const buy_label = async () => {
@@ -94,7 +94,7 @@ const OrderListItem = (props) => {
 		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
 		console.log(request);
-		dispatch(listOrders());
+		dispatch(listOrders('', '', '', 'none'));
 	};
 
 	return (

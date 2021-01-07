@@ -111,11 +111,23 @@ const Header = (props) => {
 						<Link to="/">
 							<button className="btn nav">Home</button>
 						</Link>
-						<Link to="/collections/all/products">
+						{/* <Link to="/collections/all/products">
 							<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
 								Products
 							</button>
-						</Link>
+						</Link> */}
+						<div className="dropdown-nav">
+							<Link to="/collections/all/products">
+								<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
+									Products
+								</button>
+							</Link>
+							<div className="dropdown-nav-content hover_fade_in w-200px">
+								<Link to="/collections/all/products/category/best_sellers">
+									<button className="btn nav w-100per ta-l">Best Sellers</button>
+								</Link>
+							</div>
+						</div>
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/gloving">
 								<button className="btn nav">Gloving</button>
