@@ -315,7 +315,7 @@ const OrderPage = (props) => {
 					}}
 				/>
 				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-					Pay for Order
+					Complete Order
 				</button>
 			</form>
 		);
@@ -619,7 +619,7 @@ ${order.shipping.email}`)}
 									<div>
 										<StripeCheckout
 											name="Glow LEDs"
-											description={`Pay for Order`}
+											description={`Complete Order`}
 											amount={
 												(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) *
 												100
@@ -632,7 +632,7 @@ ${order.shipping.email}`)}
 												className="btn primary w-100per"
 												style={{ marginBottom: '12px' }}
 											>
-												Pay for Order
+												Complete Order
 											</button>
 										</StripeCheckout>
 									</div>

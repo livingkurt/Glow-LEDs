@@ -7,14 +7,14 @@ require('dotenv').config();
 const StripeButton = () => {
 	return (
 		<StripeCheckout
-			name="Pay for Order"
+			name="Complete Order"
 			description={`Order paid by ${user_data.name}`}
 			amount={order.totalPrice * 100}
 			token={(token) => handleSuccessPayment(token)}
 			stripeKey={process.env.REACT_APP_STRIPE_KEY}
 		>
 			<button className="btn w-100per" style={{ backgroundColor: '#804747' }}>
-				Pay for Order
+				Complete Order
 			</button>
 		</StripeCheckout>
 	);

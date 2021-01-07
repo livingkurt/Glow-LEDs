@@ -555,7 +555,7 @@ const PlaceOrderPage = (props) => {
 					}}
 				/>
 				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-					Pay for Order
+					Complete Order
 				</button>
 			</form>
 		);
@@ -925,13 +925,13 @@ const PlaceOrderPage = (props) => {
 							<div>
 								<StripeCheckout
 									name="Glow LEDs"
-									description={`Pay for Order`}
+									description={`Complete Order`}
 									amount={totalPrice.toFixed(2) * 100}
 									token={(token) => placeOrderHandler(token)}
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
-									<button className="btn primary w-100per mb-12px">Pay for Order</button>
+									<button className="btn primary w-100per mb-12px">Complete Order</button>
 								</StripeCheckout>
 							</div>
 						)} */}

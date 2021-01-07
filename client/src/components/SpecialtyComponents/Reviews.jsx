@@ -86,7 +86,7 @@ const Review = (props) => {
 			))}
 
 			<button className="btn primary" onClick={show_write_review}>
-				Write a customer review
+				Write a Review
 			</button>
 
 			<li style={{ listStyleType: 'none', display: review_modal }}>
@@ -97,7 +97,7 @@ const Review = (props) => {
 						justifyContent: 'center'
 					}}
 				>
-					Write a customer review
+					Write a Review
 				</h2>
 				{userInfo ? (
 					<form>

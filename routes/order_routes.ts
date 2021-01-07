@@ -70,69 +70,6 @@ router.get('/tax_rates', async (req: any, res: any) => {
 	res.send(result);
 });
 
-// router.get('/', isAuth, async (req: any, res: any) => {
-// 	try {
-// 		const category = req.query.category ? { category: req.query.category } : {};
-// 		let user: any;
-// 		let searchKeyword: any;
-// 		if (req.query.searchKeyword) {
-// 			const userSearchKeyword = req.query.searchKeyword
-// 				? {
-// 						'shipping.first_name': {
-// 							$regex: req.query.searchKeyword,
-// 							$options: 'i'
-// 						}
-// 					}
-// 				: {};
-// 			user = await User.findOne({ ...userSearchKeyword });
-// 			searchKeyword = { user: user._id };
-// 		}
-// 		let sortOrder = {};
-// 		if (req.query.sortOrder === 'lowest') {
-// 			sortOrder = { totalPrice: 1 };
-// 		} else if (req.query.sortOrder === 'highest') {
-// 			sortOrder = { totalPrice: -1 };
-// 		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-// 			sortOrder = { createdAt: -1 };
-// 		} else if (req.query.sortOrder === 'paid') {
-// 			sortOrder = { isPaid: -1, createdAt: -1 };
-// 		} else if (req.query.sortOrder === 'manufactured') {
-// 			sortOrder = { isManufactured: -1, createdAt: -1 };
-// 		} else if (req.query.sortOrder === 'packaged') {
-// 			sortOrder = { isPackaged: -1, createdAt: -1 };
-// 		} else if (req.query.sortOrder === 'shipped') {
-// 			sortOrder = { isShipped: -1, createdAt: -1 };
-// 		} else if (req.query.sortOrder === 'delivered') {
-// 			sortOrder = { isDelivered: -1, createdAt: -1 };
-// 		}
-
-// 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-// 			.populate('user')
-// 			.populate('orderItems.product')
-// 			.populate('orderItems.secondary_product')
-// 			.sort(sortOrder);
-// 		log_request({
-// 			method: 'GET',
-// 			path: req.originalUrl,
-// 			collection: 'Product',
-// 			data: orders,
-// 			status: 200,
-// 			success: true,
-// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-// 		});
-// 		res.send(orders);
-// 	} catch (error) {
-// 		log_error({
-// 			method: 'GET',
-// 			path: req.originalUrl,
-// 			collection: 'Product',
-// 			error,
-// 			status: 500,
-// 			success: false
-// 		});
-// 		res.status(500).send({ error, message: 'Error Getting Orders' });
-// 	}
-// });
 router.get('/', isAuth, async (req: any, res: any) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};

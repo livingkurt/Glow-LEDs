@@ -489,14 +489,14 @@ const OrderPublicPage = (props) => {
 							<div>
 								<StripeCheckout
 									name="Glow LEDs"
-									description={`Pay for Order`}
+									description={`Complete Order`}
 									amount={(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) * 100}
 									token={(token) => pay_order(token)}
 									stripeKey={process.env.REACT_APP_STRIPE_KEY}
 									onChange={handleChangeFor('cardNumber')}
 								>
 									<button className="btn primary w-100per" style={{ marginBottom: '12px' }}>
-										Pay for Order
+										Complete Order
 									</button>
 								</StripeCheckout>
 							</div>

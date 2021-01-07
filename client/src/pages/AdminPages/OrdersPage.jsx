@@ -185,10 +185,10 @@ const OrdersPage = (props) => {
 									{parseInt(x + 1)}
 								</option>
 							))} */}
-						<button className="btn icon primary" onClick={() => previous_set_of_orders('previous')}>
+						<button className="btn icon primary mh-1rem" onClick={() => previous_set_of_orders('previous')}>
 							<i className="fas fa-arrow-left fs-22px" />
 						</button>
-						<button className="btn icon primary" onClick={() => next_set_of_orders('next')}>
+						<button className="btn icon primary " onClick={() => next_set_of_orders('next')}>
 							<i className="fas fa-arrow-right fs-22px" />
 						</button>
 					</div>
