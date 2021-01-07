@@ -30,6 +30,44 @@ const HomePage = (props) => {
 		[ contents ]
 	);
 
+	const homepage_videos = [
+		{
+			name: 'Glowskins',
+			category: 'glowskins',
+			video: '3Yk0QOMBlAo',
+			description:
+				'What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.'
+		},
+		{
+			name: 'Diffuser Caps',
+			category: 'diffuser_caps',
+			video: '0b1cn_3EczE',
+			description:
+				'Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we'
+		},
+		{
+			name: 'Mega Diffuser Caps',
+			category: 'mega_diffuser_caps',
+			video: 'CaC-86DAql4',
+			description:
+				'Take your light shows to a new dimension with Mega Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. Now in Mega Size! These Mega Diffuser Caps are Just like our regular sized Diffuser Caps, but 20% bigger! 20mm in Diameter (Same size as our Mega Dome Diffusers) The mega size allows for a more intricate design that may be too complex for the regular sized diffuser caps. Simply place the Diffuser Adapters (sold separately) on your microlight like normal diffusers and the caps screw on on the outside of the glove! People will be speechless at your tracers and trails! 100% facemelt guarantee. Lights not included. Patent pending. The Mega Diffuser Caps are compatible with the Original Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we mean.'
+		},
+		{
+			name: 'Frosted Diffusers',
+			category: 'frosted_diffusers',
+			video: 'uY2xjrGrZd0',
+			description:
+				'tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.'
+		},
+		{
+			name: 'Glow Strings',
+			category: 'glow_strings',
+			video: 'TCArM88Ll1s',
+			description:
+				'Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150 LED), and 46 ft (200 LED) options so there’s a size for every need.'
+		}
+	];
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -122,9 +160,9 @@ const HomePage = (props) => {
 				</div>
 			)}
 			<div className="jc-c">
-				<h2 style={{ textAlign: 'center' }}>From a Glover that just wants the world to stay lit</h2>
+				<h2 className="ta-c">From a Glover that just wants the world to stay lit</h2>
 			</div>
-			<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
+			<p className="p_descriptions paragraph_font ta-c">
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
 				handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
 				the intention of turning your home into a glowing rainbow dreamland with infinite hours of
@@ -132,200 +170,77 @@ const HomePage = (props) => {
 				encouraged). The beautiful colors have the ability to turn your home into the next best festival or into
 				a relaxing retreat, you decide.
 			</p>
-
-			<div className="home_page_divs">
-				<div className="jc-c">
-					<h2 style={{ textAlign: 'center' }}>Glowskins</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Glowskins Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/3Yk0QOMBlAo?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-					What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip
-					inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which
-					create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin
-					chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel
-					comfortable! They do not inhibit access to your microlight button for mode switching. Our light and
-					streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/glowskins">
-						<button className="btn primary" style={{ background: 'transparent' }}>
-							<h2>Shop Glowskins</h2>
-						</button>
-					</Link>
-				</div>
+			<div className="big_home_page_cards">
+				{homepage_videos.map((card) => {
+					return (
+						<Link to={`/collections/all/products/category/${card.category}`}>
+							<div className="home_page_divs h-59rem">
+								<div className="jc-c">
+									<h2 className="ta-c">{card.name}</h2>
+								</div>
+								<div className="row">
+									<div className="iframe-container-big">
+										<iframe
+											title={`${card.name} Promo Video`}
+											width="996"
+											height="560"
+											className="br-20px"
+											src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+											frameborder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen="1"
+										/>
+									</div>
+									<div className="ml-2rem">
+										<p className="p_descriptions paragraph_font w-50rem">{card.description}</p>
+										<div className="jc-c">
+											<Link
+												className="w-100per"
+												to={`/collections/all/products/category/${card.category}`}
+											>
+												<button className="btn primary w-100per">Shop {card.name}</button>
+											</Link>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Link>
+					);
+				})}
 			</div>
-			<div className="home_page_divs">
-				<div className="jc-c">
-					<h2 style={{ textAlign: 'center' }}>Diffuser Caps</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Diffuser Caps Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/0b1cn_3EczE?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-					It's been too long since a truly new element has been introduced to gloving. We are here to change
-					lightshows forever. This new technology puts designs on the outside of your glove for ultimate
-					definition. Using a propriety design, you will be able to simply screw on the caps through the
-					gloves to the adapter and start throwing heat right away. Mix and match the cap designs create truly
-					ridiculous light shows. 100% facemelt guarantee.
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/diffuser_caps">
-						<button className="btn primary" style={{ background: 'transparent' }}>
-							<h2>Shop Diffuser Caps</h2>
-						</button>
-					</Link>
-				</div>
-			</div>
-			<div className="home_page_divs">
-				<div className="jc-c">
-					<h2 style={{ textAlign: 'center' }}>Mega Diffuser Caps</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Mega Diffuser Caps Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/CaC-86DAql4?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-					Get the same Diffuser Caps that you know and love in a smaller size. We Call them Mega Diffuser
-					Caps!
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/mega_diffuser_caps">
-						<button className="btn primary" style={{ background: 'transparent' }}>
-							<h2>Shop Mega Diffuser Caps</h2>
-						</button>
-					</Link>
-				</div>
-			</div>
-
-			<div className="home_page_divs">
-				<div className="jc-c">
-					<h2 style={{ textAlign: 'center' }}>Frosted Diffusers</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Frosted Diffusers Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/uY2xjrGrZd0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
-					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
-					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
-					LED), and 46 ft (200 LED) options so there’s a size for every need.
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/frosted_diffusers">
-						<button className="btn primary" style={{ background: 'transparent' }}>
-							<h2>Shop Frosted Diffusers</h2>
-						</button>
-					</Link>
-				</div>
-			</div>
-			{/* <div className="home_page_divs">
-				<div className="jc-c">
-					<h2 style={{ textAlign: 'center' }}>Glowskins</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Glowskins Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/K8hSD_VaYG4?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-					Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity mirrors
-					are the perfect addition to any chill space. Look into another dimension as vibrant LEDs go on for
-					miles of rainbow bliss. Order a custom infinity mirror to add that personal touch that will only be
-					found in your space.
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/infinity_mirrors">
-						<button className="btn primary" style={{ background: 'transparent' }}>
-							<h2>Shop Glowskins</h2>
-						</button>
-					</Link>
-				</div>
-			</div> */}
-			<div className="home_page_divs">
-				<div className="jc-c">
-					<h2>Glow Strings</h2>
-				</div>
-				<div className="jc-c pos-rel">
-					<div className="iframe-container">
-						<iframe
-							title="Glow Strings Promo Video"
-							width="996"
-							height="560"
-							style={{ borderRadius: '20px' }}
-							src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-							frameborder="0"
-							allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen="1"
-						/>
-					</div>
-				</div>
-				<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-					Make your space glow! Our string lights come with 14 preprogrammed patterns that will turn your home
-					into a festival. Strobes, fades, flashes, they have it all. fill your universe with a swimming pool
-					of light in every color of the rainbow. Available in 12 ft (50 LED), 23 ft (100 LED), 34 ft (150
-					LED), and 46 ft (200 LED) options so there’s a size for every need.
-				</p>
-				<div className="jc-c">
-					<Link to="/collections/all/products/category/glow_strings">
-						<button className="btn primary" style={{ background: 'transparent' }}>
-							<h2>Shop Glow Strings</h2>
-						</button>
-					</Link>
-				</div>
+			<div className="small_home_page_cards none">
+				{homepage_videos.map((card) => {
+					return (
+						<Link to={`/collections/all/products/category/${card.category}`}>
+							<div className="home_page_divs">
+								<div className="jc-c">
+									<h2 className="ta-c">{card.name}</h2>
+								</div>
+								<div className="jc-c pos-rel">
+									<div className="iframe-container">
+										<iframe
+											title={`${card.name} Promo Video`}
+											style={{ borderRadius: '20px' }}
+											src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+											frameborder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen="1"
+										/>
+									</div>
+								</div>
+								<p className="p_descriptions paragraph_font">{card.description}</p>
+								<div className="jc-c">
+									<Link
+										className="w-100per"
+										to={`/collections/all/products/category/${card.category}`}
+									>
+										<button className="btn primary w-100per">Shop {card.name}</button>
+									</Link>
+								</div>
+							</div>
+						</Link>
+					);
+				})}
 			</div>
 		</div>
 	);

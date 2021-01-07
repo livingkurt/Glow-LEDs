@@ -76,7 +76,13 @@
 	}
 	.brand {
 		margin-right: 20px !important;
-	}
+  }
+  .small_home_page_cards {
+    display: block !important;
+  }
+  .big_home_page_cards {
+    display: none !important;
+  }
 	/* .content {
     margin: 0 20px !important;
   } */
