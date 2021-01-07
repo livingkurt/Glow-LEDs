@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ const HomePage = (props) => {
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
+	const [ inactive, set_inactive ] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -24,6 +25,8 @@ const HomePage = (props) => {
 			const active_content = contents.find((content) => content.active === true);
 			if (active_content) {
 				dispatch(detailsContent(active_content._id));
+			} else {
+				set_inactive(true);
 			}
 			return () => {};
 		},
@@ -110,6 +113,7 @@ const HomePage = (props) => {
 				</h1>
 			</div>
 			{content &&
+			inactive &&
 			content.home_page && (
 				<div className="home_page_divs">
 					<div className="jc-c">
@@ -160,7 +164,8 @@ const HomePage = (props) => {
 				</div>
 			)}
 			<div className="jc-c">
-				<h2 className="ta-c">From a Glover that just wants the world to stay lit</h2>
+				{/* <h2 className="ta-c phrase_font">From a Glover that just wants the world to stay lit 🔥 </h2> */}
+				{/* <h2 className="ta-c phrase_font">Lighting up your world one LED at a time </h2> */}
 			</div>
 			<p className="p_descriptions paragraph_font ta-c">
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
