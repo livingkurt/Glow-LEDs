@@ -197,6 +197,12 @@
 // }
 
 @media only screen and (max-width: 704px) {
+  .home_page_divs {
+		padding: 0px;
+		background-color: unset !important;
+		border: 0;
+		box-shadow: unset;
+	}
 	.product_big_screen {
 		display: none !important;
 	}
@@ -377,6 +383,9 @@
 	}
 }
 @media only screen and (max-width: 450px) {
+  .home_page_description {
+    display: none !important;
+  }
 	.product_text {
 		font-size: 1.4rem !important;
 	}
@@ -407,7 +416,8 @@
 	}
 	// .search_input {
 	// 	width: 100% !important;
-	// }
+  // }
+  
 }
 
 @media only screen and (max-width: 412px) {
