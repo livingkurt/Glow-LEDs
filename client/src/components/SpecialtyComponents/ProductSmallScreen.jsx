@@ -10,14 +10,76 @@ const ProductSmallScreen = (props) => {
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
 			<Link to={'/collections/all/products/' + props.product.pathname}>
 				<div className="small_screen_product row">
-					<div className="">
-						<LazyLoadImage
-							className="product-image w-200px h-200px "
-							alt={props.product.name}
-							title="Product Image"
-							effect="blur"
-							src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
-						/>
+					<div className="row mt-15px">
+						<div className="column ai-c pos-rel">
+							<LazyLoadImage
+								className="product-image w-200px h-200px "
+								alt={props.product.name}
+								title="Product Image"
+								effect="blur"
+								src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+							/>
+							{props.product_occurrences &&
+							props.product_occurrences[0] &&
+							props.product_occurrences[0].name === props.product.name && (
+								<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+									<img
+										className=" mt-3px ml-2px h-100px w-100px"
+										alt={props.product.name}
+										title="Product Image"
+										src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
+									/>
+								</div>
+							)}
+							{props.product_occurrences &&
+							props.product_occurrences[1] &&
+							props.product_occurrences[1].name === props.product.name && (
+								<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+									<img
+										className=" mt-3px ml-2px h-100px w-100px"
+										alt={props.product.name}
+										title="Product Image"
+										src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
+									/>
+								</div>
+							)}
+							{props.product_occurrences &&
+							props.product_occurrences[2] &&
+							props.product_occurrences[2].name === props.product.name && (
+								<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+									<img
+										className=" mt-3px ml-2px h-100px w-100px"
+										alt={props.product.name}
+										title="Product Image"
+										src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
+									/>
+								</div>
+							)}
+							{props.product_occurrences &&
+							props.product_occurrences[3] &&
+							props.product_occurrences[3].name === props.product.name && (
+								<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+									<img
+										className=" mt-3px ml-2px h-100px w-100px"
+										alt={props.product.name}
+										title="Product Image"
+										src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
+									/>
+								</div>
+							)}
+							{props.product_occurrences &&
+							props.product_occurrences[4] &&
+							props.product_occurrences[4].name === props.product.name && (
+								<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+									<img
+										className=" mt-3px ml-2px h-100px w-100px"
+										alt={props.product.name}
+										title="Product Image"
+										src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
+									/>
+								</div>
+							)}
+						</div>
 					</div>
 					<div className="p-10px">
 						<div className="product_text" style={{ fontSize: '1.6rem' }}>

@@ -6,10 +6,12 @@ import { Product, ProductSmallScreen, Search, Sort } from '../../components/Spec
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { API_Products } from '../../utils';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
 	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
@@ -32,6 +34,19 @@ const AllProductsPage = (props) => {
 		},
 		[ searchKeyword ]
 	);
+	useEffect(
+		() => {
+			get_occurrences();
+		},
+		[ searchKeyword ]
+	);
+
+	const get_occurrences = async () => {
+		const { data: occurrences } = await API_Products.get_occurrences();
+		set_product_occurrences(occurrences);
+		console.log({ occurrences });
+		// initialize_occurrence_chart(occurrences);
+	};
 
 	useEffect(
 		() => {
@@ -196,7 +211,14 @@ const AllProductsPage = (props) => {
 							<ul className="products" style={{ marginTop: 0 }}>
 								{products.map(
 									(product, index) =>
-										!product.hidden && <Product size="300px" key={index} product={product} />
+										!product.hidden && (
+											<Product
+												size="300px"
+												key={index}
+												product={product}
+												product_occurrences={product_occurrences}
+											/>
+										)
 								)}
 							</ul>
 						)}
@@ -208,7 +230,12 @@ const AllProductsPage = (props) => {
 								{products.map(
 									(product, index) =>
 										!product.hidden && (
-											<ProductSmallScreen size="300px" key={index} product={product} />
+											<ProductSmallScreen
+												size="300px"
+												key={index}
+												product={product}
+												product_occurrences={product_occurrences}
+											/>
 										)
 								)}
 							</ul>
