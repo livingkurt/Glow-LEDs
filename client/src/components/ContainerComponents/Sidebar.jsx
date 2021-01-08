@@ -94,6 +94,11 @@ const Sidebar = (props) => {
 				<i className="fas fa-times" />
 			</button>
 			<div className="column h-100per" style={{ overflowY: 'scroll' }}>
+				<Link to="/">
+					<button className="sidebar-btn primary" onClick={closeMenu}>
+						Home
+					</button>
+				</Link>
 				{props.userInfo ? (
 					<div className="sidebar_dropdown">
 						<button className="sidebar-btn primary">{first_name}</button>
@@ -186,11 +191,21 @@ const Sidebar = (props) => {
 						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 					</div>
 				)}
-				<Link to="/collections/all/products">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
-						Products
+
+				<div className="sidebar_dropdown">
+					<button className="sidebar-btn primary">
+						<Link to="/collections/all/products">Products</Link>
 					</button>
-				</Link>
+
+					<ul className="sidebar_dropdown_container">
+						<Link to="/collections/all/products/category/best_sellers">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Best Seller
+							</button>
+						</Link>
+					</ul>
+					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+				</div>
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/pages/menu/gloving">Gloving</Link>
