@@ -21,24 +21,32 @@ const router = express.Router();
 router.get('/occurrences', async (req: any, res: any) => {
 	const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
 	const products: any = [];
+	const ids: any = [];
 	orders.forEach((order: any) => {
 		order.orderItems.map((item: any) => {
 			products.push(item.name);
+			ids.push(item._id);
 			if (item.secondary_product) {
 				products.push(item.secondary_product.name);
+				ids.push(item.secondary_product._id);
 			}
 		});
 	});
+	// console.log({ ids });
 	let result: any = {};
+	let ids_result: any = {};
 	for (var i = 0; i < products.length; ++i) {
 		if (!result[products[i]]) {
 			result[products[i]] = 0;
+			ids_result[ids[i]] = 0;
 		}
 		++result[products[i]];
+		++ids_result[ids[i]];
 	}
+	// console.log({ ids_result });
 	let final_result = [];
 	for (let i in result) {
-		const entry = { name: i, occurrence: result[i] };
+		const entry = { name: i, occurrence: result[i], id: ids_result[i] };
 		final_result.push(entry);
 	}
 	final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));

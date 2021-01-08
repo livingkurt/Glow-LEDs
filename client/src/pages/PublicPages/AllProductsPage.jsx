@@ -12,6 +12,7 @@ const AllProductsPage = (props) => {
 	const history = useHistory();
 	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
+	const [ best_sellers, set_best_sellers ] = useState([]);
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
@@ -45,6 +46,11 @@ const AllProductsPage = (props) => {
 		const { data: occurrences } = await API_Products.get_occurrences();
 		set_product_occurrences(occurrences);
 		console.log({ occurrences });
+		if (occurrences && category === 'best_sellers') {
+			const { data } = await API_Products.get_best_sellers(occurrences);
+			console.log({ data });
+			set_best_sellers(data);
+		}
 		// initialize_occurrence_chart(occurrences);
 	};
 
@@ -205,46 +211,85 @@ const AllProductsPage = (props) => {
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>
-				<div>
-					<div className="product_big_screen">
-						{products && (
-							<ul className="products" style={{ marginTop: 0 }}>
-								{products.map(
-									(product, index) =>
-										!product.hidden && (
-											<Product
-												size="300px"
-												key={index}
-												product={product}
-												product_occurrences={product_occurrences}
-											/>
-										)
-								)}
-							</ul>
-						)}
-					</div>
+				{best_sellers ? (
+					<div>
+						<div className="product_big_screen">
+							{best_sellers && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{best_sellers.map(
+										(product, index) =>
+											!product.hidden && (
+												<Product
+													size="300px"
+													key={index}
+													product={product}
+													product_occurrences={product_occurrences}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
 
-					<div className="product_small_screen none">
-						{products && (
-							<ul className="products" style={{ marginTop: 0 }}>
-								{products.map(
-									(product, index) =>
-										!product.hidden && (
-											<ProductSmallScreen
-												size="300px"
-												key={index}
-												product={product}
-												product_occurrences={product_occurrences}
-											/>
-										)
-								)}
-							</ul>
-						)}
+						<div className="product_small_screen none">
+							{best_sellers && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{best_sellers.map(
+										(product, index) =>
+											!product.hidden && (
+												<ProductSmallScreen
+													size="300px"
+													key={index}
+													product={product}
+													product_occurrences={product_occurrences}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
 					</div>
-				</div>
-				{products.length === 0 && (
-					<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
+				) : (
+					<div>
+						<div className="product_big_screen">
+							{products && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{products.map(
+										(product, index) =>
+											!product.hidden && (
+												<Product
+													size="300px"
+													key={index}
+													product={product}
+													product_occurrences={product_occurrences}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
+
+						<div className="product_small_screen none">
+							{products && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{products.map(
+										(product, index) =>
+											!product.hidden && (
+												<ProductSmallScreen
+													size="300px"
+													key={index}
+													product={product}
+													product_occurrences={product_occurrences}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
+					</div>
 				)}
+				{products.length === 0 &&
+				!best_sellers && <h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>}
 			</Loading>
 		</div>
 	);

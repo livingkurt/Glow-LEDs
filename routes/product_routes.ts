@@ -7,6 +7,56 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
+router.post('/best_sellers', async (req, res) => {
+	try {
+		const occurences = req.body.occurences;
+		console.log(occurences[0]);
+		const names = [
+			occurences[0].name,
+			occurences[1].name,
+			occurences[2].name,
+			occurences[3].name,
+			occurences[4].name
+		];
+		console.log({ names });
+		const products = await Product.find({ name: { $in: names } });
+		console.log({ products });
+		if (products) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ products ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(products);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ products ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Product Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Product' });
+	}
+});
+
 router.get('/categories', async (req, res) => {
 	const products = await Product.find({ deleted: false }).sort({ category: 1 });
 	const categories = products.map((product: any) => product.category);
@@ -198,6 +248,7 @@ router.get('/:pathname', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Getting Product' });
 	}
 });
+
 router.get('/images/:category', async (req, res) => {
 	// try {
 	console.log(req.params.category);
