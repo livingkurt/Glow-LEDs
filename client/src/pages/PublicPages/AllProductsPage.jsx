@@ -41,6 +41,15 @@ const AllProductsPage = (props) => {
 		},
 		[ searchKeyword ]
 	);
+	useEffect(
+		() => {
+			if (category === 'best_sellers') {
+				get_occurrences();
+			}
+			dispatch(listProducts(category, subcategory, searchKeyword));
+		},
+		[ category ]
+	);
 
 	const get_occurrences = async () => {
 		const { data: occurrences } = await API_Products.get_occurrences();
@@ -50,9 +59,13 @@ const AllProductsPage = (props) => {
 			const { data } = await API_Products.get_best_sellers(occurrences);
 			console.log({ data });
 			set_best_sellers(data);
+		} else {
+			dispatch(listProducts(category, subcategory, searchKeyword));
+			set_best_sellers(false);
 		}
-		// initialize_occurrence_chart(occurrences);
 	};
+	console.log({ best_sellers });
+	console.log({ products });
 
 	useEffect(
 		() => {
@@ -211,28 +224,30 @@ const AllProductsPage = (props) => {
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>
-				{best_sellers ? (
+				{best_sellers && (
 					<div>
 						<div className="product_big_screen">
 							{best_sellers && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{best_sellers.map(
-										(product, index) =>
-											!product.hidden && (
-												<Product
-													size="300px"
-													key={index}
-													product={product}
-													product_occurrences={product_occurrences}
-												/>
-											)
-									)}
+									{products.length === 0 &&
+										best_sellers.map(
+											(product, index) =>
+												!product.hidden && (
+													<Product
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
 								</ul>
 							)}
 						</div>
 
 						<div className="product_small_screen none">
-							{best_sellers && (
+							{products.length === 0 &&
+							best_sellers && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{best_sellers.map(
 										(product, index) =>
@@ -249,7 +264,8 @@ const AllProductsPage = (props) => {
 							)}
 						</div>
 					</div>
-				) : (
+				)}
+				{products && (
 					<div>
 						<div className="product_big_screen">
 							{products && (
