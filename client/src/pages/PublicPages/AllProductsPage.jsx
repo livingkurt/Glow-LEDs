@@ -13,6 +13,8 @@ const AllProductsPage = (props) => {
 	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ best_sellers, set_best_sellers ] = useState([]);
+	const [ essentials, set_essentials ] = useState([]);
+	const [ alternative_products, set_alternative_products ] = useState([]);
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
@@ -35,18 +37,22 @@ const AllProductsPage = (props) => {
 		},
 		[ searchKeyword ]
 	);
-	useEffect(
-		() => {
-			get_occurrences();
-		},
-		[ searchKeyword ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		get_occurrences();
+	// 	},
+	// 	[ searchKeyword ]
+	// );
 	useEffect(
 		() => {
 			if (category === 'best_sellers') {
 				get_occurrences();
 			}
-			dispatch(listProducts(category, subcategory, searchKeyword));
+			if (category === 'essentials') {
+				get_occurrences();
+			} else {
+				dispatch(listProducts(category, subcategory, searchKeyword));
+			}
 		},
 		[ category ]
 	);
@@ -59,6 +65,12 @@ const AllProductsPage = (props) => {
 			const { data } = await API_Products.get_best_sellers(occurrences);
 			console.log({ data });
 			set_best_sellers(data);
+			set_alternative_products(data);
+		} else if (occurrences && category === 'essentials') {
+			const { data } = await API_Products.get_essentials();
+			console.log({ data });
+			set_essentials(data);
+			set_alternative_products(data);
 		} else {
 			dispatch(listProducts(category, subcategory, searchKeyword));
 			set_best_sellers(false);
@@ -227,10 +239,10 @@ const AllProductsPage = (props) => {
 				{best_sellers && (
 					<div>
 						<div className="product_big_screen">
-							{best_sellers && (
+							{alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{products.length === 0 &&
-										best_sellers.map(
+										alternative_products.map(
 											(product, index) =>
 												!product.hidden && (
 													<Product
@@ -247,9 +259,9 @@ const AllProductsPage = (props) => {
 
 						<div className="product_small_screen none">
 							{products.length === 0 &&
-							best_sellers && (
+							alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{best_sellers.map(
+									{alternative_products.map(
 										(product, index) =>
 											!product.hidden && (
 												<ProductSmallScreen
@@ -265,6 +277,47 @@ const AllProductsPage = (props) => {
 						</div>
 					</div>
 				)}
+				{/* {essentials && !best_sellers(
+					<div>
+						<div className="product_big_screen">
+							{essentials && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{products.length === 0 &&
+										essentials.map(
+											(product, index) =>
+												!product.hidden && (
+													<Product
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
+								</ul>
+							)}
+						</div>
+
+						<div className="product_small_screen none">
+							{products.length === 0 &&
+							essentials && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{essentials.map(
+										(product, index) =>
+											!product.hidden && (
+												<ProductSmallScreen
+													size="300px"
+													key={index}
+													product={product}
+													product_occurrences={product_occurrences}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
+					</div>
+				)} */}
 				{products && (
 					<div>
 						<div className="product_big_screen">

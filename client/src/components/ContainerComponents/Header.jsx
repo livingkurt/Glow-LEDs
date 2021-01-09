@@ -122,9 +122,12 @@ const Header = (props) => {
 									Products
 								</button>
 							</Link>
-							<div className="dropdown-nav-content hover_fade_in w-200px">
+							<div className="dropdown-nav-content hover_fade_in w-250px">
 								<Link to="/collections/all/products/category/best_sellers">
 									<button className="btn nav w-100per ta-l">Best Sellers</button>
+								</Link>
+								<Link to="/collections/all/products/category/essentials">
+									<button className="btn nav w-100per ta-l">Glow LEDs Essentials</button>
 								</Link>
 							</div>
 						</div>
