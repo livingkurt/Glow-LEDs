@@ -200,7 +200,12 @@ const Sidebar = (props) => {
 					<ul className="sidebar_dropdown_container">
 						<Link to="/collections/all/products/category/best_sellers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Best Seller
+								Best Sellers
+							</button>
+						</Link>
+						<Link to="/collections/all/products/category/essentials">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Glow LEDs Essentials
 							</button>
 						</Link>
 					</ul>
