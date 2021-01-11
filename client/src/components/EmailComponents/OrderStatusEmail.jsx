@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -24,6 +24,8 @@ const OrderStatusEmail = (props) => {
 
 	const dispatch = useDispatch();
 	const stableDispatch = useCallback(dispatch, []);
+
+	const [ message_to_user, set_message_to_user ] = useState('');
 
 	useEffect(
 		() => {
@@ -235,15 +237,6 @@ const OrderStatusEmail = (props) => {
 							flexDirection: 'column'
 						}}
 					>
-						{/* {(order.isPaid &&
-						order.isManufactured &&
-						order.isPackaged &&
-						order.isShipped && <OrderStatusSteps step1 step2 step3 step4 step5 />) ||
-							(order.isPaid &&
-							order.isManufactured &&
-							order.isPackaged && <OrderStatusSteps step1 step2 step3 step4 />) ||
-							(order.isPaid && order.isManufactured && <OrderStatusSteps step1 step2 step3 />) ||
-							(order.isPaid && <OrderStatusSteps step1 step2 />)} */}
 						{order_status_steps(order)}
 						<div
 							style={{
@@ -265,6 +258,17 @@ const OrderStatusEmail = (props) => {
 								<p style={{ textAlign: 'right', margin: '1rem 0' }}>
 									<strong>Order #:</strong> {order._id}
 								</p>
+								{order.order_note && (
+									<div>
+										<p style={{ textAlign: 'left', margin: '1rem 0' }}>
+											<strong> Order Note: </strong> {order.order_note}
+										</p>
+										<p style={{ textAlign: 'left', margin: '1rem 0' }}>
+											<strong> Message to User: </strong>
+											{message_to_user}
+										</p>
+									</div>
+								)}
 
 								<div
 									style={{
@@ -350,7 +354,6 @@ const OrderStatusEmail = (props) => {
 										</a>
 									</p>
 								)}
-
 								<div style={{ borderBottom: '1px solid #ddd', paddingBottom: '20px' }} />
 								<table
 									cellPadding={0}
@@ -427,7 +430,6 @@ const OrderStatusEmail = (props) => {
 										))}
 									</tbody>
 								</table>
-
 								<div
 									style={{
 										verticalAlign: 'top',
@@ -677,7 +679,16 @@ const OrderStatusEmail = (props) => {
 							<button className="btn primary">Back to Order</button>
 						</Link>
 					)}
-
+					<div>
+						<label htmlFor="message_to_user">Message to User</label>
+						<input
+							type="text"
+							value={message_to_user}
+							name="message_to_user"
+							id="message_to_user"
+							onChange={(e) => set_message_to_user(e.target.value)}
+						/>
+					</div>
 					<button
 						className="btn primary mb-1rem"
 						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h1)}
