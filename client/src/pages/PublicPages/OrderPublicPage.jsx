@@ -9,6 +9,8 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
 import { API_Products } from '../../utils';
+import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 
 require('dotenv').config();
 
@@ -88,8 +90,8 @@ const OrderPublicPage = (props) => {
 		}
 	};
 
-	const pay_order = (token) => {
-		dispatch(payOrderGuest(order, token));
+	const pay_order = (paymentMethod) => {
+		dispatch(payOrderGuest(order, paymentMethod));
 		set_payment_loading(true);
 	};
 
@@ -205,6 +207,59 @@ const OrderPublicPage = (props) => {
 		handleWindowResize(getWidth());
 		return () => {};
 	}, []);
+
+	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
+	// console.log(process.env.REACT_APP_STRIPE_KEY);
+
+	const Form = () => {
+		const stripe = useStripe();
+		const elements = useElements();
+
+		const handleSubmit = async (event) => {
+			event.preventDefault();
+			const { error, paymentMethod } = await stripe.createPaymentMethod({
+				type: 'card',
+				card: elements.getElement(CardElement)
+			});
+
+			// console.log({ error });
+			if (error) {
+				console.log({ error });
+				return;
+			}
+			console.log({ paymentMethod });
+			pay_order(paymentMethod);
+		};
+
+		return (
+			<form onSubmit={handleSubmit}>
+				<CardElement
+					options={{
+						iconStyle: 'solid',
+						style: {
+							base: {
+								iconColor: '#c4f0ff',
+								color: '#fff',
+								fontWeight: 500,
+								fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+								fontSize: '1.2rem',
+								fontSmoothing: 'antialiased',
+								':-webkit-autofill': { color: 'white' },
+								'::placeholder': { color: 'white' }
+							},
+							invalid: {
+								iconColor: '#ffc7ee',
+								color: '#ffc7ee'
+							}
+						}
+					}}
+				/>
+				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
+					Complete Order
+				</button>
+			</form>
+		);
+	};
 
 	return loading ? (
 		<div className="column jc-c">
@@ -487,18 +542,9 @@ const OrderPublicPage = (props) => {
 						/>
 						{!order.isPaid && (
 							<div>
-								<StripeCheckout
-									name="Glow LEDs"
-									description={`Complete Order`}
-									amount={(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) * 100}
-									token={(token) => pay_order(token)}
-									stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									onChange={handleChangeFor('cardNumber')}
-								>
-									<button className="btn primary w-100per" style={{ marginBottom: '12px' }}>
-										Complete Order
-									</button>
-								</StripeCheckout>
+								<Elements stripe={stripePromise}>
+									<Form />
+								</Elements>
 							</div>
 						)}
 
