@@ -248,27 +248,27 @@ const OrderPage = (props) => {
 
 	const create_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Orders.create_label(props.order, props.order.shipping.shipping_rate);
+		const { data } = await API_Orders.create_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		const request = await API_Orders.add_tracking_number(order, data.tracking_code);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Orders.buy_label(props.order, props.order.shipping.shipping_rate);
+		const { data } = await API_Orders.buy_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		if (data) {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		const request = await API_Orders.add_tracking_number(order, data.tracking_code);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
