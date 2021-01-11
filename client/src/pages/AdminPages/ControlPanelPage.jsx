@@ -44,7 +44,7 @@ const ControlPanelPage = (props) => {
 	const [ monthly_income, set_monthly_income ] = useState([]);
 
 	useEffect(() => {
-		dispatch(listOrders('', '', '', 'none'));
+		dispatch(listOrders('', '', '', 'all'));
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());

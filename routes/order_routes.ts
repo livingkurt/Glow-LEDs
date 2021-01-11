@@ -155,6 +155,13 @@ router.get('/', isAuth, async (req: any, res: any) => {
 					.populate('orderItems.product')
 					.populate('orderItems.secondary_product')
 					.sort(sortOrder);
+			} else if (last_id === 'all') {
+				// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
+				orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+					.populate('user')
+					.populate('orderItems.product')
+					.populate('orderItems.secondary_product')
+					.sort(sortOrder);
 			} else {
 				// products = await Product.find({_id: {$gt: last_id}, deleted_at: null}).limit(10)
 				orders = await Order.find({
@@ -171,6 +178,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 				orders = orders.reverse();
 			}
 		}
+
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
