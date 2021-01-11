@@ -87,7 +87,7 @@ const ControlPanelPage = (props) => {
 	};
 	const initialize_occurrence_chart = (occurrences) => {
 		const occurrence_occurrence_chart_ref = occurrence_chart_ref.current.getContext('2d');
-		const multiplier = 360 / occurrences.length;
+		const multiplier = 360 / occurrences.filter((product) => product.occurrence > 1).length;
 
 		let num = -multiplier;
 		// console.log(
@@ -102,11 +102,13 @@ const ControlPanelPage = (props) => {
 			type: 'bar',
 			data: {
 				//Bring in data
-				labels: occurrences.map((product) => product.name),
+				labels: occurrences.filter((product) => product.occurrence > 1).map((product) => product.name),
 				datasets: [
 					{
 						label: 'Product',
-						data: occurrences.map((product) => product.occurrence),
+						data: occurrences
+							.filter((product) => product.occurrence > 1)
+							.map((product) => product.occurrence),
 						fill: true,
 						borderColor: '#3e4c6d',
 						// backgroundColor: '#333333',
