@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const shippingSchema = {
 	shipment_id: { type: String },
 	shipping_rate: { type: Object },
+	shipping_label: { type: Object },
 	first_name: { type: String, required: true },
 	last_name: { type: String, required: true },
 	email: { type: String, required: true },

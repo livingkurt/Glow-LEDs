@@ -13,9 +13,9 @@ export default {
 	buy_label: (order: any, shipping_rate: any) => {
 		return axios.put('/api/orders/buy_label', { order, shipping_rate });
 	},
-	add_tracking_number: (order: any, tracking_number: any) => {
-		return axios.put('/api/orders/tracking_number', { order, tracking_number });
-	},
+	add_tracking_number: (order: any, tracking_number: any, label: any) => {
+		return axios.put('/api/orders/tracking_number', { order, tracking_number, label });
+	}
 	// save_shipment_id: (order: any, shipment_id: string) => {
 	// 	return axios.put('/api/orders/shipment_id', { order, shipment_id });
 	// }

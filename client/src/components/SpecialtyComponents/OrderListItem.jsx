@@ -79,7 +79,7 @@ const OrderListItem = (props) => {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code, data);
 		console.log(request);
 		dispatch(listOrders('', '', '', 'none'));
 	};
@@ -92,9 +92,12 @@ const OrderListItem = (props) => {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code);
+		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code, data);
 		console.log(request);
 		dispatch(listOrders('', '', '', 'none'));
+	};
+	const view_label = async () => {
+		window.open(props.order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 
 	return (
@@ -533,12 +536,22 @@ ${props.order.shipping.email}`)}
 										</button>
 									</Link>
 								</div>
-								<button className="btn secondary mv-5px" onClick={() => create_label()}>
-									Create Label
-								</button>
-								<button className="btn secondary mv-5px" onClick={() => buy_label()}>
-									Buy Label
-								</button>
+
+								{!props.order.shipping.shipping_label && (
+									<button className="btn secondary mv-5px" onClick={() => create_label()}>
+										Create Label
+									</button>
+								)}
+								{!props.order.shipping.shipping_label && (
+									<button className="btn secondary mv-5px" onClick={() => buy_label()}>
+										Buy Label
+									</button>
+								)}
+								{props.order.shipping.shipping_label && (
+									<button className="btn secondary mv-5px" onClick={() => view_label()}>
+										View Label
+									</button>
+								)}
 								<button className="btn secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>

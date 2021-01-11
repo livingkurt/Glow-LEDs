@@ -1554,8 +1554,9 @@ router.put('/tracking_number', async (req: any, res: any) => {
 				success: true,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-
+			// console.log({req.body})
 			order.tracking_number = req.body.tracking_number;
+			order.shipping.shipping_label = req.body.label;
 			const updated = await Order.updateOne({ _id: req.body.order._id }, order);
 			if (updated) {
 				log_request({

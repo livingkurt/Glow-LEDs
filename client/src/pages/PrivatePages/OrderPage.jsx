@@ -255,7 +255,7 @@ const OrderPage = (props) => {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(order, data.tracking_code);
+		const request = await API_Orders.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
@@ -268,9 +268,13 @@ const OrderPage = (props) => {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(order, data.tracking_code);
+		const request = await API_Orders.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
+	};
+
+	const view_label = async () => {
+		window.open(order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 
 	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
@@ -887,12 +891,22 @@ ${order.shipping.email}`)}
 													</button>
 												</Link>
 											</div>
-											<button className="btn secondary mv-5px" onClick={() => create_label()}>
-												Create Label
-											</button>
-											<button className="btn secondary mv-5px" onClick={() => buy_label()}>
-												Buy Label
-											</button>
+
+											{!order.shipping.shipping_label && (
+												<button className="btn secondary mv-5px" onClick={() => create_label()}>
+													Create Label
+												</button>
+											)}
+											{!order.shipping.shipping_label && (
+												<button className="btn secondary mv-5px" onClick={() => buy_label()}>
+													Buy Label
+												</button>
+											)}
+											{order.shipping.shipping_label && (
+												<button className="btn secondary mv-5px" onClick={() => view_label()}>
+													View Label
+												</button>
+											)}
 											<button className="btn secondary mv-5px">
 												<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
 											</button>
