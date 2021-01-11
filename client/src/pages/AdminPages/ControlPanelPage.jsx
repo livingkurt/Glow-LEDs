@@ -44,15 +44,15 @@ const ControlPanelPage = (props) => {
 	const [ monthly_income, set_monthly_income ] = useState([]);
 
 	useEffect(() => {
-		dispatch(listOrders());
+		dispatch(listOrders('', '', '', 'none'));
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
 		dispatch(listAffiliates());
 		dispatch(listPromos());
 		get_income();
-		get_daily_income();
-		get_monthly_income();
+		// get_daily_income();
+		// get_monthly_income();
 	}, []);
 
 	useEffect(
