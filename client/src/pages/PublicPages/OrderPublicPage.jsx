@@ -496,12 +496,12 @@ const OrderPublicPage = (props) => {
 							</li>
 						)}
 						<li>
-							<div>Shipping</div>
-							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
-						</li>
-						<li>
 							<div>Tax</div>
 							<div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
+						</li>
+						<li>
+							<div>Shipping</div>
+							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
 						</li>
 
 						{!order.isRefunded && (
