@@ -170,6 +170,9 @@ const AllFeaturesPage = (props) => {
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
 			</Helmet>
+			<button className="btn secondary" onClick={() => history.goBack()}>
+				Back to Menu
+			</button>
 			<div className="jc-c">
 				<div className="row">
 					<h1>{'Featured ' + humanize(category) || 'Featured'}</h1>
@@ -187,6 +190,7 @@ const AllFeaturesPage = (props) => {
 					</label>
 				</div>
 			</div>
+
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />

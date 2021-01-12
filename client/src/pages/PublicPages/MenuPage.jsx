@@ -4,9 +4,15 @@ import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
 import { listFeatures } from '../../actions/featureActions';
 import { useSelector, useDispatch } from 'react-redux';
+import { API_Features } from '../../utils';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
+
+	const [ glovers, set_glovers ] = useState([]);
+	const [ artists, set_artists ] = useState([]);
+	const [ producers, set_producers ] = useState([]);
+	const [ vfx, set_vfx ] = useState([]);
 
 	const featureList = useSelector((state) => state.featureList);
 	const { features, loading, error } = featureList;
@@ -14,10 +20,26 @@ const MenuPage = (props) => {
 	useEffect(() => {
 		if (pathname === 'featured') {
 			dispatch(listFeatures());
+			get_features();
 		}
 
 		return () => {};
 	}, []);
+
+	const get_features = async () => {
+		const { data: glovers } = await API_Features.get_features_by_category('glovers');
+		const { data: artists } = await API_Features.get_features_by_category('artists');
+		const { data: producers } = await API_Features.get_features_by_category('producers');
+		const { data: vfx } = await API_Features.get_features_by_category('vfx');
+		console.log({ glovers });
+		console.log({ artists });
+		console.log({ producers });
+		console.log({ vfx });
+		set_glovers(glovers);
+		set_artists(artists);
+		set_producers(producers);
+		set_vfx(vfx);
+	};
 
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
@@ -64,17 +86,28 @@ const MenuPage = (props) => {
 			return [
 				{
 					category: 'glovers',
-					image: `http://img.youtube.com/vi/${features[0] && features[0].video}/hqdefault.jpg`,
-					artist_name: features[0] && features[0].artist_name,
-					product: features[0] && features[0].product
+					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`,
+					artist_name: glovers[0] && glovers[0].artist_name,
+					product: glovers[0] && glovers[0].product
 				},
 				{
 					category: 'artists',
 					image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg',
-					artist_name: features[0] && features[0].artist_name,
-					product: features[0] && features[0].product
+					artist_name: artists[0] && artists[0].artist_name,
+					link: artists[0] && artists[0].link
 				},
-				{ category: 'producers', image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg' }
+				{
+					category: 'producers',
+					image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg',
+					artist_name: producers[0] && producers[0].artist_name,
+					link: producers[0] && producers[0].link
+				},
+				{
+					category: 'vfx',
+					image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg',
+					artist_name: vfx[0] && vfx[0].artist_name,
+					link: vfx[0] && vfx[0].link
+				}
 			];
 		}
 	};
@@ -134,6 +167,7 @@ const MenuPage = (props) => {
 									</div>
 									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
 										{item.product && item.product}
+										{item.link && item.link}
 									</div>
 								</div>
 							);
