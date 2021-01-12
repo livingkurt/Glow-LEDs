@@ -390,7 +390,7 @@ const EditProductPage = (props) => {
 								);
 							})}
 					</div>
-					<li>
+					{/* <li>
 						<label htmlFor="images">Images</label>
 						<textarea
 							className="edit_product_textarea w-450px h-100per"
@@ -399,7 +399,7 @@ const EditProductPage = (props) => {
 							id="images"
 							// onChange={(e) => set_images(e.target.value)}
 						/>
-					</li>
+					</li> */}
 				</div>
 			</div>
 		);

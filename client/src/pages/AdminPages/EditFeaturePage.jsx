@@ -248,7 +248,7 @@ const EditFeaturePage = (props) => {
 								);
 							})}
 					</div>
-					<li>
+					{/* <li>
 						<label htmlFor="images">Images</label>
 						<textarea
 							className="edit_product_textarea w-420px h-100per"
@@ -257,14 +257,14 @@ const EditFeaturePage = (props) => {
 							id="images"
 							// onChange={(e) => set_images(e.target.value)}
 						/>
-					</li>
+					</li> */}
 				</div>
 			</div>
 		);
 	};
 	return (
 		<div className="main_container p-20px">
-			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Feature' : 'Create Feature'}</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.video ? 'Edit Feature' : 'Create Feature'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>

@@ -139,7 +139,7 @@ const FeaturesPage = (props) => {
 										</td>
 										<td className="p-10px">
 											<div className="jc-b">
-												<Link to={'/secure/glow/editfeature/' + feature._id}>
+												<Link to={'/secure/glow/editfeature/' + feature.video}>
 													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>
