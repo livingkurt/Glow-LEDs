@@ -26,7 +26,7 @@ export const featureListReducer = (state = { features: [] }, action: { type: any
 	}
 };
 
-export const featureDetailsReducer = (state = { feature: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const featureDetailsReducer = (state = { feature: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case FEATURE_DETAILS_REQUEST:
 			return { loading: true };

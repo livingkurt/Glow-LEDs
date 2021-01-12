@@ -59,7 +59,7 @@ const MenuPage = (props) => {
 		if (pathname === 'gloving' || pathname === 'decor') {
 			return `/collections/all/products/category/${item.category}`;
 		} else if (pathname === 'featured') {
-			return `/pages/featured/${item.category}`;
+			return `/collections/all/features/category/${item.category}`;
 		} else {
 			return `/pages/${item.category}`;
 		}

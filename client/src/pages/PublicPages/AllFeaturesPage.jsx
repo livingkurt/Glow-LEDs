@@ -154,12 +154,16 @@ const AllFeaturesPage = (props) => {
 
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
 
+	const date = new Date();
+
+	const today = date.toISOString();
+
 	return (
 		<div>
 			<Helmet>
-				<title>Products | Glow LEDs</title>
-				<meta property="og:title" content="Products" />
-				<meta name="twitter:title" content="Products" />
+				<title>Featured | Glow LEDs</title>
+				<meta property="og:title" content="Featured" />
+				<meta name="twitter:title" content="Featured" />
 				<link rel="canonical" href="https://www.glow-leds.com/collections/all/features" />
 				<meta property="og:url" content="https://www.glow-leds.com/collections/all/features" />
 				<meta name="description" content={description_determination()} />
@@ -168,9 +172,7 @@ const AllFeaturesPage = (props) => {
 			</Helmet>
 			<div className="jc-c">
 				<div className="row">
-					<h1>
-						{category === 'diffuser_caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}
-					</h1>
+					<h1>{'Featured ' + humanize(category) || 'Featured'}</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
@@ -189,28 +191,52 @@ const AllFeaturesPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
+			{/* <div className="jc-c">
+				<h1> Featured</h1>
+			</div> */}
+
+			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+				Here is an archive of the lightshows and product reviews that you have so graciously given to us. We
+				appreciate each and every one of you.
+			</p>
 			<Loading loading={loading} error={error}>
 				<div>
-					<div className="feature_big_screen">
+					<div className="product_big_screen">
 						{features && (
-							<ul className="features" style={{ marginTop: 0 }}>
-								{features.map(
-									(feature, index) =>
-										!feature.hidden && <Feature size="300px" key={index} feature={feature} />
-								)}
+							<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+								{features
+									.filter((feature) => feature.release_date <= today)
+									.map(
+										(feature, index) =>
+											!feature.hidden && (
+												<Feature
+													size="300px"
+													key={index}
+													feature={feature}
+													category={props.match.params.category}
+												/>
+											)
+									)}
 							</ul>
 						)}
 					</div>
 
-					<div className="feature_small_screen none">
+					<div className="product_small_screen none">
 						{features && (
-							<ul className="features" style={{ marginTop: 0 }}>
-								{features.map(
-									(feature, index) =>
-										!feature.hidden && (
-											<FeatureSmallScreen size="300px" key={index} feature={feature} />
-										)
-								)}
+							<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+								{features
+									.filter((feature) => feature.release_date <= today)
+									.map(
+										(feature, index) =>
+											!feature.hidden && (
+												<FeatureSmallScreen
+													size="300px"
+													key={index}
+													feature={feature}
+													category={props.match.params.category}
+												/>
+											)
+									)}
 							</ul>
 						)}
 					</div>

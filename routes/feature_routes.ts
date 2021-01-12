@@ -71,11 +71,13 @@ router.get('/', async (req, res) => {
 // 	}
 // });
 
-router.get('/:id', async (req, res) => {
+router.get('/:video', async (req, res) => {
 	try {
-		const feature = await Feature.findOne({ _id: req.params.id });
+		// console.log({ feature });
+		console.log(req.params.video);
+		console.log('hello');
+		const feature = await Feature.findOne({ video: req.params.video });
 		console.log({ feature });
-		console.log(req.params.id);
 		if (feature) {
 			log_request({
 				method: 'GET',

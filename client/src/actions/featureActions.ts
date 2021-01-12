@@ -71,12 +71,11 @@ export const saveFeature = (feature: {
 	}
 };
 
-export const detailsFeature = (pathname: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void
-) => {
+export const detailsFeature = (video: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
-		dispatch({ type: FEATURE_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/features/' + pathname);
+		console.log({ video });
+		dispatch({ type: FEATURE_DETAILS_REQUEST, payload: video });
+		const { data } = await axios.get('/api/features/' + video);
 		dispatch({ type: FEATURE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: FEATURE_DETAILS_FAIL, payload: error.response.data.message });

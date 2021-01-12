@@ -356,8 +356,17 @@ const App = () => {
 							<Route path="/pages/faq" exact={true} component={FAQPage} />
 							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
 							{/* <Route path="/pages/featured" exact={true} component={FeaturedPage} /> */}
-							{/* <Route path="/pages/featured/:pathname?" exact={true} component={FeaturedPage} /> */}
-							<Route path="/pages/featured/:pathname?" exact={true} component={AllFeaturesPage} />
+							<Route
+								path="/collections/all/features/category/:category?"
+								exact={true}
+								component={AllFeaturesPage}
+							/>
+							<Route
+								path="/collections/all/features/category/:category/:video?"
+								exact={true}
+								component={FeaturedPage}
+							/>
+
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/" exact={true} component={HomePage} />
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />

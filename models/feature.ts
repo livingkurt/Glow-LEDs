@@ -12,6 +12,8 @@ const featureSchema = new mongoose.Schema(
 		quote: { type: String },
 		video: { type: String },
 		picture: { type: String },
+		category: { type: String },
+		pathname: { type: String },
 		release_date: { type: Date },
 		deleted: { type: Boolean, default: false }
 	},
