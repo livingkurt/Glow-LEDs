@@ -32,11 +32,11 @@ const EditProductPage = (props) => {
 	const [ meta_title, set_meta_title ] = useState();
 	const [ meta_description, set_meta_description ] = useState();
 	const [ meta_keywords, set_meta_keywords ] = useState();
-	const [ length, set_length ] = useState();
-	const [ width, set_width ] = useState();
-	const [ height, set_height ] = useState();
-	const [ weight_pounds, set_weight_pounds ] = useState();
-	const [ weight_ounces, set_weight_ounces ] = useState();
+	const [ length, set_length ] = useState(0);
+	const [ width, set_width ] = useState(0);
+	const [ height, set_height ] = useState(0);
+	const [ weight_pounds, set_weight_pounds ] = useState(0);
+	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ pathname, setPathname ] = useState();
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -55,7 +55,7 @@ const EditProductPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	console.log({ product });
+	// console.log({ product });
 
 	// console.log({ ID: id });
 	const stableDispatch = useCallback(dispatch, []);
@@ -106,6 +106,7 @@ const EditProductPage = (props) => {
 	}, 500);
 
 	const set_state = () => {
+		console.log({ product_length: product.length });
 		setId(product._id);
 		setName(product.name);
 		setPrice(product.price);
@@ -164,7 +165,7 @@ const EditProductPage = (props) => {
 		set_meta_title('');
 		set_meta_description('');
 		set_meta_keywords('');
-		set_length(1);
+		// set_length(1);
 		set_width(1);
 		set_height(1);
 		set_weight_pounds(0);
