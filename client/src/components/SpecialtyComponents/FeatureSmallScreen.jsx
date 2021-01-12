@@ -24,7 +24,7 @@ const FeatureSmallScreen = (props) => {
 						<div className="feature_text" style={{ fontSize: '1.6rem' }}>
 							{props.feature.glover_name}
 						</div>
-						<label style={{ fontSize: '1.3rem' }}>{humanize(props.feature.pathname)}</label>
+						<label style={{ fontSize: '1.3rem' }}>{humanize(props.feature.product)}</label>
 					</div>
 				</div>
 			</Link>

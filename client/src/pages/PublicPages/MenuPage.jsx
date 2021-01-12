@@ -125,10 +125,10 @@ const MenuPage = (props) => {
 										/>
 									</Link>
 									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.6rem' }}>
-										{item.artist_name}
+										{item.artist_name && item.artist_name}
 									</div>
 									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
-										{item.product}
+										{item.product && item.product}
 									</div>
 								</div>
 							);
