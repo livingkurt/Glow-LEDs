@@ -7,34 +7,6 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
-router.get('/:category', async (req, res) => {
-	try {
-		const features = await Feature.find({ deleted: false, category: req.params.category }).sort({ _id: -1 });
-		console.log({ category: req.params.category });
-		console.log({ features });
-		log_request({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Feature',
-			data: features,
-			status: 200,
-			success: true,
-			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-		});
-		res.send(features);
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Feature',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Features' });
-	}
-});
-
 router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
@@ -65,6 +37,33 @@ router.get('/', async (req, res) => {
 		}
 
 		const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Feature',
+			data: features,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(features);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Feature',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Features' });
+	}
+});
+router.get('/category/:category', async (req, res) => {
+	try {
+		const features = await Feature.find({ deleted: false, category: req.params.category }).sort({ _id: -1 });
+		console.log({ category: req.params.category });
+		console.log({ features });
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
