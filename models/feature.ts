@@ -11,9 +11,10 @@ const featureSchema = new mongoose.Schema(
 		song_id: { type: String },
 		quote: { type: String },
 		video: { type: String },
-		picture: { type: String },
+		images: { type: Array },
 		category: { type: String },
 		pathname: { type: String },
+		description: { type: String },
 		release_date: { type: Date },
 		deleted: { type: Boolean, default: false }
 	},

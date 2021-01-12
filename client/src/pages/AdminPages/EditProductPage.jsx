@@ -650,7 +650,7 @@ const EditProductPage = (props) => {
 												</li>
 											)}
 											<li>
-												<label htmlFor="image">image</label>
+												<label htmlFor="image">Image</label>
 												<input
 													type="text"
 													name="image"
