@@ -15,8 +15,8 @@ const FeaturedPage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(detailsFeature(props.match.params.video));
-		console.log(props.match.params.video);
+		dispatch(detailsFeature(props.match.params.pathname));
+		console.log(props.match.params.pathname);
 		return () => {};
 	}, []);
 

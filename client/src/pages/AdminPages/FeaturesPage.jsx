@@ -88,7 +88,7 @@ const FeaturesPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr>
-									<th>user</th>
+									{/* <th>user</th> */}
 									<th>Release Date</th>
 									<th>glover name</th>
 									<th>instagram handle</th>
@@ -96,8 +96,8 @@ const FeaturesPage = (props) => {
 									<th>product</th>
 									{/* <th>quote</th> */}
 									<th>video</th>
-									<th>song id</th>
-									<th>picture</th>
+									{/* <th>song id</th> */}
+									{/* <th>picture</th> */}
 								</tr>
 							</thead>
 							<tbody>
@@ -109,9 +109,9 @@ const FeaturesPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td className="p-10px" style={{ minWidth: '5rem' }}>
+										{/* <td className="p-10px" style={{ minWidth: '5rem' }}>
 											{feature.user}
-										</td>
+										</td> */}
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
 											{format_date(feature.release_date)}
 										</td>
@@ -131,15 +131,15 @@ const FeaturesPage = (props) => {
 										<td className="p-10px" style={{ minWidth: '10rem' }}>
 											{feature.video}
 										</td>
-										<td className="p-10px" style={{ minWidth: '50rem' }}>
+										{/* <td className="p-10px" style={{ minWidth: '50rem' }}>
 											{feature.song_id}
-										</td>
-										<td className="p-10px" style={{ minWidth: '10rem' }}>
+										</td> */}
+										{/* <td className="p-10px" style={{ minWidth: '10rem' }}>
 											{feature.picture}
-										</td>
+										</td> */}
 										<td className="p-10px">
 											<div className="jc-b">
-												<Link to={'/secure/glow/editfeature/' + feature.video}>
+												<Link to={'/secure/glow/editfeature/' + feature.pathname}>
 													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>

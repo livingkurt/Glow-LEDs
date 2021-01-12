@@ -47,10 +47,10 @@ const EditFeaturePage = (props) => {
 	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(() => {
-		if (props.match.params.id) {
+		if (props.match.params.pathname) {
 			console.log('Is ID');
-			stableDispatch(detailsFeature(props.match.params.id));
-			stableDispatch(detailsFeature(props.match.params.id));
+			stableDispatch(detailsFeature(props.match.params.pathname));
+			stableDispatch(detailsFeature(props.match.params.pathname));
 		} else {
 			stableDispatch(detailsFeature(''));
 		}
@@ -264,7 +264,7 @@ const EditFeaturePage = (props) => {
 	};
 	return (
 		<div className="main_container p-20px">
-			<h1 style={{ textAlign: 'center' }}>{props.match.params.video ? 'Edit Feature' : 'Create Feature'}</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Feature' : 'Create Feature'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>

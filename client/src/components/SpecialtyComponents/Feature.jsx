@@ -11,7 +11,7 @@ const Feature = (props) => {
 	console.log({ props });
 	return (
 		<li key={props.feature._id} style={{ ...props.styles, textDecoration: 'none' }}>
-			<Link to={`/collections/all/features/category/${props.category}/${props.feature.video}`}>
+			<Link to={`/collections/all/features/category/${props.category}/${props.feature.pathname}`}>
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="product">
@@ -27,7 +27,7 @@ const Feature = (props) => {
 							<label style={{ fontSize: '1.6rem' }}>{props.feature.glover_name}</label>
 							{/* <label style={{ fontSize: '1.3rem' }}>{props.feature.song_id}</label> */}
 							<label style={{ fontSize: '1.3rem' }}>{humanize(props.feature.product)}</label>
-							<Link to={`/collections/all/features/category/${props.category}/${props.feature.video}`}>
+							<Link to={`/collections/all/features/category/${props.category}/${props.feature.pathname}`}>
 								<label style={{ fontSize: '1.6rem' }}>{props.feature.name}</label>
 							</Link>
 						</div>

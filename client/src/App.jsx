@@ -237,7 +237,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
-							<AdminRoute path="/secure/glow/editfeature/:id?" component={EditFeaturePage} />
+							<AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />
 							<AdminRoute path="/secure/glow/editcart/:id?" component={EditCartPage} />
 							{/* <AdminRoute path="/secure/glow/expenses" component={ExpensesPage} /> */}
 							<AdminRoute
@@ -362,7 +362,7 @@ const App = () => {
 								component={AllFeaturesPage}
 							/>
 							<Route
-								path="/collections/all/features/category/:category/:video?"
+								path="/collections/all/features/category/:category/:pathname?"
 								exact={true}
 								component={FeaturedPage}
 							/>
