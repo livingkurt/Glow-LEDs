@@ -2,9 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
+import { listFeatures } from '../../actions/featureActions';
+import { useSelector, useDispatch } from 'react-redux';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
+
+	const featureList = useSelector((state) => state.featureList);
+	const { features, loading, error } = featureList;
+	const dispatch = useDispatch();
+	useEffect(() => {
+		if (pathname === 'featured') {
+			dispatch(listFeatures());
+		}
+
+		return () => {};
+	}, []);
 
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
@@ -47,8 +60,14 @@ const MenuPage = (props) => {
 				{ category: 'terms', image: 'https://thumbs2.imgbox.com/a0/11/BlKmYy5J_t.png' }
 			];
 		} else if (pathname === 'featured') {
+			console.log({ features });
 			return [
-				{ category: 'glovers', image: 'https://thumbs2.imgbox.com/1f/c9/qXeP6Rtb_t.jpg' },
+				{
+					category: 'glovers',
+					image: `http://img.youtube.com/vi/${features[0] && features[0].video}/hqdefault.jpg`,
+					artist_name: features[0] && features[0].glover_name,
+					product: features[0] && features[0].product
+				},
 				{ category: 'artists', image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg' },
 				{ category: 'producers', image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg' }
 			];
@@ -91,31 +110,29 @@ const MenuPage = (props) => {
 			</div>
 			<div className="jc-c">
 				<div className="jc-c wrap">
-					{determine_menu_items().map((item) => {
-						return (
-							<div className="home_page_divs m-10px w-300px">
-								<Link
-									to={decide_url(item)
-									// pathname === 'gloving' || pathname === 'decor' ? (
-									// 	`/collections/all/products/category/${item.category}`
-									// ) : (
-									// 	`/pages/${item.category}`
-									// )
-									}
-								>
-									<h2 className="">{humanize(item.category)}</h2>
-									{/* {console.log({ img: get_category_images(item.category) })} */}
-									<img
-										className="w-100per h-auto br-20px"
-										width="200px"
-										src={item.image}
-										alt={item.category}
-										title="Menu Item Images"
-									/>
-								</Link>
-							</div>
-						);
-					})}
+					{features &&
+						determine_menu_items().map((item) => {
+							return (
+								<div className="home_page_divs m-10px w-300px ">
+									<Link to={decide_url(item)}>
+										<h2 className="">{humanize(item.category)}</h2>
+										<img
+											className="w-100per h-auto br-20px"
+											width="200px"
+											src={item.image}
+											alt={item.category}
+											title="Menu Item Images"
+										/>
+									</Link>
+									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.6rem' }}>
+										{item.artist_name}
+									</div>
+									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
+										{item.product}
+									</div>
+								</div>
+							);
+						})}
 				</div>
 			</div>
 		</div>
