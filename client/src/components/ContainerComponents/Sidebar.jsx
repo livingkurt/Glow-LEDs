@@ -191,45 +191,7 @@ const Sidebar = (props) => {
 						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 					</div>
 				)}
-				<a href="https://imgbox.com/DhjMsLTp" target="_blank">
-					<img src="https://thumbs2.imgbox.com/f3/04/DhjMsLTp_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/9AEwfxFE" target="_blank">
-					<img src="https://thumbs2.imgbox.com/eb/e9/9AEwfxFE_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/iYlWO3Te" target="_blank">
-					<img src="https://thumbs2.imgbox.com/5a/8c/iYlWO3Te_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/wCDfgTB5" target="_blank">
-					<img src="https://thumbs2.imgbox.com/15/e5/wCDfgTB5_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/rlgX7ln7" target="_blank">
-					<img src="https://thumbs2.imgbox.com/00/da/rlgX7ln7_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/6jsTTFt4" target="_blank">
-					<img src="https://thumbs2.imgbox.com/2d/54/6jsTTFt4_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/XqI9pjno" target="_blank">
-					<img src="https://thumbs2.imgbox.com/b5/ec/XqI9pjno_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/KNXAyxa9" target="_blank">
-					<img src="https://thumbs2.imgbox.com/d4/a9/KNXAyxa9_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/U3EXg7FH" target="_blank">
-					<img src="https://thumbs2.imgbox.com/66/fa/U3EXg7FH_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/IDU47rE7" target="_blank">
-					<img src="https://thumbs2.imgbox.com/67/40/IDU47rE7_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/xBOj669u" target="_blank">
-					<img src="https://thumbs2.imgbox.com/d1/e3/xBOj669u_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/LZS1amp9" target="_blank">
-					<img src="https://thumbs2.imgbox.com/c5/37/LZS1amp9_t.jpg" alt="image host" />
-				</a>{' '}
-				<a href="https://imgbox.com/bxT5tIC6" target="_blank">
-					<img src="https://thumbs2.imgbox.com/0e/f8/bxT5tIC6_t.jpg" alt="image host" />
-				</a>
+
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/collections/all/products">Products</Link>
@@ -450,6 +412,7 @@ const Sidebar = (props) => {
 						Glow Strings
 					</button>
 				</Link>
+
 				{/* <ul className="sidebar_dropdown_container">
 						<Link to="/collections/all/products/category/glow_strings">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
