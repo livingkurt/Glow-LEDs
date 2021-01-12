@@ -12,6 +12,7 @@ const featureSchema = new mongoose.Schema(
 		quote: { type: String },
 		video: { type: String },
 		images: { type: Array },
+		link: { type: String },
 		category: { type: String },
 		pathname: { type: String },
 		description: { type: String },

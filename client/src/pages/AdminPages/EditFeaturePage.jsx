@@ -21,6 +21,7 @@ const EditFeaturePage = (props) => {
 	const [ pathname, set_pathname ] = useState('');
 	const [ images, set_images ] = useState([]);
 	const [ image, set_image ] = useState('');
+	const [ link, set_link ] = useState('');
 	const [ description, set_description ] = useState('');
 	const [ release_date, set_release_date ] = useState('');
 	// const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -84,6 +85,7 @@ const EditFeaturePage = (props) => {
 		set_facebook_name(feature.facebook_name);
 		set_product(feature.product);
 		set_song_id(feature.song_id);
+		set_link(feature.link);
 		set_video(feature.video);
 		set_category(feature.category);
 		set_pathname(feature.pathname);
@@ -100,6 +102,7 @@ const EditFeaturePage = (props) => {
 		set_facebook_name('');
 		set_product('');
 		set_song_id('');
+		set_link('');
 		set_video('');
 		set_category('');
 		set_pathname('');
@@ -119,6 +122,7 @@ const EditFeaturePage = (props) => {
 				facebook_name,
 				product,
 				song_id,
+				link,
 				video,
 				images,
 				description,
@@ -428,6 +432,16 @@ const EditFeaturePage = (props) => {
 													value={video}
 													id="video"
 													onChange={(e) => set_video(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="link">Link</label>
+												<input
+													type="text"
+													name="link"
+													value={link}
+													id="link"
+													onChange={(e) => set_link(e.target.value)}
 												/>
 											</li>
 											<li>
