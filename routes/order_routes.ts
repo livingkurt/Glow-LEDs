@@ -1416,15 +1416,19 @@ router.put('/create_label', async (req: any, res: any) => {
 				order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
 				order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
 		);
+		let weight = 0;
+		order.orderItems.forEach((item: any, index: number) => {
+			if (item.weight_pounds) {
+				weight += item.weight_pounds * 16 + item.weight_ounces;
+			} else {
+				weight += item.weight_ounces;
+			}
+		});
 		const parcel = new EasyPost.Parcel({
 			length: cube_root_volume,
 			width: cube_root_volume,
 			height: cube_root_volume,
-			weight: order.orderItems.reduce(
-				(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
-					c.weight_pounds * 16 + c.weight_ounces + a,
-				0
-			)
+			weight
 		});
 		let customsInfo = {};
 		if (order.shipping.international) {
@@ -1498,22 +1502,20 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 				order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
 				order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
 		);
-		// console.log(
-		// 	Math.cbrt(
-		// 		order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0) *
-		// 			order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
-		// 			order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
-		// 	)
-		// );
+		let weight = 0;
+		order.orderItems.forEach((item: any, index: number) => {
+			if (item.weight_pounds) {
+				weight += item.weight_pounds * 16 + item.weight_ounces;
+			} else {
+				weight += item.weight_ounces;
+			}
+		});
+
 		const parcel = new EasyPost.Parcel({
 			length: cube_root_volume,
 			width: cube_root_volume,
 			height: cube_root_volume,
-			weight: order.orderItems.reduce(
-				(a: any, c: { weight_pounds: any; weight_ounces: number }) =>
-					c.weight_pounds * 16 + c.weight_ounces + a,
-				0
-			)
+			weight
 		});
 		const shipment = new EasyPost.Shipment({
 			to_address: toAddress,

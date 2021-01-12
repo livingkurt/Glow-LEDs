@@ -76,6 +76,7 @@ export const addToCart = (
 			category: data.category,
 			qty
 		};
+		console.log({ cartItem });
 		if (diffuser_cap_color) {
 			cartItem = {
 				product: data._id,
@@ -96,6 +97,7 @@ export const addToCart = (
 				category: data.category,
 				qty
 			};
+			console.log({ diffuser_cap_color: cartItem });
 		}
 		if (diffuser_cap) {
 			cartItem = {
@@ -119,6 +121,7 @@ export const addToCart = (
 				category: data.category,
 				qty
 			};
+			console.log({ diffuser_cap: cartItem });
 		}
 		dispatch({
 			type: CART_ADD_ITEM,
@@ -127,23 +130,23 @@ export const addToCart = (
 
 		const { cart: { cartItems } } = getState();
 		Cookie.set('cartItems', JSON.stringify(cartItems));
-		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
-		const { userLogin: { userInfo } } = getState();
-		if (!cart._id) {
-			const { data } = await axios.post('/api/carts', cart, {
-				headers: {
-					Authorization: 'Bearer ' + userInfo.token
-				}
-			});
-			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		} else {
-			const { data } = await axios.put('/api/carts/' + cart._id, cart, {
-				headers: {
-					Authorization: 'Bearer ' + userInfo.token
-				}
-			});
-			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		}
+		// dispatch({ type: CART_SAVE_REQUEST, payload: cart });
+		// const { userLogin: { userInfo } } = getState();
+		// if (!cart._id) {
+		// 	const { data } = await axios.post('/api/carts', cart, {
+		// 		headers: {
+		// 			Authorization: 'Bearer ' + userInfo.token
+		// 		}
+		// 	});
+		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		// } else {
+		// 	const { data } = await axios.put('/api/carts/' + cart._id, cart, {
+		// 		headers: {
+		// 			Authorization: 'Bearer ' + userInfo.token
+		// 		}
+		// 	});
+		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		// }
 	} catch (error) {
 		console.log({ error });
 	}
