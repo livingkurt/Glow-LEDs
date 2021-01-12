@@ -52,22 +52,6 @@ const FeaturedPage = (props) => {
 					</button>
 					<div className="column jc-c">
 						<h2 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h2>
-						<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-							Check out {feature.glover_name} with the {feature.product && humanize(feature.product)}!
-						</p>
-						<p className="p_descriptions" style={{ textAlign: 'center' }}>
-							Follow him @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on
-							Instagram
-						</p>
-						<Link to={`/collections/all/products/${feature.product}`}>
-							<div className="column jc-c">
-								<div className="p_descriptions" style={{ textAlign: 'center' }}>
-									<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-										{feature.product && humanize(feature.product)}
-									</button>
-								</div>
-							</div>
-						</Link>
 					</div>
 					<div className="jc-c pos-rel">
 						<div className="iframe-container">
@@ -75,26 +59,29 @@ const FeaturedPage = (props) => {
 								width="996"
 								height="560"
 								style={{ borderRadius: '20px' }}
-								src={`https://www.youtube.com/embed/${feature.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+								src={`https://www.youtube.com/embed/${feature.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
 								frameborder="0"
 								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
 								allowfullscreen="1"
 							/>
 						</div>
 					</div>
-
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						{feature.song_id}
+					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
+						Check out {feature.glover_name} with the {feature.product && humanize(feature.product)}!
 					</p>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						For Information on how to become featured on our pages. Check our Frequently Asked Questions
-						page.
+						Follow him @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram
 					</p>
-					<Link to="/pages/faq">
-						<div className="jc-c">
-							<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-								Frequently Asked Questions
-							</button>
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Song ID: {feature.song_id}
+					</p>
+					<Link to={`/collections/all/products/${feature.product}`}>
+						<div className="column jc-c">
+							<div className="p_descriptions" style={{ textAlign: 'center' }}>
+								<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									{feature.product && humanize(feature.product)}
+								</button>
+							</div>
 						</div>
 					</Link>
 				</div>
