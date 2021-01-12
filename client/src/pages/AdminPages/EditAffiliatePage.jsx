@@ -9,7 +9,7 @@ import { listUsers } from '../../actions/userActions';
 const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
-	const [ glover_name, set_glover_name ] = useState('');
+	const [ artist_name, set_artist_name ] = useState('');
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
 	const [ percentage_off, set_percentage_off ] = useState('');
@@ -32,7 +32,7 @@ const EditAffiliatePage = (props) => {
 	const set_state = () => {
 		set_id(affiliate._id);
 		set_user(affiliate.user && affiliate.user._id);
-		set_glover_name(affiliate.glover_name);
+		set_artist_name(affiliate.artist_name);
 		set_instagram_handle(affiliate.instagram_handle);
 		set_facebook_name(affiliate.facebook_name);
 		set_percentage_off(affiliate.percentage_off);
@@ -45,7 +45,7 @@ const EditAffiliatePage = (props) => {
 	const unset_state = () => {
 		set_id('');
 		set_user('');
-		set_glover_name('');
+		set_artist_name('');
 		set_instagram_handle('');
 		set_facebook_name('');
 		set_percentage_off('');
@@ -99,7 +99,7 @@ const EditAffiliatePage = (props) => {
 			saveAffiliate({
 				_id: id,
 				user,
-				glover_name,
+				artist_name,
 				instagram_handle,
 				facebook_name,
 				percentage_off,
@@ -170,13 +170,13 @@ const EditAffiliatePage = (props) => {
 											)}
 
 											<li>
-												<label htmlFor="glover_name">Glover Name</label>
+												<label htmlFor="artist_name">Glover Name</label>
 												<input
 													type="text"
-													name="glover_name"
-													value={glover_name}
-													id="glover_name"
-													onChange={(e) => set_glover_name(e.target.value)}
+													name="artist_name"
+													value={artist_name}
+													id="artist_name"
+													onChange={(e) => set_artist_name(e.target.value)}
 												/>
 											</li>
 											<li>

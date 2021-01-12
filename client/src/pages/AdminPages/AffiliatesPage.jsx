@@ -129,7 +129,7 @@ const AffiliatesPage = (props) => {
 										}}
 									>
 										<td className="p-10px">{affiliate._id}</td>
-										<td className="p-10px">{affiliate.glover_name}</td>
+										<td className="p-10px">{affiliate.artist_name}</td>
 										<td className="p-10px">{affiliate.instagram_handle}</td>
 										<td className="p-10px">{affiliate.facebook_name}</td>
 										<td className="p-10px">{affiliate.percentage_off}%</td>

@@ -25,7 +25,7 @@ const ContactPage = (props) => {
 	const [ song_id, set_song_id ] = useState('');
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
-	const [ glover_name, set_glover_name ] = useState('');
+	const [ artist_name, set_artist_name ] = useState('');
 	const [ inspirational_pictures, set_inspirational_pictures ] = useState([]);
 
 	const [ first_name_validations, set_first_name_Validations ] = useState('');
@@ -96,7 +96,7 @@ const ContactPage = (props) => {
 					reason,
 					message,
 					inspirational_pictures,
-					glover_name,
+					artist_name,
 					instagram_handle,
 					facebook_name,
 					song_id
@@ -106,7 +106,7 @@ const ContactPage = (props) => {
 				dispatch(
 					saveFeature({
 						user: userInfo,
-						glover_name,
+						artist_name,
 						instagram_handle,
 						facebook_name,
 						product: '',
@@ -375,12 +375,12 @@ const ContactPage = (props) => {
 							<div style={{ width: '330px' }}>
 								<label>Glover Name</label>
 								<input
-									onChange={(e) => set_glover_name(e.target.value)}
-									defaultValue={glover_name}
-									value={glover_name}
+									onChange={(e) => set_artist_name(e.target.value)}
+									defaultValue={artist_name}
+									value={artist_name}
 									className="zoom_f form_input"
 									type="text"
-									name="glover_name"
+									name="artist_name"
 									placeholder="Glover Name (optional)"
 								/>
 							</div>

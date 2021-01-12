@@ -65,10 +65,15 @@ const MenuPage = (props) => {
 				{
 					category: 'glovers',
 					image: `http://img.youtube.com/vi/${features[0] && features[0].video}/hqdefault.jpg`,
-					artist_name: features[0] && features[0].glover_name,
+					artist_name: features[0] && features[0].artist_name,
 					product: features[0] && features[0].product
 				},
-				{ category: 'artists', image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg' },
+				{
+					category: 'artists',
+					image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg',
+					artist_name: features[0] && features[0].artist_name,
+					product: features[0] && features[0].product
+				},
 				{ category: 'producers', image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg' }
 			];
 		}

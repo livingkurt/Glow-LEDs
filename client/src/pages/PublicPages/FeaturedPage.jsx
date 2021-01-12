@@ -51,7 +51,7 @@ const FeaturedPage = (props) => {
 						Back to Features
 					</button>
 					<div className="column jc-c">
-						<h2 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h2>
+						<h2 style={{ textAlign: 'center' }}>{feature.artist_name} Light Show</h2>
 					</div>
 					<div className="jc-c pos-rel">
 						<div className="iframe-container">
@@ -67,7 +67,7 @@ const FeaturedPage = (props) => {
 						</div>
 					</div>
 					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out {feature.glover_name} with the {feature.product && humanize(feature.product)}!
+						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
 					</p>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Follow him @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram

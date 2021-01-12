@@ -685,11 +685,11 @@ const ControlPanelPage = (props) => {
 											}}
 											className=""
 										>
-											<th style={{ padding: '15px' }}>{affiliate.glover_name}</th>
+											<th style={{ padding: '15px' }}>{affiliate.artist_name}</th>
 											<th style={{ padding: '15px' }}>
 												{
 													orders.filter((order) => {
-														return order.promo_code === affiliate.glover_name;
+														return order.promo_code === affiliate.artist_name;
 													}).length
 												}
 											</th>
@@ -715,7 +715,7 @@ const ControlPanelPage = (props) => {
 										{
 											orders.filter((order) => {
 												return affiliates
-													.map((affiliate) => affiliate.glover_name)
+													.map((affiliate) => affiliate.artist_name)
 													.includes(order.promo_code);
 											}).length
 										}
@@ -724,7 +724,7 @@ const ControlPanelPage = (props) => {
 										${orders
 											.filter((order) =>
 												affiliates
-													.map((affiliate) => affiliate.glover_name)
+													.map((affiliate) => affiliate.artist_name)
 													.includes(order.promo_code)
 											)
 											.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)

@@ -11,7 +11,7 @@ import { listUsers } from '../../actions/userActions';
 const EditFeaturePage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
-	const [ glover_name, set_glover_name ] = useState('');
+	const [ artist_name, set_artist_name ] = useState('');
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
 	const [ product, set_product ] = useState('');
@@ -81,7 +81,7 @@ const EditFeaturePage = (props) => {
 	const set_state = () => {
 		set_id(feature._id);
 		set_user(feature.user);
-		set_glover_name(feature.glover_name);
+		set_artist_name(feature.artist_name);
 		set_instagram_handle(feature.instagram_handle);
 		set_facebook_name(feature.facebook_name);
 		set_product(feature.product);
@@ -99,7 +99,7 @@ const EditFeaturePage = (props) => {
 	const unset_state = () => {
 		set_id('');
 		set_user('');
-		set_glover_name('');
+		set_artist_name('');
 		set_instagram_handle('');
 		set_facebook_name('');
 		set_product('');
@@ -120,7 +120,7 @@ const EditFeaturePage = (props) => {
 			saveFeature({
 				_id: id,
 				user,
-				glover_name,
+				artist_name,
 				instagram_handle,
 				facebook_name,
 				product,
@@ -327,13 +327,13 @@ const EditFeaturePage = (props) => {
 											</li>
 
 											<li>
-												<label htmlFor="glover_name">Glover Name</label>
+												<label htmlFor="artist_name">Glover Name</label>
 												<input
 													type="text"
-													name="glover_name"
-													value={glover_name}
-													id="glover_name"
-													onChange={(e) => set_glover_name(e.target.value)}
+													name="artist_name"
+													value={artist_name}
+													id="artist_name"
+													onChange={(e) => set_artist_name(e.target.value)}
 												/>
 											</li>
 											<li>

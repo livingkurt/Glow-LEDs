@@ -6,7 +6,7 @@ export default (props: {
 	order_number: string;
 	reason_for_contact: string;
 	inspirational_pictures: Array<string>;
-	glover_name: string;
+	artist_name: string;
 	instagram_handle: string;
 	facebook_name: string;
 	song_id: string;
@@ -36,7 +36,7 @@ export default (props: {
 
      
 
-      ${props.glover_name ? `<div>Glover Name: ${props.glover_name}</div>` : `<div></div>`}
+      ${props.artist_name ? `<div>Glover Name: ${props.artist_name}</div>` : `<div></div>`}
 
       ${props.instagram_handle ? `<div>Instagram Handle: ${props.instagram_handle}</div>` : `<div></div>`}
 

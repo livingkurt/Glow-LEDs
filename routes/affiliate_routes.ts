@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 
 		let sortOrder = {};
 		if (req.query.sortOrder === 'glover name') {
-			sortOrder = { glover_name: 1 };
+			sortOrder = { artist_name: 1 };
 		} else if (req.query.sortOrder === 'facebook name') {
 			sortOrder = { facebook_name: 1 };
 		} else if (req.query.sortOrder === 'sponsor') {

@@ -14,15 +14,21 @@ const FeatureSmallScreen = (props) => {
 					<div className="">
 						<LazyLoadImage
 							className="feature-image w-200px h-auto"
-							alt={props.feature.glover_name}
+							alt={props.feature.artist_name}
 							title="Feature Image"
 							effect="blur"
-							src={`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`} // use normal <img> attributes as props
+							src={
+								props.category === 'glovers' ? (
+									`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
+								) : (
+									props.feature.logo
+								)
+							} // use normal <img> attributes as props
 						/>
 					</div>
 					<div className="p-10px">
 						<div className="feature_text" style={{ fontSize: '1.6rem' }}>
-							{props.feature.glover_name}
+							{props.feature.artist_name}
 						</div>
 						<label style={{ fontSize: '1.3rem' }}>{humanize(props.feature.product)}</label>
 					</div>

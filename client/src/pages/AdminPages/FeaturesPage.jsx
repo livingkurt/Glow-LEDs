@@ -116,7 +116,7 @@ const FeaturesPage = (props) => {
 											{format_date(feature.release_date)}
 										</td>
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
-											{feature.glover_name}
+											{feature.artist_name}
 										</td>
 										<td className="p-10px" style={{ minWidth: '10rem' }}>
 											{feature.instagram_handle}

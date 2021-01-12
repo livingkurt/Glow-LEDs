@@ -4,7 +4,7 @@ export {};
 const affiliateSchema = new mongoose.Schema(
 	{
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-		glover_name: { type: String },
+		artist_name: { type: String },
 		instagram_handle: { type: String },
 		facebook_name: { type: String },
 		percentage_off: { type: Number },

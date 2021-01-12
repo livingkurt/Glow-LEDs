@@ -53,9 +53,9 @@ const FeaturedPage = (props) => {
 					return (
 						<div className="home_page_divs">
 							<div className="column jc-c">
-								<h2 style={{ textAlign: 'center' }}>{feature.glover_name} Light Show</h2>
+								<h2 style={{ textAlign: 'center' }}>{feature.artist_name} Light Show</h2>
 								<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-									Check out {feature.glover_name} with the {humanize(feature.product)}!
+									Check out {feature.artist_name} with the {humanize(feature.product)}!
 								</p>
 								<p className="p_descriptions" style={{ textAlign: 'center' }}>
 									Follow him @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on
