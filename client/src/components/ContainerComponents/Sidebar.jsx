@@ -84,9 +84,6 @@ const Sidebar = (props) => {
 				<Link to="/">
 					<div className="row">
 						<label className="ml-5px fs-30px mv-0px ff-h">Glow LEDs</label>
-						{/* <label className="tm" style={{ color: '#9a9898' }}>
-							™
-						</label> */}
 					</div>
 				</Link>
 			</div>
@@ -113,11 +110,6 @@ const Sidebar = (props) => {
 									Orders
 								</button>
 							</Link>
-							{/* <Link to="/secure/account/devices">
-								<button className=" sidebar-btn secondary" onClick={closeMenu}>
-									Devices
-								</button>
-							</Link> */}
 							<button onClick={handleLogout} className=" sidebar-btn secondary">
 								{' '}
 								Logout
@@ -304,127 +296,12 @@ const Sidebar = (props) => {
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
-				{/* <div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">Diffuser Caps</button>
-					<ul className="sidebar_dropdown_container">
-						<div className="sidebar_dropdown_secondary">
-							<button className="sidebar-btn secondary">
-								<Link to="/collections/all/products/category/mega_diffuser_caps">
-									Mega Diffuser Caps
-								</Link>
-							</button>
-							<ul className="sidebar_dropdown_secondary_container">
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Geomotric
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Shapes
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Abstract
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Patterns
-									</button>
-								</Link>
-							</ul>
-							<i
-								
-								className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
-							/>
-						</div>
-						<div className="sidebar_dropdown_secondary">
-							<button className="sidebar-btn secondary">
-								<Link to="/collections/all/products/category/diffuser_caps">
-									Diffuser Caps
-								</Link>
-							</button>
-							<ul className="sidebar_dropdown_secondary_container">
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Geomotric
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Shapes
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/symbols">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Symbols
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Abstract
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Patterns
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/emoji">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Emojis
-									</button>
-								</Link>
-							</ul>
-							<i
-								
-								className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
-							/>
-						</div>
-					</ul>
-					<i
-						
-						className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
-					/>
-				</div>
-				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">Diffusers</button>
-					<ul className="sidebar_dropdown_container">
-						<Link to="/collections/all/products/category/frosted_diffusers">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Frosted Diffusers
-							</button>
-						</Link>
-					</ul>
-					<i
-						
-						className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
-					/>
-				</div> */}
-				{/* <div className="sidebar_dropdown"> */}
-				{/* <button className="sidebar-btn primary">
-						<Link to="/pages/menu/decor">Decor</Link>
-					</button> */}
 				<Link to="/collections/all/products/category/glow_strings">
 					<button className="sidebar-btn primary" onClick={closeMenu}>
 						Glow Strings
 					</button>
 				</Link>
 
-				{/* <ul className="sidebar_dropdown_container">
-						<Link to="/collections/all/products/category/glow_strings">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Glow Strings
-							</button>
-						</Link>
-					</ul>
-					<i
-						
-						className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up"
-					/> */}
-				{/* </div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/pages/menu/community">Community</Link>
@@ -436,7 +313,7 @@ const Sidebar = (props) => {
 								Announcements
 							</button>
 						</Link>
-						<Link to="/pages/featured">
+						<Link to="/pages/menu/featured">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Featured
 							</button>
