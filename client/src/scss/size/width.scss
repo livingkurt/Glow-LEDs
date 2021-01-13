@@ -8,6 +8,11 @@
 		width: $i + px !important;
 	}
 }
+@for $i from 0 to 101 {
+	.w-#{$i}vh {
+		width: $i + vh !important;
+	}
+}
 
 @for $i from 0 to 100 {
 	.w-#{$i}per {
