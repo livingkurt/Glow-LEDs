@@ -285,40 +285,9 @@ const SubmitFeaturePage = (props) => {
 									<title>Edit Feature| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '38rem', marginBottom: '20px' }}>
-									<div className="row wrap jc-b m-10px">
+								<ul className="edit-form-container" style={{ maxWidth: '76rem', marginBottom: '20px' }}>
+									<div className=" wrap jc-b m-10px">
 										<div className="w-288px m-10px">
-											<li>
-												<label htmlFor="artist_name">Artist Name</label>
-												<input
-													type="text"
-													name="artist_name"
-													value={artist_name}
-													id="artist_name"
-													onChange={(e) => set_artist_name(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="logo">Logo</label>
-												<input
-													type="text"
-													name="logo"
-													value={logo}
-													id="logo"
-													onChange={(e) => set_logo(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="description">Description</label>
-												<textarea
-													className=""
-													name="description"
-													defaultValue={description}
-													id="description"
-													onChange={(e) => set_description(e.target.value)}
-												/>
-											</li>
-
 											<li>
 												<label className="mb-2rem">Category</label>
 												<div className="ai-c h-25px mb-15px jc-c">
@@ -329,7 +298,7 @@ const SubmitFeaturePage = (props) => {
 															defaultValue={category}
 														>
 															<option key={1} defaultValue="">
-																---Categories---
+																---Choose Category---
 															</option>
 															{categories.map((type, index) => (
 																<option key={index} value={type}>
@@ -347,11 +316,52 @@ const SubmitFeaturePage = (props) => {
 													type="text"
 													name="category"
 													value={category}
+													placeholder="Type Category if Not Listed"
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'Glover Name... DJ Name...'"
+													value={artist_name}
 													id="category"
 													onChange={(e) => set_category(e.target.value)}
 												/>
 											</li>
 											<li>
+												<label htmlFor="artist_name">Artist Name</label>
+												<input
+													type="text"
+													name="artist_name"
+													placeholder="Glover Name... DJ Name..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'Glover Name... DJ Name...'"
+													value={artist_name}
+													id="artist_name"
+													onChange={(e) => set_artist_name(e.target.value)}
+												/>
+											</li>
+											{/* <li>
+												<label htmlFor="logo">Logo</label>
+												<input
+													type="text"
+													name="logo"
+													value={logo}
+													id="logo"
+													onChange={(e) => set_logo(e.target.value)}
+												/>
+											</li> */}
+											<li>
+												<label htmlFor="description">Description</label>
+												<textarea
+													className="edit_product_textarea"
+													name="description"
+													placeholder="Write a little something to introduce yourself..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'Write a little something to introduce yourself...'"
+													defaultValue={description}
+													id="description"
+													onChange={(e) => set_description(e.target.value)}
+												/>
+											</li>
+
+											{/* <li>
 												<label htmlFor="video">Video</label>
 												<input
 													type="text"
@@ -360,13 +370,16 @@ const SubmitFeaturePage = (props) => {
 													id="video"
 													onChange={(e) => set_video(e.target.value)}
 												/>
-											</li>
+											</li> */}
 											<li>
 												<label htmlFor="instagram_handle">Instagram Handle</label>
 												<input
 													type="text"
 													name="instagram_handle"
 													value={instagram_handle}
+													placeholder="@..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = '@...'"
 													id="instagram_handle"
 													onChange={(e) => set_instagram_handle(e.target.value)}
 												/>
@@ -382,16 +395,19 @@ const SubmitFeaturePage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="link">Link</label>
+												<label htmlFor="link">Website</label>
 												<input
 													type="text"
 													name="link"
 													value={link}
+													placeholder="https://www..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'https://www...'"
 													id="link"
 													onChange={(e) => set_link(e.target.value)}
 												/>
 											</li>
-											<li>
+											{/* <li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
 													type="text"
@@ -400,20 +416,21 @@ const SubmitFeaturePage = (props) => {
 													id="pathname"
 													onChange={(e) => set_pathname(e.target.value)}
 												/>
-											</li>
+											</li> */}
+											{category === 'Glovers' && (
+												<li>
+													<label htmlFor="song_id">Song ID</label>
+													<input
+														type="text"
+														name="song_id"
+														value={song_id}
+														id="song_id"
+														onChange={(e) => set_song_id(e.target.value)}
+													/>
+												</li>
+											)}
 
-											<li>
-												<label htmlFor="song_id">Song ID</label>
-												<input
-													type="text"
-													name="song_id"
-													value={song_id}
-													id="song_id"
-													onChange={(e) => set_song_id(e.target.value)}
-												/>
-											</li>
-
-											<li>
+											{/* <li>
 												<label htmlFor="image">Image</label>
 												<input
 													type="text"
@@ -426,10 +443,35 @@ const SubmitFeaturePage = (props) => {
 													Add Image
 												</button>
 											</li>
-											{image_display(images)}
+											{image_display(images)} */}
+										</div>
+
+										<div className="w-300px m-10px">
+											<li className="ta-c">
+												Send in Video, Pictures, and Music using WeTransfer Below to
+												info.glowleds@gmail.com
+											</li>
+											<li className="ta-c">
+												<img
+													className="mv-10px br-15px w-100per h-auto"
+													src="https://thumbs2.imgbox.com/6b/f9/BIssJaJ4_t.png"
+												/>
+											</li>
+
+											<li>
+												<button className="zoom_b btn secondary w-100per">
+													<a
+														target="_blank"
+														href="https://wetransfer.com/"
+														rel="noreferrer"
+														rel="noopener noreferrer"
+													>
+														WeTransfer{' '}
+													</a>
+												</button>
+											</li>
 										</div>
 									</div>
-
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Submit'}
