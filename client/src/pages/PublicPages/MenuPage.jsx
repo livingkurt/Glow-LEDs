@@ -86,28 +86,28 @@ const MenuPage = (props) => {
 			return [
 				{
 					category: 'glovers',
-					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`,
-					artist_name: glovers[0] && glovers[0].artist_name,
-					product: glovers[0] && glovers[0].product
+					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`
+					// artist_name: glovers[0] && glovers[0].artist_name,
+					// product: glovers[0] && glovers[0].product
 				},
-				// {
-				// 	category: 'artists',
-				// 	image: '',
-				// 	artist_name: artists[0] && artists[0].artist_name,
-				// 	link: artists[0] && artists[0].link
-				// },
+				{
+					category: 'artists',
+					image: artists[0] && artists[0].logo
+					// artist_name: artists[0] && artists[0].artist_name,
+					// link: artists[0] && artists[0].link
+				},
 				{
 					category: 'producers',
-					image: producers[0] && producers[0].logo,
-					artist_name: producers[0] && producers[0].artist_name,
-					link: producers[0] && producers[0].link
+					image: producers[0] && producers[0].logo
+					// artist_name: producers[0] && producers[0].artist_name
+					// link: producers[0] && producers[0].link
 				},
 				{
 					category: 'vfx',
 					image:
-						(vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx[0] && vfx[0].video}/hqdefault.jpg`,
-					artist_name: vfx[0] && vfx[0].artist_name,
-					link: vfx[0] && vfx[0].link
+						(vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx[0] && vfx[0].video}/hqdefault.jpg`
+					// artist_name: vfx[0] && vfx[0].artist_name
+					// link: vfx[0] && vfx[0].link
 				}
 			];
 		}
@@ -153,6 +153,10 @@ const MenuPage = (props) => {
 			<div className="jc-c">
 				<div className="jc-c wrap">
 					{features &&
+						glovers &&
+						artists &&
+						producers &&
+						vfx &&
 						determine_menu_items().map((item) => {
 							return (
 								<div className="home_page_divs m-10px ">
