@@ -27,10 +27,10 @@ const MenuPage = (props) => {
 	}, []);
 
 	const get_features = async () => {
-		const { data: glovers } = await API_Features.get_features_by_category('glovers');
-		const { data: artists } = await API_Features.get_features_by_category('artists');
-		const { data: producers } = await API_Features.get_features_by_category('producers');
-		const { data: vfx } = await API_Features.get_features_by_category('vfx');
+		const { data: glovers } = await API_Features.get_features_by_category('Glovers');
+		const { data: artists } = await API_Features.get_features_by_category('Artists');
+		const { data: producers } = await API_Features.get_features_by_category('Producers');
+		const { data: vfx } = await API_Features.get_features_by_category('VFX');
 		console.log({ glovers });
 		console.log({ artists });
 		console.log({ producers });
@@ -82,32 +82,32 @@ const MenuPage = (props) => {
 				{ category: 'terms', image: 'https://thumbs2.imgbox.com/a0/11/BlKmYy5J_t.png' }
 			];
 		} else if (pathname === 'featured') {
-			console.log({ features });
+			console.log({ producers });
 			return [
 				{
-					category: 'glovers',
+					category: 'Glovers',
 					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`,
 					artist_name: glovers[0] && glovers[0].artist_name,
 					product: glovers[0] && glovers[0].product
 				},
+				// {
+				// 	category: 'Artists',
+				// 	image: '',
+				// 	artist_name: artists[0] && artists[0].artist_name,
+				// 	link: artists[0] && artists[0].link
+				// },
 				{
-					category: 'artists',
-					image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg',
-					artist_name: artists[0] && artists[0].artist_name,
-					link: artists[0] && artists[0].link
-				},
-				{
-					category: 'producers',
-					image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg',
+					category: 'Producers',
+					image: producers[0] && producers[0].logo,
 					artist_name: producers[0] && producers[0].artist_name,
 					link: producers[0] && producers[0].link
-				},
-				{
-					category: 'vfx',
-					image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg',
-					artist_name: vfx[0] && vfx[0].artist_name,
-					link: vfx[0] && vfx[0].link
 				}
+				// {
+				// 	category: 'VFX',
+				// 	image: '',
+				// 	artist_name: vfx[0] && vfx[0].artist_name,
+				// 	link: vfx[0] && vfx[0].link
+				// }
 			];
 		}
 	};

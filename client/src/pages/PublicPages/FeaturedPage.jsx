@@ -51,39 +51,51 @@ const FeaturedPage = (props) => {
 						Back to Features
 					</button>
 					<div className="column jc-c">
-						<h2 style={{ textAlign: 'center' }}>{feature.artist_name} Light Show</h2>
+						<h2 style={{ textAlign: 'center' }}>{feature.artist_name}</h2>
 					</div>
-					<div className="jc-c pos-rel">
-						<div className="iframe-container">
-							<iframe
-								width="996"
-								height="560"
-								style={{ borderRadius: '20px' }}
-								src={`https://www.youtube.com/embed/${feature.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
-								frameborder="0"
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-								allowfullscreen="1"
-							/>
-						</div>
-					</div>
-					<p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
-					</p>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Follow him @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram
+						{feature.description}
+					</p>
+					{feature.video && (
+						<div className="jc-c pos-rel">
+							<div className="iframe-container">
+								<iframe
+									width="996"
+									height="560"
+									style={{ borderRadius: '20px' }}
+									src={`https://www.youtube.com/embed/${feature.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
+									frameborder="0"
+									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen="1"
+								/>
+							</div>
+						</div>
+					)}
+
+					{/* <p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
+						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
+					</p> */}
+
+					<p className="p_descriptions" style={{ textAlign: 'center' }}>
+						Follow @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram
 					</p>
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
 						Song ID: {feature.song_id}
 					</p>
-					<Link to={`/collections/all/products/${feature.product}`}>
+					<Link to={feature.link} />
+					<a rel="noreferrer" href={feature.link} target="_blank" rel="noopener noreferrer">
 						<div className="column jc-c">
 							<div className="p_descriptions" style={{ textAlign: 'center' }}>
 								<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-									{feature.product && humanize(feature.product)}
+									{feature.product ? (
+										humanize(feature.product)
+									) : (
+										`See More from ${feature.artist_name}`
+									)}
 								</button>
 							</div>
 						</div>
-					</Link>
+					</a>
 				</div>
 			)}
 		</div>

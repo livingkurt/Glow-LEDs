@@ -22,7 +22,7 @@ const Feature = (props) => {
 								style={{ height: props.size, width: 'auto' }}
 								effect="blur"
 								src={
-									props.category === 'glovers' ? (
+									props.category === 'Glovers' ? (
 										`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
 									) : (
 										props.feature.logo
@@ -32,7 +32,9 @@ const Feature = (props) => {
 
 							<label style={{ fontSize: '1.6rem' }}>{props.feature.artist_name}</label>
 							{/* <label style={{ fontSize: '1.3rem' }}>{props.feature.song_id}</label> */}
-							<label style={{ fontSize: '1.3rem' }}>{humanize(props.feature.product)}</label>
+							<label style={{ fontSize: '1.3rem' }}>
+								{props.feature.product && humanize(props.feature.product)}
+							</label>
 							<Link to={`/collections/all/features/category/${props.category}/${props.feature.pathname}`}>
 								<label style={{ fontSize: '1.6rem' }}>{props.feature.name}</label>
 							</Link>

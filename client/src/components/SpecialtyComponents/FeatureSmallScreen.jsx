@@ -18,19 +18,21 @@ const FeatureSmallScreen = (props) => {
 							title="Feature Image"
 							effect="blur"
 							src={
-								props.category === 'glovers' ? (
+								props.category === 'Glovers' ? (
 									`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
 								) : (
 									props.feature.logo
 								)
-							} // use normal <img> attributes as props
+							}
 						/>
 					</div>
 					<div className="p-10px">
 						<div className="feature_text" style={{ fontSize: '1.6rem' }}>
 							{props.feature.artist_name}
 						</div>
-						<label style={{ fontSize: '1.3rem' }}>{humanize(props.feature.product)}</label>
+						<label style={{ fontSize: '1.3rem' }}>
+							{props.feature.product && humanize(props.feature.product)}
+						</label>
 					</div>
 				</div>
 			</Link>

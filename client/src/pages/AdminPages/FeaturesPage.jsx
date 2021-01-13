@@ -61,6 +61,30 @@ const FeaturesPage = (props) => {
 		'Song ID',
 		'Newest'
 	];
+	const colors = [
+		{ name: 'Glovers', color: '#3e4c6d' },
+		{ name: 'Producers', color: '#4b7188' },
+		{ name: 'Artists', color: '#6f5f7d' },
+		{ name: 'VFX', color: '#636363' }
+		// { name: 'Refunded', color: '#a9a9a9' }
+	];
+
+	const determine_color = (feature) => {
+		let result = '';
+		if (feature.category === 'Glovers') {
+			result = colors[0].color;
+		}
+		if (feature.category === 'Producers') {
+			result = colors[1].color;
+		}
+		if (feature.category === 'Artists') {
+			result = colors[2].color;
+		}
+		if (feature.category === 'VFX') {
+			result = colors[3].color;
+		}
+		return result;
+	};
 
 	return (
 		<div className="main_container p-20px">
@@ -74,7 +98,23 @@ const FeaturesPage = (props) => {
 					</button>
 				</Link>
 			</div>
-
+			<div className="wrap jc-b">
+				{colors.map((color) => {
+					return (
+						<div className="wrap jc-b w-16rem m-1rem">
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</div>
+					);
+				})}
+			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Features</h1>
 			</div>
@@ -90,10 +130,13 @@ const FeaturesPage = (props) => {
 								<tr>
 									{/* <th>user</th> */}
 									<th>Release Date</th>
-									<th>glover name</th>
-									<th>instagram handle</th>
-									<th>facebook name</th>
-									<th>product</th>
+									<th>Category</th>
+									<th>Artist Name</th>
+
+									{/* <th>Pathname</th> */}
+									<th>Instagram handle</th>
+									<th>Facebook name</th>
+									{/* <th>product</th> */}
 									{/* <th>quote</th> */}
 									<th>video</th>
 									{/* <th>song id</th> */}
@@ -105,7 +148,7 @@ const FeaturesPage = (props) => {
 									<tr
 										key={feature._id}
 										style={{
-											backgroundColor: '#3e4c6d',
+											backgroundColor: determine_color(feature),
 											fontSize: '1.4rem'
 										}}
 									>
@@ -116,17 +159,24 @@ const FeaturesPage = (props) => {
 											{feature.release_date && format_date(feature.release_date)}
 										</td>
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{feature.category}
+										</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
 											{feature.artist_name}
 										</td>
+
+										{/* <td className="p-10px" style={{ minWidth: '15rem' }}>
+											{feature.pathname}
+										</td> */}
 										<td className="p-10px" style={{ minWidth: '10rem' }}>
 											{feature.instagram_handle}
 										</td>
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
 											{feature.facebook_name}
 										</td>
-										<td className="p-10px" style={{ minWidth: '5rem' }}>
+										{/* <td className="p-10px" style={{ minWidth: '5rem' }}>
 											{feature.product}
-										</td>
+										</td> */}
 										{/* <td className="p-10px" style={{ minWidth: '5rem' }}>{feature.quote}</td> */}
 										<td className="p-10px" style={{ minWidth: '10rem' }}>
 											{feature.video}

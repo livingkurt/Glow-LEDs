@@ -199,10 +199,10 @@ const AllFeaturesPage = (props) => {
 				<h1> Featured</h1>
 			</div> */}
 
-			<p className="p_descriptions" style={{ textAlign: 'center' }}>
+			{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here is an archive of the lightshows and product reviews that you have so graciously given to us. We
 				appreciate each and every one of you.
-			</p>
+			</p> */}
 			<Loading loading={loading} error={error}>
 				<div>
 					<div className="product_big_screen">

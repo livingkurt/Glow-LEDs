@@ -89,6 +89,7 @@ const EditFeaturePage = (props) => {
 		set_link(feature.link);
 		set_logo(feature.logo);
 		set_video(feature.video);
+		set_description(feature.description);
 		set_category(feature.category);
 		set_pathname(feature.pathname);
 		set_images(feature.images);
@@ -106,6 +107,7 @@ const EditFeaturePage = (props) => {
 		set_song_id('');
 		set_link('');
 		set_logo('');
+		set_description('');
 		set_video('');
 		set_category('');
 		set_pathname('');
