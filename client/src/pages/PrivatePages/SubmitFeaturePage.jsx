@@ -4,6 +4,7 @@ import { saveFeature, detailsFeature } from '../../actions/featureActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
@@ -141,7 +142,8 @@ const SubmitFeaturePage = (props) => {
 		e.target.reset();
 		unset_state();
 		set_loading_submit(false);
-		history.push('/collections/all/features/category/' + category);
+		// history.push('/collections/all/features/category/' + category.toLowerCase());
+		history.push('/collections/all/features');
 	};
 
 	const add_image = (e) => {
@@ -489,9 +491,9 @@ const SubmitFeaturePage = (props) => {
 										</button>
 									</li>
 									<li>
-										<button className="btn secondary" onClick={() => history.goBack()}>
-											Back to Features
-										</button>
+										<Link to="/pages/menu/featured">
+											<button className="btn secondary w-100per">Back to Features</button>
+										</Link>
 									</li>
 								</ul>
 							</div>
