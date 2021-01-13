@@ -113,7 +113,7 @@ const FeaturesPage = (props) => {
 											{feature.user}
 										</td> */}
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
-											{format_date(feature.release_date)}
+											{feature.release_date && format_date(feature.release_date)}
 										</td>
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
 											{feature.artist_name}

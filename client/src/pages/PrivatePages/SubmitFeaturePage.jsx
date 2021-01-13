@@ -7,6 +7,8 @@ import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const SubmitFeaturePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -25,7 +27,7 @@ const SubmitFeaturePage = (props) => {
 	const [ logo, set_logo ] = useState('');
 	const [ description, set_description ] = useState('');
 	const [ release_date, set_release_date ] = useState('');
-	// const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ loading_submit, set_loading_submit ] = useState(false);
 
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
@@ -84,17 +86,17 @@ const SubmitFeaturePage = (props) => {
 		set_artist_name(feature.artist_name);
 		set_instagram_handle(feature.instagram_handle);
 		set_facebook_name(feature.facebook_name);
-		set_product(feature.product);
+		// set_product(feature.product);
 		set_song_id(feature.song_id);
 		set_link(feature.link);
-		set_logo(feature.logo);
-		set_video(feature.video);
+		// set_logo(feature.logo);
+		// set_video(feature.video);
 		set_category(feature.category);
-		set_pathname(feature.pathname);
-		set_images(feature.images);
-		if (feature.release_date) {
-			set_release_date(format_date(feature.release_date));
-		}
+		// set_pathname(feature.pathname);
+		// set_images(feature.images);
+		// if (feature.release_date) {
+		// 	set_release_date(format_date(feature.release_date));
+		// }
 	};
 	const unset_state = () => {
 		set_id('');
@@ -102,42 +104,44 @@ const SubmitFeaturePage = (props) => {
 		set_artist_name('');
 		set_instagram_handle('');
 		set_facebook_name('');
-		set_product('');
+		// set_product('');
 		set_song_id('');
 		set_link('');
-		set_logo('');
-		set_video('');
+		// set_logo('');
+		// set_video('');
 		set_category('');
-		set_pathname('');
-		set_images([]);
-		set_image('');
-		set_release_date('');
+		// set_pathname('');
+		// set_images([]);
+		// set_image('');
+		// set_release_date('');
 	};
 
 	const submitHandler = (e) => {
+		set_loading_submit(true);
 		e.preventDefault();
 		dispatch(
 			saveFeature({
 				_id: id,
-				user,
+				user: props.userInfo._id,
 				artist_name,
 				instagram_handle,
 				facebook_name,
-				product,
+				// product,
 				song_id,
 				link,
-				logo,
-				video,
-				images,
+				// logo,
+				// video,
+				// images,
 				description,
-				pathname,
-				category,
-				release_date: unformat_date(release_date)
+				pathname: `${artist_name.toLowerCase()}_${category.toLowerCase()}_${Math.floor(Math.random() * 1000)}`,
+				category
+				// release_date: unformat_date('01/01/2021')
 			})
 		);
 		e.target.reset();
 		unset_state();
-		history.push('/secure/glow/features');
+		set_loading_submit(false);
+		history.push('/collections/all/features/category/' + category);
 	};
 
 	const add_image = (e) => {
@@ -279,6 +283,7 @@ const SubmitFeaturePage = (props) => {
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
 					<Loading loading={loading} error={error}>
+						<Loading loading={loading_submit} />
 						{feature && (
 							<div>
 								<Helmet>
@@ -318,8 +323,7 @@ const SubmitFeaturePage = (props) => {
 													value={category}
 													placeholder="Type Category if Not Listed"
 													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Glover Name... DJ Name...'"
-													value={artist_name}
+													onblur="this.placeholder = 'Type Category if Not Listed'"
 													id="category"
 													onChange={(e) => set_category(e.target.value)}
 												/>
@@ -448,14 +452,21 @@ const SubmitFeaturePage = (props) => {
 
 										<div className="w-300px m-10px">
 											<li className="ta-c">
+												<h2>Submit Media</h2>
+											</li>
+											<li className="ta-c">
 												Send in Video, Pictures, and Music using WeTransfer Below to
 												info.glowleds@gmail.com
 											</li>
-											<li className="ta-c">
-												<img
-													className="mv-10px br-15px w-100per h-auto"
-													src="https://thumbs2.imgbox.com/6b/f9/BIssJaJ4_t.png"
-												/>
+											<li className="ta-c jc-c w-100per m-auto">
+												<div className="jc-c">
+													<Zoom className="m-auto">
+														<img
+															className="mv-10px br-15px w-100per h-auto max-w-20rem ta-c"
+															src="https://thumbs2.imgbox.com/6b/f9/BIssJaJ4_t.png"
+														/>
+													</Zoom>
+												</div>
 											</li>
 
 											<li>

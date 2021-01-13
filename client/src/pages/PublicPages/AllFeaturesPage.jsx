@@ -176,7 +176,7 @@ const AllFeaturesPage = (props) => {
 			<div className="jc-c">
 				<div className="row">
 					<h1>{'Featured ' + humanize(category) || 'Featured'}</h1>
-					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
+					{/* <label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
 						category === 'mega_diffuser_caps' ||
@@ -187,7 +187,7 @@ const AllFeaturesPage = (props) => {
 						) : (
 							''
 						)}{' '}
-					</label>
+					</label> */}
 				</div>
 			</div>
 
@@ -209,7 +209,7 @@ const AllFeaturesPage = (props) => {
 						{features && (
 							<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
 								{features
-									.filter((feature) => feature.release_date <= today)
+									.filter((feature) => feature.release_date <= today && feature.category === category)
 									.map(
 										(feature, index) =>
 											!feature.hidden && (
@@ -229,7 +229,7 @@ const AllFeaturesPage = (props) => {
 						{features && (
 							<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
 								{features
-									.filter((feature) => feature.release_date <= today)
+									.filter((feature) => feature.release_date <= today && feature.category === category)
 									.map(
 										(feature, index) =>
 											!feature.hidden && (
