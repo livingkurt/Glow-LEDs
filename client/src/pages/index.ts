@@ -36,6 +36,7 @@ export { default as ShippingPage } from './PrivatePages/ShippingPage';
 export { default as EditShippingPage } from './PrivatePages/EditShippingPage';
 export { default as ChangePasswordPage } from './PrivatePages/ChangePasswordPage';
 export { default as OrderPaymentCompletePage } from './PrivatePages/OrderPaymentCompletePage';
+export { default as SubmitFeaturePage } from './PrivatePages/SubmitFeaturePage';
 
 export { default as CartPage } from './PublicPages/CartPage';
 export { default as HomePage } from './PublicPages/HomePage';

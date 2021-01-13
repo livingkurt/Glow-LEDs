@@ -67,7 +67,8 @@ import {
 	OrderPublicPage,
 	AnnouncementsPage,
 	EditAllDataPage,
-	AllFeaturesPage
+	AllFeaturesPage,
+	SubmitFeaturePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -195,6 +196,10 @@ const App = () => {
 							<PrivateRoute
 								path="/secure/account/editprofile"
 								component={(props) => <EditProfilePage userInfo={userInfo} {...props} />}
+							/>
+							<PrivateRoute
+								path="/secure/account/submit_feature"
+								component={(props) => <SubmitFeaturePage userInfo={userInfo} {...props} />}
 							/>
 							<PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
 							<PrivateRoute
