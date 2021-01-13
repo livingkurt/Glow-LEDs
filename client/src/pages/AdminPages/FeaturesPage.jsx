@@ -80,6 +80,7 @@ const FeaturesPage = (props) => {
 		if (feature.category === 'artists') {
 			result = colors[2].color;
 		}
+		console.log({ category: feature.category });
 		if (feature.category === 'vfx') {
 			result = colors[3].color;
 		}

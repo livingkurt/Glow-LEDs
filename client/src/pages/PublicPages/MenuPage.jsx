@@ -101,13 +101,14 @@ const MenuPage = (props) => {
 					image: producers[0] && producers[0].logo,
 					artist_name: producers[0] && producers[0].artist_name,
 					link: producers[0] && producers[0].link
+				},
+				{
+					category: 'vfx',
+					image:
+						(vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx[0] && vfx[0].video}/hqdefault.jpg`,
+					artist_name: vfx[0] && vfx[0].artist_name,
+					link: vfx[0] && vfx[0].link
 				}
-				// {
-				// 	category: 'vfx',
-				// 	image: '',
-				// 	artist_name: vfx[0] && vfx[0].artist_name,
-				// 	link: vfx[0] && vfx[0].link
-				// }
 			];
 		}
 	};

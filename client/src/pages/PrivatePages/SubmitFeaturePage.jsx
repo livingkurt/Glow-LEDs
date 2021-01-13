@@ -135,7 +135,7 @@ const SubmitFeaturePage = (props) => {
 				// images,
 				description,
 				pathname: `${artist_name.toLowerCase()}_${category.toLowerCase()}_${Math.floor(Math.random() * 1000)}`,
-				category
+				category: category.toLowerCase()
 				// release_date: unformat_date('01/01/2021')
 			})
 		);
