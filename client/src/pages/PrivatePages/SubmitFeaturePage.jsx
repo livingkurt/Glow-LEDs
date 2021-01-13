@@ -292,9 +292,9 @@ const SubmitFeaturePage = (props) => {
 									<title>Edit Feature| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '76rem', marginBottom: '20px' }}>
-									<div className=" wrap jc-b m-10px">
-										<div className="w-288px m-10px">
+								<ul className="edit-form-container" style={{ maxWidth: '76rem' }}>
+									<div className="wrap jc-b  submit_form">
+										<div className="w-288px">
 											<li>
 												<label className="mb-2rem">Category</label>
 												<div className="ai-c h-25px mb-15px jc-c">

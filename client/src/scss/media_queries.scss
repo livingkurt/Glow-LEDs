@@ -475,6 +475,18 @@
 	}
 	.welcome_text {
 		font-size: 30px !important;
+  }
+  .form-container, .submit_form
+	.placeorder-action,
+	.edit-form-container,
+	.cart-list-container,
+	.placeorder-info > div {
+		background-color: unset !important;
+		border: 0 !important;
+		box-shadow: unset !important;
+		max-width: 25rem !important;
+		margin: 0 auto !important;
+		padding: 0 !important;
 	}
 }
 
@@ -515,12 +527,12 @@
 	.edit-form-container,
 	.cart-list-container,
 	.placeorder-info > div {
-		background-color: unset;
-		border: 0;
-		box-shadow: unset;
+    background-color: unset !important;
+		border: 0 !important;
+		box-shadow: unset !important;
 		max-width: 25rem !important;
-		margin: 0 auto;
-		padding: 0;
+		margin: 0 auto !important;
+		padding: 0 !important;
 	}
 	.placeorder-info > div {
 		margin-bottom: 20px;
