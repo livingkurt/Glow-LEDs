@@ -368,8 +368,7 @@ const App = () => {
 							/>
 							<Route
 								path="/collections/all/features/category/:category/:pathname?"
-								exact={true}
-								component={FeaturedPage}
+								component={(props) => <FeaturedPage userInfo={userInfo} {...props} />}
 							/>
 
 							<Route path="/pages/music" exact={true} component={MusicPage} />

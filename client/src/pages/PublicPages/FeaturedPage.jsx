@@ -5,6 +5,8 @@ import { Helmet } from 'react-helmet';
 import { detailsFeature, listFeatures } from '../../actions/featureActions';
 import { humanize } from '../../utils/helper_functions';
 import { useHistory } from 'react-router-dom';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const FeaturedPage = (props) => {
 	const history = useHistory();
@@ -47,9 +49,19 @@ const FeaturedPage = (props) => {
 
 			{feature && (
 				<div className="">
-					<button className="btn secondary" onClick={() => history.goBack()}>
-						Back to Features
-					</button>
+					<div className="jc-b">
+						<button className="btn secondary" onClick={() => history.goBack()}>
+							Back to Features
+						</button>
+						{props.userInfo &&
+						props.userInfo.isAdmin && (
+							<Link to={'/secure/glow/editfeature/' + props.match.params.pathname}>
+								<button className="btn secondary" style={{ width: '156px' }}>
+									Edit Feature
+								</button>
+							</Link>
+						)}
+					</div>
 					<div className="column jc-c">
 						<h2 style={{ textAlign: 'center' }}>{feature.artist_name}</h2>
 					</div>
@@ -71,6 +83,16 @@ const FeaturedPage = (props) => {
 							</div>
 						</div>
 					)}
+					<div className="products">
+						{feature.images &&
+							feature.images.map((image) => {
+								return (
+									<Zoom className="m-auto">
+										<img className="m-1rem br-15px w-100per h-auto max-w-30rem ta-c" src={image} />
+									</Zoom>
+								);
+							})}
+					</div>
 
 					{/* <p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
 						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
@@ -83,9 +105,10 @@ const FeaturedPage = (props) => {
 						Song ID: {feature.song_id}
 					</p>
 					<Link to={feature.link} />
-					<a rel="noreferrer" href={feature.link} target="_blank" rel="noopener noreferrer">
-						<div className="column jc-c">
-							<div className="p_descriptions" style={{ textAlign: 'center' }}>
+
+					<div className="column jc-c">
+						<div className="p_descriptions" style={{ textAlign: 'center' }}>
+							<a rel="noreferrer" href={feature.link} target="_blank" rel="noopener noreferrer">
 								<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
 									{feature.product ? (
 										humanize(feature.product)
@@ -93,9 +116,9 @@ const FeaturedPage = (props) => {
 										`See More from ${feature.artist_name}`
 									)}
 								</button>
-							</div>
+							</a>
 						</div>
-					</a>
+					</div>
 				</div>
 			)}
 		</div>
