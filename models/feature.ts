@@ -5,7 +5,7 @@ const featureSchema = new mongoose.Schema(
 	{
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		artist_name: { type: String },
-		glover_name: { type: String },
+		// glover_name: { type: String },
 		instagram_handle: { type: String },
 		facebook_name: { type: String },
 		product: { type: String },

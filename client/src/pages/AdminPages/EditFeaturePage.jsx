@@ -329,7 +329,7 @@ const EditFeaturePage = (props) => {
 											</li>
 
 											<li>
-												<label htmlFor="artist_name">Glover Name</label>
+												<label htmlFor="artist_name">Artist Name</label>
 												<input
 													type="text"
 													name="artist_name"
