@@ -30,9 +30,9 @@ router.get('/', async (req, res) => {
 			sortOrder = { product: 1 };
 		} else if (req.query.sortOrder === 'instagram handle') {
 			sortOrder = { instagram_handle: 1 };
-		} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
+		} else if (req.query.sortOrder === 'release_date') {
 			sortOrder = { release_date: -1 };
-		} else if (req.query.sortOrder === 'newest') {
+		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
 			sortOrder = { _id: -1 };
 		}
 
