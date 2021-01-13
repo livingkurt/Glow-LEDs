@@ -145,9 +145,11 @@ const MenuPage = (props) => {
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
 			</Helmet>
-			<Link to="/account/login?redirect=/secure/account/submit_feature" className="jc-fe">
-				<button className="btn secondary ">Submit Feature</button>
-			</Link>
+			<div className="jc-fe">
+				<Link to="/account/login?redirect=/secure/account/submit_feature">
+					<button className="btn secondary ">Submit Feature</button>
+				</Link>
+			</div>
 			<div className="jc-c">
 				<h1> {humanize(pathname)}</h1>
 			</div>

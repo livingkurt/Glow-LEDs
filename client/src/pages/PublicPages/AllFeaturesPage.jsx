@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { Feature, FeatureSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
@@ -170,9 +171,14 @@ const AllFeaturesPage = (props) => {
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
 			</Helmet>
-			<button className="btn secondary" onClick={() => history.goBack()}>
+			{/* <button className="btn secondary" onClick={() => history.goBack()}>
 				Back to Menu
-			</button>
+			</button> */}
+			<div className="jc-fe">
+				<Link to="/account/login?redirect=/secure/account/submit_feature">
+					<button className="btn secondary ">Submit Feature</button>
+				</Link>
+			</div>
 			<div className="jc-c">
 				<div className="row">
 					<h1>{'Featured ' + humanize(category) || 'Featured'}</h1>

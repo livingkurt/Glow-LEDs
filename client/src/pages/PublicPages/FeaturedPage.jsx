@@ -99,25 +99,26 @@ const FeaturedPage = (props) => {
 					</p> */}
 
 					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Follow @ {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram
+						Follow {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram
 					</p>
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Song ID: {feature.song_id}
-					</p>
-					<Link to={feature.link} />
+					{feature.song_id && (
+						<p className="p_descriptions" style={{ textAlign: 'center' }}>
+							Song ID: {feature.song_id}
+						</p>
+					)}
 
-					<div className="column jc-c">
-						<div className="p_descriptions" style={{ textAlign: 'center' }}>
-							<a rel="noreferrer" href={feature.link} target="_blank" rel="noopener noreferrer">
-								<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-									{feature.product ? (
-										humanize(feature.product)
-									) : (
-										`See More from ${feature.artist_name}`
-									)}
-								</button>
-							</a>
-						</div>
+					<div className="p_descriptions" style={{ textAlign: 'center' }}>
+						<a
+							rel="noreferrer"
+							className="jc-c w-100per"
+							href={feature.link}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+								{feature.product ? humanize(feature.product) : `See More from ${feature.artist_name}`}
+							</button>
+						</a>
 					</div>
 				</div>
 			)}

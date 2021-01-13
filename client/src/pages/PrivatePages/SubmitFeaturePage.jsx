@@ -383,9 +383,6 @@ const SubmitFeaturePage = (props) => {
 													type="text"
 													name="instagram_handle"
 													value={instagram_handle}
-													placeholder="@..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = '@...'"
 													id="instagram_handle"
 													onChange={(e) => set_instagram_handle(e.target.value)}
 												/>
