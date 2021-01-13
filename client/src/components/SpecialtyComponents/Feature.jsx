@@ -11,7 +11,7 @@ const Feature = (props) => {
 	console.log({ props });
 	return (
 		<li key={props.feature._id} style={{ ...props.styles, textDecoration: 'none' }}>
-			<Link to={`/collections/all/features/category/${props.category}/${props.feature.pathname}`}>
+			<Link to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature.pathname}`}>
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="product">
@@ -22,7 +22,7 @@ const Feature = (props) => {
 								style={{ height: props.size, width: 'auto' }}
 								effect="blur"
 								src={
-									props.category === 'Glovers' ? (
+									props.category.toLowerCase() === 'glovers' ? (
 										`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
 									) : (
 										props.feature.logo
@@ -35,7 +35,10 @@ const Feature = (props) => {
 							<label style={{ fontSize: '1.3rem' }}>
 								{props.feature.product && humanize(props.feature.product)}
 							</label>
-							<Link to={`/collections/all/features/category/${props.category}/${props.feature.pathname}`}>
+							<Link
+								to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature
+									.pathname}`}
+							>
 								<label style={{ fontSize: '1.6rem' }}>{props.feature.name}</label>
 							</Link>
 						</div>

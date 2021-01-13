@@ -71,16 +71,16 @@ const FeaturesPage = (props) => {
 
 	const determine_color = (feature) => {
 		let result = '';
-		if (feature.category === 'Glovers') {
+		if (feature.category === 'glovers') {
 			result = colors[0].color;
 		}
-		if (feature.category === 'Producers') {
+		if (feature.category === 'producers') {
 			result = colors[1].color;
 		}
-		if (feature.category === 'Artists') {
+		if (feature.category === 'artists') {
 			result = colors[2].color;
 		}
-		if (feature.category === 'VFX') {
+		if (feature.category === 'vfx') {
 			result = colors[3].color;
 		}
 		return result;

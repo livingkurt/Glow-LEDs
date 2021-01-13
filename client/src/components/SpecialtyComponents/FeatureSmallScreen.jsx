@@ -9,7 +9,7 @@ import { humanize } from '../../utils/helper_functions';
 const FeatureSmallScreen = (props) => {
 	return (
 		<li key={props.feature._id} className=" w-100per" style={props.styles}>
-			<Link to={`/collections/all/features/category/${props.category}/${props.feature.pathname}`}>
+			<Link to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature.pathname}`}>
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyLoadImage
@@ -18,7 +18,7 @@ const FeatureSmallScreen = (props) => {
 							title="Feature Image"
 							effect="blur"
 							src={
-								props.category === 'Glovers' ? (
+								props.category.toLowerCase() === 'glovers' ? (
 									`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
 								) : (
 									props.feature.logo

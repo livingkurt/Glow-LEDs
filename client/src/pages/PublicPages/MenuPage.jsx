@@ -27,10 +27,10 @@ const MenuPage = (props) => {
 	}, []);
 
 	const get_features = async () => {
-		const { data: glovers } = await API_Features.get_features_by_category('Glovers');
-		const { data: artists } = await API_Features.get_features_by_category('Artists');
-		const { data: producers } = await API_Features.get_features_by_category('Producers');
-		const { data: vfx } = await API_Features.get_features_by_category('VFX');
+		const { data: glovers } = await API_Features.get_features_by_category('glovers');
+		const { data: artists } = await API_Features.get_features_by_category('artists');
+		const { data: producers } = await API_Features.get_features_by_category('producers');
+		const { data: vfx } = await API_Features.get_features_by_category('vfx');
 		console.log({ glovers });
 		console.log({ artists });
 		console.log({ producers });
@@ -85,25 +85,25 @@ const MenuPage = (props) => {
 			console.log({ producers });
 			return [
 				{
-					category: 'Glovers',
+					category: 'glovers',
 					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`,
 					artist_name: glovers[0] && glovers[0].artist_name,
 					product: glovers[0] && glovers[0].product
 				},
 				// {
-				// 	category: 'Artists',
+				// 	category: 'artists',
 				// 	image: '',
 				// 	artist_name: artists[0] && artists[0].artist_name,
 				// 	link: artists[0] && artists[0].link
 				// },
 				{
-					category: 'Producers',
+					category: 'producers',
 					image: producers[0] && producers[0].logo,
 					artist_name: producers[0] && producers[0].artist_name,
 					link: producers[0] && producers[0].link
 				}
 				// {
-				// 	category: 'VFX',
+				// 	category: 'vfx',
 				// 	image: '',
 				// 	artist_name: vfx[0] && vfx[0].artist_name,
 				// 	link: vfx[0] && vfx[0].link
