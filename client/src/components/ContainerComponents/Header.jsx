@@ -233,6 +233,25 @@ const Header = (props) => {
 							{/* </div> */}
 						</div>
 						<div className="dropdown-nav">
+							<Link to="/pages/menu/featured">
+								<button className="btn nav">Featured Artists</button>
+							</Link>
+							<div className="dropdown-nav-content hover_fade_in w-200px">
+								<Link to="/collections/all/features/category/artists">
+									<button className="btn nav w-100per ta-l">Artists</button>
+								</Link>
+								<Link to="/collections/all/features/category/glovers">
+									<button className="btn nav w-100per ta-l">Glovers</button>
+								</Link>
+								<Link to="/collections/all/features/category/producers">
+									<button className="btn nav w-100per ta-l">Producers</button>
+								</Link>
+								<Link to="/collections/all/features/category/vfx">
+									<button className="btn nav w-100per ta-l">VFX</button>
+								</Link>
+							</div>
+						</div>
+						{/* <div className="dropdown-nav">
 							<Link to="/pages/menu/community">
 								<button className="btn nav">Community</button>
 							</Link>
@@ -247,7 +266,7 @@ const Header = (props) => {
 									<button className="btn nav w-100per ta-l">Music</button>
 								</Link>
 							</div>
-						</div>
+						</div> */}
 						{/* <div className="dropdown-nav">
 							<Link to="/pages/glowcontrol">
 								<button className="btn nav">Glow Control</button>
@@ -264,7 +283,9 @@ const Header = (props) => {
 								<Link to="/pages/about">
 									<button className="btn nav w-100per ta-l">About</button>
 								</Link>
-
+								<Link to="/pages/announcements">
+									<button className="btn nav w-100per ta-l">Announcements</button>
+								</Link>
 								<div className="dropdown-nav-subcategory">
 									<Link to="/pages/faq">
 										<button className="btn nav w-100per ta-l w-100per ta-l">FAQ</button>

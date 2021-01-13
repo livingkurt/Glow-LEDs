@@ -85,17 +85,18 @@ const MenuPage = (props) => {
 			console.log({ producers });
 			return [
 				{
-					category: 'glovers',
-					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`
-					// artist_name: glovers[0] && glovers[0].artist_name,
-					// product: glovers[0] && glovers[0].product
-				},
-				{
 					category: 'artists',
 					image: artists[0] && artists[0].logo
 					// artist_name: artists[0] && artists[0].artist_name,
 					// link: artists[0] && artists[0].link
 				},
+				{
+					category: 'glovers',
+					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`
+					// artist_name: glovers[0] && glovers[0].artist_name,
+					// product: glovers[0] && glovers[0].product
+				},
+
 				{
 					category: 'producers',
 					image: producers[0] && producers[0].logo

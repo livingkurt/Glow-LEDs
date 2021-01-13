@@ -302,7 +302,7 @@ const Sidebar = (props) => {
 					</button>
 				</Link>
 
-				<div className="sidebar_dropdown">
+				{/* <div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/pages/menu/community">Community</Link>
 					</button>
@@ -321,6 +321,36 @@ const Sidebar = (props) => {
 						<Link to="/pages/music">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Music
+							</button>
+						</Link>
+					</ul>
+					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+				</div> */}
+				<div className="sidebar_dropdown">
+					<button className="sidebar-btn primary">
+						<Link to="/pages/menu/featured">Featured Artists</Link>
+					</button>
+
+					<ul className="sidebar_dropdown_container">
+						<Link to="/collections/all/features/category/artists">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Artists
+							</button>
+						</Link>
+						<Link to="/collections/all/features/category/glovers">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Glovers
+							</button>
+						</Link>
+
+						<Link to="/collections/all/features/category/producers">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Producers
+							</button>
+						</Link>
+						<Link to="/collections/all/features/category/vfx">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								VFX
 							</button>
 						</Link>
 					</ul>
