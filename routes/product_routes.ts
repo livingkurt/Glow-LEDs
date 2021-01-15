@@ -179,6 +179,66 @@ router.get('/', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Getting Products' });
 	}
 });
+
+router.get('/category/:category/subcategory/:subcategory', async (req, res) => {
+	try {
+		const products = await Product.find({
+			deleted: false,
+			category: req.params.category
+			// subcategory: req.params.subcategory
+		}).sort({ _id: -1 });
+		console.log({ category: req.params.category });
+		console.log({ products });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: products,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(products);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Products' });
+	}
+});
+// router.get('/category/:category/subcategory/:subcateo', async (req, res) => {
+// 	try {
+// 		const products = await Product.find({ deleted: false, category: req.params.category }).sort({ _id: -1 });
+// 		console.log({ category: req.params.category });
+// 		console.log({ products });
+// 		log_request({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			data: products,
+// 			status: 200,
+// 			success: true,
+// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 		});
+// 		res.send(products);
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Getting Products' });
+// 	}
+// });
+
 router.get('/shown', async (req, res) => {
 	try {
 		const products = await Product.find({ deleted: false, hidden: false });

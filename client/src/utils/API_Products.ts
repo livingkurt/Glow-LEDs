@@ -44,6 +44,12 @@ export default {
 		console.log({ promo_code_used: promo_code });
 		return axios.put('/api/promos/used', { promo_code });
 	},
+	// get_product_pictures: (category: string) => {
+	// 	return axios.get('/api/products/category/' + category);
+	// },
+	get_product_pictures: (category: string, subcategory: string) => {
+		return axios.get('/api/products/category/' + category + '/subcategory/' + subcategory);
+	},
 	batch_request: (
 		method: string,
 		collection: string,

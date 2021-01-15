@@ -328,7 +328,7 @@ const Sidebar = (props) => {
 				</div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
-						<Link to="/pages/menu/featured">Featured Artists</Link>
+						<Link to="/pages/menu/featured">Featured</Link>
 					</button>
 
 					<ul className="sidebar_dropdown_container">

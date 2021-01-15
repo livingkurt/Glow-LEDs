@@ -671,12 +671,35 @@ th {
 	/* margin-top: 0.4rem; */
 	// box-shadow: $bs_deep;
 }
+.dropdown-nav-nested {
+	display: inline-block;
+	position: relative;
+}
+
+.dropdown-nav-nested-content {
+	position: absolute;
+	display: none;
+	left: 268px;
+	top: -5px;
+	padding: 1rem;
+	list-style-type: none;
+	z-index: 1;
+	background-color: $theme_color_header;
+	margin: 0;
+	border-radius: $br_small_containers;
+	/* margin-top: 0.4rem; */
+	// box-shadow: $bs_deep;
+}
 
 .dropdown-nav:hover .dropdown-nav-content {
 	display: flex;
 	flex-direction: column;
 }
 .dropdown-nav-subcategory:hover .dropdown-nav-subcategory-content {
+	display: flex;
+	flex-direction: column;
+}
+.dropdown-nav-nested:hover .dropdown-nav-nested-content {
 	display: flex;
 	flex-direction: column;
 }

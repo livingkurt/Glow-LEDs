@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
 import { listFeatures } from '../../actions/featureActions';
 import { useSelector, useDispatch } from 'react-redux';
-import { API_Features } from '../../utils';
+import { API_Features, API_Products } from '../../utils';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
@@ -14,6 +14,18 @@ const MenuPage = (props) => {
 	const [ producers, set_producers ] = useState([]);
 	const [ vfx, set_vfx ] = useState([]);
 
+	const [ glowskins, set_glowskins ] = useState([]);
+	const [ frosted_diffusers, set_frosted_diffusers ] = useState([]);
+	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
+	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
+	const [ accessories, set_accessories ] = useState([]);
+
+	const [ geometric, set_geometric ] = useState([]);
+	const [ shapes, set_shapes ] = useState([]);
+	const [ abstract, set_abstract ] = useState([]);
+	const [ patterns, set_patterns ] = useState([]);
+	const [ emojis, set_emojis ] = useState([]);
+
 	const featureList = useSelector((state) => state.featureList);
 	const { features, loading, error } = featureList;
 	const dispatch = useDispatch();
@@ -22,6 +34,15 @@ const MenuPage = (props) => {
 			dispatch(listFeatures());
 			get_features();
 		}
+		if (pathname === 'gloving') {
+			get_products_by_category();
+		}
+		// if (pathname === 'diffuser_caps') {
+		// 	get_caps_by_subcategory('diffuser_caps');
+		// }
+		// if (pathname === 'mega_diffuser_caps') {
+		// 	get_caps_by_subcategory('mega_diffuser_caps');
+		// }
 
 		return () => {};
 	}, []);
@@ -41,28 +62,73 @@ const MenuPage = (props) => {
 		set_vfx(vfx);
 	};
 
+	const get_products_by_category = async () => {
+		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
+		const { data: frosted_diffusers } = await API_Products.get_product_pictures('frosted_diffusers');
+		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
+		const { data: mega_diffuser_caps } = await API_Products.get_product_pictures('mega_diffuser_caps');
+		const { data: accessories } = await API_Products.get_product_pictures('accessories');
+		console.log({ glowskins });
+		console.log({ frosted_diffusers });
+		console.log({ diffuser_caps });
+		console.log({ mega_diffuser_caps });
+		console.log({ accessories });
+		set_glowskins(glowskins);
+		set_frosted_diffusers(frosted_diffusers);
+		set_diffuser_caps(diffuser_caps);
+		set_mega_diffuser_caps(mega_diffuser_caps);
+		set_accessories(accessories);
+	};
+
+	const get_caps_by_subcategory = async (category) => {
+		const { data: geometric } = await API_Products.get_product_pictures(category, 'geometric');
+		const { data: shapes } = await API_Products.get_product_pictures(category, 'shapes');
+		const { data: abstract } = await API_Products.get_product_pictures(category, 'abstract');
+		const { data: patterns } = await API_Products.get_product_pictures(category, 'patterns');
+		const { data: emojis } = await API_Products.get_product_pictures(category, 'emojis');
+		console.log({ geometric });
+		console.log({ shapes });
+		console.log({ abstract });
+		console.log({ patterns });
+		console.log({ emojis });
+		if (category === 'mega_diffuser_caps') {
+			set_geometric(geometric);
+			set_shapes(shapes);
+			set_abstract(abstract);
+			set_patterns(patterns);
+			set_emojis(emojis);
+		}
+		if (category === 'diffuser_caps') {
+			set_geometric(geometric);
+			set_shapes(shapes);
+			set_abstract(abstract);
+			set_patterns(patterns);
+		}
+	};
+
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
 			return [
-				{ category: 'frosted_diffusers', image: 'https://thumbs2.imgbox.com/1f/c9/qXeP6Rtb_t.jpg' },
-				{ category: 'mega_diffuser_caps', image: 'https://thumbs2.imgbox.com/34/a1/fH5sSzCD_t.jpg' },
-				{ category: 'diffuser_caps', image: 'https://thumbs2.imgbox.com/77/69/NeANPFC2_t.jpg' },
-				{ category: 'accessories', image: 'https://thumbs2.imgbox.com/68/f6/GBGPpTs0_t.jpg' }
+				{ category: 'glowskins', image: glowskins[0] && glowskins[0].images[0] },
+				{ category: 'frosted_diffusers', image: frosted_diffusers[0] && frosted_diffusers[0].images[0] },
+				{ category: 'mega_diffuser_caps', image: mega_diffuser_caps[0] && mega_diffuser_caps[0].images[0] },
+				{ category: 'diffuser_caps', image: diffuser_caps[0] && diffuser_caps[0].images[0] },
+				{ category: 'accessories', image: accessories[0] && accessories[0].images[0] }
 			];
 		} else if (pathname === 'mega_diffuser_caps') {
 			return [
 				{ category: 'geometric', image: '' },
 				{ category: 'shapes', image: '' },
 				{ category: 'abstract', image: '' },
-				{ category: 'patterns', image: '' }
+				{ category: 'patterns', image: '' },
+				{ category: 'emojis', image: '' }
 			];
 		} else if (pathname === 'diffuser_caps') {
 			return [
 				{ category: 'geometric', image: '' },
 				{ category: 'shapes', image: '' },
 				{ category: 'abstract', image: '' },
-				{ category: 'patterns', image: '' },
-				{ category: 'emojis', image: '' }
+				{ category: 'patterns', image: '' }
 			];
 		} else if (pathname === 'decor') {
 			return [
