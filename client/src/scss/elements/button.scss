@@ -135,6 +135,13 @@ button {
 	text-align: start;
 	padding-left: 40px;
 }
+.sidebar-btn.nested_2 {
+	border-bottom: 1px white solid;
+	width: 100%;
+	border-radius: 0px;
+	text-align: start;
+	padding-left: 60px;
+}
 
 .sidebar-btn:hover {
 	background: $theme_color_sidebar_hover;
@@ -153,6 +160,13 @@ button {
 }
 
 .sidebar-btn.secondary:hover + .sidebar_dropdown_secondary_container {
+	max-height: 600px;
+}
+.sidebar-btn.nested:hover {
+	background: $theme_color_sidebar_hover;
+}
+
+.sidebar-btn.nested:hover + .sidebar_dropdown_nested_container {
 	max-height: 600px;
 }
 

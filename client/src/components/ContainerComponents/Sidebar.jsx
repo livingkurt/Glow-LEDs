@@ -124,65 +124,6 @@ const Sidebar = (props) => {
 						</button>
 					</Link>
 				)}
-				{props.userInfo &&
-				props.userInfo.isAdmin && (
-					<div className="sidebar_dropdown">
-						<button className="sidebar-btn primary">Admin</button>
-						<ul className="sidebar_dropdown_container">
-							<Link to="/secure/glow/controlpanel">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Control Panel
-								</button>
-							</Link>
-							<Link to="/secure/glow/orders">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Orders
-								</button>
-							</Link>
-							<Link to="/secure/glow/products">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Products
-								</button>
-							</Link>
-							<Link to="/secure/glow/users">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Users
-								</button>
-							</Link>
-							<Link to="/secure/glow/expenses">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Expenses
-								</button>
-							</Link>
-							<Link to="/secure/glow/affiliates">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Affiliates
-								</button>
-							</Link>
-							<Link to="/secure/glow/promos">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Promos
-								</button>
-							</Link>
-							<Link to="/secure/glow/carts">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Carts
-								</button>
-							</Link>
-							<Link to="/secure/glow/contents">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Contents
-								</button>
-							</Link>
-							<Link to="/secure/glow/emails">
-								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Emails
-								</button>
-							</Link>
-						</ul>
-						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-					</div>
-				)}
 
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
@@ -200,132 +141,100 @@ const Sidebar = (props) => {
 								Glow LEDs Essentials
 							</button>
 						</Link>
-					</ul>
-					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-				</div>
-				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">
-						<Link to="/pages/menu/gloving">Gloving</Link>
-					</button>
-
-					<ul className="sidebar_dropdown_container">
-						<Link to="/collections/all/products/category/glowskins">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Glowskins (New)
-							</button>
-						</Link>
-						<Link to="/collections/all/products/category/frosted_diffusers">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Frosted Diffusers
-							</button>
-						</Link>
-
 						<div className="sidebar_dropdown_secondary">
 							<button className="sidebar-btn secondary">
-								<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+								<Link to="/pages/menu/gloving">Gloving</Link>
 							</button>
 							<ul className="sidebar_dropdown_secondary_container">
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+								<Link to="/collections/all/products/category/glowskins">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Geomotric
+										Glowskins (New)
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
+								<Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Shapes
+										Frosted Diffusers
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Abstract
+								<div className="sidebar_dropdown_nested">
+									<button className="sidebar-btn nested">
+										<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
 									</button>
-								</Link>
-								<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
+									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Geomotric
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Shapes
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Abstract
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Patterns
+											</button>
+										</Link>
+									</ul>
+									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+								</div>
+								<div className="sidebar_dropdown_nested">
+									<button className="sidebar-btn nested">
+										<Link to="/collections/all/products/category/mega_diffuser_caps">
+											Mega Diffuser Caps
+										</Link>
+									</button>
+									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Geomotric
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Shapes
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Abstract
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Patterns
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emojis">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Emojis
+											</button>
+										</Link>
+									</ul>
+									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+								</div>
+								<Link to="/collections/all/products/category/accessories">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Patterns
+										Accessories
 									</button>
 								</Link>
 							</ul>
 							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 						</div>
-						<div className="sidebar_dropdown_secondary">
-							<button className="sidebar-btn secondary">
-								<Link to="/collections/all/products/category/mega_diffuser_caps">
-									Mega Diffuser Caps
-								</Link>
-							</button>
-							<ul className="sidebar_dropdown_secondary_container">
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Geomotric
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Shapes
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/symbols">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Symbols
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Abstract
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Patterns
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Emojis
-									</button>
-								</Link>
-							</ul>
-							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-						</div>
-						<Link to="/collections/all/products/category/accessories">
+						<Link to="/collections/all/products/category/glow_strings">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Accessories
+								Glow Strings
 							</button>
 						</Link>
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
-				<Link to="/collections/all/products/category/glow_strings">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
-						Glow Strings
-					</button>
-				</Link>
-
-				{/* <div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">
-						<Link to="/pages/menu/community">Community</Link>
-					</button>
-
-					<ul className="sidebar_dropdown_container">
-						<Link to="/pages/announcements">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Announcements
-							</button>
-						</Link>
-						<Link to="/pages/menu/featured">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Featured
-							</button>
-						</Link>
-						<Link to="/pages/music">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Music
-							</button>
-						</Link>
-					</ul>
-					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-				</div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/pages/menu/featured">Featured</Link>
@@ -433,6 +342,65 @@ const Sidebar = (props) => {
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
+				{props.userInfo &&
+				props.userInfo.isAdmin && (
+					<div className="sidebar_dropdown">
+						<button className="sidebar-btn primary">Admin</button>
+						<ul className="sidebar_dropdown_container">
+							<Link to="/secure/glow/controlpanel">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Control Panel
+								</button>
+							</Link>
+							<Link to="/secure/glow/orders">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Orders
+								</button>
+							</Link>
+							<Link to="/secure/glow/products">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Products
+								</button>
+							</Link>
+							<Link to="/secure/glow/users">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Users
+								</button>
+							</Link>
+							<Link to="/secure/glow/expenses">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Expenses
+								</button>
+							</Link>
+							<Link to="/secure/glow/affiliates">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Affiliates
+								</button>
+							</Link>
+							<Link to="/secure/glow/promos">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Promos
+								</button>
+							</Link>
+							<Link to="/secure/glow/carts">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Carts
+								</button>
+							</Link>
+							<Link to="/secure/glow/contents">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Contents
+								</button>
+							</Link>
+							<Link to="/secure/glow/emails">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Emails
+								</button>
+							</Link>
+						</ul>
+						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+					</div>
+				)}
 			</div>
 		</aside>
 	);
