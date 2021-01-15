@@ -80,31 +80,31 @@ const MenuPage = (props) => {
 		set_accessories(accessories);
 	};
 
-	const get_caps_by_subcategory = async (category) => {
-		const { data: geometric } = await API_Products.get_product_pictures(category, 'geometric');
-		const { data: shapes } = await API_Products.get_product_pictures(category, 'shapes');
-		const { data: abstract } = await API_Products.get_product_pictures(category, 'abstract');
-		const { data: patterns } = await API_Products.get_product_pictures(category, 'patterns');
-		const { data: emojis } = await API_Products.get_product_pictures(category, 'emojis');
-		console.log({ geometric });
-		console.log({ shapes });
-		console.log({ abstract });
-		console.log({ patterns });
-		console.log({ emojis });
-		if (category === 'mega_diffuser_caps') {
-			set_geometric(geometric);
-			set_shapes(shapes);
-			set_abstract(abstract);
-			set_patterns(patterns);
-			set_emojis(emojis);
-		}
-		if (category === 'diffuser_caps') {
-			set_geometric(geometric);
-			set_shapes(shapes);
-			set_abstract(abstract);
-			set_patterns(patterns);
-		}
-	};
+	// const get_caps_by_subcategory = async (category) => {
+	// 	const { data: geometric } = await API_Products.get_product_pictures(category, 'geometric');
+	// 	const { data: shapes } = await API_Products.get_product_pictures(category, 'shapes');
+	// 	const { data: abstract } = await API_Products.get_product_pictures(category, 'abstract');
+	// 	const { data: patterns } = await API_Products.get_product_pictures(category, 'patterns');
+	// 	const { data: emojis } = await API_Products.get_product_pictures(category, 'emojis');
+	// 	console.log({ geometric });
+	// 	console.log({ shapes });
+	// 	console.log({ abstract });
+	// 	console.log({ patterns });
+	// 	console.log({ emojis });
+	// 	if (category === 'mega_diffuser_caps') {
+	// 		set_geometric(geometric);
+	// 		set_shapes(shapes);
+	// 		set_abstract(abstract);
+	// 		set_patterns(patterns);
+	// 		set_emojis(emojis);
+	// 	}
+	// 	if (category === 'diffuser_caps') {
+	// 		set_geometric(geometric);
+	// 		set_shapes(shapes);
+	// 		set_abstract(abstract);
+	// 		set_patterns(patterns);
+	// 	}
+	// };
 
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
@@ -221,7 +221,7 @@ const MenuPage = (props) => {
 			</div>
 			<div className="jc-c">
 				<div className="jc-c wrap">
-					{features &&
+					{/* {features &&
 						glovers &&
 						artists &&
 						producers &&
@@ -250,6 +250,39 @@ const MenuPage = (props) => {
 										{item.product && item.product}
 										{item.link && item.link}
 									</div>
+								</div>
+							);
+						})} */}
+					{features &&
+						glovers &&
+						artists &&
+						producers &&
+						vfx &&
+						determine_menu_items().map((item) => {
+							return (
+								<div className="product m-1rem" style={{ height: 'unset' }}>
+									<Link to={decide_url(item)}>
+										<h2 className="">{humanize(item.category)}</h2>
+										<div className="w-300px h-300px mb-1rem">
+											<img
+												className="w-100per h-auto br-20px"
+												width="300px"
+												height="300px"
+												style={{ objectFit: 'cover' }}
+												src={item.image}
+												alt={item.category}
+												title="Menu Item Images"
+											/>
+										</div>
+
+										<div className="feature_text w-100per ta-c" style={{ fontSize: '1.6rem' }}>
+											{item.artist_name && item.artist_name}
+										</div>
+										<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
+											{item.product && item.product}
+											{item.link && item.link}
+										</div>
+									</Link>
 								</div>
 							);
 						})}
