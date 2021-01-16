@@ -80,9 +80,9 @@ const FAQPage = () => {
 						<Zoom>
 							<img
 								className="colored_caps_images"
-								src="https://images2.imgbox.com/82/8c/QWA07w4X_o.png"
-								alt="Colored Caps"
-								title="Colored Caps"
+								src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
+								alt="Glowskins Chip Compatibility"
+								title="Glowskins Chip Compatibility"
 							/>
 						</Zoom>
 						{/* <h2>Nanoskins V1</h2>
