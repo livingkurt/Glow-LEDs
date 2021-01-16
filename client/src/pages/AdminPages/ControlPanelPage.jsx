@@ -685,11 +685,11 @@ const ControlPanelPage = (props) => {
 											}}
 											className=""
 										>
-											<th style={{ padding: '15px' }}>{affiliate.artist_name}</th>
+											<th style={{ padding: '15px' }}>{affiliate.promo_code}</th>
 											<th style={{ padding: '15px' }}>
 												{
 													orders.filter((order) => {
-														return order.promo_code === affiliate.artist_name;
+														return order.promo_code === affiliate.promo_code;
 													}).length
 												}
 											</th>
