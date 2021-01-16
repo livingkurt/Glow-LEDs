@@ -131,7 +131,7 @@ const SubmitFeaturePage = (props) => {
 				song_id,
 				link,
 				// logo,
-				// video,
+				video,
 				// images,
 				description,
 				pathname: `${artist_name.toLowerCase()}_${category.toLowerCase()}_${Math.floor(Math.random() * 1000)}`,
@@ -367,16 +367,6 @@ const SubmitFeaturePage = (props) => {
 												/>
 											</li>
 
-											{/* <li>
-												<label htmlFor="video">Video</label>
-												<input
-													type="text"
-													name="video"
-													value={video}
-													id="video"
-													onChange={(e) => set_video(e.target.value)}
-												/>
-											</li> */}
 											<li>
 												<label htmlFor="instagram_handle">Instagram Handle</label>
 												<input
@@ -454,7 +444,7 @@ const SubmitFeaturePage = (props) => {
 												<h2>Submit Media</h2>
 											</li>
 											<li className="ta-c">
-												Send in Video, Pictures, and Music using WeTransfer Below to
+												Send in Logo, Pictures, and Music using WeTransfer Below to
 												info.glowleds@gmail.com
 											</li>
 											<li className="ta-c jc-c w-100per m-auto">
@@ -482,6 +472,22 @@ const SubmitFeaturePage = (props) => {
 											</li>
 										</div>
 									</div>
+									<li>
+										<div>
+											<label htmlFor="video">Youtube Video</label>
+											<div className="ai-c">
+												<label className="mr-1rem">https://www.youtube.com/embed/</label>
+												<input
+													type="text"
+													className="w-100per"
+													name="video"
+													value={video}
+													id="video"
+													onChange={(e) => set_video(e.target.value)}
+												/>
+											</div>
+										</div>
+									</li>
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Submit'}

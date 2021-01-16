@@ -432,6 +432,9 @@ const Header = (props) => {
 								<Link to="/collections/all/features/category/vfx">
 									<button className="btn nav w-100per ta-l">VFX</button>
 								</Link>
+								<Link to="/account/login?redirect=/secure/account/submit_feature">
+									<button className="btn nav w-100per ta-l">Submit Feature</button>
+								</Link>
 							</div>
 						</div>
 						{/* <div className="dropdown-nav">

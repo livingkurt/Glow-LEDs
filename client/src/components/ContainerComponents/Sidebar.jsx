@@ -262,6 +262,11 @@ const Sidebar = (props) => {
 								VFX
 							</button>
 						</Link>
+						<Link to="/account/login?redirect=/secure/account/submit_feature">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Submit Feature
+							</button>
+						</Link>
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
