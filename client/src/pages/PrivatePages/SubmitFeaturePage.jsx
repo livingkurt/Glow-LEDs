@@ -143,7 +143,7 @@ const SubmitFeaturePage = (props) => {
 		unset_state();
 		set_loading_submit(false);
 		// history.push('/collections/all/features/category/' + category.toLowerCase());
-		history.push('/collections/all/features');
+		history.push('/secure/account/submission_complete');
 	};
 
 	const add_image = (e) => {

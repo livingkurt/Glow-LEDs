@@ -24,7 +24,6 @@ import {
 	ChangePasswordPage,
 	TermsPage,
 	AboutPage,
-	OrderPaymentCompletePage,
 	UsersPage,
 	FAQPage,
 	UserProfilePage,
@@ -50,16 +49,12 @@ import {
 	GlowControlHomePage,
 	EditDevicePage,
 	MusicPage,
-	DiscountPage,
 	EditEmailPage,
 	EmailsPage,
 	LogsPage,
 	GuestDecisionPage,
 	PlaceOrderPublicPage,
-	ShippingPublicPage,
-	OrderPaymentCompletePublicPage,
 	MenuPage,
-	OrderPaymentAccountCompletePublicPage,
 	ResetPasswordPage,
 	ProductsDisplayPage,
 	UserOrdersPage,
@@ -68,7 +63,8 @@ import {
 	AnnouncementsPage,
 	EditAllDataPage,
 	AllFeaturesPage,
-	SubmitFeaturePage
+	SubmitFeaturePage,
+	SubmissionComplete
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -213,11 +209,6 @@ const App = () => {
 								component={(props) => <EditDevicePage userInfo={userInfo} {...props} />}
 							/>
 							<PrivateRoute
-								path="/secure/checkout/paymentcomplete/:id"
-								exact={true}
-								component={OrderPaymentCompletePage}
-							/>
-							<PrivateRoute
 								path="/secure/account/order/:id"
 								component={(props) => <OrderPage userInfo={userInfo} {...props} />}
 							/>
@@ -229,6 +220,7 @@ const App = () => {
 								path="/secure/checkout/order/receipt/:id/:status/:send?"
 								component={OrderEmail}
 							/>
+							<PrivateRoute path="/secure/account/submission_complete" component={SubmissionComplete} />
 							{/* Admin Routes */}
 							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
 							<AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
@@ -319,16 +311,6 @@ const App = () => {
 								component={(props) => <PlaceOrderPublicPage userInfo={userInfo} {...props} />}
 							/>
 							<Route path="/checkout/shipping" component={ShippingPage} />
-							<Route
-								path="/checkout/paymentacccountcomplete/:id"
-								exact={true}
-								component={OrderPaymentAccountCompletePublicPage}
-							/>
-							<Route
-								path="/checkout/paymentcomplete/:id"
-								exact={true}
-								component={OrderPaymentCompletePublicPage}
-							/>
 
 							{/* <Route path="/checkout/cart/:pathname?" component={CartPage} /> */}
 							<Route

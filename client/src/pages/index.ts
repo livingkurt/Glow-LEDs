@@ -35,8 +35,8 @@ export { default as ProfilePage } from './PrivatePages/ProfilePage';
 export { default as ShippingPage } from './PrivatePages/ShippingPage';
 export { default as EditShippingPage } from './PrivatePages/EditShippingPage';
 export { default as ChangePasswordPage } from './PrivatePages/ChangePasswordPage';
-export { default as OrderPaymentCompletePage } from './PrivatePages/OrderPaymentCompletePage';
 export { default as SubmitFeaturePage } from './PrivatePages/SubmitFeaturePage';
+export { default as SubmissionComplete } from './PrivatePages/SubmissionComplete';
 
 export { default as CartPage } from './PublicPages/CartPage';
 export { default as HomePage } from './PublicPages/HomePage';
@@ -63,8 +63,6 @@ export { default as MusicPage } from './PublicPages/MusicPage';
 export { default as GuestDecisionPage } from './PublicPages/GuestDecisionPage';
 export { default as PlaceOrderPublicPage } from './PublicPages/PlaceOrderPublicPage';
 export { default as ShippingPublicPage } from './PublicPages/ShippingPublicPage';
-export { default as OrderPaymentCompletePublicPage } from './PublicPages/OrderPaymentCompletePublicPage';
-export { default as OrderPaymentAccountCompletePublicPage } from './PublicPages/OrderPaymentAccountCompletePublicPage';
 export { default as MenuPage } from './PublicPages/MenuPage';
 export { default as TrackOrderPage } from './PublicPages/TrackOrderPage';
 export { default as OrderPublicPage } from './PublicPages/OrderPublicPage';

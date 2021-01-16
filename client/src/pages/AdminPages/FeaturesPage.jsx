@@ -102,7 +102,7 @@ const FeaturesPage = (props) => {
 			<div className="wrap jc-b">
 				{colors.map((color) => {
 					return (
-						<div className="wrap jc-b w-16rem m-1rem">
+						<div className="wrap jc-b w-18rem m-1rem">
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
