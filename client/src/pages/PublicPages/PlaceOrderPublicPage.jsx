@@ -110,24 +110,24 @@ const PlaceOrderPublicPage = (props) => {
 	// 	// console.log({ shippingPrice });
 	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 	// };
-	// const calculate_international = () => {
-	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-	// 	if (volume === 0) {
-	// 		setShippingPrice(0);
-	// 	} else if (volume <= 10) {
-	// 		setShippingPrice(17);
-	// 	} else if (volume > 10 && volume < 250) {
-	// 		setShippingPrice(17);
-	// 	} else if (volume > 250 && volume < 405) {
-	// 		setShippingPrice(20);
-	// 	} else if (volume > 405 && volume < 500) {
-	// 		setShippingPrice(40);
-	// 	} else if (volume > 500) {
-	// 		setShippingPrice(80);
-	// 	}
-	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-	// 	// console.log({ shippingPrice });
-	// };
+	const calculate_international = () => {
+		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+		if (volume === 0) {
+			setShippingPrice(0);
+		} else if (volume <= 10) {
+			setShippingPrice(17);
+		} else if (volume > 10 && volume < 250) {
+			setShippingPrice(17);
+		} else if (volume > 250 && volume < 405) {
+			setShippingPrice(20);
+		} else if (volume > 405 && volume < 500) {
+			setShippingPrice(40);
+		} else if (volume > 500) {
+			setShippingPrice(80);
+		}
+		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+		// console.log({ shippingPrice });
+	};
 
 	const stableDispatch = useCallback(dispatch, []);
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
@@ -172,7 +172,11 @@ const PlaceOrderPublicPage = (props) => {
 				// 	stable_calculate_shipping();
 				// }
 				set_loading_shipping(true);
-				get_shipping_rates();
+				if (shipping.international) {
+					calculate_international();
+				} else {
+					get_shipping_rates();
+				}
 				get_tax_rates();
 			}
 			return () => {};

@@ -40,7 +40,7 @@ const PlaceOrderPage = (props) => {
 	const [ current_shipping_speed, set_current_shipping_speed ] = useState('');
 	const [ loading_shipping, set_loading_shipping ] = useState(false);
 	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
-	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
+	const [ packaging_cost, set_packaging_cost ] = useState(0);
 	const [ shipment_id, set_shipment_id ] = useState('');
 	const [ shipping_rate, set_shipping_rate ] = useState({});
 	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
@@ -850,7 +850,7 @@ const PlaceOrderPage = (props) => {
 										)
 									);
 								})}
-								{shipping_rates.rates.map((rate, index) => {
+								{/* {shipping_rates.rates.map((rate, index) => {
 									return (
 										rate.service === 'Ground' && (
 											<div className=" mv-1rem jc-b  ai-c">
@@ -862,7 +862,7 @@ const PlaceOrderPage = (props) => {
 															2
 														)}{' '}
 													</div>
-													<div> 3-{rate.est_delivery_days} Days</div>
+													<div> {rate.est_delivery_days} Days</div>
 												</div>
 												<button
 													className="custom-select-shipping_rates"
@@ -873,7 +873,7 @@ const PlaceOrderPage = (props) => {
 											</div>
 										)
 									);
-								})}
+								})} */}
 								{shipping_rates.rates.map((rate, index) => {
 									return (
 										rate.service === 'Express' && (
