@@ -1517,10 +1517,35 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 			height: cube_root_volume,
 			weight
 		});
+		let customsInfo = {};
+		if (order.shipping.international) {
+			const customs_items = order.orderItems.map((item: any) => {
+				const customs_item = new EasyPost.CustomsItem({
+					description: '3D Printed Accessories',
+					quantity: item.qty,
+					value: item.price,
+					weight: item.weight,
+					origin_country: 'US'
+				});
+				return customs_item;
+			});
+
+			customsInfo = new EasyPost.CustomsInfo({
+				eel_pfc: 'NOEEI 30.37(a)',
+				customs_certify: true,
+				customs_signer: order.shipping.first_name + ' ' + order.shipping.last_name,
+				contents_type: 'merchandise',
+				restriction_type: 'none',
+				non_delivery_option: 'return',
+				customs_items
+			});
+		}
+
 		const shipment = new EasyPost.Shipment({
 			to_address: toAddress,
 			from_address: fromAddress,
-			parcel: parcel
+			parcel: parcel,
+			customsInfo: order.shipping.international ? customsInfo : {}
 		});
 		const saved_shipment = await shipment.save();
 		// console.log({ saved_shipment });
