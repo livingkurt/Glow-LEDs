@@ -121,9 +121,7 @@ const HomePage = (props) => {
 			inactive &&
 			content.home_page && (
 				<div className="home_page_divs">
-					<div className="jc-c">
-						<h2 className="ta-c fs-30px">{content.home_page.h1}</h2>
-					</div>
+					<h4 className="fs-25px mt-8px ta-c">{content.home_page.h1}</h4>
 					{content.home_page.show_image && (
 						<Link to={content.home_page.link}>
 							<img
@@ -154,16 +152,14 @@ const HomePage = (props) => {
 					)}
 
 					<div className="jc-c">
-						<h2 style={{ marginBottom: 0, textAlign: 'center' }}>{content.home_page.h2}</h2>
+						<h4 className="fs-18px mb-0px ta-c">{content.home_page.h2}</h4>
 					</div>
 					<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
 						{content.home_page.p}
 					</p>
 					<div className="jc-c">
 						<Link to={content.home_page.link}>
-							<button className="btn primary" style={{ background: 'transparent' }}>
-								<h2>{content.home_page.button}</h2>
-							</button>
+							<button className="btn primary">{content.home_page.button}</button>
 						</Link>
 					</div>
 				</div>
