@@ -126,6 +126,8 @@ const PlaceOrderPublicPage = (props) => {
 			setShippingPrice(80);
 		}
 		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+		set_hide_pay_button(false);
+		set_loading_shipping(false);
 		// console.log({ shippingPrice });
 	};
 
@@ -857,7 +859,9 @@ const PlaceOrderPublicPage = (props) => {
 						)}
 
 						<li>
-							{!hide_pay_button && (
+							{!hide_pay_button &&
+							current_shipping_speed && (
+								// (shipping && shipping.hasOwnProperty('international') && !shipping.international) &&
 								<div className=" mv-1rem jc-b ai-c w-100per">
 									<div className="shipping_rates jc-b w-100per ">
 										<div>
