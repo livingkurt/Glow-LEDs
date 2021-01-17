@@ -100,26 +100,26 @@ const PlaceOrderPage = (props) => {
 	// 	// console.log({ shippingPrice });
 	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 	// };
-	const calculate_international = () => {
-		const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-		if (volume === 0) {
-			setShippingPrice(0);
-		} else if (volume <= 10) {
-			setShippingPrice(17);
-		} else if (volume > 10 && volume < 250) {
-			setShippingPrice(17);
-		} else if (volume > 250 && volume < 405) {
-			setShippingPrice(20);
-		} else if (volume > 405 && volume < 500) {
-			setShippingPrice(40);
-		} else if (volume > 500) {
-			setShippingPrice(80);
-		}
-		setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-		set_hide_pay_button(false);
-		set_loading_shipping(false);
-		// console.log({ shippingPrice });
-	};
+	// const calculate_international = () => {
+	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
+	// 	if (volume === 0) {
+	// 		setShippingPrice(0);
+	// 	} else if (volume <= 10) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 10 && volume < 250) {
+	// 		setShippingPrice(17);
+	// 	} else if (volume > 250 && volume < 405) {
+	// 		setShippingPrice(20);
+	// 	} else if (volume > 405 && volume < 500) {
+	// 		setShippingPrice(40);
+	// 	} else if (volume > 500) {
+	// 		setShippingPrice(80);
+	// 	}
+	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+	// 	set_hide_pay_button(false);
+	// 	set_loading_shipping(false);
+	// 	// console.log({ shippingPrice });
+	// };
 
 	const stableDispatch = useCallback(dispatch, []);
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
@@ -168,11 +168,11 @@ const PlaceOrderPage = (props) => {
 		() => {
 			if (shipping) {
 				set_loading_shipping(true);
-				if (shipping.international) {
-					calculate_international();
-				} else {
-					get_shipping_rates();
-				}
+				// if (shipping.international) {
+				// 	calculate_international();
+				// } else {
+				get_shipping_rates();
+				// }
 
 				// get_shipping_rates();
 				get_tax_rates();
@@ -195,6 +195,7 @@ const PlaceOrderPage = (props) => {
 			order_note,
 			promo_code
 		});
+		console.log({ data });
 		if (data) {
 			set_shipping_rates(data);
 			set_shipment_id(data.id);
@@ -796,110 +797,183 @@ const PlaceOrderPage = (props) => {
 						{hide_pay_button &&
 						shipping_rates.rates && (
 							<div>
-								{shipping_rates.rates.map((rate, index) => {
-									return (
-										rate.service === 'First' && (
-											<div className=" mv-1rem jc-b  ai-c">
-												<div className="shipping_rates jc-b w-100per wrap ">
-													<div className="service">Standard</div>
-													<div>
-														{' '}
-														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
-															2
-														)}{' '}
+								{shipping.international && (
+									<div>
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'FirstClassPackageInternationalService' && (
+													<div className=" mv-1rem jc-b  ai-c">
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Standard</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div>1-3+ Weeks</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Standard')}
+														>
+															Select
+														</button>
 													</div>
-													<div>
-														{' '}
-														{rate.est_delivery_days}{' '}
-														{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'PriorityMailInternational' && (
+													<div className=" mv-1rem jc-b  ai-c">
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Prority</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div>6-10 Days</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Standard')}
+														>
+															Select
+														</button>
 													</div>
-												</div>
-												<button
-													className="custom-select-shipping_rates"
-													onClick={() => choose_shipping_rate(rate, 'Standard')}
-												>
-													Select
-												</button>
-											</div>
-										)
-									);
-								})}
-								{shipping_rates.rates.map((rate, index) => {
-									return (
-										rate.service === 'Priority' && (
-											<div className=" mv-1rem jc-b  ai-c">
-												<div className="shipping_rates jc-b w-100per wrap ">
-													<div className="service">Priority</div>
-													<div>
-														{' '}
-														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
-															2
-														)}{' '}
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'ExpressMailInternational' && (
+													<div className=" mv-1rem jc-b  ai-c">
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Express</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div>3-5 Days</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Standard')}
+														>
+															Select
+														</button>
 													</div>
-													<div>
-														{' '}
-														{rate.est_delivery_days}{' '}
-														{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+												)
+											);
+										})}
+									</div>
+								)}
+								{!shipping.international && (
+									<div>
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'First' && (
+													<div className=" mv-1rem jc-b  ai-c">
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Standard</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div>
+																{' '}
+																{rate.est_delivery_days}{' '}
+																{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+															</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Standard')}
+														>
+															Select
+														</button>
 													</div>
-												</div>
-												<button
-													className="custom-select-shipping_rates"
-													onClick={() => choose_shipping_rate(rate, 'Priority')}
-												>
-													Select
-												</button>
-											</div>
-										)
-									);
-								})}
-								{/* {shipping_rates.rates.map((rate, index) => {
-									return (
-										rate.service === 'Ground' && (
-											<div className=" mv-1rem jc-b  ai-c">
-												<div className="shipping_rates jc-b w-100per wrap ">
-													<div className="service">Ground</div>
-													<div>
-														{' '}
-														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
-															2
-														)}{' '}
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'Priority' && (
+													<div className=" mv-1rem jc-b  ai-c">
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Priority</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div>
+																{' '}
+																{rate.est_delivery_days}{' '}
+																{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+															</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Priority')}
+														>
+															Select
+														</button>
 													</div>
-													<div> {rate.est_delivery_days} Days</div>
-												</div>
-												<button
-													className="custom-select-shipping_rates"
-													onClick={() => choose_shipping_rate(rate, 'Ground')}
-												>
-													Select
-												</button>
-											</div>
-										)
-									);
-								})} */}
-								{shipping_rates.rates.map((rate, index) => {
-									return (
-										rate.service === 'Express' && (
-											<div className=" mv-1rem jc-b ai-c">
-												<div className="shipping_rates jc-b w-100per wrap">
-													<div className="service">Express</div>
-													<div>
-														{' '}
-														${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(
-															2
-														)}{' '}
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'Ground' && (
+													<div className=" mv-1rem jc-b  ai-c">
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Ground</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div> {rate.est_delivery_days} Days</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Ground')}
+														>
+															Select
+														</button>
 													</div>
-													<div> 1-2 Days</div>
-												</div>
-												<button
-													className="custom-select-shipping_rates"
-													onClick={() => choose_shipping_rate(rate, 'Express')}
-												>
-													Select
-												</button>
-											</div>
-										)
-									);
-								})}
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'Express' && (
+													<div className=" mv-1rem jc-b ai-c">
+														<div className="shipping_rates jc-b w-100per wrap">
+															<div className="service">Express</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.retail_rate) +
+																	packaging_cost).toFixed(2)}{' '}
+															</div>
+															<div> 1-2 Days</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Express')}
+														>
+															Select
+														</button>
+													</div>
+												)
+											);
+										})}
+									</div>
+								)}
 							</div>
 						)}
 
