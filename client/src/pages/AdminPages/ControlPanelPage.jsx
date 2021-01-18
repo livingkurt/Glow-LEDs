@@ -42,6 +42,8 @@ const ControlPanelPage = (props) => {
 	const [ monthly_orders, set_monthly_orders ] = useState([]);
 	const [ daily_income, set_daily_income ] = useState([]);
 	const [ monthly_income, set_monthly_income ] = useState([]);
+	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState([]);
+	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
 
 	useEffect(() => {
 		dispatch(listOrders('', '', '', 'all'));
@@ -51,6 +53,7 @@ const ControlPanelPage = (props) => {
 		dispatch(listAffiliates());
 		dispatch(listPromos());
 		get_income();
+
 		// get_daily_income();
 		// get_monthly_income();
 	}, []);
@@ -62,6 +65,17 @@ const ControlPanelPage = (props) => {
 		},
 		[ orders ]
 	);
+
+	useEffect(
+		() => {
+			if (orders && affiliates) {
+				get_total();
+			}
+
+			return () => {};
+		},
+		[ affiliates, orders ]
+	);
 	useEffect(
 		() => {
 			setTimeout(() => {
@@ -71,6 +85,26 @@ const ControlPanelPage = (props) => {
 		},
 		[ monthly_income ]
 	);
+
+	const get_total = () => {
+		const uses = affiliates.map((affiliate) => {
+			return orders.filter((order) => {
+				return order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase();
+			}).length;
+		});
+		set_total_promo_code_usage(uses.reduce((a, c) => a + c, 0));
+		console.log({ uses });
+		const revenue = affiliates.map((affiliate) => {
+			return orders
+				.filter(
+					(order) => order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+				)
+				.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+				.toFixed(2);
+		});
+		set_total_affiliate_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
+		console.log({ revenue });
+	};
 
 	const duration_of_opening = () => {
 		const current_date = new Date();
@@ -721,23 +755,26 @@ const ControlPanelPage = (props) => {
 								>
 									<th style={{ padding: '15px' }}>Total</th>
 									<th style={{ padding: '15px' }}>
-										{
+										{/* {
 											orders.filter((order) => {
 												return affiliates
 													.map((affiliate) => affiliate.artist_name)
 													.includes(order.promo_code);
 											}).length
-										}
+										} */}
+
+										{total_promo_code_usage}
 									</th>
 									<th style={{ padding: '15px' }}>
-										${orders
+										${total_affiliate_revenue > 0 && total_affiliate_revenue.toFixed(2)}
+										{/* ${orders
 											.filter((order) =>
 												affiliates
 													.map((affiliate) => affiliate.artist_name)
 													.includes(order.promo_code)
 											)
 											.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-											.toFixed(2)}
+											.toFixed(2)} */}
 									</th>
 								</tr>
 							</tbody>
