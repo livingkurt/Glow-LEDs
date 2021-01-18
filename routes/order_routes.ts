@@ -85,8 +85,8 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		let searchKeyword: any;
 		let last_id = req.query.lastID;
 		let direction = req.query.direction;
-		console.log('hello');
-		console.log(req.query);
+		// console.log('hello');
+		// console.log(req.query);
 		let orders: any;
 		if (req.query.searchKeyword) {
 			const userSearchKeyword = req.query.searchKeyword
@@ -188,7 +188,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
-		console.log({ orders });
+		// console.log({ orders });
 		res.send(orders);
 	} catch (error) {
 		log_error({

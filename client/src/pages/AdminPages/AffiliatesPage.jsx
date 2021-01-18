@@ -50,7 +50,7 @@ const AffiliatesPage = (props) => {
 		dispatch(deleteAffiliate(affiliate._id));
 	};
 
-	const sort_options = [ 'Newest', 'Glover Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
+	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
 	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promoter', color: '#7d5555' } ];
 
@@ -109,7 +109,7 @@ const AffiliatesPage = (props) => {
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Glover Name</th>
+									<th>Artist Name</th>
 									<th>Instagram Handle</th>
 									<th>Facebook Name</th>
 									<th>Percentage Off</th>

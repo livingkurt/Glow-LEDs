@@ -689,13 +689,22 @@ const ControlPanelPage = (props) => {
 											<th style={{ padding: '15px' }}>
 												{
 													orders.filter((order) => {
-														return order.promo_code === affiliate.promo_code;
+														return (
+															order.promo_code &&
+															order.promo_code.toLowerCase() ===
+																affiliate.promo_code.toLowerCase()
+														);
 													}).length
 												}
 											</th>
 											<th style={{ padding: '15px' }}>
 												${orders
-													.filter((order) => order.promo_code === affiliate.promo_code)
+													.filter(
+														(order) =>
+															order.promo_code &&
+															order.promo_code.toLowerCase() ===
+																affiliate.promo_code.toLowerCase()
+													)
 													.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 													.toFixed(2)}
 											</th>
