@@ -544,7 +544,7 @@ const PlaceOrderPublicPage = (props) => {
 			<LoadingPayments loading={payment_loading} error={error} />
 			<div className="placeorder">
 				<div className="placeorder-info">
-					<div>
+					<div className="placeorder-info-container">
 						<h2>Shipping</h2>
 
 						<div className="wrap jc-b">
@@ -577,7 +577,7 @@ const PlaceOrderPublicPage = (props) => {
 							</div>
 						</div>
 					</div>
-					<div>
+					<div className="placeorder-info-container">
 						<ul className="cart-list-container">
 							<li>
 								<h2>Shopping Cart</h2>
