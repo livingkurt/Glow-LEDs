@@ -29,8 +29,12 @@ export const validate_promo_code = (data: any) => {
 		if (promo && promo.affiliate_only && promo.affiliate_only && data.user_data.is_affiliated === false) {
 			errors.promo_code = 'Promo Code Not Active';
 		}
-	} else if ((!data.user_data && promo.admin_only) || promo.affiliate_only) {
-		errors.promo_code = 'Promo Code Not Active';
+	} else if (!data.user_data) {
+		if (promo && promo.admin_only) {
+			errors.promo_code = 'Promo Code Not Active';
+		} else if (promo && promo.affiliate_only) {
+			errors.promo_code = 'Promo Code Not Active';
+		}
 	}
 	if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
 		errors.promo_code = 'Minimum Order Total Not Met';
