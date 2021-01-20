@@ -69,28 +69,28 @@ const PlaceOrderPage = (props) => {
 	}, 500);
 
 	// const calculate_shipping = () => {
-	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-	// 	console.log(volume);
-	// 	if (volume === 0) {
+	// 	const package_volume = cartItems.reduce((a, c) => a + c.package_volume * c.qty, 0);
+	// 	console.log(package_volume);
+	// 	if (package_volume === 0) {
 	// 		console.log(0);
 	// 		setShippingPrice(0);
-	// 	} else if (volume <= 10) {
+	// 	} else if (package_volume <= 10) {
 	// 		console.log(5);
 	// 		setShippingPrice(5);
-	// 	} else if (volume > 10 && volume <= 165) {
+	// 	} else if (package_volume > 10 && package_volume <= 165) {
 	// 		console.log(8);
 	// 		setShippingPrice(7);
-	// 	} else if (volume > 165 && volume <= 250) {
+	// 	} else if (package_volume > 165 && package_volume <= 250) {
 	// 		console.log(8);
 	// 		setShippingPrice(9);
-	// 	} else if (volume > 250 && volume <= 405) {
+	// 	} else if (package_volume > 250 && package_volume <= 405) {
 	// 		console.log(10);
 	// 		setShippingPrice(10);
 	// 		console.log(12);
-	// 	} else if (volume > 405 && volume < 500) {
+	// 	} else if (package_volume > 405 && package_volume < 500) {
 	// 		setShippingPrice(12);
 	// 		console.log(500);
-	// 	} else if (volume > 500) {
+	// 	} else if (package_volume > 500) {
 	// 		setShippingPrice(15);
 	// 	}
 
@@ -101,18 +101,18 @@ const PlaceOrderPage = (props) => {
 	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
 	// };
 	// const calculate_international = () => {
-	// 	const volume = cartItems.reduce((a, c) => a + c.volume * c.qty, 0);
-	// 	if (volume === 0) {
+	// 	const package_volume = cartItems.reduce((a, c) => a + c.package_volume * c.qty, 0);
+	// 	if (package_volume === 0) {
 	// 		setShippingPrice(0);
-	// 	} else if (volume <= 10) {
+	// 	} else if (package_volume <= 10) {
 	// 		setShippingPrice(17);
-	// 	} else if (volume > 10 && volume < 250) {
+	// 	} else if (package_volume > 10 && package_volume < 250) {
 	// 		setShippingPrice(17);
-	// 	} else if (volume > 250 && volume < 405) {
+	// 	} else if (package_volume > 250 && package_volume < 405) {
 	// 		setShippingPrice(20);
-	// 	} else if (volume > 405 && volume < 500) {
+	// 	} else if (package_volume > 405 && package_volume < 500) {
 	// 		setShippingPrice(40);
-	// 	} else if (volume > 500) {
+	// 	} else if (package_volume > 500) {
 	// 		setShippingPrice(80);
 	// 	}
 	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);

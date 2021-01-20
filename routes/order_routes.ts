@@ -1412,9 +1412,9 @@ router.put('/create_label', async (req: any, res: any) => {
 			email: 'info.glowleds@gmail.com'
 		});
 		const cube_root_volume = Math.cbrt(
-			order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0) *
-				order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
-				order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
+			order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
+				order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
+				order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
 		);
 		let weight = 0;
 		order.orderItems.forEach((item: any, index: number) => {
@@ -1498,9 +1498,9 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 			email: 'info.glowleds@gmail.com'
 		});
 		const cube_root_volume = Math.cbrt(
-			order.orderItems.reduce((a: any, c: string | any[]) => a + c.length, 0) *
-				order.orderItems.reduce((a: any, c: { width: any }) => a + c.width, 0) *
-				order.orderItems.reduce((a: any, c: { height: any }) => a + c.height, 0)
+			order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
+				order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
+				order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
 		);
 		let weight = 0;
 		order.orderItems.forEach((item: any, index: number) => {

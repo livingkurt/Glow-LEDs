@@ -26,15 +26,18 @@ const EditProductPage = (props) => {
 	const [ sale_start_date, set_sale_start_date ] = useState('');
 	const [ sale_end_date, set_sale_end_date ] = useState('');
 
-	const [ volume, setVolume ] = useState(0);
+	const [ package_volume, set_package_volume ] = useState(0);
 	// const [ subcategories, set_subcategories ] = useState('');
 	const [ subcategory, set_subcategory ] = useState('');
 	const [ meta_title, set_meta_title ] = useState();
 	const [ meta_description, set_meta_description ] = useState();
 	const [ meta_keywords, set_meta_keywords ] = useState();
-	const [ length, set_length ] = useState(0);
-	const [ width, set_width ] = useState(0);
-	const [ height, set_height ] = useState(0);
+	const [ package_length, set_package_length ] = useState(0);
+	const [ package_width, set_package_width ] = useState(0);
+	const [ package_height, set_package_height ] = useState(0);
+	const [ product_length, set_product_length ] = useState(0);
+	const [ product_width, set_product_width ] = useState(0);
+	const [ product_height, set_product_height ] = useState(0);
 	const [ weight_pounds, set_weight_pounds ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ pathname, setPathname ] = useState();
@@ -121,13 +124,16 @@ const EditProductPage = (props) => {
 		if (product.sale_end_date) {
 			set_sale_end_date(format_date(product.sale_end_date));
 		}
-		setVolume(product.volume);
+		set_package_volume(product.package_volume);
 		set_meta_title(product.meta_title);
 		set_meta_description(product.meta_description);
 		set_meta_keywords(product.meta_keywords);
-		set_length(product.length);
-		set_width(product.width);
-		set_height(product.height);
+		set_package_length(product.package_length);
+		set_package_width(product.package_width);
+		set_package_height(product.package_height);
+		set_product_length(product.product_length);
+		set_product_width(product.product_width);
+		set_product_height(product.product_height);
 		set_weight_pounds(product.weight_pounds);
 		set_weight_ounces(product.weight_ounces);
 		// setDisplayImage(product.display_image);
@@ -161,13 +167,16 @@ const EditProductPage = (props) => {
 		setSalePrice('');
 		set_sale_start_date(format_date('2021-01-01'));
 		set_sale_end_date(format_date('2021-01-01'));
-		setVolume(1);
+		set_package_volume(1);
 		set_meta_title('');
 		set_meta_description('');
 		set_meta_keywords('');
-		// set_length(1);
-		set_width(1);
-		set_height(1);
+		// set_package_length(1);
+		// set_package_width(1);
+		// set_package_height(1);
+		// set_product_length(1);
+		// set_product_width(1);
+		// set_product_height(1);
 		set_weight_pounds(0);
 		set_weight_ounces(0);
 		setPathname('');
@@ -198,14 +207,17 @@ const EditProductPage = (props) => {
 				sale_price,
 				sale_start_date: unformat_date(sale_start_date),
 				sale_end_date: unformat_date(sale_end_date),
-				volume: length * width * height,
+				package_volume: package_length * package_width * package_height,
 				subcategory,
 				meta_title: `${name} | Glow LEDs`,
 				meta_description,
 				meta_keywords,
-				length,
-				width,
-				height,
+				package_length,
+				package_width,
+				package_height,
+				product_length,
+				product_width,
+				product_height,
 				weight_pounds,
 				weight_ounces,
 				pathname: pathname ? pathname : snake_case(name),
@@ -346,8 +358,8 @@ const EditProductPage = (props) => {
 							return (
 								<img
 									style={{
-										width: '100%',
-										height: 'auto',
+										package_width: '100%',
+										package_height: 'auto',
 										maxWidth: '150px',
 										maxHeight: '150px',
 										borderRadius: '15px',
@@ -461,7 +473,7 @@ const EditProductPage = (props) => {
 										<h2
 											style={{
 												textAlign: 'center',
-												width: '100%',
+												package_width: '100%',
 												marginRight: 'auto',
 												justifyContent: 'center'
 											}}
@@ -707,7 +719,7 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 										</div>
-										<div className="column" styles={{ width: '228px', margin: '10px' }}>
+										<div className="column" styles={{ package_width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
@@ -760,49 +772,86 @@ const EditProductPage = (props) => {
 											</li>
 										</div>
 										<div className="w-228px m-10px">
+											<h3>Product Dimmensions</h3>
 											<li>
-												<label htmlFor="length">Product Length</label>
+												<label htmlFor="product_length">Product Length</label>
 												<input
 													type="text"
-													name="length"
-													defaultValue={length}
-													id="length"
-													onChange={(e) => set_length(e.target.value)}
+													name="product_length"
+													defaultValue={product_length}
+													id="product_length"
+													onChange={(e) => set_product_length(e.target.value)}
 												/>
 											</li>
 											<li>
-												<label htmlFor="width">Product Width</label>
+												<label htmlFor="product_width">Product Width</label>
 												<input
 													type="text"
-													name="width"
-													value={width}
-													id="width"
-													onChange={(e) => set_width(e.target.value)}
+													name="product_width"
+													value={product_width}
+													id="product_width"
+													onChange={(e) => set_product_width(e.target.value)}
 												/>
 											</li>
 											<li>
-												<label htmlFor="height">Product Height</label>
+												<label htmlFor="product_height">Product Height</label>
 												<input
 													type="text"
-													name="height"
-													value={height}
-													id="height"
-													onChange={(e) => set_height(e.target.value)}
+													name="product_height"
+													value={product_height}
+													id="product_height"
+													onChange={(e) => set_product_height(e.target.value)}
+												/>
+											</li>
+											<h3>Package Dimmensions</h3>
+											<li>
+												<label htmlFor="package_length">Package Length</label>
+												<input
+													type="text"
+													name="package_length"
+													defaultValue={package_length}
+													id="package_length"
+													onChange={(e) => set_package_length(e.target.value)}
 												/>
 											</li>
 											<li>
-												<label htmlFor="volume">Product Volume</label>
+												<label htmlFor="package_width">Package Width</label>
 												<input
 													type="text"
-													name="volume"
-													value={length && width && height && length * width * height}
-													id="volume"
-													onChange={(e) => setVolume(e.target.value)}
+													name="package_width"
+													value={package_width}
+													id="package_width"
+													onChange={(e) => set_package_width(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="package_height">Package Height</label>
+												<input
+													type="text"
+													name="package_height"
+													value={package_height}
+													id="package_height"
+													onChange={(e) => set_package_height(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="package_volume">Package Volume</label>
+												<input
+													type="text"
+													name="package_volume"
+													value={
+														package_length &&
+														package_width &&
+														package_height &&
+														package_length * package_width * package_height
+													}
+													id="package_volume"
+													onChange={(e) => set_package_volume(e.target.value)}
 												/>
 											</li>
 											{/* <li>
-												<label htmlFor="height">
-													Calculated Volume {length && length * width * height}
+												<label htmlFor="package_height">
+													Calculated Volume {length && length * package_width * package_height}
 												</label>
 											</li> */}
 											<li>

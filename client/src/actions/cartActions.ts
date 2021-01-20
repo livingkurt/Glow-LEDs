@@ -41,12 +41,12 @@ export const addToCart = (
 				price: number;
 				sale_price: number;
 				countInStock: number;
-				volume: number;
+				package_package_volume: number;
 				weight_pounds: number;
 				weight_ounces: number;
-				length: number;
-				width: number;
-				height: number;
+				package_length: number;
+				package_width: number;
+				package_height: number;
 				qty: number;
 				pathname: number;
 				category: string;
@@ -66,12 +66,12 @@ export const addToCart = (
 			price: data.price,
 			sale_price: data.sale_price,
 			countInStock: data.countInStock,
-			volume: data.volume,
+			package_volume: data.package_volume,
 			weight_pounds: data.weight_pounds,
 			weight_ounces: data.weight_ounces,
-			length: data.length,
-			width: data.width,
-			height: data.height,
+			package_length: data.package_length,
+			package_width: data.package_width,
+			package_height: data.package_height,
 			pathname: data.pathname,
 			category: data.category,
 			qty
@@ -87,12 +87,12 @@ export const addToCart = (
 				price: data.price,
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
-				volume: data.volume,
+				package_volume: data.package_volume,
 				weight_pounds: data.weight_pounds,
 				weight_ounces: data.weight_ounces,
-				length: data.length,
-				width: data.width,
-				height: data.height,
+				package_length: data.package_length,
+				package_width: data.package_width,
+				package_height: data.package_height,
 				pathname: data.pathname,
 				category: data.category,
 				qty
@@ -111,12 +111,12 @@ export const addToCart = (
 				price: data.price,
 				sale_price: data.sale_price,
 				countInStock: data.countInStock,
-				volume: data.volume,
+				package_volume: data.package_volume,
 				weight_pounds: data.weight_pounds,
 				weight_ounces: data.weight_ounces,
-				length: data.length,
-				width: data.width,
-				height: data.height,
+				package_length: data.package_length,
+				package_width: data.package_width,
+				package_height: data.package_height,
 				pathname: data.pathname,
 				category: data.category,
 				qty

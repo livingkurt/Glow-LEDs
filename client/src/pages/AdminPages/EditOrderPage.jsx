@@ -217,12 +217,12 @@ const EditOrderPage = (props) => {
 			category: order_item.category,
 			pathname: order_item.pathname,
 			// sale_price: orderItems[index].sale_price,
-			volume: order_item.volume,
+			package_volume: order_item.package_volume,
 			weight_pounds: order_item.weight_pounds,
 			weight_ounces: order_item.weight_ounces,
-			length: order_item.length,
-			width: order_item.width,
-			height: order_item.height,
+			package_length: order_item.package_length,
+			package_width: order_item.package_width,
+			package_height: order_item.package_height,
 			reviewed: order_item.reviewed,
 			product: order_item._id
 			// secondary_product: orderItems[index].secondary_product
@@ -853,13 +853,13 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
-															<label htmlFor="length">Length</label>
+															<label htmlFor="package_length">Length</label>
 															<input
 																type="text"
-																name="length"
-																defaultValue={item.length}
-																value={item.length}
-																id="length"
+																name="package_length"
+																defaultValue={item.package_length}
+																value={item.package_length}
+																id="package_length"
 																onChange={(e) =>
 																	update_order_item_property(
 																		e.target.value,
@@ -869,13 +869,13 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
-															<label htmlFor="width">Width</label>
+															<label htmlFor="package_width">Width</label>
 															<input
 																type="text"
-																name="width"
-																defaultValue={item.width}
-																value={item.width}
-																id="width"
+																name="package_width"
+																defaultValue={item.package_width}
+																value={item.package_width}
+																id="package_width"
 																onChange={(e) =>
 																	update_order_item_property(
 																		e.target.value,
@@ -885,13 +885,13 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
-															<label htmlFor="height">Height</label>
+															<label htmlFor="package_height">Height</label>
 															<input
 																type="text"
-																name="height"
-																defaultValue={item.height}
-																value={item.height}
-																id="height"
+																name="package_height"
+																defaultValue={item.package_height}
+																value={item.package_height}
+																id="package_height"
 																onChange={(e) =>
 																	update_order_item_property(
 																		e.target.value,
@@ -901,13 +901,13 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
-															<label htmlFor="volume">Volume</label>
+															<label htmlFor="package_volume">Volume</label>
 															<input
 																type="text"
-																name="volume"
-																defaultValue={item.volume}
-																value={item.volume}
-																id="volume"
+																name="package_volume"
+																defaultValue={item.package_volume}
+																value={item.package_volume}
+																id="package_volume"
 																onChange={(e) =>
 																	update_order_item_property(
 																		e.target.value,

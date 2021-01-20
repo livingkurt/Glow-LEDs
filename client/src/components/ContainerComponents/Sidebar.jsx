@@ -156,7 +156,7 @@ const Sidebar = (props) => {
 										Frosted Diffusers
 									</button>
 								</Link> */}
-								<div className="sidebar_dropdown_nested">
+								<div className="sidebar_dropdown_nested w-">
 									<button className="sidebar-btn nested">
 										<Link to="/collections/all/products/category/frosted_diffusers">
 											Frosted Diffusers
