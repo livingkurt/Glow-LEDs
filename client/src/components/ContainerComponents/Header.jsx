@@ -158,16 +158,16 @@ const Header = (props) => {
 														<button className="btn nav w-100per ta-l">Domes</button>
 													</div>
 												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/fisheyes">
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Fisheyes</button>
+														<button className="btn nav w-100per ta-l">Open Hole</button>
 													</div>
 												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/bullets">
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Bullets</button>
+														<button className="btn nav w-100per ta-l">Closed Hole</button>
 													</div>
 												</Link>
 												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/polygons">

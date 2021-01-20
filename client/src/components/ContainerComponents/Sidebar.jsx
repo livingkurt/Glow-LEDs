@@ -168,14 +168,14 @@ const Sidebar = (props) => {
 												Domes
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/fisheyes">
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Fisheyes
+												Open Hole
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/bullets">
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Bullets
+												Closed Hole
 											</button>
 										</Link>
 										{/* <Link to="/collections/all/products/category/frosted_diffusers/subcategory/patterns">
