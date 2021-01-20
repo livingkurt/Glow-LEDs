@@ -479,28 +479,69 @@ const ProductPage = (props) => {
 									</button>
 								</Link>
 							)}
-							<div className="column">
-								<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
-								<div className="column h-100per paragraph_font">
-									<ul style={{ marginLeft: '10px' }}>
-										{product.included_items ? (
-											product.included_items.split('\n').map((line, index) => {
-												return (
-													<li
-														key={index}
-														className="paragraph_font"
-														style={{ listStyleType: 'disc' }}
-													>
-														{line}
-													</li>
-												);
-											})
-										) : (
-											product.included_items
-										)}
-									</ul>
+							{!product.product_length && (
+								<div className="column">
+									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
+									<div className="column h-100per paragraph_font">
+										<ul style={{ marginLeft: '10px' }}>
+											{product.included_items ? (
+												product.included_items.split('\n').map((line, index) => {
+													return (
+														<li
+															key={index}
+															className="paragraph_font"
+															style={{ listStyleType: 'disc' }}
+														>
+															{line}
+														</li>
+													);
+												})
+											) : (
+												product.included_items
+											)}
+										</ul>
+									</div>
 								</div>
-							</div>
+							)}
+							{product.product_length && (
+								<div className="jc-a wrap">
+									<div className="column">
+										<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
+										<div className="column h-100per paragraph_font">
+											<ul style={{ marginLeft: '10px' }}>
+												{product.included_items ? (
+													product.included_items.split('\n').map((line, index) => {
+														return (
+															<li
+																key={index}
+																className="paragraph_font"
+																style={{ listStyleType: 'disc' }}
+															>
+																{line}
+															</li>
+														);
+													})
+												) : (
+													product.included_items
+												)}
+											</ul>
+										</div>
+									</div>
+
+									<div className="column">
+										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
+										<div className="column h-100per paragraph_font mt-2rem">
+											{product.name === 'Coin Battery Storage' ? (
+												`${product.product_length} cm x ${product.product_width} cm x
+											${product.product_height} cm`
+											) : (
+												`${product.product_length} mm x ${product.product_width} mm x
+											${product.product_height} mm`
+											)}
+										</div>
+									</div>
+								</div>
+							)}
 						</div>
 						{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
 							<div className=" m-2rem  h-auto m-auto jc-c">
