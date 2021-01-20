@@ -170,6 +170,12 @@ const Header = (props) => {
 														<button className="btn nav w-100per ta-l">Closed Hole</button>
 													</div>
 												</Link>
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Abstract</button>
+													</div>
+												</Link>
 												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/polygons">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}

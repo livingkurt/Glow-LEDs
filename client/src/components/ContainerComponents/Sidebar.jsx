@@ -178,6 +178,11 @@ const Sidebar = (props) => {
 												Closed Hole
 											</button>
 										</Link>
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Abstract
+											</button>
+										</Link>
 										{/* <Link to="/collections/all/products/category/frosted_diffusers/subcategory/patterns">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
 												Patterns
