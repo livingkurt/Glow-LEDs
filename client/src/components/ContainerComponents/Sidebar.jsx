@@ -151,11 +151,41 @@ const Sidebar = (props) => {
 										Glowskins (New)
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers">
+								{/* <Link to="/collections/all/products/category/frosted_diffusers">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Frosted Diffusers
 									</button>
-								</Link>
+								</Link> */}
+								<div className="sidebar_dropdown_nested">
+									<button className="sidebar-btn nested">
+										<Link to="/collections/all/products/category/frosted_diffusers">
+											Frosted Diffusers
+										</Link>
+									</button>
+									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Domes
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/fisheyes">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Fisheyes
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/bullets">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Bullets
+											</button>
+										</Link>
+										{/* <Link to="/collections/all/products/category/frosted_diffusers/subcategory/patterns">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Patterns
+											</button>
+										</Link> */}
+									</ul>
+									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+								</div>
 								<div className="sidebar_dropdown_nested">
 									<button className="sidebar-btn nested">
 										<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>

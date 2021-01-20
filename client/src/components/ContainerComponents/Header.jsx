@@ -141,12 +141,43 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l">Glowskins</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers">
+										{/* <Link to="/collections/all/products/category/frosted_diffusers">
 											<div className="row">
-												{/* <i className="mr-30px fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
 											</div>
-										</Link>
+										</Link> */}
+										<div className="dropdown-nav-nested">
+											<Link to="/collections/all/products/category/frosted_diffusers">
+												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
+												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
+											</Link>
+											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px">
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Domes</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/fisheyes">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Fisheyes</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/bullets">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Bullets</button>
+													</div>
+												</Link>
+												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/polygons">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Polygons</button>
+													</div>
+												</Link> */}
+											</div>
+										</div>
 										<div className="dropdown-nav-nested">
 											<Link to="/collections/all/products/category/diffuser_caps">
 												<button className="btn nav w-100per ta-l">Diffuser Caps</button>

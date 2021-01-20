@@ -113,7 +113,7 @@ const HomePage = (props) => {
 			</Helmet>
 
 			<div className="jc-c">
-				<h1 className="welcome_text mb-1rem" style={{ fontSize: '4rem' }}>
+				<h1 className="welcome_text mb-1rem ta-c" style={{ fontSize: '4rem' }}>
 					Welcome to Glow-LEDs
 				</h1>
 			</div>
