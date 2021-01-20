@@ -358,7 +358,7 @@ const EditProductPage = (props) => {
 							return (
 								<img
 									style={{
-										package_width: '100%',
+										width: '100%',
 										package_height: 'auto',
 										maxWidth: '150px',
 										maxHeight: '150px',
@@ -473,10 +473,11 @@ const EditProductPage = (props) => {
 										<h2
 											style={{
 												textAlign: 'center',
-												package_width: '100%',
+												width: '100%',
 												marginRight: 'auto',
 												justifyContent: 'center'
 											}}
+											className="ta-c "
 										>
 											{loading ? 'Product' : product.name}
 										</h2>
@@ -719,7 +720,7 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 										</div>
-										<div className="column" styles={{ package_width: '228px', margin: '10px' }}>
+										<div className="column" styles={{ width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
@@ -855,7 +856,7 @@ const EditProductPage = (props) => {
 												</label>
 											</li> */}
 											<li>
-												<label htmlFor="weight_pounds">Product lbs</label>
+												<label htmlFor="weight_pounds">Package lbs</label>
 												<input
 													type="text"
 													name="weight_pounds"
@@ -865,7 +866,7 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="weight_ounces">Product oz</label>
+												<label htmlFor="weight_ounces">Package oz</label>
 												<input
 													type="text"
 													name="weight_ounces"
