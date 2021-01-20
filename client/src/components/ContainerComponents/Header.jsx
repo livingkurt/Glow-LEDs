@@ -151,7 +151,7 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px">
+											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-200px">
 												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}

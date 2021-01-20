@@ -183,9 +183,9 @@ const Sidebar = (props) => {
 												Abstract
 											</button>
 										</Link>
-										{/* <Link to="/collections/all/products/category/frosted_diffusers/subcategory/patterns">
+										{/* <Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Patterns
+												Polygons
 											</button>
 										</Link> */}
 									</ul>
