@@ -37,7 +37,7 @@ export { default as EditShippingPage } from './PrivatePages/EditShippingPage';
 export { default as ChangePasswordPage } from './PrivatePages/ChangePasswordPage';
 export { default as SubmitFeaturePage } from './PrivatePages/SubmitFeaturePage';
 export { default as SubmissionComplete } from './PrivatePages/SubmissionComplete';
-export { default as CreateAffiliatePage } from './PrivatePages/CreateAffiliatePage';
+export { default as EditUserAffiliatePage } from './PrivatePages/EditUserAffiliatePage';
 export { default as AffiliateCreationComplete } from './PrivatePages/AffiliateCreationComplete';
 
 export { default as CartPage } from './PublicPages/CartPage';

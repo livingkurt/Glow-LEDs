@@ -126,13 +126,30 @@ const ProfilePage = (props) => {
 							</button>
 						</Link>
 					</div>
-					{is_affiliated && (
+					{is_affiliated && user_data.affiliate ? (
 						<div className="h-20px ml-1rem">
-							<Link to={'/secure/account/affiliate_signup'}>
-								<button className="btn primary">Affiliate Sign Up</button>
+							<Link
+								to={'/secure/account/edit_affiliate/' + user_data.affiliate || user_data.affiliate._id}
+							>
+								<button className="btn primary">Edit Affiliate Profile</button>
+							</Link>
+						</div>
+					) : (
+						<div className="h-20px ml-1rem">
+							<Link to={'/secure/account/edit_affiliate'}>
+								<button className="btn primary">'Affiliate Sign Up</button>
 							</Link>
 						</div>
 					)}
+					{/* {is_affiliated && (
+						<div className="h-20px ml-1rem">
+							<Link to={'/secure/account/affiliate_signup'}>
+								<button className="btn primary">
+									{user_data.affiliate ? 'Edit Affiliate Profile' : 'Affiliate Sign Up'}
+								</button>
+							</Link>
+						</div>
+					)} */}
 				</div>
 			</div>
 		</div>

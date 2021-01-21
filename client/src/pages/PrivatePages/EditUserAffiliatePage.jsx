@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 
 const CreateAffiliatePage = (props) => {
+	const user_data = props.userInfo;
+	console.log({ user_data });
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ artist_name, set_artist_name ] = useState('');
@@ -128,12 +130,16 @@ const CreateAffiliatePage = (props) => {
 		);
 		e.target.reset();
 		unset_state();
-		history.push('/secure/account/affiliate_sign_up_complete');
+		if (props.match.params.id) {
+			history.push('/secure/account/profile');
+		} else {
+			history.push('/secure/account/affiliate_sign_up_complete');
+		}
 	};
 
 	return (
 		<div className="main_container p-20px">
-			<h1 style={{ textAlign: 'center' }}>Affiliate Sign Up</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Update Affiliate' : 'Affiliate Sign Up'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
@@ -274,7 +280,7 @@ const CreateAffiliatePage = (props) => {
 									</div>
 									<li>
 										<button type="submit" className="btn primary">
-											{id ? 'Update' : 'Create'}
+											{props.match.params.id ? 'Update' : 'Create'}
 										</button>
 									</li>
 									<li>

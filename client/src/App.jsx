@@ -65,7 +65,7 @@ import {
 	AllFeaturesPage,
 	SubmitFeaturePage,
 	SubmissionComplete,
-	CreateAffiliatePage,
+	EditUserAffiliatePage,
 	AffiliateCreationComplete
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
@@ -223,8 +223,8 @@ const App = () => {
 								component={(props) => <AffiliateCreationComplete userInfo={userInfo} {...props} />}
 							/>
 							<PrivateRoute
-								path="/secure/account/affiliate_signup"
-								component={(props) => <CreateAffiliatePage userInfo={userInfo} {...props} />}
+								path="/secure/account/edit_affiliate/:id"
+								component={(props) => <EditUserAffiliatePage userInfo={userInfo} {...props} />}
 							/>
 
 							<PrivateRoute

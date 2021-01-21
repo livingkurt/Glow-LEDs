@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', isAuth, async (req, res) => {
 	try {
-		const user = await User.findOne({ _id: req.params.id });
+		const user = await User.findOne({ _id: req.params.id }).populate('affiliate');
 		if (user) {
 			log_request({
 				method: 'GET',
