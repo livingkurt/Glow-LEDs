@@ -244,37 +244,6 @@ const CreateAffiliatePage = (props) => {
 													onChange={(e) => set_inspiration(e.target.value)}
 												/>
 											</li>
-											{/* <li>
-												<label htmlFor="percentage_off">Percentage Off</label>
-												<input
-													type="text"
-													name="percentage_off"
-													value={percentage_off}
-													id="percentage_off"
-													onChange={(e) => set_percentage_off(e.target.value)}
-												/>
-											</li> */}
-
-											{/* <li>
-												<label htmlFor="funds_generated">Funds Generated</label>
-												<input
-													type="text"
-													name="funds_generated"
-													value={funds_generated}
-													id="funds_generated"
-													onChange={(e) => set_funds_generated(e.target.value)}
-												/>
-											</li> */}
-											{/* <li>
-												<label htmlFor="promo_code">Promo Code Name</label>
-												<input
-													type="text"
-													name="promo_code"
-													value={promo_code}
-													id="promo_code"
-													onChange={(e) => set_promo_code(e.target.value)}
-												/>
-											</li> */}
 											<li>
 												<label htmlFor="bio">Bio</label>
 												<textarea
@@ -301,64 +270,6 @@ const CreateAffiliatePage = (props) => {
 													onChange={(e) => set_link(e.target.value)}
 												/>
 											</li>
-
-											{/* {loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="sponsor">Sponsor</label>
-													<input
-														type="checkbox"
-														name="sponsor"
-														// defaultChecked={sponsor ? 'checked' : 'unchecked'}
-														// defaultValue={sponsor}
-														defaultChecked={sponsor}
-														// value={sponsor ? '1' : '0'}
-														id="sponsor"
-														onChange={(e) => {
-															set_sponsor(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="promoter">Promoter</label>
-													<input
-														type="checkbox"
-														name="promoter"
-														// defaultChecked={promoter ? 'checked' : 'unchecked'}
-														// defaultValue={promoter}
-														defaultChecked={promoter}
-														// value={promoter ? '1' : '0'}
-														id="promoter"
-														onChange={(e) => {
-															set_promoter(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="active">Active</label>
-													<input
-														type="checkbox"
-														name="active"
-														// defaultChecked={active ? 'checked' : 'unchecked'}
-														// defaultValue={active}
-														defaultChecked={active}
-														// value={active ? '1' : '0'}
-														id="active"
-														onChange={(e) => {
-															set_active(e.target.checked);
-														}}
-													/>
-												</li>
-											)} */}
 										</div>
 									</div>
 									<li>

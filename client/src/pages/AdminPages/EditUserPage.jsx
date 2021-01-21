@@ -4,10 +4,12 @@ import { saveUser, detailsUser } from '../../actions/userActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
+import { listAffiliates } from '../../actions/affiliateActions';
 
 const EditUserPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
+	const [ affiliate, set_affiliate ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ email, set_email ] = useState('');
 	const [ is_affiliated, set_is_affiliated ] = useState(false);
@@ -20,6 +22,9 @@ const EditUserPage = (props) => {
 	const userDetails = useSelector((state) => state.userDetails);
 	const { user, loading, error } = userDetails;
 
+	const affiliateList = useSelector((state) => state.affiliateList);
+	const { affiliates } = affiliateList;
+
 	const dispatch = useDispatch();
 
 	console.log({ user });
@@ -30,6 +35,7 @@ const EditUserPage = (props) => {
 		set_last_name(user.last_name);
 		set_email(user.email);
 		set_is_affiliated(user.is_affiliated);
+		set_affiliate(user.affiliate);
 		set_isVerified(user.isVerified);
 		set_isAdmin(user.isAdmin);
 	};
@@ -39,6 +45,7 @@ const EditUserPage = (props) => {
 		set_last_name('');
 		set_email('');
 		set_is_affiliated('');
+		set_affiliate('');
 		set_isVerified('');
 		set_isAdmin('');
 	};
@@ -54,6 +61,7 @@ const EditUserPage = (props) => {
 			} else {
 				stableDispatch(detailsUser(''));
 			}
+			stableDispatch(listAffiliates(''));
 			set_state();
 			return () => {};
 		},
@@ -89,6 +97,7 @@ const EditUserPage = (props) => {
 				first_name,
 				last_name,
 				email,
+				affiliate,
 				is_affiliated,
 				isVerified,
 				isAdmin
@@ -145,6 +154,41 @@ const EditUserPage = (props) => {
 													onChange={(e) => set_email(e.target.value)}
 												/>
 											</li>
+
+											<li>
+												<label htmlFor="affiliate">Affiliate</label>
+												<input
+													type="text"
+													name="affiliate"
+													value={affiliate}
+													id="affiliate"
+													onChange={(e) => set_affiliate(e.target.value)}
+												/>
+											</li>
+											{affiliates && (
+												<div className="ai-c h-25px mv-10px mb-30px jc-c">
+													<div className="custom-select w-100per">
+														<select
+															className="qty_select_dropdown w-100per"
+															// defaultValue={{
+															// 	label: user.first_name + ' ' + user.last_name,
+															// 	value: user._id
+															// }}
+															onChange={(e) => set_affiliate(e.target.value)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Affiliate---
+															</option>
+															{affiliates.map((affiliate, index) => (
+																<option key={index} value={affiliate._id}>
+																	{affiliate.facebook_name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											)}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
