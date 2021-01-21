@@ -13,9 +13,9 @@ const AffiliateComplete = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/paymentcomplete/" />
 			</Helmet>
 			<div className="jc-b wrap w-100per">
-				<Link to="/pages/menu/featured">
+				<Link to="/secure/account/profile">
 					<button style={{ margin: '15px' }} className="btn primary">
-						Back to Features
+						Back to Profile
 					</button>
 				</Link>
 				{/* <Link to="/collections/all/products">

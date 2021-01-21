@@ -179,12 +179,12 @@ const OrdersPage = (props) => {
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
 					<div className="wrap jc-b">
-						{/* {orders &&
+						{orders &&
 							[ ...Array(10).keys() ].map((x) => (
 								<option key={x + 1} defaultValue={parseInt(x + 1)}>
 									{parseInt(x + 1)}
 								</option>
-							))} */}
+							))}
 						<button className="btn icon primary mh-1rem" onClick={() => previous_set_of_orders('previous')}>
 							<i className="fas fa-arrow-left fs-22px" />
 						</button>

@@ -223,7 +223,7 @@ const App = () => {
 								component={(props) => <AffiliateCreationComplete userInfo={userInfo} {...props} />}
 							/>
 							<PrivateRoute
-								path="/secure/account/edit_affiliate/:id"
+								path="/secure/account/edit_affiliate/:id?"
 								component={(props) => <EditUserAffiliatePage userInfo={userInfo} {...props} />}
 							/>
 

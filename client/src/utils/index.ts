@@ -5,3 +5,4 @@ export { default as API_Products } from './API_Products';
 export { default as API_External } from './API_External';
 export { default as API_Orders } from './API_Orders';
 export { default as API_Features } from './API_Features';
+export { default as API_Users } from './API_Users';
