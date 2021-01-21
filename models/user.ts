@@ -68,6 +68,7 @@ const userSchema = new mongoose.Schema(
 		},
 		shipping: shippingSchema,
 		password: { type: String, required: true },
+
 		isAdmin: { type: Boolean, required: true, default: false },
 		isVerified: { type: Boolean, required: true, default: false },
 		is_affiliated: { type: Boolean, required: true, default: false },

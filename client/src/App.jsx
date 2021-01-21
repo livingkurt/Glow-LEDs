@@ -64,7 +64,9 @@ import {
 	EditAllDataPage,
 	AllFeaturesPage,
 	SubmitFeaturePage,
-	SubmissionComplete
+	SubmissionComplete,
+	CreateAffiliatePage,
+	AffiliateCreationComplete
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -216,6 +218,15 @@ const App = () => {
 								path="/secure/checkout/placeorder"
 								component={(props) => <PlaceOrderPage userInfo={userInfo} {...props} />}
 							/>
+							<PrivateRoute
+								path="/secure/account/affiliate_sign_up_complete"
+								component={(props) => <AffiliateCreationComplete userInfo={userInfo} {...props} />}
+							/>
+							<PrivateRoute
+								path="/secure/account/affiliate_signup"
+								component={(props) => <CreateAffiliatePage userInfo={userInfo} {...props} />}
+							/>
+
 							<PrivateRoute
 								path="/secure/checkout/order/receipt/:id/:status/:send?"
 								component={OrderEmail}

@@ -185,7 +185,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 	}
 });
 
-router.post('/', isAuth, isAdmin, async (req: any, res: any) => {
+router.post('/', isAuth, async (req: any, res: any) => {
 	try {
 		const newAffiliate = await Affiliate.create(req.body);
 		if (newAffiliate) {

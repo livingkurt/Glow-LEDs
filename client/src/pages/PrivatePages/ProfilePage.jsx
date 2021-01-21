@@ -10,6 +10,7 @@ const ProfilePage = (props) => {
 	const [ last_name, set_last_name ] = useState('');
 	const [ shipping, set_shipping ] = useState({});
 	const [ password, setPassword ] = useState('');
+	const [ is_affiliated, set_is_affiliated ] = useState();
 	const [ email_subscription, set_email_subscription ] = useState(true);
 	const [ email, setEmail ] = useState('');
 	const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const ProfilePage = (props) => {
 				set_last_name(user_data.last_name);
 				set_shipping(user_data.shipping);
 				setPassword(user_data.password);
+				set_is_affiliated(user_data.is_affiliated);
 				set_email_subscription(user_data.email_subscription);
 			}
 			dispatch(listMyOrders());
@@ -40,6 +42,7 @@ const ProfilePage = (props) => {
 				set_last_name(userUpdate.userInfo.last_name);
 				set_shipping(userUpdate.userInfo.shipping);
 				setPassword(userUpdate.userInfo.password);
+				set_is_affiliated(user_data.userInfo.is_affiliated);
 				set_email_subscription(userUpdate.email_subscription);
 			}
 			return () => {};
@@ -123,6 +126,13 @@ const ProfilePage = (props) => {
 							</button>
 						</Link>
 					</div>
+					{is_affiliated && (
+						<div className="h-20px ml-1rem">
+							<Link to={'/secure/account/affiliate_signup'}>
+								<button className="btn primary">Affiliate Sign Up</button>
+							</Link>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
