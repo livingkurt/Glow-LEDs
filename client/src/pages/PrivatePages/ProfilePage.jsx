@@ -137,7 +137,7 @@ const ProfilePage = (props) => {
 					) : (
 						<div className="h-20px ml-1rem">
 							<Link to={'/secure/account/edit_affiliate'}>
-								<button className="btn primary">'Affiliate Sign Up</button>
+								<button className="btn primary">Affiliate Sign Up</button>
 							</Link>
 						</div>
 					)}
