@@ -35,7 +35,7 @@ const EditUserPage = (props) => {
 		set_last_name(user.last_name);
 		set_email(user.email);
 		set_is_affiliated(user.is_affiliated);
-		set_affiliate(user.affiliate);
+		set_affiliate(user.affiliate && user.affiliate._id);
 		set_isVerified(user.isVerified);
 		set_isAdmin(user.isAdmin);
 	};
