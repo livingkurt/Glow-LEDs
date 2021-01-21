@@ -18,6 +18,10 @@ const EditAffiliatePage = (props) => {
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ promoter, set_promoter ] = useState('');
 	const [ active, set_active ] = useState('');
+	const [ style, set_style ] = useState('');
+	const [ inspiration, set_inspiration ] = useState('');
+	const [ bio, set_bio ] = useState('');
+	const [ link, set_link ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -41,6 +45,10 @@ const EditAffiliatePage = (props) => {
 		set_promoter(affiliate.promoter);
 		set_sponsor(affiliate.sponsor);
 		set_active(affiliate.active);
+		set_bio(affiliate.bio);
+		set_link(affiliate.link);
+		set_style(affiliate.style);
+		set_inspiration(affiliate.inspiration);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -54,6 +62,10 @@ const EditAffiliatePage = (props) => {
 		set_promoter('');
 		set_sponsor('');
 		set_active('');
+		set_bio('');
+		set_link('');
+		set_style('');
+		set_inspiration('');
 	};
 
 	const dispatch = useDispatch();
@@ -107,7 +119,11 @@ const EditAffiliatePage = (props) => {
 				funds_generated,
 				sponsor,
 				promoter,
-				active
+				active,
+				bio,
+				link,
+				style,
+				inspiration
 			})
 		);
 		e.target.reset();
@@ -197,6 +213,58 @@ const EditAffiliatePage = (props) => {
 													value={facebook_name}
 													id="facebook_name"
 													onChange={(e) => set_facebook_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="style">Your Style</label>
+												<input
+													type="text"
+													name="style"
+													value={style}
+													placeholder="Wave Tuts, Clusters, Whips..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'Wave Tuts, Clusters, Whips...'"
+													id="style"
+													onChange={(e) => set_style(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="inspiration">Inspiration</label>
+												<input
+													type="text"
+													name="inspiration"
+													value={inspiration}
+													placeholder="Flow, Megasloth, Jest..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = ''Flow, Megasloth, Jest..."
+													id="inspiration"
+													onChange={(e) => set_inspiration(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="bio">Bio</label>
+												<textarea
+													className="edit_product_textarea"
+													name="bio"
+													placeholder="Write a little something to introduce yourself..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'Write a little something to introduce yourself...'"
+													defaultValue={bio}
+													id="bio"
+													onChange={(e) => set_bio(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="link">Website</label>
+												<input
+													type="text"
+													name="link"
+													value={link}
+													placeholder="https://www..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'https://www...'"
+													id="link"
+													onChange={(e) => set_link(e.target.value)}
 												/>
 											</li>
 											<li>
