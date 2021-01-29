@@ -71,6 +71,7 @@ const PlaceOrderPublicPage = (props) => {
 	useEffect(() => {
 		dispatch(listPromos());
 		// dispatch(listUsers(''));
+		// set_loading_shipping(false);
 		return () => {};
 	}, []);
 
