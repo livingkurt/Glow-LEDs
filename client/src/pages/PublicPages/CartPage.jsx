@@ -25,7 +25,7 @@ const CartPage = (props) => {
 		if (cartItems.length === 0) {
 			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 		} else {
-			if (userInfo) {
+			if (userInfo.hasOwnProperty('first_name')) {
 				props.history.push('/account/login?redirect=/secure/checkout/placeorder');
 			} else {
 				props.history.push('/checkout/decision');

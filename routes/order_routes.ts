@@ -8,7 +8,7 @@ import Order from '../models/order';
 import { log_error, log_request } from '../util';
 import axios from 'axios';
 const { isAuth, isAdmin } = require('../util');
-const salesTax = require('state-sales-tax');
+// const salesTax = require('state-sales-tax');
 const scraper = require('table-scraper');
 
 const easy_post_api = require('@easypost/api');
