@@ -47,7 +47,8 @@ import {
 	userDeleteReducer,
 	userListReducer,
 	userDetailsReducer,
-	userUpdateUserReducer
+	userUpdateUserReducer,
+	errorReducer
 } from './reducers/userReducers';
 import {
 	orderCreateReducer,
@@ -76,10 +77,10 @@ import { emailDeleteReducer, emailDetailsReducer, emailListReducer, emailSaveRed
 import { logDeleteReducer, logDetailsReducer, logListReducer, logSaveReducer } from './reducers/logReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
-const userInfo = Cookie.getJSON('userInfo') || null;
-console.log({ userInfo });
+// const userInfo = Cookie.getJSON('userInfo') || null;
+// console.log({ userInfo });
 
-const initialState: object = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo } };
+const initialState: object = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo: {} } };
 const reducer = combineReducers({
 	productList: productListReducer,
 	productDetails: productDetailsReducer,
@@ -90,6 +91,7 @@ const reducer = combineReducers({
 	cartDelete: cartDeleteReducer,
 	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
+	errors: errorReducer,
 	productSave: productSaveReducer,
 	productImages: productImagesReducer,
 	productDelete: productDeleteReducer,

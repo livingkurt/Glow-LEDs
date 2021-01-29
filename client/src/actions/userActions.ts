@@ -36,8 +36,174 @@ import {
 	USER_DETAILS_FAIL,
 	USER_UPDATE_USER_REQUEST,
 	USER_UPDATE_USER_SUCCESS,
-	USER_UPDATE_USER_FAIL
+	USER_UPDATE_USER_FAIL,
+	GET_ERRORS,
+	SET_CURRENT_USER,
+	USER_LOADING
 } from '../constants/userConstants';
+import setAuthToken from '../utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
+
+// import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
+
+// // Register User
+// export const register = (userData: any) => (dispatch: (arg0: { type: string; payload: any }) => any) => {
+// 	console.log({ userData });
+// 	axios.post('/api/users/register', userData).catch((err) =>
+// 		dispatch({
+// 			type: GET_ERRORS,
+// 			payload: err.response.data
+// 		})
+// 	);
+// };
+
+export const register = (userData: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	dispatch({ type: USER_REGISTER_REQUEST, payload: userData });
+	try {
+		const { data } = await axios.post('/api/users/register', userData);
+		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+		axios.post('/api/emails/verified', data);
+		// axios.post('/api/emails/verify', data);
+		// Cookie.set('userInfo', JSON.stringify(data));
+	} catch (error) {
+		console.log({ error: error.response.data.message });
+		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
+	}
+};
+
+// // Login - get user token
+// export const login = (userData: any) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
+// 	console.log(userData);
+// 	axios
+// 		.post('/api/users/login', userData)
+// 		.then((res) => {
+// 			// Save to localStorage
+
+// 			// Set token to localStorage
+// 			const { token } = res.data;
+// 			console.log(res.data);
+// 			localStorage.setItem('jwtToken', token);
+// 			// Set token to Auth header
+// 			setAuthToken(token);
+// 			// Decode token to get user data
+// 			const decoded = jwt_decode(token);
+// 			console.log({ decoded });
+// 			// Set current user
+// 			dispatch(setCurrentUser(decoded));
+// 		})
+// 		.catch(
+// 			(err) =>
+// 				// dispatch({
+// 				// 	type: GET_ERRORS,
+// 				// 	payload: err.response.data.message
+// 				// })
+// 			// console.log({ login: error });
+// 			// dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message })
+// 		);
+// };
+export const login = (userData: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	dispatch({ type: USER_LOGIN_REQUEST, payload: userData });
+	try {
+		const { data } = await axios.post('/api/users/login', userData);
+		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+		// Set token to localStorage
+		const { token } = data;
+		console.log(data);
+		localStorage.setItem('jwtToken', token);
+		// Set token to Auth header
+		setAuthToken(token);
+		// Decode token to get user data
+		const decoded = jwt_decode(token);
+		console.log({ decoded });
+		// Set current user
+		dispatch(setCurrentUser(decoded));
+	} catch (error) {
+		console.log({ login: error.response.data.message });
+		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
+	}
+};
+
+// Set logged in user
+export const setCurrentUser = (decoded: unknown) => {
+	return {
+		type: SET_CURRENT_USER,
+		payload: decoded
+	};
+};
+
+// User loading
+export const setUserLoading = () => {
+	return {
+		type: USER_LOADING
+	};
+};
+
+// Log user out
+export const logout = () => (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	// Remove token from local storage
+	localStorage.removeItem('jwtToken');
+	// Remove auth header for future requests
+	setAuthToken(false);
+	// Set current user to empty object {} which will set isAuthenticated to false
+	dispatch(setCurrentUser({}));
+};
+
+// export const check_refresh_token = (userData: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+// 	dispatch({ type: USER_LOGIN_REQUEST, payload: userData });
+// 	try {
+//     const token = localStorage.jwtToken;
+// 		const { data } = await axios.post('/api/users/login_refresh', userData);
+// 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+// 		// Set token to localStorage
+// 		const { token } = data;
+// 		console.log(data);
+// 		localStorage.setItem('jwtToken', token);
+// 		// Set token to Auth header
+// 		setAuthToken(token);
+// 		// Decode token to get user data
+// 		const decoded = jwt_decode(token);
+// 		console.log({ decoded });
+// 		// Set current user
+// 		dispatch(setCurrentUser(decoded));
+// 	} catch (error) {
+// 		console.log({ login: error.response.data.message });
+// 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
+// 	}
+// };
+
+// export const register = (first_name: string, last_name: string, email: string, password: string) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void
+// ) => {
+// 	dispatch({ type: USER_REGISTER_REQUEST, payload: { first_name, last_name, email, password } });
+// 	try {
+// 		const { data } = await axios.post('/api/users/register', { first_name, last_name, email, password });
+// 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+// 		axios.post('/api/emails/verified', data);
+// 		// axios.post('/api/emails/verify', data);
+// 		// Cookie.set('userInfo', JSON.stringify(data));
+// 	} catch (error) {
+// 		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
+// 	}
+// };
+// export const login = (email: string, password: string) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void
+// ) => {
+// 	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
+// 	try {
+// 		const { data } = await axios.post('/api/users/login', { email, password });
+// 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+// 		Cookie.set('userInfo', JSON.stringify(data));
+// 	} catch (error) {
+// 		console.log({ login: error });
+// 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
+// 	}
+// };
+
+// export const logout = () => (dispatch: (arg0: { type: string }) => void) => {
+// 	Cookie.remove('userInfo');
+// 	Cookie.remove('userInfo');
+// 	dispatch({ type: USER_LOGOUT });
+// };
 
 export const update = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
@@ -47,19 +213,7 @@ export const update = (userdata: any) => async (
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_REQUEST,
-		payload: {
-			userId: userdata.userId,
-			first_name: userdata.first_name,
-			last_name: userdata.last_name,
-			email: userdata.email,
-			password: userdata.password,
-			is_affiliated: userdata.is_affiliated,
-			email_subscription: userdata.email_subscription,
-			affiliate: userdata.affiliate,
-			shipping: userdata.shipping,
-			verified: userdata.verified,
-			admin: userdata.admin
-		}
+		payload: {}
 	});
 	try {
 		const { data } = await axios.put(
@@ -73,8 +227,8 @@ export const update = (userdata: any) => async (
 				email_subscription: userdata.email_subscription,
 				affiliate: userdata.affiliate,
 				shipping: userdata.shipping,
-				verified: userdata.verified,
-				admin: userdata.admin
+				isVerified: userdata.isVerified,
+				isAdmin: userdata.isAdmin
 			},
 			{
 				headers: {
@@ -83,9 +237,15 @@ export const update = (userdata: any) => async (
 			}
 		);
 
-		console.log({ data });
 		dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
-		Cookie.set('userInfo', JSON.stringify(data));
+
+		const { token } = data;
+		setAuthToken(token);
+		const decoded = jwt_decode(token);
+		console.log({ decoded });
+		// Set current user
+		localStorage.setItem('jwtToken', token);
+		dispatch(setCurrentUser(decoded));
 	} catch (error) {
 		dispatch({ type: USER_UPDATE_FAIL, payload: error.response.data.message });
 	}
@@ -136,8 +296,8 @@ export const updateUser = (userdata: any) => async (
 			is_affiliated: userdata.is_affiliated,
 			email_subscription: userdata.email_subscription,
 			affiliate: userdata.affiliate,
-			verified: userdata.verified,
-			admin: userdata.admin
+			isVerified: userdata.isVerified,
+			isAdmin: userdata.isAdmin
 		}
 	});
 	try {
@@ -151,8 +311,8 @@ export const updateUser = (userdata: any) => async (
 				is_affiliated: userdata.is_affiliated,
 				email_subscription: userdata.email_subscription,
 				affiliate: userdata.affiliate,
-				verified: userdata.verified,
-				admin: userdata.admin
+				isVerified: userdata.isVerified,
+				isAdmin: userdata.isAdmin
 			},
 			{
 				headers: {
@@ -167,22 +327,7 @@ export const updateUser = (userdata: any) => async (
 	}
 };
 
-export const login = (email: string, password: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void
-) => {
-	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
-	try {
-		const { data } = await axios.post('/api/users/login', { email, password });
-		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-		Cookie.set('userInfo', JSON.stringify(data));
-	} catch (error) {
-		console.log({ login: error });
-		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
-	}
-};
-
 export const reset_password = (email: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
-	console.log({ password_reset: email });
 	dispatch({ type: USER_PASSWORD_RESET_REQUEST, payload: { email } });
 	try {
 		const { data } = await axios.post('/api/users/reset_password', { email });
@@ -197,7 +342,6 @@ export const password_reset = (user_id: string, password: string, repassword: st
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ user_id, password, repassword });
 	dispatch({ type: USER_RESET_PASSWORD_REQUEST, payload: { user_id, password, repassword } });
 	try {
 		const { data } = await axios.put('/api/users/password_reset', { user_id, password, repassword });
@@ -225,21 +369,6 @@ export const password_reset = (user_id: string, password: string, repassword: st
 // 		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
 // 	}
 // };
-
-export const register = (first_name: string, last_name: string, email: string, password: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void
-) => {
-	dispatch({ type: USER_REGISTER_REQUEST, payload: { first_name, last_name, email, password } });
-	try {
-		const { data } = await axios.post('/api/users/register', { first_name, last_name, email, password });
-		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-		axios.post('/api/emails/verified', data);
-		// axios.post('/api/emails/verify', data);
-		// Cookie.set('userInfo', JSON.stringify(data));
-	} catch (error) {
-		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
-	}
-};
 
 export const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ user_id });
@@ -369,10 +498,4 @@ export const detailsUser = (userId: string) => async (
 	} catch (error) {
 		dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
 	}
-};
-
-export const logout = () => (dispatch: (arg0: { type: string }) => void) => {
-	Cookie.remove('userInfo');
-	Cookie.remove('userInfo');
-	dispatch({ type: USER_LOGOUT });
 };

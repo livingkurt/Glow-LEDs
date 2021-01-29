@@ -12,16 +12,21 @@ const LoginPage = (props) => {
 
 	const [ email_validations, setEmailValidations ] = useState('');
 	const [ password_validations, setPasswordValidations ] = useState('');
+	const [ loading, set_loading ] = useState(false);
 
 	const userLogin = useSelector((state) => state.userLogin);
-	const { loading, userInfo, error } = userLogin;
-	console.log({ userLogin });
+	const { loading: user_loading, userInfo, error } = userLogin;
+	// const errors = useSelector((state) => state.errors);
+	// console.log({ errors });
+	// console.log({ error });
+	// const { loading, userInfo, error } = errors;
+	console.log({ userInfo });
 	const dispatch = useDispatch();
 	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
 
 	useEffect(
 		() => {
-			if (userInfo) {
+			if (userInfo && userInfo.hasOwnProperty('first_name')) {
 				props.history.push(redirect);
 			}
 			return () => {
@@ -30,6 +35,15 @@ const LoginPage = (props) => {
 		},
 		[ userInfo, props.history, redirect ]
 	);
+	useEffect(() => {
+		set_loading(false);
+		return () => {
+			//
+		};
+	}, []);
+	setTimeout(() => {
+		set_loading(false);
+	}, 3000);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -38,9 +52,12 @@ const LoginPage = (props) => {
 
 		setEmailValidations(request.errors.email);
 		setPasswordValidations(request.errors.password);
-
+		console.log();
 		if (request.isValid) {
-			dispatch(login(email, password));
+			dispatch(login({ email, password }));
+			console.log({ email, password });
+			set_loading(user_loading);
+			// dispatch(loginUser(email, password));
 		}
 	};
 
