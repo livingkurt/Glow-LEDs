@@ -207,7 +207,10 @@ const App = () => {
 								component={EditUserAffiliatePage}
 							/>
 							<PrivateRoute path="/secure/account/submission_complete" component={SubmissionComplete} />
-
+							<PrivateRoute
+								path="/secure/checkout/order/receipt/:id/:status/:send?"
+								component={OrderEmail}
+							/>
 							{/* Admin Routes */}
 							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
 							<AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
@@ -224,10 +227,6 @@ const App = () => {
 							<AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />
 							<AdminRoute path="/secure/glow/editcart/:id?" component={EditCartPage} />
 							<AdminRoute path="/secure/glow/expenses" component={ExpensesPage} />
-							{/* <AdminRoute
-								path="/secure/glow/expenses"
-								component={(props) => <ExpensesPage userInfo={userInfo} {...props} />}
-							/> */}
 							<AdminRoute path="/secure/glow/features" component={FeaturesPage} />
 							<AdminRoute path="/secure/glow/carts" component={CartsPage} />
 							<AdminRoute path="/secure/glow/contents" component={ContentsPage} />
@@ -265,11 +264,6 @@ const App = () => {
 								component={PasswordChangedEmail}
 							/>
 							<AdminRoute path="/secure/glow/emails/invoice/:id?" exact={true} component={InvoiceEmail} />
-							{/* <AdminRoute
-								path="/secure/glow/emails/invoice/:id?"
-								exact={true}
-								component={(props) => <InvoiceEmail userInfo={userInfo} {...props} />}
-							/> */}
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editaffiliate/:id?" component={EditAffiliatePage} />
@@ -289,17 +283,10 @@ const App = () => {
 							<Route path="/account/passwordreset" component={PasswordResetPage} />
 							<Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
 							<Route path="/checkout/decision" component={GuestDecisionPage} />
-							<Route
-								path="/checkout/placeorder"
-								component={(props) => <PlaceOrderPublicPage userInfo={userInfo} {...props} />}
-							/>
+							<Route path="/checkout/placeorder" component={PlaceOrderPublicPage} />
 							<Route path="/checkout/shipping" component={ShippingPage} />
 
 							<Route path="/checkout/cart/:pathname?" component={CartPage} />
-							{/* <Route
-								path="/checkout/cart/:pathname?"
-								component={(props) => <CartPage userInfo={userInfo} {...props} />}
-							/> */}
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
 								path="/collections/all/products/category/:category/subcategory/:subcategory?"
@@ -309,17 +296,8 @@ const App = () => {
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
 							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
-							{/* <Route
-								path="/pages/contact/:reason?"
-								exact={true}
-								component={(props) => <ContactPage userInfo={userInfo} {...props} />}
-							/> */}
 							<Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />
 							<Route path="/pages/glowcontrol" component={ContactPage} />
-							{/* <Route
-								path="/pages/glowcontrol"
-								component={(props) => <GlowControlHomePage userInfo={userInfo} {...props} />}
-							/> */}
 							<Route path="/pages/terms" exact={true} component={TermsPage} />
 							<Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
 
@@ -331,16 +309,6 @@ const App = () => {
 								exact={true}
 								component={AllFeaturesPage}
 							/>
-							{/* <Route
-								path="/collections/all/features/category/:category?"
-								exact={true}
-								component={AllFeaturesPage}
-							/> */}
-							{/* <Route
-								path="/collections/all/features/category/:category/:pathname?"
-								component={(props) => <FeaturedPage userInfo={userInfo} {...props} />}
-							/> */}
-
 							<Route
 								path="/collections/all/features/category/:category/:pathname?"
 								exact={true}
