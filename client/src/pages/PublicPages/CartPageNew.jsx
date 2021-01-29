@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 const CartPage = (props) => {
-	const user_data = props.userInfo;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	// const cart = useSelector((state) => state.cart);
 
 	// const { cart.cartItems } = cart;
@@ -51,7 +52,7 @@ const CartPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(detailsCart(user_data.cart));
+			dispatch(detailsCart(userInfo.cart));
 			// if (pathname) {
 			// console.log(cart.cartItems.find((item) => item.pathname === pathname));
 			// const same_product = cart.cartItems.find((item) => item.pathname === pathname);

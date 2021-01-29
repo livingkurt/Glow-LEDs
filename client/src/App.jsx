@@ -66,7 +66,8 @@ import {
 	SubmitFeaturePage,
 	SubmissionComplete,
 	EditUserAffiliatePage,
-	AffiliateCreationComplete
+	AffiliateCreationComplete,
+	ShippingPublicPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -284,7 +285,7 @@ const App = () => {
 							<Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
 							<Route path="/checkout/decision" component={GuestDecisionPage} />
 							<Route path="/checkout/placeorder" component={PlaceOrderPublicPage} />
-							<Route path="/checkout/shipping" component={ShippingPage} />
+							<Route path="/checkout/shipping" component={ShippingPublicPage} />
 
 							<Route path="/checkout/cart/:pathname?" component={CartPage} />
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />

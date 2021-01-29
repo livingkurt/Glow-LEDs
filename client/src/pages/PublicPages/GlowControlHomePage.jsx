@@ -8,7 +8,8 @@ import { deleteDevice, listMyDevices } from '../../actions/deviceActions';
 import { Loading } from '../../components/UtilityComponents';
 
 const GlowControlHomePage = (props) => {
-	const user_data = props.userInfo;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	const contentDetails = useSelector((state) => state.contentDetails);
 	const { content, loading, error } = contentDetails;
 
@@ -134,7 +135,7 @@ const GlowControlHomePage = (props) => {
 						</Link>
 					</div>
 				</div>
-				{user_data ? devices && devices.length > 0 ? (
+				{userInfo ? devices && devices.length > 0 ? (
 					<Loading loading={loading_devices} error={error_devices}>
 						{devices && (
 							<div className="device-list responsive_table">

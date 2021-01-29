@@ -7,8 +7,6 @@ import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 
 const CreateAffiliatePage = (props) => {
-	const user_data = props.userInfo;
-	console.log({ user_data });
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ artist_name, set_artist_name ] = useState('');

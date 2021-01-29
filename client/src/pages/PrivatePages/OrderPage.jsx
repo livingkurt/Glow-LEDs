@@ -17,7 +17,8 @@ import useClipboard from 'react-hook-clipboard';
 require('dotenv').config();
 
 const OrderPage = (props) => {
-	const user_data = props.userInfo;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
 
@@ -79,7 +80,7 @@ const OrderPage = (props) => {
 	);
 
 	const save_secondary_product = async () => {
-		const request = await API_Products.save_secondary_product(order, user_data, secondary_product);
+		const request = await API_Products.save_secondary_product(order, userInfo, secondary_product);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
@@ -412,8 +413,8 @@ const OrderPage = (props) => {
 											<div>{order.shipping.email}</div>
 										</div>
 									</div>
-									{user_data &&
-									user_data.isAdmin && (
+									{userInfo &&
+									userInfo.isAdmin && (
 										<button
 											className="btn secondary w-200px mv-10px"
 											onClick={() =>
@@ -749,8 +750,8 @@ ${order.shipping.email}`)}
 							<button className="btn secondary w-100per mv-5px ">
 								<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
 							</button>
-							{user_data &&
-							user_data.isAdmin && (
+							{userInfo &&
+							userInfo.isAdmin && (
 								<div>
 									<div className="jc-b">
 										<div className="column jc-b w-100per">

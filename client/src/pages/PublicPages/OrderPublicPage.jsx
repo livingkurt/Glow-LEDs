@@ -16,7 +16,6 @@ require('dotenv').config();
 
 const OrderPublicPage = (props) => {
 	const [ order_number, set_order_number ] = useState('');
-	const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
 
@@ -52,12 +51,6 @@ const OrderPublicPage = (props) => {
 		},
 		[ product_object ]
 	);
-
-	const save_secondary_product = async () => {
-		const request = await API_Products.save_secondary_product(order, user_data, secondary_product);
-		console.log(request);
-		dispatch(detailsOrderPublic(props.match.params.id));
-	};
 
 	useEffect(
 		() => {
@@ -407,31 +400,6 @@ const OrderPublicPage = (props) => {
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>
-											{props.userInfo &&
-											props.userInfo.isAdmin &&
-											item.secondary_product && (
-												<div className="row">
-													<div className="mv-10px ">
-														<label htmlFor="secondary_product">Secondary Product</label>
-														<div className="row">
-															<input
-																type="text"
-																value={item.secondary_product._id}
-																name="secondary_product"
-																id="secondary_product"
-																className="w-100per"
-																onChange={(e) => set_secondary_product(e.target.value)}
-															/>
-															<button
-																className="btn primary"
-																onClick={save_secondary_product}
-															>
-																Add
-															</button>
-														</div>
-													</div>
-												</div>
-											)}
 										</div>
 										<div className="cart-price">
 											{item.sale_price !== 0 ? (

@@ -9,7 +9,8 @@ import { Helmet } from 'react-helmet';
 import { API_Orders } from '../../utils';
 
 const ShippingPage = (props) => {
-	const user_data = props.userInfo;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	const cart = useSelector((state) => state.cart);
 	const { shipping } = cart;
@@ -32,21 +33,21 @@ const ShippingPage = (props) => {
 
 	useEffect(
 		() => {
-			if (user_data) {
-				set_email(user_data.email);
-				set_first_name(user_data.shipping.first_name);
-				set_last_name(user_data.shipping.last_name);
-				set_address_1(user_data.shipping.address_1);
-				set_address_2(user_data.shipping.address_2);
-				setCity(user_data.shipping.city);
-				setState(user_data.shipping.state);
-				setPostalCode(user_data.shipping.postalCode);
-				setCountry(user_data.shipping.country);
-				setInternational(user_data.shipping.international);
+			if (userInfo) {
+				set_email(userInfo.email);
+				set_first_name(userInfo.shipping.first_name);
+				set_last_name(userInfo.shipping.last_name);
+				set_address_1(userInfo.shipping.address_1);
+				set_address_2(userInfo.shipping.address_2);
+				setCity(userInfo.shipping.city);
+				setState(userInfo.shipping.state);
+				setPostalCode(userInfo.shipping.postalCode);
+				setCountry(userInfo.shipping.country);
+				setInternational(userInfo.shipping.international);
 			}
 			return () => {};
 		},
-		[ user_data ]
+		[ userInfo ]
 	);
 
 	// useEffect(
@@ -164,7 +165,7 @@ const ShippingPage = (props) => {
 			if (save_shipping) {
 				dispatch(
 					update({
-						...user_data,
+						...userInfo,
 						shipping: {
 							first_name,
 							last_name,
@@ -219,8 +220,8 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
-						{user_data &&
-						user_data.isAdmin && (
+						{userInfo &&
+						userInfo.isAdmin && (
 							<li>
 								<div className="ai-c h-25px mv-10px mb-30px jc-c">
 									<div className="custom-select w-100per">
@@ -411,7 +412,7 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
-						{user_data && loading ? (
+						{userInfo && loading ? (
 							<div>Loading...</div>
 						) : (
 							<div>

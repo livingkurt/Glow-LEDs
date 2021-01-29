@@ -17,7 +17,8 @@ import { CardElement, Elements, useStripe, useElements } from '@stripe/react-str
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
-	const user_data = props.userInfo;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
@@ -54,7 +55,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ show_message, set_show_message ] = useState('');
 	const [ tax_rate, set_tax_rate ] = useState(0);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
-	const [ user, set_user ] = useState(user_data);
+	const [ user, set_user ] = useState(userInfo);
 	const [ create_account, set_create_account ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ account_create, set_account_create ] = useState(false);
@@ -196,7 +197,7 @@ const PlaceOrderPublicPage = (props) => {
 			shippingPrice,
 			taxPrice,
 			totalPrice,
-			user_data,
+			userInfo,
 			order_note,
 			promo_code
 		});
@@ -294,7 +295,7 @@ const PlaceOrderPublicPage = (props) => {
 					shippingPrice,
 					taxPrice,
 					totalPrice,
-					user_data,
+					userInfo,
 					order_note,
 					promo_code
 				},
@@ -360,7 +361,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	// const handleSuccessPayment = (paymentResult, token) => {
 	// 	console.log('handleSuccessPayment');
-	// 	dispatch(payOrder(order, paymentResult, user_data, token));
+	// 	dispatch(payOrder(order, paymentResult, userInfo, token));
 	// 	set_payment_loading(false);
 	// 	// if (successPay) {
 	// 	props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
@@ -385,7 +386,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	const check_code = (e) => {
 		e.preventDefault();
-		const data = { promo_code, promos, user_data, items_price };
+		const data = { promo_code, promos, userInfo, items_price };
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);

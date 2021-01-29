@@ -6,7 +6,6 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 
 const CartPage = (props) => {
-	// const user_data = props.userInfo;
 	const cart = useSelector((state) => state.cart);
 
 	const { cartItems } = cart;

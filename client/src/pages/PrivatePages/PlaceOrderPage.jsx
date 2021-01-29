@@ -17,7 +17,8 @@ import { listUsers } from '../../actions/userActions';
 import { API_External, API_Orders, API_Products } from '../../utils';
 
 const PlaceOrderPage = (props) => {
-	const user_data = props.userInfo;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
@@ -54,7 +55,7 @@ const PlaceOrderPage = (props) => {
 	const [ taxPrice, setTaxPrice ] = useState(0);
 	const [ totalPrice, setTotalPrice ] = useState(0);
 	const [ show_message, set_show_message ] = useState('');
-	const [ user, set_user ] = useState(user_data);
+	const [ user, set_user ] = useState(userInfo);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 
@@ -191,7 +192,7 @@ const PlaceOrderPage = (props) => {
 			shippingPrice,
 			taxPrice,
 			totalPrice,
-			user_data,
+			userInfo,
 			order_note,
 			promo_code
 		});
@@ -255,7 +256,7 @@ const PlaceOrderPage = (props) => {
 
 	const placeOrderHandler = async (paymentMethod) => {
 		// create an order
-		console.log({ user_data });
+		console.log({ userInfo });
 		console.log({ user });
 		dispatch(
 			createPayOrder(
@@ -273,7 +274,7 @@ const PlaceOrderPage = (props) => {
 					shippingPrice,
 					taxPrice,
 					totalPrice,
-					user_data,
+					userInfo,
 					order_note,
 					promo_code
 				},
@@ -412,7 +413,7 @@ const PlaceOrderPage = (props) => {
 
 	const check_code = (e) => {
 		e.preventDefault();
-		const data = { promo_code, promos, user_data, items_price };
+		const data = { promo_code, promos, userInfo, items_price };
 		console.log({ data });
 		const request = validate_promo_code(data);
 
@@ -1029,65 +1030,74 @@ const PlaceOrderPage = (props) => {
 								</Elements>
 							</div>
 						)}
-						{user_data && user_data.isAdmin && users && loading_checkboxes ? (
-							<div>Loading...</div>
-						) : (
-							<li>
-								<label htmlFor="no_user mb-20px">No User</label>
-								<input
-									type="checkbox"
-									name="no_user"
-									defaultChecked={no_user}
-									id="no_user"
-									onChange={(e) => {
-										set_no_user(e.target.checked);
-									}}
-								/>
-							</li>
-						)}
-						{user_data &&
-						user_data.isAdmin &&
-						users &&
-						!no_user && (
+						{userInfo &&
+						userInfo.isAdmin && (
 							<div>
-								<button
-									onClick={create_order_without_paying}
-									className="btn secondary w-100per mb-12px"
-								>
-									Create Order Without Paying
-								</button>
-
-								<div className="ai-c h-25px mv-10px mb-30px jc-c">
-									<div className="custom-select w-100per">
-										<select
-											className="qty_select_dropdown w-100per"
-											defaultValue={user_data.first_name}
-											onChange={(e) => set_user(JSON.parse(e.target.value))}
+								{loading_checkboxes ? (
+									<div>Loading...</div>
+								) : (
+									<li>
+										<label htmlFor="no_user mb-20px">No User</label>
+										<input
+											type="checkbox"
+											name="no_user"
+											defaultChecked={no_user}
+											id="no_user"
+											onChange={(e) => {
+												set_no_user(e.target.checked);
+											}}
+										/>
+									</li>
+								)}
+								{userInfo &&
+								userInfo.isAdmin &&
+								users &&
+								!no_user && (
+									<div>
+										<button
+											onClick={create_order_without_paying}
+											className="btn secondary w-100per mb-12px"
 										>
-											<option key={1} defaultValue="">
-												---Choose User for Order---
-											</option>
-											{users.map((user, index) => (
-												<option key={index} value={JSON.stringify(user)}>
-													{user.first_name} {user.last_name}
-												</option>
-											))}
-										</select>
-										<span className="custom-arrow" />
+											Create Order Without Paying
+										</button>
+
+										<div className="ai-c h-25px mv-10px mb-30px jc-c">
+											<div className="custom-select w-100per">
+												<select
+													className="qty_select_dropdown w-100per"
+													defaultValue={userInfo.first_name}
+													onChange={(e) => set_user(JSON.parse(e.target.value))}
+												>
+													<option key={1} defaultValue="">
+														---Choose User for Order---
+													</option>
+													{users.map((user, index) => (
+														<option key={index} value={JSON.stringify(user)}>
+															{user.first_name} {user.last_name}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
 									</div>
-								</div>
+								)}
+								{userInfo &&
+								userInfo.isAdmin &&
+								users &&
+								no_user && (
+									<div>
+										<button
+											onClick={create_order_without_user}
+											className="btn secondary w-100per mb-12px"
+										>
+											Create Order Without User
+										</button>
+									</div>
+								)}
 							</div>
 						)}
-						{user_data &&
-						user_data.isAdmin &&
-						users &&
-						no_user && (
-							<div>
-								<button onClick={create_order_without_user} className="btn secondary w-100per mb-12px">
-									Create Order Without User
-								</button>
-							</div>
-						)}
+
 						<div className="mv-10px">
 							<label htmlFor="promo_code">Promo Code</label>
 

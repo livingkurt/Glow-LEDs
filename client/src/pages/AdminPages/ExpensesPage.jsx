@@ -11,7 +11,6 @@ import { API_Revenue } from '../../utils';
 import CSVReader from 'react-csv-reader';
 
 const ExpensesPage = (props) => {
-	// const user_data = props.userinfo;
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ card_type, set_card_type ] = useState('GL AMEX');
