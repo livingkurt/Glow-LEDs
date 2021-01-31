@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 const ProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log({ userInfo });
+	// console.log({ userInfo });
 
 	return (
 		<div className="column p-20px inner_content">

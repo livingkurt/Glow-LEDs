@@ -53,6 +53,47 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/code/:promo_code', async (req, res) => {
+	try {
+		const promo = await Promo.findOne({ promo_code: req.params.promo_code }).populate('sponsor').populate('user');
+		console.log({ promo });
+		console.log(req.params.promo_code);
+		if (promo) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Promo',
+				data: [ promo ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(promo);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Promo',
+				data: [ promo ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Promo Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Promo',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Promo' });
+	}
+});
+
 router.get('/:id', async (req, res) => {
 	try {
 		const promo = await Promo.findOne({ _id: req.params.id }).populate('sponsor').populate('user');
@@ -111,7 +152,7 @@ router.put('/used', async (req, res) => {
 	try {
 		console.log({ used: req.body.promo_code });
 		console.log('Promo_Routes');
-		const promo: any = await Promo.findOne({ promo_code: req.body.promo_code });
+		const promo: any = await Promo.findOne({ promo_code: req.body.promo_code.toLowerCase() });
 		promo.used_once = true;
 		console.log({ promo });
 		if (promo) {

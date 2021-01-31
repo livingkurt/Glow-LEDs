@@ -284,7 +284,11 @@ const PlaceOrderPage = (props) => {
 
 		set_payment_loading(true);
 		if (promo_code) {
-			await API_Products.promo_code_used(promo_code);
+			const { data } = await API_Orders.get_promo(promo_code.toLowerCase());
+			console.log({ data });
+			if (data.single_use) {
+				await API_Orders.promo_code_used(promo_code.toLowerCase());
+			}
 		}
 	};
 	// 	const save_shipment_id = (shipment_id) => {

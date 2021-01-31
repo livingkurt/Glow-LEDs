@@ -15,8 +15,13 @@ export default {
 	},
 	add_tracking_number: (order: any, tracking_number: any, label: any) => {
 		return axios.put('/api/orders/tracking_number', { order, tracking_number, label });
+	},
+	promo_code_used: (promo_code: any) => {
+		console.log({ promo_code_used: promo_code });
+		return axios.put('/api/promos/used', { promo_code });
+	},
+	get_promo: (promo_code: any) => {
+		console.log({ get_promo: promo_code });
+		return axios.get('/api/promos/code/' + promo_code);
 	}
-	// save_shipment_id: (order: any, shipment_id: string) => {
-	// 	return axios.put('/api/orders/shipment_id', { order, shipment_id });
-	// }
 };

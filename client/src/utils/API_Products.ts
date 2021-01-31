@@ -40,10 +40,7 @@ export default {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/essentials');
 	},
-	promo_code_used: (promo_code: any) => {
-		console.log({ promo_code_used: promo_code });
-		return axios.put('/api/promos/used', { promo_code });
-	},
+
 	// get_product_pictures: (category: string) => {
 	// 	return axios.get('/api/products/category/' + category);
 	// },
