@@ -11,8 +11,9 @@ import 'react-medium-image-zoom/dist/styles.css';
 const FeaturedPage = (props) => {
 	const history = useHistory();
 	const featureDetails = useSelector((state) => state.featureDetails);
-	console.log({ featureDetails });
 	const { feature } = featureDetails;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	const dispatch = useDispatch();
 
@@ -53,8 +54,8 @@ const FeaturedPage = (props) => {
 						<button className="btn secondary" onClick={() => history.goBack()}>
 							Back to Features
 						</button>
-						{props.userInfo &&
-						props.userInfo.isAdmin && (
+						{userInfo &&
+						userInfo.isAdmin && (
 							<Link to={'/secure/glow/editfeature/' + props.match.params.pathname}>
 								<button className="btn secondary" style={{ width: '156px' }}>
 									Edit Feature

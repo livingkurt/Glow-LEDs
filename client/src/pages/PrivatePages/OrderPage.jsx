@@ -345,8 +345,8 @@ const OrderPage = (props) => {
 					</Helmet>
 					{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
 					<div className="mb-10px ml-20px">
-						{props.userInfo &&
-						props.userInfo.isAdmin && (
+						{userInfo &&
+						userInfo.isAdmin && (
 							<Link to="/secure/glow/orders">
 								<button className="btn secondary">Back to Admin Orders</button>
 							</Link>
@@ -474,8 +474,8 @@ ${order.shipping.email}`)}
 														</Link>
 													</div>
 													<div>Qty: {item.qty}</div>
-													{props.userInfo &&
-													props.userInfo.isAdmin &&
+													{userInfo &&
+													userInfo.isAdmin &&
 													item.secondary_product && (
 														<div className="row">
 															<div className="mv-10px ">

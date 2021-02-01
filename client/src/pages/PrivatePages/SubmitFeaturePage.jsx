@@ -32,6 +32,9 @@ const SubmitFeaturePage = (props) => {
 
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	// console.log(users);
 	// setTimeout(() => {
 	// 	set_loading_checkboxes(false);
@@ -123,7 +126,7 @@ const SubmitFeaturePage = (props) => {
 		dispatch(
 			saveFeature({
 				_id: id,
-				user: props.userInfo._id,
+				user: userInfo._id,
 				artist_name,
 				instagram_handle,
 				facebook_name,

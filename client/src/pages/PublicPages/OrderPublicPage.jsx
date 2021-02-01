@@ -278,13 +278,6 @@ const OrderPublicPage = (props) => {
 			</Helmet>
 			{/* {order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />} */}
 			<div className="mb-10px ml-20px">
-				{props.userInfo &&
-				props.userInfo.isAdmin && (
-					<Link to="/secure/glow/orders">
-						<button className="btn secondary">Back to Admin Orders</button>
-					</Link>
-				)}
-
 				<Link to="/secure/account/orders">
 					<button className="btn secondary">Back to Orders</button>
 				</Link>

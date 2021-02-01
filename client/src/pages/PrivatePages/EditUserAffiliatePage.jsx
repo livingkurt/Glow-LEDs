@@ -33,6 +33,9 @@ const CreateAffiliatePage = (props) => {
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
 
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
 	const set_state = () => {
 		set_id(affiliate._id);
 		set_user(affiliate.user && affiliate.user._id);
@@ -110,7 +113,7 @@ const CreateAffiliatePage = (props) => {
 		dispatch(
 			saveAffiliate({
 				_id: id,
-				user: props.userInfo._id,
+				user: userInfo._id,
 				artist_name,
 				instagram_handle,
 				facebook_name,

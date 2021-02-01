@@ -382,8 +382,8 @@ const Sidebar = (props) => {
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
-				{props.userInfo &&
-				props.userInfo.isAdmin && (
+				{userInfo &&
+				userInfo.isAdmin && (
 					<div className="sidebar_dropdown">
 						<button className="sidebar-btn primary">Admin</button>
 						<ul className="sidebar_dropdown_container">
