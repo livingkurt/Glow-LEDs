@@ -16,6 +16,9 @@ export default {
 	add_tracking_number: (order: any, tracking_number: any, label: any) => {
 		return axios.put('/api/orders/tracking_number', { order, tracking_number, label });
 	},
+	// add_shipment_tracking: (order: any, shipment_tracking: any, label: any) => {
+	// 	return axios.put('/api/orders/shipment_tracking', { order, shipment_tracking, label });
+	// },
 	promo_code_used: (promo_code: any) => {
 		console.log({ promo_code_used: promo_code });
 		return axios.put('/api/promos/used', { promo_code });

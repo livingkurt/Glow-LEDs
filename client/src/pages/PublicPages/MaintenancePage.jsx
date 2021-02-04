@@ -34,6 +34,7 @@ const MaintenancePage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/" />
 				<meta property="og:url" content="https://www.glow-leds.com" />
 			</Helmet>
+
 			<div style={header_styles}>
 				<div className="jc-c column ta-c">
 					<div className="brand">

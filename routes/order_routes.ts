@@ -1561,6 +1561,7 @@ router.put('/buy_label', async (req: any, res: any) => {
 		const created_shipment = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
 		const label = await created_shipment.buy(order.shipping.shipping_rate, 0);
 		console.log({ label });
+
 		res.send(label);
 	} catch (err) {
 		console.log(err);
@@ -1569,7 +1570,10 @@ router.put('/buy_label', async (req: any, res: any) => {
 
 router.put('/tracking_number', async (req: any, res: any) => {
 	try {
-		console.log(req.body);
+		// console.log({ order: req.body.order });
+		// console.log({ tracking_number: req.body.tracking_number });
+		// console.log({ label: req.body.label });
+		const EasyPost = new easy_post_api(process.env.EASY_POST);
 		const order = await Order.findById(req.body.order._id);
 		if (order) {
 			log_request({
@@ -1581,7 +1585,14 @@ router.put('/tracking_number', async (req: any, res: any) => {
 				success: true,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
+			// console.log({ tracker: req.body.label.tracker.id });
+			const tracker = await EasyPost.Tracker.retrieve(req.body.label.tracker.id);
+			// const tracker = new EasyPost.Tracker.retrieve(req.body.label.tracker.id);
+			console.log({ tracker });
+			console.log({ tracker: tracker.tracking_details });
+
 			// console.log({req.body})
+			order.shipment_tracking = req.body.tracker;
 			order.tracking_number = req.body.tracking_number;
 			order.shipping.shipping_label = req.body.label;
 			const updated = await Order.updateOne({ _id: req.body.order._id }, order);

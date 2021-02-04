@@ -172,7 +172,18 @@ const PlaceOrderPage = (props) => {
 				// if (shipping.international) {
 				// 	calculate_international();
 				// } else {
-				get_shipping_rates();
+				// const weight_ounces = cartItems.reduce((a, c) => a + c.weight_ounces, 0);
+				const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
+				console.log({ package_volume });
+				if (!package_volume) {
+					set_loading_shipping(false);
+					set_hide_pay_button(false);
+					setShippingPrice(0);
+					set_free_shipping_message('Free');
+				} else {
+					get_shipping_rates();
+				}
+
 				// }
 
 				// get_shipping_rates();
@@ -804,7 +815,8 @@ const PlaceOrderPage = (props) => {
 						{hide_pay_button &&
 						shipping_rates.rates && (
 							<div>
-								{shipping.international && (
+								{shipping &&
+								shipping.international && (
 									<div>
 										{shipping_rates.rates.map((rate, index) => {
 											return (
@@ -877,7 +889,8 @@ const PlaceOrderPage = (props) => {
 										})}
 									</div>
 								)}
-								{!shipping.international && (
+								{shipping &&
+								!shipping.international && (
 									<div>
 										{shipping_rates.rates.map((rate, index) => {
 											return (
