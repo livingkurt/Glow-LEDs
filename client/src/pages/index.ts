@@ -12,6 +12,7 @@ export { default as EditPromoPage } from './AdminPages/EditPromoPage';
 export { default as EditAffiliatePage } from './AdminPages/EditAffiliatePage';
 export { default as EditOrderPage } from './AdminPages/EditOrderPage';
 export { default as AffiliatesPage } from './AdminPages/AffiliatesPage';
+export { default as ChipsPage } from './AdminPages/ChipsPage';
 export { default as PromosPage } from './AdminPages/PromosPage';
 export { default as FeaturesPage } from './AdminPages/FeaturesPage';
 export { default as ContentsPage } from './AdminPages/ContentsPage';

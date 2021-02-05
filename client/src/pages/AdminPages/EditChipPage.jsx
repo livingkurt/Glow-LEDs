@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { saveAffiliate, detailsAffiliate } from '../../actions/chipActions';
+import { saveChip, detailsChip } from '../../actions/chipActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -75,10 +75,10 @@ const EditChipPage = (props) => {
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsAffiliate(props.match.params.id));
-				stableDispatch(detailsAffiliate(props.match.params.id));
+				stableDispatch(detailsChip(props.match.params.id));
+				stableDispatch(detailsChip(props.match.params.id));
 			} else {
-				stableDispatch(detailsAffiliate(''));
+				stableDispatch(detailsChip(''));
 			}
 			stableDispatch(listUsers(''));
 			set_state();
@@ -108,7 +108,7 @@ const EditChipPage = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(
-			saveAffiliate({
+			saveChip({
 				_id: id,
 				user,
 				artist_name,
@@ -133,7 +133,7 @@ const EditChipPage = (props) => {
 
 	return (
 		<div className="main_container p-20px">
-			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Affiliate' : 'Create Affiliate'}</h1>
+			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Chip' : 'Create Chip'}</h1>
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
@@ -144,7 +144,7 @@ const EditChipPage = (props) => {
 						{chip && (
 							<div>
 								<Helmet>
-									<title>Edit Affiliate| Glow LEDs</title>
+									<title>Edit Chip| Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -364,7 +364,7 @@ const EditChipPage = (props) => {
 									</li>
 									<li>
 										<button className="btn secondary" onClick={() => history.goBack()}>
-											Back to Affiliates
+											Back to Chips
 										</button>
 									</li>
 								</ul>

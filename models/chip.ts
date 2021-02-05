@@ -24,7 +24,7 @@ const chip_schema = new mongoose.Schema(
 	}
 );
 
-const chip_model = mongoose.model('Cart', chip_schema);
+const chip_model = mongoose.model('Chip', chip_schema);
 
 export default chip_model;
 

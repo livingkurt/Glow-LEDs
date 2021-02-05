@@ -52,12 +52,12 @@ const ProductPage = (props) => {
 		}
 	};
 	const open_cart = () => {
-		const cart = document.querySelector('.cart');
+		const cart = document.querySelector('.cart_sidebar');
 		console.log(cart.classList.value);
-		if (cart.classList.value === 'cart open') {
-			document.querySelector('.cart').classList.remove('open');
-		} else if (cart.classList.value === 'cart') {
-			document.querySelector('.cart').classList.add('open');
+		if (cart.classList.value === 'cart_sidebar open') {
+			document.querySelector('.cart_sidebar').classList.remove('open');
+		} else if (cart.classList.value === 'cart_sidebar') {
+			document.querySelector('.cart_sidebar').classList.add('open');
 		}
 	};
 

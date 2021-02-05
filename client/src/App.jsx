@@ -67,7 +67,8 @@ import {
 	SubmissionComplete,
 	EditUserAffiliatePage,
 	AffiliateCreationComplete,
-	ShippingPublicPage
+	ShippingPublicPage,
+	ChipsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -92,6 +93,7 @@ import { setCurrentUser, logout } from './actions/userActions';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
+import EditChipPage from './pages/AdminPages/EditChipPage';
 
 const App = () => {
 	const theme_colors = {
@@ -269,10 +271,12 @@ const App = () => {
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editaffiliate/:id?" component={EditAffiliatePage} />
+							<AdminRoute path="/secure/glow/edit_chip/:id?" component={EditChipPage} />
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
 							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
 							<AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
+							<AdminRoute path="/secure/glow/chips" component={ChipsPage} />
 							<AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 
 							{/* Public Routes */}

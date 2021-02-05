@@ -16,3 +16,4 @@ export { default as Device } from './device';
 export { default as Email } from './email';
 export { default as Log } from './log';
 export { default as Content } from './content';
+export { default as Chip } from './chip';
