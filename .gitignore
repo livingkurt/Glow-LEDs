@@ -117,6 +117,7 @@ client/public/gifs/full_sized_gifs
 util.js
 server.js
 config.js
+passport.js
 
 routes/user_routes.js
 routes/product_routes.js
@@ -133,9 +134,10 @@ routes/content_routes.js
 routes/device_routes.js
 routes/email_routes_original.js
 routes/log_routes.js
+routes/chip_routes.js
 
 models/user.js
-models/chips.js
+models/chip.js
 models/product.js
 models/index.js
 models/order.js

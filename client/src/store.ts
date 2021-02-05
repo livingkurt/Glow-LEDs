@@ -47,8 +47,8 @@ import {
 	userDeleteReducer,
 	userListReducer,
 	userDetailsReducer,
-	userUpdateUserReducer,
-	errorReducer
+	userUpdateUserReducer
+	// errorReducer
 } from './reducers/userReducers';
 import {
 	orderCreateReducer,
@@ -67,6 +67,7 @@ import {
 	affiliateListReducer,
 	affiliateSaveReducer
 } from './reducers/affiliateReducers';
+import { chipDeleteReducer, chipDetailsReducer, chipListReducer, chipSaveReducer } from './reducers/chipReducers';
 import {
 	contentDeleteReducer,
 	contentDetailsReducer,
@@ -91,7 +92,7 @@ const reducer = combineReducers({
 	cartDelete: cartDeleteReducer,
 	userLogin: userLoginReducer,
 	userRegister: userRegisterReducer,
-	errors: errorReducer,
+	// errors: errorReducer,
 	productSave: productSaveReducer,
 	productImages: productImagesReducer,
 	productDelete: productDeleteReducer,
@@ -135,6 +136,10 @@ const reducer = combineReducers({
 	affiliateDetails: affiliateDetailsReducer,
 	affiliateSave: affiliateSaveReducer,
 	affiliateDelete: affiliateDeleteReducer,
+	chipList: chipListReducer,
+	chipDetails: chipDetailsReducer,
+	chipSave: chipSaveReducer,
+	chipDelete: chipDeleteReducer,
 	contentList: contentListReducer,
 	contentDetails: contentDetailsReducer,
 	contentSave: contentSaveReducer,
