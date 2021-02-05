@@ -57,7 +57,7 @@ const productSchema = new mongoose.Schema(
 		weight_pounds: { type: Number },
 		weight_ounces: { type: Number },
 		order: { type: Number },
-		compatible_chips: { type: Array }
+		chips: { type: Array }
 	},
 	{
 		timestamps: true

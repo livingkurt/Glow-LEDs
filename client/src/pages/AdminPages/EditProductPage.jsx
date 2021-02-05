@@ -140,7 +140,7 @@ const EditProductPage = (props) => {
 		set_weight_ounces(product.weight_ounces);
 		// setDisplayImage(product.display_image);
 		set_images(product.images);
-		set_chips(product.compatible_chips);
+		set_chips(product.chips);
 		// set_image(product.image);
 		setVideo(product.video);
 		setBrand(product.brand);
@@ -200,7 +200,7 @@ const EditProductPage = (props) => {
 				price,
 				// display_image,
 				images,
-				compatible_chips: chips,
+				chips: chips,
 				video,
 				brand,
 				category,
@@ -540,7 +540,7 @@ const EditProductPage = (props) => {
 	const move_left = () => {};
 	const move_right = () => {};
 
-	const compatible_chips = [
+	const chip_names = [
 		'spectra EVOs',
 		'chroma EVOs',
 		'Uber Nanos',
@@ -808,7 +808,7 @@ const EditProductPage = (props) => {
 															<option key={1} defaultValue="">
 																---Choose Chip---
 															</option>
-															{compatible_chips.map((chip, index) => (
+															{chip_names.map((chip, index) => (
 																<option key={index} value={chip}>
 																	{chip}
 																</option>
