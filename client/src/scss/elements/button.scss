@@ -90,6 +90,19 @@ button {
 	background-color: gray;
 }
 
+.cart_close_button {
+	border-radius: 50%;
+	font-size: 2rem;
+	padding-top: 0;
+	cursor: pointer;
+	position: absolute;
+	right: .5rem;
+	top: 1.5rem;
+	background-color: transparent;
+	border: 0;
+	color: $theme_color_phrase_font;
+}
+
 .sidebar_close_button {
 	border-radius: 50%;
 	font-size: 2rem;

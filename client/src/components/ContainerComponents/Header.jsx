@@ -26,13 +26,22 @@ const Header = (props) => {
 
 	const { cartItems } = cart;
 
-	const openMenu = () => {
+	const open_sidebar = () => {
 		const sidebar = document.querySelector('.sidebar');
 		console.log(sidebar.classList.value);
 		if (sidebar.classList.value === 'sidebar open') {
 			document.querySelector('.sidebar').classList.remove('open');
 		} else if (sidebar.classList.value === 'sidebar') {
 			document.querySelector('.sidebar').classList.add('open');
+		}
+	};
+	const open_cart = () => {
+		const cart = document.querySelector('.cart');
+		console.log(cart.classList.value);
+		if (cart.classList.value === 'cart open') {
+			document.querySelector('.cart').classList.remove('open');
+		} else if (cart.classList.value === 'cart') {
+			document.querySelector('.cart').classList.add('open');
 		}
 	};
 	const dispatch = useDispatch();
@@ -74,7 +83,7 @@ const Header = (props) => {
 					</Link>
 					<button
 						className="btn mobile nav none fs-30px h-50px w-50px p-10px"
-						onClick={openMenu}
+						onClick={open_sidebar}
 						aria-label="sidebar"
 					>
 						<i className="fas fa-bars" />
@@ -576,26 +585,25 @@ const Header = (props) => {
 						</div>
 					</div>
 				</div>
-				<Link to="/checkout/cart">
-					<button className="btn mobile nav cart_icon none">
+				{/* <Link to="/checkout/cart"> */}
+				<button className="btn mobile nav cart_icon none" onClick={open_cart}>
+					<i className="fas fa-shopping-cart" />{' '}
+					{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+				</button>
+				{/* </Link> */}
+				<div className="nav_bar w-233px jc-fe">
+					{/* <Link to="/checkout/cart"> */}
+					<button className="btn nav cart_text w-105px" onClick={open_cart}>
+						Cart <i className="fas fa-shopping-cart" />{' '}
+						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+					</button>
+					{/* </Link> */}
+					{/* <Link to="/checkout/cart"> */}
+					<button className="btn mobile nav cart_icon none" onClick={open_cart}>
 						<i className="fas fa-shopping-cart" />{' '}
 						{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
 					</button>
-				</Link>
-				<div className="nav_bar w-233px jc-fe">
-					<Link to="/checkout/cart">
-						<button className="btn nav cart_text w-105px">
-							Cart <i className="fas fa-shopping-cart" />{' '}
-							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
-						</button>
-					</Link>
-					<Link to="/checkout/cart">
-						<button className="btn mobile nav cart_icon none">
-							<i className="fas fa-shopping-cart" />{' '}
-							{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
-						</button>
-					</Link>
-					{console.log({ userInfo })}
+					{/* </Link> */}
 					{userInfo && userInfo.hasOwnProperty('first_name') ? (
 						<div className="dropdown">
 							<button className="btn nav">{first_name}</button>

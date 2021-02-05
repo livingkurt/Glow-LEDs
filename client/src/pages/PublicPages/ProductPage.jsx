@@ -26,6 +26,7 @@ const ProductPage = (props) => {
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
 	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('');
+	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
 	// console.log({ diffuser_cap });
 
@@ -48,6 +49,15 @@ const ProductPage = (props) => {
 			return diffuser_cap_colors;
 		} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
 			return diffuser_colors;
+		}
+	};
+	const open_cart = () => {
+		const cart = document.querySelector('.cart');
+		console.log(cart.classList.value);
+		if (cart.classList.value === 'cart open') {
+			document.querySelector('.cart').classList.remove('open');
+		} else if (cart.classList.value === 'cart') {
+			document.querySelector('.cart').classList.add('open');
 		}
 	};
 
@@ -106,7 +116,12 @@ const ProductPage = (props) => {
 
 	const handleAddToCart = () => {
 		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap));
-		props.history.push('/checkout/cart');
+		// props.history.push('/checkout/cart');
+		// set_added_to_cart_message(product.name);
+		// setTimeout(() => {
+		// 	set_added_to_cart_message('');
+		// }, 2000);
+		open_cart();
 	};
 
 	// const filament_colors = [ 'Black' ];
@@ -201,6 +216,16 @@ const ProductPage = (props) => {
 								}
 							/>
 						</Helmet>
+						<div>
+							{added_to_cart_message && (
+								<div className="jc-c column">
+									<div className="added_to_cart_message">
+										<h2 className="ta-c">{added_to_cart_message}</h2>
+										<p className="ta-c">Added to Cart!</p>
+									</div>
+								</div>
+							)}
+						</div>
 						<div className="details">
 							<div className="column">
 								<label className="product_title_top none fs-2em ff-h mb-2rem">{product.name}</label>

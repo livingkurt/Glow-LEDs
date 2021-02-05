@@ -69,7 +69,7 @@ import {
 	AffiliateCreationComplete,
 	ShippingPublicPage
 } from './pages/index';
-import { Header, Container, Content, Footer, Sidebar } from './components/ContainerComponents/index';
+import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
 
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
@@ -175,8 +175,9 @@ const App = () => {
 					/>
 					<meta name="twitter:creator" content="@glow_leds" />
 				</Helmet>
-				<Header userInfo={userInfo} />
-				<Sidebar userInfo={userInfo} />
+				<Header />
+				<Sidebar />
+				<Cart />
 				<Content>
 					<MessengerCustomerChat
 						pageId="100365571740684"

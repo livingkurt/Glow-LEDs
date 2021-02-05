@@ -41,6 +41,7 @@ const facebook_catalog_upload = async () => {
 			'price',
 			'link',
 			'image_link',
+			'additional_image_link',
 			'brand',
 			'inventory',
 			'fb_product_category',
@@ -61,6 +62,7 @@ const facebook_catalog_upload = async () => {
 			const price = product.price + ' USD';
 			const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
 			const image_link = product.images[0];
+			const additional_image_link = product.images[1];
 			const brand = 'Glow LEDs';
 			const inventory = product.countInStock;
 			const fb_product_category = 'toys & games > electronic toys';
@@ -78,6 +80,7 @@ const facebook_catalog_upload = async () => {
 				price,
 				link,
 				image_link,
+				additional_image_link,
 				brand,
 				inventory,
 				fb_product_category,
