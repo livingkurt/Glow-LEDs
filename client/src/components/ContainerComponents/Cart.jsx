@@ -15,7 +15,7 @@ const Cart = (props) => {
 				function handleClickOutside(event) {
 					if (ref.current && !ref.current.contains(event.target)) {
 						// alert('You clicked outside of me!');
-						document.querySelector('.cart').classList.remove('open');
+						document.querySelector('.cart_sidebar').classList.remove('open');
 					}
 				}
 				// Bind the event listener
@@ -32,7 +32,7 @@ const Cart = (props) => {
 	useOutsideAlerter(wrapperRef);
 
 	const closeMenu = () => {
-		document.querySelector('.cart').classList.remove('open');
+		document.querySelector('.cart_sidebar').classList.remove('open');
 	};
 	const dispatch = useDispatch();
 
@@ -108,7 +108,7 @@ const Cart = (props) => {
 	};
 
 	return (
-		<aside ref={wrapperRef} className="cart">
+		<aside ref={wrapperRef} className="cart_sidebar">
 			<div>
 				{/* <div className="logo_text mh-auto ai-c">
 					<Link to="/">
@@ -127,11 +127,11 @@ const Cart = (props) => {
 						</div>
 					</Link>
 				</div> */}
-				<button className="cart_close_button" aria-label="close" onClick={closeMenu}>
+				<button className="cart_sidebar_close_button" aria-label="close" onClick={closeMenu}>
 					<i className="fas fa-times" />
 				</button>
 			</div>
-			<ul className="cart-list-container w-100per mr-1rem">
+			<ul className="cart_sidebar-list-container w-100per mr-1rem">
 				<li>
 					<h2>Shopping Cart</h2>
 					<div>Price</div>
@@ -143,11 +143,9 @@ const Cart = (props) => {
 				) : (
 					<div>
 						<h4>{no_adapters_warning()}</h4>
-						{console.log({ cartItems })}
 						{cartItems.map((item, index) => (
 							<li key={index}>
-								{/* {console.log({ item })} */}
-								<div className="cart-image">
+								<div className="cart_sidebar-image">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<img
 											src={item.display_image}
@@ -158,7 +156,7 @@ const Cart = (props) => {
 										/>
 									</Link>
 								</div>
-								<div className="cart-name">
+								<div className="cart_sidebar-name">
 									<div className="mb-10px">
 										<Link to={'/collections/all/products/' + item.pathname}>
 											{(item.category === 'diffuser_caps' ||
@@ -205,7 +203,7 @@ const Cart = (props) => {
 								</div>
 
 								<div className="column">
-									<div className="cart-price">
+									<div className="cart_sidebar-price">
 										{item.sale_price !== 0 ? (
 											<label>
 												<del style={{ color: 'red' }}>
@@ -242,28 +240,14 @@ const Cart = (props) => {
 					cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 				)}
 			</h3>
+
+			<button className="btn secondary w-100per mb-1rem" onClick={closeMenu}>
+				<Link to="/checkout/cart">View Cart</Link>
+			</button>
+
 			<button onClick={decide_warning} className="btn primary w-100per">
 				Proceed to Checkout
 			</button>
-			{/* <div className="cart">
-				<div className="cart-list" />
-
-				<div className="cart-action-container jc-c">
-					<div className="cart-action">
-						<h3 className="subtotal_h3">
-							Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-							{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-								cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-							) : (
-								cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
-							)}
-						</h3>
-						<button onClick={decide_warning} className="btn primary w-100per">
-							Proceed to Checkout
-						</button>
-					</div>
-				</div>
-			</div> */}
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
 		</aside>
 	);

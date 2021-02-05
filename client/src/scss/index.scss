@@ -984,7 +984,7 @@ video {
 
 /* Cart */
 
-.cart {
+.cart_sidebar {
 	position: fixed;
 	transition: all .5s;
 	transform: translateX(40rem);
@@ -997,22 +997,22 @@ video {
 	z-index: 99;
 }
 
-.cart.open {
+.cart_sidebar.open {
 	transform: translateX(0rem);
 }
 
-.cart_dropdown {
+.cart_sidebar_dropdown {
 	position: relative;
 }
-.cart_dropdown_secondary {
-	position: relative;
-}
-
-.cart_dropdown_nested {
+.cart_sidebar_dropdown_secondary {
 	position: relative;
 }
 
-.cart_dropdown_container {
+.cart_sidebar_dropdown_nested {
+	position: relative;
+}
+
+.cart_sidebar_dropdown_container {
 	overflow: hidden;
 	height: auto;
 	max-height: 0px;
@@ -1024,7 +1024,7 @@ video {
 	width: 100%;
 }
 
-.cart_dropdown_secondary_container {
+.cart_sidebar_dropdown_secondary_container {
 	overflow: hidden;
 	height: auto;
 	max-height: 0px;
@@ -1036,10 +1036,10 @@ video {
 	width: 100%;
 }
 
-.cart_dropdown_secondary_container:hover {
+.cart_sidebar_dropdown_secondary_container:hover {
 	max-height: 600px;
 }
-.cart_dropdown_nested_container {
+.cart_sidebar_dropdown_nested_container {
 	overflow: hidden;
 	height: auto;
 	max-height: 0px;
@@ -1051,8 +1051,67 @@ video {
 	width: 100%;
 }
 
-.cart_dropdown_nested_container:hover {
+.cart_sidebar_dropdown_nested_container:hover {
 	max-height: 600px;
+}
+
+.cart_sidebar {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 1rem;
+	align-items: flex-start;
+}
+
+.cart_sidebar-list {
+	flex: 3 1 40rem;
+}
+
+.cart_sidebar-action {
+	box-shadow: $bs_deep;
+	border-radius: $br_small_containers;
+	background-color: $theme_color_action;
+	padding: 1rem;
+}
+
+
+.cart_sidebar-list-container {
+	padding: 0;
+	list-style-type: none;
+	// margin-right: 10px;
+	margin: 0;
+	li {
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 1rem;
+		margin-bottom: 1rem;
+		border-bottom: .1rem #c0c0c0 solid;
+		img {
+			max-width: 10rem;
+			max-height: 10rem;
+			border-radius: $br_medium_containers;
+			margin-right: 10px;
+		}
+	}
+}
+
+.cart_sidebar-list-container li:first-child {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+.cart_sidebar-image {
+	flex: 1 1;
+}
+
+.cart_sidebar-name {
+	flex: 8 1;
+}
+
+.cart_sidebar-price {
+	flex: 1 1;
+	font-size: 2rem;
+	text-align: right;
 }
 
 .contact_dropdown {
