@@ -23,7 +23,7 @@ import {
 } from '../constants/productConstants';
 import axios from 'axios';
 
-export const listProducts = (category = '', subcategory = '', searchKeyword = '', sortOrder = '') => async (
+export const listProducts = (category = '', subcategory = '', searchKeyword = '', sortOrder = '', chip = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
@@ -34,6 +34,8 @@ export const listProducts = (category = '', subcategory = '', searchKeyword = ''
 				category +
 				'&subcategory=' +
 				subcategory +
+				'&chip=' +
+				chip +
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +

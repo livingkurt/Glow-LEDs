@@ -135,6 +135,7 @@ routes/email_routes_original.js
 routes/log_routes.js
 
 models/user.js
+models/chips.js
 models/product.js
 models/index.js
 models/order.js

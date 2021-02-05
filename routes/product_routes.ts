@@ -132,6 +132,7 @@ router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
+		const chip = req.query.chip ? { chip: req.query.chip } : {};
 		const searchKeyword = req.query.searchKeyword
 			? {
 					name: {
@@ -154,9 +155,13 @@ router.get('/', async (req, res) => {
 			sortOrder = { order: 1, _id: -1 };
 		}
 
-		const products = await Product.find({ deleted: false, ...category, ...subcategory, ...searchKeyword }).sort(
-			sortOrder
-		);
+		const products = await Product.find({
+			deleted: false,
+			...category,
+			...subcategory,
+			...searchKeyword,
+			...chip
+		}).sort(sortOrder);
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,

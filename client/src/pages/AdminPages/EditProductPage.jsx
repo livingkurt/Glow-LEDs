@@ -41,6 +41,8 @@ const EditProductPage = (props) => {
 	const [ weight_pounds, set_weight_pounds ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ pathname, setPathname ] = useState();
+	const [ chips, set_chips ] = useState([]);
+	const [ chip, set_chip ] = useState('');
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
@@ -138,6 +140,7 @@ const EditProductPage = (props) => {
 		set_weight_ounces(product.weight_ounces);
 		// setDisplayImage(product.display_image);
 		set_images(product.images);
+		set_chips(product.compatible_chips);
 		// set_image(product.image);
 		setVideo(product.video);
 		setBrand(product.brand);
@@ -164,6 +167,7 @@ const EditProductPage = (props) => {
 		set_subcategory('');
 		setCountInStock(0);
 		setHidden(false);
+		set_chip([]);
 		setSalePrice('');
 		set_sale_start_date(format_date('2021-01-01'));
 		set_sale_end_date(format_date('2021-01-01'));
@@ -196,6 +200,7 @@ const EditProductPage = (props) => {
 				price,
 				// display_image,
 				images,
+				compatible_chips: chips,
 				video,
 				brand,
 				category,
@@ -267,6 +272,25 @@ const EditProductPage = (props) => {
 
 		set_image('');
 	};
+	const add_chip = (e) => {
+		e.preventDefault();
+		console.log(chip);
+		// if (chip.indexOf(' ') >= 0) {
+		// 	console.log('indexOf');
+		// 	chip.split(' ').map((chip) => {
+		// 		set_chips((chips) => [ ...chips, chip ]);
+		// 	});
+		// } else
+		if (chips) {
+			console.log('chips.length > 0');
+			set_chips((chips) => [ ...chips, e.target.value ]);
+		} else {
+			console.log('chips.length === 0');
+			set_chips([ e.target.value ]);
+		}
+
+		set_chip('');
+	};
 
 	// const add_subcategory = (e) => {
 	// 	e.preventDefault();
@@ -292,6 +316,14 @@ const EditProductPage = (props) => {
 		set_images((images) =>
 			images.filter((image, index) => {
 				return image_index !== index;
+			})
+		);
+	};
+	const remove_chip = (chip_index, e) => {
+		e.preventDefault();
+		set_chips((chips) =>
+			chips.filter((chip, index) => {
+				return chip_index !== index;
 			})
 		);
 	};
@@ -349,6 +381,74 @@ const EditProductPage = (props) => {
 		return arr;
 	}
 
+	const chip_display = (images) => {
+		return (
+			<div>
+				{/* <div className="row wrap">
+					{images &&
+						images.map((picture) => {
+							return (
+								<img
+									style={{
+										width: '100%',
+										package_height: 'auto',
+										maxWidth: '150px',
+										maxHeight: '150px',
+										borderRadius: '15px',
+										marginRight: '10px'
+									}}
+									className="mv-10px"
+									src={picture}
+								/>
+							);
+						})}
+				</div> */}
+				<div className="jc-b">
+					<div>
+						{images &&
+							images.map((picture, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{picture}
+										</div>
+										{/* <div>
+											{index > 0 && (
+												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
+													<i className=" fas fa-sort-up" />
+												</button>
+											)}
+
+											{index < images.length - 1 && (
+												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
+													<i
+														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														className=" fas fa-sort-up"
+													/>
+												</button>
+											)}
+										</div> */}
+									</div>
+								);
+							})}
+					</div>
+					{/* <li>
+						<label htmlFor="images">Images</label>
+						<textarea
+							className="edit_product_textarea w-450px h-100per"
+							name="images"
+							value={images}
+							id="images"
+							// onChange={(e) => set_images(e.target.value)}
+						/>
+					</li> */}
+				</div>
+			</div>
+		);
+	};
 	const image_display = (images) => {
 		return (
 			<div>
@@ -439,6 +539,20 @@ const EditProductPage = (props) => {
 
 	const move_left = () => {};
 	const move_right = () => {};
+
+	const compatible_chips = [
+		'spectra EVOs',
+		'chroma EVOs',
+		'Uber Nanos',
+		'Aurora Nanos',
+		'QtLite 6 Mode',
+		'Atoms',
+		'Ions',
+		'Apollos',
+		'Aethers',
+		'OSM 2s',
+		'Micromax'
+	];
 
 	return (
 		<div className="main_container p-20px">
@@ -664,7 +778,7 @@ const EditProductPage = (props) => {
 												</li>
 											)}
 											<li>
-												<label htmlFor="image">image</label>
+												<label htmlFor="image">Image</label>
 												<input
 													type="text"
 													name="image"
@@ -674,6 +788,37 @@ const EditProductPage = (props) => {
 												/>
 												<button className="btn primary" onClick={(e) => add_image(e)}>
 													Add Image
+												</button>
+											</li>
+											<li>
+												<label htmlFor="chip">Chip</label>
+												{/* <input
+													type="text"
+													name="chip"
+													value={chip}
+													id="chip"
+													onChange={(e) => set_chip(e.target.value)}
+												/> */}
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_chip(e)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Chip---
+															</option>
+															{compatible_chips.map((chip, index) => (
+																<option key={index} value={chip}>
+																	{chip}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												<button className="btn primary" onClick={(e) => add_chip(e)}>
+													Add Chip
 												</button>
 											</li>
 										</div>
@@ -877,6 +1022,7 @@ const EditProductPage = (props) => {
 											</li>
 										</div>
 									</div>
+									{chip_display(chips)}
 									{image_display(images)}
 									<li>
 										<button type="submit" className="btn primary">

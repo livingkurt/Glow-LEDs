@@ -20,3 +20,5 @@ export { default as Order } from './Order';
 export { default as OrderSmallScreen } from './OrderSmallScreen';
 export { default as OrderListItem } from './OrderListItem';
 export { default as OrderStatusSteps } from './OrderStatusSteps';
+export { default as FilterByChip } from './FilterByChip';
+export { default as Filter } from './Filter';

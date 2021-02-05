@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
-import { Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Filter, Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
@@ -20,6 +20,7 @@ const AllProductsPage = (props) => {
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
 	const [ sortOrder, setSortOrder ] = useState('');
+	const [ filter, set_filter ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 
@@ -156,6 +157,10 @@ const AllProductsPage = (props) => {
 		setSortOrder(e.target.value);
 		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value));
 	};
+	const filterHandler = (e) => {
+		set_filter(e.target.value);
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, e.target.value));
+	};
 
 	const descriptions = {
 		all_products:
@@ -199,6 +204,19 @@ const AllProductsPage = (props) => {
 	// console.log({ category });
 
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
+	const filter_options = [
+		'spectra EVOs',
+		'chroma EVOs',
+		'Uber Nanos',
+		'Aurora Nanos',
+		'QtLite 6 Mode',
+		'Atoms',
+		'Ions',
+		'Apollos',
+		'Aethers',
+		'OSM 2s',
+		'Micromax'
+	];
 
 	return (
 		<div>
@@ -234,6 +252,7 @@ const AllProductsPage = (props) => {
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
+				{/* <Filter filterHandler={filterHandler} filter_options={filter_options} /> */}
 			</div>
 			<Loading loading={loading} error={error}>
 				{best_sellers && (
