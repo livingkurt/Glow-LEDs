@@ -271,7 +271,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
 							<AdminRoute path="/secure/glow/editaffiliate/:id?" component={EditAffiliatePage} />
-							<AdminRoute path="/secure/glow/edit_chip/:id?" component={EditChipPage} />
+							<AdminRoute path="/secure/glow/editchip/:id?" component={EditChipPage} />
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
 							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />

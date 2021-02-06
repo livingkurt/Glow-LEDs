@@ -9,12 +9,13 @@ const chip_dimensions_schema = {
 
 const chip_schema = new mongoose.Schema(
 	{
-		chip_name: { type: String },
+		name: { type: String },
 		company: { type: String },
 		category: { type: String },
 		programmmable: { type: Boolean },
 		number_of_modes: { type: Number },
 		characteristics: { type: String },
+		pathname: { type: String },
 		image: { type: String },
 		dimensions: chip_dimensions_schema,
 		deleted: { type: Boolean, default: false }

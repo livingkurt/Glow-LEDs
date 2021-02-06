@@ -25,7 +25,8 @@ import {
 	cart_routes,
 	content_routes,
 	device_routes,
-	log_routes
+	log_routes,
+	chip_routes
 } from './routes/index';
 // import users from './routes/users';
 
@@ -107,7 +108,7 @@ app.use('/api/affiliates', affiliate_routes);
 app.use('/api/expenses', expense_routes);
 app.use('/api/features', feature_routes);
 app.use('/api/users', user_routes);
-// app.use('/api/usess', users);
+app.use('/api/chips', chip_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);

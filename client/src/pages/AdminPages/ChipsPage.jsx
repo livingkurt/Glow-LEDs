@@ -52,16 +52,38 @@ const ChipsPage = (props) => {
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
-	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promoter', color: '#7d5555' } ];
+	const colors = [
+		{ name: 'EL Nano', color: '#3e4c6d' },
+		{ name: 'LG Nano', color: '#3e4c6d' },
+		{ name: 'EL Coin', color: '#4b7188' },
+		{ name: 'LG Coin', color: '#4b7188' },
+		{ name: 'Apollo', color: '#6f5f7d' },
+		{ name: 'Coffin', color: '#636363' },
+		{ name: 'Emissive', color: '#333333' }
+	];
 
 	const determine_color = (chip) => {
 		let result = '';
-
-		if (chip.sponsor) {
-			result = colors[0].color;
-		}
-		if (chip.promoter) {
+		if (chip.category === 'el_nano') {
 			result = colors[1].color;
+		}
+		if (chip.category === 'lg_nano') {
+			result = colors[1].color;
+		}
+		if (chip.category === 'el_coin') {
+			result = colors[2].color;
+		}
+		if (chip.category === 'lg_coin') {
+			result = colors[2].color;
+		}
+		if (chip.category === 'apollo') {
+			result = colors[3].color;
+		}
+		if (chip.category === 'coffin') {
+			result = colors[4].color;
+		}
+		if (chip.category === 'emissive') {
+			result = colors[5].color;
 		}
 		return result;
 	};
@@ -109,14 +131,11 @@ const ChipsPage = (props) => {
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Artist Name</th>
-									<th>Instagram Handle</th>
-									<th>Facebook Name</th>
-									<th>Percentage Off</th>
-									<th>Promo Code</th>
-									<th>Sponsor</th>
-									<th>Promotor</th>
-									<th>active</th>
+									<th>Chip Name</th>
+									<th>Company</th>
+									<th>Category</th>
+									<th>Programmmable</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -129,27 +148,11 @@ const ChipsPage = (props) => {
 										}}
 									>
 										<td className="p-10px">{chip._id}</td>
-										<td className="p-10px">{chip.artist_name}</td>
-										<td className="p-10px">{chip.instagram_handle}</td>
-										<td className="p-10px">{chip.facebook_name}</td>
-										<td className="p-10px">{chip.percentage_off}%</td>
-										<td className="p-10px">{chip.promo_code}</td>
+										<td className="p-10px">{chip.chip_name}</td>
+										<td className="p-10px">{chip.company}</td>
+										<td className="p-10px">{chip.category}</td>
 										<td className="p-10px">
-											{chip.sponsor ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</td>
-										<td className="p-10px">
-											{chip.promoter ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</td>
-										<td className="p-10px">
-											{chip.active ? (
+											{chip.programmmable ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />

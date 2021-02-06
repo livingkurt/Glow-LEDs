@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
+import { listChips } from '../../actions/chipActions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -55,6 +56,9 @@ const EditProductPage = (props) => {
 	const productList = useSelector((state) => state.productList);
 	const { products } = productList;
 
+	const chipList = useSelector((state) => state.chipList);
+	const { chips: chips_list } = chipList;
+
 	const productReviewDelete = useSelector((state) => state.productReviewDelete);
 	const { success: productDeleteSuccess } = productReviewDelete;
 
@@ -75,7 +79,7 @@ const EditProductPage = (props) => {
 				stableDispatch(detailsProduct(''));
 			}
 			stableDispatch(listProducts(''));
-
+			listChips();
 			// set_loading_data(false);
 			set_state();
 			return () => {};
@@ -540,19 +544,19 @@ const EditProductPage = (props) => {
 	const move_left = () => {};
 	const move_right = () => {};
 
-	const chip_names = [
-		'spectra EVOs',
-		'chroma EVOs',
-		'Uber Nanos',
-		'Aurora Nanos',
-		'QtLite 6 Mode',
-		'Atoms',
-		'Ions',
-		'Apollos',
-		'Aethers',
-		'OSM 2s',
-		'Micromax'
-	];
+	// const chip_names = [
+	// 	'spectra EVOs',
+	// 	'chroma EVOs',
+	// 	'Uber Nanos',
+	// 	'Aurora Nanos',
+	// 	'QtLite 6 Mode',
+	// 	'Atoms',
+	// 	'Ions',
+	// 	'Apollos',
+	// 	'Aethers',
+	// 	'OSM 2s',
+	// 	'Micromax'
+	// ];
 
 	return (
 		<div className="main_container p-20px">
@@ -808,9 +812,9 @@ const EditProductPage = (props) => {
 															<option key={1} defaultValue="">
 																---Choose Chip---
 															</option>
-															{chip_names.map((chip, index) => (
-																<option key={index} value={chip}>
-																	{chip}
+															{chips_list.map((chip, index) => (
+																<option key={index} value={chip.pathname}>
+																	{chip.name}
 																</option>
 															))}
 														</select>
