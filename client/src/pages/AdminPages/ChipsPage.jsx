@@ -148,7 +148,7 @@ const ChipsPage = (props) => {
 										}}
 									>
 										<td className="p-10px">{chip._id}</td>
-										<td className="p-10px">{chip.chip_name}</td>
+										<td className="p-10px">{chip.name}</td>
 										<td className="p-10px">{chip.company}</td>
 										<td className="p-10px">{chip.category}</td>
 										<td className="p-10px">

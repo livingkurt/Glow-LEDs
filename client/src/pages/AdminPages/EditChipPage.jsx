@@ -255,7 +255,7 @@ const EditChipPage = (props) => {
 									</button>
 								</li>
 								<li>
-									<button className="btn secondary">
+									<button className="btn secondary" onClick={(e) => e.preventDefault()}>
 										<Link to="/secure/glow/chips">Back to Chips</Link>
 									</button>
 								</li>

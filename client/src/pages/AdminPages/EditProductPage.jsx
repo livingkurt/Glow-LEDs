@@ -79,7 +79,8 @@ const EditProductPage = (props) => {
 				stableDispatch(detailsProduct(''));
 			}
 			stableDispatch(listProducts(''));
-			listChips();
+			stableDispatch(listChips());
+
 			// set_loading_data(false);
 			set_state();
 			return () => {};
@@ -195,7 +196,7 @@ const EditProductPage = (props) => {
 	// };
 
 	const submitHandler = (e) => {
-		console.log({ hidden });
+		console.log({ chips });
 		e.preventDefault();
 		dispatch(
 			saveProduct({
@@ -204,7 +205,7 @@ const EditProductPage = (props) => {
 				price,
 				// display_image,
 				images,
-				chips: chips,
+				chips: chips.map((chip) => chip._id),
 				video,
 				brand,
 				category,
@@ -278,7 +279,8 @@ const EditProductPage = (props) => {
 	};
 	const add_chip = (e) => {
 		e.preventDefault();
-		console.log(chip);
+		const chip_object = JSON.parse(e.target.value);
+		// console.log(chip);
 		// if (chip.indexOf(' ') >= 0) {
 		// 	console.log('indexOf');
 		// 	chip.split(' ').map((chip) => {
@@ -287,10 +289,10 @@ const EditProductPage = (props) => {
 		// } else
 		if (chips) {
 			console.log('chips.length > 0');
-			set_chips((chips) => [ ...chips, e.target.value ]);
+			set_chips((chips) => [ ...chips, chip_object ]);
 		} else {
 			console.log('chips.length === 0');
-			set_chips([ e.target.value ]);
+			set_chips([ chip_object ]);
 		}
 
 		set_chip('');
@@ -385,12 +387,12 @@ const EditProductPage = (props) => {
 		return arr;
 	}
 
-	const chip_display = (images) => {
+	const chip_display = (chips) => {
 		return (
 			<div>
 				{/* <div className="row wrap">
-					{images &&
-						images.map((picture) => {
+					{chips &&
+						chips.map((picture) => {
 							return (
 								<img
 									style={{
@@ -409,15 +411,15 @@ const EditProductPage = (props) => {
 				</div> */}
 				<div className="jc-b">
 					<div>
-						{images &&
-							images.map((picture, index) => {
+						{chips &&
+							chips.map((chip, index) => {
 								return (
 									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
 										<div>
 											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
 												<i className="fas fa-times mr-5px" />
 											</button>
-											{picture}
+											{chip.name}
 										</div>
 										{/* <div>
 											{index > 0 && (
@@ -426,7 +428,7 @@ const EditProductPage = (props) => {
 												</button>
 											)}
 
-											{index < images.length - 1 && (
+											{index < chips.length - 1 && (
 												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
 													<i
 														style={{ '-webkitTransform': 'rotate(-180deg)' }}
@@ -567,6 +569,7 @@ const EditProductPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
+								{console.log({ product })}
 								<Helmet>
 									<title>Edit Product | Glow LEDs</title>
 								</Helmet>
@@ -813,7 +816,7 @@ const EditProductPage = (props) => {
 																---Choose Chip---
 															</option>
 															{chips_list.map((chip, index) => (
-																<option key={index} value={chip.pathname}>
+																<option key={index} value={JSON.stringify(chip)}>
 																	{chip.name}
 																</option>
 															))}

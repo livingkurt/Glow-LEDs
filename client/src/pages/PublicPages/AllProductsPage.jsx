@@ -7,6 +7,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
+import { listChips } from '../../actions/chipActions';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
@@ -28,6 +29,10 @@ const AllProductsPage = (props) => {
 	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
+
+	const chipList = useSelector((state) => state.chipList);
+	const { chips: chips_list } = chipList;
+
 	const dispatch = useDispatch();
 
 	useEffect(
@@ -35,6 +40,7 @@ const AllProductsPage = (props) => {
 			// dispatch(listProducts(''));
 			// console.log({ search: search.substring(8) });
 			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listChips());
 		},
 		[ searchKeyword ]
 	);
@@ -54,6 +60,7 @@ const AllProductsPage = (props) => {
 			} else {
 				dispatch(listProducts(category, subcategory, searchKeyword));
 			}
+			dispatch(listChips());
 		},
 		[ category ]
 	);
@@ -92,6 +99,7 @@ const AllProductsPage = (props) => {
 			// params.delete('searcj'); //Query string is now: 'bar=2'
 			setSearchKeyword('');
 			dispatch(listProducts(category, subcategory));
+			dispatch(listChips());
 		},
 		[ props.location.pathname ]
 	);
@@ -126,6 +134,7 @@ const AllProductsPage = (props) => {
 			// }
 
 			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listChips());
 			// } else {
 
 			// 	dispatch(listProducts(''));
@@ -137,6 +146,7 @@ const AllProductsPage = (props) => {
 	useEffect(
 		() => {
 			dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
+			dispatch(listChips());
 		},
 		[ sortOrder ]
 	);
@@ -204,19 +214,19 @@ const AllProductsPage = (props) => {
 	// console.log({ category });
 
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
-	const filter_options = [
-		'spectra EVOs',
-		'chroma EVOs',
-		'Uber Nanos',
-		'Aurora Nanos',
-		'QtLite 6 Mode',
-		'Atoms',
-		'Ions',
-		'Apollos',
-		'Aethers',
-		'OSM 2s',
-		'Micromax'
-	];
+	// const filter_options = [
+	// 	'spectra EVOs',
+	// 	'chroma EVOs',
+	// 	'Uber Nanos',
+	// 	'Aurora Nanos',
+	// 	'QtLite 6 Mode',
+	// 	'Atoms',
+	// 	'Ions',
+	// 	'Apollos',
+	// 	'Aethers',
+	// 	'OSM 2s',
+	// 	'Micromax'
+	// ];
 
 	return (
 		<div>
@@ -252,7 +262,7 @@ const AllProductsPage = (props) => {
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-				{/* <Filter filterHandler={filterHandler} filter_options={filter_options} /> */}
+				<Filter filterHandler={filterHandler} filter_options={chips_list.map((chip) => chip.name)} />
 			</div>
 			<Loading loading={loading} error={error}>
 				{best_sellers && (
