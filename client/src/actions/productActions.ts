@@ -28,7 +28,7 @@ export const listProducts = (category = '', subcategory = '', searchKeyword = ''
 ) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
-		console.log({ searchKeyword });
+		console.log({ chip });
 		const { data } = await axios.get(
 			'/api/products?category=' +
 				category +

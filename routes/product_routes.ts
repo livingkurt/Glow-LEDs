@@ -132,7 +132,12 @@ router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
-		const chip = req.query.chip ? { chip: req.query.chip } : {};
+		// const chips = req.query.chip ? { chips: { $all: [ req.query.chip ] } } : {};
+		// const chips = req.query.chip ? { $elemMatch: { chip: req.query.chip } } : {};
+		// const chips = req.query.chip ? { chips: { $elemMatch: { chip: req.query.chip } } } : {};
+		// const chips = req.query.chip ? { chips: { $elemMatch: req.query.chip } } : {};
+		const chips = req.query.chip ? { chips: req.query.chip } : {};
+		console.log(chips);
 		const searchKeyword = req.query.searchKeyword
 			? {
 					name: {
@@ -160,7 +165,7 @@ router.get('/', async (req, res) => {
 			...category,
 			...subcategory,
 			...searchKeyword,
-			...chip
+			...chips
 		}).sort(sortOrder);
 		log_request({
 			method: 'GET',
@@ -171,6 +176,12 @@ router.get('/', async (req, res) => {
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
+		// console.log(
+		// 	products
+		// 		.map((product: any) => product.chips)
+		// 		.includes([ '601ecb528aa105a5eff3bbe3', '601ecab68aa105a5eff3bbbc' ])
+		// );
+		console.log(products.map((product: any) => product.chips));
 		res.send(products);
 	} catch (error) {
 		log_error({

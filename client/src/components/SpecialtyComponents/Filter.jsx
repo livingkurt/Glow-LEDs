@@ -9,8 +9,12 @@ const Filter = (props) => {
 					<option className="grey_option" disabled="disabled" selected="selected" value="">
 						Filter By
 					</option>
-					{props.filter_options.map((option) => {
-						return <option value={option.toLowerCase()}>{option}</option>;
+					{props.filter_options.map((option, index) => {
+						return (
+							<option key={index} value={option._id}>
+								{option.name}
+							</option>
+						);
 					})}
 				</select>
 				<span className="custom-arrow" />

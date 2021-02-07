@@ -25,7 +25,7 @@ const AllProductsPage = (props) => {
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 
-	console.log({ subcategory });
+	// console.log({ subcategory });
 	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
@@ -84,8 +84,8 @@ const AllProductsPage = (props) => {
 			set_best_sellers(false);
 		}
 	};
-	console.log({ best_sellers });
-	console.log({ products });
+	// console.log({ best_sellers });
+	// console.log({ products });
 
 	useEffect(
 		() => {
@@ -262,7 +262,7 @@ const AllProductsPage = (props) => {
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-				<Filter filterHandler={filterHandler} filter_options={chips_list.map((chip) => chip.name)} />
+				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading} error={error}>
 				{best_sellers && (
