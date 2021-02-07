@@ -620,21 +620,21 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // // 	res.send(order);
 // // });
 
-// // router.put('/orders_mini', async (req, res) => {
-// // 	const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
-// // 	const order = await Order.updateMany(
-// // 		{ 'orderItems.name': 'Mega Diffuser Caps + Adapters Starter Kit' },
-// // 		{
-// // 			// $rename: { shipping_price: 'volume' }
-// // 			$set: {
-// // 				'orderItems.$.secondary_product': 'Black'
-// // 			}
-// // 			// $unset: { shipping_price: 1 }
-// // 		},
-// // 		{ upsert: true }
-// // 	);
-// // 	console.log({ order });
-// // 	res.send(order);
-// // });
+router.put('/all_chips', async (req, res) => {
+	// const orders = await Product.find({ category: 'frosted_diffusers' });
+	const order = await Product.updateMany(
+		{ category: 'mega_diffuser_caps' },
+		{
+			// $rename: { shipping_price: 'volume' }
+			$set: {
+				chips: [ '60203602dcf28a002a1a62ed' ]
+			}
+			// $unset: { shipping_price: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
 
 export default router;
