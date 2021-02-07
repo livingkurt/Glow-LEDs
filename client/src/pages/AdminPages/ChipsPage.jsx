@@ -56,6 +56,7 @@ const ChipsPage = (props) => {
 		{ name: 'EL Nano', color: '#3e4c6d' },
 		{ name: 'LG Nano', color: '#3e4c6d' },
 		{ name: 'FL Nano', color: '#3e4c6d' },
+		{ name: 'QT Nano', color: '#3e4c6d' },
 		{ name: 'EL Coin', color: '#4b7188' },
 		{ name: 'LG Coin', color: '#4b7188' },
 		{ name: 'FL Coin', color: '#4b7188' },
@@ -73,6 +74,9 @@ const ChipsPage = (props) => {
 			result = colors[1].color;
 		}
 		if (chip.category === 'fl_nano') {
+			result = colors[1].color;
+		}
+		if (chip.category === 'qt_nano') {
 			result = colors[1].color;
 		}
 		if (chip.category === 'el_coin') {
