@@ -55,11 +55,13 @@ const ChipsPage = (props) => {
 	const colors = [
 		{ name: 'EL Nano', color: '#3e4c6d' },
 		{ name: 'LG Nano', color: '#3e4c6d' },
+		{ name: 'FL Nano', color: '#3e4c6d' },
 		{ name: 'EL Coin', color: '#4b7188' },
 		{ name: 'LG Coin', color: '#4b7188' },
+		{ name: 'FL Coin', color: '#4b7188' },
 		{ name: 'Apollo', color: '#6f5f7d' },
 		{ name: 'Coffin', color: '#636363' },
-		{ name: 'Emissive', color: '#333333' }
+		{ name: 'Inova', color: '#333333' }
 	];
 
 	const determine_color = (chip) => {
@@ -70,10 +72,16 @@ const ChipsPage = (props) => {
 		if (chip.category === 'lg_nano') {
 			result = colors[1].color;
 		}
+		if (chip.category === 'fl_nano') {
+			result = colors[1].color;
+		}
 		if (chip.category === 'el_coin') {
 			result = colors[2].color;
 		}
 		if (chip.category === 'lg_coin') {
+			result = colors[2].color;
+		}
+		if (chip.category === 'fl_coin') {
 			result = colors[2].color;
 		}
 		if (chip.category === 'apollo') {
