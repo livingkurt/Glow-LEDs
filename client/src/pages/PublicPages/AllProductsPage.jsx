@@ -262,7 +262,8 @@ const AllProductsPage = (props) => {
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-				{category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />}
+				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
+				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading} error={error}>
 				{best_sellers && (

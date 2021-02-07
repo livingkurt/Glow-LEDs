@@ -136,7 +136,8 @@ router.get('/', async (req, res) => {
 		// const chips = req.query.chip ? { $elemMatch: { chip: req.query.chip } } : {};
 		// const chips = req.query.chip ? { chips: { $elemMatch: { chip: req.query.chip } } } : {};
 		// const chips = req.query.chip ? { chips: { $elemMatch: req.query.chip } } : {};
-		const chips = req.query.chip ? { chips: req.query.chip } : {};
+		// const chips = req.query.chip ? { chips: req.query.chip } : {};
+		const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 		const searchKeyword = req.query.searchKeyword
 			? {
 					name: {
