@@ -259,10 +259,12 @@ const AllProductsPage = (props) => {
 					</label>
 				</div>
 			</div>
-			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
+			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				{/* <div> */}
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
+				{/* </div> */}
 			</div>
 			<Loading loading={loading} error={error}>
 				{best_sellers && (
