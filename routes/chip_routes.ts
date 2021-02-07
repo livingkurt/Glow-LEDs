@@ -23,14 +23,8 @@ router.get('/', async (req, res) => {
 			sortOrder = { artist_name: 1 };
 		} else if (req.query.sortOrder === 'facebook name') {
 			sortOrder = { facebook_name: 1 };
-		} else if (req.query.sortOrder === 'sponsor') {
-			sortOrder = { sponsor: -1 };
-		} else if (req.query.sortOrder === 'promoter') {
-			sortOrder = { promoter: -1 };
-		} else if (req.query.sortOrder === 'active') {
-			sortOrder = { active: -1 };
 		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-			sortOrder = { _id: -1 };
+			sortOrder = { name: 1 };
 		}
 
 		const chips = await Chip.find({ deleted: false, ...category, ...searchKeyword })
