@@ -81,7 +81,7 @@ router.post('/login', (req, res) => {
 	const password = req.body.password;
 
 	// Find user by email
-	User.findOne({ email }).then((user: any) => {
+	User.findOne({ email }).populate('affiliate').then((user: any) => {
 		// Check if user exists
 		if (!user) {
 			return res.status(404).json({ message: 'Email not found' });
@@ -133,7 +133,7 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		// try {
 		const userId = req.params.id;
 
-		const user: any = await User.findById(userId);
+		const user: any = await User.findById(userId).populate('affiliate');
 		console.log('/update/:id');
 		if (user) {
 			log_request({
@@ -406,7 +406,9 @@ router.get('/', async (req, res) => {
 			sortOrder = { _id: -1 };
 		}
 
-		const users = await User.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+		const users = await User.find({ deleted: false, ...category, ...searchKeyword })
+			.populate('affiliate')
+			.sort(sortOrder);
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -868,7 +870,7 @@ router.put('/verify/:id', async (req, res) => {
 	try {
 		const userId = req.params.id;
 		console.log({ verify: userId });
-		const user: any = await User.findById(userId);
+		const user: any = await User.findById(userId).populate('affiliate');
 		if (user) {
 			log_request({
 				method: 'GET',
@@ -953,7 +955,7 @@ router.put('/verify/:id', async (req, res) => {
 
 router.post('/getuser/:id', async (req, res) => {
 	try {
-		const user: any = await User.findOne({ _id: req.params.id });
+		const user: any = await User.findOne({ _id: req.params.id }).populate('affiliate');
 		if (!user) {
 			log_request({
 				method: 'POST',
@@ -1043,7 +1045,7 @@ router.get('/createadmin', async (req, res) => {
 			isVerified: true,
 			isAdmin: true
 		});
-		const user = await User.findOne({ email: admin.email });
+		const user = await User.findOne({ email: admin.email }).populate('affiliate');
 		if (user) {
 			return res.status(400).send({ message: 'Email already exists' });
 		} else {

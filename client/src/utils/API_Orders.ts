@@ -26,5 +26,8 @@ export default {
 	get_promo: (promo_code: any) => {
 		console.log({ get_promo: promo_code });
 		return axios.get('/api/promos/code/' + promo_code);
+	},
+	get_code_usage: (promo_code: string) => {
+		return axios.get('/api/orders/code_usage/' + promo_code);
 	}
 };

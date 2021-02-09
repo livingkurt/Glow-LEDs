@@ -53,6 +53,22 @@ router.get('/occurrences', async (req: any, res: any) => {
 	res.send(final_result);
 });
 
+router.get('/code_usage/:promo_code', async (req: any, res: any) => {
+	const orders = await Order.find({ deleted: false });
+	const number_of_uses = orders.filter((order: any) => {
+		return order.promo_code && order.promo_code.toLowerCase() === req.params.promo_code.toLowerCase();
+	}).length;
+	const revenue = orders
+		.filter(
+			(order: any) => order.promo_code && order.promo_code.toLowerCase() === req.params.promo_code.toLowerCase()
+		)
+		.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		.toFixed(2);
+
+	console.log({ number_of_uses, revenue });
+	res.send({ number_of_uses, revenue });
+});
+
 router.get('/all_shipping', async (req: any, res: any) => {
 	const orders = await Order.find({ deleted: false });
 	let all_shipping: any = [];

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveAffiliate, detailsAffiliate } from '../../actions/affiliateActions';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
@@ -285,8 +285,8 @@ const CreateAffiliatePage = (props) => {
 										</button>
 									</li>
 									<li>
-										<button className="btn secondary" onClick={() => history.goBack()}>
-											Back to Profile
+										<button className="btn secondary">
+											<Link to="/secure/account/profile">Back to Profile</Link>
 										</button>
 									</li>
 								</ul>

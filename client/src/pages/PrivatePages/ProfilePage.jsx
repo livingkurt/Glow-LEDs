@@ -3,11 +3,26 @@ import { Link } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { API_Orders } from '../../utils';
 
 const ProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	// console.log({ userInfo });
+
+	const [ number_of_uses, set_number_of_uses ] = useState(0);
+	const [ revenue, set_revenue ] = useState(0);
+
+	useEffect(() => {
+		get_code_usage();
+		return () => {};
+	}, []);
+
+	const get_code_usage = async () => {
+		const { data } = await API_Orders.get_code_usage(userInfo.affiliate.promo_code);
+		console.log({ data });
+		set_number_of_uses(data.number_of_uses);
+		set_revenue(data.revenue);
+	};
 
 	return (
 		<div className="column p-20px inner_content">
@@ -58,6 +73,18 @@ const ProfilePage = (props) => {
 						<h3>Promotional Emails</h3>
 						<label>{userInfo.email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
 					</div>
+					{userInfo.is_affiliated &&
+					userInfo.affiliate && (
+						<div className="column mb-20px">
+							<h2>Affiliate Metrics</h2>
+							<h3>Code Usage</h3>
+							<label>
+								{userInfo.affiliate.promo_code.toUpperCase()} used {number_of_uses} times
+							</label>
+							<h3>Code Revenue</h3>
+							<label>${revenue}</label>
+						</div>
+					)}
 				</div>
 				<div className="row">
 					<div className="h-20px">
