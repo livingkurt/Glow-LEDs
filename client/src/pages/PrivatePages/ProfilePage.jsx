@@ -81,8 +81,8 @@ const ProfilePage = (props) => {
 							<label>
 								{userInfo.affiliate.promo_code.toUpperCase()} used {number_of_uses} times
 							</label>
-							<h3>Code Revenue</h3>
-							<label>${revenue}</label>
+							{/* <h3>Code Revenue</h3>
+							<label>${revenue}</label> */}
 						</div>
 					)}
 				</div>
