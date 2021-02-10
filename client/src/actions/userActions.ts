@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { PRODUCT_SAVE_FAIL, PRODUCT_SAVE_REQUEST, PRODUCT_SAVE_SUCCESS } from '../constants/productConstants';
 import {
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
@@ -39,7 +38,10 @@ import {
 	USER_UPDATE_USER_FAIL,
 	GET_ERRORS,
 	SET_CURRENT_USER,
-	USER_LOADING
+	USER_LOADING,
+	USER_SAVE_FAIL,
+	USER_SAVE_REQUEST,
+	USER_SAVE_SUCCESS
 } from '../constants/userConstants';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
@@ -257,7 +259,7 @@ export const saveUser = (user: any) => async (
 ) => {
 	console.log({ userActions: user });
 	try {
-		dispatch({ type: PRODUCT_SAVE_REQUEST, payload: user });
+		dispatch({ type: USER_SAVE_REQUEST, payload: user });
 		const { userLogin: { userInfo } } = getState();
 		if (!user._id) {
 			const { data } = await axios.post('/api/users', user, {
@@ -265,17 +267,17 @@ export const saveUser = (user: any) => async (
 					Authorization: 'Bearer ' + userInfo.token
 				}
 			});
-			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+			dispatch({ type: USER_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/users/' + user._id, user, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
 				}
 			});
-			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+			dispatch({ type: USER_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
-		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
 

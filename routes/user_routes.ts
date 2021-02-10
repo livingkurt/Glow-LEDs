@@ -23,7 +23,7 @@ const validateLoginInput = require('../validation/login');
 // @route POST api/users/register
 // @desc Register user
 // @access Public
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
 	// Form validation
 	console.log({ body: req.body });
 
@@ -34,34 +34,57 @@ router.post('/register', (req, res) => {
 	// 	return res.status(400).json(errors);
 	// }
 
-	User.findOne({ email: req.body.email }).then((user) => {
-		if (user) {
-			return res.status(400).json({ message: 'Email already exists' });
-		} else {
-			const newUser: any = new User({
-				first_name: req.body.first_name,
-				last_name: req.body.last_name,
-				email: req.body.email,
-				password: req.body.password,
-				affiliate: req.body.affiliate,
-				is_affiliated: req.body.is_affiliated,
-				email_subscription: req.body.email_subscription,
-				isAdmin: false,
-				isVerified: true
-			});
+	const user: any = await User.findOne({ email: req.body.email });
 
-			// Hash password before saving in database
-			bcrypt.genSalt(10, (err: any, salt: any) => {
-				bcrypt.hash(newUser.password, salt, (err: any, hash: any) => {
-					if (err) throw err;
-					newUser.password = hash;
-					newUser.save().then((user: any) => res.json(user)).catch((err: any) => {
-						res.status(500).json({ message: 'Error Registering User' });
-					});
+	if (user) {
+		bcrypt.genSalt(10, (err: any, salt: any) => {
+			bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
+				if (err) throw err;
+				user.password = hash;
+				user.first_name = req.body.first_name;
+				user.last_name = req.body.last_name;
+				user.email = req.body.email;
+				await user.save().then((user: any) => res.json(user)).catch((err: any) => {
+					console.log({ err });
+					res.status(500).json({ message: 'Error Registering User' });
+				});
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'User',
+					data: [ user ],
+					status: 202,
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				// res.status(202).send({ message: 'Password Saved', data: user });
+			});
+		});
+		// return res.status(400).json({ message: 'Email already exists' });
+	} else {
+		const newUser: any = new User({
+			first_name: req.body.first_name,
+			last_name: req.body.last_name,
+			email: req.body.email,
+			password: req.body.password,
+			affiliate: req.body.affiliate,
+			is_affiliated: req.body.is_affiliated,
+			email_subscription: req.body.email_subscription,
+			isAdmin: false,
+			isVerified: true
+		});
+
+		// Hash password before saving in database
+		bcrypt.genSalt(10, (err: any, salt: any) => {
+			bcrypt.hash(newUser.password, salt, (err: any, hash: any) => {
+				if (err) throw err;
+				newUser.password = hash;
+				newUser.save().then((user: any) => res.json(user)).catch((err: any) => {
+					res.status(500).json({ message: 'Error Registering User' });
 				});
 			});
-		}
-	});
+		});
+	}
 });
 
 // @route POST api/users/login

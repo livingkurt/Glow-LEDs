@@ -868,6 +868,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 
 router.post('/guestcheckout', async (req: any, res: any) => {
 	try {
+		console.log({ body: req.body });
 		const newOrderCreated = await Order.create({ ...req.body, guest: true });
 		console.log({ newOrderCreated });
 
