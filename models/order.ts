@@ -21,7 +21,7 @@ const shippingSchema = {
 };
 
 const paymentSchema = {
-	paymentMethod: { type: String, required: true },
+	paymentMethod: { type: String },
 	payment: { type: Object },
 	charge: { type: Object },
 	refund: { type: Array },
@@ -37,7 +37,7 @@ const orderItemSchema = new mongoose.Schema(
 		diffuser_cap_name: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
-		pathname: { type: String, required: true },
+		pathname: { type: String },
 		sale_price: { type: Number },
 		package_volume: { type: Number },
 		weight_pounds: { type: Number },

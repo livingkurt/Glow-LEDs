@@ -61,10 +61,10 @@ const userSchema = new mongoose.Schema(
 		last_name: { type: String },
 		email: {
 			type: String,
-			required: true,
-			unique: true,
-			index: true,
-			dropDups: true
+			required: true
+			// unique: true,
+			// index: true
+			// dropDups: true
 		},
 		shipping: shippingSchema,
 		password: { type: String, required: true },

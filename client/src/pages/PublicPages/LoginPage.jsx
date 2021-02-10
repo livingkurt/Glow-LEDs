@@ -20,7 +20,7 @@ const LoginPage = (props) => {
 	// console.log({ errors });
 	// console.log({ error });
 	// const { loading, userInfo, error } = errors;
-	console.log({ userInfo });
+	// console.log({ userInfo });
 	const dispatch = useDispatch();
 	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
 
@@ -55,7 +55,7 @@ const LoginPage = (props) => {
 		console.log();
 		if (request.isValid) {
 			dispatch(login({ email, password }));
-			console.log({ email, password });
+			// console.log({ email, password });
 			set_loading(user_loading);
 			// dispatch(loginUser(email, password));
 		}

@@ -11,7 +11,7 @@ const Header = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log({ userInfo });
+	// console.log({ userInfo });
 
 	useEffect(
 		() => {

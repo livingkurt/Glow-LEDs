@@ -118,6 +118,9 @@ export const validate_registration = (data: {
 	} else if (!Validator.isEmail(data.email)) {
 		errors.email = 'Email must a valid email';
 	}
+	// else if (data.email === data.email.toLowerCase()) {
+	// 	errors.email = 'Email must a not contain uppercase letters';
+	// }
 	// Password checks
 	if (Validator.isEmpty(data.password)) {
 		errors.password = 'Password field is required';

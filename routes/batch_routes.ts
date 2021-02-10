@@ -1,6 +1,7 @@
 export {};
 import express from 'express';
 import { Affiliate, Email, Expense, Feature, Content, Product, Order, User } from '../models';
+const bcrypt = require('bcryptjs');
 require('dotenv');
 const { isAuth, isAdmin } = require('../util');
 
@@ -620,21 +621,320 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // // 	res.send(order);
 // // });
 
-router.put('/all_chips', async (req, res) => {
-	// const orders = await Product.find({ category: 'frosted_diffusers' });
-	const order = await Product.updateMany(
-		{ category: 'mega_diffuser_caps' },
-		{
-			// $rename: { shipping_price: 'volume' }
-			$set: {
-				chips: [ '60203602dcf28a002a1a62ed' ]
+// router.put('/all_chips', async (req, res) => {
+// 	// const orders = await Product.find({ category: 'frosted_diffusers' });
+// 	const order = await Product.updateMany(
+// 		{ category: 'mega_diffuser_caps' },
+// 		{
+// 			// $rename: { shipping_price: 'volume' }
+// 			$set: {
+// 				chips: [ '60203602dcf28a002a1a62ed' ]
+// 			}
+// 			// $unset: { shipping_price: 1 }
+// 		},
+// 		{ upsert: true }
+// 	);
+// 	console.log({ order });
+// 	res.send(order);
+// });
+router.put('/emails_lowercase', async (req, res) => {
+	const users = await User.find({ email: { $exists: true } });
+	users.forEach(async (user: any) => {
+		const userss: any = await User.findOne({ _id: user._id });
+		const updated_user: any = new User(userss);
+		// Check if user exists
+		if (userss.email !== userss.email.toLowerCase()) {
+			console.log('Yes Uppercase');
+			console.log({ original: userss.email, lower: userss.email.toLowerCase() });
+			const same_user: any = await User.findOne({ email: userss.email.toLowerCase() });
+			if (!same_user) {
+				console.log('No Same User');
+
+				updated_user.email = updated_user.email.toLowerCase();
+				await updated_user.save();
+			} else if (same_user) {
+				console.log('Yes Same User');
+				console.log({ same_user });
+				const orders: any = await Order.find({ user: updated_user._id });
+				orders.forEach(async (order: any) => {
+					// const orderss: any = await Order.findOne({ _id: order._id });
+					console.log('Order Change User');
+					const updated_order: any = new Order(order);
+					updated_order.shipping.email = same_user.email;
+					updated_order.user = same_user._id;
+					updated_order.save();
+				});
+				console.log('Delete User');
+				updated_user.deleted = true;
+				await updated_user.save();
 			}
-			// $unset: { shipping_price: 1 }
-		},
-		{ upsert: true }
-	);
-	console.log({ order });
-	res.send(order);
+		}
+	});
+	res.send('Done');
 });
+// router.put('/pathnames', async (req, res) => {
+// 	// const orders = await Product.find({ category: 'frosted_diffusers' });
+// 	const order = await Order.updateMany(
+// 		{ 'orderItems.$.pathname': { $exists: false } },
+// 		{
+// 			// $rename: { shipping_price: 'volume' }
+// 			$set: {
+// 				'orderItems.$.pathname': 'product'
+// 			}
+// 			// $unset: { shipping_price: 1 }
+// 		}
+// 		// { upsert: true }
+// 	);
+// 	console.log({ order });
+// 	res.send(order);
+// });
+router.put('/find_duplicates', async (req, res) => {
+	// const users = await User.aggregate([
+	// 	{
+	// 		$group: {
+	// 			_id: { email: '$email' },
+	// 			uniqueIds: { $addToSet: '$_id' },
+	// 			count: { $sum: 1 }
+	// 		}
+	// 	},
+	// 	{
+	// 		$match: {
+	// 			count: { $gt: 1 }
+	// 		}
+	// 	},
+	// 	{
+	// 		$sort: {
+	// 			count: -1
+	// 		}
+	// 	}
+	// ]);
+	const users = await User.find({ email: { $exists: true } });
+	var valueArr = users.map((item: any) => item.email).sort();
+	console.log({ valueArr });
+	var isDuplicate = valueArr.some((item, idx) => {
+		return valueArr.indexOf(item) != idx;
+	});
+	console.log({ valueArr });
+	res.send(valueArr);
+});
+router.put('/find_orders_by_email', async (req, res) => {
+	const orders = await Order.find({ deleted: false, 'shipping.email': 'dthibodeauj@gmail.com' });
+
+	res.send(orders);
+});
+
+router.put('/guest_order_user_creation', async (req, res) => {
+	try {
+		const orders = await Order.find({ guest: true, user: { $exists: false } });
+		orders.forEach(async (order: any) => {
+			const updated_order: any = await Order.findOne({ _id: order._id });
+			const user_lowercase: any = await User.findOne({
+				email: updated_order.shipping.email.toLowerCase().trim()
+			});
+			// const user_uppercase: any = await User.findOne({ email: updated_order.shipping.email });
+			// if (user_lowercase && user_uppercase) {
+			// 	user_uppercase.email = 'bad_' + user_uppercase.email;
+			// 	user_uppercase.deleted = true;
+			// 	await user_uppercase.save();
+			// } else
+			// console.log({ user_lowercase: user_lowercase.email });
+			// console.log({ user_uppercase: user_uppercase.email });
+			if (!user_lowercase) {
+				console.log('User Lowercase Not Exists');
+				const newUser: any = new User({
+					first_name: updated_order.shipping.first_name,
+					last_name: updated_order.shipping.last_name,
+					email: updated_order.shipping.email.toLowerCase().trim(),
+					password: 'fevjYt-7gucfu-kozgog',
+					is_affiliated: false,
+					email_subscription: true,
+					isAdmin: false,
+					isVerified: true
+				});
+
+				bcrypt.genSalt(10, (err: any, salt: any) => {
+					bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
+						if (err) throw err;
+						newUser.password = hash;
+
+						// console.log({ newUser, user });
+						// if (!user) {
+						console.log('No User');
+						try {
+							const user: any = await User.findOne({ email: newUser.email });
+							console.log({ user, newUser });
+							if (!user) {
+								await newUser.save();
+							}
+						} catch (error) {
+							console.log({ error_user: error });
+						}
+
+						// console.log({ before_no_user: updated_order });
+						try {
+							updated_order.user = newUser._id;
+							updated_order.shipping.email = newUser.email;
+							// console.log({ after_no_user: updated_order });
+							await updated_order.save();
+						} catch (error) {
+							console.log({ error_order_no_user_lowercase: error });
+						}
+
+						// await newUser
+						// 	.save()
+						// 	.then(async (newUser: any) => {
+						// 		updated_order.user = newUser._id;
+						// 		updated_order.shipping.email = newUser.email;
+						// 		console.log({ updated_order });
+						// 		await updated_order.save();
+						// 		// res.json(newUser);
+						// 	})
+						// 	.catch((err: any) => {
+						// 		console.log({ err });
+						// 		console.log({ message: 'Error Registering User' });
+						// 		// res.status(500).json({ message: 'Error Registering User' });
+						// 	});
+						// }
+						// else if (user) {
+						// 	console.log('User');
+						// 	// console.log({ user });
+						// 	// updated_order.user = user_lowercase._id;
+						// 	// updated_order.shipping.email = user_lowercase.email.trim();
+						// 	// console.log({ updated_order });
+						// 	// await updated_order.save();
+						// 	// return;
+						// }
+
+						// res.status(202).send({ message: 'Password Saved', data: user });
+					});
+				});
+			} else if (user_lowercase) {
+				console.log('User Lowercase Exists');
+				// // Just add the user to the updated_order without creating the user
+				// updated_order.user = user_lowercase._id;
+				// updated_order.shipping.email = user_lowercase.email.trim();
+				// console.log({ updated_order });
+				// await updated_order.save();
+				try {
+					const user: any = await User.findOne({ email: updated_order.shipping.email.toLowerCase().trim() });
+					// console.log({ before_yes_user: updated_order });
+					updated_order.user = user._id;
+					updated_order.shipping.email = user.email;
+					// console.log({ after_yes_user: updated_order });
+					await updated_order.save();
+				} catch (error) {
+					console.log({ error_order_user_lowercase: error });
+				}
+			}
+		});
+		res.status(202).send({ message: 'Done' });
+	} catch (error) {
+		console.log({ error_overall: error });
+	}
+});
+// router.put('/guest_order_user_creation', async (req, res) => {
+// 	try {
+// 		const order = await Order.findOne({ guest: true, user: { $exists: false } });
+// 		const user = User.findOne({ email: order.shipping.email });
+// 		// Check if user exists
+// 		if (user) {
+// 			return res.status(404).json({ message: 'Email Exists found' });
+// 		} else {
+// 			// orders.forEach(async (order: any) => {
+// 			const newUser: any = new User({
+// 				first_name: order.shipping.first_name,
+// 				last_name: order.shipping.last_name,
+// 				email: order.shipping.email,
+// 				password: 'fevjYt-7gucfu-kozgog',
+// 				is_affiliated: false,
+// 				email_subscription: true,
+// 				isAdmin: false,
+// 				isVerified: true
+// 			});
+// 			console.log({ newUser });
+// 			bcrypt.genSalt(10, (err: any, salt: any) => {
+// 				bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
+// 					if (err) throw err;
+// 					newUser.password = hash;
+// 					await newUser
+// 						.save()
+// 						.then(async (newUser: any) => {
+// 							order.user = newUser._id;
+// 							console.log({ order });
+// 							await order.save();
+// 							res.json(newUser);
+// 						})
+// 						.catch((err: any) => {
+// 							console.log({ err });
+// 							res.status(500).json({ message: 'Error Registering User' });
+// 						});
+// 					// res.status(202).send({ message: 'Password Saved', data: user });
+// 				});
+// 			});
+// 		}
+
+// 		// 	// Hash password before saving in database
+// 		// 	bcrypt.genSalt(10, (err: any, salt: any) => {
+// 		// 		bcrypt.hash(newUser.password, salt, async (err: any, hash: any) => {
+// 		// 			if (err) throw err;
+// 		// 			newUser.password = hash;
+// 		// 			// const user = newUser.save();
+// 		// 			console.log({ newUser });
+// 		// 			// order.user = user._id;
+// 		// 			// const saved_order = order.save();
+// 		// 			// const orders = await Order.updateOne({ _id: order._id }, { ...order, user: user._id });
+// 		// 			res.json(newUser);
+// 		// 			// .catch((err: any) => {
+// 		// 			// 	res.status(500).json({ message: 'Error Registering User' });
+// 		// 			// });
+// 		// 		});
+// 		// 	});
+// 		// });
+
+// 		// // console.log({ orders });
+// 		// res.send(newUser);
+// 	} catch (error) {
+// 		console.log({ error });
+// 	}
+// });
+// router.put('/guest_order_user_creation', async (req, res) => {
+// 	try {
+// 		const orders = await Order.find({ guest: true, user: { $exists: false } });
+// 		orders.forEach(async (order: any) => {
+// 			const newUser: any = new User({
+// 				first_name: order.shipping.first_name,
+// 				last_name: order.shipping.last_name,
+// 				email: order.shipping.email,
+// 				password: 'fevjYt-7gucfu-kozgog',
+// 				is_affiliated: false,
+// 				email_subscription: true,
+// 				isAdmin: false,
+// 				isVerified: true
+// 			});
+
+// 			// Hash password before saving in database
+// 			bcrypt.genSalt(10, (err: any, salt: any) => {
+// 				bcrypt.hash(newUser.password, salt, async (err: any, hash: any) => {
+// 					if (err) throw err;
+// 					newUser.password = hash;
+// 					// const user = newUser.save();
+// 					console.log({ newUser });
+// 					// order.user = user._id;
+// 					// const saved_order = order.save();
+// 					// const orders = await Order.updateOne({ _id: order._id }, { ...order, user: user._id });
+// 					res.json(newUser);
+// 					// .catch((err: any) => {
+// 					// 	res.status(500).json({ message: 'Error Registering User' });
+// 					// });
+// 				});
+// 			});
+// 		});
+
+// 		// console.log({ orders });
+// 		res.send(orders);
+// 	} catch (error) {
+// 		console.log({ error });
+// 	}
+// });
 
 export default router;

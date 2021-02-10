@@ -25,7 +25,6 @@ const validateLoginInput = require('../validation/login');
 // @access Public
 router.post('/register', async (req, res) => {
 	// Form validation
-	console.log({ body: req.body });
 
 	// const { errors, isValid } = validateRegisterInput(req.body);
 	// console.log({ isValid });
@@ -37,28 +36,35 @@ router.post('/register', async (req, res) => {
 	const user: any = await User.findOne({ email: req.body.email });
 
 	if (user) {
-		bcrypt.genSalt(10, (err: any, salt: any) => {
-			bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
-				if (err) throw err;
-				user.password = hash;
-				user.first_name = req.body.first_name;
-				user.last_name = req.body.last_name;
-				user.email = req.body.email;
-				await user.save().then((user: any) => res.json(user)).catch((err: any) => {
-					console.log({ err });
-					res.status(500).json({ message: 'Error Registering User' });
+		bcrypt.compare(process.env.TEMP_PASS, user.password).then(async (isMatch: any) => {
+			if (isMatch) {
+				bcrypt.genSalt(10, (err: any, salt: any) => {
+					bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
+						if (err) throw err;
+						// Check password
+						user.password = hash;
+						user.first_name = req.body.first_name;
+						user.last_name = req.body.last_name;
+						user.email = req.body.email;
+						await user.save().then((user: any) => res.json(user)).catch((err: any) => {
+							console.log({ err });
+							res.status(500).json({ message: 'Error Registering User' });
+						});
+						log_request({
+							method: 'PUT',
+							path: req.originalUrl,
+							collection: 'User',
+							data: [ user ],
+							status: 202,
+							success: true,
+							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+						});
+						// res.status(202).send({ message: 'Password Saved', data: user });
+					});
 				});
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 202,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
-				// res.status(202).send({ message: 'Password Saved', data: user });
-			});
+			} else {
+				res.status(500).json({ message: 'User Already Exists' });
+			}
 		});
 		// return res.status(400).json({ message: 'Email already exists' });
 	} else {
@@ -595,7 +601,7 @@ router.post('/', async (req, res) => {
 	try {
 		let user: any = {};
 		let hashed_password: string = '';
-		const temporary_password = '123456';
+		const temporary_password = process.env.TEMP_PASS;
 		bcrypt.genSalt(10, (err: any, salt: any) => {
 			bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
 				if (err) throw err;
