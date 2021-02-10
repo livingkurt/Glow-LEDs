@@ -136,64 +136,65 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		}
 
 		// if (category === 'none' || category === 'None' || category === 'all' || category === 'All') {
-		if (last_id === 'none') {
-			// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
-			orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-				.limit(10)
-				.populate('user')
-				.populate('orderItems.product')
-				.populate('orderItems.secondary_product')
-				.sort(sortOrder);
-		} else {
-			if (direction === 'next') {
-				// products = await Product.find({_id: {$lt: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
-				orders = await Order.find({
-					deleted: false,
-					...category,
-					...searchKeyword,
-					_id: { $lt: last_id }
-				})
-					.limit(10)
-					.populate('user')
-					.populate('orderItems.product')
-					.populate('orderItems.secondary_product')
-					.sort(sortOrder);
-			} else if (direction === 'previous') {
-				// products = await Product.find({_id: {$lte: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
-				orders = await Order.find({
-					deleted: false,
-					...category,
-					...searchKeyword,
-					_id: { $gt: last_id }
-				})
-					.limit(10)
-					.populate('user')
-					.populate('orderItems.product')
-					.populate('orderItems.secondary_product')
-					.sort(sortOrder);
-			} else if (last_id === 'all') {
-				// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
-				orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-					.populate('user')
-					.populate('orderItems.product')
-					.populate('orderItems.secondary_product')
-					.sort(sortOrder);
-			} else {
-				// products = await Product.find({_id: {$gt: last_id}, deleted_at: null}).limit(10)
-				orders = await Order.find({
-					deleted: false,
-					...category,
-					...searchKeyword,
-					_id: { $gt: last_id }
-				})
-					.limit(10)
-					.populate('user')
-					.populate('orderItems.product')
-					.populate('orderItems.secondary_product')
-					.sort(sortOrder);
-				orders = orders.reverse();
-			}
-		}
+		// if (last_id === 'none') {
+		// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
+		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+			// .limit(10)
+			.populate('user')
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.sort(sortOrder);
+		// }
+		// else {
+		// 	if (direction === 'next') {
+		// 		// products = await Product.find({_id: {$lt: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
+		// 		orders = await Order.find({
+		// 			deleted: false,
+		// 			...category,
+		// 			...searchKeyword,
+		// 			_id: { $lt: last_id }
+		// 		})
+		// 			.limit(10)
+		// 			.populate('user')
+		// 			.populate('orderItems.product')
+		// 			.populate('orderItems.secondary_product')
+		// 			.sort(sortOrder);
+		// 	} else if (direction === 'previous') {
+		// 		// products = await Product.find({_id: {$lte: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
+		// 		orders = await Order.find({
+		// 			deleted: false,
+		// 			...category,
+		// 			...searchKeyword,
+		// 			_id: { $gt: last_id }
+		// 		})
+		// 			.limit(10)
+		// 			.populate('user')
+		// 			.populate('orderItems.product')
+		// 			.populate('orderItems.secondary_product')
+		// 			.sort(sortOrder);
+		// 	} else if (last_id === 'all') {
+		// 		// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
+		// 		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+		// 			.populate('user')
+		// 			.populate('orderItems.product')
+		// 			.populate('orderItems.secondary_product')
+		// 			.sort(sortOrder);
+		// 	} else {
+		// 		// products = await Product.find({_id: {$gt: last_id}, deleted_at: null}).limit(10)
+		// 		orders = await Order.find({
+		// 			deleted: false,
+		// 			...category,
+		// 			...searchKeyword,
+		// 			_id: { $gt: last_id }
+		// 		})
+		// 			.limit(10)
+		// 			.populate('user')
+		// 			.populate('orderItems.product')
+		// 			.populate('orderItems.secondary_product')
+		// 			.sort(sortOrder);
+		// 		orders = orders.reverse();
+		// 	}
+		// }
 
 		log_request({
 			method: 'GET',

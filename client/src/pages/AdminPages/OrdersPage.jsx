@@ -5,6 +5,7 @@ import { listOrders, update_order, update_payment } from '../../actions/orderAct
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
+import Pagination from 'react-js-pagination';
 
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -24,6 +25,28 @@ const OrdersPage = (props) => {
 	const dispatch = useDispatch();
 
 	const [ order_state, set_order_state ] = useState({});
+
+	const ordersPerPage = 10;
+	const [ activePage, setCurrentPage ] = useState(1);
+	const [ currentOrders, set_current_orders ] = useState([]);
+
+	useEffect(
+		() => {
+			// Logic for displaying current orders
+			if (orders) {
+				const indexOfLastOrder = activePage * ordersPerPage;
+				const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+				set_current_orders(orders.slice(indexOfFirstOrder, indexOfLastOrder));
+				console.log(orders.slice(indexOfFirstOrder, indexOfLastOrder));
+			}
+		},
+		[ orders, activePage ]
+	);
+
+	const handlePageChange = (pageNumber) => {
+		console.log(`active page is ${pageNumber}`);
+		setCurrentPage(pageNumber);
+	};
 
 	useEffect(
 		() => {
@@ -185,12 +208,24 @@ const OrdersPage = (props) => {
 									{parseInt(x + 1)}
 								</option>
 							))} */}
-						<button className="btn icon primary mh-1rem" onClick={() => previous_set_of_orders('previous')}>
+						{/* <button className="btn icon primary mh-1rem" onClick={() => previous_set_of_orders('previous')}>
 							<i className="fas fa-arrow-left fs-22px" />
 						</button>
 						<button className="btn icon primary " onClick={() => next_set_of_orders('next')}>
 							<i className="fas fa-arrow-right fs-22px" />
-						</button>
+						</button> */}
+						<div>
+							{/* <div className="result">{renderOrders}</div> */}
+							<div className="pagination">
+								<Pagination
+									activePage={activePage}
+									itemsCountPerPage={10}
+									totalItemsCount={orders && orders.length}
+									pageRangeDisplayed={10}
+									onChange={handlePageChange}
+								/>
+							</div>
+						</div>
 					</div>
 					{/* <div className="ml-1rem product_big_screen">
 						<div className="custom-select w-100per">
@@ -208,8 +243,8 @@ const OrdersPage = (props) => {
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
 						{!block_list_view &&
-							orders &&
-							orders.map((order) => (
+							currentOrders &&
+							currentOrders.map((order) => (
 								<OrderListItem
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
@@ -222,8 +257,8 @@ const OrdersPage = (props) => {
 					</div>
 					<div className="product_big_screen">
 						{block_list_view &&
-							orders &&
-							orders.map((order) => (
+							currentOrders &&
+							currentOrders.map((order) => (
 								<Order
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
@@ -235,8 +270,8 @@ const OrdersPage = (props) => {
 							))}
 					</div>
 					<div className="product_small_screen none column">
-						{orders &&
-							orders.map((order) => (
+						{currentOrders &&
+							currentOrders.map((order) => (
 								<OrderSmallScreen determine_color={determine_color} order={order} admin={true} />
 							))}
 					</div>
