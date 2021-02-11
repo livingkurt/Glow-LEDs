@@ -211,7 +211,7 @@ export const createPayOrderGuest = (
 				password: password
 			});
 			console.log(data);
-			console.log(data.data);
+			// console.log(data.data);
 			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 			axios.post('/api/emails/verified', data);
 			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
