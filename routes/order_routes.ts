@@ -139,7 +139,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		// if (last_id === 'none') {
 		// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
 		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-			// .limit(10)
+			.limit(100)
 			.populate('user')
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product')

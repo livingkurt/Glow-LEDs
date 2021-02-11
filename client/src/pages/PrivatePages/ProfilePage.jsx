@@ -13,7 +13,10 @@ const ProfilePage = (props) => {
 	const [ revenue, set_revenue ] = useState(0);
 
 	useEffect(() => {
-		get_code_usage();
+		if (userInfo && userInfo.is_affiliated) {
+			get_code_usage();
+		}
+
 		return () => {};
 	}, []);
 

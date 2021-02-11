@@ -73,8 +73,10 @@ router.post('/register', async (req, res) => {
 	// }
 
 	const user: any = await User.findOne({ email: req.body.email });
+	console.log({ user });
 
 	if (user) {
+		console.log('User Exists');
 		bcrypt.compare(process.env.TEMP_PASS, user.password).then(async (isMatch: any) => {
 			if (isMatch) {
 				bcrypt.genSalt(10, (err: any, salt: any) => {
@@ -107,6 +109,7 @@ router.post('/register', async (req, res) => {
 		});
 		// return res.status(400).json({ message: 'Email already exists' });
 	} else {
+		console.log('User Does Not Exists');
 		const newUser: any = new User({
 			first_name: req.body.first_name,
 			last_name: req.body.last_name,

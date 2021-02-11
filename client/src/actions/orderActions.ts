@@ -192,7 +192,9 @@ export const createPayOrderGuest = (
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
+		console.log({ 'Create Account': create_account });
 		if (create_account) {
+			console.log('Create Account');
 			dispatch({
 				type: USER_REGISTER_REQUEST,
 				payload: {
@@ -208,12 +210,14 @@ export const createPayOrderGuest = (
 				email: order.shipping.email,
 				password: password
 			});
+			console.log(data);
+			console.log(data.data);
 			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 			axios.post('/api/emails/verified', data);
 			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 			const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', {
 				...order,
-				user: data.data._id
+				user: data._id
 			});
 			console.log({ newOrder });
 
@@ -266,6 +270,7 @@ export const createPayOrderGuest = (
 					email: order.shipping.email,
 					isVerified: true,
 					email_subscription: true,
+					guest: true,
 					password: process.env.REACT_APP_TEMP_PASS
 				});
 				console.log('hello');

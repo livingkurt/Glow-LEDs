@@ -23,7 +23,7 @@ const PlaceOrderPublicPage = (props) => {
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
 	const { order, error } = orderCreate;
-	console.log({ orderCreate });
+	// console.log({ orderCreate });
 
 	const orderPay = useSelector((state) => state.orderPay);
 	const { success: successPay, error: errorPay } = orderPay;
@@ -56,9 +56,9 @@ const PlaceOrderPublicPage = (props) => {
 	const [ tax_rate, set_tax_rate ] = useState(0);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ user, set_user ] = useState(userInfo);
-	const [ create_account, set_create_account ] = useState();
+	// const [ create_account, set_create_account ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-	const [ account_create, set_account_create ] = useState(false);
+	const [ create_account, set_create_account ] = useState(false);
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
@@ -277,8 +277,9 @@ const PlaceOrderPublicPage = (props) => {
 		}
 	};
 
-	const placeOrderHandler = async (paymentMethod, create_account) => {
-		set_create_account(create_account);
+	const placeOrderHandler = async (paymentMethod) => {
+		// console.log({ create_account });
+		// set_create_account(create_account);
 		dispatch(
 			createPayOrderGuest(
 				{
@@ -961,7 +962,7 @@ const PlaceOrderPublicPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						!account_create && (
+						!create_account && (
 							<div>
 								<Elements stripe={stripePromise}>
 									<Form />
@@ -972,7 +973,7 @@ const PlaceOrderPublicPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						!account_create && (
+						!create_account && (
 							<div>
 								<StripeCheckout
 									name="Glow LEDs"
@@ -990,19 +991,19 @@ const PlaceOrderPublicPage = (props) => {
 							<div>Loading...</div>
 						) : (
 							<li>
-								<label htmlFor="account_create mb-20px">Create Account</label>
+								<label htmlFor="create_account mb-20px">Create Account</label>
 								<input
 									type="checkbox"
-									name="account_create"
-									defaultChecked={account_create}
-									id="account_create"
+									name="create_account"
+									defaultChecked={create_account}
+									id="create_account"
 									onChange={(e) => {
-										set_account_create(e.target.checked);
+										set_create_account(e.target.checked);
 									}}
 								/>
 							</li>
 						)}
-						{account_create && (
+						{create_account && (
 							<li className="column">
 								<label htmlFor="password">Password</label>
 								<input
@@ -1015,7 +1016,7 @@ const PlaceOrderPublicPage = (props) => {
 								<label className="validation_text fs-16px jc-c ">{password_validations}</label>
 							</li>
 						)}
-						{account_create && (
+						{create_account && (
 							<li className="column">
 								<label htmlFor="rePassword">Re-Enter Password</label>
 								<input
@@ -1028,7 +1029,7 @@ const PlaceOrderPublicPage = (props) => {
 								<label className="validation_text fs-16px jc-c ">{re_password_validations}</label>
 							</li>
 						)}
-						{account_create && (
+						{create_account && (
 							<li className="column">
 								<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
 									{passwords_complete}
@@ -1061,7 +1062,7 @@ const PlaceOrderPublicPage = (props) => {
 						{!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						account_create &&
+						create_account &&
 						passwords_check && (
 							<div>
 								<Elements stripe={stripePromise}>
