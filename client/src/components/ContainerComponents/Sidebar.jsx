@@ -90,7 +90,7 @@ const Sidebar = (props) => {
 			<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
 				<i className="fas fa-times" />
 			</button>
-			<div className="column  h-67vh" style={{ overflowY: 'scroll' }}>
+			<nav className="column  h-67vh" style={{ overflowY: 'scroll' }}>
 				<Link to="/">
 					<button className="sidebar-btn primary" onClick={closeMenu}>
 						Home
@@ -441,7 +441,7 @@ const Sidebar = (props) => {
 						<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 					</div>
 				)}
-			</div>
+			</nav>
 		</aside>
 	);
 };

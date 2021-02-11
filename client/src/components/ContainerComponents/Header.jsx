@@ -118,7 +118,7 @@ const Header = (props) => {
 							{/* </div> */}
 						</Link>
 					</div>
-					<div className="jc-b nav_bar">
+					<nav className="jc-b nav_bar">
 						<Link to="/">
 							<button className="btn nav">Home</button>
 						</Link>
@@ -583,7 +583,7 @@ const Header = (props) => {
 								</Link>
 							</div>
 						</div>
-					</div>
+					</nav>
 				</div>
 				{/* <Link to="/checkout/cart"> */}
 				<button className="btn mobile nav cart_icon none" onClick={open_cart}>
