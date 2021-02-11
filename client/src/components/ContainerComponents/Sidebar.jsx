@@ -146,9 +146,14 @@ const Sidebar = (props) => {
 								<Link to="/pages/menu/gloving">Gloving</Link>
 							</button>
 							<ul className="sidebar_dropdown_secondary_container">
+								<Link to="/collections/all/products/category/glow_casings">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Glow Casings
+									</button>
+								</Link>
 								<Link to="/collections/all/products/category/glowskins">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Glowskins (New)
+										Glowskins
 									</button>
 								</Link>
 								{/* <Link to="/collections/all/products/category/frosted_diffusers">
