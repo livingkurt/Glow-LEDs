@@ -387,6 +387,11 @@ ${props.order.shipping.email}`)}
 									{props.order.tracking_number}
 								</a>
 							</li>
+							{props.order.guest && (
+								<li className="row">
+									<h3 className="">Guest Order </h3>
+								</li>
+							)}
 						</ul>
 
 						<div className="jc-b">
