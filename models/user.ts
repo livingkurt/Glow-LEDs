@@ -76,6 +76,7 @@ const userSchema = new mongoose.Schema(
 		cart: cartSchema,
 		affiliate: { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' },
 		email_subscription: { type: Boolean, default: true },
+		guest: { type: Boolean },
 		deleted: { type: Boolean, default: false }
 	},
 	{
