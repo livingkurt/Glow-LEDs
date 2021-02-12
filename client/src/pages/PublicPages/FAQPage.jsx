@@ -534,17 +534,17 @@ const FAQPage = () => {
 								</span>️.
 							</li>
 							<li>
-								For glove accessories (caps, adapters, diffusers, battery storage) we will get your
-								order in the mail{' '}
+								For glove accessories (Glowskins, Glow Casings Diffuser Caps, Diffuser Adapters, Frosted
+								Diffusers) we will get your order in the mail{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									✉️{' '}
-								</span>️ within approximately 1-3 days{' '}
+								</span>️ within approximately 3-10 days{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									🗓{' '}
-								</span>️after the order is placed.
+								</span>️after the order is placed, depending on how many orders are in front of you.
 							</li>
 							<li>
-								For string lights{' '}
+								For Glow Strings and Coin Battery Storage{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									💡
 								</span>️we will get your order in the mail{' '}
