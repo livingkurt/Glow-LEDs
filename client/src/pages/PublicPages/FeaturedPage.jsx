@@ -89,7 +89,9 @@ const FeaturedPage = (props) => {
 							feature.images.map((image) => {
 								return (
 									<Zoom className="m-auto">
-										<img className="m-1rem br-15px w-100per h-auto max-w-30rem ta-c" src={image} />
+										{/* <div className="responsive_container"> */}
+										<img className="m-1rem br-15px  h-auto ta-c responsive_img" src={image} />
+										{/* </div> */}
 									</Zoom>
 								);
 							})}
