@@ -1126,7 +1126,7 @@ const PlaceOrderPage = (props) => {
 									id="promo_code"
 									className="w-100per"
 									style={{ textTransform: 'uppercase' }}
-									onChange={(e) => set_promo_code(e.target.value)}
+									onChange={(e) => set_promo_code(e.target.value.toUpperCase())}
 								/>
 								<button
 									className="btn primary"

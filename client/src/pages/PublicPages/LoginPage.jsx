@@ -91,7 +91,13 @@ const LoginPage = (props) => {
 					<Loading loading={loading} error={error} />
 					<li>
 						<label htmlFor="email">Email</label>
-						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+						<input
+							style={{ textTransform: 'lowercase' }}
+							type="text"
+							name="email"
+							id="email"
+							onChange={(e) => setEmail(e.target.value.toLowerCase())}
+						/>
 					</li>
 					<label className="validation_text" style={{ textAlign: 'center' }}>
 						{email_validations}

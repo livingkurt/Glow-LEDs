@@ -123,7 +123,13 @@ const RegisterPage = (props) => {
 					</label>
 					<li>
 						<label htmlFor="email">Email</label>
-						<input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} />
+						<input
+							type="text"
+							name="email"
+							id="email"
+							style={{ textTransform: 'lowercase' }}
+							onChange={(e) => setEmail(e.target.value.toLowerCase())}
+						/>
 					</li>
 					<label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
 						{/* {console.log(email_validations)} */}
