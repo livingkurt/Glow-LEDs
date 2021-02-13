@@ -5,6 +5,7 @@ import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { sale_price_switch } from '../../utils/react_helper_functions';
 import { humanize } from '../../utils/helper_functions';
+import { LazyImage } from '../UtilityComponents';
 
 const FeatureSmallScreen = (props) => {
 	return (
@@ -12,8 +13,8 @@ const FeatureSmallScreen = (props) => {
 			<Link to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature.pathname}`}>
 				<div className="small_screen_product row">
 					<div className="">
-						<LazyLoadImage
-							className="feature-image w-200px h-auto br-10px"
+						<LazyImage
+							look="feature-image w-200px h-auto br-10px"
 							alt={props.feature.artist_name}
 							title="Feature Image"
 							effect="blur"
@@ -25,6 +26,19 @@ const FeatureSmallScreen = (props) => {
 								)
 							}
 						/>
+						{/* <LazyLoadImage
+							className="feature-image w-200px h-auto br-10px"
+							alt={props.feature.artist_name}
+							title="Feature Image"
+							effect="blur"
+							src={
+								props.category.toLowerCase() === 'glovers' ? (
+									`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
+								) : (
+									props.feature.logo
+								)
+							}
+						/> */}
 					</div>
 					<div className="p-10px">
 						<div className="product_text" style={{ fontSize: '1.6rem' }}>

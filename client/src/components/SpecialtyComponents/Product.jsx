@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { sale_price_switch } from '../../utils/react_helper_functions';
+import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';
 
 const Product = (props) => {
@@ -69,14 +70,18 @@ const Product = (props) => {
 								<div className="row mt-15px">
 									<div className="column ai-c pos-rel">
 										{/* <Link to={'/collections/all/products/' + item.pathname}> */}
-										<LazyLoadImage
-											className="product-image"
+										<LazyImage
+											look="product-image"
 											alt={props.product.name}
 											title="Product Image"
-											style={{ height: props.size, width: props.size }}
+											size={{ height: props.size, width: props.size }}
 											effect="blur"
 											src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
 										/>
+										{/* <LazyImage
+											src={props.product.images && props.product.images[0]}
+											alt={props.product.name}
+										/> */}
 										{props.product_occurrences &&
 										props.product_occurrences[0] &&
 										props.product_occurrences[0].name === props.product.name && (

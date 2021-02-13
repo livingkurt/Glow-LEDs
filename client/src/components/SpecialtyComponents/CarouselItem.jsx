@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { sale_price_switch } from '../../utils/react_helper_functions';
+import { LazyImage } from '../UtilityComponents';
 
 const CarouselItem = (props) => {
 	const [ product, set_product ] = useState(props.product);
@@ -23,14 +24,22 @@ const CarouselItem = (props) => {
 				<li key={props.product && product.pathname} style={props.styles}>
 					<Link to={product && '/collections/all/products/' + product.pathname}>
 						<div className="product">
-							<LazyLoadImage
+							<LazyImage
+								look="product-image"
+								alt={product.name}
+								title="Product Image"
+								size={{ height: props.size, width: props.size }}
+								effect="blur"
+								src={product.images && product.images[0]} // use normal <img> attributes as props
+							/>
+							{/* <LazyLoadImage
 								className="product-image"
 								alt={product.name}
 								title="Product Image"
 								style={{ height: props.size, width: props.size }}
 								effect="blur"
 								src={product.images && product.images[0]} // use normal <img> attributes as props
-							/>
+							/> */}
 
 							<label style={{ fontSize: '1.3rem' }}>{product.brand}</label>
 							<label style={{ fontSize: '1.6rem' }}>{product.name}</label>

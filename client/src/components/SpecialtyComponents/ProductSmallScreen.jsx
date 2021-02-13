@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { sale_price_switch } from '../../utils/react_helper_functions';
+import { LazyImage } from '../UtilityComponents';
 
 const ProductSmallScreen = (props) => {
 	return (
@@ -13,10 +14,18 @@ const ProductSmallScreen = (props) => {
 					<div className="small_screen_product row">
 						<div className="row mt-15px">
 							<div className="column ai-c pos-rel">
-								<LazyLoadImage
+								{/* <LazyLoadImage
 									className="product-image w-200px h-200px "
 									alt={props.product.name}
 									title="Product Image"
+									effect="blur"
+									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+								/> */}
+								<LazyImage
+									look="product-image w-200px h-200px "
+									alt={props.product.name}
+									title="Product Image"
+									size={{ height: props.size, width: props.size }}
 									effect="blur"
 									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
 								/>

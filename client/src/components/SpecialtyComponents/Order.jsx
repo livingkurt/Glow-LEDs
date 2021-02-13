@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { refundOrder } from '../../actions/orderActions';
+import { LazyImage } from '../UtilityComponents';
 
 const Order = (props) => {
 	const dispatch = useDispatch();
@@ -157,13 +158,20 @@ const Order = (props) => {
 								<div className="row mt-15px">
 									<div className="column ai-c pos-rel">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											<LazyLoadImage
-												className="order-image w-200px h-200px br-10px mr-15px"
+											<LazyImage
+												look="order-image w-200px h-200px br-10px mr-15px"
 												alt={item.name}
 												title="Product Image"
 												effect="blur"
 												src={item.display_image && item.display_image} // use normal <img> attributes as props
 											/>
+											{/* <LazyLoadImage
+												className="order-image w-200px h-200px br-10px mr-15px"
+												alt={item.name}
+												title="Product Image"
+												effect="blur"
+												src={item.display_image && item.display_image} // use normal <img> attributes as props
+											/> */}
 										</Link>
 										{item.qty > 1 && (
 											<div

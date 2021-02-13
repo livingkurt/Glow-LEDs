@@ -5,6 +5,7 @@ import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { sale_price_switch } from '../../utils/react_helper_functions';
 import { humanize } from '../../utils/helper_functions';
+import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';
 
 const Feature = (props) => {
@@ -15,11 +16,11 @@ const Feature = (props) => {
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="product">
-							<LazyLoadImage
-								className="product-image"
+							<LazyImage
+								look="product-image"
 								alt={props.feature.name}
 								title="Feature Image"
-								style={{ height: props.size, width: 'auto' }}
+								size={{ height: props.size, width: 'auto' }}
 								effect="blur"
 								src={
 									props.category.toLowerCase() === 'glovers' ? (
@@ -29,6 +30,14 @@ const Feature = (props) => {
 									)
 								} // use normal <img> attributes as props
 							/>
+							{/* <LazyImage
+									look="product-image w-200px h-200px "
+									alt={props.product.name}
+									title="Product Image"
+									size={{ height: props.size, width: props.size }}
+									effect="blur"
+									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+								/> */}
 
 							<label style={{ fontSize: '1.6rem' }}>{props.feature.artist_name}</label>
 							{/* <label style={{ fontSize: '1.3rem' }}>{props.feature.song_id}</label> */}
