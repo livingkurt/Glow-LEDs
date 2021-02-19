@@ -34,7 +34,17 @@
 	}
 }
 
-@media only screen and (max-height: 411px) {
+@media only screen and (max-height: 500px) and (min-height: 412px) {
+	.cart_sidebar {
+		height: 70vh !important;
+	}
+	aside.sidebar {
+		nav {
+			height: 46vh !important;
+		}
+	}
+}
+@media only screen and (max-height: 411px) and (min-height: 376px) {
 	.cart_sidebar {
 		height: 66vh !important;
 	}
@@ -45,7 +55,7 @@
 	}
 }
 
-@media only screen and (max-height: 375px) {
+@media only screen and (max-height: 375px) and (min-height: 321px) {
 	.cart_sidebar {
 		height: 68vh !important;
 	}
