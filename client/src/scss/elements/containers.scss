@@ -4,7 +4,8 @@
 @import '../appearance/font.scss';
 
 #root {
-	height: 100%;
+	height: 100vh;
+	height: calc(var(--vh, 1vh) * 100);
 }
 
 html {

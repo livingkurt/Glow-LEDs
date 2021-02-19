@@ -300,55 +300,90 @@ let transporter = nodemailer.createTransport({
 // });
 
 router.post('/announcement', async (req, res) => {
-	console.log({ template: req.body.template });
-	console.log({ subject: req.body.subject });
-	console.log({ test: req.body.test });
-	console.log({ chunk: req.body.chunk });
+	// console.log({ template: req.body.template });
 	const users = await User.find({ email_subscription: true });
-	const all_emails = users.map((user: any) => user.email).reverse();
+	// const all_emails = users.map((user: any) => user.email).reverse();
 	// console.log({ all_emails });
-	// const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
+	const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
+	console.log({ all_emails });
 	const test = [
-		[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
-		[ 'lavacquek@gmail.com', 'lavacquek@icloud.com', 'livingkurt222@gmail.com' ],
-		[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ]
+		'lavacquek@icloud.com',
+		'lavacquek@gmail.com',
+		'livingkurt222@gmail.com',
+		'destanyesalinas@gmail.com',
+		'zestanye@gmail.com'
 	];
-	// const test = [
-	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
-	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
-	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
-	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
-	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ]
-	// ];
-	// const test = [ 'keith.booher@yahoo.com', 'keibooher@gmail.com' ];
-	// console.log({ all_emails });
-	const emails_split = split_array(all_emails);
-	// const all_emails = [ 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
-	console.log({ emails_split });
-	let split_emails: any = req.body.test ? test : emails_split;
-	// console.log({ split_emails: split_emails[0] });
-	// split_emails[0].forEach((emails: any, index: any) => {
-	split_emails[0].forEach((email: any) => {
-		let mailOptions = {
-			to: email,
-			from: process.env.DISPLAY_EMAIL,
-			subject: req.body.subject,
-			html: req.body.template
-		};
-		transporter.sendMail(mailOptions, (err, data) => {
-			if (err) {
-				console.log('Error Occurs', err);
-				res.status(500).send({ error: err, message: 'Error Sending Email' });
-			} else {
-				console.log('Announcement Email Sent to ' + email);
-			}
-		});
+	// const test = [ 'lavacquek@icloud.com' ];
+	let emails: any = req.body.test ? test : all_emails;
+	let mailOptions = {
+		to: process.env.EMAIL,
+		from: process.env.DISPLAY_EMAIL,
+		subject: req.body.subject,
+		html: req.body.template,
+		bcc: emails
+	};
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
+		} else {
+			console.log(req.body.subject);
+			res.send(req.body.subject);
+		}
 	});
-	// 	console.log('Email Chunk ' + index);
-	// });
 
-	res.send('Announcement Email Sent to ' + all_emails);
+	// res.send('Order Email Sent to');
 });
+// router.post('/announcement', async (req, res) => {
+// 	console.log({ template: req.body.template });
+// 	console.log({ subject: req.body.subject });
+// 	console.log({ test: req.body.test });
+// 	console.log({ chunk: req.body.chunk });
+// 	const users = await User.find({ email_subscription: true });
+// 	const all_emails = users.map((user: any) => user.email).reverse();
+// 	// console.log({ all_emails });
+// 	// const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
+// 	const test = [
+// 		[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
+// 		[ 'lavacquek@gmail.com', 'lavacquek@icloud.com', 'livingkurt222@gmail.com' ],
+// 		[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ]
+// 	];
+// 	// const test = [
+// 	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
+// 	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
+// 	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
+// 	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ],
+// 	// 	[ 'lavacquek@icloud.com', 'lavacquek@gmail.com', 'livingkurt222@gmail.com' ]
+// 	// ];
+// 	// const test = [ 'keith.booher@yahoo.com', 'keibooher@gmail.com' ];
+// 	// console.log({ all_emails });
+// 	const emails_split = split_array(all_emails);
+// 	// const all_emails = [ 'destanyesalinas@gmail.com', 'zestanye@gmail.com' ];
+// 	console.log({ emails_split });
+// 	let split_emails: any = req.body.test ? test : emails_split;
+// 	// console.log({ split_emails: split_emails[0] });
+// 	// split_emails[0].forEach((emails: any, index: any) => {
+// 	split_emails[0].forEach((email: any) => {
+// 		let mailOptions = {
+// 			to: email,
+// 			from: process.env.DISPLAY_EMAIL,
+// 			subject: req.body.subject,
+// 			html: req.body.template
+// 		};
+// 		transporter.sendMail(mailOptions, (err, data) => {
+// 			if (err) {
+// 				console.log('Error Occurs', err);
+// 				res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 			} else {
+// 				console.log('Announcement Email Sent to ' + email);
+// 			}
+// 		});
+// 	});
+// 	// 	console.log('Email Chunk ' + index);
+// 	// });
+
+// 	res.send('Announcement Email Sent to ' + all_emails);
+// });
 
 const split_array = (all_emails: any) => {
 	let chunk;

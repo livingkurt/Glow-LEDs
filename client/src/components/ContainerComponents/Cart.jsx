@@ -108,7 +108,7 @@ const Cart = (props) => {
 	};
 
 	return (
-		<aside ref={wrapperRef} className="cart_sidebar">
+		<aside ref={wrapperRef} className="cart_sidebar" style={{ overflowY: 'scroll' }}>
 			<div>
 				{/* <div className="logo_text mh-auto ai-c">
 					<Link to="/">
