@@ -27,7 +27,7 @@ export default (props: any) => {
               href="https://www.instagram.com/glow_leds/" target="_blank"><i class="fab fa-instagram zoom"
                 style="color:white"></i></a></div>
           <div style="font-size:30px;color:white"><a rel="noopener noreferrer"
-              href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw" target="_blank"><i
+              href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1" target="_blank"><i
                 class="fab fa-youtube zoom" style="color:white"></i></a></div>
           <div style="font-size:30px;color:white"><a rel="noopener noreferrer" href="https://soundcloud.com/ntre/tracks"
               target="_blank"><i class="fab fa-soundcloud" style="color:white"></i></a></div>

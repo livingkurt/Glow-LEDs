@@ -946,7 +946,8 @@ const PlaceOrderPage = (props) => {
 												)
 											);
 										})}
-										{shipping_rates.rates.map((rate, index) => {
+										{/* {shipping_rates.rates.find((rate, index) => rate.service) === 'First' < shipping_rates.rates.find((rate, index) => rate.service === 'Ground')} */}
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Ground' && (
 													<div className=" mv-1rem jc-b  ai-c">
@@ -968,7 +969,7 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
+										})} */}
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Express' && (

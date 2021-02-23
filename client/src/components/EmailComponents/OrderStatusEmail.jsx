@@ -555,7 +555,7 @@ const OrderStatusEmail = (props) => {
 									}}
 								>
 									<a
-										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw"
+										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
 										target="_blank"
 										rel="noopener noreferrer"
 									>
