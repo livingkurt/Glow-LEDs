@@ -141,7 +141,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
 			.limit(100)
 			.populate('user')
-			.populate('orderItems.product')
+			// .populate('orderItems.product')
 			.populate('orderItems.secondary_product')
 			.sort(sortOrder);
 		// }

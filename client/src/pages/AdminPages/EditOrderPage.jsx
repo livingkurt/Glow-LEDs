@@ -100,7 +100,7 @@ const EditOrderPage = (props) => {
 	const unset_state = () => {
 		set_id('');
 		set_user('');
-		set_orderItems('');
+		set_orderItems([ {} ]);
 		set_shipping('');
 		set_payment('');
 		set_itemsPrice('');
@@ -224,9 +224,11 @@ const EditOrderPage = (props) => {
 			package_width: order_item.package_width,
 			package_height: order_item.package_height,
 			reviewed: order_item.reviewed,
-			product: order_item._id
+			product: { _id: order_item._id }
+
 			// secondary_product: orderItems[index].secondary_product
 		};
+		// console.log(order_item._id);
 		set_orderItems(new_order_items);
 		console.log({ orderItems });
 	};
