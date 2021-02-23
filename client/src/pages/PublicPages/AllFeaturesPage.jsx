@@ -199,7 +199,7 @@ const AllFeaturesPage = (props) => {
 
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
-				<Sort sortHandler={sortHandler} sort_options={sort_options} />
+				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
 			</div>
 			{/* <div className="jc-c">
 				<h1> Featured</h1>
