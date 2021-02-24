@@ -189,7 +189,7 @@ const EditProductPage = (props) => {
 		set_weight_pounds(0);
 		set_weight_ounces(0);
 		setPathname('');
-		setOrder(0);
+		setOrder();
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
