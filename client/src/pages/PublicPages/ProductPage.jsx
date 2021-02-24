@@ -481,13 +481,20 @@ const ProductPage = (props) => {
 										</Link>
 									) : (
 										<li>
-											{product.countInStock > 0 && !product.hidden ? (
+											{product.countInStock > 0 ? (
 												<button className="btn primary" onClick={handleAddToCart}>
 													Add to Cart
 												</button>
 											) : (
 												<button className="btn inactive">Out of Stock</button>
 											)}
+											{/* {product.countInStock > 0 && !product.hidden ? (
+												<button className="btn primary" onClick={handleAddToCart}>
+													Add to Cart
+												</button>
+											) : (
+												<button className="btn inactive">Out of Stock</button>
+											)} */}
 										</li>
 									)}
 								</ul>
