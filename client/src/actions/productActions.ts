@@ -23,9 +23,14 @@ import {
 } from '../constants/productConstants';
 import axios from 'axios';
 
-export const listProducts = (category = '', subcategory = '', searchKeyword = '', sortOrder = '', chip = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listProducts = (
+	category = '',
+	subcategory = '',
+	searchKeyword = '',
+	sortOrder = '',
+	chip = '',
+	show_hidden = ''
+) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 		console.log({ chip });
@@ -39,7 +44,9 @@ export const listProducts = (category = '', subcategory = '', searchKeyword = ''
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +
-				sortOrder.toLowerCase()
+				sortOrder.toLowerCase() +
+				'&showHidden=' +
+				show_hidden
 		);
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {

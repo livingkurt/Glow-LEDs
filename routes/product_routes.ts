@@ -132,11 +132,6 @@ router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
-		// const chips = req.query.chip ? { chips: { $all: [ req.query.chip ] } } : {};
-		// const chips = req.query.chip ? { $elemMatch: { chip: req.query.chip } } : {};
-		// const chips = req.query.chip ? { chips: { $elemMatch: { chip: req.query.chip } } } : {};
-		// const chips = req.query.chip ? { chips: { $elemMatch: req.query.chip } } : {};
-		// const chips = req.query.chip ? { chips: req.query.chip } : {};
 		const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 		const searchKeyword = req.query.searchKeyword
 			? {
@@ -248,6 +243,32 @@ router.get('/category/:category/subcategory/:subcategory', async (req, res) => {
 // 		res.status(500).send({ error, message: 'Error Getting Products' });
 // 	}
 // });
+
+router.get('/hidden', async (req, res) => {
+	try {
+		const products = await Product.find({ deleted: false });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: products,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(products);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Products' });
+	}
+});
 
 router.get('/shown', async (req, res) => {
 	try {

@@ -32,6 +32,10 @@ export default {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/orders/occurrences');
 	},
+	get_all_products: () => {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/products/hidden');
+	},
 	get_best_sellers: (occurences: any) => {
 		// console.log({ not_paid_email: array });
 		return axios.post('/api/products/best_sellers', { occurences });
