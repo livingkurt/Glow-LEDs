@@ -56,7 +56,7 @@ const ProductsPage = (props) => {
 
 	const colors = [
 		{ name: 'Not Category', color: '#333333' },
-		{ name: 'Infinity Mirrors', color: '#557b68' },
+		{ name: 'Glow Casings', color: '#557b68' },
 		{ name: 'Glow Strings', color: '#4b7188' },
 		{ name: 'Glowskins', color: '#736084' },
 		{ name: 'Mega Diffuser Caps', color: '#4b8882' },
@@ -70,9 +70,9 @@ const ProductsPage = (props) => {
 		if (!product.category) {
 			result = colors[0].color;
 		}
-		// if (product.category === 'infinity_mirrors') {
-		// 	result = colors[1].color;
-		// }
+		if (product.category === 'glow_casings') {
+			result = colors[1].color;
+		}
 		if (product.category === 'glow_strings') {
 			result = colors[2].color;
 		}
