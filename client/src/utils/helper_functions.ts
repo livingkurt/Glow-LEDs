@@ -16,8 +16,20 @@ export const humanize = (str: string) => {
 	return frags.join(' ');
 };
 export const snake_case = (str: string) => {
-	return str.toLowerCase().split(' ').join('_');
+	let snake_case = str;
+	snake_case.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
+	console.log({ snake_case: snake_case.substr(-1) });
+	if (snake_case.substr(-1) === ')') {
+		return str.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_').slice(0, -1);
+	} else {
+		return str.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
+	}
 };
+
+// export const snake_case = (str: string) => {
+// 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
+// };
+
 export const toCapitlize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
