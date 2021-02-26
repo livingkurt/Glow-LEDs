@@ -5,6 +5,7 @@ import { humanize } from '../../utils/helper_functions';
 import { listFeatures } from '../../actions/featureActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { API_Features, API_Products } from '../../utils';
+import { LazyImage } from '../../components/UtilityComponents';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
@@ -105,6 +106,9 @@ const MenuPage = (props) => {
 	// 		set_patterns(patterns);
 	// 	}
 	// };
+	const date = new Date();
+
+	const today = date.toISOString();
 
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
@@ -158,7 +162,11 @@ const MenuPage = (props) => {
 				},
 				{
 					category: 'glovers',
-					image: `http://img.youtube.com/vi/${glovers[0] && glovers[0].video}/hqdefault.jpg`
+					image: `http://img.youtube.com/vi/${glovers.filter(
+						(glover) => glover.release_date <= today && glover.category === 'glovers'
+					)[0] &&
+						glovers.filter((glover) => glover.release_date <= today && glover.category === 'glovers')[0]
+							.video}/hqdefault.jpg`
 					// artist_name: glovers[0] && glovers[0].artist_name,
 					// product: glovers[0] && glovers[0].product
 				},
@@ -264,7 +272,7 @@ const MenuPage = (props) => {
 									<Link to={decide_url(item)}>
 										<h2 className="">{humanize(item.category)}</h2>
 										<div className="w-300px h-300px mb-1rem">
-											<img
+											{/* <img
 												className="w-100per h-auto br-20px"
 												width="300px"
 												height="300px"
@@ -272,6 +280,14 @@ const MenuPage = (props) => {
 												src={item.image}
 												alt={item.category}
 												title="Menu Item Images"
+											/> */}
+											<LazyImage
+												look="w-100per h-auto br-20px"
+												alt={item.category}
+												title="Product Image"
+												size={{ height: '300px', width: '300px', objectFit: 'cover' }}
+												effect="blur"
+												src={item.image} // use normal <img> attributes as props
 											/>
 										</div>
 
