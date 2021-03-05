@@ -94,7 +94,7 @@ router.get('/tax_rates', async (req: any, res: any) => {
 	res.send(result);
 });
 
-router.get('/', isAuth, async (req: any, res: any) => {
+router.get('/', async (req: any, res: any) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		let user: any;
@@ -205,7 +205,7 @@ router.get('/', isAuth, async (req: any, res: any) => {
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
-		// console.log({ orders });
+		console.log({ orders });
 		res.send(orders);
 	} catch (error) {
 		log_error({
@@ -216,6 +216,26 @@ router.get('/', isAuth, async (req: any, res: any) => {
 			status: 500,
 			success: false
 		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
+router.get('/promo_code_usage', async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({ deleted: false })
+			// .limit(100)
+			.populate('user')
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product');
+		res.send(orders);
+	} catch (error) {
+		// log_error({
+		// 	method: 'GET',
+		// 	path: req.originalUrl,
+		// 	collection: 'Product',
+		// 	error,
+		// 	status: 500,
+		// 	success: false
+		// });
 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	}
 });
@@ -367,6 +387,7 @@ router.get('/each_month_income/:date', async (req: any, res: any) => {
 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	}
 });
+
 router.get('/daily_income', async (req: any, res: any) => {
 	try {
 		const orders = await Order.find({
