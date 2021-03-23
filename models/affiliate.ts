@@ -5,7 +5,6 @@ const affiliateSchema = new mongoose.Schema(
 	{
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		artist_name: { type: String },
-		glover_name: { type: String },
 		instagram_handle: { type: String },
 		facebook_name: { type: String },
 		percentage_off: { type: Number },
@@ -19,6 +18,7 @@ const affiliateSchema = new mongoose.Schema(
 		inspiration: { type: String },
 		link: { type: String },
 		promoter: { type: Boolean, default: true },
+		team: { type: Boolean, default: false },
 		sponsor: { type: Boolean, default: false },
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }

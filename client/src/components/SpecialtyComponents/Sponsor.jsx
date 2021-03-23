@@ -34,6 +34,10 @@ const Sponsor = (props) => {
 								/> */}
 
 							<label style={{ fontSize: '1.6rem' }}>{props.affiliate.artist_name}</label>
+							<label style={{ fontSize: '1.6rem' }}>
+								{props.affiliate.user && props.affiliate.user.first_name}{' '}
+								{props.affiliate.user && props.affiliate.user.last_name}
+							</label>
 							{/* <label style={{ fontSize: '1.3rem' }}>{props.affiliate.song_id}</label> */}
 							<label style={{ fontSize: '1.3rem' }}>
 								{props.affiliate.product && humanize(props.affiliate.product)}
