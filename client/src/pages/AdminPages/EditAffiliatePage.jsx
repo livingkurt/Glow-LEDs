@@ -23,6 +23,8 @@ const EditAffiliatePage = (props) => {
 	const [ bio, set_bio ] = useState('');
 	const [ link, set_link ] = useState('');
 	const [ picture, set_picture ] = useState('');
+	const [ location, set_location ] = useState('');
+	const [ years, set_years ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -69,6 +71,8 @@ const EditAffiliatePage = (props) => {
 		set_style('');
 		set_inspiration('');
 		set_picture('');
+		set_location('');
+		set_years('');
 	};
 
 	const dispatch = useDispatch();
@@ -128,7 +132,9 @@ const EditAffiliatePage = (props) => {
 				link,
 				picture,
 				style,
-				inspiration
+				inspiration,
+				location,
+				years
 			})
 		);
 		e.target.reset();
@@ -254,6 +260,26 @@ const EditAffiliatePage = (props) => {
 													onblur="this.placeholder = ''Flow, Megasloth, Jest..."
 													id="inspiration"
 													onChange={(e) => set_inspiration(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="years">Years Gloving</label>
+												<input
+													type="text"
+													name="years"
+													value={years}
+													id="years"
+													onChange={(e) => set_years(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="location">Location</label>
+												<input
+													type="text"
+													name="location"
+													value={location}
+													id="location"
+													onChange={(e) => set_location(e.target.value)}
 												/>
 											</li>
 											<li>
