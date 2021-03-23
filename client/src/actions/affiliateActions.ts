@@ -61,12 +61,12 @@ export const saveAffiliate = (affiliate: any) => async (
 	}
 };
 
-export const detailsAffiliate = (pathname: string) => async (
+export const detailsAffiliate = (artist_name: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void
 ) => {
 	try {
-		dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/affiliates/' + pathname);
+		dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: artist_name });
+		const { data } = await axios.get('/api/affiliates/' + artist_name);
 		dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: AFFILIATE_DETAILS_FAIL, payload: error.response.data.message });

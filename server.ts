@@ -26,7 +26,8 @@ import {
 	content_routes,
 	device_routes,
 	log_routes,
-	chip_routes
+	chip_routes,
+	team_routes
 } from './routes/index';
 // import users from './routes/users';
 
@@ -114,6 +115,7 @@ app.use('/api/orders', order_routes);
 app.use('/api/emails', email_routes);
 app.use('/api/devices', device_routes);
 app.use('/api/logs', log_routes);
+app.use('/api/teams', team_routes);
 app.use('/api/all', batch_routes);
 
 // app.use('/', htmlRoutes);

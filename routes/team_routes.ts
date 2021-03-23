@@ -1,7 +1,7 @@
 export {};
 import express from 'express';
 import { Log } from '../models';
-import Affiliate from '../models/affiliate';
+import Team from '../models/team';
 import { log_error, log_request } from '../util';
 const { isAuth, isAdmin } = require('../util');
 
@@ -13,10 +13,8 @@ router.get('/', async (req, res) => {
 		let sponsor = {};
 		let promoter = {};
 		console.log(category);
-		if (req.query.category === 'sponsored_glovers') {
+		if (req.query.category === 'sponsored_teams') {
 			sponsor = { sponsor: true };
-		} else if (req.query.category === 'affiliated_glovers') {
-			promoter = { promoter: true };
 		}
 		console.log(sponsor, promoter);
 		const searchKeyword = req.query.searchKeyword
@@ -43,7 +41,7 @@ router.get('/', async (req, res) => {
 			sortOrder = { _id: -1 };
 		}
 
-		const affiliates = await Affiliate.find({
+		const teams = await Team.find({
 			deleted: false,
 			// ...category,
 			...searchKeyword,
@@ -57,122 +55,122 @@ router.get('/', async (req, res) => {
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
-			collection: 'Affiliate',
-			data: affiliates,
+			collection: 'Team',
+			data: teams,
 			status: 200,
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
-		console.log({ affiliates });
-		res.send(affiliates);
+		console.log({ teams });
+		res.send(teams);
 	} catch (error) {
 		log_error({
 			method: 'GET',
 			path: req.originalUrl,
-			collection: 'Affiliate',
+			collection: 'Team',
 			error,
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Getting Affiliates' });
+		res.status(500).send({ error, message: 'Error Getting Teams' });
 	}
 });
 
-router.get('/:artist_name', async (req, res) => {
+router.get('/:team_name', async (req, res) => {
 	try {
-		const affiliate = await Affiliate.findOne({ promo_code: req.params.artist_name }).populate('user');
-		console.log({ affiliate });
-		console.log(req.params.artist_name);
-		if (affiliate) {
+		const team = await Team.findOne({ team_name: req.params.team_name }).populate('user');
+		console.log({ team });
+		console.log(req.params.team_name);
+		if (team) {
 			log_request({
 				method: 'GET',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ affiliate ],
+				collection: 'Team',
+				data: [ team ],
 				status: 200,
 				success: true,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-			res.send(affiliate);
+			res.send(team);
 		} else {
 			log_request({
 				method: 'GET',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ affiliate ],
+				collection: 'Team',
+				data: [ team ],
 				status: 404,
 				success: false,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-			res.status(404).send({ message: 'Affiliate Not Found.' });
+			res.status(404).send({ message: 'Team Not Found.' });
 		}
 	} catch (error) {
 		log_error({
 			method: 'GET',
 			path: req.originalUrl,
-			collection: 'Affiliate',
+			collection: 'Team',
 			error,
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Getting Affiliate' });
+		res.status(500).send({ error, message: 'Error Getting Team' });
 	}
 });
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	try {
-		console.log({ affiliate_routes_put: req.body });
-		const affiliate_id = req.params.id;
-		const affiliate: any = await Affiliate.findById(affiliate_id);
-		if (affiliate) {
-			const updatedAffiliate = await Affiliate.updateOne({ _id: affiliate_id }, req.body);
-			if (updatedAffiliate) {
+		console.log({ team_routes_put: req.body });
+		const team_id = req.params.id;
+		const team: any = await Team.findById(team_id);
+		if (team) {
+			const updatedTeam = await Team.updateOne({ _id: team_id }, req.body);
+			if (updatedTeam) {
 				log_request({
 					method: 'PUT',
 					path: req.originalUrl,
-					collection: 'Affiliate',
-					data: [ affiliate ],
+					collection: 'Team',
+					data: [ team ],
 					status: 200,
 					success: true,
 					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
-				return res.status(200).send({ message: 'Affiliate Updated', data: updatedAffiliate });
+				return res.status(200).send({ message: 'Team Updated', data: updatedTeam });
 			}
 		} else {
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ affiliate ],
+				collection: 'Team',
+				data: [ team ],
 				status: 500,
 				success: false,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-			return res.status(500).send({ message: ' Error in Updating Affiliate.' });
+			return res.status(500).send({ message: ' Error in Updating Team.' });
 		}
 	} catch (error) {
 		log_error({
 			method: 'PUT',
 			path: req.originalUrl,
-			collection: 'Affiliate',
+			collection: 'Team',
 			error,
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Getting Affiliate' });
+		res.status(500).send({ error, message: 'Error Getting Team' });
 	}
 });
 
 router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 	try {
-		const message: any = { message: 'Affiliate Deleted' };
-		const deleted_affiliate = await Affiliate.updateOne({ _id: req.params.id }, { deleted: true });
-		if (deleted_affiliate) {
+		const message: any = { message: 'Team Deleted' };
+		const deleted_team = await Team.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_team) {
 			log_request({
 				method: 'DELETE',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ deleted_affiliate ],
+				collection: 'Team',
+				data: [ deleted_team ],
 				status: 200,
 				success: true,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
@@ -182,8 +180,8 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 			log_request({
 				method: 'DELETE',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ deleted_affiliate ],
+				collection: 'Team',
+				data: [ deleted_team ],
 				status: 500,
 				success: false,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
@@ -194,51 +192,51 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 		log_error({
 			method: 'DELETE',
 			path: req.originalUrl,
-			collection: 'Affiliate',
+			collection: 'Team',
 			error,
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Deleting Affiliate' });
+		res.status(500).send({ error, message: 'Error Deleting Team' });
 	}
 });
 
 router.post('/', isAuth, async (req: any, res: any) => {
 	try {
-		const newAffiliate = await Affiliate.create(req.body);
-		if (newAffiliate) {
+		const newTeam = await Team.create(req.body);
+		if (newTeam) {
 			log_request({
 				method: 'POST',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ newAffiliate ],
+				collection: 'Team',
+				data: [ newTeam ],
 				status: 201,
 				success: true,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-			return res.status(201).send({ message: 'New Affiliate Created', data: newAffiliate });
+			return res.status(201).send({ message: 'New Team Created', data: newTeam });
 		} else {
 			log_request({
 				method: 'POST',
 				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ newAffiliate ],
+				collection: 'Team',
+				data: [ newTeam ],
 				status: 500,
 				success: false,
 				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 			});
-			return res.status(500).send({ message: ' Error in Creating Affiliate.' });
+			return res.status(500).send({ message: ' Error in Creating Team.' });
 		}
 	} catch (error) {
 		log_error({
 			method: 'POST',
 			path: req.originalUrl,
-			collection: 'Affiliate',
+			collection: 'Team',
 			error,
 			status: 500,
 			success: false
 		});
-		res.status(500).send({ error, message: 'Error Creating Affiliate' });
+		res.status(500).send({ error, message: 'Error Creating Team' });
 	}
 });
 

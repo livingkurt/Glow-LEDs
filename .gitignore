@@ -120,6 +120,7 @@ config.js
 passport.js
 
 routes/user_routes.js
+routes/team_routes.js
 routes/product_routes.js
 routes/index.js
 routes/email_routes.js
@@ -137,6 +138,7 @@ routes/log_routes.js
 routes/chip_routes.js
 
 models/user.js
+models/team.js
 models/chip.js
 models/product.js
 models/index.js

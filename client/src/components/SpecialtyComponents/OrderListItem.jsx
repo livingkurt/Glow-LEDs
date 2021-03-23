@@ -165,7 +165,7 @@ const OrderListItem = (props) => {
 					)}
 					<div className="column fs-16px">
 						<h3>Ship To</h3>
-						<Link to={`/secure/glow/userprofile/${props.order.user._id}`}>
+						<Link to={`/secure/glow/userprofile/${props.order.user && props.order.user._id}`}>
 							{props.order.shipping.first_name} {props.order.shipping.last_name}
 						</Link>
 					</div>

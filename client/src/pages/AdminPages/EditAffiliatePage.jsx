@@ -73,10 +73,10 @@ const EditAffiliatePage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
+			if (props.match.params.artist_name) {
 				console.log('Is ID');
-				stableDispatch(detailsAffiliate(props.match.params.id));
-				stableDispatch(detailsAffiliate(props.match.params.id));
+				stableDispatch(detailsAffiliate(props.match.params.artist_name));
+				stableDispatch(detailsAffiliate(props.match.params.artist_name));
 			} else {
 				stableDispatch(detailsAffiliate(''));
 			}
@@ -84,7 +84,7 @@ const EditAffiliatePage = (props) => {
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ stableDispatch, props.match.params.artist_name ]
 	);
 
 	useEffect(

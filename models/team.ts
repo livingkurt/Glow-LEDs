@@ -1,0 +1,28 @@
+import mongoose from 'mongoose';
+export {};
+
+const teamSchema = new mongoose.Schema(
+	{
+		affiliates: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliates' } ],
+		team_name: { type: String },
+		instagram_handle: { type: String },
+		facebook_name: { type: String },
+		percentage_off: { type: Number },
+		promo_code: { type: String },
+		bio: { type: String },
+		// style: { type: String },
+		// inspiration: { type: String },
+		link: { type: String },
+		promoter: { type: Boolean, default: true },
+		sponsor: { type: Boolean, default: false },
+		active: { type: Boolean, default: true },
+		deleted: { type: Boolean, default: false }
+	},
+	{
+		timestamps: true
+	}
+);
+
+const teamModel = mongoose.model('Team', teamSchema);
+
+export default teamModel;

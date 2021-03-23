@@ -1,29 +1,29 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listAffiliates, deleteAffiliate } from '../../actions/affiliateActions';
+import { listTeams, deleteTeam } from '../../actions/teamActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
-const AffiliatesPage = (props) => {
+const TeamsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
-	const affiliateList = useSelector((state) => state.affiliateList);
-	const { loading, affiliates, error } = affiliateList;
+	const teamList = useSelector((state) => state.teamList);
+	const { loading, teams, error } = teamList;
 
-	const affiliateSave = useSelector((state) => state.affiliateSave);
-	const { success: successSave } = affiliateSave;
+	const teamSave = useSelector((state) => state.teamSave);
+	const { success: successSave } = teamSave;
 
-	const affiliateDelete = useSelector((state) => state.affiliateDelete);
-	const { success: successDelete } = affiliateDelete;
+	const teamDelete = useSelector((state) => state.teamDelete);
+	const { success: successDelete } = teamDelete;
 	const dispatch = useDispatch();
 
 	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listAffiliates());
+			stableDispatch(listTeams());
 			return () => {
 				//
 			};
@@ -32,35 +32,35 @@ const AffiliatesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listAffiliates(category, searchKeyword, sortOrder));
+		dispatch(listTeams(category, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listAffiliates(category, searchKeyword, e.target.value));
+		dispatch(listTeams(category, searchKeyword, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listAffiliates(category, searchKeyword, sortOrder));
+			stableDispatch(listTeams(category, searchKeyword, sortOrder));
 		},
 		[ stableDispatch, category, searchKeyword, sortOrder ]
 	);
-	const deleteHandler = (affiliate) => {
-		dispatch(deleteAffiliate(affiliate._id));
+	const deleteHandler = (team) => {
+		dispatch(deleteTeam(team._id));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
 	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promoter', color: '#7d5555' } ];
 
-	const determine_color = (affiliate) => {
+	const determine_color = (team) => {
 		let result = '';
 
-		if (affiliate.sponsor) {
+		if (team.sponsor) {
 			result = colors[0].color;
 		}
-		if (affiliate.promoter) {
+		if (team.promoter) {
 			result = colors[1].color;
 		}
 		return result;
@@ -69,7 +69,7 @@ const AffiliatesPage = (props) => {
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
-				<title>Admin Affiliates | Glow LEDs</title>
+				<title>Admin Teams | Glow LEDs</title>
 			</Helmet>
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
@@ -89,27 +89,27 @@ const AffiliatesPage = (props) => {
 						);
 					})}
 				</div>
-				<Link to="/secure/glow/editaffiliate">
+				<Link to="/secure/glow/editteam">
 					<button className="btn primary" style={{ width: '160px' }}>
-						Create Affiliate
+						Create Team
 					</button>
 				</Link>
 			</div>
 			<div className="jc-c">
-				<h1 style={{ textAlign: 'center' }}>Affiliates</h1>
+				<h1 style={{ textAlign: 'center' }}>Teams</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>
-				{affiliates && (
-					<div className="affiliate-list responsive_table">
+				{teams && (
+					<div className="team-list responsive_table">
 						<table className="table">
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Artist Name</th>
+									<th>Team Name</th>
 									<th>Instagram Handle</th>
 									<th>Facebook Name</th>
 									<th>Percentage Off</th>
@@ -120,36 +120,36 @@ const AffiliatesPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{affiliates.map((affiliate) => (
+								{teams.map((team) => (
 									<tr
-										key={affiliate._id}
+										key={team._id}
 										style={{
-											backgroundColor: determine_color(affiliate),
+											backgroundColor: determine_color(team),
 											fontSize: '1.4rem'
 										}}
 									>
-										<td className="p-10px">{affiliate._id}</td>
-										<td className="p-10px">{affiliate.artist_name}</td>
-										<td className="p-10px">{affiliate.instagram_handle}</td>
-										<td className="p-10px">{affiliate.facebook_name}</td>
-										<td className="p-10px">{affiliate.percentage_off}%</td>
-										<td className="p-10px">{affiliate.promo_code}</td>
+										<td className="p-10px">{team._id}</td>
+										<td className="p-10px">{team.team_name}</td>
+										<td className="p-10px">{team.instagram_handle}</td>
+										<td className="p-10px">{team.facebook_name}</td>
+										<td className="p-10px">{team.percentage_off}%</td>
+										<td className="p-10px">{team.promo_code}</td>
 										<td className="p-10px">
-											{affiliate.sponsor ? (
+											{team.sponsor ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
 										<td className="p-10px">
-											{affiliate.promoter ? (
+											{team.promoter ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
 										<td className="p-10px">
-											{affiliate.active ? (
+											{team.active ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />
@@ -157,12 +157,12 @@ const AffiliatesPage = (props) => {
 										</td>
 										<td className="p-10px">
 											<div className="jc-b">
-												<Link to={'/secure/glow/editaffiliate/' + affiliate.artist_name}>
+												<Link to={'/secure/glow/editteam/' + team.team_name}>
 													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(affiliate)}>
+												<button className="btn icon" onClick={() => deleteHandler(team)}>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>
@@ -177,4 +177,4 @@ const AffiliatesPage = (props) => {
 		</div>
 	);
 };
-export default AffiliatesPage;
+export default TeamsPage;

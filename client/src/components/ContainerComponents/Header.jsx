@@ -148,21 +148,14 @@ const Header = (props) => {
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px w-243px">
 										<Link to="/collections/all/products/category/glow_casings">
 											<div className="row">
-												{/* <i className="mr-30px trans-neg-90 fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l">Glow Casings</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/glowskins">
 											<div className="row">
-												{/* <i className="mr-30px trans-neg-90 fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l">Glowskins</button>
 											</div>
 										</Link>
-										{/* <Link to="/collections/all/products/category/frosted_diffusers">
-											<div className="row">
-												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
-											</div>
-										</Link> */}
 										<div className="dropdown-nav-nested">
 											<Link to="/collections/all/products/category/frosted_diffusers">
 												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
@@ -276,204 +269,26 @@ const Header = (props) => {
 										</Link>
 									</div>
 								</div>
-								{/* <div className="dropdown-nav-subcategory">
-									<Link to="/pages/menu/gloving">
-										<button className="btn nav">Gloving</button>
-									</Link>
-									<div className="dropdown-nav-content hover_fade_in w-300px">
-										<Link to="/collections/all/products/category/glowskins">
-											<button className="btn nav w-100per ta-l">Glowskins (New)</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers">
-											<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
-										</Link>
-										<div className="dropdown-nav-subcategory">
-											<Link to="/collections/all/products/category/diffuser_caps">
-												<button className="btn nav w-100per ta-l">Diffuser Caps</button>
-												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-											</Link>
-											<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-													<div className="row">
-														<i className="mr-30px trans-neg-90 fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Geomotric</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-													<div className="row">
-														<i className="mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Shapes</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Abstract</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Patterns</button>
-													</div>
-												</Link>
-											</div>
-										</div>
 
-										<div className="dropdown-nav-subcategory">
-											<Link to="/collections/all/products/category/mega_diffuser_caps">
-												<button className="btn nav w-100per ta-l">Mega Diffuser Caps</button>
-												<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-											</Link>
-											<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
-												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Geomotric</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Shapes</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Abstract</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Patterns</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Emojis</button>
-													</div>
-												</Link>
-											</div>
-										</div>
-										<Link to="/collections/all/products/category/accessories">
-											<button className="btn nav w-100per ta-l">Accessories</button>
-										</Link>
-									</div>
-								</div> */}
 								<Link to="/collections/all/products/category/glow_strings">
 									<button className="btn nav w-100per ta-l">Glow Strings</button>
 								</Link>
 							</div>
-						</div>
-						{/* <div className="dropdown-nav">
-							<Link to="/pages/menu/gloving">
-								<button className="btn nav">Gloving</button>
-							</Link>
-							<div className="dropdown-nav-content hover_fade_in w-300px">
-								<Link to="/collections/all/products/category/glowskins">
-									<button className="btn nav w-100per ta-l">Glowskins (New)</button>
-								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers">
-									<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
-								</Link>
-								<div className="dropdown-nav-subcategory">
-									<Link to="/collections/all/products/category/diffuser_caps">
-										<button className="btn nav w-100per ta-l">Diffuser Caps</button>
-										<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-											<div className="row">
-												<i className="mr-30px trans-neg-90 fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Geomotric</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-											<div className="row">
-												<i className="mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Shapes</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Abstract</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Patterns</button>
-											</div>
-										</Link>
-									</div>
-								</div>
-
-								<div className="dropdown-nav-subcategory">
-									<Link to="/collections/all/products/category/mega_diffuser_caps">
-										<button className="btn nav w-100per ta-l">Mega Diffuser Caps</button>
-										<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px">
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Geomotric</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Shapes</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Abstract</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Patterns</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
-											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Emojis</button>
-											</div>
-										</Link>
-									</div>
-								</div>
-								<Link to="/collections/all/products/category/accessories">
-									<button className="btn nav w-100per ta-l">Accessories</button>
-								</Link>
-							</div>
-						</div> */}
-
-						<div className="dropdown-nav">
-							{/* <Link to="/pages/menu/decor">
-								<button className="btn nav">Decor</button>
-							</Link> */}
-							{/* <div className="dropdown-nav-content hover_fade_in w-200px"> */}
-							{/* <Link to="/collections/all/products/category/glow_strings">
-								<button className="btn nav w-100per ta-l">Glow Strings</button>
-							</Link> */}
-							{/* <Link to="/collections/all/products/category/infinity_mirrors">
-									<button className="btn nav w-100per ta-l"> Infinity Mirrors</button>
-								</Link> */}
-							{/* </div> */}
 						</div>
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/featured">
 								<button className="btn nav">Featured</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
+								<Link to="/collections/all/affiliates/category/sponsored_glovers">
+									<button className="btn nav w-100per ta-l">Sponsored Glovers</button>
+								</Link>
+								<Link to="/collections/all/affiliates/category/sponsored_teams">
+									<button className="btn nav w-100per ta-l">Inky Bois</button>
+								</Link>
+								<Link to="/collections/all/affiliates/category/affiliated_glovers">
+									<button className="btn nav w-100per ta-l">Affiliated Glovers</button>
+								</Link>
 								<Link to="/collections/all/features/category/artists">
 									<button className="btn nav w-100per ta-l">Artists</button>
 								</Link>
@@ -491,22 +306,6 @@ const Header = (props) => {
 								</Link>
 							</div>
 						</div>
-						{/* <div className="dropdown-nav">
-							<Link to="/pages/menu/community">
-								<button className="btn nav">Community</button>
-							</Link>
-							<div className="dropdown-nav-content hover_fade_in w-200px">
-								<Link to="/pages/announcements">
-									<button className="btn nav w-100per ta-l">Announcements</button>
-								</Link>
-								<Link to="/pages/menu/featured">
-									<button className="btn nav w-100per ta-l">Featured</button>
-								</Link>
-								<Link to="/pages/music">
-									<button className="btn nav w-100per ta-l">Music</button>
-								</Link>
-							</div>
-						</div> */}
 						{/* <div className="dropdown-nav">
 							<Link to="/pages/glowcontrol">
 								<button className="btn nav">Glow Control</button>
@@ -633,47 +432,6 @@ const Header = (props) => {
 							</Link>
 						</div>
 					)}
-					{/* {userInfo && userInfo.hasOwnProperty('first_name') ? (
-						<div>
-							<Link to="/account/login">
-								<button className="btn nav">Login</button>
-							</Link>
-						</div>
-					) : (
-						<div className="dropdown">
-							<button className="btn nav">{first_name}</button>
-							<ul className="dropdown-content hover_fade_in w-110px">
-								<Link to="/secure/account/profile">
-									<button className="btn nav">Profile</button>
-								</Link>
-								<Link to="/secure/account/orders">
-									<button className="btn nav">Orders</button>
-								</Link>
-								<button className="btn nav mr-auto" onClick={handleLogout}>
-									{' '}
-									Logout
-								</button>
-							</ul>
-						</div>
-					)} */}
-					{/* {userInfo && (
-						<div className="dropdown">
-							<button className="btn nav">{first_name}</button>
-							<ul className="dropdown-content hover_fade_in w-110px">
-								<Link to="/secure/account/profile">
-									<button className="btn nav">Profile</button>
-								</Link>
-								<Link to="/secure/account/orders">
-									<button className="btn nav">Orders</button>
-								</Link>
-					
-								<button className="btn nav mr-auto" onClick={handleLogout}>
-									{' '}
-									Logout
-								</button>
-							</ul>
-						</div>
-					)} */}
 					{userInfo &&
 					userInfo.isAdmin && (
 						<div className="dropdown ">
@@ -699,6 +457,9 @@ const Header = (props) => {
 								</Link>
 								<Link to="/secure/glow/affiliates">
 									<button className="btn nav"> Affiliates</button>
+								</Link>
+								<Link to="/secure/glow/teams">
+									<button className="btn nav"> Teams</button>
 								</Link>
 								<Link to="/secure/glow/promos">
 									<button className="btn nav">Promos</button>

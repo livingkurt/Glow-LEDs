@@ -68,7 +68,11 @@ import {
 	EditUserAffiliatePage,
 	AffiliateCreationComplete,
 	ShippingPublicPage,
-	ChipsPage
+	ChipsPage,
+	AllAffiliatesPage,
+	AffiliatedPage,
+	EditTeamPage,
+	TeamsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -277,12 +281,14 @@ const App = () => {
 							<AdminRoute path="/secure/glow/emails/invoice/:id?" exact={true} component={InvoiceEmail} />
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-							<AdminRoute path="/secure/glow/editaffiliate/:id?" component={EditAffiliatePage} />
+							<AdminRoute path="/secure/glow/editaffiliate/:team_name?" component={EditAffiliatePage} />
+							<AdminRoute path="/secure/glow/editteam/:team_name?" component={EditTeamPage} />
 							<AdminRoute path="/secure/glow/editchip/:id?" component={EditChipPage} />
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
 							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
 							<AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
+							<AdminRoute path="/secure/glow/teams" component={TeamsPage} />
 							<AdminRoute path="/secure/glow/chips" component={ChipsPage} />
 							<AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 
@@ -326,6 +332,16 @@ const App = () => {
 								path="/collections/all/features/category/:category/:pathname?"
 								exact={true}
 								component={FeaturedPage}
+							/>
+							<Route
+								path="/collections/all/affiliates/category/:category?"
+								exact={true}
+								component={AllAffiliatesPage}
+							/>
+							<Route
+								path="/collections/all/affiliates/category/:category/:artist_name?"
+								exact={true}
+								component={AffiliatedPage}
 							/>
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/" exact={true} component={HomePage} />

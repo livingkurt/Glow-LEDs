@@ -67,6 +67,7 @@ import {
 	affiliateListReducer,
 	affiliateSaveReducer
 } from './reducers/affiliateReducers';
+import { teamDeleteReducer, teamDetailsReducer, teamListReducer, teamSaveReducer } from './reducers/teamReducers';
 import { chipDeleteReducer, chipDetailsReducer, chipListReducer, chipSaveReducer } from './reducers/chipReducers';
 import {
 	contentDeleteReducer,
@@ -136,6 +137,10 @@ const reducer = combineReducers({
 	affiliateDetails: affiliateDetailsReducer,
 	affiliateSave: affiliateSaveReducer,
 	affiliateDelete: affiliateDeleteReducer,
+	teamList: teamListReducer,
+	teamDetails: teamDetailsReducer,
+	teamSave: teamSaveReducer,
+	teamDelete: teamDeleteReducer,
 	chipList: chipListReducer,
 	chipDetails: chipDetailsReducer,
 	chipSave: chipSaveReducer,
