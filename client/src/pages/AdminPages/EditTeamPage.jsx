@@ -23,6 +23,7 @@ const EditTeamPage = (props) => {
 	const [ bio, set_bio ] = useState('');
 	const [ link, set_link ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
+	const [ picture, set_picture ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -47,6 +48,7 @@ const EditTeamPage = (props) => {
 		set_bio(team.bio);
 		set_link(team.link);
 		set_pathname(team.pathname);
+		set_picture(team.picture);
 		console.log(team.affiliates);
 		set_affiliates(team.affiliates);
 	};
@@ -63,6 +65,7 @@ const EditTeamPage = (props) => {
 		set_bio('');
 		set_link('');
 		set_pathname('');
+		set_picture('');
 		set_affiliates([]);
 	};
 
@@ -119,6 +122,7 @@ const EditTeamPage = (props) => {
 				active,
 				bio,
 				link,
+				picture,
 				pathname: pathname ? pathname : snake_case(team_name),
 				affiliates: affiliates && affiliates.map((affiliate) => affiliate._id)
 			})
@@ -242,6 +246,16 @@ const EditTeamPage = (props) => {
 													value={team_name}
 													id="team_name"
 													onChange={(e) => set_team_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="picture">Picture</label>
+												<input
+													type="text"
+													name="picture"
+													value={picture}
+													id="picture"
+													onChange={(e) => set_picture(e.target.value)}
 												/>
 											</li>
 											<li>
