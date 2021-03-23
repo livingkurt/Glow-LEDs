@@ -25,6 +25,7 @@ const EditAffiliatePage = (props) => {
 	const [ picture, set_picture ] = useState('');
 	const [ location, set_location ] = useState('');
 	const [ years, set_years ] = useState('');
+	const [ team, set_team ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -53,6 +54,7 @@ const EditAffiliatePage = (props) => {
 		set_style(affiliate.style);
 		set_inspiration(affiliate.inspiration);
 		set_picture(affiliate.picture);
+		set_team(affiliate.team);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -73,6 +75,7 @@ const EditAffiliatePage = (props) => {
 		set_picture('');
 		set_location('');
 		set_years('');
+		set_team('');
 	};
 
 	const dispatch = useDispatch();
@@ -131,6 +134,7 @@ const EditAffiliatePage = (props) => {
 				bio,
 				link,
 				picture,
+				team,
 				style,
 				inspiration,
 				location,
@@ -214,6 +218,16 @@ const EditAffiliatePage = (props) => {
 													value={picture}
 													id="picture"
 													onChange={(e) => set_picture(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="team">Team</label>
+												<input
+													type="text"
+													name="team"
+													value={team}
+													id="team"
+													onChange={(e) => set_team(e.target.value)}
 												/>
 											</li>
 											<li>
