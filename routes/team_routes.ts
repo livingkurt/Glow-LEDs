@@ -76,11 +76,12 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/:team_name', async (req, res) => {
+router.get('/:pathname', async (req, res) => {
 	try {
-		const team = await Team.findOne({ team_name: req.params.team_name }).populate('user');
+		console.log({ pathname: req.params.pathname });
+		const team = await Team.findOne({ pathname: req.params.pathname }).populate('affiliates');
 		console.log({ team });
-		console.log(req.params.team_name);
+		console.log(req.params.pathname);
 		if (team) {
 			log_request({
 				method: 'GET',

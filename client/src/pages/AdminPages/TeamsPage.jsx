@@ -157,7 +157,7 @@ const TeamsPage = (props) => {
 										</td>
 										<td className="p-10px">
 											<div className="jc-b">
-												<Link to={'/secure/glow/editteam/' + team.team_name}>
+												<Link to={'/secure/glow/editteam/' + team.pathname}>
 													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>

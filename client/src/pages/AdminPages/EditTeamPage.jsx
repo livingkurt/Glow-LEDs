@@ -6,6 +6,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listAffiliates } from '../../actions/affiliateActions';
+import { snake_case } from '../../utils/helper_functions';
 
 const EditTeamPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -21,6 +22,7 @@ const EditTeamPage = (props) => {
 	const [ active, set_active ] = useState('');
 	const [ bio, set_bio ] = useState('');
 	const [ link, set_link ] = useState('');
+	const [ pathname, set_pathname ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -44,6 +46,8 @@ const EditTeamPage = (props) => {
 		set_active(team.active);
 		set_bio(team.bio);
 		set_link(team.link);
+		set_pathname(team.pathname);
+		console.log(team.affiliates);
 		set_affiliates(team.affiliates);
 	};
 	const unset_state = () => {
@@ -58,6 +62,7 @@ const EditTeamPage = (props) => {
 		set_active('');
 		set_bio('');
 		set_link('');
+		set_pathname('');
 		set_affiliates([]);
 	};
 
@@ -66,10 +71,10 @@ const EditTeamPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.team_name) {
+			if (props.match.params.pathname) {
 				console.log('Is ID');
-				stableDispatch(detailsTeam(props.match.params.team_name));
-				stableDispatch(detailsTeam(props.match.params.team_name));
+				stableDispatch(detailsTeam(props.match.params.pathname));
+				stableDispatch(detailsTeam(props.match.params.pathname));
 				set_state();
 			} else {
 				stableDispatch(detailsTeam(''));
@@ -78,7 +83,7 @@ const EditTeamPage = (props) => {
 
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.team_name ]
+		[ stableDispatch, props.match.params.pathname ]
 	);
 
 	useEffect(
@@ -114,6 +119,7 @@ const EditTeamPage = (props) => {
 				active,
 				bio,
 				link,
+				pathname: pathname ? pathname : snake_case(team_name),
 				affiliates: affiliates && affiliates.map((affiliate) => affiliate._id)
 			})
 		);
@@ -186,79 +192,79 @@ const EditTeamPage = (props) => {
 						<div>Loading...</div>
 					) : ( */}
 					<Loading loading={loading} error={error}>
-						{/* {team && ( */}
-						<div>
-							<Helmet>
-								<title>Edit Team| Glow LEDs</title>
-							</Helmet>
+						{team && (
+							<div>
+								<Helmet>
+									<title>Edit Team| Glow LEDs</title>
+								</Helmet>
 
-							<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
-								<div className="row wrap">
-									<div className="column w-228px m-10px">
-										<li>
-											<label htmlFor="affiliate">Affiliate</label>
-											{/* <input
+								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
+									<div className="row wrap">
+										<div className="column w-228px m-10px">
+											<li>
+												<label htmlFor="affiliate">Affiliate</label>
+												{/* <input
 													type="text"
 													name="affiliate"
 													value={affiliate}
 													id="affiliate"
 													onChange={(e) => set_affiliate(e.target.value)}
 												/> */}
-											<div className="ai-c h-25px mv-15px jc-c">
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => add_affiliate(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose Affiliate---
-														</option>
-														{affiliates_list.map((affiliate, index) => (
-															<option key={index} value={JSON.stringify(affiliate)}>
-																{affiliate.artist_name}
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_affiliate(e)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Affiliate---
 															</option>
-														))}
-													</select>
-													<span className="custom-arrow" />
+															{affiliates_list.map((affiliate, index) => (
+																<option key={index} value={JSON.stringify(affiliate)}>
+																	{affiliate.artist_name || affiliate.glover_name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
 												</div>
-											</div>
-											<button className="btn primary" onClick={(e) => add_affiliate(e)}>
-												Add Affiliate
-											</button>
-											{affiliate_display(affiliates)}
-										</li>
+												<button className="btn primary" onClick={(e) => add_affiliate(e)}>
+													Add Affiliate
+												</button>
+												{affiliate_display(affiliates)}
+											</li>
 
-										<li>
-											<label htmlFor="team_name">Team Name</label>
-											<input
-												type="text"
-												name="team_name"
-												value={team_name}
-												id="team_name"
-												onChange={(e) => set_team_name(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="instagram_handle">Instagram Handle</label>
-											<input
-												type="text"
-												name="instagram_handle"
-												value={instagram_handle}
-												id="instagram_handle"
-												onChange={(e) => set_instagram_handle(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="facebook_name">Facebook Name</label>
-											<input
-												type="text"
-												name="facebook_name"
-												value={facebook_name}
-												id="facebook_name"
-												onChange={(e) => set_facebook_name(e.target.value)}
-											/>
-										</li>
-										{/* <li>
+											<li>
+												<label htmlFor="team_name">Team Name</label>
+												<input
+													type="text"
+													name="team_name"
+													value={team_name}
+													id="team_name"
+													onChange={(e) => set_team_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="instagram_handle">Instagram Handle</label>
+												<input
+													type="text"
+													name="instagram_handle"
+													value={instagram_handle}
+													id="instagram_handle"
+													onChange={(e) => set_instagram_handle(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="facebook_name">Facebook Name</label>
+												<input
+													type="text"
+													name="facebook_name"
+													value={facebook_name}
+													id="facebook_name"
+													onChange={(e) => set_facebook_name(e.target.value)}
+												/>
+											</li>
+											{/* <li>
 											<label htmlFor="style">Your Style</label>
 											<input
 												type="text"
@@ -284,44 +290,56 @@ const EditTeamPage = (props) => {
 												onChange={(e) => set_inspiration(e.target.value)}
 											/>
 										</li> */}
-										<li>
-											<label htmlFor="bio">Bio</label>
-											<textarea
-												className="edit_product_textarea"
-												name="bio"
-												placeholder="Write a little something to introduce yourself..."
-												onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'Write a little something to introduce yourself...'"
-												defaultValue={bio}
-												id="bio"
-												onChange={(e) => set_bio(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="link">Website</label>
-											<input
-												type="text"
-												name="link"
-												value={link}
-												placeholder="https://www..."
-												onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'https://www...'"
-												id="link"
-												onChange={(e) => set_link(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="percentage_off">Percentage Off</label>
-											<input
-												type="text"
-												name="percentage_off"
-												value={percentage_off}
-												id="percentage_off"
-												onChange={(e) => set_percentage_off(e.target.value)}
-											/>
-										</li>
+											<li>
+												<label htmlFor="bio">Bio</label>
+												<textarea
+													className="edit_product_textarea"
+													name="bio"
+													placeholder="Write a little something to introduce yourself..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'Write a little something to introduce yourself...'"
+													defaultValue={bio}
+													id="bio"
+													onChange={(e) => set_bio(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="link">Website</label>
+												<input
+													type="text"
+													name="link"
+													value={link}
+													placeholder="https://www..."
+													onfocus="this.placeholder = ''"
+													onblur="this.placeholder = 'https://www...'"
+													id="link"
+													onChange={(e) => set_link(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="pathname">Pathname</label>
+												<input
+													type="text"
+													name="pathname"
+													defaultValue={
+														pathname ? pathname : team_name && snake_case(team_name)
+													}
+													id="pathname"
+													onChange={(e) => set_pathname(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="percentage_off">Percentage Off</label>
+												<input
+													type="text"
+													name="percentage_off"
+													value={percentage_off}
+													id="percentage_off"
+													onChange={(e) => set_percentage_off(e.target.value)}
+												/>
+											</li>
 
-										{/* <li>
+											{/* <li>
 												<label htmlFor="funds_generated">Funds Generated</label>
 												<input
 													type="text"
@@ -331,88 +349,88 @@ const EditTeamPage = (props) => {
 													onChange={(e) => set_funds_generated(e.target.value)}
 												/>
 											</li> */}
-										<li>
-											<label htmlFor="promo_code">Promo Code</label>
-											<input
-												type="text"
-												name="promo_code"
-												value={promo_code}
-												id="promo_code"
-												onChange={(e) => set_promo_code(e.target.value)}
-											/>
-										</li>
-										{loading_checkboxes ? (
-											<div>Loading...</div>
-										) : (
 											<li>
-												<label htmlFor="sponsor">Sponsor</label>
+												<label htmlFor="promo_code">Promo Code</label>
 												<input
-													type="checkbox"
-													name="sponsor"
-													// defaultChecked={sponsor ? 'checked' : 'unchecked'}
-													// defaultValue={sponsor}
-													defaultChecked={sponsor}
-													// value={sponsor ? '1' : '0'}
-													id="sponsor"
-													onChange={(e) => {
-														set_sponsor(e.target.checked);
-													}}
+													type="text"
+													name="promo_code"
+													value={promo_code}
+													id="promo_code"
+													onChange={(e) => set_promo_code(e.target.value)}
 												/>
 											</li>
-										)}
-										{loading_checkboxes ? (
-											<div>Loading...</div>
-										) : (
-											<li>
-												<label htmlFor="promoter">Promoter</label>
-												<input
-													type="checkbox"
-													name="promoter"
-													// defaultChecked={promoter ? 'checked' : 'unchecked'}
-													// defaultValue={promoter}
-													defaultChecked={promoter}
-													// value={promoter ? '1' : '0'}
-													id="promoter"
-													onChange={(e) => {
-														set_promoter(e.target.checked);
-													}}
-												/>
-											</li>
-										)}
-										{loading_checkboxes ? (
-											<div>Loading...</div>
-										) : (
-											<li>
-												<label htmlFor="active">Active</label>
-												<input
-													type="checkbox"
-													name="active"
-													// defaultChecked={active ? 'checked' : 'unchecked'}
-													// defaultValue={active}
-													defaultChecked={active}
-													// value={active ? '1' : '0'}
-													id="active"
-													onChange={(e) => {
-														set_active(e.target.checked);
-													}}
-												/>
-											</li>
-										)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="sponsor">Sponsor</label>
+													<input
+														type="checkbox"
+														name="sponsor"
+														// defaultChecked={sponsor ? 'checked' : 'unchecked'}
+														// defaultValue={sponsor}
+														defaultChecked={sponsor}
+														// value={sponsor ? '1' : '0'}
+														id="sponsor"
+														onChange={(e) => {
+															set_sponsor(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="promoter">Promoter</label>
+													<input
+														type="checkbox"
+														name="promoter"
+														// defaultChecked={promoter ? 'checked' : 'unchecked'}
+														// defaultValue={promoter}
+														defaultChecked={promoter}
+														// value={promoter ? '1' : '0'}
+														id="promoter"
+														onChange={(e) => {
+															set_promoter(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="active">Active</label>
+													<input
+														type="checkbox"
+														name="active"
+														// defaultChecked={active ? 'checked' : 'unchecked'}
+														// defaultValue={active}
+														defaultChecked={active}
+														// value={active ? '1' : '0'}
+														id="active"
+														onChange={(e) => {
+															set_active(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+										</div>
 									</div>
-								</div>
-								<li>
-									<button type="submit" className="btn primary">
-										{id ? 'Update' : 'Create'}
-									</button>
-								</li>
-								<li>
-									<button className="btn secondary" onClick={() => history.goBack()}>
-										Back to Teams
-									</button>
-								</li>
-							</ul>
-						</div>
-						{/* )} */}
+									<li>
+										<button type="submit" className="btn primary">
+											{id ? 'Update' : 'Create'}
+										</button>
+									</li>
+									<li>
+										<button className="btn secondary" onClick={() => history.goBack()}>
+											Back to Teams
+										</button>
+									</li>
+								</ul>
+							</div>
+						)}
 					</Loading>
 					{/* )} */}
 				</form>

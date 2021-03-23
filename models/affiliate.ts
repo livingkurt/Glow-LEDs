@@ -11,6 +11,7 @@ const affiliateSchema = new mongoose.Schema(
 		percentage_off: { type: Number },
 		promo_code: { type: String },
 		bio: { type: String },
+		picture: { type: String },
 		style: { type: String },
 		inspiration: { type: String },
 		link: { type: String },

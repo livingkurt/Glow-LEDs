@@ -3,13 +3,15 @@ export {};
 
 const teamSchema = new mongoose.Schema(
 	{
-		affiliates: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliates' } ],
+		affiliates: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' } ],
 		team_name: { type: String },
 		instagram_handle: { type: String },
 		facebook_name: { type: String },
 		percentage_off: { type: Number },
 		promo_code: { type: String },
 		bio: { type: String },
+		picture: { type: String },
+		pathname: { type: String },
 		// style: { type: String },
 		// inspiration: { type: String },
 		link: { type: String },

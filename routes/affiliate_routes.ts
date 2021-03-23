@@ -63,7 +63,7 @@ router.get('/', async (req, res) => {
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
-		console.log({ affiliates });
+		// console.log({ affiliates });
 		res.send(affiliates);
 	} catch (error) {
 		log_error({

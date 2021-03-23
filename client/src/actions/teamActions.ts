@@ -61,10 +61,10 @@ export const saveTeam = (team: any) => async (
 	}
 };
 
-export const detailsTeam = (team_name: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsTeam = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
-		dispatch({ type: TEAM_DETAILS_REQUEST, payload: team_name });
-		const { data } = await axios.get('/api/teams/' + team_name);
+		dispatch({ type: TEAM_DETAILS_REQUEST, payload: pathname });
+		const { data } = await axios.get('/api/teams/' + pathname);
 		dispatch({ type: TEAM_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: TEAM_DETAILS_FAIL, payload: error.response.data.message });

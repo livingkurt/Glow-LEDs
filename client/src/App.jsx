@@ -281,8 +281,8 @@ const App = () => {
 							<AdminRoute path="/secure/glow/emails/invoice/:id?" exact={true} component={InvoiceEmail} />
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-							<AdminRoute path="/secure/glow/editaffiliate/:team_name?" component={EditAffiliatePage} />
-							<AdminRoute path="/secure/glow/editteam/:team_name?" component={EditTeamPage} />
+							<AdminRoute path="/secure/glow/editaffiliate/:pathname?" component={EditAffiliatePage} />
+							<AdminRoute path="/secure/glow/editteam/:pathname?" component={EditTeamPage} />
 							<AdminRoute path="/secure/glow/editchip/:id?" component={EditChipPage} />
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
 							<AdminRoute path="/secure/glow/editemail/:id?" component={EditEmailPage} />
