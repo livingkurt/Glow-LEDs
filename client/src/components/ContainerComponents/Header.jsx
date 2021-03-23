@@ -280,7 +280,7 @@ const Header = (props) => {
 								<button className="btn nav">Featured</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-200px">
-								<Link to="/collections/all/affiliates/category/sponsored_glovers">
+								{/* <Link to="/collections/all/affiliates/category/sponsored_glovers">
 									<button className="btn nav w-100per ta-l">Sponsored Glovers</button>
 								</Link>
 								<Link to="/collections/all/affiliates/category/sponsored_teams">
@@ -288,7 +288,7 @@ const Header = (props) => {
 								</Link>
 								<Link to="/collections/all/affiliates/category/affiliated_glovers">
 									<button className="btn nav w-100per ta-l">Affiliated Glovers</button>
-								</Link>
+								</Link> */}
 								<Link to="/collections/all/features/category/artists">
 									<button className="btn nav w-100per ta-l">Artists</button>
 								</Link>
