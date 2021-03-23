@@ -69,10 +69,12 @@ import {
 	AffiliateCreationComplete,
 	ShippingPublicPage,
 	ChipsPage,
-	AllAffiliatesPage,
-	AffiliatedPage,
+	AllSponsorsPage,
+	SponsorPage,
 	EditTeamPage,
-	TeamsPage
+	TeamsPage,
+	TeamPage,
+	AllTeamsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -281,7 +283,7 @@ const App = () => {
 							<AdminRoute path="/secure/glow/emails/invoice/:id?" exact={true} component={InvoiceEmail} />
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-							<AdminRoute path="/secure/glow/editaffiliate/:pathname?" component={EditAffiliatePage} />
+							<AdminRoute path="/secure/glow/editaffiliate/:promo_code?" component={EditAffiliatePage} />
 							<AdminRoute path="/secure/glow/editteam/:pathname?" component={EditTeamPage} />
 							<AdminRoute path="/secure/glow/editchip/:id?" component={EditChipPage} />
 							<AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />
@@ -334,15 +336,19 @@ const App = () => {
 								component={FeaturedPage}
 							/>
 							<Route
-								path="/collections/all/affiliates/category/:category?"
+								path="/collections/all/sponsors/category/:category?"
 								exact={true}
-								component={AllAffiliatesPage}
+								component={AllSponsorsPage}
 							/>
+							<Route path="/collections/all/sponsors" exact={true} component={AllSponsorsPage} />
+							<Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
 							<Route
-								path="/collections/all/affiliates/category/:category/:artist_name?"
+								path="/collections/all/teams/category/:category?"
 								exact={true}
-								component={AffiliatedPage}
+								component={AllTeamsPage}
 							/>
+							<Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
+							<Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/" exact={true} component={HomePage} />
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />

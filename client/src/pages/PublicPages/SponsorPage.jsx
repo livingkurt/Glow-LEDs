@@ -18,8 +18,8 @@ const AffiliatedPage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(detailsAffiliate(props.match.params.artist_name));
-		console.log(props.match.params.artist_name);
+		dispatch(detailsAffiliate(props.match.params.promo_code));
+		console.log(props.match.params.promo_code);
 		return () => {};
 	}, []);
 
@@ -51,12 +51,15 @@ const AffiliatedPage = (props) => {
 			{affiliate && (
 				<div className="">
 					<div className="jc-b">
-						<button className="btn secondary" onClick={() => history.goBack()}>
+						{/* <button className="btn secondary" onClick={() => history.goBack()}>
 							Back to Affiliates
-						</button>
+						</button> */}
+						<Link to="/secure/glow/affiliates">
+							<button className="btn secondary">Back to Affiliates</button>
+						</Link>
 						{userInfo &&
 						userInfo.isAdmin && (
-							<Link to={'/secure/glow/editaffiliate/' + props.match.params.pathname}>
+							<Link to={'/secure/glow/editaffiliate/' + props.match.params.promo_code}>
 								<button className="btn secondary" style={{ width: '156px' }}>
 									Edit Affiliate
 								</button>

@@ -10,13 +10,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
-		let sponsor = {};
-		let promoter = {};
-		console.log(category);
-		if (req.query.category === 'sponsored_teams') {
-			sponsor = { sponsor: true };
-		}
-		console.log(sponsor, promoter);
 		const searchKeyword = req.query.searchKeyword
 			? {
 					facebook_name: {
@@ -43,12 +36,8 @@ router.get('/', async (req, res) => {
 
 		const teams = await Team.find({
 			deleted: false,
-			// ...category,
-			...searchKeyword,
-			// sponsor: true
-			// promoter: true
-			...sponsor,
-			...promoter
+			...category,
+			...searchKeyword
 		})
 			.sort(sortOrder)
 			.populate('user');

@@ -22,6 +22,7 @@ const EditAffiliatePage = (props) => {
 	const [ inspiration, set_inspiration ] = useState('');
 	const [ bio, set_bio ] = useState('');
 	const [ link, set_link ] = useState('');
+	const [ picture, set_picture ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -49,6 +50,7 @@ const EditAffiliatePage = (props) => {
 		set_link(affiliate.link);
 		set_style(affiliate.style);
 		set_inspiration(affiliate.inspiration);
+		set_picture(affiliate.picture);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -66,6 +68,7 @@ const EditAffiliatePage = (props) => {
 		set_link('');
 		set_style('');
 		set_inspiration('');
+		set_picture('');
 	};
 
 	const dispatch = useDispatch();
@@ -73,10 +76,11 @@ const EditAffiliatePage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.artist_name) {
+			if (props.match.params.promo_code) {
 				console.log('Is ID');
-				stableDispatch(detailsAffiliate(props.match.params.artist_name));
-				stableDispatch(detailsAffiliate(props.match.params.artist_name));
+				console.log(props.match.params.promo_code);
+				stableDispatch(detailsAffiliate(props.match.params.promo_code));
+				stableDispatch(detailsAffiliate(props.match.params.promo_code));
 			} else {
 				stableDispatch(detailsAffiliate(''));
 			}
@@ -84,7 +88,7 @@ const EditAffiliatePage = (props) => {
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.artist_name ]
+		[ stableDispatch, props.match.params.promo_code ]
 	);
 
 	useEffect(
@@ -122,6 +126,7 @@ const EditAffiliatePage = (props) => {
 				active,
 				bio,
 				link,
+				picture,
 				style,
 				inspiration
 			})
@@ -193,6 +198,16 @@ const EditAffiliatePage = (props) => {
 													value={artist_name}
 													id="artist_name"
 													onChange={(e) => set_artist_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="picture">Picture</label>
+												<input
+													type="text"
+													name="picture"
+													value={picture}
+													id="picture"
+													onChange={(e) => set_picture(e.target.value)}
 												/>
 											</li>
 											<li>

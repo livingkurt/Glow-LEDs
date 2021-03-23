@@ -78,11 +78,13 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/:artist_name', async (req, res) => {
+router.get('/:promo_code', async (req, res) => {
 	try {
-		const affiliate = await Affiliate.findOne({ promo_code: req.params.artist_name }).populate('user');
+		console.log({ promo_code: req.params.promo_code });
+		console.log('hello');
+		const affiliate = await Affiliate.findOne({ promo_code: req.params.promo_code }).populate('user');
 		console.log({ affiliate });
-		console.log(req.params.artist_name);
+		console.log(req.params.promo_code);
 		if (affiliate) {
 			log_request({
 				method: 'GET',

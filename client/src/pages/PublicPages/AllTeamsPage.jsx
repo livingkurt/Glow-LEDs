@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { Affiliate, AffiliateSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Team, TeamSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
-import { listAffiliates } from '../../actions/affiliateActions';
+import { listTeams } from '../../actions/teamActions';
 
-const AllAffiliatesPage = (props) => {
+const AllTeamsPage = (props) => {
 	const history = useHistory();
 	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
 	// console.log({ search_outside: search });
@@ -21,22 +21,24 @@ const AllAffiliatesPage = (props) => {
 
 	// console.log({ subcategory });
 	// console.log(props.match.params);
-	const affiliateList = useSelector((state) => state.affiliateList);
-	const { affiliates, loading, error } = affiliateList;
+	const teamList = useSelector((state) => state.teamList);
+	const { teams, loading, error } = teamList;
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			// dispatch(listAffiliates(''));
+			// dispatch(listTeams(''));
+			// dispatch(listTeams(''));
 			// console.log({ search: search.substring(8) });
-			dispatch(listAffiliates(category, subcategory, searchKeyword));
+			dispatch(listTeams(category, subcategory, searchKeyword));
 		},
 		[ searchKeyword ]
 	);
 
 	// useEffect(
 	// 	() => {
-	// 		// dispatch(listAffiliates(''));
+	// 		// dispatch(listTeams(''));
+	// 		// dispatch(listTeams(''));
 	// 		console.log(props.location);
 	// 		// let params = new URLSearchParams(props.location);
 	// 		// params.delete('search');
@@ -45,7 +47,8 @@ const AllAffiliatesPage = (props) => {
 
 	// 		// params.delete('searcj'); //Query string is now: 'bar=2'
 	// 		setSearchKeyword('');
-	// 		dispatch(listAffiliates(category, subcategory));
+	// 		dispatch(listTeams(category, subcategory));
+	// 		dispatch(listTeams(category, subcategory));
 	// 	},
 	// 	[ props.location.pathname ]
 	// );
@@ -79,10 +82,12 @@ const AllAffiliatesPage = (props) => {
 			// 	});
 			// }
 
-			dispatch(listAffiliates(category, subcategory, searchKeyword));
+			dispatch(listTeams(category, subcategory, searchKeyword));
+
 			// } else {
 
-			// 	dispatch(listAffiliates(''));
+			// 	dispatch(listTeams(''));
+			// 	dispatch(listTeams(''));
 			// }
 		},
 		[ category, subcategory, searchKeyword ]
@@ -90,7 +95,7 @@ const AllAffiliatesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listAffiliates(category, subcategory, searchKeyword, sortOrder));
+			dispatch(listTeams(category, subcategory, searchKeyword, sortOrder));
 		},
 		[ sortOrder ]
 	);
@@ -99,21 +104,22 @@ const AllAffiliatesPage = (props) => {
 		console.log({ searchKeyword });
 		e.preventDefault();
 		// history.push(
-		// 	'/collections/all/affiliates/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
+		// 	'/collections/all/teams/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
 		// );
 		history.push({
 			search: '?search=' + searchKeyword
 		});
-		dispatch(listAffiliates(category, subcategory, searchKeyword, sortOrder));
+
+		dispatch(listTeams(category, subcategory, searchKeyword, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listAffiliates(category, subcategory, searchKeyword, e.target.value));
+		dispatch(listTeams(category, subcategory, searchKeyword, e.target.value));
 	};
 
 	const descriptions = {
-		affiliates:
+		teams:
 			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskins, and Glow Strings. Click to Shop.',
 		frosted_diffusers:
 			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
@@ -148,7 +154,7 @@ const AllAffiliatesPage = (props) => {
 		if (category === 'glow_strings') {
 			return descriptions.glow_strings;
 		} else {
-			return descriptions.affiliates;
+			return descriptions.teams;
 		}
 	};
 	// console.log({ category });
@@ -162,11 +168,11 @@ const AllAffiliatesPage = (props) => {
 	return (
 		<div>
 			<Helmet>
-				<title>Affiliated | Glow LEDs</title>
-				<meta property="og:title" content="Affiliated" />
-				<meta name="twitter:title" content="Affiliated" />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/affiliates" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/affiliates" />
+				<title>Teamd | Glow LEDs</title>
+				<meta property="og:title" content="Teamd" />
+				<meta name="twitter:title" content="Teamd" />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/all/teams" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/all/teams" />
 				<meta name="description" content={description_determination()} />
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
@@ -175,13 +181,13 @@ const AllAffiliatesPage = (props) => {
 				Back to Menu
 			</button> */}
 			<div className="jc-fe">
-				<Link to="/account/login?redirect=/secure/account/submit_affiliate">
-					<button className="btn secondary ">Submit Affiliate</button>
+				<Link to="/account/login?redirect=/secure/account/submit_team">
+					<button className="btn secondary ">Submit Team</button>
 				</Link>
 			</div>
 			<div className="jc-c">
 				<div className="row">
-					<h1>{'Affiliated ' + humanize(category) || 'Affiliated'}</h1>
+					<h1>Sponsored Teams</h1>
 					{/* <label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
@@ -198,60 +204,62 @@ const AllAffiliatesPage = (props) => {
 			</div>
 
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				{/* <Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} /> */}
 				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
 			</div>
 			{/* <div className="jc-c">
-				<h1> Affiliated</h1>
+				<h1> Teamd</h1>
 			</div> */}
 
 			{/* <p className="p_descriptions" style={{ textAlign: 'center' }}>
 				Here is an archive of the lightshows and product reviews that you have so graciously given to us. We
 				appreciate each and every one of you.
 			</p> */}
-			<Loading loading={loading} error={error}>
-				<div>
-					<div className="product_big_screen">
-						{affiliates && (
-							<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
-								{affiliates.map(
-									(affiliate, index) =>
-										!affiliate.hidden && (
-											<Affiliate
-												size="300px"
-												key={index}
-												affiliate={affiliate}
-												category={props.match.params.category}
-											/>
-										)
-								)}
-							</ul>
-						)}
-					</div>
+			{teams && (
+				<Loading loading={loading} error={error}>
+					<div>
+						<div className="product_big_screen">
+							{teams && (
+								<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+									{teams.map(
+										(team, index) =>
+											!team.hidden && (
+												<Team
+													size="300px"
+													key={index}
+													team={team}
+													category={props.match.params.category}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
 
-					<div className="product_small_screen none">
-						{affiliates && (
-							<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
-								{affiliates.map(
-									(affiliate, index) =>
-										!affiliate.hidden && (
-											<AffiliateSmallScreen
-												size="300px"
-												key={index}
-												affiliate={affiliate}
-												category={props.match.params.category}
-											/>
-										)
-								)}
-							</ul>
-						)}
+						<div className="product_small_screen none">
+							{teams && (
+								<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+									{teams.map(
+										(team, index) =>
+											!team.hidden && (
+												<TeamSmallScreen
+													size="300px"
+													key={index}
+													team={team}
+													category={props.match.params.category}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
 					</div>
-				</div>
-				{affiliates.length === 0 && (
-					<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
-				)}
-			</Loading>
+					{teams.length === 0 && (
+						<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
+					)}
+				</Loading>
+			)}
 		</div>
 	);
 };
-export default AllAffiliatesPage;
+export default AllTeamsPage;

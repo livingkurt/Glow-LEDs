@@ -8,29 +8,21 @@ import { humanize } from '../../utils/helper_functions';
 import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';
 
-const Affiliate = (props) => {
+const Team = (props) => {
 	console.log({ props });
 	return (
-		<li key={props.affiliate._id} style={{ ...props.styles, textDecoration: 'none' }}>
-			<Link
-				to={`/collections/all/affiliates/category/${props.category.toLowerCase()}/${props.affiliate.artist_name.toLowerCase()}`}
-			>
+		<li key={props.team._id} style={{ ...props.styles, textDecoration: 'none' }}>
+			<Link to={`/collections/all/teams/${props.team && props.team.pathname.toLowerCase()}`}>
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="product">
 							<LazyImage
 								look="product-image"
-								alt={props.affiliate.name}
-								title="Affiliate Image"
+								alt={props.team.name}
+								title="Team Image"
 								size={{ height: props.size, width: 'auto' }}
 								effect="blur"
-								src={
-									props.category.toLowerCase() === 'glovers' ? (
-										`http://img.youtube.com/vi/${props.affiliate.video}/hqdefault.jpg`
-									) : (
-										props.affiliate.logo
-									)
-								} // use normal <img> attributes as props
+								src={props.team.picture}
 							/>
 							{/* <LazyImage
 									look="product-image w-200px h-200px "
@@ -41,16 +33,13 @@ const Affiliate = (props) => {
 									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
 								/> */}
 
-							<label style={{ fontSize: '1.6rem' }}>{props.affiliate.artist_name}</label>
-							{/* <label style={{ fontSize: '1.3rem' }}>{props.affiliate.song_id}</label> */}
+							<label style={{ fontSize: '1.6rem' }}>{props.team.team_name}</label>
+							{/* <label style={{ fontSize: '1.3rem' }}>{props.team.song_id}</label> */}
 							<label style={{ fontSize: '1.3rem' }}>
-								{props.affiliate.product && humanize(props.affiliate.product)}
+								{props.team.product && humanize(props.team.product)}
 							</label>
-							<Link
-								to={`/collections/all/affiliates/category/${props.category.toLowerCase()}/${props
-									.affiliate.pathname}`}
-							>
-								<label style={{ fontSize: '1.6rem' }}>{props.affiliate.name}</label>
+							<Link to={`/collections/all/teams/${props.team && props.team.pathname.toLowerCase()}`}>
+								<label style={{ fontSize: '1.6rem' }}>{props.team.name}</label>
 							</Link>
 						</div>
 					</div>
@@ -60,4 +49,4 @@ const Affiliate = (props) => {
 	);
 };
 
-export default Affiliate;
+export default Team;
