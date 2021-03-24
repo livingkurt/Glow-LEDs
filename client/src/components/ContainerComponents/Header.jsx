@@ -280,14 +280,9 @@ const Header = (props) => {
 								<button className="btn nav">Featured</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-250px">
-								{/* <Link to="/collections/all/affiliates/category/sponsored_glovers">
-									<button className="btn nav w-100per ta-l">Sponsored Glovers</button>
-								</Link> */}
-								<div className="dropdown-nav-nested ">
-									{/* <Link to="/collections/all/affiliates/category/sponsored_glovers"> */}
+								{/* <div className="dropdown-nav-nested ">
 									<button className="btn nav w-100per ta-l">Sponsored Artists</button>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-									{/* </Link> */}
 									<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-250px">
 										<Link to="/collections/all/sponsors">
 											<div className="row">
@@ -302,13 +297,8 @@ const Header = (props) => {
 											</div>
 										</Link>
 									</div>
-								</div>
-								{/* <Link to="/collections/all/affiliates/category/sponsored_teams">
-									<button className="btn nav w-100per ta-l">Inky Bois</button>
-								</Link>
-								<Link to="/collections/all/affiliates/category/affiliated_glovers">
-									<button className="btn nav w-100per ta-l">Affiliated Glovers</button>
-								</Link> */}
+								</div> */}
+
 								<Link to="/collections/all/features/category/artists">
 									<button className="btn nav w-100per ta-l">Artists</button>
 								</Link>
