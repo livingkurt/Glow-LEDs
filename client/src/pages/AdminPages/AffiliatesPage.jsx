@@ -52,7 +52,11 @@ const AffiliatesPage = (props) => {
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
-	const colors = [ { name: 'Sponsor', color: '#3e4c6d' }, { name: 'Promoter', color: '#7d5555' } ];
+	const colors = [
+		{ name: 'Sponsor', color: '#3e4c6d' },
+		{ name: 'Promoter', color: '#7d5555' },
+		{ name: 'Team', color: '#557d6c' }
+	];
 
 	const determine_color = (affiliate) => {
 		let result = '';
@@ -62,6 +66,9 @@ const AffiliatesPage = (props) => {
 		}
 		if (affiliate.promoter) {
 			result = colors[1].color;
+		}
+		if (affiliate.team) {
+			result = colors[2].color;
 		}
 		return result;
 	};
