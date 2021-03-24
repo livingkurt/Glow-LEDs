@@ -220,16 +220,7 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_picture(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="team">Team</label>
-												<input
-													type="text"
-													name="team"
-													value={team}
-													id="team"
-													onChange={(e) => set_team(e.target.value)}
-												/>
-											</li>
+
 											<li>
 												<label htmlFor="instagram_handle">Instagram Handle</label>
 												<input
@@ -353,6 +344,25 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
 											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="team">Team</label>
+													<input
+														type="checkbox"
+														name="team"
+														// defaultChecked={team ? 'checked' : 'unchecked'}
+														// defaultValue={team}
+														defaultChecked={team}
+														// value={team ? '1' : '0'}
+														id="team"
+														onChange={(e) => {
+															set_team(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
