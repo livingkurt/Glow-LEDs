@@ -54,6 +54,8 @@ const EditAffiliatePage = (props) => {
 		set_style(affiliate.style);
 		set_inspiration(affiliate.inspiration);
 		set_picture(affiliate.picture);
+		set_location(affiliate.location);
+		set_years(affiliate.years);
 		set_team(affiliate.team);
 	};
 	const unset_state = () => {
