@@ -523,7 +523,7 @@ const ProductPage = (props) => {
 							)} */}
 							{product.category === 'glow_strings' && (
 								<button className="btn primary w-100per fs-20px mb-2rem">
-									<a href="https://www.glow-leds.com/Glow_Strings_V2_Manual.pdf">
+									<a href="https://www.glow-leds.com/Glow_Strings_V2_Manual.pdf" target="_blank">
 										Download Glow Strings V2 Manual
 									</a>
 								</button>
