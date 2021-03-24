@@ -76,3 +76,4 @@ export { default as AllSponsorsPage } from './PublicPages/AllSponsorsPage';
 export { default as SponsorPage } from './PublicPages/SponsorPage';
 export { default as AllTeamsPage } from './PublicPages/AllTeamsPage';
 export { default as TeamPage } from './PublicPages/TeamPage';
+export { default as ManualPage } from './PublicPages/ManualPage';

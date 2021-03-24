@@ -74,7 +74,8 @@ import {
 	EditTeamPage,
 	TeamsPage,
 	TeamPage,
-	AllTeamsPage
+	AllTeamsPage,
+	ManualPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -354,12 +355,12 @@ const App = () => {
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
 							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
 							<Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
+							<Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
 
 							<Route component={Four04Page} />
 						</Switch>
 					</ScrollToTop>
 				</Content>
-
 				<Footer />
 			</Container>
 		</Router>

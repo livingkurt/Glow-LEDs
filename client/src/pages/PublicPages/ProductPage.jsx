@@ -133,7 +133,8 @@ const ProductPage = (props) => {
 	};
 
 	const open_pdf = () => {
-		window.open('/Glow Strings V2 Manual.pdf', '_blank');
+		// window.open('/Glow Strings V2 Manual.pdf', '_blank');
+		window.open('/Glow_Strings_V2_Manual.pdf', '_blank', 'width=600,height=400');
 	};
 
 	return (
@@ -508,26 +509,26 @@ const ProductPage = (props) => {
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p className="paragraph_font">{product.description}</p>
-							{/* {product.category === 'glow_strings' && (
-								<Link to="/Glow Strings V2 Manual.pdf" target="_blank" download>
+							{product.category === 'glow_strings' && (
+								<Link to="/pages/manual/glow_strings_v2_manual">
 									<button className="btn primary w-100per fs-20px mb-2rem">
-										Download Glow Strings Manual
+										View Glow Strings V2 Manual
 									</button>
 								</Link>
-							)} */}
+							)}
 							{/* {product.category === 'glow_strings' && (
 								<button className="btn primary w-100per fs-20px mb-2rem" onClick={open_pdf}>
 									Download Glow Strings V2 Manual
 								</button>
                 
 							)} */}
-							{product.category === 'glow_strings' && (
-								<button className="btn primary w-100per fs-20px mb-2rem">
-									<a href="https://www.glow-leds.com/Glow_Strings_V2_Manual.pdf" target="_blank">
-										Download Glow Strings V2 Manual
+							{/* {product.category === 'glow_strings' && (
+								<button className="btn primary w-100per fs-20px mb-2rem" onClick={() => open_pdf()}>
+									<a href="/Glow_Strings_V2_Manual.png" target="_blank">
+									Download Glow Strings V2 Manual
 									</a>
 								</button>
-							)}
+							)} */}
 							{/* {product.category === 'glow_strings' && (
 								<p>
 									<span style="font-size: 130%;">
@@ -543,14 +544,14 @@ const ProductPage = (props) => {
 							{/* {product.category === 'glow_strings' && (
 								// <button className="btn primary w-100per fs-20px mb-2rem">
 								<object
-									data="/Glow Strings V2 Manual.pdf"
+									data="/Glow_Strings_V2_Manual.pdf"
 									type="application/pdf"
-									width="100%"
-									height="100%"
+									// width="100%"
+									// height="100%"
 								>
 									<p>
 										Your web browser doesn't have a PDF plugin. Instead you can{' '}
-										<a href="/Glow Strings V2 Manual.pdf">click here to download the PDF file.</a>
+										<a href="/Glow_Strings_V2_Manual.pdf">click here to download the PDF file.</a>
 									</p>
 								</object>
 								// </button>
