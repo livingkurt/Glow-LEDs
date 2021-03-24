@@ -528,7 +528,7 @@ const ProductPage = (props) => {
 									</a>
 								</button>
 							)}
-							{product.category === 'glow_strings' && (
+							{/* {product.category === 'glow_strings' && (
 								<p>
 									<span style="font-size: 130%;">
 										<a
@@ -539,7 +539,7 @@ const ProductPage = (props) => {
 										</a>
 									</span>
 								</p>
-							)}
+							)} */}
 							{/* {product.category === 'glow_strings' && (
 								// <button className="btn primary w-100per fs-20px mb-2rem">
 								<object
