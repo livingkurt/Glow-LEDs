@@ -132,6 +132,10 @@ const ProductPage = (props) => {
 		set_diffuser_cap_name(JSON.parse(e.target.value).pathname);
 	};
 
+	const open_pdf = () => {
+		window.open('/Glow Strings V2 Manual.pdf', '_blank');
+	};
+
 	return (
 		<div className="column">
 			<div className="back-to-result">
@@ -504,13 +508,41 @@ const ProductPage = (props) => {
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p className="paragraph_font">{product.description}</p>
-							{product.category === 'glow_strings' && (
-								<Link to="/Glow_Strings_Manual.pdf" target="_blank" download>
+							{/* {product.category === 'glow_strings' && (
+								<Link to="/Glow Strings V2 Manual.pdf" target="_blank" download>
 									<button className="btn primary w-100per fs-20px mb-2rem">
 										Download Glow Strings Manual
 									</button>
 								</Link>
+							)} */}
+							{/* {product.category === 'glow_strings' && (
+								<button className="btn primary w-100per fs-20px mb-2rem" onClick={open_pdf}>
+									Download Glow Strings V2 Manual
+								</button>
+                
+							)} */}
+							{product.category === 'glow_strings' && (
+								<button className="btn primary w-100per fs-20px mb-2rem">
+									<a href="https://www.glow-leds.com/Glow Strings V2 Manual.pdf">
+										Download Glow Strings V2 Manual
+									</a>
+								</button>
 							)}
+							{/* {product.category === 'glow_strings' && (
+								// <button className="btn primary w-100per fs-20px mb-2rem">
+								<object
+									data="/Glow Strings V2 Manual.pdf"
+									type="application/pdf"
+									width="100%"
+									height="100%"
+								>
+									<p>
+										Your web browser doesn't have a PDF plugin. Instead you can{' '}
+										<a href="/Glow Strings V2 Manual.pdf">click here to download the PDF file.</a>
+									</p>
+								</object>
+								// </button>
+							)} */}
 							{!product.product_length && (
 								<div className="column">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
