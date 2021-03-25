@@ -70,6 +70,22 @@ const TeamPage = (props) => {
 					<div className="column jc-c">
 						<h2 style={{ textAlign: 'center' }}>{team.team_name}</h2>
 					</div>
+					<div className="">
+						<LazyImage
+							look="sponsor-image sponsor_image_small"
+							alt={team.team_name}
+							title="Sponsor Image"
+							size={{
+								height: 'auto',
+								width: '100%',
+								display: 'none',
+								maxWidth: 'unset',
+								maxHeight: 'unset'
+							}}
+							effect="blur"
+							src={team.picture} // use normal <img> attributes as props
+						/>
+					</div>
 					{team.video && (
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
@@ -100,20 +116,9 @@ const TeamPage = (props) => {
 						/>
 					</div> */}
 					<div className="jc-b ">
-						<div className=" w-50per">
-							{/* <h3 className="">Gloving for</h3>
-							<p className="p_descriptions">{team.years} Years</p> */}
-							{/* <h3 className="">Chillin in </h3>
-							<p className="p_descriptions">{team.location}</p> */}
+						<div className="" style={{ flex: '1 1 70%' }}>
 							<h3 className="">Bio</h3>
 							<p className="p_descriptions ">{team.bio}</p>
-							{/* {team.inspiration && (
-								<div>
-									<h3 className="">Inspired by</h3>
-									<p className="p_descriptions">{team.inspiration}</p>
-								</div>
-							)} */}
-
 							<h3 className="">Follow {team.team_name} </h3>
 							<div className="mt-2rem wrap  ">
 								<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
@@ -140,7 +145,7 @@ const TeamPage = (props) => {
 						</div>
 						<div className="mt-2rem">
 							<LazyImage
-								look="sponsor-image"
+								look="sponsor-image sponsor_image_big"
 								alt={team.name}
 								title="Sponsor Image"
 								size={{ height: 'auto', width: '100%' }}
@@ -149,7 +154,7 @@ const TeamPage = (props) => {
 							/>
 						</div>
 					</div>
-					<h3 className="fs-40px"> {team.team_name} Team Members</h3>
+					<h3 className=""> {team.team_name} Team Members</h3>
 					<div className="products">
 						{team.affiliates &&
 							team.affiliates.map((affiliate) => {

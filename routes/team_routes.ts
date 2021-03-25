@@ -106,6 +106,47 @@ router.get('/:pathname', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Getting Team' });
 	}
 });
+router.get('/affiliate/:affiliate_id', async (req, res) => {
+	try {
+		console.log(req.params.affiliate_id);
+		const team = await Team.find({ affiliates: { $in: [ req.params.affiliate_id ] } }).populate('affiliates');
+		console.log({ team });
+		console.log(req.params.affiliate_id);
+		if (team) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Team',
+				data: [ team ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(team);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Team',
+				data: [ team ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Team Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Team',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Team' });
+	}
+});
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	try {

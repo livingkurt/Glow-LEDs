@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -9,21 +9,51 @@ import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { LazyImage } from '../../components/UtilityComponents';
 import { Product, ProductSimple, ProductSimpleSmallScreen } from '../../components/SpecialtyComponents';
+import { listTeams } from '../../actions/teamActions';
+import { API_Users } from '../../utils';
 
-const AffiliatedPage = (props) => {
+const SponsorPage = (props) => {
+	const [ teams, set_teams ] = useState([]);
 	const history = useHistory();
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate } = affiliateDetails;
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
+	// const teamList = useSelector((state) => state.teamList);
+	// const { teams, loading, error } = teamList;
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(detailsAffiliate(props.match.params.promo_code));
-		console.log(props.match.params.promo_code);
+		// dispatch(detailsTeam('inky_bois'));
+		// dispatch(listTeams(''));
+		// find_team();
 		return () => {};
 	}, []);
+
+	useEffect(
+		() => {
+			if (affiliate && affiliate._id) {
+				find_team();
+			}
+
+			return () => {};
+		},
+		[ affiliate ]
+	);
+
+	// const teamDetails = useSelector((state) => state.teamDetails);
+	// const { team } = teamDetails;
+
+	const find_team = async () => {
+		console.log({ affiliate: affiliate._id });
+		const { data } = await API_Users.get_teams(affiliate._id);
+		set_teams(data);
+		// const team = teams.map((team) => team.affiliates.find((member) => member._id === affiliate._id));
+		console.log({ data });
+	};
 
 	const date = new Date();
 
@@ -71,7 +101,7 @@ const AffiliatedPage = (props) => {
 					<div className="">
 						<LazyImage
 							look="sponsor-image sponsor_image_small"
-							alt={affiliate.name}
+							alt={affiliate.artist_name}
 							title="Sponsor Image"
 							size={{
 								height: 'auto',
@@ -84,49 +114,98 @@ const AffiliatedPage = (props) => {
 							src={affiliate.picture} // use normal <img> attributes as props
 						/>
 					</div>
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						{affiliate.description}
-					</p>
 					<div className="jc-b">
-						<div>
-							<h3 className="">Who be this</h3>
-							<p className="p_descriptions">
-								{affiliate.user && affiliate.user.first_name}{' '}
-								{affiliate.user && affiliate.user.last_name}
-							</p>
-							<h3 className="">Gloving for</h3>
-							<p className="p_descriptions">{affiliate.years} Years</p>
-							<h3 className="">Chillin in </h3>
-							<p className="p_descriptions">{affiliate.location}</p>
-							<h3 className="">Bio</h3>
-							<p className="p_descriptions">{affiliate.bio}</p>
+						<div className="column" style={{ flex: '1 1 70%' }}>
+							<div>
+								<h3 className="">Who be this</h3>
+								<p className="p_descriptions">
+									{affiliate.user && affiliate.user.first_name}{' '}
+									{affiliate.user && affiliate.user.last_name}
+								</p>
+							</div>
+							<div>
+								<h3 className="">Gloving for</h3>
+								<p className="p_descriptions">{affiliate.years} Years</p>
+							</div>
+							<div>
+								<h3 className="">Chillin in </h3>
+								<p className="p_descriptions">{affiliate.location}</p>
+							</div>
+							<div>
+								<h3 className="">Bio</h3>
+								<p className="p_descriptions">{affiliate.bio}</p>
+							</div>
 							{affiliate.inspiration && (
 								<div>
 									<h3 className="">Inspired by</h3>
 									<p className="p_descriptions">{affiliate.inspiration}</p>
 								</div>
 							)}
-
-							<h3 className="">Follow {affiliate.artist_name} </h3>
-							<div className="mt-2rem wrap  ">
-								<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
-									<div className="fs-40px">
-										<a
-											href={'https://www.facebook.com/' + affiliate.facebook_name}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<i className="fab fa-facebook zoom" />
-										</a>
-									</div>
-									<div className="ml-10px fs-40px">
-										<a
-											href={'https://www.facebook.com/' + affiliate.instagram_handle}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<i className="fab fa-instagram zoom" />
-										</a>
+							{/* <div>
+								<h3 className="">Team</h3>
+								{console.log({ teams })}
+								{teams.map((team) => {
+									return (
+										<Link to={'/collections/all/teams/' + teams.pathname} className=" pos-rel">
+											<LazyImage
+												look="sponsor-image w-200px"
+												alt={team.name}
+												title="Sponsor Image"
+												size={{ height: 'auto', width: '100%' }}
+												effect="blur"
+												src={team.picture} // use normal <img> attributes as props
+											/>
+											<h3
+												className="pos-abs fs-30px"
+												style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
+											>
+												{affiliate.artist_name != 'Koztic' && affiliate.artist_name}
+											</h3>
+										</Link>
+									);
+								})}
+							</div> */}
+							<div>
+								<h3 className="">Team{teams > 1 && "'s"}</h3>
+								{teams.map((team) => {
+									return (
+										<Link to={'/collections/all/teams/' + team.pathname} className="pos-rel">
+											<img
+												className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
+												src={team.picture}
+											/>
+											<h3
+												className="pos-abs fs-30px w-200px"
+												style={{ top: '34px', left: '50%', transform: 'translate(-80%, 100%)' }}
+											>
+												{team.team_name != 'Koztic' && team.team_name}
+											</h3>
+										</Link>
+									);
+								})}
+							</div>
+							<div>
+								<h3 className="">Follow {affiliate.artist_name} </h3>
+								<div className="mt-2rem wrap  ">
+									<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
+										<div className="fs-40px">
+											<a
+												href={'https://www.facebook.com/' + affiliate.facebook_name}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<i className="fab fa-facebook zoom" />
+											</a>
+										</div>
+										<div className="ml-10px fs-40px">
+											<a
+												href={'https://www.facebook.com/' + affiliate.instagram_handle}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<i className="fab fa-instagram zoom" />
+											</a>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -265,4 +344,4 @@ const AffiliatedPage = (props) => {
 		</div>
 	);
 };
-export default AffiliatedPage;
+export default SponsorPage;
