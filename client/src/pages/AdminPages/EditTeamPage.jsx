@@ -24,6 +24,7 @@ const EditTeamPage = (props) => {
 	const [ link, set_link ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
 	const [ picture, set_picture ] = useState('');
+	const [ video, set_video ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -51,6 +52,7 @@ const EditTeamPage = (props) => {
 		set_picture(team.picture);
 		console.log(team.affiliates);
 		set_affiliates(team.affiliates);
+		set_video(team.video);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -65,6 +67,7 @@ const EditTeamPage = (props) => {
 		set_bio('');
 		set_link('');
 		set_pathname('');
+		set_video('');
 		set_picture('');
 		set_affiliates([]);
 	};
@@ -122,6 +125,7 @@ const EditTeamPage = (props) => {
 				active,
 				bio,
 				link,
+				video,
 				picture,
 				pathname: pathname ? pathname : snake_case(team_name),
 				affiliates: affiliates && affiliates.map((affiliate) => affiliate._id)
@@ -248,16 +252,7 @@ const EditTeamPage = (props) => {
 													onChange={(e) => set_team_name(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="picture">Picture</label>
-												<input
-													type="text"
-													name="picture"
-													value={picture}
-													id="picture"
-													onChange={(e) => set_picture(e.target.value)}
-												/>
-											</li>
+
 											<li>
 												<label htmlFor="instagram_handle">Instagram Handle</label>
 												<input
@@ -276,6 +271,26 @@ const EditTeamPage = (props) => {
 													value={facebook_name}
 													id="facebook_name"
 													onChange={(e) => set_facebook_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="picture">Picture</label>
+												<input
+													type="text"
+													name="picture"
+													value={picture}
+													id="picture"
+													onChange={(e) => set_picture(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="video">Video</label>
+												<input
+													type="text"
+													name="video"
+													value={video}
+													id="video"
+													onChange={(e) => set_video(e.target.value)}
 												/>
 											</li>
 											{/* <li>
