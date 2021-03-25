@@ -15,7 +15,7 @@ const Sponsor = (props) => {
 			<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.artist_name.toLowerCase()}`}>
 				<div className="tooltip">
 					<div className="tooltipoverlay">
-						<div className="product">
+						<div className="sponsor">
 							<LazyImage
 								look="product-image"
 								alt={props.affiliate.name}
@@ -24,24 +24,18 @@ const Sponsor = (props) => {
 								effect="blur"
 								src={props.affiliate.picture} // use normal <img> attributes as props
 							/>
-							{/* <LazyImage
-									look="product-image w-200px h-200px "
-									alt={props.product.name}
-									title="Product Image"
-									size={{ height: props.size, width: props.size }}
-									effect="blur"
-									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
-								/> */}
 
-							<label style={{ fontSize: '1.6rem' }}>{props.affiliate.artist_name}</label>
-							<label style={{ fontSize: '1.6rem' }}>
-								{props.affiliate.user && props.affiliate.user.first_name}{' '}
-								{props.affiliate.user && props.affiliate.user.last_name}
+							<label style={{ fontSize: '2rem', webkitTextStroke: '1.5px white' }} className="pv-1rem">
+								{props.affiliate.artist_name}
 							</label>
-							{/* <label style={{ fontSize: '1.3rem' }}>{props.affiliate.song_id}</label> */}
-							<label style={{ fontSize: '1.3rem' }}>
-								{props.affiliate.product && humanize(props.affiliate.product)}
-							</label>
+							<div className="jc-b">
+								<label style={{ fontSize: '1.6rem' }}>
+									{props.affiliate.user && props.affiliate.user.first_name}{' '}
+									{props.affiliate.user && props.affiliate.user.last_name}
+								</label>
+
+								<label style={{ fontSize: '1.6rem' }}>{props.affiliate.location}</label>
+							</div>
 							<Link
 								to={`/collections/all/sponsors/${props.affiliate &&
 									props.affiliate.artist_name.toLowerCase()}`}

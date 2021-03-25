@@ -14,33 +14,26 @@ const AffiliateSmallScreen = (props) => {
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage
-							look="affiliate-image w-200px h-auto br-10px"
+							look="sponsor-image max-w-400px max-h-400px w-100per h-auto br-10px pr-1rem"
 							alt={props.affiliate.artist_name}
 							title="Affiliate Image"
 							effect="blur"
+							size={{ height: 'auto', width: '100%' }}
 							src={props.affiliate.picture} // use normal <img> attributes as props
 						/>
-						{/* <LazyLoadImage
-							className="affiliate-image w-200px h-auto br-10px"
-							alt={props.affiliate.artist_name}
-							title="Affiliate Image"
-							effect="blur"
-							src={
-								props.category.toLowerCase() === 'glovers' ? (
-									`http://img.youtube.com/vi/${props.affiliate.video}/hqdefault.jpg`
-								) : (
-									props.affiliate.logo
-								)
-							}
-						/> */}
 					</div>
-					<div className="p-10px">
-						<div className="product_text" style={{ fontSize: '1.6rem' }}>
+					<div className="column jc-b w-200px">
+						<label style={{ fontSize: '2rem', webkitTextStroke: '1.5px white' }} className="pv-1rem">
 							{props.affiliate.artist_name}
-						</div>
-						<label style={{ fontSize: '1.3rem' }}>
-							{props.affiliate.product && humanize(props.affiliate.product)}
 						</label>
+						<div className="column jc-b ">
+							<label style={{ fontSize: '1.6rem' }} className="pv-10px">
+								{props.affiliate.user && props.affiliate.user.first_name}{' '}
+								{props.affiliate.user && props.affiliate.user.last_name}
+							</label>
+
+							<label style={{ fontSize: '1.6rem' }}>{props.affiliate.location}</label>
+						</div>
 					</div>
 				</div>
 			</Link>

@@ -24,19 +24,9 @@ const Team = (props) => {
 								effect="blur"
 								src={props.team.picture}
 							/>
-							{/* <LazyImage
-									look="product-image w-200px h-200px "
-									alt={props.product.name}
-									title="Product Image"
-									size={{ height: props.size, width: props.size }}
-									effect="blur"
-									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
-								/> */}
 
-							<label style={{ fontSize: '1.6rem' }}>{props.team.team_name}</label>
-							{/* <label style={{ fontSize: '1.3rem' }}>{props.team.song_id}</label> */}
-							<label style={{ fontSize: '1.3rem' }}>
-								{props.team.product && humanize(props.team.product)}
+							<label style={{ fontSize: '2rem', webkitTextStroke: '1px white' }} className="pv-1rem">
+								{props.team.team_name}
 							</label>
 							<Link to={`/collections/all/teams/${props.team && props.team.pathname.toLowerCase()}`}>
 								<label style={{ fontSize: '1.6rem' }}>{props.team.name}</label>

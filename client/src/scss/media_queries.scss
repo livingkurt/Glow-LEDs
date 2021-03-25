@@ -259,6 +259,12 @@
 		border: 0;
 		box-shadow: unset;
 	}
+	.sponsor_image_big {
+		display: none !important;
+	}
+	.sponsor_image_small {
+		display: block !important;
+	}
 	.product_big_screen {
 		display: none !important;
 	}

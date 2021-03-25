@@ -14,10 +14,12 @@ const FeatureSmallScreen = (props) => {
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage
-							look="feature-image w-200px h-auto br-10px"
+							look="feature-image  w-100per h-auto br-10px"
 							alt={props.feature.artist_name}
 							title="Feature Image"
 							effect="blur"
+							// style={{ height: 'unset' }}
+							size={{ height: 'auto', width: '100%' }}
 							src={
 								props.category.toLowerCase() === 'glovers' ? (
 									`http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
@@ -40,7 +42,7 @@ const FeatureSmallScreen = (props) => {
 							}
 						/> */}
 					</div>
-					<div className="p-10px">
+					<div className="p-10px w-300px">
 						<div className="product_text" style={{ fontSize: '1.6rem' }}>
 							{props.feature.artist_name}
 						</div>

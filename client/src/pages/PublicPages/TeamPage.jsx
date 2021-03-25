@@ -7,6 +7,7 @@ import { humanize } from '../../utils/helper_functions';
 import { useHistory } from 'react-router-dom';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import { LazyImage } from '../../components/UtilityComponents';
 
 const TeamPage = (props) => {
 	const history = useHistory();
@@ -54,8 +55,8 @@ const TeamPage = (props) => {
 						{/* <button className="btn secondary" onClick={() => history.goBack()}>
 							Back to Teams
 						</button> */}
-						<Link to="/secure/glow/teams">
-							<button className="btn secondary">Back to Teams</button>
+						<Link to="/collections/all/sponsors">
+							<button className="btn secondary">Back to Sponsors</button>
 						</Link>
 						{userInfo &&
 						userInfo.isAdmin && (
@@ -67,11 +68,8 @@ const TeamPage = (props) => {
 						)}
 					</div>
 					<div className="column jc-c">
-						<h2 style={{ textAlign: 'center' }}>{team.artist_name}</h2>
+						<h2 style={{ textAlign: 'center' }}>{team.team_name}</h2>
 					</div>
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						{team.description}
-					</p>
 					{team.video && (
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
@@ -87,44 +85,89 @@ const TeamPage = (props) => {
 							</div>
 						</div>
 					)}
-					<div className="products">
-						{team.images &&
-							team.images.map((image) => {
-								return (
-									<Zoom className="m-auto">
-										{/* <div className="responsive_container"> */}
-										<img className="m-1rem br-15px  h-auto ta-c responsive_img" src={image} />
-										{/* </div> */}
-									</Zoom>
-								);
-							})}
-					</div>
 
 					{/* <p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
-						Check out {team.artist_name} with the {team.product && humanize(team.product)}!
+						Check out {team.team_name} with the {team.product && humanize(team.product)}!
 					</p> */}
+					{/* <div className="mt-2rem">
+						<LazyImage
+							look="sponsor-image"
+							alt={team.name}
+							title="Sponsor Image"
+							size={{ height: 'auto', width: '100%' }}
+							effect="blur"
+							src={team.picture} // use normal <img> attributes as props
+						/>
+					</div> */}
+					<div className="jc-b ">
+						<div className=" w-50per">
+							{/* <h3 className="">Gloving for</h3>
+							<p className="p_descriptions">{team.years} Years</p> */}
+							{/* <h3 className="">Chillin in </h3>
+							<p className="p_descriptions">{team.location}</p> */}
+							<h3 className="">Bio</h3>
+							<p className="p_descriptions ">{team.bio}</p>
+							{/* {team.inspiration && (
+								<div>
+									<h3 className="">Inspired by</h3>
+									<p className="p_descriptions">{team.inspiration}</p>
+								</div>
+							)} */}
 
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Follow {team.facebook_name} on Facebook and @{team.instagram_handle} on Instagram
-					</p>
-					{team.song_id && (
-						<p className="p_descriptions" style={{ textAlign: 'center' }}>
-							Song ID: {team.song_id}
-						</p>
-					)}
-
-					<div className="p_descriptions" style={{ textAlign: 'center' }}>
-						<a
-							rel="noreferrer"
-							className="jc-c w-100per"
-							href={team.link}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-								{team.product ? humanize(team.product) : `See More from ${team.artist_name}`}
-							</button>
-						</a>
+							<h3 className="">Follow {team.team_name} </h3>
+							<div className="mt-2rem wrap  ">
+								<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
+									<div className="fs-40px">
+										<a
+											href={'https://www.facebook.com/' + team.facebook_name}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<i className="fab fa-facebook zoom" />
+										</a>
+									</div>
+									<div className="ml-10px fs-40px">
+										<a
+											href={'https://www.facebook.com/' + team.instagram_handle}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<i className="fab fa-instagram zoom" />
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="mt-2rem">
+							<LazyImage
+								look="sponsor-image"
+								alt={team.name}
+								title="Sponsor Image"
+								size={{ height: 'auto', width: '100%' }}
+								effect="blur"
+								src={team.picture} // use normal <img> attributes as props
+							/>
+						</div>
+					</div>
+					<h3 className="fs-40px"> {team.team_name} Team Members</h3>
+					<div className="products">
+						{team.affiliates &&
+							team.affiliates.map((affiliate) => {
+								return (
+									<Link to={'/collections/all/sponsors/' + affiliate.promo_code} className="pos-rel">
+										<img
+											className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
+											src={affiliate.picture}
+										/>
+										<h3
+											className="pos-abs fs-30px"
+											style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
+										>
+											{affiliate.artist_name != 'Koztic' && affiliate.artist_name}
+										</h3>
+									</Link>
+								);
+							})}
 					</div>
 				</div>
 			)}

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
+import { listProducts } from '../../actions/productActions';
 
 const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -27,6 +28,8 @@ const EditAffiliatePage = (props) => {
 	const [ years, set_years ] = useState('');
 	const [ team, set_team ] = useState('');
 	const [ video, set_video ] = useState('');
+	const [ product, set_product ] = useState('');
+	const [ products, set_products ] = useState([]);
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -37,6 +40,9 @@ const EditAffiliatePage = (props) => {
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
+
+	const productList = useSelector((state) => state.productList);
+	const { products: products_list } = productList;
 
 	const set_state = () => {
 		set_id(affiliate._id);
@@ -59,6 +65,7 @@ const EditAffiliatePage = (props) => {
 		set_years(affiliate.years);
 		set_team(affiliate.team);
 		set_video(affiliate.video);
+		set_products(affiliate.products);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -81,6 +88,8 @@ const EditAffiliatePage = (props) => {
 		set_years('');
 		set_video('');
 		set_team('');
+		set_products([]);
+		set_product('');
 	};
 
 	const dispatch = useDispatch();
@@ -97,6 +106,7 @@ const EditAffiliatePage = (props) => {
 				stableDispatch(detailsAffiliate(''));
 			}
 			stableDispatch(listUsers(''));
+			stableDispatch(listProducts(''));
 			set_state();
 			return () => {};
 		},
@@ -144,7 +154,8 @@ const EditAffiliatePage = (props) => {
 				inspiration,
 				location,
 				years,
-				video
+				video,
+				products
 			})
 		);
 		e.target.reset();
@@ -152,6 +163,59 @@ const EditAffiliatePage = (props) => {
 		history.push('/secure/glow/affiliates');
 	};
 
+	const add_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		// console.log(product);
+		// if (product.indexOf(' ') >= 0) {
+		// 	console.log('indexOf');
+		// 	product.split(' ').map((product) => {
+		// 		set_products((products) => [ ...products, product ]);
+		// 	});
+		// } else
+		if (products) {
+			console.log('products.length > 0');
+			set_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_products([ product_object ]);
+		}
+
+		set_product('');
+	};
+
+	const remove_product = (product_index, e) => {
+		e.preventDefault();
+		set_products((products) =>
+			products.filter((product, index) => {
+				return product_index !== index;
+			})
+		);
+	};
+
+	const product_display = (products) => {
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{products &&
+							products.map((product, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{product.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Affiliate' : 'Create Affiliate'}</h1>
@@ -360,6 +424,38 @@ const EditAffiliatePage = (props) => {
 													id="promo_code"
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
+											</li>
+											<li>
+												<label htmlFor="product">Glow Gear</label>
+												{/* <input
+													type="text"
+													name="product"
+													value={product}
+													id="product"
+													onChange={(e) => set_product(e.target.value)}
+												/> */}
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_product(e)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Glow Gear---
+															</option>
+															{products_list.map((product, index) => (
+																<option key={index} value={JSON.stringify(product)}>
+																	{product.name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												<button className="btn primary" onClick={(e) => add_product(e)}>
+													Add Affiliate
+												</button>
+												{product_display(products)}
 											</li>
 											{loading_checkboxes ? (
 												<div>Loading...</div>
