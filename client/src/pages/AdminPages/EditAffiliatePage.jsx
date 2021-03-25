@@ -26,6 +26,7 @@ const EditAffiliatePage = (props) => {
 	const [ location, set_location ] = useState('');
 	const [ years, set_years ] = useState('');
 	const [ team, set_team ] = useState('');
+	const [ video, set_video ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -57,6 +58,7 @@ const EditAffiliatePage = (props) => {
 		set_location(affiliate.location);
 		set_years(affiliate.years);
 		set_team(affiliate.team);
+		set_video(affiliate.video);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -77,6 +79,7 @@ const EditAffiliatePage = (props) => {
 		set_picture('');
 		set_location('');
 		set_years('');
+		set_video('');
 		set_team('');
 	};
 
@@ -140,7 +143,8 @@ const EditAffiliatePage = (props) => {
 				style,
 				inspiration,
 				location,
-				years
+				years,
+				video
 			})
 		);
 		e.target.reset();
@@ -212,17 +216,17 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_artist_name(e.target.value)}
 												/>
 											</li>
+
 											<li>
-												<label htmlFor="picture">Picture</label>
+												<label htmlFor="facebook_name">Facebook Glover Page</label>
 												<input
 													type="text"
-													name="picture"
-													value={picture}
-													id="picture"
-													onChange={(e) => set_picture(e.target.value)}
+													name="facebook_name"
+													value={facebook_name}
+													id="facebook_name"
+													onChange={(e) => set_facebook_name(e.target.value)}
 												/>
 											</li>
-
 											<li>
 												<label htmlFor="instagram_handle">Instagram Handle</label>
 												<input
@@ -234,13 +238,43 @@ const EditAffiliatePage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="facebook_name">Facebook Name</label>
+												<label htmlFor="location">Location</label>
 												<input
 													type="text"
-													name="facebook_name"
-													value={facebook_name}
-													id="facebook_name"
-													onChange={(e) => set_facebook_name(e.target.value)}
+													name="location"
+													value={location}
+													id="location"
+													onChange={(e) => set_location(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="years">Years Gloving</label>
+												<input
+													type="text"
+													name="years"
+													value={years}
+													id="years"
+													onChange={(e) => set_years(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="picture">Picture</label>
+												<input
+													type="text"
+													name="picture"
+													value={picture}
+													id="picture"
+													onChange={(e) => set_picture(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="video">Video</label>
+												<input
+													type="text"
+													name="video"
+													value={video}
+													id="video"
+													onChange={(e) => set_video(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -269,26 +303,7 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_inspiration(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="years">Years Gloving</label>
-												<input
-													type="text"
-													name="years"
-													value={years}
-													id="years"
-													onChange={(e) => set_years(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="location">Location</label>
-												<input
-													type="text"
-													name="location"
-													value={location}
-													id="location"
-													onChange={(e) => set_location(e.target.value)}
-												/>
-											</li>
+
 											<li>
 												<label htmlFor="bio">Bio</label>
 												<textarea
