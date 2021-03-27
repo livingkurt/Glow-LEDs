@@ -55,8 +55,8 @@ const TeamPage = (props) => {
 						{/* <button className="btn secondary" onClick={() => history.goBack()}>
 							Back to Teams
 						</button> */}
-						<Link to="/collections/all/sponsors">
-							<button className="btn secondary">Back to Sponsors</button>
+						<Link to="/collections/all/teams">
+							<button className="btn secondary">Back to Teams</button>
 						</Link>
 						{userInfo &&
 						userInfo.isAdmin && (
