@@ -16,6 +16,8 @@ const UserProfilePage = (props) => {
 	const [ email, setEmail ] = useState('');
 	const [ verified, set_verified ] = useState();
 	const [ admin, set_admin ] = useState();
+	const [ shipping, set_shipping ] = useState({});
+	const [ email_subscription, set_email_subscription ] = useState();
 
 	const dispatch = useDispatch();
 	const stableDispatch = useCallback(dispatch, []);
@@ -39,6 +41,8 @@ const UserProfilePage = (props) => {
 				set_last_name(user.last_name);
 				set_verified(user.isVerified);
 				set_admin(user.isAdmin);
+				set_shipping(user.shipping);
+				set_email_subscription(user.email_subscription);
 			}
 			return () => {};
 		},
@@ -99,6 +103,28 @@ const UserProfilePage = (props) => {
 							<div className="column" style={container_styles}>
 								<h3>Password</h3>
 								<label>**********</label>
+							</div>
+							<div className="label">
+								<h3>Shipping Address</h3>
+								{shipping && (
+									<div>
+										<div>
+											{shipping.first_name} {shipping.last_name}
+										</div>
+										<div>
+											{shipping.address_1} {shipping.address_2}
+										</div>
+										<div>
+											{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+										</div>
+										<div>{shipping.international && 'International'}</div>
+										<div>{shipping.email}</div>
+									</div>
+								)}
+							</div>
+							<div className="column mb-20px">
+								<h3>Promotional Emails</h3>
+								<label>{email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
 							</div>
 							<div className="column" style={container_styles}>
 								<h3>Verified</h3>
