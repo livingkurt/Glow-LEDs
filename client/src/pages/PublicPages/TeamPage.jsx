@@ -52,12 +52,12 @@ const TeamPage = (props) => {
 			{team && (
 				<div className="">
 					<div className="jc-b">
-						{/* <button className="btn secondary" onClick={() => history.goBack()}>
-							Back to Teams
-						</button> */}
-						<Link to="/collections/all/teams">
+						<button className="btn secondary" onClick={() => history.goBack()}>
+							Back
+						</button>
+						{/* <Link to="/collections/all/teams">
 							<button className="btn secondary">Back to Teams</button>
-						</Link>
+						</Link> */}
 						{userInfo &&
 						userInfo.isAdmin && (
 							<Link to={'/secure/glow/editteam/' + props.match.params.pathname}>
