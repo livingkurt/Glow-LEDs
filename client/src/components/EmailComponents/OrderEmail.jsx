@@ -407,7 +407,7 @@ const OrderEmail = (props) => {
 												{order.promo_code && (
 													<del style={{ color: 'red' }}>
 														<label style={{ color: 'white' }}>
-															${(order.orderItems &&
+															{(order.orderItems &&
 															order.orderItems.reduce(
 																(a, c) => a + c.sale_price * c.qty,
 																0
