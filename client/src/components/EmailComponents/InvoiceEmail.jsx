@@ -688,9 +688,9 @@ const InvoiceEmail = (props) => {
 						Back to Emails
 					</button>
 				)}
-				<button className="btn primary" onClick={() => history.goBack()}>
-					Back to Orders
-				</button>
+				<Link to="/secure/glow/orders">
+					<button className="btn primary mh-10px">Back to Orders</button>
+				</Link>
 
 				<Link to={'/secure/account/order/' + props.match.params.id}>
 					<button className="btn primary mh-10px">View Order</button>
