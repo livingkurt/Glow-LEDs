@@ -84,6 +84,20 @@ const OrderListItem = (props) => {
 		dispatch(listOrders('', '', '', 'none'));
 	};
 
+	const create_return_label = async () => {
+		set_loading_label(true);
+		const { data } = await API_Orders.create_return_label(props.order, props.order.shipping.shipping_rate);
+		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		console.log({ data });
+		if (data) {
+			set_loading_label(false);
+		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Orders.add_return_tracking_number(props.order, data.tracking_code, data);
+		console.log(request);
+		dispatch(listOrders('', '', '', 'none'));
+	};
+
 	const buy_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Orders.buy_label(props.order, props.order.shipping.shipping_rate);
@@ -98,6 +112,13 @@ const OrderListItem = (props) => {
 	};
 	const view_label = async () => {
 		window.open(props.order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
+	};
+	const view_return_label = async () => {
+		window.open(
+			props.order.shipping.return_shipping_label.postage_label.label_url,
+			'_blank',
+			'width=600,height=400'
+		);
 	};
 
 	return (
@@ -396,6 +417,28 @@ ${props.order.shipping.email}`)}
 									{props.order.tracking_number}
 								</a>
 							</li>
+							{props.order.return_tracking_number && (
+								<li className="row">
+									<h3 className="">Return Tracking Number: </h3>
+
+									<a
+										href={
+											'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+											props.order.return_tracking_number
+										}
+										target="_blank"
+										rel="noopener noreferrer"
+										className="mv-2rem ml-1rem"
+										style={{
+											textDecoration: 'underline',
+											color: 'white'
+										}}
+									>
+										{props.order.return_tracking_number}
+									</a>
+								</li>
+							)}
+
 							{props.order.guest && (
 								<li className="row">
 									<h3 className="">Guest Order </h3>
@@ -564,6 +607,16 @@ ${props.order.shipping.email}`)}
 								{props.order.shipping.shipping_label && (
 									<button className="btn secondary mv-5px" onClick={() => view_label()}>
 										View Label
+									</button>
+								)}
+								{!props.order.shipping.return_shipping_label && (
+									<button className="btn secondary mv-5px" onClick={() => create_return_label()}>
+										Create Return Label
+									</button>
+								)}
+								{props.order.shipping.return_shipping_label && (
+									<button className="btn secondary mv-5px" onClick={() => view_return_label()}>
+										View Return Label
 									</button>
 								)}
 								<button className="btn secondary mv-5px">

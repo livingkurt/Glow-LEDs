@@ -261,6 +261,20 @@ const OrderPage = (props) => {
 		dispatch(detailsOrder(props.match.params.id));
 	};
 
+	const create_return_label = async () => {
+		set_loading_label(true);
+		const { data } = await API_Orders.create_return_label(order, order.shipping.shipping_rate);
+		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		console.log({ data });
+		if (data) {
+			set_loading_label(false);
+		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Orders.add_return_tracking_number(order, data.tracking_code, data);
+		console.log(request);
+		dispatch(detailsOrder(props.match.params.id));
+	};
+
 	const buy_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Orders.buy_label(order, order.shipping.shipping_rate);
@@ -276,6 +290,14 @@ const OrderPage = (props) => {
 
 	const view_label = async () => {
 		window.open(order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
+	};
+
+	const view_return_label = async () => {
+		window.open(
+			props.order.shipping.return_shipping_label.postage_label.label_url,
+			'_blank',
+			'width=600,height=400'
+		);
 	};
 
 	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
@@ -391,6 +413,28 @@ const OrderPage = (props) => {
 												}}
 											>
 												{order.tracking_number}
+											</a>
+										</label>
+									)}
+									{userInfo &&
+									userInfo.isAdmin &&
+									order.return_tracking_number && (
+										<label>
+											USPS Return Tracking #:{' '}
+											<a
+												href={
+													'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+													order.return_tracking_number
+												}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="mv-2rem"
+												style={{
+													textDecoration: 'underline',
+													color: 'white'
+												}}
+											>
+												{order.return_tracking_number}
 											</a>
 										</label>
 									)}
@@ -747,6 +791,7 @@ ${order.shipping.email}`)}
 									</div>
 								</div>
 							</div>
+
 							<button className="btn secondary w-100per mv-5px ">
 								<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
 							</button>
@@ -906,6 +951,22 @@ ${order.shipping.email}`)}
 											{order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => view_label()}>
 													View Label
+												</button>
+											)}
+											{!order.shipping.return_shipping_label && (
+												<button
+													className="btn secondary mv-5px"
+													onClick={() => create_return_label()}
+												>
+													Create Return Label
+												</button>
+											)}
+											{order.shipping.return_shipping_label && (
+												<button
+													className="btn secondary mv-5px"
+													onClick={() => view_return_label()}
+												>
+													View Return Label
 												</button>
 											)}
 											<button className="btn secondary mv-5px">

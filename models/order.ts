@@ -7,6 +7,10 @@ const shippingSchema = {
 	shipping_rate: { type: Object },
 	shipping_label: { type: Object },
 	shipment_tracking: { type: Object },
+	return_shipment_id: { type: String },
+	return_shipping_rate: { type: Object },
+	return_shipping_label: { type: Object },
+	return_shipment_tracking: { type: Object },
 	first_name: { type: String, required: true },
 	last_name: { type: String, required: true },
 	email: { type: String, required: true },
@@ -92,6 +96,7 @@ const orderSchema = new mongoose.Schema(
 		order_note: { type: String },
 		promo_code: { type: String },
 		tracking_number: { type: String },
+		return_tracking_number: { type: String },
 		deleted: { type: Boolean, default: false }
 	},
 	{

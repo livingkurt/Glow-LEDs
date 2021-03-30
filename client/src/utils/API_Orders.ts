@@ -7,6 +7,9 @@ export default {
 	create_label: (order: any, shipping_rate: number) => {
 		return axios.put('/api/orders/create_label', { order, shipping_rate });
 	},
+	create_return_label: (order: any, shipping_rate: number) => {
+		return axios.put('/api/orders/create_return_label', { order, shipping_rate });
+	},
 	get_shipping_rates: (order: any) => {
 		return axios.put('/api/orders/get_shipping_rates', { order });
 	},
@@ -15,6 +18,9 @@ export default {
 	},
 	add_tracking_number: (order: any, tracking_number: any, label: any) => {
 		return axios.put('/api/orders/tracking_number', { order, tracking_number, label });
+	},
+	add_return_tracking_number: (order: any, tracking_number: any, label: any) => {
+		return axios.put('/api/orders/return_tracking_number', { order, tracking_number, label });
 	},
 	// add_shipment_tracking: (order: any, shipment_tracking: any, label: any) => {
 	// 	return axios.put('/api/orders/shipment_tracking', { order, shipment_tracking, label });
