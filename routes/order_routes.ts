@@ -101,6 +101,7 @@ router.get('/', async (req: any, res: any) => {
 		const category = req.query.category ? { category: req.query.category } : {};
 		const page: any = req.query.page ? req.query.page : 1;
 		const limit: any = req.query.limit ? req.query.limit : 10;
+		console.log({ page });
 		let user: any;
 		let searchKeyword: any;
 		if (req.query.searchKeyword) {
@@ -134,7 +135,14 @@ router.get('/', async (req: any, res: any) => {
 			sortOrder = { isDelivered: -1, createdAt: -1 };
 		}
 		// execute query with page and limit values
-		const orders = await Order.find().sort(sortOrder).limit(limit * 1).skip((page - 1) * limit).exec();
+		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+			.populate('user')
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.sort(sortOrder)
+			.limit(limit * 1)
+			.skip((page - 1) * limit)
+			.exec();
 
 		// get total documents in the Posts collection
 		const count = await Order.countDocuments();
@@ -167,6 +175,83 @@ router.get('/', async (req: any, res: any) => {
 	}
 });
 
+// router.get('/', async (req: any, res: any) => {
+// 	try {
+// 		const category = req.query.category ? { category: req.query.category } : {};
+// 		const page: any = req.query.page ? { page: req.query.page } : { page: 1 };
+// 		const limit: any = req.query.limit ? { limit: req.query.limit } : { limit: 10 };
+// 		let user: any;
+// 		let searchKeyword: any;
+// 		if (req.query.searchKeyword) {
+// 			const userSearchKeyword = req.query.searchKeyword
+// 				? {
+// 						'shipping.first_name': {
+// 							$regex: req.query.searchKeyword,
+// 							$options: 'i'
+// 						}
+// 					}
+// 				: {};
+// 			user = await User.findOne({ ...userSearchKeyword });
+// 			searchKeyword = { user: user._id };
+// 		}
+// 		// const { page = 1, limit = 10 } = req.query;
+
+// 		let sortOrder = {};
+// 		if (req.query.sortOrder === 'lowest') {
+// 			sortOrder = { totalPrice: 1 };
+// 		} else if (req.query.sortOrder === 'highest') {
+// 			sortOrder = { totalPrice: -1 };
+// 		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+// 			sortOrder = { createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'paid') {
+// 			sortOrder = { isPaid: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'manufactured') {
+// 			sortOrder = { isManufactured: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'packaged') {
+// 			sortOrder = { isPackaged: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'shipped') {
+// 			sortOrder = { isShipped: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'delivered') {
+// 			sortOrder = { isDelivered: -1, createdAt: -1 };
+// 		}
+
+// 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+// 			.limit(limit * 1)
+// 			.skip((page - 1) * limit)
+// 			.exec()
+// 			.populate('user')
+// 			.populate('orderItems.product')
+// 			.populate('orderItems.secondary_product')
+// 			.sort(sortOrder);
+
+// 		const count = await Order.countDocuments();
+
+// 		log_request({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			data: orders,
+// 			status: 200,
+// 			success: true,
+// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 		});
+// 		res.send({
+// 			orders,
+// 			totalPages: Math.ceil(count / limit),
+// 			currentPage: page
+// 		});
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Getting Orders' });
+// 	}
+// });
 router.get('/promo_code_usage', async (req: any, res: any) => {
 	try {
 		const orders = await Order.find({ deleted: false })

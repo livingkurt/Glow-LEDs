@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, update_order, update_payment } from '../../actions/orderActions';
 import { Loading } from '../../components/UtilityComponents';
@@ -16,6 +16,8 @@ const OrdersPage = (props) => {
 	const [ block_list_view, set_block_list_view ] = useState(false);
 
 	const category = props.match.params.category ? props.match.params.category : '';
+	const page = props.match.params.page ? props.match.params.page : 1;
+	const limit = props.match.params.limit ? props.match.params.limit : 10;
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, error } = orderList;
 
@@ -26,52 +28,36 @@ const OrdersPage = (props) => {
 
 	const [ order_state, set_order_state ] = useState({});
 
-	const ordersPerPage = 10;
-	const [ activePage, setCurrentPage ] = useState(1);
-	const [ currentOrders, set_current_orders ] = useState([]);
+	useEffect(
+		() => {
+			dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+			// dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+			// dispatch(listOrders());
+		},
+		[ successDelete, order_state, sortOrder, page, props.match.params.page ]
+	);
 
 	// useEffect(
 	// 	() => {
-	// 		// Logic for displaying current orders
-	// 		if (orders) {
-	// 			// const indexOfLastOrder = activePage * ordersPerPage;
-	// 			// const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-	// 			// set_current_orders(orders.slice(indexOfFirstOrder, indexOfLastOrder));
-	// 			// console.log(orders.slice(indexOfFirstOrder, indexOfLastOrder));
-	// 		}
+	// 		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
 	// 	},
-	// 	[ orders, activePage ]
+	// 	[ sortOrder ]
 	// );
-
-	const handlePageChange = (pageNumber) => {
-		console.log(`active page is ${pageNumber}`);
-		setCurrentPage(pageNumber);
-	};
-
-	useEffect(
-		() => {
-			dispatch(listOrders(category, searchKeyword, sortOrder, 1));
-			dispatch(listOrders(category, searchKeyword, sortOrder, 1));
-			// dispatch(listOrders());
-		},
-		[ successDelete, order_state ]
-	);
-
-	useEffect(
-		() => {
-			dispatch(listOrders(category, searchKeyword, sortOrder, 1));
-		},
-		[ sortOrder ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+	// 	},
+	// 	[ page ]
+	// );
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listOrders(category, searchKeyword, sortOrder, 1));
+		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listOrders(category, searchKeyword, e.target.value, 1));
+		dispatch(listOrders(category, searchKeyword, e.target.value, page, limit));
 	};
 
 	const colors = [
@@ -140,19 +126,19 @@ const OrdersPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 	};
-	// const change_view = (e) => {
-	// 	if (e.target.value === 'Block View') {
-	// 		set_block_list_view(true);
-	// 	} else {
-	// 		set_block_list_view(false);
-	// 	}
-	// };
-	// const next_set_of_orders = (direction) => {
-	// 	dispatch(listOrders(category, searchKeyword, sortOrder, orders[9]._id, direction));
-	// };
-	// const previous_set_of_orders = (direction) => {
-	// 	dispatch(listOrders(category, searchKeyword, sortOrder, orders[0]._id, direction));
-	// };
+
+	const history = useHistory();
+
+	const update_page = (e) => {
+		e.preventDefault();
+		const page = parseInt(e.target.value) + 1;
+		history.push({
+			search: '?page=' + page
+		});
+
+		console.log(e.target.value);
+		dispatch(listOrders(category, searchKeyword, sortOrder, page));
+	};
 
 	return (
 		<div className="profile_container wrap column p-20px">
@@ -208,9 +194,10 @@ const OrdersPage = (props) => {
 						[ ...Array(orders.totalPages).keys() ].map((x) => (
 							<button
 								key={x + 1}
-								defaultValue={x + 1}
+								value={x}
+								defaultValue={x}
 								className="btn primary w-40px mr-1rem mb-1rem"
-								onClick={(e) => dispatch(listOrders(category, searchKeyword, sortOrder, x + 1))}
+								onClick={(e) => update_page(e)}
 							>
 								{parseInt(x + 1)}
 							</button>
@@ -260,7 +247,7 @@ const OrdersPage = (props) => {
 								key={x + 1}
 								defaultValue={x + 1}
 								className="btn primary w-40px mr-1rem mb-1rem"
-								onClick={(e) => dispatch(listOrders(category, searchKeyword, sortOrder, x + 1))}
+								onClick={(e) => update_page(e)}
 							>
 								{parseInt(x + 1)}
 							</button>
