@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
 		} else if (req.query.sortOrder === 'release_date') {
 			sortOrder = { release_date: -1 };
 		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-			sortOrder = { _id: -1 };
+			sortOrder = { release_date: -1 };
 		}
 
 		const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
