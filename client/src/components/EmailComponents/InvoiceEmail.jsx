@@ -64,7 +64,7 @@ const InvoiceEmail = (props) => {
 				// margin: 20,
 
 				backgroundColor: 'transparent',
-				zoom: '50%'
+				zoom: '60%'
 			}}
 		>
 			{order && (
@@ -681,7 +681,7 @@ const InvoiceEmail = (props) => {
 					backgroundColor: 'white',
 					padding: '10px',
 					margin: 'auto',
-					width: '600px',
+					width: '700px',
 					borderRadius: '20px'
 				}}
 			>
