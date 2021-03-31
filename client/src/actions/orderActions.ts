@@ -443,12 +443,11 @@ export const listUserOrders = (user_id: string) => async (
 	}
 };
 
-export const listOrders = (category = '', searchKeyword = '', sortOrder = '', lastID = '', direction = '') => async (
+export const listOrders = (category = '', searchKeyword = '', sortOrder = '', page = '', limit = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		console.log({ direction });
 		dispatch({ type: ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		// const { data } = await axios.get('/api/orders', {
@@ -461,14 +460,15 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '', la
 				searchKeyword +
 				'&sortOrder=' +
 				sortOrder.toLowerCase() +
-				'&lastID=' +
-				lastID +
-				'&direction=' +
-				direction,
+				'&page=' +
+				page +
+				'&limit=' +
+				limit,
 			{
 				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
 		);
+		console.log({ data });
 		dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: ORDER_LIST_FAIL, payload: error.response.data.message });

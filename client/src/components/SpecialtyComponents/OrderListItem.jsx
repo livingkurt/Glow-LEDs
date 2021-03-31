@@ -81,7 +81,7 @@ const OrderListItem = (props) => {
 		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code, data);
 		console.log(request);
-		dispatch(listOrders('', '', '', 'none'));
+		dispatch(listOrders('', '', '', 1, 10));
 	};
 
 	const create_return_label = async () => {
@@ -95,7 +95,7 @@ const OrderListItem = (props) => {
 		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Orders.add_return_tracking_number(props.order, data.tracking_code, data);
 		console.log(request);
-		dispatch(listOrders('', '', '', 'none'));
+		dispatch(listOrders('', '', '', 1, 10));
 	};
 
 	const buy_label = async () => {
@@ -108,7 +108,7 @@ const OrderListItem = (props) => {
 		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code, data);
 		console.log(request);
-		dispatch(listOrders('', '', '', 'none'));
+		dispatch(listOrders('', '', '', 1, 10));
 	};
 	const view_label = async () => {
 		window.open(props.order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
@@ -327,7 +327,7 @@ const OrderListItem = (props) => {
 											type="text"
 											value={refund_amount}
 											name="refund_amount"
-											id="refund_amount"
+											// id="refund_amount"
 											className="w-100per"
 											onChange={(e) => set_refund_amount(e.target.value)}
 										/>
@@ -339,7 +339,7 @@ const OrderListItem = (props) => {
 												type="text"
 												value={refund_reason}
 												name="refund_reason"
-												id="refund_reason"
+												// id="refund_reason"
 												className="w-100per"
 												onChange={(e) => set_refund_reason(e.target.value)}
 											/>

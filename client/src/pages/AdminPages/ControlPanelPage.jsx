@@ -46,7 +46,7 @@ const ControlPanelPage = (props) => {
 	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
 
 	useEffect(() => {
-		dispatch(listOrders('', '', '', 'all'));
+		dispatch(listOrders('', '', '', 1, 10));
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());

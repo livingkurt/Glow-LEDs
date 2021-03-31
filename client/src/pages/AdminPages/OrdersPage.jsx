@@ -30,18 +30,18 @@ const OrdersPage = (props) => {
 	const [ activePage, setCurrentPage ] = useState(1);
 	const [ currentOrders, set_current_orders ] = useState([]);
 
-	useEffect(
-		() => {
-			// Logic for displaying current orders
-			if (orders) {
-				const indexOfLastOrder = activePage * ordersPerPage;
-				const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-				set_current_orders(orders.slice(indexOfFirstOrder, indexOfLastOrder));
-				console.log(orders.slice(indexOfFirstOrder, indexOfLastOrder));
-			}
-		},
-		[ orders, activePage ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		// Logic for displaying current orders
+	// 		if (orders) {
+	// 			// const indexOfLastOrder = activePage * ordersPerPage;
+	// 			// const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+	// 			// set_current_orders(orders.slice(indexOfFirstOrder, indexOfLastOrder));
+	// 			// console.log(orders.slice(indexOfFirstOrder, indexOfLastOrder));
+	// 		}
+	// 	},
+	// 	[ orders, activePage ]
+	// );
 
 	const handlePageChange = (pageNumber) => {
 		console.log(`active page is ${pageNumber}`);
@@ -50,8 +50,8 @@ const OrdersPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
-			dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
+			dispatch(listOrders(category, searchKeyword, sortOrder, 1));
+			dispatch(listOrders(category, searchKeyword, sortOrder, 1));
 			// dispatch(listOrders());
 		},
 		[ successDelete, order_state ]
@@ -59,19 +59,19 @@ const OrdersPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
+			dispatch(listOrders(category, searchKeyword, sortOrder, 1));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listOrders(category, searchKeyword, sortOrder, 'none'));
+		dispatch(listOrders(category, searchKeyword, sortOrder, 1));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listOrders(category, searchKeyword, e.target.value, 'none'));
+		dispatch(listOrders(category, searchKeyword, e.target.value, 1));
 	};
 
 	const colors = [
@@ -140,19 +140,19 @@ const OrdersPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 		}
 	};
-	const change_view = (e) => {
-		if (e.target.value === 'Block View') {
-			set_block_list_view(true);
-		} else {
-			set_block_list_view(false);
-		}
-	};
-	const next_set_of_orders = (direction) => {
-		dispatch(listOrders(category, searchKeyword, sortOrder, orders[9]._id, direction));
-	};
-	const previous_set_of_orders = (direction) => {
-		dispatch(listOrders(category, searchKeyword, sortOrder, orders[0]._id, direction));
-	};
+	// const change_view = (e) => {
+	// 	if (e.target.value === 'Block View') {
+	// 		set_block_list_view(true);
+	// 	} else {
+	// 		set_block_list_view(false);
+	// 	}
+	// };
+	// const next_set_of_orders = (direction) => {
+	// 	dispatch(listOrders(category, searchKeyword, sortOrder, orders[9]._id, direction));
+	// };
+	// const previous_set_of_orders = (direction) => {
+	// 	dispatch(listOrders(category, searchKeyword, sortOrder, orders[0]._id, direction));
+	// };
 
 	return (
 		<div className="profile_container wrap column p-20px">
@@ -201,50 +201,26 @@ const OrdersPage = (props) => {
 				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
-					<div className="wrap jc-b">
-						{/* {orders &&
-							[ ...Array(10).keys() ].map((x) => (
-								<option key={x + 1} defaultValue={parseInt(x + 1)}>
-									{parseInt(x + 1)}
-								</option>
-							))} */}
-						{/* <button className="btn icon primary mh-1rem" onClick={() => previous_set_of_orders('previous')}>
-							<i className="fas fa-arrow-left fs-22px" />
-						</button>
-						<button className="btn icon primary " onClick={() => next_set_of_orders('next')}>
-							<i className="fas fa-arrow-right fs-22px" />
-						</button> */}
-						<div>
-							{/* <div className="result">{renderOrders}</div> */}
-							<div className="pagination">
-								<Pagination
-									activePage={activePage}
-									itemsCountPerPage={10}
-									totalItemsCount={orders && orders.length}
-									pageRangeDisplayed={10}
-									onChange={handlePageChange}
-								/>
-							</div>
-						</div>
-					</div>
-					{/* <div className="ml-1rem product_big_screen">
-						<div className="custom-select w-100per">
-							<select className="qty_select_dropdown w-100per" onChange={(e) => change_view(e)}>
-								{[ 'List View', 'Block View' ].map((view, index) => (
-									<option key={index} value={view}>
-										{view}
-									</option>
-								))}
-							</select>
-							<span className="custom-arrow" />
-						</div>
-					</div> */}
+				</div>
+				<div className="wrap jc-c">
+					{orders &&
+						orders.totalPages &&
+						[ ...Array(orders.totalPages).keys() ].map((x) => (
+							<button
+								key={x + 1}
+								defaultValue={x + 1}
+								className="btn primary w-40px mr-1rem mb-1rem"
+								onClick={(e) => dispatch(listOrders(category, searchKeyword, sortOrder, x + 1))}
+							>
+								{parseInt(x + 1)}
+							</button>
+						))}
 				</div>
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
 						{!block_list_view &&
-							currentOrders &&
-							currentOrders.map((order) => (
+							orders &&
+							orders.orders.map((order) => (
 								<OrderListItem
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
@@ -257,8 +233,8 @@ const OrdersPage = (props) => {
 					</div>
 					<div className="product_big_screen">
 						{block_list_view &&
-							currentOrders &&
-							currentOrders.map((order) => (
+							orders &&
+							orders.orders.map((order) => (
 								<Order
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
@@ -270,12 +246,26 @@ const OrdersPage = (props) => {
 							))}
 					</div>
 					<div className="product_small_screen none column">
-						{currentOrders &&
-							currentOrders.map((order) => (
+						{orders &&
+							orders.orders.map((order) => (
 								<OrderSmallScreen determine_color={determine_color} order={order} admin={true} />
 							))}
 					</div>
 				</Loading>
+				<div className="wrap jc-c">
+					{orders &&
+						orders.totalPages &&
+						[ ...Array(orders.totalPages).keys() ].map((x) => (
+							<button
+								key={x + 1}
+								defaultValue={x + 1}
+								className="btn primary w-40px mr-1rem mb-1rem"
+								onClick={(e) => dispatch(listOrders(category, searchKeyword, sortOrder, x + 1))}
+							>
+								{parseInt(x + 1)}
+							</button>
+						))}
+				</div>
 			</div>
 		</div>
 	);

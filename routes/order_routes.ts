@@ -95,27 +95,11 @@ router.get('/tax_rates', async (req: any, res: any) => {
 });
 
 router.get('/', async (req: any, res: any) => {
+	// destructure page and limit and set default values
+	const page: any = req.query.page ? req.query.page : 1;
+	const limit: any = req.query.limit ? req.query.limit : 10;
+
 	try {
-		const category = req.query.category ? { category: req.query.category } : {};
-		let user: any;
-		let searchKeyword: any;
-		let last_id = req.query.lastID;
-		let direction = req.query.direction;
-		// console.log('hello');
-		// console.log(req.query);
-		let orders: any;
-		if (req.query.searchKeyword) {
-			const userSearchKeyword = req.query.searchKeyword
-				? {
-						'shipping.first_name': {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-			user = await User.findOne({ ...userSearchKeyword });
-			searchKeyword = { user: user._id };
-		}
 		let sortOrder = {};
 		if (req.query.sortOrder === 'lowest') {
 			sortOrder = { totalPrice: 1 };
@@ -134,91 +118,105 @@ router.get('/', async (req: any, res: any) => {
 		} else if (req.query.sortOrder === 'delivered') {
 			sortOrder = { isDelivered: -1, createdAt: -1 };
 		}
+		// execute query with page and limit values
+		const orders = await Order.find().sort(sortOrder).limit(limit * 1).skip((page - 1) * limit).exec();
 
-		// if (category === 'none' || category === 'None' || category === 'all' || category === 'All') {
-		// if (last_id === 'none') {
-		// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
-		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-			// .limit(100)
-			.populate('user')
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.sort(sortOrder);
-		// }
-		// else {
-		// 	if (direction === 'next') {
-		// 		// products = await Product.find({_id: {$lt: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
-		// 		orders = await Order.find({
-		// 			deleted: false,
-		// 			...category,
-		// 			...searchKeyword,
-		// 			_id: { $lt: last_id }
-		// 		})
-		// 			.limit(10)
-		// 			.populate('user')
-		// 			.populate('orderItems.product')
-		// 			.populate('orderItems.secondary_product')
-		// 			.sort(sortOrder);
-		// 	} else if (direction === 'previous') {
-		// 		// products = await Product.find({_id: {$lte: last_id}, deleted_at: null}).sort({_id:-1}).limit(10)
-		// 		orders = await Order.find({
-		// 			deleted: false,
-		// 			...category,
-		// 			...searchKeyword,
-		// 			_id: { $gt: last_id }
-		// 		})
-		// 			.limit(10)
-		// 			.populate('user')
-		// 			.populate('orderItems.product')
-		// 			.populate('orderItems.secondary_product')
-		// 			.sort(sortOrder);
-		// 	} else if (last_id === 'all') {
-		// 		// products = await Product.find({ deleted_at: null }).sort({_id:-1}).limit(10)
-		// 		orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-		// 			.populate('user')
-		// 			.populate('orderItems.product')
-		// 			.populate('orderItems.secondary_product')
-		// 			.sort(sortOrder);
-		// 	} else {
-		// 		// products = await Product.find({_id: {$gt: last_id}, deleted_at: null}).limit(10)
-		// 		orders = await Order.find({
-		// 			deleted: false,
-		// 			...category,
-		// 			...searchKeyword,
-		// 			_id: { $gt: last_id }
-		// 		})
-		// 			.limit(10)
-		// 			.populate('user')
-		// 			.populate('orderItems.product')
-		// 			.populate('orderItems.secondary_product')
-		// 			.sort(sortOrder);
-		// 		orders = orders.reverse();
-		// 	}
-		// }
+		// get total documents in the Posts collection
+		const count = await Order.countDocuments();
 
-		log_request({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Product',
-			data: orders,
-			status: 200,
-			success: true,
-			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		// return response with posts, total pages, and current page
+		res.json({
+			orders,
+			totalPages: Math.ceil(count / limit),
+			currentPage: parseInt(page)
 		});
-		console.log({ orders });
-		res.send(orders);
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Product',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Orders' });
+	} catch (err) {
+		console.error(err.message);
 	}
 });
+
+// router.get('/', async (req: any, res: any) => {
+// 	try {
+// 		const category = req.query.category ? { category: req.query.category } : {};
+// 		const page: any = req.query.page ? { page: req.query.page } : { page: 1 };
+// 		const limit: any = req.query.limit ? { limit: req.query.limit } : { limit: 10 };
+// 		let user: any;
+// 		let searchKeyword: any;
+// 		if (req.query.searchKeyword) {
+// 			const userSearchKeyword = req.query.searchKeyword
+// 				? {
+// 						'shipping.first_name': {
+// 							$regex: req.query.searchKeyword,
+// 							$options: 'i'
+// 						}
+// 					}
+// 				: {};
+// 			user = await User.findOne({ ...userSearchKeyword });
+// 			searchKeyword = { user: user._id };
+// 		}
+// 		// const { page = 1, limit = 10 } = req.query;
+
+// 		let sortOrder = {};
+// 		if (req.query.sortOrder === 'lowest') {
+// 			sortOrder = { totalPrice: 1 };
+// 		} else if (req.query.sortOrder === 'highest') {
+// 			sortOrder = { totalPrice: -1 };
+// 		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+// 			sortOrder = { createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'paid') {
+// 			sortOrder = { isPaid: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'manufactured') {
+// 			sortOrder = { isManufactured: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'packaged') {
+// 			sortOrder = { isPackaged: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'shipped') {
+// 			sortOrder = { isShipped: -1, createdAt: -1 };
+// 		} else if (req.query.sortOrder === 'delivered') {
+// 			sortOrder = { isDelivered: -1, createdAt: -1 };
+// 		}
+
+// 		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+// 			.limit(limit * 1)
+// 			.skip((page - 1) * limit)
+// 			.exec()
+// 			.populate('user')
+// 			.populate('orderItems.product')
+// 			.populate('orderItems.secondary_product')
+// 			.sort(sortOrder);
+
+// 		const count = await Order.countDocuments();
+
+// 		log_request({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			data: orders,
+// 			status: 200,
+// 			success: true,
+// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 		});
+// 		// console.log({
+// 		// 	orders,
+// 		// 	totalPages: Math.ceil(count / limit),
+// 		// 	currentPage: page
+// 		// });
+// 		res.send({
+// 			orders,
+// 			totalPages: Math.ceil(count / limit),
+// 			currentPage: page
+// 		});
+// 	} catch (error) {
+// 		log_error({
+// 			method: 'GET',
+// 			path: req.originalUrl,
+// 			collection: 'Product',
+// 			error,
+// 			status: 500,
+// 			success: false
+// 		});
+// 		res.status(500).send({ error, message: 'Error Getting Orders' });
+// 	}
+// });
 router.get('/promo_code_usage', async (req: any, res: any) => {
 	try {
 		const orders = await Order.find({ deleted: false })

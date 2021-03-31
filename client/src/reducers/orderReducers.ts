@@ -110,7 +110,7 @@ export const myOrderListReducer = (
 
 export const orderListReducer = (
 	state = {
-		orders: []
+		orders: { orders: [], totalPages: 0, currentPage: 0 }
 	},
 	action: { type: any; payload: any }
 ) => {
@@ -118,7 +118,14 @@ export const orderListReducer = (
 		case ORDER_LIST_REQUEST:
 			return { loading: true };
 		case ORDER_LIST_SUCCESS:
-			return { loading: false, orders: action.payload };
+			return {
+				loading: false,
+				orders: {
+					orders: action.payload.orders,
+					totalPages: action.payload.totalPages,
+					currentPage: action.payload.currentPage
+				}
+			};
 		case ORDER_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
