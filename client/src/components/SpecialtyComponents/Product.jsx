@@ -150,13 +150,8 @@ const Product = (props) => {
 							<Link to={'/collections/all/products/' + props.product.pathname}>
 								<label style={{ fontSize: '1.6rem' }}>{props.product.name}</label>
 							</Link>
-							{props.product.name === 'Custom Infinity Mirror' ? (
-								<label className="product-price">
-									$549.99 - $<i className="fas fa-arrow-up" />
-								</label>
-							) : (
-								<label className="product-price">{sale_price_switch(props.product)}</label>
-							)}
+
+							<label className="product-price">{sale_price_switch(props.product)}</label>
 
 							{props.product.rating ? (
 								<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />

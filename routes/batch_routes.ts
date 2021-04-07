@@ -87,7 +87,7 @@ router.put('/product_sale_price', async (req, res) => {
 		console.log({ discount });
 		product.sale_price = product.price - discount;
 		const result = await product.save();
-		console.log({ result });
+		// console.log({ result });
 	});
 	// console.log({ products });
 	res.send(products);

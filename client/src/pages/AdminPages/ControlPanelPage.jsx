@@ -7,7 +7,7 @@ import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
 import Chart from 'chart.js';
 import { hslToHex, unformat_date } from '../../utils/helper_functions';
-import { API_Revenue, API_Products } from '../../utils';
+import { API_Revenue, API_Products, API_Orders } from '../../utils';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { listPromos } from '../../actions/promoActions';
 import { Helmet } from 'react-helmet';
@@ -21,8 +21,9 @@ const ControlPanelPage = (props) => {
 	const expenseList = useSelector((state) => state.expenseList);
 	const { expenses } = expenseList;
 
-	const orderList = useSelector((state) => state.orderList);
-	const { orders } = orderList;
+	// const orderList = useSelector((state) => state.orderList);
+	// const { orders: order_data } = orderList;
+	// console.log({ order_data });
 
 	const productList = useSelector((state) => state.productList);
 	const { products } = productList;
@@ -38,6 +39,7 @@ const ControlPanelPage = (props) => {
 
 	// const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ daily_orders, set_daily_orders ] = useState([]);
+	const [ orders, set_orders ] = useState([]);
 	const [ weekly_orders, set_weekly_orders ] = useState([]);
 	const [ monthly_orders, set_monthly_orders ] = useState([]);
 	const [ daily_income, set_daily_income ] = useState([]);
@@ -45,8 +47,15 @@ const ControlPanelPage = (props) => {
 	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState([]);
 	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
 
+	const get_orders = async () => {
+		const { data } = await API_Orders.get_all_orders();
+		console.log({ data });
+		set_orders(data);
+	};
+
 	useEffect(() => {
-		dispatch(listOrders('', '', '', 1, 10));
+		// dispatch(listOrders('', '', '', 1, 10));
+		get_orders();
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
@@ -61,6 +70,10 @@ const ControlPanelPage = (props) => {
 	useEffect(
 		() => {
 			get_occurrences();
+			// if (order_data) {
+			// 	set_orders(order_data.orders);
+			// }
+
 			return () => {};
 		},
 		[ orders ]

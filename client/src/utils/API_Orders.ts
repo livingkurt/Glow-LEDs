@@ -4,6 +4,9 @@ export default {
 	get_all_shipping: () => {
 		return axios.get('/api/orders/all_shipping');
 	},
+	get_all_orders: () => {
+		return axios.get('/api/orders/all_orders');
+	},
 	create_label: (order: any, shipping_rate: number) => {
 		return axios.put('/api/orders/create_label', { order, shipping_rate });
 	},
