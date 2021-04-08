@@ -146,6 +146,11 @@ const Header = (props) => {
 										<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px w-243px">
+										<Link to="/collections/all/products/category/novaskins">
+											<div className="row">
+												<button className="btn nav w-100per ta-l">Novaskins (New)</button>
+											</div>
+										</Link>
 										<Link to="/collections/all/products/category/glow_casings">
 											<div className="row">
 												<button className="btn nav w-100per ta-l">Glow Casings</button>
