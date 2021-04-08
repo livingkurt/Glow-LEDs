@@ -581,11 +581,11 @@ const ProductPage = (props) => {
 								</div>
 							)}
 							{product.product_length && (
-								<div className="jc-a wrap">
-									<div className="column">
+								<div className="jc-b wrap m-2rem">
+									<div className="column mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 										<div className="column h-100per paragraph_font">
-											<ul style={{ marginLeft: '10px' }}>
+											<ul style={{}}>
 												{product.included_items ? (
 													product.included_items.split('\n').map((line, index) => {
 														return (
@@ -605,9 +605,9 @@ const ProductPage = (props) => {
 										</div>
 									</div>
 
-									<div className="column">
+									<div className="column mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
-										<div className="column h-100per paragraph_font mt-2rem">
+										<div className="column h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
 												`${product.product_length} cm x ${product.product_width} cm x
 											${product.product_height} cm`
@@ -615,6 +615,28 @@ const ProductPage = (props) => {
 												`${product.product_length} mm x ${product.product_width} mm x
 											${product.product_height} mm`
 											)}
+										</div>
+									</div>
+									<div className="column mt-2rem">
+										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
+										<div className="column h-100per paragraph_font ">
+											<ul style={{}}>
+												{product.chips ? (
+													product.chips.map((chip, index) => {
+														return (
+															<li
+																key={index}
+																className="paragraph_font"
+																style={{ listStyleType: 'disc' }}
+															>
+																{chip.name}
+															</li>
+														);
+													})
+												) : (
+													product.chips
+												)}
+											</ul>
 										</div>
 									</div>
 								</div>
