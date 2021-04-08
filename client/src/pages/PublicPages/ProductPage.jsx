@@ -556,7 +556,7 @@ const ProductPage = (props) => {
 								</object>
 								// </button>
 							)} */}
-							{!product.product_length && (
+							{/* {!product.product_length && (
 								<div className="column">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 									<div className="column h-100per paragraph_font">
@@ -579,44 +579,50 @@ const ProductPage = (props) => {
 										</ul>
 									</div>
 								</div>
-							)}
-							{product.product_length && (
-								<div className="jc-b wrap m-2rem">
-									<div className="column mt-2rem">
-										<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
-										<div className="column h-100per paragraph_font">
-											<ul style={{}}>
-												{product.included_items ? (
-													product.included_items.split('\n').map((line, index) => {
-														return (
-															<li
-																key={index}
-																className="paragraph_font"
-																style={{ listStyleType: 'disc' }}
-															>
-																{line}
-															</li>
-														);
-													})
-												) : (
-													product.included_items
-												)}
-											</ul>
-										</div>
+							)} */}
+							{/* {product.product_length && ( */}
+							<div className="jc-b wrap m-2rem">
+								<div className="column mt-2rem">
+									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
+									<div className="column h-100per paragraph_font">
+										<ul style={{}}>
+											{product.included_items ? (
+												product.included_items.split('\n').map((line, index) => {
+													return (
+														<li
+															key={index}
+															className="paragraph_font"
+															style={{ listStyleType: 'disc' }}
+														>
+															{line}
+														</li>
+													);
+												})
+											) : (
+												product.included_items
+											)}
+										</ul>
 									</div>
-
+								</div>
+								{product.product_length && (
 									<div className="column mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
 										<div className="column h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
 												`${product.product_length} cm x ${product.product_width} cm x
 											${product.product_height} cm`
+											) : product.name === 'Glow Strings V2 50 LED / 3.5m' ? (
+												`${product.product_length} m x ${product.product_width} m x
+											${product.product_height} m`
 											) : (
 												`${product.product_length} mm x ${product.product_width} mm x
 											${product.product_height} mm`
 											)}
 										</div>
 									</div>
+								)}
+								{product.chips &&
+								product.chips.length > 0 && (
 									<div className="column mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
 										<div className="column h-100per paragraph_font ">
@@ -639,8 +645,9 @@ const ProductPage = (props) => {
 											</ul>
 										</div>
 									</div>
-								</div>
-							)}
+								)}
+							</div>
+							{/* )} */}
 						</div>
 						{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
 							<div className=" m-2rem  h-auto m-auto jc-c">
