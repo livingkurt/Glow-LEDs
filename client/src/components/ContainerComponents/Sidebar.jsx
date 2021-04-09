@@ -151,16 +151,34 @@ const Sidebar = (props) => {
 										Glow Casings
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/glowskins">
+								{/* <Link to="/collections/all/products/category/glowskins">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Glowskins
+									</button> */}
+
+								<div className="sidebar_dropdown_nested w-">
+									<button className="sidebar-btn nested">
+										<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
 									</button>
-								</Link>
-								{/* <Link to="/collections/all/products/category/frosted_diffusers">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Frosted Diffusers
-									</button>
-								</Link> */}
+									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/glowskins/subcategory/classics">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Classics
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Novaskins
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Alt Novaskins
+											</button>
+										</Link>
+									</ul>
+									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+								</div>
 								<div className="sidebar_dropdown_nested w-">
 									<button className="sidebar-btn nested">
 										<Link to="/collections/all/products/category/frosted_diffusers">
@@ -188,11 +206,6 @@ const Sidebar = (props) => {
 												Abstract
 											</button>
 										</Link>
-										{/* <Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Polygons
-											</button>
-										</Link> */}
 									</ul>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 								</div>
@@ -281,6 +294,22 @@ const Sidebar = (props) => {
 					</button>
 
 					<ul className="sidebar_dropdown_container">
+						<div className="sidebar_dropdown_nested w-">
+							<button className="sidebar-btn secondary">Sponsored Artists</button>
+							<ul className="sidebar_dropdown_secondary_container">
+								<Link to="/collections/all/sponsors">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Sponsored Glovers
+									</button>
+								</Link>
+								<Link to="/collections/all/teams">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Sponsored Teams
+									</button>
+								</Link>
+							</ul>
+							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+						</div>
 						<Link to="/collections/all/features/category/artists">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Artists
@@ -315,6 +344,94 @@ const Sidebar = (props) => {
 						Glow Control
 					</button>
 				</Link> */}
+				{/* <div className="sidebar_dropdown">
+					<button className="sidebar-btn primary">
+						<Link to="/pages/menu/featured">Featured</Link>
+					</button>
+
+					<ul className="sidebar_dropdown_container">
+						<Link to="/collections/all/features/category/artists">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Artists
+							</button>
+						</Link>
+						<Link to="/collections/all/features/category/glovers">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Glovers
+							</button>
+						</Link>
+
+						<Link to="/collections/all/features/category/producers">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Producers
+							</button>
+						</Link>
+						<Link to="/collections/all/features/category/vfx">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								VFX
+							</button>
+						</Link>
+						<Link to="/account/login?redirect=/secure/account/submit_feature">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Submit Feature
+							</button>
+						</Link>
+						<div className="sidebar_dropdown_secondary">
+							<button className="sidebar-btn secondary">
+								<Link to="/pages/faq">FAQ</Link>
+							</button>
+							<ul className="sidebar_dropdown_secondary_container">
+								<HashLink href="/pages/faq#glowskins">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Glowskins
+									</button>
+								</HashLink>
+								<HashLink href="/pages/faq#using_diffuser_caps_and_adapters">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Diffuser Caps Guide
+									</button>
+								</HashLink>
+								<HashLink href="/pages/faq#diffuser_too_tight_too_loose">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Diffusers Too Tight/Loose?
+									</button>
+								</HashLink>
+								<HashLink href="/pages/faq#ordering_custom_products">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Ordering Custom Products
+									</button>
+								</HashLink>
+								<HashLink href="/pages/faq#featured_content">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Featured Content
+									</button>
+								</HashLink>
+								<HashLink href="/pages/faq#processing_shipping">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Processing/Shipping
+									</button>
+								</HashLink>
+								<HashLink href="/pages/faq#returns_cancellations">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Returns/Cancellations
+									</button>
+								</HashLink>
+							</ul>
+							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+						</div>
+						<Link to="/pages/contact">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Contact
+							</button>
+						</Link>
+						<Link to="/pages/terms">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Terms and Conditions
+							</button>
+						</Link>
+					</ul>
+					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+				</div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/pages/menu/support">Support</Link>

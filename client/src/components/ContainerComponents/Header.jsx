@@ -299,7 +299,7 @@ const Header = (props) => {
 								<button className="btn nav">Featured</button>
 							</Link>
 							<div className="dropdown-nav-content hover_fade_in w-250px">
-								{/* <div className="dropdown-nav-nested ">
+								<div className="dropdown-nav-nested ">
 									<button className="btn nav w-100per ta-l">Sponsored Artists</button>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 									<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-250px">
@@ -316,7 +316,7 @@ const Header = (props) => {
 											</div>
 										</Link>
 									</div>
-								</div> */}
+								</div>
 
 								<Link to="/collections/all/features/category/artists">
 									<button className="btn nav w-100per ta-l">Artists</button>
