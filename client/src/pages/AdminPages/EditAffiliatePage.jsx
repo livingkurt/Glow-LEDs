@@ -6,6 +6,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
+import { listChips } from '../../actions/chipActions';
 
 const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -30,6 +31,8 @@ const EditAffiliatePage = (props) => {
 	const [ video, set_video ] = useState('');
 	const [ product, set_product ] = useState('');
 	const [ products, set_products ] = useState([]);
+	const [ chips, set_chips ] = useState([]);
+	const [ chip, set_chip ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -43,6 +46,9 @@ const EditAffiliatePage = (props) => {
 
 	const productList = useSelector((state) => state.productList);
 	const { products: products_list } = productList;
+
+	const chipList = useSelector((state) => state.chipList);
+	const { chips: chips_list } = chipList;
 
 	const set_state = () => {
 		set_id(affiliate._id);
@@ -66,6 +72,7 @@ const EditAffiliatePage = (props) => {
 		set_team(affiliate.team);
 		set_video(affiliate.video);
 		set_products(affiliate.products);
+		set_chips(affiliate.chips);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -90,6 +97,8 @@ const EditAffiliatePage = (props) => {
 		set_team('');
 		set_products([]);
 		set_product('');
+		set_chip([]);
+		// set_chip('');
 	};
 
 	const dispatch = useDispatch();
@@ -107,6 +116,7 @@ const EditAffiliatePage = (props) => {
 			}
 			stableDispatch(listUsers(''));
 			stableDispatch(listProducts(''));
+			stableDispatch(listChips());
 			set_state();
 			return () => {};
 		},
@@ -155,7 +165,8 @@ const EditAffiliatePage = (props) => {
 				location,
 				years,
 				video,
-				products
+				products,
+				chips: chips.map((chip) => chip._id)
 			})
 		);
 		e.target.reset();
@@ -166,13 +177,6 @@ const EditAffiliatePage = (props) => {
 	const add_product = (e) => {
 		e.preventDefault();
 		const product_object = JSON.parse(e.target.value);
-		// console.log(product);
-		// if (product.indexOf(' ') >= 0) {
-		// 	console.log('indexOf');
-		// 	product.split(' ').map((product) => {
-		// 		set_products((products) => [ ...products, product ]);
-		// 	});
-		// } else
 		if (products) {
 			console.log('products.length > 0');
 			set_products((products) => [ ...products, product_object ]);
@@ -216,6 +220,60 @@ const EditAffiliatePage = (props) => {
 			</div>
 		);
 	};
+
+	const add_chip = (e) => {
+		e.preventDefault();
+		const chip_object = JSON.parse(e.target.value);
+		// console.log(chip);
+		// if (chip.indexOf(' ') >= 0) {
+		// 	console.log('indexOf');
+		// 	chip.split(' ').map((chip) => {
+		// 		set_chips((chips) => [ ...chips, chip ]);
+		// 	});
+		// } else
+		if (chips) {
+			console.log('chips.length > 0');
+			set_chips((chips) => [ ...chips, chip_object ]);
+		} else {
+			console.log('chips.length === 0');
+			set_chips([ chip_object ]);
+		}
+
+		set_chip('');
+	};
+
+	const remove_chip = (chip_index, e) => {
+		e.preventDefault();
+		set_chips((chips) =>
+			chips.filter((chip, index) => {
+				return chip_index !== index;
+			})
+		);
+	};
+	const chip_display = (chips) => {
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{chips &&
+							chips.map((chip, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{chip.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Affiliate' : 'Create Affiliate'}</h1>
@@ -453,10 +511,36 @@ const EditAffiliatePage = (props) => {
 													</div>
 												</div>
 												<button className="btn primary" onClick={(e) => add_product(e)}>
-													Add Affiliate
+													Add Gear
 												</button>
 												{product_display(products)}
 											</li>
+											<li>
+												<label htmlFor="chip">Chip</label>
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_chip(e)}
+														>
+															<option key={1} defaultValue="">
+																---Choose Chip---
+															</option>
+															{chips_list.map((chip, index) => (
+																<option key={index} value={JSON.stringify(chip)}>
+																	{chip.name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												<button className="btn primary" onClick={(e) => add_chip(e)}>
+													Add Chip
+												</button>
+												{chip_display(chips)}
+											</li>
+
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (

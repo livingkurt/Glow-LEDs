@@ -167,10 +167,22 @@ const Header = (props) => {
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
 											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-200px">
+												<Link to="/collections/all/products/category/glowskins/subcategory/classics">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Classics</button>
+													</div>
+												</Link>
 												<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 														<button className="btn nav w-100per ta-l">Novaskins</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Alt Novaskins</button>
 													</div>
 												</Link>
 											</div>

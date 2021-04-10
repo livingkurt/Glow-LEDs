@@ -15,6 +15,20 @@ const reviewSchema = new mongoose.Schema(
 		timestamps: true
 	}
 );
+const productOptionsSchema = new mongoose.Schema(
+	{
+		name: { type: String },
+		price: { type: Number, default: 0 },
+		sale_price: { type: Number, default: 0 },
+		size: { type: Number },
+		color: { type: String },
+		default: { type: Boolean, default: false },
+		deleted: { type: Boolean, default: false }
+	},
+	{
+		timestamps: true
+	}
+);
 
 const productSchema = new mongoose.Schema(
 	{
@@ -57,7 +71,8 @@ const productSchema = new mongoose.Schema(
 		weight_pounds: { type: Number },
 		weight_ounces: { type: Number },
 		order: { type: Number },
-		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ]
+		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ],
+		product_options: [ productOptionsSchema ]
 	},
 	{
 		timestamps: true

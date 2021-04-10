@@ -47,6 +47,7 @@ const EditProductPage = (props) => {
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
+	const [ product_options, set_product_options ] = useState([ {} ]);
 
 	const history = useHistory();
 
@@ -105,6 +106,7 @@ const EditProductPage = (props) => {
 			} else {
 				console.log('UnSet');
 				unset_state();
+				set_product_options([ {} ]);
 			}
 
 			return () => {};
@@ -154,6 +156,7 @@ const EditProductPage = (props) => {
 		setCountInStock(product.countInStock);
 		props.match.params.pathname && setPathname(product.pathname);
 		setOrder(product.order);
+		set_product_options(product.product_options);
 	};
 	const unset_state = () => {
 		setId('');
@@ -190,13 +193,14 @@ const EditProductPage = (props) => {
 		set_weight_ounces(0);
 		setPathname('');
 		setOrder();
+		set_product_options([ {} ]);
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
 	// };
 
 	const submitHandler = (e) => {
-		console.log({ chips });
+		console.log({ product_options });
 		e.preventDefault();
 		dispatch(
 			saveProduct({
@@ -231,7 +235,8 @@ const EditProductPage = (props) => {
 				weight_pounds,
 				weight_ounces,
 				pathname: pathname ? pathname : snake_case(name),
-				order
+				order,
+				product_options
 			})
 		);
 		e.target.reset();
@@ -280,13 +285,6 @@ const EditProductPage = (props) => {
 	const add_chip = (e) => {
 		e.preventDefault();
 		const chip_object = JSON.parse(e.target.value);
-		// console.log(chip);
-		// if (chip.indexOf(' ') >= 0) {
-		// 	console.log('indexOf');
-		// 	chip.split(' ').map((chip) => {
-		// 		set_chips((chips) => [ ...chips, chip ]);
-		// 	});
-		// } else
 		if (chips) {
 			console.log('chips.length > 0');
 			set_chips((chips) => [ ...chips, chip_object ]);
@@ -330,6 +328,14 @@ const EditProductPage = (props) => {
 		set_chips((chips) =>
 			chips.filter((chip, index) => {
 				return chip_index !== index;
+			})
+		);
+	};
+	const remove_product_option = (option_index, e) => {
+		e.preventDefault();
+		set_product_options((option) =>
+			option.filter((option, index) => {
+				return option_index !== index;
 			})
 		);
 	};
@@ -390,25 +396,6 @@ const EditProductPage = (props) => {
 	const chip_display = (chips) => {
 		return (
 			<div>
-				{/* <div className="row wrap">
-					{chips &&
-						chips.map((picture) => {
-							return (
-								<img
-									style={{
-										width: '100%',
-										package_height: 'auto',
-										maxWidth: '150px',
-										maxHeight: '150px',
-										borderRadius: '15px',
-										marginRight: '10px'
-									}}
-									className="mv-10px"
-									src={picture}
-								/>
-							);
-						})}
-				</div> */}
 				<div className="jc-b">
 					<div>
 						{chips &&
@@ -421,36 +408,10 @@ const EditProductPage = (props) => {
 											</button>
 											{chip.name}
 										</div>
-										{/* <div>
-											{index > 0 && (
-												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
-													<i className=" fas fa-sort-up" />
-												</button>
-											)}
-
-											{index < chips.length - 1 && (
-												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
-													<i
-														style={{ '-webkitTransform': 'rotate(-180deg)' }}
-														className=" fas fa-sort-up"
-													/>
-												</button>
-											)}
-										</div> */}
 									</div>
 								);
 							})}
 					</div>
-					{/* <li>
-						<label htmlFor="images">Images</label>
-						<textarea
-							className="edit_product_textarea w-450px h-100per"
-							name="images"
-							value={images}
-							id="images"
-							// onChange={(e) => set_images(e.target.value)}
-						/>
-					</li> */}
 				</div>
 			</div>
 		);
@@ -523,42 +484,29 @@ const EditProductPage = (props) => {
 			</div>
 		);
 	};
-	// const subcategory_display = (subcategories) => {
-	// 	return (
-	// 		<div className=" w-100per">
-	// 			{subcategories &&
-	// 				subcategories.map((subcategory, index) => {
-	// 					return (
-	// 						<div className="promo_code mv-1rem w-100per row jc-b max-w-55rem w-100per">
-	// 							<div className=" w-100per">
-	// 								<button className="btn icon" onClick={(e) => remove_subcategory(index, e)}>
-	// 									<i className="fas fa-times mr-5px" />
-	// 								</button>
-	// 								{subcategory}
-	// 							</div>
-	// 						</div>
-	// 					);
-	// 				})}
-	// 		</div>
-	// 	);
-	// };
 
 	const move_left = () => {};
 	const move_right = () => {};
 
-	// const chip_names = [
-	// 	'spectra EVOs',
-	// 	'chroma EVOs',
-	// 	'Uber Nanos',
-	// 	'Aurora Nanos',
-	// 	'QtLite 6 Mode',
-	// 	'Atoms',
-	// 	'Ions',
-	// 	'Apollos',
-	// 	'Aethers',
-	// 	'OSM 2s',
-	// 	'Micromax'
-	// ];
+	const add_product_option = (e) => {
+		e.preventDefault();
+		set_product_options((options) => [ ...options, {} ]);
+	};
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
+
+	const update_product_option_property = (value, field_name, index) => {
+		console.log({ value, field_name, index });
+		let new_product_options = [ ...product_options ];
+		new_product_options[index] = {
+			...new_product_options[index],
+			[field_name]: value
+		};
+		set_product_options(new_product_options);
+		console.log({ product_options });
+	};
 
 	return (
 		<div className="main_container p-20px">
@@ -773,10 +721,7 @@ const EditProductPage = (props) => {
 													<input
 														type="checkbox"
 														name="hidden"
-														// defaultChecked={hidden ? 'checked' : 'unchecked'}
-														// defaultValue={hidden}
 														defaultChecked={hidden}
-														// value={hidden ? '1' : '0'}
 														id="hidden"
 														onChange={(e) => {
 															setHidden(e.target.checked);
@@ -799,13 +744,6 @@ const EditProductPage = (props) => {
 											</li>
 											<li>
 												<label htmlFor="chip">Chip</label>
-												{/* <input
-													type="text"
-													name="chip"
-													value={chip}
-													id="chip"
-													onChange={(e) => set_chip(e.target.value)}
-												/> */}
 												<div className="ai-c h-25px mv-15px jc-c">
 													<div className="custom-select">
 														<select
@@ -1031,6 +969,128 @@ const EditProductPage = (props) => {
 									</div>
 									{chip_display(chips)}
 									{image_display(images)}
+									<li>
+										<button className="btn primary" onClick={(e) => add_product_option(e)}>
+											Create Product Option
+										</button>
+									</li>
+									<div className="row wrap jc-b">
+										{product_options &&
+											product_options.map((option, index) => {
+												return (
+													<div key={index} className="w-410px m-10px">
+														<div className="jc-b">
+															<h2>Product Option {index + 1}</h2>
+															<button
+																className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+																onClick={(e) => remove_product_option(index, e)}
+															>
+																<i className="fas fa-times mr-5px" />
+															</button>
+														</div>
+														<li>
+															<label htmlFor="name">Name</label>
+															<input
+																type="text"
+																name="name"
+																defaultValue={option.name}
+																value={option.name}
+																id="name"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="size">Size</label>
+															<input
+																type="text"
+																name="size"
+																defaultValue={option.size}
+																value={option.size}
+																id="size"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="price">Price</label>
+															<input
+																type="text"
+																name="price"
+																defaultValue={option.price}
+																value={option.price}
+																id="price"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="sale_price">Sale Price</label>
+															<input
+																type="text"
+																name="sale_price"
+																defaultValue={option.sale_price}
+																value={option.sale_price}
+																id="sale_price"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="color">Color</label>
+															<input
+																type="text"
+																name="color"
+																defaultValue={option.color}
+																value={option.color}
+																id="color"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														{loading_checkboxes ? (
+															<li>Loading...</li>
+														) : (
+															<li>
+																<label htmlFor="default">Default Option</label>
+																<input
+																	type="checkbox"
+																	name="default"
+																	defaultChecked={option.default}
+																	id="default"
+																	onChange={(e) =>
+																		update_product_option_property(
+																			e.target.checked,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+														)}
+													</div>
+												);
+											})}
+									</div>
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}

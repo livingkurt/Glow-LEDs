@@ -445,6 +445,7 @@ router.get('/images/:category', async (req, res) => {
 router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ product_routes_put: req.body });
+		console.log({ product_options: req.body.product_options });
 		const productId = req.params.pathname;
 		console.log({ productId });
 		const product = await Product.findById(productId);

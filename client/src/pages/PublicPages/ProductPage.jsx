@@ -23,6 +23,10 @@ const ProductPage = (props) => {
 	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
+	const [ price, set_price ] = useState(0);
+	const [ sale_price, set_sale_price ] = useState(0);
+	const [ size, set_size ] = useState(0);
+	const [ product_option, set_product_option ] = useState({});
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
 	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('');
@@ -76,6 +80,12 @@ const ProductPage = (props) => {
 		// }
 	}, []);
 
+	// const get_original_diffuser_caps = async () => {
+	// 	const { data } = await API_Products.get_original_diffuser_caps();
+	// 	// console.log(data);
+	// 	set_original_diffuser_caps(data);
+	// 	// set_diffuser_caps(data);
+	// };
 	const get_original_diffuser_caps = async () => {
 		const { data } = await API_Products.get_original_diffuser_caps();
 		// console.log(data);
@@ -93,6 +103,21 @@ const ProductPage = (props) => {
 		() => {
 			if (product) {
 				set_image(product.images && product.images[0]);
+				console.log({ product_options: product.product_options });
+				if (product.product_options) {
+					// const option = product.product_options.forEach((option) =>
+					// 	console.log({ default: option.default })
+					// );
+					const option = product.product_options.find((option) => option.default === true);
+					console.log({ option });
+					console.log({ price: option.price });
+					console.log({ price: option.size });
+					set_price(option.price);
+					set_size(option.size);
+					set_sale_price(option.sale_price);
+					set_product_option(option);
+				}
+
 				set_diffuser_cap_color(
 					product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
 						? 'Translucent White'
@@ -115,12 +140,7 @@ const ProductPage = (props) => {
 	);
 
 	const handleAddToCart = () => {
-		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap));
-		// props.history.push('/checkout/cart');
-		// set_added_to_cart_message(product.name);
-		// setTimeout(() => {
-		// 	set_added_to_cart_message('');
-		// }, 2000);
+		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap, product_option));
 		open_cart();
 	};
 
@@ -135,6 +155,22 @@ const ProductPage = (props) => {
 	const open_pdf = () => {
 		// window.open('/Glow Strings V2 Manual.pdf', '_blank');
 		window.open('/Glow_Strings_V2_Manual.pdf', '_blank', 'width=600,height=400');
+	};
+
+	const update_product = (e, option) => {
+		let button = document.getElementById(e.target.id);
+		let buttons = document.querySelectorAll('.packs');
+		buttons.forEach((node) => {
+			node.classList.remove('active');
+			node.classList.remove('secondary');
+			node.classList.add('primary');
+		});
+		button.classList.add('secondary');
+		button.classList.add('active');
+		set_price(option.price);
+		set_sale_price(option.sale_price);
+		set_size(option.size);
+		set_product_option(option);
 	};
 
 	return (
@@ -263,28 +299,22 @@ const ProductPage = (props) => {
 									</a>
 								</div>
 
-								{product.name === 'Custom Infinity Mirror' ? (
-									<h3 style={{ margin: 0, marginRight: 5 }}>
-										Price: $549.99 - $<i class="fas fa-arrow-up" />
-									</h3>
-								) : (
-									<div className="row">
-										<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
-										{product.sale_price !== 0 ? (
-											<label>
-												<del style={{ color: 'red' }}>
-													<label style={{ color: 'white' }}>
-														${product.price ? product.price.toFixed(2) : product.price}
-													</label>
-												</del>{' '}
-												<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
-												On Sale!
-											</label>
-										) : (
-											<label>${product.price ? product.price.toFixed(2) : product.price}</label>
-										)}
-									</div>
-								)}
+								<div className="row">
+									<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
+									{sale_price !== 0 ? (
+										<label>
+											<del style={{ color: 'red' }}>
+												<label style={{ color: 'white' }}>
+													${price ? price.toFixed(2) : price}
+												</label>
+											</del>{' '}
+											<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price}{' '}
+											On Sale!
+										</label>
+									) : (
+										<label>${price ? price.toFixed(2) : price}</label>
+									)}
+								</div>
 
 								<div className="column">
 									<div className="column h-100per paragraph_font">
@@ -311,30 +341,39 @@ const ProductPage = (props) => {
 							</div>
 							<div className="details-action">
 								<ul>
-									{product.name === 'Custom Infinity Mirror' ? (
-										<label style={{ margin: 0, marginRight: 5 }}>
-											Price: $549.99 - $<i class="fas fa-arrow-up" />
-										</label>
-									) : (
-										<div className="row">
-											<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
-											{product.sale_price !== 0 ? (
-												<label>
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															${product.price ? product.price.toFixed(2) : product.price}
-														</label>
-													</del>{' '}
-													<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
-													On Sale!
-												</label>
-											) : (
-												<label>
-													${product.price ? product.price.toFixed(2) : product.price}
-												</label>
-											)}
-										</div>
-									)}
+									<div className="row">
+										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
+										{console.log({ price })}
+										{sale_price !== 0 ? (
+											<label>
+												<del style={{ color: 'red' }}>
+													<label style={{ color: 'white' }}>
+														${price ? price.toFixed(2) : price}
+													</label>
+												</del>{' '}
+												<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price}{' '}
+												On Sale!
+											</label>
+										) : (
+											<label>${price ? price.toFixed(2) : price}</label>
+										)}
+									</div>
+									{/* <div className="row">
+										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
+										{product.sale_price !== 0 ? (
+											<label>
+												<del style={{ color: 'red' }}>
+													<label style={{ color: 'white' }}>
+														${product.price ? product.price.toFixed(2) : product.price}
+													</label>
+												</del>{' '}
+												<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
+												On Sale!
+											</label>
+										) : (
+											<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+										)}
+									</div> */}
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
 										<div className="ai-c h-25px">
@@ -367,6 +406,64 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
+									{/* {product.product_options && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Product Options:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_product(JSON.parse(e.target.value))}
+													>
+														{product.product_options &&
+															product.product_options.map((option, index) => (
+																<option
+																	key={index}
+																	selected={option.default}
+																	value={JSON.stringify(option)}
+																>
+																	{option.name}
+																</option>
+															))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)} */}
+									<li>
+										<div className="ai-c h-25px mb-15px">
+											<label
+												aria-label="sortOrder"
+												htmlFor="sortOrder"
+												className="select-label mr-1rem"
+											>
+												Pack Size:
+											</label>
+											{product.product_options &&
+												product.product_options.map((option, index) => (
+													<button
+														key={index}
+														selected={option.default}
+														id={option.name}
+														value={JSON.stringify(option)}
+														onClick={(e) => update_product(e, JSON.parse(e.target.value))}
+														className={`packs min-w-40px mr-1rem mb-1rem btn ${option.default
+															? 'secondary'
+															: 'primary'}`}
+													>
+														{option.name}
+													</button>
+												))}
+										</div>
+									</li>
+									{/* <li>Product Size: {size}</li> */}
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
 										<li>
 											<div className="ai-c h-25px mb-15px">

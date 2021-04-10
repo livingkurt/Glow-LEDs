@@ -54,6 +54,7 @@ router.get('/', async (req, res) => {
 		})
 			.sort(sortOrder)
 			.populate('user')
+			.populate('chips')
 			.populate('products');
 		log_request({
 			method: 'GET',
@@ -85,6 +86,7 @@ router.get('/:promo_code', async (req, res) => {
 		console.log('hello');
 		const affiliate = await Affiliate.findOne({ promo_code: req.params.promo_code })
 			.populate('user')
+			.populate('chips')
 			.populate('products');
 		console.log({ affiliate });
 		console.log(req.params.promo_code);
