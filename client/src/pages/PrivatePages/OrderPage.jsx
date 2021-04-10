@@ -13,6 +13,7 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Orders, API_Products } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
+import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 require('dotenv').config();
 
@@ -513,6 +514,8 @@ ${order.shipping.email}`)}
 																item.category === 'mega_diffuser_caps') &&
 																item.diffuser_cap_color}{' '}
 															{item.name}{' '}
+															{item.product_option.name &&
+																`- ${item.product_option.name}`}
 															{item.secondary_product &&
 																`w (${item.secondary_product.name})`}
 														</Link>
@@ -548,21 +551,41 @@ ${order.shipping.email}`)}
 													)}
 												</div>
 												<div className="cart-price">
-													{item.sale_price !== 0 ? (
-														<div style={{ width: '230px' }}>
+													{cart_sale_price_switch(item)}
+													{/* {item.product_option.sale_price > 0 ? (
+														<label>
 															<del style={{ color: 'red' }}>
 																<label style={{ color: 'white' }}>
-																	${item.price ? item.price : item.price}
+																	${item.product_option.price ? (
+																		item.product_option.price.toFixed(2)
+																	) : item.price ? (
+																		item.price.toFixed(2)
+																	) : (
+																		item.price
+																	)}
 																</label>
 															</del>{' '}
-															<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+															<i class="fas fa-arrow-right" /> ${item.product_option
+																.sale_price ? (
+																item.product_option.sale_price.toFixed(2)
+															) : item.sale_price ? (
+																item.sale_price.toFixed(2)
+															) : (
+																item.sale_price
+															)}{' '}
 															On Sale!
-														</div>
+														</label>
 													) : (
 														<label>
-															${item.price ? item.price.toFixed(2) : item.price}
+															${item.product_option.price ? (
+																item.product_option.price.toFixed(2)
+															) : item.price ? (
+																item.price.toFixed(2)
+															) : (
+																item.price
+															)}
 														</label>
-													)}
+													)} */}
 												</div>
 											</li>
 										))

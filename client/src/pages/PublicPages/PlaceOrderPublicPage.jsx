@@ -14,6 +14,7 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External, API_Orders } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -79,59 +80,6 @@ const PlaceOrderPublicPage = (props) => {
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
-
-	// const calculate_shipping = () => {
-	// 	const package_volume = cartItems.reduce((a, c) => a + c.package_volume * c.qty, 0);
-	// 	console.log(package_volume);
-	// 	if (package_volume === 0) {
-	// 		console.log(0);
-	// 		setShippingPrice(0);
-	// 	} else if (package_volume <= 10) {
-	// 		console.log(5);
-	// 		setShippingPrice(5);
-	// 	} else if (package_volume > 10 && package_volume <= 165) {
-	// 		console.log(8);
-	// 		setShippingPrice(7);
-	// 	} else if (package_volume > 165 && package_volume <= 250) {
-	// 		console.log(8);
-	// 		setShippingPrice(9);
-	// 	} else if (package_volume > 250 && package_volume <= 405) {
-	// 		console.log(10);
-	// 		setShippingPrice(10);
-	// 		console.log(12);
-	// 	} else if (package_volume > 405 && package_volume < 500) {
-	// 		setShippingPrice(12);
-	// 		console.log(500);
-	// 	} else if (package_volume > 500) {
-	// 		setShippingPrice(15);
-	// 	}
-
-	// 	// if (itemsPrice >= 50) {
-	// 	// 	setShippingPrice(0);
-	// 	// }
-	// 	// console.log({ shippingPrice });
-	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-	// };
-	// const calculate_international = () => {
-	// 	const package_volume = cartItems.reduce((a, c) => a + c.package_volume * c.qty, 0);
-	// 	if (package_volume === 0) {
-	// 		setShippingPrice(0);
-	// 	} else if (package_volume <= 10) {
-	// 		setShippingPrice(17);
-	// 	} else if (package_volume > 10 && package_volume < 250) {
-	// 		setShippingPrice(17);
-	// 	} else if (package_volume > 250 && package_volume < 405) {
-	// 		setShippingPrice(20);
-	// 	} else if (package_volume > 405 && package_volume < 500) {
-	// 		setShippingPrice(40);
-	// 	} else if (package_volume > 500) {
-	// 		setShippingPrice(80);
-	// 	}
-	// 	setTotalPrice(itemsPrice + shippingPrice + taxPrice);
-	// 	set_hide_pay_button(false);
-	// 	set_loading_shipping(false);
-	// 	// console.log({ shippingPrice });
-	// };
 
 	const stableDispatch = useCallback(dispatch, []);
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
@@ -612,7 +560,9 @@ const PlaceOrderPublicPage = (props) => {
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
 														item.diffuser_cap_color}{' '}
-													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
+													{item.name}{' '}
+													{item.product_option.name && `- ${item.product_option.name}`}{' '}
+													{item.diffuser_cap && `w (${item.diffuser_cap.name})`}
 													{item.qty > 1 && item.qty + 'x'}
 												</Link>
 											</div>
@@ -634,7 +584,8 @@ const PlaceOrderPublicPage = (props) => {
 																	item.pathname,
 																	e.target.value,
 																	item.diffuser_cap_color && item.diffuser_cap_color,
-																	item.diffuser_cap && item.diffuser_cap.name
+																	item.diffuser_cap && item.diffuser_cap.name,
+																	item.product_option && item.product_option
 																)
 															)}
 													>
@@ -650,19 +601,41 @@ const PlaceOrderPublicPage = (props) => {
 										</div>
 										<div className=" cart_item">
 											<div className="cart-price ">
-												{item.sale_price !== 0 ? (
-													<div>
+												{cart_sale_price_switch(item)}
+												{/* {item.product_option.sale_price > 0 ? (
+													<label>
 														<del style={{ color: 'red' }}>
 															<label style={{ color: 'white' }}>
-																${item.price && (item.price * item.qty).toFixed(2)}
+																${item.product_option.price ? (
+																	item.product_option.price.toFixed(2)
+																) : item.price ? (
+																	item.price.toFixed(2)
+																) : (
+																	item.price
+																)}
 															</label>
 														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}{' '}
+														<i class="fas fa-arrow-right" /> ${item.product_option
+															.sale_price ? (
+															item.product_option.sale_price.toFixed(2)
+														) : item.sale_price ? (
+															item.sale_price.toFixed(2)
+														) : (
+															item.sale_price
+														)}{' '}
 														On Sale!
-													</div>
+													</label>
 												) : (
-													<label>${item.price && (item.price * item.qty).toFixed(2)}</label>
-												)}
+													<label>
+														${item.product_option.price ? (
+															item.product_option.price.toFixed(2)
+														) : item.price ? (
+															item.price.toFixed(2)
+														) : (
+															item.price
+														)}
+													</label>
+												)} */}
 											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button

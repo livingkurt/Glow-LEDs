@@ -66,7 +66,7 @@ export const addToCart = (
 			name: data.name,
 			display_image: data.images[0],
 			price: product_option.price || data.price,
-			sale_price: product_option.price || data.sale_price,
+			sale_price: product_option.sale_price || data.sale_price,
 			countInStock: data.countInStock,
 			package_volume: data.package_volume,
 			weight_pounds: data.weight_pounds,
@@ -76,7 +76,7 @@ export const addToCart = (
 			package_height: data.package_height,
 			pathname: data.pathname,
 			category: data.category,
-			product_option,
+			product_option: product_option || {},
 			qty
 		};
 		console.log({ cartItem });
@@ -88,7 +88,7 @@ export const addToCart = (
 				diffuser_cap_color,
 				diffuser_cap,
 				price: product_option.price || data.price,
-				sale_price: product_option.price || data.sale_price,
+				sale_price: product_option.sale_price || data.sale_price,
 				countInStock: data.countInStock,
 				package_volume: data.package_volume,
 				weight_pounds: data.weight_pounds,
@@ -98,7 +98,7 @@ export const addToCart = (
 				package_height: data.package_height,
 				pathname: data.pathname,
 				category: data.category,
-				product_option,
+				product_option: product_option || {},
 				qty
 			};
 			console.log({ diffuser_cap_color: cartItem });
@@ -113,7 +113,7 @@ export const addToCart = (
 				diffuser_cap,
 				diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
 				price: product_option.price || data.price,
-				sale_price: product_option.price || data.sale_price,
+				sale_price: product_option.sale_price || data.sale_price,
 				countInStock: data.countInStock,
 				package_volume: data.package_volume,
 				weight_pounds: data.weight_pounds,
@@ -123,7 +123,7 @@ export const addToCart = (
 				package_height: data.package_height,
 				pathname: data.pathname,
 				category: data.category,
-				product_option,
+				product_option: product_option || {},
 				qty
 			};
 			console.log({ diffuser_cap: cartItem });
@@ -135,6 +135,7 @@ export const addToCart = (
 
 		const { cart: { cartItems } } = getState();
 		Cookie.set('cartItems', JSON.stringify(cartItems));
+		console.log({ cartItems });
 		// dispatch({ type: CART_SAVE_REQUEST, payload: cart });
 		// const { userLogin: { userInfo } } = getState();
 		// if (!cart._id) {

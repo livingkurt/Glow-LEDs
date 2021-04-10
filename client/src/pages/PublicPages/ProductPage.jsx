@@ -23,7 +23,7 @@ const ProductPage = (props) => {
 	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
-	const [ price, set_price ] = useState(0);
+	const [ price, set_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState(0);
 	const [ product_option, set_product_option ] = useState({});
@@ -104,18 +104,17 @@ const ProductPage = (props) => {
 			if (product) {
 				set_image(product.images && product.images[0]);
 				console.log({ product_options: product.product_options });
+				set_price(product.price);
+				set_product_option({});
 				if (product.product_options) {
-					// const option = product.product_options.forEach((option) =>
-					// 	console.log({ default: option.default })
-					// );
 					const option = product.product_options.find((option) => option.default === true);
 					console.log({ option });
-					console.log({ price: option.price });
-					console.log({ price: option.size });
-					set_price(option.price);
-					set_size(option.size);
-					set_sale_price(option.sale_price);
-					set_product_option(option);
+					if (option) {
+						set_price(option.price);
+						set_size(option.size);
+						set_sale_price(option.sale_price);
+						set_product_option(option);
+					}
 				}
 
 				set_diffuser_cap_color(
@@ -140,8 +139,10 @@ const ProductPage = (props) => {
 	);
 
 	const handleAddToCart = () => {
+		console.log({ product_option });
 		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap, product_option));
 		open_cart();
+		set_product_option({});
 	};
 
 	// const filament_colors = [ 'Black' ];
@@ -437,17 +438,18 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)} */}
-									<li>
-										<div className="ai-c h-25px mb-15px">
-											<label
-												aria-label="sortOrder"
-												htmlFor="sortOrder"
-												className="select-label mr-1rem"
-											>
-												Pack Size:
-											</label>
-											{product.product_options &&
-												product.product_options.map((option, index) => (
+									{product.product_options &&
+									product.product_options.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Pack Size:
+												</label>
+												{product.product_options.map((option, index) => (
 													<button
 														key={index}
 														selected={option.default}
@@ -461,8 +463,9 @@ const ProductPage = (props) => {
 														{option.name}
 													</button>
 												))}
-										</div>
-									</li>
+											</div>
+										</li>
+									)}
 									{/* <li>Product Size: {size}</li> */}
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
 										<li>

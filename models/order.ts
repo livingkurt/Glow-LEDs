@@ -32,6 +32,14 @@ const paymentSchema = {
 	refund_reason: { type: Array }
 };
 
+const productOptionsSchema = new mongoose.Schema({
+	name: { type: String },
+	price: { type: Number },
+	sale_price: { type: Number, default: 0 },
+	size: { type: Number },
+	color: { type: String }
+});
+
 const orderItemSchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true },
@@ -53,6 +61,7 @@ const orderItemSchema = new mongoose.Schema(
 		package_width: { type: Number },
 		package_height: { type: Number },
 		reviewed: { type: Boolean, default: false },
+		product_option: productOptionsSchema,
 		product: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product',

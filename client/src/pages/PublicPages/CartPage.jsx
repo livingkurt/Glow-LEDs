@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
+import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -102,7 +103,9 @@ const CartPage = (props) => {
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
 														item.diffuser_cap_color}{' '}
-													{item.name} {item.diffuser_cap && `w (${item.diffuser_cap.name})`}
+													{item.name}{' '}
+													{item.product_option.name && `- ${item.product_option.name}`}
+													{item.diffuser_cap && `w (${item.diffuser_cap.name})`}
 												</Link>
 											</div>
 											<div>
@@ -125,7 +128,8 @@ const CartPage = (props) => {
 																		e.target.value,
 																		item.diffuser_cap_color &&
 																			item.diffuser_cap_color,
-																		item.diffuser_cap && item.diffuser_cap.name
+																		item.diffuser_cap && item.diffuser_cap.name,
+																		item.product_option && item.product_option
 																	)
 																);
 															}}
@@ -144,19 +148,41 @@ const CartPage = (props) => {
 
 										<div className="column">
 											<div className="cart-price">
-												{item.sale_price !== 0 ? (
+												{cart_sale_price_switch(item)}
+												{/* {item.product_option.sale_price > 0 ? (
 													<label>
 														<del style={{ color: 'red' }}>
 															<label style={{ color: 'white' }}>
-																${item.price ? item.price.toFixed(2) : item.price}
+																${item.product_option.price ? (
+																	item.product_option.price.toFixed(2)
+																) : item.price ? (
+																	item.price.toFixed(2)
+																) : (
+																	item.price
+																)}
 															</label>
 														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+														<i class="fas fa-arrow-right" /> ${item.product_option
+															.sale_price ? (
+															item.product_option.sale_price.toFixed(2)
+														) : item.sale_price ? (
+															item.sale_price.toFixed(2)
+														) : (
+															item.sale_price
+														)}{' '}
 														On Sale!
 													</label>
 												) : (
-													<label>${item.price ? item.price.toFixed(2) : item.price}</label>
-												)}
+													<label>
+														${item.product_option.price ? (
+															item.product_option.price.toFixed(2)
+														) : item.price ? (
+															item.price.toFixed(2)
+														) : (
+															item.price
+														)}
+													</label>
+												)} */}
 											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button

@@ -265,7 +265,8 @@ const InvoiceEmail = (props) => {
 										) : (
 											''
 										)}
-										{item.name} {item.qty > 1 && item.qty + 'x'}
+										{item.name} {item.product_option.name && `- ${item.product_option.name}`}
+										{item.qty > 1 && item.qty + 'x'}
 										{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
 									</td>
 

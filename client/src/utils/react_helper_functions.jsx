@@ -65,3 +65,42 @@ export const email_sale_price_switch = (item, color) => {
 		return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
 	}
 };
+export const cart_sale_price_switch = (item, color) => {
+	if (item.product_option.sale_price > 0) {
+		return (
+			<label>
+				<del style={{ color: 'red' }}>
+					<label style={{ color: 'white' }}>
+						${item.product_option.price ? (
+							item.product_option.price.toFixed(2)
+						) : item.price ? (
+							item.price.toFixed(2)
+						) : (
+							item.price
+						)}
+					</label>
+				</del>{' '}
+				<i class="fas fa-arrow-right" /> ${item.product_option.sale_price ? (
+					item.product_option.sale_price.toFixed(2)
+				) : item.sale_price ? (
+					item.sale_price.toFixed(2)
+				) : (
+					item.sale_price
+				)}{' '}
+				On Sale!
+			</label>
+		);
+	} else {
+		return (
+			<label>
+				${item.product_option.price ? (
+					item.product_option.price.toFixed(2)
+				) : item.price ? (
+					item.price.toFixed(2)
+				) : (
+					item.price
+				)}
+			</label>
+		);
+	}
+};
