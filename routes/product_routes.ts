@@ -112,6 +112,45 @@ router.post('/best_sellers', async (req, res) => {
 	}
 });
 
+router.get('/options/:pathname', async (req, res) => {
+	try {
+		const product = await Product.findOne({ pathname: req.params.pathname }).populate('chips');
+
+		if (product) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ product ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(product);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ product ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Product Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Product' });
+	}
+});
 router.get('/categories', async (req, res) => {
 	const products = await Product.find({ deleted: false }).sort({ category: 1 });
 	const categories = products.map((product: any) => product.category);

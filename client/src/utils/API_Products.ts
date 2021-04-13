@@ -8,6 +8,9 @@ export default {
 	get_categories: () => {
 		return axios.get('/api/products/categories');
 	},
+	get_product_options: (pathname: any) => {
+		return axios.get('/api/products/options/' + pathname);
+	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });
 	// 	return axios.post('/api/products/array', array);

@@ -6,6 +6,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
 import { listChips } from '../../actions/chipActions';
+import { API_Products } from '../../utils';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -95,6 +96,13 @@ const EditProductPage = (props) => {
 
 	const use_template = (e) => {
 		dispatch(detailsProduct(e.target.value));
+		// history.push('/secure/glow/products');
+	};
+	const use_product_options_template = async (e) => {
+		const { data } = await API_Products.get_product_options(e.target.value);
+		console.log({ data });
+		set_product_options(data.product_options);
+		// dispatch(detailsProduct(e.target.value));
 		// history.push('/secure/glow/products');
 	};
 
@@ -969,6 +977,28 @@ const EditProductPage = (props) => {
 									</div>
 									{chip_display(chips)}
 									{image_display(images)}
+									<li>
+										<div className="ai-c h-25px mb-15px jc-c">
+											<div className="custom-select">
+												<select
+													className="qty_select_dropdown"
+													onChange={(e) => use_product_options_template(e)}
+												>
+													<option key={1} defaultValue="">
+														---Choose Product Option Template---
+													</option>
+													{products
+														.filter((product) => product.product_options.length > 0)
+														.map((product, index) => (
+															<option key={index} value={product.pathname}>
+																{product.name}
+															</option>
+														))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+									</li>
 									<li>
 										<button className="btn primary" onClick={(e) => add_product_option(e)}>
 											Create Product Option
