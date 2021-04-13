@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { sale_price_switch } from '../../utils/react_helper_functions';
+import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';
 
@@ -151,7 +151,9 @@ const Product = (props) => {
 								<label style={{ fontSize: '1.6rem' }}>{props.product.name}</label>
 							</Link>
 
-							<label className="product-price">{sale_price_switch(props.product)}</label>
+							<label className="product-price">
+								{sale_price_product_option_switch(props.product, props.product.product_options)}
+							</label>
 
 							{props.product.rating ? (
 								<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />

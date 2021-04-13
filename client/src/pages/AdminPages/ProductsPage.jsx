@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-import { sale_price_switch } from '../../utils/react_helper_functions';
+import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
 
 const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -173,7 +173,7 @@ const ProductsPage = (props) => {
 											{product.name}
 										</td>
 										<td className="p-10px" style={{ minWidth: '225px' }}>
-											{sale_price_switch(product)}
+											{sale_price_product_option_switch(product, product.product_options)}
 										</td>
 										<td className="p-10px">{product.category}</td>
 										<td className="p-10px" style={{ minWidth: '111px' }}>

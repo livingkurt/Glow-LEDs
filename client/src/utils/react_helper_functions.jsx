@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const sale_price_switch = (product) => {
+export const sale_price_switch = (product, product_option) => {
 	const today = new Date();
 	if (
 		today > new Date(product.sale_start_date) &&
@@ -36,6 +36,74 @@ export const sale_price_switch = (product) => {
 		);
 	} else {
 		return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+	}
+};
+export const sale_price_product_option_switch = (product, product_options) => {
+	// console.log({ product_options });
+	const today = new Date();
+	if (product_options && product_options.length > 0) {
+		const option = product.product_options.find((option) => option.default);
+		if (option && option.price) {
+			if (
+				today > new Date(product.sale_start_date) &&
+				today < new Date(product.sale_end_date) &&
+				option.sale_price !== 0
+			) {
+				return (
+					<label className="">
+						<del style={{ color: 'red' }}>
+							<label className="" style={{ color: 'white' }}>
+								${option.price ? option.price.toFixed(2) : option.price}
+							</label>
+						</del>{' '}
+						<i className="fas fa-arrow-right" /> ${option.sale_price ? (
+							option.sale_price.toFixed(2)
+						) : (
+							option.sale_price
+						)}{' '}
+						On Sale!
+					</label>
+				);
+			} else {
+				return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
+			}
+		}
+	} else {
+		if (
+			today > new Date(product.sale_start_date) &&
+			today < new Date(product.sale_end_date) &&
+			product.sale_price !== 0
+		) {
+			return (
+				<label className="">
+					<del style={{ color: 'red' }}>
+						<label className="" style={{ color: 'white' }}>
+							${product.price ? product.price.toFixed(2) : product.price}
+						</label>
+					</del>{' '}
+					<i className="fas fa-arrow-right" /> ${product.sale_price ? (
+						product.sale_price.toFixed(2)
+					) : (
+						product.sale_price
+					)}{' '}
+					On Sale!
+				</label>
+			);
+		} else if (!product.countInStock) {
+			return (
+				<label>
+					<del style={{ color: 'red' }}>
+						<label style={{ color: 'white' }} className="ml-7px">
+							${product.price ? product.price.toFixed(2) : product.price}
+						</label>
+					</del>{' '}
+					<i className="fas fa-arrow-right" />
+					<label className="ml-7px">Sold Out</label>
+				</label>
+			);
+		} else {
+			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+		}
 	}
 };
 

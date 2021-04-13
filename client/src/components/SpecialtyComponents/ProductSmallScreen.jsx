@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { sale_price_switch } from '../../utils/react_helper_functions';
+import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const ProductSmallScreen = (props) => {
@@ -101,7 +101,9 @@ const ProductSmallScreen = (props) => {
 										$549.99 - $<i className="fas fa-arrow-up" />
 									</div>
 								) : (
-									<div className="">{sale_price_switch(props.product)}</div>
+									<div className="">
+										{sale_price_product_option_switch(props.product, props.product.product_options)}
+									</div>
 								)}
 							</div>
 							{props.product.rating ? (
