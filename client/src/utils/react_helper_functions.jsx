@@ -9,7 +9,7 @@ export const sale_price_switch = (product, product_option) => {
 	) {
 		return (
 			<label className="">
-				<del style={{ color: 'red' }}>
+				<del style={{ color: '#a03131' }}>
 					<label className="" style={{ color: 'white' }}>
 						${product.price ? product.price.toFixed(2) : product.price}
 					</label>
@@ -25,7 +25,7 @@ export const sale_price_switch = (product, product_option) => {
 	} else if (!product.countInStock) {
 		return (
 			<label>
-				<del style={{ color: 'red' }}>
+				<del style={{ color: '#a03131' }}>
 					<label style={{ color: 'white' }} className="ml-7px">
 						${product.price ? product.price.toFixed(2) : product.price}
 					</label>
@@ -51,7 +51,7 @@ export const sale_price_product_option_switch = (product, product_options) => {
 			) {
 				return (
 					<label className="">
-						<del style={{ color: 'red' }}>
+						<del style={{ color: '#a03131' }}>
 							<label className="" style={{ color: 'white' }}>
 								${option.price ? option.price.toFixed(2) : option.price}
 							</label>
@@ -65,7 +65,20 @@ export const sale_price_product_option_switch = (product, product_options) => {
 					</label>
 				);
 			} else {
-				return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
+				// return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
+				return (
+					<div className="">
+						<del style={{ color: '#a03131' }}>
+							<label className="" style={{ color: 'white' }}>
+								${product.price ? product.price.toFixed(2) : product.price}
+							</label>
+						</del>{' '}
+						<i className="fas fa-arrow-right" /> ${option.price ? option.price.toFixed(2) : option.price}{' '}
+						<label className="fs-16px" style={{ color: '#a03131', webkitTextStroke: '1px #a03131' }}>
+							NEW LOW PRICE!
+						</label>
+					</div>
+				);
 			}
 		}
 	} else {
@@ -76,7 +89,7 @@ export const sale_price_product_option_switch = (product, product_options) => {
 		) {
 			return (
 				<label className="">
-					<del style={{ color: 'red' }}>
+					<del style={{ color: '#a03131' }}>
 						<label className="" style={{ color: 'white' }}>
 							${product.price ? product.price.toFixed(2) : product.price}
 						</label>
@@ -92,7 +105,7 @@ export const sale_price_product_option_switch = (product, product_options) => {
 		} else if (!product.countInStock) {
 			return (
 				<label>
-					<del style={{ color: 'red' }}>
+					<del style={{ color: '#a03131' }}>
 						<label style={{ color: 'white' }} className="ml-7px">
 							${product.price ? product.price.toFixed(2) : product.price}
 						</label>
@@ -112,7 +125,7 @@ export const email_sale_price_switch = (item, color) => {
 		return (
 			<label>
 				{/* <label style={{ marginRight: '3px' }}>On Sale!</label> */}
-				<del style={{ color: 'red' }}>
+				<del style={{ color: '#a03131' }}>
 					<label style={{ color: color }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
 				</del>{' '}
 				{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
@@ -121,7 +134,7 @@ export const email_sale_price_switch = (item, color) => {
 	} else if (item.countInStock === 0) {
 		return (
 			<label>
-				<del style={{ color: 'red' }}>
+				<del style={{ color: '#a03131' }}>
 					<label style={{ color: color, marginLeft: '7px' }}>
 						${item.price && (item.price * item.qty).toFixed(2)}
 					</label>
@@ -137,7 +150,7 @@ export const cart_sale_price_switch = (item, color) => {
 	if (item.product_option.sale_price > 0) {
 		return (
 			<label>
-				<del style={{ color: 'red' }}>
+				<del style={{ color: '#a03131' }}>
 					<label style={{ color: 'white' }}>
 						${item.product_option.price ? (
 							item.product_option.price.toFixed(2)
