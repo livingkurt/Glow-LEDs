@@ -16,7 +16,6 @@ import {
 	CART_DELETE_SUCCESS,
 	CART_DELETE_FAIL
 } from '../constants/cartConstants';
-import Cookie from 'js-cookie';
 
 export const cartReducer = (
 	state = { cartItems: [], shipping: {}, payment: {} },
@@ -25,7 +24,21 @@ export const cartReducer = (
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
-			let product: any = state.cartItems.find((cart_item: any) => cart_item.pathname === item.pathname);
+			// let product: any = state.cartItems.find((cart_item: any) => {
+			// 	if (cart_item.pathname === item.pathname) {
+			// 		if (cart_item.product_option && item.product_option) {
+			// 			if (cart_item.product_option.name === item.product_option.name) {
+			// 				return;
+			// 			}
+			// 		}
+			// 	}
+			// 	// && cart_item.product_option.name === item.product_option.name
+			// });
+			let product: any = state.cartItems.find(
+				(cart_item: any) =>
+					cart_item.pathname === item.pathname && cart_item.product_option.name === item.product_option.name
+			);
+
 			if (product) {
 				return {
 					cartItems: state.cartItems.map(
