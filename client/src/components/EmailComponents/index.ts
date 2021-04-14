@@ -6,3 +6,4 @@ export { default as ResetPasswordEmail } from './ResetPasswordEmail';
 export { default as OrderEmail } from './OrderEmail';
 export { default as OrderStatusEmail } from './OrderStatusEmail';
 export { default as InvoiceEmail } from './InvoiceEmail';
+export { default as FeatureEmail } from './FeatureEmail';

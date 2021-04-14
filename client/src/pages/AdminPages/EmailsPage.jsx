@@ -111,6 +111,15 @@ const EmailsPage = (props) => {
 				<Link to="/secure/glow/emails/invoice">
 					<button className="btn primary">Invoice</button>
 				</Link>
+				<Link to="/secure/glow/emails/feature/hello_producers_53/feature/false">
+					<button className="btn primary">Feature</button>
+				</Link>
+				{/* <Link to="/secure/glow/emails/feature_created">
+					<button className="btn primary">Feature Created</button>
+				</Link>
+				<Link to="/secure/glow/emails/feature_submitted">
+					<button className="btn primary">Feature Submitted</button>
+				</Link> */}
 				<Link to="/secure/glow/editemail">
 					<button className="btn primary">Create Email</button>
 				</Link>

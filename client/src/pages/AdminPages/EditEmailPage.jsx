@@ -128,7 +128,8 @@ const EditEmailPage = (props) => {
 		'Refunded',
 		'Account Created',
 		'Reset Password',
-		'Password Changed'
+		'Password Changed',
+		'Feature'
 	];
 
 	return (

@@ -15,6 +15,12 @@ export default {
 	send_order_created_email: (template: string, subject: string) => {
 		return axios.post('/api/emails/order_created', { template, subject });
 	},
+	send_feature_email: (template: string, subject: string, email: string) => {
+		return axios.post('/api/emails/feature', { template, subject, email });
+	},
+	send_feature_created_email: (template: string, subject: string) => {
+		return axios.post('/api/emails/feature_created', { template, subject });
+	},
 
 	save_html: (template: string, email: any, token: any) => {
 		console.log({ template, email, token });

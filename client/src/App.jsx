@@ -87,6 +87,7 @@ import MessengerCustomerChat from 'react-messenger-customer-chat';
 import {
 	AccountCreatedEmail,
 	AnnouncementEmail,
+	FeatureEmail,
 	InvoiceEmail,
 	OrderEmail,
 	OrderStatusEmail,
@@ -208,7 +209,7 @@ const App = () => {
 							{/* Private Routes */}
 							<PrivateRoute path="/secure/account/profile" component={ProfilePage} />
 							<PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
-							<PrivateRoute path="/secure/account/submit_feature" component={SubmitFeaturePage} />
+							{/* <PrivateRoute path="/account/submit_feature" component={SubmitFeaturePage} /> */}
 							<PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
 							<PrivateRoute path="/secure/account/glowcontrol/:id" component={GlowControlPage} />
@@ -281,6 +282,11 @@ const App = () => {
 								exact={true}
 								component={PasswordChangedEmail}
 							/>
+							<AdminRoute
+								path="/secure/glow/emails/feature/:pathname?/:status?/:send?"
+								exact={true}
+								component={FeatureEmail}
+							/>
 							<AdminRoute path="/secure/glow/emails/invoice/:id?" exact={true} component={InvoiceEmail} />
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
@@ -348,6 +354,8 @@ const App = () => {
 								exact={true}
 								component={AllTeamsPage}
 							/>
+							<Route path="/account/feature/receipt/:pathname/:status/:send?" component={FeatureEmail} />
+							<Route path="/account/submit_feature" component={SubmitFeaturePage} />
 							<Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
 							<Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
 							<Route path="/pages/music" exact={true} component={MusicPage} />

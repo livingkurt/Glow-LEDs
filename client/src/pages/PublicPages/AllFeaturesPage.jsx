@@ -175,7 +175,7 @@ const AllFeaturesPage = (props) => {
 				Back to Menu
 			</button> */}
 			<div className="jc-fe">
-				<Link to="/account/login?redirect=/secure/account/submit_feature">
+				<Link to="/account/login?redirect=/account/submit_feature">
 					<button className="btn secondary ">Submit Feature</button>
 				</Link>
 			</div>

@@ -14,6 +14,9 @@ import 'react-medium-image-zoom/dist/styles.css';
 const SubmitFeaturePage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
+	const [ email, set_email ] = useState('');
+	const [ first_name, set_first_name ] = useState('');
+	const [ last_name, set_last_name ] = useState('');
 	const [ artist_name, set_artist_name ] = useState('');
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
@@ -44,6 +47,8 @@ const SubmitFeaturePage = (props) => {
 
 	const featureDetails = useSelector((state) => state.featureDetails);
 	const { feature, loading, error } = featureDetails;
+	const featureSave = useSelector((state) => state.featureSave);
+	const { feature: feature_saved, loading: loading_saved, success } = featureSave;
 
 	const productList = useSelector((state) => state.productList);
 	const { products } = productList;
@@ -90,6 +95,9 @@ const SubmitFeaturePage = (props) => {
 		set_artist_name(feature.artist_name);
 		set_instagram_handle(feature.instagram_handle);
 		set_facebook_name(feature.facebook_name);
+		set_email(feature.email);
+		set_first_name(feature.first_name);
+		set_last_name(feature.last_name);
 		// set_product(feature.product);
 		set_song_id(feature.song_id);
 		set_link(feature.link);
@@ -108,6 +116,9 @@ const SubmitFeaturePage = (props) => {
 		set_artist_name('');
 		set_instagram_handle('');
 		set_facebook_name('');
+		set_email('');
+		set_first_name('');
+		set_last_name('');
 		// set_product('');
 		set_song_id('');
 		set_link('');
@@ -126,10 +137,13 @@ const SubmitFeaturePage = (props) => {
 		dispatch(
 			saveFeature({
 				_id: id,
-				user: userInfo._id,
+				user: userInfo ? userInfo._id : '',
 				artist_name,
 				instagram_handle,
 				facebook_name,
+				email: userInfo ? userInfo.email : email,
+				first_name: userInfo ? userInfo.first_name : first_name,
+				last_name: userInfo ? userInfo.last_name : last_name,
 				// product,
 				song_id,
 				link,
@@ -146,139 +160,19 @@ const SubmitFeaturePage = (props) => {
 		unset_state();
 		set_loading_submit(false);
 		// history.push('/collections/all/features/category/' + category.toLowerCase());
-		history.push('/secure/account/submission_complete');
+		// history.push('/secure/account/submission_complete');
 	};
 
-	const add_image = (e) => {
-		e.preventDefault();
-		console.log(image);
-		if (image.indexOf(' ') >= 0) {
-			console.log('indexOf');
-			image.split(' ').map((image) => {
-				set_images((images) => [ ...images, image ]);
-			});
-		} else if (images) {
-			console.log('images.length > 0');
-			set_images((images) => [ ...images, image ]);
-		} else {
-			console.log('images.length === 0');
-			set_images([ image ]);
-		}
-
-		set_image('');
-	};
-
-	const remove_image = (image_index, e) => {
-		e.preventDefault();
-		set_images((images) =>
-			images.filter((image, index) => {
-				return image_index !== index;
-			})
-		);
-	};
-
-	const move_image_up = (image_index, e) => {
-		e.preventDefault();
-		const new_array = move(images, image_index, image_index - 1);
-		set_images(new_array);
-		// set_new_array(new_array);
-		image_display(new_array);
-	};
-	const move_image_down = (image_index, e) => {
-		e.preventDefault();
-		const new_array = move(images, image_index, image_index + 1);
-		set_images(new_array);
-		// set_new_array(new_array);
-		image_display(new_array);
-	};
-
-	function move(arr, old_index, new_index) {
-		console.log({ arr, old_index, new_index });
-		while (old_index < 0) {
-			old_index += arr.length;
-		}
-		while (new_index < 0) {
-			new_index += arr.length;
-		}
-		if (new_index >= arr.length) {
-			var k = new_index - arr.length;
-			while (k-- + 1) {
-				arr.push(undefined);
+	useEffect(
+		() => {
+			if (success && feature_saved) {
+				console.log({ feature_saved });
+				history.push('/account/feature/receipt/' + feature_saved.data.pathname + '/feature/true');
 			}
-		}
-		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-		console.log({ arr });
-		return arr;
-	}
+		},
+		[ success ]
+	);
 
-	const image_display = (images) => {
-		return (
-			<div>
-				<div className="row wrap">
-					{images &&
-						images.map((picture) => {
-							return (
-								<img
-									style={{
-										width: '100%',
-										height: 'auto',
-										maxWidth: '150px',
-										maxHeight: '150px',
-										borderRadius: '15px',
-										marginRight: '10px'
-									}}
-									className="mv-10px"
-									src={picture}
-								/>
-							);
-						})}
-				</div>
-				<div className="jc-b">
-					<div>
-						{images &&
-							images.map((picture, index) => {
-								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-										<div>
-											<button className="btn icon" onClick={(e) => remove_image(index, e)}>
-												<i className="fas fa-times mr-5px" />
-											</button>
-											{picture}
-										</div>
-										<div>
-											{index > 0 && (
-												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
-													<i className=" fas fa-sort-up" />
-												</button>
-											)}
-
-											{index < images.length - 1 && (
-												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
-													<i
-														style={{ '-webkitTransform': 'rotate(-180deg)' }}
-														className=" fas fa-sort-up"
-													/>
-												</button>
-											)}
-										</div>
-									</div>
-								);
-							})}
-					</div>
-					{/* <li>
-						<label htmlFor="images">Images</label>
-						<textarea
-							className="edit_product_textarea w-288px h-100per"
-							name="images"
-							value={images}
-							id="images"
-							// onChange={(e) => set_images(e.target.value)}
-						/>
-					</li> */}
-				</div>
-			</div>
-		);
-	};
 	const categories = [ 'Glovers', 'Artists', 'Producers', 'VFX' ];
 
 	return (
@@ -319,6 +213,46 @@ const SubmitFeaturePage = (props) => {
 														<span className="custom-arrow" />
 													</div>
 												</div>
+											</li>
+											{!userInfo && (
+												<li>
+													<Link to="/account/login?redirect=/account/submit_feature">
+														<button className="btn secondary w-100per">
+															Sign in to Link Account
+														</button>
+													</Link>
+												</li>
+											)}
+
+											<li>
+												<label htmlFor="email">Email</label>
+												<input
+													type="text"
+													name="email"
+													value={userInfo ? userInfo.email : email}
+													id="email"
+													onChange={(e) => set_email(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="first_name">First Name</label>
+												<input
+													type="text"
+													name="first_name"
+													value={userInfo ? userInfo.first_name : first_name}
+													id="first_name"
+													onChange={(e) => set_first_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="last_name">Last Name</label>
+												<input
+													type="text"
+													name="last_name"
+													value={userInfo ? userInfo.last_name : last_name}
+													id="last_name"
+													onChange={(e) => set_last_name(e.target.value)}
+												/>
 											</li>
 											<li>
 												<label htmlFor="category">Category</label>

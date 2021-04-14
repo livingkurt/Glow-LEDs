@@ -331,7 +331,7 @@ const Sidebar = (props) => {
 								VFX
 							</button>
 						</Link>
-						<Link to="/account/login?redirect=/secure/account/submit_feature">
+						<Link to="/account/login?redirect=/account/submit_feature">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Submit Feature
 							</button>
@@ -371,7 +371,7 @@ const Sidebar = (props) => {
 								VFX
 							</button>
 						</Link>
-						<Link to="/account/login?redirect=/secure/account/submit_feature">
+						<Link to="/account/login?redirect=/account/submit_feature">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Submit Feature
 							</button>

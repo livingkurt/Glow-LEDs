@@ -409,10 +409,11 @@ router.post('/order', async (req, res) => {
 	// console.log({ template: req.body.template });
 	const test = [ 'lavacquek@icloud.com' ];
 	let mailOptions = {
-		to: req.body.email,
+		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
-		html: req.body.template
+		html: req.body.template,
+		bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -432,7 +433,51 @@ router.post('/order_created', async (req, res) => {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
-		html: req.body.template
+		html: req.body.template,
+		bcc: req.body.email
+	};
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
+		} else {
+			console.log(req.body.subject);
+			res.send(req.body.subject);
+		}
+	});
+
+	// res.send('Order Email Sent to');
+});
+router.post('/feature', async (req, res) => {
+	console.log({ feature: req.body });
+	const test = [ 'lavacquek@icloud.com' ];
+	let mailOptions = {
+		to: process.env.EMAIL,
+		from: process.env.DISPLAY_EMAIL,
+		subject: req.body.subject,
+		html: req.body.template,
+		bcc: req.body.email
+	};
+	transporter.sendMail(mailOptions, (err, data) => {
+		if (err) {
+			console.log('Error Occurs', err);
+			res.status(500).send({ error: err, message: 'Error Sending Email' });
+		} else {
+			console.log(req.body.subject);
+			res.send(req.body.subject);
+		}
+	});
+
+	// res.send('Order Email Sent to');
+});
+router.post('/feature_created', async (req, res) => {
+	console.log({ feature_created: req.body });
+	let mailOptions = {
+		to: process.env.EMAIL,
+		from: process.env.DISPLAY_EMAIL,
+		subject: req.body.subject,
+		html: req.body.template,
+		bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -462,7 +507,8 @@ router.post('/contact', async (req, res) => {
 		to: process.env.DISPLAY_EMAIL,
 		from: req.body.email,
 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
-		html: contact(req.body)
+		html: contact(req.body),
+		bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -484,7 +530,8 @@ router.post('/contactconfirmation', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: `Thank you for Contacting Glow LEDs Support`,
-		html: contact_confirmation(req.body)
+		html: contact_confirmation(req.body),
+		bcc: req.body.email
 	};
 
 	// try {
@@ -503,6 +550,52 @@ router.post('/contactconfirmation', async (req, res) => {
 		}
 	});
 });
+// router.post('/feature', async (req, res) => {
+// 	// const data = req.body;
+// 	console.log({ contact: req.body });
+// 	// console.log(process.env.SENDGRID_SECRET);
+// 	// sgMail.setApiKey(process.env.SENDGRID_SECRET);
+// 	let mailOptions = {
+// 		to: process.env.DISPLAY_EMAIL,
+// 		from: req.body.email,
+// 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
+// 		html: contact(req.body),
+// 		bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log('Contact Email Sent to ' + req.body.first_name);
+// 			res.status(200).send({ message: 'Email Successfully Sent' });
+// 		}
+// 	});
+// });
+
+// router.post('/featureonfirmation', async (req, res) => {
+// 	// const data = req.body;
+// 	console.log({ contact: req.body });
+// 	// console.log(process.env.SENDGRID_SECRET);
+// 	// sgMail.setApiKey(process.env.SENDGRID_SECRET);
+// 	let mailOptions = {
+// 		from: process.env.DISPLAY_EMAIL,
+// 		to: req.body.email,
+// 		subject: `Thank you for Submitting Content to be featured`,
+// 		html: contact_confirmation(req.body),
+// 		bcc: req.body.email
+// 	};
+
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log('Contact Email Sent to ' + req.body.first_name);
+// 			res.status(200).send({ message: 'Email Successfully Sent' });
+// 		}
+// 	});
+// });
 
 router.post('/password_reset', async (req, res) => {
 	console.log({ passwordreset: req.body });
@@ -511,7 +604,8 @@ router.post('/password_reset', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.data.email,
 		subject: 'Glow LEDs Password Reset',
-		html: App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' })
+		html: App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' }),
+		bcc: req.body.data.email
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -531,7 +625,8 @@ router.post('/reset_password', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Reset Password',
-		html: App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' })
+		html: App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' }),
+		bcc: req.body.data.email
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -552,7 +647,8 @@ router.post('/verified', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Account Created',
-		html: App({ body: account_created(req.body), title: 'Glow LEDs Account Created' })
+		html: App({ body: account_created(req.body), title: 'Glow LEDs Account Created' }),
+		bcc: req.body.data.email
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
