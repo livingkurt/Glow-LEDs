@@ -166,7 +166,7 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l">Glowskins</button>
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-200px">
+											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-225px">
 												<Link to="/collections/all/products/category/glowskins/subcategory/classics">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
