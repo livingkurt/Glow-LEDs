@@ -321,7 +321,7 @@ const PlaceOrderPage = (props) => {
 	const empty_cart = () => {
 		console.log(cartItems);
 		for (let item of cartItems) {
-			dispatch(removeFromCart(item.pathname));
+			dispatch(removeFromCart(item));
 		}
 	};
 
@@ -701,7 +701,7 @@ const PlaceOrderPage = (props) => {
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
 													className="btn icon"
-													onClick={() => dispatch(removeFromCart(item.pathname))}
+													onClick={() => dispatch(removeFromCart(item))}
 												>
 													<i className="fas fa-trash-alt" />
 												</button>

@@ -158,11 +158,11 @@ export const addToCart = (
 	}
 };
 
-export const removeFromCart = (productId: string) => (
+export const removeFromCart = (product: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { cart: { cartItems: object } }
 ) => {
-	dispatch({ type: CART_REMOVE_ITEM, payload: productId });
+	dispatch({ type: CART_REMOVE_ITEM, payload: product });
 
 	const { cart: { cartItems } } = getState();
 	Cookie.set('cartItems', JSON.stringify(cartItems));

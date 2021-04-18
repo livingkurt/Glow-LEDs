@@ -104,7 +104,7 @@ const OrderPage = (props) => {
 
 	const empty_cart = () => {
 		for (let item of cartItems) {
-			dispatch(removeFromCart(item.pathname));
+			dispatch(removeFromCart(item));
 		}
 	};
 

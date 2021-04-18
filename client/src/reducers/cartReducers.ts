@@ -48,7 +48,15 @@ export const cartReducer = (
 			}
 			return { cartItems: [ ...state.cartItems, item ] };
 		case CART_REMOVE_ITEM:
-			return { cartItems: state.cartItems.filter((cart_item: any) => cart_item.pathname !== action.payload) };
+			console.log({ 'action.payload': action.payload });
+			return {
+				cartItems: state.cartItems.filter(
+					(cart_item: any) =>
+						cart_item.product_option.hasOwnProperty('name')
+							? cart_item.product_option.name !== action.payload.product_option.name
+							: cart_item.pathname !== action.payload.pathname
+				)
+			};
 		case CART_SAVE_SHIPPING:
 			return { ...state, shipping: action.payload };
 		case CART_SAVE_PAYMENT:

@@ -17,8 +17,8 @@ const CartPage = (props) => {
 	const dispatch = useDispatch();
 	const [ no_items_in_cart, set_no_items_in_cart ] = useState('');
 
-	const removeFromCartHandler = (pathname) => {
-		dispatch(removeFromCart(pathname));
+	const removeFromCartHandler = (product) => {
+		dispatch(removeFromCart(product));
 	};
 	// const addToCartHandler = (pathname, qty) => {
 	// 	console.log({ pathname, qty });
@@ -215,7 +215,7 @@ const CartPage = (props) => {
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
 													className="btn icon"
-													onClick={() => removeFromCartHandler(item.pathname)}
+													onClick={() => removeFromCartHandler(item)}
 												>
 													<i className="fas fa-trash-alt" />
 												</button>
