@@ -87,6 +87,19 @@ router.get('/all_orders', async (req: any, res: any) => {
 	res.json(orders);
 });
 
+router.get('/last_months_orders', async (req: any, res: any) => {
+	const orders = await Order.find({
+		createdAt: {
+			$gte: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000)
+		}
+	})
+		.sort({ date: -1 })
+		.populate('user')
+		.populate('orderItems.product')
+		.populate('orderItems.secondary_product');
+	res.json(orders);
+});
+
 router.get('/tax_rates', async (req: any, res: any) => {
 	let updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
 	let result: any = {};

@@ -37,7 +37,7 @@ const affiliate_revenue_upload = async () => {
 		let total_promo_code_usage: any;
 		let total_affiliate_revenue: any;
 
-		const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders');
+		const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/last_month_orders');
 		const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
 		console.log({ orders });
 		console.log({ affiliates });
