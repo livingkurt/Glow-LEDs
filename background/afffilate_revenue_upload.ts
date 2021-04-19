@@ -37,10 +37,14 @@ const affiliate_revenue_upload = async () => {
 		let total_promo_code_usage: any;
 		let total_affiliate_revenue: any;
 
-		const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/last_month_orders');
+		const { data: last_month_orders } = await axios.get(
+			'https://glow-leds-dev.herokuapp.com/api/orders/last_month_orders'
+		);
+		// const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders');
 		const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
-		console.log({ orders });
-		console.log({ affiliates });
+		// console.log({ orders });
+		// console.log({ affiliates });
+		console.log({ last_month_orders });
 
 		// const get_total = () => {
 		// 	const uses = affiliates.map((affiliate: { promo_code: string }) => {
@@ -68,10 +72,10 @@ const affiliate_revenue_upload = async () => {
 		const new_rows = affiliates.map((affiliate: any) => {
 			return {
 				promo_code: affiliate.promo_code,
-				uses: orders.filter((order: any) => {
+				uses: last_month_orders.filter((order: any) => {
 					return order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase();
 				}).length,
-				revenue: ` $${orders
+				revenue: ` $${last_month_orders
 					.filter(
 						(order: any) =>
 							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
@@ -128,7 +132,11 @@ const affiliate_revenue_upload = async () => {
 		await sheet.addRows(new_rows);
 		await sheet.saveUpdatedCells();
 		// adding / removing sheets
-		// const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
+		const date = new Date();
+		const month = date.getMonth();
+		const year = date.getFullYear();
+
+		const newSheet = await doc.addSheet({ title: `${month} ${year} Affiliate Revenue` });
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
