@@ -99,6 +99,14 @@ router.get('/last_months_orders', async (req: any, res: any) => {
 		.populate('orderItems.secondary_product');
 	res.json(orders);
 });
+router.get('/total_orders', async (req: any, res: any) => {
+	const orders = await Order.find({})
+		.sort({ date: -1 })
+		.populate('user')
+		.populate('orderItems.product')
+		.populate('orderItems.secondary_product');
+	res.json(orders);
+});
 
 router.get('/tax_rates', async (req: any, res: any) => {
 	let updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';

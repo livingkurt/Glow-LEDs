@@ -245,7 +245,8 @@ const OrdersPage = (props) => {
 						[ ...Array(orders.totalPages).keys() ].map((x) => (
 							<button
 								key={x + 1}
-								defaultValue={x + 1}
+								value={x}
+								defaultValue={x}
 								className="btn primary w-40px mr-1rem mb-1rem"
 								onClick={(e) => update_page(e)}
 							>
