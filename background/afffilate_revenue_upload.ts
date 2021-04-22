@@ -40,8 +40,8 @@ const affiliate_revenue_upload = async () => {
 		// const { data: last_month_orders } = await axios.get(
 		// 	'https://glow-leds-dev.herokuapp.com/api/orders/last_months_orders'
 		// );
-		const { data: last_month_orders } = await axios.get('http://localhost:5000/api/orders/last_months_orders');
-		const { data: orders } = await axios.get('http://localhost:5000/api/orders/total_orders');
+		const { data: last_month_orders } = await axios.get('https://www.glow-leds.com/api/orders/last_months_orders');
+		const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/total_orders');
 		const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
 		// console.log({ orders });
 		console.log({ affiliates });
