@@ -10,6 +10,7 @@ import { API_Products } from '../../utils';
 import { addToCart } from '../../actions/cartActions';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -302,7 +303,8 @@ const ProductPage = (props) => {
 
 								<div className="row">
 									<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
-									{sale_price !== 0 ? (
+									{sale_price_product_option_switch(product, product.product_options)}
+									{/* {sale_price !== 0 ? (
 										<label>
 											<del style={{ color: 'red' }}>
 												<label style={{ color: 'white' }}>
@@ -314,7 +316,7 @@ const ProductPage = (props) => {
 										</label>
 									) : (
 										<label>${price ? price.toFixed(2) : price}</label>
-									)}
+									)} */}
 								</div>
 
 								<div className="column">
@@ -345,7 +347,8 @@ const ProductPage = (props) => {
 									<div className="row">
 										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
 										{console.log({ price })}
-										{sale_price !== 0 ? (
+										{sale_price_product_option_switch(product, product.product_options)}
+										{/* {sale_price !== 0 ? (
 											<label>
 												<del style={{ color: 'red' }}>
 													<label style={{ color: 'white' }}>
@@ -357,7 +360,7 @@ const ProductPage = (props) => {
 											</label>
 										) : (
 											<label>${price ? price.toFixed(2) : price}</label>
-										)}
+										)} */}
 									</div>
 									{/* <div className="row">
 										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>

@@ -66,7 +66,9 @@ export const sale_price_product_option_switch = (product, product_options) => {
 				);
 			} else {
 				// return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
-				return (
+				return product.price === option.price ? (
+					<label>${option.price ? option.price.toFixed(2) : option.price}</label>
+				) : (
 					<div className="">
 						<del style={{ color: '#a03131' }}>
 							<label className="" style={{ color: 'white' }}>
