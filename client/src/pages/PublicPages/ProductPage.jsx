@@ -10,7 +10,10 @@ import { API_Products } from '../../utils';
 import { addToCart } from '../../actions/cartActions';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import {
+	sale_price_product_option_switch,
+	sale_price_product_option_switch_product
+} from '../../utils/react_helper_functions';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -303,20 +306,13 @@ const ProductPage = (props) => {
 
 								<div className="row">
 									<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
-									{sale_price_product_option_switch(product, product.product_options)}
-									{/* {sale_price !== 0 ? (
-										<label>
-											<del style={{ color: 'red' }}>
-												<label style={{ color: 'white' }}>
-													${price ? price.toFixed(2) : price}
-												</label>
-											</del>{' '}
-											<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price}{' '}
-											On Sale!
-										</label>
-									) : (
-										<label>${price ? price.toFixed(2) : price}</label>
+									{/* {sale_price_product_option_switch_product(
+										product,
+										product.product_options,
+										price,
+										sale_price
 									)} */}
+									{sale_price_product_option_switch_product(price, sale_price)}
 								</div>
 
 								<div className="column">
@@ -347,37 +343,15 @@ const ProductPage = (props) => {
 									<div className="row">
 										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
 										{console.log({ price })}
-										{sale_price_product_option_switch(product, product.product_options)}
-										{/* {sale_price !== 0 ? (
-											<label>
-												<del style={{ color: 'red' }}>
-													<label style={{ color: 'white' }}>
-														${price ? price.toFixed(2) : price}
-													</label>
-												</del>{' '}
-												<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price}{' '}
-												On Sale!
-											</label>
-										) : (
-											<label>${price ? price.toFixed(2) : price}</label>
+										{/* {sale_price_product_option_switch_product(
+											product,
+											product.product_options,
+											price
 										)} */}
+
+										{sale_price_product_option_switch_product(price, sale_price)}
 									</div>
-									{/* <div className="row">
-										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
-										{product.sale_price !== 0 ? (
-											<label>
-												<del style={{ color: 'red' }}>
-													<label style={{ color: 'white' }}>
-														${product.price ? product.price.toFixed(2) : product.price}
-													</label>
-												</del>{' '}
-												<i class="fas fa-arrow-right" /> ${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}{' '}
-												On Sale!
-											</label>
-										) : (
-											<label>${product.price ? product.price.toFixed(2) : product.price}</label>
-										)}
-									</div> */}
+
 									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
 										<div className="ai-c h-25px">

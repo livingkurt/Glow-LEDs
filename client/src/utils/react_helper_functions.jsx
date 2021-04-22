@@ -122,6 +122,94 @@ export const sale_price_product_option_switch = (product, product_options) => {
 	}
 };
 
+export const sale_price_product_option_switch_product = (price, sale_price) => {
+	if (sale_price !== 0) {
+		return (
+			<label>
+				<del style={{ color: 'red' }}>
+					<label style={{ color: 'white' }}>${price ? price.toFixed(2) : price}</label>
+				</del>{' '}
+				<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price} On Sale!
+			</label>
+		);
+	} else {
+		return <label>${price ? price.toFixed(2) : price}</label>;
+	}
+};
+// export const sale_price_product_option_switch_product = (product, product_options, price, sale_price) => {
+// 	// console.log({ product_options });
+// 	const today = new Date();
+// 	if (product_options && product_options.length > 0) {
+// 		const option = product.product_options.find((option) => option.default);
+// 		if (option && option.price) {
+// 			if (
+// 				today > new Date(product.sale_start_date) &&
+// 				today < new Date(product.sale_end_date) &&
+// 				option.sale_price !== 0
+// 			) {
+// 				return (
+// 					<label className="">
+// 						<del style={{ color: '#a03131' }}>
+// 							<label className="" style={{ color: 'white' }}>
+// 								${option.price ? option.price.toFixed(2) : option.price}
+// 							</label>
+// 						</del>{' '}
+// 						<i className="fas fa-arrow-right" /> ${option.sale_price ? (
+// 							option.sale_price.toFixed(2)
+// 						) : (
+// 							option.sale_price
+// 						)}{' '}
+// 						On Sale!
+// 					</label>
+// 				);
+// 			} else {
+// 				// return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
+// 				return product.price === option.price ? (
+// 					<label>${price ? price.toFixed(2) : price}</label>
+// 				) : (
+// 					<div className="">
+// 						<del style={{ color: '#a03131' }}>
+// 							<label className="" style={{ color: 'white' }}>
+// 								${price ? price.toFixed(2) : price}
+// 							</label>
+// 						</del>{' '}
+// 						<i className="fas fa-arrow-right" /> ${option.price ? option.price.toFixed(2) : option.price}{' '}
+// 						<label className="fs-16px" style={{ color: '#a03131', webkitTextStroke: '1px #a03131' }}>
+// 							NEW LOW PRICE!
+// 						</label>
+// 					</div>
+// 				);
+// 			}
+// 		}
+// 	} else {
+// 		if (today > new Date(product.sale_start_date) && today < new Date(product.sale_end_date) && sale_price !== 0) {
+// 			return (
+// 				<label className="">
+// 					<del style={{ color: '#a03131' }}>
+// 						<label className="" style={{ color: 'white' }}>
+// 							${price ? price.toFixed(2) : price}
+// 						</label>
+// 					</del>{' '}
+// 					<i className="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price} On Sale!
+// 				</label>
+// 			);
+// 		} else if (!product.countInStock) {
+// 			return (
+// 				<label>
+// 					<del style={{ color: '#a03131' }}>
+// 						<label style={{ color: 'white' }} className="ml-7px">
+// 							${price ? price.toFixed(2) : price}
+// 						</label>
+// 					</del>{' '}
+// 					<i className="fas fa-arrow-right" />
+// 					<label className="ml-7px">Sold Out</label>
+// 				</label>
+// 			);
+// 		} else {
+// 			return <label>${price ? price.toFixed(2) : price}</label>;
+// 		}
+// 	}
+// };
 export const email_sale_price_switch = (item, color) => {
 	if (item.sale_price !== 0) {
 		return (
