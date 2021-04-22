@@ -165,9 +165,11 @@ const HomePage = (props) => {
 					<div className="jc-c">
 						<h4 className="fs-18px mb-0px ta-c">{content.home_page.h2}</h4>
 					</div>
-					<p className="p_descriptions paragraph_font" style={{ textAlign: 'center' }}>
-						{content.home_page.p}
-					</p>
+					<div className="max-w-800px jc-c w-100per m-auto">
+						{/* <p className="p_descriptions paragraph_font "> */}
+						<pre className="p_descriptions paragraph_font ">{content.home_page.p}</pre>
+						{/* </p> */}
+					</div>
 					<div className="jc-c">
 						<Link to={content.home_page.link}>
 							<button className="btn primary">{content.home_page.button}</button>

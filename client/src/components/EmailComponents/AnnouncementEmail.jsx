@@ -132,13 +132,25 @@ const AnnouncementEmail = () => {
 									fontSize: '16px',
 									lineHeight: '30px',
 									maxWidth: '800px',
-									textAlign: 'center',
+									// textAlign: 'center',
 									width: '100%',
 									margin: '20px auto',
 									color: 'white'
 								}}
 							>
-								{email.p}
+								<pre
+									style={{
+										fontFamily: 'helvetica',
+										overflowX: 'auto',
+										whiteSpace: 'pre-wrap',
+										whiteSpace: '-moz-pre-wrap',
+										whiteSpace: '-pre-wrap',
+										whiteSpace: '-o-pre-wrap',
+										wordWrap: 'break-word'
+									}}
+								>
+									{email.p}
+								</pre>
 							</p>
 							<div
 								style={{
