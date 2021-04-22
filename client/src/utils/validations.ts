@@ -183,6 +183,11 @@ export const validate_shipping = (data: {
 	// Postal Code checks
 	if (Validator.isEmpty(data.postalCode)) {
 		errors.postalCode = 'Postal Code field is required';
+	} else if (
+		(!data.international && data.postalCode.toString().length < 5) ||
+		data.postalCode.toString().length > 5
+	) {
+		errors.postalCode = 'Postal Code must a valid Postal Code';
 	}
 	// // International checks
 	// if (Validator.isEmpty(data.international)) {

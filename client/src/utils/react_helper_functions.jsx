@@ -147,12 +147,12 @@ export const email_sale_price_switch = (item, color) => {
 	}
 };
 export const cart_sale_price_switch = (item, color) => {
-	if (item.product_option.sale_price > 0) {
+	if (item.product_option && item.product_option.sale_price > 0) {
 		return (
 			<label>
 				<del style={{ color: '#a03131' }}>
 					<label style={{ color: 'white' }}>
-						${item.product_option.price ? (
+						${item.product_option && item.product_option.price ? (
 							item.product_option.price.toFixed(2)
 						) : item.price ? (
 							item.price.toFixed(2)
@@ -161,7 +161,7 @@ export const cart_sale_price_switch = (item, color) => {
 						)}
 					</label>
 				</del>{' '}
-				<i class="fas fa-arrow-right" /> ${item.product_option.sale_price ? (
+				<i class="fas fa-arrow-right" /> ${item.product_option && item.product_option.sale_price ? (
 					item.product_option.sale_price.toFixed(2)
 				) : item.sale_price ? (
 					item.sale_price.toFixed(2)
@@ -174,7 +174,7 @@ export const cart_sale_price_switch = (item, color) => {
 	} else {
 		return (
 			<label>
-				${item.product_option.price ? (
+				${item.product_option && item.product_option.price ? (
 					item.product_option.price.toFixed(2)
 				) : item.price ? (
 					item.price.toFixed(2)

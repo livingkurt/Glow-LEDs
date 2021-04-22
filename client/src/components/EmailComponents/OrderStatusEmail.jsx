@@ -263,10 +263,12 @@ const OrderStatusEmail = (props) => {
 										<p style={{ textAlign: 'left', margin: '1rem 0' }}>
 											<strong> Order Note: </strong> {order.order_note}
 										</p>
-										<p style={{ textAlign: 'left', margin: '1rem 0' }}>
-											<strong> Message to User: </strong>
-											{message_to_user}
-										</p>
+										{message_to_user && (
+											<p style={{ textAlign: 'left', margin: '1rem 0' }}>
+												<strong> Message to User: </strong>
+												{message_to_user}
+											</p>
+										)}
 									</div>
 								)}
 

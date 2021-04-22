@@ -307,7 +307,8 @@ const OrderEmail = (props) => {
 																''
 															)}
 															{item.name}{' '}
-															{item.product_option.name &&
+															{item.product_option &&
+																item.product_option.name &&
 																`- ${item.product_option.name}`}
 															{item.qty > 1 && item.qty + 'x'}
 															{item.secondary_product ? (
