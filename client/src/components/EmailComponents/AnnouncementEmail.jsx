@@ -101,7 +101,7 @@ const AnnouncementEmail = () => {
 										<tr>
 											<td>
 												<img
-													src={email.image}
+													src={email.images && email.images[0] && email.images[0]}
 													alt="Glow LEDs"
 													title="Email Image"
 													style={{
@@ -115,6 +115,132 @@ const AnnouncementEmail = () => {
 									</table>
 								)}
 							</div>
+							<div
+								style={{
+									display: 'flex',
+									justifyContent: 'center',
+									maxWidth: '800px',
+									flexWrap: 'wrap',
+									margin: 'auto'
+								}}
+							>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									{!email.show_image && (
+										<table width="100%" style={{ maxWidth: '400px' }}>
+											<tr>
+												<td>
+													<img
+														src={email.images && email.images[0] && email.images[0]}
+														alt="Glow LEDs"
+														title="Email Image"
+														style={{
+															textAlign: 'center',
+															width: '100%',
+															borderRadius: '20px'
+														}}
+													/>
+												</td>
+											</tr>
+										</table>
+									)}
+								</div>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									{!email.show_image && (
+										<table width="100%" style={{ maxWidth: '400px' }}>
+											<tr>
+												<td>
+													<img
+														src={email.images && email.images[1] && email.images[1]}
+														alt="Glow LEDs"
+														title="Email Image"
+														style={{
+															textAlign: 'center',
+															width: '100%',
+															borderRadius: '20px'
+														}}
+													/>
+												</td>
+											</tr>
+										</table>
+									)}
+								</div>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									{!email.show_image && (
+										<table width="100%" style={{ maxWidth: '400px' }}>
+											<tr>
+												<td>
+													<img
+														src={email.images && email.images[2] && email.images[2]}
+														alt="Glow LEDs"
+														title="Email Image"
+														style={{
+															textAlign: 'center',
+															width: '100%',
+															borderRadius: '20px'
+														}}
+													/>
+												</td>
+											</tr>
+										</table>
+									)}
+								</div>
+								<div style={{ display: 'flex', justifyContent: 'center' }}>
+									{!email.show_image && (
+										<table width="100%" style={{ maxWidth: '400px' }}>
+											<tr>
+												<td>
+													<img
+														src={email.images && email.images[3] && email.images[3]}
+														alt="Glow LEDs"
+														title="Email Image"
+														style={{
+															textAlign: 'center',
+															width: '100%',
+															borderRadius: '20px'
+														}}
+													/>
+												</td>
+											</tr>
+										</table>
+									)}
+								</div>
+							</div>
+							{/* <div style={{ backgroundColor: '#5f5f5f', padding: '20px' }}> */}
+							{/* <div style={{ display: 'flex', justifyContent: 'center' }}>
+
+								<div
+									style={{
+										display: 'flex',
+										justifyContent: 'center',
+										maxWidth: '800px',
+										flexWrap: 'wrap'
+									}}
+								>
+									{email.images &&
+										email.images.map((image) => {
+											return (
+												<table width="100%" style={{ textAlign: 'center' }}>
+													<tr>
+													<td>
+													<img
+														src={image}
+														alt="Glow LEDs"
+														title="Email Image"
+														style={{
+															maxWidth: '300px',
+															textAlign: 'center',
+															width: '100%',
+															borderRadius: '20px'
+														}}
+													/>
+													</td>
+													</tr>
+												</table>
+											);
+										})}
+								</div>
+
+							</div> */}
 							<h4
 								style={{
 									textAlign: 'center',
@@ -146,7 +272,13 @@ const AnnouncementEmail = () => {
 										whiteSpace: '-moz-pre-wrap',
 										whiteSpace: '-pre-wrap',
 										whiteSpace: '-o-pre-wrap',
-										wordWrap: 'break-word'
+										wordWrap: 'break-word',
+										maxWidth: '800px',
+										width: '100%',
+										margin: '20px auto',
+										color: 'white',
+										fontSize: '16px',
+										lineHeight: '30px'
 									}}
 								>
 									{email.p}

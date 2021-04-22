@@ -16,6 +16,7 @@ const emailSchema = new mongoose.Schema(
 		email_type: { type: String },
 		h1: { type: String },
 		image: { type: String },
+		images: { type: Array },
 		show_image: { type: Boolean, default: true },
 		h2: { type: String },
 		p: { type: String },

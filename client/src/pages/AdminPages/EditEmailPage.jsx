@@ -16,6 +16,8 @@ const EditEmailPage = (props) => {
 	const [ email_button, set_email_button ] = useState('');
 	const [ email_link, set_email_link ] = useState('');
 	const [ email_active, set_email_active ] = useState(true);
+	const [ images, set_images ] = useState([]);
+	const [ image, set_image ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const history = useHistory();
@@ -33,6 +35,7 @@ const EditEmailPage = (props) => {
 		set_email_type(email.email_type);
 		set_email_h1(email.h1);
 		set_email_image(email.image);
+		set_images(email.images);
 		set_email_show_image(email.show_image);
 		set_email_h2(email.h2);
 		set_email_p(email.p);
@@ -44,13 +47,15 @@ const EditEmailPage = (props) => {
 		set_id('');
 		set_email_type('');
 		set_email_h1('');
-		set_email_image('');
+		set_images('');
 		set_email_show_image('');
 		set_email_h2('');
 		set_email_p('');
 		set_email_button('');
 		set_email_link('');
 		set_email_active('');
+		set_images([]);
+		set_image('');
 	};
 
 	const stableDispatch = useCallback(dispatch, []);
@@ -103,6 +108,7 @@ const EditEmailPage = (props) => {
 				email_type,
 				h1: email_h1,
 				image: email_image,
+				images,
 				show_image: email_show_image,
 				h2: email_h2,
 				p: email_p,
@@ -131,6 +137,138 @@ const EditEmailPage = (props) => {
 		'Password Changed',
 		'Feature'
 	];
+
+	const add_image = (e) => {
+		e.preventDefault();
+		console.log(image);
+		if (image.indexOf(' ') >= 0) {
+			console.log('indexOf');
+			image.split(' ').map((image) => {
+				set_images((images) => [ ...images, image ]);
+			});
+		} else if (images) {
+			console.log('images.length > 0');
+			set_images((images) => [ ...images, image ]);
+		} else {
+			console.log('images.length === 0');
+			set_images([ image ]);
+		}
+
+		set_image('');
+	};
+	const remove_image = (image_index, e) => {
+		e.preventDefault();
+		set_images((images) =>
+			images.filter((image, index) => {
+				return image_index !== index;
+			})
+		);
+	};
+
+	const move_image_up = (image_index, e) => {
+		e.preventDefault();
+		const new_array = move(images, image_index, image_index - 1);
+		set_images(new_array);
+		// set_new_array(new_array);
+		image_display(new_array);
+	};
+	const move_image_down = (image_index, e) => {
+		e.preventDefault();
+		const new_array = move(images, image_index, image_index + 1);
+		set_images(new_array);
+		// set_new_array(new_array);
+		image_display(new_array);
+	};
+
+	function move(arr, old_index, new_index) {
+		console.log({ arr, old_index, new_index });
+		while (old_index < 0) {
+			old_index += arr.length;
+		}
+		while (new_index < 0) {
+			new_index += arr.length;
+		}
+		if (new_index >= arr.length) {
+			var k = new_index - arr.length;
+			while (k-- + 1) {
+				arr.push(undefined);
+			}
+		}
+		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+		console.log({ arr });
+		return arr;
+	}
+
+	const image_display = (images) => {
+		return (
+			<div>
+				<div className="row wrap">
+					{images &&
+						images.map((picture, index) => {
+							return (
+								<div className="promo_code mv-1rem jc-b max-w-55rem w-100per">
+									<div className="pos-rel">
+										<img
+											style={{
+												width: '100%',
+												package_height: 'auto',
+												maxWidth: '150px',
+												maxHeight: '150px',
+												borderRadius: '15px'
+											}}
+											className="mv-10px ml-10px"
+											src={picture}
+										/>
+										<div className="ml-10px">{picture}</div>
+
+										<button
+											className="btn icon pos-abs right-10px top-15px"
+											onClick={(e) => remove_image(index, e)}
+										>
+											<i className="fas fa-times" />
+										</button>
+										<div className="pos-abs right-40px top-15px column">
+											{index > 0 && (
+												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
+													<i className=" fas fa-sort-up" />
+												</button>
+											)}
+
+											{index < images.length - 1 && (
+												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
+													<i
+														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														className=" fas fa-sort-up"
+													/>
+												</button>
+											)}
+										</div>
+									</div>
+								</div>
+							);
+						})}
+				</div>
+				<div className="jc-b">
+					<div>
+						{images &&
+							images.map((picture, index) => {
+								return;
+							})}
+					</div>
+					{/* <li>
+						<label htmlFor="images">Images</label>
+						<textarea
+							className="edit_product_textarea w-450px h-100per"
+							name="images"
+							value={images}
+							id="images"
+							// onChange={(e) => set_images(e.target.value)}
+						/>
+					</li> */}
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<div className="main_container p-20px">
@@ -214,7 +352,7 @@ const EditEmailPage = (props) => {
 													onChange={(e) => set_email_h1(e.target.value)}
 												/>
 											</li>
-											<li>
+											{/* <li>
 												<label htmlFor="email_image">Image</label>
 												<input
 													type="text"
@@ -223,8 +361,20 @@ const EditEmailPage = (props) => {
 													id="email_image"
 													onChange={(e) => set_email_image(e.target.value)}
 												/>
+											</li> */}
+											<li>
+												<label htmlFor="image">Image</label>
+												<input
+													type="text"
+													name="image"
+													value={image}
+													id="image"
+													onChange={(e) => set_image(e.target.value)}
+												/>
+												<button className="btn primary" onClick={(e) => add_image(e)}>
+													Add Image
+												</button>
 											</li>
-
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -299,6 +449,7 @@ const EditEmailPage = (props) => {
 											)}
 										</div>
 									</div>
+									{image_display(images)}
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
