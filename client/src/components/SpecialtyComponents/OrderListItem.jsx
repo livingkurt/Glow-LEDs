@@ -281,10 +281,12 @@ const OrderListItem = (props) => {
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div>
-									<div>
-										{item.diffuser_cap_color && ` ${item.diffuser_cap_color} `} {item.name}
-									</div>
-									{item.secondary_product && '> ' + item.secondary_product.name + ''}{' '}
+									{item.name}{' '}
+									{item.product_option &&
+										item.product_option.hasOwnProperty('name') &&
+										`- ${item.product_option.name} `}
+									{item.qty > 1 && item.qty + 'x'}
+									{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
 								</div>
 							);
 						})}

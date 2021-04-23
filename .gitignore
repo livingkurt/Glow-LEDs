@@ -156,7 +156,7 @@ models/log.js
 background/facebook_catalog_upload.js
 background/google_catalog_upload.js
 background/google_sheets_keys.js
-background/afffilate_revenue_upload.js
+background/affiliate_revenue_upload.js
 
 email_templates/pages/error.js
 email_templates/pages/account_created.js
