@@ -242,6 +242,18 @@ const PlaceOrderPage = (props) => {
 		);
 
 		set_payment_loading(true);
+		console.log({ cartItems });
+		cartItems.forEach(async (item) => {
+			// console.log({ item });
+			if (item.finite_stock) {
+				// const { data: product } = await API_Products.get_product(item.product);
+				// console.log({ product });
+				const new_count = item.countInStock - item.qty;
+				console.log({ new_count });
+				const { data: res } = await API_Products.update_stock(item.product, new_count);
+				console.log({ res });
+			}
+		});
 		if (promo_code) {
 			const { data } = await API_Orders.get_promo(promo_code.toLowerCase());
 			console.log({ data });
@@ -285,8 +297,21 @@ const PlaceOrderPage = (props) => {
 		set_payment_loading(false);
 		props.history.push('/secure/glow/orders');
 		empty_cart();
+		// if (promo_code) {
+		// 	await API_Products.promo_code_used(promo_code);
+		// }
+		cartItems.forEach(async (item) => {
+			if (item.finite_stock) {
+				const new_count = item.countInStock - item.qty;
+				const { data: res } = await API_Products.update_stock(item.product, new_count);
+			}
+		});
 		if (promo_code) {
-			await API_Products.promo_code_used(promo_code);
+			const { data } = await API_Orders.get_promo(promo_code.toLowerCase());
+			console.log({ data });
+			if (data.single_use) {
+				await API_Orders.promo_code_used(promo_code.toLowerCase());
+			}
 		}
 	};
 
@@ -313,8 +338,21 @@ const PlaceOrderPage = (props) => {
 
 		props.history.push('/secure/glow/orders');
 		empty_cart();
+		// if (promo_code) {
+		// 	await API_Products.promo_code_used(promo_code);
+		// }
+		cartItems.forEach(async (item) => {
+			if (item.finite_stock) {
+				const new_count = item.countInStock - item.qty;
+				const { data: res } = await API_Products.update_stock(item.product, new_count);
+			}
+		});
 		if (promo_code) {
-			await API_Products.promo_code_used(promo_code);
+			const { data } = await API_Orders.get_promo(promo_code.toLowerCase());
+			console.log({ data });
+			if (data.single_use) {
+				await API_Orders.promo_code_used(promo_code.toLowerCase());
+			}
 		}
 	};
 

@@ -52,6 +52,7 @@ export const addToCart = (
 				pathname: number;
 				category: string;
 				product_option: any;
+				finite_stock: number;
 			};
 		}
 	) => void,
@@ -77,7 +78,8 @@ export const addToCart = (
 			pathname: data.pathname,
 			category: data.category,
 			product_option: product_option || {},
-			qty
+			qty,
+			finite_stock: data.finite_stock
 		};
 		console.log({ cartItem });
 		if (diffuser_cap_color) {
@@ -99,7 +101,8 @@ export const addToCart = (
 				pathname: data.pathname,
 				category: data.category,
 				product_option: product_option || {},
-				qty
+				qty,
+				finite_stock: data.finite_stock
 			};
 			console.log({ diffuser_cap_color: cartItem });
 		}
@@ -124,7 +127,8 @@ export const addToCart = (
 				pathname: data.pathname,
 				category: data.category,
 				product_option: product_option || {},
-				qty
+				qty,
+				finite_stock: data.finite_stock
 			};
 			console.log({ diffuser_cap: cartItem });
 		}

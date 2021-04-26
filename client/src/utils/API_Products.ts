@@ -11,6 +11,9 @@ export default {
 	get_product_options: (pathname: any) => {
 		return axios.get('/api/products/options/' + pathname);
 	},
+	get_product: (pathname: any) => {
+		return axios.get('/api/products/' + pathname);
+	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });
 	// 	return axios.post('/api/products/array', array);
@@ -18,6 +21,10 @@ export default {
 	save_product: (order: any, user_data: any, product: any) => {
 		console.log({ save_product: { order, user_data, product } });
 		return axios.put('/api/orders/addproduct', { order, user_data, product });
+	},
+	update_stock: (product_id: string, count_in_stock: number) => {
+		console.log({ update_stock: { product_id, count_in_stock } });
+		return axios.put('/api/products/update_stock', { product_id, count_in_stock });
 	},
 	save_secondary_product: (order: any, user_data: any, secondary_product: any) => {
 		console.log({ save_secondary_product: { order, user_data, secondary_product } });

@@ -45,6 +45,8 @@ const EditProductPage = (props) => {
 	const [ pathname, setPathname ] = useState();
 	const [ chips, set_chips ] = useState([]);
 	const [ chip, set_chip ] = useState('');
+	const [ finite_stock, set_finite_stock ] = useState(false);
+
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
@@ -162,6 +164,7 @@ const EditProductPage = (props) => {
 		setCategory(product.category);
 		set_subcategory(product.subcategory);
 		setCountInStock(product.countInStock);
+		set_finite_stock(product.finite_stock);
 		props.match.params.pathname && setPathname(product.pathname);
 		setOrder(product.order);
 		set_product_options(product.product_options);
@@ -191,6 +194,7 @@ const EditProductPage = (props) => {
 		set_meta_title('');
 		set_meta_description('');
 		set_meta_keywords('');
+		set_finite_stock(false);
 		// set_package_length(1);
 		// set_package_width(1);
 		// set_package_height(1);
@@ -244,7 +248,8 @@ const EditProductPage = (props) => {
 				weight_ounces,
 				pathname: pathname ? pathname : snake_case(name),
 				order,
-				product_options
+				product_options,
+				finite_stock
 			})
 		);
 		e.target.reset();
@@ -787,6 +792,22 @@ const EditProductPage = (props) => {
 													onChange={(e) => setCountInStock(e.target.value)}
 												/>
 											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="finite_stock">Finite Stock</label>
+													<input
+														type="checkbox"
+														name="finite_stock"
+														defaultChecked={finite_stock}
+														id="finite_stock"
+														onChange={(e) => {
+															set_finite_stock(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<li>
 												<label htmlFor="facts">Facts</label>
 												<textarea
