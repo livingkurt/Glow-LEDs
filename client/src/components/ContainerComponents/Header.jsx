@@ -185,6 +185,12 @@ const Header = (props) => {
 														<button className="btn nav w-100per ta-l">Alt Novaskins</button>
 													</div>
 												</Link>
+												<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Imperfect</button>
+													</div>
+												</Link>
 											</div>
 										</div>
 										<div className="dropdown-nav-nested">
