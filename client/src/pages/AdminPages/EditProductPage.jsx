@@ -15,7 +15,7 @@ const EditProductPage = (props) => {
 	const [ price, setPrice ] = useState('');
 	// const [ display_image, setDisplayImage ] = useState('');
 	const [ images, set_images ] = useState([]);
-	const [ product_options_images, set_product_options_images ] = useState([]);
+	// const [ product_options_images, set_product_options_images ] = useState([]);
 	const [ image, set_image ] = useState('');
 	const [ video, setVideo ] = useState('');
 	const [ brand, setBrand ] = useState('');
@@ -52,6 +52,7 @@ const EditProductPage = (props) => {
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
 	const [ product_options, set_product_options ] = useState([ {} ]);
+	const [ product_options_images, set_product_options_images ] = useState([ [] ]);
 
 	const history = useHistory();
 
@@ -170,6 +171,9 @@ const EditProductPage = (props) => {
 		props.match.params.pathname && setPathname(product.pathname);
 		setOrder(product.order);
 		set_product_options(product.product_options);
+		set_product_options_images(
+			product.product_options && product.product_options.map((option, index) => option.images)
+		);
 	};
 	const unset_state = () => {
 		setId('');
@@ -208,6 +212,7 @@ const EditProductPage = (props) => {
 		setPathname('');
 		setOrder();
 		set_product_options([ {} ]);
+		set_product_options_images([ [] ]);
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -484,7 +489,7 @@ const EditProductPage = (props) => {
 		);
 	};
 	const product_option_image_display = (images, option_index) => {
-		console.log({ images });
+		// console.log({ images });
 		return (
 			<div>
 				<div className="row wrap">
@@ -564,17 +569,30 @@ const EditProductPage = (props) => {
 
 	const add_option_image = (e, index) => {
 		e.preventDefault();
-		console.log({ image });
+		// console.log({ image });
 		if (image.indexOf(' ') >= 0) {
 			console.log('indexOf');
 			image.split(' ').map((image) => {
-				set_product_options_images((images) => [ ...images, image ]);
-				update_product_option_property([ ...product_options_images, image ], 'images', index);
+				update_product_option_property([ ...product_options_images[index], image ], 'images', index);
+				set_product_options_images((images) => [ ...images[index], image ]);
 			});
 		} else if (images) {
 			console.log('images.length > 0');
-			set_product_options_images((images) => [ ...images, image ]);
-			update_product_option_property([ ...product_options_images, image ], 'images', index);
+			console.log({ product_options_images });
+			// const option_images = product_options_images[index];
+
+			// // console.log({ product_options_images: [ ...product_options_images[index], image ] });
+			// console.log({ option_images });
+			// console.log({ image });
+			// const new_images = [ ...option_images, image ];
+			product_options_images[index].push(image);
+			// console.log({ new_images });
+			// set_product_options_images(product_options_images);
+			// set_product_options_images((images) => [ ...images, [ ...images[index], image ] ]);
+			// console.log([ ...product_options_images[index], image ]);
+			update_product_option_property(product_options_images[index], 'images', index);
+
+			// return [ ...images, image ];
 		} else {
 			console.log('images.length === 0');
 			set_product_options_images([ image ]);
@@ -583,6 +601,18 @@ const EditProductPage = (props) => {
 
 		set_image('');
 	};
+
+	const update_product_option_property = (value, field_name, index) => {
+		console.log({ value, field_name, index });
+		let new_product_options = [ ...product_options ];
+		new_product_options[index] = {
+			...new_product_options[index],
+			[field_name]: value
+		};
+		set_product_options(new_product_options);
+		// console.log({ product_options });
+	};
+
 	const remove_product_option_image = (image_index, e, option_index) => {
 		e.preventDefault();
 		// set_product_options_images((images) =>
@@ -623,17 +653,6 @@ const EditProductPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const update_product_option_property = (value, field_name, index) => {
-		console.log({ value, field_name, index });
-		let new_product_options = [ ...product_options ];
-		new_product_options[index] = {
-			...new_product_options[index],
-			[field_name]: value
-		};
-		set_product_options(new_product_options);
-		console.log({ product_options });
-	};
-
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
@@ -643,7 +662,7 @@ const EditProductPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
-								{console.log({ product })}
+								{/* {console.log({ product })} */}
 								<Helmet>
 									<title>Edit Product | Glow LEDs</title>
 								</Helmet>

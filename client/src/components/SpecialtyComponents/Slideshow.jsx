@@ -12,8 +12,8 @@ const Slideshow = (props) => {
 
 	return (
 		<div className={classes}>
-			{props.product.images &&
-				props.product.images.map((image, index) => {
+			{props.images &&
+				props.images.map((image, index) => {
 					return (
 						<div className="img_column" key={index}>
 							<img

@@ -27,6 +27,7 @@ const ProductPage = (props) => {
 	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
+	const [ images, set_images ] = useState([]);
 	const [ price, set_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState(0);
@@ -107,8 +108,10 @@ const ProductPage = (props) => {
 		() => {
 			if (product) {
 				set_image(product.images && product.images[0]);
-				console.log({ product_options: product.product_options });
+				set_images(product.images && product.images);
+				console.log({ images: product.images });
 				set_price(product.price);
+
 				set_product_option({});
 				if (product.product_options) {
 					const option = product.product_options.find((option) => option.default === true);
@@ -118,6 +121,9 @@ const ProductPage = (props) => {
 						set_size(option.size);
 						set_sale_price(option.sale_price);
 						set_product_option(option);
+						if (option.images) {
+							set_images(option.images);
+						}
 					}
 				}
 
@@ -173,6 +179,7 @@ const ProductPage = (props) => {
 		button.classList.add('secondary');
 		button.classList.add('active');
 		set_price(option.price);
+		set_images(option.images);
 		set_sale_price(option.sale_price);
 		set_size(option.size);
 		set_product_option(option);
@@ -293,7 +300,7 @@ const ProductPage = (props) => {
 									</Zoom>
 								</div>
 							</div>
-							<Slideshow product={product} show_hide="alt_pictures_shown_shown" />
+							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
 								<h1 class="product_title_side" styles={{ display: 'flex' }}>
 									{product.name}
@@ -336,7 +343,12 @@ const ProductPage = (props) => {
 										</ul>
 									</div>
 								</div>
-								<Slideshow product={product} show_hide="alt_pictures_hidden" set_image={set_image} />
+								<Slideshow
+									product={product}
+									images={images}
+									show_hide="alt_pictures_hidden"
+									set_image={set_image}
+								/>
 							</div>
 							<div className="details-action">
 								<ul>
@@ -424,7 +436,7 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													Pack Size:
+													Options:
 												</label>
 												{product.product_options.map((option, index) => (
 													<button
@@ -582,7 +594,12 @@ const ProductPage = (props) => {
 								</ul>
 							</div>
 						</div>
-						<Slideshow product={product} show_hide="alt_pictures_shown" set_image={set_image} />
+						<Slideshow
+							product={product}
+							images={images}
+							show_hide="alt_pictures_shown"
+							set_image={set_image}
+						/>
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							<p className="paragraph_font">{product.description}</p>
