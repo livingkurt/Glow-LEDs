@@ -248,24 +248,6 @@ const EditEmailPage = (props) => {
 							);
 						})}
 				</div>
-				<div className="jc-b">
-					<div>
-						{images &&
-							images.map((picture, index) => {
-								return;
-							})}
-					</div>
-					{/* <li>
-						<label htmlFor="images">Images</label>
-						<textarea
-							className="edit_product_textarea w-450px h-100per"
-							name="images"
-							value={images}
-							id="images"
-							// onChange={(e) => set_images(e.target.value)}
-						/>
-					</li> */}
-				</div>
 			</div>
 		);
 	};

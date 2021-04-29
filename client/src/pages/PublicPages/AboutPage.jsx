@@ -74,7 +74,7 @@ const AboutPage = () => {
 						/>
 					</div>
 					{content && content.banner && <p className="paragraph_font">{content.about_page.kurt_p}</p>}
-					<div
+					{/* <div
 						className="about_pictures"
 						style={{
 							float: 'right',
@@ -105,12 +105,8 @@ const AboutPage = () => {
 							src="/images/optimized_images/personal_images/img_0345_optimized.jpg"
 						/>
 					</div>
-					{/* <p >
-						I (Destanye) help with orders, designs, marketing, customer service and anything that doesn’t
-						involve coding or engineering. This business is truly a labor of love and we hope that something
-						here brings happiness into your life.
-					</p> */}
-					{content && content.banner && <p className="paragraph_font">{content.about_page.destanye_p}</p>}
+
+					{content && content.banner && <p className="paragraph_font">{content.about_page.destanye_p}</p>} */}
 				</div>
 			</div>
 		</div>

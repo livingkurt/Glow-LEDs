@@ -15,6 +15,7 @@ const EditProductPage = (props) => {
 	const [ price, setPrice ] = useState('');
 	// const [ display_image, setDisplayImage ] = useState('');
 	const [ images, set_images ] = useState([]);
+	const [ product_options_images, set_product_options_images ] = useState([]);
 	const [ image, set_image ] = useState('');
 	const [ video, setVideo ] = useState('');
 	const [ brand, setBrand ] = useState('');
@@ -157,6 +158,7 @@ const EditProductPage = (props) => {
 		set_weight_ounces(product.weight_ounces);
 		// setDisplayImage(product.display_image);
 		set_images(product.images);
+		// set_images(product.images);
 		set_chips(product.chips);
 		// set_image(product.image);
 		setVideo(product.video);
@@ -434,36 +436,30 @@ const EditProductPage = (props) => {
 			<div>
 				<div className="row wrap">
 					{images &&
-						images.map((picture) => {
+						images.map((picture, index) => {
 							return (
-								<img
-									style={{
-										width: '100%',
-										package_height: 'auto',
-										maxWidth: '150px',
-										maxHeight: '150px',
-										borderRadius: '15px',
-										marginRight: '10px'
-									}}
-									className="mv-10px"
-									src={picture}
-								/>
-							);
-						})}
-				</div>
-				<div className="jc-b">
-					<div>
-						{images &&
-							images.map((picture, index) => {
-								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-										<div>
-											<button className="btn icon" onClick={(e) => remove_image(index, e)}>
-												<i className="fas fa-times mr-5px" />
-											</button>
-											{picture}
-										</div>
-										<div>
+								<div className="promo_code mv-1rem jc-b max-w-55rem w-100per">
+									<div className="pos-rel">
+										<img
+											style={{
+												width: '100%',
+												package_height: 'auto',
+												maxWidth: '150px',
+												maxHeight: '150px',
+												borderRadius: '15px'
+											}}
+											className="mv-10px ml-10px"
+											src={picture}
+										/>
+										<div className="ml-10px">{picture}</div>
+
+										<button
+											className="btn icon pos-abs right-10px top-15px"
+											onClick={(e) => remove_image(index, e)}
+										>
+											<i className="fas fa-times" />
+										</button>
+										<div className="pos-abs right-40px top-15px column">
 											{index > 0 && (
 												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
 													<i className=" fas fa-sort-up" />
@@ -480,23 +476,140 @@ const EditProductPage = (props) => {
 											)}
 										</div>
 									</div>
-								);
-							})}
-					</div>
-					<li>
-						<label htmlFor="images">Images</label>
-						<textarea
-							className="edit_product_textarea w-450px h-100per"
-							name="images"
-							value={images}
-							id="images"
-							// onChange={(e) => set_images(e.target.value)}
-						/>
-					</li>
+								</div>
+							);
+						})}
 				</div>
 			</div>
 		);
 	};
+	const product_option_image_display = (images, option_index) => {
+		console.log({ images });
+		return (
+			<div>
+				<div className="row wrap">
+					{images &&
+						images.map((picture, index) => {
+							return (
+								<div className="promo_code mv-1rem jc-b max-w-55rem w-100per">
+									<div className="pos-rel">
+										<img
+											style={{
+												width: '100%',
+												package_height: 'auto',
+												maxWidth: '150px',
+												maxHeight: '150px',
+												borderRadius: '15px'
+											}}
+											className="mv-10px ml-10px"
+											src={picture}
+										/>
+										<div className="ml-10px">{picture}</div>
+
+										<button
+											className="btn icon pos-abs right-10px top-15px"
+											onClick={(e) => remove_product_option_image(index, e, option_index)}
+										>
+											<i className="fas fa-times" />
+										</button>
+										<div className="pos-abs right-40px top-15px column">
+											{index > 0 && (
+												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
+													<i className=" fas fa-sort-up" />
+												</button>
+											)}
+
+											{index < images.length - 1 && (
+												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
+													<i
+														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														className=" fas fa-sort-up"
+													/>
+												</button>
+											)}
+										</div>
+									</div>
+								</div>
+							);
+						})}
+				</div>
+			</div>
+		);
+	};
+
+	// const add_option_image = (image, e, index) => {
+	// 	e.preventDefault();
+	// 	console.log(image);
+	// 	if (image.indexOf(' ') >= 0) {
+	// 		console.log('indexOf');
+	// 		image.split(' ').map((image) => {
+	// 			set_product_options_images((images) => [ ...images, image ]);
+	// 		});
+	// 	} else if (images) {
+	// 		console.log('images.length > 0');
+	// 		set_product_options_images((images) => [ ...images, image ]);
+	// 		// update_product_option_property(image, e.target.name, index);
+	// 		// update_product_option_property(
+	// 		//   e.target.value,
+	// 		//   e.target.name,
+	// 		//   index
+	// 		// )
+	// 	} else {
+	// 		console.log('images.length === 0');
+	// 		set_product_options_images([ image ]);
+	// 	}
+
+	// 	set_image('');
+	// };
+
+	const add_option_image = (e, index) => {
+		e.preventDefault();
+		console.log({ image });
+		if (image.indexOf(' ') >= 0) {
+			console.log('indexOf');
+			image.split(' ').map((image) => {
+				set_product_options_images((images) => [ ...images, image ]);
+				update_product_option_property([ ...product_options_images, image ], 'images', index);
+			});
+		} else if (images) {
+			console.log('images.length > 0');
+			set_product_options_images((images) => [ ...images, image ]);
+			update_product_option_property([ ...product_options_images, image ], 'images', index);
+		} else {
+			console.log('images.length === 0');
+			set_product_options_images([ image ]);
+			update_product_option_property([ image ], 'images', index);
+		}
+
+		set_image('');
+	};
+	const remove_product_option_image = (image_index, e, option_index) => {
+		e.preventDefault();
+		// set_product_options_images((images) =>
+		// 	images.filter((image, index) => {
+		// 		return image_index !== index;
+		// 	})
+		// );
+		// const images = product_options.find((option, index) => index === option_index);
+		const images = product_options
+			.map((option, index) => option.images)
+			.find((images, index) => index === option_index)
+			.filter((image, index) => image_index !== index);
+		console.log({ images });
+
+		// .filter((image, index) => {
+		// 	return image_index !== index;
+		// });
+		update_product_option_property(images, 'images', option_index);
+	};
+	// const update_product_option_image = (e, image_index) => {
+	// 	e.preventDefault();
+	// 	set_product_options_images((images) =>
+	// 		images.filter((image, index) => {
+	// 			return image_index !== index;
+	// 		})
+	// 	);
+	// };
 
 	const move_left = () => {};
 	const move_right = () => {};
@@ -1119,6 +1232,42 @@ const EditProductPage = (props) => {
 																	)}
 															/>
 														</li>
+														<li>
+															<label htmlFor="count_in_stock">Count In Stock</label>
+															<input
+																type="text"
+																name="count_in_stock"
+																defaultValue={option.count_in_stock}
+																value={option.count_in_stock}
+																id="count_in_stock"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+
+														{loading_checkboxes ? (
+															<li>Loading...</li>
+														) : (
+															<li>
+																<label htmlFor="dropdown">Dropdown</label>
+																<input
+																	type="checkbox"
+																	name="dropdown"
+																	defaultChecked={option.dropdown}
+																	id="dropdown"
+																	onChange={(e) =>
+																		update_product_option_property(
+																			e.target.checked,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+														)}
 														{loading_checkboxes ? (
 															<li>Loading...</li>
 														) : (
@@ -1138,6 +1287,55 @@ const EditProductPage = (props) => {
 																/>
 															</li>
 														)}
+														{/* <li>
+															<label htmlFor="image">Option Image</label>
+															<input
+																type="text"
+																name={option.name}
+																// value={option.image}
+																id="image"
+																// onChange={(e) => set_image(e.target.value)}
+																// onChange={(e) => add_chip(e)}
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+															<button
+																className="btn primary"
+																name={option.name}
+																// onClick={(e) => add_product_option_image(e)}
+																onClick={(e) =>
+																	add_product_option_image(
+																		image,
+																		e.target.name,
+																		index
+																	)}
+															>
+																Add Image
+															</button>
+														</li> */}
+														<li>
+															<label htmlFor="image">Option Image</label>
+															<input
+																type="text"
+																name="image"
+																value={image}
+																id="image"
+																// onChange={(e) =>
+																// 	update_product_option_image(e, index)}
+																onChange={(e) => set_image(e.target.value)}
+															/>
+															<button
+																className="btn primary"
+																onClick={(e) => add_option_image(e, index)}
+															>
+																Add Image
+															</button>
+														</li>
+														{product_option_image_display(option.images, index)}
 													</div>
 												);
 											})}
