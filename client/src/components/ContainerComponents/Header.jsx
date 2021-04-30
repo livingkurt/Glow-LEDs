@@ -185,12 +185,12 @@ const Header = (props) => {
 														<button className="btn nav w-100per ta-l">Alt Novaskins</button>
 													</div>
 												</Link>
-												<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
+												{/* <Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 														<button className="btn nav w-100per ta-l">Imperfect</button>
 													</div>
-												</Link>
+												</Link> */}
 											</div>
 										</div>
 										<div className="dropdown-nav-nested">
@@ -263,7 +263,7 @@ const Header = (props) => {
 												</Link>
 											</div>
 										</div>
-										<div className="dropdown-nav-nested">
+										{/* <div className="dropdown-nav-nested">
 											<Link to="/collections/all/products/category/mega_diffuser_caps">
 												<button className="btn nav w-100per ta-l">Mega Diffuser Caps</button>
 												<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
@@ -300,7 +300,7 @@ const Header = (props) => {
 													</div>
 												</Link>
 											</div>
-										</div>
+										</div> */}
 										<Link to="/collections/all/products/category/accessories">
 											<button className="btn nav w-100per ta-l">Accessories</button>
 										</Link>

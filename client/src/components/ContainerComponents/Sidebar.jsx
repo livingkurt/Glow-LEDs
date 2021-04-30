@@ -176,11 +176,11 @@ const Sidebar = (props) => {
 												Alt Novaskins
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
+										{/* <Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
 												Imperfect
 											</button>
-										</Link>
+										</Link> */}
 									</ul>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 								</div>
@@ -242,7 +242,7 @@ const Sidebar = (props) => {
 									</ul>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 								</div>
-								<div className="sidebar_dropdown_nested">
+								{/* <div className="sidebar_dropdown_nested">
 									<button className="sidebar-btn nested">
 										<Link to="/collections/all/products/category/mega_diffuser_caps">
 											Mega Diffuser Caps
@@ -276,7 +276,7 @@ const Sidebar = (props) => {
 										</Link>
 									</ul>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-								</div>
+								</div> */}
 								<Link to="/collections/all/products/category/accessories">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Accessories

@@ -110,7 +110,7 @@ const ProductPage = (props) => {
 		() => {
 			if (product) {
 				set_image(product.images && product.images[0]);
-				set_images(product.images && product.images);
+				set_images(product.images);
 				console.log({ images: product.images });
 				set_price(product.price);
 				set_count_in_stock(product.countInStock);
@@ -125,8 +125,9 @@ const ProductPage = (props) => {
 						set_sale_price(option.sale_price);
 						set_count_in_stock(option.count_in_stock);
 						set_product_option(option);
-						if (option.images) {
+						if (option.images > 0) {
 							set_images(option.images);
+							set_image(option.images && option.images[0]);
 						}
 					}
 				}
@@ -241,6 +242,13 @@ const ProductPage = (props) => {
 		// set_product_option(option);
 		set_diffuser_cap_color(JSON.parse(e.target.value).color);
 		set_color(JSON.parse(e.target.value));
+		console.log({ option_images: option.images });
+		if (option.images && option.images[0]) {
+			set_images(option.images);
+			set_image(option.images[0]);
+		}
+
+		// update_product_images(e, option);
 	};
 
 	return (
@@ -638,9 +646,9 @@ const ProductPage = (props) => {
 												</div>
 											</li>
 										))} */}
-									{(product.category === 'diffuser_caps' ||
-										product.category === 'mega_diffuser_caps' ||
-										product.category === 'frosted_diffusers') && (
+									{product.product_options &&
+									product.product_options.length > 0 &&
+									product.product_options.filter((option) => option.dropdown).length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
 												<label
