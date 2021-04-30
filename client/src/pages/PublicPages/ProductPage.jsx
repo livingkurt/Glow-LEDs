@@ -485,8 +485,14 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)} */}
+									{console.log({
+										product_options:
+											product.product_options &&
+											product.product_options.filter((option) => option.dropdown)
+									})}
 									{product.product_options &&
-									product.product_options.length > 0 && (
+									product.product_options.length > 0 &&
+									product.product_options.filter((option) => !option.dropdown).length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
 												<label
