@@ -183,7 +183,11 @@ const ProductPage = (props) => {
 		button.classList.add('secondary');
 		button.classList.add('active');
 		set_price(option.price);
-		set_images(option.images);
+		if (option.images > 0) {
+			set_images(option.images);
+			set_image(option.images[0]);
+		}
+
 		set_sale_price(option.sale_price);
 		set_size(option.size);
 		set_count_in_stock(option.count_in_stock);
@@ -191,6 +195,33 @@ const ProductPage = (props) => {
 		if (color) {
 			set_price(color.price);
 		}
+	};
+
+	const update_product_images = (e, option) => {
+		const product = JSON.parse(e.target.value);
+		set_diffuser_cap(JSON.parse(e.target.value));
+		// let button = document.getElementById(e.target.id);
+		// let buttons = document.querySelectorAll('.packs');
+		// buttons.forEach((node) => {
+		// 	node.classList.remove('active');
+		// 	node.classList.remove('secondary');
+		// 	node.classList.add('primary');
+		// });
+		// button.classList.add('secondary');
+		// button.classList.add('active');
+		// set_price(option.price);
+		// if (product.images) {
+		set_images(product.images);
+		set_image(product.images[0]);
+		// }
+
+		// set_sale_price(option.sale_price);
+		// set_size(option.size);
+		// set_count_in_stock(option.count_in_stock);
+		// set_product_option(option);
+		// if (color) {
+		// 	set_price(color.price);
+		// }
 	};
 
 	const update_color = (e, option) => {
@@ -502,7 +533,7 @@ const ProductPage = (props) => {
 														defaultValue={diffuser_cap_name}
 														// value={diffuser_cap_name}
 														className="qty_select_dropdown"
-														onChange={(e) => set_diffuser_cap(JSON.parse(e.target.value))}
+														onChange={(e) => update_product_images(e)}
 													>
 														<option key={1} defaultValue="">
 															---Choose Cap---
