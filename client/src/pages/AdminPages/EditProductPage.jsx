@@ -446,18 +446,18 @@ const EditProductPage = (props) => {
 	const image_display = (images) => {
 		return (
 			<div>
-				<div className="row wrap">
+				<div className="wrap jc-b">
 					{images &&
 						images.map((picture, index) => {
 							return (
-								<div className="promo_code mv-1rem jc-b max-w-55rem w-100per">
+								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
 									<div className="pos-rel">
 										<img
 											style={{
 												width: '100%',
 												package_height: 'auto',
-												maxWidth: '150px',
-												maxHeight: '150px',
+												maxWidth: '100px',
+												maxHeight: '100px',
 												borderRadius: '15px'
 											}}
 											className="mv-10px ml-10px"
@@ -503,14 +503,14 @@ const EditProductPage = (props) => {
 					{images &&
 						images.map((picture, index) => {
 							return (
-								<div className="promo_code mv-1rem jc-b max-w-55rem w-100per">
+								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
 									<div className="pos-rel">
 										<img
 											style={{
 												width: '100%',
 												package_height: 'auto',
-												maxWidth: '150px',
-												maxHeight: '150px',
+												maxWidth: '100px',
+												maxHeight: '100px',
 												borderRadius: '15px'
 											}}
 											className="mv-10px ml-10px"
@@ -791,6 +791,16 @@ const EditProductPage = (props) => {
 									<div className="row wrap jc-b">
 										<div className="w-228px m-10px">
 											<li>
+												<label htmlFor="id">ID</label>
+												<input
+													type="text"
+													name="id"
+													value={product._id}
+													id="id"
+													// onChange={(e) => setName(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="name">Name</label>
 												<input
 													type="text"
@@ -930,86 +940,6 @@ const EditProductPage = (props) => {
 													/>
 												</li>
 											)}
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="group_product">Group Product</label>
-													<input
-														type="checkbox"
-														name="group_product"
-														defaultChecked={group_product}
-														id="group_product"
-														onChange={(e) => {
-															set_group_product(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-											{group_product && (
-												<li>
-													<label htmlFor="product">Products</label>
-													<div className="ai-c h-25px mv-15px jc-c">
-														<div className="custom-select">
-															<select
-																className="qty_select_dropdown"
-																onChange={(e) => add_product(e)}
-															>
-																<option key={1} defaultValue="">
-																	---Add Products to Group---
-																</option>
-																{products_list.map((product, index) => (
-																	<option key={index} value={JSON.stringify(product)}>
-																		{product.name}
-																	</option>
-																))}
-															</select>
-															<span className="custom-arrow" />
-														</div>
-													</div>
-													{/* <button className="btn primary" onClick={(e) => add_product(e)}>
-														Add Gear
-													</button> */}
-													{product_display(products)}
-												</li>
-											)}
-											<li>
-												<label htmlFor="image">Image</label>
-												<input
-													type="text"
-													name="image"
-													value={image}
-													id="image"
-													onChange={(e) => set_image(e.target.value)}
-												/>
-												<button className="btn primary" onClick={(e) => add_image(e)}>
-													Add Image
-												</button>
-											</li>
-											<li>
-												<label htmlFor="chip">Chip</label>
-												<div className="ai-c h-25px mv-15px jc-c">
-													<div className="custom-select">
-														<select
-															className="qty_select_dropdown"
-															onChange={(e) => add_chip(e)}
-														>
-															<option key={1} defaultValue="">
-																---Choose Chip---
-															</option>
-															{chips_list.map((chip, index) => (
-																<option key={index} value={JSON.stringify(chip)}>
-																	{chip.name}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-												<button className="btn primary" onClick={(e) => add_chip(e)}>
-													Add Chip
-												</button>
-											</li>
 										</div>
 
 										<div className="w-228px m-10px">
@@ -1227,8 +1157,92 @@ const EditProductPage = (props) => {
 											</li>
 										</div>
 									</div>
-									{chip_display(chips)}
+									<li>
+										<label htmlFor="image">Image</label>
+										<input
+											type="text"
+											name="image"
+											value={image}
+											id="image"
+											onChange={(e) => set_image(e.target.value)}
+										/>
+										<button className="btn primary" onClick={(e) => add_image(e)}>
+											Add Image
+										</button>
+									</li>
+
 									{image_display(images)}
+									{loading_checkboxes ? (
+										<div>Loading...</div>
+									) : (
+										<li>
+											<label htmlFor="group_product">Group Product</label>
+											<input
+												type="checkbox"
+												name="group_product"
+												defaultChecked={group_product}
+												id="group_product"
+												onChange={(e) => {
+													set_group_product(e.target.checked);
+												}}
+											/>
+										</li>
+									)}
+									<div className="jc-b">
+										{group_product && (
+											<li>
+												{/* <label htmlFor="product">Products</label> */}
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_product(e)}
+														>
+															<option key={1} defaultValue="">
+																---Add Products to Group---
+															</option>
+															{products_list.map((product, index) => (
+																<option key={index} value={JSON.stringify(product)}>
+																	{product.name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												{/* <button className="btn primary" onClick={(e) => add_product(e)}>
+														Add Gear
+													</button> */}
+												{product_display(products)}
+											</li>
+										)}
+										<li>
+											<label htmlFor="chip">Chip</label>
+											<div className="ai-c h-25px mv-15px jc-c">
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => add_chip(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose Chip---
+														</option>
+														{chips_list.map((chip, index) => (
+															<option key={index} value={JSON.stringify(chip)}>
+																{chip.name}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+											{/* <button className="btn primary" onClick={(e) => add_chip(e)}>
+											Add Chip
+										</button> */}
+											{chip_display(chips)}
+										</li>
+									</div>
+
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
@@ -1251,6 +1265,7 @@ const EditProductPage = (props) => {
 											</div>
 										</div>
 									</li>
+
 									<li>
 										<button className="btn primary" onClick={(e) => add_product_option(e)}>
 											Create Product Option

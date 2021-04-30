@@ -31,6 +31,7 @@ const ProductPage = (props) => {
 	const [ price, set_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState(0);
+	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ product_option, set_product_option ] = useState({});
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
@@ -112,6 +113,7 @@ const ProductPage = (props) => {
 				set_images(product.images && product.images);
 				console.log({ images: product.images });
 				set_price(product.price);
+				set_count_in_stock(product.countInStock);
 
 				set_product_option({});
 				if (product.product_options) {
@@ -121,6 +123,7 @@ const ProductPage = (props) => {
 						set_price(option.price);
 						set_size(option.size);
 						set_sale_price(option.sale_price);
+						set_count_in_stock(option.count_in_stock);
 						set_product_option(option);
 						if (option.images) {
 							set_images(option.images);
@@ -183,6 +186,7 @@ const ProductPage = (props) => {
 		set_images(option.images);
 		set_sale_price(option.sale_price);
 		set_size(option.size);
+		set_count_in_stock(option.count_in_stock);
 		set_product_option(option);
 		if (color) {
 			set_price(color.price);
@@ -387,7 +391,7 @@ const ProductPage = (props) => {
 										{sale_price_product_option_switch_product(price, sale_price)}
 									</div>
 
-									<li>Status: {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}</li>
+									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
 									<li>
 										<div className="ai-c h-25px">
 											<label
@@ -405,7 +409,7 @@ const ProductPage = (props) => {
 														setQty(e.target.value);
 													}}
 												>
-													{[ ...Array(product.countInStock).keys() ].map((x) => (
+													{[ ...Array(count_in_stock).keys() ].map((x) => (
 														<option key={x + 1} defaultValue={x + 1}>
 															{x + 1}
 														</option>
