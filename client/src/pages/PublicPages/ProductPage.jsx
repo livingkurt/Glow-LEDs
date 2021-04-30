@@ -35,6 +35,7 @@ const ProductPage = (props) => {
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
 	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('');
+	const [ color, set_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
 	// console.log({ diffuser_cap });
@@ -183,6 +184,28 @@ const ProductPage = (props) => {
 		set_sale_price(option.sale_price);
 		set_size(option.size);
 		set_product_option(option);
+		if (color) {
+			set_price(color.price);
+		}
+	};
+
+	const update_color = (e, option) => {
+		// let button = document.getElementById(e.target.id);
+		// let buttons = document.querySelectorAll('.packs');
+		// buttons.forEach((node) => {
+		// 	node.classList.remove('active');
+		// 	node.classList.remove('secondary');
+		// 	node.classList.add('primary');
+		// });
+		// button.classList.add('secondary');
+		// button.classList.add('active');
+		set_price(option.price);
+		// set_images(option.images);
+		set_sale_price(option.sale_price);
+		// set_size(option.size);
+		// set_product_option(option);
+		set_diffuser_cap_color(JSON.parse(e.target.value).color);
+		set_color(JSON.parse(e.target.value));
 	};
 
 	return (
@@ -438,20 +461,23 @@ const ProductPage = (props) => {
 												>
 													Options:
 												</label>
-												{product.product_options.map((option, index) => (
-													<button
-														key={index}
-														selected={option.default}
-														id={option.name}
-														value={JSON.stringify(option)}
-														onClick={(e) => update_product(e, JSON.parse(e.target.value))}
-														className={`packs min-w-40px mr-1rem mb-1rem btn ${option.default
-															? 'secondary'
-															: 'primary'}`}
-													>
-														{option.name}
-													</button>
-												))}
+												{product.product_options
+													.filter((option) => !option.dropdown)
+													.map((option, index) => (
+														<button
+															key={index}
+															selected={option.default}
+															id={option.name}
+															value={JSON.stringify(option)}
+															onClick={(e) =>
+																update_product(e, JSON.parse(e.target.value))}
+															className={`packs min-w-40px mr-1rem mb-1rem btn ${option.default
+																? 'secondary'
+																: 'primary'}`}
+														>
+															{option.name}
+														</button>
+													))}
 											</div>
 										</li>
 									)}
@@ -548,17 +574,25 @@ const ProductPage = (props) => {
 												<div className="custom-select">
 													<select
 														defaultValue={diffuser_cap_color}
-														value={diffuser_cap_color}
+														// value={diffuser_cap_color}
 														className="qty_select_dropdown"
 														onChange={(e) => {
-															set_diffuser_cap_color(e.target.value);
+															// set_diffuser_cap_color(e.target.value);
+															update_color(e, JSON.parse(e.target.value));
 														}}
 													>
-														{determine_colors().map((color, index) => (
+														{/* {determine_colors().map((color, index) => (
 															<option key={index} value={color}>
 																{color}
 															</option>
-														))}
+														))} */}
+														{product.product_options
+															.filter((option) => option.dropdown)
+															.map((option, index) => (
+																<option key={index} value={JSON.stringify(option)}>
+																	{option.color}
+																</option>
+															))}
 													</select>
 													<span className="custom-arrow" />
 												</div>

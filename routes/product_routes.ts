@@ -396,7 +396,7 @@ router.get('/mega_caps', async (req, res) => {
 
 router.get('/:pathname', async (req, res) => {
 	try {
-		const product = await Product.findOne({ pathname: req.params.pathname }).populate('chips');
+		const product = await Product.findOne({ pathname: req.params.pathname }).populate('chips').populate('products');
 
 		if (product) {
 			log_request({

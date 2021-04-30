@@ -76,6 +76,8 @@ const productSchema = new mongoose.Schema(
 		weight_ounces: { type: Number },
 		order: { type: Number },
 		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ],
+		products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+		group_product: { type: Boolean, default: false },
 		product_options: [ productOptionsSchema ]
 	},
 	{

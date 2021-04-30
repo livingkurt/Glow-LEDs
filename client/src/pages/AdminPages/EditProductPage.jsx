@@ -44,10 +44,12 @@ const EditProductPage = (props) => {
 	const [ weight_pounds, set_weight_pounds ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ pathname, setPathname ] = useState();
+	const [ group_product, set_group_product ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 	const [ finite_stock, set_finite_stock ] = useState(false);
-
+	// const [ product, set_product ] = useState('');
+	const [ products, set_products ] = useState([]);
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
@@ -60,7 +62,7 @@ const EditProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 
 	const productList = useSelector((state) => state.productList);
-	const { products } = productList;
+	const { products: products_list } = productList;
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
@@ -174,6 +176,8 @@ const EditProductPage = (props) => {
 		set_product_options_images(
 			product.product_options && product.product_options.map((option, index) => option.images)
 		);
+		set_group_product(product.group_product);
+		set_products(product.products);
 	};
 	const unset_state = () => {
 		setId('');
@@ -213,6 +217,7 @@ const EditProductPage = (props) => {
 		setOrder();
 		set_product_options([ {} ]);
 		set_product_options_images([ [] ]);
+		set_group_product([]);
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -256,7 +261,9 @@ const EditProductPage = (props) => {
 				pathname: pathname ? pathname : snake_case(name),
 				order,
 				product_options,
-				finite_stock
+				finite_stock,
+				products: products.map((chip) => chip._id),
+				group_product
 			})
 		);
 		e.target.reset();
@@ -653,6 +660,55 @@ const EditProductPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
+	const add_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		console.log({ product_object });
+		if (products) {
+			console.log('products.length > 0');
+			set_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_products([ product_object ]);
+		}
+
+		// set_product('');
+	};
+
+	const remove_product = (product_index, e) => {
+		e.preventDefault();
+		set_products((products) =>
+			products.filter((product, index) => {
+				return product_index !== index;
+			})
+		);
+	};
+
+	const product_display = (products) => {
+		console.log({ products });
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{products &&
+							products.map((product, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{product.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
@@ -662,7 +718,7 @@ const EditProductPage = (props) => {
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
-								{/* {console.log({ product })} */}
+								{console.log({ product })}
 								<Helmet>
 									<title>Edit Product | Glow LEDs</title>
 								</Helmet>
@@ -722,7 +778,7 @@ const EditProductPage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Product as a Template---
 													</option>
-													{products.map((product, index) => (
+													{products_list.map((product, index) => (
 														<option key={index} value={product.pathname}>
 															{product.name}
 														</option>
@@ -872,6 +928,49 @@ const EditProductPage = (props) => {
 															setHidden(e.target.checked);
 														}}
 													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="group_product">Group Product</label>
+													<input
+														type="checkbox"
+														name="group_product"
+														defaultChecked={group_product}
+														id="group_product"
+														onChange={(e) => {
+															set_group_product(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{group_product && (
+												<li>
+													<label htmlFor="product">Products</label>
+													<div className="ai-c h-25px mv-15px jc-c">
+														<div className="custom-select">
+															<select
+																className="qty_select_dropdown"
+																onChange={(e) => add_product(e)}
+															>
+																<option key={1} defaultValue="">
+																	---Add Products to Group---
+																</option>
+																{products_list.map((product, index) => (
+																	<option key={index} value={JSON.stringify(product)}>
+																		{product.name}
+																	</option>
+																))}
+															</select>
+															<span className="custom-arrow" />
+														</div>
+													</div>
+													{/* <button className="btn primary" onClick={(e) => add_product(e)}>
+														Add Gear
+													</button> */}
+													{product_display(products)}
 												</li>
 											)}
 											<li>
@@ -1140,7 +1239,7 @@ const EditProductPage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Product Option Template---
 													</option>
-													{products
+													{products_list
 														.filter((product) => product.product_options.length > 0)
 														.map((product, index) => (
 															<option key={index} value={product.pathname}>
