@@ -193,7 +193,7 @@ const ProductPage = (props) => {
 		set_size(option.size);
 		set_count_in_stock(option.count_in_stock);
 		set_product_option(option);
-		if (color) {
+		if (color && color.price) {
 			set_price(color.price);
 		}
 	};
@@ -235,7 +235,10 @@ const ProductPage = (props) => {
 		// });
 		// button.classList.add('secondary');
 		// button.classList.add('active');
-		set_price(option.price);
+		if (option.price) {
+			set_price(option.price);
+		}
+
 		// set_images(option.images);
 		set_sale_price(option.sale_price);
 		// set_size(option.size);
