@@ -184,10 +184,16 @@ const ProductPage = (props) => {
 		button.classList.add('secondary');
 		button.classList.add('active');
 		set_price(option.price);
-		if (option.images > 0) {
+		// console.log({ option_images: option.images });
+		console.log({ option_images: option.images !== 0 });
+		if (typeof option.images !== 'undefined' && option.images.length > 0) {
 			set_images(option.images);
 			set_image(option.images[0]);
 		}
+		// if (option.images !== 0) {
+		// 	set_images(option.images);
+		// 	set_image(option.images[0]);
+		// }
 
 		set_sale_price(option.sale_price);
 		set_size(option.size);
