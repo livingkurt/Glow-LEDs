@@ -492,6 +492,14 @@ const EditProductPage = (props) => {
 							);
 						})}
 				</div>
+				<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
+					<p>
+						{images &&
+							images.map((picture, index) => {
+								return `${picture}\n`;
+							})}
+					</p>
+				</div>
 			</div>
 		);
 	};
@@ -553,17 +561,6 @@ const EditProductPage = (props) => {
 							})}
 					</p>
 				</div>
-
-				{/* <li>
-					<label htmlFor="images">Images</label>
-					<textarea
-						className="edit_product_textarea w-420px h-100per"
-						name="images"
-						value={images}
-						id="images"
-						// onChange={(e) => set_images(e.target.value)}
-					/>
-				</li> */}
 			</div>
 		);
 	};

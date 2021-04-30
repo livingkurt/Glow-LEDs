@@ -207,38 +207,32 @@ const EditFeaturePage = (props) => {
 	const image_display = (images) => {
 		return (
 			<div>
-				<div className="row wrap">
+				<div className="wrap jc-b">
 					{images &&
-						images.map((picture) => {
+						images.map((picture, index) => {
 							return (
-								<img
-									style={{
-										width: '100%',
-										height: 'auto',
-										maxWidth: '150px',
-										maxHeight: '150px',
-										borderRadius: '15px',
-										marginRight: '10px'
-									}}
-									className="mv-10px"
-									src={picture}
-								/>
-							);
-						})}
-				</div>
-				<div className="jc-b">
-					<div>
-						{images &&
-							images.map((picture, index) => {
-								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
-										<div>
-											<button className="btn icon" onClick={(e) => remove_image(index, e)}>
-												<i className="fas fa-times mr-5px" />
-											</button>
-											{picture}
-										</div>
-										<div>
+								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
+									<div className="pos-rel">
+										<img
+											style={{
+												width: '100%',
+												package_height: 'auto',
+												maxWidth: '100px',
+												maxHeight: '100px',
+												borderRadius: '15px'
+											}}
+											className="mv-10px ml-10px"
+											src={picture}
+										/>
+										<div className="ml-10px">{picture}</div>
+
+										<button
+											className="btn icon pos-abs right-10px top-15px"
+											onClick={(e) => remove_image(index, e)}
+										>
+											<i className="fas fa-times" />
+										</button>
+										<div className="pos-abs right-40px top-15px column">
 											{index > 0 && (
 												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
 													<i className=" fas fa-sort-up" />
@@ -255,19 +249,17 @@ const EditFeaturePage = (props) => {
 											)}
 										</div>
 									</div>
-								);
+								</div>
+							);
+						})}
+				</div>
+				<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
+					<p>
+						{images &&
+							images.map((picture, index) => {
+								return `${picture}\n`;
 							})}
-					</div>
-					{/* <li>
-						<label htmlFor="images">Images</label>
-						<textarea
-							className="edit_product_textarea w-420px h-100per"
-							name="images"
-							value={images}
-							id="images"
-							// onChange={(e) => set_images(e.target.value)}
-						/>
-					</li> */}
+					</p>
 				</div>
 			</div>
 		);

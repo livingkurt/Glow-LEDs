@@ -198,22 +198,21 @@ const EditEmailPage = (props) => {
 		console.log({ arr });
 		return arr;
 	}
-
 	const image_display = (images) => {
 		return (
 			<div>
-				<div className="row wrap">
+				<div className="wrap jc-b">
 					{images &&
 						images.map((picture, index) => {
 							return (
-								<div className="promo_code mv-1rem jc-b max-w-55rem w-100per">
+								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
 									<div className="pos-rel">
 										<img
 											style={{
 												width: '100%',
 												package_height: 'auto',
-												maxWidth: '150px',
-												maxHeight: '150px',
+												maxWidth: '100px',
+												maxHeight: '100px',
 												borderRadius: '15px'
 											}}
 											className="mv-10px ml-10px"
@@ -248,10 +247,17 @@ const EditEmailPage = (props) => {
 							);
 						})}
 				</div>
+				<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
+					<p>
+						{images &&
+							images.map((picture, index) => {
+								return `${picture}\n`;
+							})}
+					</p>
+				</div>
 			</div>
 		);
 	};
-
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Email' : 'Create Email'}</h1>
