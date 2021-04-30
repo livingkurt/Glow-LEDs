@@ -482,7 +482,45 @@ const ProductPage = (props) => {
 										</li>
 									)}
 									{/* <li>Product Size: {size}</li> */}
-									{(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
+									{product.products &&
+									product.products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Caps:
+												</label>
+												<div className="custom-select">
+													<select
+														defaultValue={diffuser_cap_name}
+														// value={diffuser_cap_name}
+														className="qty_select_dropdown"
+														onChange={(e) => set_diffuser_cap(JSON.parse(e.target.value))}
+													>
+														<option key={1} defaultValue="">
+															---Choose Cap---
+														</option>
+														{product.products.map(
+															(cap, index) =>
+																cap.name === 'Custom Diffuser Caps Deposit' ||
+																cap.name === 'Diffuser Caps + Adapters Starter Kit' ? (
+																	''
+																) : (
+																	<option key={index} value={JSON.stringify(cap)}>
+																		{cap.name.slice(0, -14)}
+																	</option>
+																)
+														)}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
+									{/* {(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
 												<label
@@ -558,7 +596,7 @@ const ProductPage = (props) => {
 													</div>
 												</div>
 											</li>
-										))}
+										))} */}
 									{(product.category === 'diffuser_caps' ||
 										product.category === 'mega_diffuser_caps' ||
 										product.category === 'frosted_diffusers') && (

@@ -420,7 +420,7 @@ const OrderStatusEmail = (props) => {
 															)}
 															{item.name}
 															{item.secondary_product ? (
-																`w (${item.secondary_product.name})`
+																` w (${item.secondary_product.name})`
 															) : (
 																''
 															)}

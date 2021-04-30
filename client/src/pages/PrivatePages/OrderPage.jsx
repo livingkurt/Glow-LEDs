@@ -518,7 +518,7 @@ ${order.shipping.email}`)}
 																item.product_option.name &&
 																`- ${item.product_option.name}`}
 															{item.secondary_product &&
-																`w (${item.secondary_product.name})`}
+																` w (${item.secondary_product.name})`}
 														</Link>
 													</div>
 													<div>Qty: {item.qty}</div>

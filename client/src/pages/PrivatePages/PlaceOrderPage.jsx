@@ -662,7 +662,7 @@ const PlaceOrderPage = (props) => {
 													{item.product_option &&
 														item.product_option.name &&
 														`- ${item.product_option.name}`}
-													{item.diffuser_cap && `w (${item.diffuser_cap.name})`}{' '}
+													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}{' '}
 													{item.qty > 1 && item.qty + 'x'}
 												</Link>
 											</div>

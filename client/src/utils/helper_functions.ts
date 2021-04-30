@@ -356,7 +356,7 @@ export const print_invoice = (order: any) => {
 					? `${item.diffuser_cap_color} -`
 					: ''}
         ${item.name}
-        ${item.secondary_product ? `w (${item.secondary_product.name})` : ''}
+        ${item.secondary_product ? ` w (${item.secondary_product.name})` : ''}
           </td>
   
           <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"

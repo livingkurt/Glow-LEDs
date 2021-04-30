@@ -389,7 +389,7 @@ const OrderPublicPage = (props) => {
 														item.category === 'mega_diffuser_caps') &&
 														item.diffuser_cap_color}{' '}
 													{item.name}{' '}
-													{item.secondary_product && `w (${item.secondary_product.name})`}
+													{item.secondary_product && ` w (${item.secondary_product.name})`}
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>

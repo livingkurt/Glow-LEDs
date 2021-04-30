@@ -270,7 +270,7 @@ const InvoiceEmail = (props) => {
 											item.product_option.hasOwnProperty('name') &&
 											`- ${item.product_option.name} `}
 										{item.qty > 1 && item.qty + 'x'}
-										{item.secondary_product ? `w (${item.secondary_product.name})` : ''}
+										{item.secondary_product ? ` w (${item.secondary_product.name})` : ''}
 									</td>
 
 									<td

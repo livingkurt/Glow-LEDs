@@ -67,7 +67,7 @@ export default (props: any) => {
 						? item.diffuser_cap_color
 						: ''}
                 - ${item.name}
-                ${item.diffuser_cap_name ? `w (${item.diffuser_cap_name})` : ''}</td>
+                ${item.diffuser_cap_name ? ` w (${item.diffuser_cap_name})` : ''}</td>
               <td style="color:white;padding:20px 0;vertical-align:top;text-align:right;border-bottom:1px solid #eee" valign="top"
                 align="right">$${item.price ? item.price.toFixed(2) : item.price}</td>
             </tr>`;
@@ -115,8 +115,8 @@ export default (props: any) => {
                     </tr>
                     <tr>
                       <td style="vertical-align:top;width:50%; color:white;" valign="top">${props.shipping
-							.first_name} ${props.shipping.last_name}<br />${props.shipping.address_1} ${props.shipping.address_2}<br />${props.shipping
-		.city}, ${props.shipping.state}
+							.first_name} ${props.shipping.last_name}<br />${props.shipping.address_1} ${props.shipping
+		.address_2}<br />${props.shipping.city}, ${props.shipping.state}
                       ${props.shipping.postalCode} ${props.shipping.country}<br />${props.shipping.email}</td>
                     </tr>
                   </tbody>
