@@ -545,6 +545,25 @@ const EditProductPage = (props) => {
 							);
 						})}
 				</div>
+				<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
+					<p>
+						{images &&
+							images.map((picture, index) => {
+								return `${picture}\n`;
+							})}
+					</p>
+				</div>
+
+				{/* <li>
+					<label htmlFor="images">Images</label>
+					<textarea
+						className="edit_product_textarea w-420px h-100per"
+						name="images"
+						value={images}
+						id="images"
+						// onChange={(e) => set_images(e.target.value)}
+					/>
+				</li> */}
 			</div>
 		);
 	};
@@ -580,26 +599,13 @@ const EditProductPage = (props) => {
 		if (image.indexOf(' ') >= 0) {
 			console.log('indexOf');
 			image.split(' ').map((image) => {
-				update_product_option_property([ ...product_options_images[index], image ], 'images', index);
-				set_product_options_images((images) => [ ...images[index], image ]);
+				product_options_images[index].push(image);
+				update_product_option_property(product_options_images[index], 'images', index);
 			});
 		} else if (images) {
 			console.log('images.length > 0');
-			console.log({ product_options_images });
-			// const option_images = product_options_images[index];
-
-			// // console.log({ product_options_images: [ ...product_options_images[index], image ] });
-			// console.log({ option_images });
-			// console.log({ image });
-			// const new_images = [ ...option_images, image ];
 			product_options_images[index].push(image);
-			// console.log({ new_images });
-			// set_product_options_images(product_options_images);
-			// set_product_options_images((images) => [ ...images, [ ...images[index], image ] ]);
-			// console.log([ ...product_options_images[index], image ]);
 			update_product_option_property(product_options_images[index], 'images', index);
-
-			// return [ ...images, image ];
 		} else {
 			console.log('images.length === 0');
 			set_product_options_images([ image ]);
