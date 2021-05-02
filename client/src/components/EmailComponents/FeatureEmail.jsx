@@ -109,7 +109,7 @@ const FeatureEmail = (props) => {
 										<tr>
 											<td>
 												<img
-													src={email.image}
+													src={email.images[0]}
 													alt="Glow LEDs"
 													title="Email Image"
 													style={{
