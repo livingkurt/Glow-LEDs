@@ -162,9 +162,7 @@ const FeatureEmail = (props) => {
 											<div style={{ height: '30px' }}>{`Facebook: ${feature.facebook_name}`}</div>
 										)}
 										{feature.description && (
-											<div style={{ height: '30px' }}>
-												{`Description: ${feature.description}`}
-											</div>
+											<div style={{ height: '30px' }}>{`Bio: ${feature.description}`}</div>
 										)}
 										{feature.song_id && (
 											<div style={{ height: '30px' }}>{`Song ID: ${feature.song_id}`}</div>
@@ -198,6 +196,7 @@ const FeatureEmail = (props) => {
 							>
 								How to Send Content via WeTansfer
 							</h4>
+							{/* If you have not sent your media via wetransfer.com to info.glowleds@gmail.com, please do so as soon as you can, so we can keep track of your submission. Your video will be featured on our Facebook and Instagram pages as well as a spot on our website! We really appreciate you taking the time to submit your pictures and videos to us! We love posting your art so everyone can see! Whenever you feel inspired please do not hesitate to send us a video. We will be honored to feature it!  */}
 							<div
 								style={{
 									maxWidth: '800px',

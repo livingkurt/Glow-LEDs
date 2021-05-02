@@ -189,98 +189,103 @@ const SubmitFeaturePage = (props) => {
 									<title>Edit Feature| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '76rem' }}>
-									<div className="wrap jc-b  submit_form">
-										<div className="w-288px">
+								<ul className="edit-form-container" style={{ maxWidth: '30rem' }}>
+									{/* <div className="wrap jc-b  submit_form"> */}
+									<div>
+										{!userInfo.hasOwnProperty('first_name') && (
 											<li>
-												<label className="mb-2rem">Category</label>
-												<div className="ai-c h-25px mb-15px jc-c">
-													<div className="custom-select w-100per">
-														<select
-															className="qty_select_dropdown w-100per"
-															onChange={(e) => set_category(e.target.value)}
-															defaultValue={category}
-														>
-															<option key={1} defaultValue="">
-																---Choose Category---
-															</option>
-															{categories.map((type, index) => (
-																<option key={index} value={type}>
-																	{type}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
+												<Link to="/account/login?redirect=/account/submit_feature">
+													<button className="btn secondary w-100per">
+														Sign in to Link Account
+													</button>
+												</Link>
 											</li>
-											{!userInfo && (
-												<li>
-													<Link to="/account/login?redirect=/account/submit_feature">
-														<button className="btn secondary w-100per">
-															Sign in to Link Account
-														</button>
-													</Link>
-												</li>
-											)}
+										)}
+										{userInfo.hasOwnProperty('first_name') && (
+											<li>
+												<h4 className="w-100per mv-0px">Logged in as {userInfo.first_name}</h4>
+											</li>
+										)}
 
-											<li>
-												<label htmlFor="email">Email</label>
-												<input
-													type="text"
-													name="email"
-													value={userInfo ? userInfo.email : email}
-													id="email"
-													onChange={(e) => set_email(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="first_name">First Name</label>
-												<input
-													type="text"
-													name="first_name"
-													value={userInfo ? userInfo.first_name : first_name}
-													id="first_name"
-													onChange={(e) => set_first_name(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="last_name">Last Name</label>
-												<input
-													type="text"
-													name="last_name"
-													value={userInfo ? userInfo.last_name : last_name}
-													id="last_name"
-													onChange={(e) => set_last_name(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="category">Category</label>
-												<input
-													type="text"
-													name="category"
-													value={category}
-													placeholder="Type Category if Not Listed"
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Type Category if Not Listed'"
-													id="category"
-													onChange={(e) => set_category(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="artist_name">Artist Name</label>
-												<input
-													type="text"
-													name="artist_name"
-													placeholder="Glover Name... DJ Name..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Glover Name... DJ Name...'"
-													value={artist_name}
-													id="artist_name"
-													onChange={(e) => set_artist_name(e.target.value)}
-												/>
-											</li>
-											{/* <li>
+										<li>
+											<label htmlFor="email">Email</label>
+											<input
+												type="text"
+												name="email"
+												value={userInfo ? userInfo.email : email}
+												id="email"
+												onChange={(e) => set_email(e.target.value)}
+											/>
+										</li>
+										<li>
+											<label htmlFor="first_name">First Name</label>
+											<input
+												type="text"
+												name="first_name"
+												value={userInfo ? userInfo.first_name : first_name}
+												id="first_name"
+												onChange={(e) => set_first_name(e.target.value)}
+											/>
+										</li>
+										<li>
+											<label htmlFor="last_name">Last Name</label>
+											<input
+												type="text"
+												name="last_name"
+												value={userInfo ? userInfo.last_name : last_name}
+												id="last_name"
+												onChange={(e) => set_last_name(e.target.value)}
+											/>
+										</li>
+										<li>
+											<label className="mb-2rem">Category</label>
+											<div className="ai-c h-25px mb-15px jc-c">
+												<div className="custom-select w-100per">
+													<select
+														className="qty_select_dropdown w-100per"
+														onChange={(e) => set_category(e.target.value)}
+														defaultValue={category}
+													>
+														<option key={1} defaultValue="">
+															---Choose Category---
+														</option>
+														{categories.map((type, index) => (
+															<option key={index} value={type}>
+																{type}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+										<li>
+											{/* <label htmlFor="category">Category</label> */}
+											<input
+												type="text"
+												name="category"
+												value={category}
+												placeholder="Type Category if Not Listed"
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Type Category if Not Listed'"
+												id="category"
+												onChange={(e) => set_category(e.target.value)}
+											/>
+										</li>
+										<li>
+											<label htmlFor="artist_name">Artist Name</label>
+											<input
+												type="text"
+												name="artist_name"
+												placeholder="Glover Name... DJ Name..."
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Glover Name... DJ Name...'"
+												value={artist_name}
+												id="artist_name"
+												onChange={(e) => set_artist_name(e.target.value)}
+											/>
+										</li>
+										{/* <li>
 												<label htmlFor="logo">Logo</label>
 												<input
 													type="text"
@@ -290,54 +295,54 @@ const SubmitFeaturePage = (props) => {
 													onChange={(e) => set_logo(e.target.value)}
 												/>
 											</li> */}
-											<li>
-												<label htmlFor="description">Description</label>
-												<textarea
-													className="edit_product_textarea"
-													name="description"
-													placeholder="Write a little something to introduce yourself..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Write a little something to introduce yourself...'"
-													defaultValue={description}
-													id="description"
-													onChange={(e) => set_description(e.target.value)}
-												/>
-											</li>
+										<li>
+											<label htmlFor="description">Bio</label>
+											<textarea
+												className="edit_product_textarea"
+												name="description"
+												placeholder="Write a little something to introduce yourself..."
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Write a little something to introduce yourself...'"
+												defaultValue={description}
+												id="description"
+												onChange={(e) => set_description(e.target.value)}
+											/>
+										</li>
 
-											<li>
-												<label htmlFor="instagram_handle">Instagram Handle</label>
-												<input
-													type="text"
-													name="instagram_handle"
-													value={instagram_handle}
-													id="instagram_handle"
-													onChange={(e) => set_instagram_handle(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="facebook_name">Facebook Name</label>
-												<input
-													type="text"
-													name="facebook_name"
-													value={facebook_name}
-													id="facebook_name"
-													onChange={(e) => set_facebook_name(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="link">Website</label>
-												<input
-													type="text"
-													name="link"
-													value={link}
-													placeholder="https://www..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'https://www...'"
-													id="link"
-													onChange={(e) => set_link(e.target.value)}
-												/>
-											</li>
-											{/* <li>
+										<li>
+											<label htmlFor="instagram_handle">Instagram Handle</label>
+											<input
+												type="text"
+												name="instagram_handle"
+												value={instagram_handle}
+												id="instagram_handle"
+												onChange={(e) => set_instagram_handle(e.target.value)}
+											/>
+										</li>
+										<li>
+											<label htmlFor="facebook_name">Facebook Name</label>
+											<input
+												type="text"
+												name="facebook_name"
+												value={facebook_name}
+												id="facebook_name"
+												onChange={(e) => set_facebook_name(e.target.value)}
+											/>
+										</li>
+										<li>
+											<label htmlFor="link">Website</label>
+											<input
+												type="text"
+												name="link"
+												value={link}
+												placeholder="https://www..."
+												onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'https://www...'"
+												id="link"
+												onChange={(e) => set_link(e.target.value)}
+											/>
+										</li>
+										{/* <li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
 													type="text"
@@ -347,20 +352,20 @@ const SubmitFeaturePage = (props) => {
 													onChange={(e) => set_pathname(e.target.value)}
 												/>
 											</li> */}
-											{category === 'Glovers' && (
-												<li>
-													<label htmlFor="song_id">Song ID</label>
-													<input
-														type="text"
-														name="song_id"
-														value={song_id}
-														id="song_id"
-														onChange={(e) => set_song_id(e.target.value)}
-													/>
-												</li>
-											)}
+										{category === 'Glovers' && (
+											<li>
+												<label htmlFor="song_id">Song ID</label>
+												<input
+													type="text"
+													name="song_id"
+													value={song_id}
+													id="song_id"
+													onChange={(e) => set_song_id(e.target.value)}
+												/>
+											</li>
+										)}
 
-											{/* <li>
+										{/* <li>
 												<label htmlFor="image">Image</label>
 												<input
 													type="text"
@@ -374,9 +379,9 @@ const SubmitFeaturePage = (props) => {
 												</button>
 											</li>
 											{image_display(images)} */}
-										</div>
+									</div>
 
-										<div className="w-300px m-10px">
+									{/* <div className="w-300px m-10px">
 											<li className="ta-c">
 												<h2>Submit Media</h2>
 											</li>
@@ -407,24 +412,25 @@ const SubmitFeaturePage = (props) => {
 													</a>
 												</button>
 											</li>
-										</div>
-									</div>
-									<li>
-										<div>
-											<label htmlFor="video">Youtube Video</label>
-											<div className="ai-c">
-												<label className="mr-1rem">https://www.youtube.com/embed/</label>
-												<input
-													type="text"
-													className="w-100per"
-													name="video"
-													value={video}
-													id="video"
-													onChange={(e) => set_video(e.target.value)}
-												/>
+										</div> */}
+									{/* <li>
+											<div>
+												<label htmlFor="video">Youtube Video</label>
+												<div className="ai-c">
+													<label className="mr-1rem">https://www.youtube.com/embed/</label>
+													<input
+														type="text"
+														className="w-100per"
+														name="video"
+														value={video}
+														id="video"
+														onChange={(e) => set_video(e.target.value)}
+													/>
+												</div>
 											</div>
-										</div>
-									</li>
+										</li> */}
+									{/* </div> */}
+
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Submit'}

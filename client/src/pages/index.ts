@@ -38,7 +38,7 @@ export { default as ProfilePage } from './PrivatePages/ProfilePage';
 export { default as ShippingPage } from './PrivatePages/ShippingPage';
 export { default as EditShippingPage } from './PrivatePages/EditShippingPage';
 export { default as ChangePasswordPage } from './PrivatePages/ChangePasswordPage';
-export { default as SubmitFeaturePage } from './PrivatePages/SubmitFeaturePage';
+
 export { default as SubmissionComplete } from './PrivatePages/SubmissionComplete';
 export { default as EditUserAffiliatePage } from './PrivatePages/EditUserAffiliatePage';
 export { default as AffiliateCreationComplete } from './PrivatePages/AffiliateCreationComplete';
@@ -77,3 +77,4 @@ export { default as SponsorPage } from './PublicPages/SponsorPage';
 export { default as AllTeamsPage } from './PublicPages/AllTeamsPage';
 export { default as TeamPage } from './PublicPages/TeamPage';
 export { default as ManualPage } from './PublicPages/ManualPage';
+export { default as SubmitFeaturePage } from './PublicPages/SubmitFeaturePage';
