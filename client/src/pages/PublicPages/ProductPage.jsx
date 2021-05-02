@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../../actions/productActions';
-import { Rating, Reviews, Slideshow, RelatedProducts } from '../../components/SpecialtyComponents';
+import { Rating, Reviews, Slideshow, RelatedProducts, ReadMore } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import { Helmet } from 'react-helmet';
@@ -732,7 +732,8 @@ const ProductPage = (props) => {
 						/>
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
-							<p className="paragraph_font">{product.description}</p>
+							{/* <p className="paragraph_font">{product.description}</p> */}
+							<ReadMore className="paragraph_font">{product.description}</ReadMore>
 							{product.category === 'glow_strings' && (
 								<Link to="/pages/manual/glow_strings_v2_manual">
 									<button className="btn primary w-100per fs-20px mb-2rem">

@@ -412,8 +412,8 @@ router.post('/order', async (req, res) => {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
-		html: req.body.template,
-		bcc: req.body.email
+		html: req.body.template
+		// bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -433,8 +433,8 @@ router.post('/order_created', async (req, res) => {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
-		html: req.body.template,
-		bcc: req.body.email
+		html: req.body.template
+		// bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -455,8 +455,8 @@ router.post('/feature', async (req, res) => {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
-		html: req.body.template,
-		bcc: req.body.email
+		html: req.body.template
+		// bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -476,8 +476,8 @@ router.post('/feature_created', async (req, res) => {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
-		html: req.body.template,
-		bcc: req.body.email
+		html: req.body.template
+		// bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -507,8 +507,8 @@ router.post('/contact', async (req, res) => {
 		to: process.env.DISPLAY_EMAIL,
 		from: req.body.email,
 		subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
-		html: contact(req.body),
-		bcc: req.body.email
+		html: contact(req.body)
+		// bcc: req.body.email
 	};
 	transporter.sendMail(mailOptions, (err, data) => {
 		if (err) {
@@ -530,8 +530,8 @@ router.post('/contactconfirmation', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: `Thank you for Contacting Glow LEDs Support`,
-		html: contact_confirmation(req.body),
-		bcc: req.body.email
+		html: contact_confirmation(req.body)
+		// bcc: req.body.email
 	};
 
 	// try {
@@ -604,8 +604,8 @@ router.post('/password_reset', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.data.email,
 		subject: 'Glow LEDs Password Reset',
-		html: App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' }),
-		bcc: req.body.data.email
+		html: App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' })
+		// bcc: req.body.data.email
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -625,8 +625,8 @@ router.post('/reset_password', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Reset Password',
-		html: App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' }),
-		bcc: req.body.data.email
+		html: App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' })
+		// bcc: req.body.data.email
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {
@@ -647,8 +647,8 @@ router.post('/verified', async (req, res) => {
 		from: process.env.DISPLAY_EMAIL,
 		to: req.body.email,
 		subject: 'Glow LEDs Account Created',
-		html: App({ body: account_created(req.body), title: 'Glow LEDs Account Created' }),
-		bcc: req.body.data.email
+		html: App({ body: account_created(req.body), title: 'Glow LEDs Account Created' })
+		// bcc: req.body.data.email
 	};
 
 	transporter.sendMail(mailOptions, (err, data) => {

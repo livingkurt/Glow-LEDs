@@ -28,3 +28,4 @@ export { default as FilterByChip } from './FilterByChip';
 export { default as Filter } from './Filter';
 export { default as ProductSimple } from './ProductSimple';
 export { default as ProductSimpleSmallScreen } from './ProductSimpleSmallScreen';
+export { default as ReadMore } from './ReadMore';
