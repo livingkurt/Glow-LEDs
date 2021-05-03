@@ -32,7 +32,7 @@ const affiliate_revenue_upload = async () => {
 		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
 
 		await sheet.clear();
-		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue' ]);
+		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
 
 		let total_promo_code_usage: any;
 		let total_affiliate_revenue: any;
@@ -88,6 +88,13 @@ const affiliate_revenue_upload = async () => {
 							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+					.toFixed(2)}`,
+				Earned: ` $${last_month_orders
+					.filter(
+						(order: any) =>
+							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+					)
+					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
 					.toFixed(2)}`
 			};
 		});
@@ -103,6 +110,13 @@ const affiliate_revenue_upload = async () => {
 							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+					.toFixed(2)}`,
+				Earned: ` $${orders
+					.filter(
+						(order: any) =>
+							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+					)
+					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
 					.toFixed(2)}`
 			};
 		});
@@ -183,9 +197,9 @@ const affiliate_revenue_upload = async () => {
 		// };
 
 		const newSheet = await doc.addSheet({
-			title: `${months[month - 1]} ${year} Affiliate Revenue`
+			title: `${months[month]} ${year} Affiliate Revenue`
 		});
-		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue' ]);
+		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
 		await newSheet.addRows(last_months_rows);
 		await newSheet.saveUpdatedCells();
 		// await newSheet.delete();

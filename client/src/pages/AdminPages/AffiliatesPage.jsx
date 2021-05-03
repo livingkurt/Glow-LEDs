@@ -96,10 +96,13 @@ const AffiliatesPage = (props) => {
 						);
 					})}
 				</div>
-				<Link to="/secure/glow/editaffiliate">
+				<Link to="/pages/affiliate_terms">
 					<button className="btn primary" style={{ width: '160px' }}>
-						Create Affiliate
+						Affiliate Terms
 					</button>
+				</Link>
+				<Link to="/secure/glow/editaffiliate">
+					<button className="btn primary">Create Affiliate</button>
 				</Link>
 			</div>
 			<div className="jc-c">

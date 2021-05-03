@@ -136,6 +136,8 @@ routes/device_routes.js
 routes/email_routes_original.js
 routes/log_routes.js
 routes/chip_routes.js
+routes/payment_routes.js
+routes/shipping_routes.js
 
 models/user.js
 models/team.js

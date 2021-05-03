@@ -6,7 +6,7 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
-import { API_Orders } from '../../utils';
+import { API_Orders, API_Shipping } from '../../utils';
 
 const ShippingPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -96,7 +96,7 @@ const ShippingPage = (props) => {
 	}, []);
 
 	const get_all_shipping = async () => {
-		const { data } = await API_Orders.get_all_shipping();
+		const { data } = await API_Shipping.get_all_shipping();
 		set_all_shipping(data);
 		console.log({ data });
 	};

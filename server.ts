@@ -27,7 +27,9 @@ import {
 	device_routes,
 	log_routes,
 	chip_routes,
-	team_routes
+	team_routes,
+	payment_routes,
+	shipping_routes
 } from './routes/index';
 // import users from './routes/users';
 
@@ -117,6 +119,8 @@ app.use('/api/devices', device_routes);
 app.use('/api/logs', log_routes);
 app.use('/api/teams', team_routes);
 app.use('/api/all', batch_routes);
+app.use('/api/shipping', shipping_routes);
+app.use('/api/payments', payment_routes);
 
 // app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {

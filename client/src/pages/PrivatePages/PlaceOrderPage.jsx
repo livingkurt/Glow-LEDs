@@ -14,7 +14,7 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
-import { API_External, API_Orders, API_Products } from '../../utils';
+import { API_External, API_Orders, API_Products, API_Shipping } from '../../utils';
 import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
@@ -143,7 +143,7 @@ const PlaceOrderPage = (props) => {
 	);
 
 	const get_shipping_rates = async () => {
-		const { data } = await API_Orders.get_shipping_rates({
+		const { data } = await API_Shipping.get_shipping_rates({
 			orderItems: cartItems,
 			shipping,
 			payment,

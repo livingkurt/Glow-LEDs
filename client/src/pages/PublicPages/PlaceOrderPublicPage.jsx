@@ -11,7 +11,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
-import { API_External, API_Orders } from '../../utils';
+import { API_External, API_Orders, API_Shipping } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { cart_sale_price_switch } from '../../utils/react_helper_functions';
@@ -137,7 +137,7 @@ const PlaceOrderPublicPage = (props) => {
 	);
 
 	const get_shipping_rates = async () => {
-		const { data } = await API_Orders.get_shipping_rates({
+		const { data } = await API_Shipping.get_shipping_rates({
 			orderItems: cartItems,
 			shipping,
 			payment,

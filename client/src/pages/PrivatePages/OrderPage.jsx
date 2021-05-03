@@ -11,7 +11,7 @@ import { CardElement, Elements, useStripe, useElements } from '@stripe/react-str
 import { Helmet } from 'react-helmet';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
-import { API_Orders, API_Products } from '../../utils';
+import { API_Orders, API_Products, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
 import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
@@ -250,41 +250,41 @@ const OrderPage = (props) => {
 
 	const create_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Orders.create_label(order, order.shipping.shipping_rate);
+		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(order, data.tracking_code, data);
+		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
 
 	const create_return_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Orders.create_return_label(order, order.shipping.shipping_rate);
+		const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_return_tracking_number(order, data.tracking_code, data);
+		const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Orders.buy_label(order, order.shipping.shipping_rate);
+		const { data } = await API_Shipping.buy_label(order, order.shipping.shipping_rate);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		if (data) {
 			set_loading_label(false);
 		}
 		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(order, data.tracking_code, data);
+		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};

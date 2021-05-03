@@ -73,7 +73,7 @@ export const createPayOrder = (
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
 		const { data } = await axios.put(
-			'/api/orders/' + newOrder._id + '/pay',
+			'/api/payments/' + newOrder._id + '/pay',
 			{ paymentMethod },
 			{
 				headers: { Authorization: 'Bearer ' + user_data.token }
@@ -223,7 +223,7 @@ export const createPayOrderGuest = (
 
 			dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
-			const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { paymentMethod });
+			const paid = await axios.put('/api/payments/guestcheckout/' + newOrder._id + '/pay', { paymentMethod });
 			console.log({ paid });
 			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
 			Cookie.remove('shipping');
@@ -251,7 +251,7 @@ export const createPayOrderGuest = (
 
 					dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
-					const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', {
+					const paid = await axios.put('/api/payments/guestcheckout/' + newOrder._id + '/pay', {
 						paymentMethod
 					});
 					console.log({ paid });
@@ -289,7 +289,7 @@ export const createPayOrderGuest = (
 
 				dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 
-				const paid = await axios.put('/api/orders/guestcheckout/' + newOrder._id + '/pay', { paymentMethod });
+				const paid = await axios.put('/api/payments/guestcheckout/' + newOrder._id + '/pay', { paymentMethod });
 				console.log({ paid });
 				dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
 				Cookie.remove('shipping');
@@ -376,7 +376,7 @@ export const payOrder = (order: any, paymentMethod: any) => async (
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
 		const { userLogin: { userInfo: user_data } } = getState();
 		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/pay',
+			'/api/payments/' + order._id + '/pay',
 			{ paymentMethod },
 			{
 				headers: { Authorization: 'Bearer ' + user_data.token }
@@ -399,7 +399,7 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (
 ) => {
 	try {
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
-		const { data } = await axios.put('/api/orders/guestcheckout/' + order._id + '/pay', { paymentMethod });
+		const { data } = await axios.put('/api/payments/guestcheckout/' + order._id + '/pay', { paymentMethod });
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		console.log({ order: data.order });
 	} catch (error) {
@@ -534,7 +534,7 @@ export const refundOrder = (
 		dispatch({ type: ORDER_REFUND_REQUEST, payload: refundResult });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.put(
-			'/api/orders/' + order._id + '/refund',
+			'/api/payments/' + order._id + '/refund',
 			{
 				...order,
 				refund_amount: refund_amount,
