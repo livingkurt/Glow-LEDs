@@ -104,6 +104,89 @@ router.put('/create_label', async (req: any, res: any) => {
 	}
 });
 
+// router.put('/create_new_label', async (req: any, res: any) => {
+// 	try {
+// 		const EasyPost = new easy_post_api(process.env.EASY_POST);
+// 		const order = req.body.order;
+// 		console.log({ order });
+// 		const toAddress = new EasyPost.Address({
+// 			name: order.shipping.first_name + ' ' + order.shipping.last_name,
+// 			street1: order.shipping.address_1,
+// 			street2: order.shipping.address_2,
+// 			city: order.shipping.city,
+// 			state: order.shipping.state,
+// 			zip: order.shipping.postalCode,
+// 			country: order.shipping.country
+// 		});
+// 		const fromAddress = new EasyPost.Address({
+// 			street1: '404 Kenniston Dr',
+// 			street2: 'Apt D',
+// 			city: 'Austin',
+// 			state: 'TX',
+// 			zip: '78752',
+// 			country: 'United States',
+// 			company: 'Glow LEDs',
+// 			phone: '906-284-2208',
+// 			email: 'info.glowleds@gmail.com'
+// 		});
+// 		const cube_root_volume = Math.cbrt(
+// 			order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
+// 				order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
+// 				order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
+// 		);
+// 		let weight = 0;
+// 		order.orderItems.forEach((item: any, index: number) => {
+// 			if (item.weight_pounds) {
+// 				weight += item.weight_pounds * 16 + item.weight_ounces;
+// 			} else {
+// 				weight += item.weight_ounces;
+// 			}
+// 		});
+// 		const parcel = new EasyPost.Parcel({
+// 			length: cube_root_volume,
+// 			width: cube_root_volume,
+// 			height: cube_root_volume,
+// 			weight
+// 		});
+// 		let customsInfo = {};
+// 		if (order.shipping.international) {
+// 			const customs_items = order.orderItems.map((item: any) => {
+// 				const customs_item = new EasyPost.CustomsItem({
+// 					description: '3D Printed Accessories',
+// 					quantity: item.qty,
+// 					value: item.price,
+// 					weight: item.weight,
+// 					origin_country: 'US'
+// 				});
+// 				return customs_item;
+// 			});
+
+// 			customsInfo = new EasyPost.CustomsInfo({
+// 				eel_pfc: 'NOEEI 30.37(a)',
+// 				customs_certify: true,
+// 				customs_signer: order.shipping.first_name + ' ' + order.shipping.last_name,
+// 				contents_type: 'merchandise',
+// 				restriction_type: 'none',
+// 				non_delivery_option: 'return',
+// 				customs_items
+// 			});
+// 		}
+
+// 		const shipment = new EasyPost.Shipment({
+// 			to_address: toAddress,
+// 			from_address: fromAddress,
+// 			parcel: parcel,
+// 			customsInfo: order.shipping.international ? customsInfo : {}
+// 		});
+// 		const saved_shipment = await shipment.save();
+// 		const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
+// 		const label = await created_shipment.buy(created_shipment.lowestRate(), 0);
+// 		res.send(label);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
+
 router.put('/create_return_label', async (req: any, res: any) => {
 	try {
 		const EasyPost = new easy_post_api(process.env.EASY_POST);

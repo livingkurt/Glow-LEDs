@@ -261,6 +261,19 @@ const OrderPage = (props) => {
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
+	// const create_new_label = async () => {
+	// 	set_loading_label(true);
+	// 	const { data } = await API_Shipping.create_new_label(order, order.shipping.shipping_rate);
+	// 	window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+	// 	console.log({ data });
+	// 	if (data) {
+	// 		set_loading_label(false);
+	// 	}
+	// 	console.log({ tracking_code: data.tracking_code });
+	// 	const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+	// 	console.log(request);
+	// 	dispatch(detailsOrder(props.match.params.id));
+	// };
 
 	const create_return_label = async () => {
 		set_loading_label(true);
@@ -962,11 +975,14 @@ ${order.shipping.email}`)}
 												</Link>
 											</div>
 
-											{!order.shipping.shipping_label && (
+											<button className="btn secondary mv-5px" onClick={() => create_label()}>
+												{!order.shipping.shipping_label ? 'Create Label' : 'Create New Label'}
+											</button>
+											{/* {order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => create_label()}>
-													Create Label
+													Create New Label
 												</button>
-											)}
+											)} */}
 											{!order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => buy_label()}>
 													Buy Label
