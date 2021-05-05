@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const AffiliateTermsPage = () => {
+const BecomeAffiliatePage = () => {
 	return (
 		<div className="main_container p-20px ">
 			<Helmet>
@@ -24,8 +24,12 @@ const AffiliateTermsPage = () => {
 				/>
 			</Helmet>
 
-			<h1 className="ta-c">Affiliate Terms & Conditions</h1>
-			<h2 className="ta-c">Promotor Terms</h2>
+			<h1 className="ta-c">About Our Affiliate Program</h1>
+			<p>
+				We want the best of the best to be the face of Glow LEDs, so we can show the community that we have what
+				it takes to be known and respected. We need not only great glovers but great people with far reaching
+				influnce in the community online and in real life.
+			</p>
 			<div className="paragraph_font">
 				<h3 style={{ webkitTextStroke: '0px' }}>Promoter Benefits</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
@@ -180,4 +184,4 @@ const AffiliateTermsPage = () => {
 	);
 };
 
-export default AffiliateTermsPage;
+export default BecomeAffiliatePage;

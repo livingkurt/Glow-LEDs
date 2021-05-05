@@ -60,6 +60,7 @@ export { default as EmailSentPage } from './PublicPages/EmailSentPage';
 export { default as MaintenancePage } from './PublicPages/MaintenancePage';
 export { default as TermsPage } from './PublicPages/TermsPage';
 export { default as AffiliateTermsPage } from './PublicPages/AffiliateTermsPage';
+export { default as BecomeAffiliatePage } from './PublicPages/BecomeAffiliatePage';
 export { default as AboutPage } from './PublicPages/AboutPage';
 export { default as FAQPage } from './PublicPages/FAQPage';
 export { default as SitemapPage } from './PublicPages/SitemapPage';

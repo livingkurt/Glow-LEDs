@@ -8,6 +8,7 @@ import { listUsers } from '../../actions/userActions';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { listProducts } from '../../actions/productActions';
 import { API_Products } from '../../utils';
+import { format_date, unformat_date } from '../../utils/helper_functions';
 
 const EditPromoPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -26,7 +27,10 @@ const EditPromoPage = (props) => {
 	const [ amount_off, set_amount_off ] = useState(0);
 	const [ minimum_total, set_minimum_total ] = useState(0);
 	const [ free_shipping, set_free_shipping ] = useState(false);
+	const [ time_limit, set_time_limit ] = useState(false);
 	const [ active, set_active ] = useState('');
+	const [ start_date, set_start_date ] = useState('');
+	const [ end_date, set_end_date ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ categories, set_categories ] = useState([]);
 
@@ -105,8 +109,16 @@ const EditPromoPage = (props) => {
 		set_amount_off(promo.amount_off);
 		set_minimum_total(promo.minimum_total);
 		set_free_shipping(promo.free_shipping);
+		set_time_limit(promo.time_limit);
 		set_active(promo.active);
+		if (promo.start_date) {
+			set_start_date(format_date(promo.start_date));
+		}
+		if (promo.end_date) {
+			set_end_date(format_date(promo.end_date));
+		}
 	};
+	const today = new Date();
 	const unset_state = () => {
 		set_id('');
 		set_affiliate('');
@@ -122,7 +134,10 @@ const EditPromoPage = (props) => {
 		set_amount_off('');
 		set_minimum_total('');
 		set_free_shipping('');
+		set_time_limit('');
 		set_active('');
+		set_start_date(format_date('2021-01-01'));
+		set_end_date(format_date('2021-01-01'));
 	};
 
 	const submitHandler = (e) => {
@@ -143,6 +158,9 @@ const EditPromoPage = (props) => {
 				amount_off,
 				minimum_total,
 				free_shipping,
+				time_limit,
+				start_date: unformat_date(start_date),
+				end_date: unformat_date(end_date),
 				active
 			})
 		);
@@ -368,6 +386,7 @@ const EditPromoPage = (props) => {
 													/>
 												</li>
 											)}
+
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -382,6 +401,53 @@ const EditPromoPage = (props) => {
 															set_used_once(e.target.checked);
 														}}
 													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="time_limit">Time Limit</label>
+													<input
+														type="checkbox"
+														name="time_limit"
+														defaultChecked={time_limit}
+														id="time_limit"
+														onChange={(e) => {
+															set_time_limit(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{time_limit && (
+												<li>
+													<div className="jc-b">
+														<div>
+															<label htmlFor="start_date">Start Date</label>
+															<input
+																type="text"
+																className="w-100per"
+																name="start_date"
+																value={start_date}
+																id="start_date"
+																onChange={(e) => set_start_date(e.target.value)}
+															/>
+														</div>
+														<div className="m-7px pt-22px">
+															<i className="fas fa-minus" />
+														</div>
+														<div>
+															<label htmlFor="end_date">End Date</label>
+															<input
+																type="text"
+																className="w-100per"
+																name="end_date"
+																value={end_date}
+																id="end_date"
+																onChange={(e) => set_end_date(e.target.value)}
+															/>
+														</div>
+													</div>
 												</li>
 											)}
 

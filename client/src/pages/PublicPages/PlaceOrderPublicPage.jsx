@@ -933,17 +933,7 @@ const PlaceOrderPublicPage = (props) => {
 								</div>
 							)}
 						</li>
-						{!loading_tax_rate &&
-						!hide_pay_button &&
-						shipping &&
-						shipping.hasOwnProperty('first_name') &&
-						!create_account && (
-							<div>
-								<Elements stripe={stripePromise}>
-									<Form />
-								</Elements>
-							</div>
-						)}
+
 						{/* {!loading_tax_rate &&
 						!hide_pay_button &&
 						shipping &&
@@ -982,7 +972,7 @@ const PlaceOrderPublicPage = (props) => {
 							<li className="column">
 								<label htmlFor="password">Password</label>
 								<input
-									className="form_input"
+									// className="form_input"
 									type="password"
 									id="password"
 									name="password"
@@ -995,7 +985,7 @@ const PlaceOrderPublicPage = (props) => {
 							<li className="column">
 								<label htmlFor="rePassword">Re-Enter Password</label>
 								<input
-									className="form_input"
+									// className="form_input"
 									type="password"
 									id="rePassword"
 									name="rePassword"
@@ -1013,37 +1003,6 @@ const PlaceOrderPublicPage = (props) => {
 									Check Password
 								</button>
 							</li>
-						)}
-
-						{/* {shipping &&
-						shipping.hasOwnProperty('first_name') &&
-						passwords_check && (
-							<div>
-								<StripeCheckout
-									name="Glow LEDs"
-									description={`Complete Order`}
-									amount={totalPrice.toFixed(2) * 100}
-									token={(token) => placeOrderHandler(token, true)}
-									stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									onChange={handleChangeFor('cardNumber')}
-								>
-									<button className="btn primary w-100per mb-12px">
-										Complete Order/Create Account
-									</button>
-								</StripeCheckout>
-							</div>
-						)} */}
-
-						{!hide_pay_button &&
-						shipping &&
-						shipping.hasOwnProperty('first_name') &&
-						create_account &&
-						passwords_check && (
-							<div>
-								<Elements stripe={stripePromise}>
-									<Form />
-								</Elements>
-							</div>
 						)}
 						<div className="mv-10px">
 							<label htmlFor="promo_code">Promo Code</label>
@@ -1079,17 +1038,40 @@ const PlaceOrderPublicPage = (props) => {
 								{show_message}
 							</div>
 						)}
-						<div className="column">
+						<div className="w-100per">
 							<div htmlFor="order_note">Add a note</div>
-							<textarea
+							<input
+								type="text"
 								name="order_note"
 								value={order_note}
 								id="order_note"
-								style={{ width: '100%', height: '100px' }}
+								className="w-100per"
 								onChange={(e) => set_order_note(e.target.value)}
 							/>
 							<h4>{no_note_warning()}</h4>
 						</div>
+						{!loading_tax_rate &&
+						!hide_pay_button &&
+						shipping &&
+						shipping.hasOwnProperty('first_name') &&
+						!create_account && (
+							<div>
+								<Elements stripe={stripePromise}>
+									<Form />
+								</Elements>
+							</div>
+						)}
+						{!hide_pay_button &&
+						shipping &&
+						shipping.hasOwnProperty('first_name') &&
+						create_account &&
+						passwords_check && (
+							<div>
+								<Elements stripe={stripePromise}>
+									<Form />
+								</Elements>
+							</div>
+						)}
 					</ul>
 				</div>
 			</div>

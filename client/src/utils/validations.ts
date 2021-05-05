@@ -12,8 +12,9 @@ export const validate_promo_code = (data: any) => {
 		promo_code: string;
 	}
 	const promo_codes = data.promos.map((promo: any) => promo.promo_code.toLowerCase());
-	console.log({ promo_codes });
-	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code);
+	// console.log({ promo_codes });
+	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
+
 	console.log({ promo });
 
 	// Convert empty fields to an empty string so we can use validator functions
@@ -44,12 +45,29 @@ export const validate_promo_code = (data: any) => {
 	}
 
 	if (promo && promo.single_use && promo.used_once) {
-		console.log({ single_use: promo.single_use, used_once: promo.used_once });
+		// console.log({ single_use: promo.single_use, used_once: promo.used_once });
 		errors.promo_code = 'Promo Code Not Active';
 	}
 	if (!promo_codes.includes(data.promo_code.toLowerCase())) {
 		errors.promo_code = 'Promo Code Not Valid';
 	}
+	const today = new Date();
+
+	if (promo && promo.time_limit) {
+		console.log({ today, start_date: new Date(promo.start_date) });
+		if (today > new Date(promo.end_date) || today < new Date(promo.start_date)) {
+			// console.log('Today is Greater');
+			errors.promo_code = 'Promo Code Not Active';
+		}
+		// else {
+		// }
+		// if (today < new Date(promo.start_date) && today > new Date(promo.end_date)) {
+		// 	console.log('hello');
+		// }
+		// console.log('hello');
+		// errors.promo_code = 'Promo Code Not Active';
+	}
+
 	return {
 		errors,
 		isValid: isEmpty(errors)

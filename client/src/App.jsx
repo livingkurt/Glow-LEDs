@@ -76,7 +76,8 @@ import {
 	TeamPage,
 	AllTeamsPage,
 	ManualPage,
-	AffiliateTermsPage
+	AffiliateTermsPage,
+	BecomeAffiliatePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -366,6 +367,7 @@ const App = () => {
 							<Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
 							<Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
 							<Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
+							<Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
 
 							<Route component={Four04Page} />
 						</Switch>

@@ -504,6 +504,10 @@ const PlaceOrderPage = (props) => {
 		}
 	};
 
+	// const update_promo_code = (e) => {
+	//   set_promo_code(e.target.value.toUpperCase()
+	// }
+
 	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
 	// console.log(process.env.REACT_APP_STRIPE_KEY);
 
@@ -960,7 +964,7 @@ const PlaceOrderPage = (props) => {
 											);
 										})}
 										{/* {shipping_rates.rates.find((rate, index) => rate.service) === 'First' < shipping_rates.rates.find((rate, index) => rate.service === 'Ground')} */}
-										{shipping_rates.rates.map((rate, index) => {
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Ground' && (
 													<div className=" mv-1rem jc-b  ai-c">
@@ -982,7 +986,7 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
+										})} */}
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Express' && (
@@ -1051,6 +1055,55 @@ const PlaceOrderPage = (props) => {
 								</StripeCheckout>
 							</div>
 						)} */}
+						<div className="mv-10px">
+							<label htmlFor="promo_code">Promo Code</label>
+
+							<form onSubmit={(e) => check_code(e)} className="row">
+								<input
+									type="text"
+									value={promo_code}
+									name="promo_code"
+									id="promo_code"
+									className="w-100per"
+									style={{ textTransform: 'uppercase' }}
+									onChange={(e) => {
+										e.preventDefault();
+										set_promo_code(e.target.value.toUpperCase());
+									}}
+								/>
+								<button
+									className="btn primary"
+									// onTouchStart={() => (e)()}
+									// onClick={() => check_code()}
+									style={{ curser: 'pointer' }}
+								>
+									Apply
+								</button>
+							</form>
+						</div>
+						<label className="validation_text" style={{ textAlign: 'center' }}>
+							{promo_code_validations}
+						</label>
+						{show_message && (
+							<div className="promo_code mv-1rem">
+								<button className="btn icon" onClick={() => remove_promo()}>
+									<i className="fas fa-times mr-5px" />
+								</button>
+								{show_message}
+							</div>
+						)}
+						<div className="w-100per">
+							<div htmlFor="order_note">Add a note</div>
+							<input
+								type="text"
+								name="order_note"
+								value={order_note}
+								id="order_note"
+								className="w-100per"
+								onChange={(e) => set_order_note(e.target.value)}
+							/>
+							<h4>{no_note_warning()}</h4>
+						</div>
 						{!loading_tax_rate &&
 						!hide_pay_button &&
 						shipping &&
@@ -1128,52 +1181,6 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						)}
-
-						<div className="mv-10px">
-							<label htmlFor="promo_code">Promo Code</label>
-
-							<form onSubmit={(e) => check_code(e)} className="row">
-								<input
-									type="text"
-									value={promo_code}
-									name="promo_code"
-									id="promo_code"
-									className="w-100per"
-									style={{ textTransform: 'uppercase' }}
-									onChange={(e) => set_promo_code(e.target.value.toUpperCase())}
-								/>
-								<button
-									className="btn primary"
-									// onTouchStart={() => (e)()}
-									// onClick={() => check_code()}
-									style={{ curser: 'pointer' }}
-								>
-									Apply
-								</button>
-							</form>
-						</div>
-						<label className="validation_text" style={{ textAlign: 'center' }}>
-							{promo_code_validations}
-						</label>
-						{show_message && (
-							<div className="promo_code mv-1rem">
-								<button className="btn icon" onClick={() => remove_promo()}>
-									<i className="fas fa-times mr-5px" />
-								</button>
-								{show_message}
-							</div>
-						)}
-						<div className="column">
-							<div htmlFor="order_note">Add a note</div>
-							<textarea
-								name="order_note"
-								value={order_note}
-								id="order_note"
-								style={{ width: '100%', height: '100px' }}
-								onChange={(e) => set_order_note(e.target.value)}
-							/>
-							<h4>{no_note_warning()}</h4>
-						</div>
 					</ul>
 				</div>
 			</div>

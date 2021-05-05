@@ -351,6 +351,9 @@ const Header = (props) => {
 								<Link to="/account/submit_feature">
 									<button className="btn nav w-100per ta-l">Submit Feature</button>
 								</Link>
+								{/* <Link to="/pages/become_affiliate">
+									<button className="btn nav w-100per ta-l">Become an Affiliate</button>
+								</Link> */}
 							</div>
 						</div>
 						{/* <div className="dropdown-nav">

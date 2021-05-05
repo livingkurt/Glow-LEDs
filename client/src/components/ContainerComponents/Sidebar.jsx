@@ -341,6 +341,11 @@ const Sidebar = (props) => {
 								Submit Feature
 							</button>
 						</Link>
+						{/* <Link to="/pages/become_affiliate">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Become an Affiliate
+							</button>
+						</Link> */}
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
