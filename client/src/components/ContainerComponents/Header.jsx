@@ -198,11 +198,19 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-200px">
+											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-250px">
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">
+															Cylinders (New)
+														</button>
+													</div>
+												</Link>
 												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Domes</button>
+														<button className="btn nav w-100per ta-l">Domes (New)</button>
 													</div>
 												</Link>
 												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
@@ -223,6 +231,7 @@ const Header = (props) => {
 														<button className="btn nav w-100per ta-l">Abstract</button>
 													</div>
 												</Link>
+
 												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/polygons">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}

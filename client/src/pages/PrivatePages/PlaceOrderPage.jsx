@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder, createOrderGuest } from '../../actions/orderActions';
@@ -18,6 +18,8 @@ import { API_External, API_Orders, API_Products, API_Shipping } from '../../util
 import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
+	const promo_code_ref = useRef(null);
+	const order_note_ref = useRef(null);
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
@@ -152,8 +154,8 @@ const PlaceOrderPage = (props) => {
 			taxPrice,
 			totalPrice,
 			userInfo,
-			order_note,
-			promo_code
+			order_note: order_note_ref.current.value,
+			promo_code: promo_code_ref.current.value
 		});
 		console.log({ data });
 		if (data) {
@@ -234,8 +236,8 @@ const PlaceOrderPage = (props) => {
 					taxPrice,
 					totalPrice,
 					userInfo,
-					order_note,
-					promo_code
+					order_note: order_note_ref.current.value,
+					promo_code: promo_code_ref.current.value
 				},
 				paymentMethod
 			)
@@ -289,8 +291,8 @@ const PlaceOrderPage = (props) => {
 				taxPrice,
 				totalPrice,
 				user,
-				order_note,
-				promo_code
+				order_note: order_note_ref.current.value,
+				promo_code: promo_code_ref.current.value
 			})
 		);
 
@@ -331,8 +333,8 @@ const PlaceOrderPage = (props) => {
 				shippingPrice,
 				taxPrice,
 				totalPrice,
-				order_note,
-				promo_code
+				order_note: order_note_ref.current.value,
+				promo_code: promo_code_ref.current.value
 			})
 		);
 
@@ -414,16 +416,18 @@ const PlaceOrderPage = (props) => {
 
 	const check_code = (e) => {
 		e.preventDefault();
-		const data = { promo_code, promos, userInfo, items_price };
-		console.log({ data });
+		// console.log({ promo_code: promo_code_ref.current.value });
+		const data = { promo_code: promo_code_ref.current.value, promos, userInfo, items_price };
+		// console.log({ data });
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);
 		console.log(request);
-		console.log({ request });
+		// console.log({ request });
 
 		if (request.isValid) {
-			const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
+			const promo = promos.find((promo) => promo.promo_code === promo_code_ref.current.value);
+			console.log({ isValid: promo, promo_code: promo_code });
 			const category_cart_items = cartItems
 				.filter((item) => promo.excluded_categories.includes(item.category))
 				.reduce((a, item) => a + item.price, 0);
@@ -453,11 +457,11 @@ const PlaceOrderPage = (props) => {
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
-				if (promo_code === 'freeshipping') {
-					setPreviousShippingPrice(shippingPrice);
-					setShippingPrice(0);
-					set_free_shipping_message('Free');
-				}
+				// if (promo_code_ref.current.value === 'freeshipping') {
+				// 	setPreviousShippingPrice(shippingPrice);
+				// 	setShippingPrice(0);
+				// 	set_free_shipping_message('Free');
+				// }
 				set_show_message(
 					`${promo.promo_code} ${promo.percentage_off
 						? `${promo.percentage_off}% Off`
@@ -1061,15 +1065,16 @@ const PlaceOrderPage = (props) => {
 							<form onSubmit={(e) => check_code(e)} className="row">
 								<input
 									type="text"
-									value={promo_code}
+									// value={promo_code}
 									name="promo_code"
 									id="promo_code"
 									className="w-100per"
 									style={{ textTransform: 'uppercase' }}
-									onChange={(e) => {
-										e.preventDefault();
-										set_promo_code(e.target.value.toUpperCase());
-									}}
+									ref={promo_code_ref}
+									// onBlur={(e) => {
+									// 	e.preventDefault();
+									// 	set_promo_code(e.target.value.toUpperCase());
+									// }}
 								/>
 								<button
 									className="btn primary"
@@ -1097,10 +1102,11 @@ const PlaceOrderPage = (props) => {
 							<input
 								type="text"
 								name="order_note"
-								value={order_note}
+								// value={order_note}
 								id="order_note"
 								className="w-100per"
-								onChange={(e) => set_order_note(e.target.value)}
+								ref={order_note_ref}
+								// onBlur={(e) => set_order_note(e.target.value)}
 							/>
 							<h4>{no_note_warning()}</h4>
 						</div>

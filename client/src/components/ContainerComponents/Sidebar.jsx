@@ -191,9 +191,14 @@ const Sidebar = (props) => {
 										</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Cylinders (New)
+											</button>
+										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Domes
+												Domes (New)
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
