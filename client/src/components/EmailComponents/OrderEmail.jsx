@@ -997,7 +997,8 @@ const OrderEmail = (props) => {
 
 					<button
 						className="btn primary mb-1rem"
-						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h2, order.isRefunded)}
+						onClick={() =>
+							send_order_email('lavacquek@icloud.com', 'Kurt', 'Your Glow LEDS Order', order.isRefunded)}
 					>
 						Send Test Email
 					</button>
@@ -1007,7 +1008,7 @@ const OrderEmail = (props) => {
 							send_order_email(
 								order.shipping.email,
 								order.shipping.first_name,
-								email.h2,
+								'Your Glow LEDS Order',
 								order.isRefunded
 							)}
 					>
