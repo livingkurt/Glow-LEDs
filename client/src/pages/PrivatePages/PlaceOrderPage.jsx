@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder, createOrderGuest } from '../../actions/orderActions';
-import { CheckoutSteps } from '../../components/SpecialtyComponents';
+import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
 import StripeCheckout from 'react-stripe-checkout';
-import { loadStripe } from '@stripe/stripe-js';
+
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
@@ -512,74 +512,73 @@ const PlaceOrderPage = (props) => {
 	//   set_promo_code(e.target.value.toUpperCase()
 	// }
 
-	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
 	// console.log(process.env.REACT_APP_STRIPE_KEY);
 
-	const Form = () => {
-		const stripe = useStripe();
-		const elements = useElements();
+	// const Form = () => {
+	// 	const stripe = useStripe();
+	// 	const elements = useElements();
 
-		const handleSubmit = async (event) => {
-			event.preventDefault();
-			const { error, paymentMethod } = await stripe.createPaymentMethod({
-				type: 'card',
-				card: elements.getElement(CardElement)
-			});
+	// 	const handleSubmit = async (event) => {
+	// 		event.preventDefault();
+	// 		const { error, paymentMethod } = await stripe.createPaymentMethod({
+	// 			type: 'card',
+	// 			card: elements.getElement(CardElement)
+	// 		});
 
-			// console.log({ error });
-			if (error) {
-				console.log({ error });
-				return;
-			}
-			console.log({ paymentMethod });
-			placeOrderHandler(paymentMethod);
-		};
+	// 		// console.log({ error });
+	// 		if (error) {
+	// 			console.log({ error });
+	// 			return;
+	// 		}
+	// 		console.log({ paymentMethod });
+	// 		placeOrderHandler(paymentMethod);
+	// 	};
 
-		return (
-			<form onSubmit={handleSubmit}>
-				<CardElement
-					// options={{
-					// 	style: {
-					// 		base: {
-					// 			fontSize: '20px',
-					// 			color: 'white',
-					// 			backgroundColor: '#4d5061',
-					// 			padding: '1rem',
-					// 			'::placeholder': {
-					// 				color: 'white'
-					// 			}
-					// 		},
-					// 		invalid: {
-					// 			color: '#9e2146'
-					// 		}
-					// 	}
-					// }}
-					options={{
-						iconStyle: 'solid',
-						style: {
-							base: {
-								iconColor: '#c4f0ff',
-								color: '#fff',
-								fontWeight: 500,
-								fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-								fontSize: '1.2rem',
-								fontSmoothing: 'antialiased',
-								':-webkit-autofill': { color: 'white' },
-								'::placeholder': { color: 'white' }
-							},
-							invalid: {
-								iconColor: '#ffc7ee',
-								color: '#ffc7ee'
-							}
-						}
-					}}
-				/>
-				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-					Complete Order
-				</button>
-			</form>
-		);
-	};
+	// 	return (
+	// 		<form onSubmit={handleSubmit}>
+	// 			<CardElement
+	// 				// options={{
+	// 				// 	style: {
+	// 				// 		base: {
+	// 				// 			fontSize: '20px',
+	// 				// 			color: 'white',
+	// 				// 			backgroundColor: '#4d5061',
+	// 				// 			padding: '1rem',
+	// 				// 			'::placeholder': {
+	// 				// 				color: 'white'
+	// 				// 			}
+	// 				// 		},
+	// 				// 		invalid: {
+	// 				// 			color: '#9e2146'
+	// 				// 		}
+	// 				// 	}
+	// 				// }}
+	// 				options={{
+	// 					iconStyle: 'solid',
+	// 					style: {
+	// 						base: {
+	// 							iconColor: '#c4f0ff',
+	// 							color: '#fff',
+	// 							fontWeight: 500,
+	// 							fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+	// 							fontSize: '1.2rem',
+	// 							fontSmoothing: 'antialiased',
+	// 							':-webkit-autofill': { color: 'white' },
+	// 							'::placeholder': { color: 'white' }
+	// 						},
+	// 						invalid: {
+	// 							iconColor: '#ffc7ee',
+	// 							color: '#ffc7ee'
+	// 						}
+	// 					}
+	// 				}}
+	// 			/>
+	// 			<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
+	// 				Complete Order
+	// 			</button>
+	// 		</form>
+	// 	);
+	// };
 
 	return (
 		<div>
@@ -1113,13 +1112,17 @@ const PlaceOrderPage = (props) => {
 						{!loading_tax_rate &&
 						!hide_pay_button &&
 						shipping &&
+						shipping.hasOwnProperty('first_name') && <Stripe pay_order={placeOrderHandler} />}
+						{/* {!loading_tax_rate &&
+						!hide_pay_button &&
+						shipping &&
 						shipping.hasOwnProperty('first_name') && (
 							<div>
 								<Elements stripe={stripePromise}>
 									<Form />
 								</Elements>
 							</div>
-						)}
+						)} */}
 						{userInfo &&
 						userInfo.isAdmin && (
 							<div>

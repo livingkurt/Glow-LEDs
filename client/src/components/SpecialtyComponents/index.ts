@@ -29,3 +29,5 @@ export { default as Filter } from './Filter';
 export { default as ProductSimple } from './ProductSimple';
 export { default as ProductSimpleSmallScreen } from './ProductSimpleSmallScreen';
 export { default as ReadMore } from './ReadMore';
+export { default as StripeForm } from './StripeForm';
+export { default as Stripe } from './Stripe';

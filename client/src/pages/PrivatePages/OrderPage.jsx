@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsOrder, payOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
-import { CheckoutSteps } from '../../components/SpecialtyComponents';
+import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import StripeCheckout from 'react-stripe-checkout';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -109,8 +109,8 @@ const OrderPage = (props) => {
 	};
 
 	const pay_order = (paymentMethod) => {
-		dispatch(payOrder(order, paymentMethod));
 		set_payment_loading(true);
+		dispatch(payOrder(order, paymentMethod));
 	};
 
 	useEffect(
@@ -314,53 +314,53 @@ const OrderPage = (props) => {
 		);
 	};
 
-	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
-	// console.log(process.env.REACT_APP_STRIPE_KEY);
+	// const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
+	// // console.log(process.env.REACT_APP_STRIPE_KEY);
 
-	const Form = () => {
-		const stripe = useStripe();
-		const elements = useElements();
+	// const Form = () => {
+	// 	const stripe = useStripe();
+	// 	const elements = useElements();
 
-		const handleSubmit = async (event) => {
-			event.preventDefault();
-			const { error, paymentMethod } = await stripe.createPaymentMethod({
-				type: 'card',
-				card: elements.getElement(CardElement)
-			});
+	// 	const handleSubmit = async (event) => {
+	// 		event.preventDefault();
+	// 		const { error, paymentMethod } = await stripe.createPaymentMethod({
+	// 			type: 'card',
+	// 			card: elements.getElement(CardElement)
+	// 		});
 
-			// console.log({ error });
-			if (error) {
-				console.log({ error });
-				return;
-			}
-			console.log({ paymentMethod });
-			pay_order(paymentMethod);
-		};
+	// 		// console.log({ error });
+	// 		if (error) {
+	// 			console.log({ error });
+	// 			return;
+	// 		}
+	// 		console.log({ paymentMethod });
+	// 		pay_order(paymentMethod);
+	// 	};
 
-		return (
-			<form onSubmit={handleSubmit}>
-				<CardElement
-					options={{
-						style: {
-							base: {
-								fontSize: '20px',
-								color: 'white',
-								'::placeholder': {
-									color: 'white'
-								}
-							},
-							invalid: {
-								color: '#9e2146'
-							}
-						}
-					}}
-				/>
-				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-					Complete Order
-				</button>
-			</form>
-		);
-	};
+	// 	return (
+	// 		<form onSubmit={handleSubmit}>
+	// 			<CardElement
+	// 				options={{
+	// 					style: {
+	// 						base: {
+	// 							fontSize: '20px',
+	// 							color: 'white',
+	// 							'::placeholder': {
+	// 								color: 'white'
+	// 							}
+	// 						},
+	// 						invalid: {
+	// 							color: '#9e2146'
+	// 						}
+	// 					}
+	// 				}}
+	// 			/>
+	// 			<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
+	// 				Complete Order
+	// 			</button>
+	// 		</form>
+	// 	);
+	// };
 
 	return (
 		<Loading loading={loading} error={error}>
@@ -724,13 +724,7 @@ ${order.shipping.email}`)}
 									</div>
 								)} */}
 
-								{!order.isPaid && (
-									<div>
-										<Elements stripe={stripePromise}>
-											<Form />
-										</Elements>
-									</div>
-								)}
+								{!order.isPaid && <Stripe pay_order={pay_order} />}
 
 								{order.promo_code && (
 									<div className="column">

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createOrder, createPayOrderGuest } from '../../actions/orderActions';
-import { GuestCheckoutSteps } from '../../components/SpecialtyComponents';
+import { GuestCheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
@@ -429,58 +429,58 @@ const PlaceOrderPublicPage = (props) => {
 		}
 	};
 
-	const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
-	// console.log(process.env.REACT_APP_STRIPE_KEY);
+	// const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
+	// // console.log(process.env.REACT_APP_STRIPE_KEY);
 
-	const Form = () => {
-		const stripe = useStripe();
-		const elements = useElements();
+	// const Form = () => {
+	// 	const stripe = useStripe();
+	// 	const elements = useElements();
 
-		const handleSubmit = async (event) => {
-			event.preventDefault();
-			const { error, paymentMethod } = await stripe.createPaymentMethod({
-				type: 'card',
-				card: elements.getElement(CardElement)
-			});
+	// 	const handleSubmit = async (event) => {
+	// 		event.preventDefault();
+	// 		const { error, paymentMethod } = await stripe.createPaymentMethod({
+	// 			type: 'card',
+	// 			card: elements.getElement(CardElement)
+	// 		});
 
-			// console.log({ error });
-			if (error) {
-				console.log({ error });
-				return;
-			}
-			console.log({ paymentMethod });
-			placeOrderHandler(paymentMethod);
-		};
+	// 		// console.log({ error });
+	// 		if (error) {
+	// 			console.log({ error });
+	// 			return;
+	// 		}
+	// 		console.log({ paymentMethod });
+	// 		placeOrderHandler(paymentMethod);
+	// 	};
 
-		return (
-			<form onSubmit={handleSubmit}>
-				<CardElement
-					options={{
-						iconStyle: 'solid',
-						style: {
-							base: {
-								iconColor: '#c4f0ff',
-								color: '#fff',
-								fontWeight: 500,
-								fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-								fontSize: '1.2rem',
-								fontSmoothing: 'antialiased',
-								':-webkit-autofill': { color: 'white' },
-								'::placeholder': { color: 'white' }
-							},
-							invalid: {
-								iconColor: '#ffc7ee',
-								color: '#ffc7ee'
-							}
-						}
-					}}
-				/>
-				<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-					Complete Order
-				</button>
-			</form>
-		);
-	};
+	// 	return (
+	// 		<form onSubmit={handleSubmit}>
+	// 			<CardElement
+	// 				options={{
+	// 					iconStyle: 'solid',
+	// 					style: {
+	// 						base: {
+	// 							iconColor: '#c4f0ff',
+	// 							color: '#fff',
+	// 							fontWeight: 500,
+	// 							fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+	// 							fontSize: '1.2rem',
+	// 							fontSmoothing: 'antialiased',
+	// 							':-webkit-autofill': { color: 'white' },
+	// 							'::placeholder': { color: 'white' }
+	// 						},
+	// 						invalid: {
+	// 							iconColor: '#ffc7ee',
+	// 							color: '#ffc7ee'
+	// 						}
+	// 					}
+	// 				}}
+	// 			/>
+	// 			<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
+	// 				Complete Order
+	// 			</button>
+	// 		</form>
+	// 	);
+	// };
 
 	return (
 		<div>
@@ -1062,24 +1062,12 @@ const PlaceOrderPublicPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						!create_account && (
-							<div>
-								<Elements stripe={stripePromise}>
-									<Form />
-								</Elements>
-							</div>
-						)}
+						!create_account && <Stripe pay_order={placeOrderHandler} />}
 						{!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
 						create_account &&
-						passwords_check && (
-							<div>
-								<Elements stripe={stripePromise}>
-									<Form />
-								</Elements>
-							</div>
-						)}
+						passwords_check && <Stripe pay_order={placeOrderHandler} />}
 					</ul>
 				</div>
 			</div>
