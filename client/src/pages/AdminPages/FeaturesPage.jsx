@@ -65,7 +65,8 @@ const FeaturesPage = (props) => {
 		{ name: 'Glovers', color: '#3e4c6d' },
 		{ name: 'Producers', color: '#4b7188' },
 		{ name: 'Artists', color: '#6f5f7d' },
-		{ name: 'VFX', color: '#636363' }
+		{ name: 'VFX', color: '#408184' },
+		{ name: 'Unreleased', color: '#636363' }
 		// { name: 'Refunded', color: '#a9a9a9' }
 	];
 
@@ -80,9 +81,12 @@ const FeaturesPage = (props) => {
 		if (feature.category === 'artists') {
 			result = colors[2].color;
 		}
-		console.log({ category: feature.category });
+
 		if (feature.category === 'vfx') {
 			result = colors[3].color;
+		}
+		if (!feature.release_date) {
+			result = colors[4].color;
 		}
 		return result;
 	};

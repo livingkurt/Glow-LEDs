@@ -18,22 +18,7 @@ router.get('/', async (req, res) => {
 				}
 			: {};
 
-		let sortOrder = {};
-		if (req.query.sortOrder === 'glover name') {
-			sortOrder = { image: 1 };
-		} else if (req.query.sortOrder === 'facebook name') {
-			sortOrder = { p: 1 };
-		} else if (req.query.sortOrder === 'song id') {
-			sortOrder = { link: 1 };
-		} else if (req.query.sortOrder === 'button') {
-			sortOrder = { button: 1 };
-		} else if (req.query.sortOrder === 'instagram handle') {
-			sortOrder = { h2: 1 };
-		} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-			sortOrder = { release_date: -1 };
-		} else if (req.query.sortOrder === 'newest') {
-			sortOrder = { _id: -1 };
-		}
+		let sortOrder = { _id: -1 };
 
 		const contents = await Content.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
 		log_request({
