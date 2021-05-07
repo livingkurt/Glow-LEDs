@@ -258,13 +258,13 @@ const InvoiceEmail = (props) => {
 										}}
 										valign="top"
 									>
-										{item.category === 'diffuser_caps' ||
+										{/* {item.category === 'diffuser_caps' ||
 										item.category === 'mega_diffuser_caps' ||
 										item.category === 'frosted_diffusers' ? (
 											`${item.diffuser_cap_color} `
 										) : (
 											''
-										)}
+										)} */}
 										{item.name}{' '}
 										{item.product_option &&
 											item.product_option.hasOwnProperty('name') &&

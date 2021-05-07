@@ -411,13 +411,13 @@ const OrderStatusEmail = (props) => {
 															</tr>
 														</table>
 														<div style={{ marginBottom: '1rem', marginLeft: '1rem' }}>
-															{item.category === 'diffuser_caps' ||
+															{/* {item.category === 'diffuser_caps' ||
 															item.category === 'mega_diffuser_caps' ||
 															item.category === 'frosted_diffusers' ? (
 																`${item.diffuser_cap_color} - `
 															) : (
 																''
-															)}
+															)} */}
 															{item.name}
 															{item.secondary_product ? (
 																` w (${item.secondary_product.name})`

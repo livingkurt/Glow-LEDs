@@ -90,7 +90,9 @@ const ShippingPage = (props) => {
 	);
 
 	useEffect(() => {
-		get_all_shipping();
+		if (userInfo.isAdmin) {
+			get_all_shipping();
+		}
 
 		return () => {};
 	}, []);
@@ -186,7 +188,7 @@ const ShippingPage = (props) => {
 	};
 	setTimeout(() => {
 		set_loading(false);
-	}, 500);
+	}, 50);
 
 	const update_shipping = (shipping) => {
 		shipping = JSON.parse(shipping);
