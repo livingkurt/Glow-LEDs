@@ -153,9 +153,31 @@ const ProductPage = (props) => {
 		[ error ]
 	);
 
+	const determine_default_color = (diffuser_cap_color) => {
+		if (!diffuser_cap_color) {
+			if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
+				return 'Translucent White';
+			} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
+				return 'Black';
+			} else if (product.category === 'glowskins') {
+				return 'Clear';
+			}
+		} else {
+			return diffuser_cap_color;
+		}
+	};
+
 	const handleAddToCart = () => {
 		console.log({ product_option });
-		dispatch(addToCart(props.match.params.pathname, qty, diffuser_cap_color, diffuser_cap, product_option));
+		dispatch(
+			addToCart(
+				props.match.params.pathname,
+				qty,
+				determine_default_color(diffuser_cap_color),
+				diffuser_cap,
+				product_option
+			)
+		);
 		open_cart();
 		set_product_option({});
 	};
@@ -471,74 +493,42 @@ const ProductPage = (props) => {
 											Shipping Calculated at Checkout
 										</h4>
 									</li>
-									{/* {product.product_options && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													Product Options:
-												</label>
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => update_product(JSON.parse(e.target.value))}
-													>
-														{product.product_options &&
-															product.product_options.map((option, index) => (
-																<option
-																	key={index}
-																	selected={option.default}
-																	value={JSON.stringify(option)}
-																>
-																	{option.name}
-																</option>
-															))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
-									{console.log({
-										product_options:
-											product.product_options &&
-											product.product_options.filter((option) => option.dropdown)
-									})}
+									{/* <div className=""> */}
 									{product.product_options &&
 									product.product_options.length > 0 &&
 									product.product_options.filter((option) => !option.dropdown).length > 0 && (
 										<li>
-											<div className="ai-c h-25px mb-15px">
+											<div className="row">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
-													className="select-label mr-1rem"
+													className="select-label mr-1rem mt-1rem"
 												>
 													Options:
 												</label>
-												{product.product_options
-													.filter((option) => !option.dropdown)
-													.map((option, index) => (
-														<button
-															key={index}
-															selected={option.default}
-															id={option.name}
-															value={JSON.stringify(option)}
-															onClick={(e) =>
-																update_product(e, JSON.parse(e.target.value))}
-															className={`packs min-w-40px mr-1rem mb-1rem btn ${option.default
-																? 'secondary'
-																: 'primary'}`}
-														>
-															{option.name}
-														</button>
-													))}
+												<div className="ai-c wrap">
+													{product.product_options
+														.filter((option) => !option.dropdown)
+														.map((option, index) => (
+															<button
+																key={index}
+																selected={option.default}
+																id={option.name}
+																value={JSON.stringify(option)}
+																onClick={(e) =>
+																	update_product(e, JSON.parse(e.target.value))}
+																className={`packs  flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default
+																	? 'secondary'
+																	: 'primary'}`}
+															>
+																{option.name}
+															</button>
+														))}
+												</div>
 											</div>
 										</li>
 									)}
+									{/* </div> */}
 									{/* <li>Product Size: {size}</li> */}
 									{product.products &&
 									product.products.length > 0 && (
@@ -578,83 +568,7 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-									{/* {(product.name === 'Diffuser Caps + Adapters Starter Kit' && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													Caps:
-												</label>
-												<div className="custom-select">
-													<select
-														defaultValue={diffuser_cap_name}
-														// value={diffuser_cap_name}
-														className="qty_select_dropdown"
-														onChange={(e) => set_diffuser_cap(JSON.parse(e.target.value))}
-													>
-														<option key={1} defaultValue="">
-															---Choose Cap---
-														</option>
-														{original_diffuser_caps.map(
-															(cap, index) =>
-																cap.name === 'Custom Diffuser Caps Deposit' ||
-																cap.name === 'Diffuser Caps + Adapters Starter Kit' ? (
-																	''
-																) : (
-																	<option key={index} value={JSON.stringify(cap)}>
-																		{cap.name.slice(0, -14)}
-																	</option>
-																)
-														)}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)) ||
-										(product.name === 'Mega Diffuser Caps + Adapters Starter Kit' && (
-											<li>
-												<div className="ai-c h-25px mb-15px">
-													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
-														className="select-label mr-1rem"
-													>
-														Caps:
-													</label>
-													{console.log({ diffuser_cap })}
-													<div className="custom-select">
-														<select
-															defaultValue={diffuser_cap_name}
-															// value={diffuser_cap_name}
-															className="qty_select_dropdown"
-															onChange={(e) =>
-																set_diffuser_cap(JSON.parse(e.target.value))}
-														>
-															<option key={1} defaultValue="">
-																---Choose Cap---
-															</option>
-															{mega_diffuser_caps.map(
-																(cap, index) =>
-																	cap.name === 'Custom Mega Diffuser Caps Deposit' ||
-																	cap.name ===
-																		'Mega Diffuser Caps + Adapters Starter Kit' ? (
-																		''
-																	) : (
-																		<option key={index} value={JSON.stringify(cap)}>
-																			{cap.name.slice(0, -14)}
-																		</option>
-																	)
-															)}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-											</li>
-										))} */}
+
 									{product.product_options &&
 									product.product_options.length > 0 &&
 									product.product_options.filter((option) => option.dropdown).length > 0 && (
@@ -677,11 +591,6 @@ const ProductPage = (props) => {
 															update_color(e, JSON.parse(e.target.value));
 														}}
 													>
-														{/* {determine_colors().map((color, index) => (
-															<option key={index} value={color}>
-																{color}
-															</option>
-														))} */}
 														{product.product_options
 															.filter((option) => option.dropdown)
 															.map((option, index) => (

@@ -17,21 +17,29 @@ $align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
 
 @for $i from 0 to 100 {
 	.g-#{$i}rem {
+		display: flex !important;
 		gap: $i + rem !important;
 	}
 }
 @for $i from 0 to 100 {
 	.g-#{$i}px {
+		display: flex !important;
 		gap: $i + px !important;
 	}
 }
 
+// @for $i from 0 to 100 {
+// 	.g-#{$i}px {
+// 		gap: $i + px !important;
+// 	}
+// }
+
 .row {
-	display: flex;
+	display: flex !important;
 	flex-direction: row;
 }
 .column {
-	display: flex;
+	display: flex !important;
 	flex-direction: column;
 }
 .none {
@@ -41,6 +49,11 @@ $align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
 .wrap {
 	display: flex !important;
 	flex-wrap: wrap !important;
+}
+
+.flex-s-0 {
+	display: flex !important;
+	flex-shrink: 0;
 }
 
 // .flex {

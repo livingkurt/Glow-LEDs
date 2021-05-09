@@ -164,7 +164,7 @@ const Cart = (props) => {
 												item.category === 'mega_diffuser_caps' ||
 												item.category === 'frosted_diffusers') &&
 												item.diffuser_cap_color}{' '} */}
-											{item.name}{' '}
+											{item.category === 'glowskins' && item.diffuser_cap_color} {item.name}{' '}
 											{item.product_option &&
 												item.product_option.name &&
 												`- ${item.product_option.name}`}

@@ -65,7 +65,7 @@ export const addToCart = (
 		let cartItem: any = {
 			product: data._id,
 			name: data.name,
-			display_image: data.images[0],
+			display_image: product_option.images.length > 0 ? product_option.images : data.images[0],
 			price: product_option.price || data.price,
 			sale_price: product_option.sale_price || data.sale_price,
 			countInStock: data.countInStock,
@@ -86,7 +86,7 @@ export const addToCart = (
 			cartItem = {
 				product: data._id,
 				name: data.name,
-				display_image: data.images[0],
+				display_image: product_option.images.length > 0 ? product_option.images : data.images[0],
 				diffuser_cap_color,
 				diffuser_cap,
 				price: product_option.price || data.price,
@@ -111,7 +111,7 @@ export const addToCart = (
 				product: data._id,
 				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
 				name: data.name,
-				display_image: data.images[0],
+				display_image: product_option.images.length > 0 ? product_option.images : data.images[0],
 				diffuser_cap_color,
 				diffuser_cap,
 				diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
