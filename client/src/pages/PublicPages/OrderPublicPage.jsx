@@ -385,11 +385,14 @@ const OrderPublicPage = (props) => {
 											<div>
 												{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{(item.category === 'diffuser_caps' ||
-														item.category === 'mega_diffuser_caps') &&
-														item.diffuser_cap_color}{' '}
+													{item.category === 'glowskins' && item.diffuser_cap_color}{' '}
+													{item.category === 'glowskins' && item.diffuser_cap_color}{' '}
 													{item.name}{' '}
-													{item.secondary_product && ` w (${item.secondary_product.name})`}
+													{item.product_option &&
+														item.product_option.name &&
+														`- ${item.product_option.name}`}
+													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}{' '}
+													{item.qty > 1 && item.qty + 'x'}
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>

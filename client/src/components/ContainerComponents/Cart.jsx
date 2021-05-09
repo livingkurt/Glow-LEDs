@@ -160,11 +160,12 @@ const Cart = (props) => {
 								<div className="cart_sidebar-name">
 									<div className="mb-10px">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											{/* {(item.category === 'diffuser_caps' ||
+											{(item.category === 'glowskins' ||
+												item.category === 'diffuser_caps' ||
 												item.category === 'mega_diffuser_caps' ||
 												item.category === 'frosted_diffusers') &&
-												item.diffuser_cap_color}{' '} */}
-											{item.category === 'glowskins' && item.diffuser_cap_color} {item.name}{' '}
+												item.diffuser_cap_color}{' '}
+											{item.name}{' '}
 											{item.product_option &&
 												item.product_option.name &&
 												`- ${item.product_option.name}`}

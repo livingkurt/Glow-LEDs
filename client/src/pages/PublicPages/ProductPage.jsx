@@ -175,7 +175,8 @@ const ProductPage = (props) => {
 				qty,
 				determine_default_color(diffuser_cap_color),
 				diffuser_cap,
-				product_option
+				product_option,
+				images
 			)
 		);
 		open_cart();
