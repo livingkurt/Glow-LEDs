@@ -33,7 +33,7 @@ const ProductPage = (props) => {
 	const [ size, set_size ] = useState(0);
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ product_option, set_product_option ] = useState({});
-	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
+	// const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
 	const [ color, set_color ] = useState('');
 	const [ option_color, set_option_color ] = useState('');
@@ -185,11 +185,11 @@ const ProductPage = (props) => {
 
 	// const filament_colors = [ 'Black' ];
 
-	const handle_diffuser_cap_change = (e) => {
-		set_diffuser_cap(JSON.parse(e.target.value));
-		console.log(JSON.parse(e.target.value).pathname);
-		set_diffuser_cap_name(JSON.parse(e.target.value).pathname);
-	};
+	// const handle_diffuser_cap_change = (e) => {
+	// 	set_diffuser_cap(JSON.parse(e.target.value));
+	// 	console.log(JSON.parse(e.target.value).pathname);
+	// 	set_diffuser_cap_name(JSON.parse(e.target.value).pathname);
+	// };
 
 	const open_pdf = () => {
 		// window.open('/Glow Strings V2 Manual.pdf', '_blank');
@@ -544,7 +544,7 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														defaultValue={diffuser_cap_name}
+														// defaultValue={diffuser_cap_name}
 														// value={diffuser_cap_name}
 														className="qty_select_dropdown"
 														onChange={(e) => update_product_images(e)}
@@ -609,10 +609,6 @@ const ProductPage = (props) => {
 										product.name === 'Mega Diffuser Caps + Adapters Starter Kit') &&
 									!diffuser_cap ? (
 										<div />
-									) : product.name === 'Custom Infinity Mirror' ? (
-										<Link to="/pages/contact/custom_orders">
-											<button className="btn primary w-100per">Contact</button>
-										</Link>
 									) : (
 										<li>
 											{product.countInStock > 0 ? (
@@ -622,13 +618,6 @@ const ProductPage = (props) => {
 											) : (
 												<button className="btn inactive">Out of Stock</button>
 											)}
-											{/* {product.countInStock > 0 && !product.hidden ? (
-												<button className="btn primary" onClick={handleAddToCart}>
-													Add to Cart
-												</button>
-											) : (
-												<button className="btn inactive">Out of Stock</button>
-											)} */}
 										</li>
 									)}
 								</ul>

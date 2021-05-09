@@ -836,7 +836,7 @@ const EditOrderPage = (props) => {
 																	)}
 															/>
 														</li>
-														<li>
+														{/* <li>
 															<label htmlFor="diffuser_cap_name">Diffuser Cap Name</label>
 															<input
 																type="text"
@@ -851,7 +851,7 @@ const EditOrderPage = (props) => {
 																		index
 																	)}
 															/>
-														</li>
+														</li> */}
 														<li>
 															<label htmlFor="package_length">Length</label>
 															<input

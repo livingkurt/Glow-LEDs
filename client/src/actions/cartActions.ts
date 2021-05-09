@@ -38,7 +38,7 @@ export const addToCart = (
 				name: string;
 				display_image: string;
 				diffuser_cap: any;
-				diffuser_cap_name: string;
+				// diffuser_cap_name: string;
 				color: string;
 				price: number;
 				sale_price: number;
@@ -115,7 +115,7 @@ export const addToCart = (
 				display_image: images[0],
 				color,
 				diffuser_cap,
-				diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
+				// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
 				price: product_option.price || data.price,
 				sale_price: product_option.sale_price || data.sale_price,
 				countInStock: data.countInStock,
