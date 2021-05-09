@@ -521,13 +521,13 @@ ${order.shipping.email}`)}
 												</div>
 												<div className="cart-name">
 													<div>
-														{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
+														{console.log({ color: item.color })}
 														<Link to={'/collections/all/products/' + item.pathname}>
 															{(item.category === 'glowskins' ||
 																item.category === 'diffuser_caps' ||
 																item.category === 'mega_diffuser_caps' ||
 																item.category === 'frosted_diffusers') &&
-																item.diffuser_cap_color}{' '}
+																item.color}{' '}
 															{item.name}{' '}
 															{item.product_option &&
 																item.product_option.name &&

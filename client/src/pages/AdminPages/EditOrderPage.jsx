@@ -821,15 +821,13 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
-															<label htmlFor="diffuser_cap_color">
-																Diffuser Cap Color
-															</label>
+															<label htmlFor="color">Color</label>
 															<input
 																type="text"
-																name="diffuser_cap_color"
-																defaultValue={item.diffuser_cap_color}
-																value={item.diffuser_cap_color}
-																id="diffuser_cap_color"
+																name="color"
+																defaultValue={item.color}
+																value={item.color}
+																id="color"
 																onChange={(e) =>
 																	update_order_item_property(
 																		e.target.value,

@@ -281,7 +281,7 @@ const OrderListItem = (props) => {
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div>
-									{item.category === 'glowskins' && item.diffuser_cap_color} {item.name}{' '}
+									{item.category === 'glowskins' && item.color} {item.name}{' '}
 									{item.product_option &&
 										item.product_option.hasOwnProperty('name') &&
 										`- ${item.product_option.name} `}

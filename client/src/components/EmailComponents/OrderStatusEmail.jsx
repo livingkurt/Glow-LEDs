@@ -415,7 +415,7 @@ const OrderStatusEmail = (props) => {
 																item.category === 'diffuser_caps' ||
 																item.category === 'mega_diffuser_caps' ||
 																item.category === 'frosted_diffusers') &&
-																item.diffuser_cap_color}{' '}
+																item.color}{' '}
 															{item.name}{' '}
 															{item.secondary_product ? (
 																` w (${item.secondary_product.name})`

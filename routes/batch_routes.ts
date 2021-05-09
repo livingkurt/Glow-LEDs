@@ -383,7 +383,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': ''
+// 				'orderItems.$.color': ''
 // 			}
 // 			// $unset: { shipping_price: 1 }
 // 		},
@@ -401,7 +401,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Translucent White'
+// 				'orderItems.$.color': 'Translucent White'
 // 			}
 // 			// $unset: { shipping_price: 1 }
 // 		},
@@ -419,7 +419,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Translucent White'
+// 				'orderItems.$.color': 'Translucent White'
 // 			}
 // 			// $unset: { shipping_price: 1 }
 // 		},
@@ -436,7 +436,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Translucent White'
+// 				'orderItems.$.color': 'Translucent White'
 // 			}
 // 			// $unset: { shipping_price: 1 }
 // 		},
@@ -453,7 +453,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Translucent White',
+// 				'orderItems.$.color': 'Translucent White',
 // 				'orderItems.$.name': 'Frosted Dome Diffusers'
 // 			}
 // 			// $unset: { shipping_price: 1 }
@@ -472,7 +472,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Translucent White',
+// 				'orderItems.$.color': 'Translucent White',
 // 				'orderItems.$.name': 'Frosted Mega Dome Diffusers'
 // 			}
 // 			// $unset: { shipping_price: 1 }
@@ -491,7 +491,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Black',
+// 				'orderItems.$.color': 'Black',
 // 				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392',
 // 				'orderItems.$.category': 'diffuser_caps'
 // 			}
@@ -510,7 +510,7 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Black',
+// 				'orderItems.$.color': 'Black',
 // 				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392',
 // 				'orderItems.$.category': 'mega_diffuser_caps'
 // 			}
@@ -522,12 +522,12 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 	res.send(order);
 // });
 // router.put('/product_color', async (req, res) => {
-// 	// const order = await Order.find({}, { diffuser_cap_color: 1 });
+// 	// const order = await Order.find({}, { color: 1 });
 // 	const order = await Order.updateMany(
 // 		{},
-// 		{ diffuser_cap_color: 1 },
+// 		{ color: 1 },
 // 		{
-// 			$rename: { diffuser_cap_color: 'product_color' }
+// 			$rename: { color: 'product_color' }
 // 		}
 // 		// { upsert: true }
 // 	);
@@ -543,11 +543,11 @@ router.put('/order_items_color', async (req, res) => {
 		// For each object in the current document's array
 		for (let i = 0; i < doc.orderItems.length; ++i) {
 			// Create the new field
-			doc.orderItems[i].color = doc.orderItems[i].diffuser_cap_color;
+			doc.orderItems[i].color = doc.orderItems[i].color;
 
 			// Delete the old field
-			// delete doc.orderItems[i].diffuser_cap_color;
-			doc.orderItems[i].diffuser_cap_color = undefined;
+			// delete doc.orderItems[i].color;
+			doc.orderItems[i].color = undefined;
 		}
 
 		// Update the document
@@ -566,9 +566,9 @@ router.put('/order_items_color', async (req, res) => {
 // 	// const order = await Order.updateMany(
 // 	// 	{},
 // 	// 	{
-// 	// 		$rename: { 'orderItems.$.diffuser_cap_color': 'color' }
+// 	// 		$rename: { 'orderItems.$.color': 'color' }
 // 	// 		// $set: {
-// 	// 		// 	// 'orderItems.$.diffuser_cap_color': 'Black',
+// 	// 		// 	// 'orderItems.$.color': 'Black',
 // 	// 		// 	'orderItems.$.category': 'diffuser_caps'
 // 	// 		// }
 // 	// 		// $unset: { shipping_price: 1 }
@@ -581,11 +581,11 @@ router.put('/order_items_color', async (req, res) => {
 // 	const orders = await Order.updateMany({}, [
 // 		{
 // 			$set: {
-// 				'orderItems.diffuser_cap_color': {
+// 				'orderItems.color': {
 // 					$map: {
 // 						input: '$orderItems',
 // 						as: 'file',
-// 						in: [...'$orderItems', {color: '$$file.diffuser_cap_color'}]
+// 						in: [...'$orderItems', {color: '$$file.color'}]
 // 					}
 // 				}
 // 			}
@@ -615,12 +615,12 @@ router.get('/order_items_color', async (req, res) => {
 // 	//       }
 // 	//     },
 // 	//         {$set: {
-// 	//           'orderItems.$.diffuser_cap_color': 'Black',
+// 	//           'orderItems.$.color': 'Black',
 // 	//           'orderItems.$.category': 'mega_diffuser_caps'
 // 	//         }}
 // 	//     )
 // 	// });
-// 	diffuser_cap_color: 'Black';
+// 	color: 'Black';
 // 	category: 'diffuser_caps';
 
 // 	const order = await Order.updateMany(
@@ -633,7 +633,7 @@ router.get('/order_items_color', async (req, res) => {
 // 		{
 // 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Black',
+// 				'orderItems.$.color': 'Black',
 // 				'orderItems.$.category': 'mega_diffuser_caps'
 // 			}
 // 			// $unset: { shipping_price: 1 }
@@ -651,7 +651,7 @@ router.get('/order_items_color', async (req, res) => {
 // // 		{
 // // 			// $rename: { shipping_price: 'volume' }
 // // 			$set: {
-// // 				'orderItems.$.diffuser_cap_color': 'Black',
+// // 				'orderItems.$.color': 'Black',
 // // 				'orderItems.$.secondary_product': '5eff4ab907deec002a7c4392'
 // // 			}
 // // 			// $unset: { shipping_price: 1 }

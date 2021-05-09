@@ -31,13 +31,13 @@ const CartPage = (props) => {
 	const handleAddToCart = (pathname, qty) => {
 		// console.log({ pathname: props.match.params.pathname });
 		// console.log({ qty });
-		// console.log({ diffuser_cap_color });
+		// console.log({ color });
 		// console.log({ diffuser_cap });
 		// if (diffuser_cap) {
 		// 	Cookie.set('diffuser_cap', diffuser_cap);
 		// }
-		// if (diffuser_cap_color) {
-		// 	Cookie.set('diffuser_cap_color', diffuser_cap_color);
+		// if (color) {
+		// 	Cookie.set('color', color);
 		// }
 		dispatch(addToCart(pathname, qty));
 		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
@@ -45,10 +45,10 @@ const CartPage = (props) => {
 	};
 
 	// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
-	// const diffuser_cap_color_cookie = Cookie.getJSON('diffuser_cap_color');
+	// const color_cookie = Cookie.getJSON('color');
 
 	// const [ diffuser_cap, set_diffuser_cap ] = useState({});
-	// const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('Black');
+	// const [ color, set_color ] = useState('Black');
 
 	useEffect(
 		() => {
@@ -64,9 +64,9 @@ const CartPage = (props) => {
 			// 	set_diffuser_cap(diffuser_cap_cookie);
 			// 	console.log({ diffuser_cap_cookie });
 			// }
-			// if (diffuser_cap_color_cookie) {
-			// 	set_diffuser_cap_color(diffuser_cap_color_cookie);
-			// 	console.log({ diffuser_cap_color_cookie });
+			// if (color_cookie) {
+			// 	set_color(color_cookie);
+			// 	console.log({ color_cookie });
 			// }
 			// }
 			// }
@@ -87,9 +87,9 @@ const CartPage = (props) => {
 			// 	set_diffuser_cap(diffuser_cap_cookie);
 			// 	// console.log({ diffuser_cap_cookie });
 			// }
-			// if (diffuser_cap_color_cookie) {
-			// 	set_diffuser_cap_color(diffuser_cap_color_cookie);
-			// 	// console.log({ diffuser_cap_color_cookie });
+			// if (color_cookie) {
+			// 	set_color(color_cookie);
+			// 	// console.log({ color_cookie });
 			// }
 			// }
 			// }
@@ -162,8 +162,8 @@ const CartPage = (props) => {
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
-														item.diffuser_cap_color}{' '}
-													{item.name}  {item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
+														item.color}{' '}
+													{item.name} {item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
 													{/* {item.name === 'Diffuser Caps + Adapters Starter Kit' ||
 														(item.name === 'Mega Diffuser Caps + Adapters Starter Kit' &&
 															` w (${JSON.parse(item.diffuser_cap).name})`)} */}

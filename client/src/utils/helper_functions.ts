@@ -84,7 +84,7 @@ export const occurrence = function(array: any) {
 	return result;
 };
 
-const diffuser_cap_colors = [
+const colors = [
 	{ color: 'Black', price: 11.99 },
 	{ color: 'White', price: 15.99 },
 	{ color: 'Red', price: 15.99 },
@@ -102,17 +102,17 @@ const diffuser_colors = [
 	{ color: 'Purple', price: 11.99 }
 ];
 
-export const determine_price = (diffuser_cap_color: any, diffuser_cap: any) => {
-	console.log(diffuser_cap_color);
+export const determine_price = (color: any, diffuser_cap: any) => {
+	console.log(color);
 	console.log(diffuser_cap);
 	let price: any = 11.99;
 	if (diffuser_cap) {
-		price = diffuser_cap_colors.filter((cap_color: any) => {
-			return cap_color.color === diffuser_cap_colors;
+		price = colors.filter((cap_color: any) => {
+			return cap_color.color === colors;
 		});
 	} else {
 		price = diffuser_colors.filter((cap_color: any) => {
-			return cap_color.color === diffuser_cap_colors;
+			return cap_color.color === colors;
 		});
 	}
 	return price;
@@ -353,7 +353,7 @@ export const print_invoice = (order: any) => {
           ${item.qty}x - ${item.category === 'diffuser_caps' ||
 				item.category === 'mega_diffuser_caps' ||
 				item.category === 'frosted_diffusers'
-					? `${item.diffuser_cap_color} -`
+					? `${item.color} -`
 					: ''}
         ${item.name}
         ${item.secondary_product ? ` w (${item.secondary_product.name})` : ''}

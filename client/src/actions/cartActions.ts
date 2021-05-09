@@ -23,7 +23,7 @@ import axios from 'axios';
 export const addToCart = (
 	pathname: string,
 	qty: number,
-	diffuser_cap_color: string,
+	color: string,
 	diffuser_cap: any,
 	product_option: any,
 	images: any,
@@ -39,7 +39,7 @@ export const addToCart = (
 				display_image: string;
 				diffuser_cap: any;
 				diffuser_cap_name: string;
-				diffuser_cap_color: string;
+				color: string;
 				price: number;
 				sale_price: number;
 				countInStock: number;
@@ -83,12 +83,12 @@ export const addToCart = (
 			finite_stock: data.finite_stock
 		};
 		console.log({ cartItem });
-		if (diffuser_cap_color) {
+		if (color) {
 			cartItem = {
 				product: data._id,
 				name: data.name,
 				display_image: images[0],
-				diffuser_cap_color,
+				color,
 				diffuser_cap,
 				price: product_option.price || data.price,
 				sale_price: product_option.sale_price || data.sale_price,
@@ -105,7 +105,7 @@ export const addToCart = (
 				qty,
 				finite_stock: data.finite_stock
 			};
-			console.log({ diffuser_cap_color: cartItem });
+			console.log({ color: cartItem });
 		}
 		if (diffuser_cap) {
 			cartItem = {
@@ -113,7 +113,7 @@ export const addToCart = (
 				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
 				name: data.name,
 				display_image: images[0],
-				diffuser_cap_color,
+				color,
 				diffuser_cap,
 				diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
 				price: product_option.price || data.price,

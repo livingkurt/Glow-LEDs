@@ -103,7 +103,7 @@ const CartPage = (props) => {
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
-														item.diffuser_cap_color}{' '}
+														item.color}{' '}
 													{item.name}{' '}
 													{item.product_option &&
 														item.product_option.name &&
@@ -129,8 +129,7 @@ const CartPage = (props) => {
 																	addToCart(
 																		item.pathname,
 																		e.target.value,
-																		item.diffuser_cap_color &&
-																			item.diffuser_cap_color,
+																		item.color && item.color,
 																		item.diffuser_cap && item.diffuser_cap.name,
 																		item.product_option && item.product_option
 																	)

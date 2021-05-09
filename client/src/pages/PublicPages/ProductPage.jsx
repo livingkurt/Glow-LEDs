@@ -35,8 +35,8 @@ const ProductPage = (props) => {
 	const [ product_option, set_product_option ] = useState({});
 	const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
-	const [ diffuser_cap_color, set_diffuser_cap_color ] = useState('');
 	const [ color, set_color ] = useState('');
+	const [ option_color, set_option_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
 	// console.log({ diffuser_cap });
@@ -54,10 +54,10 @@ const ProductPage = (props) => {
 	// const filament_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 
 	const diffuser_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
-	const diffuser_cap_colors = [ 'Translucent White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
+	const colors = [ 'Translucent White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
 	const determine_colors = () => {
 		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
-			return diffuser_cap_colors;
+			return colors;
 		} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
 			return diffuser_colors;
 		}
@@ -132,7 +132,7 @@ const ProductPage = (props) => {
 					}
 				}
 
-				set_diffuser_cap_color(
+				set_color(
 					product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
 						? 'Translucent White'
 						: product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps'
@@ -153,8 +153,8 @@ const ProductPage = (props) => {
 		[ error ]
 	);
 
-	const determine_default_color = (diffuser_cap_color) => {
-		if (!diffuser_cap_color) {
+	const determine_default_color = (color) => {
+		if (!color) {
 			if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
 				return 'Translucent White';
 			} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
@@ -163,7 +163,7 @@ const ProductPage = (props) => {
 				return 'Clear';
 			}
 		} else {
-			return diffuser_cap_color;
+			return color;
 		}
 	};
 
@@ -173,7 +173,7 @@ const ProductPage = (props) => {
 			addToCart(
 				props.match.params.pathname,
 				qty,
-				determine_default_color(diffuser_cap_color),
+				determine_default_color(color),
 				diffuser_cap,
 				product_option,
 				images
@@ -222,8 +222,8 @@ const ProductPage = (props) => {
 		set_size(option.size);
 		set_count_in_stock(option.count_in_stock);
 		set_product_option(option);
-		if (color && color.price) {
-			set_price(color.price);
+		if (option_color && option_color.price) {
+			set_price(option_color.price);
 		}
 	};
 
@@ -272,8 +272,8 @@ const ProductPage = (props) => {
 		set_sale_price(option.sale_price);
 		// set_size(option.size);
 		// set_product_option(option);
-		set_diffuser_cap_color(JSON.parse(e.target.value).color);
-		set_color(JSON.parse(e.target.value));
+		set_color(JSON.parse(e.target.value).color);
+		set_option_color(JSON.parse(e.target.value));
 		console.log({ option_images: option.images });
 		if (option.images && option.images[0]) {
 			set_images(option.images);
@@ -584,11 +584,11 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														defaultValue={diffuser_cap_color}
-														// value={diffuser_cap_color}
+														defaultValue={color}
+														// value={color}
 														className="qty_select_dropdown"
 														onChange={(e) => {
-															// set_diffuser_cap_color(e.target.value);
+															// set_color(e.target.value);
 															update_color(e, JSON.parse(e.target.value));
 														}}
 													>

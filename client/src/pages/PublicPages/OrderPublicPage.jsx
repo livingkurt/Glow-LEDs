@@ -383,11 +383,10 @@ const OrderPublicPage = (props) => {
 										</div>
 										<div className="cart-name">
 											<div>
-												{console.log({ diffuser_cap_color: item.diffuser_cap_color })}
+												{console.log({ color: item.color })}
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.category === 'glowskins' && item.diffuser_cap_color}{' '}
-													{item.category === 'glowskins' && item.diffuser_cap_color}{' '}
-													{item.name}{' '}
+													{item.category === 'glowskins' && item.color}{' '}
+													{item.category === 'glowskins' && item.color} {item.name}{' '}
 													{item.product_option &&
 														item.product_option.name &&
 														`- ${item.product_option.name}`}

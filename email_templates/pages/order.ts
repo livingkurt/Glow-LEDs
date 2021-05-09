@@ -64,7 +64,7 @@ export default (props: any) => {
 						'diffuser_caps' ||
 					item.category === 'mega_diffuser_caps' ||
 					item.category === 'frosted_diffusers'
-						? item.diffuser_cap_color
+						? item.color
 						: ''}
                 - ${item.name}
                 ${item.diffuser_cap_name ? ` w (${item.diffuser_cap_name})` : ''}</td>
