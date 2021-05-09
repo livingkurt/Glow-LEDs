@@ -7,6 +7,7 @@ import { API_Emails } from '../../utils';
 import { format_date, toCapitlize } from '../../utils/helper_functions';
 import { detailsOrderPublic } from '../../actions/orderActions';
 import { email_sale_price_switch } from '../../utils/react_helper_functions';
+import { listPromos } from '../../actions/promoActions';
 
 const OrderEmail = (props) => {
 	const history = useHistory();
@@ -22,6 +23,9 @@ const OrderEmail = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
+	const promoList = useSelector((state) => state.promoList);
+	const { promos } = promoList;
+
 	const dispatch = useDispatch();
 	const stableDispatch = useCallback(dispatch, []);
 
@@ -29,6 +33,7 @@ const OrderEmail = (props) => {
 		() => {
 			stableDispatch(listEmails(toCapitlize(props.match.params.status)));
 			stableDispatch(detailsOrderPublic(props.match.params.id));
+			stableDispatch(listPromos());
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
@@ -504,7 +509,14 @@ const OrderEmail = (props) => {
 												align="right"
 											>
 												<strong>Promo Code:</strong>{' '}
-												{order.promo_code && order.promo_code.toUpperCase()}
+												{order.promo_code &&
+												promos.find(
+													(promo) => promo.promo_code === order.promo_code.toLowerCase()
+												).admin_only ? (
+													''
+												) : (
+													order.promo_code && order.promo_code.toUpperCase()
+												)}
 												<br />
 												<strong>Order Note:</strong> {order.order_note}
 												<br />
