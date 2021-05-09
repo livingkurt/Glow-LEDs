@@ -6,6 +6,7 @@ import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 import { email_sale_price_switch } from '../../utils/react_helper_functions';
+import { listPromos } from '../../actions/promoActions';
 
 const InvoiceEmail = (props) => {
 	const history = useHistory();
@@ -18,6 +19,9 @@ const InvoiceEmail = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
+	const promoList = useSelector((state) => state.promoList);
+	const { promos } = promoList;
+
 	console.log({ emails });
 
 	const dispatch = useDispatch();
@@ -27,6 +31,7 @@ const InvoiceEmail = (props) => {
 		() => {
 			stableDispatch(listEmails('Invoice'));
 			stableDispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
+			stableDispatch(listPromos());
 			return () => {};
 		},
 		[ stableDispatch ]
@@ -308,7 +313,13 @@ const InvoiceEmail = (props) => {
 									align="right"
 								>
 									<strong style={{ marginRight: '3px' }}>Promo Code: </strong>{' '}
-									{order.promo_code && order.promo_code.toUpperCase()}
+									{order.promo_code &&
+									promos.find((promo) => promo.promo_code === order.promo_code.toLowerCase())
+										.admin_only ? (
+										''
+									) : (
+										order.promo_code && order.promo_code.toUpperCase()
+									)}
 								</div>
 								<div
 									style={{ padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
