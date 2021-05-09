@@ -535,29 +535,70 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // 	res.send(order);
 // });
 // // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
-// router.put('/orders_original_caps', async (req, res) => {
-// 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
-// 	const order = await Order.updateMany(
+router.put('/order_items_color', async (req, res) => {
+	const orders = await Order.find({});
+
+	orders.forEach(async (doc: any) => {
+		// console.log({ doc });
+		// For each object in the current document's array
+		for (let i = 0; i < doc.orderItems.length; ++i) {
+			// Create the new field
+			doc.orderItems[i].color = doc.orderItems[i].diffuser_cap_color;
+
+			// Delete the old field
+			// delete doc.orderItems[i].diffuser_cap_color;
+			doc.orderItems[i].diffuser_cap_color = undefined;
+		}
+
+		// Update the document
+		await Order.update(
+			// Only the current document
+			{ _id: doc._id },
+			// The updated document (as per the statements in the above "for" loop)
+			doc
+		);
+	});
+
+	res.send(orders);
+});
+// router.put('/order_items_color', async (req, res) => {
+// 	// // const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+// 	// const order = await Order.updateMany(
+// 	// 	{},
+// 	// 	{
+// 	// 		$rename: { 'orderItems.$.diffuser_cap_color': 'color' }
+// 	// 		// $set: {
+// 	// 		// 	// 'orderItems.$.diffuser_cap_color': 'Black',
+// 	// 		// 	'orderItems.$.category': 'diffuser_caps'
+// 	// 		// }
+// 	// 		// $unset: { shipping_price: 1 }
+// 	// 	},
+// 	// 	{ multi: true }
+// 	// 	// { upsert: true },
+// 	// );
+// 	// console.log({ order });
+// 	// res.send(order);
+// 	const orders = await Order.updateMany({}, [
 // 		{
-// 			'orderItems.name': {
-// 				$regex: 'Diffuser Caps',
-// 				$options: 'i'
-// 			}
-// 		},
-// 		{
-// 			// $rename: { shipping_price: 'volume' }
 // 			$set: {
-// 				// 'orderItems.$.diffuser_cap_color': 'Black',
-// 				'orderItems.$.category': 'diffuser_caps'
+// 				'orderItems.diffuser_cap_color': {
+// 					$map: {
+// 						input: '$orderItems',
+// 						as: 'file',
+// 						in: [...'$orderItems', {color: '$$file.diffuser_cap_color'}]
+// 					}
+// 				}
 // 			}
-// 			// $unset: { shipping_price: 1 }
-// 		},
-// 		{ multi: true }
-// 		// { upsert: true },
-// 	);
-// 	console.log({ order });
-// 	res.send(order);
+// 		}
+// 	]);
+// 	res.send(orders);
 // });
+router.get('/order_items_color', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Order.find({});
+	console.log({ order });
+	res.send(order);
+});
 // // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
 // router.put('/orders_mini_caps', async (req, res) => {
 // 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
