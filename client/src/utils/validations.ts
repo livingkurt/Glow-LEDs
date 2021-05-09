@@ -15,7 +15,9 @@ export const validate_promo_code = (data: any) => {
 	// console.log({ promo_codes });
 	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
 
+	console.log({ data });
 	console.log({ promo });
+	console.log({ user: data.userInfo });
 
 	// Convert empty fields to an empty string so we can use validator functions
 	data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : '';
@@ -23,17 +25,18 @@ export const validate_promo_code = (data: any) => {
 	if (Validator.isEmpty(data.promo_code)) {
 		errors.promo_code = 'Promo Code Field Empty';
 	}
-	if (data.user_data) {
-		if (promo && promo.admin_only && data.user_data.isAdmin === false) {
-			errors.promo_code = 'Promo Code Not Active';
-		} else if (promo && promo.affiliate_only && data.user_data.is_affiliated === false) {
-			errors.promo_code = 'Promo Code Not Active';
+	if (data.userInfo) {
+		if (promo && promo.admin_only && data.userInfo.isAdmin === false) {
+			errors.promo_code = 'Promo Code Not Active 1';
+		} else if (promo && promo.affiliate_only && data.userInfo.is_affiliated === false) {
+			errors.promo_code = 'Promo Code Not Active 2';
 		}
-	} else if (!data.user_data) {
+	}
+	if (!data.userInfo.hasOwnProperty('first_name')) {
 		if (promo && promo.admin_only) {
-			errors.promo_code = 'Promo Code Not Active';
+			errors.promo_code = 'Promo Code Not Active 3';
 		} else if (promo && promo.affiliate_only) {
-			errors.promo_code = 'Promo Code Not Active';
+			errors.promo_code = 'Promo Code Not Active 4';
 		}
 	}
 	if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
@@ -41,12 +44,12 @@ export const validate_promo_code = (data: any) => {
 	}
 	// errors.promo_code = 'Promo Code Not Active Start';
 	if (promo && !promo.active) {
-		errors.promo_code = 'Promo Code Not Active';
+		errors.promo_code = 'Promo Code Not Active 5';
 	}
 
 	if (promo && promo.single_use && promo.used_once) {
 		// console.log({ single_use: promo.single_use, used_once: promo.used_once });
-		errors.promo_code = 'Promo Code Not Active';
+		errors.promo_code = 'Promo Code Not Active 6';
 	}
 	if (!promo_codes.includes(data.promo_code.toLowerCase())) {
 		errors.promo_code = 'Promo Code Not Valid';
@@ -57,7 +60,7 @@ export const validate_promo_code = (data: any) => {
 		console.log({ today, start_date: new Date(promo.start_date) });
 		if (today > new Date(promo.end_date) || today < new Date(promo.start_date)) {
 			// console.log('Today is Greater');
-			errors.promo_code = 'Promo Code Not Active';
+			errors.promo_code = 'Promo Code Not Active 7';
 		}
 		// else {
 		// }

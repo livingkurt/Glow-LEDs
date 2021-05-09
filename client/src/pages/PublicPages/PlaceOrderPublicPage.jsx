@@ -17,8 +17,6 @@ import { CardElement, Elements, useStripe, useElements } from '@stripe/react-str
 import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
-	const promo_code_ref = useRef(null);
-	const order_note_ref = useRef(null);
 	const dispatch = useDispatch();
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -148,8 +146,8 @@ const PlaceOrderPublicPage = (props) => {
 			taxPrice,
 			totalPrice,
 			userInfo,
-			order_note: order_note_ref.current.value,
-			promo_code: promo_code_ref.current.value
+			order_note,
+			promo_code
 		});
 		if (data) {
 			set_shipping_rates(data);
@@ -247,8 +245,8 @@ const PlaceOrderPublicPage = (props) => {
 					taxPrice,
 					totalPrice,
 					userInfo,
-					order_note: order_note_ref.current.value,
-					promo_code: promo_code_ref.current.value
+					order_note,
+					promo_code
 				},
 				create_account,
 				password,
@@ -337,17 +335,18 @@ const PlaceOrderPublicPage = (props) => {
 
 	const check_code = (e) => {
 		e.preventDefault();
-		// console.log({ promo_code: promo_code_ref.current.value });
-		const data = { promo_code: promo_code_ref.current.value, promos, userInfo, items_price };
+		// console.log({ promo_code, });
+		console.log({ userInfo });
+		const data = { promo_code: promo_code, promos, userInfo, items_price };
 		// console.log({ data });
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);
 		console.log(request);
-		// console.log({ request });
+		console.log({ promo_code });
 
 		if (request.isValid) {
-			const promo = promos.find((promo) => promo.promo_code === promo_code_ref.current.value);
+			const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
 			console.log({ isValid: promo, promo_code: promo_code });
 			const category_cart_items = cartItems
 				.filter((item) => promo.excluded_categories.includes(item.category))
@@ -378,7 +377,7 @@ const PlaceOrderPublicPage = (props) => {
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
-				// if (promo_code_ref.current.value === 'freeshipping') {
+				// if, === 'freeshipping') {
 				// 	setPreviousShippingPrice(shippingPrice);
 				// 	setShippingPrice(0);
 				// 	set_free_shipping_message('Free');
@@ -1022,8 +1021,7 @@ const PlaceOrderPublicPage = (props) => {
 									id="promo_code"
 									className="w-100per"
 									style={{ textTransform: 'uppercase' }}
-									// onBlur={(e) => set_promo_code(e.target.value)}
-									ref={promo_code_ref}
+									onChange={(e) => set_promo_code(e.target.value)}
 								/>
 								<button
 									className="btn primary"
@@ -1054,8 +1052,7 @@ const PlaceOrderPublicPage = (props) => {
 								// value={order_note}
 								id="order_note"
 								className="w-100per"
-								ref={order_note_ref}
-								// onBlur={(e) => set_order_note(e.target.value)}
+								onChange={(e) => set_order_note(e.target.value)}
 							/>
 							<h4>{no_note_warning()}</h4>
 						</div>

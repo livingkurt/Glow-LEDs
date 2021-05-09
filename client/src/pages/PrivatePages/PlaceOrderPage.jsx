@@ -18,8 +18,8 @@ import { API_External, API_Orders, API_Products, API_Shipping } from '../../util
 import { cart_sale_price_switch } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
-	const promo_code_ref = useRef(null);
-	const order_note_ref = useRef(null);
+	// const promo_code_ref = useRef(null);
+	// const order_note_ref = useRef(null);
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
@@ -154,8 +154,8 @@ const PlaceOrderPage = (props) => {
 			taxPrice,
 			totalPrice,
 			userInfo,
-			order_note: order_note_ref.current.value,
-			promo_code: promo_code_ref.current.value
+			order_note,
+			promo_code
 		});
 		console.log({ data });
 		if (data) {
@@ -236,8 +236,8 @@ const PlaceOrderPage = (props) => {
 					taxPrice,
 					totalPrice,
 					userInfo,
-					order_note: order_note_ref.current.value,
-					promo_code: promo_code_ref.current.value
+					order_note,
+					promo_code
 				},
 				paymentMethod
 			)
@@ -291,8 +291,8 @@ const PlaceOrderPage = (props) => {
 				taxPrice,
 				totalPrice,
 				user,
-				order_note: order_note_ref.current.value,
-				promo_code: promo_code_ref.current.value
+				order_note,
+				promo_code
 			})
 		);
 
@@ -333,8 +333,8 @@ const PlaceOrderPage = (props) => {
 				shippingPrice,
 				taxPrice,
 				totalPrice,
-				order_note: order_note_ref.current.value,
-				promo_code: promo_code_ref.current.value
+				order_note,
+				promo_code
 			})
 		);
 
@@ -417,16 +417,17 @@ const PlaceOrderPage = (props) => {
 	const check_code = (e) => {
 		e.preventDefault();
 		// console.log({ promo_code: promo_code_ref.current.value });
-		const data = { promo_code: promo_code_ref.current.value, promos, userInfo, items_price };
+		console.log({ userInfo });
+		const data = { promo_code: promo_code, promos, userInfo, items_price };
 		// console.log({ data });
 		const request = validate_promo_code(data);
 
 		set_promo_code_validations(request.errors.promo_code);
 		console.log(request);
-		// console.log({ request });
+		console.log({ promo_code });
 
 		if (request.isValid) {
-			const promo = promos.find((promo) => promo.promo_code === promo_code_ref.current.value);
+			const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
 			console.log({ isValid: promo, promo_code: promo_code });
 			const category_cart_items = cartItems
 				.filter((item) => promo.excluded_categories.includes(item.category))
@@ -1070,11 +1071,10 @@ const PlaceOrderPage = (props) => {
 									id="promo_code"
 									className="w-100per"
 									style={{ textTransform: 'uppercase' }}
-									ref={promo_code_ref}
-									// onBlur={(e) => {
-									// 	e.preventDefault();
-									// 	set_promo_code(e.target.value.toUpperCase());
-									// }}
+									// ref={promo_code_ref}
+									onChange={(e) => {
+										set_promo_code(e.target.value.toUpperCase());
+									}}
 								/>
 								<button
 									className="btn primary"
@@ -1105,8 +1105,8 @@ const PlaceOrderPage = (props) => {
 								// value={order_note}
 								id="order_note"
 								className="w-100per"
-								ref={order_note_ref}
-								// onBlur={(e) => set_order_note(e.target.value)}
+								// ref={order_note_ref}
+								onChange={(e) => set_order_note(e.target.value)}
 							/>
 							<h4>{no_note_warning()}</h4>
 						</div>
