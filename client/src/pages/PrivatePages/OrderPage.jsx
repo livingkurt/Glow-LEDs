@@ -527,7 +527,7 @@ ${order.shipping.email}`)}
 													<div>
 														{console.log({ color: item.color })}
 														<Link to={'/collections/all/products/' + item.pathname}>
-															{determine_product_name_w_qty_sp(item)}
+															{determine_product_name(item, false)}
 															{/* {(item.category === 'glowskins' ||
 																item.category === 'diffuser_caps' ||
 																item.category === 'mega_diffuser_caps' ||

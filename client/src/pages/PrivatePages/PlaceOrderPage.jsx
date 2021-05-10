@@ -666,7 +666,7 @@ const PlaceOrderPage = (props) => {
 										<div className=" abel cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item)}
+													{determine_product_name(item, false)}
 													{/* {(item.category === 'glowskins' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||

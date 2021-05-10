@@ -308,7 +308,7 @@ const OrderEmail = (props) => {
 															</tr>
 														</table>
 														<div style={{ marginBottom: '1rem', marginLeft: '1rem' }}>
-															{determine_product_name_w_qty_sp(item)}
+															{determine_product_name(item, true)}
 														</div>
 													</div>
 												</td>

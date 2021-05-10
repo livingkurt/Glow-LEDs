@@ -99,7 +99,7 @@ const CartPage = (props) => {
 										<div className="cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item)}
+													{determine_product_name(item, false)}
 												</Link>
 											</div>
 											<div>

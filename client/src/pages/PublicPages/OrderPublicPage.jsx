@@ -11,7 +11,11 @@ import { LoadingPayments } from '../../components/UtilityComponents';
 import { API_Products } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { determine_product_name_w_qty, determine_product_name_w_qty_sp } from '../../utils/react_helper_functions';
+import {
+	determine_product_name,
+	determine_product_name_w_qty,
+	determine_product_name_w_qty_sp
+} from '../../utils/react_helper_functions';
 
 require('dotenv').config();
 
@@ -382,7 +386,7 @@ const OrderPublicPage = (props) => {
 											<div>
 												{console.log({ color: item.color })}
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name_w_qty_sp(item)}
+													{determine_product_name(item, false)}
 													{/* {item.category === 'glowskins' && item.color}{' '}
 													{item.category === 'glowskins' && item.color} {item.name}{' '}
 													{item.product_option &&

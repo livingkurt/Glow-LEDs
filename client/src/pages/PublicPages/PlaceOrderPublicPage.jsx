@@ -14,7 +14,7 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External, API_Orders, API_Shipping } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { cart_sale_price_switch, determine_product_name_w_qty } from '../../utils/react_helper_functions';
+import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -561,7 +561,7 @@ const PlaceOrderPublicPage = (props) => {
 										<div className=" label cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name_w_qty(item)}
+													{determine_product_name(item, false)}
 													{/* {(item.category === 'glowskins' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
