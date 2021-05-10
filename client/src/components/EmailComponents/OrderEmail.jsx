@@ -498,7 +498,12 @@ const OrderEmail = (props) => {
 												{promos &&
 												order.promo_code &&
 												promos.find(
-													(promo) => promo.promo_code === order.promo_code.toLowerCase()
+													(promo) =>
+														promo.promo_code === order.promo_code.toLowerCase() &&
+														promos.find(
+															(promo) =>
+																promo.promo_code === order.promo_code.toLowerCase()
+														)
 												).admin_only ? (
 													''
 												) : (

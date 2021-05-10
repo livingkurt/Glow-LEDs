@@ -316,6 +316,7 @@ const InvoiceEmail = (props) => {
 									<strong style={{ marginRight: '3px' }}>Promo Code: </strong>{' '}
 									{promos &&
 									order.promo_code &&
+									promos.find((promo) => promo.promo_code === order.promo_code.toLowerCase()) &&
 									promos.find((promo) => promo.promo_code === order.promo_code.toLowerCase())
 										.admin_only ? (
 										''
