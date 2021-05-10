@@ -15,11 +15,7 @@ import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Orders, API_Products, API_Shipping } from '../../utils';
-import {
-	cart_sale_price_switch,
-	determine_product_name,
-	determine_product_name_w_qty
-} from '../../utils/react_helper_functions';
+import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);

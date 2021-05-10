@@ -8,11 +8,7 @@ import useClipboard from 'react-hook-clipboard';
 import { deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
 import { LazyImage, Loading } from '../UtilityComponents';
-import {
-	determine_product_name,
-	determine_product_name_w_qty,
-	determine_product_name_w_qty_sp
-} from '../../utils/react_helper_functions';
+import { determine_product_name } from '../../utils/react_helper_functions';
 
 const OrderListItem = (props) => {
 	const dispatch = useDispatch();

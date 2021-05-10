@@ -276,51 +276,6 @@ export const cart_sale_price_switch = (item, color) => {
 	}
 };
 
-// export const determine_product_name = (product) => {
-// 	console.log({ product });
-// 	console.log({ secondary_product: product.secondary_product });
-// 	return (
-// 		<div>
-// 			{product.name !== 'Diffuser Caps + Adapters Starter Kit' && product.color && product.color} {product.name}{' '}
-// 			{product.product_option && product.product_option.name && `- ${product.product_option.name}`}
-// 			{product.diffuser_cap &&
-// 				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product.diffuser_cap
-// 					.name})`}
-// 		</div>
-// 	);
-// };
-
-export const determine_product_name_w_qty = (product) => {
-	console.log({ product });
-	console.log({ secondary_product: product.secondary_product });
-	return (
-		<div>
-			{product.name !== 'Diffuser Caps + Adapters Starter Kit' && product.color && product.color} {product.name}{' '}
-			{product.product_option && product.product_option.name && `- ${product.product_option.name}`}
-			{product.diffuser_cap &&
-				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product.diffuser_cap
-					.name})`}{' '}
-			{/* {' x ' + product.qty} */}
-			{product.qty > 1 && product.qty + 'x'}
-		</div>
-	);
-};
-export const determine_product_name_w_qty_sp = (product) => {
-	console.log({ product });
-	console.log({ secondary_product: product.secondary_product });
-	return (
-		<div>
-			{product.name !== 'Diffuser Caps + Adapters Starter Kit' && product.color && product.color} {product.name}{' '}
-			{product.product_option && product.product_option.name && `- ${product.product_option.name}`}
-			{product.secondary_product &&
-				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product
-					.secondary_product.name})`}{' '}
-			{/* {' x ' + product.qty} */}
-			{product.qty > 1 && product.qty + 'x'}
-		</div>
-	);
-};
-
 export const determine_product_name = (product, show_qty) => {
 	console.log({ product });
 	console.log({ secondary_product: product.secondary_product });
@@ -333,21 +288,9 @@ export const determine_product_name = (product, show_qty) => {
 			{product.name} {product.product_option && product.product_option.name && `- ${product.product_option.name}`}
 			{(product.secondary_product || product.diffuser_cap) &&
 				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product
-					.secondary_product.name || product.diffuser_cap.name}`}{' '}
+					.secondary_product.name || product.diffuser_cap.name})`}{' '}
 			{/* {' x ' + product.qty} */}
 			{show_qty && product.qty > 1 && product.qty + 'x'}
 		</div>
 	);
 };
-
-// {(item.category === 'glowskins' ||
-// 											item.category === 'diffuser_caps' ||
-// 											item.category === 'mega_diffuser_caps' ||
-// 											item.category === 'frosted_diffusers') &&
-// 											item.color}{' '}
-// 										{item.name}{' '}
-// 										{item.product_option &&
-// 											item.product_option.hasOwnProperty('name') &&
-// 											`- ${item.product_option.name} `}
-// 										{item.qty > 1 && item.qty + 'x'}
-// 										{item.secondary_product ? ` w (${item.secondary_product.name})` : ''}

@@ -7,7 +7,7 @@ import { API_Emails } from '../../utils';
 import { toCapitlize } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 import { OrderStatusSteps } from '../SpecialtyComponents';
-import { determine_product_name, determine_product_name_w_qty } from '../../utils/react_helper_functions';
+import { determine_product_name } from '../../utils/react_helper_functions';
 
 const OrderStatusEmail = (props) => {
 	const history = useHistory();

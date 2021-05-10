@@ -5,11 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
-import {
-	determine_product_name,
-	determine_product_name_w_qty_sp,
-	email_sale_price_switch
-} from '../../utils/react_helper_functions';
+import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 
 const InvoiceEmail = (props) => {

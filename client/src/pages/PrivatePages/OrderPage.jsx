@@ -13,11 +13,7 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Orders, API_Products, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
-import {
-	cart_sale_price_switch,
-	determine_product_name,
-	determine_product_name_w_qty_sp
-} from '../../utils/react_helper_functions';
+import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 require('dotenv').config();
 
