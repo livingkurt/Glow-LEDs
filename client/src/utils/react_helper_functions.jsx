@@ -287,9 +287,9 @@ export const determine_product_name = (product, show_qty) => {
 				product.color}{' '}
 			{product.name} {product.product_option && product.product_option.name && `- ${product.product_option.name}`}
 			{(product.secondary_product || product.diffuser_cap) &&
-				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product
-					.secondary_product.name || product.diffuser_cap.name})`}{' '}
-			{/* {' x ' + product.qty} */}
+				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' &&
+					product.color} ${(product.secondary_product && product.secondary_product.name) ||
+					(product.diffuser_cap && product.diffuser_cap.name)})`}{' '}
 			{show_qty && product.qty > 1 && product.qty + 'x'}
 		</div>
 	);
