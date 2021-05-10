@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
-import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
+import { determine_product_name_w_qty_sp, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 
 const InvoiceEmail = (props) => {
@@ -262,8 +262,21 @@ const InvoiceEmail = (props) => {
 											borderBottom: '1px solid black'
 										}}
 										valign="top"
-									/>
-									{determine_product_name(item)}
+									>
+										{/* {(item.category === 'glowskins' ||
+											item.category === 'diffuser_caps' ||
+											item.category === 'mega_diffuser_caps' ||
+											item.category === 'frosted_diffusers') &&
+											item.color}{' '}
+										{item.name}{' '}
+										{item.product_option &&
+											item.product_option.hasOwnProperty('name') &&
+											`- ${item.product_option.name} `}
+										{item.qty > 1 && item.qty + 'x'}
+										{item.secondary_product ? ` w (${item.secondary_product.name})` : ''} */}
+										{determine_product_name_w_qty_sp(item)}
+									</td>
+
 									<td
 										style={{
 											padding: '5px',

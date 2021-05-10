@@ -8,6 +8,7 @@ import useClipboard from 'react-hook-clipboard';
 import { deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
 import { LazyImage, Loading } from '../UtilityComponents';
+import { determine_product_name, determine_product_name_w_qty } from '../../utils/react_helper_functions';
 
 const OrderListItem = (props) => {
 	const dispatch = useDispatch();
@@ -281,12 +282,13 @@ const OrderListItem = (props) => {
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div>
-									{item.category === 'glowskins' && item.color} {item.name}{' '}
+									{determine_product_name(item)}
+									{/* {item.category === 'glowskins' && item.color} {item.name}{' '}
 									{item.product_option &&
 										item.product_option.hasOwnProperty('name') &&
 										`- ${item.product_option.name} `}
 									{item.qty > 1 && item.qty + 'x'}
-									{item.secondary_product ? ` w (${item.secondary_product.name})` : ''}
+									{item.secondary_product ? ` w (${item.secondary_product.name})` : ''} */}
 								</div>
 							);
 						})}

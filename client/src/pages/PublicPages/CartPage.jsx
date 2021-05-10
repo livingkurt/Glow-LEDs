@@ -121,7 +121,7 @@ const CartPage = (props) => {
 																		item.pathname,
 																		e.target.value,
 																		item.color && item.color,
-																		item.diffuser_cap && item.diffuser_cap.name,
+																		item.diffuser_cap && item.diffuser_cap,
 																		item.product_option && item.product_option,
 																		item.display_image
 																	)

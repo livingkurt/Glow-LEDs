@@ -13,7 +13,11 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Orders, API_Products, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
-import { cart_sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	cart_sale_price_switch,
+	determine_product_name,
+	determine_product_name_w_qty_sp
+} from '../../utils/react_helper_functions';
 
 require('dotenv').config();
 
@@ -513,7 +517,7 @@ ${order.shipping.email}`)}
 												<div className="cart-image">
 													<Link to={'/collections/all/products/' + item.pathname}>
 														<img
-															src={item.product.images[0]}
+															src={item.display_image}
 															alt={item.name}
 															title="Product Image"
 														/>
@@ -523,7 +527,8 @@ ${order.shipping.email}`)}
 													<div>
 														{console.log({ color: item.color })}
 														<Link to={'/collections/all/products/' + item.pathname}>
-															{(item.category === 'glowskins' ||
+															{determine_product_name_w_qty_sp(item)}
+															{/* {(item.category === 'glowskins' ||
 																item.category === 'diffuser_caps' ||
 																item.category === 'mega_diffuser_caps' ||
 																item.category === 'frosted_diffusers') &&
@@ -533,7 +538,7 @@ ${order.shipping.email}`)}
 																item.product_option.name &&
 																`- ${item.product_option.name}`}
 															{item.secondary_product &&
-																` w (${item.secondary_product.name})`}
+																` w (${item.secondary_product.name})`} */}
 														</Link>
 													</div>
 													<div>Qty: {item.qty}</div>

@@ -6,7 +6,11 @@ import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date, toCapitlize } from '../../utils/helper_functions';
 import { detailsOrderPublic } from '../../actions/orderActions';
-import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	determine_product_name,
+	determine_product_name_w_qty_sp,
+	email_sale_price_switch
+} from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 
 const OrderEmail = (props) => {
@@ -304,7 +308,7 @@ const OrderEmail = (props) => {
 															</tr>
 														</table>
 														<div style={{ marginBottom: '1rem', marginLeft: '1rem' }}>
-															{determine_product_name(item)}
+															{determine_product_name_w_qty_sp(item)}
 														</div>
 													</div>
 												</td>

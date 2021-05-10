@@ -178,8 +178,8 @@ const Cart = (props) => {
 													? item.product_option.images[0]
 													: item.display_image
 											)} */}
-											{console.log({ product_option_image: item.product_option.images[0] })}
-											{console.log({ display_image: item.display_image })}
+											{/* {console.log({ product_option_image: item.product_option.images[0] })}
+											{console.log({ display_image: item.display_image })} */}
 											<div className="custom-select">
 												<select
 													defaultValue={item.qty}
@@ -190,7 +190,7 @@ const Cart = (props) => {
 																item.pathname,
 																e.target.value,
 																item.color && item.color,
-																item.diffuser_cap && item.diffuser_cap.name,
+																item.diffuser_cap && item.diffuser_cap,
 																item.product_option && item.product_option,
 																item.display_image
 															)

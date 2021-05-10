@@ -51,17 +51,6 @@ const ProductPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	// const filament_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
-
-	const diffuser_colors = [ 'Black', 'White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
-	const colors = [ 'Translucent White', 'Red', 'Green', 'Blue', 'Violet', 'Purple' ];
-	const determine_colors = () => {
-		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
-			return colors;
-		} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
-			return diffuser_colors;
-		}
-	};
 	const open_cart = () => {
 		const cart = document.querySelector('.cart_sidebar');
 		console.log(cart.classList.value);
@@ -176,7 +165,7 @@ const ProductPage = (props) => {
 				determine_default_color(color),
 				diffuser_cap,
 				product_option,
-				images
+				images[0]
 			)
 		);
 		open_cart();

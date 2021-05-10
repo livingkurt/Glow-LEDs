@@ -11,6 +11,7 @@ import { LoadingPayments } from '../../components/UtilityComponents';
 import { API_Products } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { determine_product_name_w_qty, determine_product_name_w_qty_sp } from '../../utils/react_helper_functions';
 
 require('dotenv').config();
 
@@ -374,24 +375,21 @@ const OrderPublicPage = (props) => {
 										{console.log({ item })}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												<img
-													src={item.product.images[0]}
-													title="Product Image"
-													alt={item.name}
-												/>
+												<img src={item.display_image} title="Product Image" alt={item.name} />
 											</Link>
 										</div>
 										<div className="cart-name">
 											<div>
 												{console.log({ color: item.color })}
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{item.category === 'glowskins' && item.color}{' '}
+													{determine_product_name_w_qty_sp(item)}
+													{/* {item.category === 'glowskins' && item.color}{' '}
 													{item.category === 'glowskins' && item.color} {item.name}{' '}
 													{item.product_option &&
 														item.product_option.name &&
 														`- ${item.product_option.name}`}
 													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}{' '}
-													{item.qty > 1 && item.qty + 'x'}
+													{item.qty > 1 && item.qty + 'x'} */}
 												</Link>
 											</div>
 											<div>Qty: {item.qty}</div>

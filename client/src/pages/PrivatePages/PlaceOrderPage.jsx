@@ -15,7 +15,11 @@ import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Orders, API_Products, API_Shipping } from '../../utils';
-import { cart_sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	cart_sale_price_switch,
+	determine_product_name,
+	determine_product_name_w_qty
+} from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -662,7 +666,8 @@ const PlaceOrderPage = (props) => {
 										<div className=" abel cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{(item.category === 'glowskins' ||
+													{determine_product_name(item)}
+													{/* {(item.category === 'glowskins' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
@@ -672,7 +677,7 @@ const PlaceOrderPage = (props) => {
 														item.product_option.name &&
 														`- ${item.product_option.name}`}
 													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}{' '}
-													{item.qty > 1 && item.qty + 'x'}
+													{item.qty > 1 && item.qty + 'x'} */}
 												</Link>
 											</div>
 											{/* <div>Qty: {item.qty}</div> */}
@@ -694,7 +699,7 @@ const PlaceOrderPage = (props) => {
 																	item.pathname,
 																	e.target.value,
 																	item.color && item.color,
-																	item.diffuser_cap && item.diffuser_cap.name,
+																	item.diffuser_cap && item.diffuser_cap,
 																	item.product_option && item.product_option,
 																	item.display_image
 																)

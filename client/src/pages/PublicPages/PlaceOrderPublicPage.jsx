@@ -14,7 +14,7 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External, API_Orders, API_Shipping } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { cart_sale_price_switch } from '../../utils/react_helper_functions';
+import { cart_sale_price_switch, determine_product_name_w_qty } from '../../utils/react_helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -561,7 +561,8 @@ const PlaceOrderPublicPage = (props) => {
 										<div className=" label cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{(item.category === 'glowskins' ||
+													{determine_product_name_w_qty(item)}
+													{/* {(item.category === 'glowskins' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'frosted_diffusers') &&
@@ -571,7 +572,7 @@ const PlaceOrderPublicPage = (props) => {
 														item.product_option.name &&
 														`- ${item.product_option.name}`}
 													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
-													{item.qty > 1 && item.qty + 'x'}
+													{item.qty > 1 && item.qty + 'x'} */}
 												</Link>
 											</div>
 											<div className="ai-c h-25px">
@@ -592,7 +593,7 @@ const PlaceOrderPublicPage = (props) => {
 																	item.pathname,
 																	e.target.value,
 																	item.color && item.color,
-																	item.diffuser_cap && item.diffuser_cap.name,
+																	item.diffuser_cap && item.diffuser_cap,
 																	item.product_option && item.product_option,
 																	item.display_image
 																)
