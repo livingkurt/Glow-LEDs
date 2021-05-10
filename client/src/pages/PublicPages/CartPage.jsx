@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import { cart_sale_price_switch } from '../../utils/react_helper_functions';
+import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -99,16 +99,7 @@ const CartPage = (props) => {
 										<div className="cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{(item.category === 'glowskins' ||
-														item.category === 'diffuser_caps' ||
-														item.category === 'mega_diffuser_caps' ||
-														item.category === 'frosted_diffusers') &&
-														item.color}{' '}
-													{item.name}{' '}
-													{item.product_option &&
-														item.product_option.name &&
-														`- ${item.product_option.name}`}
-													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
+													{determine_product_name(item)}
 												</Link>
 											</div>
 											<div>
@@ -131,7 +122,8 @@ const CartPage = (props) => {
 																		e.target.value,
 																		item.color && item.color,
 																		item.diffuser_cap && item.diffuser_cap.name,
-																		item.product_option && item.product_option
+																		item.product_option && item.product_option,
+																		item.display_image
 																	)
 																);
 															}}

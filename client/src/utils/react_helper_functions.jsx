@@ -275,3 +275,40 @@ export const cart_sale_price_switch = (item, color) => {
 		);
 	}
 };
+
+export const determine_product_name = (product) => {
+	return (
+		<div>
+			{product.name !== 'Diffuser Caps + Adapters Starter Kit' && product.color && product.color} {product.name}{' '}
+			{product.product_option && product.product_option.name && `- ${product.product_option.name}`}
+			{product.diffuser_cap &&
+				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product.diffuser_cap
+					.name})`}
+		</div>
+	);
+};
+
+export const determine_product_name_w_qty = (product) => {
+	return (
+		<div>
+			{product.name !== 'Diffuser Caps + Adapters Starter Kit' && product.color && product.color} {product.name}{' '}
+			{product.product_option && product.product_option.name && `- ${product.product_option.name}`}
+			{product.diffuser_cap &&
+				` w (${product.name === 'Diffuser Caps + Adapters Starter Kit' && product.color} ${product.diffuser_cap
+					.name})`}{' '}
+			{' x ' + product.qty}
+		</div>
+	);
+};
+
+// {(item.category === 'glowskins' ||
+// 											item.category === 'diffuser_caps' ||
+// 											item.category === 'mega_diffuser_caps' ||
+// 											item.category === 'frosted_diffusers') &&
+// 											item.color}{' '}
+// 										{item.name}{' '}
+// 										{item.product_option &&
+// 											item.product_option.hasOwnProperty('name') &&
+// 											`- ${item.product_option.name} `}
+// 										{item.qty > 1 && item.qty + 'x'}
+// 										{item.secondary_product ? ` w (${item.secondary_product.name})` : ''}

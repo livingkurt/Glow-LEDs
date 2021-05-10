@@ -593,7 +593,8 @@ const PlaceOrderPublicPage = (props) => {
 																	e.target.value,
 																	item.color && item.color,
 																	item.diffuser_cap && item.diffuser_cap.name,
-																	item.product_option && item.product_option
+																	item.product_option && item.product_option,
+																	item.display_image
 																)
 															)}
 													>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
 import { HashLink } from 'react-router-hash-link';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
-import { cart_sale_price_switch } from '../../utils/react_helper_functions';
+import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const Cart = (props) => {
 	const history = useHistory();
@@ -146,6 +146,7 @@ const Cart = (props) => {
 						<h4>{no_adapters_warning()}</h4>
 						{cartItems.map((item, index) => (
 							<li key={index}>
+								{console.log({ item })}
 								<div className="cart_sidebar-image">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<img
@@ -160,16 +161,7 @@ const Cart = (props) => {
 								<div className="cart_sidebar-name">
 									<div className="mb-10px">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											{(item.category === 'glowskins' ||
-												item.category === 'diffuser_caps' ||
-												item.category === 'mega_diffuser_caps' ||
-												item.category === 'frosted_diffusers') &&
-												item.color}{' '}
-											{item.name}{' '}
-											{item.product_option &&
-												item.product_option.name &&
-												`- ${item.product_option.name}`}
-											{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
+											{determine_product_name(item)}
 										</Link>
 									</div>
 									<div>
@@ -181,6 +173,13 @@ const Cart = (props) => {
 											>
 												Qty:
 											</label>
+											{/* {console.log(
+												item.product_option.images
+													? item.product_option.images[0]
+													: item.display_image
+											)} */}
+											{console.log({ product_option_image: item.product_option.images[0] })}
+											{console.log({ display_image: item.display_image })}
 											<div className="custom-select">
 												<select
 													defaultValue={item.qty}
@@ -192,7 +191,8 @@ const Cart = (props) => {
 																e.target.value,
 																item.color && item.color,
 																item.diffuser_cap && item.diffuser_cap.name,
-																item.product_option && item.product_option
+																item.product_option && item.product_option,
+																item.display_image
 															)
 														);
 													}}

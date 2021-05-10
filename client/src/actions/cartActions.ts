@@ -60,13 +60,20 @@ export const addToCart = (
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
 	try {
-		console.log({ options_images: images });
 		const { data } = await Axios.get('/api/products/' + pathname);
+		let image: any;
+		if (typeof images === 'string') {
+			console.log('String');
+			image = images;
+		} else {
+			console.log('Array');
+			image = images[0];
+		}
 
 		let cartItem: any = {
 			product: data._id,
 			name: data.name,
-			display_image: images[0],
+			display_image: image,
 			price: product_option.price || data.price,
 			sale_price: product_option.sale_price || data.sale_price,
 			countInStock: data.countInStock,
@@ -87,7 +94,7 @@ export const addToCart = (
 			cartItem = {
 				product: data._id,
 				name: data.name,
-				display_image: images[0],
+				display_image: image,
 				color,
 				diffuser_cap,
 				price: product_option.price || data.price,
@@ -112,7 +119,7 @@ export const addToCart = (
 				product: data._id,
 				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
 				name: data.name,
-				display_image: images[0],
+				display_image: image,
 				color,
 				diffuser_cap,
 				// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',

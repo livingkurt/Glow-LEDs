@@ -7,6 +7,7 @@ import { API_Emails } from '../../utils';
 import { toCapitlize } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 import { OrderStatusSteps } from '../SpecialtyComponents';
+import { determine_product_name_w_qty } from '../../utils/react_helper_functions';
 
 const OrderStatusEmail = (props) => {
 	const history = useHistory();
@@ -411,18 +412,7 @@ const OrderStatusEmail = (props) => {
 															</tr>
 														</table>
 														<div style={{ marginBottom: '1rem', marginLeft: '1rem' }}>
-															{(item.category === 'glowskins' ||
-																item.category === 'diffuser_caps' ||
-																item.category === 'mega_diffuser_caps' ||
-																item.category === 'frosted_diffusers') &&
-																item.color}{' '}
-															{item.name}{' '}
-															{item.secondary_product ? (
-																` w (${item.secondary_product.name})`
-															) : (
-																''
-															)}
-															{' x ' + item.qty}
+															{determine_product_name_w_qty(item)}
 														</div>
 													</div>
 												</td>
