@@ -143,3 +143,13 @@ export const log_error = async (logs: any) => {
 		}
 	});
 };
+
+export const make_private_code = (length: any) => {
+	const result = [];
+	const characters = 'abcdefghijklmnopqrstuvwxyz';
+	const charactersLength = characters.length;
+	for (let i = 0; i < length; i++) {
+		result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+	}
+	return result.join('');
+};

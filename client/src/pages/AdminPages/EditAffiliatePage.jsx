@@ -545,11 +545,13 @@ const EditAffiliatePage = (props) => {
 															<option key={1} defaultValue="">
 																---Choose Glow Gear---
 															</option>
-															{products_list.map((product, index) => (
-																<option key={index} value={JSON.stringify(product)}>
-																	{product.name}
-																</option>
-															))}
+															{products_list
+																.filter((product) => !product.hidden)
+																.map((product, index) => (
+																	<option key={index} value={JSON.stringify(product)}>
+																		{product.name}
+																	</option>
+																))}
 														</select>
 														<span className="custom-arrow" />
 													</div>

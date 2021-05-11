@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
+import { format_date } from '../../utils/helper_functions';
 
 const PromosPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -134,16 +135,21 @@ const PromosPage = (props) => {
 							<thead>
 								<tr>
 									<th>Active</th>
-									<th>User</th>
-									<th>affiliate</th>
+									{/* <th>User</th> */}
+									{/* <th>affiliate</th> */}
 									<th>Promo Code</th>
+
 									<th>Percentage Off</th>
 									<th>Amount Off</th>
 									<th>Free Shipping</th>
 									<th>Affiliate Only</th>
 									<th>Admin Only</th>
-									<th>Excluded Categories</th>
-									<th>Excluded Products</th>
+									<th>Single Use</th>
+									<th>Used Once</th>
+									<th>Time Limit</th>
+									<th className="min-w-200px">Active Dates</th>
+									{/* <th>Excluded Categories</th>
+									<th>Excluded Products</th> */}
 								</tr>
 							</thead>
 							<tbody>
@@ -162,9 +168,10 @@ const PromosPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-										<td className="p-10px">{promo.user}</td>
-										<td className="p-10px">{promo.affiliate}</td>
+										{/* <td className="p-10px">{promo.user}</td> */}
+										{/* <td className="p-10px">{promo.affiliate}</td> */}
 										<td className="p-10px">{promo.promo_code}</td>
+
 										<td className="p-10px">{promo.percentage_off && promo.percentage_off + '%'}</td>
 										<td className="p-10px">{promo.amount_off && '$' + promo.amount_off}</td>
 										<td className="p-10px">
@@ -188,13 +195,39 @@ const PromosPage = (props) => {
 												<i className="fas fa-times-circle" />
 											)}
 										</td>
-
 										<td className="p-10px">
+											{promo.single_use ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">
+											{promo.used_once ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">
+											{promo.time_limit ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">
+											{promo.time_limit &&
+												promo.start_date &&
+												promo.end_date &&
+												format_date(promo.start_date) + ' - ' + format_date(promo.start_date)}
+										</td>
+										{/* <td className="p-10px">
 											{promo.excluded_categories.map((item) => <div>{item}</div>)}
 										</td>
 										<td className="p-10px">
 											{promo.excluded_products.map((item) => <div>{item}</div>)}
-										</td>
+										</td> */}
 
 										<td className="p-10px">
 											<div className="jc-b">

@@ -1,8 +1,8 @@
 export {};
 import express from 'express';
-import { Log } from '../models';
+import { Log, Promo } from '../models';
 import Affiliate from '../models/affiliate';
-import { log_error, log_request } from '../util';
+import { log_error, log_request, make_private_code } from '../util';
 const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
@@ -213,29 +213,74 @@ router.delete('/:pathname', isAuth, isAdmin, async (req: any, res: any) => {
 
 router.post('/', isAuth, async (req: any, res: any) => {
 	try {
-		const newAffiliate = await Affiliate.create(req.body);
-		if (newAffiliate) {
-			log_request({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ newAffiliate ],
-				status: 201,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		const public_code = await Promo.create({
+			promo_code: req.body.artist_name.toLowerCase(),
+			admin_only: false,
+			affiliate_only: false,
+			single_use: false,
+			used_once: false,
+			excluded_categories: [],
+			excluded_products: [],
+			percentage_off: 10,
+			amount_off: 0,
+			minimum_total: 0,
+			free_shipping: false,
+			time_limit: false,
+			start_date: '2021-01-01',
+			end_date: '2021-01-01',
+			active: true
+		});
+		console.log({ public_code });
+		if (public_code) {
+			const private_code = await Promo.create({
+				promo_code: make_private_code(6),
+				admin_only: false,
+				affiliate_only: true,
+				single_use: false,
+				used_once: false,
+				excluded_categories: [],
+				excluded_products: [],
+				percentage_off: 20,
+				amount_off: 0,
+				minimum_total: 0,
+				free_shipping: false,
+				time_limit: false,
+				start_date: '2021-01-01',
+				end_date: '2021-01-01',
+				active: true
 			});
-			return res.status(201).send({ message: 'New Affiliate Created', data: newAffiliate });
-		} else {
-			log_request({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: [ newAffiliate ],
-				status: 500,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			return res.status(500).send({ message: ' Error in Creating Affiliate.' });
+			console.log({ private_code });
+			if (private_code) {
+				const newAffiliate: any = await Affiliate.create({
+					...req.body,
+					public_code: public_code._id,
+					private_code: private_code._id
+				});
+				console.log({ newAffiliate });
+				if (newAffiliate) {
+					log_request({
+						method: 'POST',
+						path: req.originalUrl,
+						collection: 'Affiliate',
+						data: [ newAffiliate ],
+						status: 201,
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+					});
+					return res.status(201).send({ message: 'New Affiliate Created', data: newAffiliate });
+				} else {
+					log_request({
+						method: 'POST',
+						path: req.originalUrl,
+						collection: 'Affiliate',
+						data: [ newAffiliate ],
+						status: 500,
+						success: false,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+					});
+					return res.status(500).send({ message: ' Error in Creating Affiliate.' });
+				}
+			}
 		}
 	} catch (error) {
 		log_error({

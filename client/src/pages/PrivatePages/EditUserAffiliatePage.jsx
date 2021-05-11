@@ -9,7 +9,7 @@ import { snake_case } from '../../utils/helper_functions';
 import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
 
-const CreateAffiliatePage = (props) => {
+const EditUserAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ artist_name, set_artist_name ] = useState('');
@@ -31,6 +31,8 @@ const CreateAffiliatePage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 	const [ chips, set_chips ] = useState([]);
+	const [ public_code, set_public_code ] = useState('');
+	const [ private_code, set_private_code ] = useState('');
 	const [ active, set_active ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -43,6 +45,9 @@ const CreateAffiliatePage = (props) => {
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
+
+	const promoList = useSelector((state) => state.promoList);
+	const { promos: promos_list } = promoList;
 	const history = useHistory();
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
@@ -72,6 +77,8 @@ const CreateAffiliatePage = (props) => {
 		set_pathname(affiliate.pathname);
 		set_products(affiliate.products);
 		set_chips(affiliate.chips);
+		set_public_code(affiliate.public_code);
+		set_private_code(affiliate.private_code);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -95,6 +102,8 @@ const CreateAffiliatePage = (props) => {
 		set_products([]);
 		set_product('');
 		set_chip([]);
+		set_public_code('');
+		set_private_code('');
 	};
 
 	const dispatch = useDispatch();
@@ -146,7 +155,9 @@ const CreateAffiliatePage = (props) => {
 				instagram_handle,
 				facebook_name,
 				tiktok,
-				promo_code: promo_code ? promo_code : artist_name && artist_name.toLowerCase(),
+				// promo_code: promo_code ? promo_code : artist_name && artist_name.toLowerCase(),
+				// public_code: ,
+				// private_code,
 				active,
 				bio,
 				link,
@@ -161,6 +172,7 @@ const CreateAffiliatePage = (props) => {
 				chips: chips.map((chip) => chip._id)
 			})
 		);
+
 		e.target.reset();
 		unset_state();
 		if (props.match.params.id) {
@@ -474,11 +486,13 @@ const CreateAffiliatePage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Gear---
 													</option>
-													{products_list.map((product, index) => (
-														<option key={index} value={JSON.stringify(product)}>
-															{product.name}
-														</option>
-													))}
+													{products_list
+														.filter((product) => !product.hidden)
+														.map((product, index) => (
+															<option key={index} value={JSON.stringify(product)}>
+																{product.name}
+															</option>
+														))}
 												</select>
 												<span className="custom-arrow" />
 											</div>
@@ -533,4 +547,4 @@ const CreateAffiliatePage = (props) => {
 		</div>
 	);
 };
-export default CreateAffiliatePage;
+export default EditUserAffiliatePage;
