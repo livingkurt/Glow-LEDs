@@ -123,7 +123,9 @@ const AffiliatesPage = (props) => {
 									<th>Instagram Handle</th>
 									<th>Facebook Name</th>
 									<th>Percentage Off</th>
-									<th>Promo Code</th>
+									{/* <th>Promo Code</th> */}
+									<th>Public Code</th>
+									<th>Private Code</th>
 									<th>Sponsor</th>
 									<th>Promotor</th>
 									<th>active</th>
@@ -138,12 +140,19 @@ const AffiliatesPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
+										{console.log({ affiliate })}
 										<td className="p-10px">{affiliate._id}</td>
 										<td className="p-10px">{affiliate.artist_name}</td>
 										<td className="p-10px">{affiliate.instagram_handle}</td>
 										<td className="p-10px">{affiliate.facebook_name}</td>
 										<td className="p-10px">{affiliate.percentage_off}%</td>
-										<td className="p-10px">{affiliate.promo_code}</td>
+										{/* <td className="p-10px">{affiliate.promo_code.promo_code}</td> */}
+										<td className="p-10px">
+											{affiliate.public_code && affiliate.public_code.promo_code}
+										</td>
+										<td className="p-10px">
+											{affiliate.private_code && affiliate.private_code.promo_code}
+										</td>
 										<td className="p-10px">
 											{affiliate.sponsor ? (
 												<i className="fas fa-check-circle" />

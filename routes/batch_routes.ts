@@ -465,23 +465,23 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 // });
 
 // // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
-// router.put('/orders_remove_color_large_domes', async (req, res) => {
-// 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
-// 	const order = await Order.updateMany(
-// 		{ 'orderItems.name': 'Large Frosted Dome Diffusers' },
-// 		{
-// 			// $rename: { shipping_price: 'volume' }
-// 			$set: {
-// 				'orderItems.$.diffuser_cap_color': 'Translucent White',
-// 				'orderItems.$.name': 'Frosted Mega Dome Diffusers'
-// 			}
-// 			// $unset: { shipping_price: 1 }
-// 		},
-// 		{ upsert: true }
-// 	);
-// 	console.log({ order });
-// 	res.send(order);
-// });
+router.put('/remove_private_code', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const order = await Affiliate.updateMany(
+		{},
+		{
+			// // $rename: { shipping_price: 'volume' }
+			// $set: {
+			// 	'orderItems.$.diffuser_cap_color': 'Translucent White',
+			// 	'orderItems.$.name': 'Frosted Mega Dome Diffusers'
+			// }
+			$unset: { private_code: 1 }
+		},
+		{ upsert: true }
+	);
+	console.log({ order });
+	res.send(order);
+});
 
 // // Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
 // router.put('/orders_original', async (req, res) => {

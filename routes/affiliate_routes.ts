@@ -54,8 +54,10 @@ router.get('/', async (req, res) => {
 		})
 			.sort(sortOrder)
 			.populate('user')
-			.populate('products');
-		// .populate('chips');
+			.populate('products')
+			.populate('public_code')
+			.populate('private_code')
+			.populate('chips');
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,

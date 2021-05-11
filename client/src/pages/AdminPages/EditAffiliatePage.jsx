@@ -8,6 +8,7 @@ import { listUsers } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
 import { snake_case } from '../../utils/helper_functions';
+import { listPromos } from '../../actions/promoActions';
 
 const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -16,7 +17,7 @@ const EditAffiliatePage = (props) => {
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
 	const [ percentage_off, set_percentage_off ] = useState('');
-	const [ promo_code, set_promo_code ] = useState('');
+
 	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ promoter, set_promoter ] = useState('');
@@ -35,6 +36,7 @@ const EditAffiliatePage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
 	const [ pathname, set_pathname ] = useState('');
+	const [ public_code, set_public_code ] = useState('');
 	const [ private_code, set_private_code ] = useState('');
 	const [ chip, set_chip ] = useState('');
 
@@ -54,6 +56,9 @@ const EditAffiliatePage = (props) => {
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
 
+	const promoList = useSelector((state) => state.promoList);
+	const { promos: promos_list } = promoList;
+
 	const set_state = () => {
 		set_id(affiliate._id);
 		set_user(affiliate.user && affiliate.user._id);
@@ -61,7 +66,7 @@ const EditAffiliatePage = (props) => {
 		set_instagram_handle(affiliate.instagram_handle);
 		set_facebook_name(affiliate.facebook_name);
 		set_percentage_off(affiliate.percentage_off);
-		set_promo_code(affiliate.promo_code);
+		set_public_code(affiliate.public_code);
 		set_funds_generated(affiliate.funds_generated);
 		set_promoter(affiliate.promoter);
 		set_sponsor(affiliate.sponsor);
@@ -88,7 +93,7 @@ const EditAffiliatePage = (props) => {
 		set_instagram_handle('');
 		set_facebook_name('');
 		set_percentage_off('');
-		set_promo_code('');
+		set_public_code('');
 		set_funds_generated('');
 		set_promoter('');
 		set_sponsor('');
@@ -126,6 +131,7 @@ const EditAffiliatePage = (props) => {
 			}
 			stableDispatch(listUsers(''));
 			stableDispatch(listProducts(''));
+			stableDispatch(listPromos(''));
 			stableDispatch(listChips());
 			set_state();
 			return () => {};
@@ -161,7 +167,7 @@ const EditAffiliatePage = (props) => {
 				instagram_handle,
 				facebook_name,
 				percentage_off,
-				promo_code,
+				public_code: public_code && public_code._id,
 				funds_generated,
 				sponsor,
 				promoter,
@@ -176,7 +182,7 @@ const EditAffiliatePage = (props) => {
 				years,
 				video,
 				venmo,
-				private_code,
+				private_code: private_code && private_code._id,
 				pathname: pathname ? pathname : snake_case(artist_name),
 				products,
 				chips: chips.map((chip) => chip._id)
@@ -285,6 +291,57 @@ const EditAffiliatePage = (props) => {
 				</div>
 			</div>
 		);
+	};
+	const add_promo = (e, code_type) => {
+		e.preventDefault();
+		const promo_object = JSON.parse(e.target.value);
+		console.log({ promo_object });
+		// console.log(promo);
+		// if (promo.indexOf(' ') >= 0) {
+		// 	console.log('indexOf');
+		// 	promo.split(' ').map((promo) => {
+		// 		set_promos((promos) => [ ...promos, promo ]);
+		// 	});
+		// } else
+		if (code_type === 'public') {
+			console.log('public');
+			set_public_code(promo_object);
+		} else if (code_type === 'private') {
+			console.log('private');
+			set_private_code(promo_object);
+		}
+	};
+
+	const remove_promo = (e, code_type) => {
+		e.preventDefault();
+		if (code_type === 'public') {
+			console.log('public');
+			set_public_code('');
+		} else if (code_type === 'private') {
+			console.log('private');
+			set_private_code('');
+		}
+	};
+	const promo_display = (promo, code_type) => {
+		console.log({ promo });
+		if (promo) {
+			return (
+				<div>
+					<div className="jc-b">
+						<div>
+							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+								<div>
+									<button className="btn icon" onClick={(e) => remove_promo(e, code_type)}>
+										<i className="fas fa-times mr-5px" />
+									</button>
+									{promo && promo.promo_code}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		}
 	};
 
 	return (
@@ -488,21 +545,89 @@ const EditAffiliatePage = (props) => {
 												/>
 											</li> */}
 											<li>
-												<label htmlFor="promo_code">Promo Code</label>
+												<label htmlFor="promo">Public Code</label>
+												{/* <input
+													type="text"
+													name="promo"
+													value={promo}
+													id="promo"
+													onChange={(e) => set_promo(e.target.value)}
+												/> */}
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_promo(e, 'public')}
+														>
+															<option key={1} defaultValue="">
+																---Choose Public Code---
+															</option>
+															{promos_list
+																.filter((promo) => !promo.hidden)
+																.map((promo, index) => (
+																	<option key={index} value={JSON.stringify(promo)}>
+																		{promo.promo_code}
+																	</option>
+																))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												{/* <button className="btn primary" onClick={(e) => add_promo(e)}>
+													Add Gear
+												</button> */}
+												{promo_display(public_code, 'public')}
+											</li>
+											<li>
+												<label htmlFor="public_code">Public Code</label>
 												<input
 													type="text"
-													name="promo_code"
-													value={promo_code}
-													id="promo_code"
-													onChange={(e) => set_promo_code(e.target.value)}
+													name="public_code"
+													value={public_code && public_code.promo_code}
+													id="public_code"
+													onChange={(e) => set_public_code(e.target.value)}
 												/>
+											</li>
+											<li>
+												<label htmlFor="promo">Private Code</label>
+												{/* <input
+													type="text"
+													name="promo"
+													value={promo}
+													id="promo"
+													onChange={(e) => set_promo(e.target.value)}
+												/> */}
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_promo(e, 'private')}
+														>
+															<option key={1} defaultValue="">
+																---Choose Private Code---
+															</option>
+															{promos_list
+																.filter((promo) => !promo.hidden)
+																.map((promo, index) => (
+																	<option key={index} value={JSON.stringify(promo)}>
+																		{promo.promo_code}
+																	</option>
+																))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												{/* <button className="btn primary" onClick={(e) => add_promo(e)}>
+													Add Gear
+												</button> */}
+												{promo_display(private_code, 'private')}
 											</li>
 											<li>
 												<label htmlFor="private_code">Private Code</label>
 												<input
 													type="text"
 													name="private_code"
-													value={private_code}
+													value={private_code && private_code.promo_code}
 													id="private_code"
 													onChange={(e) => set_private_code(e.target.value)}
 												/>
