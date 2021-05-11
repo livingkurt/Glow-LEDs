@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
+import { snake_case } from '../../utils/helper_functions';
 
 const CreateAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -21,6 +22,11 @@ const CreateAffiliatePage = (props) => {
 	const [ inspiration, set_inspiration ] = useState('');
 	const [ bio, set_bio ] = useState('');
 	const [ link, set_link ] = useState('');
+	const [ location, set_location ] = useState('');
+	const [ years, set_years ] = useState('');
+	const [ tiktok, set_tiktok ] = useState('');
+	const [ venmo, set_venmo ] = useState('');
+	const [ pathname, set_pathname ] = useState('');
 	const [ active, set_active ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -51,7 +57,12 @@ const CreateAffiliatePage = (props) => {
 		set_bio(affiliate.bio);
 		set_link(affiliate.link);
 		set_style(affiliate.style);
+		set_venmo(affiliate.venmo);
 		set_inspiration(affiliate.inspiration);
+		set_location(affiliate.location);
+		set_years(affiliate.years);
+		set_tiktok(affiliate.tiktok);
+		set_pathname(affiliate.pathname);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -68,7 +79,12 @@ const CreateAffiliatePage = (props) => {
 		set_bio('');
 		set_link('');
 		set_style('');
+		set_location('');
+		set_years('');
+		set_venmo('');
 		set_inspiration('');
+		set_tiktok('');
+		set_pathname('');
 	};
 
 	const dispatch = useDispatch();
@@ -117,16 +133,17 @@ const CreateAffiliatePage = (props) => {
 				artist_name,
 				instagram_handle,
 				facebook_name,
-				percentage_off,
-				promo_code,
-				funds_generated,
-				sponsor,
-				promoter,
+				tiktok,
+				promo_code: promo_code ? promo_code : artist_name && artist_name.toLowerCase(),
 				active,
 				bio,
 				link,
+				location,
+				years,
 				style,
-				inspiration
+				venmo,
+				inspiration,
+				pathname: pathname ? pathname : artist_name && snake_case(artist_name)
 			})
 		);
 		e.target.reset();
@@ -206,7 +223,17 @@ const CreateAffiliatePage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="instagram_handle">Instagram Handle</label>
+												<label htmlFor="facebook_name">Facebook</label>
+												<input
+													type="text"
+													name="facebook_name"
+													value={facebook_name}
+													id="facebook_name"
+													onChange={(e) => set_facebook_name(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="instagram_handle">Instagram</label>
 												<input
 													type="text"
 													name="instagram_handle"
@@ -216,13 +243,13 @@ const CreateAffiliatePage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="facebook_name">Facebook Name</label>
+												<label htmlFor="tiktok">Tiktok</label>
 												<input
 													type="text"
-													name="facebook_name"
-													value={facebook_name}
-													id="facebook_name"
-													onChange={(e) => set_facebook_name(e.target.value)}
+													name="tiktok"
+													value={tiktok}
+													id="tiktok"
+													onChange={(e) => set_tiktok(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -252,6 +279,26 @@ const CreateAffiliatePage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="location">Location</label>
+												<input
+													type="text"
+													name="location"
+													value={location}
+													id="location"
+													onChange={(e) => set_location(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="years">Years Gloving</label>
+												<input
+													type="text"
+													name="years"
+													value={years}
+													id="years"
+													onChange={(e) => set_years(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="bio">Bio</label>
 												<textarea
 													className="edit_product_textarea"
@@ -275,6 +322,19 @@ const CreateAffiliatePage = (props) => {
 													onblur="this.placeholder = 'https://www...'"
 													id="link"
 													onChange={(e) => set_link(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="venmo">Venmo</label>
+												<input
+													type="text"
+													name="venmo"
+													value={venmo}
+													// placeholder="https://www..."
+													// onfocus="this.placeholder = ''"
+													// onblur="this.placeholder = 'https://www...'"
+													id="venmo"
+													onChange={(e) => set_venmo(e.target.value)}
 												/>
 											</li>
 										</div>

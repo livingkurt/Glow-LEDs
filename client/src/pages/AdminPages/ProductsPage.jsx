@@ -10,6 +10,7 @@ import { sale_price_product_option_switch, sale_price_switch } from '../../utils
 const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
+	// const [ hide_hidden, set_hide_hidden] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 	const productList = useSelector((state) => state.productList);

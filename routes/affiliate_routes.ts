@@ -80,16 +80,16 @@ router.get('/', async (req, res) => {
 	}
 });
 
-router.get('/:promo_code', async (req, res) => {
+router.get('/:pathname', async (req, res) => {
 	try {
-		console.log({ promo_code: req.params.promo_code });
+		console.log({ pathname: req.params.pathname });
 		console.log('hello');
-		const affiliate = await Affiliate.findOne({ promo_code: req.params.promo_code })
+		const affiliate = await Affiliate.findOne({ pathname: req.params.pathname })
 			.populate('user')
 			.populate('chips')
 			.populate('products');
 		console.log({ affiliate });
-		console.log(req.params.promo_code);
+		console.log(req.params.pathname);
 		if (affiliate) {
 			log_request({
 				method: 'GET',
@@ -126,13 +126,13 @@ router.get('/:promo_code', async (req, res) => {
 	}
 });
 
-router.put('/:id', isAuth, isAdmin, async (req, res) => {
+router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ affiliate_routes_put: req.body });
-		const affiliate_id = req.params.id;
-		const affiliate: any = await Affiliate.findById(affiliate_id);
+		const pathname = req.params.pathname;
+		const affiliate: any = await Affiliate.findOne({ pathname: pathname });
 		if (affiliate) {
-			const updatedAffiliate = await Affiliate.updateOne({ _id: affiliate_id }, req.body);
+			const updatedAffiliate = await Affiliate.updateOne({ pathname: pathname }, req.body);
 			if (updatedAffiliate) {
 				log_request({
 					method: 'PUT',
@@ -170,10 +170,10 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	}
 });
 
-router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
+router.delete('/:pathname', isAuth, isAdmin, async (req: any, res: any) => {
 	try {
 		const message: any = { message: 'Affiliate Deleted' };
-		const deleted_affiliate = await Affiliate.updateOne({ _id: req.params.id }, { deleted: true });
+		const deleted_affiliate = await Affiliate.updateOne({ pathname: req.params.pathname }, { deleted: true });
 		if (deleted_affiliate) {
 			log_request({
 				method: 'DELETE',

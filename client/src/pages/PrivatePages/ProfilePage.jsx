@@ -13,7 +13,7 @@ const ProfilePage = (props) => {
 	const [ revenue, set_revenue ] = useState(0);
 
 	useEffect(() => {
-		if (userInfo && userInfo.is_affiliated) {
+		if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
 			get_code_usage();
 		}
 
@@ -21,7 +21,7 @@ const ProfilePage = (props) => {
 	}, []);
 
 	const get_code_usage = async () => {
-		const { data } = await API_Orders.get_code_usage(userInfo.affiliate.promo_code);
+		const { data } = await API_Orders.get_code_usage(userInfo.affiliate.pathname);
 		console.log({ data });
 		set_number_of_uses(data.number_of_uses);
 		set_revenue(data.revenue);
@@ -76,18 +76,19 @@ const ProfilePage = (props) => {
 						<h3>Promotional Emails</h3>
 						<label>{userInfo.email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
 					</div>
-					{userInfo.is_affiliated &&
-					userInfo.affiliate && (
+					{/* {userInfo.is_affiliated &&
+					userInfo.affiliate &&
+					userInfo.affiliate.promo_code && (
 						<div className="column mb-20px">
 							<h2>Affiliate Metrics</h2>
 							<h3>Code Usage</h3>
 							<label>
 								{userInfo.affiliate.promo_code.toUpperCase()} used {number_of_uses} times
 							</label>
-							{/* <h3>Code Revenue</h3>
-							<label>${revenue}</label> */}
+							<h3>Code Revenue</h3>
+							<label>${revenue}</label>
 						</div>
-					)}
+					)} */}
 				</div>
 				<div className="row">
 					<div className="h-20px">
@@ -111,13 +112,17 @@ const ProfilePage = (props) => {
 							</button>
 						</Link>
 					</div>
-					{userInfo.is_affiliated && userInfo.affiliate ? (
+					{userInfo.is_affiliated &&
+					userInfo.affiliate &&
+					userInfo.affiliate.pathname && (
 						<div className="h-20px ml-1rem">
-							<Link to={'/secure/account/edit_affiliate/' + userInfo.affiliate || userInfo.affiliate._id}>
+							<Link to={'/secure/account/edit_affiliate/' + userInfo.affiliate.pathname}>
 								<button className="btn primary">Edit Affiliate Profile</button>
 							</Link>
 						</div>
-					) : (
+					)}{' '}
+					{userInfo.is_affiliated &&
+					!userInfo.affiliate && (
 						<div className="h-20px ml-1rem">
 							<Link to={'/secure/account/edit_affiliate'}>
 								<button className="btn primary">Affiliate Sign Up</button>

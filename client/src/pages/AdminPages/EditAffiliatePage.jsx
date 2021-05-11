@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
+import { snake_case } from '../../utils/helper_functions';
 
 const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -29,9 +30,11 @@ const EditAffiliatePage = (props) => {
 	const [ years, set_years ] = useState('');
 	const [ team, set_team ] = useState('');
 	const [ video, set_video ] = useState('');
+	const [ venmo, set_venmo ] = useState('');
 	const [ product, set_product ] = useState('');
 	const [ products, set_products ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
+	const [ pathname, set_pathname ] = useState('');
 	const [ chip, set_chip ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -71,8 +74,10 @@ const EditAffiliatePage = (props) => {
 		set_years(affiliate.years);
 		set_team(affiliate.team);
 		set_video(affiliate.video);
+		set_venmo(affiliate.venmo);
 		set_products(affiliate.products);
 		set_chips(affiliate.chips);
+		set_pathname(affiliate.pathname);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -98,6 +103,8 @@ const EditAffiliatePage = (props) => {
 		set_products([]);
 		set_product('');
 		set_chip([]);
+		set_venmo('');
+		set_pathname('');
 		// set_chip('');
 	};
 
@@ -106,11 +113,11 @@ const EditAffiliatePage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.promo_code) {
+			if (props.match.params.pathname) {
 				console.log('Is ID');
-				console.log(props.match.params.promo_code);
-				stableDispatch(detailsAffiliate(props.match.params.promo_code));
-				stableDispatch(detailsAffiliate(props.match.params.promo_code));
+				console.log(props.match.params.pathname);
+				stableDispatch(detailsAffiliate(props.match.params.pathname));
+				stableDispatch(detailsAffiliate(props.match.params.pathname));
 			} else {
 				stableDispatch(detailsAffiliate(''));
 			}
@@ -120,7 +127,7 @@ const EditAffiliatePage = (props) => {
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.promo_code ]
+		[ stableDispatch, props.match.params.pathname ]
 	);
 
 	useEffect(
@@ -165,6 +172,8 @@ const EditAffiliatePage = (props) => {
 				location,
 				years,
 				video,
+				venmo,
+				pathname: pathname ? pathname : snake_case(artist_name),
 				products,
 				chips: chips.map((chip) => chip._id)
 			})
@@ -399,6 +408,7 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_video(e.target.value)}
 												/>
 											</li>
+
 											<li>
 												<label htmlFor="style">Your Style</label>
 												<input
@@ -481,6 +491,26 @@ const EditAffiliatePage = (props) => {
 													value={promo_code}
 													id="promo_code"
 													onChange={(e) => set_promo_code(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="pathname">Pathname</label>
+												<input
+													type="text"
+													name="pathname"
+													value={pathname ? pathname : artist_name && snake_case(artist_name)}
+													id="pathname"
+													onChange={(e) => set_pathname(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="venmo">Venmo</label>
+												<input
+													type="text"
+													name="venmo"
+													value={venmo}
+													id="venmo"
+													onChange={(e) => set_venmo(e.target.value)}
 												/>
 											</li>
 											<li>
