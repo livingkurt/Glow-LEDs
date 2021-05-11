@@ -12,13 +12,13 @@ router.get('/', async (req, res) => {
 		const category = req.query.category ? { category: req.query.category } : {};
 		let sponsor = {};
 		let promoter = {};
-		console.log(category);
+		// console.log(category);
 		if (req.query.category === 'sponsored_glovers') {
 			sponsor = { sponsor: true };
 		} else if (req.query.category === 'affiliated_glovers') {
 			promoter = { promoter: true };
 		}
-		console.log(sponsor, promoter);
+		// console.log(sponsor, promoter);
 		const searchKeyword = req.query.searchKeyword
 			? {
 					facebook_name: {
@@ -54,8 +54,8 @@ router.get('/', async (req, res) => {
 		})
 			.sort(sortOrder)
 			.populate('user')
-			.populate('chips')
 			.populate('products');
+		// .populate('chips');
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -68,14 +68,15 @@ router.get('/', async (req, res) => {
 		// console.log({ affiliates });
 		res.send(affiliates);
 	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Affiliate',
-			error,
-			status: 500,
-			success: false
-		});
+		console.log({ error });
+		// log_error({
+		// 	method: 'GET',
+		// 	path: req.originalUrl,
+		// 	collection: 'Affiliate',
+		// 	error,
+		// 	status: 500,
+		// 	success: false
+		// });
 		res.status(500).send({ error, message: 'Error Getting Affiliates' });
 	}
 });
