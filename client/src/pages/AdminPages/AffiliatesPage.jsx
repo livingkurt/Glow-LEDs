@@ -167,7 +167,7 @@ const AffiliatesPage = (props) => {
 										</td>
 										<td className="p-10px">
 											<div className="jc-b">
-												<Link to={'/secure/glow/editaffiliate/' + affiliate.promo_code}>
+												<Link to={'/secure/glow/editaffiliate/' + affiliate.pathname}>
 													<button className="btn icon">
 														<i className="fas fa-edit" />
 													</button>

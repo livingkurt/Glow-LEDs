@@ -10,7 +10,7 @@ import { LazyImage } from '../UtilityComponents';
 const AffiliateSmallScreen = (props) => {
 	return (
 		<li key={props.affiliate._id} className=" w-100per" style={props.styles}>
-			<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.artist_name.toLowerCase()}`}>
+			<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage

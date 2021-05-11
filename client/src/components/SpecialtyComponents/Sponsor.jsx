@@ -12,7 +12,7 @@ const Sponsor = (props) => {
 	console.log({ props });
 	return (
 		<li key={props.affiliate._id} style={{ ...props.styles, textDecoration: 'none' }}>
-			<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.artist_name.toLowerCase()}`}>
+			<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="sponsor">
@@ -36,10 +36,7 @@ const Sponsor = (props) => {
 
 								<label style={{ fontSize: '1.6rem' }}>{props.affiliate.location}</label>
 							</div>
-							<Link
-								to={`/collections/all/sponsors/${props.affiliate &&
-									props.affiliate.artist_name.toLowerCase()}`}
-							>
+							<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>
 								<label style={{ fontSize: '1.6rem' }}>{props.affiliate.name}</label>
 							</Link>
 						</div>
