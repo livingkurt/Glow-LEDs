@@ -504,6 +504,9 @@ const OrderEmail = (props) => {
 															(promo) =>
 																promo.promo_code === order.promo_code.toLowerCase()
 														)
+												).admin_only &&
+												promos.find(
+													(promo) => promo.promo_code === order.promo_code.toLowerCase()
 												).admin_only ? (
 													''
 												) : (
@@ -923,8 +926,8 @@ const OrderEmail = (props) => {
 
 	const send_order_email = async (email, first_name, subject, refunded) => {
 		console.log({ email_template });
-		const { data } = await API_Emails.send_order_email(email_template, subject, email);
-		const { data: request } = await API_Emails.send_order_created_email(
+		const { data } = await API_Emails.send_user_email(email_template, subject, email);
+		const { data: request } = await API_Emails.send_admin_email(
 			email_template,
 			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
 		);

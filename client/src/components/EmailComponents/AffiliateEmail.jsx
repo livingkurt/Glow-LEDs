@@ -418,7 +418,7 @@ const AffiliateEmail = (props) => {
 				console.log({ 'props.match.params.send === true && affiliate': affiliate });
 				// if (order.orderItems.length > 0) {
 				// 	console.log({ 'order.orderItems.length > 0': order });
-				if (affiliate && affiliate.artist_name) {
+				if (affiliate && affiliate.artist_name && email_template.length > 1000) {
 					// setTimeout(() => {
 					send_affiliate_email(
 						affiliate && affiliate.user && affiliate.user.email,

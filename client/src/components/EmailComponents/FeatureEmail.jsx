@@ -57,7 +57,7 @@ const FeatureEmail = (props) => {
 	}, 500);
 
 	const jsx = (
-		<body style={{ padding: 0, margin: 0 }}>
+		<body style={{ padding: 0, margin: 0, fontSize: '16px' }}>
 			<div>
 				{email && (
 					<div
@@ -616,7 +616,7 @@ const FeatureEmail = (props) => {
 				console.log({ 'props.match.params.send === true && feature': feature });
 				// if (order.orderItems.length > 0) {
 				// 	console.log({ 'order.orderItems.length > 0': order });
-				if (feature && feature.first_name) {
+				if (feature && feature.first_name && email_template.length > 1000) {
 					// setTimeout(() => {
 					send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
 					// }, 3000);
