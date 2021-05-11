@@ -87,7 +87,7 @@ const SponsorPage = (props) => {
 						</button>
 						{userInfo &&
 						userInfo.isAdmin && (
-							<Link to={'/secure/glow/editaffiliate/' + props.match.params.promo_code}>
+							<Link to={'/secure/glow/editaffiliate/' + props.match.params.pathname}>
 								<button className="btn secondary" style={{ width: '156px' }}>
 									Edit Affiliate
 								</button>

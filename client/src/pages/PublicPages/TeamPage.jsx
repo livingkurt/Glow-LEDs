@@ -159,7 +159,7 @@ const TeamPage = (props) => {
 						{team.affiliates &&
 							team.affiliates.map((affiliate) => {
 								return (
-									<Link to={'/collections/all/sponsors/' + affiliate.promo_code} className="pos-rel">
+									<Link to={'/collections/all/sponsors/' + affiliate.pathname} className="pos-rel">
 										<img
 											className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
 											src={affiliate.picture}
