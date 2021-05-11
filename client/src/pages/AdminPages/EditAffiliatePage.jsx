@@ -35,6 +35,7 @@ const EditAffiliatePage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
 	const [ pathname, set_pathname ] = useState('');
+	const [ private_code, set_private_code ] = useState('');
 	const [ chip, set_chip ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -78,6 +79,7 @@ const EditAffiliatePage = (props) => {
 		set_products(affiliate.products);
 		set_chips(affiliate.chips);
 		set_pathname(affiliate.pathname);
+		set_private_code(affiliate.private_code);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -105,6 +107,7 @@ const EditAffiliatePage = (props) => {
 		set_chip([]);
 		set_venmo('');
 		set_pathname('');
+		set_private_code('');
 		// set_chip('');
 	};
 
@@ -173,6 +176,7 @@ const EditAffiliatePage = (props) => {
 				years,
 				video,
 				venmo,
+				private_code,
 				pathname: pathname ? pathname : snake_case(artist_name),
 				products,
 				chips: chips.map((chip) => chip._id)
@@ -491,6 +495,16 @@ const EditAffiliatePage = (props) => {
 													value={promo_code}
 													id="promo_code"
 													onChange={(e) => set_promo_code(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="private_code">Private Code</label>
+												<input
+													type="text"
+													name="private_code"
+													value={private_code}
+													id="private_code"
+													onChange={(e) => set_private_code(e.target.value)}
 												/>
 											</li>
 											<li>

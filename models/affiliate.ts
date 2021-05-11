@@ -12,6 +12,7 @@ const affiliateSchema = new mongoose.Schema(
 		tiktok: { type: String },
 		percentage_off: { type: Number },
 		promo_code: { type: String },
+		private_code: { type: String },
 		location: { type: String },
 		years: { type: String },
 		bio: { type: String },
