@@ -10,7 +10,8 @@ import {
 	AFFILIATE_SAVE_FAIL,
 	AFFILIATE_DELETE_REQUEST,
 	AFFILIATE_DELETE_SUCCESS,
-	AFFILIATE_DELETE_FAIL
+	AFFILIATE_DELETE_FAIL,
+	AFFILIATE_REMOVE_STATE
 } from '../constants/affiliateConstants';
 
 export const affiliateListReducer = (state = { affiliates: [] }, action: { type: any; payload: any }) => {
@@ -63,6 +64,8 @@ export const affiliateSaveReducer = (state = { affiliate: {} }, action: { type: 
 			return { loading: false, success: true, affiliate: action.payload };
 		case AFFILIATE_SAVE_FAIL:
 			return { loading: false, error: action.payload };
+		case AFFILIATE_REMOVE_STATE:
+			return { loading: false, success: false };
 		default:
 			return state;
 	}

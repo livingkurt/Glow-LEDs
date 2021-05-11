@@ -131,7 +131,7 @@ router.get('/:pathname', async (req, res) => {
 	}
 });
 
-router.put('/:pathname', isAuth, isAdmin, async (req, res) => {
+router.put('/:pathname', isAuth, async (req, res) => {
 	try {
 		console.log({ affiliate_routes_put: req.body });
 		const pathname = req.params.pathname;

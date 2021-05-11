@@ -10,7 +10,8 @@ import {
 	AFFILIATE_SAVE_FAIL,
 	AFFILIATE_DELETE_SUCCESS,
 	AFFILIATE_DELETE_FAIL,
-	AFFILIATE_DELETE_REQUEST
+	AFFILIATE_DELETE_REQUEST,
+	AFFILIATE_REMOVE_STATE
 } from '../constants/affiliateConstants';
 import axios from 'axios';
 import { setCurrentUser, update } from './userActions';
@@ -90,6 +91,7 @@ export const saveAffiliate = (affiliate: any) => async (
 				}
 			});
 			dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
+			dispatch({ type: AFFILIATE_REMOVE_STATE, payload: {} });
 		}
 	} catch (error) {
 		dispatch({ type: AFFILIATE_SAVE_FAIL, payload: error.response.data.message });

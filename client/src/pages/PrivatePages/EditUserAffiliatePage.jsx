@@ -179,8 +179,8 @@ const EditUserAffiliatePage = (props) => {
 				inspiration,
 				pathname: pathname ? pathname : artist_name && snake_case(artist_name),
 				products,
-				chips: chips.map((chip) => chip._id),
-				answers: !props.match.params.id && [ answer_1, answer_2, answer_3 ]
+				chips: chips && chips.map((chip) => chip._id),
+				answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [ answer_1, answer_2, answer_3 ]
 			})
 		);
 
