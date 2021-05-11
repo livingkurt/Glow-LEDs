@@ -31,6 +31,10 @@ const EditUserAffiliatePage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 	const [ chips, set_chips ] = useState([]);
+	// const [ answers, set_answers ] = useState([]);
+	const [ answer_1, set_answer_1 ] = useState('');
+	const [ answer_2, set_answer_2 ] = useState('');
+	const [ answer_3, set_answer_3 ] = useState('');
 	const [ public_code, set_public_code ] = useState('');
 	const [ private_code, set_private_code ] = useState('');
 	const [ active, set_active ] = useState('');
@@ -52,6 +56,9 @@ const EditUserAffiliatePage = (props) => {
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
+
+	const affiliateSave = useSelector((state) => state.affiliateSave);
+	const { affiliate: affiliate_saved, loading: loading_saved, success } = affiliateSave;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -104,6 +111,9 @@ const EditUserAffiliatePage = (props) => {
 		set_chip([]);
 		set_public_code('');
 		set_private_code('');
+		set_answer_1('');
+		set_answer_2('');
+		set_answer_3('');
 	};
 
 	const dispatch = useDispatch();
@@ -169,18 +179,34 @@ const EditUserAffiliatePage = (props) => {
 				inspiration,
 				pathname: pathname ? pathname : artist_name && snake_case(artist_name),
 				products,
-				chips: chips.map((chip) => chip._id)
+				chips: chips.map((chip) => chip._id),
+				answers: !props.match.params.id && [ answer_1, answer_2, answer_3 ]
 			})
 		);
 
 		e.target.reset();
 		unset_state();
-		if (props.match.params.id) {
-			history.push('/secure/account/profile');
-		} else {
-			history.push('/secure/account/affiliate_sign_up_complete');
-		}
+		// if (props.match.params.id) {
+		// 	history.push('/secure/account/profile');
+		// } else {
+		// 	// history.push('/secure/account/affiliate_sign_up_complete');
+		// }
 	};
+
+	useEffect(
+		() => {
+			if (success && affiliate_saved) {
+				if (props.match.params.id) {
+					history.push('/secure/account/profile');
+				} else {
+					// history.push('/secure/account/affiliate_sign_up_complete');
+					console.log({ affiliate_saved });
+					history.push('/account/affiliate/receipt/' + affiliate_saved.data.pathname + '/affiliate/true');
+				}
+			}
+		},
+		[ success ]
+	);
 
 	const add_product = (e) => {
 		e.preventDefault();
@@ -298,8 +324,8 @@ const EditUserAffiliatePage = (props) => {
 									<title>Edit Affiliate| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '60rem', marginBottom: '20px' }}>
-									<div className="row wrap">
+								<ul className="edit-form-container" style={{ maxWidth: '55rem', marginBottom: '20px' }}>
+									<div className="wrap jc-b">
 										<div className="column w-228px m-10px">
 											{/* <li>
 												<label htmlFor="user">User</label>
@@ -468,6 +494,48 @@ const EditUserAffiliatePage = (props) => {
 											</li>
 										</div>
 									</div>
+									{!props.match.params.id && (
+										<div className="jc-b wrap">
+											<li className="w-100per">
+												<label htmlFor="answer_1">How did you hear about Glow LEDs?</label>
+												<input
+													type="text"
+													name="answer_1"
+													id="answer_1"
+													className="w-100per"
+													value={answer_1}
+													onChange={(e) => set_answer_1(e.target.value)}
+												/>
+											</li>
+											<li className="w-100per">
+												<label htmlFor="answer_2">
+													Question 2: What is your favorite Glow LEDs Product?
+												</label>
+												<input
+													type="text"
+													name="answer_2"
+													id="answer_2"
+													value={answer_2}
+													className="w-100per"
+													onChange={(e) => set_answer_2(e.target.value)}
+												/>
+											</li>
+											<li className="w-100per">
+												<label htmlFor="answer_3">
+													Question 3: Why do you want to be a Glow LEDs Affiliate?
+												</label>
+												<input
+													type="text"
+													name="answer_3"
+													id="answer_3"
+													value={answer_3}
+													className="w-100per"
+													onChange={(e) => set_answer_3(e.target.value)}
+												/>
+											</li>
+										</div>
+									)}
+
 									<li>
 										<label htmlFor="product">Glow Gear</label>
 										{/* <input

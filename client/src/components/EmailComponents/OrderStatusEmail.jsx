@@ -629,8 +629,8 @@ const OrderStatusEmail = (props) => {
 
 	const send_order_email = async (email, first_name, subject) => {
 		console.log({ email_template });
-		const { data } = await API_Emails.send_order_email(email_template, subject, email);
-		const { data: request } = await API_Emails.send_order_created_email(
+		const { data } = await API_Emails.send_user_email(email_template, subject, email);
+		const { data: request } = await API_Emails.send_admin_email(
 			email_template,
 			'Order Status Updated for ' + first_name
 		);

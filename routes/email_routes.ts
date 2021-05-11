@@ -405,11 +405,140 @@ function shuffleArray(array: any) {
 	return array;
 }
 
-router.post('/order', async (req, res) => {
-	// console.log({ template: req.body.template });
+// router.post('/order', async (req, res) => {
+// 	// console.log({ template: req.body.template });
+// 	const test = [ 'lavacquek@icloud.com' ];
+// 	let mailOptions = {
+// 		to: req.body.email,
+// 		from: process.env.DISPLAY_EMAIL,
+// 		subject: req.body.subject,
+// 		html: req.body.template
+// 		// bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log(req.body.subject);
+// 			res.send(req.body.subject);
+// 		}
+// 	});
+
+// 	// res.send('Order Email Sent to');
+// });
+// router.post('/order_created', async (req, res) => {
+// 	// console.log({ template: req.body.template });
+// 	let mailOptions = {
+// 		to: process.env.EMAIL,
+// 		from: process.env.DISPLAY_EMAIL,
+// 		subject: req.body.subject,
+// 		html: req.body.template
+// 		// bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log(req.body.subject);
+// 			res.send(req.body.subject);
+// 		}
+// 	});
+
+// 	// res.send('Order Email Sent to');
+// });
+// router.post('/feature', async (req, res) => {
+// 	console.log({ feature: req.body });
+// 	const test = [ 'lavacquek@icloud.com' ];
+// 	let mailOptions = {
+// 		to: process.env.EMAIL,
+// 		from: process.env.DISPLAY_EMAIL,
+// 		subject: req.body.subject,
+// 		html: req.body.template
+// 		// bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log(req.body.subject);
+// 			res.send(req.body.subject);
+// 		}
+// 	});
+
+// 	// res.send('Order Email Sent to');
+// });
+// router.post('/feature_created', async (req, res) => {
+// 	console.log({ feature_created: req.body });
+// 	let mailOptions = {
+// 		to: process.env.EMAIL,
+// 		from: process.env.DISPLAY_EMAIL,
+// 		subject: req.body.subject,
+// 		html: req.body.template
+// 		// bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log(req.body.subject);
+// 			res.send(req.body.subject);
+// 		}
+// 	});
+
+// 	// res.send('Order Email Sent to');
+// });
+// router.post('/affiliate', async (req, res) => {
+// 	console.log({ affiliate: req.body });
+// 	const test = [ 'lavacquek@icloud.com' ];
+// 	let mailOptions = {
+// 		to: req.body.email,
+// 		from: process.env.DISPLAY_EMAIL,
+// 		subject: req.body.subject,
+// 		html: req.body.template
+// 		// bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log(req.body.subject);
+// 			res.send(req.body.subject);
+// 		}
+// 	});
+
+// 	// res.send('Order Email Sent to');
+// });
+// router.post('/affiliate_created', async (req, res) => {
+// 	console.log({ affiliate_created: req.body });
+// 	let mailOptions = {
+// 		to: process.env.EMAIL,
+// 		from: process.env.DISPLAY_EMAIL,
+// 		subject: req.body.subject,
+// 		html: req.body.template
+// 		// bcc: req.body.email
+// 	};
+// 	transporter.sendMail(mailOptions, (err, data) => {
+// 		if (err) {
+// 			console.log('Error Occurs', err);
+// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
+// 		} else {
+// 			console.log(req.body.subject);
+// 			res.send(req.body.subject);
+// 		}
+// 	});
+
+// 	// res.send('Order Email Sent to');
+// });
+router.post('/send_user_email', async (req, res) => {
+	console.log({ send_user_email: req.body });
 	const test = [ 'lavacquek@icloud.com' ];
 	let mailOptions = {
-		to: process.env.EMAIL,
+		to: req.body.email,
 		from: process.env.DISPLAY_EMAIL,
 		subject: req.body.subject,
 		html: req.body.template
@@ -427,51 +556,8 @@ router.post('/order', async (req, res) => {
 
 	// res.send('Order Email Sent to');
 });
-router.post('/order_created', async (req, res) => {
-	// console.log({ template: req.body.template });
-	let mailOptions = {
-		to: process.env.EMAIL,
-		from: process.env.DISPLAY_EMAIL,
-		subject: req.body.subject,
-		html: req.body.template
-		// bcc: req.body.email
-	};
-	transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			console.log('Error Occurs', err);
-			res.status(500).send({ error: err, message: 'Error Sending Email' });
-		} else {
-			console.log(req.body.subject);
-			res.send(req.body.subject);
-		}
-	});
-
-	// res.send('Order Email Sent to');
-});
-router.post('/feature', async (req, res) => {
-	console.log({ feature: req.body });
-	const test = [ 'lavacquek@icloud.com' ];
-	let mailOptions = {
-		to: process.env.EMAIL,
-		from: process.env.DISPLAY_EMAIL,
-		subject: req.body.subject,
-		html: req.body.template
-		// bcc: req.body.email
-	};
-	transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			console.log('Error Occurs', err);
-			res.status(500).send({ error: err, message: 'Error Sending Email' });
-		} else {
-			console.log(req.body.subject);
-			res.send(req.body.subject);
-		}
-	});
-
-	// res.send('Order Email Sent to');
-});
-router.post('/feature_created', async (req, res) => {
-	console.log({ feature_created: req.body });
+router.post('/send_admin_email', async (req, res) => {
+	console.log({ send_user_email_created: req.body });
 	let mailOptions = {
 		to: process.env.EMAIL,
 		from: process.env.DISPLAY_EMAIL,

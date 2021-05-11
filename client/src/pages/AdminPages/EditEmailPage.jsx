@@ -135,7 +135,8 @@ const EditEmailPage = (props) => {
 		'Account Created',
 		'Reset Password',
 		'Password Changed',
-		'Feature'
+		'Feature',
+		'Affiliate'
 	];
 
 	const add_image = (e) => {

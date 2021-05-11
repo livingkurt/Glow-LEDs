@@ -88,6 +88,7 @@ import DevicesPage from './pages/PrivatePages/DevicesPage';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import {
 	AccountCreatedEmail,
+	AffiliateEmail,
 	AnnouncementEmail,
 	FeatureEmail,
 	InvoiceEmail,
@@ -289,6 +290,11 @@ const App = () => {
 								exact={true}
 								component={FeatureEmail}
 							/>
+							<AdminRoute
+								path="/secure/glow/emails/affiliate/:pathname?/:status?/:send?"
+								exact={true}
+								component={AffiliateEmail}
+							/>
 							<AdminRoute path="/secure/glow/emails/invoice/:id?" exact={true} component={InvoiceEmail} />
 							<AdminRoute path="/secure/glow/emails" component={EmailsPage} />
 							<AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
@@ -357,6 +363,10 @@ const App = () => {
 								component={AllTeamsPage}
 							/>
 							<Route path="/account/feature/receipt/:pathname/:status/:send?" component={FeatureEmail} />
+							<Route
+								path="/account/affiliate/receipt/:pathname/:status/:send?"
+								component={AffiliateEmail}
+							/>
 							<Route path="/account/submit_feature" component={SubmitFeaturePage} />
 							<Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
 							<Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />

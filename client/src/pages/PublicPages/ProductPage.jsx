@@ -148,7 +148,7 @@ const ProductPage = (props) => {
 				return 'Translucent White';
 			} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
 				return 'Black';
-			} else if (product.category === 'glowskins') {
+			} else if (product.category === 'glowskins' || product.category === 'glow_casings') {
 				return 'Clear';
 			}
 		} else {

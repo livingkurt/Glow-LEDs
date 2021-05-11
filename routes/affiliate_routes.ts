@@ -88,7 +88,9 @@ router.get('/:pathname', async (req, res) => {
 		const affiliate = await Affiliate.findOne({ pathname: req.params.pathname })
 			.populate('user')
 			.populate('chips')
-			.populate('products');
+			.populate('products')
+			.populate('public_code')
+			.populate('private_code');
 		console.log({ affiliate });
 		console.log(req.params.pathname);
 		if (affiliate) {
@@ -222,8 +224,6 @@ router.post('/', isAuth, async (req: any, res: any) => {
 			excluded_categories: [],
 			excluded_products: [],
 			percentage_off: 10,
-			amount_off: 0,
-			minimum_total: 0,
 			free_shipping: false,
 			time_limit: false,
 			start_date: '2021-01-01',
@@ -241,8 +241,6 @@ router.post('/', isAuth, async (req: any, res: any) => {
 				excluded_categories: [],
 				excluded_products: [],
 				percentage_off: 20,
-				amount_off: 0,
-				minimum_total: 0,
 				free_shipping: false,
 				time_limit: false,
 				start_date: '2021-01-01',

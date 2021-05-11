@@ -4,22 +4,22 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { useHistory } from 'react-router-dom';
+import { detailsAffiliate } from '../../actions/affiliateActions';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
-import { detailsFeature } from '../../actions/featureActions';
 import { API_Emails } from '../../utils';
 import { toCapitlize } from '../../utils/helper_functions';
 
-const FeatureEmail = (props) => {
+const AffiliateEmail = (props) => {
 	const history = useHistory();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ test, set_test ] = useState(true);
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
 
-	const featureDetails = useSelector((state) => state.featureDetails);
-	const { feature } = featureDetails;
+	const affiliateDetails = useSelector((state) => state.affiliateDetails);
+	const { affiliate } = affiliateDetails;
 
-	console.log({ feature });
+	console.log({ affiliate });
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -34,8 +34,8 @@ const FeatureEmail = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(detailsFeature(props.match.params.pathname));
-			stableDispatch(listEmails('Feature'));
+			stableDispatch(detailsAffiliate(props.match.params.pathname));
+			stableDispatch(listEmails('Affiliate'));
 			return () => {};
 		},
 		[ stableDispatch ]
@@ -123,54 +123,19 @@ const FeatureEmail = (props) => {
 									</table>
 								)}
 							</div>
+
 							<h4
 								style={{
 									textAlign: 'center',
 									fontFamily: 'helvetica',
 									color: 'white',
-									fontSize: '1.5em',
+									fontSize: '1.6em',
 									marginTop: '20px',
 									marginBottom: '0'
 								}}
 							>
-								Feature Submitted Successfully!
+								{email.h2}
 							</h4>
-							{feature && (
-								<div
-									style={{
-										maxWidth: '800px',
-										width: '100%',
-										margin: '20px auto',
-										color: 'white'
-									}}
-								>
-									<div style={{ fontSize: '20px', textAlign: 'center' }}>Feature Info</div>
-									<div width="100%" style={{ color: 'white' }}>
-										<div style={{ height: '30px' }}>
-											Artist Name: {feature && feature.artist_name}
-										</div>
-										<div style={{ height: '30px' }}>Email: {feature && feature.email}</div>
-										<div style={{ height: '30px' }}>
-											Category: {feature && feature.category && toCapitlize(feature.category)}
-										</div>
-										{feature.instagram_handle && (
-											<div
-												style={{ height: '30px' }}
-											>{`Instagram: ${feature.instagram_handle}`}</div>
-										)}
-										{feature.facebook_name && (
-											<div style={{ height: '30px' }}>{`Facebook: ${feature.facebook_name}`}</div>
-										)}
-										{feature.description && (
-											<div style={{ height: '30px' }}>{`Bio: ${feature.description}`}</div>
-										)}
-										{feature.song_id && (
-											<div style={{ height: '30px' }}>{`Song ID: ${feature.song_id}`}</div>
-										)}
-										<div />
-									</div>
-								</div>
-							)}
 							<p
 								style={{
 									fontSize: '16px',
@@ -184,238 +149,75 @@ const FeatureEmail = (props) => {
 							>
 								{email.p}
 							</p>
-							<h4
-								style={{
-									textAlign: 'center',
-									fontFamily: 'helvetica',
-									color: 'white',
-									fontSize: '1.5em',
-									marginTop: '20px',
-									marginBottom: '0'
-								}}
-							>
-								How to Send Content via WeTansfer
-							</h4>
-							{/* If you have not sent your media via wetransfer.com to info.glowleds@gmail.com, please do so as soon as you can, so we can keep track of your submission. Your video will be featured on our Facebook and Instagram pages as well as a spot on our website! We really appreciate you taking the time to submit your pictures and videos to us! We love posting your art so everyone can see! Whenever you feel inspired please do not hesitate to send us a video. We will be honored to feature it!  */}
-							<div
-								style={{
-									maxWidth: '800px',
-									width: '100%',
-									margin: '20px auto',
-									color: 'white'
-								}}
-							>
-								{/* <div style={{ fontSize: '20px', textAlign: 'center' }}>Feature Info</div> */}
-								<ol width="100%" style={{ color: 'white' }}>
-									<li>
-										<div>
-											<div
-												className={{
-													display: 'flex',
-													flexDirection: 'row'
-												}}
-											>
-												<div>Click the WeTransfer button to begin</div>
-												<div
-													style={{
-														display: 'flex',
-														justifyContent: 'center'
-													}}
-												>
-													<a
-														href={'https://wetransfer.com/'}
-														style={{
-															backgroundColor: '#4c4f60',
-															color: 'white',
-															borderRadius: '10px',
-															border: 0,
-															padding: '15px',
-															margin: '20px'
-														}}
-													>
-														<h4
-															style={{
-																fontFamily: 'helvetica',
-																margin: 0,
-																fontSize: '1.2em',
-																textAlign: 'center'
-															}}
-														>
-															WeTransfer.com
-														</h4>
-													</a>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div>Look for a window that looks like this:</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/d0/ef/EWIZve42_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
 
-									<li>
-										<div>Click "Add your files" to choose the content you wish to send</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/90/f3/LA7rHfAH_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Type or paste info.glowleds@gmail.com into the "Email To" field</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/b9/4f/IW8ZTgwp_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Type your email into the "Email From" field</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/b8/34/sEXmUSJH_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Click the transfer button</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/bd/c4/Lxu9OfEp_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>You may need to verify your email</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/2b/9e/UwReXG8i_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Once verified your transfer will begin!</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/f5/b2/jibRBVhN_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>In a few minutes your transfer will finish</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/60/44/pU1uEWBN_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-								</ol>
-							</div>
-							<h4
-								style={{
-									textAlign: 'center',
-									fontFamily: 'helvetica',
-									color: 'white',
-									fontSize: '1.5em',
-									marginTop: '20px',
-									marginBottom: '0',
-									margin: '10px'
-								}}
-							>
-								You have completed transferring content to Glow LEDs via WeTransfer
-							</h4>
+							{affiliate && (
+								<div
+									style={{
+										maxWidth: '800px',
+										width: '100%',
+										margin: '20px auto',
+										color: 'white'
+									}}
+								>
+									{/* <div style={{ fontSize: '20px', textAlign: 'center' }}>Affiliate Info</div> */}
+									<div width="100%" style={{ color: 'white', lineHeight: '30px', fontSize: '16px' }}>
+										<h3>Artist Info</h3>
+										<div>Artist Name: {affiliate && affiliate.artist_name}</div>
+										<div>Email: {affiliate && affiliate.user && affiliate.user.email}</div>
+										{affiliate.bio && <div>{`Bio: ${affiliate.bio}`}</div>}
+										{affiliate.location && <div>{`Location: ${affiliate.location}`}</div>}
+										{affiliate.years && <div>{`Years Gloving: ${affiliate.years}`}</div>}
+
+										<h3>Social Media</h3>
+										{affiliate.instagram_handle && (
+											<div>{`Instagram: ${affiliate.instagram_handle}`}</div>
+										)}
+										{affiliate.facebook_name && <div>{`Facebook: ${affiliate.facebook_name}`}</div>}
+										{affiliate.tiktok && <div>{`Tiktok: ${affiliate.tiktok}`}</div>}
+										<h3>Promo Codes</h3>
+										{affiliate.public_code && (
+											<div
+											>{`Public Code: ${affiliate.public_code.promo_code.toUpperCase()}`}</div>
+										)}
+										{affiliate.private_code && (
+											<div
+											>{`Private Code: ${affiliate.private_code.promo_code.toUpperCase()} - DO NOT SHARE PRIVATE CODE`}</div>
+										)}
+
+										{affiliate.answers &&
+										affiliate.answers.length > 0 && (
+											<div style={{ lineHeight: '30px', fontSize: '16px' }}>
+												<h3>Questions</h3>
+												<div>
+													<strong>Question 1: </strong>
+													<div>How did you hear about Glow LEDs?</div>
+												</div>
+												<div>
+													<strong>Answer 1:</strong>
+												</div>
+												<div>{affiliate.answers[0]}</div>
+												<div>
+													<strong>Question 2:</strong>
+												</div>
+												<div>What is your favorite Glow LEDs Product?</div>
+												<div>
+													<strong>Answer 2:</strong>
+												</div>
+												<div>{affiliate.answers[1]}</div>
+												<div>
+													<strong>Question 3:</strong>
+												</div>
+												<div>Why do you want to be a Glow LEDs Affiliate?</div>
+												<div>
+													<strong>Answer 3:</strong>
+												</div>
+												<div>{affiliate.answers[2]}</div>
+											</div>
+										)}
+									</div>
+								</div>
+							)}
+
 							<div
 								style={{
 									display: 'flex',
@@ -593,12 +395,12 @@ const FeatureEmail = (props) => {
 	// 	console.log('Announcement Email Sent Successfully');
 	// 	console.log(data);
 	// };
-	const send_feature_email = async (email, first_name, subject) => {
+	const send_affiliate_email = async (email, first_name, subject) => {
 		console.log({ email_template });
 		const { data } = await API_Emails.send_user_email(email_template, subject, email);
 		const { data: request } = await API_Emails.send_admin_email(
 			email_template,
-			'New Feature Created by ' + first_name
+			'New Affiliate Created by ' + first_name
 		);
 		console.log({ data });
 		console.log({ request });
@@ -612,13 +414,17 @@ const FeatureEmail = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.send === 'true' && feature) {
-				console.log({ 'props.match.params.send === true && feature': feature });
+			if (props.match.params.send === 'true' && affiliate) {
+				console.log({ 'props.match.params.send === true && affiliate': affiliate });
 				// if (order.orderItems.length > 0) {
 				// 	console.log({ 'order.orderItems.length > 0': order });
-				if (feature && feature.first_name) {
+				if (affiliate && affiliate.artist_name) {
 					// setTimeout(() => {
-					send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
+					send_affiliate_email(
+						affiliate && affiliate.user && affiliate.user.email,
+						affiliate.artist_name,
+						'Your Glow LEDs Affiliate Application'
+					);
 					// }, 3000);
 				}
 
@@ -627,7 +433,7 @@ const FeatureEmail = (props) => {
 
 			return () => {};
 		},
-		[ feature ]
+		[ affiliate ]
 	);
 
 	console.log({ email_template });
@@ -658,7 +464,12 @@ const FeatureEmail = (props) => {
 				)}
 				<button
 					className="btn primary mb-1rem"
-					onClick={() => send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature')}
+					onClick={() =>
+						send_affiliate_email(
+							affiliate && affiliate.user && affiliate.user.email,
+							affiliate.artist_name,
+							'Your Glow LEDs Affiliate Application'
+						)}
 				>
 					Send Email
 				</button>
@@ -683,4 +494,4 @@ const FeatureEmail = (props) => {
 	);
 };
 
-export default FeatureEmail;
+export default AffiliateEmail;
