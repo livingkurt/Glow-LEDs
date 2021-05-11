@@ -142,6 +142,7 @@ const CreateAffiliatePage = (props) => {
 				years,
 				style,
 				venmo,
+				percentage_off: 20,
 				inspiration,
 				pathname: pathname ? pathname : artist_name && snake_case(artist_name)
 			})
