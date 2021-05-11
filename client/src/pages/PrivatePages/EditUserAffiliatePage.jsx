@@ -6,6 +6,8 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { snake_case } from '../../utils/helper_functions';
+import { listProducts } from '../../actions/productActions';
+import { listChips } from '../../actions/chipActions';
 
 const CreateAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -13,9 +15,7 @@ const CreateAffiliatePage = (props) => {
 	const [ artist_name, set_artist_name ] = useState('');
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
-	const [ percentage_off, set_percentage_off ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
-	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ promoter, set_promoter ] = useState('');
 	const [ style, set_style ] = useState('');
@@ -27,6 +27,10 @@ const CreateAffiliatePage = (props) => {
 	const [ tiktok, set_tiktok ] = useState('');
 	const [ venmo, set_venmo ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
+	const [ product, set_product ] = useState('');
+	const [ products, set_products ] = useState([]);
+	const [ chip, set_chip ] = useState('');
+	const [ chips, set_chips ] = useState([]);
 	const [ active, set_active ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -34,6 +38,11 @@ const CreateAffiliatePage = (props) => {
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
 
+	const productList = useSelector((state) => state.productList);
+	const { products: products_list } = productList;
+
+	const chipList = useSelector((state) => state.chipList);
+	const { chips: chips_list } = chipList;
 	const history = useHistory();
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
@@ -48,9 +57,7 @@ const CreateAffiliatePage = (props) => {
 		set_artist_name(affiliate.artist_name);
 		set_instagram_handle(affiliate.instagram_handle);
 		set_facebook_name(affiliate.facebook_name);
-		set_percentage_off(affiliate.percentage_off);
 		set_promo_code(affiliate.promo_code);
-		set_funds_generated(affiliate.funds_generated);
 		set_promoter(affiliate.promoter);
 		set_sponsor(affiliate.sponsor);
 		set_active(affiliate.active);
@@ -63,6 +70,8 @@ const CreateAffiliatePage = (props) => {
 		set_years(affiliate.years);
 		set_tiktok(affiliate.tiktok);
 		set_pathname(affiliate.pathname);
+		set_products(affiliate.products);
+		set_chips(affiliate.chips);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -70,9 +79,7 @@ const CreateAffiliatePage = (props) => {
 		set_artist_name('');
 		set_instagram_handle('');
 		set_facebook_name('');
-		set_percentage_off('');
 		set_promo_code('');
-		set_funds_generated('');
 		set_promoter('');
 		set_sponsor('');
 		set_active('');
@@ -85,6 +92,9 @@ const CreateAffiliatePage = (props) => {
 		set_inspiration('');
 		set_tiktok('');
 		set_pathname('');
+		set_products([]);
+		set_product('');
+		set_chip([]);
 	};
 
 	const dispatch = useDispatch();
@@ -100,6 +110,8 @@ const CreateAffiliatePage = (props) => {
 				stableDispatch(detailsAffiliate(''));
 			}
 			stableDispatch(listUsers(''));
+			stableDispatch(listProducts(''));
+			stableDispatch(listChips());
 			set_state();
 			return () => {};
 		},
@@ -144,7 +156,9 @@ const CreateAffiliatePage = (props) => {
 				venmo,
 				percentage_off: 20,
 				inspiration,
-				pathname: pathname ? pathname : artist_name && snake_case(artist_name)
+				pathname: pathname ? pathname : artist_name && snake_case(artist_name),
+				products,
+				chips: chips.map((chip) => chip._id)
 			})
 		);
 		e.target.reset();
@@ -154,6 +168,106 @@ const CreateAffiliatePage = (props) => {
 		} else {
 			history.push('/secure/account/affiliate_sign_up_complete');
 		}
+	};
+
+	const add_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		if (products) {
+			console.log('products.length > 0');
+			set_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_products([ product_object ]);
+		}
+
+		set_product('');
+	};
+
+	const remove_product = (product_index, e) => {
+		e.preventDefault();
+		set_products((products) =>
+			products.filter((product, index) => {
+				return product_index !== index;
+			})
+		);
+	};
+
+	const product_display = (products) => {
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{products &&
+							products.map((product, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{product.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
+
+	const add_chip = (e) => {
+		e.preventDefault();
+		const chip_object = JSON.parse(e.target.value);
+		// console.log(chip);
+		// if (chip.indexOf(' ') >= 0) {
+		// 	console.log('indexOf');
+		// 	chip.split(' ').map((chip) => {
+		// 		set_chips((chips) => [ ...chips, chip ]);
+		// 	});
+		// } else
+		if (chips) {
+			console.log('chips.length > 0');
+			set_chips((chips) => [ ...chips, chip_object ]);
+		} else {
+			console.log('chips.length === 0');
+			set_chips([ chip_object ]);
+		}
+
+		set_chip('');
+	};
+
+	const remove_chip = (chip_index, e) => {
+		e.preventDefault();
+		set_chips((chips) =>
+			chips.filter((chip, index) => {
+				return chip_index !== index;
+			})
+		);
+	};
+	const chip_display = (chips) => {
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{chips &&
+							chips.map((chip, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+										<div>
+											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{chip.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
 	};
 
 	return (
@@ -172,7 +286,7 @@ const CreateAffiliatePage = (props) => {
 									<title>Edit Affiliate| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
+								<ul className="edit-form-container" style={{ maxWidth: '60rem', marginBottom: '20px' }}>
 									<div className="row wrap">
 										<div className="column w-228px m-10px">
 											{/* <li>
@@ -279,6 +393,8 @@ const CreateAffiliatePage = (props) => {
 													onChange={(e) => set_inspiration(e.target.value)}
 												/>
 											</li>
+										</div>
+										<div className="column w-228px m-10px">
 											<li>
 												<label htmlFor="location">Location</label>
 												<input
@@ -340,6 +456,63 @@ const CreateAffiliatePage = (props) => {
 											</li>
 										</div>
 									</div>
+									<li>
+										<label htmlFor="product">Glow Gear</label>
+										{/* <input
+													type="text"
+													name="product"
+													value={product}
+													id="product"
+													onChange={(e) => set_product(e.target.value)}
+												/> */}
+										<div className="ai-c h-25px mv-15px ">
+											<div className="custom-select max-w-200px">
+												<select
+													className="qty_select_dropdown max-w-200px"
+													onChange={(e) => add_product(e)}
+												>
+													<option key={1} defaultValue="">
+														---Choose Gear---
+													</option>
+													{products_list.map((product, index) => (
+														<option key={index} value={JSON.stringify(product)}>
+															{product.name}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+										{/* <button className="btn primary" onClick={(e) => add_product(e)}>
+											Add Gear
+										</button> */}
+										{product_display(products)}
+									</li>
+									<li>
+										<label htmlFor="chip">Chip</label>
+										<div className="ai-c h-25px mv-15px ">
+											<div className="custom-select max-w-200px">
+												<select
+													className="qty_select_dropdown max-w-200px"
+													onChange={(e) => add_chip(e)}
+												>
+													<option key={1} defaultValue="">
+														---Choose Chip---
+													</option>
+													{chips_list.map((chip, index) => (
+														<option key={index} value={JSON.stringify(chip)}>
+															{chip.name}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+										{/* <button className="btn primary" onClick={(e) => add_chip(e)}>
+											Add Chip
+										</button> */}
+										{chip_display(chips)}
+									</li>
 									<li>
 										<button type="submit" className="btn primary">
 											{props.match.params.id ? 'Update' : 'Create'}
