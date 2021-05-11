@@ -207,6 +207,14 @@ const EditUserAffiliatePage = (props) => {
 		},
 		[ success ]
 	);
+	useEffect(
+		() => {
+			if (userInfo && !userInfo.is_affiliated) {
+				history.push('/secure/account/profile');
+			}
+		},
+		[ userInfo ]
+	);
 
 	const add_product = (e) => {
 		e.preventDefault();
