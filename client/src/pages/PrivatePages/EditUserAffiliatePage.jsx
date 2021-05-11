@@ -15,7 +15,7 @@ const EditUserAffiliatePage = (props) => {
 	const [ artist_name, set_artist_name ] = useState('');
 	const [ instagram_handle, set_instagram_handle ] = useState('');
 	const [ facebook_name, set_facebook_name ] = useState('');
-	const [ promo_code, set_promo_code ] = useState('');
+	// const [ promo_code, set_promo_code ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ promoter, set_promoter ] = useState('');
 	const [ style, set_style ] = useState('');
@@ -69,7 +69,7 @@ const EditUserAffiliatePage = (props) => {
 		set_artist_name(affiliate.artist_name);
 		set_instagram_handle(affiliate.instagram_handle);
 		set_facebook_name(affiliate.facebook_name);
-		set_promo_code(affiliate.promo_code);
+		// set_promo_code(affiliate.promo_code);
 		set_promoter(affiliate.promoter);
 		set_sponsor(affiliate.sponsor);
 		set_active(affiliate.active);
@@ -93,7 +93,7 @@ const EditUserAffiliatePage = (props) => {
 		set_artist_name('');
 		set_instagram_handle('');
 		set_facebook_name('');
-		set_promo_code('');
+		// set_promo_code('');
 		set_promoter('');
 		set_sponsor('');
 		set_active('');

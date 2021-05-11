@@ -67,11 +67,11 @@ const SponsorPage = (props) => {
 					<meta name="twitter:title" content={affiliate.artist_name + ' | Glow LEDs'} />
 					<link
 						rel="canonical"
-						href={'https://www.glow-leds.com/collections/all/sponsors/' + affiliate.promo_code}
+						href={'https://www.glow-leds.com/collections/all/sponsors/' + affiliate.pathname}
 					/>
 					<meta
 						property="og:url"
-						content={'https://www.glow-leds.com/collections/all/sponsors/' + affiliate.promo_code}
+						content={'https://www.glow-leds.com/collections/all/sponsors/' + affiliate.pathname}
 					/>
 					<meta name="description" content={affiliate.bio} />
 					<meta property="og:description" content={affiliate.bio} />

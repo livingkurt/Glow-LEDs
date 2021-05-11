@@ -52,7 +52,7 @@ const affiliate_revenue_upload = async () => {
 		// const get_total = () => {
 		// 	const uses = affiliates.map((affiliate: { promo_code: string }) => {
 		// 		return orders.filter((order: { promo_code: string }) => {
-		// 			return order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase();
+		// 			return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase();
 		// 		}).length;
 		// 	});
 		// 	total_promo_code_usage = uses.reduce((a: any, c: any) => a + c, 0);
@@ -61,7 +61,7 @@ const affiliate_revenue_upload = async () => {
 		// 		return orders
 		// 			.filter(
 		// 				(order: { promo_code: string }) =>
-		// 					order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+		// 					order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase()
 		// 			)
 		// 			.reduce(
 		// 				(a: any, order: { totalPrice: any; taxPrice: number }) => a + order.totalPrice - order.taxPrice,
@@ -78,21 +78,21 @@ const affiliate_revenue_upload = async () => {
 
 		const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.promo_code),
+				'Promo Code': toCapitlize(affiliate.public_code),
 				Uses: last_month_orders.filter((order: any) => {
-					return order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase();
+					return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase();
 				}).length,
 				Revenue: ` $${last_month_orders
 					.filter(
 						(order: any) =>
-							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+							order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
 				Earned: ` $${last_month_orders
 					.filter(
 						(order: any) =>
-							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+							order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
 					.toFixed(2)}`
@@ -100,21 +100,21 @@ const affiliate_revenue_upload = async () => {
 		});
 		const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.promo_code),
+				'Promo Code': toCapitlize(affiliate.public_code),
 				Uses: orders.filter((order: any) => {
-					return order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase();
+					return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase();
 				}).length,
 				Revenue: ` $${orders
 					.filter(
 						(order: any) =>
-							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+							order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
 				Earned: ` $${orders
 					.filter(
 						(order: any) =>
-							order.promo_code && order.promo_code.toLowerCase() === affiliate.promo_code.toLowerCase()
+							order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
 					.toFixed(2)}`
@@ -124,7 +124,7 @@ const affiliate_revenue_upload = async () => {
 
 		// const new_rows = affiliates.map((affiliate: any, i: number) => {
 		// 	return {
-		// 		promo_code: affiliate.promo_code
+		// 		promo_code: affiliate.public_code
 		// 	};
 		// });
 		// const new_rows = data.map((product: any, i: number) => {
