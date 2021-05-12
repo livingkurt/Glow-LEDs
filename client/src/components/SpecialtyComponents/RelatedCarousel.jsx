@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import { Loading } from '../UtilityComponents';
 import { CarouselItem } from '.';
+import useWindowDimensions from './ScreenSize';
 
 const RelatedProducts = (props) => {
 	const dispatch = useDispatch();
-
+	const { height, width } = useWindowDimensions();
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 
@@ -50,40 +51,13 @@ const RelatedProducts = (props) => {
 			set_number_of_items(1);
 		}
 	};
-
-	const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-	function useCurrentWidth() {
-		// save current window width in the state object
-		let [ width, setWidth ] = useState(getWidth());
-		// in this case useEffect will execute only once because
-		// it does not have any dependencies.
-		useEffect(() => {
-			// timeoutId for debounce mechanism
-			let timeoutId = null;
-			let numberId = null;
-			const resizeListener = () => {
-				// prevent execution of previous setTimeout
-				clearTimeout(timeoutId);
-				clearTimeout(numberId);
-				// change width from the state object after 150 milliseconds
-				timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-				numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
-			};
-			// handleWindowResize(width);
-
-			// set resize listener
-			window.addEventListener('resize', resizeListener);
-			// clean up function
-			return () => {
-				// remove resize listener
-				window.removeEventListener('resize', resizeListener);
-			};
-		}, []);
-		return width;
-	}
-
-	let width = useCurrentWidth();
+	useEffect(
+		() => {
+			handleWindowResize();
+			return () => {};
+		},
+		[ width ]
+	);
 
 	return (
 		<div className="column mh-10px">

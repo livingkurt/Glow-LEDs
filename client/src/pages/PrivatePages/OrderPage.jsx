@@ -14,10 +14,13 @@ import { deleteOrder, listOrders, update_order, update_payment, refundOrder } fr
 import { API_Orders, API_Products, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
 import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
 
 require('dotenv').config();
 
 const OrderPage = (props) => {
+	const { height, width } = useWindowDimensions();
+
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
@@ -136,11 +139,11 @@ const OrderPage = (props) => {
 		[ errorPay ]
 	);
 
-	const handleChangeFor = (type) => ({ error }) => {
-		/* handle error */
-		console.log({ type });
-		console.log({ error });
-	};
+	// const handleChangeFor = (type) => ({ error }) => {
+	// 	/* handle error */
+	// 	console.log({ type });
+	// 	console.log({ error });
+	// };
 
 	const colors = [
 		{ name: 'Not Paid', color: '#6d3e3e' },
@@ -180,52 +183,60 @@ const OrderPage = (props) => {
 
 	const [ show_color, set_show_color ] = useState(false);
 
-	const handleWindowResize = (width) => {
-		if (width > 0 && width < 407) {
-			set_show_color(true);
-		} else {
-			set_show_color(false);
-		}
-	};
+	// const handleWindowResize = (width) => {
+	// 	if (width > 0 && width < 407) {
+	// 		set_show_color(true);
+	// 	} else {
+	// 		set_show_color(false);
+	// 	}
+	// };
+	console.log({ width: width, height: height });
 
-	const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	// const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-	function useCurrentWidth() {
-		// save current window width in the state object
-		let [ width, setWidth ] = useState(getWidth());
-		// in this case useEffect will execute only once because
-		// it does not have any dependencies.
-		useEffect(() => {
-			// timeoutId for debounce mechanism
-			let timeoutId = null;
-			let numberId = null;
-			const resizeListener = () => {
-				// prevent execution of previous setTimeout
-				clearTimeout(timeoutId);
-				clearTimeout(numberId);
-				// change width from the state object after 150 milliseconds
-				timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-				numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
-			};
-			// handleWindowResize(width);
+	// function useCurrentWidth() {
+	// 	// save current window width in the state object
+	// 	let [ width, setWidth ] = useState(getWidth());
+	// 	// in this case useEffect will execute only once because
+	// 	// it does not have any dependencies.
+	// 	useEffect(() => {
+	// 		// timeoutId for debounce mechanism
+	// 		let timeoutId = null;
+	// 		let numberId = null;
+	// 		const resizeListener = () => {
+	// 			// prevent execution of previous setTimeout
+	// 			clearTimeout(timeoutId);
+	// 			clearTimeout(numberId);
+	// 			// change width from the state object after 150 milliseconds
+	// 			timeoutId = setTimeout(() => setWidth(getWidth()), 150);
+	// 			numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
+	// 		};
+	// 		// handleWindowResize(width);
 
-			// set resize listener
-			window.addEventListener('resize', resizeListener);
-			// clean up function
-			return () => {
-				// remove resize listener
-				window.removeEventListener('resize', resizeListener);
-			};
-		}, []);
-		return width;
-	}
+	// 		// set resize listener
+	// 		window.addEventListener('resize', resizeListener);
+	// 		// clean up function
+	// 		return () => {
+	// 			// remove resize listener
+	// 			window.removeEventListener('resize', resizeListener);
+	// 		};
+	// 	}, []);
+	// 	return width;
+	// }
 
-	let width = useCurrentWidth();
+	// let width = useCurrentWidth();
 
-	useEffect(() => {
-		handleWindowResize(getWidth());
-		return () => {};
-	}, []);
+	// useEffect(() => {
+	// 	handleWindowResize(getWidth());
+	// 	return () => {};
+	// }, []);
+	// useEffect(
+	// 	() => {
+	// 		handleWindowResize(width);
+	// 		return () => {};
+	// 	},
+	// 	[ width ]
+	// );
 
 	const update_order_state = (order, state, is_action, action_at) => {
 		if (state) {
@@ -394,12 +405,9 @@ const OrderPage = (props) => {
 					</div>
 					<Loading loading={loading_label} />
 					<LoadingPayments loading={payment_loading} error={errorPay} />
-					<div
-						className="placeorder br-20px"
-						style={{ backgroundColor: show_color && determine_color(order) }}
-					>
+					<div className="placeorder br-20px" style={{}}>
 						<div className="placeorder-info">
-							<div style={{ backgroundColor: determine_color(order) }}>
+							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 								{order.isRefunded && (
 									<h1>
 										Refunded: {
@@ -489,7 +497,7 @@ ${order.shipping.email}`)}
 								</div>
 							</div>
 
-							<div style={{ backgroundColor: determine_color(order) }}>
+							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 								<h2>Payment</h2>
 								<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 									<p style={{ marginBottom: '0px' }}>
@@ -497,7 +505,7 @@ ${order.shipping.email}`)}
 									</p>
 								</div>
 							</div>
-							<div style={{ backgroundColor: determine_color(order) }}>
+							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 								<ul className="cart-list-container mt-0px">
 									<li>
 										<h2>Shopping Cart</h2>
@@ -610,7 +618,10 @@ ${order.shipping.email}`)}
 								</ul>
 							</div>
 						</div>
-						<div className="placeorder-action" style={{ backgroundColor: determine_color(order) }}>
+						<div
+							className="placeorder-action"
+							style={{ backgroundColor: width > 407 && determine_color(order) }}
+						>
 							<ul>
 								<li>
 									<h2 style={{ marginTop: 0 }}>Order Summary</h2>

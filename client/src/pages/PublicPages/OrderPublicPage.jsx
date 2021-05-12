@@ -12,10 +12,12 @@ import { API_Products } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { determine_product_name } from '../../utils/react_helper_functions';
+import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
 
 require('dotenv').config();
 
 const OrderPublicPage = (props) => {
+	const { height, width } = useWindowDimensions();
 	const [ order_number, set_order_number ] = useState('');
 	const cart = useSelector((state) => state.cart);
 	const { cartItems } = cart;
@@ -153,54 +155,62 @@ const OrderPublicPage = (props) => {
 		}
 		return result;
 	};
-	const [ show_color, set_show_color ] = useState(false);
+	// const [ show_color, set_show_color ] = useState(false);
 
-	const handleWindowResize = (width) => {
-		if (width > 0 && width < 407) {
-			set_show_color(true);
-		} else {
-			set_show_color(false);
-		}
-	};
+	// const handleWindowResize = () => {
+	// 	if (width > 0 && width < 407) {
+	// 		set_show_color(true);
+	// 	} else {
+	// 		set_show_color(false);
+	// 	}
+	// };
 
-	const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	// const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-	function useCurrentWidth() {
-		// save current window width in the state object
-		let [ width, setWidth ] = useState(getWidth());
-		// in this case useEffect will execute only once because
-		// it does not have any dependencies.
-		useEffect(() => {
-			// timeoutId for debounce mechanism
-			let timeoutId = null;
-			let numberId = null;
-			const resizeListener = () => {
-				// prevent execution of previous setTimeout
-				clearTimeout(timeoutId);
-				clearTimeout(numberId);
-				// change width from the state object after 150 milliseconds
-				timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-				numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
-			};
-			// handleWindowResize(width);
+	// function useCurrentWidth() {
+	// 	// save current window width in the state object
+	// 	let [ width, setWidth ] = useState(getWidth());
+	// 	// in this case useEffect will execute only once because
+	// 	// it does not have any dependencies.
+	// 	useEffect(() => {
+	// 		// timeoutId for debounce mechanism
+	// 		let timeoutId = null;
+	// 		let numberId = null;
+	// 		const resizeListener = () => {
+	// 			// prevent execution of previous setTimeout
+	// 			clearTimeout(timeoutId);
+	// 			clearTimeout(numberId);
+	// 			// change width from the state object after 150 milliseconds
+	// 			timeoutId = setTimeout(() => setWidth(getWidth()), 150);
+	// 			numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
+	// 		};
+	// 		// handleWindowResize(width);
 
-			// set resize listener
-			window.addEventListener('resize', resizeListener);
-			// clean up function
-			return () => {
-				// remove resize listener
-				window.removeEventListener('resize', resizeListener);
-			};
-		}, []);
-		return width;
-	}
+	// 		// set resize listener
+	// 		window.addEventListener('resize', resizeListener);
+	// 		// clean up function
+	// 		return () => {
+	// 			// remove resize listener
+	// 			window.removeEventListener('resize', resizeListener);
+	// 		};
+	// 	}, []);
+	// 	return width;
+	// }
 
-	let width = useCurrentWidth();
+	// let width = useCurrentWidth();
 
-	useEffect(() => {
-		handleWindowResize(getWidth());
-		return () => {};
-	}, []);
+	// useEffect(() => {
+	// 	handleWindowResize(getWidth());
+	// 	return () => {};
+	// }, []);
+
+	// useEffect(
+	// 	() => {
+	// 		handleWindowResize();
+	// 		return () => {};
+	// 	},
+	// 	[ width ]
+	// );
 
 	// const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
 	// // console.log(process.env.REACT_APP_STRIPE_KEY);
@@ -299,9 +309,9 @@ const OrderPublicPage = (props) => {
 				</div>
 			</div>
 			<LoadingPayments loading={payment_loading} error={errorPay} />
-			<div className="placeorder br-20px" style={{ backgroundColor: show_color && determine_color(order) }}>
+			<div className="placeorder br-20px" style={{ backgroundColor: width > 407 && determine_color(order) }}>
 				<div className="placeorder-info">
-					<div style={{ backgroundColor: determine_color(order) }}>
+					<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 						{order.isRefunded && (
 							<h1>
 								Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
@@ -352,7 +362,7 @@ const OrderPublicPage = (props) => {
 						</div>
 					</div>
 
-					<div style={{ backgroundColor: determine_color(order) }}>
+					<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 						<h2>Payment</h2>
 						<div style={{ borderTop: '.1rem white solid', width: '100%' }}>
 							<p style={{ marginBottom: '0px' }}>
@@ -360,7 +370,7 @@ const OrderPublicPage = (props) => {
 							</p>
 						</div>
 					</div>
-					<div style={{ backgroundColor: determine_color(order) }}>
+					<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 						<ul className="cart-list-container mt-0px">
 							<li>
 								<h2>Shopping Cart</h2>
@@ -415,7 +425,7 @@ const OrderPublicPage = (props) => {
 						</ul>
 					</div>
 				</div>
-				<div className="placeorder-action" style={{ backgroundColor: determine_color(order) }}>
+				<div className="placeorder-action" style={{ backgroundColor: width > 407 && determine_color(order) }}>
 					<ul>
 						<li>
 							<h2 style={{ marginTop: 0 }}>Order Summary</h2>
