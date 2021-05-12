@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import { ReadMore } from '../../components/SpecialtyComponents';
 
 const AboutPage = () => {
 	const contentDetails = useSelector((state) => state.contentDetails);
@@ -73,7 +74,13 @@ const AboutPage = () => {
 							src="/images/optimized_images/personal_images/IMG_8989_optimized.jpeg"
 						/>
 					</div>
-					{content && content.banner && <p className="paragraph_font">{content.about_page.kurt_p}</p>}
+					{content &&
+					content.banner && (
+						// <p className="paragraph_font">{content.about_page.kurt_p}</p>
+						<ReadMore className="paragraph_font" length={100} pre={true}>
+							{content.about_page.kurt_p}
+						</ReadMore>
+					)}
 					{/* <div
 						className="about_pictures"
 						style={{

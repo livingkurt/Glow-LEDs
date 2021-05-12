@@ -10,9 +10,16 @@ const ReadMore = (props) => {
 		<div>
 			{props.children && props.children.length > props.length && width < 1000 ? (
 				<div>
-					<p className={props.className}>
-						{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
-					</p>
+					{props.pre ? (
+						<p className={props.className}>
+							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
+						</p>
+					) : (
+						<pre className={props.className}>
+							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
+						</pre>
+					)}
+
 					<button
 						className="btn primary mb-2rem"
 						onClick={() => set_show_text((show) => (show === true ? false : true))}

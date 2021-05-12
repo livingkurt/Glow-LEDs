@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
+import { ReadMore } from '../../components/SpecialtyComponents';
 
 const HomePage = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);
@@ -167,7 +168,10 @@ const HomePage = (props) => {
 					</div>
 					<div className="max-w-800px jc-c w-100per m-auto">
 						{/* <p className="p_descriptions paragraph_font "> */}
-						<pre className="p_descriptions paragraph_font ">{content.home_page.p}</pre>
+						{/* <pre className="p_descriptions paragraph_font ">{content.home_page.p}</pre> */}
+						<ReadMore className="p_descriptions paragraph_font" length={100} pre={true}>
+							{content.home_page.p}
+						</ReadMore>
 						{/* </p> */}
 					</div>
 					<div className="jc-c">
@@ -181,14 +185,17 @@ const HomePage = (props) => {
 				{/* <h2 className="ta-c phrase_font">From a Glover that just wants the world to stay lit 🔥 </h2> */}
 				{/* <h2 className="ta-c phrase_font">Lighting up your world one LED at a time </h2> */}
 			</div>
-			<p className="p_descriptions paragraph_font ta-c home_page_description">
+			{/* <p className="p_descriptions paragraph_font ta-c home_page_description">
+			
+			</p> */}
+			<ReadMore className="p_descriptions paragraph_font ta-c" length={100}>
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
 				handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
 				the intention of turning your home into a glowing rainbow dreamland with infinite hours of
 				entertainment. You don’t need a party to enjoy our products (although parties are definitely
 				encouraged). The beautiful colors have the ability to turn your home into the next best festival or into
 				a relaxing retreat, you decide.
-			</p>
+			</ReadMore>
 			<div className="big_home_page_cards">
 				{homepage_videos.map((card) => {
 					return (
@@ -247,9 +254,12 @@ const HomePage = (props) => {
 										/>
 									</div>
 								</div>
-								<p className="p_descriptions paragraph_font home_page_description">
+								{/* <p className="p_descriptions paragraph_font home_page_description">
 									{card.description}
-								</p>
+								</p> */}
+								<ReadMore className="p_descriptions paragraph_font" length={100}>
+									{card.description}
+								</ReadMore>
 								<div className="jc-c">
 									<Link
 										className="w-100per"
