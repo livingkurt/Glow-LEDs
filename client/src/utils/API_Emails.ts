@@ -9,18 +9,6 @@ export default {
 	send_announcement_email: (template: string, subject: string, test: boolean) => {
 		return axios.post('/api/emails/announcement', { template, subject, test });
 	},
-	// send_order_email: (template: string, subject: string, email: string) => {
-	// 	return axios.post('/api/emails/order', { template, subject, email });
-	// },
-	// send_order_created_email: (template: string, subject: string) => {
-	// 	return axios.post('/api/emails/order_created', { template, subject });
-	// },
-	// send_feature_email: (template: string, subject: string, email: string) => {
-	// 	return axios.post('/api/emails/feature', { template, subject, email });
-	// },
-	// send_feature_created_email: (template: string, subject: string) => {
-	// 	return axios.post('/api/emails/feature_created', { template, subject });
-	// },
 	send_user_email: (template: string, subject: string, email: string) => {
 		return axios.post('/api/emails/send_user_email', { template, subject, email });
 	},

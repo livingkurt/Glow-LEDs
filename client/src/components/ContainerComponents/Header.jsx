@@ -63,11 +63,57 @@ const Header = (props) => {
 	// 	},
 	// 	[ userUpdate.userInfo ]
 	// );
+	const debounce = (func, wait, immediate) => {
+		var timeout;
+		return function() {
+			var context = this,
+				args = arguments;
+			var later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
+
+	const [ prevScrollPos, setPrevScrollPos ] = useState(0);
+	const [ visible, setVisible ] = useState(true);
+
+	const handleScroll = debounce(() => {
+		const currentScrollPos = window.pageYOffset;
+
+		setVisible(
+			(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10
+		);
+
+		setPrevScrollPos(currentScrollPos);
+	}, 50);
+
+	useEffect(
+		() => {
+			window.addEventListener('scroll', handleScroll);
+
+			return () => window.removeEventListener('scroll', handleScroll);
+		},
+		[ prevScrollPos, visible, handleScroll ]
+	);
+	const navbarStyles = {
+		position: 'fixed',
+		// height: '160px',
+		width: '100%',
+		// backgroundColor: 'grey',
+		// textAlign: 'center',
+		transition: 'top 0.2s'
+	};
 
 	return (
 		<div className="column">
-			<Banner />
-			<header id="overlay">
+			{/* <div className="column" style={{ ...navbarStyles, top: visible ? '0' : '-200px' }}> */}
+			<Banner visible={visible} />
+			<header id="overlay" style={{ ...navbarStyles, top: visible ? '0' : '-180px' }}>
 				<div className="menu_button w-233px">
 					<Link to="/">
 						<div className="row">

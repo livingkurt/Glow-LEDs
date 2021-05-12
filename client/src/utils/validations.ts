@@ -397,3 +397,29 @@ export const validate_passwords = async (data: { id: any; password: any; rePassw
 		isValid: isEmpty(errors)
 	};
 };
+
+export const validate_affiliate = (data: { artist_name: any; years: any }) => {
+	let errors: any = {};
+	// Convert empty fields to an empty string so we can use validator functions
+	data.artist_name = !isEmpty(data.artist_name) ? data.artist_name : '';
+	data.years = !isEmpty(data.years) ? data.years : '';
+	// data.international = !isEmpty(data.international) ? data.international : '';
+	// First Name checks
+	if (Validator.isEmpty(data.artist_name)) {
+		errors.artist_name = 'First Name field is required';
+	}
+	// Last Name checks
+	if (Validator.isEmpty(data.years)) {
+		errors.instagram_handle = 'Last Name field is required';
+	}
+	// else if (data.years)
+	// // International checks
+	// if (Validator.isEmpty(data.international)) {
+	// 	errors.international = 'Country field is required';
+	// }
+
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	};
+};

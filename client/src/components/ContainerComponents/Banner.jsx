@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsContent, listContents } from '../../actions/contentActions';
 
-const Banner = () => {
+const Banner = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);
 	const { content } = contentDetails;
 
@@ -26,8 +26,17 @@ const Banner = () => {
 		},
 		[ contents ]
 	);
+	const banner_styles = {
+		position: 'fixed',
+		// height: '22px',
+		width: '100%',
+		// backgroundColor: 'grey',
+		// textAlign: 'center',
+		transition: 'top 0.2s'
+	};
+
 	return (
-		<span className="banner">
+		<span className="banner" style={{ ...banner_styles, top: props.visible ? '0' : '-22px' }}>
 			<div className="max-w-1500px m-auto jc-b">
 				{content &&
 				content.banner && (
