@@ -14,6 +14,7 @@ import {
 	sale_price_product_option_switch,
 	sale_price_product_option_switch_product
 } from '../../utils/react_helper_functions';
+import ReadMoreReact from 'read-more-react';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -23,9 +24,6 @@ const ProductPage = (props) => {
 	let { userInfo } = userLogin;
 
 	const [ qty, setQty ] = useState(1);
-	const [ original_diffuser_caps, set_original_diffuser_caps ] = useState([]);
-	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
-	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ images, set_images ] = useState([]);
 	const [ price, set_price ] = useState();
@@ -33,21 +31,13 @@ const ProductPage = (props) => {
 	const [ size, set_size ] = useState(0);
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ product_option, set_product_option ] = useState({});
-	// const [ diffuser_cap_name, set_diffuser_cap_name ] = useState('');
 	const [ image, set_image ] = useState('');
 	const [ color, set_color ] = useState('');
 	const [ option_color, set_option_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
-	// console.log({ diffuser_cap });
 
 	const { product, loading, error } = productDetails;
-
-	const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
-
-	// const productList = useSelector((state) => state.productList);
-	// const { products, loading: loading_products, error: error_products } = productList;
-	// console.log({ products });
 
 	const dispatch = useDispatch();
 
@@ -66,34 +56,7 @@ const ProductPage = (props) => {
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
-		// dispatch(listProducts(''));
-		get_original_diffuser_caps();
-		get_mega_diffuser_caps();
-
-		// if (diffuser_cap_cookie) {
-		// 	set_diffuser_cap(diffuser_cap_cookie);
-		// 	console.log({ diffuser_cap_cookie });
-		// }
 	}, []);
-
-	// const get_original_diffuser_caps = async () => {
-	// 	const { data } = await API_Products.get_original_diffuser_caps();
-	// 	// console.log(data);
-	// 	set_original_diffuser_caps(data);
-	// 	// set_diffuser_caps(data);
-	// };
-	const get_original_diffuser_caps = async () => {
-		const { data } = await API_Products.get_original_diffuser_caps();
-		// console.log(data);
-		set_original_diffuser_caps(data);
-		// set_diffuser_caps(data);
-	};
-	const get_mega_diffuser_caps = async () => {
-		const { data } = await API_Products.get_mega_diffuser_caps();
-		// console.log(data);
-		set_mega_diffuser_caps(data);
-		// set_diffuser_caps(data);
-	};
 
 	useEffect(
 		() => {
@@ -172,19 +135,6 @@ const ProductPage = (props) => {
 		set_product_option({});
 	};
 
-	// const filament_colors = [ 'Black' ];
-
-	// const handle_diffuser_cap_change = (e) => {
-	// 	set_diffuser_cap(JSON.parse(e.target.value));
-	// 	console.log(JSON.parse(e.target.value).pathname);
-	// 	set_diffuser_cap_name(JSON.parse(e.target.value).pathname);
-	// };
-
-	const open_pdf = () => {
-		// window.open('/Glow Strings V2 Manual.pdf', '_blank');
-		window.open('/Glow_Strings_V2_Manual.pdf', '_blank', 'width=600,height=400');
-	};
-
 	const update_product = (e, option) => {
 		let button = document.getElementById(e.target.id);
 		let buttons = document.querySelectorAll('.packs');
@@ -196,17 +146,10 @@ const ProductPage = (props) => {
 		button.classList.add('secondary');
 		button.classList.add('active');
 		set_price(option.price);
-		// console.log({ option_images: option.images });
-		console.log({ option_images: option.images !== 0 });
 		if (typeof option.images !== 'undefined' && option.images.length > 0) {
 			set_images(option.images);
 			set_image(option.images[0]);
 		}
-		// if (option.images !== 0) {
-		// 	set_images(option.images);
-		// 	set_image(option.images[0]);
-		// }
-
 		set_sale_price(option.sale_price);
 		set_size(option.size);
 		set_count_in_stock(option.count_in_stock);
@@ -219,48 +162,15 @@ const ProductPage = (props) => {
 	const update_product_images = (e, option) => {
 		const product = JSON.parse(e.target.value);
 		set_diffuser_cap(JSON.parse(e.target.value));
-		// let button = document.getElementById(e.target.id);
-		// let buttons = document.querySelectorAll('.packs');
-		// buttons.forEach((node) => {
-		// 	node.classList.remove('active');
-		// 	node.classList.remove('secondary');
-		// 	node.classList.add('primary');
-		// });
-		// button.classList.add('secondary');
-		// button.classList.add('active');
-		// set_price(option.price);
-		// if (product.images) {
 		set_images(product.images);
 		set_image(product.images[0]);
-		// }
-
-		// set_sale_price(option.sale_price);
-		// set_size(option.size);
-		// set_count_in_stock(option.count_in_stock);
-		// set_product_option(option);
-		// if (color) {
-		// 	set_price(color.price);
-		// }
 	};
 
 	const update_color = (e, option) => {
-		// let button = document.getElementById(e.target.id);
-		// let buttons = document.querySelectorAll('.packs');
-		// buttons.forEach((node) => {
-		// 	node.classList.remove('active');
-		// 	node.classList.remove('secondary');
-		// 	node.classList.add('primary');
-		// });
-		// button.classList.add('secondary');
-		// button.classList.add('active');
 		if (option.price) {
 			set_price(option.price);
 		}
-
-		// set_images(option.images);
 		set_sale_price(option.sale_price);
-		// set_size(option.size);
-		// set_product_option(option);
 		set_color(JSON.parse(e.target.value).color);
 		set_option_color(JSON.parse(e.target.value));
 		console.log({ option_images: option.images });
@@ -268,8 +178,6 @@ const ProductPage = (props) => {
 			set_images(option.images);
 			set_image(option.images[0]);
 		}
-
-		// update_product_images(e, option);
 	};
 
 	return (
@@ -621,7 +529,20 @@ const ProductPage = (props) => {
 						<div className="column p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							{/* <p className="paragraph_font">{product.description}</p> */}
-							<ReadMore className="paragraph_font">{product.description}</ReadMore>
+							<ReadMore className="paragraph_font" length={100}>
+								{product.description}
+							</ReadMore>
+							{/* <ReadMore className="paragraph_font">{product.description}</ReadMore> */}
+							{/* <p className="paragraph_font">
+								<ReadMoreReact
+									text={
+										'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+									}
+									min={80}
+									ideal={100}
+									max={200}
+								/>
+							</p> */}
 							{product.category === 'glow_strings' && (
 								<Link to="/pages/manual/glow_strings_v2_manual">
 									<button className="btn primary w-100per fs-20px mb-2rem">

@@ -4,12 +4,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import CarouselItem from './CarouselItem';
 import { Loading } from '../UtilityComponents';
+import useWindowDimensions from './ScreenSize';
 
 const Carousel = (props) => {
 	const dispatch = useDispatch();
 
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
+	const { height, width } = useWindowDimensions();
 
 	useEffect(() => {
 		dispatch(listProducts(''));
@@ -34,7 +36,8 @@ const Carousel = (props) => {
 			});
 		}
 	};
-	const handleWindowResize = (width) => {
+
+	const handleWindowResize = () => {
 		if (width > 1530) {
 			set_number_of_items(5);
 		} else if (width > 1137 && width < 1529) {
@@ -48,39 +51,47 @@ const Carousel = (props) => {
 		}
 	};
 
-	const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+	useEffect(
+		() => {
+			handleWindowResize();
+			return () => {};
+		},
+		[ width ]
+	);
 
-	function useCurrentWidth() {
-		// save current window width in the state object
-		let [ width, setWidth ] = useState(getWidth());
-		// in this case useEffect will execute only once because
-		// it does not have any dependencies.
-		useEffect(() => {
-			// timeoutId for debounce mechanism
-			let timeoutId = null;
-			let numberId = null;
-			const resizeListener = () => {
-				// prevent execution of previous setTimeout
-				clearTimeout(timeoutId);
-				clearTimeout(numberId);
-				// change width from the state object after 150 milliseconds
-				timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-				numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
-			};
-			// handleWindowResize(width);
+	// const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-			// set resize listener
-			window.addEventListener('resize', resizeListener);
-			// clean up function
-			return () => {
-				// remove resize listener
-				window.removeEventListener('resize', resizeListener);
-			};
-		}, []);
-		return width;
-	}
+	// function useCurrentWidth() {
+	// 	// save current window width in the state object
+	// 	let [ width, setWidth ] = useState(getWidth());
+	// 	// in this case useEffect will execute only once because
+	// 	// it does not have any dependencies.
+	// 	useEffect(() => {
+	// 		// timeoutId for debounce mechanism
+	// 		let timeoutId = null;
+	// 		let numberId = null;
+	// 		const resizeListener = () => {
+	// 			// prevent execution of previous setTimeout
+	// 			clearTimeout(timeoutId);
+	// 			clearTimeout(numberId);
+	// 			// change width from the state object after 150 milliseconds
+	// 			timeoutId = setTimeout(() => setWidth(getWidth()), 150);
+	// 			numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
+	// 		};
+	// 		// handleWindowResize(width);
 
-	let width = useCurrentWidth();
+	// 		// set resize listener
+	// 		window.addEventListener('resize', resizeListener);
+	// 		// clean up function
+	// 		return () => {
+	// 			// remove resize listener
+	// 			window.removeEventListener('resize', resizeListener);
+	// 		};
+	// 	}, []);
+	// 	return width;
+	// }
+
+	// let width = useCurrentWidth();
 
 	return (
 		<div className="column mh-10px">

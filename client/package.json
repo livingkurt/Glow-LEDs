@@ -46,6 +46,7 @@
 		"react-router-hash-link": "^2.2.2",
 		"react-scripts": "^3.4.1",
 		"react-stripe-checkout": "^2.6.3",
+		"read-more-react": "^1.0.10",
 		"redux": "^4.0.5",
 		"redux-thunk": "^2.3.0",
 		"sales-tax": "^2.2.4",
