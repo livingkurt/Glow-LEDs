@@ -77,6 +77,12 @@ import {
 } from './reducers/contentReducers';
 import { emailDeleteReducer, emailDetailsReducer, emailListReducer, emailSaveReducer } from './reducers/emailReducers';
 import { logDeleteReducer, logDetailsReducer, logListReducer, logSaveReducer } from './reducers/logReducers';
+import {
+	paycheckDeleteReducer,
+	paycheckDetailsReducer,
+	paycheckListReducer,
+	paycheckSaveReducer
+} from './reducers/paycheckReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
 // const userInfo = Cookie.getJSON('userInfo') || null;
@@ -156,7 +162,11 @@ const reducer = combineReducers({
 	logList: logListReducer,
 	logDetails: logDetailsReducer,
 	logSave: logSaveReducer,
-	logDelete: logDeleteReducer
+	logDelete: logDeleteReducer,
+	paycheckList: paycheckListReducer,
+	paycheckDetails: paycheckDetailsReducer,
+	paycheckSave: paycheckSaveReducer,
+	paycheckDelete: paycheckDeleteReducer
 });
 
 declare global {

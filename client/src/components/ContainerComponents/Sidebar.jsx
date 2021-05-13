@@ -549,6 +549,11 @@ const Sidebar = (props) => {
 									Expenses
 								</button>
 							</Link>
+							<Link to="/secure/glow/paychecks">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Paychecks
+								</button>
+							</Link>
 							<Link to="/secure/glow/affiliates">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Affiliates

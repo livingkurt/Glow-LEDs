@@ -27,6 +27,8 @@ export { default as LogsPage } from './AdminPages/LogsPage';
 export { default as ProductsDisplayPage } from './AdminPages/ProductsDisplayPage';
 export { default as UserOrdersPage } from './AdminPages/UserOrdersPage';
 export { default as EditAllDataPage } from './AdminPages/EditAllDataPage';
+export { default as PaychecksPage } from './AdminPages/PaychecksPage';
+export { default as EditPaycheckPage } from './AdminPages/EditPaycheckPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

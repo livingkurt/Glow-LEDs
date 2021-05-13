@@ -138,6 +138,7 @@ routes/log_routes.js
 routes/chip_routes.js
 routes/payment_routes.js
 routes/shipping_routes.js
+routes/paycheck_routes.js
 
 models/user.js
 models/team.js
@@ -154,6 +155,7 @@ models/content.js
 models/device.js
 models/email.js
 models/log.js
+models/paycheck.js
 
 background/facebook_catalog_upload.js
 background/google_catalog_upload.js
