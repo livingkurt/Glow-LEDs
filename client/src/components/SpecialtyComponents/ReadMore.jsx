@@ -5,7 +5,7 @@ const ReadMore = (props) => {
 	const [ show_text, set_show_text ] = useState(false);
 	const { height, width } = useWindowDimensions();
 
-	console.log({ width: width, height: height });
+	// console.log({ width: width, height: height });
 	return (
 		<div>
 			{props.children && props.children.length > props.length && width < 1000 ? (

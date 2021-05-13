@@ -149,12 +149,17 @@ const Header = (props) => {
 						</Link>
 						<Link to="/">
 							{/* <div className="pos-rel"> */}
-							<div className="row">
+							<div className="row pos-rel">
 								<label className="glow_leds_text">Glow LEDs</label>
+
 								<label className="tm" style={{ color: '#9a9898' }}>
 									™
 								</label>
+								<label className="make_it_glow_text fs-18px mt-10px ta-r jc-fe pos-abs right-n10px bottom-n11px">
+									Make it Glow
+								</label>
 							</div>
+
 							{/* <div className="row">
 									<label className="glow_leds_text glow pos-abs">Glow LEDs</label>
 									<label className="tm" style={{ color: '#9a9898' }}>

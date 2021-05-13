@@ -152,50 +152,59 @@ router.post('/login', (req, res) => {
 	const password = req.body.password;
 
 	// Find user by email
-	User.findOne({ email }).populate('affiliate').then((user: any) => {
-		// Check if user exists
-		if (!user) {
-			return res.status(404).json({ message: 'Email not found' });
-		}
-
-		// Check password
-		bcrypt.compare(password, user.password).then((isMatch: any) => {
-			if (isMatch) {
-				// User matched
-				// Create JWT Payload
-				const payload = {
-					_id: user.id,
-					first_name: user.first_name,
-					last_name: user.last_name,
-					email: user.email,
-					affiliate: user.affiliate,
-					email_subscription: user.email_subscription,
-					is_affiliated: user.is_affiliated,
-					isVerified: user.isVerified,
-					isAdmin: user.isAdmin,
-					shipping: user.shipping,
-					token: getToken(user)
-				};
-
-				// Sign token
-				jwt.sign(
-					payload,
-					config.JWT_SECRET,
-					{
-						expiresIn: '48hr' // 1 year in seconds
-					},
-					(err: any, token: string) => {
-						res.json({
-							success: true,
-							token: 'Bearer ' + token
-						});
-					}
-				);
-			} else {
-				return res.status(400).json({ message: 'Password incorrect' });
+	User.findOne({ email })
+		.populate('affiliate')
+		.populate({ path: 'affiliate.chips' }) // .populate({
+		// 	path: 'affiliate',
+		// 	populate: {
+		// 		path: 'chips',
+		// 		model: 'Affiliate'
+		// 	}
+		// })
+		.then((user: any) => {
+			// Check if user exists
+			if (!user) {
+				return res.status(404).json({ message: 'Email not found' });
 			}
+
+			// Check password
+			bcrypt.compare(password, user.password).then((isMatch: any) => {
+				if (isMatch) {
+					// User matched
+					// Create JWT Payload
+					const payload = {
+						_id: user.id,
+						first_name: user.first_name,
+						last_name: user.last_name,
+						email: user.email,
+						affiliate: user.affiliate,
+						email_subscription: user.email_subscription,
+						is_affiliated: user.is_affiliated,
+						isVerified: user.isVerified,
+						isAdmin: user.isAdmin,
+						shipping: user.shipping,
+						token: getToken(user)
+					};
+
+					// Sign token
+					jwt.sign(
+						payload,
+						config.JWT_SECRET,
+						{
+							expiresIn: '48hr' // 1 year in seconds
+						},
+						(err: any, token: string) => {
+							res.json({
+								success: true,
+								token: 'Bearer ' + token
+							});
+						}
+					);
+				} else {
+					return res.status(400).json({ message: 'Password incorrect' });
+				}
+			});
 		});
-	});
 });
 
 router.put('/update/:id', isAuth, async (req, res) => {
@@ -204,8 +213,23 @@ router.put('/update/:id', isAuth, async (req, res) => {
 		// try {
 		const userId = req.params.id;
 
-		const user: any = await User.findById(userId).populate('affiliate');
-		console.log('/update/:id');
+		const user: any = await User.findById(userId).populate({ path: 'affiliate.chips' });
+		// .populate({
+		// 	path: 'affiliate',
+		// 	populate: {
+		// 		path: 'public_code',
+		// 		model: 'Affiliate'
+		// 	}
+		// });
+		// .populate('affiliate.private_code')
+		// .populate({ path: 'affiliate', populate: { path: 'private_code' } })
+		// .populate({ path: 'affiliate', populate: { path: 'public_code' } })
+		// .populate({ path: 'affiliate', populate: { path: 'chips' } })
+		// .populate({ path: 'affiliate', populate: { path: 'products' } });
+		// .populate('affiliate.public_code')
+		// .populate('affiliate.chips')
+		// .populate('affiliate.products');
+		console.log({ user });
 		if (user) {
 			log_request({
 				method: 'GET',
@@ -506,6 +530,10 @@ router.get('/', async (req, res) => {
 router.get('/:id', isAuth, async (req, res) => {
 	try {
 		const user = await User.findOne({ _id: req.params.id }).populate('affiliate');
+		// .populate('affiliate.private_code')
+		// .populate('affiliate.public_code')
+		// .populate('affiliate.chips')
+		// .populate('affiliate.products');
 		if (user) {
 			log_request({
 				method: 'GET',

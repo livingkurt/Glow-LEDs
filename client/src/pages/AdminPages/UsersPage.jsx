@@ -71,7 +71,7 @@ const UsersPage = (props) => {
 		if (order.is_affiliated) {
 			result = colors[3].color;
 		}
-		console.log(result);
+		// console.log(result);
 		return result;
 	};
 

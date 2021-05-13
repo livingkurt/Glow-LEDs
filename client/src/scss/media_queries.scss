@@ -191,6 +191,9 @@
 	.glow_leds_text {
 		font-size: 50px !important;
 	}
+	.make_it_glow_text {
+		font-size: 16px !important;
+	}
 	.content {
 		margin-top: 152px !important;
 		min-height: 76vh !important;
@@ -296,6 +299,9 @@
 	.glow_leds_text {
 		font-size: 40px !important;
 	}
+	.make_it_glow_text {
+		font-size: 15px !important;
+	}
 	.welcome_text {
 		font-size: 40px !important;
 	}
@@ -375,6 +381,9 @@
 	}
 	.glow_leds_text {
 		font-size: 35px !important;
+	}
+	.make_it_glow_text {
+		font-size: 14px !important;
 	}
 	.welcome_text {
 		font-size: 35px !important;
@@ -534,6 +543,9 @@
 	.glow_leds_text {
 		font-size: 28px !important;
 	}
+	.make_it_glow_text {
+		font-size: 13px !important;
+	}
 	.welcome_text {
 		font-size: 30px !important;
 	}
@@ -552,7 +564,8 @@
 }
 
 @media only screen and (max-width: 355px) {
-	.glow_leds_text {
+	.glow_leds_text,
+	.make_it_glow_text {
 		display: none !important;
 	}
 	.content {

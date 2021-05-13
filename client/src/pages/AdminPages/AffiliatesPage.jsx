@@ -55,7 +55,8 @@ const AffiliatesPage = (props) => {
 	const colors = [
 		{ name: 'Sponsor', color: '#3e4c6d' },
 		{ name: 'Promoter', color: '#7d5555' },
-		{ name: 'Team', color: '#557d6c' }
+		{ name: 'Team', color: '#557d6c' },
+		{ name: 'Not Active', color: '#757575' }
 	];
 
 	const determine_color = (affiliate) => {
@@ -69,6 +70,9 @@ const AffiliatesPage = (props) => {
 		}
 		if (affiliate.team) {
 			result = colors[2].color;
+		}
+		if (!affiliate.active) {
+			result = colors[3].color;
 		}
 		return result;
 	};

@@ -909,6 +909,19 @@ video {
 	// text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
 	text-shadow: 0 0 10px #fff, 0 0 30px;
 }
+.make_it_glow_text {
+	font-size: 67px;
+	margin: 0;
+	text-align: center;
+	justify-content: center;
+	width: 100%;
+	margin-bottom: 10px;
+	margin-top: 17px;
+	display: flex;
+	font-family: $heading_font;
+	// text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+	text-shadow: 0 0 10px #fff, 0 0 30px;
+}
 
 // .glow_leds_text_glow {
 // 	font-size: 67px;
@@ -1583,6 +1596,31 @@ video {
 // 	li:before:first-child {
 // 		margin-right: 10px;
 // 	}
+// }
+
+.group {
+	display: flex;
+	flex-wrap: wrap;
+	// gap: 10px;
+	--multiplier: calc(80rem - 100%);
+}
+
+.group_item {
+	// margin: 10px;
+	min-width: 40%;
+	max-width: 100%;
+	width: 50px;
+	// border-radius: 20px;
+	flex-grow: 1;
+	flex-basis: calc(var(--multiplier) * 999);
+}
+
+// .group_images {
+// 	// margin: 10px;
+// 	min-width: 50%;
+// 	max-width: 100%;
+// 	// width: 50px;
+// 	// border-radius: 20px;
 // }
 
 .colored_caps {

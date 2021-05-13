@@ -10,6 +10,7 @@ const UserProfilePage = (props) => {
 	const history = useHistory();
 	const userDetails = useSelector((state) => state.userDetails);
 	const { loading, user, error } = userDetails;
+	console.log({ user });
 
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
