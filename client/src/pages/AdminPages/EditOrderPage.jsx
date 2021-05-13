@@ -961,7 +961,7 @@ const EditOrderPage = (props) => {
 																			---Choose Product---
 																		</option>
 																		{products
-																			.filter((product) => !product.hidden)
+																			// .filter((product) => !product.hidden)
 																			.map((product, index) => (
 																				<option
 																					key={index}
