@@ -7,6 +7,7 @@ import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
+import { API_External } from '../../utils';
 
 const EditOrderPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -33,9 +34,11 @@ const EditOrderPage = (props) => {
 	const [ refundedAt, set_refundedAt ] = useState('');
 	const [ createdAt, set_createdAt ] = useState('');
 	const [ order_note, set_order_note ] = useState('');
+	const [ tax_rate, set_tax_rate ] = useState('');
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ tracking_number, set_tracking_number ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 
 	const history = useHistory();
 
@@ -204,14 +207,14 @@ const EditOrderPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const update_order_item = (e, index) => {
+	const update_order_item = async (e, index) => {
 		const order_item = JSON.parse(e.target.value);
 		console.log({ order_item });
 		let new_order_items = [ ...orderItems ];
 		new_order_items[index] = {
 			...new_order_items[index],
 			name: order_item.name,
-			// qty: orderItems[index].qty,
+			qty: orderItems[index].qty || 1,
 			display_image: order_item.images[0],
 			price: order_item.price,
 			category: order_item.category,
@@ -230,7 +233,40 @@ const EditOrderPage = (props) => {
 		};
 		// console.log(order_item._id);
 		set_orderItems(new_order_items);
-		console.log({ orderItems });
+		console.log({ orderItems: [ ...new_order_items ] });
+		const price_items = [ ...new_order_items ].reduce((a, c) => a + c.price * c.qty, 0);
+		// [ ...new_order_items ].forEach((item) => console.log(item.price));
+
+		set_itemsPrice(price_items);
+		const rate_tax = await get_tax_rates();
+		console.log({ rate_tax });
+		const tax = rate_tax * price_items;
+		console.log({ price_items });
+		console.log({ tax });
+		console.log({ shippingPrice });
+		set_taxPrice(tax);
+		set_totalPrice(price_items + shippingPrice + tax);
+	};
+	const get_tax_rates = async () => {
+		set_taxPrice(0);
+		set_loading_tax_rate(true);
+		const { data } = await API_External.get_tax_rates();
+		const tax_rate = parseFloat(data[shipping.state]) / 100;
+
+		if (isNaN(tax_rate)) {
+			console.log('Not a Number');
+		} else {
+			console.log({ [shipping.state]: tax_rate });
+			set_tax_rate(tax_rate);
+			if (shipping.international) {
+				set_taxPrice(0);
+				return;
+			}
+			return tax_rate;
+			// set_taxPrice(tax_rate * items_price);
+			// set_totalPrice(items_price + shippingPrice + tax_rate);
+		}
+		set_loading_tax_rate(false);
 	};
 
 	const update_order_item_property = (value, field_name, index) => {
