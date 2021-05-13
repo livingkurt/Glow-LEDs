@@ -149,18 +149,30 @@ const ProfilePage = (props) => {
 					revenue && (
 						<div className="mb-20px max-w-700px w-500px">
 							<h2 className="group_images">Affiliate Metrics</h2>
-							<h3>Public Code</h3>
-							<label>{affiliate.public_code.promo_code.toUpperCase()}</label>
-							<h3>Private Code</h3>
-							<label>{affiliate.private_code.promo_code.toUpperCase()}</label>
-							<h3>Code Usage</h3>
-							<label>
-								{affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
-							</label>
-							<h3>Total Revenue</h3>
-							<label>${parseFloat(revenue).toFixed(2)}</label>
-							<h3>Total Earrned</h3>
-							<label>${parseFloat(affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}</label>
+							<div className="column mb-20px">
+								<h3>Public Code</h3>
+								<label>{affiliate.public_code.promo_code.toUpperCase()}</label>
+							</div>
+							<div className="column mb-20px">
+								<h3>Private Code</h3>
+								<label>{affiliate.private_code.promo_code.toUpperCase()}</label>
+							</div>
+							<div className="column mb-20px">
+								<h3>Code Usage</h3>
+								<label>
+									{affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
+								</label>
+							</div>
+							<div className="column mb-20px">
+								<h3>Total Revenue</h3>
+								<label>${parseFloat(revenue).toFixed(2)}</label>
+							</div>
+							<div className="column mb-20px">
+								<h3>Total Earrned</h3>
+								<label>
+									${parseFloat(affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}
+								</label>
+							</div>
 							{/* <h3>Affilate Terms</h3> */}
 							<div className="mt-1rem">
 								{affiliate.promoter && (
