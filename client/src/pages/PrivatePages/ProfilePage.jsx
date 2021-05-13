@@ -145,7 +145,8 @@ const ProfilePage = (props) => {
 					{userInfo.is_affiliated &&
 					userInfo.affiliate &&
 					affiliate &&
-					affiliate.public_code && (
+					affiliate.public_code &&
+					revenue && (
 						<div className="mb-20px max-w-700px w-500px">
 							<h2 className="group_images">Affiliate Metrics</h2>
 							<h3>Public Code</h3>
@@ -157,9 +158,9 @@ const ProfilePage = (props) => {
 								{affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
 							</label>
 							<h3>Total Revenue</h3>
-							<label>${revenue}</label>
+							<label>${parseFloat(revenue).toFixed(2)}</label>
 							<h3>Total Earrned</h3>
-							<label>${affiliate.promoter ? 0.1 * revenue : 0.15 * revenue}</label>
+							<label>${parseFloat(affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}</label>
 							{/* <h3>Affilate Terms</h3> */}
 							<div className="mt-1rem">
 								{affiliate.promoter && (
@@ -206,106 +207,6 @@ const ProfilePage = (props) => {
 						</div>
 					)}
 				</div>
-
-				{/* <div className="max-w-700px w-500px">
-					<div className="column mb-20px">
-						<h3>First Name</h3>
-						<label>{userInfo.first_name}</label>
-					</div>
-					<div className="column mb-20px">
-						<h3>Last Name</h3>
-						<label>{userInfo.last_name}</label>
-					</div>
-					<div className="column mb-20px">
-						<h3>Email</h3>
-						<label>{userInfo.email}</label>
-					</div>
-					<div className="column mb-20px">
-						<h3>Password</h3>
-						<label>**********</label>
-					</div>
-					<div className="label">
-						<h3>Shipping Address</h3>
-						<div>
-							{userInfo.shipping.first_name} {userInfo.shipping.last_name}
-						</div>
-						<div>
-							{userInfo.shipping.address_1} {userInfo.shipping.address_2}
-						</div>
-						<div>
-							{userInfo.shipping.city}, {userInfo.shipping.state} {userInfo.shipping.postalCode}{' '}
-							{userInfo.shipping.country}
-						</div>
-						<div>{userInfo.shipping.international && 'International'}</div>
-						<div>{userInfo.shipping.email}</div>
-					</div>
-					<div className="column mb-20px">
-						<h3>Promotional Emails</h3>
-						<label>{userInfo.email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
-					</div>
-				</div> */}
-				{/* {userInfo.is_affiliated &&
-				userInfo.affiliate &&
-				affiliate &&
-				affiliate.public_code && (
-					<div className="mb-20px max-w-700px w-500px">
-						<h2>Affiliate Metrics</h2>
-						<h3>Public Code</h3>
-						<label>{affiliate.public_code.promo_code.toUpperCase()}</label>
-						<h3>Private Code</h3>
-						<label>{affiliate.private_code.promo_code.toUpperCase()}</label>
-						<h3>Code Usage</h3>
-						<label>
-							{affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
-						</label>
-						<h3>Total Revenue</h3>
-						<label>${revenue}</label>
-						<h3>Total Earrned</h3>
-						<label>${affiliate.promoter ? 0.1 * revenue : 0.15 * revenue}</label>
-						<div className="mt-1rem">
-							{affiliate.promoter && (
-								<a
-									href={
-										'https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing'
-									}
-									target="_blank"
-								>
-									<button className="btn primary">View Promoter Terms</button>
-								</a>
-							)}
-							{affiliate.sponsor && (
-								<a
-									href={
-										'https://docs.google.com/document/d/1t1HwnnPbsgE5THHLWS_-5gYyXwIRcSv8yunXK2oRxOE/edit?usp=sharing'
-									}
-									target="_blank"
-								>
-									<button className="btn primary">View Sponsor Terms</button>
-								</a>
-							)}
-							{affiliate.team && (
-								<a
-									href={
-										'https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing'
-									}
-									target="_blank"
-								>
-									<button className="btn primary">View Team Terms</button>
-								</a>
-							)}
-						</div>
-						<div className="mt-1rem">
-							<a
-								href={
-									'https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit'
-								}
-								target="_blank"
-							>
-								<button className="btn primary">View Affiliate Learnings</button>
-							</a>
-						</div>
-					</div>
-				)} */}
 			</div>
 		</div>
 	);
