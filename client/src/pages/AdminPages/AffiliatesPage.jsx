@@ -118,12 +118,12 @@ const AffiliatesPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr>
-									<th>ID</th>
+									{/* <th>ID</th> */}
 									<th>Artist Name</th>
 									<th>Instagram Handle</th>
 									<th>Facebook Name</th>
 									<th>Percentage Off</th>
-									{/* <th>Promo Code</th> */}
+									<th>Venmo</th>
 									<th>Public Code</th>
 									<th>Private Code</th>
 									<th>Sponsor</th>
@@ -141,12 +141,12 @@ const AffiliatesPage = (props) => {
 										}}
 									>
 										{console.log({ affiliate })}
-										<td className="p-10px">{affiliate._id}</td>
+										{/* <td className="p-10px">{affiliate._id}</td> */}
 										<td className="p-10px">{affiliate.artist_name}</td>
 										<td className="p-10px">{affiliate.instagram_handle}</td>
 										<td className="p-10px">{affiliate.facebook_name}</td>
 										<td className="p-10px">{affiliate.percentage_off}%</td>
-										{/* <td className="p-10px">{affiliate.promo_code.promo_code}</td> */}
+										<td className="p-10px">{affiliate.venmo}</td>
 										<td className="p-10px">
 											{affiliate.public_code && affiliate.public_code.promo_code}
 										</td>
