@@ -22,3 +22,4 @@ export { default as chip_routes } from './chip_routes';
 export { default as team_routes } from './team_routes';
 export { default as shipping_routes } from './shipping_routes';
 export { default as payment_routes } from './payment_routes';
+export { default as paycheck_routes } from './paycheck_routes';

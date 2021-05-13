@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
+import { format_date } from '../../utils/helper_functions';
 
 const PaychecksPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -52,14 +53,14 @@ const PaychecksPage = (props) => {
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
-	const colors = [ { name: 'EL Nano', color: '#3e4c6d' }, { name: 'LG Nano', color: '#3e4c6d' } ];
+	const colors = [ { name: 'Paid', color: '#3e4c6d' }, { name: 'Not Paid', color: '#6f3c3c' } ];
 
 	const determine_color = (paycheck) => {
 		let result = '';
-		if (paycheck.category === 'el_nano') {
-			result = colors[1].color;
+		if (paycheck.paid) {
+			result = colors[0].color;
 		}
-		if (paycheck.category === 'lg_nano') {
+		if (!paycheck.paid) {
 			result = colors[1].color;
 		}
 		return result;
@@ -105,11 +106,12 @@ const PaychecksPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr>
-									<th>ID</th>
-									<th>Paycheck Name</th>
-									<th>Company</th>
-									<th>Category</th>
-									<th>Programmmable</th>
+									<th>Date Paid</th>
+									<th>Affiliate</th>
+									<th>Amount</th>
+									<th>Venmo</th>
+									<th>Receipt</th>
+									<th>Paid</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -122,12 +124,15 @@ const PaychecksPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td className="p-10px">{paycheck._id}</td>
-										<td className="p-10px">{paycheck.name}</td>
-										<td className="p-10px">{paycheck.company}</td>
-										<td className="p-10px">{paycheck.category}</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{paycheck.paid_at && format_date(paycheck.paid_at)}
+										</td>
+										<td className="p-10px">{paycheck.affiliate.artist_name}</td>
+										<td className="p-10px">{paycheck.amount}</td>
+										<td className="p-10px">{paycheck.venmo}</td>
+										<td className="p-10px">{paycheck.receipt}</td>
 										<td className="p-10px">
-											{paycheck.programmmable ? (
+											{paycheck.paid ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />

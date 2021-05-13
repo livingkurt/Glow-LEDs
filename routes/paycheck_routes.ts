@@ -29,7 +29,8 @@ router.get('/', async (req, res) => {
 
 		const paychecks = await Paycheck.find({ deleted: false, ...category, ...searchKeyword })
 			.sort(sortOrder)
-			.populate('user');
+			.populate('user')
+			.populate('affiliate');
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -55,7 +56,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		const paycheck = await Paycheck.findOne({ _id: req.params.id }).populate('user');
+		const paycheck = await Paycheck.findOne({ _id: req.params.id }).populate('user').populate('affiliate');
 		console.log({ paycheck });
 		console.log(req.params.id);
 		if (paycheck) {

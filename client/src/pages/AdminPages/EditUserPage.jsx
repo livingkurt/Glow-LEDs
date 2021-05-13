@@ -192,7 +192,7 @@ const EditUserPage = (props) => {
 															</option>
 															{affiliates.map((affiliate, index) => (
 																<option key={index} value={affiliate._id}>
-																	{affiliate.facebook_name}
+																	{affiliate.artist_name}
 																</option>
 															))}
 														</select>
