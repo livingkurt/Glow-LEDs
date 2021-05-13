@@ -11,7 +11,6 @@ import { listAffiliates } from '../../actions/affiliateActions';
 const EditPaycheckPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ affiliate, set_affiliate ] = useState('');
-	const [ user, set_user ] = useState('');
 	const [ amount, set_amount ] = useState('');
 	const [ venmo, set_venmo ] = useState('');
 	const [ paid, set_paid ] = useState('');
@@ -31,17 +30,17 @@ const EditPaycheckPage = (props) => {
 	const set_state = () => {
 		set_id(paycheck._id);
 		set_affiliate(paycheck.affiliate);
-		set_user(paycheck.user);
 		set_amount(paycheck.amount);
 		set_venmo(paycheck.venmo);
 		set_paid(paycheck.paid);
 		set_reciept(paycheck.reciept);
-		set_paid_at(paycheck.paid_at);
+		if (paycheck.paid_at) {
+			set_paid_at(format_date(paycheck.paid_at));
+		}
 	};
 	const unset_state = () => {
 		set_id('');
 		set_affiliate('');
-		set_user('');
 		set_amount('');
 		set_venmo('');
 		set_paid('');
@@ -91,13 +90,12 @@ const EditPaycheckPage = (props) => {
 		dispatch(
 			savePaycheck({
 				_id: id,
-				affiliate,
-				user,
+				affiliate: affiliate._id,
 				amount,
 				venmo,
 				paid,
 				reciept,
-				paid_at: paid_at && unformat_date(paid_at)
+				paid_at: paid_at ? paid_at : paid && format_date(today)
 			})
 		);
 		e.target.reset();
@@ -200,7 +198,7 @@ const EditPaycheckPage = (props) => {
 											<input
 												type="text"
 												name="paid_at"
-												value={paid_at ? paid_at : paid && format_date(today)}
+												value={paid_at ? paid_at : paid ? format_date(today) : ''}
 												id="paid_at"
 												onChange={(e) => set_paid_at(e.target.value)}
 											/>

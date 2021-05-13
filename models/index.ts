@@ -18,3 +18,4 @@ export { default as Log } from './log';
 export { default as Content } from './content';
 export { default as Chip } from './chip';
 export { default as Team } from './team';
+export { default as Paycheck } from './paycheck';

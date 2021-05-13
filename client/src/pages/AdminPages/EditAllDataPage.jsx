@@ -74,7 +74,8 @@ const EditAllDataPage = (props) => {
 		'devices',
 		'contents',
 		'carts',
-		'affiliates'
+		'affiliates',
+		'paychecks'
 	];
 	const methods = [ 'get', 'updateMany' ];
 

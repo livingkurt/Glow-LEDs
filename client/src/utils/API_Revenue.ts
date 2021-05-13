@@ -14,6 +14,9 @@ export default {
 	get_weekly_income: () => {
 		return axios.get('/api/orders/weekly_income');
 	},
+	last_months_orders: () => {
+		return axios.get('/api/orders/last_months_orders');
+	},
 	get_monthly_income: () => {
 		return axios.get('/api/orders/monthly_income');
 	},

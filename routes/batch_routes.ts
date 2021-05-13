@@ -1,6 +1,6 @@
 export {};
 import express from 'express';
-import { Affiliate, Email, Expense, Feature, Content, Product, Order, User } from '../models';
+import { Affiliate, Email, Expense, Feature, Content, Product, Order, User, Paycheck } from '../models';
 const bcrypt = require('bcryptjs');
 require('dotenv');
 const { isAuth, isAdmin } = require('../util');
@@ -203,6 +203,29 @@ router.put('/contents', isAuth, isAdmin, async (req, res) => {
 			const contents = await Content.find(parameter);
 			console.log({ contents_get: contents });
 			res.send(contents);
+		}
+	} catch (error) {
+		console.log({ error });
+	}
+});
+router.put('/paychecks', isAuth, isAdmin, async (req, res) => {
+	try {
+		console.log({ paychecks: req.body });
+		const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
+		let parameter: any = {};
+		if (search_parameter_field && search_parameter) {
+			parameter = { [search_parameter_field]: search_parameter };
+		}
+		if (method === 'updateMany') {
+			const paychecks = await Paycheck.updateMany(parameter, {
+				[action]: { [property]: value }
+			});
+			console.log({ paychecks });
+			res.send(paychecks);
+		} else {
+			const paychecks = await Paycheck.find(parameter);
+			console.log({ paychecks_get: paychecks });
+			res.send(paychecks);
 		}
 	} catch (error) {
 		console.log({ error });

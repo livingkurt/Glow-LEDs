@@ -102,7 +102,10 @@ const ControlPanelPage = (props) => {
 	const get_total = () => {
 		const uses = affiliates.map((affiliate) => {
 			return orders.filter((order) => {
-				return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase();
+				return (
+					order.promo_code &&
+					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				);
 			}).length;
 		});
 		set_total_promo_code_usage(uses.reduce((a, c) => a + c, 0));
@@ -111,7 +114,8 @@ const ControlPanelPage = (props) => {
 			return orders
 				.filter(
 					(order) =>
-						order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.toLowerCase()
+						order.promo_code &&
+						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
 				)
 				.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 				.toFixed(2);
@@ -734,14 +738,14 @@ const ControlPanelPage = (props) => {
 											}}
 											className=""
 										>
-											<th style={{ padding: '15px' }}>{affiliate.public_code}</th>
+											<th style={{ padding: '15px' }}>{affiliate.public_code.promo_code}</th>
 											<th style={{ padding: '15px' }}>
 												{
 													orders.filter((order) => {
 														return (
 															order.promo_code &&
 															order.promo_code.toLowerCase() ===
-																affiliate.public_code.toLowerCase()
+																affiliate.public_code.promo_code.toLowerCase()
 														);
 													}).length
 												}
@@ -752,7 +756,7 @@ const ControlPanelPage = (props) => {
 														(order) =>
 															order.promo_code &&
 															order.promo_code.toLowerCase() ===
-																affiliate.public_code.toLowerCase()
+																affiliate.public_code.promo_code.toLowerCase()
 													)
 													.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
 													.toFixed(2)}
