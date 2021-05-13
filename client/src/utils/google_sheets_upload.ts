@@ -1,7 +1,8 @@
 import axios from 'axios';
+
+// import dotenv from 'dotenv';
+// dotenv.config();
 const google_sheets_json = require('./glow-leds-0e697a43198d.json');
-import dotenv from 'dotenv';
-dotenv.config();
 
 const unformatted_date = new Date();
 // const day = date.getDay();
@@ -12,14 +13,14 @@ const day_num = parseInt(day);
 console.log({ day_num });
 
 export const promoter_revenue_upload = async () => {
-	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
+	google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		const doc = new GoogleSpreadsheet('182QRD1-8UI0BmtBqbmtsuuRMf2_WUbuhQIRPHkgCmCk');
+		const doc = new GoogleSpreadsheet('1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -48,13 +49,13 @@ export const promoter_revenue_upload = async () => {
 		// console.log({ orders });
 		console.log({ affiliates });
 
-		const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
+		// const affiliates_w_inkybois = [ ...affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
 		const toCapitlize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
-		const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		const last_months_rows = affiliates.filter((affiliate: any) => affiliate.promoter).map((affiliate: any) => {
 			return {
 				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
 				Uses: last_month_orders.filter((order: any) => {
@@ -71,7 +72,7 @@ export const promoter_revenue_upload = async () => {
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
+				Earned: `$${affiliate.promoter
 					? last_month_orders
 							.filter(
 								(order: any) =>
@@ -90,7 +91,7 @@ export const promoter_revenue_upload = async () => {
 							.toFixed(2)}`
 			};
 		});
-		const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		const total_rows = affiliates.filter((affiliate: any) => affiliate.promoter).map((affiliate: any) => {
 			return {
 				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
@@ -107,7 +108,7 @@ export const promoter_revenue_upload = async () => {
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
+				Earned: `$${affiliate.promoter
 					? orders
 							.filter(
 								(order: any) =>
@@ -126,6 +127,8 @@ export const promoter_revenue_upload = async () => {
 							.toFixed(2)}`
 			};
 		});
+		console.log({ last_months_rows });
+		console.log({ total_rows });
 
 		await sheet.addRows(total_rows);
 		await sheet.saveUpdatedCells();
@@ -162,14 +165,14 @@ export const promoter_revenue_upload = async () => {
 };
 
 export const sponsor_revenue_upload = async () => {
-	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
+	google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		const doc = new GoogleSpreadsheet('182QRD1-8UI0BmtBqbmtsuuRMf2_WUbuhQIRPHkgCmCk');
+		const doc = new GoogleSpreadsheet('1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -198,13 +201,13 @@ export const sponsor_revenue_upload = async () => {
 		// console.log({ orders });
 		console.log({ affiliates });
 
-		const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
+		// const affiliates_w_inkybois = [ ...affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
 		const toCapitlize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
-		const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		const last_months_rows = affiliates.filter((affiliate: any) => affiliate.sponsor).map((affiliate: any) => {
 			return {
 				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
 				Uses: last_month_orders.filter((order: any) => {
@@ -221,7 +224,7 @@ export const sponsor_revenue_upload = async () => {
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
+				Earned: `$${affiliate.sponsor
 					? last_month_orders
 							.filter(
 								(order: any) =>
@@ -240,7 +243,7 @@ export const sponsor_revenue_upload = async () => {
 							.toFixed(2)}`
 			};
 		});
-		const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		const total_rows = affiliates.filter((affiliate: any) => affiliate.sponsor).map((affiliate: any) => {
 			return {
 				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
@@ -257,7 +260,7 @@ export const sponsor_revenue_upload = async () => {
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
+				Earned: `$${affiliate.sponsor
 					? orders
 							.filter(
 								(order: any) =>
@@ -276,6 +279,8 @@ export const sponsor_revenue_upload = async () => {
 							.toFixed(2)}`
 			};
 		});
+		console.log({ last_months_rows });
+		console.log({ total_rows });
 
 		await sheet.addRows(total_rows);
 		await sheet.saveUpdatedCells();
@@ -312,14 +317,14 @@ export const sponsor_revenue_upload = async () => {
 };
 
 export const team_revenue_upload = async () => {
-	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
+	google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		const doc = new GoogleSpreadsheet('182QRD1-8UI0BmtBqbmtsuuRMf2_WUbuhQIRPHkgCmCk');
+		const doc = new GoogleSpreadsheet('1OmtRqSVEBCZCamz1qPceXW8CPfuwvWwGxIiu1YzMtMI');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -345,38 +350,38 @@ export const team_revenue_upload = async () => {
 		const { data: last_month_orders } = await axios.get('https://www.glow-leds.com/api/orders/last_months_orders');
 		const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/total_orders');
 		const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
+		const { data: teams } = await axios.get('https://www.glow-leds.com/api/teams');
 		// console.log({ orders });
 		console.log({ affiliates });
 
-		const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
+		// const affiliates_w_inkybois = [ ...affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
 		const toCapitlize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
-		const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		const last_months_rows = teams.map((team: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitlize(team.public_code.promo_code),
 				Uses: last_month_orders.filter((order: any) => {
 					return (
-						order.promo_code &&
-						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+						order.promo_code && order.promo_code.toLowerCase() === team.public_code.promo_code.toLowerCase()
 					);
 				}).length,
 				Revenue: ` $${last_month_orders
 					.filter(
 						(order: any) =>
 							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+							order.promo_code.toLowerCase() === team.public_code.promo_code.toLowerCase()
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
+				Earned: `$${team.promoter
 					? last_month_orders
 							.filter(
 								(order: any) =>
 									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+									order.promo_code.toLowerCase() === team.public_code.promo_code.toLowerCase()
 							)
 							.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
 							.toFixed(2)
@@ -384,13 +389,13 @@ export const team_revenue_upload = async () => {
 							.filter(
 								(order: any) =>
 									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+									order.promo_code.toLowerCase() === team.public_code.promo_code.toLowerCase()
 							)
 							.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
 							.toFixed(2)}`
 			};
 		});
-		const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		const total_rows = affiliates.filter((affiliate: any) => affiliate.promoter).map((affiliate: any) => {
 			return {
 				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
@@ -407,7 +412,7 @@ export const team_revenue_upload = async () => {
 					)
 					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
+				Earned: `$${affiliate.promoter
 					? orders
 							.filter(
 								(order: any) =>
@@ -426,6 +431,8 @@ export const team_revenue_upload = async () => {
 							.toFixed(2)}`
 			};
 		});
+		console.log({ last_months_rows });
+		console.log({ total_rows });
 
 		await sheet.addRows(total_rows);
 		await sheet.saveUpdatedCells();

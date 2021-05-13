@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { snake_case } from '../../utils/helper_functions';
+import { listPromos } from '../../actions/promoActions';
 
 const EditTeamPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -25,6 +26,8 @@ const EditTeamPage = (props) => {
 	const [ pathname, set_pathname ] = useState('');
 	const [ picture, set_picture ] = useState('');
 	const [ video, set_video ] = useState('');
+	const [ public_code, set_public_code ] = useState('');
+	const [ private_code, set_private_code ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -35,6 +38,9 @@ const EditTeamPage = (props) => {
 
 	const teamDetails = useSelector((state) => state.teamDetails);
 	const { team, loading, error } = teamDetails;
+
+	const promoList = useSelector((state) => state.promoList);
+	const { promos: promos_list } = promoList;
 
 	const set_state = () => {
 		set_id(team._id);
@@ -50,9 +56,10 @@ const EditTeamPage = (props) => {
 		set_link(team.link);
 		set_pathname(team.pathname);
 		set_picture(team.picture);
-		console.log(team.affiliates);
 		set_affiliates(team.affiliates);
 		set_video(team.video);
+		set_public_code(team.public_code);
+		set_private_code(team.private_code);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -70,6 +77,8 @@ const EditTeamPage = (props) => {
 		set_video('');
 		set_picture('');
 		set_affiliates([]);
+		set_public_code('');
+		set_private_code('');
 	};
 
 	const dispatch = useDispatch();
@@ -86,6 +95,7 @@ const EditTeamPage = (props) => {
 				stableDispatch(detailsTeam(''));
 			}
 			stableDispatch(listAffiliates(''));
+			stableDispatch(listPromos(''));
 
 			return () => {};
 		},
@@ -111,6 +121,8 @@ const EditTeamPage = (props) => {
 	}, 500);
 
 	const submitHandler = (e) => {
+		console.log({ public_code });
+		console.log({ private_code });
 		e.preventDefault();
 		dispatch(
 			saveTeam({
@@ -127,6 +139,8 @@ const EditTeamPage = (props) => {
 				link,
 				video,
 				picture,
+				public_code: public_code && public_code._id,
+				private_code: private_code && private_code._id,
 				pathname: pathname ? pathname : snake_case(team_name),
 				affiliates: affiliates && affiliates.map((affiliate) => affiliate._id)
 			})
@@ -188,6 +202,58 @@ const EditTeamPage = (props) => {
 				</div>
 			</div>
 		);
+	};
+
+	const add_promo = (e, code_type) => {
+		e.preventDefault();
+		const promo_object = JSON.parse(e.target.value);
+		console.log({ promo_object });
+		// console.log(promo);
+		// if (promo.indexOf(' ') >= 0) {
+		// 	console.log('indexOf');
+		// 	promo.split(' ').map((promo) => {
+		// 		set_promos((promos) => [ ...promos, promo ]);
+		// 	});
+		// } else
+		if (code_type === 'public') {
+			console.log('public');
+			set_public_code(promo_object);
+		} else if (code_type === 'private') {
+			console.log('private');
+			set_private_code(promo_object);
+		}
+	};
+
+	const remove_promo = (e, code_type) => {
+		e.preventDefault();
+		if (code_type === 'public') {
+			console.log('public');
+			set_public_code({});
+		} else if (code_type === 'private') {
+			console.log('private');
+			set_private_code({});
+		}
+	};
+	const promo_display = (promo, code_type) => {
+		console.log({ promo });
+		if (promo) {
+			return (
+				<div>
+					<div className="jc-b">
+						<div>
+							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+								<div>
+									<button className="btn icon" onClick={(e) => remove_promo(e, code_type)}>
+										<i className="fas fa-times mr-5px" />
+									</button>
+									{promo && promo.promo_code}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			);
+		}
 	};
 
 	return (
@@ -378,7 +444,7 @@ const EditTeamPage = (props) => {
 													onChange={(e) => set_funds_generated(e.target.value)}
 												/>
 											</li> */}
-											<li>
+											{/* <li>
 												<label htmlFor="promo_code">Promo Code</label>
 												<input
 													type="text"
@@ -387,7 +453,76 @@ const EditTeamPage = (props) => {
 													id="promo_code"
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
+											</li> */}
+											<li>
+												<label htmlFor="promo">Public Code</label>
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_promo(e, 'public')}
+														>
+															<option key={1} defaultValue="">
+																---Choose Public Code---
+															</option>
+															{promos_list
+																.filter((promo) => !promo.hidden)
+																.map((promo, index) => (
+																	<option key={index} value={JSON.stringify(promo)}>
+																		{promo.promo_code}
+																	</option>
+																))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+
+												{promo_display(public_code, 'public')}
 											</li>
+											{/* <li>
+												<label htmlFor="public_code">Public Code</label>
+												<input
+													type="text"
+													name="public_code"
+													value={public_code && public_code.promo_code}
+													id="public_code"
+													onChange={(e) => set_public_code(e.target.value)}
+												/>
+											</li> */}
+											<li>
+												<label htmlFor="promo">Private Code</label>
+												<div className="ai-c h-25px mv-15px jc-c">
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => add_promo(e, 'private')}
+														>
+															<option key={1} defaultValue="">
+																---Choose Private Code---
+															</option>
+															{promos_list
+																.filter((promo) => !promo.hidden)
+																.map((promo, index) => (
+																	<option key={index} value={JSON.stringify(promo)}>
+																		{promo.promo_code}
+																	</option>
+																))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+												{promo_display(private_code, 'private')}
+											</li>
+											{/* <li>
+												<label htmlFor="private_code">Private Code</label>
+												<input
+													type="text"
+													name="private_code"
+													value={private_code && private_code.promo_code}
+													id="private_code"
+													onChange={(e) => set_private_code(e.target.value)}
+												/>
+											</li> */}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (

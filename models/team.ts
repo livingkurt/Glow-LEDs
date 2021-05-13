@@ -9,6 +9,8 @@ const teamSchema = new mongoose.Schema(
 		facebook_name: { type: String },
 		percentage_off: { type: Number },
 		promo_code: { type: String },
+		public_code: { type: mongoose.Schema.Types.ObjectId, ref: 'Promo' },
+		private_code: { type: mongoose.Schema.Types.ObjectId, ref: 'Promo' },
 		years: { type: String },
 		bio: { type: String },
 		picture: { type: String },

@@ -8,6 +8,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { API_Revenue } from '../../utils';
+import { promoter_revenue_upload, sponsor_revenue_upload, team_revenue_upload } from '../../utils/google_sheets_upload';
 
 const PaychecksPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -112,7 +113,7 @@ const PaychecksPage = (props) => {
 		set_loading_paychecks(false);
 	};
 
-	const create_promoter_paychecks = () => {
+	const create_promoter_paychecks = async () => {
 		set_loading_paychecks(true);
 		affiliates.filter((affiliate) => affiliate.promoter).forEach((affiliate) => {
 			dispatch(
@@ -139,10 +140,11 @@ const PaychecksPage = (props) => {
 				})
 			);
 		});
+		await promoter_revenue_upload();
 		set_loading_paychecks(false);
 	};
 
-	const create_sponsor_paychecks = () => {
+	const create_sponsor_paychecks = async () => {
 		set_loading_paychecks(true);
 		affiliates.filter((affiliate) => affiliate.sponsor).forEach((affiliate) => {
 			dispatch(
@@ -162,10 +164,11 @@ const PaychecksPage = (props) => {
 				})
 			);
 		});
+		await sponsor_revenue_upload();
 		set_loading_paychecks(false);
 	};
 
-	const create_team_paychecks = () => {
+	const create_team_paychecks = async () => {
 		set_loading_paychecks(true);
 		affiliates.filter((affiliate) => affiliate.team).forEach((affiliate) => {
 			dispatch(
@@ -180,6 +183,7 @@ const PaychecksPage = (props) => {
 				})
 			);
 		});
+		await team_revenue_upload();
 		set_loading_paychecks(false);
 	};
 

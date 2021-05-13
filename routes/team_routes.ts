@@ -40,7 +40,9 @@ router.get('/', async (req, res) => {
 			...searchKeyword
 		})
 			.sort(sortOrder)
-			.populate('user');
+			.populate('affiliates')
+			.populate('public_code')
+			.populate('private_code');
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -68,7 +70,10 @@ router.get('/', async (req, res) => {
 router.get('/:pathname', async (req, res) => {
 	try {
 		console.log({ pathname: req.params.pathname });
-		const team = await Team.findOne({ pathname: req.params.pathname }).populate('affiliates');
+		const team = await Team.findOne({ pathname: req.params.pathname })
+			.populate('affiliates')
+			.populate('public_code')
+			.populate('private_code');
 		console.log({ team });
 		console.log(req.params.pathname);
 		if (team) {
@@ -109,7 +114,10 @@ router.get('/:pathname', async (req, res) => {
 router.get('/affiliate/:affiliate_id', async (req, res) => {
 	try {
 		console.log(req.params.affiliate_id);
-		const team = await Team.find({ affiliates: { $in: [ req.params.affiliate_id ] } }).populate('affiliates');
+		const team = await Team.find({ affiliates: { $in: [ req.params.affiliate_id ] } })
+			.populate('affiliates')
+			.populate('public_code')
+			.populate('private_code');
 		console.log({ team });
 		console.log(req.params.affiliate_id);
 		if (team) {

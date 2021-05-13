@@ -1,7 +1,8 @@
 import axios from 'axios';
-const google_sheets_json = require('./glow-leds-0e697a43198d.json');
+
 import dotenv from 'dotenv';
 dotenv.config();
+const google_sheets_json = require('./glow-leds-0e697a43198d.json');
 
 const affiliate_revenue_upload = async () => {
 	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
