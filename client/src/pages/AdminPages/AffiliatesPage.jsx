@@ -144,7 +144,6 @@ const AffiliatesPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										{console.log({ affiliate })}
 										{/* <td className="p-10px">{affiliate._id}</td> */}
 										<td className="p-10px">{affiliate.artist_name}</td>
 										<td className="p-10px">{affiliate.instagram_handle}</td>

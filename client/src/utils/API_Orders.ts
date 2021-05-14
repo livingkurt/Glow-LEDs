@@ -14,5 +14,8 @@ export default {
 	},
 	get_code_usage: (promo_code: string) => {
 		return axios.get('/api/orders/code_usage/' + promo_code);
+	},
+	last_months_orders: () => {
+		return axios.get('/api/orders/last_months_orders');
 	}
 };

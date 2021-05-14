@@ -49,6 +49,7 @@ const EditAffiliatePage = (props) => {
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
+	console.log({ affiliate });
 
 	const productList = useSelector((state) => state.productList);
 	const { products: products_list } = productList;
@@ -60,13 +61,14 @@ const EditAffiliatePage = (props) => {
 	const { promos: promos_list } = promoList;
 
 	const set_state = () => {
+		// console.log({ affiliate });
 		set_id(affiliate._id);
 		set_user(affiliate.user && affiliate.user._id);
 		set_artist_name(affiliate.artist_name);
 		set_instagram_handle(affiliate.instagram_handle);
 		set_facebook_name(affiliate.facebook_name);
 		set_percentage_off(affiliate.percentage_off);
-		set_public_code(affiliate.public_code);
+
 		set_funds_generated(affiliate.funds_generated);
 		set_promoter(affiliate.promoter);
 		set_sponsor(affiliate.sponsor);
@@ -84,7 +86,9 @@ const EditAffiliatePage = (props) => {
 		set_products(affiliate.products);
 		set_chips(affiliate.chips);
 		set_pathname(affiliate.pathname);
+		set_public_code(affiliate.public_code);
 		set_private_code(affiliate.private_code);
+		console.log({ affiliate });
 	};
 	const unset_state = () => {
 		set_id('');
@@ -93,7 +97,7 @@ const EditAffiliatePage = (props) => {
 		set_instagram_handle('');
 		set_facebook_name('');
 		set_percentage_off('');
-		set_public_code('');
+
 		set_funds_generated('');
 		set_promoter('');
 		set_sponsor('');
@@ -112,6 +116,7 @@ const EditAffiliatePage = (props) => {
 		set_chip([]);
 		set_venmo('');
 		set_pathname('');
+		set_public_code('');
 		set_private_code('');
 		// set_chip('');
 	};
@@ -131,6 +136,7 @@ const EditAffiliatePage = (props) => {
 			}
 			stableDispatch(listUsers(''));
 			stableDispatch(listProducts(''));
+			stableDispatch(listPromos(''));
 			stableDispatch(listPromos(''));
 			stableDispatch(listChips());
 			set_state();
@@ -167,8 +173,6 @@ const EditAffiliatePage = (props) => {
 				instagram_handle,
 				facebook_name,
 				percentage_off,
-				public_code: public_code && public_code._id,
-				funds_generated,
 				sponsor,
 				promoter,
 				active,
@@ -182,6 +186,7 @@ const EditAffiliatePage = (props) => {
 				years,
 				video,
 				venmo,
+				public_code: public_code && public_code._id,
 				private_code: private_code && private_code._id,
 				pathname: pathname ? pathname : snake_case(artist_name),
 				products,
@@ -323,7 +328,6 @@ const EditAffiliatePage = (props) => {
 		}
 	};
 	const promo_display = (promo, code_type) => {
-		console.log({ promo });
 		if (promo) {
 			return (
 				<div>
@@ -359,7 +363,6 @@ const EditAffiliatePage = (props) => {
 								<Helmet>
 									<title>Edit Affiliate| Glow LEDs</title>
 								</Helmet>
-
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
 									<div className="row wrap">
 										<div className="column w-228px m-10px">
@@ -577,6 +580,7 @@ const EditAffiliatePage = (props) => {
 													Add Gear
 												</button> */}
 												{promo_display(public_code, 'public')}
+												{/* {console.log({ public_code })} */}
 											</li>
 											<li>
 												<label htmlFor="public_code">Public Code</label>
@@ -621,6 +625,7 @@ const EditAffiliatePage = (props) => {
 													Add Gear
 												</button> */}
 												{promo_display(private_code, 'private')}
+												{/* {console.log({ private_code })} */}
 											</li>
 											<li>
 												<label htmlFor="private_code">Private Code</label>

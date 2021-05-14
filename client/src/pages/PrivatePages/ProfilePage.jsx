@@ -176,34 +176,64 @@ const ProfilePage = (props) => {
 							{/* <h3>Affilate Terms</h3> */}
 							<div className="mt-1rem">
 								{affiliate.promoter && (
-									<a
-										href={
-											'https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing'
-										}
-										target="_blank"
-									>
-										<button className="btn primary">View Promoter Terms</button>
-									</a>
+									<div>
+										<a
+											href={
+												'https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing'
+											}
+											target="_blank"
+										>
+											<button className="btn primary">View Promoter Terms</button>
+										</a>
+										<a
+											href={
+												'https://docs.google.com/spreadsheets/d/1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg/edit?usp=sharing'
+											}
+											target="_blank"
+										>
+											<button className="btn primary">View Promoter Revenue</button>
+										</a>
+									</div>
 								)}
 								{affiliate.sponsor && (
-									<a
-										href={
-											'https://docs.google.com/document/d/1t1HwnnPbsgE5THHLWS_-5gYyXwIRcSv8yunXK2oRxOE/edit?usp=sharing'
-										}
-										target="_blank"
-									>
-										<button className="btn primary">View Sponsor Terms</button>
-									</a>
+									<div>
+										<a
+											href={
+												'https://docs.google.com/document/d/1t1HwnnPbsgE5THHLWS_-5gYyXwIRcSv8yunXK2oRxOE/edit?usp=sharing'
+											}
+											target="_blank"
+										>
+											<button className="btn primary">View Sponsor Terms</button>
+										</a>
+										<a
+											href={
+												'https://docs.google.com/spreadsheets/d/1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA/edit?usp=sharing'
+											}
+											target="_blank"
+										>
+											<button className="btn primary">View Sponsor Revenue</button>
+										</a>
+									</div>
 								)}
 								{affiliate.team && (
-									<a
-										href={
-											'https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing'
-										}
-										target="_blank"
-									>
-										<button className="btn primary">View Team Terms</button>
-									</a>
+									<div>
+										<a
+											href={
+												'https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing'
+											}
+											target="_blank"
+										>
+											<button className="btn primary">View Team Terms</button>
+										</a>
+										<a
+											href={
+												'https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing'
+											}
+											target="_blank"
+										>
+											<button className="btn primary">View Team Revenue</button>
+										</a>
+									</div>
 								)}
 							</div>
 							<div className="mt-1rem">

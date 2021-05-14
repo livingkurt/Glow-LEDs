@@ -27,6 +27,7 @@ export const listTeams = (category = '', searchKeyword = '', sortOrder = '') => 
 				'&sortOrder=' +
 				sortOrder.toLowerCase()
 		);
+		console.log({ data });
 		dispatch({ type: TEAM_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: TEAM_LIST_FAIL, payload: error.response.data.message });

@@ -9,11 +9,14 @@ import { format_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { API_Revenue } from '../../utils';
 import { promoter_revenue_upload, sponsor_revenue_upload, team_revenue_upload } from '../../utils/google_sheets_upload';
+import { listTeams } from '../../actions/teamActions';
+import { listOrders } from '../../actions/orderActions';
 
 const PaychecksPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ last_month_orders, set_last_month_orders ] = useState([]);
+	const [ last_months_orders, set_last_months_orders ] = useState([]);
+	const [ total_orders, set_total_orders ] = useState([]);
 	const [ loading_paychecks, set_loading_paychecks ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const paycheckList = useSelector((state) => state.paycheckList);
@@ -29,12 +32,18 @@ const PaychecksPage = (props) => {
 	const affiliateList = useSelector((state) => state.affiliateList);
 	const { affiliates } = affiliateList;
 
+	const teamList = useSelector((state) => state.teamList);
+	const { teams } = teamList;
+
 	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
 			stableDispatch(listPaychecks());
 			stableDispatch(listAffiliates(''));
+			stableDispatch(listTeams(''));
+			stableDispatch(listOrders(''));
 			get_last_months_orders();
+			get_total_orders();
 			return () => {
 				//
 			};
@@ -45,7 +54,12 @@ const PaychecksPage = (props) => {
 	const get_last_months_orders = async () => {
 		const { data } = await API_Revenue.last_months_orders();
 		console.log({ data });
-		set_last_month_orders(data);
+		set_last_months_orders(data);
+	};
+	const get_total_orders = async () => {
+		const { data } = await API_Revenue.total_orders();
+		console.log({ data });
+		set_total_orders(data);
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -83,36 +97,6 @@ const PaychecksPage = (props) => {
 	};
 	console.log({ paychecks });
 
-	const create_all_paychecks = () => {
-		set_loading_paychecks(true);
-		affiliates.forEach((affiliate) => {
-			dispatch(
-				savePaycheck({
-					affiliate: affiliate._id,
-					amount: affiliate.promoter
-						? last_month_orders
-								.filter(
-									(order) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-								.toFixed(2)
-						: last_month_orders
-								.filter(
-									(order) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2),
-					venmo: affiliate.venmo
-				})
-			);
-		});
-		set_loading_paychecks(false);
-	};
-
 	const create_promoter_paychecks = async () => {
 		set_loading_paychecks(true);
 		affiliates.filter((affiliate) => affiliate.promoter).forEach((affiliate) => {
@@ -120,7 +104,7 @@ const PaychecksPage = (props) => {
 				savePaycheck({
 					affiliate: affiliate._id,
 					amount: affiliate.promoter
-						? last_month_orders
+						? last_months_orders
 								.filter(
 									(order) =>
 										order.promo_code &&
@@ -128,7 +112,7 @@ const PaychecksPage = (props) => {
 								)
 								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
 								.toFixed(2)
-						: last_month_orders
+						: last_months_orders
 								.filter(
 									(order) =>
 										order.promo_code &&
@@ -140,7 +124,9 @@ const PaychecksPage = (props) => {
 				})
 			);
 		});
-		await promoter_revenue_upload();
+		// if (orders)
+		console.log({ affiliates, total_orders, last_months_orders });
+		await promoter_revenue_upload(affiliates, total_orders, last_months_orders);
 		set_loading_paychecks(false);
 	};
 
@@ -152,7 +138,7 @@ const PaychecksPage = (props) => {
 					affiliate: affiliate._id,
 					amount:
 						affiliate.sponsor &&
-						last_month_orders
+						last_months_orders
 							.filter(
 								(order) =>
 									order.promo_code &&
@@ -164,7 +150,7 @@ const PaychecksPage = (props) => {
 				})
 			);
 		});
-		await sponsor_revenue_upload();
+		await sponsor_revenue_upload(affiliates, total_orders, last_months_orders);
 		set_loading_paychecks(false);
 	};
 
@@ -175,7 +161,7 @@ const PaychecksPage = (props) => {
 				savePaycheck({
 					affiliate: affiliate._id,
 					amount: ((affiliate.team &&
-						last_month_orders
+						last_months_orders
 							.filter((order) => order.promo_code && order.promo_code.toLowerCase() === 'inkybois')
 							.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)) /
 						affiliates.filter((affiliate) => affiliate.team).length).toFixed(2),
@@ -183,7 +169,7 @@ const PaychecksPage = (props) => {
 				})
 			);
 		});
-		await team_revenue_upload();
+		await team_revenue_upload(teams, total_orders, last_months_orders);
 		set_loading_paychecks(false);
 	};
 
@@ -214,9 +200,7 @@ const PaychecksPage = (props) => {
 				<Link to="/secure/glow/editpaycheck">
 					<button className="btn primary">Create Paycheck</button>
 				</Link>
-				<button className="btn primary" onClick={create_all_paychecks}>
-					Create All Paycheck
-				</button>
+
 				<button className="btn primary" onClick={create_promoter_paychecks}>
 					Create Promoter Paychecks
 				</button>
