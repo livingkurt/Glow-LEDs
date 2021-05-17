@@ -73,9 +73,14 @@ const ProductPage = (props) => {
 					console.log({ option });
 					if (option) {
 						set_price(option.price);
-						set_size(option.size);
+						if (option.size) {
+							set_size(option.size);
+						}
 						set_sale_price(option.sale_price);
-						set_count_in_stock(option.count_in_stock);
+						if (option.count_in_stock) {
+							set_count_in_stock(option.count_in_stock);
+						}
+
 						set_product_option(option);
 						if (option.images > 0) {
 							set_images(option.images);
@@ -508,7 +513,7 @@ const ProductPage = (props) => {
 										<div />
 									) : (
 										<li>
-											{product.countInStock > 0 ? (
+											{count_in_stock > 0 ? (
 												<button className="btn primary" onClick={handleAddToCart}>
 													Add to Cart
 												</button>
