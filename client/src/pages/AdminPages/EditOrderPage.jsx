@@ -211,6 +211,15 @@ const EditOrderPage = (props) => {
 		set_orderItems((items) => [ ...items, { product_option: {} } ]);
 	};
 
+	const remove_order_item = (order_item_index, e) => {
+		e.preventDefault();
+		set_orderItems((order_item) =>
+			order_item.filter((order_item, index) => {
+				return order_item_index !== index;
+			})
+		);
+	};
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
@@ -925,6 +934,12 @@ const EditOrderPage = (props) => {
 												return (
 													<div key={index} className="w-410px m-10px">
 														<h2>Order Item {index + 1}</h2>
+														<button
+															className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+															onClick={(e) => remove_order_item(index, e)}
+														>
+															<i className="fas fa-times mr-5px" />
+														</button>
 														<li>
 															<label htmlFor="product">Product</label>
 															{console.log({ product: item.product })}
