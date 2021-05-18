@@ -26,6 +26,10 @@ export default {
 		console.log({ update_stock: { product_id, count_in_stock } });
 		return axios.put('/api/products/update_stock', { product_id, count_in_stock });
 	},
+	update_product_option_stock: (product_id: string, product_option: any, count_in_stock: number) => {
+		console.log({ update_product_option_stock: { product_id, product_option, count_in_stock } });
+		return axios.put('/api/products/update_product_option_stock', { product_id, product_option, count_in_stock });
+	},
 	save_secondary_product: (order: any, user_data: any, secondary_product: any) => {
 		console.log({ save_secondary_product: { order, user_data, secondary_product } });
 		return axios.put('/api/orders/addsecondaryproduct', { order, user_data, secondary_product });

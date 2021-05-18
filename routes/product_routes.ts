@@ -481,7 +481,7 @@ router.get('/images/:category', async (req, res) => {
 	// }
 });
 
-router.put('/update_stock', isAuth, isAdmin, async (req, res) => {
+router.put('/update_stock', async (req, res) => {
 	try {
 		console.log({ product_id: req.body.product_id });
 		console.log({ count_in_stock: req.body.count_in_stock });
@@ -503,6 +503,79 @@ router.put('/update_stock', isAuth, isAdmin, async (req, res) => {
 				{ _id: productId },
 				{ ...req.body, countInStock: req.body.count_in_stock }
 			);
+			console.log({ updatedProduct });
+			if (updatedProduct) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updatedProduct ],
+					status: 200,
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+			}
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ product ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			console.log('Error in Updating Product.');
+			return res.status(500).send({ message: ' Error in Updating Product.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Updating Product' });
+	}
+});
+
+router.put('/update_product_option_stock', async (req, res) => {
+	try {
+		// console.log({ product_id: req.body.product_id });
+		// console.log({ count_in_stock: req.body.count_in_stock });
+		// console.log({ product_option: req.body.product_option });
+		console.log('update_product_option_stock');
+		const product_id = req.body.product_id;
+		const product_option = req.body.product_option;
+		const count_in_stock = req.body.count_in_stock;
+		// console.log({ product_id });
+		const product = await Product.findById(product_id);
+		// console.log({ product });
+		if (product) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ product ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			console.log({ product });
+			// const option = product.product_options.find((option: any) => option.name === product_option.name);
+			// console.log({ option });
+			const index = product.product_options.findIndex((option: any) => option.name === product_option.name);
+			console.log({ index });
+			let product_options = [ ...product.product_options ];
+			product_options[index] = {
+				...product_option,
+				count_in_stock: count_in_stock
+			};
+			console.log({ product_options });
+			const updatedProduct = await Product.updateOne({ _id: product_id }, { ...req.body, product_options });
 			console.log({ updatedProduct });
 			if (updatedProduct) {
 				log_request({

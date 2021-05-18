@@ -254,6 +254,15 @@ const PlaceOrderPage = (props) => {
 				console.log({ new_count });
 				const { data: res } = await API_Products.update_stock(item.product, new_count);
 				console.log({ res });
+			} else if (item.product_option.finite_stock) {
+				const new_count = item.product_option - item.qty;
+				console.log({ new_count });
+				const { data: res } = await API_Products.update_product_option_stock(
+					item.product,
+					item.product_option,
+					new_count
+				);
+				console.log({ res });
 			}
 		});
 		if (promo_code) {
