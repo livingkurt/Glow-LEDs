@@ -421,6 +421,7 @@ const ProductPage = (props) => {
 												<div className="ai-c wrap">
 													{product.product_options
 														.filter((option) => !option.dropdown)
+														.filter((option) => option.count_in_stock)
 														.map((option, index) => (
 															<button
 																key={index}
