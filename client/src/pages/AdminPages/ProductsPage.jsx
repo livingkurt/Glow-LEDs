@@ -6,10 +6,13 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
+import { API_Products } from '../../utils';
+import { facebook_catalog_upload, google_catalog_upload } from '../../utils/google_sheets_upload';
 
 const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
+	const [ loading_upload, set_loading_upload ] = useState(false);
 	// const [ hide_hidden, set_hide_hidden] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -35,6 +38,17 @@ const ProductsPage = (props) => {
 	const deleteHandler = (product) => {
 		console.log(product._id);
 		dispatch(deleteProduct(product._id));
+	};
+
+	// const get_shown_products = () => {
+	// 	const { data } = API_Products.get_shown_products();
+
+	// };
+	const update_product_catelog = async () => {
+		set_loading_upload(true);
+		await facebook_catalog_upload(products);
+		await google_catalog_upload(products);
+		set_loading_upload(false);
 	};
 
 	useEffect(
@@ -119,6 +133,9 @@ const ProductsPage = (props) => {
 				<Link to="/secure/glow/product_display">
 					<button className="btn primary">Display Products</button>
 				</Link>
+				<button className="btn primary" onClick={update_product_catelog}>
+					Update Product Catelog
+				</button>
 				<Link to="/secure/glow/editproduct">
 					<button className="btn primary">Create Product</button>
 				</Link>
@@ -131,6 +148,7 @@ const ProductsPage = (props) => {
 					</button>
 				</Link> */}
 			</div>
+			<Loading loading={loading_upload} error={error} />
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />

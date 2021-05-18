@@ -255,7 +255,7 @@ const AllTeamsPage = (props) => {
 						</div>
 					</div>
 					{teams.length === 0 && (
-						<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>
+						<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>
 					)}
 				</Loading>
 			)}

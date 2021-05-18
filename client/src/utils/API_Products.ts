@@ -58,6 +58,10 @@ export default {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/essentials');
 	},
+	get_shown_products: () => {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/products/shown');
+	},
 
 	// get_product_pictures: (category: string) => {
 	// 	return axios.get('/api/products/category/' + category);

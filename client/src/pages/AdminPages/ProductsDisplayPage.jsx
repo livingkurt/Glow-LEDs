@@ -336,7 +336,7 @@ const ProductsDisplayPage = (props) => {
 					</div>
 				)}
 				{products.length === 0 &&
-				!best_sellers && <h2 style={{ textAlign: 'center' }}>Sorry we can't find anything wiht that name</h2>}
+				!best_sellers && <h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>}
 			</Loading>
 		</div>
 	);
