@@ -1368,6 +1368,25 @@ const EditProductPage = (props) => {
 																	)}
 															/>
 														</li>
+														{loading_checkboxes ? (
+															<div>Loading...</div>
+														) : (
+															<li>
+																<label htmlFor="finite_stock">Finite Stock</label>
+																<input
+																	type="checkbox"
+																	name="finite_stock"
+																	defaultChecked={option.finite_stock}
+																	id="finite_stock"
+																	onChange={(e) =>
+																		update_product_option_property(
+																			e.target.checked,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+														)}
 														<li>
 															<label htmlFor="count_in_stock">Count In Stock</label>
 															<input
@@ -1395,6 +1414,25 @@ const EditProductPage = (props) => {
 																	name="dropdown"
 																	defaultChecked={option.dropdown}
 																	id="dropdown"
+																	onChange={(e) =>
+																		update_product_option_property(
+																			e.target.checked,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+														)}
+														{loading_checkboxes ? (
+															<li>Loading...</li>
+														) : (
+															<li>
+																<label htmlFor="no_dropdown">No Dropdown</label>
+																<input
+																	type="checkbox"
+																	name="no_dropdown"
+																	defaultChecked={option.no_dropdown}
+																	id="no_dropdown"
 																	onChange={(e) =>
 																		update_product_option_property(
 																			e.target.checked,

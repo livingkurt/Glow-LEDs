@@ -32,6 +32,7 @@ const ProductPage = (props) => {
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
+	const [ no_dropdown, set_no_dropdown ] = useState(false);
 	const [ color, set_color ] = useState('');
 	const [ option_color, set_option_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
@@ -89,13 +90,13 @@ const ProductPage = (props) => {
 					}
 				}
 
-				set_color(
-					product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
-						? 'Translucent White'
-						: product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps'
-							? 'Black'
-							: ''
-				);
+				// set_color(
+				// 	product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
+				// 		? 'Translucent White'
+				// 		: product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps'
+				// 			? 'Black'
+				// 			: ''
+				// );
 			}
 		},
 		[ product ]
@@ -111,6 +112,7 @@ const ProductPage = (props) => {
 	);
 
 	const determine_default_color = (color) => {
+		console.log({ color });
 		if (!color) {
 			if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
 				return 'Translucent White';
@@ -125,7 +127,7 @@ const ProductPage = (props) => {
 	};
 
 	const handleAddToCart = () => {
-		console.log({ product_option });
+		console.log({ color: determine_default_color(color) });
 		dispatch(
 			addToCart(
 				props.match.params.pathname,
@@ -159,8 +161,12 @@ const ProductPage = (props) => {
 		set_size(option.size);
 		set_count_in_stock(option.count_in_stock);
 		set_product_option(option);
+		set_no_dropdown(option.no_dropdown);
 		if (option_color && option_color.price) {
 			set_price(option_color.price);
+		}
+		if (option.no_dropdown) {
+			set_color(option.color);
 		}
 	};
 
@@ -182,6 +188,9 @@ const ProductPage = (props) => {
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
+		}
+		if (product.category === 'frosted_diffusers') {
+			set_product_option(option);
 		}
 	};
 
@@ -494,13 +503,19 @@ const ProductPage = (props) => {
 															update_color(e, JSON.parse(e.target.value));
 														}}
 													>
-														{product.product_options
-															.filter((option) => option.dropdown)
-															.map((option, index) => (
-																<option key={index} value={JSON.stringify(option)}>
-																	{option.color}
-																</option>
-															))}
+														{!no_dropdown ? (
+															product.product_options
+																.filter((option) => option.dropdown)
+																.map((option, index) => (
+																	<option key={index} value={JSON.stringify(option)}>
+																		{option.color}
+																	</option>
+																))
+														) : (
+															<option value={JSON.stringify(product_option)}>
+																{product_option.color}
+															</option>
+														)}
 													</select>
 													<span className="custom-arrow" />
 												</div>

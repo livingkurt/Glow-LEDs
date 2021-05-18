@@ -24,8 +24,10 @@ const productOptionsSchema = new mongoose.Schema(
 		color: { type: String },
 		images: { type: Array },
 		count_in_stock: { type: Number },
+		finite_stock: { type: Boolean, default: false },
 		default: { type: Boolean, default: false },
 		dropdown: { type: Boolean, default: false },
+		no_dropdown: { type: Boolean, default: false },
 		deleted: { type: Boolean, default: false }
 	},
 	{
