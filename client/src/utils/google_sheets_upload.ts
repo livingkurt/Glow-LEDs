@@ -473,8 +473,8 @@ export const facebook_catalog_upload = async (products: any) => {
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		// const doc = new GoogleSpreadsheet('1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8');
-		const doc = new GoogleSpreadsheet('1IS8GkQmPTsBcPM8qv0ifGIjTpeDSjkx4FuYA0ZmEq2o');
+		const doc = new GoogleSpreadsheet('1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8');
+		// const doc = new GoogleSpreadsheet('1IS8GkQmPTsBcPM8qv0ifGIjTpeDSjkx4FuYA0ZmEq2o');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -573,8 +573,8 @@ export const google_catalog_upload = async (products: any) => {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 		// spreadsheet key is the long id in the sheets URL
-		// const doc = new GoogleSpreadsheet('1V9vSROcN0RA-OFRGOIbvt_raXh3ZG2BYDY9DSOudaqU');
-		const doc = new GoogleSpreadsheet('1f-SCHyQRz3oWRcYBTk2OKG1--KRXC1ynkY5lbWM-1hk');
+		const doc = new GoogleSpreadsheet('1V9vSROcN0RA-OFRGOIbvt_raXh3ZG2BYDY9DSOudaqU');
+		// const doc = new GoogleSpreadsheet('1f-SCHyQRz3oWRcYBTk2OKG1--KRXC1ynkY5lbWM-1hk');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
