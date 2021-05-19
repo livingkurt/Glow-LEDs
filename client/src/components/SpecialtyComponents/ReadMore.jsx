@@ -8,14 +8,14 @@ const ReadMore = (props) => {
 	// console.log({ width: width, height: height });
 	return (
 		<div>
-			{props.children && props.children.length > props.length && width < 1000 ? (
+			{props.children && props.children.length > props.length && width < props.width ? (
 				<div>
 					{props.pre ? (
-						<p className={props.className}>
+						<p className={props.className} style={props.style}>
 							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
 						</p>
 					) : (
-						<pre className={props.className}>
+						<pre className={props.className} style={props.style}>
 							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
 						</pre>
 					)}

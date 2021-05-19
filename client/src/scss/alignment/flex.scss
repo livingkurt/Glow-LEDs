@@ -53,8 +53,25 @@ $align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
 
 .flex-s-0 {
 	display: flex !important;
-	flex-shrink: 0;
+	flex-shrink: 0 !important;
 }
+
+// .flex-auto {
+// 	display: flex !important;
+// 	flex: 0 1 auto !important;
+// }
+
+// // .flex-auto {
+// // 	display: flex !important;
+// // 	flex: 0 1 auto !important;
+// // }
+
+// @for $i from 0 to 100 {
+// 	.flex-#{$i}px {
+// 		display: flex !important;
+// 		gap: $i + px !important;
+// 	}
+// }
 
 // .flex {
 // 	display: flex;

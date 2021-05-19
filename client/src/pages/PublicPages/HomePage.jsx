@@ -169,7 +169,7 @@ const HomePage = (props) => {
 					<div className="max-w-800px jc-c w-100per m-auto">
 						{/* <p className="p_descriptions paragraph_font "> */}
 						{/* <pre className="p_descriptions paragraph_font ">{content.home_page.p}</pre> */}
-						<ReadMore className="p_descriptions paragraph_font" length={100} pre={true}>
+						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
 							{content.home_page.p}
 						</ReadMore>
 						{/* </p> */}
@@ -188,7 +188,7 @@ const HomePage = (props) => {
 			{/* <p className="p_descriptions paragraph_font ta-c home_page_description">
 			
 			</p> */}
-			<ReadMore className="p_descriptions paragraph_font ta-c" length={100}>
+			<ReadMore width={1000} className="p_descriptions paragraph_font ta-c" length={100}>
 				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
 				handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
 				the intention of turning your home into a glowing rainbow dreamland with infinite hours of
@@ -257,7 +257,7 @@ const HomePage = (props) => {
 								{/* <p className="p_descriptions paragraph_font home_page_description">
 									{card.description}
 								</p> */}
-								<ReadMore className="p_descriptions paragraph_font" length={100}>
+								<ReadMore width={1000} className="p_descriptions paragraph_font" length={100}>
 									{card.description}
 								</ReadMore>
 								<div className="jc-c">
