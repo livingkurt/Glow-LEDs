@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
 import { API_External } from '../../utils';
+import { isError } from 'util';
 
 const EditOrderPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -59,7 +60,7 @@ const EditOrderPage = (props) => {
 
 	const set_state = () => {
 		set_id(order._id);
-		set_user(order.user);
+		set_user(order.user && order.user._id);
 		set_orderItems(order.orderItems);
 		set_order_items(order.orderItems);
 		set_shipping(order.shipping);
@@ -170,6 +171,7 @@ const EditOrderPage = (props) => {
 	);
 
 	const submitHandler = (e) => {
+		console.log({ user });
 		e.preventDefault();
 		dispatch(
 			saveOrder({
@@ -228,7 +230,7 @@ const EditOrderPage = (props) => {
 		const order_item = JSON.parse(e.target.value);
 		console.log({ order_item });
 		console.log({ product_options: order_item.product_options.find((option) => option.default === true) });
-		const product_option = order_item.product_options.find((option) => option.default === true);
+		// const product_option = order_item.product_options.find((option) => option.default === true);
 		let new_order_items = [ ...orderItems ];
 		new_order_items[index] = {
 			...new_order_items[index],
@@ -483,17 +485,8 @@ const EditOrderPage = (props) => {
 									<div className="row wrap jc-b">
 										<div className="w-228px m-10px">
 											{/* <h2>User</h2> */}
+
 											{/* <li>
-												<label htmlFor="user">User</label>
-												<input
-													type="text"
-													defaultValue={order.user && order.user._id}
-													name="user"
-													id="user"
-													onChange={(e) => set_user(e.target.value)}
-												/>
-											</li> */}
-											<li>
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -522,7 +515,52 @@ const EditOrderPage = (props) => {
 														<span className="custom-arrow" />
 													</div>
 												</div>
+												<li>
+													<label htmlFor="user">User</label>
+													<input
+														type="text"
+														defaultValue={order.user && order.user._id}
+														name="user"
+														id="user"
+														onChange={(e) => set_user(e.target.value)}
+													/>
+												</li>
+											</li> */}
+											<li>
+												<label htmlFor="user">User</label>
+												<input
+													type="text"
+													name="user"
+													defaultValue={user._id}
+													value={user}
+													id="user"
+													onChange={(e) => set_user(e.target.value)}
+												/>
 											</li>
+											{users && (
+												<div className="ai-c h-25px mv-10px mb-30px jc-c">
+													<div className="custom-select w-100per">
+														<select
+															className="qty_select_dropdown w-100per"
+															// defaultValue={{
+															// 	label: user.first_name + ' ' + user.last_name,
+															// 	value: user._id
+															// }}
+															onChange={(e) => set_user(e.target.value)}
+														>
+															<option key={1} defaultValue="">
+																---Choose User---
+															</option>
+															{users.map((user, index) => (
+																<option key={index} value={user._id}>
+																	{user.first_name} {user.last_name}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											)}
 
 											<h2>Shipping</h2>
 											<li>
