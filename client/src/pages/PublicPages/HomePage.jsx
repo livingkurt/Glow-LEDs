@@ -199,77 +199,70 @@ const HomePage = (props) => {
 			<div className="big_home_page_cards">
 				{homepage_videos.map((card) => {
 					return (
-						<Link to={`/collections/all/products/category/${card.category}`}>
-							<div className="home_page_divs max-h-66rem" style={{ backgroundColor: card.color }}>
-								<div className="jc-c">
-									<h2 className="ta-c">{card.name}</h2>
+						<div className="home_page_divs max-h-66rem" style={{ backgroundColor: card.color }}>
+							<div className="jc-c">
+								<h2 className="ta-c">{card.name}</h2>
+							</div>
+							<div className="row">
+								<div className="iframe-container-big">
+									<iframe
+										title={`${card.name} Promo Video`}
+										width="996"
+										height="560"
+										className="br-20px"
+										src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+										frameborder="0"
+										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+										allowfullscreen="1"
+									/>
 								</div>
-								<div className="row">
-									<div className="iframe-container-big">
-										<iframe
-											title={`${card.name} Promo Video`}
-											width="996"
-											height="560"
-											className="br-20px"
-											src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-											frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen="1"
-										/>
-									</div>
-									<div className="ml-2rem">
-										<p className="p_descriptions paragraph_font w-50rem">{card.description}</p>
-										<div className="jc-c">
-											<Link
-												className="w-100per"
-												to={`/collections/all/products/category/${card.category}`}
-											>
-												<button className="btn primary w-100per">Shop {card.name}</button>
-											</Link>
-										</div>
+								<div className="ml-2rem">
+									<p className="p_descriptions paragraph_font w-50rem">{card.description}</p>
+									<div className="jc-c">
+										<Link
+											className="w-100per"
+											to={`/collections/all/products/category/${card.category}`}
+										>
+											<button className="btn primary w-100per">Shop {card.name}</button>
+										</Link>
 									</div>
 								</div>
 							</div>
-						</Link>
+						</div>
 					);
 				})}
 			</div>
 			<div className="small_home_page_cards none">
 				{homepage_videos.map((card) => {
 					return (
-						<Link to={`/collections/all/products/category/${card.category}`}>
-							<div className="home_page_divs" style={{ backgroundColor: card.color }}>
-								<div className="jc-c">
-									<h2 className="ta-c">{card.name}</h2>
-								</div>
-								<div className="jc-c pos-rel mb-2rem">
-									<div className="iframe-container">
-										<iframe
-											title={`${card.name} Promo Video`}
-											style={{ borderRadius: '20px' }}
-											src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-											frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen="1"
-										/>
-									</div>
-								</div>
-								{/* <p className="p_descriptions paragraph_font home_page_description">
-									{card.description}
-								</p> */}
-								<ReadMore width={1000} className="p_descriptions paragraph_font" length={100}>
-									{card.description}
-								</ReadMore>
-								<div className="jc-c">
-									<Link
-										className="w-100per"
-										to={`/collections/all/products/category/${card.category}`}
-									>
-										<button className="btn primary w-100per">Shop {card.name}</button>
-									</Link>
+						<div className="home_page_divs" style={{ backgroundColor: card.color }}>
+							<div className="jc-c">
+								<h2 className="ta-c">{card.name}</h2>
+							</div>
+							<div className="jc-c pos-rel mb-2rem">
+								<div className="iframe-container">
+									<iframe
+										title={`${card.name} Promo Video`}
+										style={{ borderRadius: '20px' }}
+										src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+										frameborder="0"
+										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+										allowfullscreen="1"
+									/>
 								</div>
 							</div>
-						</Link>
+							{/* <p className="p_descriptions paragraph_font home_page_description">
+									{card.description}
+								</p> */}
+							<ReadMore width={1000} className="p_descriptions paragraph_font" length={100}>
+								{card.description}
+							</ReadMore>
+							<div className="jc-c">
+								<Link className="w-100per" to={`/collections/all/products/category/${card.category}`}>
+									<button className="btn primary w-100per">Shop {card.name}</button>
+								</Link>
+							</div>
+						</div>
 					);
 				})}
 			</div>

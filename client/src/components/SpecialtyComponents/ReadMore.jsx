@@ -11,13 +11,13 @@ const ReadMore = (props) => {
 			{props.children && props.children.length > props.length && width < props.width ? (
 				<div>
 					{props.pre ? (
-						<p className={props.className} style={props.style}>
-							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
-						</p>
-					) : (
 						<pre className={props.className} style={props.style}>
 							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
 						</pre>
+					) : (
+						<p className={props.className} style={props.style}>
+							{show_text ? props.children : `${props.children.slice(0, props.length)}...`}{' '}
+						</p>
 					)}
 
 					<button
@@ -28,7 +28,13 @@ const ReadMore = (props) => {
 					</button>
 				</div>
 			) : (
-				<p className="paragraph_font">{props.children}</p>
+				<div>
+					{props.pre ? (
+						<pre className="paragraph_font">{props.children}</pre>
+					) : (
+						<p className="paragraph_font">{props.children}</p>
+					)}
+				</div>
 			)}
 		</div>
 	);
