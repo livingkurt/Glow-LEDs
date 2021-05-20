@@ -250,6 +250,22 @@ const Header = (props) => {
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
 											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-250px">
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">
+															Abstract (New)
+														</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">
+															Polygons (New)
+														</button>
+													</div>
+												</Link>
 												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
@@ -276,19 +292,6 @@ const Header = (props) => {
 														<button className="btn nav w-100per ta-l">Closed Hole</button>
 													</div>
 												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Abstract</button>
-													</div>
-												</Link>
-
-												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/polygons">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Polygons</button>
-													</div>
-												</Link> */}
 											</div>
 										</div>
 										<div className="dropdown-nav-nested">

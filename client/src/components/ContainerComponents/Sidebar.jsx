@@ -191,6 +191,16 @@ const Sidebar = (props) => {
 										</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Abstract (New)
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Polygons (New)
+											</button>
+										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
 												Cylinders (New)
@@ -209,11 +219,6 @@ const Sidebar = (props) => {
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
 											<button className="sidebar-btn nested_2" onClick={closeMenu}>
 												Closed Hole
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Abstract
 											</button>
 										</Link>
 									</ul>
