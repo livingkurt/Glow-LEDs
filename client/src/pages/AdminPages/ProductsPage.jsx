@@ -13,6 +13,7 @@ const ProductsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_upload, set_loading_upload ] = useState(false);
+	const [ show_hidden, set_show_hidden ] = useState(false);
 	// const [ hide_hidden, set_hide_hidden] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -49,6 +50,13 @@ const ProductsPage = (props) => {
 		await facebook_catalog_upload(products);
 		await google_catalog_upload(products);
 		set_loading_upload(false);
+	};
+	const show_hidden_products = () => {
+		if (show_hidden) {
+			set_show_hidden(false);
+		} else if (!show_hidden) {
+			set_show_hidden(true);
+		}
 	};
 
 	useEffect(
@@ -134,12 +142,25 @@ const ProductsPage = (props) => {
 					<button className="btn primary">Display Products</button>
 				</Link>
 				<button className="btn primary" onClick={update_product_catelog}>
-					Update Product Catelog
+					Update Product Catalog
 				</button>
 				<Link to="/secure/glow/editproduct">
 					<button className="btn primary">Create Product</button>
 				</Link>
+				<button className="btn primary" onClick={show_hidden_products}>
+					{!show_hidden ? 'Show' : 'Hide'} Hidden Products
+				</button>
 			</div>
+
+			{/* <label htmlFor="show_hidden">Show Hidden</label>
+			<input
+				type="checkbox"
+				name="show_hidden"
+				defaultChecked={show_hidden}
+				id="show_hidden"
+				onChange={(e) => set_show_hidden(e.target.value)}
+			/> */}
+
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
 				{/* <Link to="/editproduct">
@@ -169,49 +190,94 @@ const ProductsPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{products.map((product) => (
-									<tr
-										key={product._id}
-										style={{
-											backgroundColor: product.hidden ? '#333333' : determine_color(product)
-										}}
-									>
-										<td className="p-10px">
-											<Link to={'/collections/all/products/' + product.pathname}>
-												{product._id}
-											</Link>
-										</td>
-										<td className="p-10px">
-											{product.hidden ? (
-												<i className="fas fa-eye-slash" />
-											) : (
-												<i className="fas fa-eye" />
-											)}
-										</td>
-										<td className="p-10px" style={{ minWidth: '420px' }}>
-											{product.name}
-										</td>
-										<td className="p-10px" style={{ minWidth: '225px' }}>
-											{sale_price_product_option_switch(product, product.product_options)}
-										</td>
-										<td className="p-10px">{product.category}</td>
-										<td className="p-10px" style={{ minWidth: '111px' }}>
-											{product.order}
-										</td>
-										<td className="p-10px">
-											<div className="jc-b">
-												<Link to={'/secure/glow/editproduct/' + product.pathname}>
-													<button className="btn icon">
-														<i className="fas fa-edit" />
-													</button>
+								{show_hidden &&
+									products.map((product) => (
+										<tr
+											key={product._id}
+											style={{
+												backgroundColor: product.hidden ? '#333333' : determine_color(product)
+											}}
+										>
+											<td className="p-10px">
+												<Link to={'/collections/all/products/' + product.pathname}>
+													{product._id}
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(product)}>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</div>
-										</td>
-									</tr>
-								))}
+											</td>
+											<td className="p-10px">
+												{product.hidden ? (
+													<i className="fas fa-eye-slash" />
+												) : (
+													<i className="fas fa-eye" />
+												)}
+											</td>
+											<td className="p-10px" style={{ minWidth: '420px' }}>
+												{product.name}
+											</td>
+											<td className="p-10px" style={{ minWidth: '225px' }}>
+												{sale_price_product_option_switch(product, product.product_options)}
+											</td>
+											<td className="p-10px">{product.category}</td>
+											<td className="p-10px" style={{ minWidth: '111px' }}>
+												{product.order}
+											</td>
+											<td className="p-10px">
+												<div className="jc-b">
+													<Link to={'/secure/glow/editproduct/' + product.pathname}>
+														<button className="btn icon">
+															<i className="fas fa-edit" />
+														</button>
+													</Link>
+													<button className="btn icon" onClick={() => deleteHandler(product)}>
+														<i className="fas fa-trash-alt" />
+													</button>
+												</div>
+											</td>
+										</tr>
+									))}
+								{!show_hidden &&
+									products.filter((product) => !product.hidden).map((product) => (
+										<tr
+											key={product._id}
+											style={{
+												backgroundColor: product.hidden ? '#333333' : determine_color(product)
+											}}
+										>
+											<td className="p-10px">
+												<Link to={'/collections/all/products/' + product.pathname}>
+													{product._id}
+												</Link>
+											</td>
+											<td className="p-10px">
+												{product.hidden ? (
+													<i className="fas fa-eye-slash" />
+												) : (
+													<i className="fas fa-eye" />
+												)}
+											</td>
+											<td className="p-10px" style={{ minWidth: '420px' }}>
+												{product.name}
+											</td>
+											<td className="p-10px" style={{ minWidth: '225px' }}>
+												{sale_price_product_option_switch(product, product.product_options)}
+											</td>
+											<td className="p-10px">{product.category}</td>
+											<td className="p-10px" style={{ minWidth: '111px' }}>
+												{product.order}
+											</td>
+											<td className="p-10px">
+												<div className="jc-b">
+													<Link to={'/secure/glow/editproduct/' + product.pathname}>
+														<button className="btn icon">
+															<i className="fas fa-edit" />
+														</button>
+													</Link>
+													<button className="btn icon" onClick={() => deleteHandler(product)}>
+														<i className="fas fa-trash-alt" />
+													</button>
+												</div>
+											</td>
+										</tr>
+									))}
 							</tbody>
 						</table>
 					</div>
