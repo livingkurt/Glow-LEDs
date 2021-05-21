@@ -132,7 +132,7 @@ const EditProductPage = (props) => {
 	}, 500);
 
 	const set_state = () => {
-		console.log({ product_length: product.length });
+		// console.log({ product_length: product.length });
 		setId(product._id);
 		setName(product.name);
 		setPrice(product.price);
@@ -321,6 +321,16 @@ const EditProductPage = (props) => {
 		}
 
 		set_chip('');
+	};
+
+	const update_pathname = () => {
+		if (id && pathname) {
+			const response = API_Products.update_pathname(id, pathname, product);
+			console.log(response);
+			if (response) {
+				history.push('/secure/glow/products');
+			}
+		}
 	};
 
 	// const add_subcategory = (e) => {
@@ -1517,6 +1527,11 @@ const EditProductPage = (props) => {
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
+										</button>
+									</li>
+									<li>
+										<button type="button" onClick={update_pathname} className="btn primary">
+											Update Pathname
 										</button>
 									</li>
 									<li>
