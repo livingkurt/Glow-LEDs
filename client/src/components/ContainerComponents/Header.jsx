@@ -202,6 +202,12 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l">Novaskins (New)</button>
 											</div>
 										</Link> */}
+
+										<Link to="/collections/all/products/category/exo_diffusers">
+											<div className="row">
+												<button className="btn nav w-100per ta-l">Exo Diffusers (New)</button>
+											</div>
+										</Link>
 										<Link to="/collections/all/products/category/glow_casings">
 											<div className="row">
 												<button className="btn nav w-100per ta-l">Glow Casings</button>
