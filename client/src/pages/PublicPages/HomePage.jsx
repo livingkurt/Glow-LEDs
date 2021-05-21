@@ -38,7 +38,7 @@ const HomePage = (props) => {
 
 	const homepage_videos = [
 		{
-			name: 'Exo Diffusers',
+			name: 'EXO Diffusers',
 			category: 'exo_diffusers',
 			video: 'hPxFDj7R5Lg',
 			color: '#8e4a4a',
