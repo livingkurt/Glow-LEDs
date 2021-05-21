@@ -59,54 +59,121 @@ router.get('/email/:email', async (req, res) => {
 	}
 });
 
+// // @route POST api/users/register
+// // @desc Register user
+// // @access Public
+// router.post('/register', async (req, res) => {
+// 	// Form validation
+
+// 	// const { errors, isValid } = validateRegisterInput(req.body);
+// 	// console.log({ isValid });
+// 	// // Check validation
+// 	// if (!isValid) {
+// 	// 	return res.status(400).json(errors);
+// 	// }
+
+// 	const user: any = await User.findOne({ email: req.body.email });
+// 	console.log({ user });
+
+// 	if (user) {
+// 		console.log('User Exists');
+// 		bcrypt.compare(process.env.TEMP_PASS, user.password).then(async (isMatch: any) => {
+// 			if (isMatch) {
+// 				bcrypt.genSalt(10, (err: any, salt: any) => {
+// 					bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
+// 						if (err) throw err;
+// 						// Check password
+// 						user.password = hash;
+// 						user.first_name = req.body.first_name;
+// 						user.last_name = req.body.last_name;
+// 						user.email = req.body.email;
+// 						await user.save().then((user: any) => res.json(user)).catch((err: any) => {
+// 							console.log({ err });
+// 							res.status(500).json({ message: 'Error Registering User' });
+// 						});
+// 						log_request({
+// 							method: 'PUT',
+// 							path: req.originalUrl,
+// 							collection: 'User',
+// 							data: [ user ],
+// 							status: 202,
+// 							success: true,
+// 							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+// 						});
+// 						// res.status(202).send({ message: 'Password Saved', data: user });
+// 					});
+// 				});
+// 			} else {
+// 				res.status(500).json({ message: 'User Already Exists' });
+// 			}
+// 		});
+// 		// return res.status(400).json({ message: 'Email already exists' });
+// 	} else {
+// 		console.log('User Does Not Exists');
+// 		const newUser: any = new User({
+// 			first_name: req.body.first_name,
+// 			last_name: req.body.last_name,
+// 			email: req.body.email,
+// 			password: req.body.password,
+// 			affiliate: req.body.affiliate,
+// 			is_affiliated: req.body.is_affiliated,
+// 			email_subscription: req.body.email_subscription,
+// 			isAdmin: false,
+// 			isVerified: true
+// 		});
+
+// 		// Hash password before saving in database
+// 		bcrypt.genSalt(10, (err: any, salt: any) => {
+// 			bcrypt.hash(newUser.password, salt, (err: any, hash: any) => {
+// 				if (err) throw err;
+// 				newUser.password = hash;
+// 				newUser.save().then((user: any) => res.json(user)).catch((err: any) => {
+// 					res.status(500).json({ message: 'Error Registering User' });
+// 				});
+// 			});
+// 		});
+// 	}
+// });
 // @route POST api/users/register
 // @desc Register user
 // @access Public
 router.post('/register', async (req, res) => {
 	// Form validation
 
-	// const { errors, isValid } = validateRegisterInput(req.body);
-	// console.log({ isValid });
-	// // Check validation
-	// if (!isValid) {
-	// 	return res.status(400).json(errors);
-	// }
-
 	const user: any = await User.findOne({ email: req.body.email });
 	console.log({ user });
 
 	if (user) {
 		console.log('User Exists');
-		bcrypt.compare(process.env.TEMP_PASS, user.password).then(async (isMatch: any) => {
-			if (isMatch) {
-				bcrypt.genSalt(10, (err: any, salt: any) => {
-					bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
-						if (err) throw err;
-						// Check password
-						user.password = hash;
-						user.first_name = req.body.first_name;
-						user.last_name = req.body.last_name;
-						user.email = req.body.email;
-						await user.save().then((user: any) => res.json(user)).catch((err: any) => {
-							console.log({ err });
-							res.status(500).json({ message: 'Error Registering User' });
-						});
-						log_request({
-							method: 'PUT',
-							path: req.originalUrl,
-							collection: 'User',
-							data: [ user ],
-							status: 202,
-							success: true,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
-						// res.status(202).send({ message: 'Password Saved', data: user });
+		const isMatch = await bcrypt.compare(process.env.TEMP_PASS, user.password);
+		if (isMatch) {
+			bcrypt.genSalt(10, (err: any, salt: any) => {
+				bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
+					if (err) throw err;
+					// Check password
+					user.password = hash;
+					user.first_name = req.body.first_name;
+					user.last_name = req.body.last_name;
+					user.email = req.body.email;
+					await user.save().then((user: any) => res.json(user)).catch((err: any) => {
+						console.log({ err });
+						res.status(500).json({ message: 'Error Registering User' });
 					});
+					log_request({
+						method: 'PUT',
+						path: req.originalUrl,
+						collection: 'User',
+						data: [ user ],
+						status: 202,
+						success: true,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+					});
+					// res.status(202).send({ message: 'Password Saved', data: user });
 				});
-			} else {
-				res.status(500).json({ message: 'User Already Exists' });
-			}
-		});
+			});
+		} else {
+			res.status(500).json({ message: 'User Already Exists' });
+		}
 		// return res.status(400).json({ message: 'Email already exists' });
 	} else {
 		console.log('User Does Not Exists');
@@ -138,7 +205,7 @@ router.post('/register', async (req, res) => {
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
 	// Form validation
 
 	const { errors, isValid } = validateLoginInput(req.body);
@@ -152,59 +219,47 @@ router.post('/login', (req, res) => {
 	const password = req.body.password;
 
 	// Find user by email
-	User.findOne({ email })
-		.populate('affiliate')
-		.populate({ path: 'affiliate.chips' }) // .populate({
-		// 	path: 'affiliate',
-		// 	populate: {
-		// 		path: 'chips',
-		// 		model: 'Affiliate'
-		// 	}
-		// })
-		.then((user: any) => {
-			// Check if user exists
-			if (!user) {
-				return res.status(404).json({ message: 'Email not found' });
+	const user: any = await User.findOne({ email }).populate('affiliate').populate({ path: 'affiliate.chips' }); // .populate({
+	// Check if user exists
+	if (!user) {
+		return res.status(404).json({ message: 'Email not found' });
+	}
+	// Check password
+	const isMatch = await bcrypt.compare(password, user.password);
+	if (isMatch) {
+		// User matched
+		// Create JWT Payload
+		const payload = {
+			_id: user.id,
+			first_name: user.first_name,
+			last_name: user.last_name,
+			email: user.email,
+			affiliate: user.affiliate,
+			email_subscription: user.email_subscription,
+			is_affiliated: user.is_affiliated,
+			isVerified: user.isVerified,
+			isAdmin: user.isAdmin,
+			shipping: user.shipping,
+			token: getToken(user)
+		};
+
+		// Sign token
+		jwt.sign(
+			payload,
+			config.JWT_SECRET,
+			{
+				expiresIn: '48hr' // 1 year in seconds
+			},
+			(err: any, token: string) => {
+				res.json({
+					success: true,
+					token: 'Bearer ' + token
+				});
 			}
-
-			// Check password
-			bcrypt.compare(password, user.password).then((isMatch: any) => {
-				if (isMatch) {
-					// User matched
-					// Create JWT Payload
-					const payload = {
-						_id: user.id,
-						first_name: user.first_name,
-						last_name: user.last_name,
-						email: user.email,
-						affiliate: user.affiliate,
-						email_subscription: user.email_subscription,
-						is_affiliated: user.is_affiliated,
-						isVerified: user.isVerified,
-						isAdmin: user.isAdmin,
-						shipping: user.shipping,
-						token: getToken(user)
-					};
-
-					// Sign token
-					jwt.sign(
-						payload,
-						config.JWT_SECRET,
-						{
-							expiresIn: '48hr' // 1 year in seconds
-						},
-						(err: any, token: string) => {
-							res.json({
-								success: true,
-								token: 'Bearer ' + token
-							});
-						}
-					);
-				} else {
-					return res.status(400).json({ message: 'Password incorrect' });
-				}
-			});
-		});
+		);
+	} else {
+		return res.status(400).json({ message: 'Password incorrect' });
+	}
 });
 
 router.put('/update/:id', isAuth, async (req, res) => {
