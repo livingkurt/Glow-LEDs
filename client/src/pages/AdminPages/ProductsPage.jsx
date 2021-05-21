@@ -85,7 +85,8 @@ const ProductsPage = (props) => {
 		{ name: 'Mega Diffuser Caps', color: '#4b8882' },
 		{ name: 'Frosted Diffusers', color: '#ca9160' },
 		{ name: 'Diffuser Caps', color: '#6c7ea9' },
-		{ name: 'Accessories', color: '#925757' }
+		{ name: 'Accessories', color: '#925757' },
+		{ name: 'Exo Diffusers', color: '#4162ad' }
 	];
 
 	const determine_color = (product) => {
@@ -113,6 +114,9 @@ const ProductsPage = (props) => {
 		}
 		if (product.category === 'accessories') {
 			result = colors[7].color;
+		}
+		if (product.category === 'exo_diffusers') {
+			result = colors[8].color;
 		}
 		return result;
 	};
