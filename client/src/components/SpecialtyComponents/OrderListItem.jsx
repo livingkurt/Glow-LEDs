@@ -121,6 +121,16 @@ const OrderListItem = (props) => {
 			'width=600,height=400'
 		);
 	};
+	// const open_email = async () => {
+	// 	window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here";
+	// };
+
+	const sendEmail = (message) => {
+		var email = props.order.shipping.email;
+		var subject = 'Your Glow LEDs Order';
+		var emailBody = 'Hi ' + props.order.user.first_name;
+		document.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;
+	};
 
 	return (
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
@@ -381,7 +391,7 @@ const OrderListItem = (props) => {
 									<div>{props.order.shipping.email}</div>
 								</div>
 
-								<button
+								{/* <button
 									className="btn secondary w-200px mv-10px"
 									onClick={() =>
 										copyToClipboard(`
@@ -392,7 +402,14 @@ ${props.order.shipping.postalCode} ${props.order.shipping.country}
 ${props.order.shipping.email}`)}
 								>
 									Copy to clipboard
+								</button> */}
+
+								<button className="btn secondary w-200px mv-10px" onClick={() => sendEmail('Hello')}>
+									Send User a Message
 								</button>
+								{/* <a href="mailto:demo@demo.com">
+									<button className="btn secondary w-200px mv-10px">Send User a Message</button>
+								</a> */}
 							</li>
 							<li className="row">
 								<h3 className="">Order Note: </h3>
