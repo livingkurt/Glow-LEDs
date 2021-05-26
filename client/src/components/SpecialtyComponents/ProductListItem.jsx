@@ -23,7 +23,7 @@ const ProductListItem = (props) => {
 
 	return (
 		<div className="product_list_item " style={{ backgroundColor: determine_color(product) }}>
-			<div className="ai-c h-40px">
+			<div className="ai-c h-25px">
 				<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
 					<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 				</Link>

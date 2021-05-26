@@ -78,12 +78,14 @@ function ProductPage(props) {
 	}
 
 	const update_order = () => {
+		set_loading_upload(true);
 		console.log({ products });
 		products.forEach(async (item, index) => {
 			const update_product_order = await API_Products.update_product_order(item, index + 1);
 			console.log({ update_product_order });
 		});
 		dispatch(listProducts());
+		set_loading_upload(false);
 	};
 	// const handleOnDragEnd = (result) => {
 	// 	if (!result.destination) return;
