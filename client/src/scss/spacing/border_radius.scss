@@ -12,6 +12,13 @@
 		border-radius: $i + px !important;
 	}
 }
+
+.bor-none {
+	border: none;
+}
+.bg-none {
+	background: none;
+}
 // // Top rem
 // @for $i from 0 to 40 {
 // 	.mt-#{$i}rem {

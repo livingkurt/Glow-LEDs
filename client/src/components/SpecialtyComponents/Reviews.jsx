@@ -68,7 +68,7 @@ const Review = (props) => {
 							<div>{review.first_name + ' ' + review.last_name}</div>
 							{/* <div>{review.last_name}</div> */}
 							<div>
-								<Rating value={review.rating} />
+								<Rating rating={review.rating} />
 							</div>
 							<div>{format_date(review.createdAt.substring(0, 10))}</div>
 							<div>{review.comment}</div>

@@ -83,6 +83,12 @@ import {
 	paycheckListReducer,
 	paycheckSaveReducer
 } from './reducers/paycheckReducers';
+import {
+	surveyDeleteReducer,
+	surveyDetailsReducer,
+	surveyListReducer,
+	surveySaveReducer
+} from './reducers/surveyReducers';
 
 const cartItems = Cookie.getJSON('cartItems') || [];
 // const userInfo = Cookie.getJSON('userInfo') || null;
@@ -166,7 +172,11 @@ const reducer = combineReducers({
 	paycheckList: paycheckListReducer,
 	paycheckDetails: paycheckDetailsReducer,
 	paycheckSave: paycheckSaveReducer,
-	paycheckDelete: paycheckDeleteReducer
+	paycheckDelete: paycheckDeleteReducer,
+	surveyList: surveyListReducer,
+	surveyDetails: surveyDetailsReducer,
+	surveySave: surveySaveReducer,
+	surveyDelete: surveyDeleteReducer
 });
 
 declare global {

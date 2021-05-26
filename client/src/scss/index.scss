@@ -49,6 +49,15 @@ pre {
 // 	transition: top 0.3s; /* Transition effect when sliding down (and up) */
 // }
 
+input[type="radio"] {
+	display: none;
+}
+
+.star {
+	cursor: pointer;
+	transition: color 200ms;
+}
+
 ul {
 	padding: 0;
 }
@@ -965,6 +974,13 @@ video {
 	border-radius: $br_large_containers;
 	padding: 25px;
 	margin-bottom: 25px;
+}
+.product_list_item {
+	box-shadow: $bs_deep;
+	border-radius: $br_large_containers;
+	padding: 10px;
+	padding-left: 25px;
+	margin-bottom: 10px;
 }
 
 /* Sidebar */

@@ -1,45 +1,11 @@
 // React
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
+import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
-// import Resizer from 'react-image-file-resizer';
 
 const Product = (props) => {
-	// console.log(props.product_occurrences);
-	// useEffect(
-	// 	() => {
-	// 		onChange();
-	// 		return () => {};
-	// 	},
-	// 	[ props.product.images ]
-	// );
-
-	// const resizeFile = (file) =>
-	// 	new Promise((resolve) => {
-	// 		Resizer.imageFileResizer(
-	// 			file,
-	// 			300,
-	// 			300,
-	// 			'JPEG',
-	// 			5,
-	// 			0,
-	// 			(uri) => {
-	// 				resolve(uri);
-	// 			},
-	// 			'base64'
-	// 		);
-	// 	});
-
-	// const onChange = async (image_) => {
-	// 	const file = image_;
-	// 	const image = await resizeFile(file);
-	// 	console.log(image);
-	// 	return image;
-	// };
-
 	return (
 		<li key={props.product.pathname} style={props.styles}>
 			<div className="tooltip">
@@ -76,7 +42,7 @@ const Product = (props) => {
 						)}
 
 						{props.product.rating ? (
-							<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
+							<Rating rating={props.product.rating} numReviews={props.product.numReviews} />
 						) : (
 							<span className="rating vis-hid ta-c">No Reviews</span>
 						)}

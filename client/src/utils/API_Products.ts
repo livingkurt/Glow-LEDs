@@ -22,6 +22,10 @@ export default {
 		console.log({ save_product: { order, user_data, product } });
 		return axios.put('/api/orders/addproduct', { order, user_data, product });
 	},
+	update_product_order: (product: any, order: any) => {
+		console.log({ update_product_order: { product, order } });
+		return axios.put('/api/products/update_product_order', { product, order });
+	},
 	update_stock: (product_id: string, count_in_stock: number) => {
 		console.log({ update_stock: { product_id, count_in_stock } });
 		return axios.put('/api/products/update_stock', { product_id, count_in_stock });

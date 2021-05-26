@@ -541,6 +541,62 @@ router.put('/update_stock', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Updating Product' });
 	}
 });
+router.put('/update_product_order', async (req, res) => {
+	try {
+		const product_id = req.body.product._id;
+		const order = req.body.order;
+		console.log({ product_id });
+		const product = await Product.findById(product_id);
+		console.log({ product });
+		if (product) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ product ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			const updatedProduct = await Product.updateOne({ _id: product_id }, { ...req.body.product, order: order });
+			console.log({ updatedProduct });
+			if (updatedProduct) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ updatedProduct ],
+					status: 200,
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+			}
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ product ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			console.log('Error in Updating Product.');
+			return res.status(500).send({ message: ' Error in Updating Product.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Updating Product' });
+	}
+});
 
 router.put('/update_product_option_stock', async (req, res) => {
 	try {

@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
+import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const CarouselItem = (props) => {
@@ -54,7 +53,7 @@ const CarouselItem = (props) => {
 							)}
 
 							{product.rating ? (
-								<Rating value={product.rating} text={product.numReviews + ' reviews'} />
+								<Rating rating={product.rating} numReviews={product.numReviews} />
 							) : (
 								<span className="rating vis-hid ta-c">No Reviews</span>
 							)}

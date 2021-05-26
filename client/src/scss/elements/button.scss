@@ -64,7 +64,6 @@ button {
 	padding: 6px 10px;
 }
 
-
 .btn.icon:hover {
 	box-shadow: $bs_deep;
 	background-color: $theme_color_primary_hover;
@@ -182,8 +181,6 @@ button {
 .sidebar-btn.nested:hover + .sidebar_dropdown_nested_container {
 	max-height: 600px;
 }
-
-
 
 // .search_button {
 // 	display: flex;

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts, deleteProduct } from '../../actions/productActions';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { listProducts } from '../../actions/productActions';
+import { ProductListItem } from '../../components/SpecialtyComponents';
+import { API_Products } from '../../utils';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
-import { API_Products } from '../../utils';
 import { facebook_catalog_upload, google_catalog_upload } from '../../utils/google_sheets_upload';
 
-const ProductsPage = (props) => {
+function ProductPage(props) {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_upload, set_loading_upload ] = useState(false);
@@ -17,8 +19,6 @@ const ProductsPage = (props) => {
 	// const [ hide_hidden, set_hide_hidden] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
-	const productList = useSelector((state) => state.productList);
-	const { loading, products, error } = productList;
 
 	const productSave = useSelector((state) => state.productSave);
 	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
@@ -26,39 +26,29 @@ const ProductsPage = (props) => {
 	const productDelete = useSelector((state) => state.productDelete);
 	const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
 	const dispatch = useDispatch();
+	const [ products, updateProducts ] = useState([]);
 
+	const productList = useSelector((state) => state.productList);
+	const { loading, products: items, error } = productList;
+
+	useEffect(() => {
+		dispatch(listProducts());
+		return () => {
+			//
+		};
+	}, []);
 	useEffect(
 		() => {
-			dispatch(listProducts());
+			if (items) {
+				updateProducts(items);
+			}
+
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete ]
+		[ items ]
 	);
-	const deleteHandler = (product) => {
-		console.log(product._id);
-		dispatch(deleteProduct(product._id));
-	};
-
-	// const get_shown_products = () => {
-	// 	const { data } = API_Products.get_shown_products();
-
-	// };
-	const update_product_catelog = async () => {
-		set_loading_upload(true);
-		await facebook_catalog_upload(products);
-		await google_catalog_upload(products);
-		set_loading_upload(false);
-	};
-	const show_hidden_products = () => {
-		if (show_hidden) {
-			set_show_hidden(false);
-		} else if (!show_hidden) {
-			set_show_hidden(true);
-		}
-	};
-
 	useEffect(
 		() => {
 			dispatch(listProducts(category.subcategory, searchKeyword, sortOrder));
@@ -77,6 +67,37 @@ const ProductsPage = (props) => {
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
+	function handleOnDragEnd(result) {
+		if (!result.destination) return;
+
+		const product_items = Array.from(products);
+		const [ reorderedItem ] = product_items.splice(result.source.index, 1);
+		product_items.splice(result.destination.index, 0, reorderedItem);
+
+		updateProducts(product_items);
+	}
+
+	const update_order = () => {
+		console.log({ products });
+		products.forEach(async (item, index) => {
+			const update_product_order = await API_Products.update_product_order(item, index + 1);
+			console.log({ update_product_order });
+		});
+		dispatch(listProducts());
+	};
+	// const handleOnDragEnd = (result) => {
+	// 	if (!result.destination) return;
+
+	// 	const product_items = Array.from(product_items);
+	// 	const [ reorderedItem ] = product_items.splice(result.source.index, 1);
+	// 	product_items.splice(result.destination.index, 0, reorderedItem);
+	// 	console.log({ product_items });
+	// 	updateProducts(product_items);
+	// 	// product_items.forEach(async (item) => {
+	// 	// 	const update_product_order = await API_Products.update_product_order(item);
+	// 	// });
+	// };
+
 	const colors = [
 		{ name: 'Not Category', color: '#333333' },
 		{ name: 'Glow Casings', color: '#557b68' },
@@ -91,9 +112,7 @@ const ProductsPage = (props) => {
 
 	const determine_color = (product) => {
 		let result = '';
-		if (!product.category) {
-			result = colors[0].color;
-		}
+
 		if (product.category === 'glow_casings') {
 			result = colors[1].color;
 		}
@@ -118,7 +137,23 @@ const ProductsPage = (props) => {
 		if (product.category === 'exo_diffusers') {
 			result = colors[8].color;
 		}
+		if (product.hidden) {
+			result = colors[0].color;
+		}
 		return result;
+	};
+	const update_product_catelog = async () => {
+		set_loading_upload(true);
+		await facebook_catalog_upload(products);
+		await google_catalog_upload(products);
+		set_loading_upload(false);
+	};
+	const show_hidden_products = () => {
+		if (show_hidden) {
+			set_show_hidden(false);
+		} else if (!show_hidden) {
+			set_show_hidden(true);
+		}
 	};
 
 	return (
@@ -154,140 +189,98 @@ const ProductsPage = (props) => {
 				<button className="btn primary" onClick={show_hidden_products}>
 					{!show_hidden ? 'Show' : 'Hide'} Hidden Products
 				</button>
+				<button className="btn primary" onClick={update_order}>
+					Update Order
+				</button>
 			</div>
-
-			{/* <label htmlFor="show_hidden">Show Hidden</label>
-			<input
-				type="checkbox"
-				name="show_hidden"
-				defaultChecked={show_hidden}
-				id="show_hidden"
-				onChange={(e) => set_show_hidden(e.target.value)}
-			/> */}
-
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
-				{/* <Link to="/editproduct">
-					<button className="btn primary" >
-						Create Product
-					</button>
-				</Link> */}
 			</div>
 			<Loading loading={loading_upload} error={error} />
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
-			<Loading loading={loading} error={error}>
-				{products && (
-					<div className="product-list responsive_table">
-						<table className="table">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Hidden</th>
-									<th>Name</th>
-									<th>Price</th>
-									<th>Category</th>
-									<th>Order</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								{show_hidden &&
-									products.map((product) => (
-										<tr
-											key={product._id}
-											style={{
-												backgroundColor: product.hidden ? '#333333' : determine_color(product)
-											}}
-										>
-											<td className="p-10px">
-												<Link to={'/collections/all/products/' + product.pathname}>
-													{product._id}
-												</Link>
-											</td>
-											<td className="p-10px">
-												{product.hidden ? (
-													<i className="fas fa-eye-slash" />
-												) : (
-													<i className="fas fa-eye" />
-												)}
-											</td>
-											<td className="p-10px" style={{ minWidth: '420px' }}>
-												{product.name}
-											</td>
-											<td className="p-10px" style={{ minWidth: '225px' }}>
-												{sale_price_product_option_switch(product, product.product_options)}
-											</td>
-											<td className="p-10px">{product.category}</td>
-											<td className="p-10px" style={{ minWidth: '111px' }}>
-												{product.order}
-											</td>
-											<td className="p-10px">
-												<div className="jc-b">
-													<Link to={'/secure/glow/editproduct/' + product.pathname}>
-														<button className="btn icon">
-															<i className="fas fa-edit" />
-														</button>
-													</Link>
-													<button className="btn icon" onClick={() => deleteHandler(product)}>
-														<i className="fas fa-trash-alt" />
-													</button>
-												</div>
-											</td>
-										</tr>
-									))}
-								{!show_hidden &&
-									products.filter((product) => !product.hidden).map((product) => (
-										<tr
-											key={product._id}
-											style={{
-												backgroundColor: product.hidden ? '#333333' : determine_color(product)
-											}}
-										>
-											<td className="p-10px">
-												<Link to={'/collections/all/products/' + product.pathname}>
-													{product._id}
-												</Link>
-											</td>
-											<td className="p-10px">
-												{product.hidden ? (
-													<i className="fas fa-eye-slash" />
-												) : (
-													<i className="fas fa-eye" />
-												)}
-											</td>
-											<td className="p-10px" style={{ minWidth: '420px' }}>
-												{product.name}
-											</td>
-											<td className="p-10px" style={{ minWidth: '225px' }}>
-												{sale_price_product_option_switch(product, product.product_options)}
-											</td>
-											<td className="p-10px">{product.category}</td>
-											<td className="p-10px" style={{ minWidth: '111px' }}>
-												{product.order}
-											</td>
-											<td className="p-10px">
-												<div className="jc-b">
-													<Link to={'/secure/glow/editproduct/' + product.pathname}>
-														<button className="btn icon">
-															<i className="fas fa-edit" />
-														</button>
-													</Link>
-													<button className="btn icon" onClick={() => deleteHandler(product)}>
-														<i className="fas fa-trash-alt" />
-													</button>
-												</div>
-											</td>
-										</tr>
-									))}
-							</tbody>
-						</table>
-					</div>
-				)}
-			</Loading>
+			<div className="ai-c mt-10px">
+				<div className="w-500px">Product Name</div>
+				<div className="w-100px">Hidden</div>
+				<div className="w-200px">Category</div>
+				<div className="w-120px">Order</div>
+				<div className="w-500px">Price</div>
+				<div className="w-100px">Actions</div>
+			</div>
+			{show_hidden && (
+				<DragDropContext onDragEnd={handleOnDragEnd}>
+					<Droppable droppableId="products">
+						{(provided) => (
+							<ul {...provided.droppableProps} ref={provided.innerRef}>
+								{products.map((product, index) => {
+									return (
+										<Draggable key={product._id} draggableId={product._id} index={index}>
+											{(provided) => (
+												<li
+													ref={provided.innerRef}
+													{...provided.draggableProps}
+													{...provided.dragHandleProps}
+												>
+													{/* <div className="products-thumb">
+														<img src={images[0]} height="100px" alt={`${name} Thumb`} />
+													</div>
+													<p>{name}</p> */}
+													<ProductListItem
+														size="50px"
+														product={product}
+														admin={true}
+														determine_color={determine_color}
+													/>
+												</li>
+											)}
+										</Draggable>
+									);
+								})}
+								{provided.placeholder}
+							</ul>
+						)}
+					</Droppable>
+				</DragDropContext>
+			)}
+			{!show_hidden && (
+				<DragDropContext onDragEnd={handleOnDragEnd}>
+					<Droppable droppableId="products">
+						{(provided) => (
+							<ul {...provided.droppableProps} ref={provided.innerRef}>
+								{products.filter((product) => !product.hidden).map((product, index) => {
+									return (
+										<Draggable key={product._id} draggableId={product._id} index={index}>
+											{(provided) => (
+												<li
+													ref={provided.innerRef}
+													{...provided.draggableProps}
+													{...provided.dragHandleProps}
+												>
+													{/* <div className="products-thumb">
+														<img src={images[0]} height="100px" alt={`${name} Thumb`} />
+													</div>
+													<p>{name}</p> */}
+													<ProductListItem
+														size="50px"
+														product={product}
+														admin={true}
+														determine_color={determine_color}
+													/>
+												</li>
+											)}
+										</Draggable>
+									);
+								})}
+								{provided.placeholder}
+							</ul>
+						)}
+					</Droppable>
+				</DragDropContext>
+			)}
 		</div>
 	);
-};
-export default ProductsPage;
+}
+
+export default ProductPage;

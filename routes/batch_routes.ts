@@ -584,6 +584,31 @@ router.put('/order_items_color', async (req, res) => {
 
 	res.send(orders);
 });
+router.put('/reorder_products', async (req, res) => {
+	const products = await Product.find();
+
+	products.sort((a: any, b: any) => (a.order > b.order ? 1 : -1)).forEach(async (product: any, index: any) => {
+		// Update the productument
+		const new_order = index + 1;
+		// product = { ...product, order: index + 1 };
+		// product = { ...product, order: new_order };
+		product.order = new_order;
+		console.log({ product });
+		try {
+			const updated_product = await Product.update(
+				// Only the current productument
+				{ _id: product._id },
+				// The updated productument (as per the statements in the above "for" loop)
+				product
+			);
+			console.log({ updated_product });
+		} catch (error) {
+			console.log({ error });
+		}
+	});
+
+	res.send(products);
+});
 // router.put('/order_items_color', async (req, res) => {
 // 	// // const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 // 	// const order = await Order.updateMany(

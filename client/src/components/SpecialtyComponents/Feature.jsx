@@ -1,9 +1,6 @@
 // React
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import Rating from './Rating';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { sale_price_switch } from '../../utils/react_helper_functions';
 import { humanize } from '../../utils/helper_functions';
 import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';

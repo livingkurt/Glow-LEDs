@@ -316,7 +316,7 @@ const ProductPage = (props) => {
 								</h1>
 								<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
 									<a href="#reviews">
-										<Rating value={product.rating} text={product.numReviews + ' reviews'} />
+										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
 									</a>
 								</div>
 

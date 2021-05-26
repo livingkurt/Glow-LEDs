@@ -107,7 +107,10 @@ const ProductSmallScreen = (props) => {
 								)}
 							</div>
 							{props.product.rating ? (
-								<Rating value={props.product.rating} text={props.product.numReviews + ' reviews'} />
+								<Rating
+									rating={props.product.rating}
+									numReviews={props.product.numReviews + ' reviews'}
+								/>
 							) : (
 								<span className="rating vis-hid ta-c">No Reviews</span>
 							)}

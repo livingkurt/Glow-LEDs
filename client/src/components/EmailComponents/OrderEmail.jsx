@@ -926,13 +926,16 @@ const OrderEmail = (props) => {
 
 	const send_order_email = async (email, first_name, subject, refunded) => {
 		console.log({ email_template });
-		const { data } = await API_Emails.send_user_email(email_template, subject, email);
-		const { data: request } = await API_Emails.send_admin_email(
+		const response_1 = await API_Emails.send_user_email(email_template, subject, email);
+		const response_2 = await API_Emails.send_admin_email(
 			email_template,
 			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
 		);
-		console.log({ data });
-		console.log({ request });
+		console.log({ response_1 });
+		console.log({ response_2 });
+		// if (response_1 && response_2) {
+		// 	history.push('/pages/survey');
+		// }
 	};
 
 	useEffect(

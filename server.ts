@@ -30,7 +30,8 @@ import {
 	team_routes,
 	payment_routes,
 	shipping_routes,
-	paycheck_routes
+	paycheck_routes,
+	survey_routes
 } from './routes/index';
 // import users from './routes/users';
 
@@ -123,6 +124,7 @@ app.use('/api/all', batch_routes);
 app.use('/api/shipping', shipping_routes);
 app.use('/api/payments', payment_routes);
 app.use('/api/paychecks', paycheck_routes);
+app.use('/api/surveys', survey_routes);
 
 // app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {
