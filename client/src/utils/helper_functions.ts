@@ -598,6 +598,7 @@ const reorderMultiDrag = ({ entities, selectedProductIds, source, destination }:
 		columns: withAddedProducts
 	};
 	console.log({ updated });
+	console.log({ entities });
 
 	return {
 		entities: updated,

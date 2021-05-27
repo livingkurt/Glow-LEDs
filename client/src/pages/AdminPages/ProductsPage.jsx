@@ -89,7 +89,6 @@ function ProductPage(props) {
 			state.entities.products.forEach(function(a) {
 				products[column.product_ids.indexOf(a._id)] = a;
 			});
-			console.log({ products });
 
 			console.log({ products });
 			products.forEach(async (item, index) => {
@@ -550,7 +549,10 @@ function ProductPage(props) {
 						state.entities.products.forEach(function(a) {
 							products[column.product_ids.indexOf(a._id)] = a;
 						});
-						console.log({ products });
+						const products_2 = column.product_ids.map(
+							(product_id, index) => state.entities.products[index + 1]
+						);
+						console.log({ products_2 });
 
 						return (
 							<Droppable droppableId={'column-1'}>
@@ -618,7 +620,11 @@ function ProductPage(props) {
 						state.entities.products.forEach(function(a) {
 							products[column.product_ids.indexOf(a._id)] = a;
 						});
-						console.log({ products });
+						console.log({ product_ids: column.product_ids });
+						const products_2 = column.product_ids.map(
+							(product_id, index) => state.entities.products[index + 1]
+						);
+						console.log({ products_2 });
 
 						return (
 							<Droppable droppableId={'column-1'}>
