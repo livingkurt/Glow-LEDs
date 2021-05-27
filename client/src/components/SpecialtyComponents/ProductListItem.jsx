@@ -14,22 +14,21 @@ const size = 30;
 const SelectionCount = styled.div`
 	left: -${grid}px;
 	bottom: -${grid}px;
-	color: black;
-	background: green;
+	color: white;
+	background: #4d5061;
 	border-radius: 50%;
 	height: ${size}px;
 	width: ${size}px;
 	line-height: ${size}px;
 	position: absolute;
 	text-align: center;
-	font-size: 0.8rem;
+	font-size: 1.5rem;
 `;
 
 const Container = styled.div`
-
-border-radius: ${(props) => (props.isDragging ? '3rem' : '2rem')};
-/*background-color: ${(props) => (props.isDragging ? 'lightgreen' : 'white')};*/
-/* animation: ${(props) => (props.isDragging ? '${keyFrameDragRowAnimation} 0.5s ease-in-out 0s infinite' : null)}; */
+	border-radius: ${(props) => (props.isDragging ? '3rem' : '2rem')};
+	background-color: ${(props) => (props.isDragging ? '#4d5061' : 'white')};
+	animation: ${(props) => (props.isDragging ? '${keyFrameDragRowAnimation} 0.5s ease-in-out 0s infinite' : null)};
 `;
 
 const ProductListItem = (props) => {
@@ -43,12 +42,12 @@ const ProductListItem = (props) => {
 	const getBackgroundColor = ({ isSelected, isDragging }) => {
 		if (isDragging) {
 			// return determine_color(product, isDragging, false);
-			return 'lightgreen';
+			return '#4d5061';
 		}
 
 		if (isSelected) {
 			// return determine_color(product, false, isSelected);
-			return 'lightgrey';
+			return '#a7a7a7';
 		}
 
 		return determine_color(product, false, false);
@@ -148,30 +147,6 @@ const ProductListItem = (props) => {
 		toggleSelection(product._id);
 	};
 
-	// const productName = props.product;
-	// const id = props.product._id;
-
-	// console.log("Product - Rendering");
-	// const isSelected = props.isSelected;
-	// const selectionCount = props.selectionCount;
-	// console.log({ selectionCount });
-	// const disAppearProduct = props.disAppearProduct;
-
-	// const getStyle = (style, snapshot) => {
-	// 	if (!snapshot.isDropAnimating) {
-	// 		return {
-	// 			...style,
-	// 			width: snapshot.isDragging ? '200px' : '600px',
-	// 			opacity: snapshot.isDragging ? '0.6' : '1',
-	// 			shadow: '10px 10px grey'
-	// 		};
-	// 	}
-	// 	return {
-	// 		...style,
-	// 		// cannot be 0, but make it super tiny
-	// 		transitionDuration: `0.50s`
-	// 	};
-	// };
 	const shouldShowSelection = snapshot.isDragging && selectionCount > 1;
 	if (disAppearProduct) {
 		// console.log('Product id - ' + product._id + 'diappear flag - ' + disAppearProduct);
@@ -181,7 +156,7 @@ const ProductListItem = (props) => {
 
 	return (
 		<Container
-			className="product_list_item "
+			className="product_list_item noselect"
 			style={{ backgroundColor: getBackgroundColor(props) }}
 			isDragging={snapshot.isDragging}
 			onClick={onClick}

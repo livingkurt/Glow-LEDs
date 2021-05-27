@@ -438,15 +438,15 @@ export const mutliDragAwareReorder = (args: any) => {
 	}
 	return reorderSingleDrag(args);
 };
-const reorder_entities = (list: any, startIndex: any, endIndex: any) => {
-	// const result = Array.from(list);
-	// console.log({ list });
-	const result = list.products;
-	const [ removed ] = result.splice(startIndex, 1);
-	result.splice(endIndex, 0, removed);
+// const reorder_entities = (list: any, startIndex: any, endIndex: any) => {
+// 	// const result = Array.from(list);
+// 	// console.log({ list });
+// 	const result = list.products;
+// 	const [ removed ] = result.splice(startIndex, 1);
+// 	result.splice(endIndex, 0, removed);
 
-	return result;
-};
+// 	return result;
+// };
 
 const reorderSingleDrag = ({ entities, selectedProductIds, source, destination }: any) => {
 	console.log('reorderSingleDrag');
