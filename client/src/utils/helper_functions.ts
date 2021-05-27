@@ -1,6 +1,7 @@
 import isEmpty from 'is-empty';
 import Validator from 'validator';
 import axios, { AxiosResponse } from 'axios';
+import invariant from 'tiny-invariant';
 
 interface errors {
 	email: string;
@@ -428,4 +429,257 @@ export const print_invoice = (order: any) => {
 	// mywindow.close();
 
 	return true;
+};
+
+export const mutliDragAwareReorder = (args: any) => {
+	console.log('hello');
+	if (args.selectedProductIds.length > 1) {
+		return reorderMultiDrag(args);
+	}
+	return reorderSingleDrag(args);
+};
+const reorder_entities = (list: any, startIndex: any, endIndex: any) => {
+	// const result = Array.from(list);
+	// console.log({ list });
+	const result = list.products;
+	const [ removed ] = result.splice(startIndex, 1);
+	result.splice(endIndex, 0, removed);
+
+	return result;
+};
+
+const reorderSingleDrag = ({ entities, selectedProductIds, source, destination }: any) => {
+	console.log('reorderSingleDrag');
+	// moving in the same list
+
+	if (source.droppableId === destination.droppableId) {
+		const column = entities.columns[source.droppableId];
+		const reordered = reorder(column.product_ids, source.index, destination.index);
+		// const reordered_entities = reorder_entities(entities, source.index, destination.index);
+		console.log({ entities, selectedProductIds, source, destination });
+		const updated = {
+			...entities,
+			columns: {
+				...entities.columns,
+				[column.id]: withNewProductIds(column, reordered)
+			}
+		};
+		console.log({ reorderSingleDrag: updated });
+		return {
+			entities: updated,
+			selectedProductIds
+		};
+	}
+
+	// moving to a new list
+	const home = entities.columns[source.droppableId];
+	const foreign = entities.columns[destination.droppableId];
+
+	// the id of the product to be moved
+	const productId = home.product_ids[source.index];
+
+	// remove from home column
+	const newHomeProductIds = [ ...home.product_ids ];
+	newHomeProductIds.splice(source.index, 1);
+
+	// add to foreign column
+	const newForeignProductIds = [ ...foreign.product_ids ];
+	newForeignProductIds.splice(destination.index, 0, productId);
+
+	const updated = {
+		...entities,
+		columns: {
+			...entities.columns,
+			[home.id]: withNewProductIds(home, newHomeProductIds),
+			[foreign.id]: withNewProductIds(foreign, newForeignProductIds)
+		}
+	};
+
+	return {
+		entities: updated,
+		selectedProductIds
+	};
+};
+
+const reorderMultiDrag = ({ entities, selectedProductIds, source, destination }: any) => {
+	console.log('reorderMultiDrag');
+	// console.log({ entities });
+	// console.log({ columns: entities.columns });
+	// console.log({ source });
+	// console.log({ droppableId: source.droppableId });
+	const start = entities.columns[source.droppableId];
+	console.log({ start });
+	const dragged = start.product_ids[source.index];
+	console.log({ dragged });
+	const insertAtIndex = (() => {
+		const destinationIndexOffset = selectedProductIds.reduce((previous: any, current: any) => {
+			if (current === dragged) {
+				return previous;
+			}
+
+			const final = entities.columns[destination.droppableId];
+			const column = getHomeColumn(entities, current);
+
+			if (column !== final) {
+				return previous;
+			}
+
+			const index = column.product_ids.indexOf(current);
+
+			if (index >= destination.index) {
+				return previous;
+			}
+
+			// the selected item is before the destination index
+			// we need to account for this when inserting into the new location
+			return previous + 1;
+		}, 0);
+
+		const result = destination.index - destinationIndexOffset;
+
+		console.log({ result });
+		return result;
+	})();
+
+	// doing the ordering now as we are required to look up columns
+	// and know original ordering
+	const orderedSelectedProductIds = [ ...selectedProductIds ];
+	orderedSelectedProductIds.sort((a, b) => {
+		// moving the dragged item to the top of the list
+		if (a === dragged) {
+			return -1;
+		}
+		if (b === dragged) {
+			return 1;
+		}
+
+		// sorting by their natural indexes
+		const columnForA = getHomeColumn(entities, a);
+		const indexOfA = columnForA.product_ids.indexOf(a);
+		const columnForB = getHomeColumn(entities, b);
+		const indexOfB = columnForB.product_ids.indexOf(b);
+
+		if (indexOfA !== indexOfB) {
+			return indexOfA - indexOfB;
+		}
+
+		// sorting by their order in the selectedProductIds list
+		return -1;
+	});
+
+	// we need to remove all of the selected products from their columns
+	const withRemovedProducts = entities.columnOrder.reduce((previous: any, columnId: any) => {
+		const column = entities.columns[columnId];
+
+		// remove the id's of the items that are selected
+		const remainingProductIds = column.product_ids.filter((id: any) => !selectedProductIds.includes(id));
+
+		previous[column.id] = withNewProductIds(column, remainingProductIds);
+		return previous;
+	}, entities.columns);
+
+	const final = withRemovedProducts[destination.droppableId];
+	console.log({ final });
+	const withInserted = (() => {
+		const base = [ ...final.product_ids ];
+		base.splice(insertAtIndex, 0, ...orderedSelectedProductIds);
+		return base;
+	})();
+
+	// insert all selected products into final column
+	const withAddedProducts = {
+		...withRemovedProducts,
+		[final.id]: withNewProductIds(final, withInserted)
+	};
+	console.log({ withAddedProducts });
+
+	const updated = {
+		...entities,
+		columns: withAddedProducts
+	};
+	console.log({ updated });
+
+	return {
+		entities: updated,
+		selectedProductIds: orderedSelectedProductIds
+	};
+};
+
+const withNewProductIds = (column: any, product_ids: any) => ({
+	id: column.id,
+	title: column.title,
+	product_ids
+});
+
+export const getHomeColumn = (entities: any, productId: any) => {
+	console.log({ entities, productId });
+	const columnId = entities.columnOrder.find((id: any) => {
+		const column = entities.columns[id];
+		console.log({ column });
+		console.log({ includes: column.product_ids.includes(productId) });
+		return column.product_ids.includes(productId);
+	});
+
+	// invariant(columnId, 'Count not find column for product');
+
+	return entities.columns[columnId];
+};
+
+export const multiSelectTo = (entities: any, selectedProductIds: any, newProductId: any) => {
+	// Nothing already selected
+	if (!selectedProductIds.length) {
+		return [ newProductId ];
+	}
+
+	const columnOfNew = getHomeColumn(entities, newProductId);
+
+	const indexOfNew = columnOfNew.product_ids.indexOf(newProductId);
+
+	const lastSelected = selectedProductIds[selectedProductIds.length - 1];
+	const columnOfLast = getHomeColumn(entities, lastSelected);
+	const indexOfLast = columnOfLast.product_ids.indexOf(lastSelected);
+
+	// multi selecting to another column
+	// select everything up to the index of the current item
+	if (columnOfNew !== columnOfLast) {
+		return columnOfNew.product_ids.slice(0, indexOfNew + 1);
+	}
+
+	// multi selecting in the same column
+	// need to select everything between the last index and the current index inclusive
+
+	// nothing to do here
+	if (indexOfNew === indexOfLast) {
+		return null;
+	}
+
+	const isSelectingForwards = indexOfNew > indexOfLast;
+	const start = isSelectingForwards ? indexOfLast : indexOfNew;
+	const end = isSelectingForwards ? indexOfNew : indexOfLast;
+
+	const inBetween = columnOfNew.product_ids.slice(start, end + 1);
+
+	// everything inbetween needs to have it's selection toggled.
+	// with the exception of the start and end values which will always be selected
+
+	const toAdd = inBetween.filter((productId: any) => {
+		// if already selected: then no need to select it again
+		if (selectedProductIds.includes(productId)) {
+			return false;
+		}
+		return true;
+	});
+
+	const sorted = isSelectingForwards ? toAdd : [ ...toAdd ].reverse();
+	const combined = [ ...selectedProductIds, ...sorted ];
+
+	return combined;
+};
+
+const reorder = (list: any, startIndex: any, endIndex: any) => {
+	const result = Array.from(list);
+	const [ removed ] = result.splice(startIndex, 1);
+	result.splice(endIndex, 0, removed);
+
+	return result;
 };

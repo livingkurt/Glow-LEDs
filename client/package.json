@@ -24,6 +24,7 @@
 		"http-proxy-middleware": "^1.0.4",
 		"is-empty": "^1.2.0",
 		"js-cookie": "^2.2.1",
+		"memoize-one": "^5.2.1",
 		"messaging-api-messenger": "^1.0.2",
 		"node-fetch": "^2.6.1",
 		"node-sass": "^4.14.1",
@@ -52,6 +53,8 @@
 		"redux": "^4.0.5",
 		"redux-thunk": "^2.3.0",
 		"sales-tax": "^2.2.4",
+		"styled-components": "^5.3.0",
+		"tiny-invariant": "^1.1.0",
 		"typescript": "^3.9.7",
 		"validator": "^13.1.1"
 	},

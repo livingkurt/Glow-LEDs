@@ -6,10 +6,58 @@ import useClipboard from 'react-hook-clipboard';
 import { LazyImage, Loading } from '../UtilityComponents';
 import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { deleteProduct } from '../../actions/productActions';
+import styled from 'styled-components';
+
+const grid = 8;
+const size = 30;
+
+const SelectionCount = styled.div`
+	left: -${grid}px;
+	bottom: -${grid}px;
+	color: black;
+	background: green;
+	border-radius: 50%;
+	height: ${size}px;
+	width: ${size}px;
+	line-height: ${size}px;
+	position: absolute;
+	text-align: center;
+	font-size: 0.8rem;
+`;
+
+const Container = styled.div`
+
+border-radius: ${(props) => (props.isDragging ? '3rem' : '2rem')};
+/*background-color: ${(props) => (props.isDragging ? 'lightgreen' : 'white')};*/
+/* animation: ${(props) => (props.isDragging ? '${keyFrameDragRowAnimation} 0.5s ease-in-out 0s infinite' : null)}; */
+`;
 
 const ProductListItem = (props) => {
-	const { product, determine_color, admin } = props;
+	const keyCodes = {
+		enter: 13,
+		escape: 27,
+		arrowDown: 40,
+		arrowUp: 38,
+		tab: 9
+	};
+	const getBackgroundColor = ({ isSelected, isDragging }) => {
+		if (isDragging) {
+			// return determine_color(product, isDragging, false);
+			return 'lightgreen';
+		}
+
+		if (isSelected) {
+			// return determine_color(product, false, isSelected);
+			return 'lightgrey';
+		}
+
+		return determine_color(product, false, false);
+	};
+
+	const { product, determine_color, admin, snapshot, provided, disAppearProduct, isSelected, selectionCount } = props;
 	const dispatch = useDispatch();
+
+	// console.log({ snapshot });
 
 	const show_hide = (id) => {
 		const row = document.getElementById(id);
@@ -21,11 +69,132 @@ const ProductListItem = (props) => {
 		dispatch(deleteProduct(product._id));
 	};
 
+	const onKeyDown = (event, provided, snapshot) => {
+		if (provided.dragHandleProps) {
+			provided.dragHandleProps.onKeyDown(event);
+		}
+
+		if (event.defaultPrevented) {
+			return;
+		}
+
+		if (snapshot.isDragging) {
+			return;
+		}
+
+		if (event.keyCode !== keyCodes.enter) {
+			return;
+		}
+
+		// we are using the event for selection
+		event.preventDefault();
+
+		performAction(event);
+	};
+
+	// Using onClick as it will be correctly
+	// preventing if there was a drag
+	const onClick = (event) => {
+		// console.log("onClick event called");
+		if (event.defaultPrevented) {
+			return;
+		}
+
+		if (event.button !== 0) {
+			return;
+		}
+
+		// marking the event as used
+		event.preventDefault();
+
+		performAction(event);
+	};
+
+	const onTouchEnd = (event) => {
+		if (event.defaultPrevented) {
+			return;
+		}
+
+		// marking the event as used
+		// we would also need to add some extra logic to prevent the click
+		// if this element was an anchor
+		event.preventDefault();
+		props.toggleSelectionInGroup(props.product._id);
+	};
+
+	// Determines if the platform specific toggle selection in group key was used
+	const wasToggleInSelectionGroupKeyUsed = (event) => {
+		const isUsingWindows = navigator.platform.indexOf('Win') >= 0;
+		return isUsingWindows ? event.ctrlKey : event.metaKey;
+	};
+
+	// Determines if the multiSelect key was used
+	const wasMultiSelectKeyUsed = (event) => event.shiftKey;
+
+	const performAction = (event) => {
+		// console.log("OnClick performAction called");
+		const { product, toggleSelection, toggleSelectionInGroup, multiSelectTo } = props;
+
+		if (wasToggleInSelectionGroupKeyUsed(event)) {
+			toggleSelectionInGroup(product._id);
+			return;
+		}
+
+		if (wasMultiSelectKeyUsed(event)) {
+			multiSelectTo(product._id);
+			return;
+		}
+		// console.log({ props: props });
+		toggleSelection(product._id);
+	};
+
+	// const productName = props.product;
+	// const id = props.product._id;
+
+	// console.log("Product - Rendering");
+	// const isSelected = props.isSelected;
+	// const selectionCount = props.selectionCount;
+	// console.log({ selectionCount });
+	// const disAppearProduct = props.disAppearProduct;
+
+	// const getStyle = (style, snapshot) => {
+	// 	if (!snapshot.isDropAnimating) {
+	// 		return {
+	// 			...style,
+	// 			width: snapshot.isDragging ? '200px' : '600px',
+	// 			opacity: snapshot.isDragging ? '0.6' : '1',
+	// 			shadow: '10px 10px grey'
+	// 		};
+	// 	}
+	// 	return {
+	// 		...style,
+	// 		// cannot be 0, but make it super tiny
+	// 		transitionDuration: `0.50s`
+	// 	};
+	// };
+	const shouldShowSelection = snapshot.isDragging && selectionCount > 1;
+	if (disAppearProduct) {
+		// console.log('Product id - ' + product._id + 'diappear flag - ' + disAppearProduct);
+		return null;
+	}
+	// console.log("Product - Draggable Rendering");
+
 	return (
-		<div className="product_list_item " style={{ backgroundColor: determine_color(product) }}>
+		<Container
+			className="product_list_item "
+			style={{ backgroundColor: getBackgroundColor(props) }}
+			isDragging={snapshot.isDragging}
+			onClick={onClick}
+			onTouchEnd={onTouchEnd}
+			onKeyDown={(event) => onKeyDown(event, provided, snapshot)}
+			isSelected={isSelected}
+		>
 			<div className="ai-c h-25px">
 				<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
-					<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
+					<label style={{ fontSize: '1.6rem' }}>
+						{snapshot.isDragging ? props.product.name + ' - Moving' : props.product.name}
+					</label>
+					{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 				</Link>
 				<label className="w-100px">
 					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
@@ -60,6 +229,7 @@ const ProductListItem = (props) => {
 					</div>
 					<div />
 				</div>
+				{shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
 			</div>
 			{admin && (
 				<div id={product._id} className="expanded-row-content hide-row">
@@ -94,7 +264,7 @@ const ProductListItem = (props) => {
 					</div>
 				</div>
 			)}
-		</div>
+		</Container>
 	);
 };
 

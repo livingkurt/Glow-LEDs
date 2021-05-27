@@ -10,6 +10,8 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
 import { facebook_catalog_upload, google_catalog_upload } from '../../utils/google_sheets_upload';
+import { mutliDragAwareReorder, multiSelectTo as multiSelect } from '../../utils/helper_functions';
+import memoizeOne from 'memoize-one';
 
 function ProductPage(props) {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -26,7 +28,7 @@ function ProductPage(props) {
 	const productDelete = useSelector((state) => state.productDelete);
 	const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
 	const dispatch = useDispatch();
-	const [ products, updateProducts ] = useState([]);
+	const [ products_list, updateProducts ] = useState([]);
 
 	const productList = useSelector((state) => state.productList);
 	const { loading, products: items, error } = productList;
@@ -37,18 +39,18 @@ function ProductPage(props) {
 			//
 		};
 	}, []);
-	useEffect(
-		() => {
-			if (items) {
-				updateProducts(items);
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (items) {
+	// 			updateProducts(items);
+	// 		}
 
-			return () => {
-				//
-			};
-		},
-		[ items ]
-	);
+	// 		return () => {
+	// 			//
+	// 		};
+	// 	},
+	// 	[ items ]
+	// );
 	useEffect(
 		() => {
 			dispatch(listProducts(category.subcategory, searchKeyword, sortOrder));
@@ -67,39 +69,37 @@ function ProductPage(props) {
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
-	function handleOnDragEnd(result) {
-		if (!result.destination) return;
-
-		const product_items = Array.from(products);
-		const [ reorderedItem ] = product_items.splice(result.source.index, 1);
-		product_items.splice(result.destination.index, 0, reorderedItem);
-
-		updateProducts(product_items);
-	}
-
+	// const update_order = () => {
+	// 	set_loading_upload(true);
+	// 	console.log({ products: state.entities.products });
+	// 	state.entities.products.forEach(async (item, index) => {
+	// 		const update_product_order = await API_Products.update_product_order(item, index + 1);
+	// 		console.log({ update_product_order });
+	// 	});
+	// 	dispatch(listProducts());
+	// 	set_loading_upload(false);
+	// };
 	const update_order = () => {
 		set_loading_upload(true);
-		console.log({ products });
-		products.forEach(async (item, index) => {
-			const update_product_order = await API_Products.update_product_order(item, index + 1);
-			console.log({ update_product_order });
+		state.entities.columnOrder.map((columnId) => {
+			const column = state.entities.columns[columnId];
+			console.log({ column });
+			// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
+			let products = [];
+			state.entities.products.forEach(function(a) {
+				products[column.product_ids.indexOf(a._id)] = a;
+			});
+			console.log({ products });
+
+			console.log({ products });
+			products.forEach(async (item, index) => {
+				const update_product_order = await API_Products.update_product_order(item, index + 1);
+				console.log({ update_product_order });
+			});
 		});
 		dispatch(listProducts());
 		set_loading_upload(false);
 	};
-	// const handleOnDragEnd = (result) => {
-	// 	if (!result.destination) return;
-
-	// 	const product_items = Array.from(product_items);
-	// 	const [ reorderedItem ] = product_items.splice(result.source.index, 1);
-	// 	product_items.splice(result.destination.index, 0, reorderedItem);
-	// 	console.log({ product_items });
-	// 	updateProducts(product_items);
-	// 	// product_items.forEach(async (item) => {
-	// 	// 	const update_product_order = await API_Products.update_product_order(item);
-	// 	// });
-	// };
-
 	const colors = [
 		{ name: 'Not Category', color: '#333333' },
 		{ name: 'Glow Casings', color: '#557b68' },
@@ -112,11 +112,18 @@ function ProductPage(props) {
 		{ name: 'Exo Diffusers', color: '#4162ad' }
 	];
 
-	const determine_color = (product) => {
+	const determine_color = (product, isSelected, isDragging) => {
 		let result = '';
 
 		if (product.category === 'glow_casings') {
 			result = colors[1].color;
+			// if (isSelected) {
+			// 	result = '#6a7fad';
+			// } else if (isDragging) {
+			// 	result = colors[1].color;
+			// } else {
+			// 	result = '#557b68';
+			// }
 		}
 		if (product.category === 'glow_strings') {
 			result = colors[2].color;
@@ -144,12 +151,14 @@ function ProductPage(props) {
 		}
 		return result;
 	};
+
 	const update_product_catelog = async () => {
 		set_loading_upload(true);
-		await facebook_catalog_upload(products);
-		await google_catalog_upload(products);
+		await facebook_catalog_upload(state.entites.products);
+		await google_catalog_upload(state.entites.products);
 		set_loading_upload(false);
 	};
+
 	const show_hidden_products = () => {
 		if (show_hidden) {
 			set_show_hidden(false);
@@ -157,6 +166,326 @@ function ProductPage(props) {
 			set_show_hidden(true);
 		}
 	};
+
+	const [ state, setState ] = useState({
+		entities: {
+			products: [],
+			columns: {
+				'column-1': {
+					id: 'column-1',
+					title: 'Products',
+					product_ids: []
+				}
+			},
+			columnOrder: [ 'column-1' ]
+		},
+		selectedProductIds: [],
+		draggingProductId: null
+	});
+
+	useEffect(() => {
+		window.addEventListener('click', onWindowClick);
+		window.addEventListener('keydown', onWindowKeyDown);
+		window.addEventListener('touchend', onWindowTouchEnd);
+		// createData();
+		return () => {
+			window.removeEventListener('click', onWindowClick);
+			window.removeEventListener('keydown', onWindowKeyDown);
+			window.removeEventListener('touchend', onWindowTouchEnd);
+		};
+	}, []);
+
+	useEffect(
+		() => {
+			if (items) {
+				set_state();
+			}
+
+			return () => {};
+		},
+		[ items ]
+	);
+
+	const set_state = () => {
+		if (items) {
+			console.log({ set_state: items });
+			if (items.columns) {
+				setState({
+					entities: items,
+					selectedProductIds: [],
+					draggingProductId: null
+				});
+			} else {
+				setState({
+					entities: {
+						products: items,
+						columns: {
+							'column-1': {
+								id: 'column-1',
+								title: 'Products',
+								product_ids: items.map((product) => product._id)
+							}
+						},
+						columnOrder: [ 'column-1' ]
+					},
+					selectedProductIds: [],
+					draggingProductId: null
+				});
+			}
+		}
+		updateProducts(items);
+	};
+
+	// const createData = () => {
+	// 	// let productIdcount = 0;
+	// 	// let products = Array.from(initialData.products);
+	// 	// let product_ids = Array.from(initialData.products);
+	// 	// for (let i = 0; i < 10; i++) {
+	// 	// 	let count = ++productIdcount;
+	// 	// 	let product = {
+	// 	// 		id: count,
+	// 	// 		content: 'Product ' + count
+	// 	// 	};
+	// 	// 	products.push(product);
+	// 	// 	product_ids.push(product.id);
+	// 	// }
+	// 	// console.log({ product_ids });
+	// 	// console.log({ products });
+	// 	// // set_entities({
+	// 	// // 	products: products,
+	// 	// // 	columns: {
+	// 	// // 		'column-1': {
+	// 	// // 			id: 'column-1',
+	// 	// // 			title: 'Products',
+	// 	// // 			product_ids: product_ids
+	// 	// // 		}
+	// 	// // 	},
+	// 	// // 	columnOrder: [ 'column-1' ]
+	// 	// // });
+	// 	setState({
+	// 		entities: {
+	// 			products: products,
+	// 			columns: {
+	// 				'column-1': {
+	// 					id: 'column-1',
+	// 					title: 'Products',
+	// 					product_ids: products.map(product => product._id)
+	// 				}
+	// 			},
+	// 			columnOrder: [ 'column-1' ]
+	// 		},
+	// 		selectedProductIds: [],
+	// 		draggingProductId: null
+	// 	});
+	// 	// set_selectedProductIds([] });
+	// 	// set_draggingProductId({ draggingProductId: null });
+	// };
+
+	// createData();
+
+	console.log({ state });
+
+	const onDragStart = (start) => {
+		// console.log("OnDragStart event started");
+		const id = start.draggableId;
+		const selected = state.selectedProductIds.find((productId) => productId === id);
+
+		// if dragging an item that is not selected - unselect all items
+		if (!selected) {
+			unselectAll();
+		}
+		// console.log("Updating State from onDragStart");
+		// set_draggingProductId(start.draggableId);
+		// setState(state => {return ...state,draggingProductId: start.draggableId});
+		setState((state) => {
+			return { ...state, draggingProductId: start.draggableId };
+		});
+	};
+
+	const onDragEnd = (result) => {
+		// console.log("OnDragEnd event started");
+		const { destination, source, draggableId } = result;
+
+		if (!destination) {
+			// set_draggingProductId(null);
+			// setState({
+			// 	draggingProductId: null
+			// });
+			setState((state) => {
+				return { ...state, draggingProductId: null };
+			});
+			return;
+		}
+
+		const processed = mutliDragAwareReorder({
+			entities: state.entities,
+			selectedProductIds: state.selectedProductIds,
+			source,
+			destination
+		});
+
+		console.log('Updating State from onDragEnd');
+		// ...processed,
+		console.log({ processed });
+		// set_entities(processed.entities);
+		// set_selectedProductIds(processed.selectedProductIds);
+		// set_draggingProductId(null);
+		// setState({
+		// 	...processed,
+		// 	draggingProductId: null
+		// });
+		setState((state) => {
+			return { ...processed, draggingProductId: null };
+		});
+		updateProducts(processed.entities.products);
+		// updateProducts(state.entities);
+	};
+
+	// function handleOnDragEnd(result) {
+	// 	if (!result.destination) return;
+
+	// 	const product_items = Array.from(products);
+	// 	const [ reorderedItem ] = product_items.splice(result.source.index, 1);
+	// 	product_items.splice(result.destination.index, 0, reorderedItem);
+
+	// 	updateProducts(product_items);
+	// }
+
+	const onWindowKeyDown = (event) => {
+		if (event.defaultPrevented) {
+			return;
+		}
+
+		if (event.key === 'Escape') {
+			unselectAll();
+		}
+	};
+
+	const onWindowClick = (event) => {
+		console.log({ event });
+		if (event.defaultPrevented) {
+			return;
+		}
+		unselectAll();
+	};
+
+	const onWindowTouchEnd = (event) => {
+		if (event.defaultPrevented) {
+			return;
+		}
+		unselectAll();
+	};
+
+	const toggleSelection = (productId) => {
+		const selectedProductIds = state.selectedProductIds;
+		// console.log({ selectedProductIds });
+		const wasSelected = selectedProductIds.includes(productId);
+
+		const newProductIds = (() => {
+			// Product was not previously selected
+			// now will be the only selected item
+			if (!wasSelected) {
+				return [ productId ];
+			}
+
+			// Product was part of a selected group
+			// will now become the only selected item
+			if (selectedProductIds.length > 1) {
+				return [ productId ];
+			}
+
+			// product was previously selected but not in a group
+			// we will now clear the selection
+			return [];
+		})();
+		// console.log("Updating state from toggleSelection");
+		// set_selectedProductIds(newProductIds);
+		// setState({
+		// 	selectedProductIds: newProductIds
+		// });
+		setState((state) => {
+			return { ...state, selectedProductIds: newProductIds };
+		});
+	};
+
+	const toggleSelectionInGroup = (productId) => {
+		const selectedProductIds = state.selectedProductIds;
+		const index = selectedProductIds.indexOf(productId);
+
+		// if not selected - add it to the selected items
+		if (index === -1) {
+			// console.log(
+			//   "Updating State from toggleSelectioninGroup for index === -1"
+			// );
+			// set_selectedProductIds([ ...selectedProductIds, productId ]);
+			// setState({
+			// 	selectedProductIds: [ ...selectedProductIds, productId ]
+			// });
+			setState((state) => {
+				return { ...state, selectedProductIds: [ ...selectedProductIds, productId ] };
+			});
+			return;
+		}
+
+		// it was previously selected and now needs to be removed from the group
+		const shallow = [ ...selectedProductIds ];
+		shallow.splice(index, 1);
+		// console.log("Updating State from toggleSelectioninGroup shallow");
+		// set_selectedProductIds(shallow);
+		// setState({
+		// 	selectedProductIds: shallow
+		// });
+
+		setState((state) => {
+			return { ...state, selectedProductIds: shallow };
+		});
+	};
+
+	// This behaviour matches the MacOSX finder selection
+	const multiSelectTo = (newProductId) => {
+		const updated = multiSelect(state.entities, state.selectedProductIds, newProductId);
+
+		console.log({ updated });
+
+		if (updated == null) {
+			return;
+		}
+
+		// console.log("Updating State from multiSelectTo");
+		// set_selectedProductIds(updated);
+		// setState({
+		// 	selectedProductIds: updated
+		// });
+
+		setState((state) => {
+			return { ...state, selectedProductIds: updated };
+		});
+	};
+
+	const unselect = () => {
+		unselectAll();
+	};
+
+	const unselectAll = () => {
+		// console.log("Updating State from unselectAll");
+		// set_selectedProductIds([]);
+		// setState({
+		// 	selectedProductIds: []
+		// });
+		setState((state) => {
+			return { ...state, selectedProductIds: [] };
+		});
+	};
+	// console.log({ selectionCount: state.selectedProductIds.length });
+
+	const getSelectedMap = memoizeOne((selectedProductIds) =>
+		selectedProductIds.reduce((previous, current) => {
+			previous[current] = true;
+			// console.log({ previous });
+			// console.log({ selectedProductIds });
+			return previous;
+		}, {})
+	);
 
 	return (
 		<div className="main_container p-20px">
@@ -212,73 +541,139 @@ function ProductPage(props) {
 				<div className="w-100px">Actions</div>
 			</div>
 			{show_hidden && (
-				<DragDropContext onDragEnd={handleOnDragEnd}>
-					<Droppable droppableId="products">
-						{(provided) => (
-							<ul {...provided.droppableProps} ref={provided.innerRef}>
-								{products.map((product, index) => {
-									return (
-										<Draggable key={product._id} draggableId={product._id} index={index}>
-											{(provided) => (
-												<li
-													ref={provided.innerRef}
-													{...provided.draggableProps}
-													{...provided.dragHandleProps}
-												>
-													{/* <div className="products-thumb">
-														<img src={images[0]} height="100px" alt={`${name} Thumb`} />
-													</div>
-													<p>{name}</p> */}
-													<ProductListItem
-														size="50px"
-														product={product}
-														admin={true}
-														determine_color={determine_color}
-													/>
-												</li>
-											)}
-										</Draggable>
-									);
-								})}
-								{provided.placeholder}
-							</ul>
-						)}
-					</Droppable>
+				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+					{state.entities.columnOrder.map((columnId) => {
+						const column = state.entities.columns[columnId];
+						console.log({ column });
+						// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
+						let products = [];
+						state.entities.products.forEach(function(a) {
+							products[column.product_ids.indexOf(a._id)] = a;
+						});
+						console.log({ products });
+
+						return (
+							<Droppable droppableId={'column-1'}>
+								{(provided) => (
+									<ul {...provided.droppableProps} ref={provided.innerRef}>
+										{/* {console.log({ state.entities })} */}
+										{products.map((product, index) => {
+											return (
+												<Draggable key={product._id} draggableId={product._id} index={index}>
+													{(provided, snapshot) => {
+														const isSelected = Boolean(
+															getSelectedMap(state.selectedProductIds)[product._id]
+														);
+														let disAppearProduct = false;
+														if (
+															snapshot.isDraggingOver &&
+															isSelected &&
+															state.draggingProductId &&
+															product._id !== state.draggingProductId
+														) {
+															// console.log("Dragging Over - Product not to render - " + product._id);
+															// console.log("draggingProductId - " + draggingProductId);
+															disAppearProduct = true;
+														}
+														return (
+															<li
+																ref={provided.innerRef}
+																{...provided.draggableProps}
+																{...provided.dragHandleProps}
+															>
+																<ProductListItem
+																	size="50px"
+																	product={product}
+																	admin={true}
+																	determine_color={determine_color}
+																	isSelected={isSelected}
+																	selectionCount={state.selectedProductIds.length}
+																	toggleSelection={toggleSelection}
+																	toggleSelectionInGroup={toggleSelectionInGroup}
+																	multiSelectTo={multiSelectTo}
+																	disAppearProduct={disAppearProduct}
+																	snapshot={snapshot}
+																/>
+															</li>
+														);
+													}}
+												</Draggable>
+											);
+										})}
+										{provided.placeholder}
+									</ul>
+								)}
+							</Droppable>
+						);
+					})}
 				</DragDropContext>
 			)}
 			{!show_hidden && (
-				<DragDropContext onDragEnd={handleOnDragEnd}>
-					<Droppable droppableId="products">
-						{(provided) => (
-							<ul {...provided.droppableProps} ref={provided.innerRef}>
-								{products.filter((product) => !product.hidden).map((product, index) => {
-									return (
-										<Draggable key={product._id} draggableId={product._id} index={index}>
-											{(provided) => (
-												<li
-													ref={provided.innerRef}
-													{...provided.draggableProps}
-													{...provided.dragHandleProps}
-												>
-													{/* <div className="products-thumb">
-														<img src={images[0]} height="100px" alt={`${name} Thumb`} />
-													</div>
-													<p>{name}</p> */}
-													<ProductListItem
-														size="50px"
-														product={product}
-														admin={true}
-														determine_color={determine_color}
-													/>
-												</li>
-											)}
-										</Draggable>
-									);
-								})}
-								{provided.placeholder}
-							</ul>
-						)}
-					</Droppable>
+				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+					{state.entities.columnOrder.map((columnId) => {
+						const column = state.entities.columns[columnId];
+						console.log({ column });
+						// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
+						let products = [];
+						state.entities.products.forEach(function(a) {
+							products[column.product_ids.indexOf(a._id)] = a;
+						});
+						console.log({ products });
+
+						return (
+							<Droppable droppableId={'column-1'}>
+								{(provided) => (
+									<ul {...provided.droppableProps} ref={provided.innerRef}>
+										{/* {console.log({ state.entities })} */}
+										{products.map((product, index) => {
+											return (
+												<Draggable key={product._id} draggableId={product._id} index={index}>
+													{(provided, snapshot) => {
+														const isSelected = Boolean(
+															getSelectedMap(state.selectedProductIds)[product._id]
+														);
+														let disAppearProduct = false;
+														if (
+															snapshot.isDraggingOver &&
+															isSelected &&
+															state.draggingProductId &&
+															product._id !== state.draggingProductId
+														) {
+															// console.log("Dragging Over - Product not to render - " + product._id);
+															// console.log("draggingProductId - " + draggingProductId);
+															disAppearProduct = true;
+														}
+														return (
+															<li
+																ref={provided.innerRef}
+																{...provided.draggableProps}
+																{...provided.dragHandleProps}
+															>
+																<ProductListItem
+																	size="50px"
+																	product={product}
+																	admin={true}
+																	determine_color={determine_color}
+																	isSelected={isSelected}
+																	selectionCount={state.selectedProductIds.length}
+																	toggleSelection={toggleSelection}
+																	toggleSelectionInGroup={toggleSelectionInGroup}
+																	multiSelectTo={multiSelectTo}
+																	disAppearProduct={disAppearProduct}
+																	snapshot={snapshot}
+																/>
+															</li>
+														);
+													}}
+												</Draggable>
+											);
+										})}
+										{provided.placeholder}
+									</ul>
+								)}
+							</Droppable>
+						);
+					})}
 				</DragDropContext>
 			)}
 		</div>
