@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
+import { unformat_date } from '../../utils/helper_functions';
 
 const EditAllDataPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -18,6 +19,8 @@ const EditAllDataPage = (props) => {
 	const [ request, set_request ] = useState('');
 	const [ sale_price_request, set_sale_price_request ] = useState('');
 	const [ discount_percentage, set_discount_percentage ] = useState(0);
+	const [ sale_start_date, set_sale_start_date ] = useState('');
+	const [ sale_end_date, set_sale_end_date ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	setTimeout(() => {
@@ -56,7 +59,11 @@ const EditAllDataPage = (props) => {
 		e.preventDefault();
 		console.log({ discount_percentage: parseInt(discount_percentage / 100) });
 		console.log({ discount_percentage: parseInt(discount_percentage) / 100 });
-		const request = await API_Products.set_sale_price(parseInt(discount_percentage) / 100);
+		const request = await API_Products.set_sale_price(
+			parseInt(discount_percentage) / 100,
+			unformat_date(sale_start_date),
+			unformat_date(sale_end_date)
+		);
 
 		console.log({ request });
 		set_request(request);
@@ -121,6 +128,35 @@ const EditAllDataPage = (props) => {
 									id="discount_percentage"
 									onChange={(e) => set_discount_percentage(e.target.value)}
 								/>
+							</li>
+							<li>
+								<div className="jc-b">
+									<div>
+										<label htmlFor="sale_start_date">Start Date</label>
+										<input
+											type="text"
+											className="w-100per"
+											name="sale_start_date"
+											value={sale_start_date}
+											id="sale_start_date"
+											onChange={(e) => set_sale_start_date(e.target.value)}
+										/>
+									</div>
+									<div className="m-7px pt-22px">
+										<i className="fas fa-minus" />
+									</div>
+									<div>
+										<label htmlFor="sale_end_date">End Date</label>
+										<input
+											type="text"
+											className="w-100per"
+											name="sale_end_date"
+											value={sale_end_date}
+											id="sale_end_date"
+											onChange={(e) => set_sale_end_date(e.target.value)}
+										/>
+									</div>
+								</div>
 							</li>
 							<li>
 								<button onClick={(e) => update_sale_price(e)} className="btn primary">

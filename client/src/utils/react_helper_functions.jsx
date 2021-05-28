@@ -39,7 +39,7 @@ export const sale_price_switch = (product, product_option) => {
 	}
 };
 export const sale_price_product_option_switch = (product, product_options) => {
-	// console.log({ product_options });
+	console.log({ product_options });
 	const today = new Date();
 	if (product_options && product_options.length > 0) {
 		const option = product.product_options.find((option) => option.default);

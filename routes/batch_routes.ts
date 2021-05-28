@@ -82,10 +82,21 @@ router.put('/product_sale_price', async (req, res) => {
 	const products = await Product.find({});
 	console.log({ discount_percentage: req.body.discount_percentage });
 
-	products.forEach(async (product: any) => {
+	products.filter((product: any) => !product.hidden).forEach(async (product: any) => {
 		const discount = product.price * req.body.discount_percentage;
+		const sale_start_date = req.body.sale_start_date;
+		const sale_end_date = req.body.sale_end_date;
 		console.log({ discount });
+		console.log({ sale_start_date });
+		console.log({ sale_end_date });
 		product.sale_price = product.price - discount;
+		product.sale_start_date = sale_start_date;
+		product.sale_end_date = sale_end_date;
+		console.log({ product_options: product.product_options });
+		if (product.product_options) {
+			console.log('Hello');
+			product.product_options.forEach(async (option: any) => (option.sale_price = option.price - discount));
+		}
 		const result = await product.save();
 		// console.log({ result });
 	});
