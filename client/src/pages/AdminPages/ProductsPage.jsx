@@ -539,7 +539,7 @@ function ProductPage(props) {
 				<div className="w-500px">Price</div>
 				<div className="w-100px">Actions</div>
 			</div>
-			{show_hidden && (
+			{!show_hidden && (
 				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
 					{state.entities.columnOrder.map((columnId) => {
 						const column = state.entities.columns[columnId];
@@ -559,7 +559,7 @@ function ProductPage(props) {
 								{(provided) => (
 									<ul {...provided.droppableProps} ref={provided.innerRef}>
 										{/* {console.log({ state.entities })} */}
-										{products.map((product, index) => {
+										{products.filter((product) => !product.hidden).map((product, index) => {
 											return (
 												<Draggable key={product._id} draggableId={product._id} index={index}>
 													{(provided, snapshot) => {
@@ -610,7 +610,7 @@ function ProductPage(props) {
 					})}
 				</DragDropContext>
 			)}
-			{!show_hidden && (
+			{show_hidden && (
 				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
 					{state.entities.columnOrder.map((columnId) => {
 						const column = state.entities.columns[columnId];
