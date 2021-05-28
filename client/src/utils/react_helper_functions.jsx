@@ -264,16 +264,35 @@ export const cart_sale_price_switch = (item, color) => {
 	} else {
 		return (
 			<label>
-				${item.product_option && item.product_option.price ? (
-					item.product_option.price.toFixed(2)
-				) : item.price ? (
-					item.price.toFixed(2)
+				<del style={{ color: '#a03131' }}>
+					<label style={{ color: 'white' }}>
+						${item && item.price ? item.price.toFixed(2) : item.price ? item.price.toFixed(2) : item.price}
+					</label>
+				</del>{' '}
+				<i class="fas fa-arrow-right" /> ${item && item.sale_price ? (
+					item.sale_price.toFixed(2)
+				) : item.sale_price ? (
+					item.sale_price.toFixed(2)
 				) : (
-					item.price
-				)}
+					item.sale_price
+				)}{' '}
+				On Sale!
 			</label>
 		);
 	}
+	// } else {
+	// 	return (
+	// 		<label>
+	// 			${item.product_option && item.product_option.price ? (
+	// 				item.product_option.price.toFixed(2)
+	// 			) : item.price ? (
+	// 				item.price.toFixed(2)
+	// 			) : (
+	// 				item.price
+	// 			)}
+	// 		</label>
+	// 	);
+	// }
 };
 
 export const determine_product_name = (product, show_qty) => {
