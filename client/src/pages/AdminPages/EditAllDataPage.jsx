@@ -68,6 +68,15 @@ const EditAllDataPage = (props) => {
 		console.log({ request });
 		set_request(request);
 	};
+	const clear_sale = async (e) => {
+		e.preventDefault();
+		const request = await API_Products.clear_sale(
+			parseInt(discount_percentage) / 100,
+			unformat_date('01/01/2021'),
+			unformat_date('01/01/2021')
+		);
+		set_request(request);
+	};
 
 	const collections = [
 		'users',
@@ -161,6 +170,11 @@ const EditAllDataPage = (props) => {
 							<li>
 								<button onClick={(e) => update_sale_price(e)} className="btn primary">
 									Update Sale Price
+								</button>
+							</li>
+							<li>
+								<button onClick={(e) => clear_sale(e)} className="btn primary">
+									Clear Sale
 								</button>
 							</li>
 						</ul>

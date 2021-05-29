@@ -76,33 +76,6 @@ router.put('/products', isAuth, isAdmin, async (req, res) => {
 		console.log({ error });
 	}
 });
-// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
-router.put('/product_sale_price', async (req, res) => {
-	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
-	const products = await Product.find({});
-	console.log({ discount_percentage: req.body.discount_percentage });
-
-	products.filter((product: any) => !product.hidden).forEach(async (product: any) => {
-		const discount = product.price * req.body.discount_percentage;
-		const sale_start_date = req.body.sale_start_date;
-		const sale_end_date = req.body.sale_end_date;
-		console.log({ discount });
-		console.log({ sale_start_date });
-		console.log({ sale_end_date });
-		product.sale_price = product.price - discount;
-		product.sale_start_date = sale_start_date;
-		product.sale_end_date = sale_end_date;
-		console.log({ product_options: product.product_options });
-		if (product.product_options) {
-			console.log('Hello');
-			product.product_options.forEach(async (option: any) => (option.sale_price = option.price - discount));
-		}
-		const result = await product.save();
-		// console.log({ result });
-	});
-	// console.log({ products });
-	res.send(products);
-});
 
 router.put('/features', isAuth, isAdmin, async (req, res) => {
 	try {
@@ -240,6 +213,73 @@ router.put('/paychecks', isAuth, isAdmin, async (req, res) => {
 		}
 	} catch (error) {
 		console.log({ error });
+	}
+});
+
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/product_sale_price', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const products = await Product.find({});
+	console.log({ discount_percentage: req.body.discount_percentage });
+
+	products.filter((product: any) => !product.hidden).forEach(async (product: any) => {
+		const main_discount = product.price * req.body.discount_percentage;
+		const sale_start_date = req.body.sale_start_date;
+		const sale_end_date = req.body.sale_end_date;
+		console.log({ main_discount });
+		console.log({ sale_start_date });
+		console.log({ sale_end_date });
+		product.sale_price = product.price - main_discount;
+		product.sale_start_date = sale_start_date;
+		product.sale_end_date = sale_end_date;
+		console.log({ product_options: product.product_options });
+		if (product.product_options) {
+			console.log('Hello');
+
+			product.product_options.forEach(async (option: any) => {
+				const option_discount = option.price * req.body.discount_percentage;
+				return (option.sale_price = option.price - option_discount);
+			});
+		}
+		const result = await product.save();
+		// console.log({ result });
+	});
+	// console.log({ products });
+	res.send(products);
+});
+
+// Adding Black to each Diffuser Adapter Starter kit Diffuser cap Color field
+router.put('/clear_sale', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	console.log();
+	try {
+		const products = await Product.find({});
+		console.log({ discount_percentage: req.body.discount_percentage });
+
+		products.filter((product: any) => !product.hidden).forEach(async (product: any) => {
+			try {
+				const cleared_sale_price = 0;
+				const sale_start_date = req.body.sale_start_date;
+				const sale_end_date = req.body.sale_end_date;
+				product.sale_price = cleared_sale_price;
+				product.sale_start_date = sale_start_date;
+				product.sale_end_date = sale_end_date;
+				console.log({ product_options: product.product_options });
+				if (product.product_options) {
+					console.log('Hello');
+					product.product_options.forEach((option: any) => (option.sale_price = cleared_sale_price));
+				}
+				const result = await product.save();
+			} catch (error) {
+				console.log({ inside: error });
+			}
+
+			// console.log({ result });
+		});
+		// console.log({ products });
+		res.send(products);
+	} catch (error) {
+		console.log({ outside: error });
 	}
 });
 

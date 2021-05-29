@@ -108,5 +108,8 @@ export default {
 	set_sale_price: (discount_percentage: any, sale_start_date: any, sale_end_date: any) => {
 		console.log({ discount_percentage, sale_start_date, sale_end_date });
 		return axios.put('/api/all/product_sale_price', { discount_percentage, sale_start_date, sale_end_date });
+	},
+	clear_sale: (sale_start_date: any, sale_end_date: any) => {
+		return axios.put('/api/all/clear_sale', { sale_start_date, sale_end_date });
 	}
 };
