@@ -66,6 +66,7 @@ const ProductPage = (props) => {
 				set_images(product.images);
 				console.log({ images: product.images });
 				set_price(product.price);
+				set_sale_price(product.sale_price);
 				set_count_in_stock(product.countInStock);
 
 				set_product_option({});
@@ -328,6 +329,8 @@ const ProductPage = (props) => {
 										price,
 										sale_price
 									)} */}
+									{console.log({ price })}
+									{console.log({ sale_price })}
 									{sale_price_product_option_switch_product(price, sale_price)}
 								</div>
 

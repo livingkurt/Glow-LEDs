@@ -87,7 +87,6 @@ export const cart_sale_price_switch = (product) => {
 	const today = new Date();
 	if (product.product_option.hasOwnProperty('price')) {
 		if (product.product_option && product.product_option.sale_price > 0) {
-			console.log('Hello 1');
 			return (
 				<label className="">
 					<del style={{ color: '#a03131' }}>
@@ -108,8 +107,6 @@ export const cart_sale_price_switch = (product) => {
 				</label>
 			);
 		} else {
-			// return <label>${product.product_option.price ? product.product_option.price.toFixed(2) : product.product_option.price}</label>;
-			console.log('Hello 2');
 			return product.price === product.product_option.price ? (
 				<label>
 					${product.product_option.price ? (
@@ -137,11 +134,7 @@ export const cart_sale_price_switch = (product) => {
 			);
 		}
 	} else {
-		if (
-			today >= new Date(product.sale_start_date) &&
-			today <= new Date(product.sale_end_date) &&
-			product.sale_price !== 0
-		) {
+		if (product && product.sale_price > 0) {
 			return (
 				<label className="">
 					<del style={{ color: '#a03131' }}>
@@ -176,7 +169,10 @@ export const cart_sale_price_switch = (product) => {
 };
 
 export const sale_price_product_option_switch_product = (price, sale_price) => {
-	if (sale_price !== 0) {
+	// console.log({ price });
+	// console.log({ sale_price });
+	if (sale_price > 0) {
+		console.log('Hello 1');
 		return (
 			<label>
 				<del style={{ color: 'red' }}>
@@ -186,6 +182,7 @@ export const sale_price_product_option_switch_product = (price, sale_price) => {
 			</label>
 		);
 	} else {
+		console.log('Hello 2');
 		return <label>${price ? price.toFixed(2) : price}</label>;
 	}
 };
