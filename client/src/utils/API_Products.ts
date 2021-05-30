@@ -3,13 +3,13 @@ import axios from 'axios';
 export default {
 	get_category_images: (category: any) => {
 		// console.log({ category });
-		return axios.get('/api/products/images/' + category);
+		return axios.get('/api/products/get_images/' + category);
 	},
 	get_categories: () => {
-		return axios.get('/api/products/categories');
+		return axios.get('/api/products/get_categories');
 	},
 	get_product_options: (pathname: any) => {
-		return axios.get('/api/products/options/' + pathname);
+		return axios.get('/api/products/get_options/' + pathname);
 	},
 	get_product: (pathname: any) => {
 		return axios.get('/api/products/' + pathname);
@@ -44,11 +44,11 @@ export default {
 	},
 	get_original_diffuser_caps: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/caps');
+		return axios.get('/api/products/get_caps');
 	},
 	get_mega_diffuser_caps: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/mega_caps');
+		return axios.get('/api/products/get_mega_caps');
 	},
 	get_occurrences: () => {
 		// console.log({ not_paid_email: array });
@@ -56,19 +56,19 @@ export default {
 	},
 	get_all_products: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/hidden');
+		return axios.get('/api/products/get_all_products');
 	},
 	get_best_sellers: (occurences: any) => {
 		// console.log({ not_paid_email: array });
-		return axios.post('/api/products/best_sellers', { occurences });
+		return axios.post('/api/products/get_best_sellers', { occurences });
 	},
 	get_essentials: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/essentials');
+		return axios.get('/api/products/get_essentials');
 	},
 	get_shown_products: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/shown');
+		return axios.get('/api/products/get_shown');
 	},
 
 	// get_product_pictures: (category: string) => {
