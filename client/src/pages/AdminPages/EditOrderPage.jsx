@@ -213,13 +213,29 @@ const EditOrderPage = (props) => {
 		set_orderItems((items) => [ ...items, { product_option: {} } ]);
 	};
 
-	const remove_order_item = (order_item_index, e) => {
+	const remove_order_item = async (order_item_index, e) => {
 		e.preventDefault();
+		const new_order_items = order_items.filter((order_item, index) => {
+			return order_item_index !== index;
+		});
 		set_orderItems((order_item) =>
 			order_item.filter((order_item, index) => {
 				return order_item_index !== index;
 			})
 		);
+		console.log({ orderItems: [ ...new_order_items ] });
+		const price_items = [ ...new_order_items ].reduce((a, c) => a + c.price * c.qty, 0);
+		// [ ...new_order_items ].forEach((item) => console.log(item.price));
+
+		set_itemsPrice(price_items);
+		const rate_tax = await get_tax_rates();
+		console.log({ rate_tax });
+		const tax = rate_tax * price_items;
+		console.log({ price_items });
+		console.log({ tax });
+		console.log({ shippingPrice });
+		set_taxPrice(tax);
+		set_totalPrice(price_items + shippingPrice + tax);
 	};
 
 	setTimeout(() => {
