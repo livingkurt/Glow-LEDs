@@ -60,7 +60,7 @@ export const addToCart = (
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
 	try {
-		const { data } = await Axios.get('/api/products/' + pathname);
+		const { data } = await Axios.get('/api/products/get_one/' + pathname);
 		let image: any;
 		if (typeof images === 'string') {
 			console.log('String');

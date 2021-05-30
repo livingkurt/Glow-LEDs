@@ -22,7 +22,7 @@ const ViewOrder = (props) => {
 							type="order_number"
 							id="order_number"
 							name="order_number"
-							onChange={(e) => set_order_number(e.target.value)}
+							onChange={(e) => set_order_number(e.target.value.trim())}
 						/>
 					</li>
 					<li>
