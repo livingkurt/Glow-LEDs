@@ -75,7 +75,7 @@ export default {
 	// 	return axios.get('/api/products/category/' + category);
 	// },
 	get_product_pictures: (category: string, subcategory: string) => {
-		return axios.get('/api/products/category/' + category + '/subcategory/' + subcategory);
+		return axios.get('/api/products/get_categories/' + category + '/subcategory/' + subcategory);
 	},
 	batch_request: (
 		method: string,
