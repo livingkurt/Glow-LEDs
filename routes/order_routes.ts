@@ -10,6 +10,48 @@ require('dotenv').config();
 
 const router = express.Router();
 
+router.get('/track_order/:id', async (req: any, res: any) => {
+	try {
+		const order = await Order.findOne({ _id: req.params.id })
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.populate('user');
+		if (order) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(order);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send('Order Not Found.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Order' });
+	}
+});
+
 router.get('/get_all', async (req: any, res: any) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
@@ -649,48 +691,6 @@ router.get('/monthly_income', async (req: any, res: any) => {
 			success: false
 		});
 		res.status(500).send({ error, message: 'Error Getting Orders' });
-	}
-});
-
-router.get('/track_order/:id', async (req: any, res: any) => {
-	try {
-		const order = await Order.findOne({ _id: req.params.id })
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.populate('user');
-		if (order) {
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: order,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.send(order);
-		} else {
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: order,
-				status: 404,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.status(404).send('Order Not Found.');
-		}
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Order' });
 	}
 });
 

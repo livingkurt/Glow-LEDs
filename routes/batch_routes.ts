@@ -283,6 +283,36 @@ router.put('/clear_sale', async (req, res) => {
 	}
 });
 
+// router.put('/update_payment_method', async (req, res) => {
+// 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+// 	const orders = await Order.find({});
+// 	console.log({ orders });
+// 	const stripe_orders = orders
+// 		.filter((order: any) => order.payment.paymentMethod === 'stripe')
+// 		.filter((order: any) => !order.payment.charge);
+// 	console.log({ stripe_orders });
+// 	stripe_orders.forEach(async (order: any) => {
+// 		order.payment.paymentMethod = 'venmo';
+// 		await order.save();
+// 	});
+// 	res.send(stripe_orders);
+// });
+
+router.put('/update_payment_method', async (req, res) => {
+	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+	const orders = await Order.find({});
+	console.log({ orders });
+	const stripe_orders = orders
+		.filter((order: any) => order.payment.paymentMethod === 'venmo')
+		.filter((order: any) => order.totalPrice === 0);
+	console.log({ stripe_orders });
+	stripe_orders.forEach(async (order: any) => {
+		order.payment.paymentMethod = '';
+		await order.save();
+	});
+	res.send(stripe_orders);
+});
+
 // router.get('/address_1', async (req, res) => {
 // 	// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
 // 	// const order = await Order.updateMany(
