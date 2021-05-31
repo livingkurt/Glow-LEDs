@@ -145,7 +145,7 @@ const PlaceOrderPage = (props) => {
 	);
 
 	const get_shipping_rates = async () => {
-		const { data } = await API_Shipping.get_shipping_rates({
+		const response = await API_Shipping.get_shipping_rates({
 			orderItems: cartItems,
 			shipping,
 			payment,
@@ -157,7 +157,9 @@ const PlaceOrderPage = (props) => {
 			order_note,
 			promo_code
 		});
-		console.log({ data });
+		console.log({ response });
+		console.log({ message: response.message });
+		const data = response.data;
 		if (data) {
 			set_shipping_rates(data);
 			set_shipment_id(data.id);

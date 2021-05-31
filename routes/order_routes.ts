@@ -10,6 +10,352 @@ require('dotenv').config();
 
 const router = express.Router();
 
+router.get('/get_all', async (req: any, res: any) => {
+	try {
+		const category = req.query.category ? { category: req.query.category } : {};
+		const page: any = req.query.page ? req.query.page : 1;
+		const limit: any = req.query.limit ? req.query.limit : 10;
+		console.log({ page });
+		let user: any;
+		let searchKeyword: any;
+		if (req.query.searchKeyword) {
+			const userSearchKeyword = req.query.searchKeyword
+				? {
+						user: {
+							$regex: req.query.searchKeyword,
+							$options: 'i'
+						}
+					}
+				: {};
+			user = await User.findOne({ ...userSearchKeyword });
+			searchKeyword = { user: user._id };
+		}
+		let sortOrder = {};
+		if (req.query.sortOrder === 'lowest') {
+			sortOrder = { totalPrice: 1 };
+		} else if (req.query.sortOrder === 'highest') {
+			sortOrder = { totalPrice: -1 };
+		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+			sortOrder = { createdAt: -1 };
+		} else if (req.query.sortOrder === 'paid') {
+			sortOrder = { isPaid: -1, createdAt: -1 };
+		} else if (req.query.sortOrder === 'manufactured') {
+			sortOrder = { isManufactured: -1, createdAt: -1 };
+		} else if (req.query.sortOrder === 'packaged') {
+			sortOrder = { isPackaged: -1, createdAt: -1 };
+		} else if (req.query.sortOrder === 'shipped') {
+			sortOrder = { isShipped: -1, createdAt: -1 };
+		} else if (req.query.sortOrder === 'delivered') {
+			sortOrder = { isDelivered: -1, createdAt: -1 };
+		}
+		// execute query with page and limit values
+		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+			.populate('user')
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.sort(sortOrder)
+			.limit(limit * 1)
+			.skip((page - 1) * limit)
+			.exec();
+
+		// get total documents in the Posts collection
+		const count = await Order.countDocuments();
+
+		// return response with posts, total pages, and current page
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.json({
+			orders,
+			totalPages: Math.ceil(count / limit),
+			currentPage: parseInt(page)
+		});
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Orders' });
+	}
+});
+
+router.get('/get_mine', isAuth, async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Your Orders' });
+	}
+});
+router.get('/get_user/:id', isAuth, async (req: any, res: any) => {
+	try {
+		const orders = await Order.find({ deleted: false, user: req.params.id }).sort({ _id: -1 });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			data: orders,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(orders);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Your Orders' });
+	}
+});
+
+router.get('/get_one/:id', isAuth, async (req: any, res: any) => {
+	try {
+		const order = await Order.findOne({ _id: req.params.id })
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product')
+			.populate('user');
+		if (order) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(order);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: order,
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send('Order Not Found.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Order' });
+	}
+});
+
+router.post('/user_create_one', isAuth, async (req: any, res: any) => {
+	try {
+		const newOrder = new Order({
+			orderItems: req.body.orderItems,
+			user: req.body.user ? req.body.user._id : req.user._id,
+			shipping: req.body.shipping,
+			payment: req.body.payment,
+			itemsPrice: req.body.itemsPrice,
+			taxPrice: req.body.taxPrice,
+			shippingPrice: req.body.shippingPrice,
+			totalPrice: req.body.totalPrice,
+			order_note: req.body.order_note,
+			promo_code: req.body.promo_code,
+			deleted: false
+		});
+		const newOrderCreated = await newOrder.save();
+		if (newOrderCreated) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			return res.status(500).send({ message: ' Error in Creating Order.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating Order' });
+	}
+});
+
+router.post('/guest_create_one', async (req: any, res: any) => {
+	try {
+		console.log({ body: req.body });
+		const newOrderCreated = await Order.create({ ...req.body, guest: true });
+		console.log({ newOrderCreated });
+
+		if (newOrderCreated) {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
+		} else {
+			log_request({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ newOrderCreated ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			return res.status(500).send({ message: ' Error in Creating Order.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'POST',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Creating Order' });
+	}
+});
+
+router.put('/update_one/:id', async (req: any, res: any) => {
+	try {
+		const updated_order = req.body;
+		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
+		if (updated) {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ updated ],
+				status: 201,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(updated_order);
+		} else {
+			log_request({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ updated ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Order not Updated.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Updating Order' });
+	}
+});
+
+router.delete('/delete_one/:id', isAuth, isAdmin, async (req: any, res: any) => {
+	try {
+		const message: any = { message: 'Order Deleted' };
+		const deleted_order = await Order.updateOne({ _id: req.params.id }, { deleted: true });
+		if (deleted_order) {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ deleted_order ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(message);
+		} else {
+			log_request({
+				method: 'DELETE',
+				path: req.originalUrl,
+				collection: 'Order',
+				data: [ deleted_order ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send('Error in Deletion.');
+		}
+	} catch (error) {
+		log_error({
+			method: 'DELETE',
+			path: req.originalUrl,
+			collection: 'Order',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Deleting Order' });
+	}
+});
+
 router.get('/occurrences', async (req: any, res: any) => {
 	const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
 	const products: any = [];
@@ -103,85 +449,6 @@ router.get('/tax_rates', async (req: any, res: any) => {
 	});
 	// console.log({ result });
 	res.send(result);
-});
-
-router.get('/', async (req: any, res: any) => {
-	try {
-		const category = req.query.category ? { category: req.query.category } : {};
-		const page: any = req.query.page ? req.query.page : 1;
-		const limit: any = req.query.limit ? req.query.limit : 10;
-		console.log({ page });
-		let user: any;
-		let searchKeyword: any;
-		if (req.query.searchKeyword) {
-			const userSearchKeyword = req.query.searchKeyword
-				? {
-						user: {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-			user = await User.findOne({ ...userSearchKeyword });
-			searchKeyword = { user: user._id };
-		}
-		let sortOrder = {};
-		if (req.query.sortOrder === 'lowest') {
-			sortOrder = { totalPrice: 1 };
-		} else if (req.query.sortOrder === 'highest') {
-			sortOrder = { totalPrice: -1 };
-		} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-			sortOrder = { createdAt: -1 };
-		} else if (req.query.sortOrder === 'paid') {
-			sortOrder = { isPaid: -1, createdAt: -1 };
-		} else if (req.query.sortOrder === 'manufactured') {
-			sortOrder = { isManufactured: -1, createdAt: -1 };
-		} else if (req.query.sortOrder === 'packaged') {
-			sortOrder = { isPackaged: -1, createdAt: -1 };
-		} else if (req.query.sortOrder === 'shipped') {
-			sortOrder = { isShipped: -1, createdAt: -1 };
-		} else if (req.query.sortOrder === 'delivered') {
-			sortOrder = { isDelivered: -1, createdAt: -1 };
-		}
-		// execute query with page and limit values
-		const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
-			.populate('user')
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.sort(sortOrder)
-			.limit(limit * 1)
-			.skip((page - 1) * limit)
-			.exec();
-
-		// get total documents in the Posts collection
-		const count = await Order.countDocuments();
-
-		// return response with posts, total pages, and current page
-		log_request({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Product',
-			data: orders,
-			status: 200,
-			success: true,
-			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-		});
-		res.json({
-			orders,
-			totalPages: Math.ceil(count / limit),
-			currentPage: parseInt(page)
-		});
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Product',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Orders' });
-	}
 });
 
 router.get('/promo_code_usage', async (req: any, res: any) => {
@@ -385,98 +652,6 @@ router.get('/monthly_income', async (req: any, res: any) => {
 	}
 });
 
-router.get('/mine', isAuth, async (req: any, res: any) => {
-	try {
-		const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
-		log_request({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Order',
-			data: orders,
-			status: 200,
-			success: true,
-			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-		});
-		res.send(orders);
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Your Orders' });
-	}
-});
-router.get('/user/:id', isAuth, async (req: any, res: any) => {
-	try {
-		const orders = await Order.find({ deleted: false, user: req.params.id }).sort({ _id: -1 });
-		log_request({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Order',
-			data: orders,
-			status: 200,
-			success: true,
-			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-		});
-		res.send(orders);
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Your Orders' });
-	}
-});
-
-router.get('/:id', isAuth, async (req: any, res: any) => {
-	try {
-		const order = await Order.findOne({ _id: req.params.id })
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.populate('user');
-		if (order) {
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: order,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.send(order);
-		} else {
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: order,
-				status: 404,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.status(404).send('Order Not Found.');
-		}
-	} catch (error) {
-		log_error({
-			method: 'GET',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Getting Order' });
-	}
-});
 router.get('/track_order/:id', async (req: any, res: any) => {
 	try {
 		const order = await Order.findOne({ _id: req.params.id })
@@ -519,219 +694,45 @@ router.get('/track_order/:id', async (req: any, res: any) => {
 	}
 });
 
-router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
-	try {
-		const message: any = { message: 'Order Deleted' };
-		const deleted_order = await Order.updateOne({ _id: req.params.id }, { deleted: true });
-		if (deleted_order) {
-			log_request({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ deleted_order ],
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.send(message);
-		} else {
-			log_request({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ deleted_order ],
-				status: 500,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.send('Error in Deletion.');
-		}
-	} catch (error) {
-		log_error({
-			method: 'DELETE',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Deleting Order' });
-	}
-});
+// router.put('/addproduct', async (req: any, res: any) => {
+// 	try {
+// 		const order_id = req.body.order._id;
+// 		const product_id = req.body.product;
+// 		const order = await Order.findById(order_id)
+// 			.populate('orderItems.product')
+// 			.populate('orderItems.secondary_product')
+// 			.populate('user');
+// 		order.orderItems.product._id = product_id;
+// 		const updated = await Order.updateOne({ _id: order_id }, order);
+// 		res.send(updated);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
 
-router.post('/', isAuth, async (req: any, res: any) => {
-	try {
-		const newOrder = new Order({
-			orderItems: req.body.orderItems,
-			user: req.body.user ? req.body.user._id : req.user._id,
-			shipping: req.body.shipping,
-			payment: req.body.payment,
-			itemsPrice: req.body.itemsPrice,
-			taxPrice: req.body.taxPrice,
-			shippingPrice: req.body.shippingPrice,
-			totalPrice: req.body.totalPrice,
-			order_note: req.body.order_note,
-			promo_code: req.body.promo_code,
-			deleted: false
-		});
-		const newOrderCreated = await newOrder.save();
-		if (newOrderCreated) {
-			log_request({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ newOrderCreated ],
-				status: 201,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
-		} else {
-			log_request({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ newOrderCreated ],
-				status: 500,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			return res.status(500).send({ message: ' Error in Creating Order.' });
-		}
-	} catch (error) {
-		log_error({
-			method: 'POST',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Creating Order' });
-	}
-});
+// router.put('/addsecondaryproduct', async (req: any, res: any) => {
+// 	try {
+// 		const order_id = req.body.order._id;
+// 		const product_id = req.body.secondary_product;
+// 		const order = await Order.findById(order_id)
+// 			.populate('orderItems.product')
+// 			.populate('orderItems.secondary_product')
+// 			.populate('user');
+// 		for (let item of order.orderItems) {
+// 			if (
+// 				item.name === 'Mega Diffuser Caps + Adapters Starter Kit' ||
+// 				item.name === 'Diffuser Caps + Adapters Starter Kit'
+// 			) {
+// 				item.secondary_product = product_id;
+// 			}
+// 		}
+// 		console.log({ order });
 
-router.post('/guestcheckout', async (req: any, res: any) => {
-	try {
-		console.log({ body: req.body });
-		const newOrderCreated = await Order.create({ ...req.body, guest: true });
-		console.log({ newOrderCreated });
-
-		if (newOrderCreated) {
-			log_request({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ newOrderCreated ],
-				status: 201,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
-		} else {
-			log_request({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ newOrderCreated ],
-				status: 500,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			return res.status(500).send({ message: ' Error in Creating Order.' });
-		}
-	} catch (error) {
-		log_error({
-			method: 'POST',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Creating Order' });
-	}
-});
-
-router.put('/addproduct', async (req: any, res: any) => {
-	try {
-		const order_id = req.body.order._id;
-		const product_id = req.body.product;
-		const order = await Order.findById(order_id)
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.populate('user');
-		order.orderItems.product._id = product_id;
-		const updated = await Order.updateOne({ _id: order_id }, order);
-		res.send(updated);
-	} catch (err) {
-		console.log(err);
-	}
-});
-
-router.put('/addsecondaryproduct', async (req: any, res: any) => {
-	try {
-		const order_id = req.body.order._id;
-		const product_id = req.body.secondary_product;
-		const order = await Order.findById(order_id)
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product')
-			.populate('user');
-		for (let item of order.orderItems) {
-			if (
-				item.name === 'Mega Diffuser Caps + Adapters Starter Kit' ||
-				item.name === 'Diffuser Caps + Adapters Starter Kit'
-			) {
-				item.secondary_product = product_id;
-			}
-		}
-		console.log({ order });
-
-		const updated = await Order.updateOne({ _id: order_id }, order);
-		res.send(updated);
-	} catch (err) {
-		console.log(err);
-	}
-});
-
-router.put('/:id/update', async (req: any, res: any) => {
-	try {
-		const updated_order = req.body;
-		const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
-		if (updated) {
-			log_request({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: [ updated ],
-				status: 201,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.send(updated_order);
-		} else {
-			log_request({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: [ updated ],
-				status: 404,
-				success: false,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			res.status(404).send({ message: 'Order not Updated.' });
-		}
-	} catch (error) {
-		log_error({
-			method: 'PUT',
-			path: req.originalUrl,
-			collection: 'Order',
-			error,
-			status: 500,
-			success: false
-		});
-		res.status(500).send({ error, message: 'Error Updating Order' });
-	}
-});
+// 		const updated = await Order.updateOne({ _id: order_id }, order);
+// 		res.send(updated);
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// });
 
 export default router;

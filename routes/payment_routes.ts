@@ -63,7 +63,7 @@ router.put('/:id/pay', isAuth, async (req: any, res: any) => {
 									success: false,
 									ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 								});
-								return res.status(500).send({ error: err, message: err.raw.message });
+								return res.status(404).send({ error: err, message: err.raw.message });
 							} else {
 								log_request({
 									method: 'PUT',

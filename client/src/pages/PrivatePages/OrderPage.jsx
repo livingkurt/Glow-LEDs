@@ -83,11 +83,11 @@ const OrderPage = (props) => {
 		[ product_object ]
 	);
 
-	const save_secondary_product = async () => {
-		const request = await API_Products.save_secondary_product(order, userInfo, secondary_product);
-		console.log(request);
-		dispatch(detailsOrder(props.match.params.id));
-	};
+	// const save_secondary_product = async () => {
+	// 	const request = await API_Products.save_secondary_product(order, userInfo, secondary_product);
+	// 	console.log(request);
+	// 	dispatch(detailsOrder(props.match.params.id));
+	// };
 
 	useEffect(
 		() => {
@@ -504,6 +504,14 @@ ${order.shipping.email}`)}
 										{order.isPaid ? 'Paid at ' + format_date(order.paidAt) : 'Not Paid'}
 									</p>
 								</div>
+								{userInfo &&
+								userInfo.isAdmin && (
+									<div className="column">
+										<div className="pt-1rem" htmlFor="order_note">
+											Payment Method: {order.payment.paymentMethod}
+										</div>
+									</div>
+								)}
 							</div>
 							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 								<ul className="cart-list-container mt-0px">
@@ -546,7 +554,7 @@ ${order.shipping.email}`)}
 														</Link>
 													</div>
 													<div>Qty: {item.qty}</div>
-													{userInfo &&
+													{/* {userInfo &&
 													userInfo.isAdmin &&
 													item.secondary_product && (
 														<div className="row">
@@ -573,7 +581,7 @@ ${order.shipping.email}`)}
 																</div>
 															</div>
 														</div>
-													)}
+													)} */}
 												</div>
 												<div className="cart-price">
 													{cart_sale_price_switch(item)}
@@ -1066,16 +1074,6 @@ ${order.shipping.email}`)}
 										</div>
 									</div>
 									<div className="mv-10px">
-										<label htmlFor="payment_method">Payment Method</label>
-										<li className="row mv-10px">
-											<input
-												type="text"
-												defaultValue={order.payment.paymentMethod}
-												name="payment_method"
-												className="w-100per"
-												onChange={(e) => set_payment_method(e.target.value)}
-											/>
-										</li>
 										<label htmlFor="refund_amount">Refund Amount</label>
 										<div className="row">
 											<input

@@ -322,10 +322,10 @@ const OrderListItem = (props) => {
 			{props.admin && (
 				<div id={props.order._id} className="expanded-row-content hide-row">
 					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
-						<div className="ai-c jc-b">
+						<div className="jc-b">
 							<div>
 								<div className="mv-10px">
-									<label htmlFor="payment_method">Payment Method</label>
+									{/* <label htmlFor="payment_method">Payment Method</label>
 									<li className="row mv-10px">
 										<input
 											type="text"
@@ -334,7 +334,7 @@ const OrderListItem = (props) => {
 											className=""
 											onChange={(e) => props.set_payment_method(e.target.value)}
 										/>
-									</li>
+									</li> */}
 									<label htmlFor="refund_amount">Refund Amount</label>
 									<div className="row">
 										<input
@@ -410,6 +410,10 @@ ${props.order.shipping.email}`)}
 								{/* <a href="mailto:demo@demo.com">
 									<button className="btn secondary w-200px mv-10px">Send User a Message</button>
 								</a> */}
+							</li>
+							<li className="row">
+								<h3 className="">Payment Method </h3>
+								<label className="mv-2rem ml-1rem">{props.order.payment.paymentMethod}</label>
 							</li>
 							<li className="row">
 								<h3 className="">Order Note: </h3>

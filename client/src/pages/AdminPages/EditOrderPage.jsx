@@ -715,6 +715,17 @@ const EditOrderPage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="payment">Payment Method</label>
+												<input
+													type="text"
+													name="payment"
+													defaultValue={payment.paymentMethod}
+													id="payment"
+													onChange={(e) =>
+														set_payment({ ...payment, paymentMethod: e.target.value })}
+												/>
+											</li>
+											<li>
 												<label htmlFor="itemsPrice">Items Price</label>
 												<input
 													type="text"
