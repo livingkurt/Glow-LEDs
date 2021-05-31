@@ -12,7 +12,7 @@ export default {
 		return axios.get('/api/products/get_options/' + pathname);
 	},
 	get_product: (pathname: any) => {
-		return axios.get('/api/products/' + pathname);
+		return axios.get('/api/products/get_one/' + pathname);
 	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });
