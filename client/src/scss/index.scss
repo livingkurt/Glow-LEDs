@@ -314,7 +314,7 @@ textarea {
 }
 
 .cart-price {
-	flex: 1 1;
+	flex: 1 1 250px;
 	font-size: 2rem;
 	text-align: right;
 }
@@ -416,7 +416,7 @@ textarea {
 .product {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: center;
 	height: 100%;
 	text-align: center;
 	border-radius: $br_small_containers;
@@ -526,6 +526,7 @@ textarea {
 	object-position: 50% 50%;
 	width: 300px;
 	height: 300px;
+	margin: auto;
 }
 
 .product-rating {

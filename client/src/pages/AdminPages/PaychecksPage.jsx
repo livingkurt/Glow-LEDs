@@ -8,7 +8,12 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { API_Revenue } from '../../utils';
-import { promoter_revenue_upload, sponsor_revenue_upload, team_revenue_upload } from '../../utils/google_sheets_upload';
+import {
+	promoter_revenue_upload,
+	sponsor_revenue_upload,
+	team_revenue_upload,
+	top_earner_upload
+} from '../../utils/google_sheets_upload';
 import { listTeams } from '../../actions/teamActions';
 import { listOrders } from '../../actions/orderActions';
 
@@ -18,6 +23,8 @@ const PaychecksPage = (props) => {
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
 	const [ total_orders, set_total_orders ] = useState([]);
 	const [ loading_paychecks, set_loading_paychecks ] = useState(false);
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
+	const [ create_paychecks, set_create_paychecks ] = useState(true);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const paycheckList = useSelector((state) => state.paycheckList);
 	const { loading, paychecks, error } = paycheckList;
@@ -34,6 +41,10 @@ const PaychecksPage = (props) => {
 
 	const teamList = useSelector((state) => state.teamList);
 	const { teams } = teamList;
+
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 
 	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
@@ -81,6 +92,21 @@ const PaychecksPage = (props) => {
 		dispatch(deletePaycheck(paycheck._id));
 	};
 
+	const date = new Date();
+
+	const today = date.toISOString();
+
+	const mark_paid = (paycheck) => {
+		dispatch(
+			savePaycheck({
+				...paycheck,
+				paid: true,
+				paid_at: format_date(today)
+			})
+		);
+		stableDispatch(listPaychecks());
+	};
+
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
 	const colors = [ { name: 'Paid', color: '#3e4c6d' }, { name: 'Not Paid', color: '#6f3c3c' } ];
@@ -99,32 +125,35 @@ const PaychecksPage = (props) => {
 
 	const create_promoter_paychecks = async () => {
 		set_loading_paychecks(true);
-		affiliates.filter((affiliate) => affiliate.promoter).forEach((affiliate) => {
-			dispatch(
-				savePaycheck({
-					affiliate: affiliate._id,
-					amount: affiliate.promoter
-						? last_months_orders
-								.filter(
-									(order) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-								.toFixed(2)
-						: last_months_orders
-								.filter(
-									(order) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2),
-					venmo: affiliate.venmo
-				})
-			);
-		});
-		// if (orders)
+		if (create_paychecks) {
+			affiliates.filter((affiliate) => affiliate.promoter).forEach((affiliate) => {
+				dispatch(
+					savePaycheck({
+						affiliate: affiliate._id,
+						amount: affiliate.promoter
+							? last_months_orders
+									.filter(
+										(order) =>
+											order.promo_code &&
+											order.promo_code.toLowerCase() ===
+												affiliate.public_code.promo_code.toLowerCase()
+									)
+									.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+									.toFixed(2)
+							: last_months_orders
+									.filter(
+										(order) =>
+											order.promo_code &&
+											order.promo_code.toLowerCase() ===
+												affiliate.public_code.promo_code.toLowerCase()
+									)
+									.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+									.toFixed(2),
+						venmo: affiliate.venmo
+					})
+				);
+			});
+		}
 		console.log({ affiliates, total_orders, last_months_orders });
 		await promoter_revenue_upload(affiliates, total_orders, last_months_orders);
 		set_loading_paychecks(false);
@@ -132,44 +161,58 @@ const PaychecksPage = (props) => {
 
 	const create_sponsor_paychecks = async () => {
 		set_loading_paychecks(true);
-		affiliates.filter((affiliate) => affiliate.sponsor).forEach((affiliate) => {
-			dispatch(
-				savePaycheck({
-					affiliate: affiliate._id,
-					amount:
-						affiliate.sponsor &&
-						last_months_orders
-							.filter(
-								(order) =>
-									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-							)
-							.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-							.toFixed(2),
-					venmo: affiliate.venmo
-				})
-			);
-		});
+		if (create_paychecks) {
+			affiliates.filter((affiliate) => affiliate.sponsor).forEach((affiliate) => {
+				dispatch(
+					savePaycheck({
+						affiliate: affiliate._id,
+						amount:
+							affiliate.sponsor &&
+							last_months_orders
+								.filter(
+									(order) =>
+										order.promo_code &&
+										order.promo_code.toLowerCase() ===
+											affiliate.public_code.promo_code.toLowerCase()
+								)
+								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+								.toFixed(2),
+						venmo: affiliate.venmo
+					})
+				);
+			});
+		}
 		await sponsor_revenue_upload(affiliates, total_orders, last_months_orders);
 		set_loading_paychecks(false);
 	};
 
 	const create_team_paychecks = async () => {
 		set_loading_paychecks(true);
-		affiliates.filter((affiliate) => affiliate.team).forEach((affiliate) => {
-			dispatch(
-				savePaycheck({
-					affiliate: affiliate._id,
-					amount: ((affiliate.team &&
-						last_months_orders
-							.filter((order) => order.promo_code && order.promo_code.toLowerCase() === 'inkybois')
-							.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)) /
-						affiliates.filter((affiliate) => affiliate.team).length).toFixed(2),
-					venmo: affiliate.venmo
-				})
-			);
-		});
+		if (create_paychecks) {
+			teams.forEach((team) => {
+				dispatch(
+					savePaycheck({
+						team: team._id,
+						amount: (team &&
+							last_months_orders
+								.filter(
+									(order) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code
+								)
+								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0))
+							.toFixed(2),
+						venmo: team.venmo
+					})
+				);
+			});
+		}
+
 		await team_revenue_upload(teams, total_orders, last_months_orders);
+		set_loading_paychecks(false);
+	};
+
+	const top_earner_creator = async () => {
+		set_loading_paychecks(true);
+		await top_earner_upload(affiliates, total_orders, last_months_orders);
 		set_loading_paychecks(false);
 	};
 
@@ -210,6 +253,25 @@ const PaychecksPage = (props) => {
 				<button className="btn primary" onClick={create_team_paychecks}>
 					Create Team Paychecks
 				</button>
+				<button className="btn primary" onClick={top_earner_creator}>
+					Top Earner
+				</button>
+				{loading_checkboxes ? (
+					<div>Loading...</div>
+				) : (
+					<div>
+						<label htmlFor="create_paychecks">Create Paychecks</label>
+						<input
+							type="checkbox"
+							name="create_paychecks"
+							defaultChecked={create_paychecks}
+							id="create_paychecks"
+							onChange={(e) => {
+								set_create_paychecks(e.target.checked);
+							}}
+						/>
+					</div>
+				)}
 			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Paychecks</h1>
@@ -246,7 +308,13 @@ const PaychecksPage = (props) => {
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
 											{paycheck.paid_at && format_date(paycheck.paid_at)}
 										</td>
-										<td className="p-10px">{paycheck.affiliate.artist_name}</td>
+										<td className="p-10px">
+											{paycheck.affiliate ? (
+												paycheck.affiliate.artist_name
+											) : (
+												paycheck.team && paycheck.team.team_name
+											)}
+										</td>
 										<td className="p-10px">${paycheck.amount}</td>
 										<td className="p-10px">{paycheck.venmo}</td>
 										<td className="p-10px">{paycheck.receipt}</td>
@@ -264,6 +332,9 @@ const PaychecksPage = (props) => {
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
+												<button className="btn icon" onClick={() => mark_paid(paycheck)}>
+													<i class="fas fa-check-circle" />
+												</button>
 												<button className="btn icon" onClick={() => deleteHandler(paycheck)}>
 													<i className="fas fa-trash-alt" />
 												</button>

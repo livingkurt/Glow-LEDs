@@ -84,7 +84,6 @@ export const sale_price_product_option_switch = (product, product_options) => {
 	}
 };
 export const cart_sale_price_switch = (product) => {
-	const today = new Date();
 	if (product.product_option.hasOwnProperty('price')) {
 		if (product.product_option && product.product_option.sale_price > 0) {
 			return (

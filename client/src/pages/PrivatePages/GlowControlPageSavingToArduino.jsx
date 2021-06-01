@@ -210,8 +210,8 @@ const GlowControl = (props) => {
 	// const fade_in = () => {
 	// 	let element = document.getElementById('autoplayPattern_duration');
 	// 	console.log(element);
-	// 	var op = 1; // initial opacity
-	// 	var timer = setInterval(function() {
+	// 	const op = 1; // initial opacity
+	// 	const timer = setInterval(function() {
 	// 		if (op <= 0.1) {
 	// 			clearInterval(timer);
 	// 			element.style.display = 'none';
@@ -223,11 +223,11 @@ const GlowControl = (props) => {
 	// 	set_show_hide(0);
 	// };
 	// const fade_out = () => {
-	// 	var op = 0.1; // initial opacity
+	// 	const op = 0.1; // initial opacity
 	// 	let element = document.getElementById('autoplayPattern_duration');
 	// 	console.log(element);
 	// 	element.style.display = 'block';
-	// 	var timer = setInterval(function() {
+	// 	const timer = setInterval(function() {
 	// 		if (op >= 1) {
 	// 			clearInterval(timer);
 	// 		}

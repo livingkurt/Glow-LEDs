@@ -7,10 +7,12 @@ import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
+import { listTeams } from '../../actions/teamActions';
 
 const EditPaycheckPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ affiliate, set_affiliate ] = useState('');
+	const [ team, set_team ] = useState('');
 	const [ amount, set_amount ] = useState('');
 	const [ venmo, set_venmo ] = useState('');
 	const [ paid, set_paid ] = useState('');
@@ -27,9 +29,13 @@ const EditPaycheckPage = (props) => {
 	const affiliateList = useSelector((state) => state.affiliateList);
 	const { affiliates } = affiliateList;
 
+	const teamList = useSelector((state) => state.teamList);
+	const { teams } = teamList;
+
 	const set_state = () => {
 		set_id(paycheck._id);
 		set_affiliate(paycheck.affiliate);
+		set_team(paycheck.team);
 		set_amount(paycheck.amount);
 		set_venmo(paycheck.venmo);
 		set_paid(paycheck.paid);
@@ -41,6 +47,7 @@ const EditPaycheckPage = (props) => {
 	const unset_state = () => {
 		set_id('');
 		set_affiliate('');
+		set_team('');
 		set_amount('');
 		set_venmo('');
 		set_paid('');
@@ -61,6 +68,7 @@ const EditPaycheckPage = (props) => {
 				stableDispatch(detailsPaycheck(''));
 			}
 			stableDispatch(listAffiliates(''));
+			stableDispatch(listTeams(''));
 			set_state();
 			return () => {};
 		},
@@ -90,7 +98,8 @@ const EditPaycheckPage = (props) => {
 		dispatch(
 			savePaycheck({
 				_id: id,
-				affiliate: affiliate._id,
+				affiliate: affiliate && affiliate._id,
+				team: team && team._id,
 				amount,
 				venmo,
 				paid,
@@ -149,6 +158,30 @@ const EditPaycheckPage = (props) => {
 														{affiliates.map((affiliate, index) => (
 															<option key={index} value={JSON.stringify(affiliate)}>
 																{affiliate.artist_name}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										)}
+										{teams && (
+											<div className="ai-c h-25px mv-10px mb-30px jc-c">
+												<div className="custom-select w-100per">
+													<select
+														className="qty_select_dropdown w-100per"
+														// defaultValue={{
+														// 	label: user.first_name + ' ' + user.last_name,
+														// 	value: user._id
+														// }}
+														onChange={(e) => update_fields(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose Team---
+														</option>
+														{teams.map((team, index) => (
+															<option key={index} value={JSON.stringify(team)}>
+																{team.team_name}
 															</option>
 														))}
 													</select>

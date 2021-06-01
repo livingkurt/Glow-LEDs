@@ -292,7 +292,7 @@ let transporter = nodemailer.createTransport({
 // 	}
 // });
 
-// var transporter = nodemailer.createTransport(`smtps://${process.env.EMAIL}:${process.env.PASSWORD}@smtp.gmail.com`);
+// const transporter = nodemailer.createTransport(`smtps://${process.env.EMAIL}:${process.env.PASSWORD}@smtp.gmail.com`);
 
 // console.log({
 // 	user: process.env.EMAIL,

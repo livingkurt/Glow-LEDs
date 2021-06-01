@@ -30,7 +30,8 @@ router.get('/', async (req, res) => {
 		const paychecks = await Paycheck.find({ deleted: false, ...category, ...searchKeyword })
 			.sort(sortOrder)
 			.populate('user')
-			.populate('affiliate');
+			.populate('affiliate')
+			.populate('team');
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
@@ -142,7 +143,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 	try {
 		const message: any = { message: 'Paycheck Deleted' };
-		const deleted_paycheck = await Paycheck.updateOne({ _id: req.params.id }, { deleted: true });
+		// const deleted_paycheck = await Paycheck.updateOne({ _id: req.params.id }, { deleted: true });
+		const deleted_paycheck = await Paycheck.deleteOne({ _id: req.params.id });
 		if (deleted_paycheck) {
 			log_request({
 				method: 'DELETE',
@@ -181,6 +183,7 @@ router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 
 router.post('/', isAuth, async (req: any, res: any) => {
 	try {
+		console.log({ paycheck: req.body });
 		const newPaycheck = await Paycheck.create(req.body);
 		if (newPaycheck) {
 			log_request({

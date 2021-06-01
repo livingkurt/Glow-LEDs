@@ -4,7 +4,7 @@ const Slideshow = (props) => {
 	const classes = 'details-image ' + props.show_hide;
 
 	const change_image = (e) => {
-		var expandImg = document.getElementById('expandedImg');
+		const expandImg = document.getElementById('expandedImg');
 		expandImg.src = e.target.src;
 		// props.set_image(e.target.src);
 		expandImg.parentElement.style.display = 'block';

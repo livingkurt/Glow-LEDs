@@ -879,9 +879,9 @@ router.put('/find_duplicates', async (req, res) => {
 	// 	}
 	// ]);
 	const users = await User.find({ email: { $exists: true } });
-	var valueArr = users.map((item: any) => item.email).sort();
+	const valueArr = users.map((item: any) => item.email).sort();
 	console.log({ valueArr });
-	var isDuplicate = valueArr.some((item, idx) => {
+	const isDuplicate = valueArr.some((item, idx) => {
 		return valueArr.indexOf(item) != idx;
 	});
 	console.log({ valueArr });

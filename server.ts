@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 // const expressAttack = require('express-attack');
 // const requestIp = require('request-ip');
 const config = require('./config');
-var cors = require('cors');
+const cors = require('cors');
 require('dotenv').config();
 const passport = require('passport');
 const compression = require('compression');
@@ -37,7 +37,7 @@ import {
 
 // const htmlRoutes = require('./email_templates/html_routes');
 
-var allowCrossDomain = function(req: any, res: any, next: any) {
+const allowCrossDomain = function(req: any, res: any, next: any) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
 	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
@@ -71,7 +71,7 @@ const app = express();
 // });
 
 app.all('*', function(req, res, next) {
-	var origin = req.get('origin');
+	const origin = req.get('origin');
 	res.header('Access-Control-Allow-Origin', origin);
 	res.header('Access-Control-Allow-Headers', 'X-Requested-With');
 	res.header('Access-Control-Allow-Headers', 'Content-Type');

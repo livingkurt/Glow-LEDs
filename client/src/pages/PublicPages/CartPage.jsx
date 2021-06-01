@@ -89,7 +89,7 @@ const CartPage = (props) => {
 							<div>
 								<h4>{no_adapters_warning()}</h4>
 								{cartItems.map((item, index) => (
-									<li key={index}>
+									<li key={index} className="h-12rem">
 										{/* {console.log({ item })} */}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>

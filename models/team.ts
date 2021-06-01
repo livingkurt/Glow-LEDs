@@ -17,6 +17,7 @@ const teamSchema = new mongoose.Schema(
 		pathname: { type: String },
 		video: { type: String },
 		link: { type: String },
+		venmo: { type: String },
 		promoter: { type: Boolean, default: true },
 		sponsor: { type: Boolean, default: false },
 		active: { type: Boolean, default: true },

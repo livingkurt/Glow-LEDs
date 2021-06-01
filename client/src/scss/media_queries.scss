@@ -490,6 +490,9 @@
 	// .search_input {
 	// 	width: 100% !important;
 	// }
+	.cart-price {
+		font-size: 16px;
+	}
 }
 
 @media only screen and (max-width: 412px) {
@@ -568,6 +571,7 @@
 	.make_it_glow_text {
 		display: none !important;
 	}
+
 	.content {
 		padding: 10px;
 	}

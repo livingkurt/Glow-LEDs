@@ -127,8 +127,8 @@ const ControlPanelPage = (props) => {
 	const duration_of_opening = () => {
 		const current_date = new Date();
 		const start_date = new Date('2020-08-10');
-		var difference_in_time = current_date.getTime() - start_date.getTime();
-		var difference_in_day = difference_in_time / (1000 * 3600 * 24);
+		const difference_in_time = current_date.getTime() - start_date.getTime();
+		const difference_in_day = difference_in_time / (1000 * 3600 * 24);
 		return difference_in_day;
 	};
 

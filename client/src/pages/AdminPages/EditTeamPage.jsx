@@ -28,6 +28,7 @@ const EditTeamPage = (props) => {
 	const [ video, set_video ] = useState('');
 	const [ public_code, set_public_code ] = useState('');
 	const [ private_code, set_private_code ] = useState('');
+	const [ venmo, set_venmo ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -60,6 +61,7 @@ const EditTeamPage = (props) => {
 		set_video(team.video);
 		set_public_code(team.public_code);
 		set_private_code(team.private_code);
+		set_venmo(team.venmo);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -79,6 +81,7 @@ const EditTeamPage = (props) => {
 		set_affiliates([]);
 		set_public_code('');
 		set_private_code('');
+		set_venmo('');
 	};
 
 	const dispatch = useDispatch();
@@ -131,7 +134,7 @@ const EditTeamPage = (props) => {
 				instagram_handle,
 				facebook_name,
 				percentage_off,
-				promo_code,
+				// promo_code,
 				sponsor,
 				promoter,
 				active,
@@ -139,6 +142,7 @@ const EditTeamPage = (props) => {
 				link,
 				video,
 				picture,
+				venmo,
 				public_code: public_code && public_code._id,
 				private_code: private_code && private_code._id,
 				pathname: pathname ? pathname : snake_case(team_name),
@@ -269,7 +273,7 @@ const EditTeamPage = (props) => {
 						{team && (
 							<div>
 								<Helmet>
-									<title>Edit Team| Glow LEDs</title>
+									<title>Edit Team | Glow LEDs</title>
 								</Helmet>
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
@@ -421,6 +425,16 @@ const EditTeamPage = (props) => {
 													}
 													id="pathname"
 													onChange={(e) => set_pathname(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="venmo">Venmo</label>
+												<input
+													type="text"
+													name="venmo"
+													value={venmo}
+													id="venmo"
+													onChange={(e) => set_venmo(e.target.value)}
 												/>
 											</li>
 											<li>

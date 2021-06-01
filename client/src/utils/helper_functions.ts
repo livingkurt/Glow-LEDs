@@ -9,9 +9,8 @@ interface errors {
 }
 
 export const humanize = (str: string) => {
-	var i,
-		frags = str.split('_');
-	for (i = 0; i < frags.length; i++) {
+	const frags = str.split('_');
+	for (let i = 0; i < frags.length; i++) {
 		frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
 	}
 	return frags.join(' ');
@@ -25,6 +24,20 @@ export const snake_case = (str: string) => {
 	} else {
 		return str.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
 	}
+};
+
+export const removeDuplicates = (originalArray: any, prop: any) => {
+	var newArray = [];
+	var lookupObject: any = {};
+
+	for (var i in originalArray) {
+		lookupObject[originalArray[i][prop]] = originalArray[i];
+	}
+
+	for (i in lookupObject) {
+		newArray.push(lookupObject[i]);
+	}
+	return newArray;
 };
 
 // export const snake_case = (str: string) => {
@@ -66,7 +79,7 @@ export const unformat_date = (formatted_date: string) => {
 export const occurrence = function(array: any) {
 	'use strict';
 	// console.log(array);
-	var result: any = {};
+	const result: any = {};
 	if (array instanceof Array) {
 		// Check if input is array.
 		for (let i of array) {
@@ -120,13 +133,13 @@ export const determine_price = (color: any, diffuser_cap: any) => {
 };
 
 // export const hsvToRgb = (h, s, v) => {
-// 	var r, g, b;
+// 	const r, g, b;
 
-// 	var i = Math.floor(h * 6);
-// 	var f = h * 6 - i;
-// 	var p = v * (1 - s);
-// 	var q = v * (1 - f * s);
-// 	var t = v * (1 - (1 - f) * s);
+// 	const i = Math.floor(h * 6);
+// 	const f = h * 6 - i;
+// 	const p = v * (1 - s);
+// 	const q = v * (1 - f * s);
+// 	const t = v * (1 - (1 - f) * s);
 
 // 	switch (i % 6) {
 // 		case 0:

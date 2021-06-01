@@ -113,6 +113,7 @@ const TeamsPage = (props) => {
 									<th>Instagram Handle</th>
 									<th>Facebook Name</th>
 									<th>Percentage Off</th>
+									<th>Venmo</th>
 									<th>Promo Code</th>
 									<th>Sponsor</th>
 									<th>Promotor</th>
@@ -133,6 +134,7 @@ const TeamsPage = (props) => {
 										<td className="p-10px">{team.instagram_handle}</td>
 										<td className="p-10px">{team.facebook_name}</td>
 										<td className="p-10px">{team.percentage_off}%</td>
+										<td className="p-10px">{team.venmo}</td>
 										<td className="p-10px">{team.promo_code}</td>
 										<td className="p-10px">
 											{team.sponsor ? (

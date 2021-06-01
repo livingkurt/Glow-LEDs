@@ -658,8 +658,8 @@ const InvoiceEmail = (props) => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const print_invoice = async () => {
-		var prtContent = document.getElementById('invoice');
-		var WinPrint = window.open('', 'PRINT', 'height=600,width=800');
+		const prtContent = document.getElementById('invoice');
+		const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
 		WinPrint.document.write(prtContent.innerHTML);
 		WinPrint.document.close();
 		WinPrint.focus();

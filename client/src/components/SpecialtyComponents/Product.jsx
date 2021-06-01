@@ -13,7 +13,7 @@ const Product = (props) => {
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="product">
-							<Link to={'/collections/all/products/' + props.product.pathname}>
+							<Link to={'/collections/all/products/' + props.product.pathname} className="m-auto">
 								<div className="row mt-15px">
 									<div className="column ai-c pos-rel">
 										{/* <Link to={'/collections/all/products/' + item.pathname}> */}

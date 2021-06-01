@@ -54,10 +54,10 @@ const OrderListItem = (props) => {
 	};
 
 	// function dates(current) {
-	// 	var week = new Array();
+	// 	const week = new Array();
 	// 	// Starting Monday not Sunday
 	// 	current.setDate(current.getDate() - current.getDay() + 1);
-	// 	for (var i = 0; i < 7; i++) {
+	// 	for (let i = 0; i < 7; i++) {
 	// 		week.push(new Date(current));
 	// 		current.setDate(current.getDate() + 1);
 	// 	}
@@ -126,9 +126,9 @@ const OrderListItem = (props) => {
 	// };
 
 	const sendEmail = (message) => {
-		var email = props.order.shipping.email;
-		var subject = 'Your Glow LEDs Order';
-		var emailBody = 'Hi ' + props.order.user.first_name;
+		const email = props.order.shipping.email;
+		const subject = 'Your Glow LEDs Order';
+		const emailBody = 'Hi ' + props.order.user.first_name;
 		document.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;
 	};
 

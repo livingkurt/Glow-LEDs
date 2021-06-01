@@ -4,6 +4,7 @@ export {};
 const paycheck_schema = new mongoose.Schema(
 	{
 		affiliate: { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' },
+		team: { type: mongoose.Schema.Types.ObjectId, ref: 'Team' },
 		amount: { type: Number },
 		venmo: { type: String },
 		paid: { type: Boolean },

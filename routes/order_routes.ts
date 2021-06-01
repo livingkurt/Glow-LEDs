@@ -1,5 +1,5 @@
 export {};
-const express = require('express');
+import express from 'express';
 import { User } from '../models';
 import Order from '../models/order';
 import { log_error, log_request } from '../util';
@@ -413,9 +413,9 @@ router.get('/occurrences', async (req: any, res: any) => {
 		});
 	});
 	// console.log({ ids });
-	let result: any = {};
-	let ids_result: any = {};
-	for (var i = 0; i < products.length; ++i) {
+	const result: any = {};
+	const ids_result: any = {};
+	for (let i = 0; i < products.length; ++i) {
 		if (!result[products[i]]) {
 			result[products[i]] = 0;
 			ids_result[ids[i]] = 0;
@@ -424,8 +424,8 @@ router.get('/occurrences', async (req: any, res: any) => {
 		++ids_result[ids[i]];
 	}
 	// console.log({ ids_result });
-	let final_result = [];
-	for (let i in result) {
+	const final_result = [];
+	for (const i in result) {
 		const entry = { name: i, occurrence: result[i], id: ids_result[i] };
 		final_result.push(entry);
 	}
@@ -479,14 +479,14 @@ router.get('/total_orders', async (req: any, res: any) => {
 });
 
 router.get('/tax_rates', async (req: any, res: any) => {
-	let updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
-	let result: any = {};
+	const updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
+	const result: any = {};
 
 	const tableData = await scraper.get(updatedSalesTaxes);
 
-	let tempData = tableData[0];
+	const tempData = tableData[0];
 	tempData.map((state: any) => {
-		let percentage = state['State Rate'];
+		const percentage = state['State Rate'];
 		result[state['State']] = percentage.slice(0, percentage.indexOf('%') + 1);
 	});
 	// console.log({ result });
