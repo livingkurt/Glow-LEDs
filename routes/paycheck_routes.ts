@@ -143,8 +143,8 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 router.delete('/:id', isAuth, isAdmin, async (req: any, res: any) => {
 	try {
 		const message: any = { message: 'Paycheck Deleted' };
-		// const deleted_paycheck = await Paycheck.updateOne({ _id: req.params.id }, { deleted: true });
-		const deleted_paycheck = await Paycheck.deleteOne({ _id: req.params.id });
+		const deleted_paycheck = await Paycheck.updateOne({ _id: req.params.id }, { deleted: true });
+		// const deleted_paycheck = await Paycheck.deleteOne({ _id: req.params.id });
 		if (deleted_paycheck) {
 			log_request({
 				method: 'DELETE',
