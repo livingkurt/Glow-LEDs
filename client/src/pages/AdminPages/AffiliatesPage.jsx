@@ -5,13 +5,21 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
+import { listOrders } from '../../actions/orderActions';
+import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../../utils/helper_functions';
+import { API_Promos, API_Revenue } from '../../utils';
 
 const AffiliatesPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const affiliateList = useSelector((state) => state.affiliateList);
+	const [ last_months_orders, set_last_months_orders ] = useState([]);
+	const [ loading_promo_update, set_loading_promo_update ] = useState(false);
+	const [ total_orders, set_total_orders ] = useState([]);
 	const { loading, affiliates, error } = affiliateList;
+	const orderList = useSelector((state) => state.orderList);
+	const { loading: loading_orders, orders, error: error_orders } = orderList;
 
 	const affiliateSave = useSelector((state) => state.affiliateSave);
 	const { success: successSave } = affiliateSave;
@@ -24,6 +32,9 @@ const AffiliatesPage = (props) => {
 	useEffect(
 		() => {
 			stableDispatch(listAffiliates());
+			stableDispatch(listOrders());
+			get_last_months_orders();
+			get_total_orders();
 			return () => {
 				//
 			};
@@ -77,6 +88,60 @@ const AffiliatesPage = (props) => {
 		return result;
 	};
 
+	// const update_ = (e) => {
+	// 	setSortOrder(e.target.value);
+	// 	dispatch(listAffiliates(category, searchKeyword, e.target.value));
+	// };
+
+	const get_last_months_orders = async () => {
+		const { data } = await API_Revenue.last_months_orders();
+		console.log({ data });
+		set_last_months_orders(data);
+	};
+	const get_total_orders = async () => {
+		const { data } = await API_Revenue.total_orders();
+		console.log({ data });
+		set_total_orders(data);
+	};
+
+	const save_affiliate = async (e) => {
+		e.preventDefault();
+		set_loading_promo_update(true);
+		// const affiliate_revenue = calculate_affiliate_usage(
+		// 	affiliates.filter((affiliate) => affiliate.sponsor).filter((affiliate) => affiliate.active),
+		// 	last_months_orders
+		// );
+		affiliates.forEach(async (affiliate) => {
+			const code_usage = last_months_orders.filter((order) => {
+				return (
+					order.promo_code &&
+					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				);
+			}).length;
+			if (code_usage >= 2) {
+				if (affiliate.promoter) {
+					// console.log({ promoter: code_usage });
+					// const request = await API_Promos.update_promo_code(
+					// 	affiliate.private_code._id,
+					// 	determine_promoter_code_tier(code_usage)
+					// );
+					// console.log({ request });
+				} else if (affiliate.sponsor) {
+					console.log({ sponsor: code_usage });
+					const request = await API_Promos.update_promo_code(
+						affiliate.private_code._id,
+						determine_sponsor_code_tier(code_usage)
+					);
+					console.log({ request });
+				}
+			}
+
+			// if
+		});
+		set_loading_promo_update(false);
+		// stableDispatch(listAffiliates());
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -100,10 +165,13 @@ const AffiliatesPage = (props) => {
 						);
 					})}
 				</div>
-				<Link to="/pages/affiliate_terms">
-					<button className="btn primary" style={{ width: '160px' }}>
-						Affiliate Terms
+				{total_orders && (
+					<button className="btn primary" onClick={(e) => save_affiliate(e)}>
+						Update Percentage Off
 					</button>
+				)}
+				<Link to="/pages/affiliate_terms">
+					<button className="btn primary">Affiliate Terms</button>
 				</Link>
 				<Link to="/secure/glow/editaffiliate">
 					<button className="btn primary">Create Affiliate</button>
@@ -148,7 +216,9 @@ const AffiliatesPage = (props) => {
 										<td className="p-10px">{affiliate.artist_name}</td>
 										<td className="p-10px">{affiliate.instagram_handle}</td>
 										<td className="p-10px">{affiliate.facebook_name}</td>
-										<td className="p-10px">{affiliate.percentage_off}%</td>
+										<td className="p-10px">
+											{affiliate.private_code && affiliate.private_code.percentage_off}%
+										</td>
 										<td className="p-10px">{affiliate.venmo}</td>
 										<td className="p-10px">
 											{affiliate.public_code && affiliate.public_code.promo_code}

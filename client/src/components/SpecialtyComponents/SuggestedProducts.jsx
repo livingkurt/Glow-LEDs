@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import Product from './Product';
 import { Loading } from '../UtilityComponents';
-// import EmblaCarousel from './EmblaCarousel';
 // import Slider from './Slider';
 
 const SuggestedProducts = (props) => {
@@ -43,7 +42,6 @@ const SuggestedProducts = (props) => {
 
 			<Loading loading={loading} error={error}>
 				<div className="row p-10px" style={{ overflowX: 'scroll' }}>
-					{/* <EmblaCarousel> */}
 					{products &&
 						products.map(
 							(item, index) =>
@@ -64,7 +62,6 @@ const SuggestedProducts = (props) => {
 									// </div>
 								)
 						)}
-					{/* </EmblaCarousel> */}
 				</div>
 			</Loading>
 		</div>

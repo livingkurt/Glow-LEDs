@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import { format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { refundOrder } from '../../actions/orderActions';

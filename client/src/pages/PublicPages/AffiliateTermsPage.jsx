@@ -27,7 +27,7 @@ const AffiliateTermsPage = () => {
 			<h1 className="ta-c">Affiliate Terms & Conditions</h1>
 			<h2 className="ta-c">Promotor Terms</h2>
 			<div className="paragraph_font">
-				<h3 style={{ webkitTextStroke: '0px' }}>Promoter Benefits</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Promoter Benefits</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>Personal 20% off Promo Code that can be used on any purchase with your affiliate account</li>
 					<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
@@ -56,7 +56,7 @@ const AffiliateTermsPage = () => {
 
 					<li>Top 10 Promoters get to promote choice of product from product release</li>
 				</ul>
-				<h3 style={{ webkitTextStroke: '0px' }}>Promoter Requirements</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Promoter Requirements</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>Like and Comment on the majority of Glow LEDs posts (Even if its just a quick bump)</li>
 					<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
@@ -66,14 +66,14 @@ const AffiliateTermsPage = () => {
 					<li>Post a Lightshow with a Glow LEDs product/Meme/Post and promo code at least twice a month</li>
 					<li>Send Glow LEDs a lightshow with a Glow LEDs product to be featured, at least once a month</li>
 				</ul>
-				<h3 style={{ webkitTextStroke: '0px' }}>Promoter Expulsion</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Promoter Expulsion</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>3 Strike Warnings</li>
 				</ul>
 			</div>
 			<h2 className="ta-c">Sponsor Terms</h2>
 			<div className="paragraph_font">
-				<h3 style={{ webkitTextStroke: '0px' }}>Sponsor Benefits</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Sponsor Benefits</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>Exclusive Sponsorship to Glow LEDs</li>
 					<li>Personal 30% off Promo Code that can be used on any purchase with your affiliate account</li>
@@ -115,7 +115,7 @@ const AffiliateTermsPage = () => {
 						{/* <li>Glove Team T-Shirt</li> */}
 					</ul>
 				</ul>
-				<h3 style={{ webkitTextStroke: '0px' }}>Sponsor Requirements</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Sponsor Requirements</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>Like and Comment on the majority of Glow LEDs posts (Even if its just a quick bump)</li>
 					<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
@@ -130,7 +130,7 @@ const AffiliateTermsPage = () => {
 			</div>
 			<h2 className="ta-c">Team Terms</h2>
 			<div className="paragraph_font">
-				<h3 style={{ webkitTextStroke: '0px' }}>Team Benefits</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Team Benefits</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>Exclusive Sponsorship to Glow LEDs</li>
 					<li>Personal 30% off Promo Code that can be used on any purchase with your affiliate account</li>
@@ -158,7 +158,7 @@ const AffiliateTermsPage = () => {
 					</ul>
 					{/* <li>Top Earner and Greater than 10 uses in a month get a a set of Glow Strings V2</li> */}
 				</ul>
-				<h3 style={{ webkitTextStroke: '0px' }}>Team Requirements</h3>
+				<h3 style={{ WebkitTextStroke: '0px' }}>Team Requirements</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 					<li>Like and Comment on the majority of Glow LEDs posts (Even if its just a quick bump)</li>
 					<ul style={{ padding: '0 18px', listStyle: 'disc' }}>

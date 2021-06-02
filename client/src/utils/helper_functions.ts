@@ -48,6 +48,37 @@ export const toCapitlize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+export const determine_promoter_code_tier = (code_usage: number) => {
+	if (code_usage === 0 || code_usage === 1) {
+		return 20;
+	} else if (code_usage >= 2 && code_usage <= 5) {
+		return 25;
+	} else if (code_usage >= 6 && code_usage <= 9) {
+		return 30;
+	} else if (code_usage >= 10 && code_usage <= 13) {
+		return 35;
+	} else if (code_usage >= 14 && code_usage <= 17) {
+		return 40;
+	} else if (code_usage >= 18 && code_usage <= 21) {
+		return 45;
+	} else if (code_usage >= 22) {
+		return 60;
+	}
+};
+export const determine_sponsor_code_tier = (code_usage: number) => {
+	if (code_usage === 0 || code_usage === 1) {
+		return 30;
+	} else if (code_usage >= 2 && code_usage <= 5) {
+		return 35;
+	} else if (code_usage >= 6 && code_usage <= 9) {
+		return 40;
+	} else if (code_usage >= 10 && code_usage <= 14) {
+		return 50;
+	} else if (code_usage >= 15) {
+		return 75;
+	}
+};
+
 export const format_date = (unformatted_date: string) => {
 	// console.log({ unformatted_date });
 	const month = unformatted_date.slice(5, 7);
@@ -193,6 +224,40 @@ export const hslToHex = (h: any, s: any, l: any) => {
 		return hex.length === 1 ? '0' + hex : hex;
 	};
 	return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+};
+
+export const calculate_affiliate_usage = (affiliates: any, orders: any) => {
+	return affiliates.map((affiliate: any) => {
+		const code_usage = orders.filter((order: any) => {
+			return (
+				order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+			);
+		}).length;
+		return {
+			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+			Uses: code_usage,
+			Revenue: ` $${orders
+				.filter(
+					(order: any) =>
+						order.promo_code &&
+						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				)
+				.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+				.toFixed(2)}`,
+			Earned: `$${orders
+				.filter(
+					(order: any) =>
+						order.promo_code &&
+						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				)
+				.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+				.toFixed(2)}`,
+			'Percentage Off':
+				!affiliate.team && affiliate.promoter
+					? `${determine_promoter_code_tier(code_usage)}%`
+					: `${determine_sponsor_code_tier(code_usage)}%`
+		};
+	});
 };
 
 export const state_names = [

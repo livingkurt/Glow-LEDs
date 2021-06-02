@@ -194,6 +194,53 @@ router.put('/used', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Getting Promo' });
 	}
 });
+router.put('/update_discount', async (req, res) => {
+	try {
+		console.log({ percentage_off: req.body.percentage_off });
+		console.log({ private_code_id: req.body.private_code_id });
+		console.log('update_discount');
+		const promo: any = await Promo.findOne({ _id: req.body.private_code_id });
+		promo.percentage_off = req.body.percentage_off;
+		console.log({ promo });
+		if (promo) {
+			const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
+
+			if (updatedPromo) {
+				log_request({
+					method: 'PUT',
+					path: req.originalUrl,
+					collection: 'Promo',
+					data: [ promo ],
+					status: 200,
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
+			}
+		} else {
+			log_error({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Promo',
+				data: [ promo ],
+				status: 500,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			return res.status(500).send({ message: ' Error in Updating Promo.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'PUT',
+			path: req.originalUrl,
+			collection: 'Promo',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Promo' });
+	}
+});
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	try {
 		console.log({ promo_routes_put: req.body });

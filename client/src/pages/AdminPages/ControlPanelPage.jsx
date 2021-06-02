@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { listOrders } from '../../actions/orderActions';
 import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 import { hslToHex, unformat_date } from '../../utils/helper_functions';
 import { API_Revenue, API_Products, API_Orders } from '../../utils';
 import { listAffiliates } from '../../actions/affiliateActions';

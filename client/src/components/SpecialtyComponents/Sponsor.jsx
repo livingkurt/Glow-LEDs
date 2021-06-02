@@ -21,7 +21,7 @@ const Sponsor = (props) => {
 								src={props.affiliate.picture} // use normal <img> attributes as props
 							/>
 
-							<label style={{ fontSize: '2rem', webkitTextStroke: '1.5px white' }} className="pv-1rem">
+							<label style={{ fontSize: '2rem', WebkitTextStroke: '1.5px white' }} className="pv-1rem">
 								{props.affiliate.artist_name}
 							</label>
 							<div className="jc-b">

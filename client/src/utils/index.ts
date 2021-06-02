@@ -7,3 +7,4 @@ export { default as API_Orders } from './API_Orders';
 export { default as API_Features } from './API_Features';
 export { default as API_Users } from './API_Users';
 export { default as API_Shipping } from './API_Shipping';
+export { default as API_Promos } from './API_Promos';

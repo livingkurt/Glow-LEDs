@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { detailsOrderPublic, payOrder, payOrderGuest } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
-import StripeCheckout from 'react-stripe-checkout';
+
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
 import { API_Products } from '../../utils';

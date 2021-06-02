@@ -38,7 +38,7 @@ export const sale_price_product_option_switch = (product, product_options) => {
 							</label>
 						</del>{' '}
 						<i className="fas fa-arrow-right" /> ${option.price ? option.price.toFixed(2) : option.price}{' '}
-						<label className="fs-16px" style={{ color: '#a03131', webkitTextStroke: '1px #a03131' }}>
+						<label className="fs-16px" style={{ color: '#a03131', WebkitTextStroke: '1px #a03131' }}>
 							NEW LOW PRICE!
 						</label>
 					</div>
@@ -126,7 +126,7 @@ export const cart_sale_price_switch = (product) => {
 					) : (
 						product.product_option.price
 					)}{' '}
-					<label className="fs-16px" style={{ color: '#a03131', webkitTextStroke: '1px #a03131' }}>
+					<label className="fs-16px" style={{ color: '#a03131', WebkitTextStroke: '1px #a03131' }}>
 						NEW LOW PRICE!
 					</label>
 				</div>
@@ -344,7 +344,7 @@ export const determine_product_name = (product, show_qty) => {
 // 							</label>
 // 						</del>{' '}
 // 						<i className="fas fa-arrow-right" /> ${option.price ? option.price.toFixed(2) : option.price}{' '}
-// 						<label className="fs-16px" style={{ color: '#a03131', webkitTextStroke: '1px #a03131' }}>
+// 						<label className="fs-16px" style={{ color: '#a03131', WebkitTextStroke: '1px #a03131' }}>
 // 							NEW LOW PRICE!
 // 						</label>
 // 					</div>

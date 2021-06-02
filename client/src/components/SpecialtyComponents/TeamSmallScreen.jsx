@@ -19,7 +19,7 @@ const TeamSmallScreen = (props) => {
 						/>
 					</div>
 					<div className="column jc-b w-200px">
-						<label style={{ fontSize: '2rem', webkitTextStroke: '1.5px white' }} className="pv-1rem">
+						<label style={{ fontSize: '2rem', WebkitTextStroke: '1.5px white' }} className="pv-1rem">
 							{props.team.team_name}
 						</label>
 						<div className="column jc-b ">

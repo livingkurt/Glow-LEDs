@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
-import { API_Revenue } from '../../utils';
+import { API_Promos, API_Revenue } from '../../utils';
 import {
 	promoter_revenue_upload,
 	sponsor_revenue_upload,
@@ -130,25 +130,15 @@ const PaychecksPage = (props) => {
 				dispatch(
 					savePaycheck({
 						affiliate: affiliate._id,
-						amount: affiliate.promoter
-							? last_months_orders
-									.filter(
-										(order) =>
-											order.promo_code &&
-											order.promo_code.toLowerCase() ===
-												affiliate.public_code.promo_code.toLowerCase()
-									)
-									.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-									.toFixed(2)
-							: last_months_orders
-									.filter(
-										(order) =>
-											order.promo_code &&
-											order.promo_code.toLowerCase() ===
-												affiliate.public_code.promo_code.toLowerCase()
-									)
-									.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-									.toFixed(2),
+						amount: last_months_orders
+							.filter(
+								(order) =>
+									order.promo_code &&
+									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+							)
+							.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+							.toFixed(2),
+
 						venmo: affiliate.venmo
 					})
 				);
@@ -182,6 +172,7 @@ const PaychecksPage = (props) => {
 				);
 			});
 		}
+
 		await sponsor_revenue_upload(affiliates, total_orders, last_months_orders);
 		set_loading_paychecks(false);
 	};

@@ -16,7 +16,6 @@ export { default as Reviews } from './Reviews';
 export { default as Slideshow } from './Slideshow';
 export { default as RelatedProducts } from './RelatedProducts';
 export { default as SuggestedProducts } from './SuggestedProducts';
-export { default as EmblaCarousel } from './EmblaCarousel';
 export { default as Carousel } from './Carousel';
 export { default as CarouselItem } from './CarouselItem';
 export { default as RelatedCarousel } from './RelatedCarousel';

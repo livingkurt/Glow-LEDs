@@ -21,7 +21,7 @@ const Team = (props) => {
 								src={props.team.picture}
 							/>
 
-							<label style={{ fontSize: '2rem', webkitTextStroke: '1px white' }} className="pv-1rem">
+							<label style={{ fontSize: '2rem', WebkitTextStroke: '1px white' }} className="pv-1rem">
 								{props.team.team_name}
 							</label>
 							<Link to={`/collections/all/teams/${props.team && props.team.pathname}`}>

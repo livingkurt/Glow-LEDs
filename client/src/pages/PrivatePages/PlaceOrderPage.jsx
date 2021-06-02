@@ -7,7 +7,6 @@ import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
-import StripeCheckout from 'react-stripe-checkout';
 
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';

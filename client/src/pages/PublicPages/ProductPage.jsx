@@ -14,7 +14,6 @@ import {
 	sale_price_product_option_switch,
 	sale_price_product_option_switch_product
 } from '../../utils/react_helper_functions';
-import ReadMoreReact from 'read-more-react';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -200,7 +199,7 @@ const ProductPage = (props) => {
 			<div className="back-to-result">
 				<div className="jc-b">
 					<div className="mb-10px">
-						<button class="btn secondary" onClick={() => props.history.goBack()}>
+						<button className="btn secondary" onClick={() => props.history.goBack()}>
 							Back to Products
 						</button>
 					</div>
@@ -293,26 +292,43 @@ const ProductPage = (props) => {
 							<div className="column">
 								<label className="product_title_top none fs-2em ff-h mb-2rem">{product.name}</label>
 								<div className="details-image">
-									<Zoom>
-										<img
-											id="expandedImg"
-											alt="Product Image"
-											title={product.name}
-											className="details-image-img"
-											src={image}
-											style={{
+									{/* <Zoom> */}
+									<img
+										id="expandedImg"
+										alt={product.name}
+										title={product.name}
+										className="details-image-img"
+										src={image}
+										style={{
+											maxWidth: '400px',
+											maxHeight: '400px',
+											height: '100%',
+											width: '100%'
+										}}
+									/>
+									{/* </Zoom> */}
+									{/* <Zoom
+										image={{
+											src: { image },
+											alt: 'Golden Gate Bridge',
+											className: 'img',
+											style: {
 												maxWidth: '400px',
 												maxHeight: '400px',
 												height: '100%',
 												width: '100%'
-											}}
-										/>
-									</Zoom>
+											}
+										}}
+										zoomImage={{
+											src: { image },
+											alt: 'Golden Gate Bridge'
+										}}
+									/> */}
 								</div>
 							</div>
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
-								<h1 class="product_title_side" styles={{ display: 'flex' }}>
+								<h1 className="product_title_side" styles={{ display: 'flex' }}>
 									{product.name}
 								</h1>
 								<div style={{ marginBottom: '15px', marginTop: '-9px' }}>

@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 import { format_date } from '../../utils/helper_functions';
 import { LazyImage } from '../UtilityComponents';
 

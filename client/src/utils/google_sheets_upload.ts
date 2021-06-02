@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { removeDuplicates } from './helper_functions';
+import { removeDuplicates, calculate_affiliate_usage } from './helper_functions';
 
 // import dotenv from 'dotenv';
 // dotenv.config();
@@ -212,84 +212,75 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
-		const last_months_rows = affiliates
-			.filter((affiliate: any) => affiliate.promoter)
-			.filter((affiliate: any) => affiliate.active)
-			.map((affiliate: any) => {
-				return {
-					'Promo Code': toCapitlize(affiliate.public_code.promo_code),
-					Uses: last_months_orders.filter((order: any) => {
-						return (
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						);
-					}).length,
-					Revenue: ` $${last_months_orders
-						.filter(
-							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-						.toFixed(2)}`,
-					Earned: `$${affiliate.promoter
-						? last_months_orders
-								.filter(
-									(order: any) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-								.toFixed(2)
-						: last_months_orders
-								.filter(
-									(order: any) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2)}`
-				};
-			});
-		const total_rows = affiliates
-			.filter((affiliate: any) => affiliate.promoter)
-			.filter((affiliate: any) => affiliate.active)
-			.map((affiliate: any) => {
-				return {
-					'Promo Code': toCapitlize(affiliate.public_code.promo_code),
-					Uses: orders.filter((order: any) => {
-						return (
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						);
-					}).length,
-					Revenue: ` $${orders
-						.filter(
-							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-						.toFixed(2)}`,
-					Earned: `$${affiliate.promoter
-						? orders
-								.filter(
-									(order: any) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-								.toFixed(2)
-						: orders
-								.filter(
-									(order: any) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2)}`
-				};
-			});
+		const last_months_rows = calculate_affiliate_usage(
+			affiliates.filter((affiliate: any) => affiliate.promoter).filter((affiliate: any) => affiliate.active),
+			last_months_orders
+		);
+		const total_rows = calculate_affiliate_usage(
+			affiliates.filter((affiliate: any) => affiliate.promoter).filter((affiliate: any) => affiliate.active),
+			orders
+		);
+
+		// const last_months_rows = affiliates
+		// 	.filter((affiliate: any) => affiliate.promoter)
+		// 	.filter((affiliate: any) => affiliate.active)
+		// 	.map((affiliate: any) => {
+		// 		return {
+		// 			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+		// 			Uses: last_months_orders.filter((order: any) => {
+		// 				return (
+		// 					order.promo_code &&
+		// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				);
+		// 			}).length,
+		// 			Revenue: ` $${last_months_orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 				.toFixed(2)}`,
+		// 			Earned: `$${last_months_orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+		// 				.toFixed(2)}`
+		// 		};
+		// 	});
+		// const total_rows = affiliates
+		// 	.filter((affiliate: any) => affiliate.promoter)
+		// 	.filter((affiliate: any) => affiliate.active)
+		// 	.map((affiliate: any) => {
+		// 		return {
+		// 			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+		// 			Uses: orders.filter((order: any) => {
+		// 				return (
+		// 					order.promo_code &&
+		// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				);
+		// 			}).length,
+		// 			Revenue: ` $${orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 				.toFixed(2)}`,
+		// 			Earned: `$${orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+		// 				.toFixed(2)}`
+		// 		};
+		// 	});
 		console.log({ last_months_rows });
 		console.log({ total_rows });
 
@@ -320,9 +311,9 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 		const year = date.getFullYear();
 
 		const newSheet = await doc.addSheet({
-			title: `${months[month]} ${year} Affiliate Revenue`
+			title: `${months[month]} ${year} Promoter Revenue`
 		});
-		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
+		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned', 'Percentage Off' ]);
 		await newSheet.addRows(
 			last_months_rows.sort(
 				(a: any, b: any) => (parseInt(a.Revenue.substring(2)) > parseInt(b.Revenue.substring(2)) ? -1 : 1)
@@ -374,70 +365,75 @@ export const sponsor_revenue_upload = async (affiliates: any, orders: any, last_
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
-		const toCapitlize = (string: string) => {
-			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
-		};
+		const last_months_rows = calculate_affiliate_usage(
+			affiliates.filter((affiliate: any) => affiliate.sponsor).filter((affiliate: any) => affiliate.active),
+			last_months_orders
+		);
+		const total_rows = calculate_affiliate_usage(
+			affiliates.filter((affiliate: any) => affiliate.sponsor).filter((affiliate: any) => affiliate.active),
+			orders
+		);
 
-		const last_months_rows = affiliates
-			.filter((affiliate: any) => affiliate.sponsor)
-			.filter((affiliate: any) => affiliate.active)
-			.map((affiliate: any) => {
-				return {
-					'Promo Code': toCapitlize(affiliate.public_code.promo_code),
-					Uses: last_months_orders.filter((order: any) => {
-						return (
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						);
-					}).length,
-					Revenue: ` $${last_months_orders
-						.filter(
-							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-						.toFixed(2)}`,
-					Earned: `$${last_months_orders
-						.filter(
-							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-						.toFixed(2)}`
-				};
-			});
-		const total_rows = affiliates
-			.filter((affiliate: any) => affiliate.sponsor)
-			.filter((affiliate: any) => affiliate.active)
-			.map((affiliate: any) => {
-				return {
-					'Promo Code': toCapitlize(affiliate.public_code.promo_code),
-					Uses: orders.filter((order: any) => {
-						return (
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						);
-					}).length,
-					Revenue: ` $${orders
-						.filter(
-							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-						.toFixed(2)}`,
-					Earned: `$${orders
-						.filter(
-							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-						.toFixed(2)}`
-				};
-			});
+		// const last_months_rows = affiliates
+		// 	.filter((affiliate: any) => affiliate.sponsor)
+		// 	.filter((affiliate: any) => affiliate.active)
+		// 	.map((affiliate: any) => {
+		// 		return {
+		// 			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+		// 			Uses: last_months_orders.filter((order: any) => {
+		// 				return (
+		// 					order.promo_code &&
+		// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				);
+		// 			}).length,
+		// 			Revenue: ` $${last_months_orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 				.toFixed(2)}`,
+		// 			Earned: `$${last_months_orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+		// 				.toFixed(2)}`
+		// 		};
+		// 	});
+		// const total_rows = affiliates
+		// 	.filter((affiliate: any) => affiliate.sponsor)
+		// 	.filter((affiliate: any) => affiliate.active)
+		// 	.map((affiliate: any) => {
+		// 		return {
+		// 			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+		// 			Uses: orders.filter((order: any) => {
+		// 				return (
+		// 					order.promo_code &&
+		// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				);
+		// 			}).length,
+		// 			Revenue: ` $${orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 				.toFixed(2)}`,
+		// 			Earned: `$${orders
+		// 				.filter(
+		// 					(order: any) =>
+		// 						order.promo_code &&
+		// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 				)
+		// 				.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+		// 				.toFixed(2)}`
+		// 		};
+		// 	});
 		console.log({ last_months_rows });
 		console.log({ total_rows });
 
@@ -470,7 +466,7 @@ export const sponsor_revenue_upload = async (affiliates: any, orders: any, last_
 		const newSheet = await doc.addSheet({
 			title: `${months[month]} ${year} Sponsor Revenue`
 		});
-		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
+		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned', 'Percentage Off' ]);
 		await newSheet.addRows(
 			last_months_rows.sort(
 				(a: any, b: any) => (parseInt(a.Revenue.substring(2)) > parseInt(b.Revenue.substring(2)) ? -1 : 1)
