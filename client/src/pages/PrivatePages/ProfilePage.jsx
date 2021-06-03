@@ -271,79 +271,85 @@ const ProfilePage = (props) => {
 					)}
 				</div>
 			</div>
-			<div className="jc-c">
-				<h1 style={{ textAlign: 'center' }}>Paychecks</h1>
-			</div>
-			<div className="wrap mv-1rem">
-				{colors.map((color, index) => {
-					return (
-						<div className="wrap  mr-1rem" key={index}>
-							<label style={{ marginRight: '1rem' }}>{color.name}</label>
-							<div
-								style={{
-									backgroundColor: color.color,
-									height: '20px',
-									width: '60px',
-									borderRadius: '5px'
-								}}
-							/>
-						</div>
-					);
-				})}
-			</div>
-			<div className="mb-1rem">
-				Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}
-			</div>
-			<Loading loading={loading_paychecks} error={error_paychecks}>
-				{paychecks && (
-					<div className="paycheck-list responsive_table">
-						<table className="table">
-							<thead>
-								<tr>
-									<th>Paid</th>
-									<th>Date Paid</th>
-									<th>Affiliate</th>
-									<th>Amount</th>
-									<th>Venmo</th>
-									{/* <th>Receipt</th> */}
-								</tr>
-							</thead>
-							<tbody>
-								{paychecks.map((paycheck, index) => (
-									<tr
-										key={index}
-										style={{
-											backgroundColor: determine_color(paycheck),
-											fontSize: '1.4rem'
-										}}
-									>
-										<td className="p-10px">
-											{paycheck.paid ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</td>
-										<td className="p-10px" style={{ minWidth: '15rem' }}>
-											{paycheck.paid_at && format_date(paycheck.paid_at)}
-										</td>
-										<td className="p-10px">
-											{paycheck.affiliate ? (
-												paycheck.affiliate.artist_name
-											) : (
-												paycheck.team && paycheck.team.team_name
-											)}
-										</td>
-										<td className="p-10px">${paycheck.amount}</td>
-										<td className="p-10px">{paycheck.venmo}</td>
-										{/* <td className="p-10px">{paycheck.receipt}</td> */}
-									</tr>
-								))}
-							</tbody>
-						</table>
+			{affiliate &&
+			(affiliate.promoter || affiliate.sponsor) && (
+				<div>
+					<div className="jc-c">
+						<h1 style={{ textAlign: 'center' }}>Paychecks</h1>
 					</div>
-				)}
-			</Loading>
+					<div className="wrap mv-1rem">
+						{colors.map((color, index) => {
+							return (
+								<div className="wrap  mr-1rem" key={index}>
+									<label style={{ marginRight: '1rem' }}>{color.name}</label>
+									<div
+										style={{
+											backgroundColor: color.color,
+											height: '20px',
+											width: '60px',
+											borderRadius: '5px'
+										}}
+									/>
+								</div>
+							);
+						})}
+					</div>
+					<div className="mb-1rem">
+						Total Payout ${paychecks &&
+							paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}
+					</div>
+					<Loading loading={loading_paychecks} error={error_paychecks}>
+						{paychecks && (
+							<div className="paycheck-list responsive_table">
+								<table className="table">
+									<thead>
+										<tr>
+											<th>Paid</th>
+											<th>Date Paid</th>
+											<th>Affiliate</th>
+											<th>Amount</th>
+											<th>Venmo</th>
+											{/* <th>Receipt</th> */}
+										</tr>
+									</thead>
+									<tbody>
+										{paychecks.map((paycheck, index) => (
+											<tr
+												key={index}
+												style={{
+													backgroundColor: determine_color(paycheck),
+													fontSize: '1.4rem'
+												}}
+											>
+												<td className="p-10px">
+													{paycheck.paid ? (
+														<i className="fas fa-check-circle" />
+													) : (
+														<i className="fas fa-times-circle" />
+													)}
+												</td>
+												<td className="p-10px" style={{ minWidth: '15rem' }}>
+													{paycheck.paid_at && format_date(paycheck.paid_at)}
+												</td>
+												<td className="p-10px">
+													{paycheck.affiliate ? (
+														paycheck.affiliate.artist_name
+													) : (
+														paycheck.team && paycheck.team.team_name
+													)}
+												</td>
+												<td className="p-10px">${paycheck.amount}</td>
+												<td className="p-10px">{paycheck.venmo}</td>
+												{/* <td className="p-10px">{paycheck.receipt}</td> */}
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						)}
+					</Loading>
+				</div>
+			)}
 		</div>
 	);
 };
