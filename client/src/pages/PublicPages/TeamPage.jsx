@@ -92,6 +92,7 @@ const TeamPage = (props) => {
 								<iframe
 									width="996"
 									height="560"
+                  title="Team Video"
 									style={{ borderRadius: '20px' }}
 									src={`https://www.youtube.com/embed/${team.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
 									frameborder="0"
@@ -162,13 +163,14 @@ const TeamPage = (props) => {
 									<Link to={'/collections/all/sponsors/' + affiliate.pathname} className="pos-rel">
 										<img
 											className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
+                      alt="Team Mate"
 											src={affiliate.picture}
 										/>
 										<h3
 											className="pos-abs fs-30px"
 											style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
 										>
-											{affiliate.artist_name != 'Koztic' && affiliate.artist_name}
+											{affiliate.artist_name}
 										</h3>
 									</Link>
 								);

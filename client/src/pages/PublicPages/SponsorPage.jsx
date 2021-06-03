@@ -170,16 +170,24 @@ const SponsorPage = (props) => {
 								{teams.map((team) => {
 									return (
 										<Link to={'/collections/all/teams/' + team.pathname} className="pos-rel">
+                      {/* <h3
+												className="pos-abs fs-30px w-200px"
+												style={{ top: '-146px', left: '27%' }}
+											>
+												{team.team_name}
+											</h3> */}
+                     
 											<img
 												className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
+                        alt="Team Name"
 												src={team.picture}
 											/>
-											<h3
-												className="pos-abs fs-30px w-200px"
-												style={{ top: '34px', left: '50%', transform: 'translate(-80%, 100%)' }}
-											>
-												{team.team_name != 'Koztic' && team.team_name}
-											</h3>
+											 <h3
+											className="pos-abs fs-30px"
+											style={{ top: '-119px', left: '50%', transform: 'translate(-50%, -50%)' }}
+										>
+											{team.team_name}
+										</h3>
 										</Link>
 									);
 								})}
@@ -199,7 +207,7 @@ const SponsorPage = (props) => {
 										</div>
 										<div className="ml-10px fs-40px">
 											<a
-												href={'https://www.facebook.com/' + affiliate.instagram_handle}
+												href={'https://www.instagram.com/' + affiliate.instagram_handle}
 												target="_blank"
 												rel="noopener noreferrer"
 											>
