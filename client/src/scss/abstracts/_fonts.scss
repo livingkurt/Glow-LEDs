@@ -16,25 +16,3 @@ $phrase_font: phrase_font;
 $paragraph_font: paragraph_font;
 $heading_font: heading_font;
 $font_size: 1.6rem;
-
-.phrase_font {
-	font-family: $phrase_font;
-}
-.paragraph_font {
-	font-family: $paragraph_font;
-	-webkit-text-stroke: 1px white;
-	font-size: 1.7rem;
-	line-height: 3.4rem;
-	li {
-		line-height: 3.4rem;
-	}
-}
-.heading_font {
-	font-family: $heading_font;
-}
-
-h1,
-h2,
-h3 {
-	font-family: $heading_font;
-}
