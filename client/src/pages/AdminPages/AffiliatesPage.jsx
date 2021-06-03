@@ -6,7 +6,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { listOrders } from '../../actions/orderActions';
-import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../../utils/helper_functions';
+import {  determine_sponsor_code_tier } from '../../utils/helper_functions';
 import { API_Promos, API_Revenue } from '../../utils';
 
 const AffiliatesPage = (props) => {
@@ -18,8 +18,6 @@ const AffiliatesPage = (props) => {
 	const [ loading_promo_update, set_loading_promo_update ] = useState(false);
 	const [ total_orders, set_total_orders ] = useState([]);
 	const { loading, affiliates, error } = affiliateList;
-	const orderList = useSelector((state) => state.orderList);
-	const { loading: loading_orders, orders, error: error_orders } = orderList;
 
 	const affiliateSave = useSelector((state) => state.affiliateSave);
 	const { success: successSave } = affiliateSave;
@@ -184,6 +182,7 @@ const AffiliatesPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
+			<Loading loading={loading_promo_update}/>
 			<Loading loading={loading} error={error}>
 				{affiliates && (
 					<div className="affiliate-list responsive_table">
