@@ -273,6 +273,11 @@ const Sidebar = (props) => {
 												Patterns
 											</button>
 										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Imperfect
+											</button>
+										</Link>
 									</ul>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 								</div>
