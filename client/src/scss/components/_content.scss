@@ -10,3 +10,10 @@
 	min-height: 65vh;
 	max-width: 1500px;
 }
+
+.inner_content {
+	font-family: $paragraph_font;
+	li {
+		margin: 10px 0;
+	}
+}

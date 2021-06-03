@@ -31,7 +31,7 @@
 // @use 'abstracts/border_radius' as *;
 // @use 'abstracts/box_shadow' as *;
 
-@use 'abstracts' as *;
+// @use 'abstracts' as *;
 
 // @use 'components/header';
 
@@ -1151,12 +1151,12 @@
 // 	padding: 1rem;
 // }
 
-.contact_options {
-	color: $theme_color_secondary_font;
-}
-.contact_grey_option {
-	color: gray;
-}
+// .contact_options {
+// 	color: $theme_color_secondary_font;
+// }
+// .contact_grey_option {
+// 	color: gray;
+// }
 
 // select option:first-child {
 // 	color: rgb(7, 44, 7);
@@ -1485,76 +1485,42 @@
 // 	transform: rotate(-5deg);
 // }
 
-.iframe-container {
-	position: relative;
-	width: 100%;
-	padding-bottom: 56.25%;
-	height: 0;
+// .iframe-container {
+// 	position: relative;
+// 	width: 100%;
+// 	padding-bottom: 56.25%;
+// 	height: 0;
 
-	// max-width: 100rem;
-	// max-height: 50rem;
-}
-.iframe-container iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	// max-width: 100rem;
-	// max-height: 59rem;
-}
+// 	// max-width: 100rem;
+// 	// max-height: 50rem;
+// }
+// .iframe-container iframe {
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	height: 100%;
+// 	// max-width: 100rem;
+// 	// max-height: 59rem;
+// }
+// .iframe-container-big {
+// 	position: relative;
+// 	width: 100%;
+// 	padding-bottom: 56.25%;
+// 	height: 0;
 
-.embed-container {
-	position: relative;
-	padding-bottom: 56.25%;
-	height: 0;
-	overflow: hidden;
-	max-width: 100%;
-}
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-.iframe-container-big {
-	position: relative;
-	width: 100%;
-	padding-bottom: 56.25%;
-	height: 0;
-
-	// max-width: 100rem;
-	// max-height: 50rem;
-}
-.iframe-container-big iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 62%;
-	// max-width: 100rem;
-	// max-height: 59rem;
-}
-
-.embed-container {
-	position: relative;
-	padding-bottom: 56.25%;
-	height: 0;
-	overflow: hidden;
-	max-width: 100%;
-}
-.embed-container iframe,
-.embed-container object,
-.embed-container embed {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
+// 	// max-width: 100rem;
+// 	// max-height: 50rem;
+// }
+// .iframe-container-big iframe {
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	height: 62%;
+// 	// max-width: 100rem;
+// 	// max-height: 59rem;
+// }
 
 // // Carousel
 
@@ -1652,33 +1618,33 @@
 // 	right: -30px;
 // }
 
-.inner_content {
-	font-family: $paragraph_font;
-	li {
-		margin: 10px 0;
-	}
-}
+// .inner_content {
+// 	font-family: $paragraph_font;
+// 	li {
+// 		margin: 10px 0;
+// 	}
+// }
 
-.products_list {
-	ul {
-		margin-left: 20px;
-	}
-}
+// .products_list {
+// 	ul {
+// 		margin-left: 20px;
+// 	}
+// }
 
-.logo {
-	width: 100%;
-	height: auto;
-}
+// .logo {
+// 	width: 100%;
+// 	height: auto;
+// }
 
-.logo_2 {
-	width: 100%;
-	height: auto;
-}
+// .logo_2 {
+// 	width: 100%;
+// 	height: auto;
+// }
 
-.logo_s {
-	width: 100%;
-	height: auto;
-}
+// .logo_s {
+// 	width: 100%;
+// 	height: auto;
+// }
 
 // ol {
 // 	list-style: 'none';
@@ -1695,22 +1661,22 @@
 // 	}
 // }
 
-.group {
-	display: flex;
-	flex-wrap: wrap;
-	// gap: 10px;
-	--multiplier: calc(80rem - 100%);
-}
+// .group {
+// 	display: flex;
+// 	flex-wrap: wrap;
+// 	// gap: 10px;
+// 	--multiplier: calc(80rem - 100%);
+// }
 
-.group_item {
-	// margin: 10px;
-	min-width: 40%;
-	max-width: 100%;
-	width: 50px;
-	// border-radius: 20px;
-	flex-grow: 1;
-	flex-basis: calc(var(--multiplier) * 999);
-}
+// .group_item {
+// 	// margin: 10px;
+// 	min-width: 40%;
+// 	max-width: 100%;
+// 	width: 50px;
+// 	// border-radius: 20px;
+// 	flex-grow: 1;
+// 	flex-basis: calc(var(--multiplier) * 999);
+// }
 
 // .group_images {
 // 	// margin: 10px;
@@ -1720,37 +1686,37 @@
 // 	// border-radius: 20px;
 // }
 
-.colored_caps {
-	display: flex;
-	flex-wrap: wrap;
-	// gap: 10px;
-	--multiplier: calc(92rem - 100%);
-}
+// .colored_caps {
+// 	display: flex;
+// 	flex-wrap: wrap;
+// 	// gap: 10px;
+// 	--multiplier: calc(92rem - 100%);
+// }
 
-.colored_caps_item {
-	// margin: 10px;
-	min-width: 48%;
-	max-width: 100%;
-	width: 50px;
-	border-radius: 20px;
-	flex-grow: 1;
-	flex-basis: calc(var(--multiplier) * 999);
-}
+// .colored_caps_item {
+// 	// margin: 10px;
+// 	min-width: 48%;
+// 	max-width: 100%;
+// 	width: 50px;
+// 	border-radius: 20px;
+// 	flex-grow: 1;
+// 	flex-basis: calc(var(--multiplier) * 999);
+// }
 
-.colored_caps_images {
-	// margin: 10px;
-	min-width: 48%;
-	max-width: 100%;
-	// width: 50px;
-	border-radius: 20px;
-}
+// .colored_caps_images {
+// 	// margin: 10px;
+// 	min-width: 48%;
+// 	max-width: 100%;
+// 	// width: 50px;
+// 	border-radius: 20px;
+// }
 
-.cart_items {
-	display: flex;
-	flex-wrap: wrap;
-	// gap: 10px;
-	--multiplier: calc(21rem - 100%);
-}
+// .cart_items {
+// 	display: flex;
+// 	flex-wrap: wrap;
+// 	// gap: 10px;
+// 	--multiplier: calc(21rem - 100%);
+// }
 
 // .cart_item {
 // 	margin: 10px;
@@ -1761,34 +1727,34 @@
 // 	flex-basis: calc(var(--multiplier) * 999);
 // }
 
-.csv-input {
-	// font-size: 20px;
-	// border-radius: 10px;
-	input {
-		font-size: 20px;
-		border-radius: 20px;
-	}
-}
+// .csv-input {
+// 	// font-size: 20px;
+// 	// border-radius: 10px;
+// 	input {
+// 		font-size: 20px;
+// 		border-radius: 20px;
+// 	}
+// }
 
-.csv-label {
-}
+// .csv-label {
+// }
 
-.csv-reader-input {
-}
+// .csv-reader-input {
+// }
 
-#react-csv-reader-input {
-}
+// #react-csv-reader-input {
+// }
 
-.custom-file-upload {
-	border: 1px solid #ccc;
-	display: inline-block;
-	padding: 6px 12px;
-	cursor: pointer;
-}
+// .custom-file-upload {
+// 	border: 1px solid #ccc;
+// 	display: inline-block;
+// 	padding: 6px 12px;
+// 	cursor: pointer;
+// }
 
-input[type="file"] {
-	display: none;
-}
+// input[type="file"] {
+// 	display: none;
+// }
 
 // .CardBrandIcon-container {
 // 	height: 20.1562px;
@@ -1805,10 +1771,10 @@ input[type="file"] {
 // 	min-height: 20.1562px;
 // }
 
-.StripeElement {
-	height: 43px;
-	// min-height: 20.1562px;
-}
+// .StripeElement {
+// 	height: 43px;
+// 	// min-height: 20.1562px;
+// }
 
 // margin.scss ----------------------------------------------------------------------------------------
 // // Positive Margins
