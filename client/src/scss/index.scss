@@ -208,6 +208,10 @@ textarea {
 	font-family: $paragraph_font;
 }
 
+ul {
+	list-style-type: none;
+}
+
 // h1,
 // h2,
 // h3 {
@@ -472,8 +476,8 @@ textarea {
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
+	list-style-type: none;
 	li {
-		list-style-type: none;
 		padding: 0;
 		flex: 0 1 34rem;
 		margin: 1rem;
@@ -2982,6 +2986,41 @@ $align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
 	text-align: right !important;
 }
 
-// font_size.scss ----------------------------------------------------------------------------------------
+// table.scss ----------------------------------------------------------------------------------------
+.tr {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	text-align: left;
+	border-radius: 20px;
+	padding: 5px;
+	td {
+		border-right: 1px solid #a0a0a0;
+		width: 100%;
+	}
+	td:last-child {
+		border-right: 0px;
+	}
+	// th {
+	// 	border-right: 1px solid white;
+	// 	width: 100%;
+	// }
+	// th:last-child {
+	// 	border-right: 0px;
+	// }
+}
+
+tr {
+	border: 1px solid #a0a0a0;
+}
+
+.hide-row {
+	display: none !important;
+}
+
+.expanded-row-content {
+	display: grid;
+	grid-column: 1/-1;
+	// grid-column: 1;
+}
 
 // font_size.scss ----------------------------------------------------------------------------------------

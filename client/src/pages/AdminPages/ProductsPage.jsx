@@ -235,55 +235,6 @@ function ProductPage(props) {
 		updateProducts(items);
 	};
 
-	// const createData = () => {
-	// 	// let productIdcount = 0;
-	// 	// let products = Array.from(initialData.products);
-	// 	// let product_ids = Array.from(initialData.products);
-	// 	// for (let i = 0; i < 10; i++) {
-	// 	// 	let count = ++productIdcount;
-	// 	// 	let product = {
-	// 	// 		id: count,
-	// 	// 		content: 'Product ' + count
-	// 	// 	};
-	// 	// 	products.push(product);
-	// 	// 	product_ids.push(product.id);
-	// 	// }
-	// 	// console.log({ product_ids });
-	// 	// console.log({ products });
-	// 	// // set_entities({
-	// 	// // 	products: products,
-	// 	// // 	columns: {
-	// 	// // 		'column-1': {
-	// 	// // 			id: 'column-1',
-	// 	// // 			title: 'Products',
-	// 	// // 			product_ids: product_ids
-	// 	// // 		}
-	// 	// // 	},
-	// 	// // 	columnOrder: [ 'column-1' ]
-	// 	// // });
-	// 	setState({
-	// 		entities: {
-	// 			products: products,
-	// 			columns: {
-	// 				'column-1': {
-	// 					id: 'column-1',
-	// 					title: 'Products',
-	// 					product_ids: products.map(product => product._id)
-	// 				}
-	// 			},
-	// 			columnOrder: [ 'column-1' ]
-	// 		},
-	// 		selectedProductIds: [],
-	// 		draggingProductId: null
-	// 	});
-	// 	// set_selectedProductIds([] });
-	// 	// set_draggingProductId({ draggingProductId: null });
-	// };
-
-	// createData();
-
-	console.log({ state });
-
 	const onDragStart = (start) => {
 		// console.log("OnDragStart event started");
 		const id = start.draggableId;
