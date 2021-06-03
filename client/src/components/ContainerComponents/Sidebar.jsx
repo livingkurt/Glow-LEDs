@@ -151,11 +151,25 @@ const Sidebar = (props) => {
 										Exo Diffusers
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/glow_casings">
+
+								<div className="sidebar_dropdown_nested w-">
+									<button className="sidebar-btn nested">
+										<Link to="/collections/all/products/category/glow_casings">Glow Casings</Link>
+									</button>
+									<ul className="sidebar_dropdown_nested_container">
+										<Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
+											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+												Imperfect
+											</button>
+										</Link>
+									</ul>
+									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+								</div>
+								{/* <Link to="/collections/all/products/category/glow_casings">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Glow Casings
 									</button>
-								</Link>
+								</Link> */}
 								{/* <Link to="/collections/all/products/category/glowskins">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Glowskins
