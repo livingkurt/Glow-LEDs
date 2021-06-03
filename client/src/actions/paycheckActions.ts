@@ -10,7 +10,10 @@ import {
 	PAYCHECK_SAVE_FAIL,
 	PAYCHECK_DELETE_SUCCESS,
 	PAYCHECK_DELETE_FAIL,
-	PAYCHECK_DELETE_REQUEST
+	PAYCHECK_DELETE_REQUEST,
+	MY_PAYCHECK_LIST_REQUEST,
+	MY_PAYCHECK_LIST_SUCCESS,
+	MY_PAYCHECK_LIST_FAIL
 } from '../constants/paycheckConstants';
 import axios from 'axios';
 
@@ -30,6 +33,23 @@ export const listPaychecks = (category = '', searchKeyword = '', sortOrder = '')
 		dispatch({ type: PAYCHECK_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: PAYCHECK_LIST_FAIL, payload: error.response.data.message });
+	}
+};
+
+export const listMyPaychecks = (affiliate_id: string) => async (
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	try {
+		dispatch({ type: MY_PAYCHECK_LIST_REQUEST });
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/paychecks/get_mine', {
+			headers: { Authorization: 'Bearer ' + userInfo.token }
+		});
+		console.log({ listMyPaychecks: data });
+		dispatch({ type: MY_PAYCHECK_LIST_SUCCESS, payload: data });
+	} catch (error) {
+		dispatch({ type: MY_PAYCHECK_LIST_FAIL, payload: error.response.data.message });
 	}
 };
 

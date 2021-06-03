@@ -81,7 +81,8 @@ import {
 	paycheckDeleteReducer,
 	paycheckDetailsReducer,
 	paycheckListReducer,
-	paycheckSaveReducer
+	paycheckSaveReducer,
+	myPaycheckListReducer
 } from './reducers/paycheckReducers';
 import {
 	surveyDeleteReducer,
@@ -171,6 +172,7 @@ const reducer = combineReducers({
 	logDelete: logDeleteReducer,
 	paycheckList: paycheckListReducer,
 	paycheckDetails: paycheckDetailsReducer,
+	myPaycheckList: myPaycheckListReducer,
 	paycheckSave: paycheckSaveReducer,
 	paycheckDelete: paycheckDeleteReducer,
 	surveyList: surveyListReducer,

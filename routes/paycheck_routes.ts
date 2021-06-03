@@ -55,6 +55,37 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/get_mine', isAuth, async (req: any, res: any) => {
+	console.log('get_mine');
+	console.log({ affiliate: req.user.affiliate });
+	try {
+		const paychecks = await Paycheck.find({ deleted: false, affiliate: req.user.affiliate._id })
+			.sort({ _id: -1 })
+			.populate('affiliate');
+		console.log({ paychecks });
+		log_request({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Paycheck',
+			data: paychecks,
+			status: 200,
+			success: true,
+			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+		});
+		res.send(paychecks);
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Paycheck',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Your Paychecks' });
+	}
+});
+
 router.get('/:id', async (req, res) => {
 	try {
 		const paycheck = await Paycheck.findOne({ _id: req.params.id }).populate('user').populate('affiliate');

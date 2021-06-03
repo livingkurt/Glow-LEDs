@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { API_Orders } from '../../utils';
 import { detailsAffiliate } from '../../actions/affiliateActions';
+import { listMyPaychecks } from '../../actions/paycheckActions';
+import { Loading } from '../../components/UtilityComponents';
+import { format_date } from '../../utils/helper_functions';
 
 const ProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -13,6 +15,11 @@ const ProfilePage = (props) => {
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
+
+	const myPaycheckList = useSelector((state) => state.myPaycheckList);
+	const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
+
+	console.log({ paychecks });
 
 	const [ number_of_uses, set_number_of_uses ] = useState(0);
 	const [ revenue, set_revenue ] = useState(0);
@@ -25,11 +32,12 @@ const ProfilePage = (props) => {
 			if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
 				console.log({ affiliate: userInfo.affiliate.pathname });
 				stableDispatch(detailsAffiliate(userInfo.affiliate.pathname));
+				stableDispatch(listMyPaychecks(userInfo.affiliate._id));
 			}
 
 			return () => {};
 		},
-		[ userInfo ]
+		[ userInfo, stableDispatch ]
 	);
 
 	useEffect(
@@ -50,6 +58,19 @@ const ProfilePage = (props) => {
 		console.log({ data });
 		set_number_of_uses(data.number_of_uses);
 		set_revenue(data.revenue);
+	};
+
+	const colors = [ { name: 'Paid', color: '#3e4c6d' }, { name: 'Not Paid', color: '#6f3c3c' } ];
+
+	const determine_color = (paycheck) => {
+		let result = '';
+		if (paycheck.paid) {
+			result = colors[0].color;
+		}
+		if (!paycheck.paid) {
+			result = colors[1].color;
+		}
+		return result;
 	};
 
 	return (
@@ -250,6 +271,79 @@ const ProfilePage = (props) => {
 					)}
 				</div>
 			</div>
+			<div className="jc-c">
+				<h1 style={{ textAlign: 'center' }}>Paychecks</h1>
+			</div>
+			<div className="wrap mv-1rem">
+				{colors.map((color, index) => {
+					return (
+						<div className="wrap  mr-1rem" key={index}>
+							<label style={{ marginRight: '1rem' }}>{color.name}</label>
+							<div
+								style={{
+									backgroundColor: color.color,
+									height: '20px',
+									width: '60px',
+									borderRadius: '5px'
+								}}
+							/>
+						</div>
+					);
+				})}
+			</div>
+			<div className="mb-1rem">
+				Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}
+			</div>
+			<Loading loading={loading_paychecks} error={error_paychecks}>
+				{paychecks && (
+					<div className="paycheck-list responsive_table">
+						<table className="table">
+							<thead>
+								<tr>
+									<th>Paid</th>
+									<th>Date Paid</th>
+									<th>Affiliate</th>
+									<th>Amount</th>
+									<th>Venmo</th>
+									{/* <th>Receipt</th> */}
+								</tr>
+							</thead>
+							<tbody>
+								{paychecks.map((paycheck, index) => (
+									<tr
+										key={index}
+										style={{
+											backgroundColor: determine_color(paycheck),
+											fontSize: '1.4rem'
+										}}
+									>
+										<td className="p-10px">
+											{paycheck.paid ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{paycheck.paid_at && format_date(paycheck.paid_at)}
+										</td>
+										<td className="p-10px">
+											{paycheck.affiliate ? (
+												paycheck.affiliate.artist_name
+											) : (
+												paycheck.team && paycheck.team.team_name
+											)}
+										</td>
+										<td className="p-10px">${paycheck.amount}</td>
+										<td className="p-10px">{paycheck.venmo}</td>
+										{/* <td className="p-10px">{paycheck.receipt}</td> */}
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				)}
+			</Loading>
 		</div>
 	);
 };

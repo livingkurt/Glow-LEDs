@@ -95,6 +95,7 @@ const EditPaycheckPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
+		console.log({ affiliate });
 		dispatch(
 			savePaycheck({
 				_id: id,
@@ -115,9 +116,11 @@ const EditPaycheckPage = (props) => {
 	const update_fields = (e) => {
 		e.preventDefault();
 		const data = JSON.parse(e.target.value);
-		set_affiliate(data._id);
+		set_affiliate(data);
+		// set_team(data);
 		set_venmo(data.venmo);
 		console.log({ venmo: data.venmo });
+		console.log({ venmo: data._id });
 	};
 	const date = new Date();
 

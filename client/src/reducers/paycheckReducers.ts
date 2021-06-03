@@ -10,7 +10,10 @@ import {
 	PAYCHECK_SAVE_FAIL,
 	PAYCHECK_DELETE_REQUEST,
 	PAYCHECK_DELETE_SUCCESS,
-	PAYCHECK_DELETE_FAIL
+	PAYCHECK_DELETE_FAIL,
+	MY_PAYCHECK_LIST_REQUEST,
+	MY_PAYCHECK_LIST_SUCCESS,
+	MY_PAYCHECK_LIST_FAIL
 } from '../constants/paycheckConstants';
 
 export const paycheckListReducer = (state = { paychecks: [] }, action: { type: any; payload: any }) => {
@@ -20,6 +23,24 @@ export const paycheckListReducer = (state = { paychecks: [] }, action: { type: a
 		case PAYCHECK_LIST_SUCCESS:
 			return { loading: false, paychecks: action.payload };
 		case PAYCHECK_LIST_FAIL:
+			return { loading: false, error: action.payload };
+		default:
+			return state;
+	}
+};
+
+export const myPaycheckListReducer = (
+	state = {
+		paychecks: []
+	},
+	action: { type: any; payload: any }
+) => {
+	switch (action.type) {
+		case MY_PAYCHECK_LIST_REQUEST:
+			return { loading: true };
+		case MY_PAYCHECK_LIST_SUCCESS:
+			return { loading: false, paychecks: action.payload };
+		case MY_PAYCHECK_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;
