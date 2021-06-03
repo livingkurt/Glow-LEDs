@@ -167,9 +167,9 @@ const SponsorPage = (props) => {
 							</div> */}
 							<div>
 								<h3 className="">Team{teams > 1 && "'s"}</h3>
-								{teams.map((team) => {
+								{teams.map((team, index) => {
 									return (
-										<Link to={'/collections/all/teams/' + team.pathname} className="pos-rel">
+										<Link to={'/collections/all/teams/' + team.pathname} className="pos-rel" key={index}>
                       {/* <h3
 												className="pos-abs fs-30px w-200px"
 												style={{ top: '-146px', left: '27%' }}

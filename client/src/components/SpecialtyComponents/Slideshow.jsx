@@ -18,8 +18,8 @@ const Slideshow = (props) => {
 						<div className="img_column" key={index}>
 							<img
 								src={image}
-								alt="Slideshow Image"
-								title="Slideshow Image"
+								alt="Slideshow"
+								title="Slideshow"
 								style={{ width: '100%' }}
 								onClick={(e) => change_image(e)}
 							/>

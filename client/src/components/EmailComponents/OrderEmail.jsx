@@ -496,7 +496,7 @@ const OrderEmail = (props) => {
 												align="right"
 											>
 												<strong>Promo Code:</strong>{' '}
-												{promos &&
+												{order && promos &&
 												order.promo_code &&
 												promos.find(
 													(promo) =>

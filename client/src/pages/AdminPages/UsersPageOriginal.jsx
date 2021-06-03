@@ -79,9 +79,9 @@ const UsersPage = (props) => {
 				<title>Admin Users | Glow LEDs</title>
 			</Helmet>
 			<div className="wrap jc-b">
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b w-20rem m-1rem">
+						<div className="wrap jc-b w-20rem m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -136,9 +136,9 @@ const UsersPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{users.map((user) => (
+								{users.map((user, index) => (
 									<tr
-										key={user._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(user)
 										}}

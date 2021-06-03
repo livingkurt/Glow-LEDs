@@ -205,42 +205,6 @@ const AnnouncementEmail = () => {
 									)}
 								</div>
 							</div>
-							{/* <div style={{ backgroundColor: '#5f5f5f', padding: '20px' }}> */}
-							{/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-
-								<div
-									style={{
-										display: 'flex',
-										justifyContent: 'center',
-										maxWidth: '800px',
-										flexWrap: 'wrap'
-									}}
-								>
-									{email.images &&
-										email.images.map((image) => {
-											return (
-												<table width="100%" style={{ textAlign: 'center' }}>
-													<tr>
-													<td>
-													<img
-														src={image}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															maxWidth: '300px',
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-													</td>
-													</tr>
-												</table>
-											);
-										})}
-								</div>
-
-							</div> */}
 							<h4
 								style={{
 									textAlign: 'center',

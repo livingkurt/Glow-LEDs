@@ -197,9 +197,9 @@ const HomePage = (props) => {
 				a relaxing retreat, you decide.
 			</ReadMore>
 			<div className="big_home_page_cards">
-				{homepage_videos.map((card) => {
+				{homepage_videos.map((card, index) => {
 					return (
-						<div className="home_page_divs max-h-66rem" style={{ backgroundColor: card.color }}>
+						<div className="home_page_divs max-h-66rem" style={{ backgroundColor: card.color }} key={index}>
 							<div className="jc-c">
 								<h2 className="ta-c">{card.name}</h2>
 							</div>
@@ -233,9 +233,9 @@ const HomePage = (props) => {
 				})}
 			</div>
 			<div className="small_home_page_cards none">
-				{homepage_videos.map((card) => {
+				{homepage_videos.map((card, index) => {
 					return (
-						<div className="home_page_divs" style={{ backgroundColor: card.color }}>
+						<div className="home_page_divs" style={{ backgroundColor: card.color }} key={index}>
 							<div className="jc-c">
 								<h2 className="ta-c">{card.name}</h2>
 							</div>

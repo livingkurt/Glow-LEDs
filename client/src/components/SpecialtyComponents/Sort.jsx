@@ -9,8 +9,8 @@ const Sort = (props) => {
 					<option className="grey_option" disabled="disabled" selected="selected" value="">
 						Sort By
 					</option>
-					{props.sort_options.map((option) => {
-						return <option value={option.toLowerCase()}>{option}</option>;
+					{props.sort_options.map((option, index) => {
+						return <option key={index} value={option.toLowerCase()}>{option}</option>;
 					})}
 				</select>
 				<span className="custom-arrow" />

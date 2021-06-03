@@ -421,7 +421,10 @@ export const detailsOrderPublic = (orderId: string) => async (
     console.log({orderId})
 		const { data } = await axios.get('/api/orders/track_order/' + orderId);
     console.log({data})
-		dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
+    if (data){
+      dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
+    }
+		// dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response.data.message });
 	}

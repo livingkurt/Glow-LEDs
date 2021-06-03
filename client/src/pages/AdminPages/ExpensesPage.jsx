@@ -132,6 +132,8 @@ const ExpensesPage = (props) => {
 			case 'AMZNK':
 				properties = [ 'date', 'post_date', 'place', 'category', 'type', 'amount' ];
 				return handle_csv_expenses(data, fileInfo, properties, 'AMZNK');
+      default:
+        return
 		}
 	};
 
@@ -143,9 +145,9 @@ const ExpensesPage = (props) => {
 
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
-					{colors.map((color) => {
+					{colors.map((color, index) => {
 						return (
-							<div className="wrap jc-b w-16rem m-1rem">
+							<div className="wrap jc-b w-16rem m-1rem" key={index}>
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -275,9 +277,9 @@ const ExpensesPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{expenses.map((expense) => (
+								{expenses.map((expense, index) => (
 									<tr
-										key={expense._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(expense),
 											fontSize: '1.4rem'

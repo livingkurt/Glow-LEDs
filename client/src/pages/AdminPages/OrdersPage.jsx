@@ -166,9 +166,9 @@ const OrdersPage = (props) => {
 				</Link>
 			</div>
 			<div className="wrap jc-b">
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b w-16rem m-1rem">
+						<div className="wrap jc-b w-16rem m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -191,9 +191,9 @@ const OrdersPage = (props) => {
 				<div className="wrap jc-c">
 					{orders &&
 						orders.totalPages &&
-						[ ...Array(orders.totalPages).keys() ].map((x) => (
+						[ ...Array(orders.totalPages).keys() ].map((x, index) => (
 							<button
-								key={x + 1}
+								key={index}
 								value={x}
 								defaultValue={x}
 								className="btn primary w-40px mr-1rem mb-1rem"
@@ -207,8 +207,9 @@ const OrdersPage = (props) => {
 					<div className="product_big_screen">
 						{!block_list_view &&
 							orders &&
-							orders.orders.map((order) => (
+							orders.orders.map((order, index) => (
 								<OrderListItem
+                key={index}
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
 									update_order_state={update_order_state}
@@ -221,8 +222,9 @@ const OrdersPage = (props) => {
 					<div className="product_big_screen">
 						{block_list_view &&
 							orders &&
-							orders.orders.map((order) => (
+							orders.orders.map((order, index) => (
 								<Order
+                key={index}
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
 									update_order_state={update_order_state}
@@ -234,17 +236,17 @@ const OrdersPage = (props) => {
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
-							orders.orders.map((order) => (
-								<OrderSmallScreen determine_color={determine_color} order={order} admin={true} />
+							orders.orders.map((order, index) => (
+								<OrderSmallScreen determine_color={determine_color} key={index} order={order} admin={true} />
 							))}
 					</div>
 				</Loading>
 				<div className="wrap jc-c">
 					{orders &&
 						orders.totalPages &&
-						[ ...Array(orders.totalPages).keys() ].map((x) => (
+						[ ...Array(orders.totalPages).keys() ].map((x, index) => (
 							<button
-								key={x + 1}
+								key={index}
 								value={x}
 								defaultValue={x}
 								className="btn primary w-40px mr-1rem mb-1rem"

@@ -711,8 +711,8 @@ const PlaceOrderPage = (props) => {
 																)
 															)}
 													>
-														{[ ...Array(item.countInStock).keys() ].map((x) => (
-															<option key={x + 1} defaultValue={parseInt(x + 1)}>
+														{[ ...Array(item.countInStock).keys() ].map((x, index) => (
+															<option key={index} defaultValue={parseInt(x + 1)}>
 																{parseInt(x + 1)}
 															</option>
 														))}
@@ -855,7 +855,7 @@ const PlaceOrderPage = (props) => {
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'FirstClassPackageInternationalService' && (
-													<div className=" mv-1rem jc-b  ai-c">
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
 														<div className="shipping_rates jc-b w-100per wrap ">
 															<div className="service">Standard</div>
 															<div>
@@ -878,7 +878,7 @@ const PlaceOrderPage = (props) => {
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'PriorityMailInternational' && (
-													<div className=" mv-1rem jc-b  ai-c">
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
 														<div className="shipping_rates jc-b w-100per wrap ">
 															<div className="service">Prority</div>
 															<div>
@@ -901,7 +901,7 @@ const PlaceOrderPage = (props) => {
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'ExpressMailInternational' && (
-													<div className=" mv-1rem jc-b  ai-c">
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
 														<div className="shipping_rates jc-b w-100per wrap ">
 															<div className="service">Express</div>
 															<div>
@@ -929,7 +929,7 @@ const PlaceOrderPage = (props) => {
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'First' && (
-													<div className=" mv-1rem jc-b  ai-c">
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
 														<div className="shipping_rates jc-b w-100per wrap ">
 															<div className="service">Standard</div>
 															<div>
@@ -956,7 +956,7 @@ const PlaceOrderPage = (props) => {
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Priority' && (
-													<div className=" mv-1rem jc-b  ai-c">
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
 														<div className="shipping_rates jc-b w-100per wrap ">
 															<div className="service">Priority</div>
 															<div>
@@ -1007,7 +1007,7 @@ const PlaceOrderPage = (props) => {
 										{shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Express' && (
-													<div className=" mv-1rem jc-b ai-c">
+													<div className=" mv-1rem jc-b ai-c" key={index}>
 														<div className="shipping_rates jc-b w-100per wrap">
 															<div className="service">Express</div>
 															<div>

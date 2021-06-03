@@ -46,9 +46,9 @@ const DevicesPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
-					{/* {colors.map((color) => {
+					{/* {colors.map((color, index) => {
 						return (
-							<div className="wrap jc-b w-16rem m-1rem">
+							<div className="wrap jc-b w-16rem m-1rem key={index}">
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -91,9 +91,9 @@ const DevicesPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{devices.map((device) => (
+								{devices.map((device, index) => (
 									<tr
-										key={device._id}
+										key={index}
 										style={{
 											backgroundColor: '#3e4c6d',
 											fontSize: '1.4rem'

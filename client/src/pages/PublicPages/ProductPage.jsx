@@ -410,8 +410,8 @@ const ProductPage = (props) => {
 														setQty(e.target.value);
 													}}
 												>
-													{[ ...Array(count_in_stock).keys() ].map((x) => (
-														<option key={x + 1} defaultValue={x + 1}>
+													{[ ...Array(count_in_stock).keys() ].map((x, index) => (
+														<option key={index} defaultValue={x + 1}>
 															{x + 1}
 														</option>
 													))}

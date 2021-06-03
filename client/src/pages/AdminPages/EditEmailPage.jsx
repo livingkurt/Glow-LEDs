@@ -209,6 +209,7 @@ const EditEmailPage = (props) => {
 								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
 									<div className="pos-rel">
 										<img
+                    alt="Email"
 											style={{
 												width: '100%',
 												package_height: 'auto',

@@ -251,7 +251,7 @@ const OrderListItem = (props) => {
 					<div className="wrap">
 						{props.order.orderItems.map((item, index) => {
 							return (
-								<div className="row mt-15px">
+								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
 										<Link to={'/collections/all/products/' + item.pathname}>
 											<LazyImage
@@ -291,7 +291,7 @@ const OrderListItem = (props) => {
 					<div className="mv-auto">
 						{props.order.orderItems.map((item, index) => {
 							return (
-								<div>
+								<div key={index}>
 									{determine_product_name(item, false)}
 									{/* {item.category === 'glowskins' && item.color} {item.name}{' '}
 									{item.product_option &&

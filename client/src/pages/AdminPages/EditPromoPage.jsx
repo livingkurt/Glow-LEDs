@@ -229,7 +229,7 @@ const EditPromoPage = (props) => {
 				{items &&
 					items.map((item, index) => {
 						return (
-							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 								<div>
 									<button className="btn icon" onClick={(e) => remove_item(index, e, type)}>
 										<i className="fas fa-times mr-5px" />

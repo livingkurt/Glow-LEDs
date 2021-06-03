@@ -309,40 +309,7 @@ const ContactPage = (props) => {
 						<label className="validation_text">{order_number_validations}</label>
 					</div>
 				)}
-				{/* {[ 'custom_orders' ].includes(reason_for_contact) && (
-					<div className="100per">
-						<label>Upload your Pictures</label>
-						<ReactFilestack
-							apikey={process.env.REACT_APP_FILESTACK_API}
-							customRender={({ onPick }) => (
-								<div>
-									<button class="btn primary mv-10px" onClick={onPick}>
-										Upload image
-									</button>
-								</div>
-							)}
-							onSuccess={finishUploading}
-						/>
-						<div className="row">
-							{inspirational_pictures.map((picture) => {
-								return (
-									<img
-										style={{
-											width: '100%',
-											height: 'auto',
-											maxWidth: '150px',
-											maxHeight: '150px',
-											borderRadius: '15px',
-											marginRight: '10px'
-										}}
-										className="mv-10px"
-										src={picture}
-									/>
-								);
-							})}
-						</div>
-					</div>
-				)} */}
+			
 
 				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 					<div>

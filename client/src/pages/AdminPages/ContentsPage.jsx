@@ -71,9 +71,9 @@ const ContentsPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{contents.map((content) => (
+								{contents.map((content, index) => (
 									<tr
-										key={content._id}
+										key={index}
 										style={{
 											backgroundColor: '#3e4c6d',
 											fontSize: '1.4rem'

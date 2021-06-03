@@ -174,7 +174,7 @@ const EditProductPage = (props) => {
 		setOrder(product.order);
 		set_product_options(product.product_options);
 		set_product_options_images(
-			product.product_options && product.product_options.map((option, index) => option.images)
+			product.product_options && product.product_options.map((option) => option.images)
 		);
 		set_group_product(product.group_product);
 		set_products(product.products);
@@ -438,7 +438,7 @@ const EditProductPage = (props) => {
 						{chips &&
 							chips.map((chip, index) => {
 								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
 											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
 												<i className="fas fa-times mr-5px" />
@@ -460,9 +460,10 @@ const EditProductPage = (props) => {
 					{images &&
 						images.map((picture, index) => {
 							return (
-								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
+								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per" key={index}>
 									<div className="pos-rel">
 										<img
+                    alt="product"
 											style={{
 												width: '100%',
 												package_height: 'auto',
@@ -521,9 +522,10 @@ const EditProductPage = (props) => {
 					{images &&
 						images.map((picture, index) => {
 							return (
-								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
+								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per" key={index}>
 									<div className="pos-rel">
 										<img
+                    alt="product"
 											style={{
 												width: '100%',
 												package_height: 'auto',
@@ -706,7 +708,7 @@ const EditProductPage = (props) => {
 						{products &&
 							products.map((product, index) => {
 								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
 											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
 												<i className="fas fa-times mr-5px" />

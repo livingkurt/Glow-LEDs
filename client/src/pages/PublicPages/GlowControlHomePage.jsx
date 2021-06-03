@@ -150,9 +150,9 @@ const GlowControlHomePage = (props) => {
 										</tr>
 									</thead>
 									<tbody>
-										{devices.map((device) => (
+										{devices.map((device, index) => (
 											<tr
-												key={device._id}
+												key={index}
 												style={{
 													backgroundColor: '#3e4c6d',
 													fontSize: '1.4rem'

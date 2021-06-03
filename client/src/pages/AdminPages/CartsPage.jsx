@@ -93,9 +93,9 @@ const CartsPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-c">
 				<div className="wrap jc-c">
-					{colors.map((color) => {
+					{colors.map((color, index) => {
 						return (
-							<div className="jc-c m-1rem w-16rem">
+							<div className="jc-c m-1rem w-16rem" key={index}>
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{

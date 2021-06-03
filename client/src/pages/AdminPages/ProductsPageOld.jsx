@@ -127,9 +127,9 @@ const ProductsPage = (props) => {
 				<title>Admin Products | Glow LEDs</title>
 			</Helmet>
 			<div className="wrap jc-b">
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="jc-b p-1rem">
+						<div className="jc-b p-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -196,9 +196,9 @@ const ProductsPage = (props) => {
 							</thead>
 							<tbody>
 								{show_hidden &&
-									products.map((product) => (
+									products.map((product, index) => (
 										<tr
-											key={product._id}
+											key={index}
 											style={{
 												backgroundColor: product.hidden ? '#333333' : determine_color(product)
 											}}
@@ -240,9 +240,9 @@ const ProductsPage = (props) => {
 										</tr>
 									))}
 								{!show_hidden &&
-									products.filter((product) => !product.hidden).map((product) => (
+									products.filter((product) => !product.hidden).map((product, index) => (
 										<tr
-											key={product._id}
+											key={index}
 											style={{
 												backgroundColor: product.hidden ? '#333333' : determine_color(product)
 											}}

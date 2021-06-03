@@ -73,6 +73,7 @@ const FeaturedPage = (props) => {
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
+                title="feature"
 									width="996"
 									height="560"
 									style={{ borderRadius: '20px' }}
@@ -86,13 +87,15 @@ const FeaturedPage = (props) => {
 					)}
 					<div className="products">
 						{feature.images &&
-							feature.images.map((image) => {
+							feature.images.map((image, index) => {
 								return (
-									<Zoom className="m-auto">
+									// <Zoom className="m-auto">
+									<div className="m-auto">
 										{/* <div className="responsive_container"> */}
-										<img className="m-1rem br-15px  h-auto ta-c responsive_img" src={image} />
+										<img className="m-1rem br-15px  h-auto ta-c responsive_img" alt="Feature" src={image} />
 										{/* </div> */}
-									</Zoom>
+									</div>
+									// </Zoom>
 								);
 							})}
 					</div>

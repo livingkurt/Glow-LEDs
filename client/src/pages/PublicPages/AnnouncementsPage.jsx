@@ -74,9 +74,9 @@ const AnnouncementPage = (props) => {
 			</div>
 
 			{emails &&
-				emails.slice(0).reverse().map((email) => {
+				emails.slice(0).reverse().map((email, index) => {
 					return (
-						<div className="home_page_divs">
+						<div className="home_page_divs" key={index}>
 							<div style={{ backgroundColor: '#333333', padding: '20px' }} className="br-10px">
 								<h4
 									style={{

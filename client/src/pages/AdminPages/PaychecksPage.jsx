@@ -215,9 +215,9 @@ const PaychecksPage = (props) => {
 			<Loading loading={loading_paychecks} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
-					{colors.map((color) => {
+					{colors.map((color, index) => {
 						return (
-							<div className="wrap jc-b  m-1rem">
+							<div className="wrap jc-b  m-1rem" key={index}>
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -288,9 +288,9 @@ const PaychecksPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{paychecks.map((paycheck) => (
+								{paychecks.map((paycheck, index) => (
 									<tr
-										key={paycheck._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(paycheck),
 											fontSize: '1.4rem'

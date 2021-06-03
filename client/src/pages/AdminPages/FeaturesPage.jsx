@@ -104,9 +104,9 @@ const FeaturesPage = (props) => {
 				</Link>
 			</div>
 			<div className="wrap jc-b">
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b w-18rem m-1rem">
+						<div className="wrap jc-b w-18rem m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -149,9 +149,9 @@ const FeaturesPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{features.map((feature) => (
+								{features.map((feature, index) => (
 									<tr
-										key={feature._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(feature),
 											fontSize: '1.4rem'

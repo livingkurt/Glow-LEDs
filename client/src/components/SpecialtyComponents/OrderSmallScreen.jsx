@@ -44,7 +44,7 @@ const OrderSmallScreen = (props) => {
 				<div className="w-100per">
 					{props.order.orderItems.map((item, index) => {
 						return (
-							<div className="row mt-15px">
+							<div className="row mt-15px" key={index}>
 								<div className="column ai-c pos-rel">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<LazyImage

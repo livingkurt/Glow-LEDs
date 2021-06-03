@@ -158,9 +158,9 @@ const TeamPage = (props) => {
 					<h3 className=""> {team.team_name} Team Members</h3>
 					<div className="products">
 						{team.affiliates &&
-							team.affiliates.map((affiliate) => {
+							team.affiliates.map((affiliate, index) => {
 								return (
-									<Link to={'/collections/all/sponsors/' + affiliate.pathname} className="pos-rel">
+									<Link to={'/collections/all/sponsors/' + affiliate.pathname} className="pos-rel" key={index}>
 										<img
 											className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                       alt="Team Mate"

@@ -252,9 +252,9 @@ const InvoiceEmail = (props) => {
 								Price
 							</td>
 						</tr>
-						{order.orderItems.map((item) => {
+						{order.orderItems.map((item, index) => {
 							return (
-								<tr>
+								<tr key={index}> 
 									<td
 										style={{
 											padding: '5px',

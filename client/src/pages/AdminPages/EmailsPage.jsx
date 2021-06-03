@@ -128,9 +128,9 @@ const EmailsPage = (props) => {
 				</Link>
 			</div>
 			<div className="wrap jc-b">
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b m-1rem">
+						<div className="wrap jc-b m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -169,9 +169,9 @@ const EmailsPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{emails.map((email) => (
+								{emails.map((email, index) => (
 									<tr
-										key={email._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(email),
 											fontSize: '1.4rem'

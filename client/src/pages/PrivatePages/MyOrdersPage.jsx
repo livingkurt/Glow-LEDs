@@ -83,9 +83,9 @@ const UserOrderPage = (props) => {
 				<Link to="/secure/account/profile">
 					<button className="btn secondary">Back to Profile</button>
 				</Link>
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b w-16rem m-1rem">
+						<div className="wrap jc-b w-16rem m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -121,16 +121,16 @@ const UserOrderPage = (props) => {
 					<div className="product_big_screen">
 						{!block_list_view &&
 							orders &&
-							orders.map((order) => <OrderListItem determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => <OrderListItem key={index} determine_color={determine_color} order={order} />)}
 					</div>
 					<div className="product_big_screen">
 						{block_list_view &&
 							orders &&
-							orders.map((order) => <Order determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => <Order key={index} determine_color={determine_color} order={order} />)}
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
-							orders.map((order) => <OrderSmallScreen determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => <OrderSmallScreen key={index} determine_color={determine_color} order={order} />)}
 					</div>
 				</Loading>
 			</div>

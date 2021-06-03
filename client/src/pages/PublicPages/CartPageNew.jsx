@@ -186,8 +186,8 @@ const CartPage = (props) => {
 																dispatch(addToCart(item.pathname, e.target.value));
 															}}
 														>
-															{[ ...Array(item.countInStock).keys() ].map((x) => (
-																<option key={x + 1} defaultValue={parseInt(x + 1)}>
+															{[ ...Array(item.countInStock).keys() ].map((x, index) => (
+																<option key={index} defaultValue={parseInt(x + 1)}>
 																	{parseInt(x + 1)}
 																</option>
 															))}

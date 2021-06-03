@@ -247,7 +247,7 @@ const EditUserAffiliatePage = (props) => {
 						{products &&
 							products.map((product, index) => {
 								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
 											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
 												<i className="fas fa-times mr-5px" />
@@ -300,7 +300,7 @@ const EditUserAffiliatePage = (props) => {
 						{chips &&
 							chips.map((chip, index) => {
 								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
 											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
 												<i className="fas fa-times mr-5px" />

@@ -77,8 +77,8 @@ const RelatedProducts = (props) => {
 								</button>
 							</div>
 							{/* )} */}
-							{[ ...Array(number_of_items).keys() ].map((x) => (
-								<div className="w-259px">
+							{[ ...Array(number_of_items).keys() ].map((x, index) => (
+								<div className="w-259px" key={index}>
 									<CarouselItem
 										key={product_number + x}
 										size="175px"

@@ -98,9 +98,9 @@ const PromosPage = (props) => {
 			</Helmet>
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
-					{colors.map((color) => {
+					{colors.map((color, index) => {
 						return (
-							<div className="wrap jc-b  m-1rem">
+							<div className="wrap jc-b  m-1rem" key={index}>
 								<label style={{ marginRight: '1rem' }}>{color.name}</label>
 								<div
 									style={{
@@ -153,9 +153,9 @@ const PromosPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{promos.map((promo) => (
+								{promos.map((promo, index) => (
 									<tr
-										key={promo._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(promo),
 											fontSize: '1.4rem'

@@ -380,8 +380,8 @@ const OrderPublicPage = (props) => {
 							{order.orderItems.length === 0 ? (
 								<div>Cart is empty</div>
 							) : (
-								order.orderItems.map((item) => (
-									<li key={item._id}>
+								order.orderItems.map((item, index) => (
+									<li key={index}>
 										{console.log({ item })}
 										<div className="cart-image">
 											<Link to={'/collections/all/products/' + item.pathname}>

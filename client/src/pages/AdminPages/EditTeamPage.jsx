@@ -192,7 +192,7 @@ const EditTeamPage = (props) => {
 						{affiliates &&
 							affiliates.map((affiliate, index) => {
 								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
 											<button className="btn icon" onClick={(e) => remove_affiliate(index, e)}>
 												<i className="fas fa-times mr-5px" />

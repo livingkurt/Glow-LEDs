@@ -316,67 +316,6 @@ const EditOrderPage = (props) => {
 		set_loading_tax_rate(false);
 	};
 
-	// const product_option_image_display = (images, option_index) => {
-	// 	// console.log({ images });
-	// 	return (
-	// 		<div>
-	// 			<div className="row wrap">
-	// 				{images &&
-	// 					images.map((picture, index) => {
-	// 						return (
-	// 							<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
-	// 								<div className="pos-rel">
-	// 									<img
-	// 										style={{
-	// 											width: '100%',
-	// 											package_height: 'auto',
-	// 											maxWidth: '100px',
-	// 											maxHeight: '100px',
-	// 											borderRadius: '15px'
-	// 										}}
-	// 										className="mv-10px ml-10px"
-	// 										src={picture}
-	// 									/>
-	// 									<div className="ml-10px">{picture}</div>
-
-	// 									<button
-	// 										className="btn icon pos-abs right-10px top-15px"
-	// 										onClick={(e) => remove_product_option_image(index, e, option_index)}
-	// 									>
-	// 										<i className="fas fa-times" />
-	// 									</button>
-	// 									<div className="pos-abs right-40px top-15px column">
-	// 										{/* {index > 0 && (
-	// 											<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
-	// 												<i className=" fas fa-sort-up" />
-	// 											</button>
-	// 										)}
-
-	// 										{index < images.length - 1 && (
-	// 											<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
-	// 												<i
-	// 													style={{ '-webkitTransform': 'rotate(-180deg)' }}
-	// 													className=" fas fa-sort-up"
-	// 												/>
-	// 											</button>
-	// 										)} */}
-	// 									</div>
-	// 								</div>
-	// 							</div>
-	// 						);
-	// 					})}
-	// 			</div>
-	// 			<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
-	// 				<p>
-	// 					{images &&
-	// 						images.map((picture, index) => {
-	// 							return `${picture}\n`;
-	// 						})}
-	// 				</p>
-	// 			</div>
-	// 		</div>
-	// 	);
-	// };
 
 	const update_order_item_property = (value, field_name, index) => {
 		console.log({ value, field_name, index });
@@ -389,27 +328,6 @@ const EditOrderPage = (props) => {
 		console.log({ orderItems });
 	};
 
-	// const add_option_image = (e, index) => {
-	// 	e.preventDefault();
-	// 	// console.log({ image });
-	// 	if (image.indexOf(' ') >= 0) {
-	// 		console.log('indexOf');
-	// 		image.split(' ').map((image) => {
-	// 			product_options_images[index].push(image);
-	// 			update_product_option_property(product_options_images[index], 'images', index);
-	// 		});
-	// 	} else if (images) {
-	// 		console.log('images.length > 0');
-	// 		product_options_images[index].push(image);
-	// 		update_product_option_property(product_options_images[index], 'images', index);
-	// 	} else {
-	// 		console.log('images.length === 0');
-	// 		set_product_options_images([ image ]);
-	// 		update_product_option_property([ image ], 'images', index);
-	// 	}
-
-	// 	set_image('');
-	// };
 
 	const update_product_option_property = (value, field_name, index) => {
 		console.log({ value, field_name, index });
@@ -458,26 +376,6 @@ const EditOrderPage = (props) => {
 		set_orderItems(new_product_option);
 	};
 
-	// const remove_product_option_image = (image_index, e, option_index) => {
-	// 	e.preventDefault();
-	// 	// set_product_options_images((images) =>
-	// 	// 	images.filter((image, index) => {
-	// 	// 		return image_index !== index;
-	// 	// 	})
-	// 	// );
-	// 	// const images = product_options.find((option, index) => index === option_index);
-	// 	const images = product_options
-	// 		.map((option, index) => option.images)
-	// 		.find((images, index) => index === option_index)
-	// 		.filter((image, index) => image_index !== index);
-	// 	console.log({ images });
-
-	// 	// .filter((image, index) => {
-	// 	// 	return image_index !== index;
-	// 	// });
-	// 	update_product_option_property(images, 'images', option_index);
-	// };
-
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Order' : 'Create Order'}</h1>
@@ -500,48 +398,6 @@ const EditOrderPage = (props) => {
 								>
 									<div className="row wrap jc-b">
 										<div className="w-228px m-10px">
-											{/* <h2>User</h2> */}
-
-											{/* <li>
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mb-15px"
-												>
-													User
-												</label>
-												<div className="ai-c h-25px mb-15px">
-													<div className="custom-select">
-														<select
-															defaultValue={order.user && order.user._id}
-															// defaultValue={user.product}
-															className="qty_select_dropdown"
-															onChange={(e) => set_user(e.target.value)}
-														>
-															<option key={1} defaultValue="">
-																---Choose User---
-															</option>
-															{users &&
-																users.map((user, index) => (
-																	<option key={index} defaultValue={user._id}>
-																		{user.first_name} {user.last_name}
-																	</option>
-																))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-												<li>
-													<label htmlFor="user">User</label>
-													<input
-														type="text"
-														defaultValue={order.user && order.user._id}
-														name="user"
-														id="user"
-														onChange={(e) => set_user(e.target.value)}
-													/>
-												</li>
-											</li> */}
 											<li>
 												<label htmlFor="user">User</label>
 												<input

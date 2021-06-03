@@ -266,9 +266,9 @@ const MenuPage = (props) => {
 						artists &&
 						producers &&
 						vfx &&
-						determine_menu_items().map((item) => {
+						determine_menu_items().map((item, index) => {
 							return (
-								<div className="product m-1rem" style={{ height: 'unset' }}>
+								<div className="product m-1rem" style={{ height: 'unset' }} key={index}>
 									<Link to={decide_url(item)}>
 										<h2 className="">{humanize(item.category)}</h2>
 										<div className="w-300px h-300px mb-1rem">

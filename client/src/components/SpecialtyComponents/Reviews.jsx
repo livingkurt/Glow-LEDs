@@ -52,9 +52,9 @@ const Review = (props) => {
 
 	return (
 		<div className="review" id="reviews">
-			{props.product.reviews.map((review) => (
+			{props.product.reviews.map((review, index) => (
 				<li
-					key={review._id}
+					key={index}
 					style={{
 						listStyleType: 'none',
 						background: '#616161',

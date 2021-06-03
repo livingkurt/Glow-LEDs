@@ -84,9 +84,9 @@ const LogsPage = (props) => {
 			</Helmet>
 
 			<div className="wrap jc-b">
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b w-16rem m-1rem">
+						<div className="wrap jc-b w-16rem m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -132,9 +132,9 @@ const LogsPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								{logs.map((log) => (
+								{logs.map((log, index) => (
 									<tr
-										key={log._id}
+										key={index}
 										style={{
 											backgroundColor: determine_color(log),
 											fontSize: '1.4rem'

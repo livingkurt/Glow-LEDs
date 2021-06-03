@@ -90,9 +90,9 @@ const UserOrderPage = (props) => {
 				<Link to="/secure/account/profile">
 					<button className="btn primary">Back to Profile</button>
 				</Link>
-				{colors.map((color) => {
+				{colors.map((color, index) => {
 					return (
-						<div className="wrap jc-b w-16rem m-1rem">
+						<div className="wrap jc-b w-16rem m-1rem" key={index}>
 							<label style={{ marginRight: '1rem' }}>{color.name}</label>
 							<div
 								style={{
@@ -129,8 +129,8 @@ const UserOrderPage = (props) => {
 									</tr>
 								</thead>
 								<tbody>
-									{orders.map((order) => (
-										<tr key={order._id} style={{ backgroundColor: determine_color(order) }}>
+									{orders.map((order, index) => (
+										<tr key={index} style={{ backgroundColor: determine_color(order) }}>
 											<td className="p-10px">{order._id}</td>
 											<td className="p-10px">{format_date(order.createdAt)}</td>
 											<td className="p-10px">${order.totalPrice.toFixed(2)}</td>
