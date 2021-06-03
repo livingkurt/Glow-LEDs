@@ -16,6 +16,7 @@ const AllProductsPage = (props) => {
 	const [ best_sellers, set_best_sellers ] = useState([]);
 	const [ essentials, set_essentials ] = useState([]);
 	const [ imperfect, set_imperfect ] = useState([]);
+	const [ loading_products, set_loading_products ] = useState(false);
 	const [ alternative_products, set_alternative_products ] = useState([]);
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
@@ -68,6 +69,7 @@ const AllProductsPage = (props) => {
 	);
 
 	const get_occurrences = async () => {
+		set_loading_products(true);
 		const { data: occurrences } = await API_Products.get_occurrences();
 		set_product_occurrences(occurrences);
 		console.log({ occurrences });
@@ -90,6 +92,7 @@ const AllProductsPage = (props) => {
 			dispatch(listProducts(category, subcategory, searchKeyword));
 			set_best_sellers(false);
 		}
+		set_loading_products(false);
 	};
 	// console.log({ best_sellers });
 	// console.log({ products });
@@ -319,6 +322,7 @@ const AllProductsPage = (props) => {
 						</div>
 					</div>
 				)}
+				<Loading loading={loading_products} />
 				{imperfect && (
 					<div>
 						<div className="product_big_screen">

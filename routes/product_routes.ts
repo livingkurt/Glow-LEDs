@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/get_all/imperfect', async (req, res) => {
 	try {
 		console.log('Imperfect');
-		const products = await Product.find({ deleted: false, subcategory: 'imperfect' });
+		const products = await Product.find({ deleted: false, subcategory: 'imperfect' }).sort({ order: -1 });
 		console.log({ products });
 		if (products) {
 			log_request({
