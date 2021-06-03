@@ -149,19 +149,20 @@ export const cart_sale_price_switch = (product) => {
 					On Sale!
 				</label>
 			);
-		} else if (!product.countInStock) {
-			return (
-				<label>
-					<del style={{ color: '#a03131' }}>
-						<label style={{ color: 'white' }} className="ml-7px">
-							${product.price ? product.price.toFixed(2) : product.price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" />
-					<label className="ml-7px">Sold Out</label>
-				</label>
-			);
 		} else {
+			// else if (!product.countInStock) {
+			// 	return (
+			// 		<label>
+			// 			<del style={{ color: '#a03131' }}>
+			// 				<label style={{ color: 'white' }} className="ml-7px">
+			// 					${product.price ? product.price.toFixed(2) : product.price}
+			// 				</label>
+			// 			</del>{' '}
+			// 			<i className="fas fa-arrow-right" />
+			// 			<label className="ml-7px">Sold Out</label>
+			// 		</label>
+			// 	);
+			// }
 			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
 		}
 	}
