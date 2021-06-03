@@ -174,7 +174,7 @@ const EditPromoPage = (props) => {
 		console.log(excluded_category);
 		if (excluded_category.indexOf(' ') >= 0) {
 			console.log('indexOf');
-			excluded_category.split(' ').map((excluded_category) => {
+			excluded_category.split(' ').forEach((excluded_category) => {
 				set_excluded_categories((excluded_categories) => [ ...excluded_categories, excluded_category ]);
 			});
 		} else if (excluded_categories) {
@@ -192,7 +192,7 @@ const EditPromoPage = (props) => {
 		console.log(excluded_product);
 		if (excluded_product.indexOf(' ') >= 0) {
 			console.log('indexOf');
-			excluded_product.split(' ').map((excluded_product) => {
+			excluded_product.split(' ').forEach((excluded_product) => {
 				set_excluded_products((excluded_products) => [ ...excluded_products, excluded_product ]);
 			});
 		} else if (excluded_products) {
