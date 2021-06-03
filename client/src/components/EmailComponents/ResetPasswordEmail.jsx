@@ -94,7 +94,7 @@ const ResetPasswordEmail = () => {
 											<td>
 												<img
 													src={email.image}
-													alt="Promo Image"
+													alt="Promo"
 													title="Promo Image"
 													style={{
 														textAlign: 'center',

@@ -467,8 +467,8 @@ const OrderStatusEmail = (props) => {
 								</a>
 								<p style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}>
 									<strong>Questions or concerns?:</strong>{' '}
-									<a
-										href="#"
+									<label
+										// href="#"
 										style={{
 											textDecoration: 'none !important',
 											fontSize: 'inherit !important',
@@ -479,7 +479,7 @@ const OrderStatusEmail = (props) => {
 										}}
 									>
 										info.glowleds@gmail.com
-									</a>
+									</label>
 								</p>
 							</div>
 						</div>

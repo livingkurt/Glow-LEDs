@@ -12,7 +12,7 @@ import { listPromos } from '../../actions/promoActions';
 const OrderEmail = (props) => {
 	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
 	const { order } = orderDetailsPublic;
-  console.log({order})
+	console.log({ order });
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
@@ -38,21 +38,21 @@ const OrderEmail = (props) => {
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
-		[ dispatch, props.match.params.id, props.match.params.status]
+		[ dispatch, props.match.params.id, props.match.params.status ]
 	);
 
 	useEffect(
 		() => {
-      if (emails){
-        const active_email = emails.find((email) => email.active === true);
-        if (active_email) {
-          dispatch(detailsEmail(active_email._id));
-        }
-      }
-			
+			if (emails) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
+			}
+
 			return () => {};
 		},
-		[ emails, dispatch]
+		[ emails, dispatch ]
 	);
 
 	const determin_card_logo = (card_type) => {
@@ -499,7 +499,8 @@ const OrderEmail = (props) => {
 												align="right"
 											>
 												<strong>Promo Code:</strong>{' '}
-												{order && promos &&
+												{order &&
+												promos &&
 												order.promo_code &&
 												promos.find(
 													(promo) =>
@@ -620,8 +621,8 @@ const OrderEmail = (props) => {
 																{order.shipping.city}, {order.shipping.state}{' '}
 																{order.shipping.postalCode}
 																<br />
-																<a
-																	href="#"
+																<label
+																	// href="#"
 																	style={{
 																		textDecoration: 'none !important',
 																		fontSize: 'inherit !important',
@@ -632,7 +633,7 @@ const OrderEmail = (props) => {
 																	}}
 																>
 																	{order.shipping.email}
-																</a>
+																</label>
 															</td>
 														</tr>
 													</tbody>
@@ -768,8 +769,8 @@ const OrderEmail = (props) => {
 								</p>
 								<p style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}>
 									<strong>Questions or concerns?:</strong>{' '}
-									<a
-										href="#"
+									<label
+										// href="#"
 										style={{
 											textDecoration: 'none !important',
 											fontSize: 'inherit !important',
@@ -780,7 +781,7 @@ const OrderEmail = (props) => {
 										}}
 									>
 										info.glowleds@gmail.com
-									</a>
+									</label>
 								</p>
 							</div>
 						</div>

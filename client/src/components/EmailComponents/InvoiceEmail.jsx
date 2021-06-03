@@ -39,13 +39,13 @@ const InvoiceEmail = (props) => {
 
 	useEffect(
 		() => {
-      if (emails){
-        const active_email = emails.find((email) => email.active === true);
-        if (active_email) {
-          stableDispatch(detailsEmail(active_email._id));
-        }
-      }
-			
+			if (emails) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					stableDispatch(detailsEmail(active_email._id));
+				}
+			}
+
 			return () => {};
 		},
 		[ emails, stableDispatch ]
@@ -61,8 +61,8 @@ const InvoiceEmail = (props) => {
 				return 'https://images2.imgbox.com/63/92/Z3KHgTl4_o.png';
 			case 'discover':
 				return 'https://images2.imgbox.com/96/cd/hXyv0MRB_o.png';
-      default:
-        return
+			default:
+				return;
 		}
 	};
 
@@ -109,6 +109,7 @@ const InvoiceEmail = (props) => {
 									<tr>
 										<td style={{ color: '#333' }} valign="top">
 											<img
+												alt="Logo"
 												src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
 												style={{ width: '500px', marginLeft: '-5px' }}
 											/>
@@ -259,7 +260,7 @@ const InvoiceEmail = (props) => {
 						</tr>
 						{order.orderItems.map((item, index) => {
 							return (
-								<tr key={index}> 
+								<tr key={index}>
 									<td
 										style={{
 											padding: '5px',
@@ -632,6 +633,7 @@ const InvoiceEmail = (props) => {
 								<div style={{ textAlign: 'center' }}>@glowledsofficial</div>
 							</div>
 							<img
+								alt="QR Code"
 								src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png"
 								style={{ width: '250px', textAlign: 'center' }}
 							/>

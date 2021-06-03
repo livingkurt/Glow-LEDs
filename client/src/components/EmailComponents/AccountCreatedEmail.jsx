@@ -90,8 +90,8 @@ const AccountCreatedEmail = () => {
 											<td>
 												<img
 													src={email.image}
-													alt="Promo Image"
-													title="Promo Image"
+													alt="Account Created"
+													title="Account Created"
 													style={{
 														textAlign: 'center',
 														width: '100%',
