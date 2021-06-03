@@ -197,22 +197,24 @@ const SponsorPage = (props) => {
 								<div className="mt-2rem wrap  ">
 									<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
 										<div className="fs-40px">
+                    {affiliate.facebook_name && 
 											<a
 												href={'https://www.facebook.com/' + affiliate.facebook_name}
 												target="_blank"
 												rel="noopener noreferrer"
 											>
 												<i className="fab fa-facebook zoom" />
-											</a>
+											</a>}
 										</div>
 										<div className="ml-10px fs-40px">
+                    {affiliate.instagram_handle && 
 											<a
 												href={'https://www.instagram.com/' + affiliate.instagram_handle}
 												target="_blank"
 												rel="noopener noreferrer"
 											>
 												<i className="fab fa-instagram zoom" />
-											</a>
+											</a>}
 										</div>
 									</div>
 								</div>
