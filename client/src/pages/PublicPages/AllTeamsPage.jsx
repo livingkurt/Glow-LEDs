@@ -21,7 +21,7 @@ const AllTeamsPage = (props) => {
 	return (
 		<div>
 			<Helmet>
-				<title>Teamd | Glow LEDs</title>
+				<title>Team | Glow LEDs</title>
 				<meta property="og:title" content="Teamd" />
 				<meta name="twitter:title" content="Teamd" />
 				<link rel="canonical" href="https://www.glow-leds.com/collections/all/teams" />
