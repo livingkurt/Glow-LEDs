@@ -27,28 +27,29 @@ const OrderEmail = (props) => {
 	const { promos } = promoList;
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
+	// const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
-			stableDispatch(listEmails(toCapitlize(props.match.params.status)));
-			stableDispatch(detailsOrderPublic(props.match.params.id));
-			stableDispatch(listPromos());
+			dispatch(listEmails(toCapitlize(props.match.params.status)));
+			dispatch(detailsOrderPublic(props.match.params.id));
+			dispatch(detailsOrderPublic(props.match.params.id));
+			dispatch(listPromos());
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
-		[ stableDispatch ]
+		[  ]
 	);
 
 	useEffect(
 		() => {
 			const active_email = emails.find((email) => email.active === true);
 			if (active_email) {
-				stableDispatch(detailsEmail(active_email._id));
+				dispatch(detailsEmail(active_email._id));
 			}
 			return () => {};
 		},
-		[ emails, stableDispatch ]
+		[ emails ]
 	);
 
 	const determin_card_logo = (card_type) => {

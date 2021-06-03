@@ -12,10 +12,12 @@ const router = express.Router();
 
 router.get('/track_order/:id', async (req: any, res: any) => {
 	try {
+    console.log(req.params.id)
 		const order = await Order.findOne({ _id: req.params.id })
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product')
 			.populate('user');
+      console.log({order})
 		if (order) {
 			log_request({
 				method: 'GET',
