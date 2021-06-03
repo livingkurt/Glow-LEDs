@@ -18,20 +18,20 @@ const Banner = (props) => {
 
 	useEffect(
 		() => {
-			const active_content = contents.find((content) => content.active === true);
-			if (active_content) {
-				dispatch(detailsContent(active_content._id));
-			}
+      if (contents){
+        const active_content = contents.find((content) => content.active === true);
+        if (active_content) {
+          dispatch(detailsContent(active_content._id));
+        }
+      }
+		
 			return () => {};
 		},
-		[ contents ]
+		[ contents, dispatch ]
 	);
 	const banner_styles = {
 		position: 'fixed',
-		// height: '22px',
 		width: '100%',
-		// backgroundColor: 'grey',
-		// textAlign: 'center',
 		transition: 'top 0.2s'
 	};
 
@@ -47,7 +47,6 @@ const Banner = (props) => {
 				<div className="row mt-3px social_media_banner">
 					<div className="ml-10px">
 						<a
-							rel="noreferrer"
 							href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -57,7 +56,6 @@ const Banner = (props) => {
 					</div>
 					<div className="ml-10px">
 						<a
-							rel="noreferrer"
 							href="https://www.instagram.com/glow_leds/"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -67,7 +65,6 @@ const Banner = (props) => {
 					</div>
 					<div className="mh-10px">
 						<a
-							rel="noreferrer"
 							href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
 							target="_blank"
 							rel="noopener noreferrer"
@@ -77,7 +74,6 @@ const Banner = (props) => {
 					</div>
 					<div className="mr-10px">
 						<a
-							rel="noreferrer"
 							href="https://soundcloud.com/ntre/tracks"
 							target="_blank"
 							rel="noopener noreferrer"

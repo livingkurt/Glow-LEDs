@@ -106,7 +106,7 @@ export const log_request = async (logs: any) => {
 			: `Unsuccessfully Completed ${logs.method} Request for`} ${logs.data.length} ${logs.collection}s`
 	});
 };
-let transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	pool: true,
 	auth: {
@@ -128,7 +128,7 @@ export const log_error = async (logs: any) => {
 
 	await Log.create(data);
 
-	let mailOptions = {
+	const mailOptions = {
 		from: process.env.DISPLAY_EMAIL,
 		to: 'info.glowleds@gmail.com',
 		subject: data.outcome,

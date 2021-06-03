@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const router = express.Router();
 
-router.get('/track_order/:id', async (req: any, res: any) => {
+router.get('/get_one_guest/:id', async (req: any, res: any) => {
 	try {
     console.log(req.params.id)
 		const order = await Order.findOne({ _id: req.params.id })

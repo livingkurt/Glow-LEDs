@@ -39,10 +39,13 @@ const InvoiceEmail = (props) => {
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				stableDispatch(detailsEmail(active_email._id));
-			}
+      if (emails){
+        const active_email = emails.find((email) => email.active === true);
+        if (active_email) {
+          stableDispatch(detailsEmail(active_email._id));
+        }
+      }
+			
 			return () => {};
 		},
 		[ emails, stableDispatch ]
@@ -58,6 +61,8 @@ const InvoiceEmail = (props) => {
 				return 'https://images2.imgbox.com/63/92/Z3KHgTl4_o.png';
 			case 'discover':
 				return 'https://images2.imgbox.com/96/cd/hXyv0MRB_o.png';
+      default:
+        return
 		}
 	};
 

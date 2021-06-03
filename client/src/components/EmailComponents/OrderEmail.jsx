@@ -10,9 +10,9 @@ import { determine_product_name, email_sale_price_switch } from '../../utils/rea
 import { listPromos } from '../../actions/promoActions';
 
 const OrderEmail = (props) => {
-	const history = useHistory();
 	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
 	const { order } = orderDetailsPublic;
+  console.log({order})
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
@@ -38,18 +38,21 @@ const OrderEmail = (props) => {
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
-		[  ]
+		[ dispatch, props.match.params.id, props.match.params.status]
 	);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
-			}
+      if (emails){
+        const active_email = emails.find((email) => email.active === true);
+        if (active_email) {
+          dispatch(detailsEmail(active_email._id));
+        }
+      }
+			
 			return () => {};
 		},
-		[ emails ]
+		[ emails, dispatch]
 	);
 
 	const determin_card_logo = (card_type) => {
@@ -505,7 +508,7 @@ const OrderEmail = (props) => {
 															(promo) =>
 																promo.promo_code === order.promo_code.toLowerCase()
 														)
-												).admin_only &&
+												) &&
 												promos.find(
 													(promo) => promo.promo_code === order.promo_code.toLowerCase()
 												).admin_only ? (

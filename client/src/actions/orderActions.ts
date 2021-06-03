@@ -419,7 +419,7 @@ export const detailsOrderPublic = (orderId: string) => async (
 	try {
 		dispatch({ type: ORDER_DETAILS_PUBLIC_REQUEST, payload: orderId });
     console.log({orderId})
-		const { data } = await axios.get('/api/orders/track_order/' + orderId);
+		const { data } = await axios.get('/api/orders/get_one_guest/' + orderId);
     console.log({data})
     if (data){
       dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
