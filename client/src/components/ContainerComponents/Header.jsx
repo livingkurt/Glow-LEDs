@@ -191,6 +191,9 @@ const Header = (props) => {
 								<Link to="/collections/all/products/category/essentials">
 									<button className="btn nav w-100per ta-l">Glow LEDs Essentials</button>
 								</Link>
+								<Link to="/collections/all/products/category/discounted">
+									<button className="btn nav w-100per ta-l">On Sale!</button>
+								</Link>
 								<div className="dropdown-nav-subcategory">
 									<Link to="/pages/menu/gloving">
 										<button className="btn nav w-100per ta-l">Gloving</button>

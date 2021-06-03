@@ -66,6 +66,10 @@ export default {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/get_essentials');
 	},
+	get_imperfect: () => {
+		console.log('get_imperfect');
+		return axios.get('/api/products/get_all/imperfect');
+	},
 	get_shown_products: () => {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/get_shown');

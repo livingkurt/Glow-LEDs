@@ -28,7 +28,6 @@ export const affiliateListReducer = (state = { affiliates: [] }, action: { type:
 };
 
 export const affiliateDetailsReducer = (state = { affiliate: {} }, action: { type: any; payload: any }) => {
-	console.log({ Reducer: action.payload });
 	switch (action.type) {
 		case AFFILIATE_DETAILS_REQUEST:
 			return { loading: true };

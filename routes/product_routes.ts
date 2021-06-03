@@ -7,6 +7,47 @@ const { isAuth, isAdmin } = require('../util');
 
 const router = express.Router();
 
+router.get('/get_all/imperfect', async (req, res) => {
+	try {
+		console.log('Imperfect');
+		const products = await Product.find({ deleted: false, subcategory: 'imperfect' });
+		console.log({ products });
+		if (products) {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ products ],
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(products);
+		} else {
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: [ products ],
+				status: 404,
+				success: false,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.status(404).send({ message: 'Product Not Found.' });
+		}
+	} catch (error) {
+		log_error({
+			method: 'GET',
+			path: req.originalUrl,
+			collection: 'Product',
+			error,
+			status: 500,
+			success: false
+		});
+		res.status(500).send({ error, message: 'Error Getting Product' });
+	}
+});
+
 router.get('/get_all', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
@@ -432,6 +473,7 @@ router.get('/get_essentials', async (req, res) => {
 		res.status(500).send({ error, message: 'Error Getting Product' });
 	}
 });
+
 router.post('/get_best_sellers', async (req, res) => {
 	try {
 		const occurences = req.body.occurences;

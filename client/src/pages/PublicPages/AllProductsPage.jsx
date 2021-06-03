@@ -15,6 +15,7 @@ const AllProductsPage = (props) => {
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ best_sellers, set_best_sellers ] = useState([]);
 	const [ essentials, set_essentials ] = useState([]);
+	const [ imperfect, set_imperfect ] = useState([]);
 	const [ alternative_products, set_alternative_products ] = useState([]);
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
@@ -52,10 +53,11 @@ const AllProductsPage = (props) => {
 	// );
 	useEffect(
 		() => {
-			if (category === 'best_sellers') {
+			if (category === 'discounted') {
 				get_occurrences();
-			}
-			if (category === 'essentials') {
+			} else if (category === 'best_sellers') {
+				get_occurrences();
+			} else if (category === 'essentials') {
 				get_occurrences();
 			} else {
 				dispatch(listProducts(category, subcategory, searchKeyword));
@@ -78,6 +80,11 @@ const AllProductsPage = (props) => {
 			const { data } = await API_Products.get_essentials();
 			console.log({ data });
 			set_essentials(data);
+			set_alternative_products(data);
+		} else if (category === 'discounted') {
+			const { data } = await API_Products.get_imperfect();
+			console.log({ data });
+			set_imperfect(data);
 			set_alternative_products(data);
 		} else {
 			dispatch(listProducts(category, subcategory, searchKeyword));
@@ -270,7 +277,49 @@ const AllProductsPage = (props) => {
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading} error={error}>
-				{best_sellers && (
+				{!imperfect &&
+				best_sellers && (
+					<div>
+						<div className="product_big_screen">
+							{alternative_products && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{products.length === 0 &&
+										alternative_products.map(
+											(product, index) =>
+												!product.hidden && (
+													<Product
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
+								</ul>
+							)}
+						</div>
+
+						<div className="product_small_screen none">
+							{products.length === 0 &&
+							alternative_products && (
+								<ul className="products" style={{ marginTop: 0 }}>
+									{alternative_products.map(
+										(product, index) =>
+											!product.hidden && (
+												<ProductSmallScreen
+													size="300px"
+													key={index}
+													product={product}
+													product_occurrences={product_occurrences}
+												/>
+											)
+									)}
+								</ul>
+							)}
+						</div>
+					</div>
+				)}
+				{imperfect && (
 					<div>
 						<div className="product_big_screen">
 							{alternative_products && (
