@@ -725,14 +725,14 @@ const ProductPage = (props) => {
 						</div>
 						{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
 							<div className=" m-2rem  h-auto m-auto jc-c">
-								<Zoom className="m-auto">
-									<img
-										className="max-w-800px w-100per h-auto"
-										src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
-										alt="Graphic Timeline"
-										title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"
-									/>
-								</Zoom>
+								{/* <Zoom className="m-auto"> */}
+								<img
+									className="max-w-800px w-100per h-auto "
+									src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
+									alt="Graphic Timeline"
+									title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"
+								/>
+								{/* </Zoom> */}
 							</div>
 						)}
 
@@ -747,14 +747,14 @@ const ProductPage = (props) => {
 								</a>
 							)} */}
 							{product.category === 'glowskins' && (
-								<Zoom>
-									<img
-										className="colored_caps_images"
-										src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
-										alt="Glowskins Chip Compatibility"
-										title="Glowskins Chip Compatibility"
-									/>
-								</Zoom>
+								// <Zoom>
+								<img
+									className="colored_caps_images"
+									src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
+									alt="Glowskins Chip Compatibility"
+									title="Glowskins Chip Compatibility"
+								/>
+								// </Zoom>
 							)}
 
 							{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
@@ -763,25 +763,25 @@ const ProductPage = (props) => {
 									<div className="colored_caps">
 										<div className="column colored_caps_item m-1rem">
 											<h3 className="colored_caps_images">Colored Caps</h3>
-											<Zoom>
-												<img
-													className="colored_caps_images"
-													src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
-													alt="Colored Caps"
-													title="Colored Caps"
-												/>
-											</Zoom>
+											{/* <Zoom> */}
+											<img
+												className="colored_caps_images"
+												src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
+												alt="Colored Caps"
+												title="Colored Caps"
+											/>
+											{/* </Zoom> */}
 										</div>
 										<div className="column colored_caps_item m-1rem">
 											<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
-											<Zoom>
-												<img
-													className="colored_caps_images"
-													src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
-													alt="Colored Caps Under Blacklight"
-													title="Colored Caps Under Blacklight"
-												/>
-											</Zoom>
+											{/* <Zoom> */}
+											<img
+												className="colored_caps_images"
+												src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
+												alt="Colored Caps Under Blacklight"
+												title="Colored Caps Under Blacklight"
+											/>
+											{/* </Zoom> */}
 										</div>
 									</div>
 								</div>

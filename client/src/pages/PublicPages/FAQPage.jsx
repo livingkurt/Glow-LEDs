@@ -77,14 +77,14 @@ const FAQPage = () => {
 							</li>
 							<li>All Done! Now go throw some sicks shows!</li>
 						</ul>
-						<Zoom>
-							<img
-								className="colored_caps_images"
-								src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
-								alt="Glowskins Chip Compatibility"
-								title="Glowskins Chip Compatibility"
-							/>
-						</Zoom>
+						{/* <Zoom> */}
+						<img
+							className="colored_caps_images"
+							src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
+							alt="Glowskins Chip Compatibility"
+							title="Glowskins Chip Compatibility"
+						/>
+						{/* </Zoom> */}
 						{/* <h2>Nanoskins V1</h2>
 						<label>
 							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
