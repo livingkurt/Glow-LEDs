@@ -1,0 +1,17 @@
+@use '../abstracts' as *;
+
+/* Home Page */
+
+.home_page_divs {
+	box-shadow: $bs_deep;
+	border-radius: $br_large_containers;
+	padding: 25px;
+	margin-bottom: 25px;
+}
+.product_list_item {
+	box-shadow: $bs_deep;
+	border-radius: $br_large_containers;
+	padding: 10px;
+	padding-left: 25px;
+	margin-bottom: 10px;
+}

@@ -176,11 +176,4 @@ email_templates/App.js
 
 certification/glowleds-key.pem
 
-client/src/scss/style.scss
-client/src/scss/components
-client/src/scss/abstracts
-client/src/scss/alignment
-client/src/scss/appearance
-client/src/scss/elements
-client/src/scss/size
-client/src/scss/spacing
+client/src/scss/OLDSCSS.scss

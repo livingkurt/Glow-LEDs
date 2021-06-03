@@ -164,7 +164,7 @@ const ProductListItem = (props) => {
 			onKeyDown={(event) => onKeyDown(event, provided, snapshot)}
 			isSelected={isSelected}
 		>
-			<div className="ai-c h-25px">
+			<div className="ai-c">
 				<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
 					<label style={{ fontSize: '1.6rem' }}>
 						{snapshot.isDragging ? props.product.name + ' - Moving' : props.product.name}

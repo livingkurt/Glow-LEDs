@@ -168,7 +168,7 @@ const RegisterPage = (props) => {
 						Already have an account?
 						<Link
 							to={redirect === '/' ? 'login' : 'login?redirect=' + redirect}
-							className="btn secondary text-center"
+							className="btn secondary ta-c"
 						>
 							Login
 						</Link>

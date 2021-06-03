@@ -129,7 +129,7 @@ const LoginPage = (props) => {
 					<li>
 						<Link
 							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-							className="btn primary text-center"
+							className="btn primary ta-c"
 						>
 							Create Account
 						</Link>
@@ -137,7 +137,7 @@ const LoginPage = (props) => {
 					{/* <li style={{ marginBottom: '-20px' }}>
 							<Link
 								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-								className="btn secondary text-center"
+								className="btn secondary ta-c"
 							>
 								New User
 							</Link>

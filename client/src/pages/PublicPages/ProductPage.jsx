@@ -196,7 +196,7 @@ const ProductPage = (props) => {
 
 	return (
 		<div className="column">
-			<div className="back-to-result">
+			<div className="p-1rem">
 				<div className="jc-b">
 					<div className="mb-10px">
 						<button className="btn secondary" onClick={() => props.history.goBack()}>

@@ -225,32 +225,32 @@ const ContactPage = (props) => {
 						name="reason_for_contact"
 						placeholder="----Click Here to Choose Reason----"
 					>
-						<option className="grey_option" disabled="disabled" selected="selected" value="">
+						<option className="contact_grey_option" disabled="disabled" selected="selected" value="">
 							----Click Here to Choose Reason----
 						</option>
 
-						<option className="options" value="did_not_recieve_verification_email">
+						<option className="contact_options" value="did_not_recieve_verification_email">
 							Did not Recieve Verification Email
 						</option>
-						<option className="options" value="order_issues">
+						<option className="contact_options" value="order_issues">
 							Order Issues
 						</option>
-						<option className="options" value="returns">
+						<option className="contact_options" value="returns">
 							Returns
 						</option>
-						<option className="options" value="technical_support">
+						<option className="contact_options" value="technical_support">
 							Technical Support
 						</option>
-						<option className="options" value="website_bugs">
+						<option className="contact_options" value="website_bugs">
 							Website Bugs
 						</option>
-						<option className="options" value="custom_orders">
+						<option className="contact_options" value="custom_orders">
 							Custom Orders
 						</option>
-						<option className="options" value="product_suggestions">
+						<option className="contact_options" value="product_suggestions">
 							Product Suggestions
 						</option>
-						<option className="options" value="submit_content_to_be_featured">
+						<option className="contact_options" value="submit_content_to_be_featured">
 							Submit Content to be Featured
 						</option>
 					</select>
