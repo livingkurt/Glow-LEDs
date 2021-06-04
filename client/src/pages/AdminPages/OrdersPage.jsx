@@ -115,6 +115,7 @@ const OrdersPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_order(order, true, is_action, action_at));
+			history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}`);
 		}
 	};
 	const update_order_payment_state = (order, state, is_action) => {
@@ -124,6 +125,7 @@ const OrdersPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_payment(order, true, payment_method));
+			history.push(`/secure/glow/emails/order/${order._id}/order/false`);
 		}
 	};
 
@@ -209,7 +211,7 @@ const OrdersPage = (props) => {
 							orders &&
 							orders.orders.map((order, index) => (
 								<OrderListItem
-                key={index}
+									key={index}
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
 									update_order_state={update_order_state}
@@ -224,7 +226,7 @@ const OrdersPage = (props) => {
 							orders &&
 							orders.orders.map((order, index) => (
 								<Order
-                key={index}
+									key={index}
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}
 									update_order_state={update_order_state}
@@ -237,7 +239,12 @@ const OrdersPage = (props) => {
 					<div className="product_small_screen none column">
 						{orders &&
 							orders.orders.map((order, index) => (
-								<OrderSmallScreen determine_color={determine_color} key={index} order={order} admin={true} />
+								<OrderSmallScreen
+									determine_color={determine_color}
+									key={index}
+									order={order}
+									admin={true}
+								/>
 							))}
 					</div>
 				</Loading>

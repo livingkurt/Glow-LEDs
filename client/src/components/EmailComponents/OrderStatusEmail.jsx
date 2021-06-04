@@ -636,22 +636,26 @@ const OrderStatusEmail = (props) => {
 		);
 		console.log({ data });
 		console.log({ request });
+		if (request) {
+			history.goBack();
+			// history.push(`/secure/account/order/${order._id}`);
+		}
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (order) {
-	// 			if (order.orderItems.length > 0) {
-	// 				if (props.match.params.id) {
-	// 					send_order_email(order.shipping.email, order.shipping.first_name);
-	// 				}
-	// 			}
-	// 		}
+	useEffect(
+		() => {
+			if (order && email) {
+				if (order.orderItems.length > 0) {
+					if (props.match.params.id) {
+						send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+					}
+				}
+			}
 
-	// 		return () => {};
-	// 	},
-	// 	[ order ]
-	// );
+			return () => {};
+		},
+		[ order, email ]
+	);
 
 	return (
 		<div>

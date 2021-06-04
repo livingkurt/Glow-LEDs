@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { detailsOrder, payOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
@@ -181,62 +181,9 @@ const OrderPage = (props) => {
 		return result;
 	};
 
+	const history = useHistory();
+
 	const [ show_color, set_show_color ] = useState(false);
-
-	// const handleWindowResize = (width) => {
-	// 	if (width > 0 && width < 407) {
-	// 		set_show_color(true);
-	// 	} else {
-	// 		set_show_color(false);
-	// 	}
-	// };
-	console.log({ width: width, height: height });
-
-	// const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-	// function useCurrentWidth() {
-	// 	// save current window width in the state object
-	// 	let [ width, setWidth ] = useState(getWidth());
-	// 	// in this case useEffect will execute only once because
-	// 	// it does not have any dependencies.
-	// 	useEffect(() => {
-	// 		// timeoutId for debounce mechanism
-	// 		let timeoutId = null;
-	// 		let numberId = null;
-	// 		const resizeListener = () => {
-	// 			// prevent execution of previous setTimeout
-	// 			clearTimeout(timeoutId);
-	// 			clearTimeout(numberId);
-	// 			// change width from the state object after 150 milliseconds
-	// 			timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-	// 			numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
-	// 		};
-	// 		// handleWindowResize(width);
-
-	// 		// set resize listener
-	// 		window.addEventListener('resize', resizeListener);
-	// 		// clean up function
-	// 		return () => {
-	// 			// remove resize listener
-	// 			window.removeEventListener('resize', resizeListener);
-	// 		};
-	// 	}, []);
-	// 	return width;
-	// }
-
-	// let width = useCurrentWidth();
-
-	// useEffect(() => {
-	// 	handleWindowResize(getWidth());
-	// 	return () => {};
-	// }, []);
-	// useEffect(
-	// 	() => {
-	// 		handleWindowResize(width);
-	// 		return () => {};
-	// 	},
-	// 	[ width ]
-	// );
 
 	const update_order_state = (order, state, is_action, action_at) => {
 		if (state) {
@@ -245,6 +192,7 @@ const OrderPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_order(order, true, is_action, action_at));
+			history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}`);
 		}
 		dispatch(detailsOrder(props.match.params.id));
 	};
@@ -255,6 +203,7 @@ const OrderPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_payment(order, true, payment_method));
+			history.push(`/secure/glow/emails/order/${order._id}/order/false`);
 		}
 		dispatch(detailsOrder(props.match.params.id));
 	};
@@ -272,19 +221,6 @@ const OrderPage = (props) => {
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 	};
-	// const create_new_label = async () => {
-	// 	set_loading_label(true);
-	// 	const { data } = await API_Shipping.create_new_label(order, order.shipping.shipping_rate);
-	// 	window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
-	// 	console.log({ data });
-	// 	if (data) {
-	// 		set_loading_label(false);
-	// 	}
-	// 	console.log({ tracking_code: data.tracking_code });
-	// 	const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-	// 	console.log(request);
-	// 	dispatch(detailsOrder(props.match.params.id));
-	// };
 
 	const create_return_label = async () => {
 		set_loading_label(true);
@@ -324,54 +260,6 @@ const OrderPage = (props) => {
 			'width=600,height=400'
 		);
 	};
-
-	// const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
-	// // console.log(process.env.REACT_APP_STRIPE_KEY);
-
-	// const Form = () => {
-	// 	const stripe = useStripe();
-	// 	const elements = useElements();
-
-	// 	const handleSubmit = async (event) => {
-	// 		event.preventDefault();
-	// 		const { error, paymentMethod } = await stripe.createPaymentMethod({
-	// 			type: 'card',
-	// 			card: elements.getElement(CardElement)
-	// 		});
-
-	// 		// console.log({ error });
-	// 		if (error) {
-	// 			console.log({ error });
-	// 			return;
-	// 		}
-	// 		console.log({ paymentMethod });
-	// 		pay_order(paymentMethod);
-	// 	};
-
-	// 	return (
-	// 		<form onSubmit={handleSubmit}>
-	// 			<CardElement
-	// 				options={{
-	// 					style: {
-	// 						base: {
-	// 							fontSize: '20px',
-	// 							color: 'white',
-	// 							'::placeholder': {
-	// 								color: 'white'
-	// 							}
-	// 						},
-	// 						invalid: {
-	// 							color: '#9e2146'
-	// 						}
-	// 					}
-	// 				}}
-	// 			/>
-	// 			<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-	// 				Complete Order
-	// 			</button>
-	// 		</form>
-	// 	);
-	// };
 
 	return (
 		<Loading loading={loading} error={error}>
@@ -866,11 +754,11 @@ ${order.shipping.email}`)}
 												>
 													{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 												</button>
-												<Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
+												{/* <Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -885,11 +773,11 @@ ${order.shipping.email}`)}
 												>
 													{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
 												</button>
-												<Link to={`/secure/glow/emails/order_status/${order._id}/reassured`}>
+												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/reassured`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -908,11 +796,11 @@ ${order.shipping.email}`)}
 														'Set to Manufactured'
 													)}
 												</button>
-												<Link to={`/secure/glow/emails/order_status/${order._id}/manufactured`}>
+												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/manufactured`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -927,11 +815,11 @@ ${order.shipping.email}`)}
 												>
 													{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 												</button>
-												<Link to={`/secure/glow/emails/order_status/${order._id}/packaged`}>
+												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/packaged`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -946,11 +834,11 @@ ${order.shipping.email}`)}
 												>
 													{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 												</button>
-												<Link to={`/secure/glow/emails/order_status/${order._id}/shipped`}>
+												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/shipped`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -965,11 +853,11 @@ ${order.shipping.email}`)}
 												>
 													{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 												</button>
-												<Link to={`/secure/glow/emails/order_status/${order._id}/delivered`}>
+												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/delivered`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
