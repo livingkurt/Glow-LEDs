@@ -153,8 +153,8 @@ function ProductPage(props) {
 
 	const update_product_catelog = async () => {
 		set_loading_upload(true);
-		await facebook_catalog_upload(state.entites.products);
-		await google_catalog_upload(state.entites.products);
+		await facebook_catalog_upload(items);
+		await google_catalog_upload(items);
 		set_loading_upload(false);
 	};
 

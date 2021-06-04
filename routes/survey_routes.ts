@@ -97,11 +97,13 @@ router.get('/:id', async (req, res) => {
 
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
 	try {
-		console.log({ survey_routes_put: req.body });
+		// console.log({ survey_routes_put: req.body });
+		console.log('Hello');
 		const survey_id = req.params.id;
 		const survey: any = await Survey.findById(survey_id);
 		if (survey) {
 			const updatedSurvey = await Survey.updateOne({ _id: survey_id }, req.body);
+			console.log({ updatedSurvey });
 			if (updatedSurvey) {
 				log_request({
 					method: 'PUT',

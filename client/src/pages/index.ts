@@ -28,7 +28,9 @@ export { default as ProductsDisplayPage } from './AdminPages/ProductsDisplayPage
 export { default as UserOrdersPage } from './AdminPages/UserOrdersPage';
 export { default as EditAllDataPage } from './AdminPages/EditAllDataPage';
 export { default as PaychecksPage } from './AdminPages/PaychecksPage';
+export { default as SurveysPage } from './AdminPages/SurveysPage';
 export { default as EditPaycheckPage } from './AdminPages/EditPaycheckPage';
+export { default as EditSurveyPage } from './AdminPages/EditSurveyPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

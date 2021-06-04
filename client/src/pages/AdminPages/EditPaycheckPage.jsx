@@ -138,7 +138,7 @@ const EditPaycheckPage = (props) => {
 						{/* {paycheck && ( */}
 						<div>
 							<Helmet>
-								<title>Edit Paycheck| Glow LEDs</title>
+								<title>Edit Paycheck | Glow LEDs</title>
 							</Helmet>
 
 							<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>

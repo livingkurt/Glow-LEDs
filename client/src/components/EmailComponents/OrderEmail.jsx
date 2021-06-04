@@ -1,15 +1,18 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date, toCapitlize } from '../../utils/helper_functions';
 import { detailsOrderPublic } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
+import { Loading } from '../UtilityComponents';
 
 const OrderEmail = (props) => {
+	const history = useHistory();
+	const [ loading, set_loading ] = useState(false);
 	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
 	const { order } = orderDetailsPublic;
 	console.log({ order });
@@ -930,6 +933,7 @@ const OrderEmail = (props) => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const send_order_email = async (email, first_name, subject, refunded) => {
+		set_loading(true);
 		console.log({ email_template });
 		const response_1 = await API_Emails.send_user_email(email_template, subject, email);
 		const response_2 = await API_Emails.send_admin_email(
@@ -938,9 +942,10 @@ const OrderEmail = (props) => {
 		);
 		console.log({ response_1 });
 		console.log({ response_2 });
-		// if (response_1 && response_2) {
-		// 	history.push('/pages/survey');
-		// }
+		if (response_1 && response_2) {
+			history.push('/pages/survey/' + order._id);
+			set_loading(false);
+		}
 	};
 
 	useEffect(
@@ -960,6 +965,7 @@ const OrderEmail = (props) => {
 
 	return (
 		<div>
+			<Loading loading={loading} />
 			{userInfo ? (
 				<div className="jc-c m-auto wrap">
 					<Link to={'/secure/account/order/' + props.match.params.id}>

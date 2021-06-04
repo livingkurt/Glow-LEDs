@@ -264,14 +264,6 @@ const EditOrderPage = (props) => {
 			package_width: order_item.package_width,
 			package_height: order_item.package_height,
 			product_option: order_item.product_options.find((option) => option.default === true),
-			// product_option: {
-			// 	name: product_option.name,
-			// 	size: product_option.size,
-			// 	price: product_option.price,
-			// 	sale_price: product_option.sale_price,
-			// 	color: product_option.color,
-			// 	count_in_stock: product_option.count_in_stock
-			// },
 			reviewed: order_item.reviewed,
 			product: { _id: order_item._id }
 
@@ -316,7 +308,6 @@ const EditOrderPage = (props) => {
 		set_loading_tax_rate(false);
 	};
 
-
 	const update_order_item_property = (value, field_name, index) => {
 		console.log({ value, field_name, index });
 		let new_order_items = [ ...orderItems ];
@@ -327,7 +318,6 @@ const EditOrderPage = (props) => {
 		set_orderItems(new_order_items);
 		console.log({ orderItems });
 	};
-
 
 	const update_product_option_property = (value, field_name, index) => {
 		console.log({ value, field_name, index });
@@ -414,10 +404,6 @@ const EditOrderPage = (props) => {
 													<div className="custom-select w-100per">
 														<select
 															className="qty_select_dropdown w-100per"
-															// defaultValue={{
-															// 	label: user.first_name + ' ' + user.last_name,
-															// 	value: user._id
-															// }}
 															onChange={(e) => set_user(e.target.value)}
 														>
 															<option key={1} defaultValue="">

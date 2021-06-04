@@ -583,6 +583,11 @@ const Sidebar = (props) => {
 									Expenses
 								</button>
 							</Link>
+							<Link to="/secure/glow/features">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Features
+								</button>
+							</Link>
 							<Link to="/secure/glow/paychecks">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Paychecks
@@ -591,6 +596,11 @@ const Sidebar = (props) => {
 							<Link to="/secure/glow/affiliates">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Affiliates
+								</button>
+							</Link>
+							<Link to="/secure/glow/teams">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Teams
 								</button>
 							</Link>
 							<Link to="/secure/glow/promos">
@@ -611,6 +621,26 @@ const Sidebar = (props) => {
 							<Link to="/secure/glow/emails">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Emails
+								</button>
+							</Link>
+							<Link to="/secure/glow/logs">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Logs
+								</button>
+							</Link>
+							<Link to="/secure/glow/chips">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Chips
+								</button>
+							</Link>
+							<Link to="/secure/glow/surveys">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Surveys
+								</button>
+							</Link>
+							<Link to="/secure/glow/edit_all_data">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Edit All Data
 								</button>
 							</Link>
 						</ul>

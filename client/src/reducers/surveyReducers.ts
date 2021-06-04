@@ -10,7 +10,8 @@ import {
 	SURVEY_SAVE_FAIL,
 	SURVEY_DELETE_REQUEST,
 	SURVEY_DELETE_SUCCESS,
-	SURVEY_DELETE_FAIL
+	SURVEY_DELETE_FAIL,
+	SURVEY_REMOVE_STATE
 } from '../constants/surveyConstants';
 
 export const surveyListReducer = (state = { surveys: [] }, action: { type: any; payload: any }) => {
@@ -60,6 +61,8 @@ export const surveySaveReducer = (state = { survey: {} }, action: { type: any; p
 			return { loading: false, success: true, survey: action.payload };
 		case SURVEY_SAVE_FAIL:
 			return { loading: false, error: action.payload };
+		case SURVEY_REMOVE_STATE:
+			return { loading: false, success: false };
 		default:
 			return state;
 	}

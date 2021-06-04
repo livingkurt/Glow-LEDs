@@ -10,7 +10,8 @@ import {
 	SURVEY_SAVE_FAIL,
 	SURVEY_DELETE_SUCCESS,
 	SURVEY_DELETE_FAIL,
-	SURVEY_DELETE_REQUEST
+	SURVEY_DELETE_REQUEST,
+	SURVEY_REMOVE_STATE
 } from '../constants/surveyConstants';
 import axios from 'axios';
 
@@ -55,6 +56,7 @@ export const saveSurvey = (survey: any) => async (
 				}
 			});
 			dispatch({ type: SURVEY_SAVE_SUCCESS, payload: data });
+			dispatch({ type: SURVEY_REMOVE_STATE, payload: {} });
 		}
 	} catch (error) {
 		dispatch({ type: SURVEY_SAVE_FAIL, payload: error.response.data.message });
