@@ -637,8 +637,8 @@ const OrderStatusEmail = (props) => {
 		console.log({ data });
 		console.log({ request });
 		if (request) {
-			history.goBack();
-			// history.push(`/secure/account/order/${order._id}`);
+			// history.goBack();
+			history.push(`/secure/account/order/${order._id}`);
 		}
 	};
 
