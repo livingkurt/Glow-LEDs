@@ -211,7 +211,8 @@ const OrderPage = (props) => {
 	const create_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
-		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		show_label(data.postage_label.label_url);
+		// window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -220,12 +221,14 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
+		props.history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const create_return_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
-		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		show_label(data.postage_label.label_url);
+		// window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -234,12 +237,26 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
+		props.history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const buy_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.buy_label(order, order.shipping.shipping_rate);
-		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
+		show_label(data.postage_label.label_url);
+		// const WinPrint = window.open(data.postage_label.label_url, 'PRINT', 'width=600,height=400');
+		// WinPrint.print();
+		// const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
+		// WinPrint.document.write(
+		// 	`<div style="width: 100%;"><img style="margin: auto; text-align: center;" src="${data.postage_label
+		// 		.label_url}" alt="label" /></div>`
+		// );
+		// WinPrint.document.close();
+		// WinPrint.focus();
+		// WinPrint.print();
+		// setTimeout(() => {
+		// 	WinPrint.print();
+		// }, 500);
 		if (data) {
 			set_loading_label(false);
 		}
@@ -247,10 +264,12 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
+		props.history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const view_label = async () => {
-		window.open(order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
+		// window.open(order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
+		show_label(order.shipping.shipping_label.postage_label.label_url);
 	};
 
 	const view_return_label = async () => {
@@ -259,6 +278,25 @@ const OrderPage = (props) => {
 			'_blank',
 			'width=600,height=400'
 		);
+	};
+
+	const show_label = (label) => {
+		const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
+		WinPrint.document.write(
+			`<div style="width: 100%;
+      display: flex;
+      height: 100%;
+      align-items: center;;">
+          <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
+      </div>`
+		);
+		WinPrint.document.close();
+		WinPrint.focus();
+		WinPrint.print();
+
+		setTimeout(() => {
+			WinPrint.print();
+		}, 500);
 	};
 
 	return (

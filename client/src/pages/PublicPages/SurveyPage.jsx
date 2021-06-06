@@ -164,7 +164,7 @@ const SurveyPage = (props) => {
 		e.preventDefault();
 		dispatch(
 			saveSurvey({
-				user: user_order.user._id,
+				user: user_order ? user_order.user._id : userInfo && userInfo._id,
 				question_1,
 				question_2,
 				question_3,
@@ -175,7 +175,7 @@ const SurveyPage = (props) => {
 				answer_3,
 				answer_4,
 				answer_5,
-				order: user_order._id,
+				order: user_order && user_order._id,
 				survey: survey_questions,
 				is_survey: false,
 				active,
@@ -224,7 +224,10 @@ const SurveyPage = (props) => {
 
 	return (
 		<div className="main_container p-20px">
-			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Survey' : 'Submit Survey'}</h1>
+			{survey &&
+			!finished && (
+				<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Survey' : 'Submit Survey'}</h1>
+			)}
 
 			<div className="form">
 				<form style={{ width: '100%' }}>
@@ -338,7 +341,62 @@ const SurveyPage = (props) => {
 								</ul>
 							</div>
 						) : (
-							<h2 className="mr-1rem ta-c">{finished}</h2>
+							<div>
+								<h2 className="mr-1rem ta-c f">{finished}</h2>
+								{/* <img src="https://thumbs2.imgbox.com/43/80/kQtikgYi_t.jpeg" alt="hearts" /> */}
+								<img
+									src="https://thumbs2.imgbox.com/43/80/kQtikgYi_t.jpeg"
+									alt="Hearts"
+									title="Diffuser Caps Heart"
+									style={{
+										textAlign: 'center',
+										width: '100%',
+										borderRadius: '20px'
+									}}
+								/>
+								{userInfo ? (
+									<div className="jc-c m-auto wrap">
+										{props.match.params.order_id && (
+											<Link to={'/secure/account/order/' + props.match.params.id}>
+												<button className="btn primary mh-10px">View Order</button>
+											</Link>
+										)}
+
+										<Link to="/secure/account/orders">
+											<button className="btn primary mh-10px">Your Orders</button>
+										</Link>
+										<Link to="/collections/all/products">
+											<button className="btn primary mh-10px">Products</button>
+										</Link>
+										<Link to="/pages/featured">
+											<button className="btn primary mh-10px">Featured Videos</button>
+										</Link>
+										<Link to="/pages/music">
+											<button className="btn primary mh-10px">NTRE Music</button>
+										</Link>
+									</div>
+								) : (
+									<div className="w-1000px jc-c m-auto">
+										{props.match.params.order_id && (
+											<Link to={'/checkout/order/' + props.match.params.id}>
+												<button className="btn primary mh-10px">View Order</button>
+											</Link>
+										)}
+										<Link to="/collections/all/products">
+											<button className="btn primary mh-10px">Products</button>
+										</Link>
+										<Link to="/pages/featured">
+											<button className="btn primary mh-10px">Featured Videos</button>
+										</Link>
+										<Link to="/pages/music">
+											<button className="btn primary mh-10px">NTRE Music</button>
+										</Link>
+										{/* <Link to="/account/register">
+						<button className="btn primary mh-10px">Create Account</button>
+					</Link> */}
+									</div>
+								)}
+							</div>
 						)}
 					</Loading>
 					{/* )} */}

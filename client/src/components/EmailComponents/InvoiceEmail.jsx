@@ -51,6 +51,14 @@ const InvoiceEmail = (props) => {
 		[ emails, stableDispatch ]
 	);
 
+	// useEffect(
+	// 	() => {
+	// 		print_invoice();
+	// 		return () => {};
+	// 	},
+	// 	[ emails, order ]
+	// );
+
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'amex':
@@ -665,6 +673,7 @@ const InvoiceEmail = (props) => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const print_invoice = async () => {
+		// openOther();
 		const prtContent = document.getElementById('invoice');
 		const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
 		WinPrint.document.write(prtContent.innerHTML);
@@ -673,7 +682,30 @@ const InvoiceEmail = (props) => {
 		setTimeout(() => {
 			WinPrint.print();
 		}, 500);
+		window.close();
 	};
+
+	// setTimeout(() => {
+	// 	// print_invoice();
+	// 	document.getElementById('print_invoice').click(); // Click on the checkbox
+	// }, 2000);
+
+	// function print() {
+	// 	const prtContent = document.getElementById('invoice');
+	// 	const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
+	// 	WinPrint.document.write(prtContent.innerHTML);
+	// 	WinPrint.document.close();
+	// 	WinPrint.focus();
+	// 	setTimeout(() => {
+	// 		WinPrint.print();
+	// 	}, 500);
+	// }
+	// function openOther() {
+	// 	//I called Api using service
+	// 	setTimeout(function() {
+	// 		print();
+	// 	}, 3000);
+	// }
 
 	return (
 		<div>
@@ -695,7 +727,7 @@ const InvoiceEmail = (props) => {
 					<button className="btn primary mh-10px">Your Orders</button>
 				</Link>
 
-				<button className="btn primary mh-10px" onClick={() => print_invoice()}>
+				<button className="btn primary mh-10px" id="print_invoice" onClick={() => print_invoice()}>
 					Print Invoice
 				</button>
 			</div>
