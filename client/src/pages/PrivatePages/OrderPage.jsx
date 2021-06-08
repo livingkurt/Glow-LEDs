@@ -575,7 +575,10 @@ ${order.shipping.email}`)}
 										<div>
 											<del style={{ color: 'red' }}>
 												<label style={{ color: 'white' }}>
-													${order.itemsPrice && order.itemsPrice.toFixed(2)}
+													${order.orderItems &&
+														order.orderItems
+															.reduce((a, c) => a + c.price * c.qty, 0)
+															.toFixed(2)}
 												</label>
 											</del>
 										</div>
