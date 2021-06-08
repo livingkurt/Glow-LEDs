@@ -142,8 +142,8 @@ const OrderListItem = (props) => {
 				taxPrice: 0,
 				totalPrice: 0,
 				user: props.order.user,
-				order_note: props.order.order_note,
-				promo_code: props.order.promo_code
+				order_note: `Replacement Order for ${props.order.shipping.first_name} ${props.shipping.user
+					.last_name} - Original Order Number is ${props.order._id}`
 			})
 		);
 		dispatch(listOrders());
