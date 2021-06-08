@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
-import { deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
+import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
 import { LazyImage, Loading } from '../UtilityComponents';
 import { determine_product_name } from '../../utils/react_helper_functions';
@@ -130,6 +130,23 @@ const OrderListItem = (props) => {
 		const subject = 'Your Glow LEDs Order';
 		const emailBody = 'Hi ' + props.order.user.first_name;
 		document.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;
+	};
+
+	const create_duplicate_order = () => {
+		dispatch(
+			createOrder({
+				orderItems: props.order.orderItems,
+				shipping: props.order.shipping,
+				itemsPrice: props.order.itemsPrice,
+				shippingPrice: 0,
+				taxPrice: 0,
+				totalPrice: 0,
+				user: props.order.user,
+				order_note: props.order.order_note,
+				promo_code: props.order.promo_code
+			})
+		);
+		dispatch(listOrders());
 	};
 
 	return (
@@ -644,9 +661,16 @@ ${props.order.shipping.email}`)}
 										View Return Label
 									</button>
 								)}
+								<button
+									className="btn secondary mv-5px"
+									onClick={() => create_duplicate_order(props.order._id)}
+								>
+									Create Duplicate Order
+								</button>
 								<button className="btn secondary mv-5px">
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>
+
 								<button
 									className="btn secondary mv-5px"
 									onClick={() => dispatch(deleteOrder(props.order._id))}
