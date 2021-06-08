@@ -393,37 +393,7 @@ const ProductPage = (props) => {
 									</div>
 
 									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
-									<li>
-										<div className="ai-c h-25px">
-											<label
-												aria-label="sortOrder"
-												htmlFor="sortOrder"
-												className="select-label mr-1rem"
-											>
-												Qty:
-											</label>
-											<div className="custom-select">
-												<select
-													defaultValue={qty}
-													className="qty_select_dropdown"
-													onChange={(e) => {
-														setQty(e.target.value);
-													}}
-												>
-													{[ ...Array(count_in_stock).keys() ].map((x, index) => (
-														<option key={index} defaultValue={x + 1}>
-															{x + 1}
-														</option>
-													))}
-												</select>
-												<span className="custom-arrow" />
-											</div>
-										</div>
 
-										<h4 style={{ marginBottom: 0, marginTop: 11 }}>
-											Shipping Calculated at Checkout
-										</h4>
-									</li>
 									{/* <div className=""> */}
 									{product.product_options &&
 									product.product_options.length > 0 &&
@@ -542,6 +512,37 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
+									<li>
+										<div className="ai-c h-25px">
+											<label
+												aria-label="sortOrder"
+												htmlFor="sortOrder"
+												className="select-label mr-1rem"
+											>
+												Qty:
+											</label>
+											<div className="custom-select">
+												<select
+													defaultValue={qty}
+													className="qty_select_dropdown"
+													onChange={(e) => {
+														setQty(e.target.value);
+													}}
+												>
+													{[ ...Array(count_in_stock).keys() ].map((x, index) => (
+														<option key={index} defaultValue={x + 1}>
+															{x + 1}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+
+										<h4 style={{ marginBottom: 0, marginTop: 11 }}>
+											Shipping Calculated at Checkout
+										</h4>
+									</li>
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' ||
 										product.name === 'Mega Diffuser Caps + Adapters Starter Kit') &&
 									!diffuser_cap ? (

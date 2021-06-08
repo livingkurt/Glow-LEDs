@@ -673,20 +673,8 @@ const PlaceOrderPage = (props) => {
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
 													{determine_product_name(item, false)}
-													{/* {(item.category === 'glowskins' ||
-														item.category === 'diffuser_caps' ||
-														item.category === 'mega_diffuser_caps' ||
-														item.category === 'frosted_diffusers') &&
-														item.color}{' '}
-													{item.name}{' '}
-													{item.product_option &&
-														item.product_option.name &&
-														`- ${item.product_option.name}`}
-													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}{' '}
-													{item.qty > 1 && item.qty + 'x'} */}
 												</Link>
 											</div>
-											{/* <div>Qty: {item.qty}</div> */}
 											<div className="ai-c h-25px">
 												<label
 													aria-label="sortOrder"
@@ -722,43 +710,7 @@ const PlaceOrderPage = (props) => {
 											</div>
 										</div>
 										<div className="">
-											<div className="cart-price">
-												{cart_sale_price_switch(item)}
-												{/* {item.product_option.sale_price > 0 ? (
-													<label>
-														<del style={{ color: 'red' }}>
-															<label style={{ color: 'white' }}>
-																${item.product_option.price ? (
-																	item.product_option.price.toFixed(2)
-																) : item.price ? (
-																	item.price.toFixed(2)
-																) : (
-																	item.price
-																)}
-															</label>
-														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.product_option
-															.sale_price ? (
-															item.product_option.sale_price.toFixed(2)
-														) : item.sale_price ? (
-															item.sale_price.toFixed(2)
-														) : (
-															item.sale_price
-														)}{' '}
-														On Sale!
-													</label>
-												) : (
-													<label>
-														${item.product_option.price ? (
-															item.product_option.price.toFixed(2)
-														) : item.price ? (
-															item.price.toFixed(2)
-														) : (
-															item.price
-														)}
-													</label>
-												)} */}
-											</div>
+											<div className="cart-price">{cart_sale_price_switch(item)}</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
 													className="btn icon"
