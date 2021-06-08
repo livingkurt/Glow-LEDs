@@ -94,7 +94,7 @@ const Carousel = (props) => {
 	// let width = useCurrentWidth();
 
 	return (
-		<div className="column mh-10px">
+		<div className="mh-10px">
 			<h2 className="jc-c w-100per ta-c">Suggested Products</h2>
 
 			<Loading loading={loading} error={error}>

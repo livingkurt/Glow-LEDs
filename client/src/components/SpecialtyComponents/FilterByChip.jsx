@@ -17,7 +17,7 @@ const FilterByChip = (props) => {
 	];
 
 	return (
-		<div className="column mh-10px">
+		<div className="mh-10px">
 			<ul className="cart-list-container" style={{ marginRight: '10px' }}>
 				{chips.map((chip, index) => {
 					return <li key={index}>{chip}</li>;

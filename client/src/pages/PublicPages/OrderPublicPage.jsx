@@ -318,7 +318,7 @@ const OrderPublicPage = (props) => {
 								{format_date(order.refundedAt)}
 							</h1>
 						)}
-						<div className="column w-100per">
+						<div className="w-100per">
 							<label>Order #: {order._id}</label>
 							{order.tracking_number && (
 								<label>
@@ -342,7 +342,7 @@ const OrderPublicPage = (props) => {
 							)}
 						</div>
 						<div className="wrap jc-b">
-							<div className="column w-100per">
+							<div className="w-100per">
 								<h2>Shipping</h2>
 								<div>
 									<div>
@@ -514,7 +514,7 @@ const OrderPublicPage = (props) => {
 						{!order.isPaid && <Stripe pay_order={pay_order} />}
 
 						{order.promo_code && (
-							<div className="column">
+							<div className="">
 								<div
 									style={{ borderTop: '.1rem white solid' }}
 									className="pt-1rem"
@@ -525,7 +525,7 @@ const OrderPublicPage = (props) => {
 							</div>
 						)}
 						{order.order_note && (
-							<div className="column">
+							<div className="">
 								<div
 									style={{ borderTop: '.1rem white solid' }}
 									className="pt-1rem"

@@ -258,7 +258,7 @@ const EditPromoPage = (props) => {
 
 								<ul className="edit-form-container" style={{ maxWidth: '48rem', marginBottom: '20px' }}>
 									<div className="row wrap">
-										<div className="column  m-10px">
+										<div className=" m-10px">
 											<li>
 												<label htmlFor="affiliate">Affiliate</label>
 												<input

@@ -238,34 +238,6 @@ const SurveyPage = (props) => {
 								<Helmet>
 									<title>Survey | Glow LEDs</title>
 								</Helmet>
-								{/* {userInfo ? (
-									<div className="jc-c m-auto wrap">
-										<Link to={'/secure/account/order/' + props.match.params.id}>
-											<button className="btn primary mh-10px">View Order</button>
-										</Link>
-										<Link to="/secure/account/orders">
-											<button className="btn primary mh-10px">Your Orders</button>
-										</Link>
-										<Link to="/collections/all/products">
-											<button className="btn primary mh-10px">Products</button>
-										</Link>
-									</div>
-								) : (
-									<div className="w-1000px jc-c m-auto">
-										<Link to={'/checkout/order/' + props.match.params.id}>
-											<button className="btn primary">View Order</button>
-										</Link>
-										<Link to="/collections/all/products">
-											<button className="btn primary mh-10px">Products</button>
-										</Link>
-										<Link to="/pages/featured">
-											<button className="btn primary mh-10px">Featured Videos</button>
-										</Link>
-										<Link to="/pages/music">
-											<button className="btn primary mh-10px">NTRE Music</button>
-										</Link>
-									</div>
-								)} */}
 								<ul className="edit-form-container" style={{ maxWidth: '60rem' }}>
 									<div>
 										<label htmlFor="description">{question_1}</label>
@@ -357,7 +329,7 @@ const SurveyPage = (props) => {
 								{userInfo ? (
 									<div className="jc-c m-auto wrap">
 										{props.match.params.order_id && (
-											<Link to={'/secure/account/order/' + props.match.params.id}>
+											<Link to={'/checkout/order/' + props.match.params.order_id}>
 												<button className="btn primary mh-10px">View Order</button>
 											</Link>
 										)}
@@ -378,7 +350,7 @@ const SurveyPage = (props) => {
 								) : (
 									<div className="w-1000px jc-c m-auto">
 										{props.match.params.order_id && (
-											<Link to={'/checkout/order/' + props.match.params.id}>
+											<Link to={'/checkout/order/' + props.match.params.order_id}>
 												<button className="btn primary mh-10px">View Order</button>
 											</Link>
 										)}

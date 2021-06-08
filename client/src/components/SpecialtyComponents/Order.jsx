@@ -66,11 +66,11 @@ const Order = (props) => {
 		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-50per jc-b ">
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
 					</div>
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Total</h3>
 						{!props.order.isRefunded && (
 							<div>
@@ -115,7 +115,7 @@ const Order = (props) => {
 						)}
 					</div>
 					{props.admin && (
-						<div className="column fs-16px">
+						<div className="fs-16px">
 							<h3>Since Order</h3>
 							{daysBetween(today, props.order.createdAt) > 1 ? (
 								`${daysBetween(today, props.order.createdAt)} Days`
@@ -124,14 +124,14 @@ const Order = (props) => {
 							)}
 						</div>
 					)}
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Ship To</h3>
 						{props.order.shipping.first_name} {props.order.shipping.last_name}
 					</div>
 				</div>
 				<div className="w-50per jc-fe">
-					<div className="column">
-						<div className="column fs-16px">
+					<div className="">
+						<div className="fs-16px">
 							<div className="row ai-c">
 								<h3 className="mr-10px">Order Number: </h3>
 								<div>{props.order._id}</div>
@@ -321,7 +321,7 @@ const Order = (props) => {
 											/>
 										</div>
 									</div>
-									<div className="column">
+									<div className="">
 										<button className="btn primary mv-5px" onClick={update_refund_state}>
 											Refund Customer
 										</button>
@@ -333,8 +333,8 @@ const Order = (props) => {
 								</div>
 							</div>
 						</div>
-						<ul className="column">
-							<li className="column ">
+						<ul className="">
+							<li className=" ">
 								<h2>Shipping</h2>
 								<div>
 									<div>

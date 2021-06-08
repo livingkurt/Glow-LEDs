@@ -75,7 +75,7 @@ const UserProfilePage = (props) => {
 		console.log(request);
 	};
 	return (
-		<div className="column p-20px inner_content">
+		<div className="p-20px inner_content">
 			<Helmet>
 				<title>Admin User Profile | Glow LEDs</title>
 			</Helmet>
@@ -88,20 +88,20 @@ const UserProfilePage = (props) => {
 			<Loading loading={loading} error={error}>
 				{user && (
 					<div className="profile_container row jc-b wrap">
-						<div className="column">
-							<div className="column" style={container_styles}>
+						<div className="">
+							<div className="" style={container_styles}>
 								<h3>First Name</h3>
 								<label>{first_name}</label>
 							</div>
-							<div className="column" style={container_styles}>
+							<div className="" style={container_styles}>
 								<h3>Last Name</h3>
 								<label>{last_name}</label>
 							</div>
-							<div className="column" style={container_styles}>
+							<div className="" style={container_styles}>
 								<h3>Email</h3>
 								<label>{email}</label>
 							</div>
-							<div className="column" style={container_styles}>
+							<div className="" style={container_styles}>
 								<h3>Password</h3>
 								<label>**********</label>
 							</div>
@@ -123,15 +123,15 @@ const UserProfilePage = (props) => {
 									</div>
 								)}
 							</div>
-							<div className="column mb-20px">
+							<div className="mb-20px">
 								<h3>Promotional Emails</h3>
 								<label>{email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
 							</div>
-							<div className="column" style={container_styles}>
+							<div className="" style={container_styles}>
 								<h3>Verified</h3>
 								<label>{verified === true ? 'Verified' : 'Not Verified'}</label>
 							</div>
-							<div className="column" style={container_styles}>
+							<div className="" style={container_styles}>
 								<h3>Admin</h3>
 								<label>{admin === true ? 'Admin' : 'Not Admin'}</label>
 							</div>

@@ -252,7 +252,7 @@ const GlowControl = (props) => {
 				<h2 className="ta-c">Loading... Make Sure Device is Turned On</h2>
 			) : (
 				settings && (
-					<div className="column w-100per">
+					<div className="w-100per">
 						<h1 className="ta-c">{device.device_name}</h1>
 						{settings.pattern.options
 							.map((pattern) => {

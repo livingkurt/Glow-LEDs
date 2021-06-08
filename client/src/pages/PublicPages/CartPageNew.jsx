@@ -125,7 +125,7 @@ const CartPage = (props) => {
 	};
 
 	return (
-		<div className="column">
+		<div className="">
 			<Helmet>
 				<title>Cart | Glow LEDs </title>
 				<meta property="og:title" content="Cart" />
@@ -198,7 +198,7 @@ const CartPage = (props) => {
 											</div>
 										</div>
 
-										<div className="column">
+										<div className="">
 											<div className="cart-price">
 												{item.sale_price !== 0 ? (
 													<label>

@@ -195,7 +195,7 @@ const ProductPage = (props) => {
 	};
 
 	return (
-		<div className="column">
+		<div className="">
 			<div className="p-1rem">
 				<div className="jc-b">
 					<div className="mb-10px">
@@ -215,7 +215,7 @@ const ProductPage = (props) => {
 			</div>
 			<Loading loading={loading} error={error}>
 				{product && (
-					<div className="column">
+					<div className="">
 						<Helmet>
 							<title>{product.meta_title + ' | Glow LEDs'}</title>
 							<meta property="og:title" content={product.meta_title} />
@@ -289,7 +289,7 @@ const ProductPage = (props) => {
 							)}
 						</div>
 						<div className="details">
-							<div className="column">
+							<div className="">
 								<label className="product_title_top none fs-2em ff-h mb-2rem">{product.name}</label>
 								<div className="details-image">
 									{/* <Zoom> */}
@@ -350,8 +350,8 @@ const ProductPage = (props) => {
 									{sale_price_product_option_switch_product(price, sale_price)}
 								</div>
 
-								<div className="column">
-									<div className="column h-100per paragraph_font">
+								<div className="">
+									<div className="h-100per paragraph_font">
 										<ul style={{ marginLeft: '10px' }}>
 											{product.facts ? (
 												product.facts.split('\n').map((line, index) => {
@@ -566,7 +566,7 @@ const ProductPage = (props) => {
 							show_hide="alt_pictures_shown"
 							set_image={set_image}
 						/>
-						<div className="column p-1rem">
+						<div className="p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							{/* <p className="paragraph_font">{product.description}</p> */}
 							<ReadMore width={1000} className="paragraph_font" length={100}>
@@ -631,9 +631,9 @@ const ProductPage = (props) => {
 								// </button>
 							)} */}
 							{/* {!product.product_length && (
-								<div className="column">
+								<div className="">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
-									<div className="column h-100per paragraph_font">
+									<div className="h-100per paragraph_font">
 										<ul style={{ marginLeft: '10px' }}>
 											{product.included_items ? (
 												product.included_items.split('\n').map((line, index) => {
@@ -656,9 +656,9 @@ const ProductPage = (props) => {
 							)} */}
 							{/* {product.product_length && ( */}
 							<div className="jc-b wrap m-2rem">
-								<div className="column mt-2rem">
+								<div className="mt-2rem">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
-									<div className="column h-100per paragraph_font">
+									<div className="h-100per paragraph_font">
 										<ul style={{}}>
 											{product.included_items ? (
 												product.included_items.split('\n').map((line, index) => {
@@ -679,9 +679,9 @@ const ProductPage = (props) => {
 									</div>
 								</div>
 								{product.product_length && (
-									<div className="column mt-2rem">
+									<div className="mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
-										<div className="column h-100per paragraph_font">
+										<div className="h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
 												`${product.product_length} cm x ${product.product_width} cm x
 											${product.product_height} cm`
@@ -697,9 +697,9 @@ const ProductPage = (props) => {
 								)}
 								{product.chips &&
 								product.chips.length > 0 && (
-									<div className="column mt-2rem">
+									<div className="mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
-										<div className="column h-100per paragraph_font ">
+										<div className="h-100per paragraph_font ">
 											<ul style={{}}>
 												{product.chips ? (
 													product.chips.map((chip, index) => {
@@ -736,7 +736,7 @@ const ProductPage = (props) => {
 							</div>
 						)}
 
-						<div className="column p-1rem">
+						<div className="p-1rem">
 							{/* {product.category === 'glowskins' && (
 								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
 									<div className="jc-c">
@@ -761,7 +761,7 @@ const ProductPage = (props) => {
 								<div>
 									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
 									<div className="colored_caps">
-										<div className="column colored_caps_item m-1rem">
+										<div className="colored_caps_item m-1rem">
 											<h3 className="colored_caps_images">Colored Caps</h3>
 											{/* <Zoom> */}
 											<img
@@ -772,7 +772,7 @@ const ProductPage = (props) => {
 											/>
 											{/* </Zoom> */}
 										</div>
-										<div className="column colored_caps_item m-1rem">
+										<div className="colored_caps_item m-1rem">
 											<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
 											{/* <Zoom> */}
 											<img

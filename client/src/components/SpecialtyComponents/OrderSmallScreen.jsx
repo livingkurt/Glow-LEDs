@@ -10,16 +10,16 @@ const OrderSmallScreen = (props) => {
 		<div className="home_page_divs p-15px " style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row ai-c" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-100per jc-b">
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
 					</div>
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Total</h3>
 						<div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div>
 					</div>
 					{props.admin && (
-						<div className="column fs-16px">
+						<div className="fs-16px">
 							<h3>Ship To</h3>
 							{props.order.shipping.first_name} {props.order.shipping.last_name}
 						</div>

@@ -117,7 +117,7 @@ const EditExpensePage = (props) => {
 
 								<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
 									<div className="row wrap">
-										<div className="column w-228px m-10px">
+										<div className="w-228px m-10px">
 											<li>
 												<label htmlFor="expense_name">Expense</label>
 												<input

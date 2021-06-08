@@ -28,7 +28,7 @@ const SuggestedProducts = (props) => {
 	// };
 
 	return (
-		<div className="column mh-10px">
+		<div className="mh-10px">
 			<h2
 				style={{
 					textAlign: 'center',

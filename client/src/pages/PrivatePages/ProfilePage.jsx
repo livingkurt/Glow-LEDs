@@ -74,7 +74,7 @@ const ProfilePage = (props) => {
 	};
 
 	return (
-		<div className="column p-20px inner_content">
+		<div className="p-20px inner_content">
 			<Helmet>
 				<title>Profile | Glow LEDs</title>
 				<meta property="og:title" content="Profile" />
@@ -122,22 +122,22 @@ const ProfilePage = (props) => {
 				</div>
 			</div>
 			<div className="jc-b wrap group">
-				<div className="column group_item">
+				<div className="group_item">
 					<h2 className="group_images">User Info</h2>
 					{/* <div className="max-w-700px w-500px"> */}
-					<div className="column mb-20px">
+					<div className="mb-20px">
 						<h3>First Name</h3>
 						<label>{userInfo.first_name}</label>
 					</div>
-					<div className="column mb-20px">
+					<div className="mb-20px">
 						<h3>Last Name</h3>
 						<label>{userInfo.last_name}</label>
 					</div>
-					<div className="column mb-20px">
+					<div className="mb-20px">
 						<h3>Email</h3>
 						<label>{userInfo.email}</label>
 					</div>
-					<div className="column mb-20px">
+					<div className="mb-20px">
 						<h3>Password</h3>
 						<label>**********</label>
 					</div>
@@ -156,13 +156,13 @@ const ProfilePage = (props) => {
 						<div>{userInfo.shipping.international && 'International'}</div>
 						<div>{userInfo.shipping.email}</div>
 					</div>
-					<div className="column mb-20px">
+					<div className="mb-20px">
 						<h3>Promotional Emails</h3>
 						<label>{userInfo.email_subscription ? 'Subscribed' : 'Not Subscribed'}</label>
 					</div>
 					{/* </div> */}
 				</div>
-				<div className="column group_item">
+				<div className="group_item">
 					{userInfo.is_affiliated &&
 					userInfo.affiliate &&
 					affiliate &&
@@ -170,25 +170,25 @@ const ProfilePage = (props) => {
 					revenue && (
 						<div className="mb-20px max-w-700px w-500px">
 							<h2 className="group_images">Affiliate Metrics</h2>
-							<div className="column mb-20px">
+							<div className="mb-20px">
 								<h3>Public Code</h3>
 								<label>{affiliate.public_code.promo_code.toUpperCase()}</label>
 							</div>
-							<div className="column mb-20px">
+							<div className="mb-20px">
 								<h3>Private Code</h3>
 								<label>{affiliate.private_code.promo_code.toUpperCase()}</label>
 							</div>
-							<div className="column mb-20px">
+							<div className="mb-20px">
 								<h3>Code Usage</h3>
 								<label>
 									{affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
 								</label>
 							</div>
-							<div className="column mb-20px">
+							<div className="mb-20px">
 								<h3>Total Revenue</h3>
 								<label>${parseFloat(revenue).toFixed(2)}</label>
 							</div>
-							<div className="column mb-20px">
+							<div className="mb-20px">
 								<h3>Total Earrned</h3>
 								<label>
 									${parseFloat(affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}

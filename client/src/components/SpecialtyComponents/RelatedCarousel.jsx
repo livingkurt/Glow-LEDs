@@ -60,7 +60,7 @@ const RelatedProducts = (props) => {
 	);
 
 	return (
-		<div className="column mh-10px">
+		<div className="mh-10px">
 			<h2 className="ta-c w-100per jc-c">Related Products</h2>
 			<Loading loading={loading} error={error}>
 				{products && (

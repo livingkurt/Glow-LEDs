@@ -154,7 +154,7 @@ const PlaceOrderPage = (props) => {
 			totalPrice,
 			userInfo,
 			order_note,
-			promo_code
+			promo_code: show_message && promo_code
 		});
 		console.log({ response });
 		console.log({ message: response.message });
@@ -238,7 +238,7 @@ const PlaceOrderPage = (props) => {
 					totalPrice,
 					userInfo,
 					order_note,
-					promo_code
+					promo_code: show_message && promo_code
 				},
 				paymentMethod
 			)
@@ -648,7 +648,7 @@ const PlaceOrderPage = (props) => {
 						<ul className="cart-list-container">
 							<li>
 								<h2>Shopping Cart</h2>
-								<div className="column">
+								<div className="">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
 											<button className="btn secondary w-100per" style={{ marginBottom: 0 }}>

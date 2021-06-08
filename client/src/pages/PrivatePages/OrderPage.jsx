@@ -342,7 +342,7 @@ const OrderPage = (props) => {
 										on {format_date(order.refundedAt)}
 									</h1>
 								)}
-								<div className="column w-100per">
+								<div className="w-100per">
 									<label>Order #: {order._id}</label>
 									{order.tracking_number && (
 										<label>
@@ -388,7 +388,7 @@ const OrderPage = (props) => {
 									)}
 								</div>
 								<div className="wrap jc-b">
-									<div className="column w-100per">
+									<div className="w-100per">
 										<h2>Shipping</h2>
 										<div>
 											<div>
@@ -432,7 +432,7 @@ ${order.shipping.email}`)}
 								</div>
 								{userInfo &&
 								userInfo.isAdmin && (
-									<div className="column">
+									<div className="">
 										<div className="pt-1rem" htmlFor="order_note">
 											Payment Method: {order.payment.paymentMethod}
 										</div>
@@ -675,7 +675,7 @@ ${order.shipping.email}`)}
 								{!order.isPaid && <Stripe pay_order={pay_order} />}
 
 								{order.promo_code && (
-									<div className="column">
+									<div className="">
 										<div
 											style={{ borderTop: '.1rem white solid' }}
 											className="pt-1rem"
@@ -686,7 +686,7 @@ ${order.shipping.email}`)}
 									</div>
 								)}
 								{order.order_note && (
-									<div className="column">
+									<div className="">
 										<div
 											style={{ borderTop: '.1rem white solid' }}
 											className="pt-1rem"
@@ -1024,7 +1024,7 @@ ${order.shipping.email}`)}
 												/>
 											</div>
 										</div>
-										<div className="column">
+										<div className="">
 											<button className="btn primary mv-5px" onClick={update_refund_state}>
 												Refund Customer
 											</button>

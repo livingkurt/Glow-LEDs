@@ -147,7 +147,7 @@ const PlaceOrderPublicPage = (props) => {
 			totalPrice,
 			userInfo,
 			order_note,
-			promo_code
+			promo_code: show_message && promo_code
 		});
 		if (data) {
 			set_shipping_rates(data);
@@ -246,7 +246,7 @@ const PlaceOrderPublicPage = (props) => {
 					totalPrice,
 					userInfo,
 					order_note,
-					promo_code
+					promo_code: show_message && promo_code
 				},
 				create_account,
 				password,
@@ -537,7 +537,7 @@ const PlaceOrderPublicPage = (props) => {
 						<ul className="cart-list-container">
 							<li>
 								<h2>Shopping Cart</h2>
-								<div className="column">
+								<div className="">
 									<Link to="/collections/all/products">
 										<li style={{ marginBottom: '0', borderBottom: 0 }}>
 											<button className="btn secondary w-100per" style={{ marginBottom: 0 }}>
@@ -977,7 +977,7 @@ const PlaceOrderPublicPage = (props) => {
 							</li>
 						)}
 						{create_account && (
-							<li className="column">
+							<li className="">
 								<label htmlFor="password">Password</label>
 								<input
 									// className="form_input"
@@ -990,7 +990,7 @@ const PlaceOrderPublicPage = (props) => {
 							</li>
 						)}
 						{create_account && (
-							<li className="column">
+							<li className="">
 								<label htmlFor="rePassword">Re-Enter Password</label>
 								<input
 									// className="form_input"
@@ -1003,7 +1003,7 @@ const PlaceOrderPublicPage = (props) => {
 							</li>
 						)}
 						{create_account && (
-							<li className="column">
+							<li className="">
 								<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
 									{passwords_complete}
 								</label>

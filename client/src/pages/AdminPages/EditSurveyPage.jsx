@@ -161,7 +161,7 @@ const EditSurveyPage = (props) => {
 
 							<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
 								<div className="row wrap">
-									<div className="column w-228px m-10px">
+									<div className="w-228px m-10px">
 										{/* {users && (
 											<div className="ai-c h-25px mv-10px mb-30px jc-c">
 												<div className="custom-select w-100per">

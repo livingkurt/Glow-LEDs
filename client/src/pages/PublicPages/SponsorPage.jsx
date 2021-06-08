@@ -115,7 +115,7 @@ const SponsorPage = (props) => {
 						/>
 					</div>
 					<div className="jc-b">
-						<div className="column" style={{ flex: '1 1 70%' }}>
+						<div className="" style={{ flex: '1 1 70%' }}>
 							<div>
 								<h3 className="">Who be this</h3>
 								<p className="p_descriptions">
@@ -169,25 +169,33 @@ const SponsorPage = (props) => {
 								<h3 className="">Team{teams > 1 && "'s"}</h3>
 								{teams.map((team, index) => {
 									return (
-										<Link to={'/collections/all/teams/' + team.pathname} className="pos-rel" key={index}>
-                      {/* <h3
+										<Link
+											to={'/collections/all/teams/' + team.pathname}
+											className="pos-rel"
+											key={index}
+										>
+											{/* <h3
 												className="pos-abs fs-30px w-200px"
 												style={{ top: '-146px', left: '27%' }}
 											>
 												{team.team_name}
 											</h3> */}
-                     
+
 											<img
 												className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-                        alt="Team Name"
+												alt="Team Name"
 												src={team.picture}
 											/>
-											 <h3
-											className="pos-abs fs-30px"
-											style={{ top: '-119px', left: '50%', transform: 'translate(-50%, -50%)' }}
-										>
-											{team.team_name}
-										</h3>
+											<h3
+												className="pos-abs fs-30px"
+												style={{
+													top: '-119px',
+													left: '50%',
+													transform: 'translate(-50%, -50%)'
+												}}
+											>
+												{team.team_name}
+											</h3>
 										</Link>
 									);
 								})}
@@ -197,24 +205,26 @@ const SponsorPage = (props) => {
 								<div className="mt-2rem wrap  ">
 									<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
 										<div className="fs-40px">
-                    {affiliate.facebook_name && 
-											<a
-												href={'https://www.facebook.com/' + affiliate.facebook_name}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<i className="fab fa-facebook zoom" />
-											</a>}
+											{affiliate.facebook_name && (
+												<a
+													href={'https://www.facebook.com/' + affiliate.facebook_name}
+													target="_blank"
+													rel="noopener noreferrer"
+												>
+													<i className="fab fa-facebook zoom" />
+												</a>
+											)}
 										</div>
 										<div className="ml-10px fs-40px">
-                    {affiliate.instagram_handle && 
-											<a
-												href={'https://www.instagram.com/' + affiliate.instagram_handle}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<i className="fab fa-instagram zoom" />
-											</a>}
+											{affiliate.instagram_handle && (
+												<a
+													href={'https://www.instagram.com/' + affiliate.instagram_handle}
+													target="_blank"
+													rel="noopener noreferrer"
+												>
+													<i className="fab fa-instagram zoom" />
+												</a>
+											)}
 										</div>
 									</div>
 								</div>

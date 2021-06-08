@@ -211,7 +211,7 @@ const ProductListItem = (props) => {
 					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
 						{/* <div className="" /> */}
 						<ul className="ai-c jc-a w-100per">
-							<li className="column ">
+							<li className="">
 								<LazyImage
 									look="product-image w-100px h-100px br-10px mr-15px"
 									alt={product.name}

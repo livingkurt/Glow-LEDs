@@ -173,9 +173,7 @@ const EditProductPage = (props) => {
 		props.match.params.pathname && setPathname(product.pathname);
 		setOrder(product.order);
 		set_product_options(product.product_options);
-		set_product_options_images(
-			product.product_options && product.product_options.map((option) => option.images)
-		);
+		set_product_options_images(product.product_options && product.product_options.map((option) => option.images));
 		set_group_product(product.group_product);
 		set_products(product.products);
 	};
@@ -463,7 +461,7 @@ const EditProductPage = (props) => {
 								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per" key={index}>
 									<div className="pos-rel">
 										<img
-                    alt="product"
+											alt="product"
 											style={{
 												width: '100%',
 												package_height: 'auto',
@@ -525,7 +523,7 @@ const EditProductPage = (props) => {
 								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per" key={index}>
 									<div className="pos-rel">
 										<img
-                    alt="product"
+											alt="product"
 											style={{
 												width: '100%',
 												package_height: 'auto',
@@ -1015,7 +1013,7 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 										</div>
-										<div className="column" styles={{ width: '228px', margin: '10px' }}>
+										<div className="" styles={{ width: '228px', margin: '10px' }}>
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input

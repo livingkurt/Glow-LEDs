@@ -209,7 +209,7 @@ const Cart = (props) => {
 									</div>
 								</div>
 
-								<div className="column">
+								<div className="">
 									<div className="cart_sidebar-price">
 										{cart_sale_price_switch(item)}
 										{/* {item.product_option.sale_price > 0 ? (

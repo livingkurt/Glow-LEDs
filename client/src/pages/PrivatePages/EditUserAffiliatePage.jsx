@@ -334,7 +334,7 @@ const EditUserAffiliatePage = (props) => {
 
 								<ul className="edit-form-container" style={{ maxWidth: '55rem', marginBottom: '20px' }}>
 									<div className="wrap jc-b">
-										<div className="column w-228px m-10px">
+										<div className="w-228px m-10px">
 											{/* <li>
 												<label htmlFor="user">User</label>
 												<input
@@ -440,7 +440,7 @@ const EditUserAffiliatePage = (props) => {
 												/>
 											</li>
 										</div>
-										<div className="column w-228px m-10px">
+										<div className="w-228px m-10px">
 											<li>
 												<label htmlFor="location">Location</label>
 												<input

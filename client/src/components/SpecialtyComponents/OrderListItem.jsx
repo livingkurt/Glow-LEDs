@@ -203,7 +203,7 @@ const OrderListItem = (props) => {
 						)}
 					</div>
 					{props.admin && (
-						<div className="column fs-16px">
+						<div className="fs-16px">
 							<h3>Since Order</h3>
 							{daysBetween(today, props.order.createdAt) > 1 ? (
 								`${daysBetween(today, props.order.createdAt)} Days`
@@ -212,7 +212,7 @@ const OrderListItem = (props) => {
 							)}
 						</div>
 					)}
-					<div className="column fs-16px">
+					<div className="fs-16px">
 						<h3>Ship To</h3>
 						<Link to={`/secure/glow/userprofile/${props.order.user && props.order.user._id}`}>
 							{props.order.shipping.first_name} {props.order.shipping.last_name}
@@ -220,8 +220,8 @@ const OrderListItem = (props) => {
 					</div>
 				</div>
 				<div className="w-50per jc-fe">
-					<div className="column">
-						<div className="column fs-16px">
+					<div className="">
+						<div className="fs-16px">
 							<div className="row ai-c">
 								<h3 className="mr-10px">Order Number: </h3>
 								<div>{props.order._id}</div>
@@ -339,7 +339,7 @@ const OrderListItem = (props) => {
 			{props.admin && (
 				<div id={props.order._id} className="expanded-row-content hide-row">
 					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
-						<div className="jc-b">
+						<div className="jc-b mr-1rem">
 							<div>
 								<div className="mv-10px">
 									{/* <label htmlFor="payment_method">Payment Method</label>
@@ -376,12 +376,12 @@ const OrderListItem = (props) => {
 											/>
 										</div>
 									</div>
-									<div className="column">
-										<button className="btn primary mv-5px" onClick={update_refund_state}>
+									<div className="">
+										<button className="btn primary mv-5px w-100per" onClick={update_refund_state}>
 											Refund Customer
 										</button>
 
-										<button className="btn primary mv-5px">
+										<button className="btn primary mv-5px w-100per">
 											<Link to={'/secure/glow/emails/order/' + props.order._id + '/order/false'}>
 												View Email
 											</Link>
@@ -390,8 +390,8 @@ const OrderListItem = (props) => {
 								</div>
 							</div>
 						</div>
-						<ul className="column">
-							<li className="column ">
+						<ul className="">
+							<li className=" ">
 								<h2>Shipping</h2>
 								<div>
 									<div>

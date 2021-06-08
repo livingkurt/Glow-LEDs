@@ -110,8 +110,7 @@ const Header = (props) => {
 	};
 
 	return (
-		<div className="column">
-			{/* <div className="column" style={{ ...navbarStyles, top: visible ? '0' : '-200px' }}> */}
+		<div className="">
 			<Banner visible={visible} />
 			<header id="overlay" style={{ ...navbarStyles, top: visible ? '0' : '-180px' }}>
 				<div className="menu_button w-233px">

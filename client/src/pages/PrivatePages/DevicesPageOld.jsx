@@ -277,7 +277,7 @@ const DevicesPage = (props) => {
 					</div>
 				)}
 			</Loading>
-			{/* <div className="column">
+			{/* <div className="">
 				<div>
 					<button onClick={() => change_device(leds.living_room)} className="btn btn-nav">
 						Living Room
