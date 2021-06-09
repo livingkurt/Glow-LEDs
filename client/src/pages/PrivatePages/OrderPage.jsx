@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { detailsOrder, payOrder } from '../../actions/orderActions';
+import { createOrder, detailsOrder, payOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 
@@ -297,6 +297,24 @@ const OrderPage = (props) => {
 		setTimeout(() => {
 			WinPrint.print();
 		}, 500);
+	};
+
+	const create_duplicate_order = () => {
+		console.log({ order: props.order });
+		dispatch(
+			createOrder({
+				orderItems: props.order.orderItems,
+				shipping: props.order.shipping,
+				itemsPrice: props.order.itemsPrice,
+				shippingPrice: 0,
+				taxPrice: 0,
+				totalPrice: 0,
+				user: props.order.user._id,
+				order_note: `Replacement Order for ${props.order.shipping.first_name} ${props.order.shipping
+					.last_name} - Original Order Number is ${props.order._id}`
+			})
+		);
+		dispatch(listOrders());
 	};
 
 	return (
@@ -954,6 +972,12 @@ ${order.shipping.email}`)}
 													View Return Label
 												</button>
 											)}
+											<button
+												className="btn secondary mv-5px"
+												onClick={() => create_duplicate_order(order._id)}
+											>
+												Create Duplicate Order
+											</button>
 											<button className="btn secondary mv-5px">
 												<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
 											</button>
