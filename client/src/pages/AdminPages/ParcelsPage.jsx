@@ -163,11 +163,13 @@ const ParcelsPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr>
+									<th>Name</th>
 									<th>Type</th>
 									<th>Length</th>
 									<th>Width</th>
 									<th>Height</th>
 									<th>Volume</th>
+									<th>Count In Stock</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -181,12 +183,20 @@ const ParcelsPage = (props) => {
 										}}
 									>
 										<td className="p-10px" style={{ minWidth: '15rem' }}>
+											{parcel.type === 'bubble_mailer' ? (
+												`${parcel.length} X ${parcel.width}`
+											) : (
+												`${parcel.length} X ${parcel.width} X ${parcel.height}`
+											)}
+										</td>
+										<td className="p-10px" style={{ minWidth: '15rem' }}>
 											{parcel.type}
 										</td>
 										<td className="p-10px">{parcel.length}</td>
 										<td className="p-10px">{parcel.width}</td>
 										<td className="p-10px">{parcel.height}</td>
 										<td className="p-10px">{parcel.volume}</td>
+										<td className="p-10px">{parcel.count_in_stock}</td>
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editparcel/' + parcel._id}>
