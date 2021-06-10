@@ -42,6 +42,10 @@ const EditProductPage = (props) => {
 	const [ product_width, set_product_width ] = useState(0);
 	const [ product_height, set_product_height ] = useState(0);
 	const [ weight_pounds, set_weight_pounds ] = useState(0);
+	const [ material_cost, set_material_cost ] = useState(0);
+	const [ filament_used, set_filament_used ] = useState(0);
+	const [ printing_time, set_printing_time ] = useState(0);
+	const [ assembly_time, set_assembly_time ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ pathname, setPathname ] = useState();
 	const [ group_product, set_group_product ] = useState([]);
@@ -176,6 +180,10 @@ const EditProductPage = (props) => {
 		set_product_options_images(product.product_options && product.product_options.map((option) => option.images));
 		set_group_product(product.group_product);
 		set_products(product.products);
+		set_material_cost(product.material_cost);
+		set_filament_used(product.filament_used);
+		set_printing_time(product.printing_time);
+		set_assembly_time(product.assembly_time);
 	};
 	const unset_state = () => {
 		setId('');
@@ -216,6 +224,10 @@ const EditProductPage = (props) => {
 		set_product_options([ {} ]);
 		set_product_options_images([ [] ]);
 		set_group_product([]);
+		set_material_cost(0);
+		set_filament_used(0);
+		set_printing_time(0);
+		set_assembly_time(0);
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -261,7 +273,11 @@ const EditProductPage = (props) => {
 				product_options,
 				finite_stock,
 				products: products.map((chip) => chip._id),
-				group_product
+				group_product,
+				material_cost,
+				filament_used,
+				printing_time,
+				assembly_time
 			})
 		);
 		e.target.reset();
@@ -1064,6 +1080,46 @@ const EditProductPage = (props) => {
 													onChange={(e) => set_meta_keywords(e.target.value)}
 												/>
 											</li>
+											<li>
+												<label htmlFor="material_cost">Material Cost</label>
+												<input
+													type="text"
+													name="material_cost"
+													defaultValue={material_cost}
+													id="material_cost"
+													onChange={(e) => set_material_cost(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="filament_used">Filament Used</label>
+												<input
+													type="text"
+													name="filament_used"
+													value={filament_used}
+													id="filament_used"
+													onChange={(e) => set_filament_used(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="printing_time">Printing Time</label>
+												<input
+													type="text"
+													name="printing_time"
+													value={printing_time}
+													id="printing_time"
+													onChange={(e) => set_printing_time(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="assembly_time">Assembly Time</label>
+												<input
+													type="text"
+													name="assembly_time"
+													defaultValue={assembly_time}
+													id="assembly_time"
+													onChange={(e) => set_assembly_time(e.target.value)}
+												/>
+											</li>
 										</div>
 										<div className="w-228px m-10px">
 											<h3>Product Dimmensions</h3>
@@ -1473,6 +1529,66 @@ const EditProductPage = (props) => {
 																name="package_ounces"
 																value={option.package_ounces}
 																id="package_ounces"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="material_cost">Material Cost</label>
+															<input
+																type="text"
+																name="material_cost"
+																defaultValue={option.material_cost}
+																id="material_cost"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="filament_used">Filament Used</label>
+															<input
+																type="text"
+																name="filament_used"
+																value={option.filament_used}
+																id="filament_used"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="printing_time">Printing Time</label>
+															<input
+																type="text"
+																name="printing_time"
+																value={option.printing_time}
+																id="printing_time"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="assembly_time">Assembly Time</label>
+															<input
+																type="text"
+																name="assembly_time"
+																defaultValue={option.assembly_time}
+																id="assembly_time"
 																onChange={(e) =>
 																	update_product_option_property(
 																		e.target.value,

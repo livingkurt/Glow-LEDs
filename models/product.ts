@@ -34,7 +34,11 @@ const productOptionsSchema = new mongoose.Schema(
 		package_height: { type: Number },
 		package_volume: { type: Number },
 		package_pounds: { type: Number },
-		package_ounces: { type: Number }
+		package_ounces: { type: Number },
+		material_cost: { type: Number },
+		filament_used: { type: Number },
+		printing_time: { type: Number },
+		assembly_time: { type: Number }
 	},
 	{
 		timestamps: true
@@ -82,6 +86,10 @@ const productSchema = new mongoose.Schema(
 		product_height: { type: Number },
 		weight_pounds: { type: Number },
 		weight_ounces: { type: Number },
+		material_cost: { type: Number },
+		filament_used: { type: Number },
+		printing_time: { type: Number },
+		assembly_time: { type: Number },
 		order: { type: Number },
 		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ],
 		products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
