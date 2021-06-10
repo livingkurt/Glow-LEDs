@@ -82,7 +82,9 @@ import {
 	PaychecksPage,
 	SurveyPage,
 	EditSurveyPage,
-	SurveysPage
+	SurveysPage,
+	EditParcelPage,
+	ParcelsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -247,12 +249,15 @@ const App = () => {
 							<AdminRoute path="/secure/glow/users" component={UsersPage} />
 							<AdminRoute path="/secure/glow/paychecks" component={PaychecksPage} />
 							<AdminRoute path="/secure/glow/surveys" component={SurveysPage} />
+							<AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
 							<AdminRoute path="/secure/glow/userorders/:id" component={UserOrdersPage} />
 							<AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
 							<AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
 							<AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />
 							<AdminRoute path="/secure/glow/editsurvey/:id?" component={EditSurveyPage} />
+							<AdminRoute path="/secure/glow/editparcel/:id?" component={EditParcelPage} />
+
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
 							<AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />

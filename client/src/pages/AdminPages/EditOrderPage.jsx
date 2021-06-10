@@ -393,8 +393,7 @@ const EditOrderPage = (props) => {
 												<input
 													type="text"
 													name="user"
-													defaultValue={user._id}
-													value={user}
+													defaultValue={user}
 													id="user"
 													onChange={(e) => set_user(e.target.value)}
 												/>

@@ -143,7 +143,7 @@ const OrderListItem = (props) => {
 				shippingPrice: 0,
 				taxPrice: 0,
 				totalPrice: 0,
-				user: props.order.user && props.order.user._id,
+				user: props.order.user._id,
 				order_note: `Replacement Order for ${props.order.shipping.first_name} ${props.order.shipping
 					.last_name} - Original Order Number is ${props.order._id}`
 			})

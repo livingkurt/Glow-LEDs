@@ -24,3 +24,4 @@ export { default as shipping_routes } from './shipping_routes';
 export { default as payment_routes } from './payment_routes';
 export { default as paycheck_routes } from './paycheck_routes';
 export { default as survey_routes } from './survey_routes';
+export { default as parcel_routes } from './parcel_routes';

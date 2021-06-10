@@ -12,12 +12,12 @@ const router = express.Router();
 
 router.get('/get_one_guest/:id', async (req: any, res: any) => {
 	try {
-    console.log(req.params.id)
+		console.log(req.params.id);
 		const order = await Order.findOne({ _id: req.params.id })
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product')
 			.populate('user');
-      console.log({order})
+		console.log({ order });
 		if (order) {
 			log_request({
 				method: 'GET',
@@ -115,6 +115,7 @@ router.get('/get_all', async (req: any, res: any) => {
 			success: true,
 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 		});
+		console.log({ orders });
 		res.json({
 			orders,
 			totalPages: Math.ceil(count / limit),

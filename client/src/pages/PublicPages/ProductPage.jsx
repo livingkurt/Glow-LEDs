@@ -29,6 +29,10 @@ const ProductPage = (props) => {
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState(0);
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
+	const [ length, set_length ] = useState(0);
+	const [ width, set_width ] = useState(0);
+	const [ height, set_height ] = useState(0);
+	const [ volume, set_volume ] = useState(0);
 	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
 	const [ no_dropdown, set_no_dropdown ] = useState(false);
@@ -127,7 +131,7 @@ const ProductPage = (props) => {
 	};
 
 	const handleAddToCart = () => {
-		console.log({ color: determine_default_color(color) });
+		console.log({ product_option });
 		dispatch(
 			addToCart(
 				props.match.params.pathname,
@@ -160,6 +164,10 @@ const ProductPage = (props) => {
 		set_sale_price(option.sale_price);
 		set_size(option.size);
 		set_count_in_stock(option.count_in_stock);
+		// set_length(option.length);
+		// set_width(option.width);
+		// set_height(option.height);
+		// set_volume(option.volume);
 		set_product_option(option);
 		set_no_dropdown(option.no_dropdown);
 		if (option_color && option_color.price) {

@@ -85,6 +85,12 @@ import {
 	myPaycheckListReducer
 } from './reducers/paycheckReducers';
 import {
+	parcelDeleteReducer,
+	parcelDetailsReducer,
+	parcelListReducer,
+	parcelSaveReducer
+} from './reducers/parcelReducers';
+import {
 	surveyDeleteReducer,
 	surveyDetailsReducer,
 	surveyListReducer,
@@ -178,7 +184,11 @@ const reducer = combineReducers({
 	surveyList: surveyListReducer,
 	surveyDetails: surveyDetailsReducer,
 	surveySave: surveySaveReducer,
-	surveyDelete: surveyDeleteReducer
+	surveyDelete: surveyDeleteReducer,
+	parcelList: parcelListReducer,
+	parcelDetails: parcelDetailsReducer,
+	parcelSave: parcelSaveReducer,
+	parcelDelete: parcelDeleteReducer
 });
 
 declare global {

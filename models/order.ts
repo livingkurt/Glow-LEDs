@@ -61,6 +61,10 @@ const orderItemSchema = new mongoose.Schema(
 		package_length: { type: Number },
 		package_width: { type: Number },
 		package_height: { type: Number },
+		parcel: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Parcel'
+		},
 		reviewed: { type: Boolean, default: false },
 		product_option: productOptionsSchema,
 		product: {

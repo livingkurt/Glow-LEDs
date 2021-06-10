@@ -1,14 +1,13 @@
 export {};
 const express = require('express');
 import Order from '../models/order';
-import { log_error, log_request } from '../util';
-import axios from 'axios';
+import { determine_parcel, log_error, log_request } from '../util';
+import { Parcel } from '../models';
 const { isAuth, isAdmin } = require('../util');
 
 const easy_post_api = require('@easypost/api');
 
 require('dotenv').config();
-const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 const router = express.Router();
 
@@ -46,11 +45,14 @@ router.put('/create_label', async (req: any, res: any) => {
 			phone: '906-284-2208',
 			email: 'info.glowleds@gmail.com'
 		});
-		const cube_root_volume = Math.cbrt(
-			order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
-				order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
-				order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
-		);
+		const package_length = order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0);
+		const package_width = order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0);
+		const package_height = order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0);
+
+		const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
+
+		// const parcel_size = determine_parcel(order.orderItems);
+
 		let weight = 0;
 		order.orderItems.forEach((item: any, index: number) => {
 			if (item.weight_pounds) {
@@ -59,6 +61,7 @@ router.put('/create_label', async (req: any, res: any) => {
 				weight += item.weight_ounces;
 			}
 		});
+
 		const parcel = new EasyPost.Parcel({
 			length: cube_root_volume,
 			width: cube_root_volume,
@@ -131,11 +134,18 @@ router.put('/create_return_label', async (req: any, res: any) => {
 			country: order.shipping.country
 		});
 
-		const cube_root_volume = Math.cbrt(
-			order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
-				order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
-				order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
-		);
+		// const cube_root_volume = Math.cbrt(
+		// 	order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
+		// 		order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
+		// 		order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
+		// );
+		const package_length = order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0);
+		const package_width = order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0);
+		const package_height = order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0);
+
+		const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
+
+		// const parcel_size = determine_parcel(order.orderItems);
 		let weight = 0;
 		order.orderItems.forEach((item: any, index: number) => {
 			if (item.weight_pounds) {
@@ -216,11 +226,21 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 			phone: '906-284-2208',
 			email: 'info.glowleds@gmail.com'
 		});
-		const cube_root_volume = Math.cbrt(
-			order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
-				order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
-				order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
-		);
+		// const cube_root_volume = Math.cbrt(
+		// 	order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
+		// 		order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
+		// 		order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
+		// );
+		const package_length = order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0);
+		const package_width = order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0);
+		const package_height = order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0);
+
+		const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
+		const parcels = await Parcel.find({ deleted: false });
+		// console.log({ parcels });
+
+		const parcel_size = determine_parcel(order.orderItems, parcels);
+
 		let weight = 0;
 		order.orderItems.forEach((item: any, index: number) => {
 			if (item.weight_pounds) {
@@ -229,11 +249,17 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 				weight += item.weight_ounces;
 			}
 		});
-
+		console.log({ weight });
+		// const parcel = new EasyPost.Parcel({
+		// 	length: cube_root_volume,
+		// 	width: cube_root_volume,
+		// 	height: cube_root_volume,
+		// 	weight
+		// });
 		const parcel = new EasyPost.Parcel({
-			length: cube_root_volume,
-			width: cube_root_volume,
-			height: cube_root_volume,
+			length: parcel_size.length,
+			width: parcel_size.width,
+			height: parcel_size.height,
 			weight
 		});
 		let customsInfo = {};

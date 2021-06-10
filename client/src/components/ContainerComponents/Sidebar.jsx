@@ -638,6 +638,11 @@ const Sidebar = (props) => {
 									Surveys
 								</button>
 							</Link>
+							<Link to="/secure/glow/parcels">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Parcels
+								</button>
+							</Link>
 							<Link to="/secure/glow/edit_all_data">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Edit All Data

@@ -1378,6 +1378,109 @@ const EditProductPage = (props) => {
 																	)}
 															/>
 														</li>
+														<h3>Package Dimmensions</h3>
+														<li>
+															<label htmlFor="package_length">Package Length</label>
+															<input
+																type="text"
+																name="package_length"
+																defaultValue={option.package_length}
+																id="package_length"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="package_width">Package Width</label>
+															<input
+																type="text"
+																name="package_width"
+																value={option.package_width}
+																id="package_width"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="package_height">Package Height</label>
+															<input
+																type="text"
+																name="package_height"
+																value={option.package_height}
+																id="package_height"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="package_volume">Package Volume</label>
+															<input
+																type="text"
+																name="package_volume"
+																value={
+																	option.package_length &&
+																	option.package_width &&
+																	option.package_height &&
+																	option.package_length *
+																		option.package_width *
+																		option.package_height
+																}
+																id="package_volume"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														{/* <li>
+												<label htmlFor="package_height">
+													Calculated Volume {length && length * package_width * package_height}
+												</label>
+											</li> */}
+														<li>
+															<label htmlFor="package_pounds">Package lbs</label>
+															<input
+																type="text"
+																name="package_pounds"
+																value={option.package_pounds}
+																id="package_pounds"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="package_ounces">Package oz</label>
+															<input
+																type="text"
+																name="package_ounces"
+																value={option.package_ounces}
+																id="package_ounces"
+																onChange={(e) =>
+																	update_product_option_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
 														{loading_checkboxes ? (
 															<div>Loading...</div>
 														) : (

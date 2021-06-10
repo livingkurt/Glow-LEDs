@@ -190,6 +190,7 @@ const OrdersPage = (props) => {
 					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				</div>
+				{console.log({ orders })}
 				<div className="wrap jc-c">
 					{orders &&
 						orders.totalPages &&

@@ -19,3 +19,4 @@ export { default as Content } from './content';
 export { default as Chip } from './chip';
 export { default as Team } from './team';
 export { default as Paycheck } from './paycheck';
+export { default as Parcel } from './parcel';

@@ -28,7 +28,13 @@ const productOptionsSchema = new mongoose.Schema(
 		default: { type: Boolean, default: false },
 		dropdown: { type: Boolean, default: false },
 		no_dropdown: { type: Boolean, default: false },
-		deleted: { type: Boolean, default: false }
+		deleted: { type: Boolean, default: false },
+		package_length: { type: Number },
+		package_width: { type: Number },
+		package_height: { type: Number },
+		package_volume: { type: Number },
+		package_pounds: { type: Number },
+		package_ounces: { type: Number }
 	},
 	{
 		timestamps: true
