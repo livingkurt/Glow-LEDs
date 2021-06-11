@@ -240,6 +240,7 @@ router.post('/user_create_one', isAuth, async (req: any, res: any) => {
 			totalPrice: req.body.totalPrice,
 			order_note: req.body.order_note,
 			promo_code: req.body.promo_code,
+			parcel: req.body.parcel,
 			deleted: false
 		});
 		const newOrderCreated = await newOrder.save();

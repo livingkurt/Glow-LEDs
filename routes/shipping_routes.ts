@@ -68,6 +68,7 @@ router.put('/create_label', async (req: any, res: any) => {
 		// 	height: cube_root_volume,
 		// 	weight
 		// });
+		const parcels = await Parcel.find({ deleted: false });
 		const parcel_size = determine_parcel(order.orderItems, parcels);
 		const parcel = new EasyPost.Parcel({
 			length: parcel_size.length,
@@ -167,6 +168,7 @@ router.put('/create_return_label', async (req: any, res: any) => {
 		// 	height: cube_root_volume,
 		// 	weight
 		// });
+		const parcels = await Parcel.find({ deleted: false });
 		const parcel_size = determine_parcel(order.orderItems, parcels);
 		const parcel = new EasyPost.Parcel({
 			length: parcel_size.length,
