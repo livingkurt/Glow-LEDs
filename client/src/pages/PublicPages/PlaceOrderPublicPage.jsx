@@ -45,6 +45,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ shipment_id, set_shipment_id ] = useState('');
 	const [ shipping_rate, set_shipping_rate ] = useState({});
 	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
+	const [ parcel, set_parcel ] = useState('');
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
@@ -150,9 +151,10 @@ const PlaceOrderPublicPage = (props) => {
 			promo_code: show_message && promo_code
 		});
 		if (data) {
-			set_shipping_rates(data);
-			set_shipment_id(data.id);
+			set_shipping_rates(data.shipment);
+			set_shipment_id(data.shipment.id);
 			set_loading_shipping(false);
+			set_parcel(data.parcel._id);
 			// set_loading_shipping(false);
 		}
 
@@ -246,7 +248,8 @@ const PlaceOrderPublicPage = (props) => {
 					totalPrice,
 					userInfo,
 					order_note,
-					promo_code: show_message && promo_code
+					promo_code: show_message && promo_code,
+					parcel
 				},
 				create_account,
 				password,
@@ -295,27 +298,6 @@ const PlaceOrderPublicPage = (props) => {
 	const checkoutHandler = () => {
 		props.history.push('/account/login?redirect=shipping');
 	};
-
-	const no_note_warning = () => {
-		const name = cartItems.map((cartItem) => {
-			return cartItem.name;
-		});
-		// if (name.includes('Diffuser Caps + Adapters Starter Kit')) {
-		// 	// console.log('Caps');
-		// 	// if (!categories.includes('diffuser_adapters')) {
-		// 	return "Don't Forget: Add a note of the caps you want or a random pair will be sent to you";
-		// 	// }
-		// }
-	};
-
-	// const handleSuccessPayment = (paymentResult, token) => {
-	// 	console.log('handleSuccessPayment');
-	// 	dispatch(payOrder(order, paymentResult, userInfo, token));
-	// 	set_payment_loading(false);
-	// 	// if (successPay) {
-	// 	props.history.push('/secure/checkout/paymentcomplete/' + props.match.params.id);
-	// 	// }
-	// };
 
 	useEffect(
 		() => {
@@ -416,70 +398,6 @@ const PlaceOrderPublicPage = (props) => {
 		console.log({ type });
 		console.log({ error });
 	};
-
-	const determine_delivery_speed = (speed) => {
-		switch (speed) {
-			case 'Standard':
-				return '2-3 Days';
-			case 'Priority':
-				return '1-3 Days';
-			case 'Express':
-				return '1-2 Days';
-		}
-	};
-
-	// const [ stripePromise, setStripePromise ] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
-	// // console.log(process.env.REACT_APP_STRIPE_KEY);
-
-	// const Form = () => {
-	// 	const stripe = useStripe();
-	// 	const elements = useElements();
-
-	// 	const handleSubmit = async (event) => {
-	// 		event.preventDefault();
-	// 		const { error, paymentMethod } = await stripe.createPaymentMethod({
-	// 			type: 'card',
-	// 			card: elements.getElement(CardElement)
-	// 		});
-
-	// 		// console.log({ error });
-	// 		if (error) {
-	// 			console.log({ error });
-	// 			return;
-	// 		}
-	// 		console.log({ paymentMethod });
-	// 		placeOrderHandler(paymentMethod);
-	// 	};
-
-	// 	return (
-	// 		<form onSubmit={handleSubmit}>
-	// 			<CardElement
-	// 				options={{
-	// 					iconStyle: 'solid',
-	// 					style: {
-	// 						base: {
-	// 							iconColor: '#c4f0ff',
-	// 							color: '#fff',
-	// 							fontWeight: 500,
-	// 							fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
-	// 							fontSize: '1.2rem',
-	// 							fontSmoothing: 'antialiased',
-	// 							':-webkit-autofill': { color: 'white' },
-	// 							'::placeholder': { color: 'white' }
-	// 						},
-	// 						invalid: {
-	// 							iconColor: '#ffc7ee',
-	// 							color: '#ffc7ee'
-	// 						}
-	// 					}
-	// 				}}
-	// 			/>
-	// 			<button type="submit" className="btn primary w-100per mb-12px" disabled={!stripe}>
-	// 				Complete Order
-	// 			</button>
-	// 		</form>
-	// 	);
-	// };
 
 	return (
 		<div>
@@ -1056,7 +974,6 @@ const PlaceOrderPublicPage = (props) => {
 								className="w-100per"
 								onChange={(e) => set_order_note(e.target.value)}
 							/>
-							<h4>{no_note_warning()}</h4>
 						</div>
 						{!loading_tax_rate &&
 						!hide_pay_button &&

@@ -47,6 +47,7 @@ const PlaceOrderPage = (props) => {
 	const [ shipment_id, set_shipment_id ] = useState('');
 	const [ shipping_rate, set_shipping_rate ] = useState({});
 	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
+	const [ parcel, set_parcel ] = useState('');
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
@@ -159,10 +160,12 @@ const PlaceOrderPage = (props) => {
 		console.log({ response });
 		console.log({ message: response.message });
 		const data = response.data;
+		console.log({ data });
 		if (data) {
-			set_shipping_rates(data);
-			set_shipment_id(data.id);
+			set_shipping_rates(data.shipment);
+			set_shipment_id(data.shipment.id);
 			set_loading_shipping(false);
+			set_parcel(data.parcel._id);
 			// set_loading_shipping(false);
 		}
 
@@ -238,7 +241,8 @@ const PlaceOrderPage = (props) => {
 					totalPrice,
 					userInfo,
 					order_note,
-					promo_code: show_message && promo_code
+					promo_code: show_message && promo_code,
+					parcel
 				},
 				paymentMethod
 			)
@@ -302,7 +306,8 @@ const PlaceOrderPage = (props) => {
 				totalPrice,
 				user,
 				order_note,
-				promo_code
+				promo_code,
+				parcel
 			})
 		);
 
@@ -344,7 +349,8 @@ const PlaceOrderPage = (props) => {
 				taxPrice,
 				totalPrice,
 				order_note,
-				promo_code
+				promo_code,
+				parcel
 			})
 		);
 

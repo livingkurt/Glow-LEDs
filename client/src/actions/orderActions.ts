@@ -64,6 +64,7 @@ export const createPayOrder = (
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
+		console.log({ createPayOrder: order });
 		const { data: { data: newOrder } } = await axios.post('/api/orders/user_create_one', order, {
 			headers: {
 				Authorization: ' Bearer ' + user_data.token
@@ -418,12 +419,12 @@ export const detailsOrderPublic = (orderId: string) => async (
 ) => {
 	try {
 		dispatch({ type: ORDER_DETAILS_PUBLIC_REQUEST, payload: orderId });
-    console.log({orderId})
+		console.log({ orderId });
 		const { data } = await axios.get('/api/orders/get_one_guest/' + orderId);
-    console.log({data})
-    if (data){
-      dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
-    }
+		console.log({ data });
+		if (data) {
+			dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
+		}
 		// dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response.data.message });

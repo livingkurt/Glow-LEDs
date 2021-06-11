@@ -62,10 +62,17 @@ router.put('/create_label', async (req: any, res: any) => {
 			}
 		});
 
+		// const parcel = new EasyPost.Parcel({
+		// 	length: cube_root_volume,
+		// 	width: cube_root_volume,
+		// 	height: cube_root_volume,
+		// 	weight
+		// });
+		const parcel_size = determine_parcel(order.orderItems, parcels);
 		const parcel = new EasyPost.Parcel({
-			length: cube_root_volume,
-			width: cube_root_volume,
-			height: cube_root_volume,
+			length: parcel_size.length,
+			width: parcel_size.width,
+			height: parcel_size.height,
 			weight
 		});
 		let customsInfo = {};
@@ -154,10 +161,17 @@ router.put('/create_return_label', async (req: any, res: any) => {
 				weight += item.weight_ounces;
 			}
 		});
+		// const parcel = new EasyPost.Parcel({
+		// 	length: cube_root_volume,
+		// 	width: cube_root_volume,
+		// 	height: cube_root_volume,
+		// 	weight
+		// });
+		const parcel_size = determine_parcel(order.orderItems, parcels);
 		const parcel = new EasyPost.Parcel({
-			length: cube_root_volume,
-			width: cube_root_volume,
-			height: cube_root_volume,
+			length: parcel_size.length,
+			width: parcel_size.width,
+			height: parcel_size.height,
 			weight
 		});
 		let customsInfo = {};
@@ -239,8 +253,6 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 		const parcels = await Parcel.find({ deleted: false });
 		// console.log({ parcels });
 
-		const parcel_size = determine_parcel(order.orderItems, parcels);
-
 		let weight = 0;
 		order.orderItems.forEach((item: any, index: number) => {
 			if (item.weight_pounds) {
@@ -256,6 +268,7 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 		// 	height: cube_root_volume,
 		// 	weight
 		// });
+		const parcel_size = determine_parcel(order.orderItems, parcels);
 		const parcel = new EasyPost.Parcel({
 			length: parcel_size.length,
 			width: parcel_size.width,
@@ -293,7 +306,7 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 			customsInfo: order.shipping.international ? customsInfo : {}
 		});
 		const saved_shipment = await shipment.save();
-		res.send(saved_shipment);
+		res.send({ shipment: saved_shipment, parcel: parcel_size });
 	} catch (err) {
 		console.log(err);
 	}
