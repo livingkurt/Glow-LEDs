@@ -60,20 +60,30 @@ router.get('/get_all', async (req: any, res: any) => {
 		const page: any = req.query.page ? req.query.page : 1;
 		const limit: any = req.query.limit ? req.query.limit : 10;
 		console.log({ page });
-		let user: any;
-		let searchKeyword: any;
-		if (req.query.searchKeyword) {
-			const userSearchKeyword = req.query.searchKeyword
-				? {
-						user: {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-			user = await User.findOne({ ...userSearchKeyword });
-			searchKeyword = { user: user._id };
-		}
+		// let user: any;
+		// let searchKeyword: any;
+		// if (req.query.searchKeyword) {
+		// 	const userSearchKeyword = req.query.searchKeyword
+		// 		? {
+		// 				user: {
+		// 					$regex: req.query.searchKeyword,
+		// 					$options: 'i'
+		// 				}
+		// 			}
+		// 		: {};
+		// 	user = await User.findOne({ ...userSearchKeyword });
+		// 	searchKeyword = { user: user._id };
+		// }
+		// const searchKeyword = req.query.searchKeyword
+		// 	? {
+		// 			_id: {
+		// 				$regex: req.query.searchKeyword,
+		// 				$options: 'i'
+		// 			}
+		// 		}
+		// 	: {};
+		const searchKeyword = { _id: req.query.searchKeyword };
+		console.log({ searchKeyword });
 		let sortOrder = {};
 		if (req.query.sortOrder === 'lowest') {
 			sortOrder = { totalPrice: 1 };
