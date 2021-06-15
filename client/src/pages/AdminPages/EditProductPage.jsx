@@ -20,6 +20,7 @@ const EditProductPage = (props) => {
 	const [ video, setVideo ] = useState('');
 	const [ brand, setBrand ] = useState('');
 	const [ category, setCategory ] = useState('');
+	const [ product_collection, set_product_collection ] = useState('');
 	const [ countInStock, setCountInStock ] = useState('');
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
@@ -171,6 +172,7 @@ const EditProductPage = (props) => {
 		setVideo(product.video);
 		setBrand(product.brand);
 		setCategory(product.category);
+		set_product_collection(product.product_collection);
 		set_subcategory(product.subcategory);
 		setCountInStock(product.countInStock);
 		set_finite_stock(product.finite_stock);
@@ -200,6 +202,7 @@ const EditProductPage = (props) => {
 		setCategory('');
 		// set_subcategories('');
 		set_subcategory('');
+		set_product_collection('');
 		setCountInStock(0);
 		setHidden(false);
 		set_chip([]);
@@ -247,6 +250,7 @@ const EditProductPage = (props) => {
 				video,
 				brand,
 				category,
+				product_collection,
 				countInStock,
 				facts,
 				included_items,
@@ -888,7 +892,6 @@ const EditProductPage = (props) => {
 													</div>
 												</div>
 											</li>
-											<li />
 											<li>
 												<label htmlFor="category">Category</label>
 												<input
@@ -912,6 +915,16 @@ const EditProductPage = (props) => {
 													Add Subcategory
 												</button>
 												{subcategory_display(subcategories)} */}
+											</li>
+											<li>
+												<label htmlFor="product_collection">Collection</label>
+												<input
+													type="text"
+													name="product_collection"
+													value={product_collection}
+													id="product_collection"
+													onChange={(e) => set_product_collection(e.target.value)}
+												/>
 											</li>
 											<li>
 												<label htmlFor="brand">Brand</label>

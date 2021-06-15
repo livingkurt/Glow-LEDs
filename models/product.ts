@@ -54,6 +54,7 @@ const productSchema = new mongoose.Schema(
 		brand: { type: String, required: true },
 		price: { type: Number, default: 0, required: true },
 		category: { type: String, required: true },
+		product_collection: { type: String },
 		// subcategories: { type: Array },
 		subcategory: { type: String },
 		countInStock: { type: Number, default: 30, required: true },
