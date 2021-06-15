@@ -74,15 +74,8 @@ router.get('/get_all', async (req: any, res: any) => {
 		// 	user = await User.findOne({ ...userSearchKeyword });
 		// 	searchKeyword = { user: user._id };
 		// }
-		// const searchKeyword = req.query.searchKeyword
-		// 	? {
-		// 			_id: {
-		// 				$regex: req.query.searchKeyword,
-		// 				$options: 'i'
-		// 			}
-		// 		}
-		// 	: {};
-		const searchKeyword = { _id: req.query.searchKeyword };
+		const searchKeyword = req.query.searchKeyword ? { _id: req.query.searchKeyword } : {};
+		// const searchKeyword = { _id: req.query.searchKeyword };
 		console.log({ searchKeyword });
 		let sortOrder = {};
 		if (req.query.sortOrder === 'lowest') {

@@ -52,7 +52,7 @@ const OrderPage = (props) => {
 
 	const update_refund_state = () => {
 		set_refund_state(true);
-		dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
+		dispatch(refundOrder(order, true, refund_amount, refund_reason));
 		// }
 	};
 	useEffect(
@@ -119,8 +119,8 @@ const OrderPage = (props) => {
 	useEffect(
 		() => {
 			if (successPay && order) {
-				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-				props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+				// history.push('/secure/checkout/paymentcomplete/' + order._id);
+				history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
 				set_payment_loading(false);
 				empty_cart();
 			} else if (errorPay) {
@@ -221,7 +221,7 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-		props.history.push('/secure/glow/emails/invoice/' + order._id);
+		history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const create_return_label = async () => {
@@ -237,7 +237,7 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-		props.history.push('/secure/glow/emails/invoice/' + order._id);
+		history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const buy_label = async () => {
@@ -264,7 +264,7 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-		props.history.push('/secure/glow/emails/invoice/' + order._id);
+		history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const view_label = async () => {
@@ -273,11 +273,7 @@ const OrderPage = (props) => {
 	};
 
 	const view_return_label = async () => {
-		window.open(
-			props.order.shipping.return_shipping_label.postage_label.label_url,
-			'_blank',
-			'width=600,height=400'
-		);
+		window.open(order.shipping.return_shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 
 	const show_label = (label) => {
@@ -300,18 +296,18 @@ const OrderPage = (props) => {
 	};
 
 	const create_duplicate_order = () => {
-		console.log({ order: props.order });
+		console.log({ order: order });
 		dispatch(
 			createOrder({
-				orderItems: props.order.orderItems,
-				shipping: props.order.shipping,
-				itemsPrice: props.order.itemsPrice,
+				orderItems: order.orderItems,
+				shipping: order.shipping,
+				itemsPrice: order.itemsPrice,
 				shippingPrice: 0,
 				taxPrice: 0,
 				totalPrice: 0,
-				user: props.order.user._id,
-				order_note: `Replacement Order for ${props.order.shipping.first_name} ${props.order.shipping
-					.last_name} - Original Order Number is ${props.order._id}`
+				user: order.user._id,
+				order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping
+					.last_name} - Original Order Number is ${order._id}`
 			})
 		);
 		dispatch(listOrders());
