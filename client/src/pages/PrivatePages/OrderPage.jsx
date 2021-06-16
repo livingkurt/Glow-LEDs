@@ -192,7 +192,7 @@ const OrderPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_order(order, true, is_action, action_at));
-			history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}`);
+			history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}/true`);
 		}
 		dispatch(detailsOrder(props.match.params.id));
 	};
