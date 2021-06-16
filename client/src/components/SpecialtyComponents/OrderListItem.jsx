@@ -517,11 +517,11 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 									</button>
-									{/* <Link to={`/secure/glow/emails/order/${props.order._id}/order/false`}>
+									<Link to={`/secure/glow/emails/order/${props.order._id}/order/false`}>
 										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
-									</Link> */}
+									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
@@ -536,11 +536,11 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
 									</button>
-									{/* <Link to={`/secure/glow/emails/order_status/${props.order._id}/reassured`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/reassured/false`}>
 										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
-									</Link> */}
+									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
@@ -555,11 +555,11 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
 									</button>
-									{/* <Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured/false`}>
 										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
-									</Link> */}
+									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
@@ -574,11 +574,11 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 									</button>
-									{/* <Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged/false`}>
 										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
-									</Link> */}
+									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
@@ -593,11 +593,11 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 									</button>
-									{/* <Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped/false`}>
 										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
-									</Link> */}
+									</Link>
 								</div>
 								<div className="row ai-c">
 									<button
@@ -612,11 +612,11 @@ ${props.order.shipping.email}`)}
 									>
 										{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 									</button>
-									{/* <Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered`}>
+									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered/false`}>
 										<button className="btn secondary">
 											<i class="fas fa-paper-plane" />
 										</button>
-									</Link> */}
+									</Link>
 								</div>
 								<div className="row ai-c">
 									<button

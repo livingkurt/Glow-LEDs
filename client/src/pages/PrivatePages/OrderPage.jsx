@@ -212,7 +212,6 @@ const OrderPage = (props) => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
 		show_label(data.postage_label.label_url);
-		// window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -228,7 +227,6 @@ const OrderPage = (props) => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
 		show_label(data.postage_label.label_url);
-		// window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -244,19 +242,6 @@ const OrderPage = (props) => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.buy_label(order, order.shipping.shipping_rate);
 		show_label(data.postage_label.label_url);
-		// const WinPrint = window.open(data.postage_label.label_url, 'PRINT', 'width=600,height=400');
-		// WinPrint.print();
-		// const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
-		// WinPrint.document.write(
-		// 	`<div style="width: 100%;"><img style="margin: auto; text-align: center;" src="${data.postage_label
-		// 		.label_url}" alt="label" /></div>`
-		// );
-		// WinPrint.document.close();
-		// WinPrint.focus();
-		// WinPrint.print();
-		// setTimeout(() => {
-		// 	WinPrint.print();
-		// }, 500);
 		if (data) {
 			set_loading_label(false);
 		}
@@ -268,7 +253,6 @@ const OrderPage = (props) => {
 	};
 
 	const view_label = async () => {
-		// window.open(order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
 		show_label(order.shipping.shipping_label.postage_label.label_url);
 	};
 
@@ -480,86 +464,11 @@ ${order.shipping.email}`)}
 														{console.log({ color: item.color })}
 														<Link to={'/collections/all/products/' + item.pathname}>
 															{determine_product_name(item, false)}
-															{/* {(item.category === 'glowskins' ||
-																item.category === 'diffuser_caps' ||
-																item.category === 'mega_diffuser_caps' ||
-																item.category === 'frosted_diffusers') &&
-																item.color}{' '}
-															{item.name}{' '}
-															{item.product_option &&
-																item.product_option.name &&
-																`- ${item.product_option.name}`}
-															{item.secondary_product &&
-																` w (${item.secondary_product.name})`} */}
 														</Link>
 													</div>
 													<div>Qty: {item.qty}</div>
-													{/* {userInfo &&
-													userInfo.isAdmin &&
-													item.secondary_product && (
-														<div className="row">
-															<div className="mv-10px ">
-																<label htmlFor="secondary_product">
-																	Secondary Product
-																</label>
-																<div className="row">
-																	<input
-																		type="text"
-																		value={item.secondary_product._id}
-																		name="secondary_product"
-																		id="secondary_product"
-																		className="w-100per"
-																		onChange={(e) =>
-																			set_secondary_product(e.target.value)}
-																	/>
-																	<button
-																		className="btn primary"
-																		onClick={save_secondary_product}
-																	>
-																		Add
-																	</button>
-																</div>
-															</div>
-														</div>
-													)} */}
 												</div>
-												<div className="cart-price">
-													{cart_sale_price_switch(item)}
-													{/* {item.product_option.sale_price > 0 ? (
-														<label>
-															<del style={{ color: 'red' }}>
-																<label style={{ color: 'white' }}>
-																	${item.product_option.price ? (
-																		item.product_option.price.toFixed(2)
-																	) : item.price ? (
-																		item.price.toFixed(2)
-																	) : (
-																		item.price
-																	)}
-																</label>
-															</del>{' '}
-															<i class="fas fa-arrow-right" /> ${item.product_option
-																.sale_price ? (
-																item.product_option.sale_price.toFixed(2)
-															) : item.sale_price ? (
-																item.sale_price.toFixed(2)
-															) : (
-																item.sale_price
-															)}{' '}
-															On Sale!
-														</label>
-													) : (
-														<label>
-															${item.product_option.price ? (
-																item.product_option.price.toFixed(2)
-															) : item.price ? (
-																item.price.toFixed(2)
-															) : (
-																item.price
-															)}
-														</label>
-													)} */}
-												</div>
+												<div className="cart-price">{cart_sale_price_switch(item)}</div>
 											</li>
 										))
 									)}
@@ -809,11 +718,11 @@ ${order.shipping.email}`)}
 												>
 													{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 												</button>
-												{/* <Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
+												<Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link> */}
+												</Link>
 											</div>
 											<div className="row ai-c">
 												<button
@@ -828,11 +737,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
 												</button>
-												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/reassured`}>
+												<Link
+													to={`/secure/glow/emails/order_status/${order._id}/reassured/false`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link> */}
+												</Link>
 											</div>
 											<div className="row ai-c">
 												<button
@@ -851,11 +762,13 @@ ${order.shipping.email}`)}
 														'Set to Manufactured'
 													)}
 												</button>
-												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/manufactured`}>
+												<Link
+													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link> */}
+												</Link>
 											</div>
 											<div className="row ai-c">
 												<button
@@ -870,11 +783,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 												</button>
-												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/packaged`}>
+												<Link
+													to={`/secure/glow/emails/order_status/${order._id}/packaged/false`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link> */}
+												</Link>
 											</div>
 											<div className="row ai-c">
 												<button
@@ -889,11 +804,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 												</button>
-												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/shipped`}>
+												<Link
+													to={`/secure/glow/emails/order_status/${order._id}/shipped/false`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link> */}
+												</Link>
 											</div>
 											<div className="row ai-c">
 												<button
@@ -908,11 +825,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 												</button>
-												{/* <Link to={`/secure/glow/emails/order_status/${order._id}/delivered`}>
+												<Link
+													to={`/secure/glow/emails/order_status/${order._id}/delivered/false`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
-												</Link> */}
+												</Link>
 											</div>
 											<div className="row ai-c">
 												<button

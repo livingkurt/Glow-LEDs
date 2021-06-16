@@ -644,7 +644,7 @@ const OrderStatusEmail = (props) => {
 
 	useEffect(
 		() => {
-			if (order && email) {
+			if (props.match.params.send === 'true' && order && email) {
 				if (order.orderItems.length > 0) {
 					if (props.match.params.id) {
 						send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
