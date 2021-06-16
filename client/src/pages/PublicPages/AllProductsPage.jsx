@@ -26,6 +26,7 @@ const AllProductsPage = (props) => {
 	const [ filter, set_filter ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+	const collection = props.match.params.collection ? props.match.params.collection : '';
 
 	// console.log({ subcategory });
 	// console.log(props.match.params);
@@ -41,7 +42,7 @@ const AllProductsPage = (props) => {
 		() => {
 			// dispatch(listProducts(''));
 			// console.log({ search: search.substring(8) });
-			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			dispatch(listChips());
 		},
 		[ searchKeyword ]
@@ -61,7 +62,7 @@ const AllProductsPage = (props) => {
 			} else if (category === 'essentials') {
 				get_occurrences();
 			} else {
-				dispatch(listProducts(category, subcategory, searchKeyword));
+				dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			}
 			dispatch(listChips());
 		},
@@ -89,7 +90,7 @@ const AllProductsPage = (props) => {
 			set_imperfect(data);
 			set_alternative_products(data);
 		} else {
-			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			set_best_sellers(false);
 		}
 		set_loading_products(false);
@@ -108,7 +109,7 @@ const AllProductsPage = (props) => {
 
 			// params.delete('searcj'); //Query string is now: 'bar=2'
 			setSearchKeyword('');
-			dispatch(listProducts(category, subcategory));
+			dispatch(listProducts(category, subcategory, '', '', '', '', collection));
 			dispatch(listChips());
 		},
 		[ props.location.pathname ]
@@ -143,7 +144,7 @@ const AllProductsPage = (props) => {
 			// 	});
 			// }
 
-			dispatch(listProducts(category, subcategory, searchKeyword));
+			dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			dispatch(listChips());
 			// } else {
 
@@ -155,7 +156,7 @@ const AllProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
+			dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, '', '', collection));
 			dispatch(listChips());
 		},
 		[ sortOrder ]
@@ -170,16 +171,16 @@ const AllProductsPage = (props) => {
 		history.push({
 			search: '?search=' + searchKeyword
 		});
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, '', '', collection));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value));
+		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value, '', '', collection));
 	};
 	const filterHandler = (e) => {
 		set_filter(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, e.target.value));
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, e.target.value, '', collection));
 	};
 
 	const descriptions = {
@@ -253,11 +254,11 @@ const AllProductsPage = (props) => {
 			<div className="jc-c">
 				<div className="row">
 					<h1>
-						{category === 'diffuser_caps' ? (
+						{/* {category === 'diffuser_caps' ? (
 							humanize('diffuser_caps')
-						) : (
-							`${humanize(category)} ${subcategory && humanize(subcategory)}` || 'Products'
-						)}
+						) : ( */}
+						{`${humanize(category)} ${subcategory && humanize(subcategory)}` || 'Products'}
+						{/* )} */}
 					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||

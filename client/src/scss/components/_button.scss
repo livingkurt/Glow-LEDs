@@ -149,12 +149,19 @@ button {
 	text-align: start;
 	padding-left: 40px;
 }
-.sidebar-btn.nested_2 {
+.sidebar-btn.nested-2 {
 	border-bottom: 1px white solid;
 	width: 100%;
 	border-radius: 0px;
 	text-align: start;
 	padding-left: 60px;
+}
+.sidebar-btn.nested-3 {
+	border-bottom: 1px white solid;
+	width: 100%;
+	border-radius: 0px;
+	text-align: start;
+	padding-left: 80px;
 }
 
 .sidebar-btn:hover {
@@ -181,6 +188,14 @@ button {
 }
 
 .sidebar-btn.nested:hover + .sidebar_dropdown_nested_container {
+	max-height: 600px;
+}
+
+.sidebar-btn.nested-2:hover {
+	background: $theme_color_sidebar_hover;
+}
+
+.sidebar-btn.nested-2:hover + .sidebar_dropdown_nested_2_container {
 	max-height: 600px;
 }
 

@@ -29,6 +29,10 @@
 	position: relative;
 }
 
+.sidebar_dropdown_nested_2 {
+	position: relative;
+}
+
 .sidebar_dropdown_container {
 	overflow: hidden;
 	height: auto;
@@ -69,5 +73,21 @@
 }
 
 .sidebar_dropdown_nested_container:hover {
+	max-height: 600px;
+}
+
+.sidebar_dropdown_nested_2_container {
+	overflow: hidden;
+	height: auto;
+	max-height: 0px;
+	transition: all 0.5s;
+	left: 0;
+	list-style-type: none;
+	background-color: $theme_color_sidebar_nested_2;
+	margin: 0;
+	width: 100%;
+}
+
+.sidebar_dropdown_nested_2_container:hover {
 	max-height: 600px;
 }

@@ -24,6 +24,15 @@ const Header = (props) => {
 
 	const cart = useSelector((state) => state.cart);
 
+	const productList = useSelector((state) => state.productList);
+	const { products, loading, error } = productList;
+
+	useEffect(() => {
+		// dispatch(listProducts(''));
+		// console.log({ search: search.substring(8) });
+		dispatch(listProducts());
+	}, []);
+
 	const { cartItems } = cart;
 
 	const open_sidebar = () => {
@@ -322,6 +331,38 @@ const Header = (props) => {
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
 											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px">
+												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Collections</button>
+													</div>
+												</Link> */}
+												<div className="dropdown-nav-nested-2 ">
+													<button className="btn nav w-100per ta-l">Collections</button>
+													<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+													<div className="dropdown-nav-nested-2-content hover_fade_in left-66px top-29px w-250px">
+														{/* <Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+															<div className="row">
+																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+																<button className="btn nav w-100per ta-l">Space Cadet</button>
+															</div>
+														</Link>
+														<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
+															<div className="row">
+																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+																<button className="btn nav w-100per ta-l">Festy Besty</button>
+															</div>
+														</Link> */}
+														<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
+															<div className="row">
+																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+																<button className="btn nav w-100per ta-l">
+																	Platonic Solids
+																</button>
+															</div>
+														</Link>
+													</div>
+												</div>
 												<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}

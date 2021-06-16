@@ -29,7 +29,8 @@ export const listProducts = (
 	searchKeyword = '',
 	sortOrder = '',
 	chip = '',
-	show_hidden = ''
+	show_hidden = '',
+	collection = ''
 ) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
@@ -46,7 +47,9 @@ export const listProducts = (
 				'&sortOrder=' +
 				sortOrder.toLowerCase() +
 				'&showHidden=' +
-				show_hidden
+				show_hidden +
+				'&collection=' +
+				collection
 		);
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {

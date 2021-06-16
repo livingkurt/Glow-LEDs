@@ -342,6 +342,10 @@ const App = () => {
 								path="/collections/all/products/category/:category/subcategory/:subcategory?"
 								component={AllProductsPage}
 							/>
+							<Route
+								path="/collections/all/products/category/:category/collection/:collection?"
+								component={AllProductsPage}
+							/>
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />

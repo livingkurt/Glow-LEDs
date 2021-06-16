@@ -163,7 +163,7 @@ const Sidebar = (props) => {
 									</button>
 									<ul className="sidebar_dropdown_nested_container">
 										<Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Imperfect
 											</button>
 										</Link>
@@ -186,22 +186,22 @@ const Sidebar = (props) => {
 									</button>
 									<ul className="sidebar_dropdown_nested_container">
 										<Link to="/collections/all/products/category/glowskins/subcategory/classics">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Classics
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Novaskins
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Alt Novaskins
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Imperfect
 											</button>
 										</Link>
@@ -216,32 +216,32 @@ const Sidebar = (props) => {
 									</button>
 									<ul className="sidebar_dropdown_nested_container">
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Abstract (New)
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Polygons (New)
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Cylinders (New)
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Domes (New)
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Open Hole
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Closed Hole
 											</button>
 										</Link>
@@ -253,69 +253,59 @@ const Sidebar = (props) => {
 										<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container">
+										<div className="sidebar_dropdown_nested_2">
+											<button className="sidebar-btn nested-2">
+												<Link to="/collections/all/products/category/diffuser_caps">
+													Collections
+												</Link>
+											</button>
+											<ul className="sidebar_dropdown_nested_2_container">
+												{/* <Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+													<button className="sidebar-btn nested-3" onClick={closeMenu}>
+														Space Cadet
+													</button>
+												</Link>
+												<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
+													<button className="sidebar-btn nested-3" onClick={closeMenu}>
+														Festy Besty
+													</button>
+												</Link> */}
+												<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
+													<button className="sidebar-btn nested-3" onClick={closeMenu}>
+														Platonic Solids
+													</button>
+												</Link>
+											</ul>
+											<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+										</div>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Geomotric
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Shapes
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Abstract
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Patterns
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Imperfect
 											</button>
 										</Link>
 									</ul>
 									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 								</div>
-								{/* <div className="sidebar_dropdown_nested">
-									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/mega_diffuser_caps">
-											Mega Diffuser Caps
-										</Link>
-									</button>
-									<ul className="sidebar_dropdown_nested_container">
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Geomotric
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Shapes
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Abstract
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Patterns
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emojis">
-											<button className="sidebar-btn nested_2" onClick={closeMenu}>
-												Emojis
-											</button>
-										</Link>
-									</ul>
-									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-								</div> */}
 								<Link to="/collections/all/products/category/accessories">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Accessories
@@ -388,99 +378,6 @@ const Sidebar = (props) => {
 					</ul>
 					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 				</div>
-				{/* <Link to="/pages/glowcontrol">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
-						Glow Control
-					</button>
-				</Link> */}
-				{/* <div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">
-						<Link to="/pages/menu/featured">Featured</Link>
-					</button>
-
-					<ul className="sidebar_dropdown_container">
-						<Link to="/collections/all/features/category/artists">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Artists
-							</button>
-						</Link>
-						<Link to="/collections/all/features/category/glovers">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Glovers
-							</button>
-						</Link>
-
-						<Link to="/collections/all/features/category/producers">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Producers
-							</button>
-						</Link>
-						<Link to="/collections/all/features/category/vfx">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								VFX
-							</button>
-						</Link>
-						<Link to="/account/login?redirect=/account/submit_feature">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Submit Feature
-							</button>
-						</Link>
-						<div className="sidebar_dropdown_secondary">
-							<button className="sidebar-btn secondary">
-								<Link to="/pages/faq">FAQ</Link>
-							</button>
-							<ul className="sidebar_dropdown_secondary_container">
-								<HashLink href="/pages/faq#glowskins">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Glowskins
-									</button>
-								</HashLink>
-								<HashLink href="/pages/faq#using_diffuser_caps_and_adapters">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Diffuser Caps Guide
-									</button>
-								</HashLink>
-								<HashLink href="/pages/faq#diffuser_too_tight_too_loose">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Diffusers Too Tight/Loose?
-									</button>
-								</HashLink>
-								<HashLink href="/pages/faq#ordering_custom_products">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Ordering Custom Products
-									</button>
-								</HashLink>
-								<HashLink href="/pages/faq#featured_content">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Featured Content
-									</button>
-								</HashLink>
-								<HashLink href="/pages/faq#processing_shipping">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Processing/Shipping
-									</button>
-								</HashLink>
-								<HashLink href="/pages/faq#returns_cancellations">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Returns/Cancellations
-									</button>
-								</HashLink>
-							</ul>
-							<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-						</div>
-						<Link to="/pages/contact">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Contact
-							</button>
-						</Link>
-						<Link to="/pages/terms">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Terms and Conditions
-							</button>
-						</Link>
-					</ul>
-					<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-				</div> */}
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary">
 						<Link to="/pages/menu/support">Support</Link>

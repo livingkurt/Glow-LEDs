@@ -52,6 +52,8 @@ router.get('/get_all', async (req, res) => {
 	try {
 		const category = req.query.category ? { category: req.query.category } : {};
 		const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
+		const collection = req.query.collection ? { product_collection: req.query.collection } : {};
+		console.log({ category, collection });
 		const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 		const searchKeyword = req.query.searchKeyword
 			? {
@@ -79,9 +81,11 @@ router.get('/get_all', async (req, res) => {
 			deleted: false,
 			...category,
 			...subcategory,
+			...collection,
 			...searchKeyword,
 			...chips
 		}).sort(sortOrder);
+		console.log({ products });
 		log_request({
 			method: 'GET',
 			path: req.originalUrl,
