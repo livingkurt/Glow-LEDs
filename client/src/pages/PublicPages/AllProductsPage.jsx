@@ -257,7 +257,8 @@ const AllProductsPage = (props) => {
 						{/* {category === 'diffuser_caps' ? (
 							humanize('diffuser_caps')
 						) : ( */}
-						{`${humanize(category)} ${subcategory && humanize(subcategory)}` || 'Products'}
+						{`${humanize(category)} ${subcategory && humanize(subcategory)} ${collection &&
+							humanize(collection)}` || 'Products'}
 						{/* )} */}
 					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
