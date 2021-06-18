@@ -36,12 +36,12 @@ const OrderEmail = (props) => {
 		() => {
 			dispatch(listEmails(toCapitlize(props.match.params.status)));
 			dispatch(detailsOrderPublic(props.match.params.id));
-			dispatch(detailsOrderPublic(props.match.params.id));
+			// dispatch(detailsOrderPublic(props.match.params.id));
 			dispatch(listPromos());
 			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 			return () => {};
 		},
-		[ dispatch, props.match.params.id, props.match.params.status ]
+		[ props.match.params.id, props.match.params.status ]
 	);
 
 	useEffect(
@@ -931,8 +931,10 @@ const OrderEmail = (props) => {
 	);
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
+	let num = 1;
 
 	const send_order_email = async (email, first_name, subject, refunded) => {
+		// if (num === 1) {
 		set_loading(true);
 		console.log({ email_template });
 		const response_1 = await API_Emails.send_user_email(email_template, subject, email);
@@ -946,22 +948,23 @@ const OrderEmail = (props) => {
 			history.push('/pages/survey/' + order._id);
 			set_loading(false);
 		}
+		// }
 	};
 
-	useEffect(
-		() => {
-			if (props.match.params.send === 'true' && order) {
-				console.log({ 'props.match.params.send === true && order': order });
-				if (order.orderItems.length > 0) {
-					console.log({ 'order.orderItems.length > 0': order });
-					send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
-				}
+	useEffect(() => {
+		// if (num === 1) {
+		if (props.match.params.send === 'true' && order) {
+			console.log({ 'props.match.params.send === true && order': order });
+			if (order.orderItems.length > 0) {
+				console.log({ 'order.orderItems.length > 0': order });
+				send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
+				// num++;
 			}
+		}
+		// }
 
-			return () => {};
-		},
-		[ order ]
-	);
+		return () => {};
+	}, []);
 
 	return (
 		<div>

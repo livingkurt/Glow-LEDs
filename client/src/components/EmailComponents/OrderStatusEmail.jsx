@@ -45,7 +45,7 @@ const OrderStatusEmail = (props) => {
 			}
 			return () => {};
 		},
-		[ emails, stableDispatch ]
+		[ emails ]
 	);
 
 	const order_status_steps = () => {
@@ -641,21 +641,22 @@ const OrderStatusEmail = (props) => {
 			history.push(`/secure/account/order/${order._id}`);
 		}
 	};
+	// let num = 1;
 
-	useEffect(
-		() => {
-			if (props.match.params.send === 'true' && order && email) {
-				if (order.orderItems.length > 0) {
-					if (props.match.params.id) {
-						send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
-					}
+	useEffect(() => {
+		// if (num === 1) {
+		if (props.match.params.send === 'true' && order && email) {
+			if (order.orderItems.length > 0) {
+				if (props.match.params.id) {
+					send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+					// num++;
 				}
 			}
+		}
+		// }
 
-			return () => {};
-		},
-		[ order, email ]
-	);
+		return () => {};
+	}, []);
 
 	return (
 		<div>
