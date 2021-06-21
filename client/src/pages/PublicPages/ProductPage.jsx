@@ -795,6 +795,35 @@ const ProductPage = (props) => {
 									</div>
 								</div>
 							)}
+							{product.category === 'frosted_diffusers' && (
+								<div>
+									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
+									<div className="colored_caps">
+										<div className="colored_caps_item m-1rem">
+											<h3 className="colored_caps_images">Colored Diffusers</h3>
+											{/* <Zoom> */}
+											<img
+												className="colored_caps_images"
+												src="https://thumbs2.imgbox.com/78/e1/DfIDjh1r_t.jpeg"
+												alt="Colored Caps"
+												title="Colored Caps"
+											/>
+											{/* </Zoom> */}
+										</div>
+										<div className="colored_caps_item m-1rem">
+											<h3 className="colored_caps_images">Colored Diffusers No Light</h3>
+											{/* <Zoom> */}
+											<img
+												className="colored_caps_images"
+												src="https://thumbs2.imgbox.com/b9/5c/9jcxAh23_t.jpeg"
+												alt="Colored Caps Under Blacklight"
+												title="Colored Caps Under Blacklight"
+											/>
+											{/* </Zoom> */}
+										</div>
+									</div>
+								</div>
+							)}
 							{!product.video ? (
 								<h2
 									style={{
