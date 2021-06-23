@@ -145,35 +145,44 @@ const PlaceOrderPage = (props) => {
 	);
 
 	const get_shipping_rates = async () => {
-		const response = await API_Shipping.get_shipping_rates({
-			orderItems: cartItems,
-			shipping,
-			payment,
-			itemsPrice,
-			shippingPrice,
-			taxPrice,
-			totalPrice,
-			userInfo,
-			order_note,
-			promo_code: show_message && promo_code
-		});
-		console.log({ response });
-		console.log({ message: response.message });
-		const data = response.data;
-		console.log({ data });
-		if (data) {
-			set_shipping_rates(data.shipment);
-			set_shipment_id(data.shipment.id);
-			set_loading_shipping(false);
-			set_parcel(data.parcel._id);
-			// set_loading_shipping(false);
-		}
+		if (
+			cartItems.reduce((a, c) => a + c.package_length, 0) === 0 &&
+			cartItems.reduce((a, c) => a + c.package_width, 0) === 0 &&
+			cartItems.reduce((a, c) => a + c.package_width, 0) === 0
+		) {
+			setShippingPrice(0);
+			set_free_shipping_message('Free');
+		} else {
+			const response = await API_Shipping.get_shipping_rates({
+				orderItems: cartItems,
+				shipping,
+				payment,
+				itemsPrice,
+				shippingPrice,
+				taxPrice,
+				totalPrice,
+				userInfo,
+				order_note,
+				promo_code: show_message && promo_code
+			});
+			console.log({ response });
+			console.log({ message: response.message });
+			const data = response.data;
+			console.log({ data });
+			if (data) {
+				set_shipping_rates(data.shipment);
+				set_shipment_id(data.shipment.id);
+				set_loading_shipping(false);
+				set_parcel(data.parcel._id);
+				// set_loading_shipping(false);
+			}
 
-		// if (sorted_rates[0]) {
-		// 	// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
-		// 	setShippingPrice(parseFloat(sorted_rates[0].retail_rate) + packaging_cost);
-		// 	// set_shipment_id(data.id);
-		// }
+			// if (sorted_rates[0]) {
+			// 	// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
+			// 	setShippingPrice(parseFloat(sorted_rates[0].retail_rate) + packaging_cost);
+			// 	// set_shipment_id(data.id);
+			// }
+		}
 	};
 
 	const choose_shipping_rate = (rate, speed) => {
