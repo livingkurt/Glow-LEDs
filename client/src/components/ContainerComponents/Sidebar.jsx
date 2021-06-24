@@ -260,7 +260,7 @@ const Sidebar = (props) => {
 												</Link>
 											</button>
 											<ul className="sidebar_dropdown_nested_2_container">
-												{/* <Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+												<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
 													<button className="sidebar-btn nested-3" onClick={closeMenu}>
 														Space Cadet
 													</button>
@@ -269,7 +269,7 @@ const Sidebar = (props) => {
 													<button className="sidebar-btn nested-3" onClick={closeMenu}>
 														Festy Besty
 													</button>
-												</Link> */}
+												</Link>
 												<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
 													<button className="sidebar-btn nested-3" onClick={closeMenu}>
 														Platonic Solids

@@ -341,7 +341,7 @@ const Header = (props) => {
 													<button className="btn nav w-100per ta-l">Collections</button>
 													<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
 													<div className="dropdown-nav-nested-2-content hover_fade_in left-66px top-29px w-250px">
-														{/* <Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+														<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
 															<div className="row">
 																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 																<button className="btn nav w-100per ta-l">Space Cadet</button>
@@ -352,7 +352,7 @@ const Header = (props) => {
 																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 																<button className="btn nav w-100per ta-l">Festy Besty</button>
 															</div>
-														</Link> */}
+														</Link>
 														<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
 															<div className="row">
 																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
