@@ -45,7 +45,7 @@ const OrderStatusEmail = (props) => {
 			}
 			return () => {};
 		},
-		[ emails ]
+		[ emails, stableDispatch ]
 	);
 
 	const order_status_steps = () => {
@@ -641,22 +641,52 @@ const OrderStatusEmail = (props) => {
 			history.push(`/secure/account/order/${order._id}`);
 		}
 	};
-	// let num = 1;
 
-	useEffect(() => {
-		// if (num === 1) {
-		if (props.match.params.send === 'true' && order && email) {
-			if (order.orderItems.length > 0) {
-				if (props.match.params.id) {
-					send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
-					// num++;
+	useEffect(
+		() => {
+			if (props.match.params.send === 'true' && order && email) {
+				if (order.orderItems.length > 0) {
+					if (props.match.params.id) {
+						send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+					}
 				}
 			}
-		}
-		// }
 
-		return () => {};
-	}, []);
+			return () => {};
+		},
+		[ order ]
+	);
+
+	// const send_order_email = async (email, first_name, subject) => {
+	// 	console.log({ email_template });
+	// 	const { data } = await API_Emails.send_user_email(email_template, subject, email);
+	// 	const { data: request } = await API_Emails.send_admin_email(
+	// 		email_template,
+	// 		'Order Status Updated for ' + first_name
+	// 	);
+	// 	console.log({ data });
+	// 	console.log({ request });
+	// 	if (request) {
+	// 		// history.goBack();
+	// 		history.push(`/secure/account/order/${order._id}`);
+	// 	}
+	// };
+	// // let num = 1;
+
+	// useEffect(() => {
+	// 	// if (num === 1) {
+	// 	if (props.match.params.send === 'true' && order && email) {
+	// 		if (order.orderItems.length > 0) {
+	// 			if (props.match.params.id) {
+	// 				send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+	// 				// num++;
+	// 			}
+	// 		}
+	// 	}
+	// 	// }
+
+	// 	return () => {};
+	// }, []);
 
 	return (
 		<div>
