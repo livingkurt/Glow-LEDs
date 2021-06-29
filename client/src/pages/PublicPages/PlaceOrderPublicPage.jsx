@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createOrder, createPayOrderGuest } from '../../actions/orderActions';
+import { createPayOrderGuest } from '../../actions/orderActions';
 import { GuestCheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';

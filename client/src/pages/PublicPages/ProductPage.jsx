@@ -561,10 +561,7 @@ const ProductPage = (props) => {
 												product.category === 'exo_diffusers') &&
 												'	This item ships in 2 - 5 business day.'}
 										</h4>
-										<h4
-											className="mb-0px mt-11px fstr-10px"
-											style={{ webkitTextStroke: '0.5px white' }}
-										>
+										<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
 											{(product.category === 'glowskins' ||
 												product.category === 'glow_casings') &&
 												'	This item ships in 3 - 7 business day.'}

@@ -230,8 +230,13 @@ router.get('/get_one/:id', isAuth, async (req: any, res: any) => {
 	}
 });
 
+const today = new Date();
+
 router.post('/user_create_one', isAuth, async (req: any, res: any) => {
 	try {
+		console.log({ user_create_one: req.body });
+		console.log({ isPaid: req.body.isPaid });
+		console.log({ paidAt: today });
 		const newOrder = new Order({
 			orderItems: req.body.orderItems,
 			user: req.body.user ? req.body.user._id : req.user._id,
@@ -244,6 +249,8 @@ router.post('/user_create_one', isAuth, async (req: any, res: any) => {
 			order_note: req.body.order_note,
 			promo_code: req.body.promo_code,
 			parcel: req.body.parcel,
+			isPaid: req.body.isPaid,
+			paidAt: req.body.isPaid ? today : null,
 			deleted: false
 		});
 		const newOrderCreated = await newOrder.save();
@@ -271,6 +278,7 @@ router.post('/user_create_one', isAuth, async (req: any, res: any) => {
 			return res.status(500).send({ message: ' Error in Creating Order.' });
 		}
 	} catch (error) {
+		console.log({ error });
 		log_error({
 			method: 'POST',
 			path: req.originalUrl,

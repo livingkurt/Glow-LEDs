@@ -48,6 +48,7 @@ const PlaceOrderPage = (props) => {
 	const [ shipping_rate, set_shipping_rate ] = useState({});
 	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
 	const [ parcel, set_parcel ] = useState('');
+	const [ paymentMethod, set_paymentMethod ] = useState('stripe');
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
@@ -63,6 +64,7 @@ const PlaceOrderPage = (props) => {
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 
 	const [ no_user, set_no_user ] = useState(false);
+	const [ paid, set_paid ] = useState(false);
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const dispatch = useDispatch();
@@ -90,11 +92,20 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
+			stableDispatch(savePayment({ paymentMethod }));
+
+			return () => {};
+		},
+		[ paymentMethod ]
+	);
+
+	useEffect(
+		() => {
 			const shipping_cookie = Cookie.getJSON('shipping');
 			if (shipping_cookie) {
 				stableDispatch(saveShipping(shipping_cookie));
 			}
-			stableDispatch(savePayment({ paymentMethod: 'stripe' }));
+			stableDispatch(savePayment({ paymentMethod }));
 			stable_setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
@@ -296,6 +307,18 @@ const PlaceOrderPage = (props) => {
 	// 	);
 	// };
 
+	// const update_order_payment_state = (order, state, is_action) => {
+	// 	if (state) {
+	// 		set_order_state({ ...order_state, [is_action]: false });
+	// 		dispatch(update_payment(order, false, payment_method));
+	// 	} else {
+	// 		set_order_state({ ...order_state, [is_action]: true });
+	// 		dispatch(update_payment(order, true, payment_method));
+	// 		history.push(`/secure/glow/emails/order/${order._id}/order/false`);
+	// 	}
+	// 	dispatch(detailsOrder(props.match.params.id));
+	// };
+	// const date = new Date();
 	const create_order_without_paying = async () => {
 		// create an order
 		console.log({ user });
@@ -316,7 +339,9 @@ const PlaceOrderPage = (props) => {
 				user,
 				order_note,
 				promo_code,
-				parcel
+				parcel,
+				isPaid: paid ? paid : false
+				// paidAt: paid && date.toISOString()
 			})
 		);
 
@@ -1002,23 +1027,7 @@ const PlaceOrderPage = (props) => {
 								</div>
 							)}
 						</li>
-						{/* {!loading_tax_rate &&
-						!hide_pay_button &&
-						shipping &&
-						shipping.hasOwnProperty('first_name') && (
-							<div>
-								<StripeCheckout
-									name="Glow LEDs"
-									description={`Complete Order`}
-									amount={totalPrice.toFixed(2) * 100}
-									token={(token) => placeOrderHandler(token)}
-									stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									onChange={handleChangeFor('cardNumber')}
-								>
-									<button className="btn primary w-100per mb-12px">Complete Order</button>
-								</StripeCheckout>
-							</div>
-						)} */}
+
 						<div className="mv-10px">
 							<label htmlFor="promo_code">Promo Code</label>
 
@@ -1073,48 +1082,86 @@ const PlaceOrderPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') && <Stripe pay_order={placeOrderHandler} />}
-						{/* {!loading_tax_rate &&
-						!hide_pay_button &&
-						shipping &&
-						shipping.hasOwnProperty('first_name') && (
-							<div>
-								<Elements stripe={stripePromise}>
-									<Form />
-								</Elements>
-							</div>
-						)} */}
+
 						{userInfo &&
 						userInfo.isAdmin && (
 							<div>
-								{loading_checkboxes ? (
-									<div>Loading...</div>
-								) : (
-									<li>
-										<label htmlFor="no_user mb-20px">No User</label>
-										<input
-											type="checkbox"
-											name="no_user"
-											defaultChecked={no_user}
-											id="no_user"
-											onChange={(e) => {
-												set_no_user(e.target.checked);
-											}}
-										/>
-									</li>
-								)}
 								{userInfo &&
 								userInfo.isAdmin &&
 								users &&
 								!no_user && (
 									<div>
-										<button
-											onClick={create_order_without_paying}
-											className="btn secondary w-100per mb-12px"
-										>
-											Create Order Without Paying
-										</button>
-
-										<div className="ai-c h-25px mv-10px mb-30px jc-c">
+										{loading_checkboxes ? (
+											<div>Loading...</div>
+										) : (
+											<li>
+												<label htmlFor="paid mb-20px ">Already Paid?</label>
+												<input
+													type="checkbox"
+													name="paid"
+													id="paid"
+													onChange={(e) => {
+														set_paid(e.target.checked);
+													}}
+												/>
+											</li>
+										)}
+										{/* {paid && (
+											<div className="w-100per mb-1rem">
+												<div htmlFor="paymentMethod">Payment Method</div>
+												<input
+													type="text"
+													name="paymentMethod"
+													value={paymentMethod}
+													id="paymentMethod"
+													className="w-100per"
+													onChange={(e) => set_paymentMethod(e.target.value)}
+												/>
+											</div>
+										)} */}
+										{paid && (
+											<div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
+												<div className="custom-select w-100per">
+													<select
+														className="qty_select_dropdown w-100per"
+														onChange={(e) => set_paymentMethod(e.target.value)}
+													>
+														<option key={1} defaultValue="">
+															Payment Method
+														</option>
+														{[
+															'stripe',
+															'venmo',
+															'cashapp',
+															'paypal',
+															'cash'
+														].map((method, index) => (
+															<option key={index} value={method}>
+																{method}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										)}
+										{/* {loading_checkboxes ? (
+											<div>Loading...</div>
+										) : (
+											<li>
+												<label htmlFor="no_user mb-20px ">No User</label>
+												<input
+													type="checkbox"
+													name="no_user"
+													defaultChecked={no_user}
+													id="no_user"
+													onChange={(e) => {
+														set_no_user(e.target.checked);
+													}}
+												/>
+											</li>
+										)} */}
+										<div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
 											<div className="custom-select w-100per">
 												<select
 													className="qty_select_dropdown w-100per"
@@ -1133,6 +1180,12 @@ const PlaceOrderPage = (props) => {
 												<span className="custom-arrow" />
 											</div>
 										</div>
+										<button
+											onClick={create_order_without_paying}
+											className="btn secondary w-100per mb-12px"
+										>
+											Create Order For User
+										</button>
 									</div>
 								)}
 								{userInfo &&

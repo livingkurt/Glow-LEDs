@@ -118,7 +118,6 @@ const EditPromoPage = (props) => {
 			set_end_date(format_date(promo.end_date));
 		}
 	};
-	const today = new Date();
 	const unset_state = () => {
 		set_id('');
 		set_affiliate('');
