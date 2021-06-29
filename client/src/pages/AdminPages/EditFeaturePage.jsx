@@ -214,7 +214,7 @@ const EditFeaturePage = (props) => {
 								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
 									<div className="pos-rel">
 										<img
-                    alt="Feature"
+											alt="Feature"
 											style={{
 												width: '100%',
 												package_height: 'auto',
@@ -243,7 +243,7 @@ const EditFeaturePage = (props) => {
 											{index < images.length - 1 && (
 												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
 													<i
-														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														style={{ WebkitTransform: 'rotate(-180deg)' }}
 														className=" fas fa-sort-up"
 													/>
 												</button>

@@ -510,7 +510,7 @@ const EditProductPage = (props) => {
 											{index < images.length - 1 && (
 												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
 													<i
-														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														style={{ WebkitTransform: 'rotate(-180deg)' }}
 														className=" fas fa-sort-up"
 													/>
 												</button>
@@ -572,7 +572,7 @@ const EditProductPage = (props) => {
 											{index < images.length - 1 && (
 												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
 													<i
-														style={{ '-webkitTransform': 'rotate(-180deg)' }}
+														style={{ WebkitTransform: 'rotate(-180deg)' }}
 														className=" fas fa-sort-up"
 													/>
 												</button>

@@ -44,21 +44,22 @@ const OrderPage = (props) => {
 	const [ clipboard, copyToClipboard ] = useClipboard();
 
 	const [ refund_state, set_refund_state ] = useState({});
-	const [ refund_amount, set_refund_amount ] = useState(0);
+	const [ refund_amount, set_refund_amount ] = useState();
 	const [ refund_reason, set_refund_reason ] = useState('');
 
 	const orderRefund = useSelector((state) => state.orderRefund);
 	const { order: refund } = orderRefund;
 
-	const update_refund_state = () => {
+	const update_refund_state = (amount) => {
+		dispatch(refundOrder(order, true, amount, refund_reason));
 		set_refund_state(true);
-		dispatch(refundOrder(order, true, refund_amount, refund_reason));
-		// }
 	};
+
 	useEffect(
 		() => {
 			if (refund) {
 				set_refund_state(refund.isRefunded);
+				dispatch(detailsOrder(props.match.params.id));
 			}
 		},
 		[ refund ]
@@ -967,11 +968,20 @@ ${order.shipping.email}`)}
 											</div>
 										</div>
 										<div className="">
-											<button className="btn primary mv-5px" onClick={update_refund_state}>
-												Refund Customer
+											<button
+												className="btn primary mv-5px w-100per"
+												onClick={() => update_refund_state(refund_amount)}
+											>
+												Refund Partial Amount
+											</button>
+											<button
+												className="btn primary mv-5px w-100per"
+												onClick={() => update_refund_state(order.totalPrice)}
+											>
+												Refund Full Amount
 											</button>
 
-											<button className="btn primary mv-5px">
+											<button className="btn secondary mv-5px w-100per">
 												<Link to={'/secure/glow/emails/order/' + order._id + '/order/false'}>
 													View Email
 												</Link>
