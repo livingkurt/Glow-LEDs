@@ -751,7 +751,11 @@ const PlaceOrderPage = (props) => {
 														</div>
 														<button
 															className="custom-select-shipping_rates"
-															onClick={() => choose_shipping_rate(rate, 'Standard')}
+															onClick={() =>
+																choose_shipping_rate(
+																	rate,
+																	'FirstClassPackageInternationalService'
+																)}
 														>
 															Select
 														</button>
@@ -774,7 +778,8 @@ const PlaceOrderPage = (props) => {
 														</div>
 														<button
 															className="custom-select-shipping_rates"
-															onClick={() => choose_shipping_rate(rate, 'Standard')}
+															onClick={() =>
+																choose_shipping_rate(rate, 'PriorityMailInternational')}
 														>
 															Select
 														</button>
@@ -797,6 +802,63 @@ const PlaceOrderPage = (props) => {
 														</div>
 														<button
 															className="custom-select-shipping_rates"
+															onClick={() =>
+																choose_shipping_rate(rate, 'ExpressMailInternational')}
+														>
+															Select
+														</button>
+													</div>
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'INTERNATIONAL_ECONOMY' && (
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Fedex Economy</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.rate) + packaging_cost).toFixed(
+																	2
+																)}{' '}
+															</div>
+															<div>
+																{' '}
+																{rate.est_delivery_days}{' '}
+																{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+															</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
+															onClick={() => choose_shipping_rate(rate, 'Standard')}
+														>
+															Select
+														</button>
+													</div>
+												)
+											);
+										})}
+										{shipping_rates.rates.map((rate, index) => {
+											return (
+												rate.service === 'INTERNATIONAL_PRIORITY' && (
+													<div className=" mv-1rem jc-b  ai-c" key={index}>
+														<div className="shipping_rates jc-b w-100per wrap ">
+															<div className="service">Fedex Prioirty</div>
+															<div>
+																{' '}
+																${(parseFloat(rate.rate) + packaging_cost).toFixed(
+																	2
+																)}{' '}
+															</div>
+															<div>
+																{' '}
+																{rate.est_delivery_days}{' '}
+																{rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+															</div>
+														</div>
+														<button
+															className="custom-select-shipping_rates"
 															onClick={() => choose_shipping_rate(rate, 'Standard')}
 														>
 															Select
@@ -807,6 +869,7 @@ const PlaceOrderPage = (props) => {
 										})}
 									</div>
 								)}
+
 								{shipping &&
 								!shipping.international && (
 									<div>

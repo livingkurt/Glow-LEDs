@@ -547,8 +547,27 @@ const ProductPage = (props) => {
 											</div>
 										</div>
 
-										<h4 style={{ marginBottom: 0, marginTop: 11 }}>
-											Shipping Calculated at Checkout
+										<h4 className="mb-0px mt-11px">Shipping Calculated at Checkout</h4>
+										<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+											{(product.category === 'glow_strings' ||
+												product.name === 'coin_battery_holder') &&
+												'	This item ships in 6 - 10 business day.'}
+										</h4>
+
+										<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+											{(product.category === 'exo_diffusers' ||
+												product.category === 'frosted_diffusers' ||
+												product.category === 'diffuser_caps' ||
+												product.category === 'exo_diffusers') &&
+												'	This item ships in 2 - 5 business day.'}
+										</h4>
+										<h4
+											className="mb-0px mt-11px fstr-10px"
+											style={{ webkitTextStroke: '0.5px white' }}
+										>
+											{(product.category === 'glowskins' ||
+												product.category === 'glow_casings') &&
+												'	This item ships in 3 - 7 business day.'}
 										</h4>
 									</li>
 									{(product.name === 'Diffuser Caps + Adapters Starter Kit' ||

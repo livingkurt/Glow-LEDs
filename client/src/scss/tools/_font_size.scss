@@ -17,10 +17,21 @@
 	}
 }
 
+@for $i from 0 to 1000 {
+	.fw-#{$i} {
+		font-weight: $i !important;
+	}
+}
+
+@for $i from 0 to 1000 {
+	.fstr-#{$i}px {
+		-webkit-text-stroke: $i + px white !important;
+	}
+}
+
 .ff-h {
 	font-family: $heading_font;
 }
-
 
 .phrase_font {
 	font-family: $phrase_font;
