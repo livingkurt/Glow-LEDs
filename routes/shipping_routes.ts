@@ -311,6 +311,7 @@ router.put('/get_shipping_rates', async (req: any, res: any) => {
 		res.send({ shipment: saved_shipment, parcel: parcel_size });
 	} catch (err) {
 		console.log(err);
+		res.send({ shipment: {}, parcel: {}, error: err });
 	}
 });
 router.put('/buy_label', async (req: any, res: any) => {

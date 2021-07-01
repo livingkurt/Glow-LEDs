@@ -12,6 +12,7 @@ import {
 	promoter_revenue_upload,
 	sponsor_revenue_upload,
 	team_revenue_upload,
+	top_code_usage_upload,
 	top_earner_upload
 } from '../../utils/google_sheets_upload';
 import { listTeams } from '../../actions/teamActions';
@@ -207,6 +208,12 @@ const PaychecksPage = (props) => {
 		set_loading_paychecks(false);
 	};
 
+	const top_code_uses_creator = async () => {
+		set_loading_paychecks(true);
+		await top_code_usage_upload(affiliates, total_orders, last_months_orders);
+		set_loading_paychecks(false);
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -246,6 +253,9 @@ const PaychecksPage = (props) => {
 				</button>
 				<button className="btn primary" onClick={top_earner_creator}>
 					Top Earner
+				</button>
+				<button className="btn primary" onClick={top_code_uses_creator}>
+					Top Code Uses
 				</button>
 				{loading_checkboxes ? (
 					<div>Loading...</div>

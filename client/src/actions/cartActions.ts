@@ -146,8 +146,30 @@ export const addToCart = (
 		});
 
 		const { cart: { cartItems } } = getState();
+		// const { cart } = getState();
 		Cookie.set('cartItems', JSON.stringify(cartItems));
 		console.log({ cartItems });
+		// try {
+		// 	dispatch({ type: CART_SAVE_REQUEST, payload: cartItems });
+		// 	const { userLogin: { userInfo } } = getState();
+		// 	if (!cart._id) {
+		// 		const { data } = await axios.post('/api/carts', cartItems, {
+		// 			headers: {
+		// 				Authorization: 'Bearer ' + userInfo.token
+		// 			}
+		// 		});
+		// 		dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		// 	} else {
+		// 		const { data } = await axios.put('/api/carts/' + cart._id, cart, {
+		// 			headers: {
+		// 				Authorization: 'Bearer ' + userInfo.token
+		// 			}
+		// 		});
+		// 		dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		// 	}
+		// } catch (error) {
+		// 	dispatch({ type: CART_SAVE_FAIL, payload: error.response.data.message });
+		// }
 		// dispatch({ type: CART_SAVE_REQUEST, payload: cart });
 		// const { userLogin: { userInfo } } = getState();
 		// if (!cart._id) {

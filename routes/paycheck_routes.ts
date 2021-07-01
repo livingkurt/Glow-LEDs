@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 		} else if (req.query.sortOrder === 'facebook name') {
 			sortOrder = { facebook_name: 1 };
 		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-			sortOrder = { name: 1 };
+			sortOrder = { _id: -1 };
 		}
 
 		const paychecks = await Paycheck.find({ deleted: false, ...category, ...searchKeyword })

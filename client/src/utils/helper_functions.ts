@@ -260,6 +260,40 @@ export const calculate_affiliate_usage = (affiliates: any, orders: any) => {
 	});
 };
 
+export const calculate_sponsor_usage = (affiliates: any, orders: any) => {
+	return affiliates.map((affiliate: any) => {
+		const code_usage = orders.filter((order: any) => {
+			return (
+				order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+			);
+		}).length;
+		return {
+			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+			Uses: code_usage,
+			Revenue: ` $${orders
+				.filter(
+					(order: any) =>
+						order.promo_code &&
+						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				)
+				.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+				.toFixed(2)}`,
+			Earned: `$${orders
+				.filter(
+					(order: any) =>
+						order.promo_code &&
+						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				)
+				.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+				.toFixed(2)}`,
+			'Percentage Off':
+				!affiliate.team && affiliate.promoter
+					? `${determine_promoter_code_tier(code_usage)}%`
+					: `${determine_sponsor_code_tier(code_usage)}%`
+		};
+	});
+};
+
 export const state_names = [
 	'Alabama',
 	'Alaska',
