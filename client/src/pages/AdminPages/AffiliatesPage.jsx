@@ -6,7 +6,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { listOrders } from '../../actions/orderActions';
-import {  determine_sponsor_code_tier } from '../../utils/helper_functions';
+import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../../utils/helper_functions';
 import { API_Promos, API_Revenue } from '../../utils';
 
 const AffiliatesPage = (props) => {
@@ -118,12 +118,12 @@ const AffiliatesPage = (props) => {
 			}).length;
 			if (code_usage >= 2) {
 				if (affiliate.promoter) {
-					// console.log({ promoter: code_usage });
-					// const request = await API_Promos.update_promo_code(
-					// 	affiliate.private_code._id,
-					// 	determine_promoter_code_tier(code_usage)
-					// );
-					// console.log({ request });
+					console.log({ promoter: code_usage });
+					const request = await API_Promos.update_promo_code(
+						affiliate.private_code._id,
+						determine_promoter_code_tier(code_usage)
+					);
+					console.log({ request });
 				} else if (affiliate.sponsor) {
 					console.log({ sponsor: code_usage });
 					const request = await API_Promos.update_promo_code(
@@ -137,7 +137,7 @@ const AffiliatesPage = (props) => {
 			// if
 		});
 		set_loading_promo_update(false);
-		// stableDispatch(listAffiliates());
+		stableDispatch(listAffiliates());
 	};
 
 	return (
@@ -182,7 +182,7 @@ const AffiliatesPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
-			<Loading loading={loading_promo_update}/>
+			<Loading loading={loading_promo_update} />
 			<Loading loading={loading} error={error}>
 				{affiliates && (
 					<div className="affiliate-list responsive_table">
