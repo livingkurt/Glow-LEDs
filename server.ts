@@ -3,6 +3,7 @@ import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
+
 // import bodyParser from 'body-parser';
 // import config from './config';
 // const expressAttack = require('express-attack');
@@ -12,28 +13,29 @@ const cors = require('cors');
 require('dotenv').config();
 const passport = require('passport');
 const compression = require('compression');
-import {
-	user_routes,
-	product_routes,
-	order_routes,
-	email_routes,
-	batch_routes,
-	expense_routes,
-	feature_routes,
-	promo_routes,
-	affiliate_routes,
-	cart_routes,
-	content_routes,
-	device_routes,
-	log_routes,
-	chip_routes,
-	team_routes,
-	payment_routes,
-	shipping_routes,
-	paycheck_routes,
-	survey_routes,
-	parcel_routes
-} from './routes/index';
+// import {
+// 	user_routes,
+// 	product_routes,
+// 	order_routes,
+// 	email_routes,
+// 	batch_routes,
+// 	expense_routes,
+// 	feature_routes,
+// 	promo_routes,
+// 	affiliate_routes,
+// 	cart_routes,
+// 	content_routes,
+// 	device_routes,
+// 	log_routes,
+// 	chip_routes,
+// 	team_routes,
+// 	payment_routes,
+// 	shipping_routes,
+// 	paycheck_routes,
+// 	survey_routes,
+// 	parcel_routes
+// } from './routes/index';
+import routes from './routes';
 // import users from './routes/users';
 
 // const htmlRoutes = require('./email_templates/html_routes');
@@ -107,26 +109,28 @@ app.use(passport.initialize());
 // Passport config
 require('./passport')(passport);
 
-app.use('/api/promos', promo_routes);
-app.use('/api/carts', cart_routes);
-app.use('/api/contents', content_routes);
-app.use('/api/affiliates', affiliate_routes);
-app.use('/api/expenses', expense_routes);
-app.use('/api/features', feature_routes);
-app.use('/api/users', user_routes);
-app.use('/api/chips', chip_routes);
-app.use('/api/products', product_routes);
-app.use('/api/orders', order_routes);
-app.use('/api/emails', email_routes);
-app.use('/api/devices', device_routes);
-app.use('/api/logs', log_routes);
-app.use('/api/teams', team_routes);
-app.use('/api/all', batch_routes);
-app.use('/api/shipping', shipping_routes);
-app.use('/api/payments', payment_routes);
-app.use('/api/paychecks', paycheck_routes);
-app.use('/api/surveys', survey_routes);
-app.use('/api/parcels', parcel_routes);
+// app.use('/api/promos', promo_routes);
+// app.use('/api/carts', cart_routes);
+// app.use('/api/contents', content_routes);
+// app.use('/api/affiliates', affiliate_routes);
+// app.use('/api/expenses', expense_routes);
+// app.use('/api/features', feature_routes);
+// app.use('/api/users', user_routes);
+// app.use('/api/chips', chip_routes);
+// app.use('/api/products', product_routes);
+// app.use('/api/orders', order_routes);
+// app.use('/api/emails', email_routes);
+// app.use('/api/devices', device_routes);
+// app.use('/api/logs', log_routes);
+// app.use('/api/teams', team_routes);
+// app.use('/api/all', batch_routes);
+// app.use('/api/shipping', shipping_routes);
+// app.use('/api/payments', payment_routes);
+// app.use('/api/paychecks', paycheck_routes);
+// app.use('/api/surveys', survey_routes);
+// app.use('/api/parcels', parcel_routes);
+
+app.use(routes);
 
 // app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {

@@ -5,23 +5,39 @@
 //   email_routes: require("./email_routes")
 // };
 
-export { default as order_routes } from './order_routes';
-export { default as product_routes } from './product_routes';
-export { default as user_routes } from './user_routes';
-export { default as email_routes } from './email_routes';
-export { default as batch_routes } from './batch_routes';
-export { default as expense_routes } from './expense_routes';
-export { default as feature_routes } from './feature_routes';
-export { default as affiliate_routes } from './affiliate_routes';
-export { default as promo_routes } from './promo_routes';
-export { default as cart_routes } from './cart_routes';
-export { default as content_routes } from './content_routes';
-export { default as device_routes } from './device_routes';
-export { default as log_routes } from './log_routes';
-export { default as chip_routes } from './chip_routes';
-export { default as team_routes } from './team_routes';
-export { default as shipping_routes } from './shipping_routes';
-export { default as payment_routes } from './payment_routes';
-export { default as paycheck_routes } from './paycheck_routes';
-export { default as survey_routes } from './survey_routes';
-export { default as parcel_routes } from './parcel_routes';
+// export { default as order_routes } from './order_routes';
+// export { default as product_routes } from './product_routes';
+// export { default as user_routes } from './user_routes';
+// export { default as email_routes } from './email_routes';
+// export { default as batch_routes } from './batch_routes';
+// export { default as expense_routes } from './expense_routes';
+// export { default as feature_routes } from './feature_routes';
+// export { default as affiliate_routes } from './affiliate_routes';
+// export { default as promo_routes } from './promo_routes';
+// export { default as cart_routes } from './cart_routes';
+// export { default as content_routes } from './content_routes';
+// export { default as device_routes } from './device_routes';
+// export { default as log_routes } from './log_routes';
+// export { default as chip_routes } from './chip_routes';
+// export { default as team_routes } from './team_routes';
+// export { default as shipping_routes } from './shipping_routes';
+// export { default as payment_routes } from './payment_routes';
+// export { default as paycheck_routes } from './paycheck_routes';
+// export { default as survey_routes } from './survey_routes';
+// export { default as parcel_routes } from './parcel_routes';
+
+import path from 'path';
+import express from 'express';
+import apiRoutes from './api';
+
+const router = express.Router();
+
+// API Routes
+router.use('/api', apiRoutes);
+
+// If no API routes are hit, send the React app
+router.use((req, res) => {
+	res.sendFile(path.join(__dirname, '../client/build/index.html'));
+});
+
+export default router;
