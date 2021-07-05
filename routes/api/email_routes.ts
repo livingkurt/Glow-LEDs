@@ -1,13 +1,17 @@
 import express from 'express';
 import { email_controller } from '../../controllers';
-
+const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
 // Matches with "/api/books"
-router.route('/').get(email_controller.findAll).post(email_controller.create);
+router.route('/').get(email_controller.findAll).post(isAuth, isAdmin, email_controller.create);
 
 // Matches with "/api/books/:id"
-router.route('/:id').get(email_controller.findById).put(email_controller.update).delete(email_controller.remove);
+router
+	.route('/:id')
+	.get(email_controller.findById)
+	.put(isAuth, isAdmin, email_controller.update)
+	.delete(isAuth, isAdmin, email_controller.remove);
 
 router.route('/send_announcement').post(email_controller.send_announcement_email);
 router.route('/send_user_email').post(email_controller.send_user_email);

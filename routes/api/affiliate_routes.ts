@@ -5,7 +5,7 @@ const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
 // Matches with "/api/books"
-router.route('/').get(isAuth, affiliate_controller.findAll).post(isAuth, affiliate_controller.create);
+router.route('/').get(affiliate_controller.findAll).post(isAuth, affiliate_controller.create);
 
 // Matches with "/api/books/:id"
 router

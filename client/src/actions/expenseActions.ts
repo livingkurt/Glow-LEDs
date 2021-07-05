@@ -15,17 +15,24 @@ import {
 import axios from 'axios';
 
 export const listExpenses = (category = '', searchKeyword = '', sortOrder = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: EXPENSE_LIST_REQUEST });
+		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
 			'/api/expenses?category=' +
 				category +
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +
-				sortOrder.toLowerCase()
+				sortOrder.toLowerCase(),
+			{
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			}
 		);
 		dispatch({ type: EXPENSE_LIST_SUCCESS, payload: data });
 	} catch (error) {
@@ -72,11 +79,17 @@ export const saveExpense = (expense: {
 };
 
 export const detailsExpense = (pathname: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: EXPENSE_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/expenses/' + pathname);
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/expenses/' + pathname, {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.token
+			}
+		});
 		dispatch({ type: EXPENSE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error.response.data.message });

@@ -18,17 +18,24 @@ import {
 import axios from 'axios';
 
 export const listPaychecks = (category = '', searchKeyword = '', sortOrder = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: PAYCHECK_LIST_REQUEST });
+		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
 			'/api/paychecks?category=' +
 				category +
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +
-				sortOrder.toLowerCase()
+				sortOrder.toLowerCase(),
+			{
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			}
 		);
 		dispatch({ type: PAYCHECK_LIST_SUCCESS, payload: data });
 	} catch (error) {
@@ -82,11 +89,17 @@ export const savePaycheck = (paycheck: any) => async (
 };
 
 export const detailsPaycheck = (pathname: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: PAYCHECK_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/paychecks/' + pathname);
+		const { userLogin: { userInfo } } = getState();
+		const { data } = await axios.get('/api/paychecks/' + pathname, {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.token
+			}
+		});
 		dispatch({ type: PAYCHECK_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: PAYCHECK_DETAILS_FAIL, payload: error.response.data.message });

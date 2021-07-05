@@ -20,17 +20,24 @@ import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
 export const listAffiliates = (category = '', searchKeyword = '', sortOrder = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
+	dispatch: (arg0: { type: string; payload?: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: AFFILIATE_LIST_REQUEST });
+		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
 			'/api/affiliates?category=' +
 				category +
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +
-				sortOrder.toLowerCase()
+				sortOrder.toLowerCase(),
+			{
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			}
 		);
 		dispatch({ type: AFFILIATE_LIST_SUCCESS, payload: data });
 	} catch (error) {

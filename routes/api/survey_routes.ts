@@ -5,12 +5,12 @@ const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
 // Matches with "/api/books"
-router.route('/').get(isAuth, isAdmin, survey_controller.findAll).post(survey_controller.create);
+router.route('/').get(survey_controller.findAll).post(survey_controller.create);
 
 // Matches with "/api/books/:id"
 router
 	.route('/:id')
-	.get(isAuth, isAdmin, survey_controller.findById)
+	.get(survey_controller.findById)
 	.put(isAuth, isAdmin, survey_controller.update)
 	.delete(isAuth, isAdmin, survey_controller.remove);
 
