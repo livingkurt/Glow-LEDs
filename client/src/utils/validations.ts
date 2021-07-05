@@ -110,15 +110,7 @@ export const validate_registration = (data: {
 	rePassword: any;
 }) => {
 	let errors: any = {};
-	// let request: AxiosResponse<any>;
-	// if (data.email) {
-	// 	request = await axios.post('/api/users/checkemail', { email: data.email });
-	// 	console.log({ request: request.data });
-	// 	// Password checks
-	// 	if (!request.data) {
-	// 		errors.email = 'Email Already in Use';
-	// 	}
-	// }
+
 	// Convert empty fields to an empty string so we can use validator functions
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
