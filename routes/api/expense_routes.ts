@@ -1,14 +1,18 @@
 import express from 'express';
 import { expense_controller } from '../../controllers';
-// const expense_controller = require("../../controllers/expense_controller");
+const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
 // Matches with "/api/books"
-router.route('/').get(expense_controller.findAll).post(expense_controller.create);
+router.route('/').get(isAuth, isAdmin, expense_controller.findAll).post(isAuth, isAdmin, expense_controller.create);
 
 // Matches with "/api/books/:id"
-router.route('/:id').get(expense_controller.findById).put(expense_controller.update).delete(expense_controller.remove);
+router
+	.route('/:id')
+	.get(isAuth, isAdmin, expense_controller.findById)
+	.put(isAuth, isAdmin, expense_controller.update)
+	.delete(isAuth, isAdmin, expense_controller.remove);
 
 router.route('/post_expense').post(expense_controller.create_all);
 
