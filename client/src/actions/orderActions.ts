@@ -64,6 +64,7 @@ export const createPayOrder = (
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
+		console.log({ user_data });
 		console.log({ createPayOrder: order });
 		const { data: { data: newOrder } } = await axios.post('/api/orders/user_create_one', order, {
 			headers: {

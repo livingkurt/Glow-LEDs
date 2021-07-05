@@ -1,5 +1,7 @@
 import express from 'express';
 import { order_controller } from '../../controllers';
+// import { isAuth } from '../../util';
+const { isAuth, isAdmin } = require('../../util');
 // const order_controller = require("../../controllers/order_controller");
 
 const router = express.Router();
@@ -12,13 +14,13 @@ const router = express.Router();
 
 router.route('/get_one_guest/:id').get(order_controller.get_one_guest);
 router.route('/get_all').get(order_controller.get_all);
-router.route('/get_mine').get(order_controller.get_mine);
+router.route('/get_mine').get(isAuth, order_controller.get_mine);
 router.route('/get_user/:id').get(order_controller.get_user);
-router.route('/get_one/:id').get(order_controller.get_one);
+router.route('/get_one/:id').get(isAuth, order_controller.get_one);
 router.route('/user_create_one').post(order_controller.user_create_one);
-router.route('/guest_create_one').post(order_controller.guest_create_one);
-router.route('/update_one/:id').put(order_controller.update_one);
-router.route('/delete_one/:id').get(order_controller.delete_one);
+router.route('/guest_create_one').post(isAuth, order_controller.guest_create_one);
+router.route('/update_one/:id').put(isAuth, isAdmin, order_controller.update_one);
+router.route('/delete_one/:id').get(isAuth, isAdmin, order_controller.delete_one);
 router.route('/occurrences').get(order_controller.occurrences);
 router.route('/code_usage/:promo_code').get(order_controller.code_usage);
 router.route('/all_orders').get(order_controller.all_orders);
