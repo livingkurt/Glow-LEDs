@@ -61,7 +61,7 @@ export default {
 			// console.log({ feature });
 			console.log(req.params.id);
 			console.log('hello');
-			const feature = await Feature.findOne({ id: req.params.id });
+			const feature = await Feature.findOne({ pathname: req.params.id });
 			console.log({ feature });
 			if (feature) {
 				log_request({
