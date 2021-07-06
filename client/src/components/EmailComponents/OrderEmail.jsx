@@ -288,9 +288,8 @@ const OrderEmail = (props) => {
 																	</h3>
 																) : (
 																	<p style={{ fontSize: '16px', lineHeight: 2 }}>
-																		Hi {order.shipping.first_name}, we're getting
-																		your order ready to be shipped. We will notify
-																		you when it has been sent.
+																		Hi {order.shipping.first_name},{' '}
+																		{email && email.h2 && email.h2}
 																	</p>
 																)}
 															</p>

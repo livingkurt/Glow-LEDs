@@ -87,25 +87,25 @@ const EmailsPage = (props) => {
 				<Link to="/secure/glow/emails/password_changed">
 					<button className="btn primary">Password Changed</button>
 				</Link>
-				<Link to="/secure/glow/emails/order/609c2490363a14002a25f892/order/false">
+				<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
 					<button className="btn primary">Order</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/reassurance">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/reassured">
 					<button className="btn primary">Reassurance</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/manufactured">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/manufactured">
 					<button className="btn primary">Manufactured</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/packaged">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/packaged">
 					<button className="btn primary">Packaged</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/shipped">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/shipped">
 					<button className="btn primary">Shipped</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/5fa43d5f248dcacd5d8e2d3f/delivered">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/delivered">
 					<button className="btn primary">Delivered</button>
 				</Link>
-				<Link to="/secure/glow/emails/order/5fb354daca1b495d41e1375b/refunded/false">
+				<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/refunded/false">
 					<button className="btn primary">Refunded</button>
 				</Link>
 				<Link to="/secure/glow/emails/invoice">

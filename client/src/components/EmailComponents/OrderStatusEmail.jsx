@@ -5,17 +5,15 @@ import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date, toCapitlize } from '../../utils/helper_functions';
-import { detailsOrderPublic } from '../../actions/orderActions';
+import { detailsOrder, detailsOrderPublic } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 import { Loading } from '../UtilityComponents';
 
-const OrderEmail = (props) => {
+const OrderStatusEmail = (props) => {
 	const history = useHistory();
-	const [ loading, set_loading ] = useState(false);
-	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
-	const { order } = orderDetailsPublic;
-	console.log({ order });
+	const orderDetails = useSelector((state) => state.orderDetails);
+	const { order } = orderDetails;
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
@@ -26,51 +24,163 @@ const OrderEmail = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	const promoList = useSelector((state) => state.promoList);
-	const { promos } = promoList;
-
 	const dispatch = useDispatch();
-	// const stableDispatch = useCallback(dispatch, []);
+	const stableDispatch = useCallback(dispatch, []);
+
+	const [ message_to_user, set_message_to_user ] = useState('');
 
 	useEffect(
 		() => {
-			dispatch(listEmails(toCapitlize(props.match.params.status)));
-			dispatch(detailsOrderPublic(props.match.params.id));
-			dispatch(detailsOrderPublic(props.match.params.id));
-			dispatch(listPromos());
-			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+			stableDispatch(listEmails(toCapitlize(props.match.params.status)));
+			stableDispatch(detailsOrder(props.match.params.id));
 			return () => {};
 		},
-		[ dispatch, props.match.params.id, props.match.params.status ]
+		[ stableDispatch ]
 	);
 
 	useEffect(
 		() => {
-			if (emails) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+			const active_email = emails.find((email) => email.active === true);
+			if (active_email) {
+				stableDispatch(detailsEmail(active_email._id));
 			}
-
 			return () => {};
 		},
-		[ emails, dispatch ]
+		[ emails, stableDispatch ]
 	);
 
-	const determin_card_logo = (card_type) => {
-		switch (card_type) {
-			case 'amex':
-				return 'https://images2.imgbox.com/ea/c8/r82jUQW8_o.png';
-			case 'visa':
-				return 'https://images2.imgbox.com/18/a3/wHEnyn5x_o.png';
-			case 'mastercard':
-				return 'https://images2.imgbox.com/84/a2/oPcysx6p_o.png';
-			case 'discover':
-				return 'https://images2.imgbox.com/f3/4b/R1EL09Rw_o.png';
-			default:
-				return '';
-		}
+	const order_status_steps = () => {
+		return (
+			<div
+				style={{
+					display: 'flex',
+					justifyContent: 'space-between',
+					maxWidth: '58rem',
+					width: '100%',
+					margin: '1rem auto'
+				}}
+			>
+				<div
+					style={
+						order ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Ordered</div>
+					{/* <i class="fas fa-check-square" /> */}
+				</div>
+				<div
+					style={
+						order.isPaid ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Paid </div>
+					{/* <i class="fas fa-money-bill-wave" /> */}
+				</div>
+				<div
+					style={
+						order.isManufactured ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Manufactured </div>
+					{/* <i class="fas fa-hammer" /> */}
+				</div>
+				<div
+					style={
+						order.isPackaged ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Packaged </div>
+					{/* <i class="fas fa-box" /> */}
+				</div>
+				<div
+					style={
+						order.isShipped ? (
+							{
+								borderTop: '.3rem white solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						) : (
+							{
+								borderTop: '.3rem #c0c0c0 solid',
+								color: '$font_color',
+								flex: '1 1',
+								paddingTop: '1rem',
+								textAlign: 'center'
+							}
+						)
+					}
+				>
+					<div>Shipped</div>
+				</div>
+			</div>
+		);
 	};
 
 	const jsx = (
@@ -271,7 +381,9 @@ const OrderEmail = (props) => {
 																>
 																	{email && email.h1}
 																</h2> */}
-															{/* <p>{email && email.p}</p> */}
+
+															{/* {order_status_steps(order)} */}
+
 															<p
 																style={{
 																	color: 'white',
@@ -288,12 +400,13 @@ const OrderEmail = (props) => {
 																	</h3>
 																) : (
 																	<p style={{ fontSize: '16px', lineHeight: 2 }}>
-																		Hi {order.shipping.first_name}, we're getting
-																		your order ready to be shipped. We will notify
-																		you when it has been sent.
+																		Hi {order.shipping.first_name},{' '}
+																		{email && email.h2 && email.h2}
 																	</p>
 																)}
 															</p>
+															{/* <p>{email.p ? email.p : email.p}</p> */}
+															<p>{email && email.p}</p>
 															<table
 																style={{
 																	width: '100%',
@@ -454,16 +567,16 @@ const OrderEmail = (props) => {
 							<table
 								style={{
 									width: '100%',
-									borderSpacing: '0',
-									padding: '10px'
+									borderSpacing: '0'
+									// padding: '10px'
 									// borderCollapse: 'collapse'
 								}}
 							>
 								<tr>
 									<td
 										style={{
-											fontFamily: 'helvetica',
-											padding: '40px 0'
+											fontFamily: 'helvetica'
+											// padding: '40px 0'
 										}}
 									>
 										<center>
@@ -479,23 +592,6 @@ const OrderEmail = (props) => {
 												}}
 											>
 												<tbody>
-													<tr>
-														<td
-															style={{
-																fontFamily: 'helvetica'
-															}}
-														>
-															<h3
-																style={{
-																	fontWeight: 'normal',
-																	fontSize: '20px',
-																	margin: '0 0 25px'
-																}}
-															>
-																<strong>Order Summary</strong>
-															</h3>
-														</td>
-													</tr>
 													<tr>
 														<td
 															colSpan={2}
@@ -535,11 +631,47 @@ const OrderEmail = (props) => {
 																			<br />
 																			<strong>Created:</strong>{' '}
 																			{order.createdAt && format_date(order.createdAt)}
+																			{order.tracking_number && (
+																				<div>
+																					<strong>Tracking Number: </strong>{' '}
+																					<a
+																						href={
+																							'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+																							order.tracking_number
+																						}
+																						target="_blank"
+																						rel="noopener noreferrer"
+																						style={{
+																							textDecoration: 'underline',
+																							color: 'white'
+																						}}
+																					>
+																						{order.tracking_number}
+																					</a>
+																				</div>
+																			)}
 																			<br />
 																		</td>
 																	</tr>
 																</tbody>
 															</table>
+														</td>
+													</tr>
+													<tr>
+														<td
+															style={{
+																fontFamily: 'helvetica'
+															}}
+														>
+															<h3
+																style={{
+																	fontWeight: 'normal',
+																	fontSize: '20px',
+																	margin: '0 0 25px'
+																}}
+															>
+																<strong>Items in this order</strong>
+															</h3>
 														</td>
 													</tr>
 												</tbody>
@@ -551,6 +683,7 @@ const OrderEmail = (props) => {
 													padding: '10px',
 													textAlign: 'left',
 													borderSpacing: '0',
+													width: '100%',
 													// borderCollapse: 'collapse',
 													margin: '0 auto'
 												}}
@@ -653,7 +786,7 @@ const OrderEmail = (props) => {
 																											</span>
 																											<br />
 																										</td>
-																										<td
+																										{/* <td
 																											style={{
 																												fontFamily:
 																													'helvetica',
@@ -683,7 +816,7 @@ const OrderEmail = (props) => {
 																													'white'
 																												)}
 																											</p>
-																										</td>
+																										</td> */}
 																									</tr>
 																								</tbody>
 																							</table>
@@ -696,7 +829,7 @@ const OrderEmail = (props) => {
 																))}
 															</tbody>
 														</table>
-														<table
+														{/* <table
 															style={{
 																width: '100%',
 
@@ -763,17 +896,6 @@ const OrderEmail = (props) => {
 																											'5px'
 																									}}
 																								>
-																									{/* <i
-																										width="18"
-																										height="18"
-																										style={{
-																											verticalAlign:
-																												'middle',
-																											marginRight:
-																												'10px'
-																										}}
-																										class="fas fa-tag"
-																									/> */}
 
 																									<img
 																										src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
@@ -1059,282 +1181,13 @@ const OrderEmail = (props) => {
 																	</td>
 																</tr>
 															</tbody>
-														</table>
+														</table> */}
 													</td>
 												</tr>
 											</table>
 										</center>
 									</td>
 								</tr>
-							</table>
-							<table
-								style={{
-									width: '100%',
-									padding: '10px',
-									borderSpacing: '0'
-									// borderCollapse: 'collapse'
-								}}
-							>
-								<tbody>
-									<tr>
-										<td
-											style={{
-												fontFamily: 'helvetica',
-												padding: '40px 0 0'
-											}}
-										>
-											<center>
-												<table
-													style={{
-														maxWidth: '560px',
-														width: '100%',
-														textAlign: 'left',
-														borderSpacing: '0',
-														// padding: '10px',
-														// borderCollapse: 'collapse',
-														margin: '0 auto'
-													}}
-												>
-													<tbody>
-														<tr>
-															<td
-																style={{
-																	fontFamily: 'helvetica'
-																}}
-															>
-																<h3
-																	style={{
-																		fontWeight: 'normal',
-																		fontSize: '20px',
-																		margin: '0 0 25px'
-																	}}
-																>
-																	<strong>Customer Information</strong>
-																</h3>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-												<table
-													style={{
-														maxWidth: '560px',
-														width: '100%',
-														textAlign: 'left',
-														borderSpacing: '0',
-														// borderCollapse: 'collapse',
-														margin: '0 auto'
-													}}
-												>
-													<tbody>
-														<tr>
-															<td
-																style={{
-																	fontFamily: 'helvetica'
-																}}
-															>
-																<table
-																	style={{
-																		width: '100%',
-																		borderSpacing: '0'
-																		// borderCollapse: 'collapse'
-																	}}
-																>
-																	<tbody>
-																		<tr>
-																			<td
-																				style={{
-																					fontFamily: 'helvetica',
-																					paddingBottom: '40px',
-																					width: '50%'
-																				}}
-																			>
-																				<h4
-																					style={{
-																						fontWeight: '500',
-																						fontSize: '16px',
-																						color: 'white',
-																						margin: '0 0 5px'
-																					}}
-																				>
-																					<strong>Shipping Address</strong>
-																				</h4>
-																				<p
-																					style={{
-																						color: 'white',
-																						lineHeight: '150%',
-																						fontSize: '16px',
-																						margin: '0'
-																					}}
-																				>
-																					{order.shipping.first_name}{' '}
-																					{order.shipping.last_name}
-																					<br />
-																					{order.shipping.address_1}{' '}
-																					{order.shipping.address_2}
-																					<br />
-																					{order.shipping.city},{' '}
-																					{order.shipping.state}{' '}
-																					{order.shipping.postalCode}
-																					<br />
-																					{order.shipping.country}
-																					<br />
-																					{order.shipping.email}
-																				</p>
-																			</td>
-
-																			{/* <td
-																				style={{
-																					fontFamily: 'helvetica',
-																					paddingBottom: '40px',
-																					width: '50%'
-																				}}
-																			>
-																				<h4
-																					style={{
-																						fontWeight: '500',
-																						fontSize: '16px',
-																						color: 'white',
-																						margin: '0 0 5px'
-																					}}
-																				>
-																					<strong>Billing Address</strong>
-																				</h4>
-																				<p
-																					style={{
-																						color: 'white',
-																						lineHeight: '150%',
-																						fontSize: '16px',
-																						margin: '0'
-																					}}
-																				>
-																					{order.shipping.first_name}{' '}
-																					{order.shipping.last_name}
-																					<br />
-																					{order.shipping.address_1}{' '}
-																					{order.shipping.address_2}
-																					<br />
-																					{order.shipping.city},{' '}
-																					{order.shipping.state}{' '}
-																					{order.shipping.postalCode}
-																					<br />
-																					{order.shipping.country}
-																				</p>
-																			</td> */}
-																		</tr>
-																	</tbody>
-																</table>
-																<table
-																	style={{
-																		width: '100%',
-																		borderSpacing: '0'
-																		// borderCollapse: 'collapse'
-																	}}
-																>
-																	<tbody>
-																		<tr>
-																			<td
-																				style={{
-																					fontFamily: 'helvetica',
-																					paddingBottom: '40px',
-																					width: '50%'
-																				}}
-																			>
-																				<h4
-																					style={{
-																						fontWeight: '500',
-																						fontSize: '16px',
-																						color: 'white',
-																						margin: '0 0 5px'
-																					}}
-																				>
-																					<strong>Shipping Method</strong>
-																				</h4>
-																				<p
-																					style={{
-																						color: 'white',
-																						lineHeight: '150%',
-																						fontSize: '16px',
-																						margin: '0'
-																					}}
-																				>
-																					{order.shipping &&
-																						order.shipping.shipping_rate &&
-																						order.shipping.shipping_rate
-																							.service}
-																				</p>
-																			</td>
-
-																			<td
-																				style={{
-																					fontFamily: 'helvetica',
-																					paddingBottom: '40px',
-																					width: '50%'
-																				}}
-																			>
-																				<h4
-																					style={{
-																						fontWeight: '500',
-																						fontSize: '16px',
-																						color: 'white',
-																						margin: '0 0 5px',
-																						textAlign: 'right'
-																					}}
-																				>
-																					<strong>Payment Method</strong>
-																				</h4>
-
-																				<p
-																					style={{
-																						color: 'white',
-																						lineHeight: '150%',
-																						fontSize: '16px',
-																						margin: '0',
-																						textAlign: 'right'
-																					}}
-																				>
-																					{order.payment.payment ? (
-																						<img
-																							src={determin_card_logo(
-																								order.payment.payment
-																									.card.brand
-																							)}
-																							style={{
-																								height: '24px',
-																								display: 'inline-block',
-																								marginRight: '10px',
-																								marginTop: '5px',
-																								marginBottom: '-6px'
-																							}}
-																							alt="card_logo"
-																						/>
-																					) : (
-																						''
-																					)}{' '}
-																					<span style={{ fontSize: '16px' }}>
-																						ending with{' '}
-																						{order.payment.payment ? order.payment.payment.card.last4 : ''}{' '}
-																						<strong
-																							style={{
-																								fontSize: '16px',
-																								color: 'white'
-																							}}
-																						>
-																							${order.totalPrice && order.totalPrice.toFixed(2)}
-																						</strong>
-																					</span>
-																				</p>
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</center>
-										</td>
-									</tr>
-								</tbody>
 							</table>
 							<table
 								style={{
@@ -1639,29 +1492,28 @@ const OrderEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const send_order_email = async (email, first_name, subject, refunded) => {
-		set_loading(true);
+	const send_order_email = async (email, first_name, subject) => {
 		console.log({ email_template });
-		const response_1 = await API_Emails.send_user_email(email_template, subject, email);
-		const response_2 = await API_Emails.send_admin_email(
+		const { data } = await API_Emails.send_user_email(email_template, subject, email);
+		const { data: request } = await API_Emails.send_admin_email(
 			email_template,
-			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
+			'Order Status Updated for ' + first_name
 		);
-		console.log({ response_1 });
-		console.log({ response_2 });
-		if (response_1 && response_2) {
-			history.push('/pages/survey/' + order._id);
-			set_loading(false);
+		console.log({ data });
+		console.log({ request });
+		if (request) {
+			// history.goBack();
+			history.push(`/secure/account/order/${order._id}`);
 		}
 	};
 
 	useEffect(
 		() => {
-			if (props.match.params.send === 'true' && order) {
-				console.log({ 'props.match.params.send === true && order': order });
+			if (props.match.params.send === 'true' && order && email) {
 				if (order.orderItems.length > 0) {
-					console.log({ 'order.orderItems.length > 0': order });
-					send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
+					if (props.match.params.id) {
+						send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+					}
 				}
 			}
 
@@ -1670,32 +1522,30 @@ const OrderEmail = (props) => {
 		[ order ]
 	);
 
-	// const send_order_email = async (email, first_name, subject, refunded) => {
-	// 	// if (num === 1) {
-	// 	set_loading(true);
+	// const send_order_email = async (email, first_name, subject) => {
 	// 	console.log({ email_template });
-	// 	const response_1 = await API_Emails.send_user_email(email_template, subject, email);
-	// 	const response_2 = await API_Emails.send_admin_email(
+	// 	const { data } = await API_Emails.send_user_email(email_template, subject, email);
+	// 	const { data: request } = await API_Emails.send_admin_email(
 	// 		email_template,
-	// 		refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
+	// 		'Order Status Updated for ' + first_name
 	// 	);
-	// 	console.log({ response_1 });
-	// 	console.log({ response_2 });
-	// 	if (response_1 && response_2) {
-	// 		history.push('/pages/survey/' + order._id);
-	// 		set_loading(false);
+	// 	console.log({ data });
+	// 	console.log({ request });
+	// 	if (request) {
+	// 		// history.goBack();
+	// 		history.push(`/secure/account/order/${order._id}`);
 	// 	}
-	// 	// }
 	// };
+	// // let num = 1;
 
 	// useEffect(() => {
 	// 	// if (num === 1) {
-	// 	if (props.match.params.send === 'true' && order) {
-	// 		console.log({ 'props.match.params.send === true && order': order });
+	// 	if (props.match.params.send === 'true' && order && email) {
 	// 		if (order.orderItems.length > 0) {
-	// 			console.log({ 'order.orderItems.length > 0': order });
-	// 			send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
-	// 			// num++;
+	// 			if (props.match.params.id) {
+	// 				send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+	// 				// num++;
+	// 			}
 	// 		}
 	// 	}
 	// 	// }
@@ -1705,77 +1555,42 @@ const OrderEmail = (props) => {
 
 	return (
 		<div>
-			<Loading loading={loading} />
-			{userInfo ? (
-				<div className="jc-c m-auto wrap">
-					<Link to={'/secure/account/order/' + props.match.params.id}>
-						<button className="btn primary mh-10px">View Order</button>
-					</Link>
-					<Link to="/secure/account/orders">
-						<button className="btn primary mh-10px">Your Orders</button>
-					</Link>
-					<Link to="/collections/all/products">
-						<button className="btn primary mh-10px">Products</button>
-					</Link>
-				</div>
-			) : (
-				<div className="w-1000px jc-c m-auto">
-					<Link to={'/checkout/order/' + props.match.params.id}>
-						<button className="btn primary">View Order</button>
-					</Link>
-					<Link to="/collections/all/products">
-						<button className="btn primary mh-10px">Products</button>
-					</Link>
-					<Link to="/pages/featured">
-						<button className="btn primary mh-10px">Featured Videos</button>
-					</Link>
-					<Link to="/pages/music">
-						<button className="btn primary mh-10px">NTRE Music</button>
-					</Link>
-					{/* <Link to="/account/register">
-						<button className="btn primary mh-10px">Create Account</button>
-					</Link> */}
-				</div>
-			)}
-			<div className="jc-c">
-				<p className="max-w-600px mv-2rem">
-					{' '}
-					Make sure to check your spam folder for the confirmation email. If you do not recieve a confirmation
-					email please contact support.
-				</p>
-			</div>
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
 					<Link to="/secure/glow/emails">
-						<button className="btn primary mh-10px">Back to Emails</button>
+						<button className="btn primary">Back to Emails</button>
 					</Link>
 					<Link to="/secure/glow/orders">
-						<button className="btn primary mh-10px">Back to Orders</button>
+						<button className="btn primary">Back to Orders</button>
 					</Link>
-
+					{order && (
+						<Link to={'/secure/account/order/' + order._id}>
+							<button className="btn primary">Back to Order</button>
+						</Link>
+					)}
+					<div>
+						<label htmlFor="message_to_user">Message to User</label>
+						<input
+							type="text"
+							value={message_to_user}
+							name="message_to_user"
+							id="message_to_user"
+							onChange={(e) => set_message_to_user(e.target.value)}
+						/>
+					</div>
 					<button
 						className="btn primary mb-1rem"
-						onClick={() =>
-							send_order_email('lavacquek@icloud.com', 'Kurt', 'Your Glow LEDS Order', order.isRefunded)}
+						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h1)}
 					>
 						Send Test Email
 					</button>
 					<button
 						className="btn primary mb-1rem"
-						onClick={() =>
-							send_order_email(
-								order.shipping.email,
-								order.shipping.first_name,
-								'Your Glow LEDS Order',
-								order.isRefunded
-							)}
+						onClick={() => send_order_email(order.shipping.email, order.shipping.first_name, email.h1)}
 					>
-						Send Order Email
+						Send Order Status Email
 					</button>
-					{/* <button className="btn primary mb-1rem" onClick={() => send_order_email()}>
-					Send Order Email
-				</button> */}
 					{/* <Loading loading={loading_email} /> */}
 				</div>
 			)}
@@ -1784,4 +1599,4 @@ const OrderEmail = (props) => {
 	);
 };
 
-export default OrderEmail;
+export default OrderStatusEmail;
