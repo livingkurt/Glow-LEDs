@@ -66,7 +66,7 @@ export const createPayOrder = (
 		const { userLogin: { userInfo: user_data } } = getState();
 		console.log({ user_data });
 		console.log({ createPayOrder: order });
-		const { data: { data: newOrder } } = await axios.post('/api/orders/user_create_one', order, {
+		const { data: { data: newOrder } } = await axios.post('/api/orders/secure', order, {
 			headers: {
 				Authorization: ' Bearer ' + user_data.token
 			}
@@ -139,7 +139,7 @@ export const createPayOrderGuest = (
 			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 			axios.post('/api/emails/verified', data);
 			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-			const { data: { newOrder } } = await axios.post('/api/orders/guest_create_one', {
+			const { data: { newOrder } } = await axios.post('/api/orders/guest', {
 				...order,
 				user: data._id
 			});
@@ -167,7 +167,7 @@ export const createPayOrderGuest = (
 					// const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
 					// console.log({ user: data.data._id });
 					// console.log({ data: data._id });
-					const { data: { newOrder } } = await axios.post('/api/orders/guest_create_one', {
+					const { data: { newOrder } } = await axios.post('/api/orders/guest', {
 						...order,
 						user: user_data._id
 					});
@@ -205,7 +205,7 @@ export const createPayOrderGuest = (
 				// const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
 				console.log({ user: data.data._id });
 				// console.log({ data: data._id });
-				const { data: { newOrder } } = await axios.post('/api/orders/guest_create_one', {
+				const { data: { newOrder } } = await axios.post('/api/orders/guest', {
 					...order,
 					user: data.data._id
 				});
@@ -245,7 +245,7 @@ export const createOrderGuest = (order: {
 ) => {
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-		const { data: { newOrder } } = await axios.post('/api/orders/guest_create_one', order);
+		const { data: { newOrder } } = await axios.post('/api/orders/guest', order);
 		console.log({ newOrder });
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
 		Cookie.remove('shipping');
@@ -277,7 +277,7 @@ export const createOrder = (order: {
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
-		const { data: { data: newOrder } } = await axios.post('/api/orders/user_create_one', order, {
+		const { data: { data: newOrder } } = await axios.post('/api/orders/secure', order, {
 			headers: {
 				Authorization: ' Bearer ' + user_data.token
 			}
@@ -341,7 +341,7 @@ export const listMyOrders = () => async (
 	try {
 		dispatch({ type: MY_ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/orders/get_mine', {
+		const { data } = await axios.get('/api/orders/user', {
 			headers: { Authorization: 'Bearer ' + userInfo.token }
 		});
 		console.log({ Orders: data });
@@ -357,7 +357,7 @@ export const listUserOrders = (user_id: string) => async (
 	try {
 		dispatch({ type: MY_ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/orders/get_user/' + user_id, {
+		const { data } = await axios.get('/api/orders/glow/' + user_id, {
 			headers: { Authorization: 'Bearer ' + userInfo.token }
 		});
 		console.log({ Orders: data });
@@ -378,7 +378,7 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '', pa
 		// 	headers: { Authorization: 'Bearer ' + userInfo.token }
 		// });
 		const { data } = await axios.get(
-			'/api/orders/get_all?category=' +
+			'/api/orders/?category=' +
 				category +
 				'&searchKeyword=' +
 				searchKeyword +
@@ -406,7 +406,7 @@ export const detailsOrder = (orderId: string) => async (
 	try {
 		dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/orders/get_one/' + orderId, {
+		const { data } = await axios.get('/api/orders/secure/' + orderId, {
 			headers: { Authorization: 'Bearer ' + userInfo.token }
 		});
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
@@ -421,7 +421,7 @@ export const detailsOrderPublic = (orderId: string) => async (
 	try {
 		dispatch({ type: ORDER_DETAILS_PUBLIC_REQUEST, payload: orderId });
 		console.log({ orderId });
-		const { data } = await axios.get('/api/orders/get_one_guest/' + orderId);
+		const { data } = await axios.get('/api/orders/guest/' + orderId);
 		console.log({ data });
 		if (data) {
 			dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
@@ -439,7 +439,7 @@ export const deleteOrder = (orderId: string) => async (
 	try {
 		dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.delete('/api/orders/delete_one/' + orderId, {
+		const { data } = await axios.delete('/api/orders/glow/' + orderId, {
 			headers: { Authorization: 'Bearer ' + userInfo.token }
 		});
 		dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
@@ -491,7 +491,7 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 		dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.put(
-			'/api/orders/update_one/' + order._id,
+			'/api/orders/glow/' + order._id,
 			{
 				...order,
 				[is_action]: result,
@@ -515,7 +515,7 @@ export const update_payment = (order: { _id: string }, result: boolean, payment_
 		dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.put(
-			'/api/orders/update_one/' + order._id,
+			'/api/orders/glow/' + order._id,
 			{
 				...order,
 				isPaid: result,
@@ -544,7 +544,7 @@ export const saveOrder = (order: any) => async (
 		dispatch({ type: ORDER_SAVE_REQUEST, payload: order });
 		const { userLogin: { userInfo } } = getState();
 		if (!order._id) {
-			const { data } = await axios.post('/api/orders/create_one', order, {
+			const { data } = await axios.post('/api/orders/glow', order, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
 				}
@@ -552,7 +552,7 @@ export const saveOrder = (order: any) => async (
 			dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
 		} else {
 			console.log({ order });
-			const { data } = await axios.put('/api/orders/update_one/' + order._id, order, {
+			const { data } = await axios.put('/api/orders/glow/' + order._id, order, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
 				}

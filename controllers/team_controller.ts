@@ -65,8 +65,8 @@ export default {
 	},
 	findById: async (req: any, res: any) => {
 		try {
-			console.log({ id: req.params.id });
-			const team = await Team.findOne({ id: req.params.id })
+			console.log({ pathname: req.params.pathname });
+			const team = await Team.findOne({ pathname: req.params.pathname })
 				.populate('affiliates')
 				.populate('public_code')
 				.populate('private_code');
@@ -192,10 +192,10 @@ export default {
 	update: async (req: any, res: any) => {
 		try {
 			console.log({ team_routes_put: req.body });
-			const team_id = req.params.id;
-			const team: any = await Team.findById(team_id);
+			const team_pathname = req.params.pathname;
+			const team: any = await Team.findOne({ pathname: team_pathname });
 			if (team) {
-				const updatedTeam = await Team.updateOne({ _id: team_id }, req.body);
+				const updatedTeam = await Team.updateOne({ pathname: team_pathname }, req.body);
 				if (updatedTeam) {
 					log_request({
 						method: 'PUT',
@@ -235,7 +235,7 @@ export default {
 	remove: async (req: any, res: any) => {
 		try {
 			const message: any = { message: 'Team Deleted' };
-			const deleted_team = await Team.updateOne({ _id: req.params.id }, { deleted: true });
+			const deleted_team = await Team.updateOne({ pathname: req.params.pathname }, { deleted: true });
 			if (deleted_team) {
 				log_request({
 					method: 'DELETE',

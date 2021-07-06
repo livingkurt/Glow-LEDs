@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default {
+const product_routes = {
 	get_category_images: (category: any) => {
 		// console.log({ category });
 		return axios.get('/api/products/get_images/' + category);
@@ -60,15 +60,15 @@ export default {
 	},
 	get_best_sellers: (occurences: any) => {
 		// console.log({ not_paid_email: array });
-		return axios.post('/api/products/get_best_sellers', { occurences });
+		return axios.post('/api/products/best_sellers', { occurences });
 	},
 	get_essentials: () => {
 		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/get_essentials');
+		return axios.get('/api/products/essentials');
 	},
 	get_imperfect: () => {
 		console.log('get_imperfect');
-		return axios.get('/api/products/get_all/imperfect');
+		return axios.get('/api/products/imperfect');
 	},
 	get_shown_products: () => {
 		// console.log({ not_paid_email: array });
@@ -117,3 +117,5 @@ export default {
 		return axios.put('/api/all/clear_sale', { sale_start_date, sale_end_date });
 	}
 };
+
+export default product_routes;

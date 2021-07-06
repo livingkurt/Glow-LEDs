@@ -21,7 +21,7 @@ const dates_in_year = [
 const today = new Date();
 // Defining methods for the booksController
 export default {
-	get_one_guest: async (req: any, res: any) => {
+	get_guest_order: async (req: any, res: any) => {
 		try {
 			console.log(req.params.id);
 			const order = await Order.findOne({ _id: req.params.id })
@@ -64,7 +64,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
 	},
-	get_all: async (req: any, res: any) => {
+	findAll: async (req: any, res: any) => {
 		try {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const page: any = req.query.page ? req.query.page : 1;
@@ -146,7 +146,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
-	get_mine: async (req: any, res: any) => {
+	get_my_orders: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
 			log_request({
@@ -171,7 +171,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
 	},
-	get_user: async (req: any, res: any) => {
+	get_user_orders: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({ deleted: false, user: req.params.id }).sort({ _id: -1 });
 			log_request({
@@ -196,7 +196,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
 	},
-	get_one: async (req: any, res: any) => {
+	get_one_order: async (req: any, res: any) => {
 		try {
 			const order = await Order.findOne({ _id: req.params.id })
 				.populate('orderItems.product')
@@ -237,7 +237,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
 	},
-	user_create_one: async (req: any, res: any) => {
+	create_user_order: async (req: any, res: any) => {
 		try {
 			console.log({ user_create_one: req.body });
 			console.log({ isPaid: req.body.isPaid });
@@ -295,7 +295,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
 	},
-	guest_create_one: async (req: any, res: any) => {
+	create_guest_order: async (req: any, res: any) => {
 		try {
 			console.log({ body: req.body });
 			const newOrderCreated = await Order.create({ ...req.body, guest: true });
@@ -336,7 +336,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
 	},
-	update_one: async (req: any, res: any) => {
+	update: async (req: any, res: any) => {
 		try {
 			const updated_order = req.body;
 			const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
@@ -375,7 +375,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Updating Order' });
 		}
 	},
-	delete_one: async (req: any, res: any) => {
+	remove: async (req: any, res: any) => {
 		try {
 			const message: any = { message: 'Order Deleted' };
 			const deleted_order = await Order.updateOne({ _id: req.params.id }, { deleted: true });

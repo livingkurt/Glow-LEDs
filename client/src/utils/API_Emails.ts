@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default {
+const email_routes = {
 	not_paid_email: (order: any, user_data: any) => {
 		console.log({ not_paid_email: order });
 		console.log({ not_paid_email: user_data });
@@ -34,3 +34,5 @@ export default {
 		return axios.post('/api/emails/invoice', order);
 	}
 };
+
+export default email_routes;

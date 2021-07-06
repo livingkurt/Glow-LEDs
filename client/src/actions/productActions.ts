@@ -36,7 +36,7 @@ export const listProducts = (
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 		console.log({ chip });
 		const { data } = await axios.get(
-			'/api/products/get_all?category=' +
+			'/api/products/?category=' +
 				category +
 				'&subcategory=' +
 				subcategory +
@@ -66,14 +66,14 @@ export const saveProduct = (product: any) => async (
 		dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
 		const { userLogin: { userInfo } } = getState();
 		if (!product._id) {
-			const { data } = await axios.post('/api/products/create_one/', product, {
+			const { data } = await axios.post('/api/products', product, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
 				}
 			});
 			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
 		} else {
-			const { data } = await axios.put('/api/products/update_one/' + product._id, product, {
+			const { data } = await axios.put('/api/products/' + product._id, product, {
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token
 				}
@@ -90,7 +90,7 @@ export const detailsProduct = (pathname: string) => async (
 ) => {
 	try {
 		dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/products/get_one/' + pathname);
+		const { data } = await axios.get('/api/products/' + pathname);
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.response.data.message });
@@ -105,7 +105,7 @@ export const deleteProduct = (id: string) => async (
 		const { userLogin: { userInfo } } = getState();
 		console.log(id);
 		dispatch({ type: PRODUCT_DELETE_REQUEST, payload: id });
-		const { data } = await axios.delete('/api/products/delete_one/' + id, {
+		const { data } = await axios.delete('/api/products/' + id, {
 			headers: {
 				Authorization: 'Bearer ' + userInfo.token
 			}
@@ -127,7 +127,7 @@ export const saveProductReview = (
 		const { userLogin: { userInfo } } = getState();
 		dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST, payload: review });
 		const { data } = await axios.post(
-			`/api/products/reviews/${product_pathname}/create_one`,
+			`/api/products/reviews/${product_pathname}`,
 			{ review, userInfo },
 			{
 				headers: {

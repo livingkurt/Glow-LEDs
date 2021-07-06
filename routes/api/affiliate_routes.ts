@@ -10,7 +10,7 @@ router.route('/').get(affiliate_controller.findAll).post(isAuth, affiliate_contr
 // Matches with "/api/books/:id"
 router
 	.route('/:pathname')
-	.get(isAuth, affiliate_controller.findById)
+	.get(affiliate_controller.findById)
 	.put(isAuth, affiliate_controller.update)
 	.delete(isAuth, isAdmin, affiliate_controller.remove);
 

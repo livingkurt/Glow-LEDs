@@ -1,5 +1,5 @@
 import { Product } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
+import { log_error, log_request } from '../util';
 // const { isAuth, isAdmin } = require('../util');
 
 // Defining methods for the booksController

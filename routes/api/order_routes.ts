@@ -6,21 +6,24 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-// // Matches with "/api/books"
-// router.route('/').get(order_controller.findAll).post(order_controller.create);
+router.route('/').get(isAuth, isAdmin, order_controller.findAll);
 
-// // Matches with "/api/books/:id"
-// router.route('/:id').get(order_controller.findById).put(order_controller.update).delete(order_controller.remove);
+router.route('/user').get(isAuth, order_controller.get_my_orders);
 
-router.route('/get_one_guest/:id').get(order_controller.get_one_guest);
-router.route('/get_all').get(order_controller.get_all);
-router.route('/get_mine').get(isAuth, order_controller.get_mine);
-router.route('/get_user/:id').get(order_controller.get_user);
-router.route('/get_one/:id').get(isAuth, order_controller.get_one);
-router.route('/user_create_one').post(isAuth, order_controller.user_create_one);
-router.route('/guest_create_one').post(order_controller.guest_create_one);
-router.route('/update_one/:id').put(isAuth, isAdmin, order_controller.update_one);
-router.route('/delete_one/:id').get(isAuth, isAdmin, order_controller.delete_one);
+router.route('/guest').post(order_controller.create_guest_order);
+router.route('/guest/:id').get(order_controller.get_guest_order);
+
+router.route('/secure').post(isAuth, order_controller.create_user_order);
+router.route('/secure/:id').get(isAuth, order_controller.get_one_order);
+
+router.route('/glow').post(isAuth, isAdmin, order_controller.create_user_order);
+
+router
+	.route('/glow/:id')
+	.get(isAuth, isAdmin, order_controller.get_user_orders)
+	.put(isAuth, isAdmin, order_controller.update)
+	.delete(isAuth, isAdmin, order_controller.remove);
+
 router.route('/occurrences').get(order_controller.occurrences);
 router.route('/code_usage/:promo_code').get(order_controller.code_usage);
 router.route('/all_orders').get(order_controller.all_orders);
