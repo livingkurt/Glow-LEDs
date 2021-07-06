@@ -7,7 +7,7 @@ const email_routes = {
 		return axios.post('/api/emails/notpaid', order, user_data);
 	},
 	send_announcement_email: (template: string, subject: string, test: boolean) => {
-		return axios.post('/api/emails/announcement', { template, subject, test });
+		return axios.post('/api/emails/send_announcement', { template, subject, test });
 	},
 	send_user_email: (template: string, subject: string, email: string) => {
 		return axios.post('/api/emails/send_user_email', { template, subject, email });
