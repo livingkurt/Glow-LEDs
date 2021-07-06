@@ -382,7 +382,7 @@ const OrderStatusEmail = (props) => {
 																	{email && email.h1}
 																</h2> */}
 
-															{/* {order_status_steps(order)} */}
+															{order_status_steps(order)}
 
 															<p
 																style={{
