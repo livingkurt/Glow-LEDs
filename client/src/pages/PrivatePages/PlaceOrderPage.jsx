@@ -240,56 +240,56 @@ const PlaceOrderPage = (props) => {
 	);
 
 	const placeOrderHandler = async (paymentMethod) => {
-		// // create an order
-		// console.log({ userInfo });
-		// console.log({ user });
-		// dispatch(
-		// 	createPayOrder(
-		// 		{
-		// 			orderItems: cartItems,
-		// 			shipping: shipment_id
-		// 				? {
-		// 						...shipping,
-		// 						shipment_id,
-		// 						shipping_rate
-		// 					}
-		// 				: shipping,
-		// 			payment,
-		// 			itemsPrice,
-		// 			shippingPrice,
-		// 			taxPrice,
-		// 			totalPrice,
-		// 			userInfo,
-		// 			order_note,
-		// 			promo_code: show_message && promo_code,
-		// 			parcel
-		// 		},
-		// 		paymentMethod
-		// 	)
-		// );
+		// create an order
+		console.log({ userInfo });
+		console.log({ user });
+		dispatch(
+			createPayOrder(
+				{
+					orderItems: cartItems,
+					shipping: shipment_id
+						? {
+								...shipping,
+								shipment_id,
+								shipping_rate
+							}
+						: shipping,
+					payment,
+					itemsPrice,
+					shippingPrice,
+					taxPrice,
+					totalPrice,
+					userInfo,
+					order_note,
+					promo_code: show_message && promo_code,
+					parcel
+				},
+				paymentMethod
+			)
+		);
 
-		// set_payment_loading(true);
-		// console.log({ cartItems });
-		// cartItems.forEach(async (item) => {
-		// 	// console.log({ item });
-		// 	if (item.finite_stock) {
-		// 		// const { data: product } = await API_Products.get_product(item.product);
-		// 		// console.log({ product });
-		// 		const new_count = item.countInStock - item.qty;
-		// 		console.log({ new_count });
-		// 		const { data: res } = await API_Products.update_stock(item.product, new_count);
-		// 		console.log({ res });
-		// 	} else if (item.product_option.finite_stock) {
-		// 		const new_count = item.product_option.count_in_stock - item.qty;
-		// 		console.log({ new_count });
-		// 		const { data: res } = await API_Products.update_product_option_stock(
-		// 			item.product,
-		// 			item.product_option,
-		// 			new_count
-		// 		);
-		// 		console.log({ res });
-		// 	}
-		// });
+		set_payment_loading(true);
+		console.log({ cartItems });
+		cartItems.forEach(async (item) => {
+			// console.log({ item });
+			if (item.finite_stock) {
+				// const { data: product } = await API_Products.get_product(item.product);
+				// console.log({ product });
+				const new_count = item.countInStock - item.qty;
+				console.log({ new_count });
+				const { data: res } = await API_Products.update_stock(item.product, new_count);
+				console.log({ res });
+			} else if (item.product_option.finite_stock) {
+				const new_count = item.product_option.count_in_stock - item.qty;
+				console.log({ new_count });
+				const { data: res } = await API_Products.update_product_option_stock(
+					item.product,
+					item.product_option,
+					new_count
+				);
+				console.log({ res });
+			}
+		});
 		if (promo_code) {
 			// const { data } = await API_Promos.get_promo(promo_code.toLowerCase());
 			// const promo_codes = data.promos.map((promo) => promo.promo_code.toLowerCase());

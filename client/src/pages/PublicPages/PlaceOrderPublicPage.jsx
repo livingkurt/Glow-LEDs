@@ -11,7 +11,7 @@ import Cookie from 'js-cookie';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
-import { API_External, API_Orders, API_Shipping } from '../../utils';
+import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
@@ -267,6 +267,38 @@ const PlaceOrderPublicPage = (props) => {
 		);
 
 		set_payment_loading(true);
+		console.log({ cartItems });
+		cartItems.forEach(async (item) => {
+			// console.log({ item });
+			if (item.finite_stock) {
+				// const { data: product } = await API_Products.get_product(item.product);
+				// console.log({ product });
+				const new_count = item.countInStock - item.qty;
+				console.log({ new_count });
+				const { data: res } = await API_Products.update_stock(item.product, new_count);
+				console.log({ res });
+			} else if (item.product_option.finite_stock) {
+				const new_count = item.product_option.count_in_stock - item.qty;
+				console.log({ new_count });
+				const { data: res } = await API_Products.update_product_option_stock(
+					item.product,
+					item.product_option,
+					new_count
+				);
+				console.log({ res });
+			}
+		});
+		if (promo_code) {
+			// const { data } = await API_Promos.get_promo(promo_code.toLowerCase());
+			// const promo_codes = data.promos.map((promo) => promo.promo_code.toLowerCase());
+			// console.log({ promo_codes });
+			const data = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
+			console.log({ data });
+			console.log({ single_use: data.single_use });
+			if (data.single_use) {
+				await API_Promos.promo_code_used(promo_code.toLowerCase());
+			}
+		}
 	};
 
 	const empty_cart = () => {

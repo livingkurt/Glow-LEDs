@@ -33,7 +33,7 @@ const SurveyPage = (props) => {
 	const [ rating, set_rating ] = useState(null);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState();
 	const [ loading_submit, set_loading_submit ] = useState();
-	const [ finished, set_finished ] = useState();
+	const [ finished, set_finished ] = useState(false);
 
 	setTimeout(() => {
 		set_loading_checkboxes(false);
@@ -78,7 +78,7 @@ const SurveyPage = (props) => {
 				stableDispatch(detailsSurvey(active_survey._id));
 				set_survey_questions(active_survey._id);
 			}
-			dispatch(detailsOrderPublic(props.match.params.order_id));
+			dispatch(detailsOrderPublic(props.order_id));
 			return () => {};
 		},
 		[ surveys, stableDispatch ]
@@ -86,18 +86,18 @@ const SurveyPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.order_id) {
+			if (props.order_id) {
 			}
 			return () => {};
 		},
-		[ props.match.params.order_id ]
+		[ props.order_id ]
 	);
 
 	useEffect(() => {
-		// if (props.match.params.pathname) {
+		// if (props.pathname) {
 		// 	console.log('Is ID');
-		// 	stableDispatch(detailsSurvey(props.match.params.pathname));
-		// 	stableDispatch(detailsSurvey(props.match.params.pathname));
+		// 	stableDispatch(detailsSurvey(props.pathname));
+		// 	stableDispatch(detailsSurvey(props.pathname));
 		// } else {
 		// 	stableDispatch(detailsSurvey(''));
 		// }
@@ -194,7 +194,7 @@ const SurveyPage = (props) => {
 			if (success && survey_saved) {
 				console.log({ survey_saved });
 				// history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
-				set_finished('Thank you for Taking the Time to Give us Feedback! We Greatly Appreciate it!');
+				set_finished(true);
 			}
 		},
 		[ success ]
@@ -225,9 +225,7 @@ const SurveyPage = (props) => {
 	return (
 		<div className="main_container p-20px">
 			{survey &&
-			!finished && (
-				<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Survey' : 'Submit Survey'}</h1>
-			)}
+			!finished && <h1 style={{ textAlign: 'center' }}>{props.pathname ? 'Edit Survey' : 'Submit Survey'}</h1>}
 
 			<div className="form">
 				<form style={{ width: '100%' }}>
@@ -314,7 +312,6 @@ const SurveyPage = (props) => {
 							</div>
 						) : (
 							<div>
-								<h2 className="mr-1rem ta-c f">{finished}</h2>
 								{/* <img src="https://thumbs2.imgbox.com/43/80/kQtikgYi_t.jpeg" alt="hearts" /> */}
 								<img
 									src="https://thumbs2.imgbox.com/43/80/kQtikgYi_t.jpeg"
@@ -326,10 +323,18 @@ const SurveyPage = (props) => {
 										borderRadius: '20px'
 									}}
 								/>
-								{userInfo ? (
+								<h2 className="mr-1rem ta-c f">
+									{finished && (
+										<div>
+											<div>Thank you for Taking the Time to Give us Feedback!</div>{' '}
+											<div>We Greatly Appreciate it!</div>
+										</div>
+									)}
+								</h2>
+								{/* {userInfo ? (
 									<div className="jc-c m-auto wrap">
-										{props.match.params.order_id && (
-											<Link to={'/checkout/order/' + props.match.params.order_id}>
+										{props.order_id && (
+											<Link to={'/checkout/order/' + props.order_id}>
 												<button className="btn primary mh-10px">View Order</button>
 											</Link>
 										)}
@@ -349,8 +354,8 @@ const SurveyPage = (props) => {
 									</div>
 								) : (
 									<div className="w-1000px jc-c m-auto">
-										{props.match.params.order_id && (
-											<Link to={'/checkout/order/' + props.match.params.order_id}>
+										{props.order_id && (
+											<Link to={'/checkout/order/' + props.order_id}>
 												<button className="btn primary mh-10px">View Order</button>
 											</Link>
 										)}
@@ -363,11 +368,9 @@ const SurveyPage = (props) => {
 										<Link to="/pages/music">
 											<button className="btn primary mh-10px">NTRE Music</button>
 										</Link>
-										{/* <Link to="/account/register">
-						<button className="btn primary mh-10px">Create Account</button>
-					</Link> */}
+								
 									</div>
-								)}
+								)} */}
 							</div>
 						)}
 					</Loading>

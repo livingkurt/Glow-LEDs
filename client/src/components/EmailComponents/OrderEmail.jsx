@@ -9,6 +9,7 @@ import { detailsOrderPublic } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 import { Loading } from '../UtilityComponents';
+import { SurveyPage } from '../../pages';
 
 const OrderEmail = (props) => {
 	const history = useHistory();
@@ -1683,7 +1684,8 @@ const OrderEmail = (props) => {
 		console.log({ response_1 });
 		console.log({ response_2 });
 		if (response_1 && response_2) {
-			history.push('/pages/survey/' + order._id);
+			// history.push('/pages/survey/' + order._id);
+			modal.style.display = 'block';
 			set_loading(false);
 		}
 	};
@@ -1735,6 +1737,40 @@ const OrderEmail = (props) => {
 
 	// 	return () => {};
 	// }, []);
+	// Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById('myBtn');
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName('close')[0];
+
+	// // When the user clicks on the button, open the modal
+	// btn.onclick = function() {
+	// 	modal.style.display = 'block';
+	// };
+
+	// // When the user clicks on <span> (x), close the modal
+	// span.onclick = function() {
+	// 	modal.style.display = 'none';
+	// };
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = 'none';
+		}
+	};
+
+	const show_hide_survey = () => {
+		console.log({ modal: modal.style.display });
+		if (modal.style.display === 'block') {
+			modal.style.display = 'none';
+		} else if (modal.style.display === '' || modal.style.display === 'none') {
+			modal.style.display = 'block';
+		}
+	};
 
 	return (
 		<div>
@@ -1794,6 +1830,19 @@ const OrderEmail = (props) => {
 					>
 						Send Test Email
 					</button>
+					{/* <button id="myBtn">Open Modal</button> */}
+					<button className="btn primary mh-10px" id="myBtn" onClick={() => show_hide_survey()}>
+						Open Modal
+					</button>
+
+					<div id="myModal" class="modal">
+						<div class="modal-content">
+							<span className="close" onClick={() => show_hide_survey()}>
+								&times;
+							</span>
+							<SurveyPage order_id={props.match.params.id} show_hide_survey={show_hide_survey} />
+						</div>
+					</div>
 					<button
 						className="btn primary mb-1rem"
 						onClick={() =>
