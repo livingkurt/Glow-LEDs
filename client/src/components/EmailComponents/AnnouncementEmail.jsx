@@ -550,49 +550,6 @@ const AnnouncementEmail = () => {
 														</td>
 													</tr>
 												</table>
-												{/* <table
-													style={{
-														maxWidth: '800px',
-														textAlign: 'left',
-														borderSpacing: '0',
-														// borderCollapse: 'collapse',
-														margin: '0 auto'
-													}}
-												>
-													<tbody>
-														<tr>
-															<td
-																style={{
-																	fontFamily: 'helvetica'
-																}}
-															>
-																<p
-																	style={{
-																		color: 'white',
-																		lineHeight: '150%',
-																		fontSize: '14px',
-																		margin: '0',
-																		textAlign: 'center',
-																		padding: '10px'
-																	}}
-																>
-																	If you have any questions, reply to this email or
-																	contact us at{' '}
-																	<a
-																		href="mailto:info.glowleds@gmail.com"
-																		style={{
-																			fontSize: '14px',
-																			textDecoration: 'none',
-																			color: '#009eff'
-																		}}
-																	>
-																		info.glowleds@gmail.com
-																	</a>
-																</p>
-															</td>
-														</tr>
-													</tbody>
-												</table> */}
 											</center>
 										</td>
 									</tr>
