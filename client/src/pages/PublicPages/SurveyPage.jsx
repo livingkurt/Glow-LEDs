@@ -323,14 +323,17 @@ const SurveyPage = (props) => {
 										borderRadius: '20px'
 									}}
 								/>
-								<h2 className="mr-1rem ta-c f">
+								<div
+									className=" ta-c p-10px br-10px mt-5px max-w-600px m-auto fs-20px"
+									style={{ backgroundColor: '#272727', color: 'white' }}
+								>
 									{finished && (
 										<div>
 											<div>Thank you for Taking the Time to Give us Feedback!</div>{' '}
-											<div>We Greatly Appreciate it!</div>
+											<div>We Greatly Appreciate it! 💙</div>
 										</div>
 									)}
-								</h2>
+								</div>
 								{/* {userInfo ? (
 									<div className="jc-c m-auto wrap">
 										{props.order_id && (
