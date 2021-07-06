@@ -6,7 +6,7 @@ export default {
 	},
 	promo_code_used: (promo_code: any) => {
 		console.log({ promo_code_used: promo_code });
-		return axios.put('/api/promos/used', { promo_code });
+		return axios.put('/api/promos/code/' + promo_code);
 	},
 	get_promo: (promo_code: any) => {
 		console.log({ get_promo: promo_code });

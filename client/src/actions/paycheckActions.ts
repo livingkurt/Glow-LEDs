@@ -50,7 +50,7 @@ export const listMyPaychecks = (affiliate_id: string) => async (
 	try {
 		dispatch({ type: MY_PAYCHECK_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/paychecks/get_mine', {
+		const { data } = await axios.get('/api/paychecks/user', {
 			headers: { Authorization: 'Bearer ' + userInfo.token }
 		});
 		console.log({ listMyPaychecks: data });

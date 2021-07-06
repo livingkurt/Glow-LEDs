@@ -301,9 +301,9 @@ export default {
 	},
 	used: async (req: any, res: any) => {
 		try {
-			console.log({ used: req.body.promo_code });
+			console.log({ used: req.params.promo_code });
 			console.log('Promo_Routes');
-			const promo: any = await Promo.findOne({ promo_code: req.body.promo_code.toLowerCase() });
+			const promo: any = await Promo.findOne({ promo_code: req.params.promo_code.toLowerCase() });
 			promo.used_once = true;
 			console.log({ promo });
 			if (promo) {
