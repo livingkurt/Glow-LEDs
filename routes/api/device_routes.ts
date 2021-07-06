@@ -3,11 +3,9 @@ import { device_controller } from '../../controllers';
 
 const router = express.Router();
 
-// Matches with "/api/books"
 router.route('/').get(device_controller.findAll).post(device_controller.create);
 router.route('/mine').get(device_controller.find_all_mine);
 
-// Matches with "/api/books/:id"
 router.route('/:id').get(device_controller.findById).put(device_controller.update).delete(device_controller.remove);
 
 router.route('/update_leds').post(device_controller.update_leds);

@@ -5,10 +5,8 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-// Matches with "/api/books"
 router.route('/').get(isAuth, isAdmin, cart_controller.findAll).post(cart_controller.create);
 
-// Matches with "/api/books/:id"
 router
 	.route('/:id')
 	.get(cart_controller.findById)

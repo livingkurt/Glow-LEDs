@@ -4,7 +4,6 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-// Matches with "/api/books"
 router.route('/all_shipping').get(shipping_controller.all_shipping);
 router.route('/create_label').put(isAuth, isAdmin, shipping_controller.create_label);
 router.route('/create_return_label').put(isAuth, isAdmin, shipping_controller.create_return_label);

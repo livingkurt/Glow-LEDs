@@ -3,10 +3,8 @@ import { user_controller } from '../../controllers';
 
 const router = express.Router();
 
-// Matches with "/api/books"
 router.route('/').get(user_controller.findAll).post(user_controller.create);
 
-// Matches with "/api/books/:id"
 router.route('/:id').get(user_controller.findById).put(user_controller.update).delete(user_controller.remove);
 
 router.route('/email/:email').get(user_controller.email);

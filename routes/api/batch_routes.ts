@@ -5,7 +5,6 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-// Matches with "/api/books"
 router.route('/users').put(isAuth, isAdmin, batch_controller.find_all_users);
 router.route('/expenses').put(isAuth, isAdmin, batch_controller.find_all_expenses);
 router.route('/products').put(isAuth, isAdmin, batch_controller.find_all_products);

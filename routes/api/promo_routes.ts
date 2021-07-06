@@ -4,14 +4,11 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-// router.route('/used/:promo_code').put(promo_controller.mark_code_used);
 router.route('/code/:promo_code').get(promo_controller.find_by_code).put(promo_controller.mark_code_used);
 router.route('/update_discount').put(isAuth, isAdmin, promo_controller.update_discount);
 
-// Matches with "/api/books"
 router.route('/').get(promo_controller.findAll).post(isAuth, isAdmin, promo_controller.create);
 
-// Matches with "/api/books/:id"
 router
 	.route('/:id')
 	.get(promo_controller.findById)

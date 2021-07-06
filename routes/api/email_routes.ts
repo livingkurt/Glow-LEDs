@@ -3,7 +3,6 @@ import { email_controller } from '../../controllers';
 const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
-// Matches with "/api/books"
 router.route('/').get(email_controller.findAll).post(isAuth, isAdmin, email_controller.create);
 
 router.route('/send_announcement').post(email_controller.send_announcement_email);
