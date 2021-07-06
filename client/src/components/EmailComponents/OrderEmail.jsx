@@ -74,859 +74,1600 @@ const OrderEmail = (props) => {
 	};
 
 	const jsx = (
-		<body style={{ padding: 0, margin: 0, fontSize: '16px' }}>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column',
-					margin: 'auto',
-					fontSize: '16px',
-					fontFamily: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
-					color: 'white',
-					backgroundColor: '#5f5f5f'
-				}}
-			>
-				<div style={{ backgroundColor: '#333333', padding: '20px' }}>
-					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<table width="100%" style={{ maxWidth: '500px' }}>
-							<tr>
-								<td>
-									<img
-										src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
-										alt="Glow LEDs Logo"
-										title="Glow LEDs Logo"
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											marginRight: '20px'
-										}}
-									/>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<h4
-						style={{
-							textAlign: 'center',
-							fontFamily: 'helvetica',
-							width: '100%',
-							margin: '0 auto',
-							lineHeight: '50px',
-							color: 'white',
-							fontSize: '2em'
-						}}
-					>
-						{email && email.h1}
-					</h4>
-				</div>
-				{order && (
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							flexDirection: 'column'
-						}}
-					>
-						<div
+		<body
+			style={{
+				background: 'unset',
+				color: 'white',
+				padding: 0,
+				margin: 0,
+				fontSize: '16px'
+				// height: '100%'
+			}}
+		>
+			{order && (
+				<table
+					style={{
+						// height: '100%',
+						width: '100%',
+
+						borderSpacing: '0',
+						// borderCollapse: 'collapse',
+						// border: 'none',
+						color: 'white',
+						margin: 'auto',
+						fontSize: '16px',
+						// fontFamily: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
+						backgroundColor: '#5f5f5f'
+					}}
+				>
+					<tr>
+						<td
 							style={{
-								margin: 'auto',
-								maxWidth: '600px',
-								width: '100%'
+								fontFamily: 'helvetica',
+								color: 'white'
 							}}
 						>
-							<div
+							<table
 								style={{
-									maxWidth: '600px',
-									lineHeight: '30px',
-									margin: '15px',
-									display: 'flex',
-									flexDirection: 'column'
+									width: '100%',
+									borderSpacing: '0',
+									// borderCollapse: 'collapse',
+									// margin: '40px 0 20px',
+									color: 'white',
+									background: '#333333',
+									padding: '20px'
+									// marginTop: '-278px'
 								}}
 							>
-								{order.isRefunded ? (
-									<h3 style={{ fontFamily: 'helvetica' }}>
-										Your Order has been refunded for{' '}
-										{order.payment.refund_reason[order.payment.refund_reason.length - 1]} on{' '}
-										{format_date(order.refundedAt)}
-									</h3>
-								) : (
-									<p>
-										Hi {order.shipping.first_name}, we're getting your order ready to be shipped. We
-										will notify you when it has been sent.
-									</p>
-								)}
-								<div
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										flexWrap: 'wrap'
-									}}
-								>
-									<div
+								<tr>
+									<td
 										style={{
-											display: 'flex',
-											justifyContent: 'center'
+											fontFamily: 'helvetica',
+											color: 'white'
 										}}
 									>
-										<a
-											href={
-												'https://www.glow-leds.com/account/login?redirect=/secure/account/order/' +
-												order._id
-											}
-											style={{
-												backgroundColor: '#4c4f60',
-												color: 'white',
-												borderRadius: '10px',
-												border: 0,
-												padding: '15px',
-												fontFamily: 'helvetica',
-												margin: 0,
-												fontWeight: 800,
-												fontSize: '1.2em',
-												textAlign: 'center',
-												textDecoration: 'none !important',
-												lineHeight: 'inherit !important'
-											}}
-										>
-											View your Order
-										</a>
-									</div>
-									<div style={{ marginLeft: '20px', width: '20px' }}>or</div>
-
-									<div
-										style={{
-											display: 'flex',
-											justifyContent: 'center'
-										}}
-									>
-										<a
-											href="https://www.glow-leds.com/collections/all/products"
-											style={{
-												color: 'white',
-												border: 0,
-												padding: '10px',
-												fontFamily: 'helvetica',
-												margin: 0,
-												fontWeight: 800,
-												fontSize: '1.2em',
-												textAlign: 'center',
-												textDecoration: 'none !important',
-												lineHeight: 'inherit !important'
-											}}
-										>
-											Visit our Store
-										</a>
-									</div>
-								</div>
-								<div style={{ borderBottom: '1px solid #ddd', paddingBottom: '20px' }} />
-								<table
-									cellPadding={0}
-									cellSpacing={0}
-									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-									width="100%"
-									align="left"
-								>
-									<tbody>
-										<tr>
-											<td colSpan={2} style={{ verticalAlign: 'top' }} valign="top">
-												<table
-													style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-													width="100%"
-													align="left"
-												>
-													<tbody>
-														<tr>
-															<td
-																style={{
-																	verticalAlign: 'top',
-																	lineHeight: '45px',
-																	color: '#333'
-																}}
-																valign="top"
-															/>
-															<td
-																style={{
-																	verticalAlign: 'top',
-																	textAlign: 'right',
-																	color: 'white',
-																	fontSize: '16px'
-																}}
-																valign="top"
-																align="right"
-															>
-																<strong>Order #:</strong> {order._id}
-																<br />
-																<strong>Created:</strong>{' '}
-																{order.createdAt && format_date(order.createdAt)}
-																<br />
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</td>
-										</tr>
-										<h4
-											style={{
-												fontFamily: 'helvetica',
-												width: '100%',
-												margin: '0 auto',
-												lineHeight: '50px',
-												color: 'white',
-												fontSize: '25px'
-											}}
-										>
-											Order Summary
-										</h4>
-
-										{order.orderItems.map((item, index) => (
-											<tr>
-												<td
-													style={{
-														verticalAlign: 'top',
-														borderBottom: '1px solid #eee',
-														padding: '20px 0',
-														color: 'white',
-														fontSize: '16px',
-														fontWeight: 800
-													}}
-													key={index}
-													valign="top"
-												>
-													<div style={{ display: 'flex', alignItems: 'center' }}>
-														<table width="100%" style={{ maxWidth: '75px' }}>
+										<center>
+											<table
+												style={{
+													maxWidth: '560px',
+													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto',
+													color: 'white'
+												}}
+											>
+												<tr>
+													<td
+														style={{
+															fontFamily: 'helvetica',
+															color: 'white'
+														}}
+													>
+														<table
+															style={{
+																width: '100%',
+																borderSpacing: '0',
+																// borderCollapse: 'collapse',
+																color: 'white'
+															}}
+														>
 															<tr>
-																<td>
+																<td
+																	style={{
+																		fontFamily: 'helvetica',
+																		color: 'white'
+																	}}
+																>
 																	<img
-																		src={item.display_image}
-																		alt={item.name}
-																		title="Product Image"
+																		src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
+																		alt="Glow LEDs Logo"
+																		title="Glow LEDs Logo"
 																		style={{
-																			textAlign: 'center',
+																			// textAlign: 'center',
 																			width: '100%',
-																			borderRadius: '10px'
+																			// marginRight: '20px'
+																			marginLeft: '-15px'
 																		}}
 																	/>
 																</td>
+
+																{/* <td
+																		style={{
+																			fontFamily: 'helvetica',
+																			textTransform: 'uppercase',
+																			fontSize: '14px',
+																			color: 'white'
+																		}}
+																		align="right"
+																	>
+																		<span style={{ fontSize: '16px' }}>
+																			Order {order && order._id}
+																		</span>
+																	</td> */}
 															</tr>
 														</table>
-														<div style={{ marginBottom: '1rem', marginLeft: '1rem' }}>
-															{determine_product_name(item, true)}
-														</div>
-													</div>
-												</td>
-												<td
-													style={{
-														verticalAlign: 'top',
-														textAlign: 'right',
-														borderBottom: '1px solid #eee',
-														padding: '40px 0',
-														color: 'white',
-														fontSize: '16px'
-
-														// fontWeight: 800
-													}}
-													valign="top"
-													align="right"
-												>
-													{/* ${item.price && item.price.toFixed(2)} */}
-													{email_sale_price_switch(item, 'white')}
-												</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
-
-								<table
-									style={{ width: '100%', lineHeight: 'inherit', textAlign: 'right', color: 'white' }}
-									width="100%"
-									align="right"
-								>
-									<tbody>
-										<tr>
-											<td
+													</td>
+												</tr>
+											</table>
+											<table
 												style={{
-													verticalAlign: 'top',
-													width: '40%',
+													maxWidth: '560px',
+													width: '100%',
 													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto',
 													color: 'white'
 												}}
-												valign="top"
-											/>
-											<td
-												style={{
-													verticalAlign: 'top',
-													width: '30%',
-													textAlign: 'left',
-													color: 'white',
-													fontSize: '16px'
-												}}
-												valign="top"
 											>
-												{!order.promo_code && 'Subtotal'}
-												{order.promo_code && (
-													<del style={{ color: 'red' }}>
-														<div style={{ color: 'white' }}>Subtotal</div>
-													</del>
-												)}
-												{order.promo_code && <div>Discount</div>}
-												{order.promo_code && <div>New Subtotal</div>}
-												{!order.promo_code && <br />}
-												Tax
-												<br />
-												Shipping
-												<br />
-												<br />
-												{!order.isRefunded && <div>Total</div>}
-												{order.isRefunded && <div>Total</div>}
-												{order.isRefunded && <div>Refund Amount</div>}
-												{order.isRefunded && (
-													<div style={{ fontWeight: 800, marginTop: '30px' }}>
-														New Order Total
-													</div>
-												)}
-											</td>
+												<tr>
+													<td
+														style={{
+															fontFamily: 'helvetica',
+															color: 'white'
+														}}
+													>
+														<h4
+															style={{
+																textAlign: 'center',
+																fontFamily: 'helvetica',
+																width: '100%',
+																margin: '0 auto',
+																lineHeight: '50px',
+																color: 'white',
+																fontSize: '2em'
+															}}
+														>
+															{email && email.h1}
+														</h4>
+													</td>
+												</tr>
+											</table>
+										</center>
+									</td>
+								</tr>
+							</table>
+							<table
+								style={{
+									width: '100%',
+									borderSpacing: '0',
+									padding: '10px'
+									// borderCollapse: 'collapse'
+								}}
+							>
+								<tr>
+									<td
+										style={{
+											fontFamily: 'helvetica',
+											// paddingBottom: '40px',
+											border: '0'
+										}}
+									>
+										<center>
+											<table
+												style={{
+													maxWidth: '560px',
+													width: '100%',
+													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto'
+												}}
+											>
+												<tbody>
+													<tr>
+														<td
+															style={{
+																fontFamily: 'helvetica'
+															}}
+														>
+															{/* <h2
+																	style={{
+																		fontWeight: 'normal',
+																		fontSize: '24px',
+																		margin: '0 0=10px'
+																	}}
+																>
+																	{email && email.h1}
+																</h2> */}
+															{/* <p>{email && email.p}</p> */}
+															<p
+																style={{
+																	color: 'white',
+																	lineHeight: '150%',
+																	fontSize: '16px',
+																	margin: '0'
+																}}
+															>
+																{order.isRefunded ? (
+																	<h3 style={{ fontFamily: 'helvetica' }}>
+																		Your Order has been refunded for{' '}
+																		{order.payment.refund_reason[order.payment.refund_reason.length - 1]}{' '}
+																		on {format_date(order.refundedAt)}
+																	</h3>
+																) : (
+																	<p style={{ fontSize: '16px', lineHeight: 2 }}>
+																		Hi {order.shipping.first_name}, we're getting
+																		your order ready to be shipped. We will notify
+																		you when it has been sent.
+																	</p>
+																)}
+															</p>
+															<table
+																style={{
+																	width: '100%',
+																	borderSpacing: '0',
+																	// borderCollapse: 'collapse',
+																	marginTop: '20px'
+																}}
+															>
+																<tbody>
+																	<tr
+																		style={{
+																			fontFamily: 'helvetica',
+																			lineHeight: '0em'
+																		}}
+																	>
+																		<td
+																			style={{
+																				fontFamily: 'helvetica',
+																				lineHeight: '0em'
+																			}}
+																		/>
+																	</tr>
+																	<tr>
+																		<td
+																			style={{
+																				fontFamily: 'helvetica'
+																			}}
+																		>
+																			<table
+																				style={{
+																					borderSpacing: '0',
+																					// borderCollapse: 'collapse',
+																					float: 'left',
+																					marginRight: '15px'
+																				}}
+																			>
+																				<tbody>
+																					<tr>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								borderRadius: '4px'
+																							}}
+																							align="center"
+																							bgcolor="#4c4f60"
+																						>
+																							<a
+																								style={{
+																									fontSize: '16px',
+																									textDecoration:
+																										'none',
+																									display: 'block',
+																									color: 'white',
+																									padding:
+																										'20px 25px',
+																									backgroundColor:
+																										'#4c4f60',
+																									border: 'none'
+																								}}
+																								href={
+																									'https://www.glow-leds.com/account/login?redirect=/secure/account/order/' +
+																									order._id
+																								}
+																							>
+																								View your order
+																							</a>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																			<table
+																				style={{
+																					borderSpacing: '0',
+																					// borderCollapse: 'collapse',
+																					marginTop: '19px'
+																				}}
+																			>
+																				<tbody>
+																					<tr
+																						style={{
+																							fontFamily: 'helvetica',
+																							borderRadius: '4px'
+																						}}
+																					>
+																						<td>
+																							or{' '}
+																							<a
+																								style={{
+																									fontSize: '16px',
+																									marginLeft: '10px',
+																									textDecoration:
+																										'none',
+																									color: 'white'
+																								}}
+																								href="https://www.glow-leds.com/"
+																							>
+																								Visit our store
+																							</a>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
 
-											<td
+															{/* <table>
+																	<tr>
+																		<td>
+																			<table>
+																				<tr>
+																					<td>
+																						<a href="https://www.glow-leds.com/">
+																							Visit our store
+																						</a>
+																					</td>
+																				</tr>
+																			</table>
+																		</td>
+																	</tr>
+																</table> */}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</center>
+									</td>
+								</tr>
+							</table>
+							{/* { assign gift_card_line_item = line_items | where: "gift_card" }
+        { if gift_card_line_item.first }
+        <table class="row section">
+          <tr>
+            <td class="section__cell">
+              <center>
+                <table >
+                  <tr>
+                    <td>
+                      <h3>Gift card</h3>
+                    </td>
+                  </tr>
+                </table>
+                <table >
+                  <tr>
+                    <td>
+
+                      <p> You’ll receive separate emails for any gift cards.</p>
+
+                    </td>
+                  </tr>
+                </table>
+              </center>
+            </td>
+          </tr>
+        </table>
+        { endif } */}
+							<table
+								style={{
+									width: '100%',
+									borderSpacing: '0',
+									padding: '10px'
+									// borderCollapse: 'collapse'
+								}}
+							>
+								<tr>
+									<td
+										style={{
+											fontFamily: 'helvetica',
+											padding: '40px 0'
+										}}
+									>
+										<center>
+											<table
 												style={{
-													verticalAlign: 'top',
-													width: '20%',
-													color: 'white',
-													fontSize: '16px'
-												}}
-												valign="top"
-											>
-												${!order.promo_code &&
-													(order.orderItems &&
-													order.orderItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-														? order.orderItems.reduce((a, c) => a + c.price * c.qty, 0)
-														: order.orderItems.reduce(
-																(a, c) => a + c.sale_price * c.qty,
-																0
-															)).toFixed(2)}
-												{order.promo_code && (
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															{(order.orderItems &&
-															order.orderItems.reduce(
-																(a, c) => a + c.sale_price * c.qty,
-																0
-															) === 0
-																? order.orderItems.reduce(
-																		(a, c) => a + c.price * c.qty,
-																		0
-																	)
-																: order.orderItems.reduce(
-																		(a, c) => a + c.sale_price * c.qty,
-																		0
-																	)).toFixed(2)}
-														</label>
-													</del>
-												)}
-												{!order.promo_code && <br />}
-												{order.promo_code && (
-													<div>
-														-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) -
-															order.itemsPrice).toFixed(2)}
-													</div>
-												)}
-												{order.promo_code && <div>${order.itemsPrice.toFixed(2)}</div>}
-												${order.taxPrice && order.taxPrice.toFixed(2)}
-												<br />
-												${order.shippingPrice && order.shippingPrice.toFixed(2)}
-												<br />
-												<br />
-												{/* <div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
-													${order.totalPrice && order.totalPrice.toFixed(2)}
-												</div> */}
-												{!order.isRefunded && (
-													<div style={{ fontSize: 30, fontWeight: 800, color: 'white' }}>
-														${order.totalPrice && order.totalPrice.toFixed(2)}
-													</div>
-												)}
-												{order.isRefunded && (
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															<div>
-																${order.totalPrice && order.totalPrice.toFixed(2)}
-															</div>
-														</label>
-													</del>
-												)}
-												{order.isRefunded && (
-													<div>
-														-${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-															100).toFixed(2)}
-													</div>
-												)}
-												{order.isRefunded && (
-													<div style={{ fontSize: 30, fontWeight: 800, marginTop: '30px' }}>
-														${(order.totalPrice -
-															order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-																100).toFixed(2)}
-													</div>
-												)}
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<table
-									style={{
-										width: '100%',
-										lineHeight: 'inherit',
-										textAlign: 'left',
-										borderBottom: '1px white solid'
-									}}
-									width="100%"
-									align="left"
-								>
-									<tbody>
-										<tr>
-											<td
-												style={{
-													verticalAlign: 'top',
-													lineHeight: '45px',
-													color: '#333',
-													padding: 0
-												}}
-												valign="top"
-											/>
-											<td
-												style={{
-													verticalAlign: 'top',
+													maxWidth: '560px',
+													width: '100%',
 													textAlign: 'left',
-													color: 'white',
-													fontSize: '16px'
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													padding: '10px',
+													margin: '0 auto'
 												}}
-												valign="top"
-												align="right"
 											>
-												<strong>Promo Code:</strong>{' '}
-												{order &&
-												promos &&
-												order.promo_code &&
-												promos.find(
-													(promo) =>
-														promo.promo_code === order.promo_code.toLowerCase() &&
-														promos.find(
-															(promo) =>
-																promo.promo_code === order.promo_code.toLowerCase()
-														)
-												) &&
-												promos.find(
-													(promo) => promo.promo_code === order.promo_code.toLowerCase()
-												).admin_only ? (
-													''
-												) : (
-													order.promo_code && order.promo_code.toUpperCase()
-												)}
-												<br />
-												<strong>Order Note:</strong> {order.order_note}
-												<br />
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<div
-									style={{
-										verticalAlign: 'top',
-										width: '40%',
-										color: 'white',
-										textAlign: 'right'
-									}}
-									valign="top"
-									align="right"
-								/>
-								<table
-									cellPadding={0}
-									cellSpacing={0}
-									style={{
-										width: '100%',
-										lineHeight: 'inherit',
-										color: 'white',
-										textAlign: 'left',
-										borderBottom: '1px white solid'
-									}}
-									width="100%"
-									align="left"
-								>
-									<tbody>
-										<tr
+												<tbody>
+													<tr>
+														<td
+															style={{
+																fontFamily: 'helvetica'
+															}}
+														>
+															<h3
+																style={{
+																	fontWeight: 'normal',
+																	fontSize: '20px',
+																	margin: '0 0 25px'
+																}}
+															>
+																<strong>Order Summary</strong>
+															</h3>
+														</td>
+													</tr>
+													<tr>
+														<td
+															colSpan={2}
+															style={{ verticalAlign: 'top', lineHeight: '25px' }}
+															valign="top"
+														>
+															<table
+																style={{
+																	width: '100%',
+																	lineHeight: 'inherit',
+																	textAlign: 'left'
+																}}
+																width="100%"
+																align="left"
+															>
+																<tbody>
+																	<tr>
+																		<td
+																			style={{
+																				verticalAlign: 'top',
+																				lineHeight: '45px',
+																				color: '#333'
+																			}}
+																			valign="top"
+																		/>
+																		<td
+																			style={{
+																				verticalAlign: 'top',
+																				textAlign: 'right',
+																				color: 'white',
+																				fontSize: '16px'
+																			}}
+																			valign="top"
+																			align="right"
+																		>
+																			<strong>Order #:</strong> {order._id}
+																			<br />
+																			<strong>Created:</strong>{' '}
+																			{order.createdAt && format_date(order.createdAt)}
+																			<br />
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+
+											<table
+												style={{
+													maxWidth: '560px',
+													padding: '10px',
+													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto'
+												}}
+											>
+												<tr>
+													<td
+														style={{
+															fontFamily: 'helvetica'
+														}}
+													>
+														<table
+															style={{
+																width: '100%',
+																borderSpacing: '0'
+																// borderCollapse: 'collapse'
+															}}
+														>
+															<tbody>
+																{order.orderItems.map((item, index) => (
+																	<tr>
+																		<td
+																			style={{
+																				fontFamily: 'helvetica'
+																			}}
+																		>
+																			<table
+																				style={{
+																					width: '100%',
+																					borderSpacing: '0',
+																					borderBottom: '1px white solid'
+																					// borderCollapse: 'collapse'
+																				}}
+																			>
+																				<tbody>
+																					<tr style={{ width: '100%' }}>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica'
+																							}}
+																						>
+																							<table
+																								style={{
+																									borderSpacing: '0',
+																									width: '100%',
+																									margin: '10px auto'
+																									// borderCollapse:
+																									// 	'collapse'
+																								}}
+																							>
+																								<tbody>
+																									<tr>
+																										<td
+																											style={{
+																												fontFamily:
+																													'helvetica'
+																											}}
+																										>
+																											<img
+																												src={
+																													item.display_image
+																												}
+																												align="left"
+																												width="60"
+																												height="60"
+																												alt="text"
+																												style={{
+																													marginRight:
+																														'15px',
+																													borderRadius:
+																														'8px'
+																													// border:
+																													// 	'1px solid #e5e5e5'
+																												}}
+																											/>
+																										</td>
+																										<td
+																											style={{
+																												fontFamily:
+																													'helvetica',
+																												width:
+																													'100%'
+																											}}
+																										>
+																											<span
+																												style={{
+																													fontSize:
+																														'16px',
+																													fontWeight:
+																														'600',
+																													lineHeight:
+																														'1.4',
+																													color:
+																														'white'
+																												}}
+																											>
+																												{determine_product_name(
+																													item,
+																													true
+																												)}
+																											</span>
+																											<br />
+																										</td>
+																										<td
+																											style={{
+																												fontFamily:
+																													'helvetica',
+																												width:
+																													'100%',
+																												whiteSpace:
+																													'nowrap'
+																											}}
+																										>
+																											<p
+																												style={{
+																													color:
+																														'white',
+																													lineHeight:
+																														'150%',
+																													fontSize:
+																														'16px',
+																													fontWeight:
+																														'600',
+																													margin:
+																														'0 0 0 15px'
+																												}}
+																												align="right"
+																											>
+																												{email_sale_price_switch(
+																													item,
+																													'white'
+																												)}
+																											</p>
+																										</td>
+																									</tr>
+																								</tbody>
+																							</table>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</td>
+																	</tr>
+																))}
+															</tbody>
+														</table>
+														<table
+															style={{
+																width: '100%',
+
+																borderSpacing: '0'
+
+																// borderCollapse: 'collapse',
+																// marginTop: '15px'
+																// borderTopWidth: '1px',
+																// borderTopColor: 'white',
+																// borderTopStyle: 'solid'
+															}}
+														>
+															<tbody>
+																<tr>
+																	<td
+																		style={{
+																			fontFamily: 'helvetica',
+																			width: '40%'
+																		}}
+																	/>
+																	<td
+																		style={{
+																			fontFamily: 'helvetica'
+																		}}
+																	>
+																		<table
+																			style={{
+																				width: '100%',
+																				borderSpacing: '0',
+																				// borderCollapse: 'collapse',
+																				marginTop: '20px'
+																			}}
+																		>
+																			<tbody>
+																				{order.promo_code && (
+																					<tr>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0',
+																								width: '100%'
+																							}}
+																						>
+																							<p
+																								style={{
+																									color: 'white',
+																									lineHeight: '1.2em',
+																									fontSize: '16px',
+																									margin: '0'
+																								}}
+																							>
+																								<span
+																									style={{
+																										fontSize: '16px'
+																									}}
+																								>
+																									Discount
+																								</span>
+																								<span
+																									style={{
+																										fontSize:
+																											'16px',
+																										marginLeft:
+																											'5px'
+																									}}
+																								>
+																									{/* <i
+																										width="18"
+																										height="18"
+																										style={{
+																											verticalAlign:
+																												'middle',
+																											marginRight:
+																												'10px'
+																										}}
+																										class="fas fa-tag"
+																									/> */}
+
+																									<img
+																										src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
+																										style={{
+																											height:
+																												'16px',
+
+																											marginRight:
+																												'10px'
+																										}}
+																										alt="tag_logo"
+																									/>
+																									<span
+																										style={{
+																											fontSize:
+																												'14px',
+																											lineHeight:
+																												'1.1',
+																											marginLeft:
+																												'-4px'
+																										}}
+																									>
+																										{order &&
+																											order.promo_code &&
+																											order.promo_code.toUpperCase()}
+																									</span>
+																								</span>
+																							</p>
+																						</td>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0',
+																								textAlign: 'right'
+																							}}
+																							align="righ=t"
+																						>
+																							<strong
+																								style={{
+																									fontSize: '16px',
+																									color: 'white'
+																								}}
+																							>
+																								-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice).toFixed(2)}
+																							</strong>
+																						</td>
+																					</tr>
+																				)}
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '5px 0'
+																						}}
+																					>
+																						<p
+																							style={{
+																								color: 'white',
+																								lineHeight: '1.2em',
+																								fontSize: '16px',
+																								margin: '0'
+																							}}
+																						>
+																							<span
+																								style={{
+																									fontSize: '16px'
+																								}}
+																							>
+																								Subtotal
+																							</span>
+																						</p>
+																					</td>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '5px 0',
+																							textAlign: 'right'
+																						}}
+																						align="righ=t"
+																					>
+																						<strong
+																							style={{
+																								fontSize: '16px',
+																								color: 'white'
+																							}}
+																						>
+																							${order.promo_code ? (
+																								order.itemsPrice.toFixed(
+																									2
+																								)
+																							) : (
+																								(order.orderItems &&
+																								order.orderItems.reduce(
+																									(a, c) =>
+																										a +
+																										c.sale_price *
+																											c.qty,
+																									0
+																								) === 0
+																									? order.orderItems.reduce(
+																											(a, c) =>
+																												a +
+																												c.price *
+																													c.qty,
+																											0
+																										)
+																									: order.orderItems.reduce(
+																											(a, c) =>
+																												a +
+																												c.sale_price *
+																													c.qty,
+																											0
+																										)).toFixed(2)
+																							)}
+																						</strong>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '5px 0'
+																						}}
+																					>
+																						<p
+																							style={{
+																								color: 'white',
+																								lineHeight: '1.2em',
+																								fontSize: '16px',
+																								margin: '0'
+																							}}
+																						>
+																							<span
+																								style={{
+																									fontSize: '16px'
+																								}}
+																							>
+																								Shipping
+																							</span>
+																						</p>
+																					</td>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '5px 0',
+																							textAlign: 'right'
+																						}}
+																						align="righ=t"
+																					>
+																						<strong
+																							style={{
+																								fontSize: '16px',
+																								color: 'white'
+																							}}
+																						>
+																							${order.shippingPrice && order.shippingPrice.toFixed(2)}
+																						</strong>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '5px 0'
+																						}}
+																					>
+																						<p
+																							style={{
+																								color: 'white',
+																								lineHeight: '1.2em',
+																								fontSize: '16px',
+																								margin: '0'
+																							}}
+																						>
+																							<span
+																								style={{
+																									fontSize: '16px'
+																								}}
+																							>
+																								Taxes
+																							</span>
+																						</p>
+																					</td>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '5px 0',
+																							textAlign: 'right'
+																						}}
+																						align="righ=t"
+																					>
+																						<strong
+																							style={{
+																								fontSize: '16px',
+																								color: 'white'
+																							}}
+																						>
+																							${order.taxPrice && order.taxPrice.toFixed(2)}
+																						</strong>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																		<table
+																			style={{
+																				width: '100%',
+																				borderSpacing: '0',
+																				// borderCollapse: 'collapse',
+																				marginTop: '20px',
+																				borderTopWidth: '2px',
+																				borderTopColor: 'white',
+																				borderTopStyle: 'solid'
+																			}}
+																		>
+																			<tbody>
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '20px 0 0'
+																						}}
+																					>
+																						<p
+																							style={{
+																								color: 'white',
+																								lineHeight: '1.2em',
+																								fontSize: '16px',
+																								margin: '0'
+																							}}
+																						>
+																							<span
+																								style={{
+																									fontSize: '16px'
+																								}}
+																							>
+																								Total
+																							</span>
+																						</p>
+																					</td>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							padding: '20px 0 0'
+																						}}
+																						align="right"
+																					>
+																						<strong
+																							style={{
+																								fontSize: '24px',
+																								color: 'white'
+																							}}
+																						>
+																							${order.totalPrice && order.totalPrice.toFixed(2)}
+																						</strong>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																		{order.promo_code && (
+																			<p
+																				style={{
+																					color: 'white',
+																					lineHeight: '1.1',
+																					fontSize: '16px',
+																					margin: '10px 0 0'
+																				}}
+																				align="right"
+																			>
+																				You saved{' '}
+																				<span
+																					style={{
+																						fontSize: '16px',
+																						color: 'white'
+																					}}
+																				>
+																					${(order.orderItems.reduce(
+																						(a, c) => a + c.price * c.qty,
+																						0
+																					) - order.itemsPrice).toFixed(2)}
+																				</span>
+																			</p>
+																		)}
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</center>
+									</td>
+								</tr>
+							</table>
+							<table
+								style={{
+									maxWidth: '560px',
+									textAlign: 'left',
+									borderSpacing: '0',
+									// borderCollapse: 'collapse',
+									margin: '0 auto',
+									paddingBottom: '10px',
+									borderBottom: '1px white solid'
+								}}
+							>
+								<tbody>
+									<tr>
+										<td
 											style={{
-												display: 'flex',
-												flexWrap: 'wrap',
-												border: 0
+												fontFamily: 'helvetica'
 											}}
 										>
-											<td
-												style={{ verticalAlign: 'top', width: '50%', maxWidth: '320px' }}
-												valign="top"
+											<p
+												style={{
+													color: 'white',
+													lineHeight: '150%',
+													fontSize: '16px',
+													margin: '0'
+												}}
 											>
+												<strong>Order Note:</strong> {order.order_note}
+											</p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<table
+								style={{
+									width: '100%',
+									padding: '10px',
+									borderSpacing: '0'
+									// borderCollapse: 'collapse'
+								}}
+							>
+								<tbody>
+									<tr>
+										<td
+											style={{
+												fontFamily: 'helvetica',
+												padding: '40px 0 0'
+											}}
+										>
+											<center>
 												<table
-													style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-													width="100%"
-													align="left"
+													style={{
+														maxWidth: '560px',
+														width: '100%',
+														textAlign: 'left',
+														borderSpacing: '0',
+														// padding: '10px',
+														// borderCollapse: 'collapse',
+														margin: '0 auto'
+													}}
 												>
 													<tbody>
-														<tr>
-															<td
-																style={{ verticalAlign: 'top', width: '50%' }}
-																valign="top"
-															>
-																<h4
-																	style={{
-																		fontFamily: 'helvetica',
-																		width: '100%',
-																		margin: '0 auto',
-																		lineHeight: '50px',
-																		color: 'white',
-																		fontSize: '20px'
-																	}}
-																>
-																	Customer Information
-																</h4>
-															</td>
-														</tr>
-														<tr>
-															<td
-																style={{ verticalAlign: 'top', width: '50%' }}
-																valign="top"
-															>
-																<h4
-																	style={{
-																		fontFamily: 'helvetica',
-																		width: '100%',
-																		margin: '0 auto',
-																		// lineHeight: '20px',
-																		color: 'white',
-																		fontSize: '18px',
-																		padding: '10px 0 '
-																	}}
-																>
-																	Shipping Address
-																</h4>
-															</td>
-														</tr>
 														<tr>
 															<td
 																style={{
-																	verticalAlign: 'top',
-																	width: '50%',
-																	color: 'white',
-																	fontSize: '16px'
+																	fontFamily: 'helvetica'
 																}}
-																valign="top"
 															>
-																{order.shipping.first_name} {order.shipping.last_name}
-																<br />
-																{order.shipping.address_1} {order.shipping.address_2}
-																<br />
-																{order.shipping.city}, {order.shipping.state}{' '}
-																{order.shipping.postalCode}
-																<br />
-																<label
-																	// href="#"
+																<h3
 																	style={{
-																		textDecoration: 'none !important',
-																		fontSize: 'inherit !important',
-																		fontFamily: 'inherit !important',
-																		fontWeight: 'inherit !important',
-																		lineHeight: 'inherit !important',
-																		color: 'inherit !important;'
+																		fontWeight: 'normal',
+																		fontSize: '20px',
+																		margin: '0 0 25px'
 																	}}
 																>
-																	{order.shipping.email}
-																</label>
+																	<strong>Customer Information</strong>
+																</h3>
 															</td>
 														</tr>
 													</tbody>
 												</table>
-											</td>
-											<td style={{ verticalAlign: 'top' }} valign="top">
 												<table
-													style={{ width: '100%', lineHeight: 'inherit', textAlign: 'left' }}
-													width="100%"
-													align="left"
+													style={{
+														maxWidth: '560px',
+														width: '100%',
+														textAlign: 'left',
+														borderSpacing: '0',
+														// borderCollapse: 'collapse',
+														margin: '0 auto'
+													}}
 												>
 													<tbody>
 														<tr>
-															<td style={{ verticalAlign: 'top' }} valign="top">
-																<h4
-																	style={{
-																		fontFamily: 'helvetica',
-																		width: '100%',
-																		margin: '0 auto',
-																		// lineHeight: '20px',
-																		color: 'white',
-																		padding: '10px 0',
-																		marginTop: '50px',
-																		fontSize: '18px'
-																	}}
-																>
-																	Payment Method
-																</h4>
-															</td>
-														</tr>
-														<tr>
 															<td
-																style={{ verticalAlign: 'top', color: 'white' }}
-																valign="top"
+																style={{
+																	fontFamily: 'helvetica'
+																}}
 															>
-																<div
+																<table
 																	style={{
-																		padding: '5px',
-																		verticalAlign: 'top',
-																		textAlign: 'right',
 																		width: '100%',
-																		color: 'white',
-																		display: 'flex',
-																		alignItems: 'center',
-																		fontSize: '16px'
+																		borderSpacing: '0'
+																		// borderCollapse: 'collapse'
 																	}}
 																>
-																	<div
-																		style={{
-																			fontSize: '40px',
-																			marginRight: '11px',
-																			color: 'white'
-																		}}
-																	>
-																		{order.payment.payment ? (
-																			<img
-																				src={determin_card_logo(
-																					order.payment.payment.card.brand
-																				)}
-																				style={{ height: '25px' }}
-																				alt="card_logo"
-																			/>
-																		) : (
-																			''
-																		)}{' '}
-																	</div>
-																	{/* {console.log(order.payment.payment && order.payment.payment.card)} */}
-																	ending with{' '}
-																	{order.payment.payment ? order.payment.payment.card.last4 : ''}{' '}
-																	<div style={{ margin: '0 10px', color: 'white' }}>-</div>
-																	<div
-																		style={{
-																			padding: '5px',
-																			verticalAlign: 'top',
-																			// textAlign: 'right',
-																			fontWeight: 'bold',
-																			color: 'white'
-																		}}
-																		valign="top"
-																		align="right"
-																	>
-																		${order.totalPrice && order.totalPrice.toFixed(2)}
-																	</div>
-																</div>
+																	<tbody>
+																		<tr>
+																			<td
+																				style={{
+																					fontFamily: 'helvetica',
+																					paddingBottom: '40px',
+																					width: '50%'
+																				}}
+																			>
+																				<h4
+																					style={{
+																						fontWeight: '500',
+																						fontSize: '16px',
+																						color: 'white',
+																						margin: '0 0 5px'
+																					}}
+																				>
+																					<strong>Shipping Address</strong>
+																				</h4>
+																				<p
+																					style={{
+																						color: 'white',
+																						lineHeight: '150%',
+																						fontSize: '16px',
+																						margin: '0'
+																					}}
+																				>
+																					{order.shipping.first_name}{' '}
+																					{order.shipping.last_name}
+																					<br />
+																					{order.shipping.address_1}{' '}
+																					{order.shipping.address_2}
+																					<br />
+																					{order.shipping.city},{' '}
+																					{order.shipping.state}{' '}
+																					{order.shipping.postalCode}
+																					<br />
+																					{order.shipping.country}
+																					<br />
+																					{order.shipping.email}
+																				</p>
+																			</td>
+
+																			{/* <td
+																				style={{
+																					fontFamily: 'helvetica',
+																					paddingBottom: '40px',
+																					width: '50%'
+																				}}
+																			>
+																				<h4
+																					style={{
+																						fontWeight: '500',
+																						fontSize: '16px',
+																						color: 'white',
+																						margin: '0 0 5px'
+																					}}
+																				>
+																					<strong>Billing Address</strong>
+																				</h4>
+																				<p
+																					style={{
+																						color: 'white',
+																						lineHeight: '150%',
+																						fontSize: '16px',
+																						margin: '0'
+																					}}
+																				>
+																					{order.shipping.first_name}{' '}
+																					{order.shipping.last_name}
+																					<br />
+																					{order.shipping.address_1}{' '}
+																					{order.shipping.address_2}
+																					<br />
+																					{order.shipping.city},{' '}
+																					{order.shipping.state}{' '}
+																					{order.shipping.postalCode}
+																					<br />
+																					{order.shipping.country}
+																				</p>
+																			</td> */}
+																		</tr>
+																	</tbody>
+																</table>
+																<table
+																	style={{
+																		width: '100%',
+																		borderSpacing: '0'
+																		// borderCollapse: 'collapse'
+																	}}
+																>
+																	<tbody>
+																		<tr>
+																			<td
+																				style={{
+																					fontFamily: 'helvetica',
+																					paddingBottom: '40px',
+																					width: '50%'
+																				}}
+																			>
+																				<h4
+																					style={{
+																						fontWeight: '500',
+																						fontSize: '16px',
+																						color: 'white',
+																						margin: '0 0 5px'
+																					}}
+																				>
+																					<strong>Shipping Method</strong>
+																				</h4>
+																				<p
+																					style={{
+																						color: 'white',
+																						lineHeight: '150%',
+																						fontSize: '16px',
+																						margin: '0'
+																					}}
+																				>
+																					{order.shipping &&
+																						order.shipping.shipping_rate &&
+																						order.shipping.shipping_rate
+																							.service}
+																				</p>
+																			</td>
+
+																			<td
+																				style={{
+																					fontFamily: 'helvetica',
+																					paddingBottom: '40px',
+																					width: '50%'
+																				}}
+																			>
+																				<h4
+																					style={{
+																						fontWeight: '500',
+																						fontSize: '16px',
+																						color: 'white',
+																						margin: '0 0 5px',
+																						textAlign: 'right'
+																					}}
+																				>
+																					<strong>Payment Method</strong>
+																				</h4>
+
+																				<p
+																					style={{
+																						color: 'white',
+																						lineHeight: '150%',
+																						fontSize: '16px',
+																						margin: '0',
+																						textAlign: 'right'
+																					}}
+																				>
+																					{order.payment.payment ? (
+																						<img
+																							src={determin_card_logo(
+																								order.payment.payment
+																									.card.brand
+																							)}
+																							style={{
+																								height: '24px',
+																								display: 'inline-block',
+																								marginRight: '10px',
+																								marginTop: '5px',
+																								marginBottom: '-6px'
+																							}}
+																							alt="card_logo"
+																						/>
+																					) : (
+																						''
+																					)}{' '}
+																					<span style={{ fontSize: '16px' }}>
+																						ending with{' '}
+																						{order.payment.payment ? order.payment.payment.card.last4 : ''}{' '}
+																						<strong
+																							style={{
+																								fontSize: '16px',
+																								color: 'white'
+																							}}
+																						>
+																							${order.totalPrice && order.totalPrice.toFixed(2)}
+																						</strong>
+																					</span>
+																				</p>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
 															</td>
 														</tr>
 													</tbody>
 												</table>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div style={{ marginBottom: '20px' }}>
-								<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-									<strong>Tag us in your videos and pictures!</strong>
-									<br />We want to feature you!
-								</p>
-								<a
-									href="https://www.glow-leds.com/pages/contact/submit_content_to_be_featured"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
-									{/* <Facebook fill="white" /> */}
-									<div style={{ display: 'flex', justifyContent: 'center' }}>
-										<a
-											href={
-												'https://www.glow-leds.com/pages/contact/submit_content_to_be_featured'
-											}
-											style={{
-												backgroundColor: '#4c4f60',
-												color: 'white',
-												borderRadius: '10px',
-												border: 0,
-												padding: '15px',
-												fontFamily: 'helvetica',
-												margin: 0,
-												fontWeight: 800,
-												fontSize: '1em',
-												textAlign: 'center',
-												textDecoration: 'none !important',
-												lineHeight: 'inherit !important'
-											}}
-										>
-											Feature Content
-										</a>
-									</div>
-								</a>
-								<p style={{ textAlign: 'center', fontSize: '14px' }}>
-									We are figuring this out as we go so any feedback is welcome.<br />We appreciate you
-									more than you know.
-								</p>
-								<p style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}>
-									<strong>Questions or concerns?:</strong>{' '}
-									<label
-										// href="#"
-										style={{
-											textDecoration: 'none !important',
-											fontSize: 'inherit !important',
-											fontFamily: 'inherit !important',
-											fontWeight: 'inherit !important',
-											lineHeight: 'inherit !important',
-											color: 'inherit !important;'
-										}}
-									>
-										info.glowleds@gmail.com
-									</label>
-								</p>
-							</div>
-						</div>
-
-						<div style={{ backgroundColor: '#333333', padding: '20px', paddingTop: 10 }}>
-							<div
+											</center>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table
 								style={{
-									marginLeft: '10px',
-									display: 'flex',
-									justifyContent: 'space-between',
-									maxWidth: '250px',
+									maxWidth: '560px',
+									textAlign: 'center',
+									borderSpacing: '0px',
+									margin: '10px auto',
 									width: '100%',
-									margin: '0 auto',
-									color: 'white',
-									alignItems: 'center'
+									borderTop: '1px white solid'
 								}}
 							>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
-										{/* <Facebook fill="white" /> */}
-										<img
-											src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
-											style={{ height: '25px' }}
-											alt="Facebook"
-											title="Facebook Logo"
-										/>
-									</a>
-								</div>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://www.instagram.com/glow_leds/"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
-										<img
-											src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
-											style={{ height: '25px' }}
-											alt="Instagram"
-											title="Instagram Logo"
-										/>
-									</a>
-								</div>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
-										<img
-											src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
-											style={{ height: '20px' }}
-											alt="Youtube"
-											title="Youtube Logo"
-										/>
-									</a>
-								</div>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://soundcloud.com/ntre/tracks"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-soundcloud" style={{ color: 'white' }} /> */}
-										<img
-											src="https://images2.imgbox.com/ed/d9/eyAcj7D2_o.png"
-											style={{ height: '20px' }}
-											alt="Soundcloud"
-											title="Soundcloud Logo"
-										/>
-									</a>
-								</div>
-							</div>
-							<div
+								<tbody>
+									<tr>
+										<td
+											style={{
+												fontFamily: 'helvetica',
+
+												// width: '50%',
+												fontSize: '30px',
+												color: 'white'
+											}}
+										>
+											<table
+												style={{
+													maxWidth: '400px',
+													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto'
+												}}
+											>
+												<tbody>
+													<tr>
+														<td
+															style={{
+																fontFamily: 'helvetica'
+															}}
+														>
+															<p
+																style={{
+																	textAlign: 'center',
+																	fontSize: '14px',
+																	color: 'white',
+																	lineHeight: 2
+																}}
+															>
+																<strong>Tag us in your videos and pictures!</strong>
+																<br /> We want to feature you!
+															</p>
+															<p
+																style={{
+																	textAlign: 'center',
+																	fontSize: '14px',
+																	color: 'white',
+																	marginBottom: '-10px'
+																}}
+															/>
+															<table
+																style={{
+																	borderSpacing: '0',
+																	// borderCollapse: 'collapse',
+																	// float: 'left',
+																	// marginRight: '15px'
+																	textAlign: 'center',
+																	margin: 'auto'
+																}}
+															>
+																<tbody>
+																	<tr>
+																		<td
+																			style={{
+																				fontFamily: 'helvetica',
+																				borderRadius: '4px'
+																			}}
+																			align="center"
+																			bgcolor="#4c4f60"
+																		>
+																			<a
+																				style={{
+																					fontSize: '16px',
+																					textDecoration: 'none',
+																					display: 'block',
+																					color: 'white',
+																					padding: '20px 25px',
+																					backgroundColor: '#4c4f60',
+																					border: 'none'
+																				}}
+																				href={
+																					'https://www.glow-leds.com/pages/contact/submit_content_to_be_featured'
+																				}
+																			>
+																				Feature Content
+																			</a>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+															<p
+																style={{
+																	textAlign: 'center',
+																	fontSize: '14px'
+																}}
+															>
+																We appreciate all of the love and support! It truely
+																drives us to do what we do. Thank you so much 💙
+															</p>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table
 								style={{
-									borderBottom: '1px white solid',
-									maxWidth: '600px',
 									width: '100%',
-									margin: '15px auto'
+									borderSpacing: '0',
+									// borderCollapse: 'collapse',
+									borderTopWidth: '1px',
+									// borderTopColor: 'white',
+									borderTopStyle: 'solid',
+									backgroundColor: '#333333'
 								}}
-							/>
-							{/* <p style={{ textAlign: 'center' }}>Copyright © 2020 Throwlights, Inc., All rights reserved.</p> */}
-							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								Our mailing address is: <br />404 Kenniston Dr Apt D, Austin, TX 78752{' '}
-							</p>
-							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								Want to change how you receive these emails? <br /> You can{' '}
-								<a
-									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
-									target="_blank"
-									rel="noopener noreferrer"
-									style={{
-										textDecoration: 'underline',
-										color: 'white'
-									}}
-								>
-									update your preferences
-								</a>{' '}
-								or{' '}
-								<a
-									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
-									target="_blank"
-									rel="noopener noreferrer"
-									style={{
-										textDecoration: 'underline',
-										color: 'white'
-									}}
-								>
-									unsubscribe{' '}
-								</a>
-								from this list.
-							</p>
-						</div>
-					</div>
-				)}
-			</div>
+							>
+								<tbody>
+									<tr>
+										<td
+											style={{
+												fontFamily: 'helvetica',
+												paddingBottom: '35px 0'
+											}}
+										>
+											<center>
+												<table
+													// style={{
+													// 	width: '100%',
+													// 	borderSpacing: '0',
+													// 	margin: '0px auto'
+													// 	// borderCollapse: 'collapse'
+													// }}
+													style={{
+														maxWidth: '400px',
+														textAlign: 'center',
+														borderSpacing: '0px',
+														margin: '10px auto',
+														width: '100%'
+													}}
+												>
+													<tbody>
+														<tr>
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.facebook.com/Glow-LEDscom-100365571740684"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+																	{/* <Facebook fill="white" /> */}
+																	<img
+																		src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
+																		style={{ height: '25px' }}
+																		alt="Facebook"
+																		title="Facebook Logo"
+																	/>
+																</a>
+															</td>
+
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.instagram.com/glow_leds/"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
+																	<img
+																		src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
+																		style={{ height: '25px' }}
+																		alt="Instagram"
+																		title="Instagram Logo"
+																	/>
+																</a>
+															</td>
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.tiktok.com/@glow_leds?lang=en"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+																	<img
+																		src="https://images2.imgbox.com/c1/ea/6hNkTIwU_o.png"
+																		style={{ height: '22px' }}
+																		alt="Tiktok"
+																		title="Tiktok Logo"
+																	/>
+																</a>
+															</td>
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+																	<img
+																		src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
+																		style={{ height: '22px' }}
+																		alt="Youtube"
+																		title="Youtube Logo"
+																	/>
+																</a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												<table
+													style={{
+														maxWidth: '560px',
+														textAlign: 'left',
+														borderSpacing: '0',
+														// borderCollapse: 'collapse',
+														margin: '0 auto'
+													}}
+												>
+													<tbody>
+														<tr>
+															<td
+																style={{
+																	fontFamily: 'helvetica'
+																}}
+															>
+																<p
+																	style={{
+																		color: 'white',
+																		lineHeight: '150%',
+																		fontSize: '14px',
+																		margin: '0',
+																		textAlign: 'center',
+																		padding: '10px'
+																	}}
+																>
+																	If you have any questions, reply to this email or
+																	contact us at{' '}
+																	<a
+																		href="mailto:info.glowleds@gmail.com"
+																		style={{
+																			fontSize: '14px',
+																			textDecoration: 'none',
+																			color: '#009eff'
+																		}}
+																	>
+																		info.glowleds@gmail.com
+																	</a>
+																</p>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</center>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</table>
+			)}
 		</body>
 	);
 
