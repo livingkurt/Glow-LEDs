@@ -57,532 +57,848 @@ const FeatureEmail = (props) => {
 	}, 500);
 
 	const jsx = (
-		<body style={{ padding: 0, margin: 0, fontSize: '16px' }}>
-			<div>
-				{email && (
-					<div
-						style={{
-							fontFamily: 'helvetica',
-							margin: '0px',
-							padding: '0px',
-							width: '100%',
-							borderRadius: '20px'
-						}}
-					>
-						<div style={{ backgroundColor: '#333333', padding: '20px' }}>
-							<div style={{ display: 'flex', justifyContent: 'center' }}>
-								<table width="100%" style={{ maxWidth: '500px' }}>
-									<tr>
-										<td>
-											<img
-												src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
-												alt="Glow LEDs"
-												title="Email Logo"
+		<body
+			style={{
+				background: 'unset',
+				color: 'white',
+				padding: 0,
+				margin: 0,
+				fontSize: '16px'
+				// height: '100%'
+			}}
+		>
+			{feature &&
+			email && (
+				<table
+					style={{
+						// height: '100%',
+						width: '100%',
+
+						borderSpacing: '0',
+						// borderCollapse: 'collapse',
+						// border: 'none',
+						color: 'white',
+						margin: 'auto',
+						fontSize: '16px',
+						// fontFamily: '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif',
+						backgroundColor: '#5f5f5f'
+					}}
+				>
+					<tr>
+						<td
+							style={{
+								fontFamily: 'helvetica',
+								color: 'white'
+							}}
+						>
+							<table
+								style={{
+									width: '100%',
+									borderSpacing: '0',
+									// borderCollapse: 'collapse',
+									// margin: '40px 0 20px',
+									color: 'white',
+									background: '#333333',
+									padding: '20px',
+									height: '100%'
+									// marginTop: '-278px'
+								}}
+							>
+								<tr>
+									<td
+										style={{
+											fontFamily: 'helvetica',
+											color: 'white'
+										}}
+									>
+										<center>
+											<table
 												style={{
-													textAlign: 'center',
-													width: '100%',
-													marginRight: '20px'
-												}}
-											/>
-										</td>
-									</tr>
-								</table>
-							</div>
-							<h4
-								style={{
-									textAlign: 'center',
-									fontFamily: 'helvetica',
-									width: '100%',
-									margin: '0 auto',
-									lineHeight: '50px',
-									color: 'white',
-									fontSize: '2em'
-								}}
-							>
-								{email.h1}
-							</h4>
-						</div>
-						<div style={{ backgroundColor: '#5f5f5f', padding: '20px' }}>
-							<div style={{ display: 'flex', justifyContent: 'center' }}>
-								{email.show_image && (
-									<table width="100%" style={{ maxWidth: '800px' }}>
-										<tr>
-											<td>
-												<img
-													src={email.images[0]}
-													alt="Glow LEDs"
-													title="Email Image"
-													style={{
-														textAlign: 'center',
-														width: '100%',
-														borderRadius: '20px'
-													}}
-												/>
-											</td>
-										</tr>
-									</table>
-								)}
-							</div>
-							<h4
-								style={{
-									textAlign: 'center',
-									fontFamily: 'helvetica',
-									color: 'white',
-									fontSize: '1.5em',
-									marginTop: '20px',
-									marginBottom: '0'
-								}}
-							>
-								Feature Submitted Successfully!
-							</h4>
-							{feature && (
-								<div
-									style={{
-										maxWidth: '800px',
-										width: '100%',
-										margin: '20px auto',
-										color: 'white'
-									}}
-								>
-									<div style={{ fontSize: '20px', textAlign: 'center' }}>Feature Info</div>
-									<div width="100%" style={{ color: 'white' }}>
-										<div style={{ height: '30px' }}>
-											Artist Name: {feature && feature.artist_name}
-										</div>
-										<div style={{ height: '30px' }}>Email: {feature && feature.email}</div>
-										<div style={{ height: '30px' }}>
-											Category: {feature && feature.category && toCapitlize(feature.category)}
-										</div>
-										{feature.instagram_handle && (
-											<div
-												style={{ height: '30px' }}
-											>{`Instagram: ${feature.instagram_handle}`}</div>
-										)}
-										{feature.facebook_name && (
-											<div style={{ height: '30px' }}>{`Facebook: ${feature.facebook_name}`}</div>
-										)}
-										{feature.description && (
-											<div style={{ height: '30px' }}>{`Bio: ${feature.description}`}</div>
-										)}
-										{feature.song_id && (
-											<div style={{ height: '30px' }}>{`Song ID: ${feature.song_id}`}</div>
-										)}
-										<div />
-									</div>
-								</div>
-							)}
-							<p
-								style={{
-									fontSize: '16px',
-									lineHeight: '30px',
-									maxWidth: '800px',
-									textAlign: 'center',
-									width: '100%',
-									margin: '20px auto',
-									color: 'white'
-								}}
-							>
-								{email.p}
-							</p>
-							<h4
-								style={{
-									textAlign: 'center',
-									fontFamily: 'helvetica',
-									color: 'white',
-									fontSize: '1.5em',
-									marginTop: '20px',
-									marginBottom: '0'
-								}}
-							>
-								How to Send Content via WeTansfer
-							</h4>
-							{/* If you have not sent your media via wetransfer.com to info.glowleds@gmail.com, please do so as soon as you can, so we can keep track of your submission. Your video will be featured on our Facebook and Instagram pages as well as a spot on our website! We really appreciate you taking the time to submit your pictures and videos to us! We love posting your art so everyone can see! Whenever you feel inspired please do not hesitate to send us a video. We will be honored to feature it!  */}
-							<div
-								style={{
-									maxWidth: '800px',
-									width: '100%',
-									margin: '20px auto',
-									color: 'white'
-								}}
-							>
-								{/* <div style={{ fontSize: '20px', textAlign: 'center' }}>Feature Info</div> */}
-								<ol width="100%" style={{ color: 'white' }}>
-									<li>
-										<div>
-											<div
-												className={{
-													display: 'flex',
-													flexDirection: 'row'
+													maxWidth: '800px',
+													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto',
+													color: 'white'
 												}}
 											>
-												<div>Click the WeTransfer button to begin</div>
-												<div
-													style={{
-														display: 'flex',
-														justifyContent: 'center'
-													}}
-												>
-													<a
-														href={'https://wetransfer.com/'}
+												<tr>
+													<td
 														style={{
-															backgroundColor: '#4c4f60',
-															color: 'white',
-															borderRadius: '10px',
-															border: 0,
-															padding: '15px',
-															margin: '20px'
+															fontFamily: 'helvetica',
+															color: 'white'
+														}}
+													>
+														<table
+															style={{
+																width: '100%',
+																borderSpacing: '0',
+																// borderCollapse: 'collapse',
+																color: 'white'
+															}}
+														>
+															<tr>
+																<td
+																	style={{
+																		fontFamily: 'helvetica',
+																		color: 'white',
+																		padding: '10px'
+																	}}
+																>
+																	<img
+																		src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
+																		alt="Glow LEDs Logo"
+																		title="Glow LEDs Logo"
+																		style={{
+																			// textAlign: 'center',
+																			width: '100%',
+																			// marginRight: '20px'
+																			marginLeft: '-15px'
+																		}}
+																	/>
+																</td>
+
+																{/* <td
+																		style={{
+																			fontFamily: 'helvetica',
+																			textTransform: 'uppercase',
+																			fontSize: '14px',
+																			color: 'white'
+																		}}
+																		align="right"
+																	>
+																		<span style={{ fontSize: '16px' }}>
+																			Order {feature && feature._id}
+																		</span>
+																	</td> */}
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<table
+												style={{
+													maxWidth: '800px',
+													width: '100%',
+													textAlign: 'left',
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '0 auto',
+													color: 'white'
+												}}
+											>
+												<tr>
+													<td
+														style={{
+															fontFamily: 'helvetica',
+															color: 'white'
 														}}
 													>
 														<h4
 															style={{
+																textAlign: 'center',
 																fontFamily: 'helvetica',
-																margin: 0,
-																fontSize: '1.2em',
-																textAlign: 'center'
+																width: '100%',
+																margin: '0 auto',
+																lineHeight: '50px',
+																color: 'white',
+																fontSize: '2em'
 															}}
 														>
-															WeTransfer.com
+															{email && email.h1}
 														</h4>
-													</a>
-												</div>
-											</div>
-										</div>
-									</li>
-									<li>
-										<div>Look for a window that looks like this:</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/d0/ef/EWIZve42_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
+													</td>
+												</tr>
+											</table>
+										</center>
+									</td>
+								</tr>
+							</table>
+							{email.show_image && (
+								<table width="100%" style={{ maxWidth: '800px', margin: 'auto', padding: '20px' }}>
+									<tr>
+										<td>
+											<img
+												src={email.images[0]}
+												alt="Glow LEDs"
+												title="Email Image"
+												style={{
+													textAlign: 'center',
+													width: '100%',
+													borderRadius: '20px'
+												}}
+											/>
+										</td>
+									</tr>
+									<tr>
+										<table
+											style={{
+												borderSpacing: '0',
+												// borderCollapse: 'collapse',
+												// marginTop: '19px'
+												margin: 'auto'
+											}}
+										>
+											<tbody>
+												<tr
+													style={{
+														fontFamily: 'helvetica',
+														borderRadius: '4px'
+													}}
+												>
+													<td>
+														<h4
+															style={{
+																textAlign: 'center',
+																fontFamily: 'helvetica',
+																color: 'white',
+																fontSize: '20px',
+																marginTop: '20px',
+																marginBottom: '0'
+															}}
+														>
+															Feature Submitted Successfully!
+														</h4>
+													</td>
+												</tr>
+											</tbody>
 										</table>
-									</li>
+										{feature && (
+											<table
+												style={{
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
 
-									<li>
-										<div>Click "Add your files" to choose the content you wish to send</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/90/f3/LA7rHfAH_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
+													// margin: 'auto'
+													width: '100%',
+													maxWidth: '800px',
+													margin: 'auto',
+													padding: '10px',
+													marginTop: '19px'
+												}}
+											>
+												<tbody>
+													<tr>
+														<td style={{ fontSize: '20px', textAlign: 'center' }}>
+															Feature Info
+														</td>
+													</tr>
+													<tr>
+														<td style={{ fontSize: '16px', height: '30px' }}>
+															Artist Name: {feature && feature.artist_name}
+														</td>
+													</tr>
+													<tr>
+														<td style={{ fontSize: '16px', height: '30px' }}>
+															Email: {feature && feature.email}
+														</td>
+													</tr>
+													<tr>
+														<td style={{ fontSize: '16px', height: '30px' }}>
+															Category:{' '}
+															{feature &&
+																feature.category &&
+																toCapitlize(feature.category)}
+														</td>
+													</tr>
+													{feature.instagram_handle && (
+														<tr>
+															<td
+																style={{ fontSize: '16px', height: '30px' }}
+															>{`Instagram: ${feature.instagram_handle}`}</td>
+														</tr>
+													)}
+													{feature.facebook_name && (
+														<tr>
+															<td
+																style={{ fontSize: '16px', height: '30px' }}
+															>{`Facebook: ${feature.facebook_name}`}</td>
+														</tr>
+													)}
+													{feature.description && (
+														<tr>
+															<td
+																style={{ fontSize: '16px', height: '30px' }}
+															>{`Bio: ${feature.description}`}</td>
+														</tr>
+													)}
+													{feature.song_id && (
+														<tr>
+															<td
+																style={{ fontSize: '16px', height: '30px' }}
+															>{`Song ID: ${feature.song_id}`}</td>
+														</tr>
+													)}
+												</tbody>
+											</table>
+										)}
+										<table
+											style={{
+												borderSpacing: '0',
+												// borderCollapse: 'collapse',
+												marginTop: '19px',
+												// margin: 'auto'
+												width: '100%',
+												padding: '10px'
+											}}
+										>
+											<tbody>
+												<tr style={{ fontSize: '20px', textAlign: 'center' }}>
+													<td>
+														<p
+															style={{
+																fontSize: '16px',
+																lineHeight: '30px',
+																maxWidth: '800px',
+																textAlign: 'center',
+																width: '100%',
+																margin: '20px auto',
+																color: 'white'
+															}}
+														>
+															{email.p}
+														</p>
+													</td>
+												</tr>
+											</tbody>
 										</table>
-									</li>
-									<li>
-										<div>Type or paste info.glowleds@gmail.com into the "Email To" field</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/b9/4f/IW8ZTgwp_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Type your email into the "Email From" field</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/b8/34/sEXmUSJH_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Click the transfer button</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/bd/c4/Lxu9OfEp_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>You may need to verify your email</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/2b/9e/UwReXG8i_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>Once verified your transfer will begin!</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/f5/b2/jibRBVhN_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-									<li>
-										<div>In a few minutes your transfer will finish</div>
-										<table width="100%" style={{ maxWidth: '400px', margin: 'auto' }}>
-											<tr>
-												<td>
-													<img
-														src={'https://thumbs2.imgbox.com/60/44/pU1uEWBN_t.png'}
-														alt="Glow LEDs"
-														title="Email Image"
-														style={{
-															textAlign: 'center',
-															width: '100%',
-															borderRadius: '20px'
-														}}
-													/>
-												</td>
-											</tr>
-										</table>
-									</li>
-								</ol>
-							</div>
-							<h4
-								style={{
-									textAlign: 'center',
-									fontFamily: 'helvetica',
-									color: 'white',
-									fontSize: '1.5em',
-									marginTop: '20px',
-									marginBottom: '0',
-									margin: '10px'
-								}}
-							>
-								You have completed transferring content to Glow LEDs via WeTransfer
-							</h4>
-							<div
-								style={{
-									display: 'flex',
-									justifyContent: 'center'
-								}}
-							>
-								<a
-									href={email.link}
-									style={{
-										backgroundColor: '#4c4f60',
-										color: 'white',
-										borderRadius: '10px',
-										border: 0,
-										padding: '15px'
-									}}
-								>
-									<h4
+
+										{feature && (
+											<table
+												style={{
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													margin: '19px 0 ',
+													// margin: 'auto'
+													width: '100%'
+												}}
+											>
+												<tbody>
+													<tr style={{ fontSize: '20px', textAlign: 'center' }}>
+														<td>
+															<h4
+																style={{
+																	textAlign: 'center',
+																	fontFamily: 'helvetica',
+																	color: 'white',
+																	fontSize: '20px',
+																	marginTop: '0px',
+																	marginBottom: '0'
+																}}
+															>
+																How to Send Content via WeTansfer
+															</h4>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										)}
+										{/* </tr>
+									<tr
 										style={{
-											fontFamily: 'helvetica',
-											margin: 0,
-											fontSize: '1.2em',
-											textAlign: 'center'
+											maxWidth: '800px',
+											width: '100%',
+											margin: '20px auto',
+											color: 'white'
 										}}
-									>
-										{email.button}
-									</h4>
-								</a>
-							</div>
-						</div>
-						<div style={{ backgroundColor: '#333333', padding: '20px', paddingTop: 10 }}>
-							<div
+									> */}
+										{/* <div style={{ fontSize: '20px', textAlign: 'center' }}>Feature Info</div> */}
+										<ol
+											width="100%"
+											style={{
+												color: 'white',
+												maxWidth: '800px',
+												margin: 'auto'
+											}}
+										>
+											<li>
+												<div>
+													<div
+														className={{
+															display: 'flex',
+															flexDirection: 'row'
+														}}
+													>
+														<div>Click the WeTransfer button to begin</div>
+														<div
+															style={{
+																display: 'flex',
+																justifyContent: 'center'
+															}}
+														>
+															<a
+																href={'https://wetransfer.com/'}
+																style={{
+																	backgroundColor: '#4c4f60',
+																	color: 'white',
+																	borderRadius: '10px',
+																	border: 0,
+																	padding: '15px',
+																	margin: '20px',
+																	textDecoration: 'none'
+																}}
+															>
+																<h4
+																	style={{
+																		fontFamily: 'helvetica',
+																		margin: 0,
+																		fontSize: '20px',
+																		textAlign: 'center'
+																	}}
+																>
+																	WeTransfer.com
+																</h4>
+															</a>
+														</div>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div>Look for a window that looks like this:</div>
+												<table
+													width="100%"
+													style={{
+														maxWidth: '400px',
+														width: '100%',
+														margin: 'auto'
+													}}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/d0/ef/EWIZve42_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+
+											<li>
+												<div>Click "Add your files" to choose the content you wish to send</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/90/f3/LA7rHfAH_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+											<li>
+												<div>
+													Type or paste info.glowleds@gmail.com into the "Email To" field
+												</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/b9/4f/IW8ZTgwp_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+											<li>
+												<div>Type your email into the "Email From" field</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/b8/34/sEXmUSJH_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+											<li>
+												<div>Click the transfer button</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/bd/c4/Lxu9OfEp_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+											<li>
+												<div>You may need to verify your email</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/2b/9e/UwReXG8i_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+											<li>
+												<div>Once verified your transfer will begin!</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/f5/b2/jibRBVhN_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+											<li>
+												<div>In a few minutes your transfer will finish</div>
+												<table
+													width="100%"
+													style={{ maxWidth: '400px', width: '100%', margin: 'auto' }}
+												>
+													<tr>
+														<td>
+															<img
+																src={'https://thumbs2.imgbox.com/60/44/pU1uEWBN_t.png'}
+																alt="Glow LEDs"
+																title="Email Image"
+																style={{
+																	marginLeft: '-20px',
+																	textAlign: 'center',
+																	width: '100%',
+																	borderRadius: '20px'
+																}}
+															/>
+														</td>
+													</tr>
+												</table>
+											</li>
+										</ol>
+
+										{feature && (
+											<table
+												style={{
+													borderSpacing: '0',
+													// borderCollapse: 'collapse',
+													marginTop: '19px',
+													// margin: 'auto'
+													width: '100%'
+												}}
+											>
+												<tbody>
+													<tr style={{ fontSize: '16px', textAlign: 'center' }}>
+														<td>
+															<h4
+																style={{
+																	textAlign: 'center',
+																	fontFamily: 'helvetica',
+																	color: 'white',
+																	fontSize: '20px',
+																	marginTop: '20px',
+																	marginBottom: '0',
+																	margin: '10px'
+																}}
+															>
+																You have completed transferring content to Glow LEDs via
+																WeTransfer
+															</h4>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										)}
+
+										<div
+											style={{
+												display: 'flex',
+												justifyContent: 'center',
+												margin: '10px 0'
+											}}
+										>
+											<a
+												href={email.link}
+												style={{
+													backgroundColor: '#4c4f60',
+													color: 'white',
+													borderRadius: '10px',
+													border: 0,
+													padding: '15px',
+													textDecoration: 'none'
+												}}
+											>
+												<h4
+													style={{
+														fontFamily: 'helvetica',
+														margin: 0,
+														fontSize: '20px',
+														textAlign: 'center'
+													}}
+												>
+													{email.button}
+												</h4>
+											</a>
+										</div>
+									</tr>
+								</table>
+							)}
+
+							<table
 								style={{
-									marginLeft: '10px',
-									display: 'flex',
-									justifyContent: 'space-between',
-									maxWidth: '250px',
 									width: '100%',
-									margin: '0 auto',
-									color: 'white',
-									alignItems: 'center'
+									borderSpacing: '0',
+									// borderCollapse: 'collapse',
+									// borderTopWidth: '1px',
+									// borderTopColor: 'white',
+									// borderTopStyle: 'solid',
+									backgroundColor: '#333333'
 								}}
 							>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
-										{/* <Facebook fill="white" /> */}
-										<img
-											src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
-											style={{ height: '25px' }}
-											alt="Facebook"
-											title="Facebook Logo"
-										/>
-									</a>
-								</div>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://www.instagram.com/glow_leds/"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
-										<img
-											src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
-											style={{ height: '25px' }}
-											alt="Instagram"
-											title="Instagram Logo"
-										/>
-									</a>
-								</div>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
-										<img
-											src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
-											style={{ height: '20px' }}
-											alt="Youtube"
-											title="Youtube Logo"
-										/>
-									</a>
-								</div>
-								<div
-									style={{
-										fontSize: '30px',
-										color: 'white'
-									}}
-								>
-									<a
-										href="https://soundcloud.com/ntre/tracks"
-										target="_blank"
-										rel="noopener noreferrer"
-									>
-										{/* <i className="fab fa-soundcloud" style={{ color: 'white' }} /> */}
-										<img
-											src="https://images2.imgbox.com/ed/d9/eyAcj7D2_o.png"
-											style={{ height: '20px' }}
-											alt="Soundcloud"
-											title="Soundcloud Logo"
-										/>
-									</a>
-								</div>
-							</div>
-							<div
-								style={{
-									borderBottom: '1px white solid',
-									maxWidth: '600px',
-									width: '100%',
-									margin: '15px auto'
-								}}
-							/>
-							{/* <p style={{ textAlign: 'center' }}>Copyright © 2020 Throwlights, Inc., All rights reserved.</p> */}
-							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								Our mailing address is: <br />404 Kenniston Dr Apt D, Austin, TX 78752{' '}
-							</p>
-							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								Want to change how you receive these emails? <br /> You can{' '}
-								<a
-									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
-									target="_blank"
-									rel="noopener noreferrer"
-									style={{
-										textDecoration: 'underline',
-										color: 'white'
-									}}
-								>
-									update your preferences
-								</a>{' '}
-								or{' '}
-								<a
-									href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"
-									target="_blank"
-									rel="noopener noreferrer"
-									style={{
-										textDecoration: 'underline',
-										color: 'white'
-									}}
-								>
-									unsubscribe{' '}
-								</a>
-								from this list.
-							</p>
-						</div>
-					</div>
-				)}
-			</div>
+								<tbody>
+									<tr>
+										<td
+											style={{
+												fontFamily: 'helvetica',
+												paddingBottom: '35px 0'
+											}}
+										>
+											<center>
+												<table
+													// style={{
+													// 	width: '100%',
+													// 	borderSpacing: '0',
+													// 	margin: '0px auto'
+													// 	// borderCollapse: 'collapse'
+													// }}
+													style={{
+														maxWidth: '400px',
+														textAlign: 'center',
+														borderSpacing: '0px',
+														margin: '10px auto',
+														width: '100%'
+													}}
+												>
+													<tbody>
+														<tr>
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.facebook.com/Glow-LEDscom-100365571740684"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-facebook zoom" style={{ color: 'white' }} /> */}
+																	{/* <Facebook fill="white" /> */}
+																	<img
+																		src="https://images2.imgbox.com/9b/a0/XAC4qmRL_o.png"
+																		style={{ height: '25px' }}
+																		alt="Facebook"
+																		title="Facebook Logo"
+																	/>
+																</a>
+															</td>
+
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.instagram.com/glow_leds/"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-instagram zoom" style={{ color: 'white' }} /> */}
+																	<img
+																		src="https://images2.imgbox.com/d2/77/vuk6FOeW_o.png"
+																		style={{ height: '25px' }}
+																		alt="Instagram"
+																		title="Instagram Logo"
+																	/>
+																</a>
+															</td>
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.tiktok.com/@glow_leds?lang=en"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+																	<img
+																		src="https://images2.imgbox.com/c1/ea/6hNkTIwU_o.png"
+																		style={{ height: '22px' }}
+																		alt="Tiktok"
+																		title="Tiktok Logo"
+																	/>
+																</a>
+															</td>
+															<td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															>
+																<a
+																	href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
+																	target="_blank"
+																	rel="noopener noreferrer"
+																>
+																	{/* <i className="fab fa-youtube zoom" style={{ color: 'white' }} /> */}
+																	<img
+																		src="https://images2.imgbox.com/c9/83/3Z0OwK1r_o.png"
+																		style={{ height: '22px' }}
+																		alt="Youtube"
+																		title="Youtube Logo"
+																	/>
+																</a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												<table
+													style={{
+														maxWidth: '800px',
+														textAlign: 'left',
+														borderSpacing: '0',
+														// borderCollapse: 'collapse',
+														margin: '0 auto'
+													}}
+												>
+													<tbody>
+														<tr>
+															<td
+																style={{
+																	fontFamily: 'helvetica'
+																}}
+															>
+																<p
+																	style={{
+																		color: 'white',
+																		lineHeight: '150%',
+																		fontSize: '14px',
+																		margin: '0',
+																		textAlign: 'center',
+																		padding: '10px'
+																	}}
+																>
+																	If you have any questions, reply to this email or
+																	contact us at{' '}
+																	<a
+																		href="mailto:info.glowleds@gmail.com"
+																		style={{
+																			fontSize: '14px',
+																			textDecoration: 'none',
+																			color: '#009eff'
+																		}}
+																	>
+																		info.glowleds@gmail.com
+																	</a>
+																</p>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</center>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</table>
+			)}
 		</body>
 	);
 
@@ -614,8 +930,8 @@ const FeatureEmail = (props) => {
 		() => {
 			if (props.match.params.send === 'true' && feature) {
 				console.log({ 'props.match.params.send === true && feature': feature });
-				// if (order.orderItems.length > 0) {
-				// 	console.log({ 'order.orderItems.length > 0': order });
+				// if (feature.orderItems.length > 0) {
+				// 	console.log({ 'feature.orderItems.length > 0': feature });
 				if (feature && feature.first_name && email_template.length > 1000) {
 					// setTimeout(() => {
 					send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
