@@ -80,7 +80,6 @@ import {
 	BecomeAffiliatePage,
 	EditPaycheckPage,
 	PaychecksPage,
-	SurveyPage,
 	EditSurveyPage,
 	SurveysPage,
 	EditParcelPage,
@@ -396,7 +395,6 @@ const App = () => {
 							<Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
 							<Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
 							<Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
-							<Route path="/pages/survey/:order_id?" exact={true} component={SurveyPage} />
 
 							<Route component={Four04Page} />
 						</Switch>

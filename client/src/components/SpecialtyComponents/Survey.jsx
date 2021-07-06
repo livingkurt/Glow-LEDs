@@ -13,7 +13,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import { StarRating } from '../../components/SpecialtyComponents';
 import { detailsOrderPublic } from '../../actions/orderActions';
 
-const SurveyPage = (props) => {
+const Survey = (props) => {
 	const [ question_1, set_question_1 ] = useState('');
 	const [ question_2, set_question_2 ] = useState('');
 	const [ question_3, set_question_3 ] = useState('');
@@ -383,4 +383,4 @@ const SurveyPage = (props) => {
 		</div>
 	);
 };
-export default SurveyPage;
+export default Survey;

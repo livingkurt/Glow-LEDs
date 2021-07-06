@@ -9,7 +9,7 @@ import { detailsOrderPublic } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 import { Loading } from '../UtilityComponents';
-import { SurveyPage } from '../../pages';
+import { Survey } from '../SpecialtyComponents';
 
 const OrderEmail = (props) => {
 	const history = useHistory();
@@ -217,7 +217,7 @@ const OrderEmail = (props) => {
 																margin: '0 auto',
 																lineHeight: '50px',
 																color: 'white',
-																fontSize: '2em'
+																fontSize: '25px'
 															}}
 														>
 															{email && email.h1}
@@ -282,11 +282,11 @@ const OrderEmail = (props) => {
 																}}
 															>
 																{order.isRefunded ? (
-																	<h3 style={{ fontFamily: 'helvetica' }}>
+																	<h4 style={{ fontFamily: 'helvetica' }}>
 																		Your Order has been refunded for{' '}
 																		{order.payment.refund_reason[order.payment.refund_reason.length - 1]}{' '}
 																		on {format_date(order.refundedAt)}
-																	</h3>
+																	</h4>
 																) : (
 																	<p style={{ fontSize: '16px', lineHeight: 2 }}>
 																		Hi {order.shipping.first_name},{' '}
@@ -485,7 +485,7 @@ const OrderEmail = (props) => {
 																fontFamily: 'helvetica'
 															}}
 														>
-															<h3
+															<h4
 																style={{
 																	fontWeight: 'normal',
 																	fontSize: '20px',
@@ -493,7 +493,7 @@ const OrderEmail = (props) => {
 																}}
 															>
 																<strong>Order Summary</strong>
-															</h3>
+															</h4>
 														</td>
 													</tr>
 													<tr>
@@ -1139,7 +1139,7 @@ const OrderEmail = (props) => {
 																	fontFamily: 'helvetica'
 																}}
 															>
-																<h3
+																<h4
 																	style={{
 																		fontWeight: 'normal',
 																		fontSize: '20px',
@@ -1147,7 +1147,7 @@ const OrderEmail = (props) => {
 																	}}
 																>
 																	<strong>Customer Information</strong>
-																</h3>
+																</h4>
 															</td>
 														</tr>
 													</tbody>
@@ -1844,7 +1844,7 @@ const OrderEmail = (props) => {
 							<span className="close" onClick={() => show_hide_survey()}>
 								&times;
 							</span>
-							<SurveyPage order_id={props.match.params.id} show_hide_survey={show_hide_survey} />
+							<Survey order_id={props.match.params.id} show_hide_survey={show_hide_survey} />
 						</div>
 					</div>
 					<button

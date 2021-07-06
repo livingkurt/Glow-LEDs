@@ -86,4 +86,3 @@ export { default as AllTeamsPage } from './PublicPages/AllTeamsPage';
 export { default as TeamPage } from './PublicPages/TeamPage';
 export { default as ManualPage } from './PublicPages/ManualPage';
 export { default as SubmitFeaturePage } from './PublicPages/SubmitFeaturePage';
-export { default as SurveyPage } from './PublicPages/SurveyPage';

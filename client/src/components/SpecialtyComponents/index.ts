@@ -33,3 +33,4 @@ export { default as Stripe } from './Stripe';
 export { default as ScreenSize } from './ScreenSize';
 export { default as StarRating } from './StarRating';
 export { default as ProductListItem } from './ProductListItem';
+export { default as Survey } from './Survey';
