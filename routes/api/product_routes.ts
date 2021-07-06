@@ -22,16 +22,11 @@ router.route('/get_options/:pathname').get(product_controller.get_options);
 router.route('/categories').get(product_controller.categories);
 router.route('/subcategories').get(product_controller.subcategories);
 router.route('/get_images/:category').get(product_controller.get_images);
-router.route('/update_stock').get(product_controller.update_stock);
-router.route('/update_product_order').get(product_controller.update_product_order);
-router.route('/update_product_option_stock').get(product_controller.update_product_option_stock);
+router.route('/update_stock').put(product_controller.update_stock);
+router.route('/update_product_order').put(product_controller.update_product_order);
+router.route('/update_product_option_stock').put(product_controller.update_product_option_stock);
 
 router.route('/reviews/:pathname').post(product_controller.reviews);
-// router.route('/get_all').get(product_controller.findAll);
-// router.route('/get_one/:pathname').get(product_controller.findById);
-// router.route('/update_one/:pathname').put(product_controller.update);
-// router.route('/create_one').post(product_controller.create);
-// router.route('/delete_one/:id').delete(product_controller.remove);
 
 router.route('/get_categories/:category/subcategory/:subcategory').get(product_controller.get_categories);
 
