@@ -4,8 +4,6 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-router.route('/').get(product_controller.findAll).post(product_controller.create);
-
 router.route('/update_pathname').get(product_controller.update_pathname);
 
 router.route('/imperfect').get(product_controller.get_all_imperfect);
@@ -29,6 +27,10 @@ router.route('/update_product_option_stock').put(product_controller.update_produ
 router.route('/reviews/:pathname').post(product_controller.reviews);
 
 router.route('/get_categories/:category/subcategory/:subcategory').get(product_controller.get_categories);
+
+// CRUD Actions
+
+router.route('/').get(product_controller.findAll).post(product_controller.create);
 
 router
 	.route('/:pathname')

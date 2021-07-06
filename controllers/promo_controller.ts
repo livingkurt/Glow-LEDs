@@ -53,8 +53,8 @@ export default {
 	findById: async (req: any, res: any) => {
 		try {
 			const promo = await Promo.findOne({ _id: req.params.id }).populate('sponsor').populate('user');
-			console.log({ promo });
-			console.log(req.params.id);
+			// console.log({ promo });
+			// console.log(req.params.id);
 			if (promo) {
 				log_request({
 					method: 'GET',
@@ -95,8 +95,9 @@ export default {
 			const promo = await Promo.findOne({ promo_code: req.params.promo_code })
 				.populate('sponsor')
 				.populate('user');
-			console.log({ promo });
-			console.log(req.params.promo_code);
+			// console.log({ promo });
+			// console.log({ promo });
+			// console.log(req.params.promo_code);
 			if (promo) {
 				log_request({
 					method: 'GET',
@@ -259,7 +260,7 @@ export default {
 			console.log('update_discount');
 			const promo: any = await Promo.findOne({ _id: req.body.private_code_id });
 			promo.percentage_off = req.body.percentage_off;
-			console.log({ promo });
+			// console.log({ promo });
 			if (promo) {
 				const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
 
@@ -299,16 +300,16 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	},
-	used: async (req: any, res: any) => {
+	mark_code_used: async (req: any, res: any) => {
 		try {
 			console.log({ used: req.params.promo_code });
 			console.log('Promo_Routes');
 			const promo: any = await Promo.findOne({ promo_code: req.params.promo_code.toLowerCase() });
 			promo.used_once = true;
-			console.log({ promo });
+			console.log({ mark_code_used: promo });
 			if (promo) {
 				const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
-
+				console.log({ updatedPromo });
 				if (updatedPromo) {
 					log_request({
 						method: 'PUT',

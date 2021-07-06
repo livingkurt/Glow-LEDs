@@ -27,16 +27,16 @@ export const validate_promo_code = (data: any) => {
 	}
 	if (data.userInfo) {
 		if (promo && promo.admin_only && data.userInfo.isAdmin === false) {
-			errors.promo_code = 'Promo Code Not Active 1';
+			errors.promo_code = 'Promo Code Not Active';
 		} else if (promo && promo.affiliate_only && data.userInfo.is_affiliated === false) {
-			errors.promo_code = 'Promo Code Not Active 2';
+			errors.promo_code = 'Promo Code Not Active';
 		}
 	}
 	if (!data.userInfo.hasOwnProperty('first_name')) {
 		if (promo && promo.admin_only) {
-			errors.promo_code = 'Promo Code Not Active 3';
+			errors.promo_code = 'Promo Code Not Active';
 		} else if (promo && promo.affiliate_only) {
-			errors.promo_code = 'Promo Code Not Active 4';
+			errors.promo_code = 'Promo Code Not Active';
 		}
 	}
 	if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
@@ -49,7 +49,7 @@ export const validate_promo_code = (data: any) => {
 
 	if (promo && promo.single_use && promo.used_once) {
 		// console.log({ single_use: promo.single_use, used_once: promo.used_once });
-		errors.promo_code = 'Promo Code Not Active 6';
+		errors.promo_code = 'Promo Code Not Active';
 	}
 	if (!promo_codes.includes(data.promo_code.toLowerCase())) {
 		errors.promo_code = 'Promo Code Not Valid';
