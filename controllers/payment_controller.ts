@@ -6,7 +6,7 @@ const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 // Defining methods for the booksController
 export default {
-	pay: async (req: any, res: any) => {
+	secure_pay: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id).populate('user');
 			// console.log({ order });
@@ -113,7 +113,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Paying for Order' });
 		}
 	},
-	guestcheckout_pay: async (req: any, res: any) => {
+	guest_pay: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id);
 			await stripe.paymentIntents.create(
@@ -213,7 +213,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Paying for Order' });
 		}
 	},
-	refund: async (req: any, res: any) => {
+	secure_refund: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id);
 			console.log({ order });
