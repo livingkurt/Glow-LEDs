@@ -552,7 +552,8 @@ const OrderEmail = (props) => {
 													textAlign: 'left',
 													borderSpacing: '0',
 													// borderCollapse: 'collapse',
-													margin: '0 auto'
+													margin: '0 auto',
+													width: '100%'
 												}}
 											>
 												<tr>
@@ -1067,38 +1068,41 @@ const OrderEmail = (props) => {
 									</td>
 								</tr>
 							</table>
-							<table
-								style={{
-									maxWidth: '560px',
-									textAlign: 'left',
-									borderSpacing: '0',
-									// borderCollapse: 'collapse',
-									margin: '0 auto',
-									paddingBottom: '10px',
-									borderBottom: '1px white solid'
-								}}
-							>
-								<tbody>
-									<tr>
-										<td
-											style={{
-												fontFamily: 'helvetica'
-											}}
-										>
-											<p
+							{order.order_note && (
+								<table
+									style={{
+										maxWidth: '560px',
+										textAlign: 'left',
+										borderSpacing: '0',
+										// borderCollapse: 'collapse',
+										margin: '0 auto',
+										paddingBottom: '10px',
+										borderBottom: '1px white solid',
+										width: '100%'
+									}}
+								>
+									<tbody>
+										<tr>
+											<td
 												style={{
-													color: 'white',
-													lineHeight: '150%',
-													fontSize: '16px',
-													margin: '0'
+													fontFamily: 'helvetica'
 												}}
 											>
-												<strong>Order Note:</strong> {order.order_note}
-											</p>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+												<p
+													style={{
+														color: 'white',
+														lineHeight: '150%',
+														fontSize: '16px',
+														margin: '0'
+													}}
+												>
+													<strong>Order Note:</strong> {order.order_note}
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							)}
 
 							<table
 								style={{
