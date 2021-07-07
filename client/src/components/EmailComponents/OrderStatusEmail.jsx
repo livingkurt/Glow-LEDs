@@ -6,7 +6,11 @@ import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date, toCapitlize } from '../../utils/helper_functions';
 import { detailsOrder, detailsOrderPublic } from '../../actions/orderActions';
-import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	determine_product_name,
+	email_sale_price_switch,
+	order_status_steps
+} from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 import { Loading } from '../UtilityComponents';
 
@@ -48,140 +52,6 @@ const OrderStatusEmail = (props) => {
 		},
 		[ emails ]
 	);
-
-	const order_status_steps = () => {
-		return (
-			<div
-				style={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					maxWidth: '58rem',
-					width: '100%',
-					margin: '1rem auto'
-				}}
-			>
-				<div
-					style={
-						order ? (
-							{
-								borderTop: '.3rem white solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						) : (
-							{
-								borderTop: '.3rem #c0c0c0 solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						)
-					}
-				>
-					<div>Ordered</div>
-					{/* <i class="fas fa-check-square" /> */}
-				</div>
-				<div
-					style={
-						order.isPaid ? (
-							{
-								borderTop: '.3rem white solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						) : (
-							{
-								borderTop: '.3rem #c0c0c0 solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						)
-					}
-				>
-					<div>Paid </div>
-					{/* <i class="fas fa-money-bill-wave" /> */}
-				</div>
-				<div
-					style={
-						order.isManufactured ? (
-							{
-								borderTop: '.3rem white solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						) : (
-							{
-								borderTop: '.3rem #c0c0c0 solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						)
-					}
-				>
-					<div>Manufactured </div>
-					{/* <i class="fas fa-hammer" /> */}
-				</div>
-				<div
-					style={
-						order.isPackaged ? (
-							{
-								borderTop: '.3rem white solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						) : (
-							{
-								borderTop: '.3rem #c0c0c0 solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						)
-					}
-				>
-					<div>Packaged </div>
-					{/* <i class="fas fa-box" /> */}
-				</div>
-				<div
-					style={
-						order.isShipped ? (
-							{
-								borderTop: '.3rem white solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						) : (
-							{
-								borderTop: '.3rem #c0c0c0 solid',
-								color: '$font_color',
-								flex: '1 1',
-								paddingTop: '1rem',
-								textAlign: 'center'
-							}
-						)
-					}
-				>
-					<div>Shipped</div>
-				</div>
-			</div>
-		);
-	};
 
 	const jsx = (
 		<body
@@ -369,7 +239,7 @@ const OrderStatusEmail = (props) => {
 																	{email && email.h1}
 																</h2> */}
 
-															{order_status_steps(order)}
+															{order_status_steps(order, props.match.params.status)}
 
 															<p
 																style={{

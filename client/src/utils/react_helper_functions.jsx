@@ -420,3 +420,160 @@ export const determine_product_name = (product, show_qty) => {
 // 		return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
 // 	}
 // };
+
+export const order_status_steps = (order, status) => {
+	return (
+		<div
+			style={{
+				display: 'flex',
+				justifyContent: 'space-between',
+				maxWidth: '58rem',
+				width: '100%',
+				margin: '1rem auto'
+			}}
+		>
+			<div
+				style={
+					order ? (
+						{
+							borderTop: '.3rem white solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					) : (
+						{
+							borderTop: '.3rem #c0c0c0 solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					)
+				}
+			>
+				<div>Ordered</div>
+				{/* <i class="fas fa-check-square" /> */}
+			</div>
+			<div
+				style={
+					order.isPaid ? (
+						{
+							borderTop: '.3rem white solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					) : (
+						{
+							borderTop: '.3rem #c0c0c0 solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					)
+				}
+			>
+				<div>Paid </div>
+				{/* <i class="fas fa-money-bill-wave" /> */}
+			</div>
+			<div
+				style={
+					status === 'manufactured' ? (
+						{
+							borderTop: '.3rem white solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					) : (
+						{
+							borderTop: '.3rem #c0c0c0 solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					)
+				}
+			>
+				<div>Manufactured </div>
+				{/* <i class="fas fa-hammer" /> */}
+			</div>
+			<div
+				style={
+					status === 'packaged' ? (
+						{
+							borderTop: '.3rem white solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					) : (
+						{
+							borderTop: '.3rem #c0c0c0 solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					)
+				}
+			>
+				<div>Packaged </div>
+				{/* <i class="fas fa-box" /> */}
+			</div>
+			<div
+				style={
+					status === 'shipped' ? (
+						{
+							borderTop: '.3rem white solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					) : (
+						{
+							borderTop: '.3rem #c0c0c0 solid',
+							color: '$font_color',
+							flex: '1 1',
+							paddingTop: '1rem',
+							textAlign: 'center'
+						}
+					)
+				}
+			>
+				<div>Shipped</div>
+			</div>
+			{/* <div
+        style={
+          status === 'delivered' ? (
+            {
+              borderTop: '.3rem white solid',
+              color: '$font_color',
+              flex: '1 1',
+              paddingTop: '1rem',
+              textAlign: 'center'
+            }
+          ) : (
+            {
+              borderTop: '.3rem #c0c0c0 solid',
+              color: '$font_color',
+              flex: '1 1',
+              paddingTop: '1rem',
+              textAlign: 'center'
+            }
+          )
+        }
+      >
+        <div>Delivered</div>
+      </div> */}
+		</div>
+	);
+};
