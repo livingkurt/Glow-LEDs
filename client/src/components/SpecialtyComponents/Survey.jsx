@@ -240,8 +240,8 @@ const Survey = (props) => {
 									<div>
 										<label htmlFor="description">{question_1}</label>
 										<StarRating set_rating={set_rating} rating={rating} />
-										<p>{rating && determine_rating_word(rating)}</p>
-										<div className="ai-c mv-2rem">
+										<p className="ta-c">{rating && determine_rating_word(rating)}</p>
+										<div className="ai-c mv-2rem jc-c">
 											{/* <h3 className="mr-1rem">{question_2}</h3> */}
 
 											<div className="custom-select">

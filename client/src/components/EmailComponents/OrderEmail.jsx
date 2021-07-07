@@ -1645,6 +1645,15 @@ const OrderEmail = (props) => {
 		</body>
 	);
 
+	// Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById('myBtn');
+
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName('close')[0];
+
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const send_order_email = async (email, first_name, subject, refunded) => {
@@ -1659,7 +1668,9 @@ const OrderEmail = (props) => {
 		console.log({ response_2 });
 		if (response_1 && response_2) {
 			// history.push('/pages/survey/' + order._id);
-			modal.style.display = 'block';
+			// modal.style.display = 'block';
+			show_hide_survey();
+			set_show_modal(true);
 			set_loading(false);
 		}
 	};
@@ -1679,6 +1690,7 @@ const OrderEmail = (props) => {
 	// 	[ order ]
 	// );
 	const [ num, set_num ] = useState(0);
+	const [ show_modal, set_show_modal ] = useState(false);
 
 	useEffect(
 		() => {
@@ -1738,14 +1750,6 @@ const OrderEmail = (props) => {
 
 	// 	return () => {};
 	// }, []);
-	// Get the modal
-	var modal = document.getElementById('myModal');
-
-	// Get the button that opens the modal
-	var btn = document.getElementById('myBtn');
-
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName('close')[0];
 
 	// // When the user clicks on the button, open the modal
 	// btn.onclick = function() {
@@ -1765,12 +1769,14 @@ const OrderEmail = (props) => {
 	};
 
 	const show_hide_survey = () => {
-		console.log({ modal: modal.style.display });
-		if (modal.style.display === 'block') {
-			modal.style.display = 'none';
-		} else if (modal.style.display === '' || modal.style.display === 'none') {
-			modal.style.display = 'block';
-		}
+		set_show_modal((show) => (show ? false : true));
+		// console.log({ modal: modal.style.display });
+		// if (modal.style.display === 'block') {
+		// 	modal.style.display = 'none';
+		//   set_show_modal(true)
+		// } else if (modal.style.display === '' || modal.style.display === 'none') {
+		// 	modal.style.display = 'block';
+		// }
 	};
 
 	return (
@@ -1836,7 +1842,7 @@ const OrderEmail = (props) => {
 						Open Modal
 					</button>
 
-					<div id="myModal" class="modal">
+					<div id="myModal" style={{ display: show_modal ? 'block' : 'none' }} className="modal">
 						<div class="modal-content">
 							<span className="close" onClick={() => show_hide_survey()}>
 								&times;
