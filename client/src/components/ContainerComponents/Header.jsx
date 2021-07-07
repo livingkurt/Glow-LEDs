@@ -72,43 +72,43 @@ const Header = (props) => {
 	// 	},
 	// 	[ userUpdate.userInfo ]
 	// );
-	const debounce = (func, wait, immediate) => {
-		let timeout;
-		return function() {
-			const context = this,
-				args = arguments;
-			const later = function() {
-				timeout = null;
-				if (!immediate) func.apply(context, args);
-			};
-			const callNow = immediate && !timeout;
-			clearTimeout(timeout);
-			timeout = setTimeout(later, wait);
-			if (callNow) func.apply(context, args);
-		};
-	};
+	// const debounce = (func, wait, immediate) => {
+	// 	let timeout;
+	// 	return function() {
+	// 		const context = this,
+	// 			args = arguments;
+	// 		const later = function() {
+	// 			timeout = null;
+	// 			if (!immediate) func.apply(context, args);
+	// 		};
+	// 		const callNow = immediate && !timeout;
+	// 		clearTimeout(timeout);
+	// 		timeout = setTimeout(later, wait);
+	// 		if (callNow) func.apply(context, args);
+	// 	};
+	// };
 
-	const [ prevScrollPos, setPrevScrollPos ] = useState(0);
-	const [ visible, setVisible ] = useState(true);
+	// const [ prevScrollPos, setPrevScrollPos ] = useState(0);
+	// const [ visible, setVisible ] = useState(true);
 
-	const handleScroll = debounce(() => {
-		const currentScrollPos = window.pageYOffset;
+	// const handleScroll = debounce(() => {
+	// 	const currentScrollPos = window.pageYOffset;
 
-		setVisible(
-			(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10
-		);
+	// 	setVisible(
+	// 		(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10
+	// 	);
 
-		setPrevScrollPos(currentScrollPos);
-	}, 50);
+	// 	setPrevScrollPos(currentScrollPos);
+	// }, 50);
 
-	useEffect(
-		() => {
-			window.addEventListener('scroll', handleScroll);
+	// useEffect(
+	// 	() => {
+	// 		window.addEventListener('scroll', handleScroll);
 
-			return () => window.removeEventListener('scroll', handleScroll);
-		},
-		[ prevScrollPos, visible, handleScroll ]
-	);
+	// 		return () => window.removeEventListener('scroll', handleScroll);
+	// 	},
+	// 	[ prevScrollPos, visible, handleScroll ]
+	// );
 	const navbarStyles = {
 		position: 'fixed',
 		// height: '160px',
@@ -120,8 +120,8 @@ const Header = (props) => {
 
 	return (
 		<div className="">
-			<Banner visible={visible} />
-			<header id="overlay" style={{ ...navbarStyles, top: visible ? '0' : '-180px' }}>
+			<Banner visible={props.visible} />
+			<header id="overlay" style={{ ...navbarStyles, top: props.visible ? '0' : '-180px' }}>
 				<div className="menu_button w-233px">
 					<Link to="/">
 						<div className="row">

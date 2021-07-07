@@ -1,6 +1,5 @@
 @use '../abstracts' as *;
 
-
 /* Cart */
 
 .cart {
@@ -69,7 +68,7 @@
 
 .cart_sidebar {
 	position: fixed;
-	transition: all .5s;
+	transition: right .5s;
 	transform: translateX(40rem);
 	width: 40rem;
 	background-color: $theme_color_sidebar;
@@ -77,9 +76,10 @@
 	// height: calc(var(--vh, 1vh) * 80);
 	// height: 100--vh;
 	right: 0px;
-	top: 179px;
+	// top: 179px;
 	padding: 10px;
 	z-index: 99;
+	transition: top 0.2s;
 }
 
 .cart_sidebar.open {

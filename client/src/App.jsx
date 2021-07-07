@@ -111,6 +111,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
 import EditChipPage from './pages/AdminPages/EditChipPage';
+import useWindowDimensions from './components/SpecialtyComponents/ScreenSize';
 
 const App = () => {
 	const theme_colors = {
@@ -119,7 +120,7 @@ const App = () => {
 		content: 'linear-gradient(180deg, #8a8a8a 0%, #272727 100%);',
 		container: '#272727'
 	};
-
+	const { height, width } = useWindowDimensions();
 	// const userLogin = useSelector((state) => state.userLogin);
 
 	// let { userInfo } = userLogin;
@@ -153,6 +154,55 @@ const App = () => {
 		let vh = window.innerHeight * 0.01;
 		document.documentElement.style.setProperty('--vh', `${vh}px`);
 	});
+
+	// const userUpdate = useSelector((state) => state.userUpdate);
+
+	// useEffect(
+	// 	() => {
+	// 		if (userUpdate.userInfo) {
+	// 			set_first_name(userUpdate.userInfo.first_name);
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate.userInfo ]
+	// );
+	const debounce = (func, wait, immediate) => {
+		let timeout;
+		return function() {
+			const context = this,
+				args = arguments;
+			const later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			const callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
+
+	const [ prevScrollPos, setPrevScrollPos ] = useState(0);
+	const [ visible, setVisible ] = useState(true);
+
+	const handleScroll = debounce(() => {
+		const currentScrollPos = window.pageYOffset;
+
+		setVisible(
+			(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10
+		);
+
+		setPrevScrollPos(currentScrollPos);
+	}, 50);
+
+	useEffect(
+		() => {
+			window.addEventListener('scroll', handleScroll);
+
+			return () => window.removeEventListener('scroll', handleScroll);
+		},
+		[ prevScrollPos, visible, handleScroll ]
+	);
 
 	return (
 		<Router>
@@ -201,9 +251,9 @@ const App = () => {
 					/>
 					<meta name="twitter:creator" content="@glow_leds" />
 				</Helmet>
-				<Header />
-				<Sidebar />
-				<Cart />
+				<Header visible={visible} />
+				<Sidebar visible={visible} height={height} width={width} />
+				<Cart visible={visible} height={height} width={width} />
 				<Content>
 					<MessengerCustomerChat
 						pageId="100365571740684"

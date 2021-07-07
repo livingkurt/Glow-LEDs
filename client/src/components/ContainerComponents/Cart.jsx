@@ -107,9 +107,32 @@ const Cart = (props) => {
 			}
 		}
 	};
+	const navbarStyles = {
+		// position: 'fixed',
+		// height: '160px',
+		// width: '100%',
+		// backgroundColor: 'grey',
+		// textAlign: 'center',
+		transition: 'top 0.2s'
+	};
 
+	const determine_top = () => {
+		if (props.width >= 1177) {
+			return '179px';
+		} else if (props.width <= 1140) {
+			return '140px';
+		} else if (props.width <= 704) {
+			return '120px';
+		} else if (props.width <= 528) {
+			return '110px';
+		}
+	};
 	return (
-		<aside ref={wrapperRef} className="cart_sidebar" style={{ overflowY: 'scroll' }}>
+		<aside
+			ref={wrapperRef}
+			className="cart_sidebar"
+			style={{ ...navbarStyles, top: props.visible ? determine_top() : '0px', overflowY: 'scroll' }}
+		>
 			<div>
 				{/* <div className="logo_text mh-auto ai-c">
 					<Link to="/">
