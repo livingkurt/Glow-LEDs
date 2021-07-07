@@ -78,11 +78,13 @@ const Sidebar = (props) => {
 	const determine_top = () => {
 		if (props.width >= 1177) {
 			return '179px';
-		} else if (props.width <= 1140) {
-			return '140px';
-		} else if (props.width <= 704) {
-			return '120px';
-		} else if (props.width <= 528) {
+		} else if (props.width < 1140 && props.width > 704) {
+			return '130px';
+		} else if (props.width < 704 && props.width > 528) {
+			return '116px';
+		} else if (props.width < 528) {
+			return '110px';
+		} else {
 			return '110px';
 		}
 	};
