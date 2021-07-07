@@ -471,7 +471,7 @@ export const refundOrder = (
 				refund_reason: refund_reason
 			},
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
 		);
 		console.log({ data });
@@ -498,7 +498,7 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 				[action_at]: result ? Date.now() : ''
 			},
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
 		);
 		console.log({ data });
@@ -525,7 +525,7 @@ export const update_payment = (order: { _id: string }, result: boolean, payment_
 				}
 			},
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.accessToken }
+				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}
 		);
 		console.log({ data });

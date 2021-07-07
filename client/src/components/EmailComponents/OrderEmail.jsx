@@ -33,17 +33,14 @@ const OrderEmail = (props) => {
 	const dispatch = useDispatch();
 	// const stableDispatch = useCallback(dispatch, []);
 
-	useEffect(
-		() => {
-			dispatch(listEmails(toCapitlize(props.match.params.status)));
-			dispatch(detailsOrderPublic(props.match.params.id));
-			dispatch(detailsOrderPublic(props.match.params.id));
-			dispatch(listPromos());
-			// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
-			return () => {};
-		},
-		[ dispatch, props.match.params.id, props.match.params.status ]
-	);
+	useEffect(() => {
+		dispatch(listEmails(toCapitlize(props.match.params.status)));
+		dispatch(detailsOrderPublic(props.match.params.id));
+		// dispatch(detailsOrderPublic(props.match.params.id));
+		dispatch(listPromos());
+		// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+		return () => {};
+	}, []);
 
 	useEffect(
 		() => {
@@ -56,7 +53,7 @@ const OrderEmail = (props) => {
 
 			return () => {};
 		},
-		[ emails, dispatch ]
+		[ emails ]
 	);
 
 	const determin_card_logo = (card_type) => {
@@ -424,33 +421,6 @@ const OrderEmail = (props) => {
 									</td>
 								</tr>
 							</table>
-							{/* { assign gift_card_line_item = line_items | where: "gift_card" }
-        { if gift_card_line_item.first }
-        <table class="row section">
-          <tr>
-            <td class="section__cell">
-              <center>
-                <table >
-                  <tr>
-                    <td>
-                      <h3>Gift card</h3>
-                    </td>
-                  </tr>
-                </table>
-                <table >
-                  <tr>
-                    <td>
-
-                      <p> You’ll receive separate emails for any gift cards.</p>
-
-                    </td>
-                  </tr>
-                </table>
-              </center>
-            </td>
-          </tr>
-        </table>
-        { endif } */}
 							<table
 								style={{
 									width: '100%',
@@ -1694,19 +1664,46 @@ const OrderEmail = (props) => {
 		}
 	};
 
+	// useEffect(
+	// 	() => {
+	// 		if (props.match.params.send === 'true' && order) {
+	// 			console.log({ 'props.match.params.send === true && order': order });
+	// 			if (order.orderItems.length > 0) {
+	// 				console.log({ 'order.orderItems.length > 0': order });
+	// 				send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
+	// 			}
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ order ]
+	// );
+	const [ num, set_num ] = useState(0);
+
 	useEffect(
 		() => {
-			if (props.match.params.send === 'true' && order) {
-				console.log({ 'props.match.params.send === true && order': order });
-				if (order.orderItems.length > 0) {
-					console.log({ 'order.orderItems.length > 0': order });
-					send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
+			if (num === 0) {
+				if (order) {
+					if (email) {
+						if (props.match.params.send === 'true') {
+							if (order.orderItems.length > 0) {
+								if (props.match.params.id) {
+									send_order_email(
+										order.shipping.email,
+										order.shipping.first_name,
+										'Your Glow LEDS Order'
+									);
+									set_num(1);
+								}
+							}
+						}
+					}
 				}
 			}
 
 			return () => {};
 		},
-		[ order ]
+		[ email ]
 	);
 
 	// const send_order_email = async (email, first_name, subject, refunded) => {
@@ -1762,7 +1759,7 @@ const OrderEmail = (props) => {
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
-		if (event.target == modal) {
+		if (event.target === modal) {
 			modal.style.display = 'none';
 		}
 	};

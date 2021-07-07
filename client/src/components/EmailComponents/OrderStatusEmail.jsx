@@ -29,24 +29,24 @@ const OrderStatusEmail = (props) => {
 
 	const [ message_to_user, set_message_to_user ] = useState('');
 
-	useEffect(
-		() => {
-			stableDispatch(listEmails(toCapitlize(props.match.params.status)));
-			stableDispatch(detailsOrder(props.match.params.id));
-			return () => {};
-		},
-		[ stableDispatch ]
-	);
+	useEffect(() => {
+		stableDispatch(listEmails(toCapitlize(props.match.params.status)));
+		// stableDispatch(detailsOrder(props.match.params.id));
+		return () => {};
+	}, []);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				stableDispatch(detailsEmail(active_email._id));
+			if (emails) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					stableDispatch(detailsEmail(active_email._id));
+				}
 			}
+
 			return () => {};
 		},
-		[ emails, stableDispatch ]
+		[ emails ]
 	);
 
 	const order_status_steps = () => {
@@ -194,7 +194,8 @@ const OrderStatusEmail = (props) => {
 				// height: '100%'
 			}}
 		>
-			{order && (
+			{order &&
+			email && (
 				<table
 					style={{
 						// height: '100%',
@@ -281,20 +282,6 @@ const OrderStatusEmail = (props) => {
 																		}}
 																	/>
 																</td>
-
-																{/* <td
-																		style={{
-																			fontFamily: 'helvetica',
-																			textTransform: 'uppercase',
-																			fontSize: '14px',
-																			color: 'white'
-																		}}
-																		align="right"
-																	>
-																		<span style={{ fontSize: '16px' }}>
-																			Order {order && order._id}
-																		</span>
-																	</td> */}
 															</tr>
 														</table>
 													</td>
@@ -513,22 +500,6 @@ const OrderStatusEmail = (props) => {
 																	</tr>
 																</tbody>
 															</table>
-
-															{/* <table>
-																	<tr>
-																		<td>
-																			<table>
-																				<tr>
-																					<td>
-																						<a href="https://www.glow-leds.com/">
-																							Visit our store
-																						</a>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																</table> */}
 														</td>
 													</tr>
 												</tbody>
@@ -537,33 +508,7 @@ const OrderStatusEmail = (props) => {
 									</td>
 								</tr>
 							</table>
-							{/* { assign gift_card_line_item = line_items | where: "gift_card" }
-        { if gift_card_line_item.first }
-        <table class="row section">
-          <tr>
-            <td class="section__cell">
-              <center>
-                <table >
-                  <tr>
-                    <td>
-                      <h3>Gift card</h3>
-                    </td>
-                  </tr>
-                </table>
-                <table >
-                  <tr>
-                    <td>
 
-                      <p> You’ll receive separate emails for any gift cards.</p>
-
-                    </td>
-                  </tr>
-                </table>
-              </center>
-            </td>
-          </tr>
-        </table>
-        { endif } */}
 							<table
 								style={{
 									width: '100%',
@@ -786,37 +731,6 @@ const OrderStatusEmail = (props) => {
 																											</span>
 																											<br />
 																										</td>
-																										{/* <td
-																											style={{
-																												fontFamily:
-																													'helvetica',
-																												width:
-																													'100%',
-																												whiteSpace:
-																													'nowrap'
-																											}}
-																										>
-																											<p
-																												style={{
-																													color:
-																														'white',
-																													lineHeight:
-																														'150%',
-																													fontSize:
-																														'16px',
-																													fontWeight:
-																														'600',
-																													margin:
-																														'0 0 0 15px'
-																												}}
-																												align="right"
-																											>
-																												{email_sale_price_switch(
-																													item,
-																													'white'
-																												)}
-																											</p>
-																										</td> */}
 																									</tr>
 																								</tbody>
 																							</table>
@@ -829,359 +743,6 @@ const OrderStatusEmail = (props) => {
 																))}
 															</tbody>
 														</table>
-														{/* <table
-															style={{
-																width: '100%',
-
-																borderSpacing: '0'
-
-																// borderCollapse: 'collapse',
-																// marginTop: '15px'
-																// borderTopWidth: '1px',
-																// borderTopColor: 'white',
-																// borderTopStyle: 'solid'
-															}}
-														>
-															<tbody>
-																<tr>
-																	<td
-																		style={{
-																			fontFamily: 'helvetica',
-																			width: '40%'
-																		}}
-																	/>
-																	<td
-																		style={{
-																			fontFamily: 'helvetica'
-																		}}
-																	>
-																		<table
-																			style={{
-																				width: '100%',
-																				borderSpacing: '0',
-																				// borderCollapse: 'collapse',
-																				marginTop: '20px'
-																			}}
-																		>
-																			<tbody>
-																				{order.promo_code && (
-																					<tr>
-																						<td
-																							style={{
-																								fontFamily: 'helvetica',
-																								padding: '5px 0',
-																								width: '100%'
-																							}}
-																						>
-																							<p
-																								style={{
-																									color: 'white',
-																									lineHeight: '1.2em',
-																									fontSize: '16px',
-																									margin: '0'
-																								}}
-																							>
-																								<span
-																									style={{
-																										fontSize: '16px'
-																									}}
-																								>
-																									Discount
-																								</span>
-																								<span
-																									style={{
-																										fontSize:
-																											'16px',
-																										marginLeft:
-																											'5px'
-																									}}
-																								>
-
-																									<img
-																										src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
-																										style={{
-																											height:
-																												'16px',
-
-																											marginRight:
-																												'10px'
-																										}}
-																										alt="tag_logo"
-																									/>
-																									<span
-																										style={{
-																											fontSize:
-																												'14px',
-																											lineHeight:
-																												'1.1',
-																											marginLeft:
-																												'-4px'
-																										}}
-																									>
-																										{order &&
-																											order.promo_code &&
-																											order.promo_code.toUpperCase()}
-																									</span>
-																								</span>
-																							</p>
-																						</td>
-																						<td
-																							style={{
-																								fontFamily: 'helvetica',
-																								padding: '5px 0',
-																								textAlign: 'right'
-																							}}
-																							align="righ=t"
-																						>
-																							<strong
-																								style={{
-																									fontSize: '16px',
-																									color: 'white'
-																								}}
-																							>
-																								-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice).toFixed(2)}
-																							</strong>
-																						</td>
-																					</tr>
-																				)}
-																				<tr>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '5px 0'
-																						}}
-																					>
-																						<p
-																							style={{
-																								color: 'white',
-																								lineHeight: '1.2em',
-																								fontSize: '16px',
-																								margin: '0'
-																							}}
-																						>
-																							<span
-																								style={{
-																									fontSize: '16px'
-																								}}
-																							>
-																								Subtotal
-																							</span>
-																						</p>
-																					</td>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '5px 0',
-																							textAlign: 'right'
-																						}}
-																						align="righ=t"
-																					>
-																						<strong
-																							style={{
-																								fontSize: '16px',
-																								color: 'white'
-																							}}
-																						>
-																							${order.promo_code ? (
-																								order.itemsPrice.toFixed(
-																									2
-																								)
-																							) : (
-																								(order.orderItems &&
-																								order.orderItems.reduce(
-																									(a, c) =>
-																										a +
-																										c.sale_price *
-																											c.qty,
-																									0
-																								) === 0
-																									? order.orderItems.reduce(
-																											(a, c) =>
-																												a +
-																												c.price *
-																													c.qty,
-																											0
-																										)
-																									: order.orderItems.reduce(
-																											(a, c) =>
-																												a +
-																												c.sale_price *
-																													c.qty,
-																											0
-																										)).toFixed(2)
-																							)}
-																						</strong>
-																					</td>
-																				</tr>
-																				<tr>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '5px 0'
-																						}}
-																					>
-																						<p
-																							style={{
-																								color: 'white',
-																								lineHeight: '1.2em',
-																								fontSize: '16px',
-																								margin: '0'
-																							}}
-																						>
-																							<span
-																								style={{
-																									fontSize: '16px'
-																								}}
-																							>
-																								Shipping
-																							</span>
-																						</p>
-																					</td>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '5px 0',
-																							textAlign: 'right'
-																						}}
-																						align="righ=t"
-																					>
-																						<strong
-																							style={{
-																								fontSize: '16px',
-																								color: 'white'
-																							}}
-																						>
-																							${order.shippingPrice && order.shippingPrice.toFixed(2)}
-																						</strong>
-																					</td>
-																				</tr>
-																				<tr>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '5px 0'
-																						}}
-																					>
-																						<p
-																							style={{
-																								color: 'white',
-																								lineHeight: '1.2em',
-																								fontSize: '16px',
-																								margin: '0'
-																							}}
-																						>
-																							<span
-																								style={{
-																									fontSize: '16px'
-																								}}
-																							>
-																								Taxes
-																							</span>
-																						</p>
-																					</td>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '5px 0',
-																							textAlign: 'right'
-																						}}
-																						align="righ=t"
-																					>
-																						<strong
-																							style={{
-																								fontSize: '16px',
-																								color: 'white'
-																							}}
-																						>
-																							${order.taxPrice && order.taxPrice.toFixed(2)}
-																						</strong>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																		<table
-																			style={{
-																				width: '100%',
-																				borderSpacing: '0',
-																				// borderCollapse: 'collapse',
-																				marginTop: '20px',
-																				borderTopWidth: '2px',
-																				borderTopColor: 'white',
-																				borderTopStyle: 'solid'
-																			}}
-																		>
-																			<tbody>
-																				<tr>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '20px 0 0'
-																						}}
-																					>
-																						<p
-																							style={{
-																								color: 'white',
-																								lineHeight: '1.2em',
-																								fontSize: '16px',
-																								margin: '0'
-																							}}
-																						>
-																							<span
-																								style={{
-																									fontSize: '16px'
-																								}}
-																							>
-																								Total
-																							</span>
-																						</p>
-																					</td>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '20px 0 0'
-																						}}
-																						align="right"
-																					>
-																						<strong
-																							style={{
-																								fontSize: '24px',
-																								color: 'white'
-																							}}
-																						>
-																							${order.totalPrice && order.totalPrice.toFixed(2)}
-																						</strong>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																		{order.promo_code && (
-																			<p
-																				style={{
-																					color: 'white',
-																					lineHeight: '1.1',
-																					fontSize: '16px',
-																					margin: '10px 0 0'
-																				}}
-																				align="right"
-																			>
-																				You saved{' '}
-																				<span
-																					style={{
-																						fontSize: '16px',
-																						color: 'white'
-																					}}
-																				>
-																					${(order.orderItems.reduce(
-																						(a, c) => a + c.price * c.qty,
-																						0
-																					) - order.itemsPrice).toFixed(2)}
-																				</span>
-																			</p>
-																		)}
-																	</td>
-																</tr>
-															</tbody>
-														</table> */}
 													</td>
 												</tr>
 											</table>
@@ -1501,57 +1062,37 @@ const OrderStatusEmail = (props) => {
 		);
 		console.log({ data });
 		console.log({ request });
-		if (request) {
+
+		if (data && request) {
 			// history.goBack();
-			history.push(`/secure/account/order/${order._id}`);
+			setTimeout(() => {
+				history.push(`/secure/account/order/${order._id}`);
+			}, 1000);
 		}
 	};
+	const [ num, set_num ] = useState(0);
 
 	useEffect(
 		() => {
-			if (props.match.params.send === 'true' && order && email) {
-				if (order.orderItems.length > 0) {
-					if (props.match.params.id) {
-						send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+			if (num === 0) {
+				if (order) {
+					if (email) {
+						if (props.match.params.send === 'true') {
+							if (order.orderItems.length > 0) {
+								if (props.match.params.id) {
+									send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+									set_num(1);
+								}
+							}
+						}
 					}
 				}
 			}
 
 			return () => {};
 		},
-		[ order ]
+		[ email ]
 	);
-
-	// const send_order_email = async (email, first_name, subject) => {
-	// 	console.log({ email_template });
-	// 	const { data } = await API_Emails.send_user_email(email_template, subject, email);
-	// 	const { data: request } = await API_Emails.send_admin_email(
-	// 		email_template,
-	// 		'Order Status Updated for ' + first_name
-	// 	);
-	// 	console.log({ data });
-	// 	console.log({ request });
-	// 	if (request) {
-	// 		// history.goBack();
-	// 		history.push(`/secure/account/order/${order._id}`);
-	// 	}
-	// };
-	// // let num = 1;
-
-	// useEffect(() => {
-	// 	// if (num === 1) {
-	// 	if (props.match.params.send === 'true' && order && email) {
-	// 		if (order.orderItems.length > 0) {
-	// 			if (props.match.params.id) {
-	// 				send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
-	// 				// num++;
-	// 			}
-	// 		}
-	// 	}
-	// 	// }
-
-	// 	return () => {};
-	// }, []);
 
 	return (
 		<div>

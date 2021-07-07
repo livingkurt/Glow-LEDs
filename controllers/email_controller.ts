@@ -267,7 +267,7 @@ export default {
 		// res.send('Order Email Sent to');
 	},
 	send_user_email: async (req: any, res: any) => {
-		console.log({ send_user_email: req.body });
+		// console.log({ send_user_email: req.body });
 		const test = [ 'lavacquek@icloud.com' ];
 		const mailOptions = {
 			to: req.body.email,
@@ -287,7 +287,7 @@ export default {
 		});
 	},
 	send_admin_email: async (req: any, res: any) => {
-		console.log({ send_user_email_created: req.body });
+		// console.log({ send_user_email_created: req.body });
 		const mailOptions = {
 			to: process.env.EMAIL,
 			from: process.env.DISPLAY_EMAIL,
