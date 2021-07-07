@@ -453,7 +453,7 @@ export const order_status_steps = (order, status) => {
 					)
 				}
 			>
-				<div>Ordered</div>
+				<div style={{ fontSize: '16px' }}>Ordered</div>
 				{/* <i class="fas fa-check-square" /> */}
 			</div>
 			<div
@@ -477,7 +477,7 @@ export const order_status_steps = (order, status) => {
 					)
 				}
 			>
-				<div>Paid </div>
+				<div style={{ fontSize: '16px' }}>Paid </div>
 				{/* <i class="fas fa-money-bill-wave" /> */}
 			</div>
 			<div
@@ -501,7 +501,7 @@ export const order_status_steps = (order, status) => {
 					)
 				}
 			>
-				<div>Manufactured </div>
+				<div style={{ fontSize: '16px' }}>Manufactured </div>
 				{/* <i class="fas fa-hammer" /> */}
 			</div>
 			<div
@@ -525,7 +525,7 @@ export const order_status_steps = (order, status) => {
 					)
 				}
 			>
-				<div>Packaged </div>
+				<div style={{ fontSize: '16px' }}>Packaged </div>
 				{/* <i class="fas fa-box" /> */}
 			</div>
 			<div
@@ -549,7 +549,7 @@ export const order_status_steps = (order, status) => {
 					)
 				}
 			>
-				<div>Shipped</div>
+				<div style={{ fontSize: '16px' }}>Shipped</div>
 			</div>
 			{/* <div
         style={
