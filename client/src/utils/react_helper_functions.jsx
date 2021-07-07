@@ -482,7 +482,7 @@ export const order_status_steps = (order, status) => {
 			</div>
 			<div
 				style={
-					status === 'manufactured' ? (
+					status === 'Manufactured' ? (
 						{
 							borderTop: '.3rem white solid',
 							color: '$font_color',
@@ -506,7 +506,7 @@ export const order_status_steps = (order, status) => {
 			</div>
 			<div
 				style={
-					status === 'packaged' ? (
+					status === 'Packaged' ? (
 						{
 							borderTop: '.3rem white solid',
 							color: '$font_color',
@@ -530,7 +530,7 @@ export const order_status_steps = (order, status) => {
 			</div>
 			<div
 				style={
-					status === 'shipped' ? (
+					status === 'Shipped' ? (
 						{
 							borderTop: '.3rem white solid',
 							color: '$font_color',
