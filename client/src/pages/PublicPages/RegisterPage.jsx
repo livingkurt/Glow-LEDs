@@ -80,11 +80,11 @@ const RegisterPage = (props) => {
 			<form onSubmit={submitHandler}>
 				<ul className="form-container">
 					<li>
-						{/* <h2>Create Account</h2> */}
-						<h1 className="row">
+						<h1 className="ta-c">Create Account</h1>
+						{/* <h1 className="row">
 							<label style={{ width: '100%', marginRight: '-40px' }}>Create</label>{' '}
 							<label style={{ width: '100%' }}>Account</label>
-						</h1>
+						</h1> */}
 					</li>
 					<Loading loading={loading} error={error} />
 					{/* <li>
