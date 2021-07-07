@@ -167,7 +167,7 @@ const Cart = (props) => {
 						<div>Cart is empty</div>
 					</div>
 				) : (
-					<div>
+					<div className="h-40vh" style={{ overflowY: 'scroll' }}>
 						<h4>{no_adapters_warning()}</h4>
 						{cartItems.map((item, index) => (
 							<li key={index}>
