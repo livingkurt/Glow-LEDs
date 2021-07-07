@@ -422,6 +422,7 @@ export const determine_product_name = (product, show_qty) => {
 // };
 
 export const order_status_steps = (order, status) => {
+	status = status.toLowerCase();
 	return (
 		<div
 			style={{
@@ -482,7 +483,7 @@ export const order_status_steps = (order, status) => {
 			</div>
 			<div
 				style={
-					status === 'Manufactured' ? (
+					status === 'manufactured' || status === 'packaged' || status === 'shipped' ? (
 						{
 							borderTop: '.3rem white solid',
 							color: '$font_color',
@@ -506,7 +507,7 @@ export const order_status_steps = (order, status) => {
 			</div>
 			<div
 				style={
-					status === 'Packaged' ? (
+					status === 'packaged' || status === 'shipped' ? (
 						{
 							borderTop: '.3rem white solid',
 							color: '$font_color',
@@ -530,7 +531,7 @@ export const order_status_steps = (order, status) => {
 			</div>
 			<div
 				style={
-					status === 'Shipped' ? (
+					status === 'shipped' ? (
 						{
 							borderTop: '.3rem white solid',
 							color: '$font_color',

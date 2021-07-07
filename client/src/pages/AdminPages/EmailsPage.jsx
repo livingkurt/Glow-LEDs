@@ -93,16 +93,16 @@ const EmailsPage = (props) => {
 				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/reassured">
 					<button className="btn primary">Reassurance</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/manufactured">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Manufactured">
 					<button className="btn primary">Manufactured</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/packaged">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Packaged">
 					<button className="btn primary">Packaged</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/shipped">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Shipped">
 					<button className="btn primary">Shipped</button>
 				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/delivered">
+				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Delivered">
 					<button className="btn primary">Delivered</button>
 				</Link>
 				<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/refunded/false">
