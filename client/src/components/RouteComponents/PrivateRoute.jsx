@@ -16,10 +16,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 			{...rest}
 			render={(props) => {
 				console.log({ props });
-				return userInfo ? (
+				return userInfo.hasOwnProperty('first_name') ? (
 					<Component {...props} />
 				) : (
-					<Redirect to={'/account/login?redirect=' + props.location.pathame} />
+					<Redirect to={'/account/login?redirect=' + props.location.pathname} />
 				);
 			}}
 		/>
