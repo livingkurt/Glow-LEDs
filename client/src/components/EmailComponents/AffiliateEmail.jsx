@@ -506,6 +506,123 @@ const AffiliateEmail = (props) => {
 											</tbody>
 										</table>
 									)}
+									<table
+										// style={{
+										// 	width: '100%',
+										// 	borderSpacing: '0',
+										// 	margin: '0px auto'
+										// 	// borderCollapse: 'collapse'
+										// }}
+										style={{
+											// maxWidth: '400px',
+											textAlign: 'center',
+											borderSpacing: '0px',
+											margin: '10px auto',
+											width: '100%'
+										}}
+									>
+										{affiliate &&
+										affiliate.promoter && (
+											<tbody>
+												{/* <tr> */}
+												{/* <td
+																style={{
+																	fontFamily: 'helvetica',
+
+																	// width: '50%',
+																	fontSize: '30px',
+																	color: 'white'
+																}}
+															> */}
+												<tr>
+													<td>
+														<div
+															style={{
+																display: 'flex',
+																justifyContent: 'center'
+
+																// marginBottom: '20px'
+															}}
+														>
+															<a
+																href={
+																	'https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing'
+																}
+																style={{
+																	backgroundColor: '#4c4f60',
+																	color: 'white',
+																	borderRadius: '10px',
+																	border: 0,
+																	padding: '15px',
+																	margin: '20px',
+																	// width: '100%',
+																	width: '100%',
+																	maxWidth: '600px',
+																	textDecoration: 'none'
+																}}
+																target="_blank"
+																rel="noopener noreferrer"
+															>
+																<h4
+																	style={{
+																		fontFamily: 'helvetica',
+																		margin: 0,
+																		fontSize: '20px',
+																		textAlign: 'center'
+																		// width: '100%'
+																	}}
+																>
+																	View Promoter Terms
+																</h4>
+															</a>
+														</div>
+
+														<div
+															style={{
+																display: 'flex',
+																justifyContent: 'center'
+																// justifyContent: 'center'
+															}}
+														>
+															<a
+																href={
+																	'https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit'
+																}
+																target="_blank"
+																rel="noopener noreferrer"
+																style={{
+																	backgroundColor: '#4c4f60',
+																	color: 'white',
+																	borderRadius: '10px',
+																	border: 0,
+																	padding: '15px',
+																	margin: '20px',
+																	width: '100%',
+																	maxWidth: '600px',
+																	textDecoration: 'none'
+																	// width: '100%'
+																}}
+															>
+																<h4
+																	style={{
+																		fontFamily: 'helvetica',
+																		margin: 0,
+																		fontSize: '20px',
+																		textAlign: 'center'
+																		// width: '100%'
+																	}}
+																>
+																	View Affiliate Learnings
+																</h4>
+															</a>
+														</div>
+													</td>
+												</tr>
+												{/* </td> */}
+												{/* </tr> */}
+											</tbody>
+										)}
+									</table>
 
 									{email.link &&
 									email.button && (
@@ -542,6 +659,7 @@ const AffiliateEmail = (props) => {
 									)}
 								</tr>
 							</table>
+
 							<table
 								style={{
 									width: '100%',
@@ -676,6 +794,7 @@ const AffiliateEmail = (props) => {
 														</tr>
 													</tbody>
 												</table>
+
 												<table
 													style={{
 														maxWidth: '800px',
