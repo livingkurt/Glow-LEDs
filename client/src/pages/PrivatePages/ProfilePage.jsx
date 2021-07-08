@@ -37,13 +37,16 @@ const ProfilePage = (props) => {
 		return () => {};
 	}, []);
 
-	useEffect(() => {
-		if (affiliate && affiliate.public_code) {
-			get_code_usage(affiliate.public_code);
-		}
+	useEffect(
+		() => {
+			if (affiliate && affiliate.public_code) {
+				get_code_usage(affiliate.public_code);
+			}
 
-		return () => {};
-	}, []);
+			return () => {};
+		},
+		[ affiliate ]
+	);
 
 	// console.log({ affiliate });
 
