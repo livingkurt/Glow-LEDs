@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default {
+const revenue_routes = {
 	get_each_day_income: (date: any) => {
 		return axios.get('/api/orders/each_day_income/' + date);
 	},
@@ -28,3 +28,5 @@ export default {
 		);
 	}
 };
+
+export default revenue_routes;

@@ -11,7 +11,7 @@ import { format_date } from '../../utils/helper_functions';
 const ProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log({ userInfo });
+	// console.log({ userInfo });
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
@@ -19,7 +19,7 @@ const ProfilePage = (props) => {
 	const myPaycheckList = useSelector((state) => state.myPaycheckList);
 	const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
 
-	console.log({ paychecks });
+	// console.log({ paychecks });
 
 	const [ number_of_uses, set_number_of_uses ] = useState(0);
 	const [ revenue, set_revenue ] = useState(0);
@@ -27,31 +27,25 @@ const ProfilePage = (props) => {
 
 	const dispatch = useDispatch();
 	const stableDispatch = useCallback(dispatch, []);
-	useEffect(
-		() => {
-			if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
-				console.log({ affiliate: userInfo.affiliate.pathname });
-				stableDispatch(detailsAffiliate(userInfo.affiliate.pathname));
-				stableDispatch(listMyPaychecks(userInfo.affiliate._id));
-			}
+	useEffect(() => {
+		if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
+			console.log({ affiliate: userInfo.affiliate.pathname });
+			stableDispatch(detailsAffiliate(userInfo.affiliate.pathname));
+			stableDispatch(listMyPaychecks(userInfo.affiliate._id));
+		}
 
-			return () => {};
-		},
-		[ userInfo, stableDispatch ]
-	);
+		return () => {};
+	}, []);
 
-	useEffect(
-		() => {
-			if (affiliate && affiliate.public_code) {
-				get_code_usage(affiliate.public_code);
-			}
+	useEffect(() => {
+		if (affiliate && affiliate.public_code) {
+			get_code_usage(affiliate.public_code);
+		}
 
-			return () => {};
-		},
-		[ affiliate ]
-	);
+		return () => {};
+	}, []);
 
-	console.log({ affiliate });
+	// console.log({ affiliate });
 
 	const get_code_usage = async (public_code) => {
 		// console.log({ pathname: affiliate.pathname });

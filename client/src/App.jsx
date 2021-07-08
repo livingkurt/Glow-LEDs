@@ -125,7 +125,7 @@ const App = (props) => {
 
 	// let { userInfo } = userLogin;
 	// let userInfo = {};
-	console.log({ window });
+	// console.log({ window });
 	// Check for token to keep user logged in
 	if (localStorage.jwtToken) {
 		// Set auth token header auth
