@@ -113,7 +113,7 @@ import store from './store';
 import EditChipPage from './pages/AdminPages/EditChipPage';
 import useWindowDimensions from './components/SpecialtyComponents/ScreenSize';
 
-const App = () => {
+const App = (props) => {
 	const theme_colors = {
 		footer: '#333333',
 		header: '#333333',
@@ -124,8 +124,8 @@ const App = () => {
 	// const userLogin = useSelector((state) => state.userLogin);
 
 	// let { userInfo } = userLogin;
-	let userInfo = {};
-
+	// let userInfo = {};
+	console.log({ window });
 	// Check for token to keep user logged in
 	if (localStorage.jwtToken) {
 		// Set auth token header auth
@@ -133,7 +133,7 @@ const App = () => {
 		setAuthToken(token);
 		// Decode token and get user info and exp
 		const decoded = jwt_decode(token);
-		console.log({ decoded });
+		// console.log({ decoded });
 		// userInfo = decoded.userInfo;
 		// Set user and isAuthenticated
 		store.dispatch(setCurrentUser(decoded));
@@ -144,7 +144,7 @@ const App = () => {
 			store.dispatch(logout());
 
 			// Redirect to login
-			window.location.href = '/account/login';
+			window.location.href = '/account/login?redirect=' + window.location.pathname;
 		}
 	}
 

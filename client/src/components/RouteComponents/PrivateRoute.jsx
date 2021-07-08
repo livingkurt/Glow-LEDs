@@ -15,7 +15,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={(props) => {
-				console.log({ props });
+				// console.log({ props });
 				return userInfo.hasOwnProperty('first_name') ? (
 					<Component {...props} />
 				) : (
