@@ -15,6 +15,7 @@ import { listPromos } from '../../actions/promoActions';
 import { Loading } from '../UtilityComponents';
 
 const OrderStatusEmail = (props) => {
+	const [ loading, set_loading ] = useState(false);
 	const history = useHistory();
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { order } = orderDetails;
@@ -924,6 +925,7 @@ const OrderStatusEmail = (props) => {
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
 	const send_order_email = async (email, first_name, subject) => {
+		set_loading(true);
 		console.log({ email_template });
 		const { data } = await API_Emails.send_user_email(email_template, subject, email);
 		const { data: request } = await API_Emails.send_admin_email(
@@ -935,9 +937,11 @@ const OrderStatusEmail = (props) => {
 
 		if (data && request) {
 			// history.goBack();
-			setTimeout(() => {
-				history.push(`/secure/account/order/${order._id}`);
-			}, 1000);
+			// setTimeout(() => {
+			// 	history.push(`/secure/account/order/${order._id}`);
+			// }, 1000);
+			history.push(`/secure/account/order/${order._id}`);
+			set_loading(false);
 		}
 	};
 	const [ num, set_num ] = useState(0);
@@ -966,6 +970,7 @@ const OrderStatusEmail = (props) => {
 
 	return (
 		<div>
+			<Loading loading={loading} />
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
