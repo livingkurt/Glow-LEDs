@@ -336,7 +336,7 @@ const Order = (props) => {
 						<ul className="">
 							<li className=" ">
 								<h2>Shipping</h2>
-								<div>
+								<div className="paragraph_font lh-25px">
 									<div>
 										{props.order.shipping.first_name} {props.order.shipping.last_name}
 									</div>
@@ -345,8 +345,9 @@ const Order = (props) => {
 									</div>
 									<div>
 										{props.order.shipping.city}, {props.order.shipping.state}{' '}
-										{props.order.shipping.postalCode} {props.order.shipping.country}
+										{props.order.shipping.postalCode}
 									</div>
+									<div>{props.order.shipping.country}</div>
 									<div>{props.order.shipping.international && 'International'}</div>
 									<div>{props.order.shipping.email}</div>
 								</div>

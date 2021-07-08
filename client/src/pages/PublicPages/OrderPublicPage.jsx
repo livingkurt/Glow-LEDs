@@ -342,9 +342,9 @@ const OrderPublicPage = (props) => {
 							)}
 						</div>
 						<div className="wrap jc-b">
-							<div className="w-100per">
+							<div className="w-100per ">
 								<h2>Shipping</h2>
-								<div>
+								<div className="paragraph_font lh-25px">
 									<div>
 										{order.shipping.first_name} {order.shipping.last_name}
 									</div>
@@ -353,8 +353,8 @@ const OrderPublicPage = (props) => {
 									</div>
 									<div>
 										{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}{' '}
-										{order.shipping.country}
 									</div>
+									<div>{order.shipping.country}</div>
 									<div>{order.shipping.international && 'International'}</div>
 									<div>{order.shipping.email}</div>
 								</div>
