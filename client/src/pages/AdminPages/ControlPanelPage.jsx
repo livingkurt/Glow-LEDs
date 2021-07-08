@@ -48,7 +48,7 @@ const ControlPanelPage = (props) => {
 	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
 
 	const get_orders = async () => {
-		const { data } = await API_Orders.get_all_orders();
+		const { data } = await API_Orders.get_total_orders();
 		console.log({ data });
 		set_orders(data);
 	};

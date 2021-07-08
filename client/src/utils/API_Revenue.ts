@@ -10,15 +10,8 @@ export default {
 	get_daily_income: () => {
 		return axios.get('/api/orders/daily_income');
 	},
-
 	get_weekly_income: () => {
 		return axios.get('/api/orders/weekly_income');
-	},
-	last_months_orders: () => {
-		return axios.get('/api/orders/last_months_orders');
-	},
-	total_orders: () => {
-		return axios.get('/api/orders/total_orders');
 	},
 	get_monthly_income: () => {
 		return axios.get('/api/orders/monthly_income');

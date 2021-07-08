@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
-import { API_Promos, API_Revenue } from '../../utils';
+import { API_Promos, API_Orders } from '../../utils';
 import {
 	promoter_revenue_upload,
 	sponsor_revenue_upload,
@@ -64,13 +64,13 @@ const PaychecksPage = (props) => {
 	);
 
 	const get_last_months_orders = async () => {
-		const { data } = await API_Revenue.last_months_orders();
+		const { data } = await API_Orders.last_months_orders();
 		console.log({ data });
 		set_last_months_orders(data);
 	};
 	const get_total_orders = async () => {
-		const { data } = await API_Revenue.total_orders();
-		console.log({ data });
+		const { data } = await API_Orders.total_orders();
+		console.log({ data: data.length });
 		set_total_orders(data);
 	};
 	const submitHandler = (e) => {

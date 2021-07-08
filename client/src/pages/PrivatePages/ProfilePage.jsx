@@ -42,8 +42,8 @@ const ProfilePage = (props) => {
 
 	useEffect(
 		() => {
-			if (affiliate) {
-				get_code_usage();
+			if (affiliate && affiliate.public_code) {
+				get_code_usage(affiliate.public_code);
 			}
 
 			return () => {};
@@ -53,11 +53,12 @@ const ProfilePage = (props) => {
 
 	console.log({ affiliate });
 
-	const get_code_usage = async () => {
-		const { data } = await API_Promos.get_code_usage(affiliate.pathname);
-		console.log({ data });
-		set_number_of_uses(data.number_of_uses);
-		set_revenue(data.revenue);
+	const get_code_usage = async (public_code) => {
+		// console.log({ pathname: affiliate.pathname });
+		const { data: { number_of_uses, revenue } } = await API_Promos.get_code_usage(public_code.promo_code);
+		console.log({ number_of_uses, revenue });
+		set_number_of_uses(number_of_uses);
+		set_revenue(revenue);
 	};
 
 	const colors = [ { name: 'Paid', color: '#3e4c6d' }, { name: 'Not Paid', color: '#6f3c3c' } ];
@@ -167,8 +168,7 @@ const ProfilePage = (props) => {
 					userInfo.affiliate &&
 					affiliate &&
 					affiliate.public_code &&
-					revenue &&
-					number_of_uses && (
+					revenue && (
 						<div className="mb-20px max-w-700px w-500px">
 							<h2 className="group_images">Affiliate Metrics</h2>
 							<div className="mb-20px">

@@ -1,5 +1,6 @@
 export {};
-import { Order, User } from '../models';
+import { order } from '../email_templates/pages';
+import { Affiliate, Order, User } from '../models';
 import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
 
 const scraper = require('table-scraper');
@@ -449,28 +450,48 @@ export default {
 		res.send(final_result);
 	},
 	code_usage: async (req: any, res: any) => {
-		const orders = await Order.find({ deleted: false });
-		const number_of_uses = orders.filter((order: any) => {
-			return order.promo_code && order.promo_code.toLowerCase() === req.params.promo_code.toLowerCase();
-		}).length;
+		const orders = await Order.find({ deleted: false })
+			.populate('user')
+			.populate('orderItems.product')
+			.populate('orderItems.secondary_product');
+		// // const affiliate = await Affiliate.findOne({ pathname: req.body.promo_code });
+		// // console.log({ promo_code: req.body.promo_code });
+		// console.log({ orders: orders.length });
+		// console.log({ affiliate });
+		const number_of_uses = orders
+			.filter((order: any) => order.promo_code)
+			.filter((order: any) => order.promo_code === req.body.promo_code.toUpperCase()).length;
+		// const number_of_uses = orders.filter((order: any) => {
+		// 	return order.promo_code && order.promo_code.toLowerCase() === req.params.promo_code.toLowerCase();
+		// }).length;
 		const revenue = orders
-			.filter(
-				(order: any) =>
-					order.promo_code && order.promo_code.toLowerCase() === req.params.promo_code.toLowerCase()
-			)
+			.filter((order: any) => order.promo_code)
+			.filter((order: any) => order.promo_code === req.body.promo_code.toUpperCase())
 			.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 			.toFixed(2);
 
 		console.log({ number_of_uses, revenue });
 		res.send({ number_of_uses, revenue });
+		// res.send({
+		// 	number_of_uses: orders.filter((order: any) => {
+		// 		return order.promo_code && order.promo_code.toLowerCase() === req.body.promo_code.toLowerCase();
+		// 	}).length,
+		// 	revenue: ` $${orders
+		// 		.filter(
+		// 			(order: any) =>
+		// 				order.promo_code && order.promo_code.toLowerCase() === req.body.promo_code.toLowerCase()
+		// 		)
+		// 		.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 		.toFixed(2)}`
+		// });
 	},
-	all_orders: async (req: any, res: any) => {
-		const orders = await Order.find({ deleted: false })
-			.populate('user')
-			.populate('orderItems.product')
-			.populate('orderItems.secondary_product');
-		res.json(orders);
-	},
+	// all_orders: async (req: any, res: any) => {
+	// 	const orders = await Order.find({ deleted: false })
+	// 		.populate('user')
+	// 		.populate('orderItems.product')
+	// 		.populate('orderItems.secondary_product');
+	// 	res.json(orders);
+	// },
 	last_months_orders: async (req: any, res: any) => {
 		const orders = await Order.find({
 			createdAt: {
@@ -484,7 +505,7 @@ export default {
 		res.json(orders);
 	},
 	total_orders: async (req: any, res: any) => {
-		const orders = await Order.find({})
+		const orders = await Order.find({ deleted: false })
 			.sort({ date: -1 })
 			.populate('user')
 			.populate('orderItems.product')

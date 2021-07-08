@@ -13,7 +13,8 @@ const promo_routes = {
 		return axios.put('/api/promos/code/' + promo_code);
 	},
 	get_code_usage: (promo_code: string) => {
-		return axios.get('/api/orders/code_usage/' + promo_code);
+		console.log({ promo_code });
+		return axios.put('/api/orders/code_usage', { promo_code });
 	}
 };
 

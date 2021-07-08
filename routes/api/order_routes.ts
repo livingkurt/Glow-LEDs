@@ -25,8 +25,8 @@ router
 	.delete(isAuth, isAdmin, order_controller.remove);
 
 router.route('/occurrences').get(order_controller.occurrences);
-router.route('/code_usage/:promo_code').get(order_controller.code_usage);
-router.route('/all_orders').get(order_controller.all_orders);
+router.route('/code_usage').put(order_controller.code_usage);
+// router.route('/all_orders').get(order_controller.all_orders);
 router.route('/last_months_orders').get(order_controller.last_months_orders);
 router.route('/total_orders').get(order_controller.total_orders);
 router.route('/tax_rates').get(order_controller.tax_rates);
