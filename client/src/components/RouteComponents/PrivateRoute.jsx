@@ -7,12 +7,22 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	// console.log({ userInfo });
+	// console.log({ props });
 
 	return (
 		// Show the component only when the user is logged in
 		// Otherwise, redirect the user to /signin page
-		<Route {...rest} render={(props) => (userInfo ? <Component {...props} /> : <Redirect to="/account/login" />)} />
+		<Route
+			{...rest}
+			render={(props) => {
+				console.log({ props });
+				return userInfo ? (
+					<Component {...props} />
+				) : (
+					<Redirect to={'/account/login?redirect=' + props.location.pathame} />
+				);
+			}}
+		/>
 	);
 };
 

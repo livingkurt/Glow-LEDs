@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { API_Orders } from '../../utils';
+import { API_Promos } from '../../utils';
 import { detailsAffiliate } from '../../actions/affiliateActions';
 import { listMyPaychecks } from '../../actions/paycheckActions';
 import { Loading } from '../../components/UtilityComponents';
@@ -54,7 +54,7 @@ const ProfilePage = (props) => {
 	console.log({ affiliate });
 
 	const get_code_usage = async () => {
-		const { data } = await API_Orders.get_code_usage(affiliate.pathname);
+		const { data } = await API_Promos.get_code_usage(affiliate.pathname);
 		console.log({ data });
 		set_number_of_uses(data.number_of_uses);
 		set_revenue(data.revenue);
@@ -167,7 +167,8 @@ const ProfilePage = (props) => {
 					userInfo.affiliate &&
 					affiliate &&
 					affiliate.public_code &&
-					revenue && (
+					revenue &&
+					number_of_uses && (
 						<div className="mb-20px max-w-700px w-500px">
 							<h2 className="group_images">Affiliate Metrics</h2>
 							<div className="mb-20px">
