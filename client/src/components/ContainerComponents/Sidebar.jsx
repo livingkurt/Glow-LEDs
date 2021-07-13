@@ -178,7 +178,7 @@ const Sidebar = (props) => {
 					</Link>
 				)}
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">
+					<button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/collections/all/products">Products</Link>
 					</button>
 
@@ -404,7 +404,7 @@ const Sidebar = (props) => {
 					</button>
 				</div>
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">
+					<button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/pages/menu/featured">Featured</Link>
 					</button>
 
@@ -465,7 +465,7 @@ const Sidebar = (props) => {
 					</button>
 				</div>
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary">
+					<button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/pages/menu/support">Support</Link>
 					</button>
 
