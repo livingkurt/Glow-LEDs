@@ -95,7 +95,8 @@ const productSchema = new mongoose.Schema(
 		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ],
 		products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
 		group_product: { type: Boolean, default: false },
-		product_options: [ productOptionsSchema ]
+		product_options: [ productOptionsSchema ],
+		product_group_name: { type: String }
 	},
 	{
 		timestamps: true

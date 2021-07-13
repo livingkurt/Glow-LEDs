@@ -451,7 +451,7 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													Caps:
+													{product.product_group_name && product.product_group_name}s:
 												</label>
 												<div className="custom-select">
 													<select
@@ -461,7 +461,8 @@ const ProductPage = (props) => {
 														onChange={(e) => update_product_images(e)}
 													>
 														<option key={1} defaultValue="">
-															---Choose Cap---
+															---Choose{' '}
+															{product.product_group_name && product.product_group_name}---
 														</option>
 														{product.products.map(
 															(cap, index) =>
@@ -470,7 +471,7 @@ const ProductPage = (props) => {
 																	''
 																) : (
 																	<option key={index} value={JSON.stringify(cap)}>
-																		{cap.name.slice(0, -14)}
+																		{cap.name.split(' ')[0]}
 																	</option>
 																)
 														)}

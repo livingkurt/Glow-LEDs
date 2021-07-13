@@ -48,6 +48,7 @@ const EditProductPage = (props) => {
 	const [ printing_time, set_printing_time ] = useState(0);
 	const [ assembly_time, set_assembly_time ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
+	const [ product_group_name, set_product_group_name ] = useState('');
 	const [ pathname, setPathname ] = useState();
 	const [ group_product, set_group_product ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
@@ -186,6 +187,7 @@ const EditProductPage = (props) => {
 		set_filament_used(product.filament_used);
 		set_printing_time(product.printing_time);
 		set_assembly_time(product.assembly_time);
+		set_product_group_name(product.product_group_name);
 	};
 	const unset_state = () => {
 		setId('');
@@ -231,6 +233,7 @@ const EditProductPage = (props) => {
 		set_filament_used(0);
 		set_printing_time(0);
 		set_assembly_time(0);
+		set_product_group_name('');
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -281,7 +284,8 @@ const EditProductPage = (props) => {
 				material_cost,
 				filament_used,
 				printing_time,
-				assembly_time
+				assembly_time,
+				product_group_name
 			})
 		);
 		e.target.reset();
@@ -1272,31 +1276,43 @@ const EditProductPage = (props) => {
 									)}
 									<div className="jc-b">
 										{group_product && (
-											<li>
-												{/* <label htmlFor="product">Products</label> */}
-												<div className="ai-c h-25px mv-15px jc-c">
-													<div className="custom-select">
-														<select
-															className="qty_select_dropdown"
-															onChange={(e) => add_product(e)}
-														>
-															<option key={1} defaultValue="">
-																---Add Products to Group---
-															</option>
-															{products_list.map((product, index) => (
-																<option key={index} value={JSON.stringify(product)}>
-																	{product.name}
+											<ul>
+												<li>
+													{/* <label htmlFor="product">Products</label> */}
+													<div className="ai-c h-25px mv-15px jc-c">
+														<div className="custom-select">
+															<select
+																className="qty_select_dropdown"
+																onChange={(e) => add_product(e)}
+															>
+																<option key={1} defaultValue="">
+																	---Add Products to Group---
 																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
+																{products_list.map((product, index) => (
+																	<option key={index} value={JSON.stringify(product)}>
+																		{product.name}
+																	</option>
+																))}
+															</select>
+															<span className="custom-arrow" />
+														</div>
 													</div>
-												</div>
-												{/* <button className="btn primary" onClick={(e) => add_product(e)}>
+													{/* <button className="btn primary" onClick={(e) => add_product(e)}>
 														Add Gear
 													</button> */}
-												{product_display(products)}
-											</li>
+													{product_display(products)}
+												</li>
+												<li>
+													<label htmlFor="product_group_name">Product Group Name</label>
+													<input
+														type="text"
+														name="product_group_name"
+														value={product_group_name}
+														id="product_group_name"
+														onChange={(e) => set_product_group_name(e.target.value)}
+													/>
+												</li>
+											</ul>
 										)}
 										<li>
 											<label htmlFor="chip">Chip</label>

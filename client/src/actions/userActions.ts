@@ -74,7 +74,10 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 		dispatch(setCurrentUser({}));
 	} catch (error) {
 		console.log({ error: error.response.data.message });
-		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
+		dispatch({
+			type: USER_REGISTER_FAIL,
+			payload: error.response && error.response.data.message ? error.response.data.message : error.message
+		});
 	}
 };
 
@@ -126,7 +129,10 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
 		console.log({ login: error.response.data.message });
-		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
+		dispatch({
+			type: USER_LOGIN_FAIL,
+			payload: error.response && error.response.data.message ? error.response.data.message : error.message
+		});
 	}
 };
 
