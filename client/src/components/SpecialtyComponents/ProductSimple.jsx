@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const Product = (props) => {
@@ -29,7 +29,9 @@ const Product = (props) => {
 
 						<label style={{ fontSize: '1.3rem' }}>{props.product.brand}</label>
 						<Link to={'/collections/all/products/' + props.product.pathname}>
-							<label style={{ fontSize: '1.6rem' }}>{props.product.name}</label>
+							<label style={{ fontSize: '1.6rem' }}>
+								{determine_product_name_display(props.product, false)}
+							</label>
 						</Link>
 						{props.product.name === 'Custom Infinity Mirror' ? (
 							<label className="product-price">

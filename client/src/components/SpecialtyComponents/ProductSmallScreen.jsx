@@ -3,7 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
 
-import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	determine_product_name_display,
+	sale_price_product_option_switch,
+	sale_price_switch
+} from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const ProductSmallScreen = (props) => {
@@ -93,7 +97,7 @@ const ProductSmallScreen = (props) => {
 						</div>
 						<div className="p-10px">
 							<div className="product_text" style={{ fontSize: '1.6rem' }}>
-								{props.product.name}
+								{determine_product_name_display(props.product, false)}
 							</div>
 							<div className="product_text mt-10px">
 								{props.product.name === 'Custom Infinity Mirror' ? (

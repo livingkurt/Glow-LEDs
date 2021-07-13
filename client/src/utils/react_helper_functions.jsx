@@ -292,6 +292,23 @@ export const determine_product_name = (product, show_qty) => {
 	);
 };
 
+export const determine_product_name_display = (product, show_qty) => {
+	// console.log({ product });
+	// console.log({ secondary_product: product.secondary_product });
+	const option = product.product_options.find((option) => option.default === true);
+	return (
+		<div>
+			{product.name}{' '}
+			{(product.category === 'accessories' ||
+				product.category === 'glowskins' ||
+				product.category === 'glow_casings') &&
+				option &&
+				option.size &&
+				`- ${option.size}`}
+		</div>
+	);
+};
+
 // export default function useWindowDimensions() {
 // 	const [ windowDimensions, setWindowDimensions ] = useState(getWindowDimensions());
 
