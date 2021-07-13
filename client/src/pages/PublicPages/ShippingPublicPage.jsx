@@ -55,50 +55,50 @@ const ShippingPublicPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		const data = {
-			email,
-			first_name,
-			last_name,
-			address_1,
-			address_2,
-			city,
-			state,
-			postalCode,
-			country,
-			international
-		};
-		const request = validate_shipping(data);
-		set_email_validations(request.errors.email);
-		set_first_name_validations(request.errors.first_name);
-		set_last_name_validations(request.errors.last_name);
-		set_address_validations(request.errors.address_1);
-		set_city_validations(request.errors.city);
-		set_state_validations(request.errors.state);
-		set_postal_code_validations(request.errors.postalCode);
-		set_country_validations(request.errors.country);
-		set_international_validations(request.errors.international);
+		// const data = {
+		// 	email,
+		// 	first_name,
+		// 	last_name,
+		// 	address_1,
+		// 	address_2,
+		// 	city,
+		// 	state,
+		// 	postalCode,
+		// 	country,
+		// 	international
+		// };
+		// const request = validate_shipping(data);
+		// set_email_validations(request.errors.email);
+		// set_first_name_validations(request.errors.first_name);
+		// set_last_name_validations(request.errors.last_name);
+		// set_address_validations(request.errors.address_1);
+		// set_city_validations(request.errors.city);
+		// set_state_validations(request.errors.state);
+		// set_postal_code_validations(request.errors.postalCode);
+		// set_country_validations(request.errors.country);
+		// set_international_validations(request.errors.international);
 
-		console.log(request);
-		console.log(request.errors.email);
-		if (request.isValid) {
-			dispatch(
-				saveShipping({
-					first_name,
-					last_name,
-					email,
-					address_1,
-					address_2,
-					city,
-					state,
-					postalCode,
-					country: international ? country : 'United States',
-					international
-				})
-			);
-			const paymentMethod = 'stripe';
-			dispatch(savePayment({ paymentMethod }));
-			props.history.push('placeorder');
-		}
+		// console.log(request);
+		// console.log(request.errors.email);
+		// if (request.isValid) {
+		dispatch(
+			saveShipping({
+				first_name,
+				last_name,
+				email,
+				address_1,
+				address_2,
+				city,
+				state,
+				postalCode,
+				country: international ? country : 'United States',
+				international
+			})
+		);
+		const paymentMethod = 'stripe';
+		dispatch(savePayment({ paymentMethod }));
+		props.history.push('placeorder');
+		// }
 	};
 	setTimeout(() => {
 		set_loading(false);
