@@ -126,7 +126,7 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		const doc = new GoogleSpreadsheet('1FkPTVWWATwdtn8hfErEjAyzz7loXaQpuQg9dHqyOOA8');
+		const doc = new GoogleSpreadsheet('1FPmn7vZGKUCW_DBbUqm0-rd2aqMvas0Us8YUCzyEK8Y');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({

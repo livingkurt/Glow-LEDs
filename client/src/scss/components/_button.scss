@@ -164,40 +164,65 @@ button {
 	padding-left: 80px;
 }
 
-.sidebar-btn:hover {
-	background: $theme_color_sidebar_hover;
+// .sidebar-btn:hover {
+// 	background: $theme_color_sidebar_hover;
+// }
+
+// // .sidebar-btn:hover + .sidebar_dropdown_container {
+// // 	max-height: 600px;
+// // }
+
+// // .sidebar_dropdown_container:hover {
+// // 	max-height: 600px;
+// // }
+
+// .sidebar-btn.secondary:hover {
+// 	background: $theme_color_sidebar_hover;
+// }
+
+// // .sidebar-btn.secondary:hover + .sidebar_dropdown_secondary_container {
+// // 	max-height: 600px;
+// // }
+// .sidebar-btn.nested:hover {
+// 	background: $theme_color_sidebar_hover;
+// }
+
+// // .sidebar-btn.nested:hover + .sidebar_dropdown_nested_container {
+// // 	max-height: 600px;
+// // }
+
+// .sidebar-btn.nested-2:hover {
+// 	background: $theme_color_sidebar_hover;
+// }
+
+.hide-menu {
+	// display: block !important;
+	max-height: 600px !important;
 }
 
-.sidebar-btn:hover + .sidebar_dropdown_container {
-	max-height: 600px;
+.sidebar-btn.icon {
+	// box-shadow: $bs_shallow;
+	background-color: transparent;
+	color: $theme_color_phrase_font;
+	border: 0px;
+	font-family: $phrase_font;
+	// border-radius: $br_small_containers;
+	transition: all .5s ease;
+	// padding: 10px;
+	box-shadow: unset;
+	padding: 2px 0px;
+	width: 20%;
+	text-align: left;
+	// margin-left: 124px;
 }
 
-.sidebar_dropdown_container:hover {
-	max-height: 600px;
-}
+// .sidebar-btn.icon:hover + .sidebar_dropdown_container {
+// 	background: $theme_color_sidebar_hover;
+// }
 
-.sidebar-btn.secondary:hover {
-	background: $theme_color_sidebar_hover;
-}
-
-.sidebar-btn.secondary:hover + .sidebar_dropdown_secondary_container {
-	max-height: 600px;
-}
-.sidebar-btn.nested:hover {
-	background: $theme_color_sidebar_hover;
-}
-
-.sidebar-btn.nested:hover + .sidebar_dropdown_nested_container {
-	max-height: 600px;
-}
-
-.sidebar-btn.nested-2:hover {
-	background: $theme_color_sidebar_hover;
-}
-
-.sidebar-btn.nested-2:hover + .sidebar_dropdown_nested_2_container {
-	max-height: 600px;
-}
+// .sidebar-btn.nested-2:hover + .sidebar_dropdown_nested_2_container {
+// 	max-height: 600px;
+// }
 
 // .search_button {
 // 	display: flex;

@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { listOrders } from '../../actions/orderActions';
 import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../../utils/helper_functions';
-import { API_Promos, API_Revenue } from '../../utils';
+import { API_Orders, API_Promos, API_Revenue } from '../../utils';
 
 const AffiliatesPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -27,18 +27,15 @@ const AffiliatesPage = (props) => {
 	const dispatch = useDispatch();
 
 	const stableDispatch = useCallback(dispatch, []);
-	useEffect(
-		() => {
-			stableDispatch(listAffiliates());
-			stableDispatch(listOrders());
-			get_last_months_orders();
-			get_total_orders();
-			return () => {
-				//
-			};
-		},
-		[ successSave, successDelete, stableDispatch ]
-	);
+	useEffect(() => {
+		stableDispatch(listAffiliates());
+		stableDispatch(listOrders());
+		get_last_months_orders();
+		get_total_orders();
+		return () => {
+			//
+		};
+	}, []);
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listAffiliates(category, searchKeyword, sortOrder));
@@ -49,12 +46,9 @@ const AffiliatesPage = (props) => {
 		dispatch(listAffiliates(category, searchKeyword, e.target.value));
 	};
 
-	useEffect(
-		() => {
-			stableDispatch(listAffiliates(category, searchKeyword, sortOrder));
-		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
-	);
+	useEffect(() => {
+		stableDispatch(listAffiliates(category, searchKeyword, sortOrder));
+	}, []);
 	const deleteHandler = (affiliate) => {
 		dispatch(deleteAffiliate(affiliate._id));
 	};
@@ -92,12 +86,12 @@ const AffiliatesPage = (props) => {
 	// };
 
 	const get_last_months_orders = async () => {
-		const { data } = await API_Revenue.last_months_orders();
+		const { data } = await API_Orders.last_months_orders();
 		console.log({ data });
 		set_last_months_orders(data);
 	};
 	const get_total_orders = async () => {
-		const { data } = await API_Revenue.total_orders();
+		const { data } = await API_Orders.total_orders();
 		console.log({ data });
 		set_total_orders(data);
 	};
@@ -138,6 +132,15 @@ const AffiliatesPage = (props) => {
 		});
 		set_loading_promo_update(false);
 		stableDispatch(listAffiliates());
+	};
+
+	const get_code_usage = async (affiliate) => {
+		// console.log({ pathname: affiliate.pathname });
+		const { data: { number_of_uses, revenue } } = await API_Promos.get_code_usage(affiliate.public_code.promo_code);
+		console.log({ number_of_uses, revenue });
+		return { number_of_uses, revenue };
+		// set_number_of_uses(number_of_uses);
+		// set_revenue(revenue);
 	};
 
 	return (
@@ -192,9 +195,11 @@ const AffiliatesPage = (props) => {
 									{/* <th>ID</th> */}
 									<th>Artist Name</th>
 									<th>Instagram Handle</th>
-									<th>Facebook Name</th>
+									{/* <th>Facebook Name</th> */}
 									<th>Percentage Off</th>
 									<th>Venmo</th>
+									{/* <th>Revenue</th>
+									<th>Uses</th> */}
 									<th>Public Code</th>
 									<th>Private Code</th>
 									<th>Sponsor</th>
@@ -214,11 +219,13 @@ const AffiliatesPage = (props) => {
 										{/* <td className="p-10px">{affiliate._id}</td> */}
 										<td className="p-10px">{affiliate.artist_name}</td>
 										<td className="p-10px">{affiliate.instagram_handle}</td>
-										<td className="p-10px">{affiliate.facebook_name}</td>
+										{/* <td className="p-10px">{affiliate.facebook_name}</td> */}
 										<td className="p-10px">
 											{affiliate.private_code && affiliate.private_code.percentage_off}%
 										</td>
 										<td className="p-10px">{affiliate.venmo}</td>
+										{/* <td className="p-10px">{get_code_usage(affiliate).revenue}</td>
+										<td className="p-10px">{get_code_usage(affiliate).number_of_uses}</td> */}
 										<td className="p-10px">
 											{affiliate.public_code && affiliate.public_code.promo_code}
 										</td>

@@ -450,7 +450,7 @@ export default {
 		res.send(final_result);
 	},
 	code_usage: async (req: any, res: any) => {
-		const orders = await Order.find({ deleted: false })
+		const orders = await Order.find({ deleted: false, isPaid: true })
 			.populate('user')
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product');
@@ -460,13 +460,13 @@ export default {
 		// console.log({ affiliate });
 		const number_of_uses = orders
 			.filter((order: any) => order.promo_code)
-			.filter((order: any) => order.promo_code === req.body.promo_code.toUpperCase()).length;
+			.filter((order: any) => order.promo_code.toLowerCase() === req.body.promo_code.toLowerCase()).length;
 		// const number_of_uses = orders.filter((order: any) => {
 		// 	return order.promo_code && order.promo_code.toLowerCase() === req.params.promo_code.toLowerCase();
 		// }).length;
 		const revenue = orders
 			.filter((order: any) => order.promo_code)
-			.filter((order: any) => order.promo_code === req.body.promo_code.toUpperCase())
+			.filter((order: any) => order.promo_code.toLowerCase() === req.body.promo_code.toLowerCase())
 			.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 			.toFixed(2);
 
