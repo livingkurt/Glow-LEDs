@@ -124,6 +124,8 @@ const ProductPage = (props) => {
 				return 'Black';
 			} else if (product.category === 'glowskins' || product.category === 'glow_casings') {
 				return 'Clear';
+			} else if (product.category === 'accessories') {
+				return 'White';
 			}
 		} else {
 			return color;
