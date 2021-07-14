@@ -111,6 +111,8 @@ const ProductPage = (props) => {
 					if (option) {
 						if (option.size) {
 							set_size(option.size);
+						} else {
+							set_size(option.name);
 						}
 						if (option.color) {
 							set_color(option.color);
@@ -143,11 +145,12 @@ const ProductPage = (props) => {
 						set_option_product_name(option.name);
 					}
 				}
-				if (product.option_products) {
+				if (product.color_products) {
 					const color = product.color_products.find((color) => color.default_option === true);
 					console.log({ color });
 					if (color) {
 						set_color_product(color._id);
+						set_color(color.color);
 					}
 				}
 			}
@@ -236,7 +239,13 @@ const ProductPage = (props) => {
 		});
 		button.classList.add('secondary');
 		button.classList.add('active');
-		set_size(option.size);
+
+		if (option.size) {
+			set_size(option.size);
+		} else {
+			set_size(option.name);
+		}
+
 		if (option.price > 0) {
 			set_price(option.price);
 		}

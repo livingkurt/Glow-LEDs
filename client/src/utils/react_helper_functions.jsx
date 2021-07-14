@@ -396,7 +396,7 @@ export const determine_product_name = (item, show_qty) => {
 	} else if (item.category === 'diffuser_caps') {
 		return (
 			<div>
-				{item.color && item.color + ' '} {item.name}
+				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
 			</div>
 		);
 	}
