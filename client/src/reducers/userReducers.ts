@@ -42,53 +42,6 @@ import {
 	GET_ERRORS
 } from '../constants/userConstants';
 
-const isEmpty = require('is-empty');
-
-const initialState = {
-	isAuthenticated: false,
-	userInfo: {},
-	loading: false
-};
-
-// export default function(state = initialState, action: { type: any; payload: any }) {
-// 	switch (action.type) {
-// 		case SET_CURRENT_USER:
-// 			return {
-// 				...state,
-// 				isAuthenticated: !isEmpty(action.payload),
-// 				user: action.payload
-// 			};
-// 		case USER_LOADING:
-// 			return {
-// 				...state,
-// 				loading: true
-// 			};
-// 		default:
-// 			return state;
-// 	}
-// }
-
-// export const userLoginReducer = (state = initialState, action: { type: any; payload: any }) => {
-// 	switch (action.type) {
-// 		case SET_CURRENT_USER:
-// 			return {
-// 				...state,
-// 				// isAuthenticated: !isEmpty(action.payload),
-// 				userInfo: action.payload
-// 			};
-// 		case USER_LOADING:
-// 			return {
-// 				...state,
-// 				loading: true
-// 			};
-// 		case USER_LOGIN_FAIL:
-// 			console.log({ payload: action.payload });
-// 			return { loading: false, error: action.payload };
-// 		default:
-// 			return state;
-// 	}
-// };
-
 export const errorReducer = (state = {}, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case GET_ERRORS:

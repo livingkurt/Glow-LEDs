@@ -35,12 +35,147 @@ export default {
 
 			const products = await Product.find({
 				deleted: false,
+				option: false,
 				...category,
 				...subcategory,
 				...collection,
 				...searchKeyword,
 				...chips
-			}).sort(sortOrder);
+			})
+				.sort(sortOrder)
+				.populate('color_products')
+				.populate('secondary_products')
+				.populate('option_products');
+			// console.log({ products });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: products,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(products);
+		} catch (error) {
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Products' });
+		}
+	},
+	get_all_options: async (req: any, res: any) => {
+		try {
+			const category = req.query.category ? { category: req.query.category } : {};
+			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
+			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
+			// console.log({ category, collection });
+			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
+			const searchKeyword = req.query.searchKeyword
+				? {
+						name: {
+							$regex: req.query.searchKeyword,
+							$options: 'i'
+						}
+					}
+				: {};
+
+			let sortOrder = {};
+			if (req.query.sortOrder === 'lowest') {
+				sortOrder = { price: 1 };
+			} else if (req.query.sortOrder === 'highest') {
+				sortOrder = { price: -1 };
+			} else if (req.query.sortOrder === 'newest') {
+				sortOrder = { _id: -1 };
+			} else if (req.query.sortOrder === 'hidden') {
+				sortOrder = { hidden: -1 };
+			} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
+				sortOrder = { order: 1, _id: -1 };
+			}
+
+			const products = await Product.find({
+				deleted: false,
+				option: true,
+				...category,
+				...subcategory,
+				...collection,
+				...searchKeyword,
+				...chips
+			})
+				.sort(sortOrder)
+				.populate('color_products')
+				.populate('secondary_products')
+				.populate('option_products');
+			// console.log({ products });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: products,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(products);
+		} catch (error) {
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Products' });
+		}
+	},
+	get_all_diffuser_caps: async (req: any, res: any) => {
+		try {
+			const category = req.query.category ? { category: req.query.category } : {};
+			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
+			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
+			// console.log({ category, collection });
+			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
+			const searchKeyword = req.query.searchKeyword
+				? {
+						name: {
+							$regex: req.query.searchKeyword,
+							$options: 'i'
+						}
+					}
+				: {};
+
+			let sortOrder = {};
+			if (req.query.sortOrder === 'lowest') {
+				sortOrder = { price: 1 };
+			} else if (req.query.sortOrder === 'highest') {
+				sortOrder = { price: -1 };
+			} else if (req.query.sortOrder === 'newest') {
+				sortOrder = { _id: -1 };
+			} else if (req.query.sortOrder === 'hidden') {
+				sortOrder = { hidden: -1 };
+			} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
+				sortOrder = { order: 1, _id: -1 };
+			}
+
+			const products = await Product.find({
+				deleted: false,
+				category: 'diffuser_caps',
+				...category,
+				...subcategory,
+				...collection,
+				...searchKeyword,
+				...chips
+			})
+				.sort(sortOrder)
+				.populate('color_products')
+				.populate('secondary_products')
+				.populate('option_products');
 			// console.log({ products });
 			log_request({
 				method: 'GET',
@@ -68,7 +203,10 @@ export default {
 		try {
 			const product = await Product.findOne({ pathname: req.params.pathname })
 				.populate('chips')
-				.populate('products');
+				.populate('products')
+				.populate('color_products')
+				.populate('secondary_products')
+				.populate('option_products');
 
 			if (product) {
 				log_request({

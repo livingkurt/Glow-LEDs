@@ -167,7 +167,7 @@ export const make_private_code = (length: any) => {
 export const determine_parcel = (orderItems: any, parcels: any) => {
 	const dimmensions = orderItems.map((item: any) => {
 		// console.log({ item });
-		if (item.product_option.length === 0) {
+		if (item.product_option && item.product_option.length === 0) {
 			return {
 				length: item.product_option.package_length,
 				width: item.product_option.package_width,

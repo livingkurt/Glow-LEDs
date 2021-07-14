@@ -8,11 +8,17 @@ const product_routes = {
 	get_categories: () => {
 		return axios.get('/api/products/get_categories');
 	},
+	get_all_options: () => {
+		return axios.get('/api/products/get_all_options');
+	},
+	get_all_diffuser_caps: () => {
+		return axios.get('/api/products/get_all_diffuser_caps');
+	},
 	get_product_options: (pathname: any) => {
 		return axios.get('/api/products/get_options/' + pathname);
 	},
 	get_product: (pathname: any) => {
-		return axios.get('/api/products/get_one/' + pathname);
+		return axios.get('/api/products/' + pathname);
 	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });

@@ -20,126 +20,141 @@ import {
 } from '../constants/cartConstants';
 import axios from 'axios';
 
-export const addToCart = (
-	pathname: string,
-	qty: number,
-	color: string,
-	diffuser_cap: any,
-	product_option: any,
-	images: any,
-	cart: any
-) => async (
-	dispatch: (
-		arg0: {
-			type: string;
-			payload: {
-				product: object;
-				secondary_product: string;
-				name: string;
-				display_image: string;
-				diffuser_cap: any;
-				// diffuser_cap_name: string;
-				color: string;
-				price: number;
-				sale_price: number;
-				countInStock: number;
-				package_package_volume: number;
-				weight_pounds: number;
-				weight_ounces: number;
-				package_length: number;
-				package_width: number;
-				package_height: number;
-				qty: number;
-				pathname: number;
-				category: string;
-				product_option: any;
-				finite_stock: number;
-			};
-		}
-	) => void,
+export const addToCart = (cart_data: any) => async (
+	dispatch: (arg0: any) => void,
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
 	try {
-		const { data } = await Axios.get('/api/products/' + pathname);
-		let image: any;
-		if (typeof images === 'string') {
-			console.log('String');
-			image = images;
-		} else {
-			console.log('Array');
-			image = images[0];
-		}
+		// const { data } = await Axios.get('/api/products/' + cart_data.pathname);
 
+		// const { data: option_product } = await Axios.get('/api/products/' + data.option_pathname);
+		// const { data: color_product } = await Axios.get('/api/products/' + data.color_pathname);
+		// let image: any;
+		// if (typeof images === 'string') {
+		// 	console.log('String');
+		// 	image = images;
+		// } else {
+		// 	console.log('Array');
+		// 	image = images[0];
+		// }
 		let cartItem: any = {
-			product: data._id,
-			name: data.name,
-			display_image: image,
-			price: product_option.price || data.price,
-			sale_price: product_option.sale_price || data.sale_price,
-			countInStock: data.countInStock,
-			weight_pounds: product_option.weight_pounds || data.weight_pounds,
-			weight_ounces: product_option.weight_ounces || data.weight_ounces,
-			package_length: product_option.package_length || data.package_length,
-			package_width: product_option.package_width || data.package_width,
-			package_height: product_option.package_height || data.package_height,
-			package_volume: product_option.package_volume || data.package_volume,
-			pathname: data.pathname,
-			category: data.category,
-			product_option: product_option || {},
-			qty,
-			finite_stock: data.finite_stock
+			product: cart_data.product,
+			color_product: cart_data.color_product,
+			option_product: cart_data.option_product,
+			option_product_name: cart_data.option_product_name,
+			secondary_product: cart_data.secondary_product,
+			secondary_product_name: cart_data.secondary_product_name,
+			name: cart_data.name,
+			size: cart_data.size,
+			color: cart_data.color,
+			display_image: cart_data.display_image,
+			price: cart_data.price,
+			sale_price: cart_data.sale_price,
+			countInStock: cart_data.countInStock,
+			weight_pounds: cart_data.weight_pounds,
+			weight_ounces: cart_data.weight_ounces,
+			package_length: cart_data.package_length,
+			package_width: cart_data.package_width,
+			package_height: cart_data.package_height,
+			package_volume: cart_data.package_volume,
+			pathname: cart_data.pathname,
+			category: cart_data.category,
+			qty: cart_data.qty,
+			finite_stock: cart_data.finite_stock
 		};
 		console.log({ cartItem });
-		if (color) {
-			cartItem = {
-				product: data._id,
-				name: data.name,
-				display_image: image,
-				color,
-				diffuser_cap,
-				price: product_option.price || data.price,
-				sale_price: product_option.sale_price || data.sale_price,
-				countInStock: data.countInStock,
-				weight_pounds: product_option.weight_pounds || data.weight_pounds,
-				weight_ounces: product_option.weight_ounces || data.weight_ounces,
-				package_length: product_option.package_length || data.package_length,
-				package_width: product_option.package_width || data.package_width,
-				package_height: product_option.package_height || data.package_height,
-				package_volume: product_option.package_volume || data.package_volume,
-				pathname: data.pathname,
-				category: data.category,
-				product_option: product_option || {},
-				qty,
-				finite_stock: data.finite_stock
-			};
-			console.log({ color: cartItem });
-		}
-		if (diffuser_cap) {
-			cartItem = {
-				product: data._id,
-				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
-				name: data.name,
-				display_image: image,
-				color,
-				diffuser_cap,
-				// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
-				price: product_option.price || data.price,
-				sale_price: product_option.sale_price || data.sale_price,
-				countInStock: data.countInStock,
-				weight_pounds: product_option.weight_pounds || data.weight_pounds,
-				weight_ounces: product_option.weight_ounces || data.weight_ounces,
-				package_length: product_option.package_length || data.package_length,
-				package_width: product_option.package_width || data.package_width,
-				package_height: product_option.package_height || data.package_height,
-				package_volume: product_option.package_volume || data.package_volume,
-				pathname: data.pathname,
-				category: data.category,
-				product_option: product_option || {},
-				qty,
-				finite_stock: data.finite_stock
-			};
-			console.log({ diffuser_cap: cartItem });
-		}
+		// let cartItem: any = {
+		// 	product: macro_product._id,
+		// 	name: macro_product.name,
+		// 	size: option_product && option_product.name,
+		// 	color: color_product && color_product.color,
+		// 	display_image: color_product.images[0] || macro_product.images[0],
+		// 	price: option_product.price || macro_product.price,
+		// 	sale_price: option_product.sale_price || macro_product.sale_price,
+		// 	countInStock: option_product.count_in_stock || macro_product.count_in_stock,
+		// 	weight_pounds: option_product.weight_pounds || macro_product.weight_pounds,
+		// 	weight_ounces: option_product.weight_ounces || macro_product.weight_ounces,
+		// 	package_length: option_product.package_length || macro_product.package_length,
+		// 	package_width: option_product.package_width || macro_product.package_width,
+		// 	package_height: option_product.package_height || macro_product.package_height,
+		// 	package_volume: option_product.package_volume || macro_product.package_volume,
+		// 	pathname: macro_product.pathname,
+		// 	category: macro_product.category,
+		// 	// product_option: product_option || {},
+		// 	qty: data.qty,
+		// 	finite_stock: macro_product.finite_stock
+		// };
+
+		// let cartItem: any = {
+		// 	product: data._id,
+		// 	name: data.name,
+		// 	display_image: image,
+		// 	price: product_option.price || data.price,
+		// 	sale_price: product_option.sale_price || data.sale_price,
+		// 	countInStock: data.countInStock,
+		// 	weight_pounds: product_option.weight_pounds || data.weight_pounds,
+		// 	weight_ounces: product_option.weight_ounces || data.weight_ounces,
+		// 	package_length: product_option.package_length || data.package_length,
+		// 	package_width: product_option.package_width || data.package_width,
+		// 	package_height: product_option.package_height || data.package_height,
+		// 	package_volume: product_option.package_volume || data.package_volume,
+		// 	pathname: data.pathname,
+		// 	category: data.category,
+		// 	product_option: product_option || {},
+		// 	qty,
+		// 	finite_stock: data.finite_stock
+		// };
+		// console.log({ cartItem });
+		// if (color) {
+		// 	cartItem = {
+		// 		product: data._id,
+		// 		name: data.name,
+		// 		display_image: image,
+		// 		color,
+		// 		diffuser_cap,
+		// 		price: product_option.price || data.price,
+		// 		sale_price: product_option.sale_price || data.sale_price,
+		// 		countInStock: data.countInStock,
+		// 		weight_pounds: product_option.weight_pounds || data.weight_pounds,
+		// 		weight_ounces: product_option.weight_ounces || data.weight_ounces,
+		// 		package_length: product_option.package_length || data.package_length,
+		// 		package_width: product_option.package_width || data.package_width,
+		// 		package_height: product_option.package_height || data.package_height,
+		// 		package_volume: product_option.package_volume || data.package_volume,
+		// 		pathname: data.pathname,
+		// 		category: data.category,
+		// 		product_option: product_option || {},
+		// 		qty,
+		// 		finite_stock: data.finite_stock
+		// 	};
+		// 	console.log({ color: cartItem });
+		// }
+		// if (diffuser_cap) {
+		// 	cartItem = {
+		// 		product: data._id,
+		// 		secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
+		// 		name: data.name,
+		// 		display_image: image,
+		// 		color,
+		// 		diffuser_cap,
+		// 		// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
+		// 		price: product_option.price || data.price,
+		// 		sale_price: product_option.sale_price || data.sale_price,
+		// 		countInStock: data.countInStock,
+		// 		weight_pounds: product_option.weight_pounds || data.weight_pounds,
+		// 		weight_ounces: product_option.weight_ounces || data.weight_ounces,
+		// 		package_length: product_option.package_length || data.package_length,
+		// 		package_width: product_option.package_width || data.package_width,
+		// 		package_height: product_option.package_height || data.package_height,
+		// 		package_volume: product_option.package_volume || data.package_volume,
+		// 		pathname: data.pathname,
+		// 		category: data.category,
+		// 		product_option: product_option || {},
+		// 		qty,
+		// 		finite_stock: data.finite_stock
+		// 	};
+		// 	console.log({ diffuser_cap: cartItem });
+		// }
 		dispatch({
 			type: CART_ADD_ITEM,
 			payload: cartItem
@@ -196,11 +211,13 @@ export const removeFromCart = (product: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { cart: { cartItems: object } }
 ) => {
+	console.log({ product });
 	dispatch({ type: CART_REMOVE_ITEM, payload: product });
 
 	const { cart: { cartItems } } = getState();
 	Cookie.set('cartItems', JSON.stringify(cartItems));
 };
+
 export const saveShipping = (data: {
 	first_name: string;
 	last_name: string;

@@ -240,9 +240,9 @@ export default {
 	},
 	create_user_order: async (req: any, res: any) => {
 		try {
-			console.log({ user_create_one: req.body });
-			console.log({ isPaid: req.body.isPaid });
-			console.log({ paidAt: today });
+			console.log({ orderItems: req.body.orderItems });
+			// console.log({ isPaid: req.body.isPaid });
+			// console.log({ paidAt: today });
 			const newOrder = new Order({
 				orderItems: req.body.orderItems,
 				user: req.body.user ? req.body.user._id : req.user._id,

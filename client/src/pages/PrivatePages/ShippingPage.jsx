@@ -34,6 +34,7 @@ const ShippingPage = (props) => {
 	useEffect(
 		() => {
 			if (userInfo) {
+				console.log({ userInfo: userInfo.shipping });
 				set_email(userInfo.email);
 				set_first_name(userInfo.shipping.first_name);
 				set_last_name(userInfo.shipping.last_name);
@@ -147,6 +148,18 @@ const ShippingPage = (props) => {
 		// console.log(request);
 		// console.log(request.errors.email);
 		// if (request.isValid) {
+		console.log({
+			first_name,
+			last_name,
+			email,
+			address_1,
+			address_2,
+			city,
+			state,
+			postalCode,
+			country: international ? country : 'United States',
+			international
+		});
 		dispatch(
 			saveShipping({
 				first_name,
@@ -163,7 +176,7 @@ const ShippingPage = (props) => {
 		);
 		const paymentMethod = 'stripe';
 		dispatch(savePayment({ paymentMethod }));
-		console.log({ save_shipping });
+		// console.log({ save_shipping });
 		if (save_shipping) {
 			dispatch(
 				update({
@@ -250,7 +263,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="email">Email</label>
 							<input
 								type="text"
-								value={email}
+								defaultValue={email}
 								name="email"
 								id="email"
 								onChange={(e) => set_email(e.target.value)}
@@ -261,7 +274,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="first_name">First Name</label>
 							<input
 								type="text"
-								value={first_name}
+								defaultValue={first_name}
 								name="first_name"
 								id="first_name"
 								onChange={(e) => set_first_name(e.target.value)}
@@ -274,7 +287,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="last_name">Last Name</label>
 							<input
 								type="text"
-								value={last_name}
+								defaultValue={last_name}
 								name="last_name"
 								id="last_name"
 								onChange={(e) => set_last_name(e.target.value)}
@@ -287,7 +300,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="address_1">Address</label>
 							<input
 								type="text"
-								value={address_1}
+								defaultValue={address_1}
 								name="address_1"
 								id="address_1"
 								onChange={(e) => set_address_1(e.target.value)}
@@ -300,7 +313,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="address_2">Apt/Suite</label>
 							<input
 								type="text"
-								value={address_2}
+								defaultValue={address_2}
 								name="address_2"
 								id="address_2"
 								onChange={(e) => set_address_2(e.target.value)}
@@ -310,7 +323,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="city">City</label>
 							<input
 								type="text"
-								value={city}
+								defaultValue={city}
 								name="city"
 								id="city"
 								onChange={(e) => setCity(e.target.value)}

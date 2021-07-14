@@ -112,7 +112,7 @@ function ProductPage(props) {
 	];
 
 	const determine_color = (product, isSelected, isDragging) => {
-		let result = '';
+		let result = '#797979';
 
 		if (product.category === 'glow_casings') {
 			result = colors[1].color;

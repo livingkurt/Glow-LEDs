@@ -186,7 +186,7 @@ const Cart = (props) => {
 								<div className="cart_sidebar-name">
 									<div className="mb-10px">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											{determine_product_name(item)}
+											{determine_product_name(item, true)}
 										</Link>
 									</div>
 									<div>

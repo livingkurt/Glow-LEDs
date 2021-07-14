@@ -11,6 +11,8 @@ import { addToCart } from '../../actions/cartActions';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import {
+	determine_product_name,
+	determine_product_name_title,
 	sale_price_product_option_switch,
 	sale_price_product_option_switch_product
 } from '../../utils/react_helper_functions';
@@ -21,7 +23,10 @@ const ProductPage = (props) => {
 
 	const { cartItems } = cart;
 	let { userInfo } = userLogin;
-
+	const [ name, set_name ] = useState('');
+	const [ description, set_description ] = useState('');
+	const [ facts, set_facts ] = useState('');
+	const [ included_items, set_included_items ] = useState('');
 	const [ qty, setQty ] = useState(1);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ images, set_images ] = useState([]);
@@ -37,8 +42,17 @@ const ProductPage = (props) => {
 	const [ image, set_image ] = useState('');
 	const [ no_dropdown, set_no_dropdown ] = useState(false);
 	const [ color, set_color ] = useState('');
+	// const [ pathname, set_pathname ] = useState('');
 	const [ option_color, set_option_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
+	const [ pathname, set_pathname ] = useState('');
+	const [ color_product, set_color_product ] = useState(null);
+	const [ option_product, set_option_product ] = useState(null);
+	const [ secondary_product, set_secondary_product ] = useState(null);
+	const [ dimensions, set_dimensions ] = useState({});
+	const [ secondary_product_name, set_secondary_product_name ] = useState('');
+	const [ option_product_name, set_option_product_name ] = useState('');
+
 	const productDetails = useSelector((state) => state.productDetails);
 
 	const { product, loading, error } = productDetails;
@@ -57,6 +71,7 @@ const ProductPage = (props) => {
 
 	useEffect(() => {
 		dispatch(detailsProduct(props.match.params.pathname));
+		set_pathname(props.match.params.pathname);
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
@@ -71,28 +86,81 @@ const ProductPage = (props) => {
 				set_price(product.price);
 				set_sale_price(product.sale_price);
 				set_count_in_stock(product.countInStock);
-
+				set_name(product.name);
+				set_description(product.description);
+				set_facts(product.facts);
+				set_color(product.color);
+				set_included_items(product.included_items);
+				set_dimensions({
+					weight_pounds: product.weight_pounds,
+					weight_ounces: product.weight_ounces,
+					package_length: product.package_length,
+					package_width: product.package_width,
+					package_height: product.package_height,
+					package_volume: product.package_volume
+				});
 				set_product_option({});
-				if (product.product_options) {
-					const option = product.product_options.find((option) => option.default === true);
+				if (product.option_products) {
+					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
 					if (option) {
 						set_price(option.price);
 						if (option.size) {
 							set_size(option.size);
 						}
+						if (option.color) {
+							set_color(option.color);
+						}
 						set_sale_price(option.sale_price);
-						if (option.count_in_stock) {
-							set_count_in_stock(option.count_in_stock);
+						if (option.countInStock) {
+							set_count_in_stock(option.countInStock);
 						}
 
 						set_product_option(option);
+						console.log({ images: option.images });
 						if (option.images > 0) {
 							set_images(option.images);
 							set_image(option.images && option.images[0]);
 						}
+						set_dimensions({
+							weight_pounds: option.weight_pounds,
+							weight_ounces: option.weight_ounces,
+							package_length: option.package_length,
+							package_width: option.package_width,
+							package_height: option.package_height,
+							package_volume: option.package_volume
+						});
+						set_option_product(option._id);
+						set_option_product_name(option.name);
 					}
 				}
+				if (product.option_products) {
+					const color = product.color_products.find((color) => color.default_option === true);
+					console.log({ color });
+					if (color) {
+						set_color_product(color._id);
+					}
+				}
+				// if (product.product_options) {
+				// 	const option = product.product_options.find((option) => option.default === true);
+				// 	console.log({ option });
+				// 	if (option) {
+				// 		set_price(option.price);
+				// 		if (option.size) {
+				// 			set_size(option.size);
+				// 		}
+				// 		set_sale_price(option.sale_price);
+				// 		if (option.count_in_stock) {
+				// 			set_count_in_stock(option.count_in_stock);
+				// 		}
+
+				// 		set_product_option(option);
+				// 		if (option.images > 0) {
+				// 			set_images(option.images);
+				// 			set_image(option.images && option.images[0]);
+				// 		}
+				// 	}
+				// }
 
 				// set_color(
 				// 	product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
@@ -115,40 +183,120 @@ const ProductPage = (props) => {
 		[ error ]
 	);
 
-	const determine_default_color = (color) => {
-		console.log({ color });
-		if (!color) {
-			if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
-				return 'Translucent White';
-			} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
-				return 'Black';
-			} else if (product.category === 'glowskins' || product.category === 'glow_casings') {
-				return 'Clear';
-			} else if (product.category === 'accessories') {
-				return 'White';
-			}
-		} else {
-			return color;
-		}
-	};
+	// const determine_default_color = (color) => {
+	// 	console.log({ color });
+	// 	if (!color) {
+	// 		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
+	// 			return 'Translucent White';
+	// 		} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
+	// 			return 'Black';
+	// 		} else if (product.category === 'glowskins' || product.category === 'glow_casings') {
+	// 			return 'Clear';
+	// 		} else if (product.category === 'accessories') {
+	// 			return 'White';
+	// 		}
+	// 	} else {
+	// 		return color;
+	// 	}
+	// };
 
 	const handleAddToCart = () => {
-		console.log({ product_option });
+		// console.log({ product_option });
+		console.log({ handleAddToCart: images[0] });
 		dispatch(
-			addToCart(
-				props.match.params.pathname,
-				qty,
-				determine_default_color(color),
-				diffuser_cap,
+			addToCart({
+				product: product._id,
+				color_product,
+				option_product,
+				option_product_name,
+				secondary_product,
+				secondary_product_name,
+				name,
+				size,
+				color,
+				display_image: images[0],
+				price,
+				sale_price,
+				countInStock: count_in_stock,
+				weight_pounds: dimensions.weight_pounds,
+				weight_ounces: dimensions.weight_ounces,
+				package_length: dimensions.package_length,
+				package_width: dimensions.package_width,
+				package_height: dimensions.package_height,
+				package_volume: dimensions.package_volume,
+				pathname: props.match.params.pathname,
+				category: product.category,
 				product_option,
-				images[0]
-			)
+				qty,
+				finite_stock: product.category
+				// // determine_default_color(color),
+				// diffuser_cap: diffuser_cap,
+			})
 		);
 		open_cart();
 		set_product_option({});
 	};
 
-	const update_product = (e, option) => {
+	// const update_product = (e, option) => {
+	// 	let button = document.getElementById(e.target.id);
+	// 	let buttons = document.querySelectorAll('.packs');
+	// 	buttons.forEach((node) => {
+	// 		node.classList.remove('active');
+	// 		node.classList.remove('secondary');
+	// 		node.classList.add('primary');
+	// 	});
+	// 	button.classList.add('secondary');
+	// 	button.classList.add('active');
+	// 	set_price(option.price);
+	// 	if (typeof option.images !== 'undefined' && option.images.length > 0) {
+	// 		set_images(option.images);
+	// 		set_image(option.images[0]);
+	// 	}
+	// 	set_sale_price(option.sale_price);
+	// 	set_size(option.size);
+	// 	set_count_in_stock(option.count_in_stock);
+	// 	// set_length(option.length);
+	// 	// set_width(option.width);
+	// 	// set_height(option.height);
+	// 	// set_volume(option.volume);
+	// 	set_product_option(option);
+	// 	set_no_dropdown(option.no_dropdown);
+	// 	if (option_color && option_color.price) {
+	// 		set_price(option_color.price);
+	// 	}
+	// 	if (option.no_dropdown) {
+	// 		set_color(option.color);
+	// 	}
+	// };
+
+	const update_product_images = (e, option) => {
+		const product = JSON.parse(e.target.value);
+		set_diffuser_cap(JSON.parse(e.target.value));
+		set_images(product.images);
+		set_image(product.images[0]);
+	};
+
+	const update_color = (e) => {
+		const option = JSON.parse(e.target.value);
+		// set_name(option.name);
+		set_price(option.price);
+		if (option.description) {
+			set_description(option.description);
+		}
+		if (option.facts) {
+			set_facts(option.facts);
+		}
+
+		set_sale_price(option.sale_price);
+		set_color(option.color);
+		if (option.images && option.images[0]) {
+			set_images(option.images);
+			set_image(option.images[0]);
+		}
+		set_color_product(option._id);
+	};
+	const update_option = (e) => {
+		const option = JSON.parse(e.target.value);
 		let button = document.getElementById(e.target.id);
 		let buttons = document.querySelectorAll('.packs');
 		buttons.forEach((node) => {
@@ -158,51 +306,107 @@ const ProductPage = (props) => {
 		});
 		button.classList.add('secondary');
 		button.classList.add('active');
-		set_price(option.price);
-		if (typeof option.images !== 'undefined' && option.images.length > 0) {
-			set_images(option.images);
-			set_image(option.images[0]);
-		}
-		set_sale_price(option.sale_price);
+		// set_name(option.name);
+		// const new_name = `${option.color && option.color + ' '}${product.name}${option.size && ' - ' + option.size}`;
+		// set_name(new_name);
+
+		// set_name(option.name);
 		set_size(option.size);
-		set_count_in_stock(option.count_in_stock);
-		// set_length(option.length);
-		// set_width(option.width);
-		// set_height(option.height);
-		// set_volume(option.volume);
-		set_product_option(option);
-		set_no_dropdown(option.no_dropdown);
-		if (option_color && option_color.price) {
-			set_price(option_color.price);
+		set_price(option.price);
+		if (option.description) {
+			set_description(option.description);
 		}
-		if (option.no_dropdown) {
-			set_color(option.color);
+		if (option.facts) {
+			set_facts(option.facts);
 		}
-	};
-
-	const update_product_images = (e, option) => {
-		const product = JSON.parse(e.target.value);
-		set_diffuser_cap(JSON.parse(e.target.value));
-		set_images(product.images);
-		set_image(product.images[0]);
-	};
-
-	const update_color = (e, option) => {
-		if (option.price) {
-			set_price(option.price);
+		if (option.included_items) {
+			set_included_items(option.included_items);
 		}
 		set_sale_price(option.sale_price);
-		set_color(JSON.parse(e.target.value).color);
-		set_option_color(JSON.parse(e.target.value));
-		console.log({ option_images: option.images });
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
 		}
-		if (product.category === 'frosted_diffusers') {
-			set_product_option(option);
-		}
+		set_dimensions({
+			weight_pounds: option.weight_pounds,
+			weight_ounces: option.weight_ounces,
+			package_length: option.package_length,
+			package_width: option.package_width,
+			package_height: option.package_height,
+			package_volume: option.package_volume
+		});
+		set_option_product(option._id);
+		set_option_product_name(option.name);
 	};
+
+	const update_secondary = (e) => {
+		const option = JSON.parse(e.target.value);
+		if (option.images && option.images[0]) {
+			set_images(option.images);
+			set_image(option.images[0]);
+		}
+		set_secondary_product(option._id);
+		set_secondary_product_name(option.name);
+	};
+
+	// const update_secondary = (e) => {
+	// 	const option = JSON.parse(e.target.value);
+	// 	let button = document.getElementById(e.target.id);
+	// 	let buttons = document.querySelectorAll('.packs');
+	// 	buttons.forEach((node) => {
+	// 		node.classList.remove('active');
+	// 		node.classList.remove('secondary');
+	// 		node.classList.add('primary');
+	// 	});
+	// 	button.classList.add('secondary');
+	// 	button.classList.add('active');
+	// 	// set_name(option.name);
+	// 	// const new_name = `${option.color && option.color + ' '}${product.name}${option.size && ' - ' + option.size}`;
+	// 	// set_name(new_name);
+
+	// 	// set_name(option.name);
+	// 	set_size(option.size);
+	// 	set_price(option.price);
+	// 	if (option.description) {
+	// 		set_description(option.description);
+	// 	}
+	// 	if (option.facts) {
+	// 		set_facts(option.facts);
+	// 	}
+	// 	if (option.included_items) {
+	// 		set_included_items(option.included_items);
+	// 	}
+	// 	set_sale_price(option.sale_price);
+	// 	if (option.images && option.images[0]) {
+	// 		set_images(option.images);
+	// 		set_image(option.images[0]);
+	// 	}
+	// 	set_dimensions({
+	// 		weight_pounds: option.weight_pounds,
+	// 		weight_ounces: option.weight_ounces,
+	// 		package_length: option.package_length,
+	// 		package_width: option.package_width,
+	// 		package_height: option.package_height,
+	// 		package_volume: option.package_volume
+	// 	});
+	// 	set_option_product(option._id);
+	// };
+	// const update_color = (e, option) => {
+	// 	if (option.price) {
+	// 		set_price(option.price);
+	// 	}
+	// 	set_sale_price(option.sale_price);
+	// 	set_color(JSON.parse(e.target.value).color);
+	// 	set_option_color(JSON.parse(e.target.value));
+	// 	console.log({ option_images: option.images });
+	// 	if (option.images && option.images[0]) {
+	// 		set_images(option.images);
+	// 		set_image(option.images[0]);
+	// 	}
+	// 	if (product.category === 'frosted_diffusers') {
+	// 		set_product_option(option);
+	// 	}
+	// };
 
 	return (
 		<div className="">
@@ -300,13 +504,13 @@ const ProductPage = (props) => {
 						</div>
 						<div className="details">
 							<div className="">
-								<label className="product_title_top none fs-2em ff-h mb-2rem">{product.name}</label>
+								<label className="product_title_top none fs-2em ff-h mb-2rem">{name}</label>
 								<div className="details-image">
 									{/* <Zoom> */}
 									<img
 										id="expandedImg"
-										alt={product.name}
-										title={product.name}
+										alt={name}
+										title={name}
 										className="details-image-img"
 										src={image}
 										style={{
@@ -338,8 +542,24 @@ const ProductPage = (props) => {
 							</div>
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
-								<h1 className="product_title_side" styles={{ display: 'flex' }}>
-									{product.name}
+								<h1 className="product_title_side lh-50px">
+									{/* {name} */}
+									{/* {color && color + ' '} {product.name} {size !== 0 && ' - ' + size} */}
+									{/* {determine_product_name_title(
+										product,
+										false,
+										secondary_product_name && secondary_product_name
+									)} */}
+									{determine_product_name(
+										{
+											...product,
+											secondary_product_name: secondary_product_name && secondary_product_name,
+											option_product_name: option_product_name && option_product_name,
+											color: color && color,
+											size: size && size
+										},
+										false
+									)}
 								</h1>
 								<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
 									<a href="#reviews">
@@ -363,8 +583,8 @@ const ProductPage = (props) => {
 								<div className="">
 									<div className="h-100per paragraph_font">
 										<ul style={{ marginLeft: '10px' }}>
-											{product.facts ? (
-												product.facts.split('\n').map((line, index) => {
+											{facts ? (
+												facts.split('\n').map((line, index) => {
 													return (
 														<li
 															key={index}
@@ -376,7 +596,7 @@ const ProductPage = (props) => {
 													);
 												})
 											) : (
-												product.facts
+												facts
 											)}
 										</ul>
 									</div>
@@ -403,9 +623,105 @@ const ProductPage = (props) => {
 									</div>
 
 									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
-
-									{/* <div className=""> */}
-									{product.product_options &&
+									{product.secondary_product_group &&
+									product.secondary_products &&
+									product.secondary_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.secondary_group_name && product.secondary_group_name}s:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_secondary(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose{' '}
+															{product.secondary_group_name &&
+																product.secondary_group_name}---
+														</option>
+														{product.secondary_products.map((secondary, index) => (
+															<option key={index} value={JSON.stringify(secondary)}>
+																{secondary.name.slice(0, -14)}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
+									{product.color_product_group &&
+									product.color_products &&
+									product.color_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Colors:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_color(e)}
+													>
+														{/* <option key={1} defaultValue="">
+															---Choose Color---
+														</option> */}
+														{product.color_products.map((color, index) => (
+															<option key={index} value={JSON.stringify(color)}>
+																{color.name.split(' ')[0]}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
+									{product.option_product_group &&
+									product.option_products &&
+									product.option_products.length > 0 && (
+										<li>
+											<div className="row">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem mt-1rem"
+												>
+													Options:
+												</label>
+												<div className="ai-c wrap">
+													{product.option_products
+														// .filter((option) => !option.dropdown)
+														// .filter((option) => option.count_in_stock)
+														.map((option, index) => (
+															<button
+																key={index}
+																selected={option.default_option}
+																id={option.name}
+																value={JSON.stringify(option)}
+																onClick={(e) => update_option(e)}
+																className={`packs  flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
+																	? 'secondary'
+																	: 'primary'}`}
+															>
+																{option.size || option.name}
+															</button>
+														))}
+												</div>
+											</div>
+										</li>
+									)}
+									{/* {product.product_options &&
 									product.product_options.length > 0 &&
 									product.product_options.filter((option) => !option.dropdown).length > 0 && (
 										<li>
@@ -439,10 +755,42 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
-									)}
-									{/* </div> */}
-									{/* <li>Product Size: {size}</li> */}
-									{product.products &&
+									)} */}
+
+									{/* {product.option_product_group &&
+									product.option_products &&
+									product.option_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.option_group_name && product.option_group_name}s:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_product_images(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose{' '}
+															{product.option_group_name && product.option_group_name}---
+														</option>
+														{product.option_products.map((option, index) => (
+															<option key={index} value={JSON.stringify(option)}>
+																{option.name.split(' ')[0]}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)} */}
+
+									{/* {product.products &&
 									product.products.length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
@@ -451,7 +799,7 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													Caps:
+													{product.group_name && product.group_name}s:
 												</label>
 												<div className="custom-select">
 													<select
@@ -461,7 +809,7 @@ const ProductPage = (props) => {
 														onChange={(e) => update_product_images(e)}
 													>
 														<option key={1} defaultValue="">
-															---Choose Cap---
+															---Choose {product.group_name && product.group_name}---
 														</option>
 														{product.products.map(
 															(cap, index) =>
@@ -470,7 +818,7 @@ const ProductPage = (props) => {
 																	''
 																) : (
 																	<option key={index} value={JSON.stringify(cap)}>
-																		{cap.name.slice(0, -14)}
+																		{cap.name.split(' ')[0]}
 																	</option>
 																)
 														)}
@@ -479,9 +827,9 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
-									)}
+									)} */}
 
-									{product.product_options &&
+									{/* {product.product_options &&
 									product.product_options.length > 0 &&
 									product.product_options.filter((option) => option.dropdown).length > 0 && (
 										<li>
@@ -521,7 +869,7 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
-									)}
+									)} */}
 									<li>
 										<div className="ai-c h-25px">
 											<label
@@ -569,9 +917,7 @@ const ProductPage = (props) => {
 												'	This item ships in 3 - 7 business day.'}
 										</h4>
 									</li>
-									{(product.name === 'Diffuser Caps + Adapters Starter Kit' ||
-										product.name === 'Mega Diffuser Caps + Adapters Starter Kit') &&
-									!diffuser_cap ? (
+									{product.name === 'Diffuser Caps + Adapters Starter Kit' && !secondary_product ? (
 										<div />
 									) : (
 										<li>
@@ -597,7 +943,7 @@ const ProductPage = (props) => {
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							{/* <p className="paragraph_font">{product.description}</p> */}
 							<ReadMore width={1000} className="paragraph_font" length={100}>
-								{product.description}
+								{description}
 							</ReadMore>
 							{/* <ReadMore width={1000} className="paragraph_font">{product.description}</ReadMore> */}
 							{/* <p className="paragraph_font">
@@ -687,8 +1033,8 @@ const ProductPage = (props) => {
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul style={{}}>
-											{product.included_items ? (
-												product.included_items.split('\n').map((line, index) => {
+											{included_items ? (
+												included_items.split('\n').map((line, index) => {
 													return (
 														<li
 															key={index}
@@ -700,7 +1046,7 @@ const ProductPage = (props) => {
 													);
 												})
 											) : (
-												product.included_items
+												included_items
 											)}
 										</ul>
 									</div>
