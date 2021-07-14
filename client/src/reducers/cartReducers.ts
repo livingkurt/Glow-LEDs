@@ -17,45 +17,25 @@ import {
 	CART_DELETE_FAIL
 } from '../constants/cartConstants';
 
-export const cartReducer = (
-	state = { cartItems: [], shipping: {}, payment: {} },
-	action: { type: any; payload: any }
-) => {
+export const cartReducer = (state = { cartItems: [] }, action: any) => {
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
-			// let product: any = state.cartItems.find((cart_item: any) => {
-			// 	if (cart_item.pathname === item.pathname) {
-			// 		if (cart_item.product_option && item.product_option) {
-			// 			if (cart_item.product_option.name === item.product_option.name) {
-			// 				return;
-			// 			}
-			// 		}
-			// 	}
-			// 	// && cart_item.product_option.name === item.product_option.name
-			// });
-			let product: any = state.cartItems.find(
-				(cart_item: any) =>
-					cart_item.pathname === item.pathname && cart_item.product_option.name === item.product_option.name
-			);
-
-			if (product) {
+			const existItem: any = state.cartItems.find((x: any) => x.product === item.product);
+			if (existItem) {
 				return {
-					cartItems: state.cartItems.map(
-						(cart_item: any) => (cart_item.pathname === product.pathname ? item : cart_item)
-					)
+					...state,
+					cartItems: state.cartItems.map((x: any) => (x.product === existItem.product ? item : x))
 				};
+			} else {
+				return { ...state, cartItems: [ ...state.cartItems, item ] };
 			}
-			return { cartItems: [ ...state.cartItems, item ] };
 		case CART_REMOVE_ITEM:
-			console.log({ 'action.payload': action.payload });
+			console.log({ cartItems: state.cartItems });
+			console.log({ payload: action.payload });
 			return {
-				cartItems: state.cartItems.filter(
-					(cart_item: any) =>
-						cart_item.product_option.hasOwnProperty('name')
-							? cart_item.product_option.name !== action.payload.product_option.name
-							: cart_item.pathname !== action.payload.pathname
-				)
+				...state,
+				cartItems: state.cartItems.filter((x: any) => x.product !== action.payload.product)
 			};
 		case CART_SAVE_SHIPPING:
 			return { ...state, shipping: action.payload };
@@ -65,6 +45,65 @@ export const cartReducer = (
 			return state;
 	}
 };
+
+// export const cartReducer = (
+// 	state = { cartItems: [], shipping: {}, payment: {} },
+// 	action: { type: any; payload: any }
+// ) => {
+// 	switch (action.type) {
+// 		case CART_ADD_ITEM:
+// 			const item = action.payload;
+// 			const existItem: any = state.cartItems.find((x: any) => x.product === item.product);
+// 			if (existItem) {
+// 				return {
+// 					...state,
+// 					cartItems: state.cartItems.map((x: any) => (x.product === existItem.product ? item : x))
+// 				};
+// 			} else {
+// 				return { ...state, cartItems: [ ...state.cartItems, item ] };
+// 			}
+// 		// const item = action.payload;
+// 		// let product: any = state.cartItems.find((cart_item: any) => {
+// 		// 	if (cart_item.pathname === item.pathname) {
+// 		// 		if (cart_item.product_option && item.product_option) {
+// 		// 			if (cart_item.product_option.name === item.product_option.name) {
+// 		// 				return;
+// 		// 			}
+// 		// 		}
+// 		// 	}
+// 		// 	// && cart_item.product_option.name === item.product_option.name
+// 		// });
+// 		// let product: any = state.cartItems.find(
+// 		// 	(cart_item: any) =>
+// 		// 		cart_item.pathname === item.pathname && cart_item.product_option.name === item.product_option.name
+// 		// );
+
+// 		// if (product) {
+// 		// 	return {
+// 		// 		cartItems: state.cartItems.map(
+// 		// 			(cart_item: any) => (cart_item.pathname === product.pathname ? item : cart_item)
+// 		// 		)
+// 		// 	};
+// 		// }
+// 		// return { cartItems: [ ...state.cartItems, item ] };
+// 		case CART_REMOVE_ITEM:
+// 			console.log({ 'action.payload': action.payload });
+// 			return {
+// 				cartItems: state.cartItems.filter(
+// 					(cart_item: any) =>
+// 						cart_item.product_option.hasOwnProperty('name')
+// 							? cart_item.product_option.name !== action.payload.product_option.name
+// 							: cart_item.pathname !== action.payload.pathname
+// 				)
+// 			};
+// 		case CART_SAVE_SHIPPING:
+// 			return { ...state, shipping: action.payload };
+// 		case CART_SAVE_PAYMENT:
+// 			return { ...state, payment: action.payload };
+// 		default:
+// 			return state;
+// 	}
+// };
 
 export const cartListReducer = (state = { carts: [] }, action: { type: any; payload: any }) => {
 	switch (action.type) {

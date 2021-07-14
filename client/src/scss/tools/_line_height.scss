@@ -3,7 +3,7 @@
 		line-height: $i + rem !important;
 	}
 }
-@for $i from 0 to 50 {
+@for $i from 0 to 200 {
 	.lh-#{$i}px {
 		line-height: $i + px !important;
 	}

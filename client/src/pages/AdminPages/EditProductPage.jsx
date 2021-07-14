@@ -74,6 +74,8 @@ const EditProductPage = (props) => {
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
 	const [ product_options, set_product_options ] = useState([ {} ]);
 	const [ product_options_images, set_product_options_images ] = useState([ [] ]);
+	const [ products_list, set_products_list ] = useState([]);
+	const [ secondary_products_list, set_secondary_products_list ] = useState([]);
 
 	const history = useHistory();
 
@@ -81,7 +83,7 @@ const EditProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 
 	const productList = useSelector((state) => state.productList);
-	const { products: products_list } = productList;
+	const { products: all_products } = productList;
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
@@ -107,13 +109,24 @@ const EditProductPage = (props) => {
 			}
 			stableDispatch(listProducts(''));
 			stableDispatch(listChips());
-
+			get_all_options();
+			get_all_secondary_products();
 			// set_loading_data(false);
 			set_state();
 			return () => {};
 		},
 		[ stableDispatch, props.match.params.pathname ]
 	);
+	const get_all_options = async () => {
+		const { data } = await API_Products.get_all_options();
+		console.log({ data });
+		set_products_list(data);
+	};
+	const get_all_secondary_products = async () => {
+		const { data } = await API_Products.get_all_diffuser_caps();
+		console.log({ data });
+		set_secondary_products_list(data);
+	};
 
 	// useEffect(() => {
 
@@ -125,9 +138,24 @@ const EditProductPage = (props) => {
 		// history.push('/secure/glow/products');
 	};
 	const use_product_options_template = async (e) => {
-		const { data } = await API_Products.get_product_options(e.target.value);
+		const { data } = await API_Products.get_product(e.target.value);
 		console.log({ data });
-		set_product_options(data.product_options);
+		set_group_name(data.group_name);
+		set_color_product_group(data.color_product_group);
+		set_color_products(data.color_products);
+		set_secondary_product_group(data.secondary_product_group);
+		set_secondary_group_name(data.secondary_group_name);
+		set_secondary_products(data.secondary_products);
+		set_option_product_group(data.option_product_group);
+		set_option_group_name(data.option_group_name);
+		set_option_products(data.option_products);
+		set_color(data.color);
+		set_size(data.size);
+		set_default_option(data.default_option);
+		set_option(data.option);
+		set_macro_product(data.macro_product);
+
+		// set_product_options(data.product_options);
 		// dispatch(detailsProduct(e.target.value));
 		// history.push('/secure/glow/products');
 	};
@@ -807,17 +835,38 @@ const EditProductPage = (props) => {
 		// set_product('');
 	};
 
-	const remove_product = (product_index, e) => {
+	const remove_product = (product_index, e, list) => {
 		e.preventDefault();
-		set_products((products) =>
-			products.filter((product, index) => {
-				return product_index !== index;
-			})
-		);
+		if (list === 'group') {
+			set_products((products) =>
+				products.filter((product, index) => {
+					return product_index !== index;
+				})
+			);
+		} else if (list === 'color') {
+			set_color_products((color_products) =>
+				color_products.filter((color_product, index) => {
+					return product_index !== index;
+				})
+			);
+		} else if (list === 'option') {
+			set_option_products((option_products) =>
+				option_products.filter((option_product, index) => {
+					return product_index !== index;
+				})
+			);
+		} else if (list === 'secondary') {
+			set_secondary_products((secondary_products) =>
+				secondary_products.filter((secondary_product, index) => {
+					return product_index !== index;
+				})
+			);
+		}
 	};
 
-	const product_display = (products) => {
+	const product_display = (products, list) => {
 		console.log({ products });
+
 		return (
 			<div>
 				<div className="jc-b">
@@ -827,7 +876,10 @@ const EditProductPage = (props) => {
 								return (
 									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
-											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
+											<button
+												className="btn icon"
+												onClick={(e) => remove_product(index, e, list)}
+											>
 												<i className="fas fa-times mr-5px" />
 											</button>
 											<Link to={'/secure/glow/editproduct/' + product.pathname}>
@@ -883,7 +935,9 @@ const EditProductPage = (props) => {
 											}}
 											className="ta-c "
 										>
-											{loading ? 'Product' : product.name}
+											<Link to={'/collections/all/products/' + product.pathname}>
+												{loading ? 'Product' : product.name}
+											</Link>
 										</h2>
 										<div className="ai-c">
 											<button
@@ -912,7 +966,7 @@ const EditProductPage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Product as a Template---
 													</option>
-													{products_list.map((product, index) => (
+													{all_products.map((product, index) => (
 														<option key={index} value={product.pathname}>
 															{product.name}
 														</option>
@@ -1138,6 +1192,7 @@ const EditProductPage = (props) => {
 													className="edit_product_textarea"
 													name="facts"
 													defaultValue={facts}
+													value={facts}
 													id="facts"
 													onChange={(e) => setFacts(e.target.value)}
 												/>
@@ -1429,7 +1484,12 @@ const EditProductPage = (props) => {
 									)}
 									{macro_product && (
 										<div>
-											<Link to={'/secure/glow/editproduct/'}>Create New Product Option</Link>
+											<Link to={'/secure/glow/editproduct'}>
+												<button className="btn primary w-100per">
+													Create New Product Option
+												</button>
+											</Link>
+											<li />
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -1446,58 +1506,6 @@ const EditProductPage = (props) => {
 													/>
 												</li>
 											)}
-
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="color_product_group">Color Product Group</label>
-													<input
-														type="checkbox"
-														name="color_product_group"
-														defaultChecked={color_product_group}
-														id="color_product_group"
-														onChange={(e) => {
-															set_color_product_group(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="secondary_product_group">
-														Secondary Product Group
-													</label>
-													<input
-														type="checkbox"
-														name="secondary_product_group"
-														defaultChecked={secondary_product_group}
-														id="secondary_product_group"
-														onChange={(e) => {
-															set_secondary_product_group(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="option_product_group">Option Product Group</label>
-													<input
-														type="checkbox"
-														name="option_product_group"
-														defaultChecked={option_product_group}
-														id="option_product_group"
-														onChange={(e) => {
-															set_option_product_group(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-
 											<div>
 												{group_product && (
 													<ul>
@@ -1524,7 +1532,7 @@ const EditProductPage = (props) => {
 																	<span className="custom-arrow" />
 																</div>
 															</div>
-															{product_display(products)}
+															{product_display(products, 'group')}
 														</li>
 														<li>
 															<label htmlFor="group_name">Group Name</label>
@@ -1539,6 +1547,22 @@ const EditProductPage = (props) => {
 													</ul>
 												)}
 											</div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="color_product_group">Color Product Group</label>
+													<input
+														type="checkbox"
+														name="color_product_group"
+														defaultChecked={color_product_group}
+														id="color_product_group"
+														onChange={(e) => {
+															set_color_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 											<div>
 												{color_product_group && (
 													<ul>
@@ -1564,55 +1588,28 @@ const EditProductPage = (props) => {
 																	<span className="custom-arrow" />
 																</div>
 															</div>
-															{product_display(color_products)}
+															{product_display(color_products, 'color')}
 														</li>
 													</ul>
 												)}
 											</div>
-											<div>
-												{secondary_product_group && (
-													<ul>
-														<li>
-															{/* <label htmlFor="product">Products</label> */}
-															<div className="ai-c h-25px mv-15px jc-c">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => add_secondary_product(e)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Add Products to Group---
-																		</option>
-																		{products_list.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-															{product_display(secondary_products)}
-														</li>
-														<li>
-															<label htmlFor="secondary_group_name">
-																Secondary Product Group Name
-															</label>
-															<input
-																type="text"
-																name="secondary_group_name"
-																value={secondary_group_name}
-																id="secondary_group_name"
-																onChange={(e) =>
-																	set_secondary_group_name(e.target.value)}
-															/>
-														</li>
-													</ul>
-												)}
-											</div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="option_product_group">Option Product Group</label>
+													<input
+														type="checkbox"
+														name="option_product_group"
+														defaultChecked={option_product_group}
+														id="option_product_group"
+														onChange={(e) => {
+															set_option_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+
 											<div>
 												{option_product_group && (
 													<ul>
@@ -1639,7 +1636,7 @@ const EditProductPage = (props) => {
 																	<span className="custom-arrow" />
 																</div>
 															</div>
-															{product_display(option_products)}
+															{product_display(option_products, 'option')}
 														</li>
 														<li>
 															<label htmlFor="option_group_name">
@@ -1651,6 +1648,70 @@ const EditProductPage = (props) => {
 																value={option_group_name}
 																id="option_group_name"
 																onChange={(e) => set_option_group_name(e.target.value)}
+															/>
+														</li>
+													</ul>
+												)}
+											</div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="secondary_product_group">
+														Secondary Product Group
+													</label>
+													<input
+														type="checkbox"
+														name="secondary_product_group"
+														defaultChecked={secondary_product_group}
+														id="secondary_product_group"
+														onChange={(e) => {
+															set_secondary_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											<div>
+												{secondary_product_group && (
+													<ul>
+														<li>
+															{/* <label htmlFor="product">Products</label> */}
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_secondary_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{secondary_products_list.map(
+																			(product, index) => (
+																				<option
+																					key={index}
+																					value={JSON.stringify(product)}
+																				>
+																					{product.name}
+																				</option>
+																			)
+																		)}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(secondary_products, 'secondary')}
+														</li>
+														<li>
+															<label htmlFor="secondary_group_name">
+																Secondary Product Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_group_name"
+																value={secondary_group_name}
+																id="secondary_group_name"
+																onChange={(e) =>
+																	set_secondary_group_name(e.target.value)}
 															/>
 														</li>
 													</ul>
@@ -1685,7 +1746,7 @@ const EditProductPage = (props) => {
 											{chip_display(chips)}
 										</li>
 									</div>
-									{/* <li>
+									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
 												<select
@@ -1695,18 +1756,16 @@ const EditProductPage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Product Option Template---
 													</option>
-													{products_list
-														.filter((product) => product.product_options.length > 0)
-														.map((product, index) => (
-															<option key={index} value={product.pathname}>
-																{product.name}
-															</option>
-														))}
+													{all_products.map((product, index) => (
+														<option key={index} value={product.pathname}>
+															{product.name}
+														</option>
+													))}
 												</select>
 												<span className="custom-arrow" />
 											</div>
 										</div>
-									</li> */}
+									</li>
 
 									{/* <li>
 										<button className="btn primary" onClick={(e) => add_product_option(e)}>

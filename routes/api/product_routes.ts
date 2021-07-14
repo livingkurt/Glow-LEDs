@@ -11,6 +11,8 @@ router.route('/imperfect').get(product_controller.get_all_imperfect);
 router.route('/best_sellers').post(product_controller.get_best_sellers);
 router.route('/essentials').get(product_controller.get_essentials);
 
+router.route('/get_all_options').get(product_controller.get_all_options);
+router.route('/get_all_diffuser_caps').get(product_controller.get_all_diffuser_caps);
 router.route('/get_all_products').get(product_controller.get_all_products);
 router.route('/get_shown').get(product_controller.get_shown);
 router.route('/get_caps').get(product_controller.get_caps);

@@ -238,6 +238,156 @@ const ProductListItem = (props) => {
 							</li> */}
 						</ul>
 					</div>
+					{product.option_products &&
+						product.option_products.map((product) => (
+							<div className="ai-c jc-b w-100per">
+								{console.log({ product })}
+								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
+									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
+								</Link>
+								<label className="w-100px">
+									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+								</label>
+								<label className="w-200px">{product.category}</label>
+								<label className="w-100px">{product.order}</label>
+								{/* <label className="product-price w-500px">
+									{sale_price_product_option_switch(product, product.product_options)}
+								</label> */}
+								{/* <label className="product-price w-250px">
+									{product.product_options.length} Options
+								</label> */}
+								<div>
+									<div>
+										<div className="jc-b">
+											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+												<button className="btn icon">
+													<i className="fas fa-edit" />
+												</button>
+											</Link>
+											<button className="btn icon" onClick={() => deleteHandler(product)}>
+												<i className="fas fa-trash-alt" />
+											</button>
+											{/* {admin && (
+												<div className="jc-fe column ml-auto ">
+													<button
+														className="btn icon h-3rem "
+														onClick={() => show_hide(product._id)}
+													>
+														<i
+															style={{ WebkitTransform: 'rotate(-180deg)' }}
+															className="top-8px fas fa-sort-up"
+														/>
+													</button>
+												</div>
+											)} */}
+										</div>
+									</div>
+									<div />
+								</div>
+								{shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
+							</div>
+						))}
+					{product.color_products &&
+						product.color_products.map((product) => (
+							<div className="ai-c jc-b w-100per">
+								{console.log({ product })}
+								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
+									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
+								</Link>
+								<label className="w-100px">
+									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+								</label>
+								<label className="w-200px">{product.category}</label>
+								<label className="w-100px">{product.order}</label>
+								{/* <label className="product-price w-500px">
+									{sale_price_product_option_switch(product, product.product_options)}
+								</label> */}
+								{/* <label className="product-price w-250px">
+									{product.product_options.length} Options
+								</label> */}
+								<div>
+									<div>
+										<div className="jc-b">
+											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+												<button className="btn icon">
+													<i className="fas fa-edit" />
+												</button>
+											</Link>
+											<button className="btn icon" onClick={() => deleteHandler(product)}>
+												<i className="fas fa-trash-alt" />
+											</button>
+											{/* {admin && (
+												<div className="jc-fe column ml-auto ">
+													<button
+														className="btn icon h-3rem "
+														onClick={() => show_hide(product._id)}
+													>
+														<i
+															style={{ WebkitTransform: 'rotate(-180deg)' }}
+															className="top-8px fas fa-sort-up"
+														/>
+													</button>
+												</div>
+											)} */}
+										</div>
+									</div>
+									<div />
+								</div>
+								{shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
+							</div>
+						))}
+					{product.secondary_products &&
+						product.secondary_products.map((product) => (
+							<div className="ai-c jc-b w-100per">
+								{console.log({ product })}
+								<Link className="" to={'/collections/all/products/' + product.pathname}>
+									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
+									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
+								</Link>
+								<label className="">
+									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+								</label>
+								<label className="">{product.category}</label>
+								<label className="">{product.order}</label>
+								{/* <label className="product-price ">
+									{sale_price_product_option_switch(product, product.product_options)}
+								</label> */}
+								{/* <label className="product-price ">
+									{product.product_options.length} Options
+								</label> */}
+								<div>
+									<div>
+										<div className="jc-b">
+											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+												<button className="btn icon">
+													<i className="fas fa-edit" />
+												</button>
+											</Link>
+											<button className="btn icon" onClick={() => deleteHandler(product)}>
+												<i className="fas fa-trash-alt" />
+											</button>
+											{/* {admin && (
+												<div className="jc-fe column ml-auto ">
+													<button
+														className="btn icon h-3rem "
+														onClick={() => show_hide(product._id)}
+													>
+														<i
+															style={{ WebkitTransform: 'rotate(-180deg)' }}
+															className="top-8px fas fa-sort-up"
+														/>
+													</button>
+												</div>
+											)} */}
+										</div>
+									</div>
+									<div />
+								</div>
+								{shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
+							</div>
+						))}
 				</div>
 			)}
 		</Container>

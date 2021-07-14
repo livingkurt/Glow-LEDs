@@ -46,11 +46,10 @@ const orderItemSchema = new mongoose.Schema(
 		qty: { type: Number, required: true },
 		display_image: { type: String, required: true },
 		color: { type: String },
-		diffuser_cap_color: { type: String },
-		diffuser_cap_name: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
 		pathname: { type: String },
+		size: { type: Number },
 		sale_price: { type: Number },
 		package_volume: { type: Number },
 		weight_pounds: { type: Number },
@@ -72,6 +71,16 @@ const orderItemSchema = new mongoose.Schema(
 			ref: 'Product',
 			required: true
 		},
+		color_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		},
+		option_product_name: { type: String },
+		option_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		},
+		secondary_product_name: { type: String },
 		secondary_product: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product'
