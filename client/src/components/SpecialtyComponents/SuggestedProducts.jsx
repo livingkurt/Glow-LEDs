@@ -43,7 +43,7 @@ const SuggestedProducts = (props) => {
 			<Loading loading={loading} error={error}>
 				<div className="row p-10px" style={{ overflowX: 'scroll' }}>
 					{products &&
-						products.map(
+						products.filter((product) => !product.option).map(
 							(item, index) =>
 								!item.hidden && (
 									// <div className="embla__slide" key={index}>
