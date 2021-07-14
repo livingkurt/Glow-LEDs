@@ -118,7 +118,9 @@ const Carousel = (props) => {
 										key={product_number + x}
 										size="175px"
 										product={
-											products.filter((product) => product.hidden === false)[product_number + x]
+											products
+												.filter((product) => !product.option)
+												.filter((product) => product.hidden === false)[product_number + x]
 										}
 										styles={{ listStyleType: 'none' }}
 									/>

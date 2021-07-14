@@ -99,6 +99,7 @@ function ProductPage(props) {
 		dispatch(listProducts());
 		set_loading_upload(false);
 	};
+
 	const colors = [
 		{ name: 'Not Category', color: '#333333' },
 		{ name: 'Glow Casings', color: '#557b68' },
@@ -498,7 +499,7 @@ function ProductPage(props) {
 						console.log({ column });
 						// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
 						let products = [];
-						state.entities.products.forEach(function(a) {
+						state.entities.products.filter((product) => !product.option).forEach(function(a) {
 							products[column.product_ids.indexOf(a._id)] = a;
 						});
 						const products_2 = column.product_ids.map(
@@ -569,7 +570,7 @@ function ProductPage(props) {
 						console.log({ column });
 						// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
 						let products = [];
-						state.entities.products.forEach(function(a) {
+						state.entities.products.filter((product) => !product.option).forEach(function(a) {
 							products[column.product_ids.indexOf(a._id)] = a;
 						});
 						console.log({ product_ids: column.product_ids });
