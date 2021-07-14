@@ -289,17 +289,19 @@ const AllProductsPage = (props) => {
 							{alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{products.length === 0 &&
-										alternative_products.map(
-											(product, index) =>
-												!product.hidden && (
-													<Product
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
+										alternative_products
+											.filter((product) => !product.option)
+											.map(
+												(product, index) =>
+													!product.hidden && (
+														<Product
+															size="300px"
+															key={index}
+															product={product}
+															product_occurrences={product_occurrences}
+														/>
+													)
+											)}
 								</ul>
 							)}
 						</div>
@@ -308,17 +310,19 @@ const AllProductsPage = (props) => {
 							{products.length === 0 &&
 							alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{alternative_products.map(
-										(product, index) =>
-											!product.hidden && (
-												<ProductSmallScreen
-													size="300px"
-													key={index}
-													product={product}
-													product_occurrences={product_occurrences}
-												/>
-											)
-									)}
+									{alternative_products
+										.filter((product) => !product.option)
+										.map(
+											(product, index) =>
+												!product.hidden && (
+													<ProductSmallScreen
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
 								</ul>
 							)}
 						</div>
@@ -331,17 +335,19 @@ const AllProductsPage = (props) => {
 							{alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{products.length === 0 &&
-										alternative_products.map(
-											(product, index) =>
-												!product.hidden && (
-													<Product
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
+										alternative_products
+											.filter((product) => !product.option)
+											.map(
+												(product, index) =>
+													!product.hidden && (
+														<Product
+															size="300px"
+															key={index}
+															product={product}
+															product_occurrences={product_occurrences}
+														/>
+													)
+											)}
 								</ul>
 							)}
 						</div>
@@ -350,17 +356,19 @@ const AllProductsPage = (props) => {
 							{products.length === 0 &&
 							alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{alternative_products.map(
-										(product, index) =>
-											!product.hidden && (
-												<ProductSmallScreen
-													size="300px"
-													key={index}
-													product={product}
-													product_occurrences={product_occurrences}
-												/>
-											)
-									)}
+									{alternative_products
+										.filter((product) => !product.option)
+										.map(
+											(product, index) =>
+												!product.hidden && (
+													<ProductSmallScreen
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
 								</ul>
 							)}
 						</div>
@@ -412,17 +420,19 @@ const AllProductsPage = (props) => {
 						<div className="product_big_screen">
 							{products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{products.map(
-										(product, index) =>
-											!product.hidden && (
-												<Product
-													size="300px"
-													key={index}
-													product={product}
-													product_occurrences={product_occurrences}
-												/>
-											)
-									)}
+									{products
+										.filter((product) => !product.option)
+										.map(
+											(product, index) =>
+												!product.hidden && (
+													<Product
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
 								</ul>
 							)}
 						</div>
@@ -430,17 +440,19 @@ const AllProductsPage = (props) => {
 						<div className="product_small_screen none">
 							{products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{products.map(
-										(product, index) =>
-											!product.hidden && (
-												<ProductSmallScreen
-													size="300px"
-													key={index}
-													product={product}
-													product_occurrences={product_occurrences}
-												/>
-											)
-									)}
+									{products
+										.filter((product) => !product.option)
+										.map(
+											(product, index) =>
+												!product.hidden && (
+													<ProductSmallScreen
+														size="300px"
+														key={index}
+														product={product}
+														product_occurrences={product_occurrences}
+													/>
+												)
+										)}
 								</ul>
 							)}
 						</div>
