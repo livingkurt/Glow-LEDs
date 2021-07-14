@@ -211,10 +211,10 @@ const ProductPage = (props) => {
 		if (option.facts) {
 			set_facts(option.facts);
 		}
-		if (option.price > 0) {
+		if (option.price !== 0) {
 			set_price(option.price);
 		}
-		if (option.sale_price > 0) {
+		if (option.sale_price !== 0) {
 			set_sale_price(option.sale_price);
 		}
 		set_color(option.color);
