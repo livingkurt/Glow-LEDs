@@ -21,7 +21,10 @@ const ProductPage = (props) => {
 
 	const { cartItems } = cart;
 	let { userInfo } = userLogin;
-
+	const [ name, set_name ] = useState('');
+	const [ description, set_description ] = useState('');
+	const [ facts, set_facts ] = useState('');
+	const [ included_items, set_included_items ] = useState('');
 	const [ qty, setQty ] = useState(1);
 	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ images, set_images ] = useState([]);
@@ -37,6 +40,7 @@ const ProductPage = (props) => {
 	const [ image, set_image ] = useState('');
 	const [ no_dropdown, set_no_dropdown ] = useState(false);
 	const [ color, set_color ] = useState('');
+	// const [ pathname, set_pathname ] = useState('');
 	const [ option_color, set_option_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 	const productDetails = useSelector((state) => state.productDetails);
@@ -71,28 +75,57 @@ const ProductPage = (props) => {
 				set_price(product.price);
 				set_sale_price(product.sale_price);
 				set_count_in_stock(product.countInStock);
+				set_name(product.name);
+				set_description(product.description);
+				set_facts(product.facts);
+				set_color(product.color);
+				set_included_items(product.included_items);
 
 				set_product_option({});
-				if (product.product_options) {
-					const option = product.product_options.find((option) => option.default === true);
+				if (product.option_products) {
+					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
 					if (option) {
 						set_price(option.price);
 						if (option.size) {
 							set_size(option.size);
 						}
+						if (option.color) {
+							set_color(option.color);
+						}
 						set_sale_price(option.sale_price);
-						if (option.count_in_stock) {
-							set_count_in_stock(option.count_in_stock);
+						if (option.countInStock) {
+							set_count_in_stock(option.countInStock);
 						}
 
 						set_product_option(option);
+						console.log({ images: option.images });
 						if (option.images > 0) {
 							set_images(option.images);
 							set_image(option.images && option.images[0]);
 						}
 					}
 				}
+				// if (product.product_options) {
+				// 	const option = product.product_options.find((option) => option.default === true);
+				// 	console.log({ option });
+				// 	if (option) {
+				// 		set_price(option.price);
+				// 		if (option.size) {
+				// 			set_size(option.size);
+				// 		}
+				// 		set_sale_price(option.sale_price);
+				// 		if (option.count_in_stock) {
+				// 			set_count_in_stock(option.count_in_stock);
+				// 		}
+
+				// 		set_product_option(option);
+				// 		if (option.images > 0) {
+				// 			set_images(option.images);
+				// 			set_image(option.images && option.images[0]);
+				// 		}
+				// 	}
+				// }
 
 				// set_color(
 				// 	product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
@@ -133,12 +166,14 @@ const ProductPage = (props) => {
 	};
 
 	const handleAddToCart = () => {
-		console.log({ product_option });
+		// console.log({ product_option });
+		console.log({ handleAddToCart: color });
 		dispatch(
 			addToCart(
 				props.match.params.pathname,
 				qty,
-				determine_default_color(color),
+				color.color,
+				// determine_default_color(color),
 				diffuser_cap,
 				product_option,
 				images[0]
@@ -187,22 +222,69 @@ const ProductPage = (props) => {
 		set_image(product.images[0]);
 	};
 
-	const update_color = (e, option) => {
-		if (option.price) {
-			set_price(option.price);
-		}
+	const update_color = (e) => {
+		const option = JSON.parse(e.target.value);
+		// set_name(option.name);
+		set_price(option.price);
+		set_description(option.description);
+		set_facts(option.facts);
+		// set_included_items(option.included_items);
 		set_sale_price(option.sale_price);
-		set_color(JSON.parse(e.target.value).color);
-		set_option_color(JSON.parse(e.target.value));
-		console.log({ option_images: option.images });
+		set_color(option.color);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
 		}
-		if (product.category === 'frosted_diffusers') {
-			set_product_option(option);
+	};
+	const update_option = (e) => {
+		const option = JSON.parse(e.target.value);
+		let button = document.getElementById(e.target.id);
+		let buttons = document.querySelectorAll('.packs');
+		buttons.forEach((node) => {
+			node.classList.remove('active');
+			node.classList.remove('secondary');
+			node.classList.add('primary');
+		});
+		button.classList.add('secondary');
+		button.classList.add('active');
+		// set_name(option.name);
+		// const new_name = `${option.color && option.color + ' '}${product.name}${option.size && ' - ' + option.size}`;
+		// set_name(new_name);
+
+		// set_name(option.name);
+		set_size(option.size);
+		set_price(option.price);
+		if (option.description) {
+			set_description(option.description);
+		}
+		if (option.facts) {
+			set_facts(option.facts);
+		}
+		if (option.included_items) {
+			set_included_items(option.included_items);
+		}
+		set_sale_price(option.sale_price);
+		if (option.images && option.images[0]) {
+			set_images(option.images);
+			set_image(option.images[0]);
 		}
 	};
+	// const update_color = (e, option) => {
+	// 	if (option.price) {
+	// 		set_price(option.price);
+	// 	}
+	// 	set_sale_price(option.sale_price);
+	// 	set_color(JSON.parse(e.target.value).color);
+	// 	set_option_color(JSON.parse(e.target.value));
+	// 	console.log({ option_images: option.images });
+	// 	if (option.images && option.images[0]) {
+	// 		set_images(option.images);
+	// 		set_image(option.images[0]);
+	// 	}
+	// 	if (product.category === 'frosted_diffusers') {
+	// 		set_product_option(option);
+	// 	}
+	// };
 
 	return (
 		<div className="">
@@ -300,13 +382,13 @@ const ProductPage = (props) => {
 						</div>
 						<div className="details">
 							<div className="">
-								<label className="product_title_top none fs-2em ff-h mb-2rem">{product.name}</label>
+								<label className="product_title_top none fs-2em ff-h mb-2rem">{name}</label>
 								<div className="details-image">
 									{/* <Zoom> */}
 									<img
 										id="expandedImg"
-										alt={product.name}
-										title={product.name}
+										alt={name}
+										title={name}
 										className="details-image-img"
 										src={image}
 										style={{
@@ -339,7 +421,8 @@ const ProductPage = (props) => {
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
 								<h1 className="product_title_side" styles={{ display: 'flex' }}>
-									{product.name}
+									{/* {name} */}
+									{color && color + ' '} {product.name} {size && ' - ' + size}
 								</h1>
 								<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
 									<a href="#reviews">
@@ -363,8 +446,8 @@ const ProductPage = (props) => {
 								<div className="">
 									<div className="h-100per paragraph_font">
 										<ul style={{ marginLeft: '10px' }}>
-											{product.facts ? (
-												product.facts.split('\n').map((line, index) => {
+											{facts ? (
+												facts.split('\n').map((line, index) => {
 													return (
 														<li
 															key={index}
@@ -376,7 +459,7 @@ const ProductPage = (props) => {
 													);
 												})
 											) : (
-												product.facts
+												facts
 											)}
 										</ul>
 									</div>
@@ -403,9 +486,72 @@ const ProductPage = (props) => {
 									</div>
 
 									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
-
-									{/* <div className=""> */}
-									{product.product_options &&
+									{product.color_product_group &&
+									product.color_products &&
+									product.color_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Colors:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_color(e)}
+													>
+														{/* <option key={1} defaultValue="">
+															---Choose Color---
+														</option> */}
+														{product.color_products.map((color, index) => (
+															<option key={index} value={JSON.stringify(color)}>
+																{color.name.split(' ')[0]}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
+									{product.option_product_group &&
+									product.option_products &&
+									product.option_products.length > 0 && (
+										<li>
+											<div className="row">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem mt-1rem"
+												>
+													Options:
+												</label>
+												<div className="ai-c wrap">
+													{product.option_products
+														// .filter((option) => !option.dropdown)
+														// .filter((option) => option.count_in_stock)
+														.map((option, index) => (
+															<button
+																key={index}
+																selected={option.default_option}
+																id={option.name}
+																value={JSON.stringify(option)}
+																onClick={(e) => update_option(e)}
+																className={`packs  flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
+																	? 'secondary'
+																	: 'primary'}`}
+															>
+																{option.size} {console.log({ option })}
+															</button>
+														))}
+												</div>
+											</div>
+										</li>
+									)}
+									{/* {product.product_options &&
 									product.product_options.length > 0 &&
 									product.product_options.filter((option) => !option.dropdown).length > 0 && (
 										<li>
@@ -439,10 +585,75 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
+									)} */}
+
+									{product.secondary_product_group &&
+									product.secondary_products &&
+									product.secondary_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.secondary_group_name && product.secondary_group_name}s:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_product_images(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose{' '}
+															{product.secondary_group_name &&
+																product.secondary_group_name}---
+														</option>
+														{product.secondary_products.map((secondary, index) => (
+															<option key={index} value={JSON.stringify(secondary)}>
+																{secondary.name.split(' ')[0]}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
 									)}
-									{/* </div> */}
-									{/* <li>Product Size: {size}</li> */}
-									{product.products &&
+									{/* {product.option_product_group &&
+									product.option_products &&
+									product.option_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.option_group_name && product.option_group_name}s:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_product_images(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose{' '}
+															{product.option_group_name && product.option_group_name}---
+														</option>
+														{product.option_products.map((option, index) => (
+															<option key={index} value={JSON.stringify(option)}>
+																{option.name.split(' ')[0]}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)} */}
+
+									{/* {product.products &&
 									product.products.length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-15px">
@@ -451,7 +662,7 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													{product.product_group_name && product.product_group_name}s:
+													{product.group_name && product.group_name}s:
 												</label>
 												<div className="custom-select">
 													<select
@@ -461,8 +672,7 @@ const ProductPage = (props) => {
 														onChange={(e) => update_product_images(e)}
 													>
 														<option key={1} defaultValue="">
-															---Choose{' '}
-															{product.product_group_name && product.product_group_name}---
+															---Choose {product.group_name && product.group_name}---
 														</option>
 														{product.products.map(
 															(cap, index) =>
@@ -480,9 +690,9 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
-									)}
+									)} */}
 
-									{product.product_options &&
+									{/* {product.product_options &&
 									product.product_options.length > 0 &&
 									product.product_options.filter((option) => option.dropdown).length > 0 && (
 										<li>
@@ -522,7 +732,7 @@ const ProductPage = (props) => {
 												</div>
 											</div>
 										</li>
-									)}
+									)} */}
 									<li>
 										<div className="ai-c h-25px">
 											<label
@@ -598,7 +808,7 @@ const ProductPage = (props) => {
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
 							{/* <p className="paragraph_font">{product.description}</p> */}
 							<ReadMore width={1000} className="paragraph_font" length={100}>
-								{product.description}
+								{description}
 							</ReadMore>
 							{/* <ReadMore width={1000} className="paragraph_font">{product.description}</ReadMore> */}
 							{/* <p className="paragraph_font">
@@ -688,8 +898,8 @@ const ProductPage = (props) => {
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul style={{}}>
-											{product.included_items ? (
-												product.included_items.split('\n').map((line, index) => {
+											{included_items ? (
+												included_items.split('\n').map((line, index) => {
 													return (
 														<li
 															key={index}
@@ -701,7 +911,7 @@ const ProductPage = (props) => {
 													);
 												})
 											) : (
-												product.included_items
+												included_items
 											)}
 										</ul>
 									</div>

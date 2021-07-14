@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, listProducts } from '../../actions/productActions';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
@@ -48,7 +48,19 @@ const EditProductPage = (props) => {
 	const [ printing_time, set_printing_time ] = useState(0);
 	const [ assembly_time, set_assembly_time ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
-	const [ product_group_name, set_product_group_name ] = useState('');
+	const [ default_option, set_default_option ] = useState(false);
+	const [ option, set_option ] = useState();
+	const [ macro_product, set_macro_product ] = useState(false);
+	const [ group_name, set_group_name ] = useState('');
+	const [ color_product_group, set_color_product_group ] = useState(false);
+	const [ color_products, set_color_products ] = useState(false);
+	const [ secondary_product_group, set_secondary_product_group ] = useState([]);
+	const [ secondary_group_name, set_secondary_group_name ] = useState('');
+	const [ secondary_products, set_secondary_products ] = useState([]);
+	const [ option_product_group, set_option_product_group ] = useState(false);
+	const [ option_group_name, set_option_group_name ] = useState('');
+	const [ option_products, set_option_products ] = useState([]);
+	const [ color, set_color ] = useState('');
 	const [ pathname, setPathname ] = useState();
 	const [ group_product, set_group_product ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
@@ -56,6 +68,7 @@ const EditProductPage = (props) => {
 	const [ finite_stock, set_finite_stock ] = useState(false);
 	// const [ product, set_product ] = useState('');
 	const [ products, set_products ] = useState([]);
+	const [ size, set_size ] = useState(0);
 	const [ order, setOrder ] = useState();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
@@ -99,12 +112,13 @@ const EditProductPage = (props) => {
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ stableDispatch, props.match.params.pathname ]
 	);
 
-	useEffect(() => {
-		return () => {};
-	}, []);
+	// useEffect(() => {
+
+	// 	return () => {};
+	// }, [props.match.params.pathname]);
 
 	const use_template = (e) => {
 		dispatch(detailsProduct(e.target.value));
@@ -187,7 +201,20 @@ const EditProductPage = (props) => {
 		set_filament_used(product.filament_used);
 		set_printing_time(product.printing_time);
 		set_assembly_time(product.assembly_time);
-		set_product_group_name(product.product_group_name);
+		set_group_name(product.group_name);
+		set_color_product_group(product.color_product_group);
+		set_color_products(product.color_products);
+		set_secondary_product_group(product.secondary_product_group);
+		set_secondary_group_name(product.secondary_group_name);
+		set_secondary_products(product.secondary_products);
+		set_option_product_group(product.option_product_group);
+		set_option_group_name(product.option_group_name);
+		set_option_products(product.option_products);
+		set_color(product.color);
+		set_size(product.size);
+		set_default_option(product.default_option);
+		set_option(product.option);
+		set_macro_product(product.macro_product);
 	};
 	const unset_state = () => {
 		setId('');
@@ -233,7 +260,20 @@ const EditProductPage = (props) => {
 		set_filament_used(0);
 		set_printing_time(0);
 		set_assembly_time(0);
-		set_product_group_name('');
+		set_group_name('');
+		set_color_product_group('');
+		set_color_products('');
+		set_secondary_product_group('');
+		set_secondary_group_name('');
+		set_secondary_products('');
+		set_option_product_group('');
+		set_option_group_name('');
+		set_option_products('');
+		set_color('');
+		set_size('');
+		set_default_option(false);
+		set_option();
+		set_macro_product(false);
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -285,7 +325,20 @@ const EditProductPage = (props) => {
 				filament_used,
 				printing_time,
 				assembly_time,
-				product_group_name
+				group_name,
+				color_product_group,
+				color_products,
+				secondary_product_group,
+				secondary_group_name,
+				secondary_products,
+				option_product_group,
+				option_group_name,
+				option_products,
+				color,
+				size,
+				default_option,
+				option,
+				macro_product
 			})
 		);
 		e.target.reset();
@@ -711,6 +764,48 @@ const EditProductPage = (props) => {
 
 		// set_product('');
 	};
+	const add_color_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		console.log({ product_object });
+		if (products) {
+			console.log('products.length > 0');
+			set_color_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_color_products([ product_object ]);
+		}
+
+		// set_product('');
+	};
+	const add_secondary_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		console.log({ product_object });
+		if (products) {
+			console.log('products.length > 0');
+			set_secondary_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_secondary_products([ product_object ]);
+		}
+
+		// set_product('');
+	};
+	const add_option_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		console.log({ product_object });
+		if (products) {
+			console.log('products.length > 0');
+			set_option_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_option_products([ product_object ]);
+		}
+
+		// set_product('');
+	};
 
 	const remove_product = (product_index, e) => {
 		e.preventDefault();
@@ -735,7 +830,9 @@ const EditProductPage = (props) => {
 											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
 												<i className="fas fa-times mr-5px" />
 											</button>
-											{product.name}
+											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+												{product.name}
+											</Link>
 										</div>
 									</div>
 								);
@@ -845,6 +942,26 @@ const EditProductPage = (props) => {
 													value={name}
 													id="name"
 													onChange={(e) => setName(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="color">Color</label>
+												<input
+													type="text"
+													name="color"
+													value={color}
+													id="color"
+													onChange={(e) => set_color(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="size">Size</label>
+												<input
+													type="text"
+													name="size"
+													value={size}
+													id="size"
+													onChange={(e) => set_size(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -1262,58 +1379,286 @@ const EditProductPage = (props) => {
 										<div>Loading...</div>
 									) : (
 										<li>
-											<label htmlFor="group_product">Group Product</label>
+											<label htmlFor="macro_product">Macro Product</label>
 											<input
 												type="checkbox"
-												name="group_product"
-												defaultChecked={group_product}
-												id="group_product"
+												name="macro_product"
+												defaultChecked={macro_product}
+												id="macro_product"
 												onChange={(e) => {
-													set_group_product(e.target.checked);
+													set_macro_product(e.target.checked);
 												}}
 											/>
 										</li>
 									)}
-									<div className="jc-b">
-										{group_product && (
-											<ul>
+									{loading_checkboxes ? (
+										<div>Loading...</div>
+									) : (
+										<li>
+											<label htmlFor="option">Option</label>
+											<input
+												type="checkbox"
+												name="option"
+												defaultChecked={option}
+												id="option"
+												onChange={(e) => {
+													set_option(e.target.checked);
+												}}
+											/>
+										</li>
+									)}
+									{option && (
+										<div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
 												<li>
-													{/* <label htmlFor="product">Products</label> */}
-													<div className="ai-c h-25px mv-15px jc-c">
-														<div className="custom-select">
-															<select
-																className="qty_select_dropdown"
-																onChange={(e) => add_product(e)}
-															>
-																<option key={1} defaultValue="">
-																	---Add Products to Group---
-																</option>
-																{products_list.map((product, index) => (
-																	<option key={index} value={JSON.stringify(product)}>
-																		{product.name}
-																	</option>
-																))}
-															</select>
-															<span className="custom-arrow" />
-														</div>
-													</div>
-													{/* <button className="btn primary" onClick={(e) => add_product(e)}>
-														Add Gear
-													</button> */}
-													{product_display(products)}
-												</li>
-												<li>
-													<label htmlFor="product_group_name">Product Group Name</label>
+													<label htmlFor="default_option">Default Option</label>
 													<input
-														type="text"
-														name="product_group_name"
-														value={product_group_name}
-														id="product_group_name"
-														onChange={(e) => set_product_group_name(e.target.value)}
+														type="checkbox"
+														name="default_option"
+														defaultChecked={default_option}
+														id="default_option"
+														onChange={(e) => {
+															set_default_option(e.target.checked);
+														}}
 													/>
 												</li>
-											</ul>
-										)}
+											)}
+										</div>
+									)}
+									{macro_product && (
+										<div>
+											<Link to={'/secure/glow/editproduct/'}>Create New Product Option</Link>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="group_product">Group Product</label>
+													<input
+														type="checkbox"
+														name="group_product"
+														defaultChecked={group_product}
+														id="group_product"
+														onChange={(e) => {
+															set_group_product(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="color_product_group">Color Product Group</label>
+													<input
+														type="checkbox"
+														name="color_product_group"
+														defaultChecked={color_product_group}
+														id="color_product_group"
+														onChange={(e) => {
+															set_color_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="secondary_product_group">
+														Secondary Product Group
+													</label>
+													<input
+														type="checkbox"
+														name="secondary_product_group"
+														defaultChecked={secondary_product_group}
+														id="secondary_product_group"
+														onChange={(e) => {
+															set_secondary_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="option_product_group">Option Product Group</label>
+													<input
+														type="checkbox"
+														name="option_product_group"
+														defaultChecked={option_product_group}
+														id="option_product_group"
+														onChange={(e) => {
+															set_option_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+
+											<div>
+												{group_product && (
+													<ul>
+														<li>
+															{/* <label htmlFor="product">Products</label> */}
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{products_list.map((product, index) => (
+																			<option
+																				key={index}
+																				value={JSON.stringify(product)}
+																			>
+																				{product.name}
+																			</option>
+																		))}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(products)}
+														</li>
+														<li>
+															<label htmlFor="group_name">Group Name</label>
+															<input
+																type="text"
+																name="group_name"
+																value={group_name}
+																id="group_name"
+																onChange={(e) => set_group_name(e.target.value)}
+															/>
+														</li>
+													</ul>
+												)}
+											</div>
+											<div>
+												{color_product_group && (
+													<ul>
+														<li>
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_color_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{products_list.map((product, index) => (
+																			<option
+																				key={index}
+																				value={JSON.stringify(product)}
+																			>
+																				{product.name}
+																			</option>
+																		))}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(color_products)}
+														</li>
+													</ul>
+												)}
+											</div>
+											<div>
+												{secondary_product_group && (
+													<ul>
+														<li>
+															{/* <label htmlFor="product">Products</label> */}
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_secondary_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{products_list.map((product, index) => (
+																			<option
+																				key={index}
+																				value={JSON.stringify(product)}
+																			>
+																				{product.name}
+																			</option>
+																		))}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(secondary_products)}
+														</li>
+														<li>
+															<label htmlFor="secondary_group_name">
+																Secondary Product Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_group_name"
+																value={secondary_group_name}
+																id="secondary_group_name"
+																onChange={(e) =>
+																	set_secondary_group_name(e.target.value)}
+															/>
+														</li>
+													</ul>
+												)}
+											</div>
+											<div>
+												{option_product_group && (
+													<ul>
+														<li>
+															{/* <label htmlFor="product">Products</label> */}
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_option_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{products_list.map((product, index) => (
+																			<option
+																				key={index}
+																				value={JSON.stringify(product)}
+																			>
+																				{product.name}
+																			</option>
+																		))}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(option_products)}
+														</li>
+														<li>
+															<label htmlFor="option_group_name">
+																Option Product Group Name
+															</label>
+															<input
+																type="text"
+																name="option_group_name"
+																value={option_group_name}
+																id="option_group_name"
+																onChange={(e) => set_option_group_name(e.target.value)}
+															/>
+														</li>
+													</ul>
+												)}
+											</div>
+										</div>
+									)}
+									<div className="jc-b">
 										<li>
 											<label htmlFor="chip">Chip</label>
 											<div className="ai-c h-25px mv-15px jc-c">
@@ -1340,8 +1685,7 @@ const EditProductPage = (props) => {
 											{chip_display(chips)}
 										</li>
 									</div>
-
-									<li>
+									{/* <li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
 												<select
@@ -1362,13 +1706,13 @@ const EditProductPage = (props) => {
 												<span className="custom-arrow" />
 											</div>
 										</div>
-									</li>
+									</li> */}
 
-									<li>
+									{/* <li>
 										<button className="btn primary" onClick={(e) => add_product_option(e)}>
 											Create Product Option
 										</button>
-									</li>
+									</li> */}
 									<div className="row wrap jc-b">
 										{product_options &&
 											product_options.map((option, index) => {
@@ -1447,7 +1791,7 @@ const EditProductPage = (props) => {
 																	)}
 															/>
 														</li>
-														<li>
+														{/* <li>
 															<label htmlFor="color">Color</label>
 															<input
 																type="text"
@@ -1462,8 +1806,8 @@ const EditProductPage = (props) => {
 																		index
 																	)}
 															/>
-														</li>
-														<h3>Package Dimmensions</h3>
+														</li> */}
+														{/* <h3>Package Dimmensions</h3>
 														<li>
 															<label htmlFor="package_length">Package Length</label>
 															<input
@@ -1531,11 +1875,6 @@ const EditProductPage = (props) => {
 																	)}
 															/>
 														</li>
-														{/* <li>
-												<label htmlFor="package_height">
-													Calculated Volume {length && length * package_width * package_height}
-												</label>
-											</li> */}
 														<li>
 															<label htmlFor="package_pounds">Package lbs</label>
 															<input
@@ -1625,8 +1964,8 @@ const EditProductPage = (props) => {
 																		index
 																	)}
 															/>
-														</li>
-														{loading_checkboxes ? (
+														</li> */}
+														{/* {loading_checkboxes ? (
 															<div>Loading...</div>
 														) : (
 															<li>
@@ -1644,8 +1983,8 @@ const EditProductPage = (props) => {
 																		)}
 																/>
 															</li>
-														)}
-														<li>
+														)} */}
+														{/* <li>
 															<label htmlFor="count_in_stock">Count In Stock</label>
 															<input
 																type="text"
@@ -1660,9 +1999,9 @@ const EditProductPage = (props) => {
 																		index
 																	)}
 															/>
-														</li>
+														</li> */}
 
-														{loading_checkboxes ? (
+														{/* {loading_checkboxes ? (
 															<li>Loading...</li>
 														) : (
 															<li>
@@ -1680,8 +2019,8 @@ const EditProductPage = (props) => {
 																		)}
 																/>
 															</li>
-														)}
-														{loading_checkboxes ? (
+														)} */}
+														{/* {loading_checkboxes ? (
 															<li>Loading...</li>
 														) : (
 															<li>
@@ -1699,7 +2038,7 @@ const EditProductPage = (props) => {
 																		)}
 																/>
 															</li>
-														)}
+														)} */}
 														{loading_checkboxes ? (
 															<li>Loading...</li>
 														) : (
@@ -1749,7 +2088,7 @@ const EditProductPage = (props) => {
 																Add Image
 															</button>
 														</li> */}
-														<li>
+														{/* <li>
 															<label htmlFor="image">Option Image</label>
 															<input
 																type="text"
@@ -1767,7 +2106,7 @@ const EditProductPage = (props) => {
 																Add Image
 															</button>
 														</li>
-														{product_option_image_display(option.images, index)}
+														{product_option_image_display(option.images, index)} */}
 													</div>
 												);
 											})}

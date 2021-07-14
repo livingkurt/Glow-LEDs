@@ -93,10 +93,26 @@ const productSchema = new mongoose.Schema(
 		assembly_time: { type: Number },
 		order: { type: Number },
 		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ],
-		products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
-		group_product: { type: Boolean, default: false },
 		product_options: [ productOptionsSchema ],
-		product_group_name: { type: String }
+		group_product: { type: Boolean, default: false },
+		group_name: { type: String },
+		products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+
+		color_product_group: { type: Boolean, default: false },
+		color_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+
+		secondary_product_group: { type: Boolean, default: false },
+		secondary_group_name: { type: String },
+		secondary_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+
+		option_product_group: { type: Boolean, default: false },
+		option_group_name: { type: String },
+		option_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+		color: { type: String },
+		size: { type: Number },
+		default_option: { type: Boolean, default: false },
+		option: { type: Boolean, default: false },
+		macro_product: { type: Boolean, default: false }
 	},
 	{
 		timestamps: true

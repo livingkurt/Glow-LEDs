@@ -68,7 +68,10 @@ export default {
 		try {
 			const product = await Product.findOne({ pathname: req.params.pathname })
 				.populate('chips')
-				.populate('products');
+				.populate('products')
+				.populate('color_products')
+				.populate('secondary_products')
+				.populate('option_products');
 
 			if (product) {
 				log_request({

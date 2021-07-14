@@ -29,34 +29,7 @@ export const addToCart = (
 	images: any,
 	cart: any
 ) => async (
-	dispatch: (
-		arg0: {
-			type: string;
-			payload: {
-				product: object;
-				secondary_product: string;
-				name: string;
-				display_image: string;
-				diffuser_cap: any;
-				// diffuser_cap_name: string;
-				color: string;
-				price: number;
-				sale_price: number;
-				countInStock: number;
-				package_package_volume: number;
-				weight_pounds: number;
-				weight_ounces: number;
-				package_length: number;
-				package_width: number;
-				package_height: number;
-				qty: number;
-				pathname: number;
-				category: string;
-				product_option: any;
-				finite_stock: number;
-			};
-		}
-	) => void,
+	dispatch: (arg0: any) => void,
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
 	try {
@@ -89,57 +62,57 @@ export const addToCart = (
 			qty,
 			finite_stock: data.finite_stock
 		};
-		console.log({ cartItem });
-		if (color) {
-			cartItem = {
-				product: data._id,
-				name: data.name,
-				display_image: image,
-				color,
-				diffuser_cap,
-				price: product_option.price || data.price,
-				sale_price: product_option.sale_price || data.sale_price,
-				countInStock: data.countInStock,
-				weight_pounds: product_option.weight_pounds || data.weight_pounds,
-				weight_ounces: product_option.weight_ounces || data.weight_ounces,
-				package_length: product_option.package_length || data.package_length,
-				package_width: product_option.package_width || data.package_width,
-				package_height: product_option.package_height || data.package_height,
-				package_volume: product_option.package_volume || data.package_volume,
-				pathname: data.pathname,
-				category: data.category,
-				product_option: product_option || {},
-				qty,
-				finite_stock: data.finite_stock
-			};
-			console.log({ color: cartItem });
-		}
-		if (diffuser_cap) {
-			cartItem = {
-				product: data._id,
-				secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
-				name: data.name,
-				display_image: image,
-				color,
-				diffuser_cap,
-				// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
-				price: product_option.price || data.price,
-				sale_price: product_option.sale_price || data.sale_price,
-				countInStock: data.countInStock,
-				weight_pounds: product_option.weight_pounds || data.weight_pounds,
-				weight_ounces: product_option.weight_ounces || data.weight_ounces,
-				package_length: product_option.package_length || data.package_length,
-				package_width: product_option.package_width || data.package_width,
-				package_height: product_option.package_height || data.package_height,
-				package_volume: product_option.package_volume || data.package_volume,
-				pathname: data.pathname,
-				category: data.category,
-				product_option: product_option || {},
-				qty,
-				finite_stock: data.finite_stock
-			};
-			console.log({ diffuser_cap: cartItem });
-		}
+		// console.log({ cartItem });
+		// if (color) {
+		// 	cartItem = {
+		// 		product: data._id,
+		// 		name: data.name,
+		// 		display_image: image,
+		// 		color,
+		// 		diffuser_cap,
+		// 		price: product_option.price || data.price,
+		// 		sale_price: product_option.sale_price || data.sale_price,
+		// 		countInStock: data.countInStock,
+		// 		weight_pounds: product_option.weight_pounds || data.weight_pounds,
+		// 		weight_ounces: product_option.weight_ounces || data.weight_ounces,
+		// 		package_length: product_option.package_length || data.package_length,
+		// 		package_width: product_option.package_width || data.package_width,
+		// 		package_height: product_option.package_height || data.package_height,
+		// 		package_volume: product_option.package_volume || data.package_volume,
+		// 		pathname: data.pathname,
+		// 		category: data.category,
+		// 		product_option: product_option || {},
+		// 		qty,
+		// 		finite_stock: data.finite_stock
+		// 	};
+		// 	console.log({ color: cartItem });
+		// }
+		// if (diffuser_cap) {
+		// 	cartItem = {
+		// 		product: data._id,
+		// 		secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
+		// 		name: data.name,
+		// 		display_image: image,
+		// 		color,
+		// 		diffuser_cap,
+		// 		// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
+		// 		price: product_option.price || data.price,
+		// 		sale_price: product_option.sale_price || data.sale_price,
+		// 		countInStock: data.countInStock,
+		// 		weight_pounds: product_option.weight_pounds || data.weight_pounds,
+		// 		weight_ounces: product_option.weight_ounces || data.weight_ounces,
+		// 		package_length: product_option.package_length || data.package_length,
+		// 		package_width: product_option.package_width || data.package_width,
+		// 		package_height: product_option.package_height || data.package_height,
+		// 		package_volume: product_option.package_volume || data.package_volume,
+		// 		pathname: data.pathname,
+		// 		category: data.category,
+		// 		product_option: product_option || {},
+		// 		qty,
+		// 		finite_stock: data.finite_stock
+		// 	};
+		// 	console.log({ diffuser_cap: cartItem });
+		// }
 		dispatch({
 			type: CART_ADD_ITEM,
 			payload: cartItem
