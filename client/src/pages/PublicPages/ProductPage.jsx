@@ -383,7 +383,18 @@ const ProductPage = (props) => {
 						</div>
 						<div className="details">
 							<div className="">
-								<label className="product_title_top none fs-2em ff-h mb-2rem">{name}</label>
+								<label className="product_title_top none fs-30px ff-h mb-2rem ta-c lh-50px">
+									{determine_product_name(
+										{
+											...product,
+											secondary_product_name: secondary_product_name && secondary_product_name,
+											option_product_name: option_product_name && option_product_name,
+											color: color && color,
+											size: size && size
+										},
+										false
+									)}
+								</label>
 								<div className="details-image">
 									{/* <Zoom> */}
 									<img
@@ -421,14 +432,7 @@ const ProductPage = (props) => {
 							</div>
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
-								<h1 className="product_title_side lh-50px">
-									{/* {name} */}
-									{/* {color && color + ' '} {product.name} {size !== 0 && ' - ' + size} */}
-									{/* {determine_product_name_title(
-										product,
-										false,
-										secondary_product_name && secondary_product_name
-									)} */}
+								<h1 className="product_title_side lh-50px fs-30px">
 									{determine_product_name(
 										{
 											...product,
