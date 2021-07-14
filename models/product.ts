@@ -52,7 +52,7 @@ const productSchema = new mongoose.Schema(
 		images: { type: Array },
 		video: { type: String },
 		brand: { type: String, required: true },
-		price: { type: Number, default: 0 },
+		price: { type: Number },
 		category: { type: String, required: true },
 		product_collection: { type: String },
 		// subcategories: { type: Array },
