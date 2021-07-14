@@ -83,8 +83,13 @@ const ProductPage = (props) => {
 				set_image(product.images && product.images[0]);
 				set_images(product.images);
 				console.log({ images: product.images });
-				set_price(product.price);
-				set_sale_price(product.sale_price);
+
+				if (product.price > 0) {
+					set_price(product.price);
+				}
+				if (product.sale_price > 0) {
+					set_sale_price(product.sale_price);
+				}
 				set_count_in_stock(product.countInStock);
 				set_name(product.name);
 				set_description(product.description);
@@ -104,14 +109,18 @@ const ProductPage = (props) => {
 					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
 					if (option) {
-						set_price(option.price);
 						if (option.size) {
 							set_size(option.size);
 						}
 						if (option.color) {
 							set_color(option.color);
 						}
-						set_sale_price(option.sale_price);
+						if (product.price > 0) {
+							set_price(product.price);
+						}
+						if (product.sale_price > 0) {
+							set_sale_price(product.sale_price);
+						}
 						if (option.countInStock) {
 							set_count_in_stock(option.countInStock);
 						}
@@ -141,34 +150,6 @@ const ProductPage = (props) => {
 						set_color_product(color._id);
 					}
 				}
-				// if (product.product_options) {
-				// 	const option = product.product_options.find((option) => option.default === true);
-				// 	console.log({ option });
-				// 	if (option) {
-				// 		set_price(option.price);
-				// 		if (option.size) {
-				// 			set_size(option.size);
-				// 		}
-				// 		set_sale_price(option.sale_price);
-				// 		if (option.count_in_stock) {
-				// 			set_count_in_stock(option.count_in_stock);
-				// 		}
-
-				// 		set_product_option(option);
-				// 		if (option.images > 0) {
-				// 			set_images(option.images);
-				// 			set_image(option.images && option.images[0]);
-				// 		}
-				// 	}
-				// }
-
-				// set_color(
-				// 	product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters'
-				// 		? 'Translucent White'
-				// 		: product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps'
-				// 			? 'Black'
-				// 			: ''
-				// );
 			}
 		},
 		[ product ]
@@ -182,23 +163,6 @@ const ProductPage = (props) => {
 		},
 		[ error ]
 	);
-
-	// const determine_default_color = (color) => {
-	// 	console.log({ color });
-	// 	if (!color) {
-	// 		if (product.category === 'frosted_diffusers' || product.subcategory === 'diffuser_adapters') {
-	// 			return 'Translucent White';
-	// 		} else if (product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') {
-	// 			return 'Black';
-	// 		} else if (product.category === 'glowskins' || product.category === 'glow_casings') {
-	// 			return 'Clear';
-	// 		} else if (product.category === 'accessories') {
-	// 			return 'White';
-	// 		}
-	// 	} else {
-	// 		return color;
-	// 	}
-	// };
 
 	const handleAddToCart = () => {
 		// console.log({ product_option });
@@ -237,57 +201,22 @@ const ProductPage = (props) => {
 		set_product_option({});
 	};
 
-	// const update_product = (e, option) => {
-	// 	let button = document.getElementById(e.target.id);
-	// 	let buttons = document.querySelectorAll('.packs');
-	// 	buttons.forEach((node) => {
-	// 		node.classList.remove('active');
-	// 		node.classList.remove('secondary');
-	// 		node.classList.add('primary');
-	// 	});
-	// 	button.classList.add('secondary');
-	// 	button.classList.add('active');
-	// 	set_price(option.price);
-	// 	if (typeof option.images !== 'undefined' && option.images.length > 0) {
-	// 		set_images(option.images);
-	// 		set_image(option.images[0]);
-	// 	}
-	// 	set_sale_price(option.sale_price);
-	// 	set_size(option.size);
-	// 	set_count_in_stock(option.count_in_stock);
-	// 	// set_length(option.length);
-	// 	// set_width(option.width);
-	// 	// set_height(option.height);
-	// 	// set_volume(option.volume);
-	// 	set_product_option(option);
-	// 	set_no_dropdown(option.no_dropdown);
-	// 	if (option_color && option_color.price) {
-	// 		set_price(option_color.price);
-	// 	}
-	// 	if (option.no_dropdown) {
-	// 		set_color(option.color);
-	// 	}
-	// };
-
-	const update_product_images = (e, option) => {
-		const product = JSON.parse(e.target.value);
-		set_diffuser_cap(JSON.parse(e.target.value));
-		set_images(product.images);
-		set_image(product.images[0]);
-	};
-
 	const update_color = (e) => {
 		const option = JSON.parse(e.target.value);
 		// set_name(option.name);
-		set_price(option.price);
+
 		if (option.description) {
 			set_description(option.description);
 		}
 		if (option.facts) {
 			set_facts(option.facts);
 		}
-
-		set_sale_price(option.sale_price);
+		if (option.price !== 0) {
+			set_price(option.price);
+		}
+		if (option.sale_price !== 0) {
+			set_sale_price(option.sale_price);
+		}
 		set_color(option.color);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
@@ -295,6 +224,7 @@ const ProductPage = (props) => {
 		}
 		set_color_product(option._id);
 	};
+
 	const update_option = (e) => {
 		const option = JSON.parse(e.target.value);
 		let button = document.getElementById(e.target.id);
@@ -306,13 +236,13 @@ const ProductPage = (props) => {
 		});
 		button.classList.add('secondary');
 		button.classList.add('active');
-		// set_name(option.name);
-		// const new_name = `${option.color && option.color + ' '}${product.name}${option.size && ' - ' + option.size}`;
-		// set_name(new_name);
-
-		// set_name(option.name);
 		set_size(option.size);
-		set_price(option.price);
+		if (option.price > 0) {
+			set_price(option.price);
+		}
+		if (option.sale_price > 0) {
+			set_sale_price(option.sale_price);
+		}
 		if (option.description) {
 			set_description(option.description);
 		}
@@ -322,7 +252,6 @@ const ProductPage = (props) => {
 		if (option.included_items) {
 			set_included_items(option.included_items);
 		}
-		set_sale_price(option.sale_price);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
@@ -348,65 +277,6 @@ const ProductPage = (props) => {
 		set_secondary_product(option._id);
 		set_secondary_product_name(option.name);
 	};
-
-	// const update_secondary = (e) => {
-	// 	const option = JSON.parse(e.target.value);
-	// 	let button = document.getElementById(e.target.id);
-	// 	let buttons = document.querySelectorAll('.packs');
-	// 	buttons.forEach((node) => {
-	// 		node.classList.remove('active');
-	// 		node.classList.remove('secondary');
-	// 		node.classList.add('primary');
-	// 	});
-	// 	button.classList.add('secondary');
-	// 	button.classList.add('active');
-	// 	// set_name(option.name);
-	// 	// const new_name = `${option.color && option.color + ' '}${product.name}${option.size && ' - ' + option.size}`;
-	// 	// set_name(new_name);
-
-	// 	// set_name(option.name);
-	// 	set_size(option.size);
-	// 	set_price(option.price);
-	// 	if (option.description) {
-	// 		set_description(option.description);
-	// 	}
-	// 	if (option.facts) {
-	// 		set_facts(option.facts);
-	// 	}
-	// 	if (option.included_items) {
-	// 		set_included_items(option.included_items);
-	// 	}
-	// 	set_sale_price(option.sale_price);
-	// 	if (option.images && option.images[0]) {
-	// 		set_images(option.images);
-	// 		set_image(option.images[0]);
-	// 	}
-	// 	set_dimensions({
-	// 		weight_pounds: option.weight_pounds,
-	// 		weight_ounces: option.weight_ounces,
-	// 		package_length: option.package_length,
-	// 		package_width: option.package_width,
-	// 		package_height: option.package_height,
-	// 		package_volume: option.package_volume
-	// 	});
-	// 	set_option_product(option._id);
-	// };
-	// const update_color = (e, option) => {
-	// 	if (option.price) {
-	// 		set_price(option.price);
-	// 	}
-	// 	set_sale_price(option.sale_price);
-	// 	set_color(JSON.parse(e.target.value).color);
-	// 	set_option_color(JSON.parse(e.target.value));
-	// 	console.log({ option_images: option.images });
-	// 	if (option.images && option.images[0]) {
-	// 		set_images(option.images);
-	// 		set_image(option.images[0]);
-	// 	}
-	// 	if (product.category === 'frosted_diffusers') {
-	// 		set_product_option(option);
-	// 	}
-	// };
 
 	return (
 		<div className="">
