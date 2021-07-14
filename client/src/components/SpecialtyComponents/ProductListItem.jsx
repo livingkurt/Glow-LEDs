@@ -246,17 +246,12 @@ const ProductListItem = (props) => {
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
-								<label className="w-100px">
+								{/* <label className="w-100px">
 									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
-								</label>
+								</label> */}
 								<label className="w-200px">{product.category}</label>
-								<label className="w-100px">{product.order}</label>
-								{/* <label className="product-price w-500px">
-									{sale_price_product_option_switch(product, product.product_options)}
-								</label> */}
-								{/* <label className="product-price w-250px">
-									{product.product_options.length} Options
-								</label> */}
+								{/* <label className="w-100px">{product.order}</label> */}
+								<label className="w-200px">${product.price}</label>
 								<div>
 									<div>
 										<div className="jc-b">
@@ -296,17 +291,12 @@ const ProductListItem = (props) => {
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
-								<label className="w-100px">
+								{/* <label className="w-100px">
 									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
-								</label>
+								</label> */}
 								<label className="w-200px">{product.category}</label>
-								<label className="w-100px">{product.order}</label>
-								{/* <label className="product-price w-500px">
-									{sale_price_product_option_switch(product, product.product_options)}
-								</label> */}
-								{/* <label className="product-price w-250px">
-									{product.product_options.length} Options
-								</label> */}
+								{/* <label className="w-100px">{product.order}</label> */}
+								<label className="w-200px">${product.price}</label>
 								<div>
 									<div>
 										<div className="jc-b">
@@ -346,17 +336,12 @@ const ProductListItem = (props) => {
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
-								<label className="">
+								{/* <label className="">
 									{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
-								</label>
+								</label> */}
 								<label className="">{product.category}</label>
-								<label className="">{product.order}</label>
-								{/* <label className="product-price ">
-									{sale_price_product_option_switch(product, product.product_options)}
-								</label> */}
-								{/* <label className="product-price ">
-									{product.product_options.length} Options
-								</label> */}
+								{/* <label className="">{product.order}</label> */}
+								<label className="w-200px">${product.price}</label>
 								<div>
 									<div>
 										<div className="jc-b">
@@ -368,19 +353,6 @@ const ProductListItem = (props) => {
 											<button className="btn icon" onClick={() => deleteHandler(product)}>
 												<i className="fas fa-trash-alt" />
 											</button>
-											{/* {admin && (
-												<div className="jc-fe column ml-auto ">
-													<button
-														className="btn icon h-3rem "
-														onClick={() => show_hide(product._id)}
-													>
-														<i
-															style={{ WebkitTransform: 'rotate(-180deg)' }}
-															className="top-8px fas fa-sort-up"
-														/>
-													</button>
-												</div>
-											)} */}
 										</div>
 									</div>
 									<div />
