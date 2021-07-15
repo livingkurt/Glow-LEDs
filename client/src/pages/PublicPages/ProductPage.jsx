@@ -465,9 +465,11 @@ const ProductPage = (props) => {
 										{color}
 									</div>
 								)}
-								{size && (
+								{size > 0 && (
 									<div className="row ai-c">
-										<h3 className="mr-5px">{product.option_group_name || 'Size'}: </h3>
+										<h3 className="mr-5px">
+											{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
+										</h3>
 										{size}
 									</div>
 								)}
