@@ -46,9 +46,13 @@ const OrderPage = (props) => {
 	const [ refund_state, set_refund_state ] = useState({});
 	const [ refund_amount, set_refund_amount ] = useState();
 	const [ refund_reason, set_refund_reason ] = useState('');
+	const [ all_orders, set_all_orders ] = useState('');
 
 	const orderRefund = useSelector((state) => state.orderRefund);
 	const { order: refund } = orderRefund;
+
+	const orderList = useSelector((state) => state.orderList);
+	const { orders } = orderList;
 
 	const update_refund_state = (amount) => {
 		dispatch(refundOrder(order, true, amount, refund_reason));
@@ -63,6 +67,13 @@ const OrderPage = (props) => {
 			}
 		},
 		[ refund ]
+	);
+
+	useEffect(
+		() => {
+			dispatch(detailsOrder(props.match.params.id));
+		},
+		[ props.match.params.id ]
 	);
 
 	useEffect(
@@ -83,6 +94,10 @@ const OrderPage = (props) => {
 		},
 		[ product_object ]
 	);
+	useEffect(() => {
+		get_total_orders();
+		return () => {};
+	}, []);
 
 	// const save_secondary_product = async () => {
 	// 	const request = await API_Products.save_secondary_product(order, userInfo, secondary_product);
@@ -98,13 +113,21 @@ const OrderPage = (props) => {
 				dispatch(detailsOrder(props.match.params.id));
 			}
 			set_payment_loading(false);
+			get_total_orders();
 		},
 		[ successPay ]
 	);
 
-	useEffect(() => {
-		empty_cart();
-	}, []);
+	const get_total_orders = async () => {
+		set_loading_label(true);
+		const { data } = await API_Orders.total_orders();
+		set_all_orders(data);
+		set_loading_label(false);
+	};
+
+	// useEffect(() => {
+	// 	empty_cart();
+	// }, []);
 
 	const empty_cart = () => {
 		for (let item of cartItems) {
@@ -298,6 +321,36 @@ const OrderPage = (props) => {
 		dispatch(listOrders());
 	};
 
+	const move_left = (e) => {
+		e.preventDefault();
+		// const current_product = all_orders.find(item => item._id ===  product._id)
+		console.log(order._id);
+		if (all_orders) {
+			let current_order_index = all_orders.map((item) => item._id).indexOf(order._id);
+			let left_order_index = current_order_index + 1;
+			if (left_order_index >= all_orders.length) {
+				left_order_index = 0;
+			}
+			console.log({ current_order_index, left_order_index, new_order: all_orders[left_order_index] });
+			// stableDispatch(detailsProduct(all_orders[current_order_index - 1]._id));
+			history.push('/secure/account/order/' + all_orders[left_order_index]._id);
+		}
+	};
+	const move_right = (e) => {
+		e.preventDefault();
+		console.log({ all_orders });
+		if (all_orders) {
+			let current_order_index = all_orders.map((item) => item._id).indexOf(order._id);
+			let right_order_index = current_order_index - 1;
+			if (right_order_index === -1) {
+				right_order_index = all_orders.length - 1;
+			}
+			console.log({ current_order_index, right_order_index, new_order: all_orders[right_order_index] });
+			// stableDispatch(detailsProduct(all_orders[current_order_index + 1]._id));
+			history.push('/secure/account/order/' + all_orders[right_order_index]._id);
+		}
+	};
+
 	return (
 		<Loading loading={loading} error={error}>
 			{order && (
@@ -327,6 +380,39 @@ const OrderPage = (props) => {
 						<Link to="/secure/account/orders">
 							<button className="btn secondary">Back to Orders</button>
 						</Link>
+					</div>
+					<div className="row">
+						<div className="ai-c">
+							<button
+								style={{ borderRadius: '50%' }}
+								className="btn icon h-59px"
+								onClick={(e) => move_left(e)}
+							>
+								<i className="fas fa-arrow-circle-left fs-40px" />
+							</button>
+						</div>
+						<h2
+							style={{
+								textAlign: 'center',
+								width: '100%',
+								marginRight: 'auto',
+								justifyContent: 'center'
+							}}
+							className="ta-c "
+						>
+							<Link to={'/collections/all/products/' + product.pathname}>
+								{loading ? 'Product' : product.name}
+							</Link>
+						</h2>
+						<div className="ai-c">
+							<button
+								style={{ borderRadius: '50%' }}
+								className="btn icon h-59px"
+								onClick={(e) => move_right(e)}
+							>
+								<i className="fas fa-arrow-circle-right fs-40px" />
+							</button>
+						</div>
 					</div>
 					<Loading loading={loading_label} />
 					<LoadingPayments loading={payment_loading} error={errorPay} />

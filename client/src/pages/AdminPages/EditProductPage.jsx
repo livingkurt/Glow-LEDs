@@ -766,8 +766,23 @@ const EditProductPage = (props) => {
 	// 	);
 	// };
 
-	const move_left = () => {};
-	const move_right = () => {};
+	const move_left = (e) => {
+		e.preventDefault();
+		// const current_product = all_products.find(item => item._id ===  product._id)
+		console.log(product._id);
+		const current_product_index = all_products.map((item) => item.pathname).indexOf(product.pathname);
+		console.log({ current_product_index });
+		// stableDispatch(detailsProduct(all_products[current_product_index - 1].pathname));
+		history.push('/secure/glow/editproduct/' + all_products[current_product_index - 1].pathname);
+	};
+	const move_right = (e) => {
+		e.preventDefault();
+		console.log(product.pathname);
+		const current_product_index = all_products.map((item) => item.pathname).indexOf(product.pathname);
+		console.log({ current_product_index });
+		// stableDispatch(detailsProduct(all_products[current_product_index + 1].pathname));
+		history.push('/secure/glow/editproduct/' + all_products[current_product_index - 1].pathname);
+	};
 
 	const add_product_option = (e) => {
 		e.preventDefault();
@@ -921,7 +936,7 @@ const EditProductPage = (props) => {
 											<button
 												style={{ borderRadius: '50%' }}
 												className="btn icon h-59px"
-												onClick={() => move_left()}
+												onClick={(e) => move_left(e)}
 											>
 												<i className="fas fa-arrow-circle-left fs-40px" />
 											</button>
@@ -943,7 +958,7 @@ const EditProductPage = (props) => {
 											<button
 												style={{ borderRadius: '50%' }}
 												className="btn icon h-59px"
-												onClick={() => move_right()}
+												onClick={(e) => move_right(e)}
 											>
 												<i className="fas fa-arrow-circle-right fs-40px" />
 											</button>
