@@ -223,10 +223,11 @@ const Cart = (props) => {
 					cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 				)}
 			</h3>
-
-			<button className="btn secondary w-100per mb-1rem" onClick={closeMenu}>
-				<Link to="/checkout/cart">View Cart</Link>
-			</button>
+			<Link to="/checkout/cart" className="w-100per">
+				<button className="btn secondary w-100per mb-1rem" onClick={closeMenu}>
+					View Cart
+				</button>
+			</Link>
 
 			<button onClick={decide_warning} className="btn primary w-100per">
 				Proceed to Checkout
