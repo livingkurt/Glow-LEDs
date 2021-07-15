@@ -24,7 +24,7 @@ const EditProductPage = (props) => {
 	const [ countInStock, setCountInStock ] = useState('');
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
-	const [ included_items, setIncludedItems ] = useState('');
+	const [ included_items, setIncludedItems ] = useState();
 	const [ hidden, setHidden ] = useState(false);
 	const [ sale_price, setSalePrice ] = useState(0);
 	const [ sale_start_date, set_sale_start_date ] = useState('');
@@ -367,7 +367,7 @@ const EditProductPage = (props) => {
 				product_collection,
 				countInStock,
 				facts,
-				included_items,
+				included_items: included_items.length === 0 ? '' : included_items,
 				description,
 				hidden,
 				sale_price,
@@ -1400,7 +1400,7 @@ const EditProductPage = (props) => {
 												<textarea
 													className="edit_product_textarea"
 													name="included_items"
-													defaultValue={included_items}
+													value={included_items}
 													id="included_items"
 													onChange={(e) => setIncludedItems(e.target.value)}
 												/>

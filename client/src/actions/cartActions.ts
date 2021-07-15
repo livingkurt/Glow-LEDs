@@ -40,6 +40,9 @@ export const addToCart = (cart_data: any) => async (
 		let cartItem: any = {
 			product: cart_data.product,
 			color_product: cart_data.color_product,
+			color_product_name: cart_data.color_product_name,
+			secondary_color_product: cart_data.secondary_color_product,
+			secondary_color_product_name: cart_data.secondary_color_product_name,
 			option_product: cart_data.option_product,
 			option_product_name: cart_data.option_product_name,
 			secondary_product: cart_data.secondary_product,
@@ -47,6 +50,7 @@ export const addToCart = (cart_data: any) => async (
 			name: cart_data.name,
 			size: cart_data.size,
 			color: cart_data.color,
+			secondary_color: cart_data.secondary_color,
 			display_image: cart_data.display_image,
 			price: cart_data.price,
 			sale_price: cart_data.sale_price,
@@ -58,6 +62,7 @@ export const addToCart = (cart_data: any) => async (
 			package_height: cart_data.package_height,
 			package_volume: cart_data.package_volume,
 			pathname: cart_data.pathname,
+			subcategory: cart_data.subcategory,
 			category: cart_data.category,
 			qty: cart_data.qty,
 			finite_stock: cart_data.finite_stock

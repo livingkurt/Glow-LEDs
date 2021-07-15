@@ -360,7 +360,15 @@ export const email_sale_price_switch = (item, color) => {
 // };
 
 export const determine_product_name = (item, show_qty) => {
-	if (item.category === 'glowskins' || item.category === 'glow_casings') {
+	console.log({ subcategory: item });
+	if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
+		return (
+			<div>
+				({item.color && item.color + ' Skin '} {item.secondary_color && item.secondary_color + ' Sled) '}{' '}
+				{item.name} {item.size !== 0 && ' - ' + item.size}
+			</div>
+		);
+	} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 		return (
 			<div>
 				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}

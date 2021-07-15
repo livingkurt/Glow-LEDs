@@ -112,6 +112,8 @@ const ProductPage = (props) => {
 					package_volume: product.package_volume
 				});
 				set_product_option({});
+				set_secondary_color_product_name(product.color);
+				set_color_product_name(product.secondary_color);
 				if (product.option_products) {
 					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
@@ -171,7 +173,6 @@ const ProductPage = (props) => {
 						set_secondary_color(color.color);
 					}
 				}
-				// set_secondary_color_product_name(product.)
 			}
 		},
 		[ product ]
@@ -188,7 +189,7 @@ const ProductPage = (props) => {
 
 	const handleAddToCart = () => {
 		// console.log({ product_option });
-		console.log({ handleAddToCart: images[0] });
+		console.log({ handleAddToCart: product.subcategory });
 		dispatch(
 			addToCart({
 				product: product._id,
@@ -203,6 +204,7 @@ const ProductPage = (props) => {
 				name,
 				size,
 				color,
+				secondary_color,
 				display_image: images[0],
 				price,
 				sale_price,
@@ -215,6 +217,7 @@ const ProductPage = (props) => {
 				package_volume: dimensions.package_volume,
 				pathname: props.match.params.pathname,
 				category: product.category,
+				subcategory: product.subcategory,
 				product_option,
 				qty,
 				finite_stock: product.category
@@ -523,7 +526,18 @@ const ProductPage = (props) => {
 										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
 									</a>
 								</div>
-
+								{secondary_product && (
+									<div className="row ai-c  mv-20px">
+										<h3 className="mv-0px mr-5px">
+											{product.secondary_group_name ? (
+												product.secondary_group_name
+											) : (
+												'Cap Design'
+											)}: {' '}
+										</h3>
+										{secondary_product_name}
+									</div>
+								)}
 								{size !== '1 Sled' &&
 								color && (
 									<div className="row ai-c mv-20px">
@@ -552,12 +566,6 @@ const ProductPage = (props) => {
 											{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
 										</h3>
 										{size}
-									</div>
-								)}
-								{secondary_product && (
-									<div className="row ai-c  mv-20px">
-										<h3 className="mv-0px mr-5px">Design: </h3>
-										{secondary_product}
 									</div>
 								)}
 
@@ -627,7 +635,11 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													{product.secondary_group_name && product.secondary_group_name}s:
+													{product.secondary_group_name ? (
+														product.secondary_group_name
+													) : (
+														'Cap Design'
+													)}
 												</label>
 												<div className="custom-select">
 													<select
