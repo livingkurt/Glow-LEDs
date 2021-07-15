@@ -88,9 +88,9 @@ export const cart_sale_price_switch = (product) => {
 	if (product.product_option && product.product_option.hasOwnProperty('price')) {
 		if (product.product_option && product.product_option.sale_price > 0) {
 			return (
-				<label className="">
+				<label className="fs-16px">
 					<del style={{ color: '#a03131' }}>
-						<label className="" style={{ color: 'white' }}>
+						<label className="fs-16px" style={{ color: 'white' }}>
 							${product.product_option.price ? (
 								product.product_option.price.toFixed(2)
 							) : (
@@ -108,7 +108,7 @@ export const cart_sale_price_switch = (product) => {
 			);
 		} else {
 			return product.price === product.product_option.price ? (
-				<label>
+				<label className="fs-16px">
 					${product.product_option.price ? (
 						product.product_option.price.toFixed(2)
 					) : (
@@ -116,9 +116,9 @@ export const cart_sale_price_switch = (product) => {
 					)}
 				</label>
 			) : (
-				<div className="">
+				<div className="fs-16px">
 					<del style={{ color: '#a03131' }}>
-						<label className="" style={{ color: 'white' }}>
+						<label className="fs-16px" style={{ color: 'white' }}>
 							${product.price ? product.price.toFixed(2) : product.price}
 						</label>
 					</del>{' '}
@@ -136,9 +136,9 @@ export const cart_sale_price_switch = (product) => {
 	} else {
 		if (product && product.sale_price > 0) {
 			return (
-				<label className="">
+				<label className="fs-16px">
 					<del style={{ color: '#a03131' }}>
-						<label className="" style={{ color: 'white' }}>
+						<label className="fs-16px" style={{ color: 'white' }}>
 							${product.price ? product.price.toFixed(2) : product.price}
 						</label>
 					</del>{' '}
@@ -167,6 +167,54 @@ export const cart_sale_price_switch = (product) => {
 			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
 		}
 	}
+};
+
+export const cart_item_name = (item) => {
+	return (
+		<div>
+			{item.secondary_product && (
+				<div className="ai-c mv-20px">
+					<label className="mv-0px mr-5px">
+						{item.secondary_group_name ? item.secondary_group_name : 'Cap Design'}: {' '}
+					</label>
+					<label className=" mv-0px">{item.secondary_product_name}</label>
+				</div>
+			)}
+			{item.size !== '1 Sled' &&
+			item.color && (
+				<div className="ai-c mv-20px">
+					<label className="mv-0px mr-5px">{item.color_group_name ? item.color_group_name : 'Color'}: </label>
+					<label className=" mv-0px">{item.color}</label>
+					{item.color_code && (
+						<canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.color_code }} />
+					)}
+				</div>
+			)}
+			{item.size !== '1 Skin' &&
+			item.secondary_color && (
+				<div className="ai-c mv-20px">
+					<label className="mv-0px mr-5px">
+						{item.secondary_color_group_name ? item.secondary_color_group_name : 'Secondary Color'}:{' '}
+					</label>
+					<label className=" mv-0px">{item.secondary_color}</label>
+					{item.secondary_color_code && (
+						<canvas
+							className=" ml-5px w-60px h-20px br-7px"
+							style={{ backgroundColor: item.secondary_color_code }}
+						/>
+					)}
+				</div>
+			)}
+			{item.size && (
+				<div className="ai-c mv-20px">
+					<label className="mv-0px mr-5px">
+						{item.option_group_name ? item.option_group_name : 'Size'}:{' '}
+					</label>
+					<label className=" mv-0px">{item.size}</label>
+				</div>
+			)}
+		</div>
+	);
 };
 
 // export const cart_sale_price_switch = (product) => {
@@ -258,7 +306,7 @@ export const sale_price_product_option_switch_product = (price, sale_price) => {
 	// console.log({ price });
 	// console.log({ sale_price });
 	if (sale_price > 0) {
-		console.log('Hello 1');
+		// console.log('Hello 1');
 		return (
 			<label>
 				<del style={{ color: 'red' }}>
@@ -268,7 +316,7 @@ export const sale_price_product_option_switch_product = (price, sale_price) => {
 			</label>
 		);
 	} else {
-		console.log('Hello 2');
+		// console.log('Hello 2');
 		return <label>${price ? price.toFixed(2) : price}</label>;
 	}
 };
@@ -360,18 +408,34 @@ export const email_sale_price_switch = (item, color) => {
 // };
 
 export const determine_product_name = (item, show_qty) => {
-	console.log({ subcategory: item });
+	// console.log({ subcategory: item });
 	if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
 		return (
 			<div>
-				({item.color && item.color + ' Skin '} {item.secondary_color && item.secondary_color + ' Sled) '}{' '}
-				{item.name} {item.size !== 0 && ' - ' + item.size}
+				({item.color && item.color + ' Skin'}
+				{item.color && ' '}
+				{item.secondary_color && item.secondary_color + ' Sled) '} {item.name}{' '}
+				{item.size !== 0 && ' - ' + item.size}
+			</div>
+		);
+	} else if (item.subcategory === 'batteries') {
+		return (
+			<div>
+				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
 			</div>
 		);
 	} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 		return (
 			<div>
 				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
+			</div>
+		);
+	} else if (item.category === 'accessories') {
+		return (
+			<div>
+				({item.color && item.color + ' Cap/Slide'}
+				{item.color && ' '}
+				{item.secondary_color && item.secondary_color + ' Body) '} {item.name}{' '}
 			</div>
 		);
 	} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {

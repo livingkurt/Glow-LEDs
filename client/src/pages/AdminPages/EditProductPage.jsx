@@ -65,6 +65,7 @@ const EditProductPage = (props) => {
 	const [ option_group_name, set_option_group_name ] = useState('');
 	const [ option_products, set_option_products ] = useState([]);
 	const [ color, set_color ] = useState('');
+	const [ color_code, set_color_code ] = useState('');
 	const [ pathname, setPathname ] = useState();
 	const [ group_product, set_group_product ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
@@ -280,6 +281,7 @@ const EditProductPage = (props) => {
 		set_option_group_name(product.option_group_name);
 		set_option_products(product.option_products);
 		set_color(product.color);
+		set_color_code(product.color_code);
 		set_size(product.size);
 		set_default_option(product.default_option);
 		set_option(product.option);
@@ -343,6 +345,7 @@ const EditProductPage = (props) => {
 		set_option_group_name('');
 		set_option_products('');
 		set_color('');
+		set_color_code('');
 		set_size('');
 		set_default_option(false);
 		set_option();
@@ -410,6 +413,7 @@ const EditProductPage = (props) => {
 				option_group_name,
 				option_products,
 				color,
+				color_code,
 				size,
 				default_option,
 				option,
@@ -1207,6 +1211,16 @@ const EditProductPage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="color_code">Color Code</label>
+												<input
+													type="text"
+													name="color_code"
+													value={color_code}
+													id="color_code"
+													onChange={(e) => set_color_code(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="size">Size</label>
 												<input
 													type="text"
@@ -1708,6 +1722,16 @@ const EditProductPage = (props) => {
 												{group_product && (
 													<ul>
 														<li>
+															<label htmlFor="group_name">Group Name</label>
+															<input
+																type="text"
+																name="group_name"
+																value={group_name}
+																id="group_name"
+																onChange={(e) => set_group_name(e.target.value)}
+															/>
+														</li>
+														<li>
 															{/* <label htmlFor="product">Products</label> */}
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
@@ -1732,19 +1756,14 @@ const EditProductPage = (props) => {
 															</div>
 															{product_display(products, 'group')}
 														</li>
-														<li>
-															<label htmlFor="group_name">Group Name</label>
-															<input
-																type="text"
-																name="group_name"
-																value={group_name}
-																id="group_name"
-																onChange={(e) => set_group_name(e.target.value)}
-															/>
-														</li>
 													</ul>
 												)}
 											</div>
+											{color_product_group && (
+												<li>
+													<h2 className="ta-c">Color Product Group</h2>
+												</li>
+											)}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -1764,6 +1783,18 @@ const EditProductPage = (props) => {
 											<div>
 												{color_product_group && (
 													<ul>
+														<li>
+															<label htmlFor="color_group_name">
+																Color Product Group Name
+															</label>
+															<input
+																type="text"
+																name="color_group_name"
+																value={color_group_name}
+																id="color_group_name"
+																onChange={(e) => set_color_group_name(e.target.value)}
+															/>
+														</li>
 														<li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
@@ -1788,21 +1819,14 @@ const EditProductPage = (props) => {
 															</div>
 															{product_display(color_products, 'color')}
 														</li>
-														<li>
-															<label htmlFor="color_group_name">
-																Color Product Group Name
-															</label>
-															<input
-																type="text"
-																name="color_group_name"
-																value={color_group_name}
-																id="color_group_name"
-																onChange={(e) => set_color_group_name(e.target.value)}
-															/>
-														</li>
 													</ul>
 												)}
 											</div>
+											{secondary_color_product_group && (
+												<li>
+													<h2 className="ta-c">Secondary Color Product Group</h2>
+												</li>
+											)}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -1824,6 +1848,22 @@ const EditProductPage = (props) => {
 											<div>
 												{secondary_color_product_group && (
 													<ul>
+														{/* <li>
+															<h2 className="ta-c">Secondary Color Product Group</h2>
+														</li> */}
+														<li>
+															<label htmlFor="secondary_color_group_name">
+																Secondary Color Product Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_color_group_name"
+																value={secondary_color_group_name}
+																id="secondary_color_group_name"
+																onChange={(e) =>
+																	set_secondary_color_group_name(e.target.value)}
+															/>
+														</li>
 														<li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
@@ -1851,22 +1891,15 @@ const EditProductPage = (props) => {
 																'secondary_color'
 															)}
 														</li>
-														<li>
-															<label htmlFor="secondary_color_group_name">
-																Secondary Color Product Group Name
-															</label>
-															<input
-																type="text"
-																name="secondary_color_group_name"
-																value={secondary_color_group_name}
-																id="secondary_color_group_name"
-																onChange={(e) =>
-																	set_secondary_color_group_name(e.target.value)}
-															/>
-														</li>
 													</ul>
 												)}
 											</div>
+											{option_product_group && (
+												<li>
+													<h2 className="ta-c">Option Color Product Group</h2>
+												</li>
+											)}
+
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -1887,6 +1920,21 @@ const EditProductPage = (props) => {
 											<div>
 												{option_product_group && (
 													<ul>
+														{/* <li>
+															<h2 className="ta-c">Option Product Group</h2>
+														</li> */}
+														<li>
+															<label htmlFor="option_group_name">
+																Option Product Group Name
+															</label>
+															<input
+																type="text"
+																name="option_group_name"
+																value={option_group_name}
+																id="option_group_name"
+																onChange={(e) => set_option_group_name(e.target.value)}
+															/>
+														</li>
 														<li>
 															{/* <label htmlFor="product">Products</label> */}
 															<div className="ai-c h-25px mv-15px jc-c">
@@ -1912,21 +1960,14 @@ const EditProductPage = (props) => {
 															</div>
 															{product_display(option_products, 'option')}
 														</li>
-														<li>
-															<label htmlFor="option_group_name">
-																Option Product Group Name
-															</label>
-															<input
-																type="text"
-																name="option_group_name"
-																value={option_group_name}
-																id="option_group_name"
-																onChange={(e) => set_option_group_name(e.target.value)}
-															/>
-														</li>
 													</ul>
 												)}
 											</div>
+											{secondary_product_group && (
+												<li>
+													<h2 className="ta-c">Secondary Product Group</h2>
+												</li>
+											)}
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -1948,6 +1989,22 @@ const EditProductPage = (props) => {
 											<div>
 												{secondary_product_group && (
 													<ul>
+														{/* <li>
+															<h2 className="ta-c">Secondary Product Group</h2>
+														</li> */}
+														<li>
+															<label htmlFor="secondary_group_name">
+																Secondary Product Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_group_name"
+																value={secondary_group_name}
+																id="secondary_group_name"
+																onChange={(e) =>
+																	set_secondary_group_name(e.target.value)}
+															/>
+														</li>
 														<li>
 															{/* <label htmlFor="product">Products</label> */}
 															<div className="ai-c h-25px mv-15px jc-c">
@@ -1974,19 +2031,6 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(secondary_products, 'secondary')}
-														</li>
-														<li>
-															<label htmlFor="secondary_group_name">
-																Secondary Product Group Name
-															</label>
-															<input
-																type="text"
-																name="secondary_group_name"
-																value={secondary_group_name}
-																id="secondary_group_name"
-																onChange={(e) =>
-																	set_secondary_group_name(e.target.value)}
-															/>
 														</li>
 													</ul>
 												)}
@@ -2040,6 +2084,36 @@ const EditProductPage = (props) => {
 											</div>
 										</div>
 									</li>
+									<div className="row">
+										<div className="ai-c">
+											<button
+												style={{ borderRadius: '50%' }}
+												className="btn icon h-59px"
+												onClick={(e) => move_left(e)}
+											>
+												<i className="fas fa-arrow-circle-left fs-40px" />
+											</button>
+										</div>
+										<div
+											style={{
+												textAlign: 'center',
+												width: '100%',
+												marginRight: 'auto',
+												justifyContent: 'center'
+											}}
+											className="ta-c "
+										/>
+
+										<div className="ai-c">
+											<button
+												style={{ borderRadius: '50%' }}
+												className="btn icon h-59px"
+												onClick={(e) => move_right(e)}
+											>
+												<i className="fas fa-arrow-circle-right fs-40px" />
+											</button>
+										</div>
+									</div>
 
 									{/* <li>
 										<button className="btn primary" onClick={(e) => add_product_option(e)}>

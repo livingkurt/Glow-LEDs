@@ -14,7 +14,7 @@ import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
-import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -630,12 +630,16 @@ const PlaceOrderPage = (props) => {
 												<img src={item.display_image} alt={item.name} title="Product Image" />
 											</Link>
 										</div>
-										<div className=" abel cart-name">
+										<div className="label cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item, false)}
+													{/* {determine_product_name(item, false)} */}
+													<label className="paragraph_font lh-0px mv-0px fs-18px">
+														{item.name}
+													</label>
 												</Link>
 											</div>
+											{cart_item_name(item)}
 											<div className="ai-c h-25px">
 												<label
 													aria-label="sortOrder"
@@ -648,17 +652,19 @@ const PlaceOrderPage = (props) => {
 													<select
 														defaultValue={item.qty}
 														className="qty_select_dropdown"
-														onChange={(e) =>
+														onChange={(e) => {
 															dispatch(
-																addToCart(
-																	item.pathname,
-																	e.target.value,
-																	item.color && item.color,
-																	item.diffuser_cap && item.diffuser_cap,
-																	item.product_option && item.product_option,
-																	item.display_image
-																)
-															)}
+																addToCart({
+																	pathname: item.pathname,
+																	color_product: item.color_product,
+																	secondary_color_product:
+																		item.secondary_color_product,
+																	option_product: item.option_product,
+																	secondary_product: item.secondary_product,
+																	qty: e.target.value
+																})
+															);
+														}}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x, index) => (
 															<option key={index} defaultValue={parseInt(x + 1)}>

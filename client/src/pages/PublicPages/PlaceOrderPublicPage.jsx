@@ -14,7 +14,7 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { loadStripe } from '@stripe/stripe-js';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -520,20 +520,13 @@ const PlaceOrderPublicPage = (props) => {
 										<div className=" label cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item, false)}
-													{/* {(item.category === 'glowskins' ||
-														item.category === 'diffuser_caps' ||
-														item.category === 'mega_diffuser_caps' ||
-														item.category === 'frosted_diffusers') &&
-														item.color}{' '}
-													{item.name}{' '}
-													{item.product_option &&
-														item.product_option.name &&
-														`- ${item.product_option.name}`}
-													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
-													{item.qty > 1 && item.qty + 'x'} */}
+													{/* {determine_product_name(item, false)} */}
+													<label className="paragraph_font lh-0px mv-0px fs-18px">
+														{item.name}
+													</label>
 												</Link>
 											</div>
+											{cart_item_name(item)}
 											<div className="ai-c h-25px">
 												<label
 													aria-label="sortOrder"
@@ -546,17 +539,19 @@ const PlaceOrderPublicPage = (props) => {
 													<select
 														defaultValue={item.qty}
 														className="qty_select_dropdown"
-														onChange={(e) =>
+														onChange={(e) => {
 															dispatch(
-																addToCart(
-																	item.pathname,
-																	e.target.value,
-																	item.color && item.color,
-																	item.diffuser_cap && item.diffuser_cap,
-																	item.product_option && item.product_option,
-																	item.display_image
-																)
-															)}
+																addToCart({
+																	pathname: item.pathname,
+																	color_product: item.color_product,
+																	secondary_color_product:
+																		item.secondary_color_product,
+																	option_product: item.option_product,
+																	secondary_product: item.secondary_product,
+																	qty: e.target.value
+																})
+															);
+														}}
 													>
 														{[ ...Array(item.countInStock).keys() ].map((x, index) => (
 															<option key={index} defaultValue={parseInt(x + 1)}>

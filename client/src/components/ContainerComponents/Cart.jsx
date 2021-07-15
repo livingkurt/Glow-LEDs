@@ -168,16 +168,16 @@ const Cart = (props) => {
 					</div>
 				) : (
 					<div className="h-40vh max-h-65vh" style={{ overflowY: 'scroll' }}>
-						<h4>{no_adapters_warning()}</h4>
+						{/* <h4>{no_adapters_warning()}</h4> */}
 						{cartItems.map((item, index) => (
 							<li key={index}>
 								{console.log({ item })}
-								<div className="cart_sidebar-image">
+								<div className="cart_sidebar-image br-5px">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<img
 											src={item.display_image}
-											height="100px"
-											width="100px"
+											height="50px"
+											width="50px"
 											alt={item.name}
 											title="Product Image"
 										/>
@@ -196,16 +196,9 @@ const Cart = (props) => {
 												htmlFor="sortOrder"
 												className="select-label mr-1rem"
 											>
-												Qty:
+												Qty: {item.qty}
 											</label>
-											{/* {console.log(
-												item.product_option.images
-													? item.product_option.images[0]
-													: item.display_image
-											)} */}
-											{/* {console.log({ product_option_image: item.product_option.images[0] })}
-											{console.log({ display_image: item.display_image })} */}
-											<div className="custom-select">
+											{/* <div className="custom-select">
 												<select
 													defaultValue={item.qty}
 													className="qty_select_dropdown"
@@ -229,13 +222,13 @@ const Cart = (props) => {
 													))}
 												</select>
 												<span className="custom-arrow" />
-											</div>
+											</div> */}
 										</div>
 									</div>
 								</div>
 
 								<div className="">
-									<div className="cart_sidebar-price">
+									<div className="cart_sidebar-price fs-16px">
 										{cart_sale_price_switch(item)}
 										{/* {item.product_option.sale_price > 0 ? (
 											<label>

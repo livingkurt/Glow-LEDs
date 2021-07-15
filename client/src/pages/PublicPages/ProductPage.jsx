@@ -56,6 +56,8 @@ const ProductPage = (props) => {
 	const [ option_product_name, set_option_product_name ] = useState('');
 	const [ color_product_name, set_color_product_name ] = useState('');
 	const [ secondary_color_product_name, set_secondary_color_product_name ] = useState('');
+	const [ color_code, set_color_code ] = useState('');
+	const [ secondary_color_code, set_secondary_color_code ] = useState('');
 	const [ hide_skin_color, set_hide_skin_color ] = useState(false);
 	const [ hide_sled_color, set_hide_sled_color ] = useState(false);
 
@@ -114,6 +116,7 @@ const ProductPage = (props) => {
 				set_product_option({});
 				set_secondary_color_product_name(product.color);
 				set_color_product_name(product.secondary_color);
+				set_size(product.size);
 				if (product.option_products) {
 					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
@@ -163,6 +166,7 @@ const ProductPage = (props) => {
 					if (color) {
 						set_color_product(color._id);
 						set_color(color.color);
+						set_color_code(color.color_code);
 					}
 				}
 				if (product.secondary_color_products) {
@@ -171,6 +175,7 @@ const ProductPage = (props) => {
 					if (color) {
 						set_secondary_color_product(color._id);
 						set_secondary_color(color.color);
+						set_secondary_color_code(color.color_code);
 					}
 				}
 			}
@@ -194,17 +199,21 @@ const ProductPage = (props) => {
 			addToCart({
 				product: product._id,
 				color_product,
+				color_code,
+				secondary_color_code,
 				color_product_name,
 				secondary_color_product,
 				secondary_color_product_name,
+				color_group_name: product.color_group_name,
+				secondary_color_group_name: product.secondary_color_group_name,
 				option_product,
 				option_product_name,
 				secondary_product,
 				secondary_product_name,
 				name,
 				size,
-				color,
-				secondary_color,
+				color: size !== '1 Skin' && color,
+				secondary_color: size !== '1 Sled' && secondary_color,
 				display_image: images[0],
 				price,
 				sale_price,
@@ -246,6 +255,7 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		set_color(option.color);
+		set_color_code(option.color_code);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
@@ -270,6 +280,7 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		set_secondary_color(option.color);
+		set_secondary_color_code(option.color_code);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
@@ -294,18 +305,18 @@ const ProductPage = (props) => {
 		} else {
 			set_size(option.name);
 		}
-		if (option.name === '1 Skin') {
-			set_hide_sled_color(true);
-		} else {
-			set_hide_skin_color(false);
-			set_hide_sled_color(false);
-		}
-		if (option.name === '1 Sled') {
-			set_hide_skin_color(true);
-		} else {
-			set_hide_skin_color(false);
-			set_hide_sled_color(false);
-		}
+		// if (option.name === '1 Skin') {
+		// 	set_hide_sled_color(true);
+		// } else {
+		// 	set_hide_skin_color(false);
+		// 	set_hide_sled_color(false);
+		// }
+		// if (option.name === '1 Sled') {
+		// 	set_hide_skin_color(true);
+		// } else {
+		// 	set_hide_skin_color(false);
+		// 	set_hide_sled_color(false);
+		// }
 
 		if (option.price > 0) {
 			set_price(option.price);
@@ -544,7 +555,13 @@ const ProductPage = (props) => {
 										<h3 className="mv-0px mr-5px">
 											{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
 										</h3>
-										{color}
+										<label>{color}</label>
+										{color_code && (
+											<canvas
+												className=" ml-5px w-60px h-20px br-7px"
+												style={{ backgroundColor: color_code }}
+											/>
+										)}
 									</div>
 								)}
 								{size !== '1 Skin' &&
@@ -557,7 +574,13 @@ const ProductPage = (props) => {
 												'Secondary Color'
 											)}:{' '}
 										</h3>
-										{secondary_color}
+										<label>{secondary_color}</label>
+										{secondary_color_code && (
+											<canvas
+												className=" ml-5px w-60px h-20px br-7px"
+												style={{ backgroundColor: secondary_color_code }}
+											/>
+										)}
 									</div>
 								)}
 								{size && (
