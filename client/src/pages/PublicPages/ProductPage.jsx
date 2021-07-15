@@ -384,16 +384,18 @@ const ProductPage = (props) => {
 						<div className="details">
 							<div className="">
 								<label className="product_title_top none fs-30px ff-h mb-2rem ta-c lh-50px">
-									{determine_product_name(
-										{
-											...product,
-											secondary_product_name: secondary_product_name && secondary_product_name,
-											option_product_name: option_product_name && option_product_name,
-											color: color && color,
-											size: size && size
-										},
-										false
-									)}
+									{name}
+									{/* {determine_product_name(
+											{
+												...product,
+												secondary_product_name:
+													secondary_product_name && secondary_product_name,
+												option_product_name: option_product_name && option_product_name,
+												color: color && color,
+												size: size && size
+											},
+											false
+										)} */}
 								</label>
 								<div className="details-image">
 									{/* <Zoom> */}
@@ -433,6 +435,19 @@ const ProductPage = (props) => {
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
 								<h1 className="product_title_side lh-50px fs-30px">
+									{name}
+									{/* {determine_product_name(
+										{
+											...product,
+											secondary_product_name: secondary_product_name && secondary_product_name,
+											option_product_name: option_product_name && option_product_name,
+											color: color && color,
+											size: size && size
+										},
+										false
+									)} */}
+								</h1>
+								{/* <h1 className="product_title_side lh-50px fs-30px">
 									{determine_product_name(
 										{
 											...product,
@@ -443,7 +458,25 @@ const ProductPage = (props) => {
 										},
 										false
 									)}
-								</h1>
+								</h1> */}
+								{color && (
+									<div className="row">
+										<h3 className="m-0px mr-5px">Color: </h3>
+										{color}
+									</div>
+								)}
+								{size && (
+									<div className="row ai-c">
+										<h3 className="mr-5px">{product.option_group_name || 'Size'}: </h3>
+										{size}
+									</div>
+								)}
+								{secondary_product && (
+									<div className="row ai-c">
+										<h3 className="mr-5px">Design: </h3>
+										{secondary_product}
+									</div>
+								)}
 								<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
 									<a href="#reviews">
 										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
