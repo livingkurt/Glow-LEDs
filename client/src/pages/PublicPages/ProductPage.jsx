@@ -32,7 +32,7 @@ const ProductPage = (props) => {
 	const [ images, set_images ] = useState([]);
 	const [ price, set_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
-	const [ size, set_size ] = useState(0);
+	const [ size, set_size ] = useState();
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ length, set_length ] = useState(0);
 	const [ width, set_width ] = useState(0);
@@ -383,7 +383,20 @@ const ProductPage = (props) => {
 						</div>
 						<div className="details">
 							<div className="">
-								<label className="product_title_top none fs-2em ff-h mb-2rem">{name}</label>
+								<label className="product_title_top none fs-30px ff-h mb-2rem ta-c lh-50px">
+									{name}
+									{/* {determine_product_name(
+											{
+												...product,
+												secondary_product_name:
+													secondary_product_name && secondary_product_name,
+												option_product_name: option_product_name && option_product_name,
+												color: color && color,
+												size: size && size
+											},
+											false
+										)} */}
+								</label>
 								<div className="details-image">
 									{/* <Zoom> */}
 									<img
@@ -421,14 +434,20 @@ const ProductPage = (props) => {
 							</div>
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
 							<div className="details-info">
-								<h1 className="product_title_side lh-50px">
-									{/* {name} */}
-									{/* {color && color + ' '} {product.name} {size !== 0 && ' - ' + size} */}
-									{/* {determine_product_name_title(
-										product,
-										false,
-										secondary_product_name && secondary_product_name
+								<h1 className="product_title_side lh-50px fs-30px mv-0px">
+									{name}
+									{/* {determine_product_name(
+										{
+											...product,
+											secondary_product_name: secondary_product_name && secondary_product_name,
+											option_product_name: option_product_name && option_product_name,
+											color: color && color,
+											size: size && size
+										},
+										false
 									)} */}
+								</h1>
+								{/* <h1 className="product_title_side lh-50px fs-30px">
 									{determine_product_name(
 										{
 											...product,
@@ -439,15 +458,37 @@ const ProductPage = (props) => {
 										},
 										false
 									)}
-								</h1>
-								<div style={{ marginBottom: '15px', marginTop: '-9px' }}>
+								</h1> */}
+
+								<div className="mb-15px mt-n9px">
 									<a href="#reviews">
 										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
 									</a>
 								</div>
 
-								<div className="row">
-									<h3 style={{ margin: 0, marginRight: 5 }}>Price: </h3>
+								{color && (
+									<div className="row ai-c mv-20px">
+										<h3 className="mv-0px mr-5px">Color: </h3>
+										{color}
+									</div>
+								)}
+								{size && (
+									<div className="row ai-c  mv-20px">
+										<h3 className="mv-0px mr-5px">
+											{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
+										</h3>
+										{size}
+									</div>
+								)}
+								{secondary_product && (
+									<div className="row ai-c  mv-20px">
+										<h3 className="mv-0px mr-5px">Design: </h3>
+										{secondary_product}
+									</div>
+								)}
+
+								<div className="row ai-c mv-20px">
+									<h3 className="mv-0px mr-5px">Price: </h3>
 									{/* {sale_price_product_option_switch_product(
 										product,
 										product.product_options,
