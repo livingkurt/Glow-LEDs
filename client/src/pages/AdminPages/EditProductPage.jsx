@@ -50,10 +50,14 @@ const EditProductPage = (props) => {
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ default_option, set_default_option ] = useState(false);
 	const [ option, set_option ] = useState();
-	const [ macro_product, set_macro_product ] = useState(false);
+	const [ macro_product, set_macro_product ] = useState();
 	const [ group_name, set_group_name ] = useState('');
 	const [ color_product_group, set_color_product_group ] = useState(false);
+	const [ color_group_name, set_color_group_name ] = useState('');
 	const [ color_products, set_color_products ] = useState(false);
+	const [ secondary_color_product_group, set_secondary_color_product_group ] = useState(false);
+	const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
+	const [ secondary_color_products, set_secondary_color_products ] = useState(false);
 	const [ secondary_product_group, set_secondary_product_group ] = useState([]);
 	const [ secondary_group_name, set_secondary_group_name ] = useState('');
 	const [ secondary_products, set_secondary_products ] = useState([]);
@@ -78,6 +82,7 @@ const EditProductPage = (props) => {
 	const [ secondary_products_list, set_secondary_products_list ] = useState([]);
 	const [ new_index, set_new_index ] = useState();
 	const [ save, set_save ] = useState(true);
+	const [ filtered_products, set_filtered_products ] = useState([]);
 
 	const history = useHistory();
 
@@ -147,7 +152,12 @@ const EditProductPage = (props) => {
 		console.log({ data });
 		set_group_name(data.group_name);
 		set_color_product_group(data.color_product_group);
+		set_color_group_name(data.color_group_name);
 		set_color_products(data.color_products);
+		set_secondary_color_product_group(data.secondary_color_product_group);
+		set_secondary_color_group_name(data.secondary_color_group_name);
+		set_secondary_color_products(data.secondary_color_products);
+
 		set_secondary_product_group(data.secondary_product_group);
 		set_secondary_group_name(data.secondary_group_name);
 		set_secondary_products(data.secondary_products);
@@ -166,16 +176,25 @@ const EditProductPage = (props) => {
 	};
 	useEffect(
 		() => {
-			if (successSave) {
-				history.push(
-					'/secure/glow/editproduct/' +
-						all_products.filter((item) => !item.option).filter((item) => !item.hidden)[new_index].pathname
-				);
+			if (successSave && filtered_products.length > 0) {
+				if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
+					history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+				}
 			}
 
 			return () => {};
 		},
 		[ successSave ]
+	);
+	useEffect(
+		() => {
+			if (all_products) {
+				set_filtered_products(all_products.filter((item) => !item.option).filter((item) => !item.hidden));
+			}
+
+			return () => {};
+		},
+		[ all_products ]
 	);
 
 	useEffect(
@@ -249,7 +268,11 @@ const EditProductPage = (props) => {
 		set_assembly_time(product.assembly_time);
 		set_group_name(product.group_name);
 		set_color_product_group(product.color_product_group);
+		set_color_group_name(product.color_group_name);
 		set_color_products(product.color_products);
+		set_secondary_color_product_group(product.secondary_color_product_group);
+		set_secondary_color_group_name(product.secondary_color_group_name);
+		set_secondary_color_products(product.secondary_color_products);
 		set_secondary_product_group(product.secondary_product_group);
 		set_secondary_group_name(product.secondary_group_name);
 		set_secondary_products(product.secondary_products);
@@ -307,8 +330,12 @@ const EditProductPage = (props) => {
 		set_printing_time(0);
 		set_assembly_time(0);
 		set_group_name('');
-		set_color_product_group('');
-		set_color_products('');
+		set_color_product_group();
+		set_color_group_name();
+		set_color_products();
+		set_secondary_color_product_group();
+		set_secondary_color_group_name();
+		set_secondary_color_products();
 		set_secondary_product_group('');
 		set_secondary_group_name('');
 		set_secondary_products('');
@@ -319,7 +346,7 @@ const EditProductPage = (props) => {
 		set_size('');
 		set_default_option(false);
 		set_option();
-		set_macro_product(false);
+		set_macro_product();
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -371,7 +398,11 @@ const EditProductPage = (props) => {
 				assembly_time,
 				group_name,
 				color_product_group,
+				color_group_name,
 				color_products,
+				secondary_color_product_group,
+				secondary_color_group_name,
+				secondary_color_products,
 				secondary_product_group,
 				secondary_group_name,
 				secondary_products,
@@ -850,7 +881,7 @@ const EditProductPage = (props) => {
 	const move_left = (e) => {
 		e.preventDefault();
 		// const current_product = all_products.find(item => item._id ===  product._id)
-		const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
+		// const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
 		console.log(product._id);
 		const current_product_index = filtered_products.map((item) => item.pathname).indexOf(product.pathname);
 		console.log({ current_product_index });
@@ -873,7 +904,7 @@ const EditProductPage = (props) => {
 	};
 	const move_right = (e) => {
 		e.preventDefault();
-		const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
+		// const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
 		console.log(product.pathname);
 		const current_product_index = filtered_products.map((item) => item.pathname).indexOf(product.pathname);
 		console.log({ current_product_index });
@@ -935,6 +966,20 @@ const EditProductPage = (props) => {
 
 		// set_product('');
 	};
+	const add_secondary_color_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		console.log({ product_object });
+		if (products) {
+			console.log('products.length > 0');
+			set_secondary_color_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_secondary_color_products([ product_object ]);
+		}
+
+		// set_product('');
+	};
 	const add_secondary_product = (e) => {
 		e.preventDefault();
 		const product_object = JSON.parse(e.target.value);
@@ -975,6 +1020,12 @@ const EditProductPage = (props) => {
 		} else if (list === 'color') {
 			set_color_products((color_products) =>
 				color_products.filter((color_product, index) => {
+					return product_index !== index;
+				})
+			);
+		} else if (list === 'secondary_color') {
+			set_secondary_color_products((color_products) =>
+				secondary_color_products.filter((color_product, index) => {
 					return product_index !== index;
 				})
 			);
@@ -1736,6 +1787,82 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(color_products, 'color')}
+														</li>
+														<li>
+															<label htmlFor="color_group_name">
+																Color Product Group Name
+															</label>
+															<input
+																type="text"
+																name="color_group_name"
+																value={color_group_name}
+																id="color_group_name"
+																onChange={(e) => set_color_group_name(e.target.value)}
+															/>
+														</li>
+													</ul>
+												)}
+											</div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="secondary_color_product_group">
+														Secondary Color Product Group
+													</label>
+													<input
+														type="checkbox"
+														name="secondary_color_product_group"
+														defaultChecked={secondary_color_product_group}
+														id="secondary_color_product_group"
+														onChange={(e) => {
+															set_secondary_color_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											<div>
+												{secondary_color_product_group && (
+													<ul>
+														<li>
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_secondary_color_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{products_list.map((product, index) => (
+																			<option
+																				key={index}
+																				value={JSON.stringify(product)}
+																			>
+																				{product.name}
+																			</option>
+																		))}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(
+																secondary_color_products,
+																'secondary_color'
+															)}
+														</li>
+														<li>
+															<label htmlFor="secondary_color_group_name">
+																Secondary Color Product Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_color_group_name"
+																value={secondary_color_group_name}
+																id="secondary_color_group_name"
+																onChange={(e) =>
+																	set_secondary_color_group_name(e.target.value)}
+															/>
 														</li>
 													</ul>
 												)}
