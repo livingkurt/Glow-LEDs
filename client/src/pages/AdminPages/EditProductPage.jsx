@@ -76,6 +76,8 @@ const EditProductPage = (props) => {
 	const [ product_options_images, set_product_options_images ] = useState([ [] ]);
 	const [ products_list, set_products_list ] = useState([]);
 	const [ secondary_products_list, set_secondary_products_list ] = useState([]);
+	const [ new_index, set_new_index ] = useState();
+	const [ save, set_save ] = useState(true);
 
 	const history = useHistory();
 
@@ -83,7 +85,7 @@ const EditProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 
 	const productSave = useSelector((state) => state.productSave);
-	const { success: save_success } = productSave;
+	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
 
 	const productList = useSelector((state) => state.productList);
 	const { products: all_products } = productList;
@@ -162,6 +164,19 @@ const EditProductPage = (props) => {
 		// dispatch(detailsProduct(e.target.value));
 		// history.push('/secure/glow/products');
 	};
+	useEffect(
+		() => {
+			if (successSave) {
+				history.push(
+					'/secure/glow/editproduct/' +
+						all_products.filter((item) => !item.option).filter((item) => !item.hidden)[new_index].pathname
+				);
+			}
+
+			return () => {};
+		},
+		[ successSave ]
+	);
 
 	useEffect(
 		() => {
@@ -849,10 +864,12 @@ const EditProductPage = (props) => {
 			left_product_index,
 			new_product: filtered_products[left_product_index]
 		});
-		// save_success();
-		// if (save_success) {
-		history.push('/secure/glow/editproduct/' + filtered_products[left_product_index].pathname);
-		// }
+		set_new_index(left_product_index);
+		if (save) {
+			save_product();
+		} else {
+			history.push('/secure/glow/editproduct/' + filtered_products[left_product_index].pathname);
+		}
 	};
 	const move_right = (e) => {
 		e.preventDefault();
@@ -869,9 +886,15 @@ const EditProductPage = (props) => {
 			right_product_index,
 			new_product: filtered_products[right_product_index]
 		});
-		// save_success();
+		set_new_index(right_product_index);
+		if (save) {
+			save_product();
+		} else {
+			history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
+		}
+
 		// if (save_success) {
-		history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
+		// history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
 		// }
 	};
 
@@ -1007,6 +1030,7 @@ const EditProductPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} className="w-100per">
+					<Loading loading={loadingSave} error={errorSave} />
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
@@ -1022,6 +1046,22 @@ const EditProductPage = (props) => {
 									className="edit-form-container"
 									style={{ maxWidth: '105rem', marginBottom: '20px' }}
 								>
+									{loading_checkboxes ? (
+										<div>Loading...</div>
+									) : (
+										<li className="w-100per row">
+											<label htmlFor="save">Save Product</label>
+											<input
+												type="checkbox"
+												name="save"
+												defaultChecked={save}
+												id="save"
+												onChange={(e) => {
+													set_save(e.target.checked);
+												}}
+											/>
+										</li>
+									)}
 									<div className="row">
 										<div className="ai-c">
 											<button
@@ -1045,6 +1085,7 @@ const EditProductPage = (props) => {
 												{loading ? 'Product' : product.name}
 											</Link>
 										</h2>
+
 										<div className="ai-c">
 											<button
 												style={{ borderRadius: '50%' }}
