@@ -82,6 +82,9 @@ const EditProductPage = (props) => {
 	const productDetails = useSelector((state) => state.productDetails);
 	const { product, loading, error } = productDetails;
 
+	const productSave = useSelector((state) => state.productSave);
+	const { success: save_success } = productSave;
+
 	const productList = useSelector((state) => state.productList);
 	const { products: all_products } = productList;
 
@@ -307,9 +310,7 @@ const EditProductPage = (props) => {
 	// 	return 'Are you sure you want to leave?';
 	// };
 
-	const submitHandler = (e) => {
-		console.log({ product_options });
-		e.preventDefault();
+	const save_product = () => {
 		dispatch(
 			saveProduct({
 				_id: props.match.params.pathname && id,
@@ -369,6 +370,71 @@ const EditProductPage = (props) => {
 				macro_product
 			})
 		);
+	};
+
+	const submitHandler = (e) => {
+		console.log({ product_options });
+		e.preventDefault();
+		save_product();
+		// dispatch(
+		// 	saveProduct({
+		// 		_id: props.match.params.pathname && id,
+		// 		name,
+		// 		price,
+		// 		// display_image,
+		// 		images,
+		// 		chips: chips.map((chip) => chip._id),
+		// 		video,
+		// 		brand,
+		// 		category,
+		// 		product_collection,
+		// 		countInStock,
+		// 		facts,
+		// 		included_items,
+		// 		description,
+		// 		hidden,
+		// 		sale_price,
+		// 		sale_start_date: unformat_date(sale_start_date),
+		// 		sale_end_date: unformat_date(sale_end_date),
+		// 		package_volume: package_length * package_width * package_height,
+		// 		subcategory,
+		// 		meta_title: `${name} | Glow LEDs`,
+		// 		meta_description,
+		// 		meta_keywords,
+		// 		package_length,
+		// 		package_width,
+		// 		package_height,
+		// 		product_length,
+		// 		product_width,
+		// 		product_height,
+		// 		weight_pounds,
+		// 		weight_ounces,
+		// 		pathname: pathname ? pathname : snake_case(name),
+		// 		order,
+		// 		product_options,
+		// 		finite_stock,
+		// 		products: products.map((chip) => chip._id),
+		// 		group_product,
+		// 		material_cost,
+		// 		filament_used,
+		// 		printing_time,
+		// 		assembly_time,
+		// 		group_name,
+		// 		color_product_group,
+		// 		color_products,
+		// 		secondary_product_group,
+		// 		secondary_group_name,
+		// 		secondary_products,
+		// 		option_product_group,
+		// 		option_group_name,
+		// 		option_products,
+		// 		color,
+		// 		size,
+		// 		default_option,
+		// 		option,
+		// 		macro_product
+		// 	})
+		// );
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/products');
@@ -769,19 +835,44 @@ const EditProductPage = (props) => {
 	const move_left = (e) => {
 		e.preventDefault();
 		// const current_product = all_products.find(item => item._id ===  product._id)
+		const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
 		console.log(product._id);
-		const current_product_index = all_products.map((item) => item.pathname).indexOf(product.pathname);
+		const current_product_index = filtered_products.map((item) => item.pathname).indexOf(product.pathname);
 		console.log({ current_product_index });
-		// stableDispatch(detailsProduct(all_products[current_product_index - 1].pathname));
-		history.push('/secure/glow/editproduct/' + all_products[current_product_index - 1].pathname);
+
+		let left_product_index = current_product_index - 1;
+		if (left_product_index === -1) {
+			left_product_index = filtered_products.length - 1;
+		}
+		console.log({
+			current_product_index,
+			left_product_index,
+			new_product: filtered_products[left_product_index]
+		});
+		// save_success();
+		// if (save_success) {
+		history.push('/secure/glow/editproduct/' + filtered_products[left_product_index].pathname);
+		// }
 	};
 	const move_right = (e) => {
 		e.preventDefault();
+		const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
 		console.log(product.pathname);
-		const current_product_index = all_products.map((item) => item.pathname).indexOf(product.pathname);
+		const current_product_index = filtered_products.map((item) => item.pathname).indexOf(product.pathname);
 		console.log({ current_product_index });
-		// stableDispatch(detailsProduct(all_products[current_product_index + 1].pathname));
-		history.push('/secure/glow/editproduct/' + all_products[current_product_index - 1].pathname);
+		let right_product_index = current_product_index + 1;
+		if (right_product_index >= filtered_products.length) {
+			right_product_index = 0;
+		}
+		console.log({
+			current_product_index,
+			right_product_index,
+			new_product: filtered_products[right_product_index]
+		});
+		// save_success();
+		// if (save_success) {
+		history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
+		// }
 	};
 
 	const add_product_option = (e) => {
