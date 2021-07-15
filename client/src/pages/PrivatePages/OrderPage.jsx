@@ -427,7 +427,7 @@ const OrderPage = (props) => {
 										on {format_date(order.refundedAt)}
 									</h1>
 								)}
-								<div className="w-100per">
+								<div className="w-100per column">
 									<label>Order #: {order._id}</label>
 									{order.tracking_number && (
 										<label>

@@ -46,6 +46,7 @@ const orderItemSchema = new mongoose.Schema(
 		qty: { type: Number, required: true },
 		display_image: { type: String, required: true },
 		color: { type: String },
+		secondary_color: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
 		pathname: { type: String },
@@ -75,6 +76,12 @@ const orderItemSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product'
 		},
+		color_product_name: { type: String },
+		secondary_color_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		},
+		secondary_color_product_name: { type: String },
 		option_product_name: { type: String },
 		option_product: {
 			type: mongoose.Schema.Types.ObjectId,

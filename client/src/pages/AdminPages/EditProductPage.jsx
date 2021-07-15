@@ -24,7 +24,7 @@ const EditProductPage = (props) => {
 	const [ countInStock, setCountInStock ] = useState('');
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
-	const [ included_items, setIncludedItems ] = useState('');
+	const [ included_items, setIncludedItems ] = useState();
 	const [ hidden, setHidden ] = useState(false);
 	const [ sale_price, setSalePrice ] = useState(0);
 	const [ sale_start_date, set_sale_start_date ] = useState('');
@@ -50,10 +50,14 @@ const EditProductPage = (props) => {
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ default_option, set_default_option ] = useState(false);
 	const [ option, set_option ] = useState();
-	const [ macro_product, set_macro_product ] = useState(false);
+	const [ macro_product, set_macro_product ] = useState();
 	const [ group_name, set_group_name ] = useState('');
 	const [ color_product_group, set_color_product_group ] = useState(false);
+	const [ color_group_name, set_color_group_name ] = useState('');
 	const [ color_products, set_color_products ] = useState(false);
+	const [ secondary_color_product_group, set_secondary_color_product_group ] = useState(false);
+	const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
+	const [ secondary_color_products, set_secondary_color_products ] = useState(false);
 	const [ secondary_product_group, set_secondary_product_group ] = useState([]);
 	const [ secondary_group_name, set_secondary_group_name ] = useState('');
 	const [ secondary_products, set_secondary_products ] = useState([]);
@@ -76,11 +80,17 @@ const EditProductPage = (props) => {
 	const [ product_options_images, set_product_options_images ] = useState([ [] ]);
 	const [ products_list, set_products_list ] = useState([]);
 	const [ secondary_products_list, set_secondary_products_list ] = useState([]);
+	const [ new_index, set_new_index ] = useState();
+	const [ save, set_save ] = useState(true);
+	const [ filtered_products, set_filtered_products ] = useState([]);
 
 	const history = useHistory();
 
 	const productDetails = useSelector((state) => state.productDetails);
 	const { product, loading, error } = productDetails;
+
+	const productSave = useSelector((state) => state.productSave);
+	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
 
 	const productList = useSelector((state) => state.productList);
 	const { products: all_products } = productList;
@@ -142,7 +152,12 @@ const EditProductPage = (props) => {
 		console.log({ data });
 		set_group_name(data.group_name);
 		set_color_product_group(data.color_product_group);
+		set_color_group_name(data.color_group_name);
 		set_color_products(data.color_products);
+		set_secondary_color_product_group(data.secondary_color_product_group);
+		set_secondary_color_group_name(data.secondary_color_group_name);
+		set_secondary_color_products(data.secondary_color_products);
+
 		set_secondary_product_group(data.secondary_product_group);
 		set_secondary_group_name(data.secondary_group_name);
 		set_secondary_products(data.secondary_products);
@@ -159,6 +174,28 @@ const EditProductPage = (props) => {
 		// dispatch(detailsProduct(e.target.value));
 		// history.push('/secure/glow/products');
 	};
+	useEffect(
+		() => {
+			if (successSave && filtered_products.length > 0) {
+				if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
+					history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+				}
+			}
+
+			return () => {};
+		},
+		[ successSave ]
+	);
+	useEffect(
+		() => {
+			if (all_products) {
+				set_filtered_products(all_products.filter((item) => !item.option).filter((item) => !item.hidden));
+			}
+
+			return () => {};
+		},
+		[ all_products ]
+	);
 
 	useEffect(
 		() => {
@@ -231,7 +268,11 @@ const EditProductPage = (props) => {
 		set_assembly_time(product.assembly_time);
 		set_group_name(product.group_name);
 		set_color_product_group(product.color_product_group);
+		set_color_group_name(product.color_group_name);
 		set_color_products(product.color_products);
+		set_secondary_color_product_group(product.secondary_color_product_group);
+		set_secondary_color_group_name(product.secondary_color_group_name);
+		set_secondary_color_products(product.secondary_color_products);
 		set_secondary_product_group(product.secondary_product_group);
 		set_secondary_group_name(product.secondary_group_name);
 		set_secondary_products(product.secondary_products);
@@ -289,8 +330,12 @@ const EditProductPage = (props) => {
 		set_printing_time(0);
 		set_assembly_time(0);
 		set_group_name('');
-		set_color_product_group('');
-		set_color_products('');
+		set_color_product_group();
+		set_color_group_name();
+		set_color_products();
+		set_secondary_color_product_group();
+		set_secondary_color_group_name();
+		set_secondary_color_products();
 		set_secondary_product_group('');
 		set_secondary_group_name('');
 		set_secondary_products('');
@@ -301,15 +346,13 @@ const EditProductPage = (props) => {
 		set_size('');
 		set_default_option(false);
 		set_option();
-		set_macro_product(false);
+		set_macro_product();
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
 	// };
 
-	const submitHandler = (e) => {
-		console.log({ product_options });
-		e.preventDefault();
+	const save_product = () => {
 		dispatch(
 			saveProduct({
 				_id: props.match.params.pathname && id,
@@ -324,7 +367,7 @@ const EditProductPage = (props) => {
 				product_collection,
 				countInStock,
 				facts,
-				included_items,
+				included_items: included_items.length === 0 ? '' : included_items,
 				description,
 				hidden,
 				sale_price,
@@ -355,7 +398,11 @@ const EditProductPage = (props) => {
 				assembly_time,
 				group_name,
 				color_product_group,
+				color_group_name,
 				color_products,
+				secondary_color_product_group,
+				secondary_color_group_name,
+				secondary_color_products,
 				secondary_product_group,
 				secondary_group_name,
 				secondary_products,
@@ -369,6 +416,71 @@ const EditProductPage = (props) => {
 				macro_product
 			})
 		);
+	};
+
+	const submitHandler = (e) => {
+		console.log({ product_options });
+		e.preventDefault();
+		save_product();
+		// dispatch(
+		// 	saveProduct({
+		// 		_id: props.match.params.pathname && id,
+		// 		name,
+		// 		price,
+		// 		// display_image,
+		// 		images,
+		// 		chips: chips.map((chip) => chip._id),
+		// 		video,
+		// 		brand,
+		// 		category,
+		// 		product_collection,
+		// 		countInStock,
+		// 		facts,
+		// 		included_items,
+		// 		description,
+		// 		hidden,
+		// 		sale_price,
+		// 		sale_start_date: unformat_date(sale_start_date),
+		// 		sale_end_date: unformat_date(sale_end_date),
+		// 		package_volume: package_length * package_width * package_height,
+		// 		subcategory,
+		// 		meta_title: `${name} | Glow LEDs`,
+		// 		meta_description,
+		// 		meta_keywords,
+		// 		package_length,
+		// 		package_width,
+		// 		package_height,
+		// 		product_length,
+		// 		product_width,
+		// 		product_height,
+		// 		weight_pounds,
+		// 		weight_ounces,
+		// 		pathname: pathname ? pathname : snake_case(name),
+		// 		order,
+		// 		product_options,
+		// 		finite_stock,
+		// 		products: products.map((chip) => chip._id),
+		// 		group_product,
+		// 		material_cost,
+		// 		filament_used,
+		// 		printing_time,
+		// 		assembly_time,
+		// 		group_name,
+		// 		color_product_group,
+		// 		color_products,
+		// 		secondary_product_group,
+		// 		secondary_group_name,
+		// 		secondary_products,
+		// 		option_product_group,
+		// 		option_group_name,
+		// 		option_products,
+		// 		color,
+		// 		size,
+		// 		default_option,
+		// 		option,
+		// 		macro_product
+		// 	})
+		// );
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/products');
@@ -769,19 +881,52 @@ const EditProductPage = (props) => {
 	const move_left = (e) => {
 		e.preventDefault();
 		// const current_product = all_products.find(item => item._id ===  product._id)
+		// const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
 		console.log(product._id);
-		const current_product_index = all_products.map((item) => item.pathname).indexOf(product.pathname);
+		const current_product_index = filtered_products.map((item) => item.pathname).indexOf(product.pathname);
 		console.log({ current_product_index });
-		// stableDispatch(detailsProduct(all_products[current_product_index - 1].pathname));
-		history.push('/secure/glow/editproduct/' + all_products[current_product_index - 1].pathname);
+
+		let left_product_index = current_product_index - 1;
+		if (left_product_index === -1) {
+			left_product_index = filtered_products.length - 1;
+		}
+		console.log({
+			current_product_index,
+			left_product_index,
+			new_product: filtered_products[left_product_index]
+		});
+		set_new_index(left_product_index);
+		if (save) {
+			save_product();
+		} else {
+			history.push('/secure/glow/editproduct/' + filtered_products[left_product_index].pathname);
+		}
 	};
 	const move_right = (e) => {
 		e.preventDefault();
+		// const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
 		console.log(product.pathname);
-		const current_product_index = all_products.map((item) => item.pathname).indexOf(product.pathname);
+		const current_product_index = filtered_products.map((item) => item.pathname).indexOf(product.pathname);
 		console.log({ current_product_index });
-		// stableDispatch(detailsProduct(all_products[current_product_index + 1].pathname));
-		history.push('/secure/glow/editproduct/' + all_products[current_product_index - 1].pathname);
+		let right_product_index = current_product_index + 1;
+		if (right_product_index >= filtered_products.length) {
+			right_product_index = 0;
+		}
+		console.log({
+			current_product_index,
+			right_product_index,
+			new_product: filtered_products[right_product_index]
+		});
+		set_new_index(right_product_index);
+		if (save) {
+			save_product();
+		} else {
+			history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
+		}
+
+		// if (save_success) {
+		// history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
+		// }
 	};
 
 	const add_product_option = (e) => {
@@ -817,6 +962,20 @@ const EditProductPage = (props) => {
 		} else {
 			console.log('products.length === 0');
 			set_color_products([ product_object ]);
+		}
+
+		// set_product('');
+	};
+	const add_secondary_color_product = (e) => {
+		e.preventDefault();
+		const product_object = JSON.parse(e.target.value);
+		console.log({ product_object });
+		if (products) {
+			console.log('products.length > 0');
+			set_secondary_color_products((products) => [ ...products, product_object ]);
+		} else {
+			console.log('products.length === 0');
+			set_secondary_color_products([ product_object ]);
 		}
 
 		// set_product('');
@@ -861,6 +1020,12 @@ const EditProductPage = (props) => {
 		} else if (list === 'color') {
 			set_color_products((color_products) =>
 				color_products.filter((color_product, index) => {
+					return product_index !== index;
+				})
+			);
+		} else if (list === 'secondary_color') {
+			set_secondary_color_products((color_products) =>
+				secondary_color_products.filter((color_product, index) => {
 					return product_index !== index;
 				})
 			);
@@ -916,6 +1081,7 @@ const EditProductPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} className="w-100per">
+					<Loading loading={loadingSave} error={errorSave} />
 					<Loading loading={loading} error={error}>
 						{product && (
 							<div>
@@ -931,6 +1097,22 @@ const EditProductPage = (props) => {
 									className="edit-form-container"
 									style={{ maxWidth: '105rem', marginBottom: '20px' }}
 								>
+									{loading_checkboxes ? (
+										<div>Loading...</div>
+									) : (
+										<li className="w-100per row">
+											<label htmlFor="save">Save Product</label>
+											<input
+												type="checkbox"
+												name="save"
+												defaultChecked={save}
+												id="save"
+												onChange={(e) => {
+													set_save(e.target.checked);
+												}}
+											/>
+										</li>
+									)}
 									<div className="row">
 										<div className="ai-c">
 											<button
@@ -954,6 +1136,7 @@ const EditProductPage = (props) => {
 												{loading ? 'Product' : product.name}
 											</Link>
 										</h2>
+
 										<div className="ai-c">
 											<button
 												style={{ borderRadius: '50%' }}
@@ -1217,7 +1400,7 @@ const EditProductPage = (props) => {
 												<textarea
 													className="edit_product_textarea"
 													name="included_items"
-													defaultValue={included_items}
+													value={included_items}
 													id="included_items"
 													onChange={(e) => setIncludedItems(e.target.value)}
 												/>
@@ -1604,6 +1787,82 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(color_products, 'color')}
+														</li>
+														<li>
+															<label htmlFor="color_group_name">
+																Color Product Group Name
+															</label>
+															<input
+																type="text"
+																name="color_group_name"
+																value={color_group_name}
+																id="color_group_name"
+																onChange={(e) => set_color_group_name(e.target.value)}
+															/>
+														</li>
+													</ul>
+												)}
+											</div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="secondary_color_product_group">
+														Secondary Color Product Group
+													</label>
+													<input
+														type="checkbox"
+														name="secondary_color_product_group"
+														defaultChecked={secondary_color_product_group}
+														id="secondary_color_product_group"
+														onChange={(e) => {
+															set_secondary_color_product_group(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											<div>
+												{secondary_color_product_group && (
+													<ul>
+														<li>
+															<div className="ai-c h-25px mv-15px jc-c">
+																<div className="custom-select">
+																	<select
+																		className="qty_select_dropdown"
+																		onChange={(e) => add_secondary_color_product(e)}
+																	>
+																		<option key={1} defaultValue="">
+																			---Add Products to Group---
+																		</option>
+																		{products_list.map((product, index) => (
+																			<option
+																				key={index}
+																				value={JSON.stringify(product)}
+																			>
+																				{product.name}
+																			</option>
+																		))}
+																	</select>
+																	<span className="custom-arrow" />
+																</div>
+															</div>
+															{product_display(
+																secondary_color_products,
+																'secondary_color'
+															)}
+														</li>
+														<li>
+															<label htmlFor="secondary_color_group_name">
+																Secondary Color Product Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_color_group_name"
+																value={secondary_color_group_name}
+																id="secondary_color_group_name"
+																onChange={(e) =>
+																	set_secondary_color_group_name(e.target.value)}
+															/>
 														</li>
 													</ul>
 												)}

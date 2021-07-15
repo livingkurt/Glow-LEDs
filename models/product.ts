@@ -99,7 +99,12 @@ const productSchema = new mongoose.Schema(
 		products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
 
 		color_product_group: { type: Boolean, default: false },
+		color_group_name: { type: String },
 		color_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
+
+		secondary_color_product_group: { type: Boolean, default: false },
+		secondary_color_group_name: { type: String },
+		secondary_color_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
 
 		secondary_product_group: { type: Boolean, default: false },
 		secondary_group_name: { type: String },

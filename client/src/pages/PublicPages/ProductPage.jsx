@@ -42,16 +42,22 @@ const ProductPage = (props) => {
 	const [ image, set_image ] = useState('');
 	const [ no_dropdown, set_no_dropdown ] = useState(false);
 	const [ color, set_color ] = useState('');
+	const [ secondary_color, set_secondary_color ] = useState('');
 	// const [ pathname, set_pathname ] = useState('');
 	const [ option_color, set_option_color ] = useState('');
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
 	const [ color_product, set_color_product ] = useState(null);
+	const [ secondary_color_product, set_secondary_color_product ] = useState(null);
 	const [ option_product, set_option_product ] = useState(null);
 	const [ secondary_product, set_secondary_product ] = useState(null);
 	const [ dimensions, set_dimensions ] = useState({});
 	const [ secondary_product_name, set_secondary_product_name ] = useState('');
 	const [ option_product_name, set_option_product_name ] = useState('');
+	const [ color_product_name, set_color_product_name ] = useState('');
+	const [ secondary_color_product_name, set_secondary_color_product_name ] = useState('');
+	const [ hide_skin_color, set_hide_skin_color ] = useState(false);
+	const [ hide_sled_color, set_hide_sled_color ] = useState(false);
 
 	const productDetails = useSelector((state) => state.productDetails);
 
@@ -95,6 +101,7 @@ const ProductPage = (props) => {
 				set_description(product.description);
 				set_facts(product.facts);
 				set_color(product.color);
+				set_secondary_color(product.secondary_color);
 				set_included_items(product.included_items);
 				set_dimensions({
 					weight_pounds: product.weight_pounds,
@@ -105,6 +112,8 @@ const ProductPage = (props) => {
 					package_volume: product.package_volume
 				});
 				set_product_option({});
+				set_secondary_color_product_name(product.color);
+				set_color_product_name(product.secondary_color);
 				if (product.option_products) {
 					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
@@ -116,6 +125,9 @@ const ProductPage = (props) => {
 						}
 						if (option.color) {
 							set_color(option.color);
+						}
+						if (option.secondary_color) {
+							set_secondary_color(option.secondary_color);
 						}
 						if (product.price > 0) {
 							set_price(product.price);
@@ -153,6 +165,14 @@ const ProductPage = (props) => {
 						set_color(color.color);
 					}
 				}
+				if (product.secondary_color_products) {
+					const color = product.secondary_color_products.find((color) => color.default_option === true);
+					console.log({ color });
+					if (color) {
+						set_secondary_color_product(color._id);
+						set_secondary_color(color.color);
+					}
+				}
 			}
 		},
 		[ product ]
@@ -169,11 +189,14 @@ const ProductPage = (props) => {
 
 	const handleAddToCart = () => {
 		// console.log({ product_option });
-		console.log({ handleAddToCart: images[0] });
+		console.log({ handleAddToCart: product.subcategory });
 		dispatch(
 			addToCart({
 				product: product._id,
 				color_product,
+				color_product_name,
+				secondary_color_product,
+				secondary_color_product_name,
 				option_product,
 				option_product_name,
 				secondary_product,
@@ -181,6 +204,7 @@ const ProductPage = (props) => {
 				name,
 				size,
 				color,
+				secondary_color,
 				display_image: images[0],
 				price,
 				sale_price,
@@ -193,6 +217,7 @@ const ProductPage = (props) => {
 				package_volume: dimensions.package_volume,
 				pathname: props.match.params.pathname,
 				category: product.category,
+				subcategory: product.subcategory,
 				product_option,
 				qty,
 				finite_stock: product.category
@@ -228,6 +253,30 @@ const ProductPage = (props) => {
 		set_color_product(option._id);
 	};
 
+	const update_secondary_color = (e) => {
+		const option = JSON.parse(e.target.value);
+		// set_name(option.name);
+
+		if (option.description) {
+			set_description(option.description);
+		}
+		if (option.facts) {
+			set_facts(option.facts);
+		}
+		if (option.price !== 0 || option.price === null || option.price === undefined) {
+			set_price(option.price);
+		}
+		if (option.sale_price !== 0 || option.sale_price === null || option.sale_price === undefined) {
+			set_sale_price(option.sale_price);
+		}
+		set_secondary_color(option.color);
+		if (option.images && option.images[0]) {
+			set_images(option.images);
+			set_image(option.images[0]);
+		}
+		set_secondary_color_product(option._id);
+	};
+
 	const update_option = (e) => {
 		const option = JSON.parse(e.target.value);
 		let button = document.getElementById(e.target.id);
@@ -244,6 +293,18 @@ const ProductPage = (props) => {
 			set_size(option.size);
 		} else {
 			set_size(option.name);
+		}
+		if (option.name === '1 Skin') {
+			set_hide_sled_color(true);
+		} else {
+			set_hide_skin_color(false);
+			set_hide_sled_color(false);
+		}
+		if (option.name === '1 Sled') {
+			set_hide_skin_color(true);
+		} else {
+			set_hide_skin_color(false);
+			set_hide_sled_color(false);
 		}
 
 		if (option.price > 0) {
@@ -465,11 +526,38 @@ const ProductPage = (props) => {
 										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
 									</a>
 								</div>
-
-								{color && (
+								{secondary_product && (
+									<div className="row ai-c  mv-20px">
+										<h3 className="mv-0px mr-5px">
+											{product.secondary_group_name ? (
+												product.secondary_group_name
+											) : (
+												'Cap Design'
+											)}: {' '}
+										</h3>
+										{secondary_product_name}
+									</div>
+								)}
+								{size !== '1 Sled' &&
+								color && (
 									<div className="row ai-c mv-20px">
-										<h3 className="mv-0px mr-5px">Color: </h3>
+										<h3 className="mv-0px mr-5px">
+											{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
+										</h3>
 										{color}
+									</div>
+								)}
+								{size !== '1 Skin' &&
+								secondary_color && (
+									<div className="row ai-c mv-20px">
+										<h3 className="mv-0px mr-5px">
+											{product.secondary_color_group_name ? (
+												product.secondary_color_group_name
+											) : (
+												'Secondary Color'
+											)}:{' '}
+										</h3>
+										{secondary_color}
 									</div>
 								)}
 								{size && (
@@ -478,12 +566,6 @@ const ProductPage = (props) => {
 											{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
 										</h3>
 										{size}
-									</div>
-								)}
-								{secondary_product && (
-									<div className="row ai-c  mv-20px">
-										<h3 className="mv-0px mr-5px">Design: </h3>
-										{secondary_product}
 									</div>
 								)}
 
@@ -553,7 +635,11 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													{product.secondary_group_name && product.secondary_group_name}s:
+													{product.secondary_group_name ? (
+														product.secondary_group_name
+													) : (
+														'Cap Design'
+													)}
 												</label>
 												<div className="custom-select">
 													<select
@@ -576,7 +662,9 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-									{product.color_product_group &&
+
+									{size !== '1 Sled' &&
+									product.color_product_group &&
 									product.color_products &&
 									product.color_products.length > 0 && (
 										<li>
@@ -586,21 +674,56 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem"
 												>
-													Colors:
+													{product.color_group_name ? product.color_group_name : 'Color'}:
 												</label>
 												<div className="custom-select">
 													<select
 														className="qty_select_dropdown"
 														onChange={(e) => update_color(e)}
 													>
-														{/* <option key={1} defaultValue="">
-															---Choose Color---
-														</option> */}
 														{product.color_products.map((color, index) => (
 															<option key={index} value={JSON.stringify(color)}>
 																{color.name.split(' ')[0]}
 															</option>
 														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+										</li>
+									)}
+									{size !== '1 Skin' &&
+									product.secondary_color_product_group &&
+									product.secondary_color_products &&
+									product.secondary_color_products.length > 0 && (
+										<li>
+											<div className="ai-c h-25px mb-15px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.secondary_color_group_name ? (
+														product.secondary_color_group_name
+													) : (
+														'Secondary Color'
+													)}:
+												</label>
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => update_secondary_color(e)}
+													>
+														{product.secondary_color_products.map(
+															(secondary_color, index) => (
+																<option
+																	key={index}
+																	value={JSON.stringify(secondary_color)}
+																>
+																	{secondary_color.name.split(' ')[0]}
+																</option>
+															)
+														)}
 													</select>
 													<span className="custom-arrow" />
 												</div>
@@ -617,7 +740,7 @@ const ProductPage = (props) => {
 													htmlFor="sortOrder"
 													className="select-label mr-1rem mt-1rem"
 												>
-													Options:
+													{product.option_group_name ? product.option_group_name : 'Size'}:
 												</label>
 												<div className="ai-c wrap">
 													{product.option_products

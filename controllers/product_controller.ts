@@ -44,6 +44,7 @@ export default {
 			})
 				.sort(sortOrder)
 				.populate('color_products')
+				.populate('secondary_color_products')
 				.populate('secondary_products')
 				.populate('option_products');
 			// console.log({ products });
@@ -109,6 +110,7 @@ export default {
 			})
 				.sort(sortOrder)
 				.populate('color_products')
+				.populate('secondary_color_products')
 				.populate('secondary_products')
 				.populate('option_products');
 			// console.log({ products });
@@ -174,6 +176,7 @@ export default {
 			})
 				.sort(sortOrder)
 				.populate('color_products')
+				.populate('secondary_color_products')
 				.populate('secondary_products')
 				.populate('option_products');
 			// console.log({ products });
@@ -205,6 +208,7 @@ export default {
 				.populate('chips')
 				.populate('products')
 				.populate('color_products')
+				.populate('secondary_color_products')
 				.populate('secondary_products')
 				.populate('option_products');
 

@@ -3,42 +3,13 @@ import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
-
-// import bodyParser from 'body-parser';
-// import config from './config';
-// const expressAttack = require('express-attack');
-// const requestIp = require('request-ip');
 const config = require('./config');
 const cors = require('cors');
 require('dotenv').config();
 const passport = require('passport');
 const compression = require('compression');
-// import {
-// 	user_routes,
-// 	product_routes,
-// 	order_routes,
-// 	email_routes,
-// 	batch_routes,
-// 	expense_routes,
-// 	feature_routes,
-// 	promo_routes,
-// 	affiliate_routes,
-// 	cart_routes,
-// 	content_routes,
-// 	device_routes,
-// 	log_routes,
-// 	chip_routes,
-// 	team_routes,
-// 	payment_routes,
-// 	shipping_routes,
-// 	paycheck_routes,
-// 	survey_routes,
-// 	parcel_routes
-// } from './routes/index';
-import routes from './routes';
-// import users from './routes/users';
 
-// const htmlRoutes = require('./email_templates/html_routes');
+import routes from './routes';
 
 const allowCrossDomain = function(req: any, res: any, next: any) {
 	res.header('Access-Control-Allow-Origin', '*');
@@ -62,7 +33,6 @@ mongoose
 	.catch((error: { reason: any }) => console.log(error.reason));
 
 const app = express();
-// app.use(bodyParser.json());
 
 // app.configure(function() {
 // 	// app.use(express.bodyParser());
@@ -82,7 +52,9 @@ app.all('*', function(req, res, next) {
 });
 app.use(allowCrossDomain);
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(compression());
 app.use(sslRedirect());

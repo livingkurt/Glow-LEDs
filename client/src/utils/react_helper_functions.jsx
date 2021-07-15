@@ -360,9 +360,15 @@ export const email_sale_price_switch = (item, color) => {
 // };
 
 export const determine_product_name = (item, show_qty) => {
-	// console.log({ product });
-	// console.log({ secondary_product: product.secondary_product });
-	if (item.category === 'glowskins' || item.category === 'glow_casings') {
+	console.log({ subcategory: item });
+	if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
+		return (
+			<div>
+				({item.color && item.color + ' Skin '} {item.secondary_color && item.secondary_color + ' Sled) '}{' '}
+				{item.name} {item.size !== 0 && ' - ' + item.size}
+			</div>
+		);
+	} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 		return (
 			<div>
 				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
@@ -414,6 +420,28 @@ export const determine_product_name_title = (item, show_qty) => {
 		</div>
 	);
 };
+
+// export const determine_product_name_orders = (item, show_qty) => {
+// 	const today = new Date();
+// 	// console.log({ product });
+// 	// console.log({ secondary_product: product.secondary_product });
+//   if (today > new Date('2021-15-20')) {
+//     return (
+//   <div>
+//     {item.name !== 'Diffuser Caps + Adapters Starter Kit' &&
+//       item.category !== 'frosted_diffusers' &&
+//       item.color &&
+//       item.color}{' '}
+//     {item.name} {item.product_option && item.product_option.name && `- ${item.product_option.name}`}
+//     {(item.secondary_product || item.diffuser_cap) &&
+//       ` w (${item.name === 'Diffuser Caps + Adapters Starter Kit' &&
+//         item.color} ${(item.secondary_product && item.secondary_product.name) ||
+//         (item.diffuser_cap && item.diffuser_cap.name)})`}{' '}
+//     {show_qty && item.qty > 1 && item.qty + 'x'}
+//   </div>
+// );
+// }
+// };
 
 // export const determine_product_name = (product, show_qty) => {
 // 	// console.log({ product });
