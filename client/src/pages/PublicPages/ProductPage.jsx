@@ -504,7 +504,7 @@ const ProductPage = (props) => {
 									/> */}
 								</div>
 							</div>
-							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
+							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown " />
 							<div className="details-info">
 								<h1 className="product_title_side lh-50px fs-30px mv-0px">
 									{name}
@@ -537,61 +537,66 @@ const ProductPage = (props) => {
 										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
 									</a>
 								</div>
-								{secondary_product && (
-									<div className="row ai-c  mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.secondary_group_name ? (
-												product.secondary_group_name
-											) : (
-												'Cap Design'
-											)}: {' '}
-										</h3>
-										{secondary_product_name}
-									</div>
-								)}
-								{size !== '1 Sled' &&
-								color && (
-									<div className="row ai-c mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
-										</h3>
-										<label>{color}</label>
-										{color_code && (
-											<canvas
-												className=" ml-5px w-60px h-20px br-7px"
-												style={{ backgroundColor: color_code }}
-											/>
-										)}
-									</div>
-								)}
-								{size !== '1 Skin' &&
-								secondary_color && (
-									<div className="row ai-c mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.secondary_color_group_name ? (
-												product.secondary_color_group_name
-											) : (
-												'Secondary Color'
-											)}:{' '}
-										</h3>
-										<label>{secondary_color}</label>
-										{secondary_color_code && (
-											<canvas
-												className=" ml-5px w-60px h-20px br-7px"
-												style={{ backgroundColor: secondary_color_code }}
-											/>
-										)}
-									</div>
-								)}
-								{size && (
-									<div className="row ai-c  mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
-										</h3>
-										{size}
-									</div>
-								)}
-
+								<div className="max-w-275px">
+									{secondary_product && (
+										<div className="ai-c mv-20px jc-b w-100per">
+											<h3 className="mv-0px mr-5px">
+												{product.secondary_group_name ? (
+													product.secondary_group_name
+												) : (
+													'Cap Design'
+												)}: {' '}
+											</h3>
+											<label>{secondary_product_name}</label>
+										</div>
+									)}
+									{size !== '1 Sled' &&
+									color && (
+										<div className="ai-c mv-20px jc-b w-100per">
+											<h3 className="mv-0px mr-5px">
+												{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
+											</h3>
+											<div className="ai-c">
+												<label>{color}</label>
+												{color_code && (
+													<canvas
+														className=" ml-5px w-60px h-20px br-7px"
+														style={{ backgroundColor: color_code }}
+													/>
+												)}
+											</div>
+										</div>
+									)}
+									{size !== '1 Skin' &&
+									secondary_color && (
+										<div className="ai-c mv-20px jc-b w-100per">
+											<h3 className="mv-0px mr-5px">
+												{product.secondary_color_group_name ? (
+													product.secondary_color_group_name
+												) : (
+													'Secondary Color'
+												)}:{' '}
+											</h3>
+											<div className="ai-c">
+												<label>{secondary_color}</label>
+												{secondary_color_code && (
+													<canvas
+														className=" ml-5px w-60px h-20px br-7px"
+														style={{ backgroundColor: secondary_color_code }}
+													/>
+												)}
+											</div>
+										</div>
+									)}
+									{size && (
+										<div className="ai-c  mv-20px">
+											<h3 className="mv-0px mr-5px">
+												{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
+											</h3>
+											{size}
+										</div>
+									)}
+								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
 									{/* {sale_price_product_option_switch_product(

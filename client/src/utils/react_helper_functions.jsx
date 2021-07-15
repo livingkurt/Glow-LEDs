@@ -171,7 +171,7 @@ export const cart_sale_price_switch = (product) => {
 
 export const cart_item_name = (item) => {
 	return (
-		<div className="max-w-250px">
+		<div className="max-w-275px">
 			{item.secondary_product && (
 				<div className="ai-c mv-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
@@ -443,6 +443,14 @@ export const determine_product_name = (item, show_qty) => {
 				({item.color && item.color + ' Cap/Slide'}
 				{item.color && ' '}
 				{item.secondary_color && item.secondary_color + ' Body) '} {item.name}{' '}
+			</div>
+		);
+	} else if (item.category === 'exo_diffusers') {
+		return (
+			<div>
+				({item.color && item.color + ' Skeleton Color'}
+				{item.color && ' '}
+				{item.secondary_color && item.secondary_color + ' Plug Color) '} {item.name}{' '}
 			</div>
 		);
 	} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {

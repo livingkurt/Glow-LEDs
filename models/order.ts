@@ -65,10 +65,7 @@ const orderItemSchema = new mongoose.Schema(
 		package_length: { type: Number },
 		package_width: { type: Number },
 		package_height: { type: Number },
-		parcel: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Parcel'
-		},
+
 		reviewed: { type: Boolean, default: false },
 		product_option: productOptionsSchema,
 		product: {
@@ -126,6 +123,10 @@ const orderSchema = new mongoose.Schema(
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
 		isRefunded: { type: Boolean, default: false },
+		parcel: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Parcel'
+		},
 		refundedAt: { type: Date },
 		order_note: { type: String },
 		promo_code: { type: String },

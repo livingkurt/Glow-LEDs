@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 export {};
 // const mongoose = require('mongoose');
 
-const cartSchema = {
-	cartItems: { type: Array },
-	deleted: { type: Boolean, default: false }
-};
+// const cartSchema = {
+// 	cartItems: { type: Array },
+// 	deleted: { type: Boolean, default: false }
+// };
 
 // const settingsSchema = {
 // 	brightness: { type: Number, default: 255 },
@@ -73,7 +73,7 @@ const userSchema = new mongoose.Schema(
 		isVerified: { type: Boolean, required: true, default: false },
 		is_affiliated: { type: Boolean, required: true, default: false },
 		devices: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Device' } ],
-		cart: cartSchema,
+		cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
 		affiliate: { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' },
 		email_subscription: { type: Boolean, default: true },
 		guest: { type: Boolean },

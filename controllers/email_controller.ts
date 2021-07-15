@@ -233,7 +233,7 @@ export default {
 	},
 	send_announcement_email: async (req: any, res: any) => {
 		// console.log({ template: req.body.template });
-		const users = await User.find({ email_subscription: true });
+		const users = await User.find({ deleted: false, email_subscription: true });
 		// const all_emails = users.map((user: any) => user.email).reverse();
 		// console.log({ all_emails });
 		const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);

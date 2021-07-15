@@ -99,30 +99,31 @@ export default {
 	},
 	create: async (req: any, res: any) => {
 		try {
-			const newCart = await Cart.create(req.body);
-			if (newCart) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Cart',
-					data: [ newCart ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
-				return res.status(201).send({ message: 'New Cart Created', data: newCart });
-			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Cart',
-					data: [ newCart ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
-				return res.status(500).send({ message: ' Error in Creating Cart.' });
-			}
+			console.log({ body: req.body });
+			// const newCart = await Cart.create(req.body);
+			// if (newCart) {
+			// 	log_request({
+			// 		method: 'POST',
+			// 		path: req.originalUrl,
+			// 		collection: 'Cart',
+			// 		data: [ newCart ],
+			// 		status: 201,
+			// 		success: true,
+			// 		ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			// 	});
+			// 	return res.status(201).send({ message: 'New Cart Created', data: newCart });
+			// } else {
+			// 	log_request({
+			// 		method: 'POST',
+			// 		path: req.originalUrl,
+			// 		collection: 'Cart',
+			// 		data: [ newCart ],
+			// 		status: 500,
+			// 		success: false,
+			// 		ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			// 	});
+			// 	return res.status(500).send({ message: ' Error in Creating Cart.' });
+			// }
 		} catch (error) {
 			log_error({
 				method: 'POST',
