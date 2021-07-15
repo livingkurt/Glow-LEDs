@@ -696,7 +696,7 @@ const ProductPage = (props) => {
 									product.color_products &&
 									product.color_products.length > 0 && (
 										<li>
-											<div className="ai-c h-25px mb-15px">
+											<div className="ai-c h-25px mb-25px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -725,7 +725,7 @@ const ProductPage = (props) => {
 									product.secondary_color_products &&
 									product.secondary_color_products.length > 0 && (
 										<li>
-											<div className="ai-c h-25px mb-15px">
+											<div className="ai-c h-25px mb-20px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -792,157 +792,8 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-									{/* {product.product_options &&
-									product.product_options.length > 0 &&
-									product.product_options.filter((option) => !option.dropdown).length > 0 && (
-										<li>
-											<div className="row">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem mt-1rem"
-												>
-													Options:
-												</label>
-												<div className="ai-c wrap">
-													{product.product_options
-														.filter((option) => !option.dropdown)
-														.filter((option) => option.count_in_stock)
-														.map((option, index) => (
-															<button
-																key={index}
-																selected={option.default}
-																id={option.name}
-																value={JSON.stringify(option)}
-																onClick={(e) =>
-																	update_product(e, JSON.parse(e.target.value))}
-																className={`packs  flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default
-																	? 'secondary'
-																	: 'primary'}`}
-															>
-																{option.name}
-															</button>
-														))}
-												</div>
-											</div>
-										</li>
-									)} */}
-
-									{/* {product.option_product_group &&
-									product.option_products &&
-									product.option_products.length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													{product.option_group_name && product.option_group_name}s:
-												</label>
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => update_product_images(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose{' '}
-															{product.option_group_name && product.option_group_name}---
-														</option>
-														{product.option_products.map((option, index) => (
-															<option key={index} value={JSON.stringify(option)}>
-																{option.name.split(' ')[0]}
-															</option>
-														))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
-
-									{/* {product.products &&
-									product.products.length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													{product.group_name && product.group_name}s:
-												</label>
-												<div className="custom-select">
-													<select
-														// defaultValue={diffuser_cap_name}
-														// value={diffuser_cap_name}
-														className="qty_select_dropdown"
-														onChange={(e) => update_product_images(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose {product.group_name && product.group_name}---
-														</option>
-														{product.products.map(
-															(cap, index) =>
-																cap.name === 'Custom Diffuser Caps Deposit' ||
-																cap.name === 'Diffuser Caps + Adapters Starter Kit' ? (
-																	''
-																) : (
-																	<option key={index} value={JSON.stringify(cap)}>
-																		{cap.name.split(' ')[0]}
-																	</option>
-																)
-														)}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
-
-									{/* {product.product_options &&
-									product.product_options.length > 0 &&
-									product.product_options.filter((option) => option.dropdown).length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													Color:
-												</label>
-												<div className="custom-select">
-													<select
-														defaultValue={color}
-														// value={color}
-														className="qty_select_dropdown"
-														onChange={(e) => {
-															// set_color(e.target.value);
-															update_color(e, JSON.parse(e.target.value));
-														}}
-													>
-														{!no_dropdown ? (
-															product.product_options
-																.filter((option) => option.dropdown)
-																.map((option, index) => (
-																	<option key={index} value={JSON.stringify(option)}>
-																		{option.color}
-																	</option>
-																))
-														) : (
-															<option value={JSON.stringify(product_option)}>
-																{product_option.color}
-															</option>
-														)}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
 									<li>
-										<div className="ai-c h-25px">
+										<div className="ai-c h-25px mb-20px">
 											<label
 												aria-label="sortOrder"
 												htmlFor="sortOrder"
