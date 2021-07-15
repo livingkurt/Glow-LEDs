@@ -171,9 +171,9 @@ export const cart_sale_price_switch = (product) => {
 
 export const cart_item_name = (item) => {
 	return (
-		<div>
+		<div className="max-w-250px">
 			{item.secondary_product && (
-				<div className="ai-c mv-20px">
+				<div className="ai-c mv-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
 						{item.secondary_group_name ? item.secondary_group_name : 'Cap Design'}: {' '}
 					</label>
@@ -182,31 +182,38 @@ export const cart_item_name = (item) => {
 			)}
 			{item.size !== '1 Sled' &&
 			item.color && (
-				<div className="ai-c mv-20px">
+				<div className="ai-c mv-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">{item.color_group_name ? item.color_group_name : 'Color'}: </label>
-					<label className=" mv-0px">{item.color}</label>
-					{item.color_code && (
-						<canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.color_code }} />
-					)}
+					<div className="ai-c">
+						<label className=" mv-0px">{item.color}</label>
+						{item.color_code && (
+							<canvas
+								className=" ml-5px w-60px h-20px br-7px"
+								style={{ backgroundColor: item.color_code }}
+							/>
+						)}
+					</div>
 				</div>
 			)}
 			{item.size !== '1 Skin' &&
 			item.secondary_color && (
-				<div className="ai-c mv-20px">
+				<div className="ai-c mv-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
 						{item.secondary_color_group_name ? item.secondary_color_group_name : 'Secondary Color'}:{' '}
 					</label>
-					<label className=" mv-0px">{item.secondary_color}</label>
-					{item.secondary_color_code && (
-						<canvas
-							className=" ml-5px w-60px h-20px br-7px"
-							style={{ backgroundColor: item.secondary_color_code }}
-						/>
-					)}
+					<div className="ai-c">
+						<label className=" mv-0px">{item.secondary_color}</label>
+						{item.secondary_color_code && (
+							<canvas
+								className=" ml-5px w-60px h-20px br-7px"
+								style={{ backgroundColor: item.secondary_color_code }}
+							/>
+						)}
+					</div>
 				</div>
 			)}
 			{item.size && (
-				<div className="ai-c mv-20px">
+				<div className="ai-c mv-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
 						{item.option_group_name ? item.option_group_name : 'Size'}:{' '}
 					</label>

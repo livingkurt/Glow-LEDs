@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Carousel } from '../../components/SpecialtyComponents';
+import { Carousel, CartItem } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
@@ -88,72 +88,7 @@ const CartPage = (props) => {
 						) : (
 							<div>
 								{/* <h4>{no_adapters_warning()}</h4> */}
-								{cartItems.map((item, index) => (
-									<li key={index} className="">
-										{/* {console.log({ item })} */}
-										<div className="cart-image m-auto ai-c">
-											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} alt={item.name} title="Product Image" />
-											</Link>
-										</div>
-										<div className="cart-name">
-											<div className="mb-10px">
-												<Link to={'/collections/all/products/' + item.pathname}>
-													{/* {determine_product_name(item, false)} */}
-
-													<label className="paragraph_font lh-0px mv-0px fs-18px">
-														{item.name}
-													</label>
-												</Link>
-											</div>
-											{cart_item_name(item)}
-											<div>
-												<div className="ai-c h-25px">
-													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
-														className="select-label mr-1rem"
-													>
-														Qty:
-													</label>
-													<div className="custom-select">
-														<select
-															defaultValue={item.qty}
-															className="qty_select_dropdown"
-															onChange={(e) => {
-																dispatch(
-																	addToCart({
-																		pathname: item.pathname,
-																		qty: e.target.value
-																	})
-																);
-															}}
-														>
-															{[ ...Array(item.countInStock).keys() ].map((x, index) => (
-																<option key={index} defaultValue={parseInt(x + 1)}>
-																	{parseInt(x + 1)}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div className="jc-b ai-fs">
-											<div className="cart-price ">{cart_sale_price_switch(item)}</div>
-											<div style={{ textAlign: 'right', width: '100%' }}>
-												<button
-													className="btn icon"
-													onClick={() => removeFromCartHandler(item)}
-												>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</div>
-										</div>
-									</li>
-								))}
+								{cartItems.map((item, index) => <CartItem item={item} index={index} />)}
 							</div>
 						)}
 					</ul>

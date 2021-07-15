@@ -198,72 +198,12 @@ const Cart = (props) => {
 											>
 												Qty: {item.qty}
 											</label>
-											{/* <div className="custom-select">
-												<select
-													defaultValue={item.qty}
-													className="qty_select_dropdown"
-													onChange={(e) => {
-														dispatch(
-															addToCart(
-																item.pathname,
-																e.target.value,
-																item.color && item.color,
-																item.diffuser_cap && item.diffuser_cap,
-																item.product_option && item.product_option,
-																item.display_image
-															)
-														);
-													}}
-												>
-													{[ ...Array(item.countInStock).keys() ].map((x) => (
-														<option key={x + 1} defaultValue={parseInt(x + 1)}>
-															{parseInt(x + 1)}
-														</option>
-													))}
-												</select>
-												<span className="custom-arrow" />
-											</div> */}
 										</div>
 									</div>
 								</div>
 
 								<div className="">
-									<div className="cart_sidebar-price fs-16px">
-										{cart_sale_price_switch(item)}
-										{/* {item.product_option.sale_price > 0 ? (
-											<label>
-												<del style={{ color: 'red' }}>
-													<label style={{ color: 'white' }}>
-														${item.product_option.price ? (
-															item.product_option.price.toFixed(2)
-														) : item.price ? (
-															item.price.toFixed(2)
-														) : (
-															item.price
-														)}
-													</label>
-												</del>{' '}
-												<i class="fas fa-arrow-right" /> ${item.product_option.sale_price ? (
-													item.product_option.sale_price.toFixed(2)
-												) : item.sale_price ? (
-													item.sale_price.toFixed(2)
-												) : (
-													item.sale_price
-												)}{' '}
-												On Sale!
-											</label>
-										) : (
-											<label>
-												${item.product_option.price ? (
-													item.product_option.price.toFixed(2)
-												) : item.price ? (
-													item.price.toFixed(2)
-												) : (
-													item.price
-												)}
-											</label>
-										)} */}
-									</div>
+									<div className="cart_sidebar-price fs-16px">{cart_sale_price_switch(item)}</div>
 									<div style={{ textAlign: 'right', width: '100%' }}>
 										<button className="btn icon" onClick={() => removeFromCartHandler(item)}>
 											<i className="fas fa-trash-alt" />
