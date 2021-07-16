@@ -206,7 +206,7 @@ export const saveShipping = (data: {
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ shipping_actions: data });
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
-	// Cookie.set('shipping', JSON.stringify(data));
+	Cookie.set('shipping', JSON.stringify(data));
 };
 
 export const savePayment = (data: { paymentMethod: any }) => (

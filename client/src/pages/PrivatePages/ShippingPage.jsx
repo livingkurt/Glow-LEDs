@@ -33,25 +33,25 @@ const ShippingPage = (props) => {
 
 	// const userUpdate = useSelector((state) => state.userUpdate);
 
-	// useEffect(
-	// 	() => {
-	// 		if (userInfo) {
-	// 			console.log({ userInfo: userInfo.shipping });
-	// 			set_email(userInfo.email);
-	// 			set_first_name(userInfo.shipping.first_name);
-	// 			set_last_name(userInfo.shipping.last_name);
-	// 			set_address_1(userInfo.shipping.address_1);
-	// 			set_address_2(userInfo.shipping.address_2);
-	// 			setCity(userInfo.shipping.city);
-	// 			setState(userInfo.shipping.state);
-	// 			setPostalCode(userInfo.shipping.postalCode);
-	// 			setCountry(userInfo.shipping.country);
-	// 			setInternational(userInfo.shipping.international);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ userInfo ]
-	// );
+	useEffect(
+		() => {
+			if (userInfo) {
+				console.log({ userInfo: userInfo.shipping });
+				set_email(userInfo.email);
+				set_first_name(userInfo.shipping.first_name);
+				set_last_name(userInfo.shipping.last_name);
+				set_address_1(userInfo.shipping.address_1);
+				set_address_2(userInfo.shipping.address_2);
+				setCity(userInfo.shipping.city);
+				setState(userInfo.shipping.state);
+				setPostalCode(userInfo.shipping.postalCode);
+				setCountry(userInfo.shipping.country);
+				setInternational(userInfo.shipping.international);
+			}
+			return () => {};
+		},
+		[ userInfo ]
+	);
 
 	// useEffect(
 	// 	() => {
