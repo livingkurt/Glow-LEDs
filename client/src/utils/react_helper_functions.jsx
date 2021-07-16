@@ -415,7 +415,7 @@ export const email_sale_price_switch = (item, color) => {
 // };
 
 export const determine_product_name = (item, show_qty) => {
-	// console.log({ subcategory: item });
+	console.log({ determine_product_name: item });
 	if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
 		return (
 			<div>
@@ -425,12 +425,6 @@ export const determine_product_name = (item, show_qty) => {
 				{item.size !== 0 && ' - ' + item.size}
 			</div>
 		);
-	} else if (item.subcategory === 'batteries') {
-		return (
-			<div>
-				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
-			</div>
-		);
 	} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 		return (
 			<div>
@@ -438,13 +432,21 @@ export const determine_product_name = (item, show_qty) => {
 			</div>
 		);
 	} else if (item.category === 'accessories') {
-		return (
-			<div>
-				({item.color && item.color + ' Cap/Slide'}
-				{item.color && ' '}
-				{item.secondary_color && item.secondary_color + ' Body) '} {item.name}{' '}
-			</div>
-		);
+		if (item.subcategory === 'batteries') {
+			return (
+				<div>
+					{item.color && item.color + ' '} {item.name} {item.size !== '0' && ' - ' + item.size}
+				</div>
+			);
+		} else {
+			return (
+				<div>
+					{item.name} - {item.color && item.color + ' Cap/Slide'}
+					{item.color && ' & '}
+					{item.secondary_color && item.secondary_color + ' Body'}
+				</div>
+			);
+		}
 	} else if (item.category === 'exo_diffusers') {
 		return (
 			<div>
@@ -459,10 +461,10 @@ export const determine_product_name = (item, show_qty) => {
 				{item.name}
 				{item.secondary_product_name &&
 					item.secondary_product_name.length > 0 &&
-					` - ${item.option_product_name} w ${item.secondary_product_name.slice(
+					` - ${item.option_product_name} w ${item.color} ${item.secondary_product_name.slice(
 						0,
 						-14
-					)} ${item.color} Caps/${item.secondary_color} Adapters`}
+					)} Caps & ${item.secondary_color} Adapters`}
 				{show_qty && item.qty > 1 && item.qty + 'x'}
 			</div>
 		);
@@ -478,6 +480,8 @@ export const determine_product_name = (item, show_qty) => {
 				{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
 			</div>
 		);
+	} else if (item.category === 'glow_strings') {
+		return <div>{item.name}</div>;
 	}
 };
 
