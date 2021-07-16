@@ -11,8 +11,8 @@ require('dotenv');
 // 	res.send(users);
 // });
 
-const validateRegisterInput = require('../validation/register');
-const validateLoginInput = require('../validation/login');
+// const validateRegisterInput = require('../validation/register');
+// const validateLoginInput = require('../validation/login');
 // const { isAuth, isAdmin } = require('../util');
 
 // Defining methods for the booksController
@@ -123,12 +123,12 @@ export default {
 	login: async (req: any, res: any) => {
 		// Form validation
 
-		const { errors, isValid } = validateLoginInput(req.body);
+		// const { errors, isValid } = validateLoginInput(req.body);
 
-		// Check validation
-		if (!isValid) {
-			return res.status(400).json(errors);
-		}
+		// // Check validation
+		// if (!isValid) {
+		// 	return res.status(400).json(errors);
+		// }
 
 		const email = req.body.email;
 		const password = req.body.password;
