@@ -14,6 +14,8 @@ const ShippingPage = (props) => {
 
 	const cart = useSelector((state) => state.cart);
 	const { shipping } = cart;
+	console.log({ ShippingPage: shipping });
+	console.log({ ShippingPage: shipping });
 
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
@@ -31,25 +33,25 @@ const ShippingPage = (props) => {
 
 	// const userUpdate = useSelector((state) => state.userUpdate);
 
-	useEffect(
-		() => {
-			if (userInfo) {
-				console.log({ userInfo: userInfo.shipping });
-				set_email(userInfo.email);
-				set_first_name(userInfo.shipping.first_name);
-				set_last_name(userInfo.shipping.last_name);
-				set_address_1(userInfo.shipping.address_1);
-				set_address_2(userInfo.shipping.address_2);
-				setCity(userInfo.shipping.city);
-				setState(userInfo.shipping.state);
-				setPostalCode(userInfo.shipping.postalCode);
-				setCountry(userInfo.shipping.country);
-				setInternational(userInfo.shipping.international);
-			}
-			return () => {};
-		},
-		[ userInfo ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (userInfo) {
+	// 			console.log({ userInfo: userInfo.shipping });
+	// 			set_email(userInfo.email);
+	// 			set_first_name(userInfo.shipping.first_name);
+	// 			set_last_name(userInfo.shipping.last_name);
+	// 			set_address_1(userInfo.shipping.address_1);
+	// 			set_address_2(userInfo.shipping.address_2);
+	// 			setCity(userInfo.shipping.city);
+	// 			setState(userInfo.shipping.state);
+	// 			setPostalCode(userInfo.shipping.postalCode);
+	// 			setCountry(userInfo.shipping.country);
+	// 			setInternational(userInfo.shipping.international);
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ userInfo ]
+	// );
 
 	// useEffect(
 	// 	() => {
@@ -264,18 +266,20 @@ const ShippingPage = (props) => {
 							<label htmlFor="email">Email</label>
 							<input
 								type="text"
-								defaultValue={email}
+								value={email}
 								name="email"
 								id="email"
 								onChange={(e) => set_email(e.target.value)}
 							/>
 						</li>
-						{email_validations}
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
+							{email_validations}
+						</label>
 						<li>
 							<label htmlFor="first_name">First Name</label>
 							<input
 								type="text"
-								defaultValue={first_name}
+								value={first_name}
 								name="first_name"
 								id="first_name"
 								onChange={(e) => set_first_name(e.target.value)}
@@ -288,7 +292,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="last_name">Last Name</label>
 							<input
 								type="text"
-								defaultValue={last_name}
+								value={last_name}
 								name="last_name"
 								id="last_name"
 								onChange={(e) => set_last_name(e.target.value)}
@@ -301,7 +305,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="address_1">Address</label>
 							<input
 								type="text"
-								defaultValue={address_1}
+								value={address_1}
 								name="address_1"
 								id="address_1"
 								onChange={(e) => set_address_1(e.target.value)}
@@ -314,7 +318,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="address_2">Apt/Suite</label>
 							<input
 								type="text"
-								defaultValue={address_2}
+								value={address_2}
 								name="address_2"
 								id="address_2"
 								onChange={(e) => set_address_2(e.target.value)}
@@ -324,7 +328,7 @@ const ShippingPage = (props) => {
 							<label htmlFor="city">City</label>
 							<input
 								type="text"
-								defaultValue={city}
+								value={city}
 								name="city"
 								id="city"
 								onChange={(e) => setCity(e.target.value)}
