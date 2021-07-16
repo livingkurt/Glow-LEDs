@@ -11,6 +11,14 @@ const compression = require('compression');
 
 import routes from './routes';
 
+let Bugsnag = require('@bugsnag/js');
+let BugsnagPluginExpress = require('@bugsnag/plugin-express');
+
+Bugsnag.start({
+	apiKey: '444564c26a336825790da83d18486098',
+	plugins: [ BugsnagPluginExpress ]
+});
+
 const allowCrossDomain = function(req: any, res: any, next: any) {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
@@ -42,6 +50,16 @@ const app = express();
 // 	// app.use(express.static(path.join(application_root, "public")));
 // 	// app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 // });
+let middleware = Bugsnag.getPlugin('express');
+
+// This must be the first piece of middleware in the stack.
+// It can only capture errors in downstream middleware
+app.use(middleware.requestHandler);
+
+/* all other middleware and application routes go here */
+
+// This handles any errors that Express catches
+app.use(middleware.errorHandler);
 
 app.all('*', function(req, res, next) {
 	const origin = req.get('origin');
@@ -80,33 +98,17 @@ app.use(passport.initialize());
 
 // Passport config
 require('./passport')(passport);
-
-// app.use('/api/promos', promo_routes);
-// app.use('/api/carts', cart_routes);
-// app.use('/api/contents', content_routes);
-// app.use('/api/affiliates', affiliate_routes);
-// app.use('/api/expenses', expense_routes);
-// app.use('/api/features', feature_routes);
-// app.use('/api/users', user_routes);
-// app.use('/api/chips', chip_routes);
-// app.use('/api/products', product_routes);
-// app.use('/api/orders', order_routes);
-// app.use('/api/emails', email_routes);
-// app.use('/api/devices', device_routes);
-// app.use('/api/logs', log_routes);
-// app.use('/api/teams', team_routes);
-// app.use('/api/all', batch_routes);
-// app.use('/api/shipping', shipping_routes);
-// app.use('/api/payments', payment_routes);
-// app.use('/api/paychecks', paycheck_routes);
-// app.use('/api/surveys', survey_routes);
-// app.use('/api/parcels', parcel_routes);
+// Bugsnag.notify(new Error('Test error'));
 
 app.use(routes);
 
 // app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {
 	res.send(config.PAYPAL_CLIENT_ID);
+});
+
+app.use(function(req, res, next) {
+	throw new Error('Test error');
 });
 
 if (process.env.NODE_ENV === 'production') {

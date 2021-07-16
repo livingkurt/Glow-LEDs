@@ -205,7 +205,7 @@ export const saveShipping = (data: {
 	country: string;
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
-	Cookie.set('shipping', JSON.stringify(data));
+	// Cookie.set('shipping', JSON.stringify(data));
 };
 
 export const savePayment = (data: { paymentMethod: any }) => (
