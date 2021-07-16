@@ -101,6 +101,7 @@ export default {
 				email: req.body.email,
 				password: req.body.password,
 				affiliate: req.body.affiliate,
+				cart: req.body.cart,
 				is_affiliated: req.body.is_affiliated,
 				email_subscription: req.body.email_subscription,
 				isAdmin: false,
@@ -149,6 +150,7 @@ export default {
 				last_name: user.last_name,
 				email: user.email,
 				affiliate: user.affiliate,
+				cart: user.cart,
 				email_subscription: user.email_subscription,
 				is_affiliated: user.is_affiliated,
 				isVerified: user.isVerified,
@@ -266,7 +268,7 @@ export default {
 	create: async (req: any, res: any) => {
 		try {
 			let user: any = {};
-			let hashed_password: string = '';
+			let hashed_password = '';
 			const temporary_password = process.env.TEMP_PASS;
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
@@ -348,6 +350,7 @@ export default {
 				user.last_name = req.body.last_name || user.last_name;
 				user.email = req.body.email || user.email;
 				// user.password = req.body.password || user.password;
+				user.cart = req.body.cart || user.cart;
 				user.isAdmin = req.body.isAdmin || user.isAdmin;
 				user.isVerified = req.body.isVerified || user.isVerified;
 				user.affiliate = req.body.affiliate || user.affiliate;
@@ -374,6 +377,7 @@ export default {
 						last_name: updatedUser.last_name,
 						email: updatedUser.email,
 						affiliate: updatedUser.affiliate,
+						cart: updatedUser.cart,
 						email_subscription: updatedUser.email_subscription,
 						shipping: updatedUser.shipping,
 						is_affiliated: updatedUser.is_affiliated,
@@ -642,6 +646,7 @@ export default {
 				user.email = req.body.email || user.email;
 				user.password = req.body.password || user.password;
 				user.isAdmin = req.body.isAdmin || user.isAdmin;
+				user.cart = req.body.cart || user.cart;
 				user.email_subscription = req.body.email_subscription || user.email_subscription;
 				user.is_affiliated = req.body.is_affiliated || user.is_affiliated;
 				user.isVerified = true;
@@ -743,6 +748,7 @@ export default {
 					email: user.email,
 					password: user.password,
 					isAdmin: user.isAdmin,
+					cart: user.cart,
 					isVerified: user.isVerified,
 					affiliate: user.affiliate,
 					is_affiliated: user.is_affiliated,
@@ -814,6 +820,7 @@ export default {
 							last_name: admin.last_name,
 							email: admin.email,
 							affiliate: admin.affiliate,
+							cart: admin.cart,
 							is_affiliated: admin.is_affiliated,
 							email_subscription: admin.email_subscription,
 							isAdmin: admin.isAdmin,

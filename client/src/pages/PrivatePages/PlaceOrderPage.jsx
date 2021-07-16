@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder, createOrderGuest } from '../../actions/orderActions';
-import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
+import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
@@ -14,7 +14,7 @@ import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
-import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -577,7 +577,7 @@ const PlaceOrderPage = (props) => {
 						<div className="wrap jc-b">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
-								<div className="label">
+								<div className="paragraph_font lh-25px">
 									<div>
 										{shipping.first_name} {shipping.last_name}
 									</div>
@@ -585,8 +585,9 @@ const PlaceOrderPage = (props) => {
 										{shipping.address_1} {shipping.address_2}
 									</div>
 									<div>
-										{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+										{shipping.city}, {shipping.state} {shipping.postalCode}
 									</div>
+									<div>{shipping.country}</div>
 									<div>{shipping.international && 'International'}</div>
 									<div>{shipping.email}</div>
 								</div>
@@ -623,66 +624,7 @@ const PlaceOrderPage = (props) => {
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
 							) : (
-								cartItems.map((item, index) => (
-									<li className="row cart_items" key={index}>
-										<div className="cart-image">
-											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} alt={item.name} title="Product Image" />
-											</Link>
-										</div>
-										<div className=" abel cart-name">
-											<div className="mb-10px">
-												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item, false)}
-												</Link>
-											</div>
-											<div className="ai-c h-25px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label"
-												>
-													Qty:
-												</label>
-												<div className="custom-select">
-													<select
-														defaultValue={item.qty}
-														className="qty_select_dropdown"
-														onChange={(e) =>
-															dispatch(
-																addToCart(
-																	item.pathname,
-																	e.target.value,
-																	item.color && item.color,
-																	item.diffuser_cap && item.diffuser_cap,
-																	item.product_option && item.product_option,
-																	item.display_image
-																)
-															)}
-													>
-														{[ ...Array(item.countInStock).keys() ].map((x, index) => (
-															<option key={index} defaultValue={parseInt(x + 1)}>
-																{parseInt(x + 1)}
-															</option>
-														))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</div>
-										<div className="">
-											<div className="cart-price">{cart_sale_price_switch(item)}</div>
-											<div style={{ textAlign: 'right', width: '100%' }}>
-												<button
-													className="btn icon"
-													onClick={() => dispatch(removeFromCart(item))}
-												>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</div>
-										</div>
-									</li>
-								))
+								cartItems.map((item, index) => <CartItem item={item} index={index} />)
 							)}
 						</ul>
 					</div>

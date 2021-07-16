@@ -20,37 +20,47 @@ import {
 } from '../constants/cartConstants';
 import axios from 'axios';
 
-export const addToCart = (cart_data: any) => async (
+export const addToCart = (cart_item_1: any) => async (
 	dispatch: (arg0: any) => void,
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
 	try {
-		// const { data } = await Axios.get('/api/products/' + cart_data.pathname);
+		let cart_data = cart_item_1;
 
-		// const { data: option_product } = await Axios.get('/api/products/' + data.option_pathname);
-		// const { data: color_product } = await Axios.get('/api/products/' + data.color_pathname);
-		// let image: any;
-		// if (typeof images === 'string') {
-		// 	console.log('String');
-		// 	image = images;
-		// } else {
-		// 	console.log('Array');
-		// 	image = images[0];
-		// }
+		const { cart: { cartItems } } = getState();
+		if (!cart_item_1.product && cart_item_1.pathname && cart_item_1.qty) {
+			const same_item = cartItems.find((item: any) => item.pathname === cart_data.pathname);
+			cart_data = { ...same_item, qty: cart_item_1.qty };
+		}
+
 		let cartItem: any = {
 			product: cart_data.product,
+
 			color_product: cart_data.color_product,
-			color_product_name: cart_data.color_product_name,
+			// color_product_name: cart_data.color_product_name,
+			color_group_name: cart_data.color_group_name,
+
+			secondary_color_group_name: cart_data.secondary_color_group_name,
 			secondary_color_product: cart_data.secondary_color_product,
-			secondary_color_product_name: cart_data.secondary_color_product_name,
+			// secondary_color_product_name: cart_data.secondary_color_product_name,
+
+			option_group_name: cart_data.option_group_name,
 			option_product: cart_data.option_product,
 			option_product_name: cart_data.option_product_name,
+
 			secondary_product: cart_data.secondary_product,
 			secondary_product_name: cart_data.secondary_product_name,
+			secondary_group_name: cart_data.secondary_group_name,
+
 			name: cart_data.name,
 			size: cart_data.size,
+
 			color: cart_data.color,
+			color_code: cart_data.color_code,
+
 			secondary_color: cart_data.secondary_color,
+			secondary_color_code: cart_data.secondary_color_code,
+
 			display_image: cart_data.display_image,
 			price: cart_data.price,
 			sale_price: cart_data.sale_price,
@@ -68,149 +78,109 @@ export const addToCart = (cart_data: any) => async (
 			finite_stock: cart_data.finite_stock
 		};
 		console.log({ cartItem });
-		// let cartItem: any = {
-		// 	product: macro_product._id,
-		// 	name: macro_product.name,
-		// 	size: option_product && option_product.name,
-		// 	color: color_product && color_product.color,
-		// 	display_image: color_product.images[0] || macro_product.images[0],
-		// 	price: option_product.price || macro_product.price,
-		// 	sale_price: option_product.sale_price || macro_product.sale_price,
-		// 	countInStock: option_product.count_in_stock || macro_product.count_in_stock,
-		// 	weight_pounds: option_product.weight_pounds || macro_product.weight_pounds,
-		// 	weight_ounces: option_product.weight_ounces || macro_product.weight_ounces,
-		// 	package_length: option_product.package_length || macro_product.package_length,
-		// 	package_width: option_product.package_width || macro_product.package_width,
-		// 	package_height: option_product.package_height || macro_product.package_height,
-		// 	package_volume: option_product.package_volume || macro_product.package_volume,
-		// 	pathname: macro_product.pathname,
-		// 	category: macro_product.category,
-		// 	// product_option: product_option || {},
-		// 	qty: data.qty,
-		// 	finite_stock: macro_product.finite_stock
-		// };
 
-		// let cartItem: any = {
-		// 	product: data._id,
-		// 	name: data.name,
-		// 	display_image: image,
-		// 	price: product_option.price || data.price,
-		// 	sale_price: product_option.sale_price || data.sale_price,
-		// 	countInStock: data.countInStock,
-		// 	weight_pounds: product_option.weight_pounds || data.weight_pounds,
-		// 	weight_ounces: product_option.weight_ounces || data.weight_ounces,
-		// 	package_length: product_option.package_length || data.package_length,
-		// 	package_width: product_option.package_width || data.package_width,
-		// 	package_height: product_option.package_height || data.package_height,
-		// 	package_volume: product_option.package_volume || data.package_volume,
-		// 	pathname: data.pathname,
-		// 	category: data.category,
-		// 	product_option: product_option || {},
-		// 	qty,
-		// 	finite_stock: data.finite_stock
-		// };
-		// console.log({ cartItem });
-		// if (color) {
-		// 	cartItem = {
-		// 		product: data._id,
-		// 		name: data.name,
-		// 		display_image: image,
-		// 		color,
-		// 		diffuser_cap,
-		// 		price: product_option.price || data.price,
-		// 		sale_price: product_option.sale_price || data.sale_price,
-		// 		countInStock: data.countInStock,
-		// 		weight_pounds: product_option.weight_pounds || data.weight_pounds,
-		// 		weight_ounces: product_option.weight_ounces || data.weight_ounces,
-		// 		package_length: product_option.package_length || data.package_length,
-		// 		package_width: product_option.package_width || data.package_width,
-		// 		package_height: product_option.package_height || data.package_height,
-		// 		package_volume: product_option.package_volume || data.package_volume,
-		// 		pathname: data.pathname,
-		// 		category: data.category,
-		// 		product_option: product_option || {},
-		// 		qty,
-		// 		finite_stock: data.finite_stock
-		// 	};
-		// 	console.log({ color: cartItem });
-		// }
-		// if (diffuser_cap) {
-		// 	cartItem = {
-		// 		product: data._id,
-		// 		secondary_product: diffuser_cap._id ? diffuser_cap._id : '',
-		// 		name: data.name,
-		// 		display_image: image,
-		// 		color,
-		// 		diffuser_cap,
-		// 		// diffuser_cap_name: diffuser_cap.name ? diffuser_cap.name : '',
-		// 		price: product_option.price || data.price,
-		// 		sale_price: product_option.sale_price || data.sale_price,
-		// 		countInStock: data.countInStock,
-		// 		weight_pounds: product_option.weight_pounds || data.weight_pounds,
-		// 		weight_ounces: product_option.weight_ounces || data.weight_ounces,
-		// 		package_length: product_option.package_length || data.package_length,
-		// 		package_width: product_option.package_width || data.package_width,
-		// 		package_height: product_option.package_height || data.package_height,
-		// 		package_volume: product_option.package_volume || data.package_volume,
-		// 		pathname: data.pathname,
-		// 		category: data.category,
-		// 		product_option: product_option || {},
-		// 		qty,
-		// 		finite_stock: data.finite_stock
-		// 	};
-		// 	console.log({ diffuser_cap: cartItem });
-		// }
 		dispatch({
 			type: CART_ADD_ITEM,
 			payload: cartItem
 		});
 
-		const { cart: { cartItems } } = getState();
-		// const { cart } = getState();
 		Cookie.set('cartItems', JSON.stringify(cartItems));
 		console.log({ cartItems });
-		// try {
-		// 	dispatch({ type: CART_SAVE_REQUEST, payload: cartItems });
-		// 	const { userLogin: { userInfo } } = getState();
-		// 	if (!cart._id) {
-		// 		const { data } = await axios.post('/api/carts', cartItems, {
-		// 			headers: {
-		// 				Authorization: 'Bearer ' + userInfo.token
-		// 			}
-		// 		});
-		// 		dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		// 	} else {
-		// 		const { data } = await axios.put('/api/carts/' + cart._id, cart, {
-		// 			headers: {
-		// 				Authorization: 'Bearer ' + userInfo.token
-		// 			}
-		// 		});
-		// 		dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		// 	}
-		// } catch (error) {
-		// 	dispatch({ type: CART_SAVE_FAIL, payload: error.response.data.message });
-		// }
-		// dispatch({ type: CART_SAVE_REQUEST, payload: cart });
-		// const { userLogin: { userInfo } } = getState();
-		// if (!cart._id) {
-		// 	const { data } = await axios.post('/api/carts', cart, {
-		// 		headers: {
-		// 			Authorization: 'Bearer ' + userInfo.token
-		// 		}
-		// 	});
-		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		// } else {
-		// 	const { data } = await axios.put('/api/carts/' + cart._id, cart, {
-		// 		headers: {
-		// 			Authorization: 'Bearer ' + userInfo.token
-		// 		}
-		// 	});
-		// 	dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		// }
 	} catch (error) {
 		console.log({ error });
 	}
 };
+
+// export const addToCart = (cart_item_1: any) => async (
+// 	dispatch: (arg0: any) => void,
+// 	getState: () => { cart: any; userLogin: { userInfo: any } }
+// ) => {
+// 	try {
+// 		let cart_data = cart_item_1;
+
+// 		const { cart } = getState();
+// 		const { userLogin: { userInfo } } = getState();
+// 		if (!cart_item_1.product && cart_item_1.pathname && cart_item_1.qty) {
+// 			const same_item = cart.cartItems.find((item: any) => item.pathname === cart_data.pathname);
+// 			console.log({ same_item });
+// 			cart_data = { ...same_item, qty: cart_item_1.qty };
+// 		}
+
+// 		let cartItem: any = {
+// 			product: cart_data.product,
+// 			color_product: cart_data.color_product,
+// 			color_product_name: cart_data.color_product_name,
+// 			color_group_name: cart_data.color_group_name,
+// 			secondary_color_group_name: cart_data.secondary_color_group_name,
+// 			secondary_color_product: cart_data.secondary_color_product,
+// 			secondary_color_product_name: cart_data.secondary_color_product_name,
+// 			option_product: cart_data.option_product,
+// 			option_product_name: cart_data.option_product_name,
+// 			secondary_product: cart_data.secondary_product,
+// 			secondary_product_name: cart_data.secondary_product_name,
+// 			name: cart_data.name,
+// 			size: cart_data.size,
+// 			color: cart_data.color,
+// 			color_code: cart_data.color_code,
+// 			secondary_color: cart_data.secondary_color,
+// 			secondary_color_code: cart_data.secondary_color_code,
+// 			display_image: cart_data.display_image,
+// 			price: cart_data.price,
+// 			sale_price: cart_data.sale_price,
+// 			countInStock: cart_data.countInStock,
+// 			weight_pounds: cart_data.weight_pounds,
+// 			weight_ounces: cart_data.weight_ounces,
+// 			package_length: cart_data.package_length,
+// 			package_width: cart_data.package_width,
+// 			package_height: cart_data.package_height,
+// 			package_volume: cart_data.package_volume,
+// 			pathname: cart_data.pathname,
+// 			subcategory: cart_data.subcategory,
+// 			category: cart_data.category,
+// 			qty: cart_data.qty,
+// 			finite_stock: cart_data.finite_stock
+// 		};
+// 		console.log({ cartItem });
+// 		const cart_id = Date.now();
+
+// 		dispatch({
+// 			type: CART_ADD_ITEM,
+// 			payload: cart.cartItems
+// 		});
+// 		Cookie.set('cartItems', JSON.stringify(cart.cartItems));
+// 		console.log({ cartItems: cart.cartItems });
+// 		// const item = action.payload;
+// 		// let cartItems = [];
+// 		// const existItem: any = cart.cartItems.find((x: any) => JSON.stringify(x) === JSON.stringify(cartItem));
+// 		// if (existItem) {
+// 		// 	cartItems = {
+// 		// 		...cart,
+// 		// 		cartItems: cart.cartItems.map(
+// 		// 			(x: any) => (JSON.stringify(x) === JSON.stringify(existItem) ? cartItem : x)
+// 		// 		)
+// 		// 	};
+// 		// } else {
+// 		// 	cartItems = { ...cart, cartItems: [ ...cart.cartItems, cartItem ] };
+// 		// }
+
+// 		// const new_cart = {cartItems, user: userInfo._id}
+// 		// try {
+// 		// 	dispatch({ type: CART_SAVE_REQUEST, payload: cart });
+
+// 		// 	if (cart.cartItems.length === 0) {
+// 		// 		const { data } = await axios.post('/api/carts', new_cart);
+// 		// 		dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+// 		// 	} else {
+// 		// 		const { data } = await axios.put('/api/carts/' + cart._id, new_cart);
+// 		// 		dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+// 		// 	}
+// 		// } catch (error) {
+// 		// 	dispatch({ type: CART_SAVE_FAIL, payload: error.response.data.message });
+// 		// }
+// 	} catch (error) {
+// 		console.log({ error });
+// 	}
+// };
 
 export const removeFromCart = (product: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
@@ -235,7 +205,7 @@ export const saveShipping = (data: {
 	country: string;
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
-	Cookie.set('shipping', JSON.stringify(data));
+	// Cookie.set('shipping', JSON.stringify(data));
 };
 
 export const savePayment = (data: { paymentMethod: any }) => (

@@ -136,30 +136,30 @@ const Cart = (props) => {
 			style={{ ...navbarStyles, top: props.visible ? determine_top() : '0px', overflowY: 'scroll' }}
 		>
 			<div>
-				{/* <div className="logo_text mh-auto ai-c">
-					<Link to="/">
-						<div className="h-50px w-50px">
-							<img
-								className="zoom logo_s"
-								src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-								alt="Glow LEDs Logo"
-								title="Small Logo"
-							/>
-						</div>
-					</Link>
-					<Link to="/">
-						<div className="row">
-							<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
-						</div>
-					</Link>
-				</div> */}
 				<button className="cart_sidebar_close_button" aria-label="close" onClick={closeMenu}>
 					<i className="fas fa-times" />
 				</button>
 			</div>
 			<ul className="cart_sidebar-list-container w-100per mr-1rem">
 				<li>
-					<h2>Shopping Cart</h2>
+					{/* <h2>Shopping Cart</h2> */}
+					<div className="logo_text ai-c">
+						<Link to="/">
+							<div className="h-50px w-50px">
+								<img
+									className="zoom logo_s"
+									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+									alt="Glow LEDs Logo"
+									title="Small Logo"
+								/>
+							</div>
+						</Link>
+						<Link to="/">
+							<div className="row">
+								<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
+							</div>
+						</Link>
+					</div>
 					<div>Price</div>
 				</li>
 				{cartItems.length === 0 ? (
@@ -168,16 +168,16 @@ const Cart = (props) => {
 					</div>
 				) : (
 					<div className="h-40vh max-h-65vh" style={{ overflowY: 'scroll' }}>
-						<h4>{no_adapters_warning()}</h4>
+						{/* <h4>{no_adapters_warning()}</h4> */}
 						{cartItems.map((item, index) => (
 							<li key={index}>
 								{console.log({ item })}
-								<div className="cart_sidebar-image">
+								<div className="cart_sidebar-image br-5px ai-c">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<img
 											src={item.display_image}
-											height="100px"
-											width="100px"
+											height="50px"
+											width="50px"
 											alt={item.name}
 											title="Product Image"
 										/>
@@ -196,81 +196,14 @@ const Cart = (props) => {
 												htmlFor="sortOrder"
 												className="select-label mr-1rem"
 											>
-												Qty:
+												Qty: {item.qty}
 											</label>
-											{/* {console.log(
-												item.product_option.images
-													? item.product_option.images[0]
-													: item.display_image
-											)} */}
-											{/* {console.log({ product_option_image: item.product_option.images[0] })}
-											{console.log({ display_image: item.display_image })} */}
-											<div className="custom-select">
-												<select
-													defaultValue={item.qty}
-													className="qty_select_dropdown"
-													onChange={(e) => {
-														dispatch(
-															addToCart(
-																item.pathname,
-																e.target.value,
-																item.color && item.color,
-																item.diffuser_cap && item.diffuser_cap,
-																item.product_option && item.product_option,
-																item.display_image
-															)
-														);
-													}}
-												>
-													{[ ...Array(item.countInStock).keys() ].map((x) => (
-														<option key={x + 1} defaultValue={parseInt(x + 1)}>
-															{parseInt(x + 1)}
-														</option>
-													))}
-												</select>
-												<span className="custom-arrow" />
-											</div>
 										</div>
 									</div>
 								</div>
 
 								<div className="">
-									<div className="cart_sidebar-price">
-										{cart_sale_price_switch(item)}
-										{/* {item.product_option.sale_price > 0 ? (
-											<label>
-												<del style={{ color: 'red' }}>
-													<label style={{ color: 'white' }}>
-														${item.product_option.price ? (
-															item.product_option.price.toFixed(2)
-														) : item.price ? (
-															item.price.toFixed(2)
-														) : (
-															item.price
-														)}
-													</label>
-												</del>{' '}
-												<i class="fas fa-arrow-right" /> ${item.product_option.sale_price ? (
-													item.product_option.sale_price.toFixed(2)
-												) : item.sale_price ? (
-													item.sale_price.toFixed(2)
-												) : (
-													item.sale_price
-												)}{' '}
-												On Sale!
-											</label>
-										) : (
-											<label>
-												${item.product_option.price ? (
-													item.product_option.price.toFixed(2)
-												) : item.price ? (
-													item.price.toFixed(2)
-												) : (
-													item.price
-												)}
-											</label>
-										)} */}
-									</div>
+									<div className="cart_sidebar-price fs-16px">{cart_sale_price_switch(item)}</div>
 									<div style={{ textAlign: 'right', width: '100%' }}>
 										<button className="btn icon" onClick={() => removeFromCartHandler(item)}>
 											<i className="fas fa-trash-alt" />
@@ -290,10 +223,11 @@ const Cart = (props) => {
 					cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 				)}
 			</h3>
-
-			<button className="btn secondary w-100per mb-1rem" onClick={closeMenu}>
-				<Link to="/checkout/cart">View Cart</Link>
-			</button>
+			<Link to="/checkout/cart" className="w-100per">
+				<button className="btn secondary w-100per mb-1rem" onClick={closeMenu}>
+					View Cart
+				</button>
+			</Link>
 
 			<button onClick={decide_warning} className="btn primary w-100per">
 				Proceed to Checkout

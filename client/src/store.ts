@@ -101,6 +101,17 @@ const cartItems = Cookie.getJSON('cartItems') || [];
 // const userInfo = Cookie.getJSON('userInfo') || null;
 // console.log({ userInfo });
 
+// const initialState: object = {
+// 	cart: {
+// 		cartItems,
+// 		user: {},
+// 		deleted: {},
+// 		_id: '',
+// 		shipping: {},
+// 		payment: {}
+// 	},
+// 	userLogin: { userInfo: {} }
+// };
 const initialState: object = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo: {} } };
 const reducer = combineReducers({
 	productList: productListReducer,

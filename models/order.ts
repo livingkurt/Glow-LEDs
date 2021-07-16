@@ -47,10 +47,17 @@ const orderItemSchema = new mongoose.Schema(
 		display_image: { type: String, required: true },
 		color: { type: String },
 		secondary_color: { type: String },
+		color_group_name: { type: String },
+		secondary_color_group_name: { type: String },
+		option_group_name: { type: String },
+		secondary_group_name: { type: String },
+		color_code: { type: String },
+		secondary_color_code: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
+		subcategory: { type: String },
 		pathname: { type: String },
-		size: { type: Number },
+		size: { type: String },
 		sale_price: { type: Number },
 		package_volume: { type: Number },
 		weight_pounds: { type: Number },
@@ -61,10 +68,7 @@ const orderItemSchema = new mongoose.Schema(
 		package_length: { type: Number },
 		package_width: { type: Number },
 		package_height: { type: Number },
-		parcel: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Parcel'
-		},
+
 		reviewed: { type: Boolean, default: false },
 		product_option: productOptionsSchema,
 		product: {
@@ -122,6 +126,10 @@ const orderSchema = new mongoose.Schema(
 		isDelivered: { type: Boolean, default: false },
 		deliveredAt: { type: Date },
 		isRefunded: { type: Boolean, default: false },
+		parcel: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Parcel'
+		},
 		refundedAt: { type: Date },
 		order_note: { type: String },
 		promo_code: { type: String },

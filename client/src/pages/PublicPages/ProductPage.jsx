@@ -21,43 +21,41 @@ const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const cart = useSelector((state) => state.cart);
 
-	const { cartItems } = cart;
 	let { userInfo } = userLogin;
 	const [ name, set_name ] = useState('');
 	const [ description, set_description ] = useState('');
 	const [ facts, set_facts ] = useState('');
 	const [ included_items, set_included_items ] = useState('');
 	const [ qty, setQty ] = useState(1);
-	const [ diffuser_cap, set_diffuser_cap ] = useState('');
 	const [ images, set_images ] = useState([]);
 	const [ price, set_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState();
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
-	const [ length, set_length ] = useState(0);
-	const [ width, set_width ] = useState(0);
-	const [ height, set_height ] = useState(0);
-	const [ volume, set_volume ] = useState(0);
 	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
-	const [ no_dropdown, set_no_dropdown ] = useState(false);
+	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
+
+	const [ dimensions, set_dimensions ] = useState({});
+
 	const [ color, set_color ] = useState('');
 	const [ secondary_color, set_secondary_color ] = useState('');
-	// const [ pathname, set_pathname ] = useState('');
-	const [ option_color, set_option_color ] = useState('');
-	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
-	const [ pathname, set_pathname ] = useState('');
+
+	const [ color_code, set_color_code ] = useState('');
+	const [ secondary_color_code, set_secondary_color_code ] = useState('');
+
 	const [ color_product, set_color_product ] = useState(null);
 	const [ secondary_color_product, set_secondary_color_product ] = useState(null);
 	const [ option_product, set_option_product ] = useState(null);
 	const [ secondary_product, set_secondary_product ] = useState(null);
-	const [ dimensions, set_dimensions ] = useState({});
+
 	const [ secondary_product_name, set_secondary_product_name ] = useState('');
 	const [ option_product_name, set_option_product_name ] = useState('');
-	const [ color_product_name, set_color_product_name ] = useState('');
-	const [ secondary_color_product_name, set_secondary_color_product_name ] = useState('');
-	const [ hide_skin_color, set_hide_skin_color ] = useState(false);
-	const [ hide_sled_color, set_hide_sled_color ] = useState(false);
+
+	// const [ color_group_name, set_color_group_name ] = useState('');
+	// const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
+	// const [ option_group_name, set_option_group_name ] = useState('');
+	// const [ secondary_group_name, set_secondary_group_name ] = useState('');
 
 	const productDetails = useSelector((state) => state.productDetails);
 
@@ -77,7 +75,6 @@ const ProductPage = (props) => {
 
 	useEffect(() => {
 		dispatch(detailsProduct(props.match.params.pathname));
-		set_pathname(props.match.params.pathname);
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
@@ -112,8 +109,13 @@ const ProductPage = (props) => {
 					package_volume: product.package_volume
 				});
 				set_product_option({});
-				set_secondary_color_product_name(product.color);
-				set_color_product_name(product.secondary_color);
+
+				// set_color_group_name(product.color_group_name);
+				// set_secondary_color_group_name(product.secondary_color_group_name);
+				// set_option_group_name(product.option_group_name);
+				// set_secondary_group_name(product.secondary_group_name);
+
+				set_size(product.size);
 				if (product.option_products) {
 					const option = product.option_products.find((option) => option.default_option === true);
 					console.log({ option });
@@ -163,14 +165,18 @@ const ProductPage = (props) => {
 					if (color) {
 						set_color_product(color._id);
 						set_color(color.color);
+						set_color_code(color.color_code);
 					}
 				}
 				if (product.secondary_color_products) {
-					const color = product.secondary_color_products.find((color) => color.default_option === true);
-					console.log({ color });
-					if (color) {
-						set_secondary_color_product(color._id);
-						set_secondary_color(color.color);
+					const secondary_color = product.secondary_color_products.find(
+						(secondary_color) => secondary_color.default_option === true
+					);
+					console.log({ secondary_color });
+					if (secondary_color) {
+						set_secondary_color_product(secondary_color._id);
+						set_secondary_color(secondary_color.color);
+						set_secondary_color_code(secondary_color.color_code);
 					}
 				}
 			}
@@ -194,17 +200,21 @@ const ProductPage = (props) => {
 			addToCart({
 				product: product._id,
 				color_product,
-				color_product_name,
+				color_code,
+				secondary_color_code,
 				secondary_color_product,
-				secondary_color_product_name,
+				color_group_name: product.color_group_name,
+				secondary_color_group_name: product.secondary_color_group_name,
+				option_group_name: product.option_group_name,
+				secondary_group_name: product.secondary_group_name,
 				option_product,
 				option_product_name,
 				secondary_product,
 				secondary_product_name,
 				name,
 				size,
-				color,
-				secondary_color,
+				color: size !== '1 Skin' && color,
+				secondary_color: size !== '1 Sled' && secondary_color,
 				display_image: images[0],
 				price,
 				sale_price,
@@ -231,14 +241,15 @@ const ProductPage = (props) => {
 
 	const update_color = (e) => {
 		const option = JSON.parse(e.target.value);
+		console.log({ option });
 		// set_name(option.name);
 
-		if (option.description) {
-			set_description(option.description);
-		}
-		if (option.facts) {
-			set_facts(option.facts);
-		}
+		// if (option.description) {
+		// 	set_description(option.description);
+		// }
+		// if (option.facts) {
+		// 	set_facts(option.facts);
+		// }
 		if (option.price !== 0 || option.price === null || option.price === undefined) {
 			set_price(option.price);
 		}
@@ -246,6 +257,7 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		set_color(option.color);
+		set_color_code(option.color_code);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
@@ -255,14 +267,15 @@ const ProductPage = (props) => {
 
 	const update_secondary_color = (e) => {
 		const option = JSON.parse(e.target.value);
+		console.log({ option });
 		// set_name(option.name);
 
-		if (option.description) {
-			set_description(option.description);
-		}
-		if (option.facts) {
-			set_facts(option.facts);
-		}
+		// if (option.description) {
+		// 	set_description(option.description);
+		// }
+		// if (option.facts) {
+		// 	set_facts(option.facts);
+		// }
 		if (option.price !== 0 || option.price === null || option.price === undefined) {
 			set_price(option.price);
 		}
@@ -270,6 +283,7 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		set_secondary_color(option.color);
+		set_secondary_color_code(option.color_code);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
@@ -294,19 +308,6 @@ const ProductPage = (props) => {
 		} else {
 			set_size(option.name);
 		}
-		if (option.name === '1 Skin') {
-			set_hide_sled_color(true);
-		} else {
-			set_hide_skin_color(false);
-			set_hide_sled_color(false);
-		}
-		if (option.name === '1 Sled') {
-			set_hide_skin_color(true);
-		} else {
-			set_hide_skin_color(false);
-			set_hide_sled_color(false);
-		}
-
 		if (option.price > 0) {
 			set_price(option.price);
 		}
@@ -493,7 +494,7 @@ const ProductPage = (props) => {
 									/> */}
 								</div>
 							</div>
-							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown" />
+							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown " />
 							<div className="details-info">
 								<h1 className="product_title_side lh-50px fs-30px mv-0px">
 									{name}
@@ -526,49 +527,66 @@ const ProductPage = (props) => {
 										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
 									</a>
 								</div>
-								{secondary_product && (
-									<div className="row ai-c  mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.secondary_group_name ? (
-												product.secondary_group_name
-											) : (
-												'Cap Design'
-											)}: {' '}
-										</h3>
-										{secondary_product_name}
-									</div>
-								)}
-								{size !== '1 Sled' &&
-								color && (
-									<div className="row ai-c mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
-										</h3>
-										{color}
-									</div>
-								)}
-								{size !== '1 Skin' &&
-								secondary_color && (
-									<div className="row ai-c mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.secondary_color_group_name ? (
-												product.secondary_color_group_name
-											) : (
-												'Secondary Color'
-											)}:{' '}
-										</h3>
-										{secondary_color}
-									</div>
-								)}
-								{size && (
-									<div className="row ai-c  mv-20px">
-										<h3 className="mv-0px mr-5px">
-											{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
-										</h3>
-										{size}
-									</div>
-								)}
-
+								<div className="max-w-492px mr-15px">
+									{secondary_product && (
+										<div className="ai-c mv-20px jc-b w-100per">
+											<h3 className="mv-0px mr-5px">
+												{product.secondary_group_name ? (
+													product.secondary_group_name
+												) : (
+													'Cap Design'
+												)}: {' '}
+											</h3>
+											<label>{secondary_product_name}</label>
+										</div>
+									)}
+									{size !== '1 Sled' &&
+									color && (
+										<div className="ai-c mv-20px jc-b w-100per">
+											<h3 className="mv-0px mr-5px">
+												{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
+											</h3>
+											<div className="ai-c">
+												<label>{color}</label>
+												{color_code && (
+													<canvas
+														className=" ml-5px w-60px h-20px br-7px"
+														style={{ backgroundColor: color_code }}
+													/>
+												)}
+											</div>
+										</div>
+									)}
+									{size !== '1 Skin' &&
+									secondary_color && (
+										<div className="ai-c mv-20px jc-b w-100per">
+											<h3 className="mv-0px mr-5px">
+												{product.secondary_color_group_name ? (
+													product.secondary_color_group_name
+												) : (
+													'Secondary Color'
+												)}:{' '}
+											</h3>
+											<div className="ai-c">
+												<label>{secondary_color}</label>
+												{secondary_color_code && (
+													<canvas
+														className=" ml-5px w-60px h-20px br-7px"
+														style={{ backgroundColor: secondary_color_code }}
+													/>
+												)}
+											</div>
+										</div>
+									)}
+									{size && (
+										<div className="ai-c  mv-20px">
+											<h3 className="mv-0px mr-5px">
+												{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
+											</h3>
+											{size}
+										</div>
+									)}
+								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
 									{/* {sale_price_product_option_switch_product(
@@ -629,7 +647,7 @@ const ProductPage = (props) => {
 									product.secondary_products &&
 									product.secondary_products.length > 0 && (
 										<li>
-											<div className="ai-c h-25px mb-15px">
+											<div className="ai-c h-25px mb-25px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -668,7 +686,7 @@ const ProductPage = (props) => {
 									product.color_products &&
 									product.color_products.length > 0 && (
 										<li>
-											<div className="ai-c h-25px mb-15px">
+											<div className="ai-c h-25px mb-25px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -697,7 +715,7 @@ const ProductPage = (props) => {
 									product.secondary_color_products &&
 									product.secondary_color_products.length > 0 && (
 										<li>
-											<div className="ai-c h-25px mb-15px">
+											<div className="ai-c h-25px mb-20px">
 												<label
 													aria-label="sortOrder"
 													htmlFor="sortOrder"
@@ -764,157 +782,8 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-									{/* {product.product_options &&
-									product.product_options.length > 0 &&
-									product.product_options.filter((option) => !option.dropdown).length > 0 && (
-										<li>
-											<div className="row">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem mt-1rem"
-												>
-													Options:
-												</label>
-												<div className="ai-c wrap">
-													{product.product_options
-														.filter((option) => !option.dropdown)
-														.filter((option) => option.count_in_stock)
-														.map((option, index) => (
-															<button
-																key={index}
-																selected={option.default}
-																id={option.name}
-																value={JSON.stringify(option)}
-																onClick={(e) =>
-																	update_product(e, JSON.parse(e.target.value))}
-																className={`packs  flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default
-																	? 'secondary'
-																	: 'primary'}`}
-															>
-																{option.name}
-															</button>
-														))}
-												</div>
-											</div>
-										</li>
-									)} */}
-
-									{/* {product.option_product_group &&
-									product.option_products &&
-									product.option_products.length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													{product.option_group_name && product.option_group_name}s:
-												</label>
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => update_product_images(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose{' '}
-															{product.option_group_name && product.option_group_name}---
-														</option>
-														{product.option_products.map((option, index) => (
-															<option key={index} value={JSON.stringify(option)}>
-																{option.name.split(' ')[0]}
-															</option>
-														))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
-
-									{/* {product.products &&
-									product.products.length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													{product.group_name && product.group_name}s:
-												</label>
-												<div className="custom-select">
-													<select
-														// defaultValue={diffuser_cap_name}
-														// value={diffuser_cap_name}
-														className="qty_select_dropdown"
-														onChange={(e) => update_product_images(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose {product.group_name && product.group_name}---
-														</option>
-														{product.products.map(
-															(cap, index) =>
-																cap.name === 'Custom Diffuser Caps Deposit' ||
-																cap.name === 'Diffuser Caps + Adapters Starter Kit' ? (
-																	''
-																) : (
-																	<option key={index} value={JSON.stringify(cap)}>
-																		{cap.name.split(' ')[0]}
-																	</option>
-																)
-														)}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
-
-									{/* {product.product_options &&
-									product.product_options.length > 0 &&
-									product.product_options.filter((option) => option.dropdown).length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-15px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													Color:
-												</label>
-												<div className="custom-select">
-													<select
-														defaultValue={color}
-														// value={color}
-														className="qty_select_dropdown"
-														onChange={(e) => {
-															// set_color(e.target.value);
-															update_color(e, JSON.parse(e.target.value));
-														}}
-													>
-														{!no_dropdown ? (
-															product.product_options
-																.filter((option) => option.dropdown)
-																.map((option, index) => (
-																	<option key={index} value={JSON.stringify(option)}>
-																		{option.color}
-																	</option>
-																))
-														) : (
-															<option value={JSON.stringify(product_option)}>
-																{product_option.color}
-															</option>
-														)}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</li>
-									)} */}
 									<li>
-										<div className="ai-c h-25px">
+										<div className="ai-c h-25px mb-20px">
 											<label
 												aria-label="sortOrder"
 												htmlFor="sortOrder"

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Carousel } from '../../components/SpecialtyComponents';
+import { Carousel, CartItem } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -77,7 +77,7 @@ const CartPage = (props) => {
 			<div className="cart">
 				<div className="cart-list">
 					<ul className="cart-list-container" style={{ marginRight: '10px' }}>
-						<li>
+						<li className="ai-fe">
 							<h2>Shopping Cart</h2>
 							<div>Price</div>
 						</li>
@@ -87,108 +87,8 @@ const CartPage = (props) => {
 							</div>
 						) : (
 							<div>
-								<h4>{no_adapters_warning()}</h4>
-								{cartItems.map((item, index) => (
-									<li key={index} className="h-12rem">
-										{/* {console.log({ item })} */}
-										<div className="cart-image">
-											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} alt={item.name} title="Product Image" />
-											</Link>
-										</div>
-										<div className="cart-name">
-											<div className="mb-10px">
-												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item, false)}
-												</Link>
-											</div>
-											<div>
-												<div className="ai-c h-25px">
-													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
-														className="select-label mr-1rem"
-													>
-														Qty:
-													</label>
-													<div className="custom-select">
-														<select
-															defaultValue={item.qty}
-															className="qty_select_dropdown"
-															onChange={(e) => {
-																dispatch(
-																	addToCart(
-																		item.pathname,
-																		e.target.value,
-																		item.color && item.color,
-																		item.diffuser_cap && item.diffuser_cap,
-																		item.product_option && item.product_option,
-																		item.display_image
-																	)
-																);
-															}}
-														>
-															{[ ...Array(item.countInStock).keys() ].map((x, index) => (
-																<option key={index} defaultValue={parseInt(x + 1)}>
-																	{parseInt(x + 1)}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div className="">
-											<div className="cart-price">
-												{cart_sale_price_switch(item)}
-												{/* {item.product_option.sale_price > 0 ? (
-													<label>
-														<del style={{ color: 'red' }}>
-															<label style={{ color: 'white' }}>
-																${item.product_option.price ? (
-																	item.product_option.price.toFixed(2)
-																) : item.price ? (
-																	item.price.toFixed(2)
-																) : (
-																	item.price
-																)}
-															</label>
-														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.product_option
-															.sale_price ? (
-															item.product_option.sale_price.toFixed(2)
-														) : item.sale_price ? (
-															item.sale_price.toFixed(2)
-														) : (
-															item.sale_price
-														)}{' '}
-														On Sale!
-													</label>
-												) : (
-													<label>
-														${item.product_option.price ? (
-															item.product_option.price.toFixed(2)
-														) : item.price ? (
-															item.price.toFixed(2)
-														) : (
-															item.price
-														)}
-													</label>
-												)} */}
-											</div>
-											<div style={{ textAlign: 'right', width: '100%' }}>
-												<button
-													className="btn icon"
-													onClick={() => removeFromCartHandler(item)}
-												>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</div>
-										</div>
-									</li>
-								))}
+								{/* <h4>{no_adapters_warning()}</h4> */}
+								{cartItems.map((item, index) => <CartItem item={item} index={index} />)}
 							</div>
 						)}
 					</ul>

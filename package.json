@@ -4,6 +4,8 @@
 	"description": "",
 	"main": "server.js",
 	"dependencies": {
+		"@bugsnag/js": "^7.10.5",
+		"@bugsnag/plugin-express": "^7.10.0",
 		"@easypost/api": "^3.9.1",
 		"@sendgrid/mail": "^7.2.3",
 		"@types/express": "^4.17.7",

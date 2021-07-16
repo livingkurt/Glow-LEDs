@@ -2,24 +2,21 @@ import mongoose from 'mongoose';
 export {};
 // const mongoose = require('mongoose');
 
-const productOptionsSchema = new mongoose.Schema({
-	name: { type: String },
-	price: { type: Number },
-	sale_price: { type: Number, default: 0 },
-	size: { type: Number },
-	color: { type: String }
-});
-
 const cartItemsSchema = new mongoose.Schema(
 	{
 		name: { type: String, required: true },
 		qty: { type: Number, required: true },
 		display_image: { type: String, required: true },
 		color: { type: String },
-		diffuser_cap: { type: String },
+		secondary_color: { type: String },
+		color_group_name: { type: String },
+		secondary_color_group_name: { type: String },
+		color_code: { type: String },
+		secondary_color_code: { type: String },
 		price: { type: Number, required: true },
 		category: { type: String, required: true },
 		pathname: { type: String },
+		size: { type: Number },
 		sale_price: { type: Number },
 		package_volume: { type: Number },
 		weight_pounds: { type: Number },
@@ -30,12 +27,27 @@ const cartItemsSchema = new mongoose.Schema(
 		package_length: { type: Number },
 		package_width: { type: Number },
 		package_height: { type: Number },
-		product_option: productOptionsSchema,
 		product: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product',
 			required: true
 		},
+		color_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		},
+		color_product_name: { type: String },
+		secondary_color_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		},
+		secondary_color_product_name: { type: String },
+		option_product_name: { type: String },
+		option_product: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Product'
+		},
+		secondary_product_name: { type: String },
 		secondary_product: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Product'
