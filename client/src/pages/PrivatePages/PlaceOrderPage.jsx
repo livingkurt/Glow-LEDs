@@ -577,7 +577,7 @@ const PlaceOrderPage = (props) => {
 						<div className="wrap jc-b">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
-								<div className="label">
+								<div className="paragraph_font lh-25px">
 									<div>
 										{shipping.first_name} {shipping.last_name}
 									</div>
@@ -585,8 +585,9 @@ const PlaceOrderPage = (props) => {
 										{shipping.address_1} {shipping.address_2}
 									</div>
 									<div>
-										{shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
+										{shipping.city}, {shipping.state} {shipping.postalCode}
 									</div>
+									<div>{shipping.country}</div>
 									<div>{shipping.international && 'International'}</div>
 									<div>{shipping.email}</div>
 								</div>
