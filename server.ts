@@ -107,9 +107,9 @@ app.get('/api/config/paypal', (req, res) => {
 	res.send(config.PAYPAL_CLIENT_ID);
 });
 
-app.use(function(req, res, next) {
-	throw new Error('Test error');
-});
+// app.use(function(req, res, next) {
+// 	throw new Error('Test error');
+// });
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));
