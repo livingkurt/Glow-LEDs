@@ -414,8 +414,8 @@ export const email_sale_price_switch = (item, color) => {
 // 	// }
 // };
 
-export const determine_product_name = (item, show_qty) => {
-	console.log({ determine_product_name: item });
+export const determine_product_name = (item, show_qty, from_where) => {
+	// console.log({ determine_product_name: item, from_where });
 	if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
 		return (
 			<div>
