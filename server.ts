@@ -15,7 +15,7 @@ let Bugsnag = require('@bugsnag/js');
 let BugsnagPluginExpress = require('@bugsnag/plugin-express');
 
 Bugsnag.start({
-	apiKey: '444564c26a336825790da83d18486098',
+	apiKey: process.env.BUGSNAG_KEY,
 	plugins: [ BugsnagPluginExpress ]
 });
 
