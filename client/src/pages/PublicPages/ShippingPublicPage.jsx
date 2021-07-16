@@ -67,6 +67,7 @@ const ShippingPublicPage = (props) => {
 			country,
 			international
 		};
+		console.log({ data });
 		const request = validate_shipping(data);
 		set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
@@ -131,6 +132,10 @@ const ShippingPublicPage = (props) => {
 								onChange={(e) => set_email(e.target.value)}
 							/>
 						</li>
+
+						<label className="validation_text" style={{ justifyContent: 'center' }}>
+							{email_validations}
+						</label>
 						<li>
 							<label htmlFor="first_name">First Name</label>
 							<input
