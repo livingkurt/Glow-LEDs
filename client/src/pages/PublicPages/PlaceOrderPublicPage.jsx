@@ -90,10 +90,10 @@ const PlaceOrderPublicPage = (props) => {
 
 	useEffect(
 		() => {
-			const shipping_cookie = Cookie.getJSON('shipping');
-			if (shipping_cookie) {
-				stableDispatch(saveShipping(shipping_cookie));
-			}
+			// const shipping_cookie = Cookie.getJSON('shipping');
+			// if (shipping_cookie) {
+			// 	stableDispatch(saveShipping(shipping_cookie));
+			// }
 			stableDispatch(savePayment({ paymentMethod: 'stripe' }));
 			stable_setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
