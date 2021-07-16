@@ -6,3 +6,4 @@ export { default as Arrows } from './Arrows';
 export { default as ToggleSwitch } from './ToggleSwitch';
 export { default as ImageLoad } from './ImageLoad';
 export { default as LazyImage } from './LazyImage';
+export { default as ErrorView } from './ErrorView';
