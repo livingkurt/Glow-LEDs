@@ -183,6 +183,7 @@ export const validate_shipping = (data: {
 			errors.email = 'Valid email required';
 		}
 	}
+	console.log({ validate_shipping: data });
 	// First Name checks
 	if (isEmpty2(data.first_name)) {
 		errors.first_name = 'First Name field is required';

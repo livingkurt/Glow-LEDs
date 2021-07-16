@@ -204,6 +204,7 @@ export const saveShipping = (data: {
 	international: boolean;
 	country: string;
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	console.log({ shipping_actions: data });
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
 	// Cookie.set('shipping', JSON.stringify(data));
 };

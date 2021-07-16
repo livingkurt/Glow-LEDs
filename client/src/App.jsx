@@ -89,7 +89,7 @@ import { Header, Container, Content, Footer, Sidebar, Cart } from './components/
 import { useSelector } from 'react-redux';
 
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
-import { ErrorView, ScrollToTop } from './components/UtilityComponents';
+import { ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import {
@@ -112,14 +112,6 @@ import setAuthToken from './utils/setAuthToken';
 import store from './store';
 import EditChipPage from './pages/AdminPages/EditChipPage';
 import useWindowDimensions from './components/SpecialtyComponents/ScreenSize';
-// ES module-style import
-import Bugsnag from '@bugsnag/js';
-import BugsnagPluginReact from '@bugsnag/plugin-react';
-require('dotenv').config();
-// Bugsnag.start({
-// 	apiKey: process.env.REACT_APP_BUGSNAG_KEY,
-// 	plugins: [ new BugsnagPluginReact() ]
-// });
 
 const App = (props) => {
 	const theme_colors = {
@@ -155,8 +147,6 @@ const App = (props) => {
 			window.location.href = '/account/login?redirect=' + window.location.pathname;
 		}
 	}
-
-	// const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 	// We listen to the resize event
 	window.addEventListener('resize', () => {
@@ -215,7 +205,6 @@ const App = (props) => {
 	);
 
 	return (
-		// <ErrorBoundary FallbackComponent={ErrorView}>
 		<Router>
 			<Container>
 				<Helmet>
@@ -464,7 +453,6 @@ const App = (props) => {
 				<Footer />
 			</Container>
 		</Router>
-		// </ErrorBoundary>
 	);
 };
 

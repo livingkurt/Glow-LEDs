@@ -146,7 +146,8 @@ const ShippingPage = (props) => {
 		set_international_validations(request.errors.international);
 
 		console.log(request);
-		console.log(request.errors.email);
+		console.log({ submitHandler: data });
+		// console.log(request.errors.email);
 		if (request.isValid) {
 			console.log({
 				first_name,
