@@ -381,39 +381,42 @@ const OrderPage = (props) => {
 							<button className="btn secondary">Back to Orders</button>
 						</Link>
 					</div>
-					<div className="row">
-						<div className="ai-c">
-							<button
-								style={{ borderRadius: '50%' }}
-								className="btn icon h-59px"
-								onClick={(e) => move_left(e)}
+					{userInfo &&
+					userInfo.isAdmin && (
+						<div className="row">
+							<div className="ai-c">
+								<button
+									style={{ borderRadius: '50%' }}
+									className="btn icon h-59px"
+									onClick={(e) => move_left(e)}
+								>
+									<i className="fas fa-arrow-circle-left fs-40px" />
+								</button>
+							</div>
+							<h2
+								style={{
+									textAlign: 'center',
+									width: '100%',
+									marginRight: 'auto',
+									justifyContent: 'center'
+								}}
+								className="ta-c "
 							>
-								<i className="fas fa-arrow-circle-left fs-40px" />
-							</button>
+								<Link to={'/collections/all/products/' + product.pathname}>
+									{loading ? 'Product' : product.name}
+								</Link>
+							</h2>
+							<div className="ai-c">
+								<button
+									style={{ borderRadius: '50%' }}
+									className="btn icon h-59px"
+									onClick={(e) => move_right(e)}
+								>
+									<i className="fas fa-arrow-circle-right fs-40px" />
+								</button>
+							</div>
 						</div>
-						<h2
-							style={{
-								textAlign: 'center',
-								width: '100%',
-								marginRight: 'auto',
-								justifyContent: 'center'
-							}}
-							className="ta-c "
-						>
-							<Link to={'/collections/all/products/' + product.pathname}>
-								{loading ? 'Product' : product.name}
-							</Link>
-						</h2>
-						<div className="ai-c">
-							<button
-								style={{ borderRadius: '50%' }}
-								className="btn icon h-59px"
-								onClick={(e) => move_right(e)}
-							>
-								<i className="fas fa-arrow-circle-right fs-40px" />
-							</button>
-						</div>
-					</div>
+					)}
 					<Loading loading={loading_label} />
 					<LoadingPayments loading={payment_loading} error={errorPay} />
 					<div className="placeorder br-20px" style={{}}>
