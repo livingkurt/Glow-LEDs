@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping, savePayment } from '../../actions/cartActions';
+import { update } from '../../actions/userActions';
 import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { API_Orders, API_Shipping } from '../../utils';
 
 const ShippingPage = (props) => {
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
+
 	const cart = useSelector((state) => state.cart);
 	const { shipping } = cart;
+	console.log({ ShippingPage: shipping });
+	console.log({ ShippingPage: shipping });
 
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
@@ -20,27 +27,91 @@ const ShippingPage = (props) => {
 	const [ postalCode, setPostalCode ] = useState('');
 	const [ country, setCountry ] = useState('United States');
 	const [ international, setInternational ] = useState(false);
+	const [ save_shipping, set_save_shipping ] = useState(false);
+	const [ all_shipping, set_all_shipping ] = useState([]);
 	const [ loading, set_loading ] = useState(true);
 
-	useEffect(
-		() => {
-			if (shipping) {
-				set_email(shipping.email);
-				set_first_name(shipping.first_name);
-				set_last_name(shipping.last_name);
-				set_address_1(shipping.address_1);
-				set_address_2(shipping.address_2);
-				setCity(shipping.city);
-				setState(shipping.state);
-				setPostalCode(shipping.postalCode);
-				setCountry(shipping.country);
-				setInternational(shipping.international);
-			}
+	// const userUpdate = useSelector((state) => state.userUpdate);
 
-			return () => {};
-		},
-		[ shipping ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (userInfo) {
+	// 			console.log({ userInfo: userInfo.shipping });
+	// 			set_email(userInfo.email);
+	// 			if (userInfo.shipping) {
+	// 				set_first_name(userInfo.shipping.first_name);
+	// 				set_last_name(userInfo.shipping.last_name);
+	// 				set_address_1(userInfo.shipping.address_1);
+	// 				set_address_2(userInfo.shipping.address_2);
+	// 				setCity(userInfo.shipping.city);
+	// 				setState(userInfo.shipping.state);
+	// 				setPostalCode(userInfo.shipping.postalCode);
+	// 				setCountry(userInfo.shipping.country);
+	// 				setInternational(userInfo.shipping.international);
+	// 			}
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ userInfo ]
+	// );
+
+	// useEffect(
+	// 	() => {
+	// 		if (userUpdate.userInfo) {
+	// 			set_first_name(userUpdate.userInfo.shipping.first_name);
+	// 			set_last_name(userUpdate.userInfo.shipping.last_name);
+	// 			set_address_1(userUpdate.userInfo.shipping.address_1);
+	// 			set_address_2(userUpdate.userInfo.shipping.address_2);
+	// 			setCity(userUpdate.userInfo.shipping.city);
+	// 			setState(userUpdate.userInfo.shipping.state);
+	// 			setPostalCode(userUpdate.userInfo.shipping.postalCode);
+	// 			setCountry(userUpdate.userInfo.shipping.country);
+	// 			setInternational(userUpdate.userInfo.shipping.international);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate ]
+	// );
+
+	// useEffect(
+	// 	() => {
+	// 		if (shipping) {
+	// 			set_email(shipping.email);
+	// 			set_first_name(shipping.first_name);
+	// 			set_last_name(shipping.last_name);
+	// 			set_address_1(shipping.address_1);
+	// 			set_address_2(shipping.address_2);
+	// 			setCity(shipping.city);
+	// 			setState(shipping.state);
+	// 			setPostalCode(shipping.postalCode);
+	// 			setCountry(shipping.country);
+	// 			setInternational(shipping.international);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ shipping ]
+	// );
+
+	useEffect(() => {
+		if (userInfo.isAdmin) {
+			get_all_shipping();
+		}
+
+		return () => {};
+	}, []);
+
+	const get_all_shipping = async () => {
+		const { data } = await API_Shipping.get_all_shipping();
+		set_all_shipping(data);
+		console.log({ data });
+	};
+
+	// const get_all_shipping = async () => {
+	// 	const request = await API_Orders.all_shipping();
+	// 	console.log(request);
+	// };
 
 	const [ email_validations, set_email_validations ] = useState('');
 	const [ first_name_validations, set_first_name_validations ] = useState('');
@@ -67,7 +138,6 @@ const ShippingPage = (props) => {
 			country,
 			international
 		};
-		console.log({ data });
 		const request = validate_shipping(data);
 		set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
@@ -79,8 +149,9 @@ const ShippingPage = (props) => {
 		set_country_validations(request.errors.country);
 		set_international_validations(request.errors.international);
 
-		console.log(request);
-		console.log(request.errors.email);
+		console.log({ submitHandler_request: request });
+		console.log({ submitHandler_data: data });
+		// console.log(request.errors.email);
 		if (request.isValid) {
 			dispatch(
 				saveShipping({
@@ -98,12 +169,51 @@ const ShippingPage = (props) => {
 			);
 			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
+			// save_shipping_to_user();
 			props.history.push('placeorder');
 		}
 	};
+
+	const save_shipping_to_user = () => {
+		if (save_shipping) {
+			dispatch(
+				update({
+					...userInfo,
+					shipping: {
+						first_name,
+						last_name,
+						email,
+						address_1,
+						address_2,
+						city,
+						state,
+						postalCode,
+						country: international ? country : 'United States',
+						international
+					}
+				})
+			);
+		}
+	};
+
 	setTimeout(() => {
 		set_loading(false);
-	}, 500);
+	}, 50);
+
+	const update_shipping = (shipping) => {
+		shipping = JSON.parse(shipping);
+		console.log({ shipping });
+		set_email(shipping.email);
+		set_first_name(shipping.first_name);
+		set_last_name(shipping.last_name);
+		set_address_1(shipping.address_1);
+		set_address_2(shipping.address_2);
+		setCity(shipping.city);
+		setState(shipping.state);
+		setPostalCode(shipping.postalCode);
+		setCountry(shipping.country);
+		setInternational(shipping.international);
+	};
 
 	return (
 		<div>
@@ -122,6 +232,30 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
+						{userInfo &&
+						userInfo.isAdmin && (
+							<li>
+								<div className="ai-c h-25px mv-10px mb-30px jc-c">
+									<div className="custom-select w-100per">
+										<select
+											className="qty_select_dropdown w-100per"
+											onChange={(e) => update_shipping(e.target.value)}
+										>
+											<option key={1} defaultValue="">
+												---Choose Shipping for Order---
+											</option>
+											{all_shipping &&
+												all_shipping.map((shipping, index) => (
+													<option key={index} value={JSON.stringify(shipping)}>
+														{shipping.first_name} {shipping.last_name}
+													</option>
+												))}
+										</select>
+										<span className="custom-arrow" />
+									</div>
+								</div>
+							</li>
+						)}
 						<li>
 							<label htmlFor="email">Email</label>
 							<input
@@ -132,7 +266,6 @@ const ShippingPage = (props) => {
 								onChange={(e) => set_email(e.target.value)}
 							/>
 						</li>
-
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{email_validations}
 						</label>
@@ -203,12 +336,12 @@ const ShippingPage = (props) => {
 								<label className="mb-1rem" htmlFor="state">
 									State
 								</label>
-								<div className="ai-c h-25px mb-15px jc-c">
+								<div className="ai-c h-25px mb-2px jc-c">
 									<div className="custom-select">
 										<select
 											className="qty_select_dropdown"
 											onChange={(e) => setState(e.target.value)}
-											value={state && state}
+											value={state}
 										>
 											{state_names.map((state, index) => (
 												<option key={index} value={state}>
@@ -268,6 +401,7 @@ const ShippingPage = (props) => {
 										}}
 									/>
 								</li>
+
 								{international && (
 									<li>
 										<label htmlFor="country">Country</label>
@@ -292,6 +426,27 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
+						{userInfo && loading ? (
+							<div>Loading...</div>
+						) : (
+							<div>
+								<li>
+									<label htmlFor="save_shipping">Save Shipping</label>
+									<input
+										type="checkbox"
+										name="save_shipping"
+										// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
+										defaultValue={save_shipping}
+										defaultChecked={save_shipping}
+										// value={save_shipping}
+										id="save_shipping"
+										onChange={(e) => {
+											set_save_shipping(e.target.checked);
+										}}
+									/>
+								</li>
+							</div>
+						)}
 					</ul>
 				</form>
 			</div>
