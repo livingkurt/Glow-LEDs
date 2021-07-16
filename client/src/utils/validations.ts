@@ -1,5 +1,5 @@
 import isEmpty from 'is-empty';
-import Validator from 'validator';
+// import Validator from 'validator';
 import axios, { AxiosResponse } from 'axios';
 
 interface errors {
@@ -22,7 +22,7 @@ export const validate_promo_code = (data: any) => {
 	// Convert empty fields to an empty string so we can use validator functions
 	data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : '';
 	// Email checks
-	if (Validator.isEmpty(data.promo_code)) {
+	if (isEmpty2(data.promo_code)) {
 		errors.promo_code = 'Promo Code Field Empty';
 	}
 	if (data.userInfo) {
@@ -87,13 +87,13 @@ export const validate_login = (data: { email: any; password: any }) => {
 	data.email = !isEmpty(data.email) ? data.email : '';
 	data.password = !isEmpty(data.password) ? data.password : '';
 	// Email checks
-	if (Validator.isEmpty(data.email)) {
+	if (isEmpty2(data.email)) {
 		errors.email = 'Email field is required';
-	} else if (!Validator.isEmail(data.email)) {
+	} else if (!isEmail(data.email)) {
 		errors.email = 'Valid email required';
 	}
 	// Password checks
-	if (Validator.isEmpty(data.password)) {
+	if (isEmpty2(data.password)) {
 		errors.password = 'Password field is required';
 	}
 	return {
@@ -118,53 +118,55 @@ export const validate_registration = (data: {
 	data.password = !isEmpty(data.password) ? data.password : '';
 	data.rePassword = !isEmpty(data.rePassword) ? data.rePassword : '';
 	// First Name checks
-	if (Validator.isEmpty(data.first_name)) {
+	if (isEmpty2(data.first_name)) {
 		errors.first_name = 'First Name field is required';
 	}
 	// Last Name checks
-	if (Validator.isEmpty(data.last_name)) {
+	if (isEmpty2(data.last_name)) {
 		errors.last_name = 'Last Name field is required';
 	}
 	// Email checks
-	if (Validator.isEmpty(data.email)) {
+	if (isEmpty2(data.email)) {
 		errors.email = 'Email field is required';
-	} else if (!Validator.isEmail(data.email)) {
+	} else if (!isEmail(data.email)) {
 		errors.email = 'Email must a valid email';
 	}
 	// else if (data.email === data.email.toLowerCase()) {
 	// 	errors.email = 'Email must a not contain uppercase letters';
 	// }
 	// Password checks
-	if (Validator.isEmpty(data.password)) {
+	if (isEmpty2(data.password)) {
 		errors.password = 'Password field is required';
 	}
-	if (Validator.isEmpty(data.rePassword)) {
+	if (isEmpty2(data.rePassword)) {
 		errors.rePassword = 'Confirm password field is required';
 	}
-	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+	if (!isLength(data.password, { min: 6, max: 30 })) {
 		errors.password = 'Password must be at least 6 characters';
 	}
-	if (!Validator.equals(data.password, data.rePassword)) {
+	if (!isEquals(data.password, data.rePassword)) {
 		errors.rePassword = 'Passwords must match';
 	}
 	return {
 		errors,
-		isValid: isEmpty(errors)
+		isValid: isEmpty2(errors)
 	};
 };
 
 export const validate_shipping = (data: {
-	first_name: any;
-	last_name: any;
-	address_1: any;
-	city: any;
-	state: any;
-	postalCode: any;
-	country: any;
-	international: any;
+	email: string;
+	first_name: string;
+	last_name: string;
+	address_1: string;
+	city: string;
+	state: string;
+	postalCode: string;
+	country: string;
+	international: boolean;
 }) => {
 	let errors: any = {};
 	// Convert empty fields to an empty string so we can use validator functions
+	data.email = !isEmpty(data.email) ? data.email : '';
 	data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.address_1 = !isEmpty(data.address_1) ? data.address_1 : '';
@@ -172,29 +174,37 @@ export const validate_shipping = (data: {
 	data.state = !isEmpty(data.state) ? data.state : '';
 	data.postalCode = !isEmpty(data.postalCode) ? data.postalCode : '';
 	data.country = !isEmpty(data.country) ? data.country : '';
-	// data.international = !isEmpty(data.international) ? data.international : '';
+	// data.international = !isEmpty2(data.international) ? data.international : '';
+	// Email Name checks
+	if (data.hasOwnProperty('email')) {
+		if (isEmpty2(data.email)) {
+			errors.email = 'Email field is required';
+		} else if (!isEmail(data.email)) {
+			errors.email = 'Valid email required';
+		}
+	}
 	// First Name checks
-	if (Validator.isEmpty(data.first_name)) {
+	if (isEmpty2(data.first_name)) {
 		errors.first_name = 'First Name field is required';
 	}
 	// Last Name checks
-	if (Validator.isEmpty(data.last_name)) {
+	if (isEmpty2(data.last_name)) {
 		errors.last_name = 'Last Name field is required';
 	}
 	// Address checks
-	if (Validator.isEmpty(data.address_1)) {
+	if (isEmpty2(data.address_1)) {
 		errors.address_1 = 'Address field is required';
 	}
 	// City checks
-	if (Validator.isEmpty(data.city)) {
+	if (isEmpty2(data.city)) {
 		errors.city = 'City field is required';
 	}
 	// State checks
-	if (Validator.isEmpty(data.state)) {
+	if (isEmpty2(data.state)) {
 		errors.state = 'State field is required';
 	}
 	// Postal Code checks
-	if (Validator.isEmpty(data.postalCode)) {
+	if (isEmpty2(data.postalCode)) {
 		errors.postalCode = 'Postal Code field is required';
 	}
 	if (!data.international) {
@@ -204,12 +214,12 @@ export const validate_shipping = (data: {
 	}
 
 	// // International checks
-	// if (Validator.isEmpty(data.international)) {
+	// if (isEmpty2(data.international)) {
 	// 	errors.international = 'Country field is required';
 	// }
 	if (data.international) {
 		// Country checks
-		if (Validator.isEmpty(data.country)) {
+		if (isEmpty2(data.country)) {
 			errors.country = 'Country field is required';
 		}
 	}
@@ -219,12 +229,33 @@ export const validate_shipping = (data: {
 		isValid: isEmpty(errors)
 	};
 };
+
+const isEmpty2 = (str: string) => {
+	return !str || str.length === 0;
+};
+const isEquals = (str_1: string, str_2: string) => {
+	return str_1 === str_2;
+};
+const isLength = (str: string, length: { min: number; max: number }) => {
+	if (str.length >= length.max && str.length <= length.min) {
+		return false;
+	} else {
+		return true;
+	}
+};
+
+const isEmail = (email: string) => {
+	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	console.log({ re: re.test(String(email).toLowerCase()) });
+	return re.test(String(email).toLowerCase());
+};
+
 export const validate_payment = (data: { paymentMethod: any }) => {
 	let errors: any = {};
 	// Convert empty fields to an empty string so we can use validator functions
 	data.paymentMethod = !isEmpty(data.paymentMethod) ? data.paymentMethod : '';
 	// First Name checks
-	if (Validator.isEmpty(data.paymentMethod)) {
+	if (isEmpty2(data.paymentMethod)) {
 		errors.paymentMethod = 'Payment Method is required';
 	}
 
@@ -251,27 +282,27 @@ export const validate_contact = (data: {
 	data.reason_for_contact = !isEmpty(data.reason_for_contact) ? data.reason_for_contact : '';
 	data.message = !isEmpty(data.message) ? data.message : '';
 	// First Name checks
-	if (Validator.isEmpty(data.first_name)) {
+	if (isEmpty2(data.first_name)) {
 		errors.first_name = 'First Name field is required';
 	}
 	// Last Name checks
-	if (Validator.isEmpty(data.last_name)) {
+	if (isEmpty2(data.last_name)) {
 		errors.last_name = 'Last Name field is required';
 	}
 	// Email checks
-	if (Validator.isEmpty(data.email)) {
+	if (isEmpty2(data.email)) {
 		errors.email = 'Email field is required';
-	} else if (!Validator.isEmail(data.email)) {
+	} else if (!isEmail(data.email)) {
 		errors.email = 'Email must be a valid email';
 	}
 	// // Password checks
-	// if (Validator.isEmpty(data.order_number)) {
+	// if (isEmpty2(data.order_number)) {
 	// 	errors.order_number = 'Order Number field is required';
 	// }
-	if (Validator.isEmpty(data.reason_for_contact)) {
+	if (isEmpty2(data.reason_for_contact)) {
 		errors.reason_for_contact = 'Reason for Contact field is required';
 	}
-	if (Validator.isEmpty(data.message)) {
+	if (isEmpty2(data.message)) {
 		errors.message = 'Message field is required';
 	}
 
@@ -288,23 +319,23 @@ export const validate_profile = (data: { first_name: any; last_name: any; email:
 	data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
 	data.email = !isEmpty(data.email) ? data.email : '';
 	// First Name checks
-	if (Validator.isEmpty(data.first_name)) {
+	if (isEmpty2(data.first_name)) {
 		errors.first_name = 'First Name field is required';
 	}
 	// Last Name checks
-	if (Validator.isEmpty(data.last_name)) {
+	if (isEmpty2(data.last_name)) {
 		errors.last_name = 'Last Name field is required';
 	}
 	// Email checks
-	if (Validator.isEmpty(data.email)) {
+	if (isEmpty2(data.email)) {
 		errors.email = 'Email field is required';
-	} else if (!Validator.isEmail(data.email)) {
+	} else if (!isEmail(data.email)) {
 		errors.email = 'Valid email required';
 	}
 
 	return {
 		errors,
-		isValid: isEmpty(errors)
+		isValid: isEmpty2(errors)
 	};
 };
 
@@ -337,25 +368,25 @@ export const validate_password_change = async (data: {
 	// 	errors.current_password = 'Current Password is Incorrect';
 	// }
 	// Password checks
-	if (Validator.isEmpty(data.current_password)) {
+	if (isEmpty2(data.current_password)) {
 		errors.current_password = 'Current Password field is required';
 	}
 	// Password checks
-	if (Validator.isEmpty(data.password)) {
+	if (isEmpty2(data.password)) {
 		errors.password = 'Password field is required';
 	}
-	if (Validator.isEmpty(data.rePassword)) {
+	if (isEmpty2(data.rePassword)) {
 		errors.rePassword = 'Confirm password field is required';
 	}
-	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+	if (!isLength(data.password, { min: 6, max: 30 })) {
 		errors.password = 'Password must be at least 6 characters';
 	}
-	if (!Validator.equals(data.password, data.rePassword)) {
+	if (!isEquals(data.password, data.rePassword)) {
 		errors.rePassword = 'Passwords must match';
 	}
 	return {
 		errors,
-		isValid: isEmpty(errors)
+		isValid: isEmpty2(errors)
 	};
 };
 
@@ -373,21 +404,21 @@ export const validate_passwords = async (data: { id: any; password: any; rePassw
 	// 	errors.current_password = 'Current Password is Incorrect';
 	// }
 	// Password checks
-	if (Validator.isEmpty(data.password)) {
+	if (isEmpty2(data.password)) {
 		errors.password = 'Password field is required';
 	}
-	if (Validator.isEmpty(data.rePassword)) {
+	if (isEmpty2(data.rePassword)) {
 		errors.rePassword = 'Confirm password field is required';
 	}
-	if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
+	if (!isLength(data.password, { min: 6, max: 30 })) {
 		errors.password = 'Password must be at least 6 characters';
 	}
-	if (!Validator.equals(data.password, data.rePassword)) {
+	if (!isEquals(data.password, data.rePassword)) {
 		errors.rePassword = 'Passwords must match';
 	}
 	return {
 		errors,
-		isValid: isEmpty(errors)
+		isValid: isEmpty2(errors)
 	};
 };
 
@@ -398,11 +429,11 @@ export const validate_affiliate = (data: { artist_name: any; years: any }) => {
 	data.years = !isEmpty(data.years) ? data.years : '';
 	// data.international = !isEmpty(data.international) ? data.international : '';
 	// First Name checks
-	if (Validator.isEmpty(data.artist_name)) {
+	if (isEmpty2(data.artist_name)) {
 		errors.artist_name = 'First Name field is required';
 	}
 	// Last Name checks
-	if (Validator.isEmpty(data.years)) {
+	if (isEmpty2(data.years)) {
 		errors.instagram_handle = 'Last Name field is required';
 	}
 	// else if (data.years)
