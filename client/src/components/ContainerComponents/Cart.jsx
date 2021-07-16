@@ -136,30 +136,30 @@ const Cart = (props) => {
 			style={{ ...navbarStyles, top: props.visible ? determine_top() : '0px', overflowY: 'scroll' }}
 		>
 			<div>
-				{/* <div className="logo_text mh-auto ai-c">
-					<Link to="/">
-						<div className="h-50px w-50px">
-							<img
-								className="zoom logo_s"
-								src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-								alt="Glow LEDs Logo"
-								title="Small Logo"
-							/>
-						</div>
-					</Link>
-					<Link to="/">
-						<div className="row">
-							<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
-						</div>
-					</Link>
-				</div> */}
 				<button className="cart_sidebar_close_button" aria-label="close" onClick={closeMenu}>
 					<i className="fas fa-times" />
 				</button>
 			</div>
 			<ul className="cart_sidebar-list-container w-100per mr-1rem">
 				<li>
-					<h2>Shopping Cart</h2>
+					{/* <h2>Shopping Cart</h2> */}
+					<div className="logo_text ai-c">
+						<Link to="/">
+							<div className="h-50px w-50px">
+								<img
+									className="zoom logo_s"
+									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+									alt="Glow LEDs Logo"
+									title="Small Logo"
+								/>
+							</div>
+						</Link>
+						<Link to="/">
+							<div className="row">
+								<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
+							</div>
+						</Link>
+					</div>
 					<div>Price</div>
 				</li>
 				{cartItems.length === 0 ? (
@@ -172,7 +172,7 @@ const Cart = (props) => {
 						{cartItems.map((item, index) => (
 							<li key={index}>
 								{console.log({ item })}
-								<div className="cart_sidebar-image br-5px">
+								<div className="cart_sidebar-image br-5px ai-c">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<img
 											src={item.display_image}
