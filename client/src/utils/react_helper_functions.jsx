@@ -456,19 +456,13 @@ export const determine_product_name = (item, show_qty) => {
 	} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
 		return (
 			<div>
-				{item.secondary_product_name &&
-					item.secondary_product_name.length === 0 &&
-					item.color &&
-					item.color + ' '}{' '}
 				{item.name}
 				{item.secondary_product_name &&
 					item.secondary_product_name.length > 0 &&
-					' - ' +
-						item.option_product_name +
-						' w ' +
-						item.color +
-						' ' +
-						item.secondary_product_name.slice(0, -14)}
+					` - ${item.option_product_name} w ${item.secondary_product_name.slice(
+						0,
+						-14
+					)} ${item.color} Caps/${item.secondary_color} Adapters`}
 				{show_qty && item.qty > 1 && item.qty + 'x'}
 			</div>
 		);

@@ -49,6 +49,8 @@ const orderItemSchema = new mongoose.Schema(
 		secondary_color: { type: String },
 		color_group_name: { type: String },
 		secondary_color_group_name: { type: String },
+		option_group_name: { type: String },
+		secondary_group_name: { type: String },
 		color_code: { type: String },
 		secondary_color_code: { type: String },
 		price: { type: Number, required: true },
