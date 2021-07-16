@@ -25,6 +25,7 @@ const ShippingPage = (props) => {
 	useEffect(
 		() => {
 			if (shipping) {
+				console.log({ ShippingPage: shipping });
 				set_email(shipping.email);
 				set_first_name(shipping.first_name);
 				set_last_name(shipping.last_name);
