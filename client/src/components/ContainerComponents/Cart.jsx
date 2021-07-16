@@ -37,20 +37,20 @@ const Cart = (props) => {
 	};
 	const dispatch = useDispatch();
 
-	const [ first_name, set_first_name ] = useState('');
+	// const [ first_name, set_first_name ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	useEffect(
-		() => {
-			if (userInfo) {
-				set_first_name(userInfo.first_name);
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (userInfo) {
+	// 			set_first_name(userInfo.first_name);
+	// 		}
 
-			// }
-		},
-		[ userInfo ]
-	);
+	// 		// }
+	// 	},
+	// 	[ userInfo ]
+	// );
 
 	const cart = useSelector((state) => state.cart);
 
@@ -108,11 +108,6 @@ const Cart = (props) => {
 		}
 	};
 	const navbarStyles = {
-		// position: 'fixed',
-		// height: '160px',
-		// width: '100%',
-		// backgroundColor: 'grey',
-		// textAlign: 'center',
 		transition: 'top 0.2s'
 	};
 
@@ -171,7 +166,7 @@ const Cart = (props) => {
 						{/* <h4>{no_adapters_warning()}</h4> */}
 						{cartItems.map((item, index) => (
 							<li key={index}>
-								{console.log({ item })}
+								{/* {console.log({ item })} */}
 								<div className="cart_sidebar-image br-5px ai-c">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<img
@@ -186,7 +181,7 @@ const Cart = (props) => {
 								<div className="cart_sidebar-name">
 									<div className="mb-10px">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											{determine_product_name(item, true)}
+											{determine_product_name(item, true, 'Cart')}
 										</Link>
 									</div>
 									<div>
