@@ -244,12 +244,12 @@ const ProductPage = (props) => {
 		console.log({ option });
 		// set_name(option.name);
 
-		if (option.description) {
-			set_description(option.description);
-		}
-		if (option.facts) {
-			set_facts(option.facts);
-		}
+		// if (option.description) {
+		// 	set_description(option.description);
+		// }
+		// if (option.facts) {
+		// 	set_facts(option.facts);
+		// }
 		if (option.price !== 0 || option.price === null || option.price === undefined) {
 			set_price(option.price);
 		}
@@ -282,8 +282,8 @@ const ProductPage = (props) => {
 		if (option.sale_price !== 0 || option.sale_price === null || option.sale_price === undefined) {
 			set_sale_price(option.sale_price);
 		}
-		// set_secondary_color(option.color);
-		// set_secondary_color_code(option.color_code);
+		set_secondary_color(option.color);
+		set_secondary_color_code(option.color_code);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
