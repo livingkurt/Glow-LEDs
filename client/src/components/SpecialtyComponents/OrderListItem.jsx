@@ -311,7 +311,7 @@ const OrderListItem = (props) => {
 						{props.order.orderItems.map((item, index) => {
 							return (
 								<div key={index}>
-									{determine_product_name(item, false)}
+									{determine_product_name(item, false, props.order.createdAt)}
 									{/* {item.category === 'glowskins' && item.color} {item.name}{' '}
 									{item.product_option &&
 										item.product_option.hasOwnProperty('name') &&
