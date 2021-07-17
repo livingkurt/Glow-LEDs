@@ -8,7 +8,7 @@ import useClipboard from 'react-hook-clipboard';
 import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
 import { LazyImage, Loading } from '../UtilityComponents';
-import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { cart_item_name, cart_sale_price_switch } from '../../utils/react_helper_functions';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
 
 const CartItem = (props) => {
@@ -38,31 +38,36 @@ const CartItem = (props) => {
 					</div>
 				</div>
 				{cart_item_name(props.item)}
+
 				<div className="ai-c h-25px max-w-300px w-100per jc-b mb-10px">
 					<label aria-label="sortOrder" htmlFor="sortOrder" className="select-label mr-1rem">
 						Qty:
 					</label>
-					<div className="custom-select">
-						<select
-							defaultValue={props.item.qty}
-							className="qty_select_dropdown"
-							onChange={(e) => {
-								dispatch(
-									addToCart({
-										pathname: props.item.pathname,
-										qty: e.target.value
-									})
-								);
-							}}
-						>
-							{[ ...Array(props.item.countInStock).keys() ].map((x, index) => (
-								<option key={index} defaultValue={parseInt(x + 1)}>
-									{parseInt(x + 1)}
-								</option>
-							))}
-						</select>
-						<span className="custom-arrow" />
-					</div>
+					{props.show_qty ? (
+						<div className="custom-select">
+							<select
+								defaultValue={props.item.qty}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									dispatch(
+										addToCart({
+											pathname: props.item.pathname,
+											qty: e.target.value
+										})
+									);
+								}}
+							>
+								{[ ...Array(props.item.countInStock).keys() ].map((x, index) => (
+									<option key={index} defaultValue={parseInt(x + 1)}>
+										{parseInt(x + 1)}
+									</option>
+								))}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					) : (
+						<label>{props.item.qty}</label>
+					)}
 				</div>
 			</div>
 		</li>

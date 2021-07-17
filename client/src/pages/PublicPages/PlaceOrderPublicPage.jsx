@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrderGuest } from '../../actions/orderActions';
-import { GuestCheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
+import { CartItem, GuestCheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
@@ -511,108 +511,7 @@ const PlaceOrderPublicPage = (props) => {
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
 							) : (
-								cartItems.map((item, index) => (
-									<li className=" row cart_items" key={index}>
-										<div className="cart-image">
-											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} title="Product Image" alt={item.name} />
-											</Link>
-										</div>
-										<div className=" label cart-name">
-											<div className="mb-10px">
-												<Link to={'/collections/all/products/' + item.pathname}>
-													{/* {determine_product_name(item, false)} */}
-													<label className="paragraph_font lh-0px mv-0px fs-18px">
-														{item.name}
-													</label>
-												</Link>
-											</div>
-											{cart_item_name(item)}
-											<div className="ai-c h-25px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label"
-												>
-													Qty:
-												</label>
-												<div className="custom-select">
-													<select
-														defaultValue={item.qty}
-														className="qty_select_dropdown"
-														onChange={(e) => {
-															dispatch(
-																addToCart({
-																	pathname: item.pathname,
-																	color_product: item.color_product,
-																	secondary_color_product:
-																		item.secondary_color_product,
-																	option_product: item.option_product,
-																	secondary_product: item.secondary_product,
-																	qty: e.target.value
-																})
-															);
-														}}
-													>
-														{[ ...Array(item.countInStock).keys() ].map((x, index) => (
-															<option key={index} defaultValue={parseInt(x + 1)}>
-																{parseInt(x + 1)}
-															</option>
-														))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-										</div>
-										<div className=" cart_item">
-											<div className="cart-price ">
-												{cart_sale_price_switch(item)}
-												{/* {item.product_option.sale_price > 0 ? (
-													<label>
-														<del style={{ color: 'red' }}>
-															<label style={{ color: 'white' }}>
-																${item.product_option.price ? (
-																	item.product_option.price.toFixed(2)
-																) : item.price ? (
-																	item.price.toFixed(2)
-																) : (
-																	item.price
-																)}
-															</label>
-														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.product_option
-															.sale_price ? (
-															item.product_option.sale_price.toFixed(2)
-														) : item.sale_price ? (
-															item.sale_price.toFixed(2)
-														) : (
-															item.sale_price
-														)}{' '}
-														On Sale!
-													</label>
-												) : (
-													<label>
-														${item.product_option.price ? (
-															item.product_option.price.toFixed(2)
-														) : item.price ? (
-															item.price.toFixed(2)
-														) : (
-															item.price
-														)}
-													</label>
-												)} */}
-											</div>
-											<div style={{ textAlign: 'right', width: '100%' }}>
-												<button
-													className="btn icon"
-													onClick={() => dispatch(removeFromCart(item))}
-												>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</div>
-										</div>
-									</li>
-								))
+								cartItems.map((item, index) => <CartItem item={item} index={index} show_qty={true} />)
 							)}
 						</ul>
 					</div>

@@ -496,31 +496,7 @@ const ProductPage = (props) => {
 							</div>
 							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown " />
 							<div className="details-info">
-								<h1 className="product_title_side lh-50px fs-30px mv-0px">
-									{name}
-									{/* {determine_product_name(
-										{
-											...product,
-											secondary_product_name: secondary_product_name && secondary_product_name,
-											option_product_name: option_product_name && option_product_name,
-											color: color && color,
-											size: size && size
-										},
-										false
-									)} */}
-								</h1>
-								{/* <h1 className="product_title_side lh-50px fs-30px">
-									{determine_product_name(
-										{
-											...product,
-											secondary_product_name: secondary_product_name && secondary_product_name,
-											option_product_name: option_product_name && option_product_name,
-											color: color && color,
-											size: size && size
-										},
-										false
-									)}
-								</h1> */}
+								<h1 className="product_title_side lh-50px fs-30px mv-0px">{name}</h1>
 
 								<div className="mb-15px mt-n9px">
 									<a href="#reviews">

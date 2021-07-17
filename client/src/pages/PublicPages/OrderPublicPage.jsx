@@ -4,14 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { detailsOrderPublic, payOrder, payOrderGuest } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
-import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
+import { CartItem, Stripe } from '../../components/SpecialtyComponents';
 
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
-import { API_Products } from '../../utils';
-import { loadStripe } from '@stripe/stripe-js';
-import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { determine_product_name } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
 
 require('dotenv').config();
@@ -381,45 +377,7 @@ const OrderPublicPage = (props) => {
 								<div>Cart is empty</div>
 							) : (
 								order.orderItems.map((item, index) => (
-									<li key={index}>
-										{console.log({ item })}
-										<div className="cart-image">
-											<Link to={'/collections/all/products/' + item.pathname}>
-												<img src={item.display_image} title="Product Image" alt={item.name} />
-											</Link>
-										</div>
-										<div className="cart-name">
-											<div>
-												{console.log({ color: item.color })}
-												<Link to={'/collections/all/products/' + item.pathname}>
-													{determine_product_name(item, false)}
-													{/* {item.category === 'glowskins' && item.color}{' '}
-													{item.category === 'glowskins' && item.color} {item.name}{' '}
-													{item.product_option &&
-														item.product_option.name &&
-														`- ${item.product_option.name}`}
-													{item.diffuser_cap && ` w (${item.diffuser_cap.name})`}{' '}
-													{item.qty > 1 && item.qty + 'x'} */}
-												</Link>
-											</div>
-											<div>Qty: {item.qty}</div>
-										</div>
-										<div className="cart-price">
-											{item.sale_price !== 0 ? (
-												<div style={{ width: '230px' }}>
-													<del style={{ color: 'red' }}>
-														<label style={{ color: 'white' }}>
-															${item.price ? item.price : item.price}
-														</label>
-													</del>{' '}
-													<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
-													On Sale!
-												</div>
-											) : (
-												<label>${item.price ? item.price.toFixed(2) : item.price}</label>
-											)}
-										</div>
-									</li>
+									<CartItem item={item} index={index} show_qty={false} />
 								))
 							)}
 						</ul>

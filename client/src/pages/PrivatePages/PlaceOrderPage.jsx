@@ -7,14 +7,11 @@ import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 import Cookie from 'js-cookie';
-
-import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
-import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -624,7 +621,7 @@ const PlaceOrderPage = (props) => {
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
 							) : (
-								cartItems.map((item, index) => <CartItem item={item} index={index} />)
+								cartItems.map((item, index) => <CartItem item={item} index={index} show_qty={true} />)
 							)}
 						</ul>
 					</div>

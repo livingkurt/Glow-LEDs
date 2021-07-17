@@ -4,16 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { createOrder, detailsOrder, payOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
-import { CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
-
-import { loadStripe } from '@stripe/stripe-js';
-import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
-import { API_Orders, API_Products, API_Shipping } from '../../utils';
+import { API_Orders, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
-import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
 
 require('dotenv').config();
@@ -539,28 +535,7 @@ ${order.shipping.email}`)}
 										<div>Cart is empty</div>
 									) : (
 										order.orderItems.map((item, index) => (
-											<li key={index}>
-												{console.log({ item })}
-												<div className="cart-image">
-													<Link to={'/collections/all/products/' + item.pathname}>
-														<img
-															src={item.display_image}
-															alt={item.name}
-															title="Product Image"
-														/>
-													</Link>
-												</div>
-												<div className="cart-name">
-													<div>
-														{console.log({ color: item.color })}
-														<Link to={'/collections/all/products/' + item.pathname}>
-															{determine_product_name(item, false)}
-														</Link>
-													</div>
-													<div>Qty: {item.qty}</div>
-												</div>
-												<div className="cart-price">{cart_sale_price_switch(item)}</div>
-											</li>
+											<CartItem item={item} index={index} show_qty={false} />
 										))
 									)}
 								</ul>

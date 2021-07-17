@@ -597,7 +597,8 @@ const OrderStatusEmail = (props) => {
 																											>
 																												{determine_product_name(
 																													item,
-																													true
+																													true,
+																													order.createdAt
 																												)}
 																											</span>
 																											<br />
