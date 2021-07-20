@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsContent, listContents } from '../../actions/contentActions';
+import { Link, useHistory } from 'react-router-dom';
+import useWindowDimensions from '../SpecialtyComponents/ScreenSize';
 
 const Banner = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);
@@ -8,6 +10,8 @@ const Banner = (props) => {
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
+
+	const { height, width } = useWindowDimensions();
 
 	const dispatch = useDispatch();
 
@@ -18,13 +22,13 @@ const Banner = (props) => {
 
 	useEffect(
 		() => {
-      if (contents){
-        const active_content = contents.find((content) => content.active === true);
-        if (active_content) {
-          dispatch(detailsContent(active_content._id));
-        }
-      }
-		
+			if (contents) {
+				const active_content = contents.find((content) => content.active === true);
+				if (active_content) {
+					dispatch(detailsContent(active_content._id));
+				}
+			}
+
 			return () => {};
 		},
 		[ contents, dispatch ]
@@ -40,10 +44,20 @@ const Banner = (props) => {
 			<div className="max-w-1500px m-auto jc-b">
 				{content &&
 				content.banner && (
-					<div className="ml-10px mt-5px fs-12px">
-						<label>{content.banner.label}</label>
+					<div className="row">
+						<div className="ml-10px mt-5px fs-12px">
+							<label>{content.banner.label}</label>
+						</div>
+						{width > 400 &&
+						content.banner.button &&
+						content.banner.link && (
+							<Link to={content.banner.link && content.banner.link} className="ml-10px">
+								<button className="banner-button">{content.banner.button}</button>
+							</Link>
+						)}
 					</div>
 				)}
+				{/* </div> */}
 				<div className="row mt-3px social_media_banner">
 					<div className="ml-10px">
 						<a
@@ -55,11 +69,7 @@ const Banner = (props) => {
 						</a>
 					</div>
 					<div className="ml-10px">
-						<a
-							href="https://www.instagram.com/glow_leds/"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer">
 							<i className="fab fa-instagram zoom" />
 						</a>
 					</div>
@@ -73,11 +83,7 @@ const Banner = (props) => {
 						</a>
 					</div>
 					<div className="mr-10px">
-						<a
-							href="https://soundcloud.com/ntre/tracks"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
+						<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
 							<i className="fab fa-soundcloud" />
 						</a>
 					</div>
