@@ -84,6 +84,7 @@ const EditProductPage = (props) => {
 	const [ new_index, set_new_index ] = useState();
 	const [ save, set_save ] = useState(true);
 	const [ filtered_products, set_filtered_products ] = useState([]);
+	const [ extra_cost, set_extra_cost ] = useState();
 
 	const history = useHistory();
 
@@ -170,6 +171,7 @@ const EditProductPage = (props) => {
 		set_default_option(data.default_option);
 		set_option(data.option);
 		set_macro_product(data.macro_product);
+		set_extra_cost(data.extra_cost);
 
 		// set_product_options(data.product_options);
 		// dispatch(detailsProduct(e.target.value));
@@ -286,6 +288,7 @@ const EditProductPage = (props) => {
 		set_default_option(product.default_option);
 		set_option(product.option);
 		set_macro_product(product.macro_product);
+		set_extra_cost(product.extra_cost);
 	};
 	const unset_state = () => {
 		setId('');
@@ -350,6 +353,7 @@ const EditProductPage = (props) => {
 		set_default_option(false);
 		set_option();
 		set_macro_product();
+		set_extra_cost();
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -417,7 +421,8 @@ const EditProductPage = (props) => {
 				size,
 				default_option,
 				option,
-				macro_product
+				macro_product,
+				extra_cost
 			})
 		);
 	};
@@ -426,89 +431,10 @@ const EditProductPage = (props) => {
 		console.log({ product_options });
 		e.preventDefault();
 		save_product();
-		// dispatch(
-		// 	saveProduct({
-		// 		_id: props.match.params.pathname && id,
-		// 		name,
-		// 		price,
-		// 		// display_image,
-		// 		images,
-		// 		chips: chips.map((chip) => chip._id),
-		// 		video,
-		// 		brand,
-		// 		category,
-		// 		product_collection,
-		// 		countInStock,
-		// 		facts,
-		// 		included_items,
-		// 		description,
-		// 		hidden,
-		// 		sale_price,
-		// 		sale_start_date: unformat_date(sale_start_date),
-		// 		sale_end_date: unformat_date(sale_end_date),
-		// 		package_volume: package_length * package_width * package_height,
-		// 		subcategory,
-		// 		meta_title: `${name} | Glow LEDs`,
-		// 		meta_description,
-		// 		meta_keywords,
-		// 		package_length,
-		// 		package_width,
-		// 		package_height,
-		// 		product_length,
-		// 		product_width,
-		// 		product_height,
-		// 		weight_pounds,
-		// 		weight_ounces,
-		// 		pathname: pathname ? pathname : snake_case(name),
-		// 		order,
-		// 		product_options,
-		// 		finite_stock,
-		// 		products: products.map((chip) => chip._id),
-		// 		group_product,
-		// 		material_cost,
-		// 		filament_used,
-		// 		printing_time,
-		// 		assembly_time,
-		// 		group_name,
-		// 		color_product_group,
-		// 		color_products,
-		// 		secondary_product_group,
-		// 		secondary_group_name,
-		// 		secondary_products,
-		// 		option_product_group,
-		// 		option_group_name,
-		// 		option_products,
-		// 		color,
-		// 		size,
-		// 		default_option,
-		// 		option,
-		// 		macro_product
-		// 	})
-		// );
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/products');
 	};
-
-	// const format_effective_date = (start_date, end_date) => {
-	//   console.log()
-	//   return unformat_date(start_date) + 'T00:00-0800/' + unformat_date(end_date) + 'T23:59-0808'
-	// }
-
-	// useEffect(() => {
-	// 	if (shouldBlockNavigation) {
-	// 		window.onbeforeunload = () => true;
-	// 	} else {
-	// 		window.onbeforeunload = undefined;
-	// 	}
-
-	// 	return () => {};
-	// }, []);
-
-	// const delete_review = (review_id) => {
-	// 	console.log({ review_id, id });
-	// 	dispatch(deleteProductReview(id, review_id));
-	// };
 
 	const add_image = (e) => {
 		e.preventDefault();
@@ -1238,6 +1164,16 @@ const EditProductPage = (props) => {
 													value={price}
 													id="price"
 													onChange={(e) => setPrice(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="extra_cost">Extra Cost</label>
+												<input
+													type="text"
+													name="extra_cost"
+													value={extra_cost}
+													id="extra_cost"
+													onChange={(e) => set_extra_cost(e.target.value)}
 												/>
 											</li>
 											<li>

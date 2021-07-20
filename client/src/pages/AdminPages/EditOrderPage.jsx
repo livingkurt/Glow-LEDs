@@ -286,6 +286,7 @@ const EditOrderPage = (props) => {
 		set_taxPrice(tax);
 		set_totalPrice(price_items + shippingPrice + tax);
 	};
+
 	const get_tax_rates = async () => {
 		set_taxPrice(0);
 		set_loading_tax_rate(true);

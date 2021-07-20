@@ -118,7 +118,8 @@ const productSchema = new mongoose.Schema(
 		size: { type: Number },
 		default_option: { type: Boolean, default: false },
 		option: { type: Boolean, default: false },
-		macro_product: { type: Boolean, default: false }
+		macro_product: { type: Boolean, default: false },
+		extra_cost: { type: Number }
 	},
 	{
 		timestamps: true
