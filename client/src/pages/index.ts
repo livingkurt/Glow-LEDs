@@ -33,6 +33,8 @@ export { default as ParcelsPage } from './AdminPages/ParcelsPage';
 export { default as EditPaycheckPage } from './AdminPages/EditPaycheckPage';
 export { default as EditSurveyPage } from './AdminPages/EditSurveyPage';
 export { default as EditParcelPage } from './AdminPages/EditParcelPage';
+export { default as EditCategoryPage } from './AdminPages/EditCategoryPage';
+export { default as CategorysPage } from './AdminPages/CategorysPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

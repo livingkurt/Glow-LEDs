@@ -61,60 +61,9 @@ const Header = (props) => {
 		history.push('/account/login');
 	};
 
-	// const userUpdate = useSelector((state) => state.userUpdate);
-
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			set_first_name(userUpdate.userInfo.first_name);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
-	// const debounce = (func, wait, immediate) => {
-	// 	let timeout;
-	// 	return function() {
-	// 		const context = this,
-	// 			args = arguments;
-	// 		const later = function() {
-	// 			timeout = null;
-	// 			if (!immediate) func.apply(context, args);
-	// 		};
-	// 		const callNow = immediate && !timeout;
-	// 		clearTimeout(timeout);
-	// 		timeout = setTimeout(later, wait);
-	// 		if (callNow) func.apply(context, args);
-	// 	};
-	// };
-
-	// const [ prevScrollPos, setPrevScrollPos ] = useState(0);
-	// const [ visible, setVisible ] = useState(true);
-
-	// const handleScroll = debounce(() => {
-	// 	const currentScrollPos = window.pageYOffset;
-
-	// 	setVisible(
-	// 		(prevScrollPos > currentScrollPos && prevScrollPos - currentScrollPos > 70) || currentScrollPos < 10
-	// 	);
-
-	// 	setPrevScrollPos(currentScrollPos);
-	// }, 50);
-
-	// useEffect(
-	// 	() => {
-	// 		window.addEventListener('scroll', handleScroll);
-
-	// 		return () => window.removeEventListener('scroll', handleScroll);
-	// 	},
-	// 	[ prevScrollPos, visible, handleScroll ]
-	// );
 	const navbarStyles = {
 		position: 'fixed',
-		// height: '160px',
 		width: '100%',
-		// backgroundColor: 'grey',
-		// textAlign: 'center',
 		transition: 'top 0.2s'
 	};
 
@@ -167,25 +116,12 @@ const Header = (props) => {
 									Make it Glow
 								</label>
 							</div>
-
-							{/* <div className="row">
-									<label className="glow_leds_text glow pos-abs">Glow LEDs</label>
-									<label className="tm" style={{ color: '#9a9898' }}>
-										™
-									</label>
-								</div> */}
-							{/* </div> */}
 						</Link>
 					</div>
 					<nav className="jc-b nav_bar">
 						<Link to="/">
 							<button className="btn nav">Home</button>
 						</Link>
-						{/* <Link to="/collections/all/products">
-							<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
-								Products
-							</button>
-						</Link> */}
 						<div className="dropdown-nav">
 							<Link to="/collections/all/products">
 								<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
@@ -669,6 +605,9 @@ const Header = (props) => {
 								</Link>
 								<Link to="/secure/glow/parcels">
 									<button className="btn nav">Parcels</button>
+								</Link>
+								<Link to="/secure/glow/categorys">
+									<button className="btn nav">Categorys</button>
 								</Link>
 								<Link to="/secure/glow/edit_all_data">
 									<button className="btn nav">Edit All Data</button>

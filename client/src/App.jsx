@@ -83,7 +83,9 @@ import {
 	EditSurveyPage,
 	SurveysPage,
 	EditParcelPage,
-	ParcelsPage
+	ParcelsPage,
+	CategorysPage,
+	EditCategoryPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -297,6 +299,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />
 							<AdminRoute path="/secure/glow/users" component={UsersPage} />
 							<AdminRoute path="/secure/glow/paychecks" component={PaychecksPage} />
+							<AdminRoute path="/secure/glow/categorys" component={CategorysPage} />
 							<AdminRoute path="/secure/glow/surveys" component={SurveysPage} />
 							<AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
@@ -304,6 +307,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
 							<AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
 							<AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />
+							<AdminRoute path="/secure/glow/editcategory/:id?" component={EditCategoryPage} />
 							<AdminRoute path="/secure/glow/editsurvey/:id?" component={EditSurveyPage} />
 							<AdminRoute path="/secure/glow/editparcel/:id?" component={EditParcelPage} />
 

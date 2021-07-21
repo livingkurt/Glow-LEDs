@@ -18,3 +18,4 @@ export { default as payment_controller } from './payment_controller';
 export { default as paycheck_controller } from './paycheck_controller';
 export { default as survey_controller } from './survey_controller';
 export { default as parcel_controller } from './parcel_controller';
+export { default as category_controller } from './category_controller';

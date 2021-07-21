@@ -1078,13 +1078,6 @@ const EditProductPage = (props) => {
 										</div>
 									</div>
 									<li>
-										{/* <label
-											aria-label="sortOrder"
-											htmlFor="sortOrder"
-											className="select-label mb-15px jc-c"
-										>
-											Product
-										</label> */}
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
 												<select

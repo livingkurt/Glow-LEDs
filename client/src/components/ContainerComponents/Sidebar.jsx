@@ -637,6 +637,11 @@ const Sidebar = (props) => {
 									Parcels
 								</button>
 							</Link>
+							<Link to="/secure/glow/categorys">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Categorys
+								</button>
+							</Link>
 							<Link to="/secure/glow/edit_all_data">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Edit All Data
