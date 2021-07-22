@@ -4,6 +4,7 @@ import { saveContent, detailsContent } from '../../actions/contentActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
+import { detailsEmail, listEmails } from '../../actions/emailActions';
 
 const EditContentPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -23,13 +24,19 @@ const EditContentPage = (props) => {
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
 
+	const emailDetails = useSelector((state) => state.emailDetails);
+	const { email, loading: loading_email, error: error_email } = emailDetails;
+
+	const emailList = useSelector((state) => state.emailList);
+	const { emails } = emailList;
+
 	const dispatch = useDispatch();
 
 	const stableDispatch = useCallback(dispatch, []);
 
-	const set_state = () => {
+	const set_state = (data) => {
 		set_id(content._id);
-		set_home_page(content.home_page);
+		set_home_page(data);
 		set_banner(content.banner);
 		// set_about_page(content.about_page);
 		set_active(content.active);
@@ -51,6 +58,7 @@ const EditContentPage = (props) => {
 			} else {
 				stableDispatch(detailsContent(''));
 			}
+			stableDispatch(listEmails(''));
 
 			// set_loading_data(false);
 			set_state();
@@ -64,11 +72,30 @@ const EditContentPage = (props) => {
 		set_using_template(true);
 	};
 
+	const use_email_template = (e) => {
+		dispatch(detailsEmail(e.target.value));
+		set_using_template(true);
+	};
+
 	useEffect(
 		() => {
-			if (content) {
+			if (email) {
 				console.log('Set');
-				set_state();
+				set_state(email);
+			} else {
+				console.log('UnSet');
+				unset_state();
+			}
+
+			return () => {};
+		},
+		[ email ]
+	);
+	useEffect(
+		() => {
+			if (content && content.home_page) {
+				console.log('Set');
+				set_state(content.home_page);
 			} else {
 				console.log('UnSet');
 				unset_state();
@@ -124,11 +151,29 @@ const EditContentPage = (props) => {
 										<div className="custom-select">
 											<select className="qty_select_dropdown" onChange={(e) => use_template(e)}>
 												<option key={1} defaultValue="">
-													---Choose Product as a Template---
+													---Content Template---
 												</option>
 												{contents.map((content, index) => (
 													<option key={index} value={content._id}>
 														{content.home_page.h1}
+													</option>
+												))}
+											</select>
+											<span className="custom-arrow" />
+										</div>
+									</div>
+									<div className="ai-c h-25px mb-15px jc-c">
+										<div className="custom-select">
+											<select
+												className="qty_select_dropdown"
+												onChange={(e) => use_email_template(e)}
+											>
+												<option key={1} defaultValue="">
+													---Email Template---
+												</option>
+												{emails.map((email, index) => (
+													<option key={index} value={email._id}>
+														{email.h1}
 													</option>
 												))}
 											</select>

@@ -4,6 +4,7 @@ import { saveEmail, detailsEmail, listEmails } from '../../actions/emailActions'
 import { useHistory, Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
+import { detailsContent, listContents } from '../../actions/contentActions';
 
 const EditEmailPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -28,20 +29,27 @@ const EditEmailPage = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
+	const contentDetails = useSelector((state) => state.contentDetails);
+	const { content, loading: loading_content, error: error_content } = contentDetails;
+
+	const contentList = useSelector((state) => state.contentList);
+	const { contents } = contentList;
+
 	const dispatch = useDispatch();
 
-	const set_state = () => {
-		props.match.params.id && set_id(email._id);
-		set_email_type(email.email_type);
-		set_email_h1(email.h1);
-		set_email_image(email.image);
-		set_images(email.images);
-		set_email_show_image(email.show_image);
-		set_email_h2(email.h2);
-		set_email_p(email.p);
-		set_email_button(email.button);
-		set_email_link(email.link);
-		set_email_active(email.active);
+	const set_state = (data) => {
+		console.log({ set_state: data });
+		props.match.params.id && set_id(data._id);
+		set_email_type(data.email_type);
+		set_email_h1(data.h1);
+		set_email_image(data.image);
+		set_images(data.images);
+		set_email_show_image(data.show_image);
+		set_email_h2(data.h2);
+		set_email_p(data.p);
+		set_email_button(data.button);
+		set_email_link(data.link);
+		set_email_active(data.active);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -70,8 +78,9 @@ const EditEmailPage = (props) => {
 				stableDispatch(detailsEmail(''));
 			}
 			stableDispatch(listEmails(''));
+			stableDispatch(listContents(''));
 
-			set_state();
+			set_state(email);
 			return () => {};
 		},
 		[ stableDispatch, props.match.params.id ]
@@ -80,12 +89,15 @@ const EditEmailPage = (props) => {
 	const use_template = (e) => {
 		dispatch(detailsEmail(e.target.value));
 	};
+	const use_content_template = (e) => {
+		dispatch(detailsContent(e.target.value));
+	};
 
 	useEffect(
 		() => {
 			if (email) {
 				console.log('Set');
-				set_state();
+				set_state(email);
 			} else {
 				console.log('UnSet');
 				unset_state();
@@ -94,6 +106,20 @@ const EditEmailPage = (props) => {
 			return () => {};
 		},
 		[ email ]
+	);
+	useEffect(
+		() => {
+			if (content && content.home_page) {
+				console.log('Set');
+				set_state(content.home_page);
+			} else {
+				console.log('UnSet');
+				unset_state();
+			}
+
+			return () => {};
+		},
+		[ content ]
 	);
 
 	setTimeout(() => {
@@ -287,11 +313,33 @@ const EditEmailPage = (props) => {
 													<option key={1} defaultValue="">
 														---Template---
 													</option>
-													{emails.map((email, index) => (
-														<option key={index} value={email._id}>
-															{email.h1}
-														</option>
-													))}
+													{emails &&
+														emails.map((email, index) => (
+															<option key={index} value={email._id}>
+																{email.h1}
+															</option>
+														))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+									</li>
+									<li>
+										<div className="ai-c h-25px mb-15px jc-c">
+											<div className="custom-select">
+												<select
+													className="qty_select_dropdown"
+													onChange={(e) => use_content_template(e)}
+												>
+													<option key={1} defaultValue="">
+														---Content Template---
+													</option>
+													{contents &&
+														contents.map((content, index) => (
+															<option key={index} value={content._id}>
+																{content.home_page.h1}
+															</option>
+														))}
 												</select>
 												<span className="custom-arrow" />
 											</div>
