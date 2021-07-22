@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveContent, detailsContent } from '../../actions/contentActions';
 import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { ImageDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
@@ -12,6 +12,8 @@ const EditContentPage = (props) => {
 	const [ home_page, set_home_page ] = useState({});
 	// const [ about_page, set_about_page ] = useState({});
 	const [ banner, set_banner ] = useState({});
+	const [ images, set_images ] = useState([]);
+	const [ image, set_image ] = useState('');
 
 	const [ active, set_active ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -36,9 +38,13 @@ const EditContentPage = (props) => {
 
 	const stableDispatch = useCallback(dispatch, []);
 
-	const set_state = (data) => {
+	const set_state = () => {
 		set_id(content._id);
-		set_home_page(data);
+		set_home_page(content.home_page);
+		if (content.home_page && content.home_page.images) {
+			set_images(content.home_page.images);
+		}
+
 		set_banner(content.banner);
 		// set_about_page(content.about_page);
 		set_active(content.active);
@@ -51,6 +57,7 @@ const EditContentPage = (props) => {
 	const unset_state = () => {
 		set_id('');
 		set_home_page('');
+		set_images([]);
 		set_banner('');
 		// set_about_page('');
 		set_active(true);
@@ -131,7 +138,7 @@ const EditContentPage = (props) => {
 		dispatch(
 			saveContent({
 				_id: using_template ? null : id,
-				home_page,
+				home_page: { ...home_page, images },
 				banner,
 				// about_page,
 				active
@@ -209,7 +216,7 @@ const EditContentPage = (props) => {
 														set_home_page({ ...home_page, h1: e.target.value })}
 												/>
 											</li>
-											<li>
+											{/* <li>
 												<label htmlFor="home_page_image">Home Page Image</label>
 												<input
 													type="text"
@@ -219,29 +226,8 @@ const EditContentPage = (props) => {
 													onChange={(e) =>
 														set_home_page({ ...home_page, image: e.target.value })}
 												/>
-											</li>
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="show_image">Show Image</label>
-													<input
-														type="checkbox"
-														name="show_image"
-														// defaultChecked={show_image ? 'checked' : 'unchecked'}
-														// defaultValue={show_image}
-														defaultChecked={home_page && home_page.show_image}
-														// value={show_image && show_image ? '1' : '0'}
-														id="show_image"
-														onChange={(e) => {
-															set_home_page({
-																...home_page,
-																show_image: e.target.checked
-															});
-														}}
-													/>
-												</li>
-											)}
+											</li> */}
+
 											<li>
 												<label htmlFor="home_page_video">Home Page Video</label>
 												<input
@@ -261,10 +247,7 @@ const EditContentPage = (props) => {
 													<input
 														type="checkbox"
 														name="show_video"
-														// defaultChecked={show_video ? 'checked' : 'unchecked'}
-														// defaultValue={show_video}
 														defaultChecked={home_page && home_page.show_video}
-														// value={show_video && show_video ? '1' : '0'}
 														id="show_video"
 														onChange={(e) => {
 															set_home_page({
@@ -320,6 +303,31 @@ const EditContentPage = (props) => {
 														set_home_page({ ...home_page, link: e.target.value })}
 												/>
 											</li>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_image">Show Image</label>
+													<input
+														type="checkbox"
+														name="show_image"
+														defaultChecked={home_page && home_page.show_image}
+														id="show_image"
+														onChange={(e) => {
+															set_home_page({
+																...home_page,
+																show_image: e.target.checked
+															});
+														}}
+													/>
+												</li>
+											)}
+											<ImageDisplay
+												images={images}
+												set_images={set_images}
+												image={image}
+												set_image={set_image}
+											/>
 										</div>
 
 										<div className="w-228px m-10px">

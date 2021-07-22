@@ -134,17 +134,36 @@ const HomePage = (props) => {
 			content.home_page && (
 				<div className="home_page_divs">
 					<h4 className="fs-25px mt-8px ta-c">{content.home_page.h1}</h4>
-					{content.home_page.show_image && (
-						<Link to={content.home_page.link}>
-							<img
-								style={{ borderRadius: '20px', width: '100%' }}
-								src={content.home_page.image}
-								className="max-w-800px jc-c m-auto"
-								alt="Promo"
-								title="Promo Image"
-							/>
-						</Link>
+					{content.home_page.show_image &&
+					content.home_page.images && (
+						<div className="m-auto jc-c max-w-600px">
+							<Link to={content.home_page.link}>
+								<img
+									style={{ borderRadius: '20px', width: '100%' }}
+									src={content.home_page.images[0]}
+									className="max-w-800px jc-c m-auto"
+									alt="Promo"
+									title="Promo Image"
+								/>
+							</Link>
+						</div>
 					)}
+
+					<div className="m-auto jc-c max-w-800px">
+						{!content.home_page.show_image &&
+						content.home_page.images && (
+							<Link to={content.home_page.link} className="home_page_pictures">
+								{content.home_page.images.map((image, index) => (
+									<img
+										src={image}
+										className={'w-100per br-20px m-auto image_' + (index + 1)}
+										alt="Promo"
+										title="Promo Image"
+									/>
+								))}
+							</Link>
+						)}
+					</div>
 					{content.home_page.show_video && (
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">

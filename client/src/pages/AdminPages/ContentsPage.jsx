@@ -64,7 +64,7 @@ const ContentsPage = (props) => {
 						<table className="table">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>Active</th>
 									<th>Home Page</th>
 									<th>Banner</th>
 									<th>Actions</th>
@@ -79,8 +79,12 @@ const ContentsPage = (props) => {
 											fontSize: '1.4rem'
 										}}
 									>
-										<td className="p-10px" style={{ minWidth: '5rem' }}>
-											{content._id}
+										<td className="p-10px">
+											{content.active ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
 										</td>
 										<td className="p-10px" style={{ minWidth: '5rem' }}>
 											{content.home_page && content.home_page.h1}

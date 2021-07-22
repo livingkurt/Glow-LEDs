@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, listProducts } from '../../actions/productActions';
 import { useHistory, Link } from 'react-router-dom';
-import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
+import { DropdownDisplay, ImageDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
 import { listChips } from '../../actions/chipActions';
@@ -1622,7 +1622,13 @@ const EditProductPage = (props) => {
 											</li>
 										</div>
 									</div>
-									<li>
+									<ImageDisplay
+										images={images}
+										set_images={set_images}
+										image={image}
+										set_image={set_image}
+									/>
+									{/* <li>
 										<label htmlFor="image">Image</label>
 										<input
 											type="text"
@@ -1636,7 +1642,7 @@ const EditProductPage = (props) => {
 										</button>
 									</li>
 
-									{image_display(images)}
+									{image_display(images)} */}
 									<DropdownDisplay
 										item_list={categorys_list}
 										list_items={categorys}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveEmail, detailsEmail, listEmails } from '../../actions/emailActions';
 import { useHistory, Link } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { ImageDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import { API_Emails } from '../../utils';
@@ -413,16 +413,6 @@ const EditEmailPage = (props) => {
 												/>
 											</li>
 											{/* <li>
-												<label htmlFor="email_image">Image</label>
-												<input
-													type="text"
-													name="email_image"
-													value={email_image}
-													id="email_image"
-													onChange={(e) => set_email_image(e.target.value)}
-												/>
-											</li> */}
-											<li>
 												<label htmlFor="image">Image</label>
 												<input
 													type="text"
@@ -434,7 +424,13 @@ const EditEmailPage = (props) => {
 												<button className="btn primary" onClick={(e) => add_image(e)}>
 													Add Image
 												</button>
-											</li>
+											</li> */}
+											<ImageDisplay
+												images={images}
+												set_images={set_images}
+												image={image}
+												set_image={set_image}
+											/>
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
