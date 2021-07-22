@@ -8,6 +8,12 @@ const product_routes = {
 	get_categories: () => {
 		return axios.get('/api/products/get_categories');
 	},
+	categories: () => {
+		return axios.get('/api/products/categories');
+	},
+	subcategories: () => {
+		return axios.get('/api/products/subcategories');
+	},
 	get_all_options: () => {
 		return axios.get('/api/products/get_all_options');
 	},

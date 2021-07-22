@@ -16,4 +16,6 @@ router.route('/paychecks').put(isAuth, isAdmin, batch_controller.find_all_payche
 router.route('/product_sale_price').put(isAuth, isAdmin, batch_controller.update_product_sale_price);
 router.route('/clear_sale').put(isAuth, isAdmin, batch_controller.update_clear_sale);
 
+// router.route('/create_categories').post();
+
 export default router;

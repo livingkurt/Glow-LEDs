@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
+import { API_Products } from '../../utils';
+import { snake_case } from '../../utils/helper_functions';
+const fetch = require('node-fetch');
 
 const CategorysPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -64,10 +67,6 @@ const CategorysPage = (props) => {
 		dispatch(deleteCategory(category._id));
 	};
 
-	const date = new Date();
-
-	const today = date.toISOString();
-
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
 	const colors = [
@@ -99,6 +98,37 @@ const CategorysPage = (props) => {
 		return result;
 	};
 
+	const create_categories = async () => {
+		const { data } = await API_Products.categories();
+		data.filter((category) => !category === null || !category === '').forEach((category) => {
+			dispatch(
+				saveCategory({
+					name: category,
+					pathname: snake_case(category),
+					nest_level: 1,
+					display: true,
+					meta_title: `${category} | Glow LEDs`
+				})
+			);
+		});
+	};
+
+	const create_subcategories = async () => {
+		const { data } = await API_Products.subcategories();
+		console.log({ data });
+		data.filter((category) => !category === null).forEach((category) => {
+			dispatch(
+				saveCategory({
+					name: category,
+					pathname: snake_case(category),
+					nest_level: 1,
+					display: true,
+					meta_title: `${category} | Glow LEDs`
+				})
+			);
+		});
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -123,6 +153,13 @@ const CategorysPage = (props) => {
 						);
 					})}
 				</div>
+
+				<button className="btn primary" onClick={() => create_categories()}>
+					Generate Categorys
+				</button>
+				<button className="btn primary" onClick={() => create_subcategories()}>
+					Generate Subcategorys
+				</button>
 				<Link to="/secure/glow/editcategory">
 					<button className="btn primary">Create Category</button>
 				</Link>

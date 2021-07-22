@@ -154,6 +154,7 @@ const AnnouncementEmail = () => {
 													</td>
 												</tr>
 											</table>
+
 											<table
 												style={{
 													maxWidth: '800px',
@@ -192,27 +193,313 @@ const AnnouncementEmail = () => {
 									</td>
 								</tr>
 							</table>
+							{!email.show_image &&
+							email.images && (
+								<table
+									style={{
+										width: '100%',
+										// padding: '10px',
+										borderSpacing: '0'
+									}}
+								>
+									<tbody>
+										<tr>
+											<td
+												style={{
+													fontFamily: 'helvetica'
+													// padding: '40px 0 0'
+												}}
+											>
+												<center>
+													<table
+														style={{
+															maxWidth: '800px',
+															padding: '20px',
+															width: '100%',
+															textAlign: 'left',
+															borderSpacing: '0',
+															// borderCollapse: 'collapse',
+															margin: '0 auto'
+														}}
+													>
+														<tbody>
+															<tr>
+																<td
+																	style={{
+																		fontFamily: 'helvetica'
+																	}}
+																>
+																	{email.images[0] &&
+																	email.images[1] && (
+																		<table
+																			style={{
+																				width: '100%',
+																				borderSpacing: '0'
+																			}}
+																		>
+																			<tbody>
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							width: '50%'
+																						}}
+																					>
+																						<table
+																							width="100%"
+																							style={{
+																								maxWidth: '800px'
+																							}}
+																						>
+																							<tr>
+																								<td>
+																									<img
+																										src={
+																											email
+																												.images[0]
+																										}
+																										alt="Glow LEDs"
+																										title="Email Image"
+																										style={{
+																											textAlign:
+																												'center',
+																											width:
+																												'100%',
+																											borderRadius:
+																												'20px'
+																										}}
+																									/>
+																								</td>
+																							</tr>
+																						</table>
+																					</td>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							width: '50%'
+																						}}
+																					>
+																						<table
+																							width="100%"
+																							style={{
+																								maxWidth: '800px'
+																							}}
+																						>
+																							<tr>
+																								<td>
+																									<img
+																										src={
+																											email
+																												.images[1]
+																										}
+																										alt="Glow LEDs"
+																										title="Email Image"
+																										style={{
+																											textAlign:
+																												'center',
+																											width:
+																												'100%',
+																											borderRadius:
+																												'20px'
+																										}}
+																									/>
+																								</td>
+																							</tr>
+																						</table>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	)}
+																	{email.images[2] &&
+																	email.images[3] && (
+																		<table
+																			style={{
+																				width: '100%',
+																				borderSpacing: '0'
+																			}}
+																		>
+																			<tbody>
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							width: '50%'
+																						}}
+																					>
+																						<table
+																							width="100%"
+																							style={{
+																								maxWidth: '800px'
+																							}}
+																						>
+																							<tr>
+																								<td>
+																									<img
+																										src={
+																											email
+																												.images[2]
+																										}
+																										alt="Glow LEDs"
+																										title="Email Image"
+																										style={{
+																											textAlign:
+																												'center',
+																											width:
+																												'100%',
+																											borderRadius:
+																												'20px'
+																										}}
+																									/>
+																								</td>
+																							</tr>
+																						</table>
+																					</td>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							width: '50%'
+																						}}
+																					>
+																						<table
+																							width="100%"
+																							style={{
+																								maxWidth: '800px'
+																							}}
+																						>
+																							<tr>
+																								<td>
+																									<img
+																										src={
+																											email
+																												.images[3]
+																										}
+																										alt="Glow LEDs"
+																										title="Email Image"
+																										style={{
+																											textAlign:
+																												'center',
+																											width:
+																												'100%',
+																											borderRadius:
+																												'20px'
+																										}}
+																									/>
+																								</td>
+																							</tr>
+																						</table>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	)}
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</center>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							)}
+							{email.show_image &&
+							email.images && (
+								<table
+									style={{
+										width: '100%',
+										padding: '10px',
+										borderSpacing: '0'
+									}}
+								>
+									<tbody>
+										<tr>
+											<td
+												style={{
+													fontFamily: 'helvetica'
+												}}
+											>
+												<center>
+													<table
+														style={{
+															maxWidth: '600px',
+															// padding: '20px',
+															width: '100%',
+															textAlign: 'left',
+															borderSpacing: '0',
+															// borderCollapse: 'collapse',
+															margin: '0 auto'
+														}}
+													>
+														<tbody>
+															<tr>
+																<td
+																	style={{
+																		fontFamily: 'helvetica'
+																	}}
+																>
+																	{email.images[0] && (
+																		<table
+																			style={{
+																				width: '100%',
+																				borderSpacing: '0'
+																			}}
+																		>
+																			<tbody>
+																				<tr>
+																					<td
+																						style={{
+																							fontFamily: 'helvetica',
+																							width: '50%'
+																						}}
+																					>
+																						<table
+																							width="100%"
+																							style={{
+																								maxWidth: '800px'
+																							}}
+																						>
+																							<tr>
+																								<td>
+																									<img
+																										src={
+																											email
+																												.images[0]
+																										}
+																										alt="Glow LEDs"
+																										title="Email Image"
+																										style={{
+																											textAlign:
+																												'center',
+																											width:
+																												'100%',
+																											borderRadius:
+																												'20px'
+																										}}
+																									/>
+																								</td>
+																							</tr>
+																						</table>
+																					</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	)}
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</center>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							)}
 							<table width="100%" style={{ maxWidth: '800px', margin: 'auto', padding: '20px' }}>
-								<tr>
-									<td>
-										<img
-											src={email && email.images && email.images[0]}
-											alt="Glow LEDs"
-											title="Email Image"
-											style={{
-												textAlign: 'center',
-												width: '100%',
-												borderRadius: '20px'
-											}}
-										/>
-									</td>
-								</tr>
 								<tr>
 									<table
 										style={{
 											borderSpacing: '0',
-											// borderCollapse: 'collapse',
-											// marginTop: '19px'
 											margin: 'auto'
 										}}
 									>
