@@ -73,6 +73,11 @@ const Banner = (props) => {
 							<i className="fab fa-instagram zoom" />
 						</a>
 					</div>
+					<div className="ml-10px">
+						<a href="https://www.tiktok.com/@glow_leds?lang=en" target="_blank" rel="noopener noreferrer">
+							<i className="fab fa-tiktok zoom" />
+						</a>
+					</div>
 					<div className="mh-10px">
 						<a
 							href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"

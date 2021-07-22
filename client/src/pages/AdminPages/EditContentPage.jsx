@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 const EditContentPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ home_page, set_home_page ] = useState({});
-	const [ about_page, set_about_page ] = useState({});
+	// const [ about_page, set_about_page ] = useState({});
 	const [ banner, set_banner ] = useState({});
 
 	const [ active, set_active ] = useState(true);
@@ -31,14 +31,14 @@ const EditContentPage = (props) => {
 		set_id(content._id);
 		set_home_page(content.home_page);
 		set_banner(content.banner);
-		set_about_page(content.about_page);
+		// set_about_page(content.about_page);
 		set_active(content.active);
 	};
 	const unset_state = () => {
 		set_id('');
 		set_home_page('');
 		set_banner('');
-		set_about_page('');
+		// set_about_page('');
 		set_active(true);
 	};
 
@@ -91,7 +91,7 @@ const EditContentPage = (props) => {
 				_id: using_template ? null : id,
 				home_page,
 				banner,
-				about_page,
+				// about_page,
 				active
 			})
 		);
@@ -118,7 +118,7 @@ const EditContentPage = (props) => {
 
 								<ul
 									className="edit-form-container jc-b"
-									style={{ maxWidth: '105rem', marginBottom: '20px' }}
+									style={{ maxWidth: '60rem', marginBottom: '20px' }}
 								>
 									<div className="ai-c h-25px mb-15px jc-c">
 										<div className="custom-select">
@@ -135,7 +135,7 @@ const EditContentPage = (props) => {
 											<span className="custom-arrow" />
 										</div>
 									</div>
-									<div className="row wrap jc-b">
+									<div className="wrap jc-b">
 										<div className="w-228px m-10px">
 											<h2>Home Page</h2>
 											<li>
@@ -315,7 +315,7 @@ const EditContentPage = (props) => {
 											)}
 										</div>
 
-										<div className="w-228px m-10px">
+										{/* <div className="w-228px m-10px">
 											<h2>About Page</h2>
 											<li>
 												<label htmlFor="about_page_kurt_p">About Page Kurt P</label>
@@ -339,7 +339,7 @@ const EditContentPage = (props) => {
 														set_about_page({ ...about_page, destanye_p: e.target.value })}
 												/>
 											</li>
-										</div>
+										</div> */}
 									</div>
 									<li>
 										<button type="submit" className="btn primary">

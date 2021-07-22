@@ -639,6 +639,10 @@ const InvoiceEmail = (props) => {
 									<strong>Facebook</strong>
 								</div>
 								<div style={{ textAlign: 'center' }}>@glowledsofficial</div>
+								<div style={{ textAlign: 'center' }}>
+									<strong>Instagram</strong>
+								</div>
+								<div style={{ textAlign: 'center' }}>@glow_leds</div>
 							</div>
 							<img
 								alt="QR Code"
@@ -647,9 +651,13 @@ const InvoiceEmail = (props) => {
 							/>
 							<div style={{ textAlign: 'center', width: '200px' }}>
 								<div style={{ textAlign: 'center' }}>
-									<strong>Instagram</strong>
+									<strong>Tiktok</strong>
 								</div>
 								<div style={{ textAlign: 'center' }}>@glow_leds</div>
+								<div style={{ textAlign: 'center' }}>
+									<strong>YouTube</strong>
+								</div>
+								<div style={{ textAlign: 'center' }}>Glow LEDs</div>
 							</div>
 						</div>
 						<div style={{ textAlign: 'center' }}>
