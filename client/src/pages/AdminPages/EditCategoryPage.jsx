@@ -5,12 +5,13 @@ import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { option_list } from '../../utils/react_helper_functions';
 
 const EditCategoryPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ name, set_name ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
-	const [ subcategory, set_subcategory ] = useState('');
+	// const [ subcategory, set_subcategory ] = useState('');
 	const [ subcategorys, set_subcategorys ] = useState('');
 	const [ nest_level, set_nest_level ] = useState('');
 	const [ display_order, set_display_order ] = useState('');
@@ -76,6 +77,7 @@ const EditCategoryPage = (props) => {
 		set_meta_description(category.meta_description);
 		set_meta_keywords(category.meta_keywords);
 		set_masthead(category.masthead);
+		set_subcategorys(category.subcategorys);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -88,11 +90,13 @@ const EditCategoryPage = (props) => {
 		set_meta_description('');
 		set_meta_keywords('');
 		set_masthead('');
+		set_subcategorys('');
 	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();
 		// console.log({ id });
+		console.log({ sub: subcategorys.map((category) => category._id) });
 		dispatch(
 			saveCategory({
 				_id: id,
@@ -104,7 +108,8 @@ const EditCategoryPage = (props) => {
 				meta_title,
 				meta_description,
 				meta_keywords,
-				masthead
+				masthead,
+				subcategorys: subcategorys.map((category) => category._id)
 			})
 		);
 		e.target.reset();
@@ -154,8 +159,6 @@ const EditCategoryPage = (props) => {
 			console.log('subcategorys.length === 0');
 			set_subcategorys([ subcategory_object ]);
 		}
-
-		set_subcategory('');
 	};
 	return (
 		<div className="main_container p-20px">
@@ -186,7 +189,7 @@ const EditCategoryPage = (props) => {
 													onChange={(e) => set_name(e.target.value)}
 												/>
 											</li>
-											<div className="jc-b">
+											{/* <div className="jc-b">
 												<li>
 													<label htmlFor="subcategory">Sub Categorys</label>
 													<div className="ai-c h-25px mv-15px jc-c">
@@ -210,12 +213,15 @@ const EditCategoryPage = (props) => {
 															<span className="custom-arrow" />
 														</div>
 													</div>
-													{/* <button className="btn primary" onClick={(e) => add_subcategory(e)}>
-											Add Chip
-										</button> */}
 													{subcategory_display(subcategorys)}
 												</li>
-											</div>
+											</div> */}
+											{option_list(
+												subcategorys_list,
+												subcategorys,
+												set_subcategorys,
+												'Subategorys'
+											)}
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input

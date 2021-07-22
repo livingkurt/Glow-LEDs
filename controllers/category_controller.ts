@@ -32,7 +32,7 @@ export default {
 			// }
 
 			// const categorys = await Category.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-			const categorys = await Category.find({});
+			const categorys = await Category.find({}).populate('subcategorys');
 			console.log({ categorys });
 			log_request({
 				method: 'GET',
@@ -58,7 +58,7 @@ export default {
 	},
 	findById: async (req: any, res: any) => {
 		try {
-			const category = await Category.findOne({ _id: req.params.id });
+			const category = await Category.findOne({ _id: req.params.id }).populate('subcategorys');
 			console.log({ category });
 			console.log(req.params.id);
 			if (category) {

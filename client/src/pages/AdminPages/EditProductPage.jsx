@@ -1730,30 +1730,6 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_group_name(e.target.value)}
 															/>
 														</li>
-														{/* <li>
-															<div className="ai-c h-25px mv-15px jc-c">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => add_product(e)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Add Products to Group---
-																		</option>
-																		{products_list.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-															{product_display(products, 'group')}
-														</li> */}
 														{option_list(
 															products_list,
 															products,
@@ -1799,30 +1775,6 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_color_group_name(e.target.value)}
 															/>
 														</li>
-														{/* <li>
-															<div className="ai-c h-25px mv-15px jc-c">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => add_color_product(e)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Add Products to Group---
-																		</option>
-																		{products_list.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-															{product_display(color_products, 'color')}
-														</li> */}
 														{option_list(
 															products_list,
 															color_products,
@@ -1858,9 +1810,6 @@ const EditProductPage = (props) => {
 											<div>
 												{secondary_color_product_group && (
 													<ul>
-														{/* <li>
-															<h2 className="ta-c">Secondary Color Product Group</h2>
-														</li> */}
 														<li>
 															<label htmlFor="secondary_color_group_name">
 																Secondary Color Product Group Name
@@ -1874,33 +1823,6 @@ const EditProductPage = (props) => {
 																	set_secondary_color_group_name(e.target.value)}
 															/>
 														</li>
-														{/* <li>
-															<div className="ai-c h-25px mv-15px jc-c">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => add_secondary_color_product(e)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Add Products to Group---
-																		</option>
-																		{products_list.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-															{product_display(
-																secondary_color_products,
-																'secondary_color'
-															)}
-														</li> */}
 														{option_list(
 															products_list,
 															secondary_color_products,
@@ -1936,9 +1858,6 @@ const EditProductPage = (props) => {
 											<div>
 												{option_product_group && (
 													<ul>
-														{/* <li>
-															<h2 className="ta-c">Option Product Group</h2>
-														</li> */}
 														<li>
 															<label htmlFor="option_group_name">
 																Option Product Group Name
@@ -1951,30 +1870,6 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_option_group_name(e.target.value)}
 															/>
 														</li>
-														{/* <li>
-															<div className="ai-c h-25px mv-15px jc-c">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => add_option_product(e)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Add Products to Group---
-																		</option>
-																		{products_list.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-															{product_display(option_products, 'option')}
-														</li> */}
 														{option_list(
 															products_list,
 															option_products,
@@ -2010,9 +1905,6 @@ const EditProductPage = (props) => {
 											<div>
 												{secondary_product_group && (
 													<ul>
-														{/* <li>
-															<h2 className="ta-c">Secondary Product Group</h2>
-														</li> */}
 														<li>
 															<label htmlFor="secondary_group_name">
 																Secondary Product Group Name
@@ -2026,32 +1918,6 @@ const EditProductPage = (props) => {
 																	set_secondary_group_name(e.target.value)}
 															/>
 														</li>
-														{/* <li>
-															<div className="ai-c h-25px mv-15px jc-c">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => add_secondary_product(e)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Add Products to Group---
-																		</option>
-																		{secondary_products_list.map(
-																			(product, index) => (
-																				<option
-																					key={index}
-																					value={JSON.stringify(product)}
-																				>
-																					{product.name}
-																				</option>
-																			)
-																		)}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-															{product_display(secondary_products, 'secondary')}
-														</li> */}
 														{option_list(
 															products_list,
 															secondary_products,
