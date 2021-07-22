@@ -9,6 +9,7 @@ import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
 import { snake_case } from '../../utils/helper_functions';
 import { listPromos } from '../../actions/promoActions';
+import { option_list } from '../../utils/react_helper_functions';
 
 const EditAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -537,25 +538,8 @@ const EditAffiliatePage = (props) => {
 												/>
 											</li>
 
-											{/* <li>
-												<label htmlFor="funds_generated">Funds Generated</label>
-												<input
-													type="text"
-													name="funds_generated"
-													value={funds_generated}
-													id="funds_generated"
-													onChange={(e) => set_funds_generated(e.target.value)}
-												/>
-											</li> */}
 											<li>
 												<label htmlFor="promo">Public Code</label>
-												{/* <input
-													type="text"
-													name="promo"
-													value={promo}
-													id="promo"
-													onChange={(e) => set_promo(e.target.value)}
-												/> */}
 												<div className="ai-c h-25px mv-15px jc-c">
 													<div className="custom-select">
 														<select
@@ -576,12 +560,9 @@ const EditAffiliatePage = (props) => {
 														<span className="custom-arrow" />
 													</div>
 												</div>
-												{/* <button className="btn primary" onClick={(e) => add_promo(e)}>
-													Add Gear
-												</button> */}
 												{promo_display(public_code, 'public')}
-												{/* {console.log({ public_code })} */}
 											</li>
+
 											<li>
 												<label htmlFor="public_code">Public Code</label>
 												<input
@@ -594,13 +575,6 @@ const EditAffiliatePage = (props) => {
 											</li>
 											<li>
 												<label htmlFor="promo">Private Code</label>
-												{/* <input
-													type="text"
-													name="promo"
-													value={promo}
-													id="promo"
-													onChange={(e) => set_promo(e.target.value)}
-												/> */}
 												<div className="ai-c h-25px mv-15px jc-c">
 													<div className="custom-select">
 														<select
@@ -621,11 +595,7 @@ const EditAffiliatePage = (props) => {
 														<span className="custom-arrow" />
 													</div>
 												</div>
-												{/* <button className="btn primary" onClick={(e) => add_promo(e)}>
-													Add Gear
-												</button> */}
 												{promo_display(private_code, 'private')}
-												{/* {console.log({ private_code })} */}
 											</li>
 											<li>
 												<label htmlFor="private_code">Private Code</label>
@@ -657,65 +627,8 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_venmo(e.target.value)}
 												/>
 											</li>
-											<li>
-												<label htmlFor="product">Glow Gear</label>
-												{/* <input
-													type="text"
-													name="product"
-													value={product}
-													id="product"
-													onChange={(e) => set_product(e.target.value)}
-												/> */}
-												<div className="ai-c h-25px mv-15px jc-c">
-													<div className="custom-select">
-														<select
-															className="qty_select_dropdown"
-															onChange={(e) => add_product(e)}
-														>
-															<option key={1} defaultValue="">
-																---Choose Glow Gear---
-															</option>
-															{products_list
-																.filter((product) => !product.hidden)
-																.map((product, index) => (
-																	<option key={index} value={JSON.stringify(product)}>
-																		{product.name}
-																	</option>
-																))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-												<button className="btn primary" onClick={(e) => add_product(e)}>
-													Add Gear
-												</button>
-												{product_display(products)}
-											</li>
-											<li>
-												<label htmlFor="chip">Chip</label>
-												<div className="ai-c h-25px mv-15px jc-c">
-													<div className="custom-select">
-														<select
-															className="qty_select_dropdown"
-															onChange={(e) => add_chip(e)}
-														>
-															<option key={1} defaultValue="">
-																---Choose Chip---
-															</option>
-															{chips_list.map((chip, index) => (
-																<option key={index} value={JSON.stringify(chip)}>
-																	{chip.name}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-												<button className="btn primary" onClick={(e) => add_chip(e)}>
-													Add Chip
-												</button>
-												{chip_display(chips)}
-											</li>
+											{option_list(products_list, products, set_products, 'Glow Gear')}
+											{option_list(chips_list, chips, set_chips, 'Chips')}
 
 											{loading_checkboxes ? (
 												<div>Loading...</div>

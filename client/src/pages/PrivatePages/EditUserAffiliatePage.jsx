@@ -8,6 +8,7 @@ import { listUsers } from '../../actions/userActions';
 import { snake_case } from '../../utils/helper_functions';
 import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
+import { option_list } from '../../utils/react_helper_functions';
 
 const EditUserAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -543,66 +544,8 @@ const EditUserAffiliatePage = (props) => {
 											</li>
 										</div>
 									)}
-
-									<li>
-										<label htmlFor="product">Glow Gear</label>
-										{/* <input
-													type="text"
-													name="product"
-													value={product}
-													id="product"
-													onChange={(e) => set_product(e.target.value)}
-												/> */}
-										<div className="ai-c h-25px mv-15px ">
-											<div className="custom-select max-w-200px">
-												<select
-													className="qty_select_dropdown max-w-200px"
-													onChange={(e) => add_product(e)}
-												>
-													<option key={1} defaultValue="">
-														---Choose Gear---
-													</option>
-													{products_list
-														.filter((product) => !product.hidden)
-														.map((product, index) => (
-															<option key={index} value={JSON.stringify(product)}>
-																{product.name}
-															</option>
-														))}
-												</select>
-												<span className="custom-arrow" />
-											</div>
-										</div>
-										{/* <button className="btn primary" onClick={(e) => add_product(e)}>
-											Add Gear
-										</button> */}
-										{product_display(products)}
-									</li>
-									<li>
-										<label htmlFor="chip">Chip</label>
-										<div className="ai-c h-25px mv-15px ">
-											<div className="custom-select max-w-200px">
-												<select
-													className="qty_select_dropdown max-w-200px"
-													onChange={(e) => add_chip(e)}
-												>
-													<option key={1} defaultValue="">
-														---Choose Chip---
-													</option>
-													{chips_list.map((chip, index) => (
-														<option key={index} value={JSON.stringify(chip)}>
-															{chip.name}
-														</option>
-													))}
-												</select>
-												<span className="custom-arrow" />
-											</div>
-										</div>
-										{/* <button className="btn primary" onClick={(e) => add_chip(e)}>
-											Add Chip
-										</button> */}
-										{chip_display(chips)}
-									</li>
+									{option_list(products_list, products, set_products, 'Glow Gear')}
+									{option_list(chips_list, chips, set_chips, 'Chips')}
 									<li>
 										<button type="submit" className="btn primary">
 											{props.match.params.id ? 'Update' : 'Create'}

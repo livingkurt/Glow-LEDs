@@ -8,6 +8,7 @@ import { format_date, snake_case, unformat_date } from '../../utils/helper_funct
 import { listChips } from '../../actions/chipActions';
 import { API_Products } from '../../utils';
 import { listCategorys } from '../../actions/categoryActions';
+import { list_display, option_list } from '../../utils/react_helper_functions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -473,19 +474,19 @@ const EditProductPage = (props) => {
 
 		set_image('');
 	};
-	const add_chip = (e) => {
-		e.preventDefault();
-		const chip_object = JSON.parse(e.target.value);
-		if (chips) {
-			console.log('chips.length > 0');
-			set_chips((chips) => [ ...chips, chip_object ]);
-		} else {
-			console.log('chips.length === 0');
-			set_chips([ chip_object ]);
-		}
+	// const add_chip = (e) => {
+	// 	e.preventDefault();
+	// 	const chip_object = JSON.parse(e.target.value);
+	// 	if (chips) {
+	// 		console.log('chips.length > 0');
+	// 		set_chips((chips) => [ ...chips, chip_object ]);
+	// 	} else {
+	// 		console.log('chips.length === 0');
+	// 		set_chips([ chip_object ]);
+	// 	}
 
-		// set_chip('');
-	};
+	// 	// set_chip('');
+	// };
 	const add_category = (e) => {
 		e.preventDefault();
 		const category_object = JSON.parse(e.target.value);
@@ -531,14 +532,14 @@ const EditProductPage = (props) => {
 			})
 		);
 	};
-	const remove_chip = (chip_index, e) => {
-		e.preventDefault();
-		set_chips((chips) =>
-			chips.filter((chip, index) => {
-				return chip_index !== index;
-			})
-		);
-	};
+	// const remove_chip = (chip_index, e) => {
+	// 	e.preventDefault();
+	// 	set_chips((chips) =>
+	// 		chips.filter((chip, index) => {
+	// 			return chip_index !== index;
+	// 		})
+	// 	);
+	// };
 	const remove_category = (category_index, e) => {
 		e.preventDefault();
 		set_categorys((categorys) =>
@@ -598,29 +599,29 @@ const EditProductPage = (props) => {
 		return arr;
 	}
 
-	const chip_display = (chips) => {
-		return (
-			<div>
-				<div className="jc-b">
-					<div>
-						{chips &&
-							chips.map((chip, index) => {
-								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
-										<div>
-											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
-												<i className="fas fa-times mr-5px" />
-											</button>
-											{chip.name}
-										</div>
-									</div>
-								);
-							})}
-					</div>
-				</div>
-			</div>
-		);
-	};
+	// const chip_display = (chips) => {
+	// 	return (
+	// 		<div>
+	// 			<div className="jc-b">
+	// 				<div>
+	// 					{chips &&
+	// 						chips.map((chip, index) => {
+	// 							return (
+	// 								<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
+	// 									<div>
+	// 										<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
+	// 											<i className="fas fa-times mr-5px" />
+	// 										</button>
+	// 										{chip.name}
+	// 									</div>
+	// 								</div>
+	// 							);
+	// 						})}
+	// 				</div>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// };
 	const category_display = (categorys) => {
 		return (
 			<div>
@@ -1296,10 +1297,6 @@ const EditProductPage = (props) => {
 													id="subcategory"
 													onChange={(e) => set_subcategory(e.target.value)}
 												/>
-												{/* <button className="btn primary" onClick={(e) => add_subcategory(e)}>
-													Add Subcategory
-												</button>
-												{subcategory_display(subcategories)} */}
 											</li>
 											<li>
 												<label htmlFor="product_collection">Collection</label>
@@ -1640,56 +1637,10 @@ const EditProductPage = (props) => {
 									</li>
 
 									{image_display(images)}
-									<div className="jc-b">
-										<li>
-											<label htmlFor="category">Categories</label>
-											<div className="ai-c h-25px mv-15px jc-c">
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => add_category(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose Category---
-														</option>
-														{categorys_list &&
-															categorys_list.map((category, index) => (
-																<option key={index} value={JSON.stringify(category)}>
-																	{category.name}
-																</option>
-															))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-											{category_display(categorys)}
-										</li>
-									</div>
-									<div className="jc-b">
-										<li>
-											<label htmlFor="subcategory">Subcategories</label>
-											<div className="ai-c h-25px mv-15px jc-c">
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => add_subcategory(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose Subcategory---
-														</option>
-														{categorys_list &&
-															categorys_list.map((subcategory, index) => (
-																<option key={index} value={JSON.stringify(subcategory)}>
-																	{subcategory.name}
-																</option>
-															))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-											{subcategory_display(subcategorys)}
-										</li>
-									</div>
+
+									{option_list(categorys_list, categorys, set_categorys, 'Categorys')}
+									{option_list(categorys_list, subcategorys, set_subcategorys, 'Subategorys')}
+
 									{loading_checkboxes ? (
 										<div>Loading...</div>
 									) : (
@@ -1779,8 +1730,7 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_group_name(e.target.value)}
 															/>
 														</li>
-														<li>
-															{/* <label htmlFor="product">Products</label> */}
+														{/* <li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
 																	<select
@@ -1803,7 +1753,13 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(products, 'group')}
-														</li>
+														</li> */}
+														{option_list(
+															products_list,
+															products,
+															set_products,
+															'Group Products'
+														)}
 													</ul>
 												)}
 											</div>
@@ -1843,7 +1799,7 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_color_group_name(e.target.value)}
 															/>
 														</li>
-														<li>
+														{/* <li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
 																	<select
@@ -1866,7 +1822,13 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(color_products, 'color')}
-														</li>
+														</li> */}
+														{option_list(
+															products_list,
+															color_products,
+															set_color_products,
+															'Color Products'
+														)}
 													</ul>
 												)}
 											</div>
@@ -1912,7 +1874,7 @@ const EditProductPage = (props) => {
 																	set_secondary_color_group_name(e.target.value)}
 															/>
 														</li>
-														<li>
+														{/* <li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
 																	<select
@@ -1938,7 +1900,13 @@ const EditProductPage = (props) => {
 																secondary_color_products,
 																'secondary_color'
 															)}
-														</li>
+														</li> */}
+														{option_list(
+															products_list,
+															secondary_color_products,
+															set_secondary_color_products,
+															'Secondary Color Products'
+														)}
 													</ul>
 												)}
 											</div>
@@ -1983,8 +1951,7 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_option_group_name(e.target.value)}
 															/>
 														</li>
-														<li>
-															{/* <label htmlFor="product">Products</label> */}
+														{/* <li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
 																	<select
@@ -2007,7 +1974,13 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(option_products, 'option')}
-														</li>
+														</li> */}
+														{option_list(
+															products_list,
+															option_products,
+															set_option_products,
+															'Option Products'
+														)}
 													</ul>
 												)}
 											</div>
@@ -2053,8 +2026,7 @@ const EditProductPage = (props) => {
 																	set_secondary_group_name(e.target.value)}
 															/>
 														</li>
-														<li>
-															{/* <label htmlFor="product">Products</label> */}
+														{/* <li>
 															<div className="ai-c h-25px mv-15px jc-c">
 																<div className="custom-select">
 																	<select
@@ -2079,40 +2051,19 @@ const EditProductPage = (props) => {
 																</div>
 															</div>
 															{product_display(secondary_products, 'secondary')}
-														</li>
+														</li> */}
+														{option_list(
+															products_list,
+															secondary_products,
+															set_secondary_products,
+															'Option Products'
+														)}
 													</ul>
 												)}
 											</div>
 										</div>
 									)}
-									<div className="jc-b">
-										<li>
-											<label htmlFor="chip">Chip</label>
-											<div className="ai-c h-25px mv-15px jc-c">
-												<div className="custom-select">
-													<select
-														className="qty_select_dropdown"
-														onChange={(e) => add_chip(e)}
-													>
-														<option key={1} defaultValue="">
-															---Choose Chip---
-														</option>
-														{chips_list.map((chip, index) => (
-															<option key={index} value={JSON.stringify(chip)}>
-																{chip.name}
-															</option>
-														))}
-													</select>
-													<span className="custom-arrow" />
-												</div>
-											</div>
-											{/* <button className="btn primary" onClick={(e) => add_chip(e)}>
-											Add Chip
-										</button> */}
-											{chip_display(chips)}
-										</li>
-									</div>
-
+									{option_list(chips_list, chips, set_chips, 'Chips')}
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
