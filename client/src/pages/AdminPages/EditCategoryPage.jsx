@@ -96,7 +96,7 @@ const EditCategoryPage = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		// console.log({ id });
-		console.log({ sub: subcategorys.map((category) => category._id) });
+		// console.log({ sub: subcategorys.map((category) => category._id) });
 		dispatch(
 			saveCategory({
 				_id: id,
@@ -109,7 +109,7 @@ const EditCategoryPage = (props) => {
 				meta_description,
 				meta_keywords,
 				masthead,
-				subcategorys: subcategorys.map((category) => category._id)
+				subcategorys: subcategorys && subcategorys.map((category) => category._id)
 			})
 		);
 		e.target.reset();
