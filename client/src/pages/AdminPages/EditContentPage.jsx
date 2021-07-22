@@ -43,6 +43,7 @@ const EditContentPage = (props) => {
 		// set_about_page(content.about_page);
 		set_active(content.active);
 	};
+
 	const set_email_state = (data) => {
 		set_home_page(data);
 	};
@@ -83,11 +84,12 @@ const EditContentPage = (props) => {
 	// 	set_using_template(true);
 	// };
 
-	const use_email_template = (e) => {
+	const use_email_template = async (e) => {
 		// dispatch(detailsContent(e.target.value));
-		const { data } = API_Emails.get_email(e.target.value);
+		const { data } = await API_Emails.get_email(e.target.value);
 		set_email(data);
 		set_email_state(data);
+		set_using_template(true);
 	};
 
 	// useEffect(
