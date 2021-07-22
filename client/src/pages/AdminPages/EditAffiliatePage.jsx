@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveAffiliate, detailsAffiliate } from '../../actions/affiliateActions';
 import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
@@ -627,8 +627,20 @@ const EditAffiliatePage = (props) => {
 													onChange={(e) => set_venmo(e.target.value)}
 												/>
 											</li>
-											{option_list(products_list, products, set_products, 'Glow Gear')}
-											{option_list(chips_list, chips, set_chips, 'Chips')}
+											{/* {option_list(products_list, products, set_products, 'Glow Gear')} */}
+											<DropdownDisplay
+												item_list={products_list}
+												list_items={products}
+												set_items={set_products}
+												list_name={'Glow Gear'}
+											/>
+											<DropdownDisplay
+												item_list={chips_list}
+												list_items={chips}
+												set_items={set_chips}
+												list_name={'Chips'}
+											/>
+											{/* {option_list(chips_list, chips, set_chips, 'Chips')} */}
 
 											{loading_checkboxes ? (
 												<div>Loading...</div>

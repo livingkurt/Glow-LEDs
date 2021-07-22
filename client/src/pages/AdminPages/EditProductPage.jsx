@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, listProducts } from '../../actions/productActions';
 import { useHistory, Link } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
 import { listChips } from '../../actions/chipActions';
@@ -1637,9 +1637,20 @@ const EditProductPage = (props) => {
 									</li>
 
 									{image_display(images)}
-
-									{option_list(categorys_list, categorys, set_categorys, 'Categorys')}
-									{option_list(categorys_list, subcategorys, set_subcategorys, 'Subategorys')}
+									<DropdownDisplay
+										item_list={categorys_list}
+										list_items={categorys}
+										set_items={set_categorys}
+										list_name={'Categorys'}
+									/>
+									<DropdownDisplay
+										item_list={categorys_list}
+										list_items={subcategorys}
+										set_items={set_subcategorys}
+										list_name={'Subcategorys'}
+									/>
+									{/* {option_list(categorys_list, categorys, set_categorys, 'Categorys')}
+									{option_list(categorys_list, subcategorys, set_subcategorys, 'Subcategorys')} */}
 
 									{loading_checkboxes ? (
 										<div>Loading...</div>
@@ -1730,12 +1741,18 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_group_name(e.target.value)}
 															/>
 														</li>
-														{option_list(
+														{/* {option_list(
 															products_list,
 															products,
 															set_products,
 															'Group Products'
-														)}
+														)} */}
+														<DropdownDisplay
+															item_list={products_list}
+															list_items={products}
+															set_items={set_products}
+															list_name={'Group Products'}
+														/>
 													</ul>
 												)}
 											</div>
@@ -1781,6 +1798,12 @@ const EditProductPage = (props) => {
 															set_color_products,
 															'Color Products'
 														)}
+														<DropdownDisplay
+															item_list={products_list}
+															list_items={color_products}
+															set_items={set_color_products}
+															list_name={'Color Products'}
+														/>
 													</ul>
 												)}
 											</div>
@@ -1823,12 +1846,18 @@ const EditProductPage = (props) => {
 																	set_secondary_color_group_name(e.target.value)}
 															/>
 														</li>
-														{option_list(
+														{/* {option_list(
 															products_list,
 															secondary_color_products,
 															set_secondary_color_products,
 															'Secondary Color Products'
-														)}
+														)} */}
+														<DropdownDisplay
+															item_list={products_list}
+															list_items={secondary_color_products}
+															set_items={set_secondary_color_products}
+															list_name={'Secondary Color Products'}
+														/>
 													</ul>
 												)}
 											</div>
@@ -1870,12 +1899,18 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_option_group_name(e.target.value)}
 															/>
 														</li>
-														{option_list(
+														{/* {option_list(
 															products_list,
 															option_products,
 															set_option_products,
 															'Option Products'
-														)}
+														)} */}
+														<DropdownDisplay
+															item_list={products_list}
+															list_items={option_products}
+															set_items={set_option_products}
+															list_name={'Option Products'}
+														/>
 													</ul>
 												)}
 											</div>
@@ -1918,12 +1953,18 @@ const EditProductPage = (props) => {
 																	set_secondary_group_name(e.target.value)}
 															/>
 														</li>
-														{option_list(
+														{/* {option_list(
 															products_list,
 															secondary_products,
 															set_secondary_products,
 															'Option Products'
-														)}
+														)} */}
+														<DropdownDisplay
+															item_list={products_list}
+															list_items={secondary_products}
+															set_items={set_secondary_products}
+															list_name={'Secondary Products'}
+														/>
 													</ul>
 												)}
 											</div>

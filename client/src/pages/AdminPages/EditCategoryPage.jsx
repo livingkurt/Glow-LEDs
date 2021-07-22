@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveCategory, detailsCategory, listCategorys } from '../../actions/categoryActions';
 import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
 import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { option_list } from '../../utils/react_helper_functions';
@@ -189,39 +189,12 @@ const EditCategoryPage = (props) => {
 													onChange={(e) => set_name(e.target.value)}
 												/>
 											</li>
-											{/* <div className="jc-b">
-												<li>
-													<label htmlFor="subcategory">Sub Categorys</label>
-													<div className="ai-c h-25px mv-15px jc-c">
-														<div className="custom-select">
-															<select
-																className="qty_select_dropdown"
-																onChange={(e) => add_subcategory(e)}
-															>
-																<option key={1} defaultValue="">
-																	---Choose Subcategory---
-																</option>
-																{subcategorys_list.map((subcategory, index) => (
-																	<option
-																		key={index}
-																		value={JSON.stringify(subcategory)}
-																	>
-																		{subcategory.name}
-																	</option>
-																))}
-															</select>
-															<span className="custom-arrow" />
-														</div>
-													</div>
-													{subcategory_display(subcategorys)}
-												</li>
-											</div> */}
-											{option_list(
-												subcategorys_list,
-												subcategorys,
-												set_subcategorys,
-												'Subategorys'
-											)}
+											<DropdownDisplay
+												item_list={subcategorys_list}
+												list_items={subcategorys}
+												set_items={set_subcategorys}
+												list_name={'Subategorys'}
+											/>
 											<li>
 												<label htmlFor="pathname">Pathname</label>
 												<input
