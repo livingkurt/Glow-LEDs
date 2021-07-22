@@ -5,6 +5,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
+import { API_Emails } from '../../utils';
 
 const EditEmailPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -20,6 +21,7 @@ const EditEmailPage = (props) => {
 	const [ images, set_images ] = useState([]);
 	const [ image, set_image ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ content, set_content ] = useState({});
 
 	const history = useHistory();
 
@@ -29,27 +31,41 @@ const EditEmailPage = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content, loading: loading_content, error: error_content } = contentDetails;
+	// const contentDetails = useSelector((state) => state.contentDetails);
+	// const { content, loading: loading_content, error: error_content } = contentDetails;
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
 
 	const dispatch = useDispatch();
 
-	const set_state = (data) => {
-		console.log({ set_state: data });
-		props.match.params.id && set_id(data._id);
-		set_email_type(data.email_type);
-		set_email_h1(data.h1);
-		set_email_image(data.image);
-		set_images(data.images);
-		set_email_show_image(data.show_image);
-		set_email_h2(data.h2);
-		set_email_p(data.p);
-		set_email_button(data.button);
-		set_email_link(data.link);
-		set_email_active(data.active);
+	const set_content_state = (content) => {
+		console.log({ set_content_state: content });
+		props.match.params.id && set_id(email._id);
+		set_email_type(content.email_type);
+		set_email_h1(content.h1);
+		set_email_image(content.image);
+		set_images(content.images);
+		set_email_show_image(content.show_image);
+		set_email_h2(content.h2);
+		set_email_p(content.p);
+		set_email_button(content.button);
+		set_email_link(content.link);
+		set_email_active(content.active);
+	};
+	const set_email_state = () => {
+		console.log({ set_state: email });
+		props.match.params.id && set_id(email._id);
+		set_email_type(email.email_type);
+		set_email_h1(email.h1);
+		set_email_image(email.image);
+		set_images(email.images);
+		set_email_show_image(email.show_image);
+		set_email_h2(email.h2);
+		set_email_p(email.p);
+		set_email_button(email.button);
+		set_email_link(email.link);
+		set_email_active(email.active);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -64,6 +80,8 @@ const EditEmailPage = (props) => {
 		set_email_active('');
 		set_images([]);
 		set_image('');
+		// dispatch(detailsEmail(''));
+		// dispatch(detailsContent(''));
 	};
 
 	const stableDispatch = useCallback(dispatch, []);
@@ -80,7 +98,7 @@ const EditEmailPage = (props) => {
 			stableDispatch(listEmails(''));
 			stableDispatch(listContents(''));
 
-			set_state(email);
+			set_email_state();
 			return () => {};
 		},
 		[ stableDispatch, props.match.params.id ]
@@ -89,17 +107,21 @@ const EditEmailPage = (props) => {
 	const use_template = (e) => {
 		dispatch(detailsEmail(e.target.value));
 	};
-	const use_content_template = (e) => {
-		dispatch(detailsContent(e.target.value));
+	const use_content_template = async (e) => {
+		// dispatch(detailsContent(e.target.value));
+		const { data } = await API_Emails.get_content(e.target.value);
+		// set_content(data);
+		console.log({ data });
+		set_content_state(data.home_page);
 	};
 
 	useEffect(
 		() => {
 			if (email) {
-				console.log('Set');
-				set_state(email);
+				// console.log('Set');
+				set_email_state();
 			} else {
-				console.log('UnSet');
+				// console.log('UnSet');
 				unset_state();
 			}
 
@@ -111,7 +133,7 @@ const EditEmailPage = (props) => {
 		() => {
 			if (content && content.home_page) {
 				console.log('Set');
-				set_state(content.home_page);
+				set_content_state(content.home_page);
 			} else {
 				console.log('UnSet');
 				unset_state();
@@ -130,7 +152,7 @@ const EditEmailPage = (props) => {
 		e.preventDefault();
 		dispatch(
 			saveEmail({
-				_id: props.match.params.id && id,
+				_id: id ? id : null,
 				email_type,
 				h1: email_h1,
 				image: email_image,

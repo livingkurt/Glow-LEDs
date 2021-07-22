@@ -113,7 +113,9 @@ export default {
 	},
 	create: async (req: any, res: any) => {
 		try {
+			console.log({ create: req.body });
 			const newEmail = await Email.create(req.body);
+			console.log({ newEmail });
 			if (newEmail) {
 				log_request({
 					method: 'POST',
@@ -138,6 +140,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Email.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,

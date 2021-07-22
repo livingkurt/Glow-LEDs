@@ -43,9 +43,10 @@ export default {
 	},
 	findById: async (req: any, res: any) => {
 		try {
+			// console.log({ findById: req.params.id });
 			const content = await Content.findOne({ _id: req.params.id });
+
 			// console.log({ content });
-			// console.log(req.params.id);
 			if (content) {
 				log_request({
 					method: 'GET',

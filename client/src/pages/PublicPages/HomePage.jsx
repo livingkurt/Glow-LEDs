@@ -140,7 +140,7 @@ const HomePage = (props) => {
 								style={{ borderRadius: '20px', width: '100%' }}
 								src={content.home_page.image}
 								className="max-w-800px jc-c m-auto"
-								alt="Promo Image"
+								alt="Promo"
 								title="Promo Image"
 							/>
 						</Link>
@@ -167,12 +167,9 @@ const HomePage = (props) => {
 						<h4 className="fs-18px mb-0px ta-c">{content.home_page.h2}</h4>
 					</div>
 					<div className="max-w-800px jc-c w-100per m-auto">
-						{/* <p className="p_descriptions paragraph_font "> */}
-						{/* <pre className="p_descriptions paragraph_font ">{content.home_page.p}</pre> */}
 						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
 							{content.home_page.p}
 						</ReadMore>
-						{/* </p> */}
 					</div>
 					<div className="jc-c">
 						<Link to={content.home_page.link}>

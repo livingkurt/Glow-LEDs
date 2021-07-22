@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
+import { API_Emails } from '../../utils';
 
 const EditContentPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -15,6 +16,7 @@ const EditContentPage = (props) => {
 	const [ active, set_active ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ using_template, set_using_template ] = useState(false);
+	const [ email, set_email ] = useState(false);
 
 	const history = useHistory();
 
@@ -24,8 +26,8 @@ const EditContentPage = (props) => {
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
 
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email, loading: loading_email, error: error_email } = emailDetails;
+	// const emailDetails = useSelector((state) => state.emailDetails);
+	// const { email, loading: loading_email, error: error_email } = emailDetails;
 
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
@@ -41,6 +43,10 @@ const EditContentPage = (props) => {
 		// set_about_page(content.about_page);
 		set_active(content.active);
 	};
+	const set_email_state = (data) => {
+		set_home_page(data);
+	};
+
 	const unset_state = () => {
 		set_id('');
 		set_home_page('');
@@ -72,25 +78,32 @@ const EditContentPage = (props) => {
 		set_using_template(true);
 	};
 
+	// const use_email_template = (e) => {
+	// 	dispatch(detailsEmail(e.target.value));
+	// 	set_using_template(true);
+	// };
+
 	const use_email_template = (e) => {
-		dispatch(detailsEmail(e.target.value));
-		set_using_template(true);
+		// dispatch(detailsContent(e.target.value));
+		const { data } = API_Emails.get_email(e.target.value);
+		set_email(data);
+		set_email_state(data);
 	};
 
-	useEffect(
-		() => {
-			if (email) {
-				console.log('Set');
-				set_state(email);
-			} else {
-				console.log('UnSet');
-				unset_state();
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (email) {
+	// 			console.log('Set');
+	// 			set_state(email);
+	// 		} else {
+	// 			console.log('UnSet');
+	// 			unset_state();
+	// 		}
 
-			return () => {};
-		},
-		[ email ]
-	);
+	// 		return () => {};
+	// 	},
+	// 	[ email ]
+	// );
 	useEffect(
 		() => {
 			if (content && content.home_page) {

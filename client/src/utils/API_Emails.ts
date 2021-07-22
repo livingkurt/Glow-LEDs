@@ -32,6 +32,14 @@ const email_routes = {
 	print_invoice: (order: any) => {
 		// console.log({ not_paid_email: array });
 		return axios.post('/api/emails/invoice', order);
+	},
+	get_email: (email_id: string) => {
+		console.log({ get_email: email_id });
+		return axios.get('/api/emails/' + email_id);
+	},
+	get_content: (content_id: string) => {
+		console.log({ get_content: content_id });
+		return axios.get('/api/contents/' + content_id);
 	}
 };
 
