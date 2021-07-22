@@ -46,7 +46,9 @@ export default {
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')
-				.populate('option_products');
+				.populate('option_products')
+				.populate('categorys')
+				.populate('subcategorys');
 			// console.log({ products });
 			log_request({
 				method: 'GET',
@@ -112,7 +114,9 @@ export default {
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')
-				.populate('option_products');
+				.populate('option_products')
+				.populate('categorys')
+				.populate('subcategorys');
 			// console.log({ products });
 			log_request({
 				method: 'GET',
@@ -178,7 +182,9 @@ export default {
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')
-				.populate('option_products');
+				.populate('option_products')
+				.populate('categorys')
+				.populate('subcategorys');
 			// console.log({ products });
 			log_request({
 				method: 'GET',
@@ -210,7 +216,9 @@ export default {
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')
-				.populate('option_products');
+				.populate('option_products')
+				.populate('categorys')
+				.populate('subcategorys');
 
 			if (product) {
 				log_request({

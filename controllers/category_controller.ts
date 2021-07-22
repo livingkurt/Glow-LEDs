@@ -16,22 +16,24 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (req.query.sortOrder === 'lowest') {
-				sortOrder = { amount: 1 };
-			} else if (req.query.sortOrder === 'highest') {
-				sortOrder = { amount: -1 };
-			} else if (req.query.sortOrder === 'newest') {
-				sortOrder = { _id: -1 };
-			} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-				sortOrder = { date_of_purchase: -1 };
-			} else if (req.query.sortOrder === 'category') {
-				sortOrder = { category: 1, createdAt: -1 };
-			} else if (req.query.sortOrder === 'application') {
-				sortOrder = { application: 1, createdAt: -1 };
-			}
+			// let sortOrder = {};
+			// if (req.query.sortOrder === 'lowest') {
+			// 	sortOrder = { amount: 1 };
+			// } else if (req.query.sortOrder === 'highest') {
+			// 	sortOrder = { amount: -1 };
+			// } else if (req.query.sortOrder === 'newest') {
+			// 	sortOrder = { _id: -1 };
+			// } else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
+			// 	sortOrder = { date_of_purchase: -1 };
+			// } else if (req.query.sortOrder === 'category') {
+			// 	sortOrder = { category: 1, createdAt: -1 };
+			// } else if (req.query.sortOrder === 'application') {
+			// 	sortOrder = { application: 1, createdAt: -1 };
+			// }
 
-			const categorys = await Category.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+			// const categorys = await Category.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+			const categorys = await Category.find({});
+			console.log({ categorys });
 			log_request({
 				method: 'GET',
 				path: req.originalUrl,

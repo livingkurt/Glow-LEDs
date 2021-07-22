@@ -17,6 +17,7 @@ import {
 } from '../constants/categoryConstants';
 
 export const categoryListReducer = (state = { categorys: [] }, action: { type: any; payload: any }) => {
+	console.log({ categoryListReducer: action.payload });
 	switch (action.type) {
 		case CATEGORY_LIST_REQUEST:
 			return { loading: true, categorys: [] };

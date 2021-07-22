@@ -18,25 +18,20 @@ import {
 import axios from 'axios';
 
 export const listCategorys = (category = '', searchKeyword = '', sortOrder = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
+	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: CATEGORY_LIST_REQUEST });
-		const { userLogin: { userInfo } } = getState();
+
 		const { data } = await axios.get(
 			'/api/categorys?category=' +
 				category +
 				'&searchKeyword=' +
 				searchKeyword +
 				'&sortOrder=' +
-				sortOrder.toLowerCase(),
-			{
-				headers: {
-					Authorization: 'Bearer ' + userInfo.token
-				}
-			}
+				sortOrder.toLowerCase()
 		);
+		console.log({ listCategorys: data });
 		dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		dispatch({ type: CATEGORY_LIST_FAIL, payload: error.response.data.message });

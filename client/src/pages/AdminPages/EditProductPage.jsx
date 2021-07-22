@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
 import { listChips } from '../../actions/chipActions';
 import { API_Products } from '../../utils';
+import { listCategorys } from '../../actions/categoryActions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -69,7 +70,11 @@ const EditProductPage = (props) => {
 	const [ pathname, setPathname ] = useState();
 	const [ group_product, set_group_product ] = useState([]);
 	const [ chips, set_chips ] = useState([]);
-	const [ chip, set_chip ] = useState('');
+	// const [ chip, set_chip ] = useState('');
+	const [ categorys, set_categorys ] = useState([]);
+	// const [ category, set_categorys ] = useState('');
+	const [ subcategorys, set_subcategorys ] = useState([]);
+	// const [ subcategory, set_subcategory ] = useState('');
 	const [ finite_stock, set_finite_stock ] = useState(false);
 	// const [ product, set_product ] = useState('');
 	const [ products, set_products ] = useState([]);
@@ -100,14 +105,14 @@ const EditProductPage = (props) => {
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
 
+	const categoryList = useSelector((state) => state.categoryList);
+	const { categorys: categorys_list } = categoryList;
+
 	const productReviewDelete = useSelector((state) => state.productReviewDelete);
 	const { success: productDeleteSuccess } = productReviewDelete;
 
 	const dispatch = useDispatch();
 
-	// console.log({ product });
-
-	// console.log({ ID: id });
 	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
@@ -119,8 +124,8 @@ const EditProductPage = (props) => {
 			} else {
 				stableDispatch(detailsProduct(''));
 			}
-			stableDispatch(listProducts(''));
-			stableDispatch(listChips());
+
+			// stableDispatch(listCategorys());
 			get_all_options();
 			get_all_secondary_products();
 			// set_loading_data(false);
@@ -129,6 +134,14 @@ const EditProductPage = (props) => {
 		},
 		[ stableDispatch, props.match.params.pathname ]
 	);
+
+	useEffect(() => {
+		dispatch(listCategorys(''));
+		stableDispatch(listProducts(''));
+		stableDispatch(listChips());
+		return () => {};
+	}, []);
+
 	const get_all_options = async () => {
 		const { data } = await API_Products.get_all_options();
 		console.log({ data });
@@ -251,6 +264,8 @@ const EditProductPage = (props) => {
 		set_images(product.images);
 		// set_images(product.images);
 		set_chips(product.chips);
+		set_categorys(product.categorys);
+		set_subcategorys(product.subcategorys);
 		// set_image(product.image);
 		setVideo(product.video);
 		setBrand(product.brand);
@@ -308,7 +323,9 @@ const EditProductPage = (props) => {
 		set_product_collection('');
 		setCountInStock(0);
 		setHidden(false);
-		set_chip([]);
+		set_chips([]);
+		set_categorys([]);
+		set_subcategorys([]);
 		setSalePrice('');
 		set_sale_start_date(format_date('2021-01-01'));
 		set_sale_end_date(format_date('2021-01-01'));
@@ -368,6 +385,8 @@ const EditProductPage = (props) => {
 				// display_image,
 				images,
 				chips: chips.map((chip) => chip._id),
+				categorys: categorys.map((category) => category._id),
+				subcategorys: subcategorys.map((subcategory) => subcategory._id),
 				video,
 				brand,
 				category,
@@ -465,7 +484,33 @@ const EditProductPage = (props) => {
 			set_chips([ chip_object ]);
 		}
 
-		set_chip('');
+		// set_chip('');
+	};
+	const add_category = (e) => {
+		e.preventDefault();
+		const category_object = JSON.parse(e.target.value);
+		if (categorys) {
+			console.log('categorys.length > 0');
+			set_categorys((categorys) => [ ...categorys, category_object ]);
+		} else {
+			console.log('categorys.length === 0');
+			set_categorys([ category_object ]);
+		}
+
+		// set_category('');
+	};
+	const add_subcategory = (e) => {
+		e.preventDefault();
+		const subcategory_object = JSON.parse(e.target.value);
+		if (subcategorys) {
+			console.log('subcategorys.length > 0');
+			set_subcategorys((subcategorys) => [ ...subcategorys, subcategory_object ]);
+		} else {
+			console.log('subcategorys.length === 0');
+			set_subcategorys([ subcategory_object ]);
+		}
+
+		// set_chip('');
 	};
 
 	const update_pathname = () => {
@@ -477,25 +522,6 @@ const EditProductPage = (props) => {
 			}
 		}
 	};
-
-	// const add_subcategory = (e) => {
-	// 	e.preventDefault();
-	// 	console.log(subcategory);
-	// 	if (subcategory.indexOf(' ') >= 0) {
-	// 		console.log('indexOf');
-	// 		subcategory.split(' ').map((subcategory) => {
-	// 			set_subcategories((subcategories) => [ ...subcategories, subcategory ]);
-	// 		});
-	// 	} else if (subcategories) {
-	// 		console.log('subcategories.length > 0');
-	// 		set_subcategories((subcategories) => [ ...subcategories, subcategory ]);
-	// 	} else {
-	// 		console.log('subcategories.length === 0');
-	// 		set_subcategories([ subcategory ]);
-	// 	}
-
-	// 	set_subcategory('');
-	// };
 
 	const remove_image = (image_index, e) => {
 		e.preventDefault();
@@ -513,6 +539,22 @@ const EditProductPage = (props) => {
 			})
 		);
 	};
+	const remove_category = (category_index, e) => {
+		e.preventDefault();
+		set_categorys((categorys) =>
+			categorys.filter((category, index) => {
+				return category_index !== index;
+			})
+		);
+	};
+	const remove_subcategory = (subcategory_index, e) => {
+		e.preventDefault();
+		set_subcategorys((subcategorys) =>
+			subcategorys.filter((subcategory, index) => {
+				return subcategory_index !== index;
+			})
+		);
+	};
 	const remove_product_option = (option_index, e) => {
 		e.preventDefault();
 		set_product_options((option) =>
@@ -521,25 +563,6 @@ const EditProductPage = (props) => {
 			})
 		);
 	};
-	// const remove_subcategory = (subcategory_index, e) => {
-	// 	e.preventDefault();
-	// 	set_subcategories((subcategories) =>
-	// 		subcategories.filter((subcategory, index) => {
-	// 			return subcategory_index !== index;
-	// 		})
-	// 	);
-	// };
-	// const [ new_array, set_new_array ] = useState([]);
-	// const [ new_array, set_new_array ] = useState([]);
-
-	// useEffect(
-	// 	() => {
-	// 		set_images(new_array);
-
-	// 		return () => {};
-	// 	},
-	// 	[ new_array ]
-	// );
 
 	const move_image_up = (image_index, e) => {
 		e.preventDefault();
@@ -589,6 +612,52 @@ const EditProductPage = (props) => {
 												<i className="fas fa-times mr-5px" />
 											</button>
 											{chip.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
+	const category_display = (categorys) => {
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{categorys &&
+							categorys.map((category, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
+										<div>
+											<button className="btn icon" onClick={(e) => remove_category(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{category.name}
+										</div>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
+	const subcategory_display = (subcategorys) => {
+		return (
+			<div>
+				<div className="jc-b">
+					<div>
+						{subcategorys &&
+							subcategorys.map((subcategory, index) => {
+								return (
+									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
+										<div>
+											<button className="btn icon" onClick={(e) => remove_subcategory(index, e)}>
+												<i className="fas fa-times mr-5px" />
+											</button>
+											{subcategory.name}
 										</div>
 									</div>
 								);
@@ -1571,6 +1640,56 @@ const EditProductPage = (props) => {
 									</li>
 
 									{image_display(images)}
+									<div className="jc-b">
+										<li>
+											<label htmlFor="category">Categories</label>
+											<div className="ai-c h-25px mv-15px jc-c">
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => add_category(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose Category---
+														</option>
+														{categorys_list &&
+															categorys_list.map((category, index) => (
+																<option key={index} value={JSON.stringify(category)}>
+																	{category.name}
+																</option>
+															))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+											{category_display(categorys)}
+										</li>
+									</div>
+									<div className="jc-b">
+										<li>
+											<label htmlFor="subcategory">Subcategories</label>
+											<div className="ai-c h-25px mv-15px jc-c">
+												<div className="custom-select">
+													<select
+														className="qty_select_dropdown"
+														onChange={(e) => add_subcategory(e)}
+													>
+														<option key={1} defaultValue="">
+															---Choose Subcategory---
+														</option>
+														{categorys_list &&
+															categorys_list.map((subcategory, index) => (
+																<option key={index} value={JSON.stringify(subcategory)}>
+																	{subcategory.name}
+																</option>
+															))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+											{subcategory_display(subcategorys)}
+										</li>
+									</div>
 									{loading_checkboxes ? (
 										<div>Loading...</div>
 									) : (
@@ -1993,6 +2112,7 @@ const EditProductPage = (props) => {
 											{chip_display(chips)}
 										</li>
 									</div>
+
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">
