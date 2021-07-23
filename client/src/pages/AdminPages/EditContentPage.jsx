@@ -51,7 +51,11 @@ const EditContentPage = (props) => {
 	};
 
 	const set_email_state = (data) => {
+		console.log({ data });
 		set_home_page(data);
+		// if (content.home_page && content.home_page.images) {
+		set_images(data.images);
+		// }
 	};
 
 	const unset_state = () => {

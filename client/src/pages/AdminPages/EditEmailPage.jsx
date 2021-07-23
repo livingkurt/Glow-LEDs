@@ -12,6 +12,7 @@ const EditEmailPage = (props) => {
 	const [ email_type, set_email_type ] = useState('');
 	const [ email_h1, set_email_h1 ] = useState('');
 	const [ email_image, set_email_image ] = useState('');
+	const [ email_images, set_email_images ] = useState([]);
 	const [ email_show_image, set_email_show_image ] = useState('');
 	const [ email_h2, set_email_h2 ] = useState('');
 	const [ email_p, set_email_p ] = useState('');
@@ -45,6 +46,7 @@ const EditEmailPage = (props) => {
 		set_email_type(content.email_type);
 		set_email_h1(content.h1);
 		set_email_image(content.image);
+		set_email_images(content.images);
 		set_images(content.images);
 		set_email_show_image(content.show_image);
 		set_email_h2(content.h2);
@@ -59,6 +61,7 @@ const EditEmailPage = (props) => {
 		set_email_type(email.email_type);
 		set_email_h1(email.h1);
 		set_email_image(email.image);
+		set_email_images(email.images);
 		set_images(email.images);
 		set_email_show_image(email.show_image);
 		set_email_h2(email.h2);
@@ -72,6 +75,7 @@ const EditEmailPage = (props) => {
 		set_email_type('');
 		set_email_h1('');
 		set_images('');
+		set_email_images([]);
 		set_email_show_image('');
 		set_email_h2('');
 		set_email_p('');
@@ -187,127 +191,127 @@ const EditEmailPage = (props) => {
 		'Affiliate'
 	];
 
-	const add_image = (e) => {
-		e.preventDefault();
-		console.log(image);
-		if (image.indexOf(' ') >= 0) {
-			console.log('indexOf');
-			image.split(' ').map((image) => {
-				set_images((images) => [ ...images, image ]);
-			});
-		} else if (images) {
-			console.log('images.length > 0');
-			set_images((images) => [ ...images, image ]);
-		} else {
-			console.log('images.length === 0');
-			set_images([ image ]);
-		}
+	// const add_image = (e) => {
+	// 	e.preventDefault();
+	// 	console.log(image);
+	// 	if (image.indexOf(' ') >= 0) {
+	// 		console.log('indexOf');
+	// 		image.split(' ').map((image) => {
+	// 			set_images((images) => [ ...images, image ]);
+	// 		});
+	// 	} else if (images) {
+	// 		console.log('images.length > 0');
+	// 		set_images((images) => [ ...images, image ]);
+	// 	} else {
+	// 		console.log('images.length === 0');
+	// 		set_images([ image ]);
+	// 	}
 
-		set_image('');
-	};
-	const remove_image = (image_index, e) => {
-		e.preventDefault();
-		set_images((images) =>
-			images.filter((image, index) => {
-				return image_index !== index;
-			})
-		);
-	};
+	// 	set_image('');
+	// };
+	// const remove_image = (image_index, e) => {
+	// 	e.preventDefault();
+	// 	set_images((images) =>
+	// 		images.filter((image, index) => {
+	// 			return image_index !== index;
+	// 		})
+	// 	);
+	// };
 
-	const move_image_up = (image_index, e) => {
-		e.preventDefault();
-		const new_array = move(images, image_index, image_index - 1);
-		set_images(new_array);
-		// set_new_array(new_array);
-		image_display(new_array);
-	};
-	const move_image_down = (image_index, e) => {
-		e.preventDefault();
-		const new_array = move(images, image_index, image_index + 1);
-		set_images(new_array);
-		// set_new_array(new_array);
-		image_display(new_array);
-	};
+	// const move_image_up = (image_index, e) => {
+	// 	e.preventDefault();
+	// 	const new_array = move(images, image_index, image_index - 1);
+	// 	set_images(new_array);
+	// 	// set_new_array(new_array);
+	// 	image_display(new_array);
+	// };
+	// const move_image_down = (image_index, e) => {
+	// 	e.preventDefault();
+	// 	const new_array = move(images, image_index, image_index + 1);
+	// 	set_images(new_array);
+	// 	// set_new_array(new_array);
+	// 	image_display(new_array);
+	// };
 
-	function move(arr, old_index, new_index) {
-		console.log({ arr, old_index, new_index });
-		while (old_index < 0) {
-			old_index += arr.length;
-		}
-		while (new_index < 0) {
-			new_index += arr.length;
-		}
-		if (new_index >= arr.length) {
-			const k = new_index - arr.length;
-			while (k-- + 1) {
-				arr.push(undefined);
-			}
-		}
-		arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-		console.log({ arr });
-		return arr;
-	}
-	const image_display = (images) => {
-		return (
-			<div>
-				<div className="wrap jc-b">
-					{images &&
-						images.map((picture, index) => {
-							return (
-								<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
-									<div className="pos-rel">
-										<img
-											alt="Email"
-											style={{
-												width: '100%',
-												package_height: 'auto',
-												maxWidth: '100px',
-												maxHeight: '100px',
-												borderRadius: '15px'
-											}}
-											className="mv-10px ml-10px"
-											src={picture}
-										/>
-										<div className="ml-10px">{picture}</div>
+	// function move(arr, old_index, new_index) {
+	// 	console.log({ arr, old_index, new_index });
+	// 	while (old_index < 0) {
+	// 		old_index += arr.length;
+	// 	}
+	// 	while (new_index < 0) {
+	// 		new_index += arr.length;
+	// 	}
+	// 	if (new_index >= arr.length) {
+	// 		const k = new_index - arr.length;
+	// 		while (k-- + 1) {
+	// 			arr.push(undefined);
+	// 		}
+	// 	}
+	// 	arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+	// 	console.log({ arr });
+	// 	return arr;
+	// }
+	// const image_display = (images) => {
+	// 	return (
+	// 		<div>
+	// 			<div className="wrap jc-b">
+	// 				{images &&
+	// 					images.map((picture, index) => {
+	// 						return (
+	// 							<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
+	// 								<div className="pos-rel">
+	// 									<img
+	// 										alt="Email"
+	// 										style={{
+	// 											width: '100%',
+	// 											package_height: 'auto',
+	// 											maxWidth: '100px',
+	// 											maxHeight: '100px',
+	// 											borderRadius: '15px'
+	// 										}}
+	// 										className="mv-10px ml-10px"
+	// 										src={picture}
+	// 									/>
+	// 									<div className="ml-10px">{picture}</div>
 
-										<button
-											className="btn icon pos-abs right-10px top-15px"
-											onClick={(e) => remove_image(index, e)}
-										>
-											<i className="fas fa-times" />
-										</button>
-										<div className="pos-abs right-40px top-15px column">
-											{index > 0 && (
-												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
-													<i className=" fas fa-sort-up" />
-												</button>
-											)}
+	// 									<button
+	// 										className="btn icon pos-abs right-10px top-15px"
+	// 										onClick={(e) => remove_image(index, e)}
+	// 									>
+	// 										<i className="fas fa-times" />
+	// 									</button>
+	// 									<div className="pos-abs right-40px top-15px column">
+	// 										{index > 0 && (
+	// 											<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
+	// 												<i className=" fas fa-sort-up" />
+	// 											</button>
+	// 										)}
 
-											{index < images.length - 1 && (
-												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
-													<i
-														style={{ WebkitTransform: 'rotate(-180deg)' }}
-														className=" fas fa-sort-up"
-													/>
-												</button>
-											)}
-										</div>
-									</div>
-								</div>
-							);
-						})}
-				</div>
-				<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
-					<p>
-						{images &&
-							images.map((picture, index) => {
-								return `${picture}\n`;
-							})}
-					</p>
-				</div>
-			</div>
-		);
-	};
+	// 										{index < images.length - 1 && (
+	// 											<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
+	// 												<i
+	// 													style={{ WebkitTransform: 'rotate(-180deg)' }}
+	// 													className=" fas fa-sort-up"
+	// 												/>
+	// 											</button>
+	// 										)}
+	// 									</div>
+	// 								</div>
+	// 							</div>
+	// 						);
+	// 					})}
+	// 			</div>
+	// 			<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
+	// 				<p>
+	// 					{images &&
+	// 						images.map((picture, index) => {
+	// 							return `${picture}\n`;
+	// 						})}
+	// 				</p>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// };
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Email' : 'Create Email'}</h1>
@@ -505,7 +509,8 @@ const EditEmailPage = (props) => {
 											)}
 										</div>
 									</div>
-									{image_display(images)}
+									{/* {image_display(images)} */}
+
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
