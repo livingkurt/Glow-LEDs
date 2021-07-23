@@ -20,6 +20,7 @@ import paycheck_routes from './paycheck_routes';
 import survey_routes from './survey_routes';
 import parcel_routes from './parcel_routes';
 import category_routes from './category_routes';
+import setting_routes from './setting_routes';
 
 const router = express.Router();
 
@@ -45,5 +46,6 @@ router.use('/paychecks', paycheck_routes);
 router.use('/surveys', survey_routes);
 router.use('/parcels', parcel_routes);
 router.use('/categorys', category_routes);
+router.use('/settings', setting_routes);
 
 export default router;

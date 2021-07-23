@@ -45,11 +45,12 @@ const EditProductPage = (props) => {
 	const [ product_width, set_product_width ] = useState(0);
 	const [ product_height, set_product_height ] = useState(0);
 	const [ weight_pounds, set_weight_pounds ] = useState(0);
+	const [ weight_ounces, set_weight_ounces ] = useState(0);
 	const [ material_cost, set_material_cost ] = useState(0);
 	const [ filament_used, set_filament_used ] = useState(0);
 	const [ printing_time, set_printing_time ] = useState(0);
 	const [ assembly_time, set_assembly_time ] = useState(0);
-	const [ weight_ounces, set_weight_ounces ] = useState(0);
+
 	const [ default_option, set_default_option ] = useState(false);
 	const [ option, set_option ] = useState();
 	const [ macro_product, set_macro_product ] = useState();

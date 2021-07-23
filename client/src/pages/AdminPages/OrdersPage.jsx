@@ -10,8 +10,6 @@ import Pagination from 'react-js-pagination';
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ last_product_id, set_last_product_id ] = useState('');
-	const [ direction, set_direction ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ block_list_view, set_block_list_view ] = useState(false);
 
@@ -31,24 +29,9 @@ const OrdersPage = (props) => {
 	useEffect(
 		() => {
 			dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
-			// dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
-			// dispatch(listOrders());
 		},
 		[ successDelete, order_state, sortOrder, page, props.match.params.page ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
-	// 	},
-	// 	[ sortOrder ]
-	// );
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
-	// 	},
-	// 	[ page ]
-	// );
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -161,6 +144,11 @@ const OrdersPage = (props) => {
 					{block_list_view ? 'Block' : 'List'}
 				</button> */}
 
+				<Link to="/secure/glow/create_label">
+					<button className="btn primary" style={{ width: '160px' }}>
+						Create Label
+					</button>
+				</Link>
 				<Link to="/secure/glow/editorder">
 					<button className="btn primary" style={{ width: '160px' }}>
 						Create Order

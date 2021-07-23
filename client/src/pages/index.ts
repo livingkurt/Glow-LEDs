@@ -35,6 +35,9 @@ export { default as EditSurveyPage } from './AdminPages/EditSurveyPage';
 export { default as EditParcelPage } from './AdminPages/EditParcelPage';
 export { default as EditCategoryPage } from './AdminPages/EditCategoryPage';
 export { default as CategorysPage } from './AdminPages/CategorysPage';
+export { default as EditSettingPage } from './AdminPages/EditSettingPage';
+export { default as SettingsPage } from './AdminPages/SettingsPage';
+export { default as LabelCreatorPage } from './AdminPages/LabelCreatorPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

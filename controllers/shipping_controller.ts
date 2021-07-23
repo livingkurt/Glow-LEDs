@@ -120,6 +120,117 @@ export default {
 			console.log(err);
 		}
 	},
+	create_custom_label: async (req: any, res: any) => {
+		try {
+			const EasyPost = new easy_post_api(process.env.EASY_POST);
+			const to_shipping = req.body.data.to_shipping;
+			const from_shipping = req.body.data.from_shipping;
+			const package_dimensions = req.body.data.package_dimensions;
+			console.log({ data: req.body.data });
+
+			const toAddress = new EasyPost.Address({
+				name: to_shipping.first_name + ' ' + to_shipping.last_name,
+				street1: to_shipping.address_1,
+				street2: to_shipping.address_2,
+				city: to_shipping.city,
+				state: to_shipping.state,
+				zip: to_shipping.postalCode,
+				country: to_shipping.country
+			});
+			const fromAddress = new EasyPost.Address({
+				street1: from_shipping.address_1,
+				street2: from_shipping.address_2,
+				city: from_shipping.city,
+				state: from_shipping.state,
+				zip: from_shipping.postalCode,
+				country: from_shipping.country,
+				company: from_shipping.company,
+				phone: from_shipping.phone,
+				email: from_shipping.email
+			});
+
+			let weight = 0;
+			if (parseInt(package_dimensions.weight_pounds)) {
+				weight += parseInt(package_dimensions.weight_pounds) * 16 + parseInt(package_dimensions.weight_ounces);
+			} else {
+				weight += parseInt(package_dimensions.weight_ounces);
+			}
+
+			const parcel = new EasyPost.Parcel({
+				length: package_dimensions.package_length,
+				width: package_dimensions.package_width,
+				height: package_dimensions.package_height,
+				weight
+			});
+
+			const shipment = new EasyPost.Shipment({
+				to_address: toAddress,
+				from_address: fromAddress,
+				parcel: parcel
+			});
+			const saved_shipment = await shipment.save();
+			const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
+			const label = await created_shipment.buy(created_shipment.lowestRate(), 0);
+			res.send(label);
+		} catch (err) {
+			console.log(err);
+		}
+	},
+	get_custom_shipping_rates: async (req: any, res: any) => {
+		try {
+			const EasyPost = new easy_post_api(process.env.EASY_POST);
+			const to_shipping = req.body.data.to_shipping;
+			const from_shipping = req.body.data.from_shipping;
+			const package_dimensions = req.body.data.package_dimensions;
+			// console.log({ data: req.body.data });
+			const toAddress = new EasyPost.Address({
+				name: to_shipping.first_name + ' ' + to_shipping.last_name,
+				street1: to_shipping.address_1,
+				street2: to_shipping.address_2,
+				city: to_shipping.city,
+				state: to_shipping.state,
+				zip: to_shipping.postalCode,
+				country: to_shipping.country
+			});
+			const fromAddress = new EasyPost.Address({
+				street1: from_shipping.address_1,
+				street2: from_shipping.address_2,
+				city: from_shipping.city,
+				state: from_shipping.state,
+				zip: from_shipping.postalCode,
+				country: from_shipping.country,
+				company: from_shipping.company,
+				phone: from_shipping.phone,
+				email: from_shipping.email
+			});
+
+			let weight = 0;
+			if (parseInt(package_dimensions.weight_pounds)) {
+				weight += parseInt(package_dimensions.weight_pounds) * 16 + parseInt(package_dimensions.weight_ounces);
+			} else {
+				weight += parseInt(package_dimensions.weight_ounces);
+			}
+			console.log({ weight });
+
+			const parcel = new EasyPost.Parcel({
+				length: package_dimensions.package_length,
+				width: package_dimensions.package_width,
+				height: package_dimensions.package_height,
+				weight
+			});
+
+			const shipment = new EasyPost.Shipment({
+				to_address: toAddress,
+				from_address: fromAddress,
+				parcel: parcel
+			});
+			const saved_shipment = await shipment.save();
+			res.send({ shipment: saved_shipment, parcel: package_dimensions });
+		} catch (err) {
+			console.log(err);
+			res.send({ shipment: {}, parcel: {}, error: err });
+		}
+	},
 	create_return_label: async (req: any, res: any) => {
 		try {
 			const EasyPost = new easy_post_api(process.env.EASY_POST);

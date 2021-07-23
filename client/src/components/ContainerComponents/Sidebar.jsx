@@ -642,6 +642,11 @@ const Sidebar = (props) => {
 									Categorys
 								</button>
 							</Link>
+							<Link to="/secure/glow/settings">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Settings
+								</button>
+							</Link>
 							<Link to="/secure/glow/edit_all_data">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Edit All Data

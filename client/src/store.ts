@@ -85,6 +85,12 @@ import {
 	myPaycheckListReducer
 } from './reducers/paycheckReducers';
 import {
+	settingDeleteReducer,
+	settingDetailsReducer,
+	settingListReducer,
+	settingSaveReducer
+} from './reducers/settingReducers';
+import {
 	categoryDeleteReducer,
 	categoryDetailsReducer,
 	categoryListReducer,
@@ -198,6 +204,10 @@ const reducer = combineReducers({
 	myPaycheckList: myPaycheckListReducer,
 	paycheckSave: paycheckSaveReducer,
 	paycheckDelete: paycheckDeleteReducer,
+	settingList: settingListReducer,
+	settingDetails: settingDetailsReducer,
+	settingSave: settingSaveReducer,
+	settingDelete: settingDeleteReducer,
 	categoryList: categoryListReducer,
 	categoryDetails: categoryDetailsReducer,
 	categorySave: categorySaveReducer,

@@ -22,3 +22,4 @@ export { default as Paycheck } from './paycheck';
 export { default as Parcel } from './parcel';
 export { default as Survey } from './survey';
 export { default as Category } from './category';
+export { default as Setting } from './setting';
