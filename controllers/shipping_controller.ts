@@ -129,15 +129,19 @@ export default {
 			console.log({ data: req.body.data });
 
 			const toAddress = new EasyPost.Address({
-				name: to_shipping.first_name + ' ' + to_shipping.last_name,
+				name: to_shipping.company ? '' : to_shipping.first_name + ' ' + to_shipping.last_name,
 				street1: to_shipping.address_1,
 				street2: to_shipping.address_2,
 				city: to_shipping.city,
 				state: to_shipping.state,
 				zip: to_shipping.postalCode,
-				country: to_shipping.country
+				country: to_shipping.country,
+				company: to_shipping.company,
+				phone: to_shipping.phone,
+				email: to_shipping.email
 			});
 			const fromAddress = new EasyPost.Address({
+				name: from_shipping.company ? '' : from_shipping.first_name + ' ' + from_shipping.last_name,
 				street1: from_shipping.address_1,
 				street2: from_shipping.address_2,
 				city: from_shipping.city,
@@ -184,15 +188,19 @@ export default {
 			const package_dimensions = req.body.data.package_dimensions;
 			// console.log({ data: req.body.data });
 			const toAddress = new EasyPost.Address({
-				name: to_shipping.first_name + ' ' + to_shipping.last_name,
+				name: to_shipping.company ? '' : to_shipping.first_name + ' ' + to_shipping.last_name,
 				street1: to_shipping.address_1,
 				street2: to_shipping.address_2,
 				city: to_shipping.city,
 				state: to_shipping.state,
 				zip: to_shipping.postalCode,
-				country: to_shipping.country
+				country: to_shipping.country,
+				company: to_shipping.company,
+				phone: to_shipping.phone,
+				email: to_shipping.email
 			});
 			const fromAddress = new EasyPost.Address({
+				name: from_shipping.company ? '' : from_shipping.first_name + ' ' + from_shipping.last_name,
 				street1: from_shipping.address_1,
 				street2: from_shipping.address_2,
 				city: from_shipping.city,
