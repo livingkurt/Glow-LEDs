@@ -29,6 +29,7 @@ export const listLogs = (category = '', searchKeyword = '', sortOrder = '') => a
 		);
 		dispatch({ type: LOG_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: LOG_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -57,6 +58,7 @@ export const saveLog = (log: any) => async (
 			dispatch({ type: LOG_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: LOG_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -67,6 +69,7 @@ export const detailsLog = (pathname: string) => async (dispatch: (arg0: { type: 
 		const { data } = await axios.get('/api/logs/' + pathname);
 		dispatch({ type: LOG_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: LOG_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -85,6 +88,7 @@ export const deleteLog = (logId: string) => async (
 		});
 		dispatch({ type: LOG_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: LOG_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

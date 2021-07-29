@@ -26,6 +26,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 		}
 	},
 	find_all_expenses: async (req: any, res: any) => {
@@ -48,6 +49,7 @@ export default {
 				res.send(expenses);
 			}
 		} catch (error) {
+			console.log({ error });
 			console.log({ error });
 		}
 	},
@@ -72,6 +74,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 		}
 	},
 	find_all_features: async (req: any, res: any) => {
@@ -94,6 +97,7 @@ export default {
 				res.send(features);
 			}
 		} catch (error) {
+			console.log({ error });
 			console.log({ error });
 		}
 	},
@@ -118,6 +122,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 		}
 	},
 	find_all_emails: async (req: any, res: any) => {
@@ -140,6 +145,7 @@ export default {
 				res.send(emails);
 			}
 		} catch (error) {
+			console.log({ error });
 			console.log({ error });
 		}
 	},
@@ -164,6 +170,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 		}
 	},
 	find_all_contents: async (req: any, res: any) => {
@@ -186,6 +193,7 @@ export default {
 				res.send(contents);
 			}
 		} catch (error) {
+			console.log({ error });
 			console.log({ error });
 		}
 	},
@@ -210,6 +218,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 		}
 	},
 	find_all_parcels: async (req: any, res: any) => {
@@ -233,6 +242,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 		}
 	},
 	find_all_chips: async (req: any, res: any) => {
@@ -255,6 +265,7 @@ export default {
 				res.send(chips);
 			}
 		} catch (error) {
+			console.log({ error });
 			console.log({ error });
 		}
 	},
@@ -310,6 +321,7 @@ export default {
 					}
 					const result = await product.save();
 				} catch (error) {
+					console.log({ error });
 					console.log({ inside: error });
 				}
 
@@ -318,6 +330,7 @@ export default {
 			// console.log({ products });
 			res.send(products);
 		} catch (error) {
+			console.log({ error });
 			console.log({ outside: error });
 		}
 	}

@@ -44,6 +44,7 @@ export default {
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -212,6 +213,7 @@ export default {
 			});
 			res.send(users);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -254,6 +256,7 @@ export default {
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -302,6 +305,7 @@ export default {
 				});
 			});
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -335,7 +339,7 @@ export default {
 			// .populate('affiliate.public_code')
 			// .populate('affiliate.chips')
 			// .populate('affiliate.products');
-			console.log({ user });
+			// console.log({ user });
 			if (user) {
 				log_request({
 					method: 'GET',
@@ -359,6 +363,7 @@ export default {
 				user.is_affiliated = req.body.is_affiliated || user.is_affiliated;
 				user.deleted = req.body.deleted || false;
 				const updatedUser = await user.save();
+				console.log({ updatedUser });
 				if (updatedUser) {
 					log_request({
 						method: 'PUT',
@@ -370,7 +375,7 @@ export default {
 						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 					});
 					// const updatedUser = await User.updateOne({ _id: userId }, user);
-					console.log({ updatedUser });
+					// console.log({ updatedUser });
 					const payload = {
 						_id: updatedUser.id,
 						first_name: updatedUser.first_name,
@@ -399,19 +404,6 @@ export default {
 							});
 						}
 					);
-					// res.send({
-					// 	_id: updatedUser.id,
-					// 	first_name: updatedUser.first_name,
-					// 	last_name: updatedUser.last_name,
-					// 	email: updatedUser.email,
-					// 	affiliate: updatedUser.affiliate,
-					// 	email_subscription: updatedUser.email_subscription,
-					// 	shipping: updatedUser.shipping,
-					// 	is_affiliated: updatedUser.is_affiliated,
-					// 	isVerified: updatedUser.isVerified,
-					// 	isAdmin: updatedUser.isAdmin,
-					// 	token: getToken(updatedUser)
-					// });
 				} else {
 					log_request({
 						method: 'PUT',
@@ -428,6 +420,7 @@ export default {
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -480,6 +473,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -529,6 +523,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'DELETE',
 				path: req.originalUrl,
@@ -544,6 +539,7 @@ export default {
 		console.log({ password_reset: req.body });
 		try {
 			const user: any = await User.findOne({ _id: req.body.user_id });
+			console.log({ user });
 			if (!user) {
 				log_request({
 					method: 'PUT',
@@ -575,6 +571,7 @@ export default {
 				});
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -615,6 +612,7 @@ export default {
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -702,6 +700,7 @@ export default {
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -769,6 +768,7 @@ export default {
 				return res.status(500).send({ message: 'Error Getting User' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -791,6 +791,7 @@ export default {
 			// res.json({ message: "User Already Exists" })
 			res.status(200).send({ message: 'No User Found' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 			res.send(error);
 		}
@@ -832,6 +833,7 @@ export default {
 				});
 			}
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 			res.send(error);
 		}

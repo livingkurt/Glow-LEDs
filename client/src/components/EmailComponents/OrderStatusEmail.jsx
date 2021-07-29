@@ -3,9 +3,9 @@ import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
-import { API_Emails } from '../../utils';
+import { API_Emails, API_Orders } from '../../utils';
 import { format_date, toCapitlize } from '../../utils/helper_functions';
-import { detailsOrder, detailsOrderPublic } from '../../actions/orderActions';
+import { detailsOrder, detailsOrderPublic, update_order } from '../../actions/orderActions';
 import {
 	determine_product_name,
 	email_sale_price_switch,
@@ -937,11 +937,17 @@ const OrderStatusEmail = (props) => {
 		console.log({ request });
 
 		if (data && request) {
-			// history.goBack();
-			// setTimeout(() => {
-			// 	history.push(`/secure/account/order/${order._id}`);
-			// }, 1000);
-			history.push(`/secure/account/order/${order._id}`);
+			if (props.match.params.batch === 'true') {
+				console.log({ send_order_email: 'mark_as_shipped' });
+				const { data: orders } = await API_Orders.mark_as_shipped();
+				dispatch(update_order(orders[0], false, 'isShipped', 'shippedAt'));
+				// const { data: orders } = await API_Orders.mark_as_shipped();
+				console.log({ send_order_email: 'redirect to order status email' });
+				history.push(`/secure/glow/emails/order_status/${orders[0]._id}/shipped/true/true`);
+			} else {
+				history.push(`/secure/account/order/${order._id}`);
+			}
+
 			set_loading(false);
 		}
 	};

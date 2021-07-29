@@ -30,7 +30,7 @@ const ChangePasswordPage = (props) => {
 		setCurrentPasswordValidations(request.errors.current_password);
 		setPasswordValidations(request.errors.password);
 		setRePasswordValidations(request.errors.rePassword);
-
+		console.log({ isValid: request.isValid });
 		if (request.isValid) {
 			dispatch(password_reset(userInfo._id, password, rePassword));
 			history.push('/secure/account/profile');

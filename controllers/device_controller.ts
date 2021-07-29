@@ -78,6 +78,7 @@ export default {
 			}
 			return res.status(500).send({ message: ' Error Updating LEDs' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 		}
 	},
@@ -95,6 +96,7 @@ export default {
 			}
 			return res.status(500).send({ message: ' Error Updating LEDs' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 		}
 	},
@@ -112,6 +114,7 @@ export default {
 			// }
 			// return res.status(500).send({ message: ' Error Updating LEDs' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 		}
 	},
@@ -126,6 +129,7 @@ export default {
 			}
 			return res.status(500).send({ message: ' Error Updating LEDs' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 		}
 	},
@@ -139,6 +143,7 @@ export default {
 			}
 			return res.status(500).send({ message: ' Error Updating LEDs' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 		}
 	},
@@ -152,6 +157,7 @@ export default {
 			}
 			return res.status(500).send({ message: ' Error Updating LEDs' });
 		} catch (error) {
+			console.log({ error });
 			console.log(error);
 		}
 	}

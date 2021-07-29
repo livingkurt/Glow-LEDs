@@ -277,10 +277,10 @@ export const determine_product_name = (item, show_qty, date) => {
 	let date_1 = new Date('2021-07-16');
 	date_1 = date_1.toISOString();
 	const date_2 = date;
-	console.log({ date_1 });
-	console.log({ date_2 });
-	console.log({ item });
-	console.log({ Test: date_1 >= date_2 });
+	// console.log({ date_1 });
+	// console.log({ date_2 });
+	// console.log({ item });
+	// console.log({ Test: date_1 >= date_2 });
 	if (date_1 <= date_2 || !date) {
 		if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
 			return (

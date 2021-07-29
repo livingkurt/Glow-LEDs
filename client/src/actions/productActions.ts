@@ -53,6 +53,7 @@ export const listProducts = (
 		);
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: PRODUCT_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -81,6 +82,7 @@ export const saveProduct = (product: any) => async (
 			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -93,6 +95,7 @@ export const detailsProduct = (pathname: string) => async (
 		const { data } = await axios.get('/api/products/' + pathname);
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -112,6 +115,7 @@ export const deleteProduct = (id: string) => async (
 		});
 		dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -137,6 +141,7 @@ export const saveProductReview = (
 		);
 		dispatch({ type: PRODUCT_REVIEW_SAVE_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -155,6 +160,7 @@ export const saveProductReview = (
 // 		});
 // 		dispatch({ type: PRODUCT_REVIEW_DELETE_SUCCESS, payload: data });
 // 	} catch (error) {
+
 // 		dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: error.response.data.message });
 // 	}
 // };

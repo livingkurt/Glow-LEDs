@@ -41,6 +41,7 @@ export const listAffiliates = (category = '', searchKeyword = '', sortOrder = ''
 		);
 		dispatch({ type: AFFILIATE_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: AFFILIATE_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -101,6 +102,7 @@ export const saveAffiliate = (affiliate: any) => async (
 			dispatch({ type: AFFILIATE_REMOVE_STATE, payload: {} });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: AFFILIATE_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -113,6 +115,7 @@ export const detailsAffiliate = (pathname: string) => async (
 		const { data } = await axios.get('/api/affiliates/' + pathname);
 		dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: AFFILIATE_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -131,6 +134,7 @@ export const deleteAffiliate = (pathname: string) => async (
 		});
 		dispatch({ type: AFFILIATE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: AFFILIATE_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

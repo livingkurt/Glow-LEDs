@@ -36,5 +36,6 @@ router.route('/each_month_income/:date').get(order_controller.each_month_income)
 router.route('/daily_income').get(order_controller.daily_income);
 router.route('/weekly_income').get(order_controller.weekly_income);
 router.route('/monthly_income').get(order_controller.monthly_income);
+router.route('/mark_as_shipped').put(order_controller.mark_as_shipped);
 
 export default router;

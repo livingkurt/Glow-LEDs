@@ -29,6 +29,7 @@ export const listChips = (category = '', searchKeyword = '', sortOrder = '') => 
 		);
 		dispatch({ type: CHIP_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CHIP_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -57,6 +58,7 @@ export const saveChip = (chip: any) => async (
 			dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CHIP_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -67,6 +69,7 @@ export const detailsChip = (pathname: string) => async (dispatch: (arg0: { type:
 		const { data } = await axios.get('/api/chips/' + pathname);
 		dispatch({ type: CHIP_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CHIP_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -85,6 +88,7 @@ export const deleteChip = (chipId: string) => async (
 		});
 		dispatch({ type: CHIP_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CHIP_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

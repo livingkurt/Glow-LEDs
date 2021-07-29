@@ -52,6 +52,7 @@ export default {
 			console.log({ teams });
 			res.send(teams);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -96,6 +97,7 @@ export default {
 				res.status(404).send({ message: 'Team Not Found.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -140,6 +142,7 @@ export default {
 				res.status(404).send({ message: 'Team Not Found.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -178,6 +181,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Team.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -221,6 +225,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Team.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -260,6 +265,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'DELETE',
 				path: req.originalUrl,

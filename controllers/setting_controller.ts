@@ -40,6 +40,7 @@ export default {
 			});
 			res.send(settings);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -70,6 +71,7 @@ export default {
 			});
 			res.send(settings);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -110,6 +112,7 @@ export default {
 				res.status(404).send({ message: 'Setting Not Found.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -149,6 +152,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Setting.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -192,6 +196,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Setting.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -232,6 +237,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'DELETE',
 				path: req.originalUrl,

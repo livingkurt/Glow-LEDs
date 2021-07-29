@@ -29,6 +29,7 @@ export const listFeatures = (category = '', searchKeyword = '', sortOrder = '') 
 		);
 		dispatch({ type: FEATURE_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: FEATURE_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -67,6 +68,7 @@ export const saveFeature = (feature: {
 			dispatch({ type: FEATURE_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: FEATURE_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -80,6 +82,7 @@ export const detailsFeature = (pathname: string) => async (
 		const { data } = await axios.get('/api/features/' + pathname);
 		dispatch({ type: FEATURE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: FEATURE_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -98,6 +101,7 @@ export const deleteFeature = (featureId: string) => async (
 		});
 		dispatch({ type: FEATURE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: FEATURE_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

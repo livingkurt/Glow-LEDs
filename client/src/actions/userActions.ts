@@ -73,6 +73,7 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 		// Set current user to empty object {} which will set isAuthenticated to false
 		dispatch(setCurrentUser({}));
 	} catch (error) {
+		console.log({ error });
 		console.log({ error: error.response.data.message });
 		dispatch({
 			type: USER_REGISTER_FAIL,
@@ -128,6 +129,7 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 		// Set current user
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
+		console.log({ error });
 		console.log({ login: error.response.data.message });
 		dispatch({
 			type: USER_LOGIN_FAIL,
@@ -179,6 +181,7 @@ export const logout = () => (dispatch: (arg0: { type: string; payload: any }) =>
 // 		// Set current user
 // 		dispatch(setCurrentUser(decoded));
 // 	} catch (error) {
+
 // 		console.log({ login: error.response.data.message });
 // 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
 // 	}
@@ -195,6 +198,7 @@ export const logout = () => (dispatch: (arg0: { type: string; payload: any }) =>
 // 		// axios.post('/api/emails/verify', data);
 // 		// Cookie.set('userInfo', JSON.stringify(data));
 // 	} catch (error) {
+
 // 		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
 // 	}
 // };
@@ -207,6 +211,7 @@ export const logout = () => (dispatch: (arg0: { type: string; payload: any }) =>
 // 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 // 		Cookie.set('userInfo', JSON.stringify(data));
 // 	} catch (error) {
+
 // 		console.log({ login: error });
 // 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
 // 	}
@@ -222,7 +227,7 @@ export const update = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ userdata });
+	console.log({ update: userdata });
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_REQUEST,
@@ -260,6 +265,7 @@ export const update = (userdata: any) => async (
 		localStorage.setItem('jwtToken', token);
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_UPDATE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -288,6 +294,7 @@ export const saveUser = (user: any) => async (
 			dispatch({ type: USER_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -296,7 +303,7 @@ export const updateUser = (userdata: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log(userdata);
+	console.log({ updateUser: userdata });
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_USER_REQUEST,
@@ -336,6 +343,7 @@ export const updateUser = (userdata: any) => async (
 		dispatch({ type: USER_UPDATE_USER_SUCCESS, payload: data });
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.response.data.message });
 	}
 };
@@ -347,6 +355,7 @@ export const reset_password = (email: string) => async (dispatch: (arg0: { type:
 		dispatch({ type: USER_PASSWORD_RESET_SUCCESS, payload: data });
 		axios.post('/api/emails/reset_password', data);
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error.response.data.message });
 	}
 };
@@ -357,11 +366,14 @@ export const password_reset = (user_id: string, password: string, repassword: st
 ) => {
 	dispatch({ type: USER_RESET_PASSWORD_REQUEST, payload: { user_id, password, repassword } });
 	try {
+		console.log({ password_reset: { user_id, password, repassword } });
 		const { data } = await axios.put('/api/users/password_reset', { user_id, password, repassword });
+		console.log({ password_reset: data });
 		dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
 		// axios.post("/api/emails/passwordreset", { email });
 		axios.post('/api/emails/password_reset', data);
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
 	}
 };
@@ -379,6 +391,7 @@ export const password_reset = (user_id: string, password: string, repassword: st
 // 		// axios.post("/api/emails/passwordreset", { email });
 // 		axios.post('/api/emails/password_reset', data);
 // 	} catch (error) {
+
 // 		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
 // 	}
 // };
@@ -393,6 +406,7 @@ export const verify = (user_id: string) => async (dispatch: (arg0: { type: strin
 		axios.post('/api/emails/verified', data);
 		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_VERIFY_FAIL, payload: error.response.data.message });
 	}
 };
@@ -448,6 +462,7 @@ export const contact = (
 		dispatch({ type: USER_CONTACT_SUCCESS, payload: data });
 		dispatch({ type: USER_CONTACT_REMOVE_SUCCESS, payload: {} });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_CONTACT_FAIL, payload: error.response.data.message });
 	}
 };
@@ -475,6 +490,7 @@ export const listUsers = (category = '', searchKeyword = '', sortOrder = '') => 
 		);
 		dispatch({ type: USER_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -491,6 +507,7 @@ export const deleteUser = (userId: string) => async (
 		});
 		dispatch({ type: USER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_DELETE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -509,6 +526,7 @@ export const detailsUser = (userId: string) => async (
 		});
 		dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };

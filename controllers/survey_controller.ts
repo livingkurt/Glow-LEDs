@@ -40,6 +40,7 @@ export default {
 			});
 			res.send(surveys);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -80,6 +81,7 @@ export default {
 				res.status(404).send({ message: 'Survey Not Found.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -118,6 +120,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Survey.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -163,6 +166,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Survey.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -202,6 +206,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'DELETE',
 				path: req.originalUrl,

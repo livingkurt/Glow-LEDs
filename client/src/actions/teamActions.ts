@@ -30,6 +30,7 @@ export const listTeams = (category = '', searchKeyword = '', sortOrder = '') => 
 		console.log({ data });
 		dispatch({ type: TEAM_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: TEAM_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -58,6 +59,7 @@ export const saveTeam = (team: any) => async (
 			dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: TEAM_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -68,6 +70,7 @@ export const detailsTeam = (pathname: string) => async (dispatch: (arg0: { type:
 		const { data } = await axios.get('/api/teams/' + pathname);
 		dispatch({ type: TEAM_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: TEAM_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -86,6 +89,7 @@ export const deleteTeam = (teamId: string) => async (
 		});
 		dispatch({ type: TEAM_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: TEAM_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

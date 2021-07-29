@@ -54,6 +54,7 @@ export default {
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -136,6 +137,7 @@ export default {
 				currentPage: parseInt(page)
 			});
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -161,6 +163,7 @@ export default {
 			});
 			res.send(orders);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -186,6 +189,7 @@ export default {
 			});
 			res.send(orders);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -227,6 +231,7 @@ export default {
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -285,6 +290,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -326,6 +332,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Order.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'POST',
 				path: req.originalUrl,
@@ -365,6 +372,7 @@ export default {
 				res.status(404).send({ message: 'Order not Updated.' });
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'PUT',
 				path: req.originalUrl,
@@ -404,6 +412,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'DELETE',
 				path: req.originalUrl,
@@ -535,6 +544,7 @@ export default {
 				.populate('orderItems.secondary_product');
 			res.send(orders);
 		} catch (error) {
+			console.log({ error });
 			// log_error({
 			// 	method: 'GET',
 			// 	path: req.originalUrl,
@@ -567,6 +577,7 @@ export default {
 			});
 			res.json(orders);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -605,6 +616,7 @@ export default {
 			});
 			res.json(orders);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -636,6 +648,7 @@ export default {
 			});
 			res.json(orders);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -667,6 +680,7 @@ export default {
 			});
 			res.json(orders);
 		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,
@@ -698,6 +712,41 @@ export default {
 			});
 			res.json(orders);
 		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Orders' });
+		}
+	},
+	mark_as_shipped: async (req: any, res: any) => {
+		try {
+			const orders = await Order.find({
+				deleted: false,
+				isManufactured: true,
+				isPackaged: true,
+				isShipped: false,
+				isDelivered: false
+			});
+			console.log({ orders });
+
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: orders,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.json(orders);
+		} catch (error) {
+			console.log({ error });
 			log_error({
 				method: 'GET',
 				path: req.originalUrl,

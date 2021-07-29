@@ -29,6 +29,7 @@ export const listContents = (category = '', searchKeyword = '', sortOrder = '') 
 		);
 		dispatch({ type: CONTENT_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CONTENT_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -58,6 +59,7 @@ export const saveContent = (content: any) => async (
 			dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CONTENT_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -70,6 +72,7 @@ export const detailsContent = (pathname: string) => async (
 		const { data } = await axios.get('/api/contents/' + pathname);
 		dispatch({ type: CONTENT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CONTENT_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -88,6 +91,7 @@ export const deleteContent = (contentId: string) => async (
 		});
 		dispatch({ type: CONTENT_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: CONTENT_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

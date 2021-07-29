@@ -11,33 +11,6 @@ export interface IGetUserAuthInfoRequest extends Request {
 }
 
 export const getToken = (user: any) => {
-	// const payload = {
-	// 	_id: user.id,
-	// 	first_name: user.first_name,
-	// 	last_name: user.last_name,
-	// 	email: user.email,
-	// 	affiliate: user.affiliate,
-	// 	email_subscription: user.email_subscription,
-	// 	is_affiliated: user.is_affiliated,
-	// 	isVerified: user.isVerified,
-	// 	isAdmin: user.isAdmin,
-	// 	shipping: user.shipping
-	// };
-
-	// return jwt.sign(
-	// 	payload,
-	// 	config.JWT_SECRET,
-	// 	{
-	// 		expiresIn: 31556926 // 1 year in seconds
-	// 	},
-	// 	(err, token) => {
-	// 		return {
-	// 			success: true,
-	// 			token: 'Bearer ' + token
-	// 		};
-	// 	}
-	// );
-
 	return jwt.sign(
 		{
 			_id: user._id,
@@ -159,6 +132,7 @@ export const make_private_code = (length: any) => {
 // 		const data = await Promise;
 // 		return [ data, null ];
 // 	} catch (error) {
+console.log({ error });
 // 		console.error(error);
 // 		return [ null, error ];
 // 	}

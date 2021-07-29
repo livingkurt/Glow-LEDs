@@ -30,6 +30,7 @@ export const listSurveys = (category = '', searchKeyword = '', sortOrder = '') =
 		);
 		dispatch({ type: SURVEY_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SURVEY_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -59,6 +60,7 @@ export const saveSurvey = (survey: any) => async (
 			dispatch({ type: SURVEY_REMOVE_STATE, payload: {} });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SURVEY_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -77,6 +79,7 @@ export const detailsSurvey = (pathname: string) => async (
 		});
 		dispatch({ type: SURVEY_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SURVEY_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -95,6 +98,7 @@ export const deleteSurvey = (surveyId: string) => async (
 		});
 		dispatch({ type: SURVEY_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SURVEY_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

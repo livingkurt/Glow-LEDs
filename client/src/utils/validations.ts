@@ -149,7 +149,7 @@ export const validate_registration = (data: {
 	}
 	return {
 		errors,
-		isValid: isEmpty2(errors)
+		isValid: isEmpty(errors)
 	};
 };
 
@@ -336,7 +336,7 @@ export const validate_profile = (data: { first_name: any; last_name: any; email:
 
 	return {
 		errors,
-		isValid: isEmpty2(errors)
+		isValid: !isEmpty2(errors)
 	};
 };
 
@@ -385,9 +385,10 @@ export const validate_password_change = async (data: {
 	if (!isEquals(data.password, data.rePassword)) {
 		errors.rePassword = 'Passwords must match';
 	}
+	console.log({ errors });
 	return {
 		errors,
-		isValid: isEmpty2(errors)
+		isValid: isEmpty(errors)
 	};
 };
 
@@ -419,7 +420,7 @@ export const validate_passwords = async (data: { id: any; password: any; rePassw
 	}
 	return {
 		errors,
-		isValid: isEmpty2(errors)
+		isValid: isEmpty(errors)
 	};
 };
 

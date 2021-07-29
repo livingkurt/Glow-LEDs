@@ -115,6 +115,7 @@ export const top_code_usage_upload = async (affiliates: any, orders: any, last_m
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
+		console.log({ error });
 	}
 };
 
@@ -271,6 +272,7 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
+		console.log({ error });
 	}
 };
 
@@ -368,6 +370,7 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
+		console.log({ error });
 	}
 };
 
@@ -460,6 +463,7 @@ export const sponsor_revenue_upload = async (affiliates: any, orders: any, last_
 		await newSheet.saveUpdatedCells();
 		// await newSheet.delete();
 	} catch (error) {
+		console.log({ error });
 		console.log({ error });
 	}
 };
@@ -618,6 +622,7 @@ export const team_revenue_upload = async (teams: any, orders: any, last_months_o
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
+		console.log({ error });
 	}
 };
 
@@ -720,6 +725,7 @@ export const facebook_catalog_upload = async (products: any) => {
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
+		console.log({ error });
 	}
 };
 
@@ -806,6 +812,7 @@ export const google_catalog_upload = async (products: any) => {
 		// const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
 		// await newSheet.delete();
 	} catch (error) {
+		console.log({ error });
 		console.log({ error });
 	}
 };

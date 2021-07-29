@@ -89,6 +89,7 @@ export const createPayOrder = (
 		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
+		console.log({ error });
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
 		console.log({ error_response: error.response });
@@ -185,6 +186,7 @@ export const createPayOrderGuest = (
 					dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 				}
 			} catch (error) {
+				console.log({ error });
 				dispatch({ type: USER_SAVE_REQUEST, payload: {} });
 				// if (!user_data && !user_data._id) {
 				// console.log({ user_data });
@@ -222,6 +224,7 @@ export const createPayOrderGuest = (
 			}
 		}
 	} catch (error) {
+		console.log({ error });
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
 		console.log({ error_response: error.response });
@@ -252,6 +255,7 @@ export const createOrderGuest = (order: {
 		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
+		console.log({ error });
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
 		console.log({ error_response: error.response });
@@ -288,6 +292,7 @@ export const createOrder = (order: {
 		Cookie.remove('diffuser_cap');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -312,6 +317,7 @@ export const payOrder = (order: any, paymentMethod: any) => async (
 		// axios.post('/api/emails/paid', { ...data.order, user_data, token });
 		// axios.post('/api/emails/orderpaid', { ...data.order, user_data, token });
 	} catch (error) {
+		console.log({ error });
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
 		console.log({ error_response: error.response });
@@ -327,6 +333,7 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
 		console.log({ order: data.order });
 	} catch (error) {
+		console.log({ error });
 		console.log({ error_message: error.response.data.message });
 		console.log({ error: error });
 		console.log({ error_response: error.response });
@@ -347,6 +354,7 @@ export const listMyOrders = () => async (
 		console.log({ Orders: data });
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -363,6 +371,7 @@ export const listUserOrders = (user_id: string) => async (
 		console.log({ Orders: data });
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -395,6 +404,7 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '', pa
 		console.log({ data });
 		dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -411,6 +421,7 @@ export const detailsOrder = (orderId: string) => async (
 		});
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -428,6 +439,7 @@ export const detailsOrderPublic = (orderId: string) => async (
 		}
 		// dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response.data.message });
 	}
 };
@@ -444,6 +456,7 @@ export const deleteOrder = (orderId: string) => async (
 		});
 		dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_DELETE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -478,6 +491,7 @@ export const refundOrder = (
 		dispatch({ type: ORDER_REFUND_SUCCESS, payload: data });
 		axios.post('/api/emails/refund', data);
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_REFUND_FAIL, payload: error.response.data.message });
 	}
 };
@@ -504,6 +518,7 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 		console.log({ data });
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -531,6 +546,7 @@ export const update_payment = (order: { _id: string }, result: boolean, payment_
 		console.log({ data });
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -560,6 +576,7 @@ export const saveOrder = (order: any) => async (
 			dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: ORDER_SAVE_FAIL, payload: error.response.data.message });
 	}
 };

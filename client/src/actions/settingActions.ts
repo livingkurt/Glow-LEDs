@@ -36,6 +36,7 @@ export const listSettings = (category = '', searchKeyword = '', sortOrder = '') 
 		);
 		dispatch({ type: SETTING_LIST_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SETTING_LIST_FAIL, payload: error.response.data.message });
 	}
 };
@@ -64,6 +65,7 @@ export const saveSetting = (setting: any) => async (
 			dispatch({ type: SETTING_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SETTING_SAVE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -82,6 +84,7 @@ export const detailsSetting = (pathname: string) => async (
 		});
 		dispatch({ type: SETTING_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SETTING_DETAILS_FAIL, payload: error.response.data.message });
 	}
 };
@@ -100,6 +103,7 @@ export const deleteSetting = (settingId: string) => async (
 		});
 		dispatch({ type: SETTING_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
+		console.log({ error });
 		dispatch({ type: SETTING_DELETE_FAIL, payload: error.response.data.message });
 	}
 };

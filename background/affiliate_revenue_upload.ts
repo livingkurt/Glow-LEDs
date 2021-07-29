@@ -234,6 +234,7 @@ const affiliate_revenue_upload = async () => {
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
+		console.log({ error });
 	}
 };
 const unformatted_date = new Date();

@@ -6,12 +6,14 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
 import Pagination from 'react-js-pagination';
+import { API_Orders } from '../../utils';
 
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ block_list_view, set_block_list_view ] = useState(false);
+	const [ loading_mark_as_shipped, set_loading_mark_as_shipped ] = useState(false);
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const page = props.match.params.page ? props.match.params.page : 1;
@@ -125,6 +127,18 @@ const OrdersPage = (props) => {
 		dispatch(listOrders(category, searchKeyword, sortOrder, page));
 	};
 
+	const mark_as_shipped = async () => {
+		set_loading_mark_as_shipped(true);
+		const { data: orders } = await API_Orders.mark_as_shipped();
+		// console.log({ data });
+		// data.forEach(async (order) => {
+		await history.push(`/secure/glow/emails/order_status/${orders[0]._id}/shipped/true/true`);
+		// dispatch(update_order(orders[0], false, 'isShipped', 'shippedAt'));
+		// });
+
+		set_loading_mark_as_shipped(false);
+	};
+
 	return (
 		<div className="profile_container wrap column p-20px">
 			<Helmet>
@@ -145,14 +159,13 @@ const OrdersPage = (props) => {
 				</button> */}
 
 				<Link to="/secure/glow/create_label">
-					<button className="btn primary" style={{ width: '160px' }}>
-						Create Label
-					</button>
+					<button className="btn primary">Create Label</button>
 				</Link>
+				<button className="btn primary" onClick={(e) => mark_as_shipped(e)}>
+					Mark as Shipped
+				</button>
 				<Link to="/secure/glow/editorder">
-					<button className="btn primary" style={{ width: '160px' }}>
-						Create Order
-					</button>
+					<button className="btn primary">Create Order</button>
 				</Link>
 			</div>
 			<div className="wrap jc-b">
@@ -194,6 +207,7 @@ const OrdersPage = (props) => {
 							</button>
 						))}
 				</div>
+				<Loading loading={loading_mark_as_shipped} />
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
 						{!block_list_view &&
