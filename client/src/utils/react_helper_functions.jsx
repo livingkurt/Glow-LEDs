@@ -273,28 +273,23 @@ export const email_sale_price_switch = (item, color) => {
 const today = new Date();
 
 export const determine_product_name = (item, show_qty, date) => {
-	// console.log({ determine_product_name: item, from_where });
 	let date_1 = new Date('2021-07-16');
 	date_1 = date_1.toISOString();
 	const date_2 = date;
-	// console.log({ date_1 });
-	// console.log({ date_2 });
-	// console.log({ item });
-	// console.log({ Test: date_1 >= date_2 });
 	if (date_1 <= date_2 || !date) {
 		if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
 			return (
 				<div>
-					({item.color && item.color + ' Skin'}
-					{item.color && ' '}
-					{item.secondary_color && item.secondary_color + ' Sled) '} {item.name}{' '}
-					{item.size !== 0 && ' - ' + item.size}
+					{item.name} {item.size !== 0 && ' - ' + item.size} {item.color && '(' + item.color + ' Skin'}
+					{item.color && ' & '}
+					{item.secondary_color && item.secondary_color + ' Sled)'}
 				</div>
 			);
 		} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 			return (
 				<div>
-					{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
+					{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
+					{item.secondary_color && item.secondary_color + ' Cape'}
 				</div>
 			);
 		} else if (item.category === 'accessories') {
@@ -307,18 +302,19 @@ export const determine_product_name = (item, show_qty, date) => {
 			} else {
 				return (
 					<div>
-						{item.name} - {item.color && item.color + ' Cap/Slide'}
-						{item.color && ' & '}
-						{item.secondary_color && item.secondary_color + ' Body'}
+						{item.color && !item.secondary_color && item.color} {item.name} {item.secondary_color && ' -'}{' '}
+						{item.secondary_color && '(' + item.color + ' Cap/Slide'}
+						{item.secondary_color && ' & '}
+						{item.secondary_color && item.secondary_color + ' Body)'}
 					</div>
 				);
 			}
 		} else if (item.category === 'exo_diffusers') {
 			return (
 				<div>
-					({item.color && item.color + ' Skeleton Color'}
-					{item.color && ' '}
-					{item.secondary_color && item.secondary_color + ' Plug Color) '} {item.name}{' '}
+					{item.name} ({item.color && item.color + ' Skeleton Color'}
+					{item.color && ' & '}
+					{item.secondary_color && item.secondary_color + ' Plug Color) '}
 				</div>
 			);
 		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {

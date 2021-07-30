@@ -1799,12 +1799,12 @@ const EditProductPage = (props) => {
 																onChange={(e) => set_color_group_name(e.target.value)}
 															/>
 														</li>
-														{option_list(
+														{/* {option_list(
 															products_list,
 															color_products,
 															set_color_products,
 															'Color Products'
-														)}
+														)} */}
 														<DropdownDisplay
 															item_list={products_list}
 															list_items={color_products}
