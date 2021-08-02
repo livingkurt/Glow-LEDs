@@ -54,7 +54,7 @@ const LoginPage = (props) => {
 		setPasswordValidations(request.errors.password);
 		console.log();
 		if (request.isValid) {
-			dispatch(login({ email, password }));
+			dispatch(login({ email: email.toLowerCase(), password }));
 			// console.log({ email, password });
 			set_loading(user_loading);
 			// dispatch(loginUser(email, password));

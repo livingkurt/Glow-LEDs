@@ -115,7 +115,6 @@ export const top_code_usage_upload = async (affiliates: any, orders: any, last_m
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
-		console.log({ error });
 	}
 };
 
@@ -127,7 +126,7 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-		const doc = new GoogleSpreadsheet('1FPmn7vZGKUCW_DBbUqm0-rd2aqMvas0Us8YUCzyEK8Y');
+		const doc = new GoogleSpreadsheet('1HMi3HF1f_5mJZqievCYOfrOuDjQkZeNLD88DoCw7kl0');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -259,6 +258,7 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 		const date = new Date();
 		const month = date.getMonth();
 		const year = date.getFullYear();
+		console.log({ month: months[month], year });
 
 		const newSheet = await doc.addSheet({
 			title: `${months[month]} ${year} Affiliate Revenue`
@@ -271,7 +271,6 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 		await newSheet.saveUpdatedCells();
 		// await newSheet.delete();
 	} catch (error) {
-		console.log({ error });
 		console.log({ error });
 	}
 };
@@ -370,7 +369,6 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
-		console.log({ error });
 	}
 };
 
@@ -463,7 +461,6 @@ export const sponsor_revenue_upload = async (affiliates: any, orders: any, last_
 		await newSheet.saveUpdatedCells();
 		// await newSheet.delete();
 	} catch (error) {
-		console.log({ error });
 		console.log({ error });
 	}
 };
@@ -622,7 +619,6 @@ export const team_revenue_upload = async (teams: any, orders: any, last_months_o
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
-		console.log({ error });
 	}
 };
 
@@ -725,7 +721,6 @@ export const facebook_catalog_upload = async (products: any) => {
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });
-		console.log({ error });
 	}
 };
 
@@ -812,7 +807,6 @@ export const google_catalog_upload = async (products: any) => {
 		// const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
 		// await newSheet.delete();
 	} catch (error) {
-		console.log({ error });
 		console.log({ error });
 	}
 };

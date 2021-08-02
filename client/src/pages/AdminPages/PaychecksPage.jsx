@@ -66,12 +66,12 @@ const PaychecksPage = (props) => {
 	const get_last_months_orders = async () => {
 		const { data } = await API_Orders.last_months_orders();
 		console.log({ data });
-		set_last_months_orders(data);
+		set_last_months_orders(data.filter((order) => order.deleted === false));
 	};
 	const get_total_orders = async () => {
 		const { data } = await API_Orders.total_orders();
 		console.log({ data: data.length });
-		set_total_orders(data);
+		set_total_orders(data.filter((order) => order.deleted === false));
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
