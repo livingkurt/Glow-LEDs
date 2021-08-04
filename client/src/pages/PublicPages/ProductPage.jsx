@@ -34,6 +34,9 @@ const ProductPage = (props) => {
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
+	const [ secondary_image, set_secondary_image ] = useState('');
+	const [ secondary_images, set_secondary_images ] = useState([]);
+
 	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 
 	const [ dimensions, set_dimensions ] = useState({});
@@ -285,8 +288,10 @@ const ProductPage = (props) => {
 		set_secondary_color(option.color);
 		set_secondary_color_code(option.color_code);
 		if (option.images && option.images[0]) {
-			set_images(option.images);
-			set_image(option.images[0]);
+			// set_images(option.images);
+			// set_images((images) => [ ...images, option.images[0] ]);
+			set_secondary_image(option.images[0]);
+			set_secondary_images(option.images);
 		}
 		set_secondary_color_product(option._id);
 	};
@@ -461,19 +466,55 @@ const ProductPage = (props) => {
 								</label>
 								<div className="details-image">
 									{/* <Zoom> */}
-									<img
-										id="expandedImg"
-										alt={name}
-										title={name}
-										className="details-image-img"
-										src={image}
-										style={{
-											maxWidth: '400px',
-											maxHeight: '400px',
-											height: '100%',
-											width: '100%'
-										}}
-									/>
+									{!secondary_image && (
+										<img
+											id="expandedImg"
+											alt={name}
+											title={name}
+											className="details-image-img"
+											src={image}
+											style={{
+												maxWidth: '400px',
+												maxHeight: '400px',
+												height: '100%',
+												width: '100%'
+											}}
+										/>
+									)}
+									{secondary_image && (
+										<div>
+											<img
+												id="expandedImg"
+												alt={name}
+												title={name}
+												className="details-image-img"
+												src={image}
+												style={{
+													maxWidth: '200px',
+													maxHeight: '400px',
+													// height: '100%',
+													width: '100%',
+													objectFit: 'cover',
+													borderRadius: '1rem 0rem 0rem 1rem'
+												}}
+											/>
+											<img
+												id="expandedSecondaryImg"
+												alt={name}
+												title={name}
+												className="details-image-img"
+												src={secondary_image}
+												style={{
+													maxWidth: '200px',
+													maxHeight: '400px',
+													// height: '100%',
+													width: '100%',
+													objectFit: 'cover',
+													borderRadius: '0rem 1rem 1rem 0rem'
+												}}
+											/>
+										</div>
+									)}
 									{/* </Zoom> */}
 									{/* <Zoom
 										image={{
@@ -494,7 +535,12 @@ const ProductPage = (props) => {
 									/> */}
 								</div>
 							</div>
-							<Slideshow product={product} images={images} show_hide="alt_pictures_shown_shown " />
+							<Slideshow
+								product={product}
+								images={images}
+								secondary_images={secondary_images}
+								show_hide="alt_pictures_shown_shown "
+							/>
 							<div className="details-info">
 								<h1 className="product_title_side lh-50px fs-30px mv-0px">{name}</h1>
 
@@ -600,6 +646,7 @@ const ProductPage = (props) => {
 								<Slideshow
 									product={product}
 									images={images}
+									secondary_images={secondary_images}
 									show_hide="alt_pictures_hidden"
 									set_image={set_image}
 								/>
@@ -824,6 +871,7 @@ const ProductPage = (props) => {
 						<Slideshow
 							product={product}
 							images={images}
+							secondary_images={secondary_images}
 							show_hide="alt_pictures_shown"
 							set_image={set_image}
 						/>
