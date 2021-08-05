@@ -125,7 +125,7 @@ const AnnouncementPage = (props) => {
 								>
 									{email.h2}
 								</h4>
-								<p
+								{/* <p
 									style={{
 										fontSize: '16px',
 										lineHeight: '30px',
@@ -137,7 +137,26 @@ const AnnouncementPage = (props) => {
 									}}
 								>
 									{email.p}
-								</p>
+								</p> */}
+								<pre
+									style={{
+										fontFamily: 'helvetica',
+										overflowX: 'auto',
+										whiteSpace: 'pre-wrap',
+										whiteSpace: '-moz-pre-wrap',
+										whiteSpace: '-pre-wrap',
+										whiteSpace: '-o-pre-wrap',
+										wordWrap: 'break-word',
+										maxWidth: '800px',
+										width: '100%',
+										margin: '20px auto',
+										color: 'white',
+										fontSize: '16px',
+										lineHeight: '30px'
+									}}
+								>
+									{email.p}
+								</pre>
 								<div
 									style={{
 										display: 'flex',
