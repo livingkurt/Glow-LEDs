@@ -37,7 +37,7 @@ const MenuItemD = ({ item, index, decide_url }) => {
 	return (
 		<div className="product m-1rem" style={{ height: 'unset' }} key={index}>
 			<Link to={decide_url(item)}>
-				<h2 className="">{humanize(item.category)}</h2>
+				<h2 className=""> {item.subcategory ? humanize(item.subcategory) : humanize(item.category)}</h2>
 				<div className="w-300px h-300px mb-1rem">
 					{item &&
 					item.image && (
@@ -50,14 +50,6 @@ const MenuItemD = ({ item, index, decide_url }) => {
 							src={item.image} // use normal <img> attributes as props
 						/>
 					)}
-				</div>
-
-				<div className="feature_text w-100per ta-c" style={{ fontSize: '1.6rem' }}>
-					{item.artist_name && item.artist_name}
-				</div>
-				<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
-					{item.product && item.product}
-					{item.link && item.link}
 				</div>
 			</Link>
 		</div>

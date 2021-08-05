@@ -20,7 +20,9 @@ const MenuItemM = ({ item, index, decide_url }) => {
 						src={item.image} // use normal <img> attributes as props
 					/>
 					<div className="column jc-b w-20rem pl-2rem">
-						<h2 className="w-100per ">{humanize(item.category)}</h2>
+						<h2 className="w-100per ">
+							{item.subcategory ? humanize(item.subcategory) : humanize(item.category)}
+						</h2>
 					</div>
 				</div>
 			</Link>

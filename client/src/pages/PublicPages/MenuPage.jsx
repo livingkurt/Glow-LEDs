@@ -26,6 +26,7 @@ const MenuPage = (props) => {
 	const [ glow_casings, set_glow_casings ] = useState([]);
 	const [ novaskins, set_novaskins ] = useState([]);
 	const [ alt_novaskins, set_alt_novaskins ] = useState([]);
+	const [ battery_storage, set_battery_storage ] = useState([]);
 
 	const [ geometric, set_geometric ] = useState([]);
 	const [ shapes, set_shapes ] = useState([]);
@@ -81,6 +82,7 @@ const MenuPage = (props) => {
 		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
 		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
 		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
+		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
 		console.log({ glowskins });
 		console.log({ frosted_diffusers });
 		console.log({ diffuser_caps });
@@ -95,6 +97,7 @@ const MenuPage = (props) => {
 		set_glow_casings(glow_casings);
 		set_novaskins(novaskins);
 		set_alt_novaskins(alt_novaskins);
+		set_battery_storage(battery_storage);
 		set_loading_pictures(false);
 	};
 
@@ -130,10 +133,10 @@ const MenuPage = (props) => {
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
 			return [
-				{
-					category: 'glow_strings',
-					image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
-				},
+				// {
+				// 	category: 'glow_strings',
+				// 	image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
+				// },
 				{
 					category: 'glowskins',
 					image: glowskins[glowskins.length - 1] && glowskins[0].images[0]
@@ -150,7 +153,7 @@ const MenuPage = (props) => {
 				{
 					category: 'glowskins',
 					subcategory: 'alt_novaskins',
-					image: alt_novaskins[alt_novaskins.length - 1] && alt_novaskins[0].images[0]
+					image: alt_novaskins[alt_novaskins.length - 1] && alt_novaskins[novaskins.length - 1].images[0]
 				},
 				{
 					category: 'frosted_diffusers',
@@ -166,6 +169,13 @@ const MenuPage = (props) => {
 					category: 'accessories',
 					subcategory: 'batteries',
 					image: batteries[batteries.length - 1] && batteries[batteries.length - 1].images[0]
+				},
+				{
+					category: 'accessories',
+					subcategory: 'battery_storage',
+					image:
+						battery_storage[battery_storage.length - 1] &&
+						battery_storage[battery_storage.length - 1].images[0]
 				},
 
 				{

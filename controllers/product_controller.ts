@@ -451,6 +451,7 @@ export default {
 			const products = await Product.find({
 				deleted: false,
 				hidden: false,
+				option: false,
 				...category,
 				...subcategory
 			})
