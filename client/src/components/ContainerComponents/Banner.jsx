@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import { Link, useHistory } from 'react-router-dom';
-import useWindowDimensions from '../SpecialtyComponents/ScreenSize';
+import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Banner = (props) => {
 	const contentDetails = useSelector((state) => state.contentDetails);

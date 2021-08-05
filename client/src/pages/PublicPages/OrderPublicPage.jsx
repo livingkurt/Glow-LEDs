@@ -8,7 +8,7 @@ import { CartItem, Stripe } from '../../components/SpecialtyComponents';
 
 import { Helmet } from 'react-helmet';
 import { LoadingPayments } from '../../components/UtilityComponents';
-import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
+import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 require('dotenv').config();
 

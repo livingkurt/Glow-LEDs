@@ -67,16 +67,31 @@ const Header = (props) => {
 		transition: 'top 0.2s'
 	};
 
+	const [ last_id, set_last_id ] = useState('');
+	const [ current_id, set_current_id ] = useState('');
+
 	const show_hide = (id) => {
-		// set_current_id(id);
+		set_current_id(id);
 		var elems = document.querySelectorAll('.nav-dropdown-subcategory-content');
 		[].forEach.call(elems, (el) => {
 			el.classList.remove('show-dropdown');
 		});
 		const current_menu = document.getElementById(id);
 		console.log(current_menu.classList);
-		current_menu.classList.toggle('show-dropdown');
-		// set_last_id(id);
+		if (last_id === id) {
+			current_menu.classList.remove('show-dropdown');
+		} else {
+			current_menu.classList.add('show-dropdown');
+		}
+
+		set_last_id(id);
+	};
+
+	const clicked_outside = () => {
+		var elems = document.querySelectorAll('.nav-dropdown-subcategory-content');
+		[].forEach.call(elems, (el) => {
+			el.classList.remove('show-dropdown');
+		});
 	};
 
 	return (
@@ -146,16 +161,17 @@ const Header = (props) => {
 							</Link>
 							<div className="hover_fade_in nav-dropdown">
 								<div className="jc-c">
-									<div>
+									<div className="nav-column">
 										<Link to="/collections/all/products">
 											<button
-												className="btn nav w-100per ta-l fs-20px"
+												className="btn nav  ta-l fs-20px"
 												onClick={() => dispatch(listProducts(''))}
 											>
 												Products
 											</button>
 										</Link>
 										{/* <hr className="w-100per" /> */}
+
 										<Link to="/collections/all/products/category/best_sellers">
 											<button className="btn nav w-100per ta-l title_font">Best Sellers</button>
 										</Link>
@@ -167,19 +183,18 @@ const Header = (props) => {
 										<Link to="/collections/all/products/category/discounted">
 											<button className="btn nav w-100per ta-l title_font">On Sale!</button>
 										</Link>
-										<Link to="/collections/all/products/category/glow_strings">
-											<button className="btn nav w-100per ta-l title_font">Glow Strings</button>
+
+										<Link to="/collections/all/products/category/accessories/subcategory/stickers">
+											<button className="btn nav w-100per ta-l title_font">Stickers</button>
 										</Link>
 									</div>
-									<div>
+									<div className="nav-column">
 										<Link to="/pages/menu/gloving">
 											<button className="btn nav w-100per ta-l fs-20px">Gloving</button>
 										</Link>
 										{/* <hr className="w-100per" /> */}
 										<Link to="/collections/all/products/category/exo_diffusers">
-											<button className="btn nav w-100per ta-l title_font">
-												Exo Diffusers (New)
-											</button>
+											<button className="btn nav w-100per ta-l title_font">EXO Diffusers</button>
 										</Link>
 										<Link to="/collections/all/products/category/glow_casings">
 											<button className="btn nav w-100per ta-l title_font jc-b">
@@ -229,7 +244,7 @@ const Header = (props) => {
 												<i className="fas fa-sort-up" />
 											</button>
 										</div>
-										<div className="nav-btn-container">
+										{/* <div className="nav-btn-container">
 											<Link
 												to="/collections/all/products/category/accessories"
 												className="w-100per"
@@ -242,17 +257,24 @@ const Header = (props) => {
 											>
 												<i className="fas fa-sort-up" />
 											</button>
-										</div>
+										</div> */}
+										<Link to="/collections/all/products/category/accessories">
+											<button className="btn nav w-100per ta-l title_font jc-b">
+												Accessories
+												{/* <i className=" trans-neg-270 fas fa-sort-up" /> */}
+											</button>
+										</Link>
 										{/* <Link to="/collections/all/products/category/accessories">
 											<button className="btn nav w-100per ta-l title_font">Accessories</button>
 										</Link> */}
 									</div>
+
 									{/* Glowskins */}
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in nav-column"
 										id="glowskins_dropdown"
 									>
-										<Link to="/pages/menu/gloving">
+										<Link to="/collections/all/products/category/glowskins">
 											<button className="btn nav w-100per ta-l fs-20px">Glowskins</button>
 										</Link>
 										<Link to="/collections/all/products/category/glowskins/subcategory/classics">
@@ -284,10 +306,10 @@ const Header = (props) => {
 									</div>
 									{/* Frosted Diffusers */}
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in nav-column"
 										id="frosted_diffusers_dropdown"
 									>
-										<Link to="/pages/menu/gloving">
+										<Link to="/collections/all/products/category/frosted_diffusers">
 											<button className="btn nav w-100per ta-l fs-20px">Frosted Diffusers</button>
 										</Link>
 										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
@@ -333,10 +355,10 @@ const Header = (props) => {
 									</div>
 									{/* Diffuser Caps */}
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in nav-column"
 										id="diffuser_caps_dropdown"
 									>
-										<Link to="/pages/menu/gloving">
+										<Link to="/collections/all/products/category/diffuser_caps">
 											<button className="btn nav w-100per ta-l fs-20px">Diffuser Caps</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
@@ -365,17 +387,29 @@ const Header = (props) => {
 											</div>
 										</Link>
 									</div>
-									{/* Accessories */}
-									<div
-										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
-										id="accessories_dropdown"
-									>
-										<Link to="/pages/menu/gloving">
-											<button className="btn nav w-100per ta-l fs-20px">Accessories</button>
+									<div className="nav-column">
+										<Link to="/collections/all/products/category/accessories">
+											<button className="btn nav w-100per ta-l fs-20px">
+												Flow Art Essensials
+											</button>
 										</Link>
-										<Link to="/collections/all/products/category/accessories/subcategory/batteries">
+										<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+											<button className="btn nav ta-l w-100per special_font gradient-btn">
+												GLOW STRINGS V2
+											</button>
+										</Link>
+										<Link to="/collections/all/products/1620_batteries">
 											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">Batteries</button>
+												<button className="btn nav w-100per ta-l title_font">
+													1620 Batteries
+												</button>
+											</div>
+										</Link>
+										<Link to="/collections/all/products/1225_batteries">
+											<div className="row">
+												<button className="btn nav w-100per ta-l title_font">
+													1225 Batteries
+												</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/accessories/subcategory/battery_storage">
@@ -383,11 +417,6 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l title_font">
 													Battery Storage
 												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/accessories/subcategory/stickers">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">Stickers</button>
 											</div>
 										</Link>
 									</div>
@@ -436,14 +465,14 @@ const Header = (props) => {
 										{/* <Link to="/pages/menu/gloving"> */}
 										<button className="btn nav w-100per ta-l fs-20px">Sponsored Artists</button>
 										{/* </Link> */}
-										<Link to="/collections/all/sponsors/category/accessories/subcategory/batteries">
+										<Link to="/collections/all/sponsors">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Sponsored Glovers
 												</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/teams/category/accessories/subcategory/battery_storage">
+										<Link to="/collections/all/teams">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Sponsored Teams

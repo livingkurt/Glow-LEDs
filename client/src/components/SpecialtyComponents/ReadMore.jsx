@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useWindowDimensions from './ScreenSize';
+import useWindowDimensions from '../Hooks/windowDimensions';
 
 const ReadMore = (props) => {
 	const [ show_text, set_show_text ] = useState(false);

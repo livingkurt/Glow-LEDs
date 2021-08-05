@@ -10,7 +10,7 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Orders, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
-import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
+import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 require('dotenv').config();
 

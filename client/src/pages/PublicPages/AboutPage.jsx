@@ -8,7 +8,7 @@ import { ReadMore, Sponsor, SponsorSmallScreen, Team, TeamSmallScreen } from '..
 import { listAffiliates } from '../../actions/affiliateActions';
 import { Loading } from '../../components/UtilityComponents';
 import { listTeams } from '../../actions/teamActions';
-import useWindowDimensions from '../../components/SpecialtyComponents/ScreenSize';
+import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 const AboutPage = () => {
 	const { height, width } = useWindowDimensions();

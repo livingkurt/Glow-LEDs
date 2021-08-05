@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import { Loading } from '../UtilityComponents';
 import { CarouselItem } from '.';
-import useWindowDimensions from './ScreenSize';
+import useWindowDimensions from '../Hooks/windowDimensions';
 
 const RelatedProducts = (props) => {
 	const dispatch = useDispatch();

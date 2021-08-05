@@ -18,7 +18,7 @@ const MenuPage = (props) => {
 	const [ glowskins, set_glowskins ] = useState([]);
 	const [ frosted_diffusers, set_frosted_diffusers ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
-	const [ mega_diffuser_caps, set_mega_diffuser_caps ] = useState([]);
+	const [ batteries, set_batteries ] = useState([]);
 	const [ accessories, set_accessories ] = useState([]);
 
 	const [ geometric, set_geometric ] = useState([]);
@@ -41,8 +41,8 @@ const MenuPage = (props) => {
 		// if (pathname === 'diffuser_caps') {
 		// 	get_caps_by_subcategory('diffuser_caps');
 		// }
-		// if (pathname === 'mega_diffuser_caps') {
-		// 	get_caps_by_subcategory('mega_diffuser_caps');
+		// if (pathname === 'batteries') {
+		// 	get_caps_by_subcategory('batteries');
 		// }
 
 		return () => {};
@@ -67,17 +67,17 @@ const MenuPage = (props) => {
 		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
 		const { data: frosted_diffusers } = await API_Products.get_product_pictures('frosted_diffusers');
 		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
-		const { data: mega_diffuser_caps } = await API_Products.get_product_pictures('mega_diffuser_caps');
+		const { data: batteries } = await API_Products.get_product_pictures('batteries');
 		const { data: accessories } = await API_Products.get_product_pictures('accessories');
 		console.log({ glowskins });
 		console.log({ frosted_diffusers });
 		console.log({ diffuser_caps });
-		console.log({ mega_diffuser_caps });
+		console.log({ batteries });
 		console.log({ accessories });
 		set_glowskins(glowskins);
 		set_frosted_diffusers(frosted_diffusers);
 		set_diffuser_caps(diffuser_caps);
-		set_mega_diffuser_caps(mega_diffuser_caps);
+		set_batteries(batteries);
 		set_accessories(accessories);
 	};
 
@@ -92,7 +92,7 @@ const MenuPage = (props) => {
 	// 	console.log({ abstract });
 	// 	console.log({ patterns });
 	// 	console.log({ emojis });
-	// 	if (category === 'mega_diffuser_caps') {
+	// 	if (category === 'batteries') {
 	// 		set_geometric(geometric);
 	// 		set_shapes(shapes);
 	// 		set_abstract(abstract);
@@ -115,11 +115,11 @@ const MenuPage = (props) => {
 			return [
 				{ category: 'glowskins', image: glowskins[0] && glowskins[0].images[0] },
 				{ category: 'frosted_diffusers', image: frosted_diffusers[0] && frosted_diffusers[0].images[0] },
-				{ category: 'mega_diffuser_caps', image: mega_diffuser_caps[0] && mega_diffuser_caps[0].images[0] },
+				{ category: 'batteries', image: batteries[0] && batteries[0].images[0] },
 				{ category: 'diffuser_caps', image: diffuser_caps[0] && diffuser_caps[0].images[0] },
 				{ category: 'accessories', image: accessories[0] && accessories[0].images[0] }
 			];
-		} else if (pathname === 'mega_diffuser_caps') {
+		} else if (pathname === 'batteries') {
 			return [
 				{ category: 'geometric', image: '' },
 				{ category: 'shapes', image: '' },

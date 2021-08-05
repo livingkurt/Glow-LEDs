@@ -30,7 +30,6 @@ export { default as ProductSimpleSmallScreen } from './ProductSimpleSmallScreen'
 export { default as ReadMore } from './ReadMore';
 export { default as StripeForm } from './StripeForm';
 export { default as Stripe } from './Stripe';
-export { default as ScreenSize } from './ScreenSize';
 export { default as StarRating } from './StarRating';
 export { default as ProductListItem } from './ProductListItem';
 export { default as ProductThumbCarouselItem } from './ProductThumbCarouselItem';

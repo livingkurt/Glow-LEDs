@@ -578,17 +578,17 @@ export default {
 			// const occurences = req.body.occurences;
 			// console.log(occurences[0]);
 			const names = [
+				'Glow Strings V2 50 LED / 3.5m',
 				'Wiffle Ball EXO Diffusers',
-				'Frosted Dome Diffusers',
+				'Dome Diffusers',
 				'Coinskins',
-				'Frosted Fisheye Difffusers',
+				'Fisheye Difffusers',
 				'Apolloskins',
-				'50 LED / 3.5m Glow Strings',
 				'Diffuser Caps + Adapters Starter Kit',
-				'Seed of Life Diffuser Caps',
+				'Space Cadet Diffuser Caps',
 				'Nano V2 Glow Casings',
-				'Honeycomb Diffuser Caps',
-				'Coin Battery Storage'
+				'Festy Besty Diffuser Caps',
+				'1225 Battery Dispenser'
 			];
 			console.log({ names });
 			const products = await Product.find({ name: { $in: names } });

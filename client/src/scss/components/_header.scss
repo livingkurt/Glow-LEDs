@@ -91,3 +91,40 @@ header {
 	// display: block !important;
 	max-height: 1500px !important;
 }
+
+.nav-column {
+	width: 100%;
+	max-width: 250px;
+}
+
+.gradient-btn {
+	// background: linear-gradient(90deg, #83d8ff, #faa9d7, #fff6a1, #80cef1);
+	// background: -webkit-linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+	background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	// border-color: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+	background-size: 200%;
+	// -webkit-text-stroke: 1px white !important;
+	font-size: 18px;
+	text-align: center;
+	// letter-spacing: 6px;
+	font-family: $paragraph_font;
+	// font-family: "special_font";
+	// transition: all 2s ease;
+}
+
+.gradient-btn:hover {
+	// background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+	// background-size: 200%;
+	animation: animate 4s linear infinite;
+}
+
+@keyframes animate {
+	0% {
+		background-position: 0%;
+	}
+	100% {
+		background-position: 400%;
+	}
+}

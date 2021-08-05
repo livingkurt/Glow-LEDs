@@ -116,7 +116,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
 import EditChipPage from './pages/AdminPages/EditChipPage';
-import useWindowDimensions from './components/SpecialtyComponents/ScreenSize';
+import useWindowDimensions from './components/Hooks/windowDimensions';
 
 const App = (props) => {
 	const theme_colors = {

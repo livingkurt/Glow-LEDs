@@ -12,7 +12,13 @@
 	src: url("../fonts/beyond_the_mountains.otf");
 }
 
+@font-face {
+	font-family: "special_font";
+	src: url("../fonts/A_Love_of_Thunder.ttf");
+}
+
 $phrase_font: phrase_font;
 $paragraph_font: paragraph_font;
 $heading_font: heading_font;
+$special_font: special_font;
 $font_size: 1.6rem;
