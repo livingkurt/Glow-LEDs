@@ -439,13 +439,29 @@ export default {
 	},
 	get_categories: async (req: any, res: any) => {
 		try {
+			const category = req.query.category ? { category: req.query.category } : {};
+			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
+			console.log({ category, subcategory });
+			// const products = await Product.find({
+			// 	deleted: false,
+			// 	...category,
+			// 	...subcategory
+			// }).sort({ _id: -1 });
+
 			const products = await Product.find({
 				deleted: false,
-				category: req.params.category
-				// subcategory: req.params.subcategory
-			}).sort({ _id: -1 });
-			console.log({ category: req.params.category });
-			console.log({ products });
+				hidden: false,
+				...category,
+				...subcategory
+			})
+				.sort({ order: 1 })
+				.populate('color_products')
+				.populate('secondary_color_products')
+				.populate('secondary_products')
+				.populate('option_products')
+				.populate('categorys')
+				.populate('subcategorys');
+			// console.log({ products });
 			log_request({
 				method: 'GET',
 				path: req.originalUrl,
@@ -635,13 +651,13 @@ export default {
 	get_best_sellers: async (req: any, res: any) => {
 		try {
 			const occurences = req.body.occurences;
-			console.log(occurences[0]);
+
 			const names = [
-				occurences[0].name,
-				occurences[1].name,
-				occurences[2].name,
-				occurences[3].name,
-				occurences[4].name
+				occurences[0].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[0].name,
+				occurences[1].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[1].name,
+				occurences[2].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[2].name,
+				occurences[3].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[3].name,
+				occurences[4].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[4].name
 			];
 			console.log({ names });
 			const products = await Product.find({ name: { $in: names } });

@@ -5,7 +5,9 @@ import { humanize } from '../../utils/helper_functions';
 import { listFeatures } from '../../actions/featureActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { API_Features, API_Products } from '../../utils';
-import { LazyImage } from '../../components/UtilityComponents';
+import { LazyImage, Loading } from '../../components/UtilityComponents';
+import { MenuItemD } from '../../components/DesktopComponents';
+import { MenuItemM } from '../../components/MobileComponents';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
@@ -20,12 +22,17 @@ const MenuPage = (props) => {
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ batteries, set_batteries ] = useState([]);
 	const [ accessories, set_accessories ] = useState([]);
+	const [ glow_strings, set_glow_strings ] = useState([]);
+	const [ glow_casings, set_glow_casings ] = useState([]);
+	const [ novaskins, set_novaskins ] = useState([]);
+	const [ alt_novaskins, set_alt_novaskins ] = useState([]);
 
 	const [ geometric, set_geometric ] = useState([]);
 	const [ shapes, set_shapes ] = useState([]);
 	const [ abstract, set_abstract ] = useState([]);
 	const [ patterns, set_patterns ] = useState([]);
 	const [ emojis, set_emojis ] = useState([]);
+	const [ loading_pictures, set_loading_pictures ] = useState(false);
 
 	const featureList = useSelector((state) => state.featureList);
 	const { features, loading, error } = featureList;
@@ -64,11 +71,16 @@ const MenuPage = (props) => {
 	};
 
 	const get_products_by_category = async () => {
+		set_loading_pictures(true);
 		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
 		const { data: frosted_diffusers } = await API_Products.get_product_pictures('frosted_diffusers');
 		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
-		const { data: batteries } = await API_Products.get_product_pictures('batteries');
+		const { data: batteries } = await API_Products.get_product_pictures('accessories', 'batteries');
 		const { data: accessories } = await API_Products.get_product_pictures('accessories');
+		const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
+		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
+		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
+		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
 		console.log({ glowskins });
 		console.log({ frosted_diffusers });
 		console.log({ diffuser_caps });
@@ -79,6 +91,11 @@ const MenuPage = (props) => {
 		set_diffuser_caps(diffuser_caps);
 		set_batteries(batteries);
 		set_accessories(accessories);
+		set_glow_strings(glow_strings);
+		set_glow_casings(glow_casings);
+		set_novaskins(novaskins);
+		set_alt_novaskins(alt_novaskins);
+		set_loading_pictures(false);
 	};
 
 	// const get_caps_by_subcategory = async (category) => {
@@ -113,11 +130,48 @@ const MenuPage = (props) => {
 	const determine_menu_items = () => {
 		if (pathname === 'gloving') {
 			return [
-				{ category: 'glowskins', image: glowskins[0] && glowskins[0].images[0] },
-				{ category: 'frosted_diffusers', image: frosted_diffusers[0] && frosted_diffusers[0].images[0] },
-				{ category: 'batteries', image: batteries[0] && batteries[0].images[0] },
-				{ category: 'diffuser_caps', image: diffuser_caps[0] && diffuser_caps[0].images[0] },
-				{ category: 'accessories', image: accessories[0] && accessories[0].images[0] }
+				{
+					category: 'glow_strings',
+					image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
+				},
+				{
+					category: 'glowskins',
+					image: glowskins[glowskins.length - 1] && glowskins[0].images[0]
+				},
+				{
+					category: 'glow_casings',
+					image: glow_casings[glow_casings.length - 1] && glow_casings[glow_casings.length - 1].images[0]
+				},
+				{
+					category: 'glowskins',
+					subcategory: 'novaskins',
+					image: novaskins[novaskins.length - 1] && novaskins[0].images[0]
+				},
+				{
+					category: 'glowskins',
+					subcategory: 'alt_novaskins',
+					image: alt_novaskins[alt_novaskins.length - 1] && alt_novaskins[0].images[0]
+				},
+				{
+					category: 'frosted_diffusers',
+					image:
+						frosted_diffusers[frosted_diffusers.length - 1] &&
+						frosted_diffusers[frosted_diffusers.length - 1].images[0]
+				},
+				{
+					category: 'diffuser_caps',
+					image: diffuser_caps[diffuser_caps.length - 1] && diffuser_caps[diffuser_caps.length - 1].images[0]
+				},
+				{
+					category: 'accessories',
+					subcategory: 'batteries',
+					image: batteries[batteries.length - 1] && batteries[batteries.length - 1].images[0]
+				},
+
+				{
+					category: 'accessories',
+					image: accessories[accessories.length - 1] && accessories[accessories.length - 1].images[0]
+				}
 			];
 		} else if (pathname === 'batteries') {
 			return [
@@ -190,7 +244,12 @@ const MenuPage = (props) => {
 
 	const decide_url = (item) => {
 		if (pathname === 'gloving' || pathname === 'decor') {
-			return `/collections/all/products/category/${item.category}`;
+			if (item.subcategory) {
+				return `/collections/all/products/category/${item && item.category}/subcategory/${item &&
+					item.subcategory}`;
+			} else {
+				return `/collections/all/products/category/${item.category}`;
+			}
 		} else if (pathname === 'featured') {
 			return `/collections/all/features/category/${item.category}`;
 		} else {
@@ -219,17 +278,21 @@ const MenuPage = (props) => {
 					content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
 				/>
 			</Helmet>
-			<div className="jc-fe">
-				<Link to="/account/login?redirect=/account/submit_feature">
-					<button className="btn secondary ">Submit Feature</button>
-				</Link>
-			</div>
+			<Loading loading={loading_pictures} />
+			{pathname === 'featured' && (
+				<div className="jc-fe">
+					<Link to="/account/login?redirect=/account/submit_feature">
+						<button className="btn secondary ">Submit Feature</button>
+					</Link>
+				</div>
+			)}
 			<div className="jc-c">
 				<h1> {humanize(pathname)}</h1>
 			</div>
-			<div className="jc-c">
-				<div className="jc-c wrap">
-					{/* {features &&
+			<div className="product_big_screen">
+				<div className="jc-c">
+					<div className="jc-c wrap">
+						{/* {features &&
 						glovers &&
 						artists &&
 						producers &&
@@ -261,47 +324,32 @@ const MenuPage = (props) => {
 								</div>
 							);
 						})} */}
-					{features &&
-						glovers &&
-						artists &&
-						producers &&
-						vfx &&
-						determine_menu_items().map((item, index) => {
-							return (
-								<div className="product m-1rem" style={{ height: 'unset' }} key={index}>
-									<Link to={decide_url(item)}>
-										<h2 className="">{humanize(item.category)}</h2>
-										<div className="w-300px h-300px mb-1rem">
-											{/* <img
-												className="w-100per h-auto br-20px"
-												width="300px"
-												height="300px"
-												style={{ objectFit: 'cover' }}
-												src={item.image}
-												alt={item.category}
-												title="Menu Item Images"
-											/> */}
-											<LazyImage
-												look="w-100per h-auto br-20px"
-												alt={item.category}
-												title="Product Image"
-												size={{ height: '300px', width: '300px', objectFit: 'cover' }}
-												effect="blur"
-												src={item.image} // use normal <img> attributes as props
-											/>
-										</div>
 
-										<div className="feature_text w-100per ta-c" style={{ fontSize: '1.6rem' }}>
-											{item.artist_name && item.artist_name}
-										</div>
-										<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
-											{item.product && item.product}
-											{item.link && item.link}
-										</div>
-									</Link>
-								</div>
-							);
-						})}
+						{!loading_pictures &&
+							features &&
+							glovers &&
+							artists &&
+							producers &&
+							vfx &&
+							determine_menu_items().map((item, index) => {
+								return <MenuItemD item={item} index={index} decide_url={decide_url} />;
+							})}
+					</div>
+				</div>
+			</div>
+			<div className="product_small_screen none">
+				<div className="jc-c">
+					<ul className="jc-c wrap">
+						{!loading_pictures &&
+							features &&
+							glovers &&
+							artists &&
+							producers &&
+							vfx &&
+							determine_menu_items().map((item, index) => {
+								return <MenuItemM item={item} index={index} decide_url={decide_url} />;
+							})}
+					</ul>
 				</div>
 			</div>
 		</div>

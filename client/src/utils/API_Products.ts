@@ -90,9 +90,13 @@ const product_routes = {
 	// get_product_pictures: (category: string) => {
 	// 	return axios.get('/api/products/category/' + category);
 	// },
-	get_product_pictures: (category: string, subcategory: string) => {
-		return axios.get('/api/products/get_categories/' + category + '/subcategory/' + subcategory);
+	get_product_pictures: (category = '', subcategory = '') => {
+		return axios.get('/api/products/?category=' + category + '&subcategory=' + subcategory);
 	},
+	// get_product_pictures: (category: string = '', subcategory: string = '') => {
+	// 	return axios.get('/api/products/get_categories/' + category + '/subcategory/' + subcategory);
+	// },
+
 	batch_request: (
 		method: string,
 		collection: string,

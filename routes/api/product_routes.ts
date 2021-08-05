@@ -28,7 +28,7 @@ router.route('/update_product_option_stock').put(product_controller.update_produ
 
 router.route('/reviews/:pathname').post(product_controller.reviews);
 
-router.route('/get_categories/:category/subcategory/:subcategory').get(product_controller.get_categories);
+router.route('/get_categories').get(product_controller.get_categories);
 
 // CRUD Actions
 
