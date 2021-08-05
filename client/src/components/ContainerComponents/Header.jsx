@@ -69,7 +69,7 @@ const Header = (props) => {
 
 	const show_hide = (id) => {
 		// set_current_id(id);
-		var elems = document.querySelectorAll('.dropdown-nav-subcategory-content');
+		var elems = document.querySelectorAll('.nav-dropdown-subcategory-content');
 		[].forEach.call(elems, (el) => {
 			el.classList.remove('show-dropdown');
 		});
@@ -144,35 +144,8 @@ const Header = (props) => {
 									Products
 								</button>
 							</Link>
-							<div className="dropdown-nav-content hover_fade_in ">
-								{/* <Link to="/collections/all/products/category/best_sellers">
-									<button className="btn nav w-100per ta-l">Best Sellers</button>
-								</Link> */}
-								<div className="jc-a">
-									{/* <div>
-										<Link to="/collections/all/products">
-											<button
-												className="btn nav w-100per ta-l fs-20px"
-												onClick={() => dispatch(listProducts(''))}
-											>
-												Products
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/best_sellers">
-											<button className="btn nav w-100per ta-l title_font">Best Sellers</button>
-										</Link>
-										<Link to="/collections/all/products/category/essentials">
-											<button className="btn nav w-100per ta-l title_font">
-												Glow LEDs Essentials
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/discounted">
-											<button className="btn nav w-100per ta-l title_font">On Sale!</button>
-										</Link>
-										<Link to="/collections/all/products/category/glow_strings">
-											<button className="btn nav w-100per ta-l title_font">Glow Strings</button>
-										</Link>
-									</div> */}
+							<div className="hover_fade_in nav-dropdown">
+								<div className="jc-c">
 									<div>
 										<Link to="/collections/all/products">
 											<button
@@ -211,65 +184,60 @@ const Header = (props) => {
 										<Link to="/collections/all/products/category/glow_casings">
 											<button className="btn nav w-100per ta-l title_font jc-b">
 												Glow Casings
-												{/* <i className=" trans-neg-180 fas fa-sort-up" /> */}
+												{/* <i className=" trans-neg-270 fas fa-sort-up" /> */}
 											</button>
 										</Link>
-										<div className="nav-btn-container jc-b w-100per">
-											<Link to="/collections/all/products/category/glowskins" className="w-80per">
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Glowskins
-												</button>
+										<div className="nav-btn-container">
+											<Link
+												to="/collections/all/products/category/glowskins"
+												className="w-100per"
+											>
+												<button className="nav-btn-link title_font">Glowskins</button>
 											</Link>
 											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
+												className="nav-btn-dropdown"
 												onClick={() => show_hide('glowskins_dropdown')}
 											>
 												<i className="fas fa-sort-up" />
 											</button>
 										</div>
-										<div className="nav-btn-container jc-b w-100per">
+										<div className="nav-btn-container">
 											<Link
 												to="/collections/all/products/category/frosted_diffusers"
-												className="w-80per"
+												className="w-100per"
 											>
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Frosted Diffusers
-												</button>
+												<button className="nav-btn-link title_font">Frosted Diffusers</button>
 											</Link>
 											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
+												className="nav-btn-dropdown"
 												onClick={() => show_hide('frosted_diffusers_dropdown')}
 											>
 												<i className="fas fa-sort-up" />
 											</button>
 										</div>
-										<div className="nav-btn-container jc-b w-100per">
+										<div className="nav-btn-container">
 											<Link
 												to="/collections/all/products/category/diffuser_caps"
-												className="w-80per"
+												className="w-100per"
 											>
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Diffuser Caps
-												</button>
+												<button className="nav-btn-link title_font">Diffuser Caps</button>
 											</Link>
 											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
+												className="nav-btn-dropdown"
 												onClick={() => show_hide('diffuser_caps_dropdown')}
 											>
 												<i className="fas fa-sort-up" />
 											</button>
 										</div>
-										<div className="nav-btn-container jc-b w-100per">
+										<div className="nav-btn-container">
 											<Link
 												to="/collections/all/products/category/accessories"
-												className="w-80per"
+												className="w-100per"
 											>
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Accessories
-												</button>
+												<button className="nav-btn-link title_font">Accessories</button>
 											</Link>
 											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
+												className="nav-btn-dropdown"
 												onClick={() => show_hide('accessories_dropdown')}
 											>
 												<i className="fas fa-sort-up" />
@@ -281,7 +249,7 @@ const Header = (props) => {
 									</div>
 									{/* Glowskins */}
 									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
 										id="glowskins_dropdown"
 									>
 										<Link to="/pages/menu/gloving">
@@ -316,7 +284,7 @@ const Header = (props) => {
 									</div>
 									{/* Frosted Diffusers */}
 									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
 										id="frosted_diffusers_dropdown"
 									>
 										<Link to="/pages/menu/gloving">
@@ -365,7 +333,7 @@ const Header = (props) => {
 									</div>
 									{/* Diffuser Caps */}
 									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
 										id="diffuser_caps_dropdown"
 									>
 										<Link to="/pages/menu/gloving">
@@ -373,38 +341,33 @@ const Header = (props) => {
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l title_font">Geomotric</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
 											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l title_font">Shapes</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
 											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l title_font">Abstract</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
 											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l title_font">Patterns</button>
 											</div>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
 											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
 												<button className="btn nav w-100per ta-l title_font">Imperfect</button>
 											</div>
 										</Link>
 									</div>
 									{/* Accessories */}
 									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
 										id="accessories_dropdown"
 									>
 										<Link to="/pages/menu/gloving">
@@ -429,336 +392,170 @@ const Header = (props) => {
 										</Link>
 									</div>
 								</div>
-
-								<div className="dropdown-nav-subcategory">
-									{/* <Link to="/pages/menu/gloving">
-										<button className="btn nav w-100per ta-l">Gloving</button>
-										<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-									</Link> */}
-									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px w-243px">
-										{/* <Link to="/collections/all/products/category/novaskins">
-											<div className="row">
-												<button className="btn nav w-100per ta-l">Novaskins (New)</button>
-											</div>
-										</Link> */}
-
-										{/* <Link to="/collections/all/products/category/exo_diffusers">
-											<div className="row">
-												<button className="btn nav w-100per ta-l">Exo Diffusers (New)</button>
-											</div>
-										</Link>
-										<div className="dropdown-nav-nested">
-											<Link to="/collections/all/products/category/glow_casings">
-												<button className="btn nav w-100per ta-l">Glow Casings</button>
-												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-225px">
-												<Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Imperfect</button>
-													</div>
-												</Link>
-											</div>
-										</div> */}
-										{/* <Link to="/collections/all/products/category/glow_casings">
-											<div className="row">
-												<button className="btn nav w-100per ta-l">Glow Casings</button>
-											</div>
-										</Link> */}
-										{/* <Link to="/collections/all/products/category/glowskins">
-											<div className="row">
-												<button className="btn nav w-100per ta-l">Glowskins</button>
-											</div>
-										</Link> */}
-										{/* <div className="dropdown-nav-nested">
-											<Link to="/collections/all/products/category/glowskins">
-												<button className="btn nav w-100per ta-l">Glowskins</button>
-												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-225px">
-												<Link to="/collections/all/products/category/glowskins/subcategory/classics">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Classics</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Novaskins</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Alt Novaskins</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Imperfect</button>
-													</div>
-												</Link>
-											</div>
-										</div> */}
-										{/* <div className="dropdown-nav-nested">
-											<Link to="/collections/all/products/category/frosted_diffusers">
-												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
-												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-250px">
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">
-															Abstract (New)
-														</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">
-															Polygons (New)
-														</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">
-															Cylinders (New)
-														</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Domes (New)</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Open Hole</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Closed Hole</button>
-													</div>
-												</Link>
-											</div>
-										</div> */}
-										{/* <div className="dropdown-nav-nested">
-											<Link to="/collections/all/products/category/diffuser_caps">
-												<button className="btn nav w-100per ta-l">Diffuser Caps</button>
-												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-											</Link>
-											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px">
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Collections</button>
-													</div>
-												</Link>
-												<div className="dropdown-nav-nested-2 ">
-													<button className="btn nav w-100per ta-l">Collections</button>
-													<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-													<div className="dropdown-nav-nested-2-content hover_fade_in left-66px top-29px w-250px">
-														<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
-															<div className="row">
-																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-																<button className="btn nav w-100per ta-l">Space Cadet</button>
-															</div>
-														</Link>
-														<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
-															<div className="row">
-																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-																<button className="btn nav w-100per ta-l">Festy Besty</button>
-															</div>
-														</Link>
-														<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
-															<div className="row">
-																<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-																<button className="btn nav w-100per ta-l">
-																	Platonic Solids
-																</button>
-															</div>
-														</Link>
-													</div>
-												</div>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Geomotric</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Shapes</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Abstract</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Patterns</button>
-													</div>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
-													<div className="row">
-														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-														<button className="btn nav w-100per ta-l">Imperfect</button>
-													</div>
-												</Link>
-											</div>
-										</div> */}
-
-										{/* <Link to="/collections/all/products/category/accessories">
-											<button className="btn nav w-100per ta-l">Accessories</button>
-										</Link> */}
-									</div>
-								</div>
-
-								{/* <Link to="/collections/all/products/category/glow_strings">
-									<button className="btn nav w-100per ta-l">Glow Strings</button>
-								</Link> */}
 							</div>
 						</div>
 						<div className="dropdown-nav">
-							{/* <Link to="/pages/menu/featured"> */}
-							<button className="btn nav">Featured</button>
+							{/* <Link to="/collections/all/features"> */}
+							<button className="btn nav">Features</button>
 							{/* </Link> */}
-							<div className="dropdown-nav-content hover_fade_in w-250px">
-								<div className="dropdown-nav-nested ">
-									<button className="btn nav w-100per ta-l">Sponsored Artists</button>
-									<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-									<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px w-250px">
-										<Link to="/collections/all/sponsors">
+							<div className="hover_fade_in nav-dropdown">
+								<div className="jc-c">
+									<div className="w-100per max-w-300px">
+										{/* <Link to="/collections/all/features"> */}
+										<button className="btn nav w-100per ta-l fs-20px">Featured</button>
+										{/* </Link> */}
+										<div className="nav-btn-container">
+											{/* <Link to="/collections/all/products/category/glowskins" className="w-80per"> */}
+											<button className="nav-btn-link title_font ">Sponsored Artists</button>
+											{/* </Link>/ */}
+											<button
+												className="nav-btn-dropdown"
+												onClick={() => show_hide('sponsored_artists_dropdown')}
+											>
+												<i className="fas fa-sort-up" />
+											</button>
+										</div>
+										<Link to="/collections/all/features/category/artists">
+											<button className="btn nav w-100per ta-l title_font">Artists</button>
+										</Link>
+										<Link to="/collections/all/features/category/glovers">
+											<button className="btn nav w-100per ta-l title_font jc-b">Glovers</button>
+										</Link>
+										<Link to="/collections/all/features/category/producers">
+											<button className="btn nav w-100per ta-l title_font">Producers</button>
+										</Link>
+										<Link to="/collections/all/features/category/vfx">
+											<button className="btn nav w-100per ta-l title_font">VFX</button>
+										</Link>
+									</div>
+
+									<div
+										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
+										id="sponsored_artists_dropdown"
+									>
+										{/* <Link to="/pages/menu/gloving"> */}
+										<button className="btn nav w-100per ta-l fs-20px">Sponsored Artists</button>
+										{/* </Link> */}
+										<Link to="/collections/all/sponsors/category/accessories/subcategory/batteries">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Sponsored Glovers</button>
+												<button className="btn nav w-100per ta-l title_font">
+													Sponsored Glovers
+												</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/teams">
+										<Link to="/collections/all/teams/category/accessories/subcategory/battery_storage">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Sponsored Teams</button>
+												<button className="btn nav w-100per ta-l title_font">
+													Sponsored Teams
+												</button>
 											</div>
 										</Link>
 									</div>
 								</div>
-
-								<Link to="/collections/all/features/category/artists">
-									<button className="btn nav w-100per ta-l">Artists</button>
-								</Link>
-								<Link to="/collections/all/features/category/glovers">
-									<button className="btn nav w-100per ta-l">Glovers</button>
-								</Link>
-								<Link to="/collections/all/features/category/producers">
-									<button className="btn nav w-100per ta-l">Producers</button>
-								</Link>
-								<Link to="/collections/all/features/category/vfx">
-									<button className="btn nav w-100per ta-l">VFX</button>
-								</Link>
-								<Link to="/account/submit_feature">
-									<button className="btn nav w-100per ta-l">Submit Feature</button>
-								</Link>
-								{/* <Link to="/pages/become_affiliate">
-									<button className="btn nav w-100per ta-l">Become an Affiliate</button>
-								</Link> */}
 							</div>
 						</div>
-						{/* <div className="dropdown-nav">
-							<Link to="/pages/glowcontrol">
-								<button className="btn nav">Glow Control</button>
-							</Link>
-						</div> */}
 						<div className="dropdown-nav">
 							<Link to="/pages/menu/support">
 								<button className="btn nav">Support</button>
 							</Link>
-							<div className="dropdown-nav-content hover_fade_in w-230px">
-								<Link to="/pages/track_your_order">
-									<button className="btn nav w-100per ta-l">Track Your Order</button>
-								</Link>
-								<Link to="/pages/about">
-									<button className="btn nav w-100per ta-l">About</button>
-								</Link>
-								<Link to="/pages/announcements">
-									<button className="btn nav w-100per ta-l">Announcements</button>
-								</Link>
-								<div className="dropdown-nav-subcategory">
-									<Link to="/pages/faq">
-										<button className="btn nav w-100per ta-l w-100per ta-l">FAQ</button>
-										<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
-									</Link>
-									<div className="dropdown-nav-subcategory-content hover_fade_in w-325px left-n325px top-n5px">
+							<div className="hover_fade_in nav-dropdown">
+								<div className="jc-c">
+									<div className="w-100per max-w-300px">
+										{/* <Link to="/collections/all/features"> */}
+										<button className="btn nav w-100per ta-l fs-20px">Support</button>
+										{/* </Link> */}
+
+										<Link to="/pages/track_your_order">
+											<button className="btn nav w-100per ta-l title_font">
+												Track Your Order
+											</button>
+										</Link>
+										<Link to="/pages/about">
+											<button className="btn nav w-100per ta-l title_font jc-b">About</button>
+										</Link>
+										<Link to="/pages/announcements">
+											<button className="btn nav w-100per ta-l title_font">Announcements</button>
+										</Link>
+										<div className="nav-btn-container">
+											{/* <Link to="/collections/all/products/category/glowskins" className="w-80per"> */}
+											<button className="nav-btn-link w-100per ta-l title_font w-80per">
+												FAQ
+											</button>
+											{/* </Link>/ */}
+											<button
+												className="nav-btn-dropdown"
+												onClick={() => show_hide('faq_dropdown')}
+											>
+												<i className="fas fa-sort-up" />
+											</button>
+										</div>
+										<Link to="/pages/contact">
+											<button className="btn nav w-100per ta-l title_font">Contact</button>
+										</Link>
+										<Link to="/pages/terms">
+											<button className="btn nav w-100per ta-l title_font">
+												Term and Conditions
+											</button>
+										</Link>
+									</div>
+
+									<div
+										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
+										id="faq_dropdown"
+									>
+										<Link to="/pages/faq">
+											<button className="btn nav w-100per ta-l fs-20px">FAQ</button>
+										</Link>
 										<HashLink to="/pages/faq#glowskins">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Glowskins</button>
+												<button className="btn nav w-100per ta-l title_font">Glowskins</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#using_diffuser_caps_and_adapters">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Diffuser Caps Guide</button>
+												<button className="btn nav w-100per ta-l title_font">
+													Diffuser Caps Guide
+												</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#diffuser_too_tight_too_loose">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">
+												<button className="btn nav w-100per ta-l title_font">
 													Diffusers Too Tight/Loose?
 												</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#ordering_custom_products">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">
+												<button className="btn nav w-100per ta-l title_font">
 													Ordering Custom Products
 												</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#featured_content">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Featured Content</button>
+												<button className="btn nav w-100per ta-l title_font">
+													Featured Content
+												</button>
 											</div>
 										</HashLink>
 
 										<HashLink to="/pages/faq#processing_shipping">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Processing/Shipping</button>
+												<button className="btn nav w-100per ta-l title_font">
+													Processing/Shipping
+												</button>
 											</div>
 										</HashLink>
 										<HashLink to="/pages/faq#returns_cancellations">
 											<div className="row">
-												<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
-												<button className="btn nav w-100per ta-l">Returns/Cancellations</button>
+												<button className="btn nav w-100per ta-l title_font">
+													Returns/Cancellations
+												</button>
 											</div>
 										</HashLink>
 									</div>
 								</div>
-								<Link to="/pages/contact">
-									<button className="btn nav w-100per ta-l">Contact</button>
-								</Link>
-								<Link to="/pages/terms">
-									<button className="btn nav w-100per ta-l">Term and Conditions</button>
-								</Link>
 							</div>
 						</div>
 					</nav>
