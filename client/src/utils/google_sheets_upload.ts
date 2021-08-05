@@ -669,6 +669,8 @@ export const facebook_catalog_upload = async (products: any) => {
 			'sale_price',
 			'sale_price_effective_date',
 			'product_type'
+			// 'color',
+			// 'item_group_id'
 		]);
 
 		// const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');

@@ -74,11 +74,7 @@ const ImageDisplay = ({ images, set_images, image, set_image }) => {
 				{images &&
 					images.map((picture, index) => {
 						return (
-							<div
-								className="promo_code mv-1rem jc-b max-w-46rem w-100per"
-								key={index}
-								style={{ overflow: 'scroll' }}
-							>
+							<div className="promo_code mv-1rem jc-b max-w-46rem w-100per" key={index}>
 								<div className="pos-rel">
 									<img
 										alt="product"
