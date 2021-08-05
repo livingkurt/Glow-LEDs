@@ -203,12 +203,13 @@ const MenuPage = (props) => {
 				{ category: 'glow_strings', image: 'https://thumbs2.imgbox.com/68/f6/GBGPpTs0_t.jpg' }
 				// { category: 'infinity_mirrors', image: 'https://thumbs2.imgbox.com/77/94/3IXh3RtO_t.jpg' }
 			];
-		} else if (pathname === 'community') {
-			return [
-				{ category: 'featured', image: 'https://thumbs2.imgbox.com/a0/9b/65wgCsF2_t.png' },
-				{ category: 'music', image: 'https://thumbs2.imgbox.com/ea/82/nqDcxRmr_t.jpg' }
-			];
 		} else if (pathname === 'support') {
+			// else if (pathname === 'sponsored_artists') {
+			// 	return [
+			// 		{ category: 'sponsors', image: 'https://thumbs2.imgbox.com/a0/9b/65wgCsF2_t.png' },
+			// 		{ category: 'teams', image: 'https://thumbs2.imgbox.com/ea/82/nqDcxRmr_t.jpg' }
+			// 	];
+			// }
 			return [
 				{ category: 'about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
 				{ category: 'faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },

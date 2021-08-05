@@ -434,7 +434,7 @@ const Header = (props) => {
 											<button className="btn nav w-100per ta-l fs-20px">Featured</button>
 										</Link>
 										<div className="nav-btn-container">
-											{/* <Link to="/collections/all/products/category/glowskins" className="w-80per"> */}
+											{/* <Link to="/pages/menu/sponsored_artists"> */}
 											<button className="nav-btn-link title_font ">Sponsored Artists</button>
 											{/* </Link>/ */}
 											<button
@@ -462,7 +462,7 @@ const Header = (props) => {
 										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
 										id="sponsored_artists_dropdown"
 									>
-										{/* <Link to="/pages/menu/gloving"> */}
+										{/* <Link to="/pages/menu/sponsored_artists"> */}
 										<button className="btn nav w-100per ta-l fs-20px">Sponsored Artists</button>
 										{/* </Link> */}
 										<Link to="/collections/all/sponsors">
@@ -490,9 +490,9 @@ const Header = (props) => {
 							<div className="hover_fade_in nav-dropdown">
 								<div className="jc-c">
 									<div className="w-100per max-w-300px">
-										{/* <Link to="/collections/all/features"> */}
-										<button className="btn nav w-100per ta-l fs-20px">Support</button>
-										{/* </Link> */}
+										<Link to="/pages/menu/support">
+											<button className="btn nav w-100per ta-l fs-20px">Support</button>
+										</Link>
 
 										<Link to="/pages/track_your_order">
 											<button className="btn nav w-100per ta-l title_font">
@@ -506,11 +506,9 @@ const Header = (props) => {
 											<button className="btn nav w-100per ta-l title_font">Announcements</button>
 										</Link>
 										<div className="nav-btn-container">
-											{/* <Link to="/collections/all/products/category/glowskins" className="w-80per"> */}
-											<button className="nav-btn-link w-100per ta-l title_font w-80per">
-												FAQ
-											</button>
-											{/* </Link>/ */}
+											<Link to="/pages/faq" className="w-80per">
+												<button className="nav-btn-link w-100per ta-l title_font">FAQ</button>
+											</Link>/
 											<button
 												className="nav-btn-dropdown"
 												onClick={() => show_hide('faq_dropdown')}

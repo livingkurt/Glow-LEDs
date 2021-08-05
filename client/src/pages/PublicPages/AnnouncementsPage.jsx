@@ -74,7 +74,7 @@ const AnnouncementPage = (props) => {
 			</div>
 
 			{emails &&
-				emails.slice(0).reverse().map((email, index) => {
+				emails.slice(0).map((email, index) => {
 					return (
 						<div className="home_page_divs" key={index}>
 							<div style={{ backgroundColor: '#333333', padding: '20px' }} className="br-10px">
@@ -99,9 +99,9 @@ const AnnouncementPage = (props) => {
 											<tr>
 												<td>
 													<img
-														src={email.image}
-														alt="Promo Image"
-														title="Promo Image"
+														src={email.images.length > 0 ? email.images[0] : email.image}
+														alt="Promo"
+														title="Promo"
 														style={{
 															textAlign: 'center',
 															width: '100%',
