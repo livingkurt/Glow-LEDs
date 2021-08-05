@@ -21,6 +21,7 @@
 	z-index: 1;
 	bottom: 25%;
 }
+
 .tooltipoverlay {
 	background: rgba(0, 0, 0, 0);
 	border-radius: 10px;
@@ -32,7 +33,23 @@
 .tooltip:hover .tooltiptext {
 	visibility: visible;
 }
+
 .tooltipoverlay:hover {
 	background: #0000001c;
 	z-index: 99;
 }
+
+// .image-btn-container {
+// 	position: relative;
+// }
+.image-btn {
+	visibility: hidden;
+}
+
+.product:hover .image-btn {
+	visibility: visible;
+}
+
+// .product:hover.image-btn {
+// 	visibility: visible !important;
+// }

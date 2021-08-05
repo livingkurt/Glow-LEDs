@@ -33,5 +33,7 @@ export { default as Stripe } from './Stripe';
 export { default as ScreenSize } from './ScreenSize';
 export { default as StarRating } from './StarRating';
 export { default as ProductListItem } from './ProductListItem';
+export { default as ProductThumbCarouselItem } from './ProductThumbCarouselItem';
+export { default as ProductThumbCarousel } from './ProductThumbCarousel';
 export { default as Survey } from './Survey';
 export { default as CartItem } from './CartItem';

@@ -45,6 +45,12 @@
 		line-height: 3.4rem;
 	}
 }
+
+.title_font {
+	font-family: $paragraph_font;
+	-webkit-text-stroke: 1px white;
+}
+
 .heading_font {
 	font-family: $heading_font;
 }

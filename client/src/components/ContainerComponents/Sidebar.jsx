@@ -97,18 +97,6 @@ const Sidebar = (props) => {
 		const current_menu = document.getElementById(id);
 		console.log(current_menu.classList);
 		current_menu.classList.toggle('hide-menu');
-		// console.log({ substring: id.substring(0, 5) });
-		// let last_menu = '';
-		// if (last_id && id.substring(0, 6) !== 'nested' && last_id !== id) {
-		// 	last_menu = document.getElementById(last_id);
-		// 	console.log(last_menu.classList);
-		// 	last_menu.classList.remove('hide-menu');
-		// }
-		// if (id.substring(0, 6) === 'nested' && last_id.substring(0, 6) === 'nested') {
-		// 	last_menu = document.getElementById(last_id);
-		// 	console.log(last_menu.classList);
-		// 	last_menu.classList.remove('hide-menu');
-		// }
 		set_last_id(id);
 	};
 

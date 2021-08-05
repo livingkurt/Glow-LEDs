@@ -69,13 +69,9 @@ const Header = (props) => {
 
 	const show_hide = (id) => {
 		// set_current_id(id);
-		var elems = document.querySelectorAll('.dropdown-nav-subcategory-content');
-		[].forEach.call(elems, (el) => {
-			el.classList.remove('show-dropdown');
-		});
 		const current_menu = document.getElementById(id);
 		console.log(current_menu.classList);
-		current_menu.classList.toggle('show-dropdown');
+		current_menu.classList.toggle('hide-menu');
 		// set_last_id(id);
 	};
 
@@ -83,6 +79,368 @@ const Header = (props) => {
 		<div className="">
 			<Banner visible={props.visible} />
 			<header id="overlay" style={{ ...navbarStyles, top: props.visible ? '0' : '-180px' }}>
+				<div className="header desktop-header mm-fixed-top ">
+					<div className="top-bar">
+						<p className="header-shipping-note m-0px min-h-25px">Lightning-Fast Shipping</p>
+						<div className="top-right-header">
+							<a href="https://www.emazinglights.com/pages/track-your-order" id="track_order">
+								Track My Order
+							</a>
+							<a href="/account/login" id="login">
+								Login
+							</a>
+						</div>
+					</div>
+					<div className="container">
+						<div className="four columns logo center">
+							{' '}
+							<a href="https://www.emazinglights.com" title="EmazingLights">
+								<picture>
+									<source
+										media="(min-width: 1024px)"
+										srcset=" //cdn.shopify.com/s/files/1/0982/0710/t/211/assets/logo.png?v=12545829877916996192 "
+									/>{' '}
+									<img
+										src=" //cdn.shopify.com/s/files/1/0982/0710/t/211/assets/logo_mobile.png?v=7236916590500192549 "
+										alt="EmazingLights"
+										data-src-home="  //cdn.shopify.com/s/files/1/0982/0710/t/211/assets/logo.png?v=12545829877916996192   "
+									/>
+								</picture>
+							</a>
+						</div>
+
+						<div className="eight columns">
+							<div className="nav mobile_hidden">
+								<div className="">
+									<div className="sixteen columns">
+										<ul className="menu links-5">
+											<li>
+												{' '}
+												<a href="/collections/best-sellers" className="top-link ">
+													Best Sellers
+												</a>
+											</li>
+											<li className="shop">
+												{' '}
+												<a href="#" className="sub-menu  ">
+													{' '}
+													Shop <span className="arrow">▾</span>
+												</a>
+												<div className="dropdown dropdown-wide">
+													<ul className="sublink_2">
+														<li>
+															{' '}
+															<a href="#">Gloving</a>
+														</li>
+														<li className="tier3 first led-gloves">
+															{' '}
+															<a className="sub-link" href="/collections/led-gloves">
+																{' '}
+																LED Gloves
+															</a>
+														</li>
+														<li className="tier3 gloving-parts-batteries">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/gloving-accessories"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Gloving Parts &amp; Batteries
+															</a>
+														</li>
+													</ul>
+													<ul className="sublink_1">
+														<li>
+															{' '}
+															<a href="#">Orbiting</a>
+														</li>
+														<li className="tier3 first orbits">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/orbits"
+																data-image="//cdn.shopify.com/s/files/1/0982/0710/collections/Orbits_large.jpg?v=1510851742"
+															>
+																Orbits
+															</a>
+														</li>
+														<li className="tier3 orbiting-parts-batteries">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/orbit-accessories"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Orbiting Parts &amp; Batteries
+															</a>
+														</li>
+													</ul>
+													<ul className="sublink_2">
+														<li>
+															{' '}
+															<a href="/collections/flow-arts">Other Flow Arts</a>
+														</li>
+														<li className="tier3 first poi-balls">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/poi"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Poi Balls
+															</a>
+														</li>
+														<li className="tier3 led-levitation-wands">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/led-levitation-wands"
+															>
+																{' '}
+																LED Levitation Wands
+															</a>
+														</li>
+														<li className="tier3 fiber-optic-whips">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/fiber-optic-whips"
+																data-image="//cdn.shopify.com/s/files/1/0982/0710/collections/dropdown_fiberopticwhips_grande_83f538d1-b0be-4140-a5f6-fb11d06b55e9_large.jpg?v=1563394088"
+															>
+																Fiber Optic Whips
+															</a>
+														</li>
+													</ul>
+													<ul className="sublink_3">
+														<li>
+															{' '}
+															<a href="#">Apparel &amp; Accessories</a>
+														</li>
+														<li className="tier3 first masks-bandanas">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/face-masks"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Masks &amp; Bandanas
+															</a>
+														</li>
+														<li className="tier3 t-shirts-tanks">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/tanks-tees-men"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																T-Shirts &amp; Tanks
+															</a>
+														</li>
+														<li className="tier3 hoodies">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/sweatshirts-men"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Hoodies
+															</a>
+														</li>
+														<li className="tier3 shorts-joggers">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/bottoms-men"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Shorts &amp; Joggers
+															</a>
+														</li>
+														<li className="tier3 boxers">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/mens-stash-boxers"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Boxers
+															</a>
+														</li>
+														<li className="tier3 hats">
+															{' '}
+															<a
+																className="sub-link"
+																href="/collections/hats-snapbacks"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_large.gif"
+															>
+																Hats
+															</a>
+														</li>
+														<li className="tier3 glasses">
+															{' '}
+															<a className="sub-link" href="/collections/glasses">
+																{' '}
+																Glasses
+															</a>
+														</li>
+													</ul>
+													<ul className="sublink_4" />
+												</div>
+											</li>
+											<li className="sales">
+												{' '}
+												<a href="#" className="sub-menu  ">
+													{' '}
+													Sales <span className="arrow">▾</span>
+												</a>
+												<div className="dropdown dropdown-wide">
+													<ul className="sublink_3">
+														<li>
+															{' '}
+															<a
+																href="/collections/sales-and-promotions"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_medium.gif"
+															>
+																Current Deals
+															</a>
+														</li>
+														<li>
+															{' '}
+															<a
+																href="/collections/5-and-under-deals"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_medium.gif"
+															>
+																Under $5 Deals
+															</a>
+														</li>
+														<li>
+															{' '}
+															<a
+																href="/collections/10-and-under-deals"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_medium.gif"
+															>
+																Under $10 Deals
+															</a>
+														</li>
+														<li>
+															{' '}
+															<a href="/collections/clearance">Clearance</a>
+														</li>
+													</ul>
+												</div>
+											</li>
+											<li>
+												{' '}
+												<a href="/pages/get-started" className="top-link ">
+													Get Started
+												</a>
+											</li>
+											<li className="get-involved">
+												{' '}
+												<a href="#" className="sub-menu  ">
+													{' '}
+													Get Involved <span className="arrow">▾</span>
+												</a>
+												<div className="dropdown dropdown-wide">
+													<ul className="sublink_5">
+														<li>
+															{' '}
+															<a href="/pages/facemelt-crew">FaceMelt Crew</a>
+														</li>
+														<li>
+															{' '}
+															<a
+																href="/pages/sponsors"
+																data-image="//cdn.shopify.com/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c_medium.gif"
+															>
+																Our Sponsors
+															</a>
+														</li>
+														<li>
+															{' '}
+															<a href="/pages/promoters">Promoters Program</a>
+														</li>
+														<li>
+															{' '}
+															<a href="/blogs/post">Blog</a>
+														</li>
+													</ul>
+												</div>
+											</li>
+											<li className="search-cart-right pos-rel">
+												<form action="/pages/search-results-page">
+													<input type="hidden" name="type" value="product" />
+													<div className="search-over">
+														{' '}
+														<button
+															type="button"
+															className="search-bar--submit icon-fallback-text"
+														>
+															{' '}
+															<span
+																className="icon icon-search search_toggle"
+																aria-hidden="true"
+															>
+																Search
+															</span>
+														</button>
+														<div className="search-wrap">
+															{' '}
+															<label for="searchProductDesktop" className="label_hidden">
+																Find Product
+															</label>{' '}
+															<input
+																type="text"
+																id="searchProductDesktop"
+																name="q"
+																className="seach_entry snize-input-style"
+																value=""
+																autocapitalize="off"
+																autocomplete="off"
+																autocorrect="off"
+															/>
+														</div>
+													</div>
+												</form>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							{/* <div className="search-bar align-right">
+          <ul>
+            <li className="wishlist-link-li wk-empty">
+              <a href="/account/login?wk-redirect=%7B%22path%22%3A%22%2Fpages%2Fwishlist%22%7D" className="wk-link wk-empty"
+                title="View Wishlist">
+                <div className="wk-icon"> <svg version="1.1" xmlns="https://www.w3.org/2000/svg" width="64px"
+                    height="60.833px" viewBox="0 0 64 60.833">
+                    <path stroke="#000" stroke-width="5" stroke-miterlimit="10" fill-opacity="0"
+                      d="M45.684,2.654c-6.057,0-11.27,4.927-13.684,10.073 c-2.417-5.145-7.63-10.073-13.687-10.073c-8.349,0-15.125,6.776-15.125,15.127c0,16.983,17.134,21.438,28.812,38.231 c11.038-16.688,28.811-21.787,28.811-38.231C60.811,9.431,54.033,2.654,45.684,2.654z">
+                    </path>
+                  </svg>
+                </div><span className="wk-label">Wishlist</span> <span className="wk-count">(0)</span>
+              </a>
+            <li>
+              <div className="cartwrap">
+                <div className="cart-wrap"><a href="javascript:void(0)" className="icon-cart cart-slide-right">
+                    <div className="cart_count">0</div>
+                    <div className="cart_count-iteam"></div>
+                  </a></div>
+              </div>
+            </li>
+          </ul>
+          <div className="minicartcontainer"> <span className="promo-message" id="promoMessage1"></span><span
+              className="itemadd">Added to Cart</span>
+            <div className="totalcontainer"><span className="subtotal">Order Subtotal</span><span className="totalmoney">$0.00
+                USD</span><span className="excludestax">Excludes tax and shipping</span></div> <span
+              className="shippingmessage">Lightning-Fast Shipping</span> <a href="/cart" className="viewcartbutton">View Cart /
+              Checkout</a>
+          </div>
+        </div> */}
+						</div>
+					</div>
+				</div>
 				<div className="menu_button w-233px">
 					<Link to="/">
 						<div className="row">
@@ -135,306 +493,27 @@ const Header = (props) => {
 						<Link to="/">
 							<button className="btn nav">Home</button>
 						</Link>
-						{/* <Link to="/collections/all/products/category/best_sellers">
-							<button className="btn nav w-100per ta-l">Best Sellers</button>
-						</Link> */}
 						<div className="dropdown-nav">
 							<Link to="/collections/all/products">
 								<button className="btn nav" onClick={() => dispatch(listProducts(''))}>
 									Products
 								</button>
 							</Link>
-							<div className="dropdown-nav-content hover_fade_in ">
-								{/* <Link to="/collections/all/products/category/best_sellers">
+							<div className="dropdown-nav-content hover_fade_in w-250px">
+								<Link to="/collections/all/products/category/best_sellers">
 									<button className="btn nav w-100per ta-l">Best Sellers</button>
-								</Link> */}
-								<div className="jc-a">
-									{/* <div>
-										<Link to="/collections/all/products">
-											<button
-												className="btn nav w-100per ta-l fs-20px"
-												onClick={() => dispatch(listProducts(''))}
-											>
-												Products
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/best_sellers">
-											<button className="btn nav w-100per ta-l title_font">Best Sellers</button>
-										</Link>
-										<Link to="/collections/all/products/category/essentials">
-											<button className="btn nav w-100per ta-l title_font">
-												Glow LEDs Essentials
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/discounted">
-											<button className="btn nav w-100per ta-l title_font">On Sale!</button>
-										</Link>
-										<Link to="/collections/all/products/category/glow_strings">
-											<button className="btn nav w-100per ta-l title_font">Glow Strings</button>
-										</Link>
-									</div> */}
-									<div>
-										<Link to="/collections/all/products">
-											<button
-												className="btn nav w-100per ta-l fs-20px"
-												onClick={() => dispatch(listProducts(''))}
-											>
-												Products
-											</button>
-										</Link>
-										{/* <hr className="w-100per" /> */}
-										<Link to="/collections/all/products/category/best_sellers">
-											<button className="btn nav w-100per ta-l title_font">Best Sellers</button>
-										</Link>
-										<Link to="/collections/all/products/category/essentials">
-											<button className="btn nav w-100per ta-l title_font jc-b">
-												Glow LEDs Essentials
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/discounted">
-											<button className="btn nav w-100per ta-l title_font">On Sale!</button>
-										</Link>
-										<Link to="/collections/all/products/category/glow_strings">
-											<button className="btn nav w-100per ta-l title_font">Glow Strings</button>
-										</Link>
-									</div>
-									<div>
-										<Link to="/pages/menu/gloving">
-											<button className="btn nav w-100per ta-l fs-20px">Gloving</button>
-										</Link>
-										{/* <hr className="w-100per" /> */}
-										<Link to="/collections/all/products/category/exo_diffusers">
-											<button className="btn nav w-100per ta-l title_font">
-												Exo Diffusers (New)
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/glow_casings">
-											<button className="btn nav w-100per ta-l title_font jc-b">
-												Glow Casings
-												{/* <i className=" trans-neg-180 fas fa-sort-up" /> */}
-											</button>
-										</Link>
-										<div className="nav-btn-container jc-b w-100per">
-											<Link to="/collections/all/products/category/glowskins" className="w-80per">
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Glowskins
-												</button>
-											</Link>
-											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
-												onClick={() => show_hide('glowskins_dropdown')}
-											>
-												<i className="fas fa-sort-up" />
-											</button>
-										</div>
-										<div className="nav-btn-container jc-b w-100per">
-											<Link
-												to="/collections/all/products/category/frosted_diffusers"
-												className="w-80per"
-											>
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Frosted Diffusers
-												</button>
-											</Link>
-											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
-												onClick={() => show_hide('frosted_diffusers_dropdown')}
-											>
-												<i className="fas fa-sort-up" />
-											</button>
-										</div>
-										<div className="nav-btn-container jc-b w-100per">
-											<Link
-												to="/collections/all/products/category/diffuser_caps"
-												className="w-80per"
-											>
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Diffuser Caps
-												</button>
-											</Link>
-											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
-												onClick={() => show_hide('diffuser_caps_dropdown')}
-											>
-												<i className="fas fa-sort-up" />
-											</button>
-										</div>
-										<div className="nav-btn-container jc-b w-100per">
-											<Link
-												to="/collections/all/products/category/accessories"
-												className="w-80per"
-											>
-												<button className="nav-btn-link w-100per ta-l title_font dropdown-nav-subcategory">
-													Accessories
-												</button>
-											</Link>
-											<button
-												className=" nav-btn-dropdown trans-neg-180 w-20per fs-16px"
-												onClick={() => show_hide('accessories_dropdown')}
-											>
-												<i className="fas fa-sort-up" />
-											</button>
-										</div>
-										{/* <Link to="/collections/all/products/category/accessories">
-											<button className="btn nav w-100per ta-l title_font">Accessories</button>
-										</Link> */}
-									</div>
-									{/* Glowskins */}
-									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
-										id="glowskins_dropdown"
-									>
-										<Link to="/pages/menu/gloving">
-											<button className="btn nav w-100per ta-l fs-20px">Glowskins</button>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/classics">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Classics</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Novaskins</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">
-													Alt Novaskins
-												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Imperfect</button>
-											</div>
-										</Link>
-									</div>
-									{/* Frosted Diffusers */}
-									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
-										id="frosted_diffusers_dropdown"
-									>
-										<Link to="/pages/menu/gloving">
-											<button className="btn nav w-100per ta-l fs-20px">Frosted Diffusers</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">
-													Abstract (New)
-												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">
-													Polygons (New)
-												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">
-													Cylinders (New)
-												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">
-													Domes (New)
-												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">Open Hole</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">
-													Closed Hole
-												</button>
-											</div>
-										</Link>
-									</div>
-									{/* Diffuser Caps */}
-									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
-										id="diffuser_caps_dropdown"
-									>
-										<Link to="/pages/menu/gloving">
-											<button className="btn nav w-100per ta-l fs-20px">Diffuser Caps</button>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Geomotric</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Shapes</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Abstract</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Patterns</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
-											<div className="row">
-												{/* <i className="trans-90 mr-30px fas fa-sort-up" />{' '} */}
-												<button className="btn nav w-100per ta-l title_font">Imperfect</button>
-											</div>
-										</Link>
-									</div>
-									{/* Accessories */}
-									<div
-										className="dropdown-nav-subcategory-content hover_fade_in w-100per max-w-250px"
-										id="accessories_dropdown"
-									>
-										<Link to="/pages/menu/gloving">
-											<button className="btn nav w-100per ta-l fs-20px">Accessories</button>
-										</Link>
-										<Link to="/collections/all/products/category/accessories/subcategory/batteries">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">Batteries</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/accessories/subcategory/battery_storage">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">
-													Battery Storage
-												</button>
-											</div>
-										</Link>
-										<Link to="/collections/all/products/category/accessories/subcategory/stickers">
-											<div className="row">
-												<button className="btn nav w-100per ta-l title_font">Stickers</button>
-											</div>
-										</Link>
-									</div>
-								</div>
-
+								</Link>
+								<Link to="/collections/all/products/category/essentials">
+									<button className="btn nav w-100per ta-l">Glow LEDs Essentials</button>
+								</Link>
+								<Link to="/collections/all/products/category/discounted">
+									<button className="btn nav w-100per ta-l">On Sale!</button>
+								</Link>
 								<div className="dropdown-nav-subcategory">
-									{/* <Link to="/pages/menu/gloving">
+									<Link to="/pages/menu/gloving">
 										<button className="btn nav w-100per ta-l">Gloving</button>
 										<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
-									</Link> */}
+									</Link>
 									<div className="dropdown-nav-subcategory-content hover_fade_in left-118px top-39px w-243px">
 										{/* <Link to="/collections/all/products/category/novaskins">
 											<div className="row">
@@ -442,7 +521,7 @@ const Header = (props) => {
 											</div>
 										</Link> */}
 
-										{/* <Link to="/collections/all/products/category/exo_diffusers">
+										<Link to="/collections/all/products/category/exo_diffusers">
 											<div className="row">
 												<button className="btn nav w-100per ta-l">Exo Diffusers (New)</button>
 											</div>
@@ -460,7 +539,7 @@ const Header = (props) => {
 													</div>
 												</Link>
 											</div>
-										</div> */}
+										</div>
 										{/* <Link to="/collections/all/products/category/glow_casings">
 											<div className="row">
 												<button className="btn nav w-100per ta-l">Glow Casings</button>
@@ -471,7 +550,7 @@ const Header = (props) => {
 												<button className="btn nav w-100per ta-l">Glowskins</button>
 											</div>
 										</Link> */}
-										{/* <div className="dropdown-nav-nested">
+										<div className="dropdown-nav-nested">
 											<Link to="/collections/all/products/category/glowskins">
 												<button className="btn nav w-100per ta-l">Glowskins</button>
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
@@ -502,8 +581,8 @@ const Header = (props) => {
 													</div>
 												</Link>
 											</div>
-										</div> */}
-										{/* <div className="dropdown-nav-nested">
+										</div>
+										<div className="dropdown-nav-nested">
 											<Link to="/collections/all/products/category/frosted_diffusers">
 												<button className="btn nav w-100per ta-l">Frosted Diffusers</button>
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
@@ -552,19 +631,19 @@ const Header = (props) => {
 													</div>
 												</Link>
 											</div>
-										</div> */}
-										{/* <div className="dropdown-nav-nested">
+										</div>
+										<div className="dropdown-nav-nested">
 											<Link to="/collections/all/products/category/diffuser_caps">
 												<button className="btn nav w-100per ta-l">Diffuser Caps</button>
 												<i className="pos-abs right-10px top-8px trans-neg-180 fas fa-sort-up" />
 											</Link>
 											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px">
-												<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+												{/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 													<div className="row">
 														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
 														<button className="btn nav w-100per ta-l">Collections</button>
 													</div>
-												</Link>
+												</Link> */}
 												<div className="dropdown-nav-nested-2 ">
 													<button className="btn nav w-100per ta-l">Collections</button>
 													<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
@@ -622,17 +701,54 @@ const Header = (props) => {
 													</div>
 												</Link>
 											</div>
+										</div>
+										{/* <div className="dropdown-nav-nested">
+											<Link to="/collections/all/products/category/mega_diffuser_caps">
+												<button className="btn nav w-100per ta-l">Mega Diffuser Caps</button>
+												<i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" />
+											</Link>
+											<div className="dropdown-nav-nested-content hover_fade_in left-118px top-39px">
+												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/geometric">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Geomotric</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/shapes">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Shapes</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/abstract">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Abstract</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/patterns">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Patterns</button>
+													</div>
+												</Link>
+												<Link to="/collections/all/products/category/mega_diffuser_caps/subcategory/emoji">
+													<div className="row">
+														<i className="trans-90 mr-30px fas fa-sort-up" />{' '}
+														<button className="btn nav w-100per ta-l">Emojis</button>
+													</div>
+												</Link>
+											</div>
 										</div> */}
-
-										{/* <Link to="/collections/all/products/category/accessories">
+										<Link to="/collections/all/products/category/accessories">
 											<button className="btn nav w-100per ta-l">Accessories</button>
-										</Link> */}
+										</Link>
 									</div>
 								</div>
 
-								{/* <Link to="/collections/all/products/category/glow_strings">
+								<Link to="/collections/all/products/category/glow_strings">
 									<button className="btn nav w-100per ta-l">Glow Strings</button>
-								</Link> */}
+								</Link>
 							</div>
 						</div>
 						<div className="dropdown-nav">
