@@ -57,6 +57,34 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Features' });
 		}
 	},
+	get_features_by_category: async (req: any, res: any) => {
+		try {
+			const category = req.query.category ? { category: req.query.category } : {};
+
+			const features = await Feature.find({ deleted: false, ...category }).sort({ _id: -1 });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Feature',
+				data: features,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.send(features);
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Feature',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Features' });
+		}
+	},
 	findById: async (req: any, res: any) => {
 		try {
 			// console.log({ feature });

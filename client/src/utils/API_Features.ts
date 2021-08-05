@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-export default {
+const feature_routes = {
 	get_features_by_category: (category: string) => {
-		return axios.get('/api/features/category/' + category);
+		return axios.get('/api/features/category?category=' + category);
 	}
 };
+
+export default feature_routes;

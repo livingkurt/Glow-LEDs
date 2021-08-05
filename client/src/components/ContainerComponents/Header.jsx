@@ -424,15 +424,15 @@ const Header = (props) => {
 							</div>
 						</div>
 						<div className="dropdown-nav">
-							{/* <Link to="/collections/all/features"> */}
-							<button className="btn nav">Features</button>
-							{/* </Link> */}
+							<Link to="/pages/menu/featured">
+								<button className="btn nav">Features</button>
+							</Link>
 							<div className="hover_fade_in nav-dropdown">
 								<div className="jc-c">
 									<div className="w-100per max-w-300px">
-										{/* <Link to="/collections/all/features"> */}
-										<button className="btn nav w-100per ta-l fs-20px">Featured</button>
-										{/* </Link> */}
+										<Link to="/pages/menu/featured">
+											<button className="btn nav w-100per ta-l fs-20px">Featured</button>
+										</Link>
 										<div className="nav-btn-container">
 											{/* <Link to="/collections/all/products/category/glowskins" className="w-80per"> */}
 											<button className="nav-btn-link title_font ">Sponsored Artists</button>
