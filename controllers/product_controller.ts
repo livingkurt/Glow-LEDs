@@ -578,17 +578,20 @@ export default {
 			// const occurences = req.body.occurences;
 			// console.log(occurences[0]);
 			const names = [
+				'Bulk CR1620 Batteries',
+				'Bulk CR1225 Batteries',
 				'Glow Strings V2 50 LED / 3.5m',
 				'Wiffle Ball EXO Diffusers',
 				'Dome Diffusers',
-				'Coinskins',
-				'Fisheye Difffusers',
-				'Apolloskins',
+				'Coinskins V2',
+				'Visor Diffusers',
+				'Hybridskins',
 				'Diffuser Caps + Adapters Starter Kit',
 				'Space Cadet Diffuser Caps',
-				'Nano V2 Glow Casings',
-				'Festy Besty Diffuser Caps',
-				'1225 Battery Dispenser'
+				'Apollo Glow Casings',
+				'1225 Coin Battery Dispenser',
+				'1620 Coin Battery Dispenser',
+				'Coin Battery Storage'
 			];
 			console.log({ names });
 			const products = await Product.find({ name: { $in: names } });
