@@ -508,7 +508,7 @@ const Header = (props) => {
 										<div className="nav-btn-container">
 											<Link to="/pages/faq" className="w-80per">
 												<button className="nav-btn-link w-100per ta-l title_font">FAQ</button>
-											</Link>/
+											</Link>
 											<button
 												className="nav-btn-dropdown"
 												onClick={() => show_hide('faq_dropdown')}
