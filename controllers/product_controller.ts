@@ -739,7 +739,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
-	categories: async (req: any, res: any) => {
+	get_all_categories: async (req: any, res: any) => {
 		const products = await Product.find({ deleted: false }).sort({ category: 1 });
 		const categories = products.map((product: any) => product.category);
 		const no_dups_categories = categories.filter((value: any, index: any) => categories.indexOf(value) === index);

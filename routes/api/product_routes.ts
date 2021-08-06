@@ -19,7 +19,7 @@ router.route('/get_caps').get(product_controller.get_caps);
 router.route('/get_mega_caps').get(product_controller.get_mega_caps);
 
 router.route('/get_options/:pathname').get(product_controller.get_options);
-router.route('/categories').get(product_controller.categories);
+router.route('/get_all_categories').get(product_controller.get_all_categories);
 router.route('/subcategories').get(product_controller.subcategories);
 router.route('/get_images/:category').get(product_controller.get_images);
 router.route('/update_stock').put(product_controller.update_stock);

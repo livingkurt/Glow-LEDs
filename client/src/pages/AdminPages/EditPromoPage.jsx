@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { savePromo, detailsPromo } from '../../actions/promoActions';
 import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listAffiliates } from '../../actions/affiliateActions';
@@ -71,7 +71,7 @@ const EditPromoPage = (props) => {
 		[ stableDispatch, props.match.params.id ]
 	);
 	const get_categories = async () => {
-		const { data } = await API_Products.get_categories();
+		const { data } = await API_Products.get_all_categories();
 		console.log(data);
 		set_categories(data);
 	};
@@ -273,13 +273,9 @@ const EditPromoPage = (props) => {
 													<div className="custom-select w-100per">
 														<select
 															className="qty_select_dropdown w-100per"
-															// defaultValue={{
-															// 	label: user.first_name + ' ' + user.last_name,
-															// 	value: user._id
-															// }}
 															onChange={(e) => set_affiliate(e.target.value)}
 														>
-															<option key={1} defaultValue="">
+															<option key={1} defaultValue={''}>
 																---Choose Affiliate---
 															</option>
 															{affiliates.map((affiliate, index) => (
@@ -308,13 +304,9 @@ const EditPromoPage = (props) => {
 													<div className="custom-select w-100per">
 														<select
 															className="qty_select_dropdown w-100per"
-															// defaultValue={{
-															// 	label: user.first_name + ' ' + user.last_name,
-															// 	value: user._id
-															// }}
 															onChange={(e) => set_user(e.target.value)}
 														>
-															<option key={1} defaultValue="">
+															<option key={1} defaultValue={''}>
 																---Choose User---
 															</option>
 															{users.map((user, index) => (
@@ -459,7 +451,7 @@ const EditPromoPage = (props) => {
 													id="excluded_category"
 													onChange={(e) => set_excluded_category(e.target.value)}
 												/> */}
-												<li>
+												{/* <li>
 													<label
 														aria-label="sortOrder"
 														htmlFor="sortOrder"
@@ -473,7 +465,7 @@ const EditPromoPage = (props) => {
 																className="qty_select_dropdown"
 																onChange={(e) => set_excluded_category(e.target.value)}
 															>
-																<option key={1} defaultValue="">
+																<option key={1} defaultValue={''}>
 																	---Choose Category---
 																</option>
 																{categories.map((category, index) => (
@@ -495,9 +487,23 @@ const EditPromoPage = (props) => {
 												)}
 
 												{excluded_list(excluded_categories, 'categories')}
+                        {console.log({
+													excluded_categories
+												})} */}
+												<DropdownDisplay
+													item_list={
+														categories &&
+														categories.map((category) => ({
+															name: category
+														}))
+													}
+													list_items={excluded_categories}
+													set_items={set_excluded_categories}
+													list_name={'Excluded Categorys'}
+												/>
 											</li>
 											<li>
-												<li>
+												{/* <li>
 													<label
 														aria-label="sortOrder"
 														htmlFor="sortOrder"
@@ -508,11 +514,11 @@ const EditPromoPage = (props) => {
 													<div className="ai-c h-25px mb-15px">
 														<div className="custom-select">
 															<select
-																defaultValue={excluded_products}
+																// defaultValue={excluded_products}
 																className="qty_select_dropdown"
 																onChange={(e) => set_excluded_product(e.target.value)}
 															>
-																<option key={1} defaultValue="">
+																<option key={1} defaultValue={''}>
 																	---Choose Product---
 																</option>
 																{products.map((product, index) => (
@@ -532,7 +538,13 @@ const EditPromoPage = (props) => {
 												excluded_products.length > 0 && (
 													<label className="mt-15px">Excluded Products</label>
 												)}
-												{excluded_list(excluded_products, 'products')}
+												{excluded_list(excluded_products, 'products')} */}
+												<DropdownDisplay
+													item_list={products}
+													list_items={excluded_products}
+													set_items={set_excluded_products}
+													list_name={'Excluded Products'}
+												/>
 											</li>
 
 											<li>
