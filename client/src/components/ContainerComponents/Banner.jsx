@@ -40,7 +40,7 @@ const Banner = (props) => {
 	};
 
 	return (
-		<span className="banner" style={{ ...banner_styles, top: props.visible ? '0' : '-22px' }}>
+		<span className="banner" style={{ ...banner_styles, top: props.visible ? '0' : '-22px', ...props.style }}>
 			<div className="max-w-1500px m-auto jc-b">
 				{content &&
 				content.banner && (

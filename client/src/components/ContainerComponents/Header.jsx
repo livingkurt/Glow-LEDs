@@ -95,9 +95,11 @@ const Header = (props) => {
 	};
 
 	return (
-		<div className="">
-			<Banner visible={props.visible} />
-			<header id="overlay" style={{ ...navbarStyles, top: props.visible ? '0' : '-180px' }}>
+		<div>
+			<div>
+				<Banner visible={props.visible} style={{ zIndex: 1 }} />
+			</div>
+			<header id="overlay" style={{ ...navbarStyles, top: props.visible ? '0' : '-180px', zIndex: 1 }}>
 				<div className="menu_button w-233px">
 					<Link to="/">
 						<div className="row">

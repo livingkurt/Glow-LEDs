@@ -104,8 +104,7 @@ const Sidebar = (props) => {
 		<aside
 			ref={wrapperRef}
 			className="sidebar"
-			style={{ top: '0px', overflowY: 'scroll', zIndex: 4 }}
-			// style={{ ...navbarStyles, top: props.visible ? determine_top() : '0px', overflowY: 'scroll' }}
+			style={{ ...navbarStyles, top: props.visible ? determine_top() : '0px', overflowY: 'scroll' }}
 		>
 			<div className="logo_text mh-auto ai-c">
 				<Link to="/">
