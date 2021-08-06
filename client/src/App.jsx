@@ -88,7 +88,8 @@ import {
 	EditCategoryPage,
 	EditSettingPage,
 	SettingsPage,
-	LabelCreatorPage
+	LabelCreatorPage,
+	AdminChangePasswordPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -317,6 +318,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/editsurvey/:id?" component={EditSurveyPage} />
 							<AdminRoute path="/secure/glow/editparcel/:id?" component={EditParcelPage} />
 
+							<AdminRoute path="/secure/glow/change_password/:id" component={AdminChangePasswordPage} />
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
 							<AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />

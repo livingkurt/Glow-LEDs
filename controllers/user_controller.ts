@@ -536,10 +536,8 @@ export default {
 		}
 	},
 	password_reset: async (req: any, res: any) => {
-		console.log({ password_reset: req.body });
 		try {
 			const user: any = await User.findOne({ _id: req.body.user_id });
-			console.log({ user });
 			if (!user) {
 				log_request({
 					method: 'PUT',
@@ -555,8 +553,12 @@ export default {
 				bcrypt.genSalt(10, (err: any, salt: any) => {
 					bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
 						if (err) throw err;
-						user.password = hash;
-						await user.save();
+						console.log({ new_password: req.body.password, hash: hash });
+						const updated_user = await User.updateOne(
+							{ _id: req.body.user_id },
+							{ ...req.body, password: hash }
+						);
+						console.log({ user_after_password_change: updated_user });
 						log_request({
 							method: 'PUT',
 							path: req.originalUrl,

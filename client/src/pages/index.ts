@@ -38,6 +38,7 @@ export { default as CategorysPage } from './AdminPages/CategorysPage';
 export { default as EditSettingPage } from './AdminPages/EditSettingPage';
 export { default as SettingsPage } from './AdminPages/SettingsPage';
 export { default as LabelCreatorPage } from './AdminPages/LabelCreatorPage';
+export { default as AdminChangePasswordPage } from './AdminPages/AdminChangePasswordPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

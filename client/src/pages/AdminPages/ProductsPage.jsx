@@ -58,25 +58,6 @@ function ProductPage(props) {
 		[ sortOrder ]
 	);
 
-	const add_item_group_id = (e) => {
-		set_loading_upload(true);
-		e.preventDefault();
-		items.forEach((item_group) => {
-			const options = [
-				...item_group.color_products,
-				...item_group.secondary_color_products,
-				...item_group.option_products
-			];
-			// console.log({ options });
-			options.forEach(async (option) => {
-				console.log({ [option.name]: option._id, item_group_id: item_group._id });
-				const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
-				// console.log({ data });
-			});
-		});
-		set_loading_upload(false);
-	};
-
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
@@ -458,6 +439,62 @@ function ProductPage(props) {
 			return previous;
 		}, {})
 	);
+
+	const add_item_group_id = (e) => {
+		set_loading_upload(true);
+		e.preventDefault();
+		items.forEach((item_group) => {
+			const options = [
+				...item_group.color_products,
+				...item_group.secondary_color_products
+				// ...item_group.option_products
+			];
+			// console.log({ options });
+			options.forEach(async (option) => {
+				console.log({ [option.name]: option._id, item_group_id: item_group._id });
+				const { data } = await API_Products.save_item_group_id(option, item_group);
+				// console.log({ data });
+			});
+		});
+		set_loading_upload(false);
+	};
+	// const add_item_group_id = (e) => {
+	// 	set_loading_upload(true);
+	// 	e.preventDefault();
+	// 	items.forEach((item_group) => {
+	// 		const options = [
+	// 			...item_group.color_products,
+	// 			...item_group.secondary_color_products,
+	// 			...item_group.option_products
+	// 		];
+	// 		// console.log({ options });
+	// 		options.forEach(async (option) => {
+	// 			console.log({ [option.name]: option._id, item_group_id: item_group._id });
+	// 			const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
+	// 			// console.log({ data });
+	// 		});
+	// 	});
+	// 	set_loading_upload(false);
+	// };
+
+	// const update_prices_for_colors = (e) => {
+	// 	set_loading_upload(true);
+	// 	e.preventDefault();
+	// 	items.forEach((item_group) => {
+	// 		const options = [
+	// 			// ...item_group.color_products,
+	// 			// ...item_group.secondary_color_products,
+	// 			...item_group.option_products
+	// 		];
+	// 		// console.log({ options });
+	// 		options.forEach(async (option) => {
+	// 			console.log({ [option.name]: option._id, item_group_id: item_group._id });
+	// 			const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
+	// 			// console.log({ data });
+	// 		});
+	// 	});
+	// 	set_loading_upload(false);
+	// };
 
 	return (
 		<div className="main_container p-20px">

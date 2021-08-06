@@ -145,7 +145,7 @@ const UserProfilePage = (props) => {
 								</Link>
 							</div>
 							<div style={{ height: 50 }}>
-								<Link to={'/account/changepassword'}>
+								<Link to={'/secure/glow/change_password/' + props.match.params.id}>
 									<button style={{ marginRight: '10px', maxWidth: '210px' }} className="btn primary">
 										Change Password
 									</button>

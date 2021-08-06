@@ -829,12 +829,12 @@ export default {
 	},
 	save_item_group_id: async (req: any, res: any) => {
 		try {
-			const option_id = req.body.option_id;
-			const item_group_id = req.body.item_group_id;
-			console.log({ option_id, item_group_id });
-			const product = await Product.findById(option_id);
-			// console.log({ product });
-			if (product) {
+			const option = req.body.option;
+			const item_group = req.body.item_group;
+			// console.log({ option, item_group });
+			const product = await Product.findById(option._id);
+			console.log({ option: option._id, price: item_group.price });
+			if (product && option._id && item_group.price) {
 				log_request({
 					method: 'GET',
 					path: req.originalUrl,
@@ -845,8 +845,8 @@ export default {
 					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
 				const updatedProduct = await Product.updateOne(
-					{ _id: option_id },
-					{ ...req.body, item_group_id: item_group_id }
+					{ _id: option._id },
+					{ ...req.body, price: item_group.price }
 				);
 				// console.log({ updatedProduct });
 				if (updatedProduct) {
