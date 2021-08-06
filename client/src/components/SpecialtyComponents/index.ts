@@ -1,5 +1,3 @@
-export { default as Product } from './Product';
-export { default as ProductSmallScreen } from './ProductSmallScreen';
 export { default as Feature } from './Feature';
 export { default as FeatureSmallScreen } from './FeatureSmallScreen';
 export { default as Team } from './Team';

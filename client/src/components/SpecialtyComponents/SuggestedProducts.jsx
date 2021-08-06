@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
-import Product from './Product';
 import { Loading } from '../UtilityComponents';
+import { ProductItemD } from '../DesktopComponents';
 // import Slider from './Slider';
 
 const SuggestedProducts = (props) => {
@@ -50,7 +50,7 @@ const SuggestedProducts = (props) => {
 									// 	<div className="embla__slide__inner">
 									// 		<div className="embla__slide__img">
 
-									<Product
+									<ProductItemD
 										key={index}
 										size="175px"
 										product={item}

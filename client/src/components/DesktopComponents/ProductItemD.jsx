@@ -1,13 +1,13 @@
 // React
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Rating from './Rating';
 import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { Rating } from '../SpecialtyComponents';
 import { LazyImage } from '../UtilityComponents';
-import ProductThumbCarouselItem from './ProductThumbCarouselItem';
+
 // import Resizer from 'react-image-file-resizer';
 
-const Product = (props) => {
+const ProductItemD = (props) => {
 	const [ image_number, set_image_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);
 	const [ image, set_image ] = useState(props.product.name);
@@ -186,4 +186,4 @@ const Product = (props) => {
 	);
 };
 
-export default Product;
+export default ProductItemD;

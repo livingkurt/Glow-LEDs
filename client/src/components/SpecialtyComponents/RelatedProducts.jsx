@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts, detailsProduct } from '../../actions/productActions';
-import Product from './Product';
 import { Loading } from '../UtilityComponents';
+import { ProductItemD } from '../DesktopComponents';
 
 const RelatedProducts = (props) => {
 	const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const RelatedProducts = (props) => {
 								!item.hidden &&
 								props.product_pathname &&
 								item.pathname !== props.product_pathname && (
-									<Product
+									<ProductItemD
 										key={index}
 										size="300px"
 										product={item}

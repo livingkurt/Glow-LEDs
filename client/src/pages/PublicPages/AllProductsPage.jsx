@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
-import { Filter, Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Filter, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
 import { listChips } from '../../actions/chipActions';
+import { ProductItemM } from '../../components/MobileComponents';
+import { ProductItemD } from '../../components/DesktopComponents';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
@@ -294,7 +296,7 @@ const AllProductsPage = (props) => {
 											.map(
 												(product, index) =>
 													!product.hidden && (
-														<Product
+														<ProductItemD
 															size="300px"
 															key={index}
 															product={product}
@@ -315,7 +317,7 @@ const AllProductsPage = (props) => {
 										.map(
 											(product, index) =>
 												!product.hidden && (
-													<ProductSmallScreen
+													<ProductItemM
 														size="300px"
 														key={index}
 														product={product}
@@ -340,7 +342,7 @@ const AllProductsPage = (props) => {
 											.map(
 												(product, index) =>
 													!product.hidden && (
-														<Product
+														<ProductItemD
 															size="300px"
 															key={index}
 															product={product}
@@ -361,7 +363,7 @@ const AllProductsPage = (props) => {
 										.map(
 											(product, index) =>
 												!product.hidden && (
-													<ProductSmallScreen
+													<ProductItemM
 														size="300px"
 														key={index}
 														product={product}
@@ -383,7 +385,7 @@ const AllProductsPage = (props) => {
 										essentials.map(
 											(product, index) =>
 												!product.hidden && (
-													<Product
+													<ProductItemD
 														size="300px"
 														key={index}
 														product={product}
@@ -402,7 +404,7 @@ const AllProductsPage = (props) => {
 									{essentials.map(
 										(product, index) =>
 											!product.hidden && (
-												<ProductSmallScreen
+												<ProductItemM
 													size="300px"
 													key={index}
 													product={product}
@@ -425,7 +427,7 @@ const AllProductsPage = (props) => {
 										.map(
 											(product, index) =>
 												!product.hidden && (
-													<Product
+													<ProductItemD
 														size="300px"
 														key={index}
 														product={product}
@@ -445,7 +447,7 @@ const AllProductsPage = (props) => {
 										.map(
 											(product, index) =>
 												!product.hidden && (
-													<ProductSmallScreen
+													<ProductItemM
 														size="300px"
 														key={index}
 														product={product}

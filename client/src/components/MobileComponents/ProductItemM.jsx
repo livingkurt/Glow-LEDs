@@ -1,13 +1,8 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Rating from './Rating';
-
-import {
-	determine_product_name_display,
-	sale_price_product_option_switch,
-	sale_price_switch
-} from '../../utils/react_helper_functions';
+import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { Rating } from '../SpecialtyComponents';
 import { LazyImage } from '../UtilityComponents';
 
 const ProductSmallScreen = (props) => {

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
-import { Filter, Product, ProductSmallScreen, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Filter, Search, Sort } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
 import { listChips } from '../../actions/chipActions';
+import { ProductItemM } from '../../components/MobileComponents';
+import { ProductItemD } from '../../components/DesktopComponents';
 
 const ProductsDisplayPage = (props) => {
 	const history = useHistory();
@@ -274,7 +276,7 @@ const ProductsDisplayPage = (props) => {
 								<ul className="products" style={{ marginTop: 0 }}>
 									{products.length === 0 &&
 										alternative_products.map((product, index) => (
-											<Product
+											<ProductItemD
 												size="300px"
 												key={index}
 												product={product}
@@ -290,7 +292,7 @@ const ProductsDisplayPage = (props) => {
 							alternative_products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{alternative_products.map((product, index) => (
-										<ProductSmallScreen
+										<ProductItemM
 											size="300px"
 											key={index}
 											product={product}
@@ -308,7 +310,7 @@ const ProductsDisplayPage = (props) => {
 							{products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{products.map((product, index) => (
-										<Product
+										<ProductItemD
 											size="300px"
 											key={index}
 											product={product}
@@ -323,7 +325,7 @@ const ProductsDisplayPage = (props) => {
 							{products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{products.map((product, index) => (
-										<ProductSmallScreen
+										<ProductItemM
 											size="300px"
 											key={index}
 											product={product}
