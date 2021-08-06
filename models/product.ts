@@ -93,6 +93,7 @@ const productSchema = new mongoose.Schema(
 		printing_time: { type: Number },
 		assembly_time: { type: Number },
 		order: { type: Number },
+		item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
 		chips: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Chip' } ],
 		product_options: [ productOptionsSchema ],
 		group_product: { type: Boolean, default: false },

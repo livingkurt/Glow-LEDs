@@ -58,6 +58,25 @@ function ProductPage(props) {
 		[ sortOrder ]
 	);
 
+	const add_item_group_id = (e) => {
+		set_loading_upload(true);
+		e.preventDefault();
+		items.forEach((item_group) => {
+			const options = [
+				...item_group.color_products,
+				...item_group.secondary_color_products,
+				...item_group.option_products
+			];
+			// console.log({ options });
+			options.forEach(async (option) => {
+				console.log({ [option.name]: option._id, item_group_id: item_group._id });
+				const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
+				// console.log({ data });
+			});
+		});
+		set_loading_upload(false);
+	};
+
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
@@ -154,7 +173,9 @@ function ProductPage(props) {
 
 	const update_product_catelog = async () => {
 		set_loading_upload(true);
-		await facebook_catalog_upload(items);
+		const { data } = await API_Products.get_all_products();
+		console.log({ data });
+		await facebook_catalog_upload(data);
 		await google_catalog_upload(items);
 		set_loading_upload(false);
 	};
@@ -465,6 +486,7 @@ function ProductPage(props) {
 				<button className="btn primary" onClick={update_product_catelog}>
 					Update Product Catalog
 				</button>
+
 				<Link to="/secure/glow/editproduct">
 					<button className="btn primary">Create Product</button>
 				</Link>
@@ -473,6 +495,9 @@ function ProductPage(props) {
 				</button>
 				<button className="btn primary" onClick={update_order}>
 					Update Order
+				</button>
+				<button className="btn primary" onClick={add_item_group_id}>
+					Add Item Group ID
 				</button>
 			</div>
 			<div className="jc-c">

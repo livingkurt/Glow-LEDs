@@ -488,7 +488,7 @@ export default {
 	},
 	get_all_products: async (req: any, res: any) => {
 		try {
-			const products = await Product.find({ deleted: false });
+			const products = await Product.find({ deleted: false, hidden: false });
 			log_request({
 				method: 'GET',
 				path: req.originalUrl,
@@ -789,6 +789,66 @@ export default {
 					{ ...req.body, countInStock: req.body.count_in_stock }
 				);
 				console.log({ updatedProduct });
+				if (updatedProduct) {
+					log_request({
+						method: 'PUT',
+						path: req.originalUrl,
+						collection: 'Product',
+						data: [ updatedProduct ],
+						status: 200,
+						success: false,
+						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+					});
+					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+				}
+			} else {
+				log_request({
+					method: 'DELETE',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ product ],
+					status: 500,
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				console.log('Error in Updating Product.');
+				return res.status(500).send({ message: ' Error in Updating Product.' });
+			}
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'PUT',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Updating Product' });
+		}
+	},
+	save_item_group_id: async (req: any, res: any) => {
+		try {
+			const option_id = req.body.option_id;
+			const item_group_id = req.body.item_group_id;
+			console.log({ option_id, item_group_id });
+			const product = await Product.findById(option_id);
+			// console.log({ product });
+			if (product) {
+				log_request({
+					method: 'GET',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ product ],
+					status: 200,
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				const updatedProduct = await Product.updateOne(
+					{ _id: option_id },
+					{ ...req.body, item_group_id: item_group_id }
+				);
+				// console.log({ updatedProduct });
 				if (updatedProduct) {
 					log_request({
 						method: 'PUT',

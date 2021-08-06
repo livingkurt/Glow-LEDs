@@ -628,6 +628,17 @@ const EditProductPage = (props) => {
 
 	// }
 
+	const add_item_group_id = (e) => {
+		e.preventDefault();
+		const products = [ ...color_products, ...secondary_color_products, ...secondary_products, ...option_products ];
+		console.log({ products });
+		products.forEach(async (product) => {
+			// console.log({ product_id: product._id, item_group_id: id });
+			const { data } = await API_Products.save_item_group_id(product._id, id);
+			console.log({ data });
+		});
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
@@ -666,6 +677,9 @@ const EditProductPage = (props) => {
 											/>
 										</li>
 									)}
+									<button className="btn primary" onClick={(e) => add_item_group_id(e)}>
+										Add Item Group ID to Options
+									</button>
 									<div className="row">
 										<div className="ai-c">
 											<button

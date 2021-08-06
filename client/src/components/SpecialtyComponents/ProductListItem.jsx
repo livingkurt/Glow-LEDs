@@ -241,7 +241,7 @@ const ProductListItem = (props) => {
 					{product.option_products &&
 						product.option_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
-								{console.log({ product })}
+								{/* {console.log({ product })} */}
 								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
@@ -286,7 +286,7 @@ const ProductListItem = (props) => {
 					{product.color_products &&
 						product.color_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
-								{console.log({ product })}
+								{/* {console.log({ product })} */}
 								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
@@ -331,7 +331,7 @@ const ProductListItem = (props) => {
 					{product.secondary_color_products &&
 						product.secondary_color_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
-								{console.log({ product })}
+								{/* {console.log({ product })} */}
 								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
@@ -376,7 +376,7 @@ const ProductListItem = (props) => {
 					{product.secondary_products &&
 						product.secondary_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
-								{console.log({ product })}
+								{/* {console.log({ product })} */}
 								<Link className="" to={'/collections/all/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}

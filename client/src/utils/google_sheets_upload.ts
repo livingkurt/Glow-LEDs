@@ -668,9 +668,11 @@ export const facebook_catalog_upload = async (products: any) => {
 			'google_product_category',
 			'sale_price',
 			'sale_price_effective_date',
-			'product_type'
-			// 'color',
-			// 'item_group_id'
+			'product_type',
+			'color',
+			'size',
+			'shipping_weight',
+			'item_group_id'
 		]);
 
 		// const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');
@@ -695,6 +697,12 @@ export const facebook_catalog_upload = async (products: any) => {
 			const sale_price = product.sale_price;
 			const sale_price_effective_date = product.sale_price_effective_date;
 			const product_type = product.category;
+			const color = product.color;
+			const size = product.size;
+			const shipping_weight = `${product.weight_pounds
+				? product.weight_pounds * 16 + product.weight_ounces
+				: product.weight_ounces} oz`;
+			const item_group_id = product.item_group_id ? product.item_group_id : '';
 
 			return {
 				id,
@@ -712,7 +720,11 @@ export const facebook_catalog_upload = async (products: any) => {
 				google_product_category,
 				sale_price,
 				sale_price_effective_date,
-				product_type
+				product_type,
+				color,
+				size,
+				shipping_weight,
+				item_group_id
 			};
 		});
 

@@ -244,7 +244,10 @@ export default {
 		const users = await User.find({ deleted: false, email_subscription: true });
 		// const all_emails = users.map((user: any) => user.email).reverse();
 		// console.log({ all_emails });
-		const all_emails = users.filter((user: any) => user.email_subscription === true).map((user: any) => user.email);
+		const all_emails = users
+			.filter((user: any) => user.deleted === false)
+			.filter((user: any) => user.email_subscription === true)
+			.map((user: any) => user.email);
 		console.log({ all_emails });
 		const test = [
 			'lavacquek@icloud.com',

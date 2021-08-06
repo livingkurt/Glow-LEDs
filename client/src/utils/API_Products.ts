@@ -74,6 +74,10 @@ const product_routes = {
 		// console.log({ not_paid_email: array });
 		return axios.post('/api/products/best_sellers', { occurences });
 	},
+	save_item_group_id: (option_id: any, item_group_id: string) => {
+		console.log({ option_id, item_group_id });
+		return axios.put('/api/products/save_item_group_id', { option_id, item_group_id });
+	},
 	get_essentials: () => {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/essentials');

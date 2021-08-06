@@ -47,7 +47,7 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name }) => {
 						<div>
 							{list_items &&
 								list_items.map((item, index) => {
-									console.log({ item });
+									// console.log({ item });
 									return (
 										<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 											<div>
