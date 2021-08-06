@@ -14,7 +14,8 @@ const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
 	const [ id, setId ] = useState('');
 	const [ name, setName ] = useState('');
-	const [ price, setPrice ] = useState('');
+	const [ price, setPrice ] = useState();
+	const [ previous_price, set_previous_price ] = useState();
 	// const [ display_image, setDisplayImage ] = useState('');
 	const [ images, set_images ] = useState([]);
 	// const [ product_options_images, set_product_options_images ] = useState([]);
@@ -86,12 +87,14 @@ const EditProductPage = (props) => {
 	// const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
 	const [ product_options, set_product_options ] = useState([ {} ]);
 	const [ product_options_images, set_product_options_images ] = useState([ [] ]);
-	const [ products_list, set_products_list ] = useState([]);
+	const [ option_products_list, set_option_products_list ] = useState([]);
+	const [ macro_products_list, set_macro_products_list ] = useState([]);
 	const [ secondary_products_list, set_secondary_products_list ] = useState([]);
 	const [ new_index, set_new_index ] = useState();
 	const [ save, set_save ] = useState(true);
 	const [ filtered_products, set_filtered_products ] = useState([]);
 	const [ extra_cost, set_extra_cost ] = useState();
+	const [ item_group_id, set_item_group_id ] = useState('');
 
 	const history = useHistory();
 
@@ -129,6 +132,7 @@ const EditProductPage = (props) => {
 
 			// stableDispatch(listCategorys());
 			get_all_options();
+			get_all_products();
 			get_all_secondary_products();
 			// set_loading_data(false);
 			set_state();
@@ -144,10 +148,15 @@ const EditProductPage = (props) => {
 		return () => {};
 	}, []);
 
+	const get_all_products = async () => {
+		const { data } = await API_Products.get_all_products();
+		console.log({ data });
+		set_macro_products_list(data);
+	};
 	const get_all_options = async () => {
 		const { data } = await API_Products.get_all_options();
 		console.log({ data });
-		set_products_list(data);
+		set_option_products_list(data);
 	};
 	const get_all_secondary_products = async () => {
 		const { data } = await API_Products.get_all_diffuser_caps();
@@ -187,6 +196,7 @@ const EditProductPage = (props) => {
 		set_option(data.option);
 		set_macro_product(data.macro_product);
 		set_extra_cost(data.extra_cost);
+		set_item_group_id(data.tem_group_id);
 
 		// set_product_options(data.product_options);
 		// dispatch(detailsProduct(e.target.value));
@@ -244,6 +254,7 @@ const EditProductPage = (props) => {
 		setIncludedItems(product.included_items);
 		setHidden(product.hidden);
 		setSalePrice(product.sale_price);
+		set_previous_price(product.previous_price);
 		if (product.sale_start_date) {
 			set_sale_start_date(format_date(product.sale_start_date));
 		}
@@ -306,11 +317,13 @@ const EditProductPage = (props) => {
 		set_option(product.option);
 		set_macro_product(product.macro_product);
 		set_extra_cost(product.extra_cost);
+		set_item_group_id(product.item_group_id);
 	};
 	const unset_state = () => {
 		setId('');
 		setName('');
 		setPrice(0);
+		set_previous_price();
 		setDescription('');
 		setFacts('');
 		setIncludedItems('');
@@ -373,6 +386,7 @@ const EditProductPage = (props) => {
 		set_option();
 		set_macro_product();
 		set_extra_cost();
+		set_item_group_id();
 	};
 	// window.onbeforeunload = function() {
 	// 	return 'Are you sure you want to leave?';
@@ -443,7 +457,9 @@ const EditProductPage = (props) => {
 				default_option,
 				option,
 				macro_product,
-				extra_cost
+				extra_cost,
+				item_group_id,
+				previous_price
 			})
 		);
 	};
@@ -677,9 +693,9 @@ const EditProductPage = (props) => {
 											/>
 										</li>
 									)}
-									<button className="btn primary" onClick={(e) => add_item_group_id(e)}>
+									{/* <button className="btn primary" onClick={(e) => add_item_group_id(e)}>
 										Add Item Group ID to Options
-									</button>
+									</button> */}
 									<div className="row">
 										<div className="ai-c">
 											<button
@@ -746,6 +762,7 @@ const EditProductPage = (props) => {
 													// onChange={(e) => setName(e.target.value)}
 												/>
 											</li>
+
 											<li>
 												<label htmlFor="name">Name</label>
 												<input
@@ -796,14 +813,15 @@ const EditProductPage = (props) => {
 													onChange={(e) => setPrice(e.target.value)}
 												/>
 											</li>
+
 											<li>
-												<label htmlFor="extra_cost">Extra Cost</label>
+												<label htmlFor="previous_price">Previous Price</label>
 												<input
 													type="text"
-													name="extra_cost"
-													value={extra_cost}
-													id="extra_cost"
-													onChange={(e) => set_extra_cost(e.target.value)}
+													name="previous_price"
+													value={previous_price}
+													id="previous_price"
+													onChange={(e) => set_previous_price(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -814,6 +832,16 @@ const EditProductPage = (props) => {
 													value={sale_price}
 													id="sale_price"
 													onChange={(e) => setSalePrice(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="extra_cost">Extra Cost</label>
+												<input
+													type="text"
+													name="extra_cost"
+													value={extra_cost}
+													id="extra_cost"
+													onChange={(e) => set_extra_cost(e.target.value)}
 												/>
 											</li>
 											<li>
@@ -1262,18 +1290,62 @@ const EditProductPage = (props) => {
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
-												<li>
-													<label htmlFor="default_option">Default Option</label>
-													<input
-														type="checkbox"
-														name="default_option"
-														defaultChecked={default_option}
-														id="default_option"
-														onChange={(e) => {
-															set_default_option(e.target.checked);
-														}}
-													/>
-												</li>
+												<div>
+													<li>
+														<label htmlFor="default_option">Default Option</label>
+														<input
+															type="checkbox"
+															name="default_option"
+															defaultChecked={default_option}
+															id="default_option"
+															onChange={(e) => {
+																set_default_option(e.target.checked);
+															}}
+														/>
+													</li>
+
+													<li>
+														<label
+															aria-label="sortOrder"
+															htmlFor="sortOrder"
+															className="select-label mb-15px"
+														>
+															Choose Macro Product
+														</label>
+														<div className="ai-c h-25px mb-15px">
+															<div className="custom-select">
+																<select
+																	className="qty_select_dropdown"
+																	onChange={(e) => set_item_group_id(e.target.value)}
+																>
+																	<option key={1} defaultValue="">
+																		---Choose Product---
+																	</option>
+																	{macro_products_list
+																		.filter((product) => !product.hidden)
+																		.filter((product) => !product.option)
+																		.map((product, index) => (
+																			<option key={index} value={product._id}>
+																				{product.name}
+																			</option>
+																		))}
+																</select>
+																<span className="custom-arrow" />
+															</div>
+														</div>
+													</li>
+													<li>
+														<label htmlFor="product">Item Group ID</label>
+														<input
+															type="text"
+															name="product"
+															defaultValue={item_group_id}
+															value={item_group_id}
+															id="product"
+															onChange={(e) => set_item_group_id(e.target.value)}
+														/>
+													</li>
+												</div>
 											)}
 										</div>
 									)}
@@ -1327,7 +1399,7 @@ const EditProductPage = (props) => {
 															'Group Products'
 														)} */}
 														<DropdownDisplay
-															item_list={products_list}
+															item_list={option_products_list}
 															list_items={products}
 															set_items={set_products}
 															list_name={'Group Products'}
@@ -1372,13 +1444,13 @@ const EditProductPage = (props) => {
 															/>
 														</li>
 														{/* {option_list(
-															products_list,
+															option_products_list,
 															color_products,
 															set_color_products,
 															'Color Products'
 														)} */}
 														<DropdownDisplay
-															item_list={products_list}
+															item_list={option_products_list}
 															list_items={color_products}
 															set_items={set_color_products}
 															list_name={'Color Products'}
@@ -1426,13 +1498,13 @@ const EditProductPage = (props) => {
 															/>
 														</li>
 														{/* {option_list(
-															products_list,
+															option_products_list,
 															secondary_color_products,
 															set_secondary_color_products,
 															'Secondary Color Products'
 														)} */}
 														<DropdownDisplay
-															item_list={products_list}
+															item_list={option_products_list}
 															list_items={secondary_color_products}
 															set_items={set_secondary_color_products}
 															list_name={'Secondary Color Products'}
@@ -1479,13 +1551,13 @@ const EditProductPage = (props) => {
 															/>
 														</li>
 														{/* {option_list(
-															products_list,
+															option_products_list,
 															option_products,
 															set_option_products,
 															'Option Products'
 														)} */}
 														<DropdownDisplay
-															item_list={products_list}
+															item_list={option_products_list}
 															list_items={option_products}
 															set_items={set_option_products}
 															list_name={'Option Products'}
@@ -1533,13 +1605,13 @@ const EditProductPage = (props) => {
 															/>
 														</li>
 														{/* {option_list(
-															products_list,
+															option_products_list,
 															secondary_products,
 															set_secondary_products,
 															'Option Products'
 														)} */}
 														<DropdownDisplay
-															item_list={products_list}
+															item_list={option_products_list}
 															list_items={secondary_products}
 															set_items={set_secondary_products}
 															list_name={'Secondary Products'}
@@ -1549,7 +1621,36 @@ const EditProductPage = (props) => {
 											</div>
 										</div>
 									)}
-									{option_list(chips_list, chips, set_chips, 'Chips')}
+									{/* {option_list(chips_list, chips, set_chips, 'Chips')} */}
+									<DropdownDisplay
+										item_list={chips_list}
+										list_items={chips}
+										set_items={set_chips}
+										list_name={'Chips'}
+									/>
+									{/* <div>
+										{color_product_group && (
+											<ul>
+												<li>
+													<label htmlFor="color_group_name">Item Group ID</label>
+													<input
+														type="text"
+														name="color_group_name"
+														value={color_group_name}
+														id="color_group_name"
+														onChange={(e) => set_color_group_name(e.target.value)}
+													/>
+												</li>
+											
+												<DropdownDisplay
+													item_list={macro_products_list}
+													list_items={color_products}
+													set_items={set_color_products}
+													list_name={'Color Products'}
+												/>
+											</ul>
+										)}
+									</div> */}
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
 											<div className="custom-select">

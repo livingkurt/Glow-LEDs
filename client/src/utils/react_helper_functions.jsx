@@ -3,48 +3,18 @@ import React from 'react';
 export const sale_price_product_option_switch = (product, product_options) => {
 	// console.log({ product_options });
 	const today = new Date();
-	if (product_options && product_options.length > 0) {
-		const option = product.product_options.find((option) => option.default);
-		if (option && option.price) {
-			if (
-				today >= new Date(product.sale_start_date) &&
-				today <= new Date(product.sale_end_date) &&
-				option.sale_price !== 0
-			) {
-				return (
-					<label className="">
-						<del style={{ color: '#a03131' }}>
-							<label className="" style={{ color: 'white' }}>
-								${option.price ? option.price.toFixed(2) : option.price}
-							</label>
-						</del>{' '}
-						<i className="fas fa-arrow-right" /> ${option.sale_price ? (
-							option.sale_price.toFixed(2)
-						) : (
-							option.sale_price
-						)}{' '}
-						On Sale!
+	if (product.previous_price) {
+		return (
+			<label className="">
+				<del style={{ color: '#a03131' }}>
+					<label className="" style={{ color: 'white' }}>
+						${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
 					</label>
-				);
-			} else {
-				// return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
-				return product.price === option.price ? (
-					<label>${option.price ? option.price.toFixed(2) : option.price}</label>
-				) : (
-					<div className="">
-						<del style={{ color: '#a03131' }}>
-							<label className="" style={{ color: 'white' }}>
-								${product.price ? product.price.toFixed(2) : product.price}
-							</label>
-						</del>{' '}
-						<i className="fas fa-arrow-right" /> ${option.price ? option.price.toFixed(2) : option.price}{' '}
-						<label className="fs-16px" style={{ color: '#a03131', WebkitTextStroke: '1px #a03131' }}>
-							NEW LOW PRICE!
-						</label>
-					</div>
-				);
-			}
-		}
+				</del>{' '}
+				<i className="fas fa-arrow-right" /> ${product.price ? product.price.toFixed(2) : product.price}{' '}
+				Discounted!
+			</label>
+		);
 	} else {
 		if (
 			today >= new Date(product.sale_start_date) &&
@@ -83,6 +53,102 @@ export const sale_price_product_option_switch = (product, product_options) => {
 		}
 	}
 };
+
+// export const sale_price_product_option_switch = (product, product_options) => {
+// 	// console.log({ product_options });
+// 	const today = new Date();
+// 	if (product_options && product_options.length > 0) {
+// 		const option = product.product_options.find((option) => option.default);
+// 		if (option && option.price) {
+// 			if (
+// 				today >= new Date(product.sale_start_date) &&
+// 				today <= new Date(product.sale_end_date) &&
+// 				option.sale_price !== 0
+// 			) {
+// 				return (
+// 					<label className="">
+// 						<del style={{ color: '#a03131' }}>
+// 							<label className="" style={{ color: 'white' }}>
+// 								${option.price ? option.price.toFixed(2) : option.price}
+// 							</label>
+// 						</del>{' '}
+// 						<i className="fas fa-arrow-right" /> ${option.sale_price ? (
+// 							option.sale_price.toFixed(2)
+// 						) : (
+// 							option.sale_price
+// 						)}{' '}
+// 						On Sale!
+// 					</label>
+// 				);
+// 			} else {
+// 				// return <label>${option.price ? option.price.toFixed(2) : option.price}</label>;
+// 				return product.price === option.price ? (
+// 					<label>${option.price ? option.price.toFixed(2) : option.price}</label>
+// 				) : (
+// 					<div className="">
+// 						<del style={{ color: '#a03131' }}>
+// 							<label className="" style={{ color: 'white' }}>
+// 								${product.price ? product.price.toFixed(2) : product.price}
+// 							</label>
+// 						</del>{' '}
+// 						<i className="fas fa-arrow-right" /> ${option.price ? option.price.toFixed(2) : option.price}{' '}
+// 						<label className="fs-16px" style={{ color: '#a03131', WebkitTextStroke: '1px #a03131' }}>
+// 							NEW LOW PRICE!
+// 						</label>
+// 					</div>
+// 				);
+// 			}
+// 		}
+// 	} else if (product.previous_price) {
+// 		return (
+// 			<label className="">
+// 				<del style={{ color: '#a03131' }}>
+// 					<label className="" style={{ color: 'white' }}>
+// 						${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
+// 					</label>
+// 				</del>{' '}
+// 				<i className="fas fa-arrow-right" /> ${product.price ? product.price.toFixed(2) : product.price} On
+// 				Sale!
+// 			</label>
+// 		);
+// 	} else {
+// 		if (
+// 			today >= new Date(product.sale_start_date) &&
+// 			today <= new Date(product.sale_end_date) &&
+// 			product.sale_price !== 0
+// 		) {
+// 			return (
+// 				<label className="">
+// 					<del style={{ color: '#a03131' }}>
+// 						<label className="" style={{ color: 'white' }}>
+// 							${product.price ? product.price.toFixed(2) : product.price}
+// 						</label>
+// 					</del>{' '}
+// 					<i className="fas fa-arrow-right" /> ${product.sale_price ? (
+// 						product.sale_price.toFixed(2)
+// 					) : (
+// 						product.sale_price
+// 					)}{' '}
+// 					On Sale!
+// 				</label>
+// 			);
+// 		} else if (!product.countInStock) {
+// 			return (
+// 				<label>
+// 					<del style={{ color: '#a03131' }}>
+// 						<label style={{ color: 'white' }} className="ml-7px">
+// 							${product.price ? product.price.toFixed(2) : product.price}
+// 						</label>
+// 					</del>{' '}
+// 					<i className="fas fa-arrow-right" />
+// 					<label className="ml-7px">Sold Out</label>
+// 				</label>
+// 			);
+// 		} else {
+// 			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+// 		}
+// 	}
+// };
 
 export const cart_sale_price_switch = (product) => {
 	if (product.product_option && product.product_option.hasOwnProperty('price')) {
@@ -224,7 +290,7 @@ export const cart_item_name = (item) => {
 	);
 };
 
-export const sale_price_product_option_switch_product = (price, sale_price) => {
+export const sale_price_product_option_switch_product = (price, sale_price, previous_price) => {
 	// console.log({ price });
 	// console.log({ sale_price });
 	if (sale_price > 0) {
@@ -235,6 +301,17 @@ export const sale_price_product_option_switch_product = (price, sale_price) => {
 					<label style={{ color: 'white' }}>${price ? price.toFixed(2) : price}</label>
 				</del>{' '}
 				<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price} On Sale!
+			</label>
+		);
+	} else if (previous_price) {
+		return (
+			<label>
+				<del style={{ color: 'red' }}>
+					<label style={{ color: 'white' }}>
+						${previous_price ? previous_price.toFixed(2) : previous_price}
+					</label>
+				</del>{' '}
+				<i class="fas fa-arrow-right" /> ${price ? price.toFixed(2) : price} Discounted!
 			</label>
 		);
 	} else {

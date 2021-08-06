@@ -29,6 +29,7 @@ const ProductPage = (props) => {
 	const [ qty, setQty ] = useState(1);
 	const [ images, set_images ] = useState([]);
 	const [ price, set_price ] = useState();
+	const [ previous_price, set_previous_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState();
 	const [ count_in_stock, set_count_in_stock ] = useState(30);
@@ -92,6 +93,9 @@ const ProductPage = (props) => {
 
 				if (product.price > 0) {
 					set_price(product.price);
+				}
+				if (product.previous_price > 0) {
+					set_previous_price(product.previous_price);
 				}
 				if (product.sale_price > 0) {
 					set_sale_price(product.sale_price);
@@ -619,7 +623,8 @@ const ProductPage = (props) => {
 									)} */}
 									{console.log({ price })}
 									{console.log({ sale_price })}
-									{sale_price_product_option_switch_product(price, sale_price)}
+									{console.log({ previous_price })}
+									{sale_price_product_option_switch_product(price, sale_price, previous_price)}
 								</div>
 
 								<div className="">
@@ -662,7 +667,7 @@ const ProductPage = (props) => {
 											price
 										)} */}
 
-										{sale_price_product_option_switch_product(price, sale_price)}
+										{sale_price_product_option_switch_product(price, sale_price, previous_price)}
 									</div>
 
 									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
