@@ -191,9 +191,9 @@ const Sidebar = (props) => {
 								On Sale
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/glow_strings">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Glow Strings
+						<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
+								Glow Strings V2
 							</button>
 						</Link>
 					</ul>
@@ -454,7 +454,7 @@ const Sidebar = (props) => {
 					</div>
 					<ul className="sidebar_dropdown_container" id="glow_casings_dropdown_6">
 						<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
-							<button className="sidebar-btn secondary" onClick={closeMenu}>
+							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
 								Glow Strings V2
 							</button>
 						</Link>
