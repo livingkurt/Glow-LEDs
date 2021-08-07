@@ -138,7 +138,12 @@ const Cart = (props) => {
 		<aside
 			ref={wrapperRef}
 			className="cart_sidebar"
-			style={{ top: '0px', zIndex: 4, height: mobile_check() ? `100%` : `unset` }}
+			style={{
+				top: '0px',
+				zIndex: 4,
+				borderRadius: '0px 0px 20px 20px',
+				height: mobile_check() ? `100%` : `unset`
+			}}
 		>
 			<ul
 				className={`cart_sidebar-list-container column jc-b ${mobile_check() ? `h-100per` : `h-unset`}`}
@@ -241,7 +246,10 @@ const Cart = (props) => {
 					{/* {no_items_in_cart && <h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>} */}
 				</div>
 			</ul>
-			<div className="column w-100per pos-fix bottom-0px add_to_cart ph-1rem">
+			<div
+				className="column w-100per pos-fix bottom-0px add_to_cart ph-1rem br-20px"
+				style={{ borderRadius: '20px 20px 0px 0px' }}
+			>
 				<h3 className="subtotal_h3">
 					Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
 					{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
