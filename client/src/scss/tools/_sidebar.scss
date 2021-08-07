@@ -98,3 +98,29 @@
 .sidebar_dropdown_nested_2_container:hover {
 	max-height: 600px;
 }
+
+.sidebar-btn-container {
+	display: flex;
+	// justify-content: space-between;
+	width: 100%;
+}
+
+.sidebar-btn-dropdown {
+	background-color: $theme_color_primary;
+	color: $theme_color_phrase_font;
+
+	border: unset;
+	border-top: 1px solid white;
+	font-family: $paragraph_font;
+	// border-radius: 1rem 0rem 0rem 1rem;
+	transition: all .5s ease;
+	// padding: 10px;
+	transform: rotate(180deg);
+	// height: 45px;
+	width: 20%;
+}
+
+.sidebar-btn-dropdown:hover {
+	box-shadow: $bs_deep;
+	background-color: $theme_color_primary_hover;
+}

@@ -130,7 +130,12 @@ const Sidebar = (props) => {
 				</Link>
 				{userInfo && userInfo.hasOwnProperty('first_name') ? (
 					<div className="sidebar_dropdown">
-						<button className="sidebar-btn primary">{first_name}</button>
+						<div className="sidebar-btn-container">
+							<button className="sidebar-btn primary">{first_name}</button>
+							<button className="sidebar-btn-dropdown" onClick={() => show_hide('user_dropdown')}>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div>
 						<ul className="sidebar_dropdown_container" id="user_dropdown">
 							<Link to="/secure/account/profile">
 								<button className=" sidebar-btn secondary" onClick={closeMenu}>
@@ -147,12 +152,6 @@ const Sidebar = (props) => {
 								Logout
 							</button>
 						</ul>
-						<button
-							className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-							onClick={() => show_hide('user_dropdown')}
-						>
-							<i className="fas fa-sort-up" />
-						</button>
 					</div>
 				) : (
 					<Link to="/account/login">
@@ -162,9 +161,19 @@ const Sidebar = (props) => {
 					</Link>
 				)}
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
+					{/* <button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/collections/all/products">Products</Link>
-					</button>
+					</button> */}
+					<div className="sidebar-btn-container">
+						<button className="sidebar-btn primary">
+							<Link to="/collections/all/products" onClick={closeMenu}>
+								Products{' '}
+							</Link>
+						</button>
+						<button className="sidebar-btn-dropdown" onClick={() => show_hide('products_dropdown')}>
+							<i className="fas fa-sort-up" />
+						</button>
+					</div>
 
 					<ul className="sidebar_dropdown_container" id="products_dropdown">
 						<Link to="/collections/all/products/category/best_sellers">
@@ -188,18 +197,25 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<button
+					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('products_dropdown')}
 					>
 						<i className="fas fa-sort-up" />
-					</button>
+					</button> */}
 				</div>
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
+					{/* <button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/pages/menu/gloving">Gloving</Link>
-					</button>
-
+					</button> */}
+					<div className="sidebar-btn-container">
+						<button className="sidebar-btn primary" onClick={closeMenu}>
+							<Link to="/pages/menu/gloving">Gloving </Link>
+						</button>
+						<button className="sidebar-btn-dropdown" onClick={() => show_hide('gloving_dropdown')}>
+							<i className="fas fa-sort-up" />
+						</button>
+					</div>
 					<ul className="sidebar_dropdown_container" id="gloving_dropdown">
 						<Link to="/collections/all/products/category/exo_diffusers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -217,17 +233,28 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<button
+							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('glow_casings_dropdown')}
 							>
 								<i className="fas fa-sort-up" />
-							</button>
+							</button> */}
 						</div>
 						<div className="sidebar_dropdown_nested">
-							<Link to="/collections/all/products/category/glowskins">
+							{/* <Link to="/collections/all/products/category/glowskins">
 								<button className="sidebar-btn secondary">Glowskins</button>
-							</Link>
+							</Link> */}
+							<div className="sidebar-btn-container">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									<Link to="/collections/all/products/category/glowskins">Glowskins </Link>
+								</button>
+								<button
+									className="sidebar-btn-dropdown"
+									onClick={() => show_hide('glow_casings_dropdown_2')}
+								>
+									<i className="fas fa-sort-up" />
+								</button>
+							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_2">
 								<Link to="/collections/all/products/category/glowskins/subcategory/classics">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
@@ -250,50 +277,30 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<button
+							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('glow_casings_dropdown_2')}
 							>
 								<i className="fas fa-sort-up" />
-							</button>
+							</button> */}
 						</div>
-						{/* <div className="sidebar_dropdown_nested">
-							<Link to="/collections/all/products/category/glowskins">
-								<button className="sidebar-btn secondary">Glowskins</button>
-							</Link>
-							<ul className="sidebar_dropdown_secondary_container" id="glowskins_dropdown">
-								<Link to="/collections/all/products/category/glowskins/subcategory/classics">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Classics
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Novaskins
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Alt Novaskins
-									</button>
-								</Link>
-								<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Imperfect
-									</button>
-								</Link>
-							</ul>
-							<button
-								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-								onClick={() => show_hide('glowskins_dropdown')}
-							>
-								<i className="fas fa-sort-up" />
-							</button>
-						</div> */}
 						<div className="sidebar_dropdown_nested">
-							<Link to="/collections/all/products/category/frosted_diffusers">
+							{/* <Link to="/collections/all/products/category/frosted_diffusers">
 								<button className="sidebar-btn secondary">Frosted Diffusers</button>
-							</Link>
+							</Link> */}
+							<div className="sidebar-btn-container">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									<Link to="/collections/all/products/category/frosted_diffusers">
+										Frosted Diffusers{' '}
+									</Link>
+								</button>
+								<button
+									className="sidebar-btn-dropdown"
+									onClick={() => show_hide('glow_casings_dropdown_3')}
+								>
+									<i className="fas fa-sort-up" />
+								</button>
+							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_3">
 								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
@@ -326,43 +333,65 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<button
+							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('glow_casings_dropdown_3')}
 							>
 								<i className="fas fa-sort-up" />
-							</button>
+							</button> */}
 						</div>
 						<div className="sidebar_dropdown_nested">
-							<Link to="/collections/all/products/category/diffuser_caps">
+							{/* <Link to="/collections/all/products/category/diffuser_caps">
 								<button className="sidebar-btn secondary">Diffuser Caps</button>
-							</Link>
+							</Link> */}
+							<div className="sidebar-btn-container">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+								</button>
+								<button
+									className="sidebar-btn-dropdown"
+									onClick={() => show_hide('glow_casings_dropdown_4')}
+								>
+									<i className="fas fa-sort-up" />
+								</button>
+							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_4">
 								<div className="sidebar_dropdown_nested">
-									<button className="sidebar-btn secondary">Collections</button>
-									<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_5">
+									{/* <button className="sidebar-btn secondary">Collections</button> */}
+									<div className="sidebar-btn-container">
+										<button className="sidebar-btn nested" onClick={closeMenu}>
+											Collections
+										</button>
+										<button
+											className="sidebar-btn-dropdown"
+											onClick={() => show_hide('glow_casings_dropdown_5')}
+										>
+											<i className="fas fa-sort-up" />
+										</button>
+									</div>
+									<ul className="sidebar_dropdown_nested_container" id="glow_casings_dropdown_5">
 										<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
-											<button className="sidebar-btn nested" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Space Cadet
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
-											<button className="sidebar-btn nested" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Festy Besty
 											</button>
 										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
-											<button className="sidebar-btn nested" onClick={closeMenu}>
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Platonic Solids
 											</button>
 										</Link>
 									</ul>
-									<button
+									{/* <button
 										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 										onClick={() => show_hide('glow_casings_dropdown_5')}
 									>
 										<i className="fas fa-sort-up" />
-									</button>
+									</button> */}
 								</div>
 								<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
@@ -390,12 +419,12 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<button
+							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('glow_casings_dropdown_4')}
 							>
 								<i className="fas fa-sort-up" />
-							</button>
+							</button> */}
 						</div>
 						<Link to="/collections/all/products/category/accessories">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -403,19 +432,26 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<button
+					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('gloving_dropdown')}
 					>
 						<i className="fas fa-sort-up" />
-					</button>
+					</button> */}
 				</div>
 
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
+					{/* <button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/collections/all/products/category/accessories">Flow Art Essensials</Link>
-					</button>
-
+					</button> */}
+					<div className="sidebar-btn-container">
+						<button className="sidebar-btn primary" onClick={closeMenu}>
+							<Link to="/collections/all/products/category/accessories">Flow Art Essensials</Link>
+						</button>
+						<button className="sidebar-btn-dropdown" onClick={() => show_hide('glow_casings_dropdown_6')}>
+							<i className="fas fa-sort-up" />
+						</button>
+					</div>
 					<ul className="sidebar_dropdown_container" id="glow_casings_dropdown_6">
 						<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -439,21 +475,39 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<button
+					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('glow_casings_dropdown_6')}
 					>
 						<i className="fas fa-sort-up" />
-					</button>
+					</button> */}
 				</div>
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
+					{/* <button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/pages/menu/featured">Featured</Link>
-					</button>
-
+					</button> */}
+					<div className="sidebar-btn-container">
+						<button className="sidebar-btn primary" onClick={closeMenu}>
+							<Link to="/pages/menu/featured">Featured</Link>
+						</button>
+						<button className="sidebar-btn-dropdown" onClick={() => show_hide('featured_dropdown')}>
+							<i className="fas fa-sort-up" />
+						</button>
+					</div>
 					<ul className="sidebar_dropdown_container" id="featured_dropdown">
 						<div className="sidebar_dropdown_nested">
-							<button className="sidebar-btn secondary">Sponsored Artists</button>
+							{/* <button className="sidebar-btn secondary">Sponsored Artists</button> */}
+							<div className="sidebar-btn-container">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Sponsored Artists
+								</button>
+								<button
+									className="sidebar-btn-dropdown"
+									onClick={() => show_hide('nested_sponsor_dropdown')}
+								>
+									<i className="fas fa-sort-up" />
+								</button>
+							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="nested_sponsor_dropdown">
 								<Link to="/collections/all/sponsors">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
@@ -466,12 +520,12 @@ const Sidebar = (props) => {
 									</button>
 								</Link>
 							</ul>
-							<button
+							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('nested_sponsor_dropdown')}
 							>
 								<i className="fas fa-sort-up" />
-							</button>
+							</button> */}
 						</div>
 						<Link to="/collections/all/features/category/artists">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -500,18 +554,25 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<button
+					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('featured_dropdown')}
 					>
 						<i className="fas fa-sort-up" />
-					</button>
+					</button> */}
 				</div>
 				<div className="sidebar_dropdown">
-					<button className="sidebar-btn primary" onClick={closeMenu}>
+					{/* <button className="sidebar-btn primary" onClick={closeMenu}>
 						<Link to="/pages/menu/support">Support</Link>
-					</button>
-
+					</button> */}
+					<div className="sidebar-btn-container">
+						<button className="sidebar-btn primary" onClick={closeMenu}>
+							<Link to="/pages/menu/support">Support</Link>
+						</button>
+						<button className="sidebar-btn-dropdown" onClick={() => show_hide('support_dropdown')}>
+							<i className="fas fa-sort-up" />
+						</button>
+					</div>
 					<ul className="sidebar_dropdown_container" id="support_dropdown">
 						<Link to="/pages/track_your_order">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -524,9 +585,20 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 						<div className="sidebar_dropdown_secondary">
-							<button className="sidebar-btn secondary">
+							{/* <button className="sidebar-btn secondary">
 								<Link to="/pages/faq">FAQ</Link>
-							</button>
+							</button> */}
+							<div className="sidebar-btn-container">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									<Link to="/pages/faq">FAQ</Link>
+								</button>
+								<button
+									className="sidebar-btn-dropdown"
+									onClick={() => show_hide('nested_faq_dropdown')}
+								>
+									<i className="fas fa-sort-up" />
+								</button>
+							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="nested_faq_dropdown">
 								<HashLink href="/pages/faq#glowskins">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
@@ -565,12 +637,12 @@ const Sidebar = (props) => {
 								</HashLink>
 							</ul>
 							{/* <i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" /> */}
-							<button
+							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('nested_faq_dropdown')}
 							>
 								<i className="fas fa-sort-up" />
-							</button>
+							</button> */}
 						</div>
 						<Link to="/pages/contact">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -583,17 +655,25 @@ const Sidebar = (props) => {
 							</button>
 						</Link>
 					</ul>
-					<button
+					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('support_dropdown')}
 					>
 						<i className="fas fa-sort-up" />
-					</button>
+					</button> */}
 				</div>
 				{userInfo &&
 				userInfo.isAdmin && (
 					<div className="sidebar_dropdown">
-						<button className="sidebar-btn primary">Admin</button>
+						{/* <button className="sidebar-btn primary">Admin</button> */}
+						<div className="sidebar-btn-container">
+							<button className="sidebar-btn primary" onClick={closeMenu}>
+								Admin
+							</button>
+							<button className="sidebar-btn-dropdown" onClick={() => show_hide('admin_dropdown')}>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div>
 						<ul className="sidebar_dropdown_container" id="admin_dropdown">
 							<Link to="/secure/glow/controlpanel">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
@@ -696,12 +776,12 @@ const Sidebar = (props) => {
 								</button>
 							</Link>
 						</ul>
-						<button
+						{/* <button
 							className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 							onClick={() => show_hide('admin_dropdown')}
 						>
 							<i className="fas fa-sort-up" />
-						</button>
+						</button> */}
 					</div>
 				)}
 			</nav>
