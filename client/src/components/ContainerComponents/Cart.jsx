@@ -138,106 +138,128 @@ const Cart = (props) => {
 		<aside
 			ref={wrapperRef}
 			className="cart_sidebar"
-			style={{ ...navbarStyles, top: props.visible ? determine_top() : '0px', overflowY: 'scroll' }}
+			style={{ top: '0px', zIndex: 4, height: mobile_check() ? `100%` : `unset` }}
 		>
-			<div>
-				<button className="cart_sidebar_close_button" aria-label="close" onClick={closeMenu}>
-					<i className="fas fa-times" />
-				</button>
-			</div>
-			<ul className="cart_sidebar-list-container w-100per mr-1rem">
-				<li>
-					{/* <h2>Shopping Cart</h2> */}
-					<div className="logo_text ai-c">
-						<Link to="/">
-							<div className="h-50px w-50px">
-								<img
-									className="zoom logo_s"
-									src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-									alt="Glow LEDs Logo"
-									title="Small Logo"
-								/>
-							</div>
-						</Link>
-						<Link to="/">
-							<div className="row">
-								<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
-							</div>
-						</Link>
-					</div>
-					<div>Price</div>
-				</li>
-				{cartItems.length === 0 ? (
-					<div className="column ai-b">
-						<div>Cart is empty</div>
-					</div>
-				) : (
-					<div className={mobile_check() ? 'h-40vh max-h-65vh' : ''} style={{ overflowY: 'scroll' }}>
-						{/* <h4>{no_adapters_warning()}</h4> */}
-						{cartItems.map((item, index) => (
-							<li key={index}>
-								{console.log({ item })}
-								<div className="cart_sidebar-image br-5px ai-c">
-									<Link to={'/collections/all/products/' + item.pathname}>
-										<img
-											src={item.display_image}
-											height="50px"
-											width="50px"
-											alt={item.name}
-											title="Product Image"
-										/>
+			<ul
+				className={`cart_sidebar-list-container column jc-b ${mobile_check() ? `h-100per` : `h-unset`}`}
+				// className={`cart_sidebar-list-container column jc-b w-100per mr-1rem ${mobile_check()
+				// 	? `h-90vh`
+				// 	: `h-100per`}`}
+			>
+				<div>
+					<li className="w-100per pb-5px">
+						<div className="p-1rem w-100per">
+							<button className="cart_sidebar_close_button" aria-label="close" onClick={closeMenu}>
+								<i className="fas fa-times" />
+							</button>
+							<div className="jc-b">
+								<div className="logo_text ai-c">
+									<Link to="/">
+										<div className="h-50px w-50px">
+											<img
+												className="zoom logo_s"
+												src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+												alt="Glow LEDs Logo"
+												title="Small Logo"
+											/>
+										</div>
+									</Link>
+									<Link to="/">
+										<div className="row">
+											<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
+										</div>
 									</Link>
 								</div>
-								<div className="cart_sidebar-name">
-									<div className="mb-10px">
+
+								<div className="column jc-fe">
+									<div className="ta-r ">Price</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					{cartItems.length === 0 ? (
+						<div className="column ai-b">
+							<div>Cart is empty</div>
+						</div>
+					) : (
+						<div
+							className={`${mobile_check() ? `h-90vh` : `h-unset`} mb-175px`}
+							style={{
+								overflowY: 'scroll'
+							}}
+						>
+							{/* <div className={mobile_check() ? 'h-40vh max-h-65vh' : ''} > */}
+							{/* <h4>{no_adapters_warning()}</h4> */}
+							{cartItems.map((item, index) => (
+								<li key={index} className="ph-1rem">
+									{/* <div className="p-1rem"> */}
+									<div className="cart_sidebar-image br-5px ai-c">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											{determine_product_name(item, true)}
+											<img
+												src={item.display_image}
+												height="50px"
+												width="50px"
+												alt={item.name}
+												title="Product Image"
+											/>
 										</Link>
 									</div>
-									<div>
-										<div className="ai-c h-25px">
-											<label
-												aria-label="sortOrder"
-												htmlFor="sortOrder"
-												className="select-label mr-1rem"
-											>
-												Qty: {item.qty}
-											</label>
+									<div className="cart_sidebar-name">
+										<div className="mb-10px">
+											<Link to={'/collections/all/products/' + item.pathname}>
+												{determine_product_name(item, true)}
+											</Link>
+										</div>
+										<div>
+											<div className="ai-c h-25px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													Qty: {item.qty}
+												</label>
+											</div>
 										</div>
 									</div>
-								</div>
 
-								<div className="">
-									<div className="cart_sidebar-price fs-16px">{cart_sale_price_switch(item)}</div>
-									<div style={{ textAlign: 'right', width: '100%' }}>
-										<button className="btn icon" onClick={() => removeFromCartHandler(item)}>
-											<i className="fas fa-trash-alt" />
-										</button>
+									<div className="">
+										<div className="cart_sidebar-price fs-16px">{cart_sale_price_switch(item)}</div>
+										<div style={{ textAlign: 'right', width: '100%' }}>
+											<button className="btn icon" onClick={() => removeFromCartHandler(item)}>
+												<i className="fas fa-trash-alt" />
+											</button>
+										</div>
+										{/* </div> */}
 									</div>
-								</div>
-							</li>
-						))}
-					</div>
-				)}
-			</ul>
-			<h3 className="subtotal_h3">
-				Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-				{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-					cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-				) : (
-					cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
-				)}
-			</h3>
-			<Link to="/checkout/cart" className="w-100per">
-				<button className="btn secondary w-100per mb-1rem" onClick={closeMenu}>
-					View Cart
-				</button>
-			</Link>
+								</li>
+							))}
+							{mobile_check() && <li className="h-175px" />}
+						</div>
+					)}
 
-			<button onClick={decide_warning} className="btn primary w-100per">
-				Proceed to Checkout
-			</button>
-			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
+					{/* {no_items_in_cart && <h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>} */}
+				</div>
+			</ul>
+			<div className="column w-100per pos-fix bottom-0px add_to_cart ph-1rem">
+				<h3 className="subtotal_h3">
+					Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
+					{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
+						cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
+					) : (
+						cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
+					)}
+				</h3>
+				<Link to="/checkout/cart" className="w-100per">
+					<button className="btn secondary w-100per mb-2rem" onClick={closeMenu}>
+						View Cart
+					</button>
+				</Link>
+
+				<button onClick={decide_warning} className="btn primary w-100per mb-1rem ">
+					Proceed to Checkout
+				</button>
+			</div>
 		</aside>
 	);
 };
