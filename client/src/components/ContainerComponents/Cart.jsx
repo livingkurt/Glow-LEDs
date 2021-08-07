@@ -142,11 +142,14 @@ const Cart = (props) => {
 				top: '-10px',
 				zIndex: 4,
 				borderRadius: '0px 0px 20px 20px',
-				height: mobile_check() ? `100%` : `unset`
+				height: mobile_check()
+					? cartItems.length === 0 ? '300px' : '100%'
+					: cartItems.length === 0 ? '300px' : 'unset'
 			}}
 		>
 			<ul
 				className={`cart_sidebar-list-container column jc-b ${mobile_check() ? `h-100per` : `h-unset`}`}
+				style={{ height: cartItems.length === 0 ? '300px' : 'unset' }}
 				// className={`cart_sidebar-list-container column jc-b w-100per mr-1rem ${mobile_check()
 				// 	? `h-90vh`
 				// 	: `h-100per`}`}
@@ -247,8 +250,8 @@ const Cart = (props) => {
 				</div>
 			</ul>
 			<div
-				className="column w-100per pos-fix bottom-0px add_to_cart ph-1rem br-20px"
-				style={{ borderRadius: '20px 20px 0px 0px' }}
+				className="column w-100per pos-fix add_to_cart ph-1rem br-20px"
+				style={{ bottom: cartItems.length === 0 ? '-10px' : '0px' }}
 			>
 				<h3 className="subtotal_h3">
 					Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
