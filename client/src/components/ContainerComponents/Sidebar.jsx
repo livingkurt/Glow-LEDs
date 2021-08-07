@@ -102,7 +102,7 @@ const Sidebar = (props) => {
 
 	return (
 		<aside ref={wrapperRef} className="sidebar" style={{ top: '0px', overflowY: 'scroll', zIndex: 4 }}>
-			<div className="logo_text mh-auto ai-c">
+			<div className="logo_text mh-auto ai-c p-1rem pb-0px">
 				<Link to="/">
 					<div className="h-50px w-50px">
 						<img
@@ -182,198 +182,6 @@ const Sidebar = (props) => {
 								On Sale
 							</button>
 						</Link>
-						<div className="sidebar_dropdown_secondary">
-							<button className="sidebar-btn secondary">
-								<Link to="/pages/menu/gloving">Gloving</Link>
-							</button>
-							<ul className="sidebar_dropdown_secondary_container" id="nested_gloving_dropdown">
-								<Link to="/collections/all/products/category/exo_diffusers">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Exo Diffusers
-									</button>
-								</Link>
-
-								<div className="sidebar_dropdown_nested w-">
-									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/glow_casings">Glow Casings</Link>
-									</button>
-									<ul className="sidebar_dropdown_nested_container" id="glow_casings_dropdown">
-										<Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Imperfect
-											</button>
-										</Link>
-									</ul>
-									<button
-										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-										onClick={() => show_hide('glow_casings_dropdown')}
-									>
-										<i className="fas fa-sort-up" />
-									</button>
-								</div>
-
-								<div className="sidebar_dropdown_nested w-">
-									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
-									</button>
-									<ul className="sidebar_dropdown_nested_container" id="glowskins_dropdown">
-										<Link to="/collections/all/products/category/glowskins/subcategory/classics">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Classics
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Novaskins
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Alt Novaskins
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Imperfect
-											</button>
-										</Link>
-									</ul>
-									<button
-										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-										onClick={() => show_hide('glowskins_dropdown')}
-									>
-										<i className="fas fa-sort-up" />
-									</button>
-								</div>
-								<div className="sidebar_dropdown_nested w-">
-									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/frosted_diffusers">
-											Frosted Diffusers
-										</Link>
-									</button>
-									<ul className="sidebar_dropdown_nested_container" id="frosted_diffusers_dropdown">
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Abstract (New)
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Polygons (New)
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Cylinders (New)
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Domes (New)
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Open Hole
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Closed Hole
-											</button>
-										</Link>
-									</ul>
-									<button
-										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-										onClick={() => show_hide('frosted_diffusers_dropdown')}
-									>
-										<i className="fas fa-sort-up" />
-									</button>
-								</div>
-								<div className="sidebar_dropdown_nested">
-									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
-									</button>
-									<ul className="sidebar_dropdown_nested_container" id="diffuser_caps_dropdown">
-										<div className="sidebar_dropdown_nested_2">
-											<button className="sidebar-btn nested-2">
-												<Link to="/collections/all/products/category/diffuser_caps">
-													Collections
-												</Link>
-											</button>
-											<ul
-												className="sidebar_dropdown_nested_2_container"
-												id="collections_caps_dropdown"
-											>
-												<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
-													<button className="sidebar-btn nested-3" onClick={closeMenu}>
-														Space Cadet
-													</button>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
-													<button className="sidebar-btn nested-3" onClick={closeMenu}>
-														Festy Besty
-													</button>
-												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
-													<button className="sidebar-btn nested-3" onClick={closeMenu}>
-														Platonic Solids
-													</button>
-												</Link>
-											</ul>
-											<button
-												className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-												onClick={() => show_hide('collections_caps_dropdown')}
-											>
-												<i className="fas fa-sort-up" />
-											</button>
-										</div>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Geomotric
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Shapes
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Abstract
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Patterns
-											</button>
-										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
-											<button className="sidebar-btn nested-2" onClick={closeMenu}>
-												Imperfect
-											</button>
-										</Link>
-									</ul>
-									<button
-										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-										onClick={() => show_hide('diffuser_caps_dropdown')}
-									>
-										<i className="fas fa-sort-up" />
-									</button>
-								</div>
-								<Link to="/collections/all/products/category/accessories">
-									<button className="sidebar-btn nested" onClick={closeMenu}>
-										Accessories
-									</button>
-								</Link>
-							</ul>
-							<button
-								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-								onClick={() => show_hide('nested_gloving_dropdown')}
-							>
-								<i className="fas fa-sort-up" />
-							</button>
-						</div>
 						<Link to="/collections/all/products/category/glow_strings">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Glow Strings
@@ -383,6 +191,257 @@ const Sidebar = (props) => {
 					<button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('products_dropdown')}
+					>
+						<i className="fas fa-sort-up" />
+					</button>
+				</div>
+				<div className="sidebar_dropdown">
+					<button className="sidebar-btn primary" onClick={closeMenu}>
+						<Link to="/pages/menu/gloving">Gloving</Link>
+					</button>
+
+					<ul className="sidebar_dropdown_container" id="gloving_dropdown">
+						<Link to="/collections/all/products/category/exo_diffusers">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								EXO Diffusers
+							</button>
+						</Link>
+						<div className="sidebar_dropdown_nested">
+							<Link to="/collections/all/products/category/glow_casings">
+								<button className="sidebar-btn secondary">Glow Casings</button>
+							</Link>
+							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown">
+								<Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Imperfect
+									</button>
+								</Link>
+							</ul>
+							<button
+								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+								onClick={() => show_hide('glow_casings_dropdown')}
+							>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div>
+						<div className="sidebar_dropdown_nested">
+							<Link to="/collections/all/products/category/glowskins">
+								<button className="sidebar-btn secondary">Glowskins</button>
+							</Link>
+							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_2">
+								<Link to="/collections/all/products/category/glowskins/subcategory/classics">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Classics
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Novaskins
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Alt Novaskins
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Imperfect
+									</button>
+								</Link>
+							</ul>
+							<button
+								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+								onClick={() => show_hide('glow_casings_dropdown_2')}
+							>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div>
+						{/* <div className="sidebar_dropdown_nested">
+							<Link to="/collections/all/products/category/glowskins">
+								<button className="sidebar-btn secondary">Glowskins</button>
+							</Link>
+							<ul className="sidebar_dropdown_secondary_container" id="glowskins_dropdown">
+								<Link to="/collections/all/products/category/glowskins/subcategory/classics">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Classics
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Novaskins
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Alt Novaskins
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Imperfect
+									</button>
+								</Link>
+							</ul>
+							<button
+								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+								onClick={() => show_hide('glowskins_dropdown')}
+							>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div> */}
+						<div className="sidebar_dropdown_nested">
+							<Link to="/collections/all/products/category/frosted_diffusers">
+								<button className="sidebar-btn secondary">Frosted Diffusers</button>
+							</Link>
+							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_3">
+								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Abstract (New)
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Polygons (New)
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Cylinders (New)
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Domes (New)
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Open Hole
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Closed Hole
+									</button>
+								</Link>
+							</ul>
+							<button
+								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+								onClick={() => show_hide('glow_casings_dropdown_3')}
+							>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div>
+						<div className="sidebar_dropdown_nested">
+							<Link to="/collections/all/products/category/diffuser_caps">
+								<button className="sidebar-btn secondary">Diffuser Caps</button>
+							</Link>
+							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_4">
+								<div className="sidebar_dropdown_nested">
+									<button className="sidebar-btn secondary">Collections</button>
+									<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_5">
+										<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+											<button className="sidebar-btn nested" onClick={closeMenu}>
+												Space Cadet
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
+											<button className="sidebar-btn nested" onClick={closeMenu}>
+												Festy Besty
+											</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
+											<button className="sidebar-btn nested" onClick={closeMenu}>
+												Platonic Solids
+											</button>
+										</Link>
+									</ul>
+									<button
+										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+										onClick={() => show_hide('glow_casings_dropdown_5')}
+									>
+										<i className="fas fa-sort-up" />
+									</button>
+								</div>
+								<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Geomotric
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Shapes
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Abstract
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Patterns
+									</button>
+								</Link>
+								<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Imperfect
+									</button>
+								</Link>
+							</ul>
+							<button
+								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+								onClick={() => show_hide('glow_casings_dropdown_4')}
+							>
+								<i className="fas fa-sort-up" />
+							</button>
+						</div>
+						<Link to="/collections/all/products/category/accessories">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Accessories
+							</button>
+						</Link>
+					</ul>
+					<button
+						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+						onClick={() => show_hide('gloving_dropdown')}
+					>
+						<i className="fas fa-sort-up" />
+					</button>
+				</div>
+
+				<div className="sidebar_dropdown">
+					<button className="sidebar-btn primary" onClick={closeMenu}>
+						<Link to="/collections/all/products/category/accessories">Flow Art Essensials</Link>
+					</button>
+
+					<ul className="sidebar_dropdown_container" id="glow_casings_dropdown_6">
+						<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Glow Strings V2
+							</button>
+						</Link>
+						<Link to="/collections/all/products/1620_batteries">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								1620 Batteries
+							</button>
+						</Link>
+
+						<Link to="/collections/all/products/1225_batteries">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								1225 Batteries
+							</button>
+						</Link>
+						<Link to="/collections/all/products/category/accessories/subcategory/battery_storage">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Battery Storage
+							</button>
+						</Link>
+					</ul>
+					<button
+						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
+						onClick={() => show_hide('glow_casings_dropdown_6')}
 					>
 						<i className="fas fa-sort-up" />
 					</button>
