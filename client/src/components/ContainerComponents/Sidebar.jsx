@@ -127,7 +127,7 @@ const Sidebar = (props) => {
 			<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
 				<i className="fas fa-times" />
 			</button>
-			<nav className="h-63vh" style={{ overflowY: 'scroll' }}>
+			<nav className="h-63vh">
 				<Link to="/">
 					<button className="sidebar-btn primary" onClick={closeMenu}>
 						Home
