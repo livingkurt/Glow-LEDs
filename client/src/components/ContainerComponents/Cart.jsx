@@ -148,7 +148,9 @@ const Cart = (props) => {
 			}}
 		>
 			<ul
-				className={`cart_sidebar-list-container column jc-b ${mobile_check() ? `h-100per` : `h-unset`}`}
+				className={`cart_sidebar-list-container w-100per column jc-b ${mobile_check()
+					? `h-100per`
+					: `h-unset`}`}
 				style={{ height: cartItems.length === 0 ? '300px' : 'unset' }}
 				// className={`cart_sidebar-list-container column jc-b w-100per mr-1rem ${mobile_check()
 				// 	? `h-90vh`
