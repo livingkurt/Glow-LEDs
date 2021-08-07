@@ -139,7 +139,7 @@ const Cart = (props) => {
 			ref={wrapperRef}
 			className="cart_sidebar"
 			style={{
-				top: '0px',
+				top: '-10px',
 				zIndex: 4,
 				borderRadius: '0px 0px 20px 20px',
 				height: mobile_check() ? `100%` : `unset`

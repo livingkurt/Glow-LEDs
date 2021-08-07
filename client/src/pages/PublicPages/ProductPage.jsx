@@ -486,57 +486,23 @@ const ProductPage = (props) => {
 										/>
 									)}
 									{secondary_image && (
-										<div>
+										<div className="double-image">
 											<img
 												id="expandedImg"
 												alt={name}
 												title={name}
-												className="details-image-img"
+												className="details-image-img-left"
 												src={image}
-												style={{
-													maxWidth: '200px',
-													maxHeight: '400px',
-													// height: '100%',
-													width: '100%',
-													objectFit: 'cover',
-													borderRadius: '1rem 0rem 0rem 1rem'
-												}}
 											/>
 											<img
 												id="expandedSecondaryImg"
 												alt={name}
 												title={name}
-												className="details-image-img"
+												className="details-image-img-right"
 												src={secondary_image}
-												style={{
-													maxWidth: '200px',
-													maxHeight: '400px',
-													// height: '100%',
-													width: '100%',
-													objectFit: 'cover',
-													borderRadius: '0rem 1rem 1rem 0rem'
-												}}
 											/>
 										</div>
 									)}
-									{/* </Zoom> */}
-									{/* <Zoom
-										image={{
-											src: { image },
-											alt: 'Golden Gate Bridge',
-											className: 'img',
-											style: {
-												maxWidth: '400px',
-												maxHeight: '400px',
-												height: '100%',
-												width: '100%'
-											}
-										}}
-										zoomImage={{
-											src: { image },
-											alt: 'Golden Gate Bridge'
-										}}
-									/> */}
 								</div>
 							</div>
 							<Slideshow
