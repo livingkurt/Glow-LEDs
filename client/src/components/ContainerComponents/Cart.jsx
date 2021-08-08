@@ -188,8 +188,8 @@ const Cart = (props) => {
 						</div>
 					</li>
 					{cartItems.length === 0 ? (
-						<div className="column ai-b">
-							<div>Cart is empty</div>
+						<div className="p-1rem ta-c w-100per">
+							<div className="ta-c w-100per">Cart is Empty</div>
 						</div>
 					) : (
 						<div
