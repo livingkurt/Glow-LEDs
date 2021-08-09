@@ -261,14 +261,16 @@ const App = (props) => {
 				<Sidebar visible={visible} height={height} width={width} />
 				<Cart visible={visible} height={height} width={width} />
 				<Content>
-					<MessengerCustomerChat
-						pageId="100365571740684"
-						appId="379385106779969"
-						greetingDialogDisplay="show"
-						shouldShowDialog={false}
-						loggedInGreeting="Hi! How can we help you?"
-						loggedOutGreeting="Hi! How can we help you?"
-					/>
+					{process.env.NODE_ENV === 'production' && (
+						<MessengerCustomerChat
+							pageId="100365571740684"
+							appId="379385106779969"
+							greetingDialogDisplay="show"
+							shouldShowDialog={false}
+							loggedInGreeting="Hi! How can we help you?"
+							loggedOutGreeting="Hi! How can we help you?"
+						/>
+					)}
 					<ScrollToTop>
 						<Switch>
 							{/* Private Routes */}

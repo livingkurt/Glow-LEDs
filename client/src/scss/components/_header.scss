@@ -103,6 +103,7 @@ header {
 	background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+
 	// border-color: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
 	background-size: 200%;
 	// -webkit-text-stroke: 1px white !important;
@@ -126,5 +127,12 @@ header {
 	}
 	100% {
 		background-position: 400%;
+	}
+}
+
+.gradient-btn {
+	span {
+		display: block;
+		display: inline-block;
 	}
 }

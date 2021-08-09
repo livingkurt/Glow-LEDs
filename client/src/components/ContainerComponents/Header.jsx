@@ -5,6 +5,7 @@ import { logout } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import Banner from './Banner';
 import { HashLink } from 'react-router-hash-link';
+import { browser_check } from '../../utils/react_helper_functions';
 
 const Header = (props) => {
 	const history = useHistory();
@@ -395,11 +396,20 @@ const Header = (props) => {
 												Flow Art Essensials
 											</button>
 										</Link>
-										<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
-											<button className="btn nav ta-l w-100per special_font gradient-btn">
-												GLOW STRINGS V2
-											</button>
-										</Link>
+										{browser_check() !== 'safari' ? (
+											<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+												<button className={`btn nav ta-l w-100per special_font gradient-btn`}>
+													<span>GLOW STRINGS V2</span>
+												</button>
+											</Link>
+										) : (
+											<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+												<button className={`btn nav ta-l w-100per title_font`}>
+													<span>Glow Strings V2</span>
+												</button>
+											</Link>
+										)}
+
 										<Link to="/collections/all/products/1620_batteries">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
