@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
 import { HashLink } from 'react-router-hash-link';
+import { browser_check } from '../../utils/react_helper_functions';
 
 const Sidebar = (props) => {
 	const history = useHistory();
@@ -191,11 +192,27 @@ const Sidebar = (props) => {
 								On Sale
 							</button>
 						</Link>
-						<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+						{/* <Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
 							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
 								Glow Strings V2
 							</button>
-						</Link>
+						</Link> */}
+						{browser_check() !== 'safari' ? (
+							<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+								<button
+									className={`sidebar-btn secondary  special_font gradient-btn`}
+									onClick={closeMenu}
+								>
+									<span>GLOW STRINGS V2</span>
+								</button>
+							</Link>
+						) : (
+							<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m" onClick={closeMenu}>
+								<button className={`sidebar-btn secondary `}>
+									<span>Glow Strings V2</span>
+								</button>
+							</Link>
+						)}
 					</ul>
 					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "

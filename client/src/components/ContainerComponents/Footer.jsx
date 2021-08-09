@@ -4,6 +4,7 @@ import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Footer = () => {
 	const { height, width } = useWindowDimensions();
+
 	return (
 		<footer className="ta-c w-100per mt-5rem h-400px" style={{ backgroundColor: '#333333' }}>
 			<div className="footer-image">
