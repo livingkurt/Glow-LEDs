@@ -105,6 +105,11 @@
 	width: 100%;
 }
 
+.sidebar-btn.primary,
+.sidebar-btn.secondary {
+	border-radius: 0px 0px 0px 1rem;
+}
+
 .sidebar-btn-dropdown {
 	background-color: $theme_color_primary;
 	color: $theme_color_phrase_font;
@@ -112,7 +117,7 @@
 	border: unset;
 	border-top: 1px solid white;
 	font-family: $paragraph_font;
-	// border-radius: 1rem 0rem 0rem 1rem;
+	border-radius: 1rem 0rem 0rem;
 	transition: all .5s ease;
 	// padding: 10px;
 	transform: rotate(180deg);
