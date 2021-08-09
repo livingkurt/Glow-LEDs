@@ -436,7 +436,7 @@ const Header = (props) => {
 											<button className="btn nav w-100per ta-l fs-20px">Featured</button>
 										</Link>
 										<div className="nav-btn-container">
-											<Link to="/pages/menu/sponsored_artists">
+											<Link to="/pages/menu/sponsored_artists" className="w-100per">
 												<button className="nav-btn-link title_font w-100per ">
 													Sponsored Artists
 												</button>

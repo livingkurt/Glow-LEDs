@@ -139,6 +139,9 @@ const Footer = () => {
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
+									<Link to="/pages/menu/sponsored_artists">Sponsored Artists</Link>
+								</li>
+								<li className="ta-l mv-2rem">
 									<Link to="/collections/all/features/category/artists">Artists</Link>
 								</li>
 								<li className="ta-l mv-2rem">
