@@ -204,12 +204,6 @@ const MenuPage = (props) => {
 				// { category: 'infinity_mirrors', image: 'https://thumbs2.imgbox.com/77/94/3IXh3RtO_t.jpg' }
 			];
 		} else if (pathname === 'support') {
-			// else if (pathname === 'sponsored_artists') {
-			// 	return [
-			// 		{ category: 'sponsors', image: 'https://thumbs2.imgbox.com/a0/9b/65wgCsF2_t.png' },
-			// 		{ category: 'teams', image: 'https://thumbs2.imgbox.com/ea/82/nqDcxRmr_t.jpg' }
-			// 	];
-			// }
 			return [
 				{ category: 'about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
 				{ category: 'faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },
@@ -220,6 +214,12 @@ const MenuPage = (props) => {
 			return [
 				{ category: 'sponsors', image: 'https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg' },
 				{ category: 'teams', image: 'https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg' }
+			];
+		} else if (pathname === 'collections') {
+			return [
+				{ category: 'space_cadet', image: 'https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg' },
+				{ category: 'festy_besty', image: 'https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg' },
+				{ category: 'platonic_solids', image: 'https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg' }
 			];
 		} else if (pathname === 'support') {
 			return [

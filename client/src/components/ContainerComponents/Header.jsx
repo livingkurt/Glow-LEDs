@@ -87,6 +87,22 @@ const Header = (props) => {
 
 		set_last_id(id);
 	};
+	const show_hide_nested = (id) => {
+		set_current_id(id);
+		var elems = document.querySelectorAll('.nav-dropdown-nested-content');
+		[].forEach.call(elems, (el) => {
+			el.classList.remove('show-dropdown');
+		});
+		const current_menu = document.getElementById(id);
+		console.log(current_menu.classList);
+		if (last_id === id) {
+			current_menu.classList.remove('show-dropdown');
+		} else {
+			current_menu.classList.add('show-dropdown');
+		}
+
+		set_last_id(id);
+	};
 
 	const clicked_outside = () => {
 		var elems = document.querySelectorAll('.nav-dropdown-subcategory-content');
@@ -364,6 +380,19 @@ const Header = (props) => {
 										<Link to="/collections/all/products/category/diffuser_caps">
 											<button className="btn nav w-100per ta-l fs-20px">Diffuser Caps</button>
 										</Link>
+										<div className="nav-btn-container">
+											<Link to="/pages/menu/collections" className="w-100per">
+												<button className="nav-btn-link title_font w-100per ">
+													Collections
+												</button>
+											</Link>
+											<button
+												className="nav-btn-dropdown"
+												onClick={() => show_hide_nested('collections_dropdown')}
+											>
+												<i className="fas fa-sort-up" />
+											</button>
+										</div>
 										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">Geomotric</button>
@@ -388,6 +417,27 @@ const Header = (props) => {
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">Imperfect</button>
 											</div>
+										</Link>
+									</div>
+									{/* Diffuser Caps */}
+									<div
+										className="nav-dropdown-nested-content hover_fade_in nav-column"
+										id="collections_dropdown"
+									>
+										{' '}
+										<Link to="/pages/menu/collections">
+											<button className="btn nav w-100per ta-l fs-20px">Collections</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+											<button className="btn nav w-100per ta-l title_font">Space Cadet</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
+											<button className="btn nav w-100per ta-l title_font">Festy Besty</button>
+										</Link>
+										<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
+											<button className="btn nav w-100per ta-l title_font">
+												Platonic Solids
+											</button>
 										</Link>
 									</div>
 									<div className="nav-column">

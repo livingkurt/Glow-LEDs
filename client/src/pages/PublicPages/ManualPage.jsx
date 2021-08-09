@@ -31,14 +31,17 @@ const AboutPage = (props) => {
 	return (
 		<div className="main_container">
 			<Helmet>
-				<title>About | Glow LEDs</title>
-				<meta property="og:title" content="About" />
-				<meta name="twitter:title" content="About" />
+				<title>Manual | Glow LEDs</title>
+				<meta property="og:title" content="Manual" />
+				<meta name="twitter:title" content="Manual" />
 				<link rel="canonical" href="https://www.glow-leds.com/pages/about" />
 				<meta property="og:url" content="https://www.glow-leds.com/pages/about" />
-				<meta name="description" content="Learn how Glow LEDs got started and more in our About Page" />
-				<meta property="og:description" content="Learn how Glow LEDs got started and more in our About Page" />
-				<meta name="twitter:description" content="Learn how Glow LEDs got started and more in our About Page" />
+				<meta name="description" content="Learn how Glow LEDs got started and more in our Manual Page" />
+				<meta property="og:description" content="Learn how Glow LEDs got started and more in our Manual Page" />
+				<meta
+					name="twitter:description"
+					content="Learn how Glow LEDs got started and more in our Manual Page"
+				/>
 			</Helmet>
 			<div className="mb-10px">
 				<button class="btn secondary" onClick={() => props.history.goBack()}>

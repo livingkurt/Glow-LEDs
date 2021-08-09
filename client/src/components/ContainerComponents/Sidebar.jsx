@@ -376,9 +376,11 @@ const Sidebar = (props) => {
 								<div className="sidebar_dropdown_nested">
 									{/* <button className="sidebar-btn secondary">Collections</button> */}
 									<div className="sidebar-btn-container">
-										<button className="sidebar-btn nested" onClick={closeMenu}>
-											Collections
-										</button>
+										<Link to="/pages/menu/collections">
+											<button className="sidebar-btn nested" onClick={closeMenu}>
+												Collections
+											</button>
+										</Link>
 										<button
 											className="sidebar-btn-dropdown"
 											onClick={() => show_hide('glow_casings_dropdown_5')}
@@ -470,11 +472,22 @@ const Sidebar = (props) => {
 						</button>
 					</div>
 					<ul className="sidebar_dropdown_container" id="glow_casings_dropdown_6">
-						<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
-							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
-								Glow Strings V2
-							</button>
-						</Link>
+						{browser_check() !== 'safari' ? (
+							<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+								<button
+									className={`sidebar-btn secondary  special_font gradient-btn`}
+									onClick={closeMenu}
+								>
+									<span>GLOW STRINGS V2</span>
+								</button>
+							</Link>
+						) : (
+							<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m" onClick={closeMenu}>
+								<button className={`sidebar-btn secondary `}>
+									<span>Glow Strings V2</span>
+								</button>
+							</Link>
+						)}
 						<Link to="/collections/all/products/1620_batteries">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								1620 Batteries
