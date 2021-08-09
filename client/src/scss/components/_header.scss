@@ -37,16 +37,43 @@ header {
 	// box-shadow: $bs_deep;
 }
 .nav-dropdown-subcategory-content {
-	display: none;
+	// display: none;
+	white-space: nowrap;
+	overflow: hidden;
+	left: 0;
+	max-width: 0px;
+	width: 100%;
 	list-style-type: none;
 	z-index: 1;
 	margin: 0;
+	// max-width: 250px;
+	transition: all .5s;
 }
+
+.show-dropdown {
+	// display: block !important;
+	max-width: 250px;
+	transition: all .5s;
+}
+
 .nav-dropdown-nested-content {
-	display: none;
+	display: flex;
+	flex-direction: column;
+	white-space: nowrap;
+	overflow: hidden;
+	left: 0;
+	max-width: 0px;
+	width: 100%;
 	list-style-type: none;
 	z-index: 1;
 	margin: 0;
+	// max-width: 250px;
+	transition: all .5s;
+}
+.show-dropdown-nested {
+	// display: block !important;
+	max-width: 250px;
+	transition: all .5s;
 }
 
 .nav-btn-link {
@@ -101,6 +128,7 @@ header {
 .nav-column {
 	width: 100%;
 	max-width: 250px;
+	transition: all .5s ease;
 }
 
 .gradient-btn {

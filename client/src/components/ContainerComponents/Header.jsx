@@ -91,14 +91,14 @@ const Header = (props) => {
 		set_current_id(id);
 		var elems = document.querySelectorAll('.nav-dropdown-nested-content');
 		[].forEach.call(elems, (el) => {
-			el.classList.remove('show-dropdown');
+			el.classList.remove('show-dropdown-nested');
 		});
 		const current_menu = document.getElementById(id);
 		console.log(current_menu.classList);
 		if (last_id === id) {
-			current_menu.classList.remove('show-dropdown');
+			current_menu.classList.remove('show-dropdown-nested');
 		} else {
-			current_menu.classList.add('show-dropdown');
+			current_menu.classList.add('show-dropdown-nested');
 		}
 
 		set_last_id(id);
@@ -290,7 +290,7 @@ const Header = (props) => {
 
 									{/* Glowskins */}
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in nav-column"
+										className="nav-dropdown-subcategory-content hover_fade_in "
 										id="glowskins_dropdown"
 									>
 										<Link to="/collections/all/products/category/glowskins">
@@ -325,7 +325,7 @@ const Header = (props) => {
 									</div>
 									{/* Frosted Diffusers */}
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in nav-column"
+										className="nav-dropdown-subcategory-content hover_fade_in "
 										id="frosted_diffusers_dropdown"
 									>
 										<Link to="/collections/all/products/category/frosted_diffusers">
@@ -374,7 +374,7 @@ const Header = (props) => {
 									</div>
 									{/* Diffuser Caps */}
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in nav-column"
+										className="nav-dropdown-subcategory-content hover_fade_in "
 										id="diffuser_caps_dropdown"
 									>
 										<Link to="/collections/all/products/category/diffuser_caps">
@@ -419,12 +419,11 @@ const Header = (props) => {
 											</div>
 										</Link>
 									</div>
-									{/* Diffuser Caps */}
+									{/* Collections */}
 									<div
-										className="nav-dropdown-nested-content hover_fade_in nav-column"
+										className="nav-dropdown-nested-content hover_fade_in"
 										id="collections_dropdown"
 									>
-										{' '}
 										<Link to="/pages/menu/collections">
 											<button className="btn nav w-100per ta-l fs-20px">Collections</button>
 										</Link>
@@ -523,7 +522,7 @@ const Header = (props) => {
 									</div>
 
 									<div
-										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
+										className="nav-dropdown-subcategory-content hover_fade_in"
 										id="sponsored_artists_dropdown"
 									>
 										<Link to="/pages/menu/sponsored_artists">
@@ -590,10 +589,7 @@ const Header = (props) => {
 										</Link>
 									</div>
 
-									<div
-										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
-										id="faq_dropdown"
-									>
+									<div className="nav-dropdown-subcategory-content hover_fade_in" id="faq_dropdown">
 										<Link to="/pages/faq">
 											<button className="btn nav w-100per ta-l fs-20px">FAQ</button>
 										</Link>
