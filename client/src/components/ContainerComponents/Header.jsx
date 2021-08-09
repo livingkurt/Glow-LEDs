@@ -436,9 +436,11 @@ const Header = (props) => {
 											<button className="btn nav w-100per ta-l fs-20px">Featured</button>
 										</Link>
 										<div className="nav-btn-container">
-											{/* <Link to="/pages/menu/sponsored_artists"> */}
-											<button className="nav-btn-link title_font ">Sponsored Artists</button>
-											{/* </Link>/ */}
+											<Link to="/pages/menu/sponsored_artists">
+												<button className="nav-btn-link title_font w-100per ">
+													Sponsored Artists
+												</button>
+											</Link>
 											<button
 												className="nav-btn-dropdown"
 												onClick={() => show_hide('sponsored_artists_dropdown')}
@@ -464,9 +466,9 @@ const Header = (props) => {
 										className="nav-dropdown-subcategory-content hover_fade_in w-100per max-w-250px"
 										id="sponsored_artists_dropdown"
 									>
-										{/* <Link to="/pages/menu/sponsored_artists"> */}
-										<button className="btn nav w-100per ta-l fs-20px">Sponsored Artists</button>
-										{/* </Link> */}
+										<Link to="/pages/menu/sponsored_artists">
+											<button className="btn nav w-100per ta-l fs-20px">Sponsored Artists</button>
+										</Link>
 										<Link to="/collections/all/sponsors">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">

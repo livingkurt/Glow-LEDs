@@ -216,6 +216,18 @@ const MenuPage = (props) => {
 				{ category: 'contact', image: 'https://images2.imgbox.com/30/76/xP16FSiH_o.png' },
 				{ category: 'terms', image: 'https://images2.imgbox.com/0b/55/LAI7uhOb_o.png' }
 			];
+		} else if (pathname === 'sponsored_artists') {
+			return [
+				{ category: 'sponsors', image: 'https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg' },
+				{ category: 'teams', image: 'https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg' }
+			];
+		} else if (pathname === 'support') {
+			return [
+				{ category: 'about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
+				{ category: 'faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },
+				{ category: 'contact', image: 'https://images2.imgbox.com/30/76/xP16FSiH_o.png' },
+				{ category: 'terms', image: 'https://images2.imgbox.com/0b/55/LAI7uhOb_o.png' }
+			];
 		} else if (pathname === 'featured') {
 			console.log({ producers });
 			return [
@@ -263,6 +275,8 @@ const MenuPage = (props) => {
 			}
 		} else if (pathname === 'featured') {
 			return `/collections/all/features/category/${item.category}`;
+		} else if (pathname === 'sponsored_artists') {
+			return `/collections/all/${item.category}`;
 		} else {
 			return `/pages/${item.category}`;
 		}
