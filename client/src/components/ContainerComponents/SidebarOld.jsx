@@ -251,37 +251,35 @@ const Sidebar = (props) => {
 								</div>
 								<div className="sidebar_dropdown_nested w-">
 									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/frosted_diffusers">
-											Frosted Diffusers
-										</Link>
+										<Link to="/collections/all/products/category/diffusers">Diffusers</Link>
 									</button>
-									<ul className="sidebar_dropdown_nested_container" id="frosted_diffusers_dropdown">
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+									<ul className="sidebar_dropdown_nested_container" id="diffusers_dropdown">
+										<Link to="/collections/all/products/category/diffusers/subcategory/abstract">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Abstract (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
+										<Link to="/collections/all/products/category/diffusers/subcategory/polygons">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Polygons (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
+										<Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Cylinders (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
+										<Link to="/collections/all/products/category/diffusers/subcategory/domes">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Domes (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
+										<Link to="/collections/all/products/category/diffusers/subcategory/open_hole">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Open Hole
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
+										<Link to="/collections/all/products/category/diffusers/subcategory/closed_hole">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Closed Hole
 											</button>
@@ -289,7 +287,7 @@ const Sidebar = (props) => {
 									</ul>
 									<button
 										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-										onClick={() => show_hide('frosted_diffusers_dropdown')}
+										onClick={() => show_hide('diffusers_dropdown')}
 									>
 										<i className="fas fa-sort-up" />
 									</button>

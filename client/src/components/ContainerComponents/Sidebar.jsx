@@ -302,14 +302,12 @@ const Sidebar = (props) => {
 							</button> */}
 						</div>
 						<div className="sidebar_dropdown_nested">
-							{/* <Link to="/collections/all/products/category/frosted_diffusers">
-								<button className="sidebar-btn secondary">Frosted Diffusers</button>
+							{/* <Link to="/collections/all/products/category/diffusers">
+								<button className="sidebar-btn secondary">Diffusers</button>
 							</Link> */}
 							<div className="sidebar-btn-container">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									<Link to="/collections/all/products/category/frosted_diffusers">
-										Frosted Diffusers{' '}
-									</Link>
+									<Link to="/collections/all/products/category/diffusers">Diffusers </Link>
 								</button>
 								<button
 									className="sidebar-btn-dropdown"
@@ -319,32 +317,32 @@ const Sidebar = (props) => {
 								</button>
 							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_3">
-								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+								<Link to="/collections/all/products/category/diffusers/subcategory/abstract">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Abstract (New)
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
+								<Link to="/collections/all/products/category/diffusers/subcategory/polygons">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Polygons (New)
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
+								<Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Cylinders (New)
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
+								<Link to="/collections/all/products/category/diffusers/subcategory/domes">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Domes (New)
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
+								<Link to="/collections/all/products/category/diffusers/subcategory/open_hole">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Open Hole
 									</button>
 								</Link>
-								<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
+								<Link to="/collections/all/products/category/diffusers/subcategory/closed_hole">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Closed Hole
 									</button>

@@ -63,7 +63,7 @@ export default (props: any) => {
               <td style="color:white; padding:20px 0;vertical-align:top;border-bottom:1px solid #eee" valign="top">${item.qty}x - ${item.category ===
 						'diffuser_caps' ||
 					item.category === 'mega_diffuser_caps' ||
-					item.category === 'frosted_diffusers'
+					item.category === 'diffusers'
 						? item.color
 						: ''}
                 - ${item.name}

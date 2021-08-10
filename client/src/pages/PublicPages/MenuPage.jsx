@@ -18,7 +18,7 @@ const MenuPage = (props) => {
 	const [ vfx, set_vfx ] = useState([]);
 
 	const [ glowskins, set_glowskins ] = useState([]);
-	const [ frosted_diffusers, set_frosted_diffusers ] = useState([]);
+	const [ diffusers, set_diffusers ] = useState([]);
 	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
 	const [ batteries, set_batteries ] = useState([]);
 	const [ accessories, set_accessories ] = useState([]);
@@ -74,7 +74,7 @@ const MenuPage = (props) => {
 	const get_products_by_category = async () => {
 		set_loading_pictures(true);
 		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
-		const { data: frosted_diffusers } = await API_Products.get_product_pictures('frosted_diffusers');
+		const { data: diffusers } = await API_Products.get_product_pictures('diffusers');
 		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
 		const { data: batteries } = await API_Products.get_product_pictures('accessories', 'batteries');
 		const { data: accessories } = await API_Products.get_product_pictures('accessories');
@@ -84,12 +84,12 @@ const MenuPage = (props) => {
 		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
 		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
 		console.log({ glowskins });
-		console.log({ frosted_diffusers });
+		console.log({ diffusers });
 		console.log({ diffuser_caps });
 		console.log({ batteries });
 		console.log({ accessories });
 		set_glowskins(glowskins);
-		set_frosted_diffusers(frosted_diffusers);
+		set_diffusers(diffusers);
 		set_diffuser_caps(diffuser_caps);
 		set_batteries(batteries);
 		set_accessories(accessories);
@@ -156,10 +156,8 @@ const MenuPage = (props) => {
 					image: alt_novaskins[alt_novaskins.length - 1] && alt_novaskins[novaskins.length - 1].images[0]
 				},
 				{
-					category: 'frosted_diffusers',
-					image:
-						frosted_diffusers[frosted_diffusers.length - 1] &&
-						frosted_diffusers[frosted_diffusers.length - 1].images[0]
+					category: 'diffusers',
+					image: diffusers[diffusers.length - 1] && diffusers[diffusers.length - 1].images[0]
 				},
 				{
 					category: 'diffuser_caps',

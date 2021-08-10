@@ -118,7 +118,7 @@ const ProductsDisplayPage = (props) => {
 			// 		'diffuser_caps',
 			// 		'infinity_mirrors',
 			// 		'accessories',
-			// 		'frosted_diffusers',
+			// 		'diffusers',
 			// 		'diffuser_adapters',
 			// 		'glow_strings',
 			// 		'mega_diffuser_caps',
@@ -178,7 +178,7 @@ const ProductsDisplayPage = (props) => {
 	const descriptions = {
 		all_products:
 			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskins, and Glow Strings. Click to Shop.',
-		frosted_diffusers:
+		diffusers:
 			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
 		diffuser_caps:
 			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
@@ -193,8 +193,8 @@ const ProductsDisplayPage = (props) => {
 	};
 
 	const description_determination = () => {
-		if (category === 'frosted_diffusers') {
-			return descriptions.frosted_diffusers;
+		if (category === 'diffusers') {
+			return descriptions.diffusers;
 		}
 		if (category === 'diffuser_adapters') {
 			return descriptions.diffuser_adapters;

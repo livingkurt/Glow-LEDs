@@ -812,7 +812,7 @@ const ProductPage = (props) => {
 
 										<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
 											{(product.category === 'exo_diffusers' ||
-												product.category === 'frosted_diffusers' ||
+												product.category === 'diffusers' ||
 												product.category === 'diffuser_caps' ||
 												product.category === 'exo_diffusers') &&
 												'	This item ships in 2 - 5 business day.'}
@@ -1066,7 +1066,7 @@ const ProductPage = (props) => {
 									</div>
 								</div>
 							)}
-							{product.category === 'frosted_diffusers' && (
+							{product.category === 'diffusers' && (
 								<div>
 									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
 									<div className="colored_caps">

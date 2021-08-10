@@ -98,9 +98,7 @@ const Footer = () => {
 									<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/frosted_diffusers">
-										Frosted Diffusers
-									</Link>
+									<Link to="/collections/all/products/category/diffusers">Diffusers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
 									<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
@@ -197,7 +195,7 @@ const Footer = () => {
 									<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/frosted_diffusers">
+									<Link to="/collections/all/products/category/diffusers">
 										Frosted Diffusers
 									</Link>
 								</li>

@@ -134,7 +134,7 @@ function ProductPage(props) {
 		if (product.category === 'mega_diffuser_caps') {
 			result = colors[4].color;
 		}
-		if (product.category === 'frosted_diffusers') {
+		if (product.category === 'diffusers') {
 			result = colors[5].color;
 		}
 		if (product.category === 'diffuser_caps') {
@@ -446,36 +446,18 @@ function ProductPage(props) {
 		items.forEach((item_group) => {
 			const options = [
 				...item_group.color_products,
-				...item_group.secondary_color_products
-				// ...item_group.option_products
+				...item_group.secondary_color_products,
+				...item_group.option_products
 			];
 			// console.log({ options });
 			options.forEach(async (option) => {
 				console.log({ [option.name]: option._id, item_group_id: item_group._id });
-				const { data } = await API_Products.save_item_group_id(option, item_group);
+				const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
 				// console.log({ data });
 			});
 		});
 		set_loading_upload(false);
 	};
-	// const add_item_group_id = (e) => {
-	// 	set_loading_upload(true);
-	// 	e.preventDefault();
-	// 	items.forEach((item_group) => {
-	// 		const options = [
-	// 			...item_group.color_products,
-	// 			...item_group.secondary_color_products,
-	// 			...item_group.option_products
-	// 		];
-	// 		// console.log({ options });
-	// 		options.forEach(async (option) => {
-	// 			console.log({ [option.name]: option._id, item_group_id: item_group._id });
-	// 			const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
-	// 			// console.log({ data });
-	// 		});
-	// 	});
-	// 	set_loading_upload(false);
-	// };
 
 	// const update_prices_for_colors = (e) => {
 	// 	set_loading_upload(true);

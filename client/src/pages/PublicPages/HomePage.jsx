@@ -80,7 +80,7 @@ const HomePage = (props) => {
 		},
 		{
 			name: 'Frosted Diffusers',
-			category: 'frosted_diffusers',
+			category: 'diffusers',
 			video: 'uY2xjrGrZd0',
 			color: '#6d416d',
 			description:

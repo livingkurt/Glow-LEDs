@@ -95,6 +95,7 @@ const EditProductPage = (props) => {
 	const [ filtered_products, set_filtered_products ] = useState([]);
 	const [ extra_cost, set_extra_cost ] = useState();
 	const [ item_group_id, set_item_group_id ] = useState('');
+	const [ loading_options, set_loading_options ] = useState(false);
 
 	const history = useHistory();
 
@@ -644,15 +645,203 @@ const EditProductPage = (props) => {
 
 	// }
 
-	const add_item_group_id = (e) => {
+	// const add_item_group_id = (e) => {
+	// 	e.preventDefault();
+	// 	const products = [ ...color_products, ...secondary_color_products, ...secondary_products, ...option_products ];
+	// 	console.log({ products });
+	// 	products.forEach(async (product) => {
+	// 		// console.log({ product_id: product._id, item_group_id: id });
+	// 		const { data } = await API_Products.save_item_group_id(product._id, id);
+	// 		console.log({ data });
+	// 	});
+	// };
+
+	const create_product_options = async (e) => {
 		e.preventDefault();
-		const products = [ ...color_products, ...secondary_color_products, ...secondary_products, ...option_products ];
-		console.log({ products });
-		products.forEach(async (product) => {
-			// console.log({ product_id: product._id, item_group_id: id });
-			const { data } = await API_Products.save_item_group_id(product._id, id);
-			console.log({ data });
-		});
+		set_loading_options(true);
+		if (product.category === 'glowskins') {
+			const list = [
+				{
+					name: `Clear ${product.name}`,
+					color: 'Clear',
+					color_code: '#4b4b4b',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: true,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `Frosted ${product.name}`,
+					color: 'Frosted',
+					color_code: 'white',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `Red ${product.name}`,
+					color: 'Red',
+					color_code: '#c11c22',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `Emerald ${product.name}`,
+					color: 'Emerald',
+					color_code: '#15715a',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `Teal ${product.name}`,
+					color: 'Teal',
+					color_code: '#1da5b3',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `Blue ${product.name}`,
+					color: 'Blue',
+					color_code: '#0014ff',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `Violet ${product.name}`,
+					color: 'Violet',
+					color_code: '#543abb',
+					category: 'options',
+					subcategory: 'colors',
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `${product.name} - 1`,
+					size: 1,
+					category: 'options',
+					subcategory: 'sizes',
+					price: 2.99,
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `${product.name} - 8`,
+					size: 8,
+					category: 'options',
+					subcategory: 'sizes',
+					price: 17.99,
+					option: true,
+					default_option: false,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				},
+				{
+					name: `${product.name} - 10`,
+					size: 10,
+					category: 'options',
+					subcategory: 'sizes',
+					price: 19.99,
+					option: true,
+					default_option: true,
+					item_group_id: product._id,
+					option_products: [],
+					color_products: [],
+					secondary_color_products: [],
+					product_options: []
+				}
+			];
+			list.map(async (item) => {
+				const new_product = { ...product, ...item };
+				delete new_product._id;
+				console.log({ new_product });
+				const { data } = await API_Products.create_product_option(new_product);
+				console.log({ data });
+				if (item.subcategory === 'colors') {
+					if (color_products) {
+						set_color_products((colors_products) => [ ...colors_products, data.data ]);
+					} else {
+						set_color_products([ data.data ]);
+					}
+				} else if (item.subcategory === 'sizes') {
+					if (color_products) {
+						set_option_products((colors_products) => [ ...colors_products, data.data ]);
+					} else {
+						set_option_products([ data.data ]);
+					}
+				}
+			});
+		} else if (product.category === 'glow_casings') {
+		} else if (product.category === 'diffuser_caps') {
+		} else if (product.category === 'diffusers') {
+		} else if (product.subcategory === 'novaskins' || product.subcategory === 'alt_novaskins') {
+		}
+		set_loading_options(false);
+		// items.forEach((item_group) => {
+		// 	const options = [
+		// 		...item_group.color_products,
+		// 		...item_group.secondary_color_products,
+		// 		...item_group.option_products
+		// 	];
+		// 	// console.log({ options });
+		// 	options.forEach(async (option) => {
+		// 		console.log({ [option.name]: option._id, item_group_id: item_group._id });
+		// 		const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
+		// 		// console.log({ data });
+		// 	});
+		// });
+		// // set_loading_options(false);
 	};
 
 	return (
@@ -663,6 +852,7 @@ const EditProductPage = (props) => {
 				<form onSubmit={submitHandler} className="w-100per">
 					<Loading loading={loadingSave} error={errorSave} />
 					<Loading loading={loading} error={error}>
+						<Loading loading={loading_options} />
 						{product && (
 							<div>
 								{console.log({ product })}
@@ -693,9 +883,9 @@ const EditProductPage = (props) => {
 											/>
 										</li>
 									)}
-									{/* <button className="btn primary" onClick={(e) => add_item_group_id(e)}>
+									<button className="btn primary" onClick={(e) => create_product_options(e)}>
 										Add Item Group ID to Options
-									</button> */}
+									</button>
 									<div className="row">
 										<div className="ai-c">
 											<button

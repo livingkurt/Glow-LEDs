@@ -161,7 +161,7 @@ const CartPage = (props) => {
 													{(item.category === 'glowskins' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
-														item.category === 'frosted_diffusers') &&
+														item.category === 'diffusers') &&
 														item.color}{' '}
 													{item.name} {item.diffuser_cap && ` w (${item.diffuser_cap.name})`}
 													{/* {item.name === 'Diffuser Caps + Adapters Starter Kit' ||

@@ -433,7 +433,7 @@ export const determine_product_name = (item, show_qty, date) => {
 					{show_qty && item.qty > 1 && item.qty + 'x'}
 				</div>
 			);
-		} else if (item.category === 'frosted_diffusers') {
+		} else if (item.category === 'diffusers') {
 			return (
 				<div>
 					{item.color && item.color + ' '} {item.name}
@@ -452,7 +452,7 @@ export const determine_product_name = (item, show_qty, date) => {
 		return (
 			<div>
 				{item.name !== 'Diffuser Caps + Adapters Starter Kit' &&
-					item.category !== 'frosted_diffusers' &&
+					item.category !== 'diffusers' &&
 					item.color &&
 					item.color}{' '}
 				{item.name}

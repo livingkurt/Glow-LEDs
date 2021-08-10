@@ -280,7 +280,7 @@ const InvoiceEmail = (props) => {
 										{/* {(item.category === 'glowskins' ||
 											item.category === 'diffuser_caps' ||
 											item.category === 'mega_diffuser_caps' ||
-											item.category === 'frosted_diffusers') &&
+											item.category === 'diffusers') &&
 											item.color}{' '}
 										{item.name}{' '}
 										{item.product_option &&

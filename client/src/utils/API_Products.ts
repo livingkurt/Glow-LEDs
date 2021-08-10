@@ -42,6 +42,10 @@ const product_routes = {
 		console.log({ update_stock: { product_id, count_in_stock } });
 		return axios.put('/api/products/update_stock', { product_id, count_in_stock });
 	},
+	create_product_option: (product: any) => {
+		console.log({ update_stock: product });
+		return axios.post('/api/products/create_product_option', product);
+	},
 	update_pathname: (product_id: string, pathname: string, product: any) => {
 		console.log({ update_pathname: { product_id, pathname } });
 		return axios.put('/api/products/update_pathname', { product_id, pathname, product });

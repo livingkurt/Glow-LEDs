@@ -261,6 +261,7 @@ export default {
 	},
 	create: async (req: any, res: any) => {
 		try {
+			console.log({ body: req.body });
 			const newProduct = await Product.create(req.body);
 			if (newProduct) {
 				log_request({
@@ -298,6 +299,47 @@ export default {
 			res.status(500).send({ error, message: 'Error Creating Product' });
 		}
 	},
+	create_product_option: async (req: any, res: any) => {
+		try {
+			console.log({ body: req.body });
+			const newProduct = await Product.create(req.body);
+			if (newProduct) {
+				log_request({
+					method: 'POST',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ newProduct ],
+					status: 201,
+					success: true,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				return res.status(201).send({ message: 'New Product Created', data: newProduct });
+			} else {
+				log_request({
+					method: 'DELETE',
+					path: req.originalUrl,
+					collection: 'Product',
+					data: [ newProduct ],
+					status: 500,
+					success: false,
+					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+				});
+				return res.status(500).send({ message: ' Error in Creating Product.' });
+			}
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'POST',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Creating Product' });
+		}
+	},
+
 	update: async (req: any, res: any) => {
 		try {
 			console.log({ product_routes_put: req.body });

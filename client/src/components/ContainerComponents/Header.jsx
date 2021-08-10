@@ -237,14 +237,14 @@ const Header = (props) => {
 										</div>
 										<div className="nav-btn-container">
 											<Link
-												to="/collections/all/products/category/frosted_diffusers"
+												to="/collections/all/products/category/diffusers"
 												className="w-100per"
 											>
-												<button className="nav-btn-link title_font">Frosted Diffusers</button>
+												<button className="nav-btn-link title_font">Diffusers</button>
 											</Link>
 											<button
 												className="nav-btn-dropdown"
-												onClick={() => show_hide('frosted_diffusers_dropdown')}
+												onClick={() => show_hide('diffusers_dropdown')}
 											>
 												<i className="fas fa-sort-up" />
 											</button>
@@ -326,45 +326,45 @@ const Header = (props) => {
 									{/* Frosted Diffusers */}
 									<div
 										className="nav-dropdown-subcategory-content hover_fade_in "
-										id="frosted_diffusers_dropdown"
+										id="diffusers_dropdown"
 									>
-										<Link to="/collections/all/products/category/frosted_diffusers">
-											<button className="btn nav w-100per ta-l fs-20px">Frosted Diffusers</button>
+										<Link to="/collections/all/products/category/diffusers">
+											<button className="btn nav w-100per ta-l fs-20px">Diffusers</button>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/abstract">
+										<Link to="/collections/all/products/category/diffusers/subcategory/abstract">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Abstract (New)
 												</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/polygons">
+										<Link to="/collections/all/products/category/diffusers/subcategory/polygons">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Polygons (New)
 												</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/cylinders">
+										<Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Cylinders (New)
 												</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/domes">
+										<Link to="/collections/all/products/category/diffusers/subcategory/domes">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Domes (New)
 												</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/open_hole">
+										<Link to="/collections/all/products/category/diffusers/subcategory/open_hole">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">Open Hole</button>
 											</div>
 										</Link>
-										<Link to="/collections/all/products/category/frosted_diffusers/subcategory/closed_hole">
+										<Link to="/collections/all/products/category/diffusers/subcategory/closed_hole">
 											<div className="row">
 												<button className="btn nav w-100per ta-l title_font">
 													Closed Hole

@@ -26,6 +26,7 @@ router.route('/update_stock').put(product_controller.update_stock);
 router.route('/update_product_order').put(product_controller.update_product_order);
 router.route('/update_product_option_stock').put(product_controller.update_product_option_stock);
 router.route('/save_item_group_id').put(product_controller.save_item_group_id);
+router.route('/create_product_option').post(product_controller.create_product_option);
 
 router.route('/reviews/:pathname').post(product_controller.reviews);
 
