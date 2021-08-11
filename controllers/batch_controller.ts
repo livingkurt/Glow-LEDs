@@ -333,5 +333,71 @@ export default {
 			console.log({ error });
 			console.log({ outside: error });
 		}
+	},
+	make_emails_lowercase: async (req: any, res: any) => {
+		const users = await User.find({ email: { $exists: true } });
+		users.forEach(async (user: any) => {
+			const userss: any = await User.findOne({ _id: user._id });
+			const updated_user: any = new User(userss);
+			// Check if user exists
+			if (userss.email !== userss.email.toLowerCase()) {
+				console.log('Yes Uppercase');
+				console.log({ original: userss.email, lower: userss.email.toLowerCase() });
+				const same_user: any = await User.findOne({ email: userss.email.toLowerCase() });
+				if (!same_user) {
+					console.log('No Same User');
+
+					updated_user.email = updated_user.email.toLowerCase();
+					await updated_user.save();
+				} else if (same_user) {
+					console.log('Yes Same User');
+					console.log({ same_user });
+					const orders: any = await Order.find({ user: updated_user._id });
+					orders.forEach(async (order: any) => {
+						// const orderss: any = await Order.findOne({ _id: order._id });
+						console.log('Order Change User');
+						const updated_order: any = new Order(order);
+						updated_order.shipping.email = same_user.email;
+						updated_order.user = same_user._id;
+						updated_order.save();
+					});
+					console.log('Delete User');
+					updated_user.deleted = true;
+					await updated_user.save();
+				}
+			}
+		});
+		res.send('Done');
+	},
+	find_duplicate_emails: async (req: any, res: any) => {
+		const users = await User.find({ email: { $exists: true } });
+		const valueArr = users.map((item: any) => item.email).sort();
+		console.log({ valueArr });
+		const isDuplicate = valueArr.some((item: any, idx: any) => {
+			return valueArr.indexOf(item) != idx;
+		});
+		console.log({ valueArr });
+		res.send(valueArr);
+	},
+	update_order_items: async (req: any, res: any) => {
+		const order = await Order.updateMany(
+			{
+				'orderItems.category': {
+					$regex: 'frosted_diffusers',
+					$options: 'i'
+				}
+			},
+			{
+				// $rename: { shipping_price: 'volume' }
+				$set: {
+					'orderItems.$.category': 'diffusers'
+				}
+				// $unset: { shipping_price: 1 }
+			},
+			{ multi: true }
+			// { upsert: true }
+		);
+		console.log({ order });
+		res.send(order);
 	}
 };

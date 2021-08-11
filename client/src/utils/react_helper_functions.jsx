@@ -433,7 +433,7 @@ export const determine_product_name = (item, show_qty, date) => {
 					{show_qty && item.qty > 1 && item.qty + 'x'}
 				</div>
 			);
-		} else if (item.category === 'diffusers') {
+		} else if (item.category === 'diffusers' || item.category === 'frosted_diffusers') {
 			return (
 				<div>
 					{item.color && item.color + ' '} {item.name}
