@@ -717,9 +717,11 @@ const Header = (props) => {
 						{/* </Link> */}
 						<div className="nav_bar w-233px jc-fe">
 							{/* <Link to="/checkout/cart"> */}
-							<button className="btn nav cart_text w-105px" onClick={open_cart}>
-								Cart <i className="fas fa-shopping-cart" />{' '}
-								{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+							<button className="btn nav cart_text w-105px row" onClick={open_cart}>
+								Cart <i className="fas fa-shopping-cart ml-5px" />
+								<div className="ml-5px">
+									{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{' '}
+								</div>
 							</button>
 							{/* </Link> */}
 							{/* <Link to="/checkout/cart"> */}
