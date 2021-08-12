@@ -277,17 +277,6 @@ const InvoiceEmail = (props) => {
 										}}
 										valign="top"
 									>
-										{/* {(item.category === 'glowskins' ||
-											item.category === 'diffuser_caps' ||
-											item.category === 'mega_diffuser_caps' ||
-											item.category === 'diffusers') &&
-											item.color}{' '}
-										{item.name}{' '}
-										{item.product_option &&
-											item.product_option.hasOwnProperty('name') &&
-											`- ${item.product_option.name} `}
-										{item.qty > 1 && item.qty + 'x'}
-										{item.secondary_product ? ` w (${item.secondary_product.name})` : ''} */}
 										{determine_product_name(item, true, order.createdAt)}
 									</td>
 

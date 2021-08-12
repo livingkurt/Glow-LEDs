@@ -383,85 +383,92 @@ export const determine_product_name = (item, show_qty, date) => {
 		if (item.subcategory === 'novaskins' || item.subcategory === 'alt_novaskins') {
 			return (
 				<div>
-					{item.name} {item.size !== 0 && ' - ' + item.size} {item.color && '(' + item.color + ' Skin'}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
+					{item.color && '(' + item.color + ' Skin'}
 					{item.color && ' & '}
-					{item.secondary_color && item.secondary_color + ' Sled)'}
+					{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
 				</div>
 			);
 		} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 			return (
 				<div>
-					{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
-					{item.secondary_color && item.secondary_color + ' Cape'}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+					{item.size !== 0 && ' - ' + item.size} {item.secondary_color && item.secondary_color + ' Cape'}{' '}
 				</div>
 			);
 		} else if (item.category === 'accessories') {
 			if (item.subcategory === 'batteries') {
 				return (
 					<div>
-						{item.color && item.color + ' '} {item.name} {item.size !== '0' && ' - ' + item.size}
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+						{item.size !== '0' && ' - ' + item.size}{' '}
 					</div>
 				);
 			} else {
 				return (
 					<div>
-						{item.color && !item.secondary_color && item.color} {item.name} {item.secondary_color && ' -'}{' '}
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && !item.secondary_color && item.color}{' '}
+						{item.name} {item.secondary_color && ' -'}{' '}
 						{item.secondary_color && '(' + item.color + ' Cap/Slide'}
 						{item.secondary_color && ' & '}
-						{item.secondary_color && item.secondary_color + ' Body)'}
+						{item.secondary_color && item.secondary_color + ' Body)'}{' '}
 					</div>
 				);
 			}
 		} else if (item.category === 'exo_diffusers') {
 			return (
 				<div>
-					{item.name} ({item.color && item.color + ' Skeleton Color'}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} ({item.color && item.color + ' Skeleton Color'}
 					{item.color && ' & '}
-					{item.secondary_color && item.secondary_color + ' Plug Color) '}
+					{item.secondary_color && item.secondary_color + ' Plug Color) '}{' '}
 				</div>
 			);
 		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
 			return (
 				<div>
-					{item.name}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
 					{item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
 						` - ${item.option_product_name} w ${item.color} ${item.secondary_product_name.slice(
 							0,
 							-14
 						)} Caps & ${item.secondary_color} Adapters`}
-					{show_qty && item.qty > 1 && item.qty + 'x'}
 				</div>
 			);
 		} else if (item.category === 'diffusers' || item.category === 'frosted_diffusers') {
 			return (
 				<div>
-					{item.color && item.color + ' '} {item.name}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}
 				</div>
 			);
 		} else if (item.category === 'diffuser_caps') {
 			return (
 				<div>
-					{item.color && item.color + ' '} {item.name} {item.size !== 0 && ' - ' + item.size}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+					{item.size !== 0 && ' - ' + item.size}{' '}
 				</div>
 			);
 		} else if (item.category === 'glow_strings') {
-			return <div>{item.name}</div>;
+			return (
+				<div>
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
+				</div>
+			);
 		}
 	} else if (date_1 > date_2) {
 		return (
 			<div>
+				{show_qty && item.qty > 1 && item.qty + 'x'}{' '}
 				{item.name !== 'Diffuser Caps + Adapters Starter Kit' &&
 					item.category !== 'diffusers' &&
 					item.color &&
 					item.color}{' '}
 				{item.name}
-				{item.product_option && item.product_option.name && `- ${item.product_option.name}`}
+				{item.product_option && item.product_option.name && ` - ${item.product_option.name}`}
 				{(item.secondary_product || item.diffuser_cap) &&
 					` w (${item.name === 'Diffuser Caps + Adapters Starter Kit' &&
 						item.color} ${(item.secondary_product && item.product.name) ||
 						(item.diffuser_cap && item.diffuser_cap.name)})`}{' '}
-				{show_qty && item.qty > 1 && item.qty + 'x'}
 			</div>
 		);
 	}
