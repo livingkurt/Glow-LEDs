@@ -16,7 +16,7 @@ const Slideshow = (props) => {
 	};
 
 	return (
-		<div className={classes}>
+		<div className={`details-image ${props.className}`}>
 			{props.images &&
 				[ ...props.images, ...props.secondary_images ].map((image, index) => {
 					return (

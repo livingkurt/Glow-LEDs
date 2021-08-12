@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../../actions/productActions';
-import { Rating, Reviews, Slideshow, RelatedProducts, ReadMore } from '../../components/SpecialtyComponents';
+import { Rating, Reviews, Slideshow, RelatedProducts, ReadMore, Swipe } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import { Helmet } from 'react-helmet';
@@ -16,6 +16,20 @@ import {
 	sale_price_product_option_switch,
 	sale_price_product_option_switch_product
 } from '../../utils/react_helper_functions';
+import useWindowDimensions from '../../components/Hooks/windowDimensions';
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/styles.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Pagination } from 'swiper/core';
+// Import Swiper styles
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/swiper.min.css';
+import 'swiper/components/zoom/zoom.min.css';
+import 'swiper/components/navigation/navigation.min.css';
+
+// install Swiper modules
+SwiperCore.use([ Pagination ]);
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -64,6 +78,8 @@ const ProductPage = (props) => {
 	const productDetails = useSelector((state) => state.productDetails);
 
 	const { product, loading, error } = productDetails;
+
+	const { width, height } = useWindowDimensions();
 
 	const dispatch = useDispatch();
 
@@ -454,22 +470,14 @@ const ProductPage = (props) => {
 						</div>
 						<div className="details">
 							<div className="">
-								<label className="product_title_top none fs-30px ff-h mb-2rem ta-c lh-50px">
+								<label
+									className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
+									style={{ display: width < 819 ? 'block' : 'none' }}
+								>
 									{name}
-									{/* {determine_product_name(
-											{
-												...product,
-												secondary_product_name:
-													secondary_product_name && secondary_product_name,
-												option_product_name: option_product_name && option_product_name,
-												color: color && color,
-												size: size && size
-											},
-											false
-										)} */}
 								</label>
+								{/* <div className="w-400px"> */}
 								<div className="details-image">
-									{/* <Zoom> */}
 									{!secondary_image && (
 										<img
 											id="expandedImg"
@@ -503,15 +511,65 @@ const ProductPage = (props) => {
 											/>
 										</div>
 									)}
+									<div style={{ display: width < 819 ? 'none' : 'block' }}>
+										<Slideshow
+											product={product}
+											images={images}
+											secondary_images={secondary_images}
+											className="w-100per jc-c max-w-400px m-auto"
+											set_image={set_image}
+										/>
+									</div>
+									{/* </div> */}
 								</div>
+								{/* <div
+								>
+									<Swiper
+										style={{
+											'--swiper-navigation-color': '#fff',
+											'--swiper-pagination-color': '#fff'
+										}}
+										zoom={true}
+										navigation={true}
+										pagination={{
+											clickable: true
+										}}
+										className="mySwiper"
+									>
+										{images &&
+											images.map((image, index) => (
+												<SwiperSlide
+													key={index}
+													// style={{
+													// 	height: 'auto',
+													// 	width: '100%'
+													// }}
+												>
+													<img
+														id="expandedImg"
+														alt={name}
+														title={name}
+														className="details-image-img"
+														src={image}
+														style={{
+															maxWidth: '400px',
+															maxHeight: '400px',
+															height: '100%',
+															width: '100%'
+														}}
+													/>
+												</SwiperSlide>
+											))}
+									</Swiper>
+								</div> */}
+								{/* <div className="w-100per max-h-400px">
+									<Swipe images={images} />
+								</div> */}
 							</div>
-							<Slideshow
-								product={product}
-								images={images}
-								secondary_images={secondary_images}
-								show_hide="alt_pictures_shown_shown "
-							/>
-							<div className="details-info">
+							<div
+								className="details-info desktop_product_view"
+								style={{ display: width > 819 ? 'block' : 'none' }}
+							>
 								<h1 className="product_title_side lh-50px fs-30px mv-0px">{name}</h1>
 
 								<div className="mb-15px mt-n9px">
@@ -581,15 +639,6 @@ const ProductPage = (props) => {
 								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
-									{/* {sale_price_product_option_switch_product(
-										product,
-										product.product_options,
-										price,
-										sale_price
-									)} */}
-									{console.log({ price })}
-									{console.log({ sale_price })}
-									{console.log({ previous_price })}
 									{sale_price_product_option_switch_product(price, sale_price, previous_price)}
 								</div>
 
@@ -614,15 +663,11 @@ const ProductPage = (props) => {
 										</ul>
 									</div>
 								</div>
-								<Slideshow
-									product={product}
-									images={images}
-									secondary_images={secondary_images}
-									show_hide="alt_pictures_hidden"
-									set_image={set_image}
-								/>
 							</div>
-							<div className="details-action">
+							<div
+								className="details-action desktop_product_view"
+								style={{ display: width > 819 ? 'block' : 'none' }}
+							>
 								<ul>
 									<div className="row">
 										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
@@ -838,31 +883,376 @@ const ProductPage = (props) => {
 									)}
 								</ul>
 							</div>
+							<div className="mobile_product_view" style={{ display: width <= 819 ? 'block' : 'none' }}>
+								<Slideshow
+									product={product}
+									images={images}
+									secondary_images={secondary_images}
+									className="jc-c w-100per"
+								/>
+							</div>
+							<div className="w-100per">
+								<div
+									className="details-action mobile_product_view"
+									style={{ display: width <= 819 ? 'block' : 'none' }}
+								>
+									<ul>
+										{/* <li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li> */}
+										<div className="row ai-c mb-1rem">
+											<h3 className="mv-0px mr-5px">Price: </h3>
+											{sale_price_product_option_switch_product(
+												price,
+												sale_price,
+												previous_price
+											)}
+										</div>
+										{product.secondary_product_group &&
+										product.secondary_products &&
+										product.secondary_products.length > 0 && (
+											<li>
+												<div className="ai-c h-25px mb-25px">
+													{/* <label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.secondary_group_name ? (
+														product.secondary_group_name
+													) : (
+														'Cap Design'
+													)}
+												</label> */}
+													<h3 className="mv-0px mr-5px">
+														{product.secondary_group_name ? (
+															product.secondary_group_name
+														) : (
+															'Design'
+														)}: {' '}
+													</h3>
+													<div className="custom-select">
+														<select
+															className="qty_select_dropdown"
+															onChange={(e) => update_secondary(e)}
+														>
+															<option key={1} defaultValue="">
+																Choose{' '}
+																{product.secondary_group_name && product.secondary_group_name}
+															</option>
+															{product.secondary_products.map((secondary, index) => (
+																<option key={index} value={JSON.stringify(secondary)}>
+																	{secondary.name.slice(0, -14)}
+																</option>
+															))}
+														</select>
+														<span className="custom-arrow" />
+													</div>
+												</div>
+											</li>
+										)}
+										{size !== '1 Sled' &&
+										product.color_product_group &&
+										product.color_products &&
+										product.color_products.length > 0 && (
+											<li>
+												<div className="ai-c h-25px mb-25px jc-b">
+													<h3 className="mv-0px ">
+														{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
+													</h3>
+													<div className="ai-c">
+														{color_code && (
+															<canvas
+																className=" mh-1rem w-60px h-20px br-7px"
+																style={{ backgroundColor: color_code }}
+															/>
+														)}
+														<div className="custom-select">
+															<select
+																className="qty_select_dropdown"
+																onChange={(e) => update_color(e)}
+															>
+																{product.color_products.map((color, index) => (
+																	<option key={index} value={JSON.stringify(color)}>
+																		{color.name.split(' ')[0]}
+																	</option>
+																))}
+															</select>
+															<span className="custom-arrow" />
+														</div>
+													</div>
+												</div>
+											</li>
+										)}
+										{size !== '1 Skin' &&
+										product.secondary_color_product_group &&
+										product.secondary_color_products &&
+										product.secondary_color_products.length > 0 && (
+											<li>
+												<div className="ai-c h-25px mb-20px jc-b">
+													<h3 className="mv-0px ">
+														{product.secondary_color_group_name ? (
+															product.secondary_color_group_name
+														) : (
+															'Secondary Color'
+														)}:{' '}
+													</h3>
+													<div className="ai-c">
+														{secondary_color_code && (
+															<canvas
+																className=" mh-1rem w-60px h-20px br-7px"
+																style={{ backgroundColor: secondary_color_code }}
+															/>
+														)}
+														<div className="custom-select">
+															<select
+																className="qty_select_dropdown"
+																onChange={(e) => update_secondary_color(e)}
+															>
+																{product.secondary_color_products.map(
+																	(secondary_color, index) => (
+																		<option
+																			key={index}
+																			value={JSON.stringify(secondary_color)}
+																		>
+																			{secondary_color.name.split(' ')[0]}
+																		</option>
+																	)
+																)}
+															</select>
+															<span className="custom-arrow" />
+														</div>
+													</div>
+												</div>
+											</li>
+										)}
+										{product.option_product_group &&
+										product.option_products &&
+										product.option_products.length > 0 && (
+											<li>
+												<div className="ai-c jc-b">
+													<h3 className="mv-0px mr-5px w-7rem">
+														{product.option_group_name ? (
+															product.option_group_name
+														) : (
+															'Size'
+														)}:{' '}
+													</h3>
+													<div className="ai-c wrap">
+														{product.option_products
+															.filter((option) => option.name !== '1 Sled')
+															.filter((option) => option.name !== '1 Skin')
+															.map((option, index) => (
+																<button
+																	key={index}
+																	selected={option.default_option}
+																	id={option.name}
+																	value={JSON.stringify(option)}
+																	onClick={(e) => update_option(e)}
+																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
+																		? 'secondary'
+																		: 'primary'}`}
+																>
+																	{option.size || option.name}
+																</button>
+															))}
+													</div>
+												</div>
+											</li>
+										)}
+										{(product.subcategory === 'novaskins' ||
+											product.subcategory === 'alt_novaskins') &&
+										product.option_product_group &&
+										product.option_products &&
+										product.option_products.length > 0 && (
+											<li>
+												<div className="ai-c">
+													<h3 className="mv-0px mr-5px w-7rem">Parts: </h3>
+													<div className="ai-c wrap">
+														{product.option_products
+															.filter((option) => option.price === 2.99)
+															.map((option, index) => (
+																<button
+																	key={index}
+																	selected={option.default_option}
+																	id={option.name}
+																	value={JSON.stringify(option)}
+																	onClick={(e) => update_option(e)}
+																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
+																		? 'secondary'
+																		: 'primary'}`}
+																>
+																	{option.size || option.name}
+																</button>
+															))}
+													</div>
+												</div>
+											</li>
+										)}
+										<li>
+											<div className="ai-c h-25px mb-20px jc-b">
+												<h3 className="mv-0px ">Qty:</h3>
+												<div className="custom-select">
+													<select
+														defaultValue={qty}
+														className="qty_select_dropdown"
+														onChange={(e) => {
+															setQty(e.target.value);
+														}}
+													>
+														{[ ...Array(count_in_stock).keys() ].map((x, index) => (
+															<option key={index} defaultValue={x + 1}>
+																{x + 1}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
+												</div>
+											</div>
+
+											<h4 className="mb-0px mt-11px">Shipping Calculated at Checkout</h4>
+											<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+												{(product.category === 'glow_strings' ||
+													product.name === 'coin_battery_holder') &&
+													'	This item ships in 6 - 10 business day.'}
+											</h4>
+
+											<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+												{(product.category === 'exo_diffusers' ||
+													product.category === 'diffusers' ||
+													product.category === 'diffuser_caps' ||
+													product.category === 'exo_diffusers') &&
+													'	This item ships in 2 - 5 business day.'}
+											</h4>
+											<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+												{(product.category === 'glowskins' ||
+													product.category === 'glow_casings') &&
+													'	This item ships in 3 - 7 business day.'}
+											</h4>
+										</li>
+										{product.name === 'Diffuser Caps + Adapters Starter Kit' &&
+										!secondary_product ? (
+											<div />
+										) : (
+											<li>
+												{count_in_stock > 0 ? (
+													<button className="btn primary" onClick={handleAddToCart}>
+														Add to Cart
+													</button>
+												) : (
+													<button className="btn inactive">Out of Stock</button>
+												)}
+											</li>
+										)}
+									</ul>
+								</div>
+								<div
+									className="details-info mobile_product_view"
+									style={{ display: width <= 819 ? 'block' : 'none' }}
+								>
+									<div className="mb-15px mt-n9px">
+										<a href="#reviews">
+											<Rating
+												rating={product.rating}
+												numReviews={product.numReviews + ' reviews'}
+											/>
+										</a>
+									</div>
+
+									<div className="mt-1rem">
+										<div className="h-100per paragraph_font">
+											<ul style={{ marginLeft: '10px' }}>
+												{facts ? (
+													facts.split('\n').map((line, index) => {
+														return (
+															<li
+																key={index}
+																style={{ listStyleType: 'disc' }}
+																className="lh-2rem"
+															>
+																{line}
+															</li>
+														);
+													})
+												) : (
+													facts
+												)}
+											</ul>
+										</div>
+									</div>
+								</div>
+
+								{/* <Swiper
+									// spaceBetween={50}
+									pagination={true}
+									slidesPerView={1}
+									onSlideChange={() => console.log('slide change')}
+									onSwiper={(swiper) => console.log(swiper)}
+								>
+									{images &&
+										images.map((image) => (
+											<SwiperSlide>
+												<img
+													id="expandedImg"
+													alt={name}
+													title={name}
+													className="details-image-img"
+													src={image}
+													style={{
+														maxWidth: '400px',
+														maxHeight: '400px',
+														height: '100%',
+														width: '100%'
+													}}
+												/>
+											</SwiperSlide>
+										))}
+								</Swiper> */}
+
+								{/* <Swiper pagination={true} className="mySwiper">
+									<SwiperSlide>Slide 1</SwiperSlide>
+									<SwiperSlide>Slide 2</SwiperSlide>
+									<SwiperSlide>Slide 3</SwiperSlide>
+									<SwiperSlide>Slide 4</SwiperSlide>
+									<SwiperSlide>Slide 5</SwiperSlide>
+									<SwiperSlide>Slide 6</SwiperSlide>
+									<SwiperSlide>Slide 7</SwiperSlide>
+									<SwiperSlide>Slide 8</SwiperSlide>
+									<SwiperSlide>Slide 9</SwiperSlide>
+								</Swiper> */}
+								{/* <AwesomeSlider media={images && images.map((image) => ({ source: image }))} /> */}
+								{/* <AwesomeSlider>
+									{images &&
+										images.map((image, index) => {
+											return (
+												<img
+													id="expandedImg"
+													alt={name}
+													title={name}
+													className="details-image-img"
+													src={image}
+													style={{
+														maxWidth: '400px',
+														maxHeight: '400px',
+														height: '100%',
+														width: '100%'
+													}}
+												/>
+											);
+										})}
+								</AwesomeSlider> */}
+							</div>
 						</div>
-						<Slideshow
+						{/* <Slideshow
 							product={product}
 							images={images}
 							secondary_images={secondary_images}
 							show_hide="alt_pictures_shown"
 							set_image={set_image}
-						/>
+						/> */}
 						<div className="p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
-							{/* <p className="paragraph_font">{product.description}</p> */}
 							<ReadMore width={1000} className="paragraph_font" length={100}>
 								{description}
 							</ReadMore>
-							{/* <ReadMore width={1000} className="paragraph_font">{product.description}</ReadMore> */}
-							{/* <p className="paragraph_font">
-								<ReadMore width={1000}React
-									text={
-										'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
-									}
-									min={80}
-									ideal={100}
-									max={200}
-								/>
-							</p> */}
 							{product.category === 'glow_strings' && (
 								<Link to="/pages/manual/glow_strings_v2_manual">
 									<button className="btn primary w-100per fs-20px mb-2rem">
@@ -1007,7 +1397,7 @@ const ProductPage = (props) => {
 							<div className=" m-2rem  h-auto m-auto jc-c">
 								{/* <Zoom className="m-auto"> */}
 								<img
-									className="max-w-800px w-100per h-auto "
+									className="max-w-819px w-100per h-auto "
 									src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
 									alt="Graphic Timeline"
 									title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"

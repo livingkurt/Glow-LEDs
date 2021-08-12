@@ -14,18 +14,18 @@
 }
 
 @media only screen and (max-width: 1440px) {
-	.alt_pictures_shown {
-		display: none !important;
-	}
-	.alt_pictures_shown_shown {
-		display: none !important;
-	}
-	.alt_pictures_hidden {
-		display: flex !important;
-	}
-	.img_column {
-		width: 20%;
-	}
+	// .alt_pictures_shown {
+	// 	display: none !important;
+	// }
+	// .alt_pictures_shown_shown {
+	// 	display: none !important;
+	// }
+	// .alt_pictures_hidden {
+	// 	display: flex !important;
+	// }
+	// .img_column {
+	// 	width: 20%;
+	// }
 }
 
 @media only screen and (max-width: 1330px) {
@@ -83,14 +83,6 @@
 }
 
 @media only screen and (max-width: 1040px) {
-	.product_title_top {
-		display: flex !important;
-		justify-content: center;
-	}
-	.product_title_side {
-		display: none !important;
-	}
-
 	.details {
 		justify-content: center;
 	}
@@ -174,13 +166,7 @@
 		// margin-top: 152px !important;
 		min-height: 76vh !important;
 	}
-	.details-info {
-		flex: unset;
-	}
-	.details-image {
-		margin: 0;
-		margin-bottom: 20px;
-	}
+
 	.cart-action-container {
 		flex: 1 1 100rem !important;
 	}
@@ -197,18 +183,12 @@
 		margin: 10px;
 		margin-top: 0px;
 	}
-	.embla {
-		width: 800px;
-	}
-	.embla__slide {
-		min-width: 30%;
-	}
-	.alt_pictures_shown_shown {
-		display: flex !important;
-	}
-	.alt_pictures_hidden {
-		display: none !important;
-	}
+	// .alt_pictures_shown_shown {
+	// 	display: flex !important;
+	// }
+	// .alt_pictures_hidden {
+	// 	display: none !important;
+	// }
 }
 // @media only screen and (max-width: 950px) {
 // 	.embla {
@@ -309,6 +289,28 @@
 	}
 }
 
+@media only screen and (max-width: 800px) {
+	// .product_title_top {
+	// 	display: flex !important;
+	// 	justify-content: center;
+	// }
+	// .product_title_side {
+	// 	display: none !important;
+	// }
+	.details-info {
+		flex: unset;
+	}
+	.details-image {
+		margin: 0;
+		margin-bottom: 20px;
+	}
+	// .mobile_product_view {
+	// 	display: block;
+	// }
+	// .desktop_product_view {
+	// 	display: none !important;
+	// }
+}
 @media only screen and (max-width: 528px) {
 	.search_and_sort {
 		justify-content: flex-start !important;
