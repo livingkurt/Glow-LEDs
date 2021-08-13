@@ -469,7 +469,8 @@ const PlaceOrderPage = (props) => {
 		e.preventDefault();
 		// console.log({ promo_code: promo_code_ref.current.value });
 		console.log({ userInfo });
-		const data = { promo_code: promo_code, promos, userInfo, items_price };
+		console.log({ cartItems });
+		const data = { promo_code: promo_code, promos, userInfo, items_price, cartItems };
 		// console.log({ data });
 		const request = validate_promo_code(data);
 
@@ -480,40 +481,52 @@ const PlaceOrderPage = (props) => {
 		if (request.isValid) {
 			const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
 			console.log({ isValid: promo, promo_code: promo_code });
-			const category_cart_items = cartItems
-				.filter((item) => promo.excluded_categories.includes(item.category))
-				.reduce((a, item) => a + item.price, 0);
-			const product_cart_items = cartItems
-				.filter((item) => promo.excluded_products.includes(item.pathname))
-				.reduce((a, item) => a + item.price, 0);
-			const total_excluded_price = category_cart_items + product_cart_items;
-			console.log({ total_excluded_price });
+			let promo_excluded = 0;
+			let promo_included = 0;
+			if (promo.exclude) {
+				const category_cart_items = cartItems
+					.filter((item) => promo.excluded_categories.includes(item.category))
+					.reduce((a, item) => a + item.price, 0);
+				const product_cart_items = cartItems
+					.filter((item) => promo.excluded_products.includes(item.pathname))
+					.reduce((a, item) => a + item.price, 0);
+				promo_excluded = category_cart_items + product_cart_items;
+			}
+			// if (promo.include) {
+			// 	const category_cart_items = cartItems.filter((item) =>
+			// 		promo.included_categories.includes(item.category)
+			// 	);
+			// 	console.log({ category_cart_items });
+			// 	const product_cart_items = cartItems.filter((item) => promo.included_products.includes(item.pathname));
+			// 	console.log({ product_cart_items });
+			// 	// promo_included = category_cart_items + product_cart_items;
+			// }
+
+			console.log({ promo_excluded });
+			console.log({ promo_included });
 			if (show_message) {
 				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
 				if (promo.percentage_off) {
-					if (items_price === total_excluded_price) {
+					if (items_price === promo_excluded) {
 						set_promo_code_validations('All Items Excluded from Promo');
 						return;
 					}
-					setItemsPrice(items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100));
+					setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
 					setTaxPrice(
-						tax_rate * (items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100))
+						tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100))
 					);
 				} else if (promo.amount_off) {
 					setItemsPrice(items_price - promo.amount_off);
 					setTaxPrice(tax_rate * (items_price - promo.amount_off));
+					// setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
+					// setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
 				}
 				if (promo.free_shipping) {
 					setPreviousShippingPrice(shippingPrice);
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
-				// if (promo_code_ref.current.value === 'freeshipping') {
-				// 	setPreviousShippingPrice(shippingPrice);
-				// 	setShippingPrice(0);
-				// 	set_free_shipping_message('Free');
-				// }
 				set_show_message(
 					`${promo.promo_code} ${promo.percentage_off
 						? `${promo.percentage_off}% Off`

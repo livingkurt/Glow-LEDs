@@ -15,9 +15,10 @@ export const validate_promo_code = (data: any) => {
 	// console.log({ promo_codes });
 	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
 
-	console.log({ data });
-	console.log({ promo });
-	console.log({ user: data.userInfo });
+	// console.log({ data });
+	// console.log({ promo });
+	// console.log({ user: data.userInfo });
+	// console.log({ cartItems: data.cartItems });
 
 	// Convert empty fields to an empty string so we can use validator functions
 	data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : '';
@@ -44,7 +45,31 @@ export const validate_promo_code = (data: any) => {
 	}
 	// errors.promo_code = 'Promo Code Not Active Start';
 	if (promo && !promo.active) {
-		errors.promo_code = 'Promo Code Not Active 5';
+		errors.promo_code = 'Promo Code Not Active';
+	}
+	if (promo && promo.include) {
+		console.log({ cartItems: data.cartItems });
+		// console.log({ included_categories: promo.included_categories });
+		// console.log({ included_products: promo.included_products });
+		// const category_cart_items = data.cartItems.filter((item: any) =>
+		// 	promo.included_categories.include(item.category)
+		// );
+		// console.log({ category_cart_items });
+		let included_item_exists = false;
+		data.cartItems.forEach((item: any) => {
+			console.log({ item_pathname: item.pathname });
+			return promo.included_products.forEach((included_product: any) => {
+				console.log({ included_product_pathname: included_product.pathname });
+				if (included_product.pathname === item.pathname) {
+					included_item_exists = true;
+				}
+			});
+		});
+		// console.log({ product_cart_items });
+		console.log({ included_item_exists });
+		if (!included_item_exists) {
+			errors.promo_code = 'Promo Code Not Active Not Included';
+		}
 	}
 
 	if (promo && promo.single_use && promo.used_once) {

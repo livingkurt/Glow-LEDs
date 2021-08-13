@@ -403,6 +403,13 @@ const Header = (props) => {
 														Diffuser Caps
 													</button>
 												</Link>
+												<Link to="/collections/all/products/diffuser_caps_adapters_starter_kit">
+													<div className="row">
+														<button className="btn nav w-100per ta-l title_font">
+															Diffuser Caps Starter Kit
+														</button>
+													</div>
+												</Link>
 												<div className="nav-btn-container">
 													<Link to="/pages/menu/collections" className="w-100per">
 														<button className="nav-btn-link title_font w-100per ">

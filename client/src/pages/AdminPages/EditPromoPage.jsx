@@ -21,8 +21,10 @@ const EditPromoPage = (props) => {
 	const [ used_once, set_used_once ] = useState('');
 	const [ excluded_categories, set_excluded_categories ] = useState([]);
 	const [ excluded_products, set_excluded_products ] = useState([]);
-	const [ excluded_category, set_excluded_category ] = useState('');
-	const [ excluded_product, set_excluded_product ] = useState('');
+	const [ included_categories, set_included_categories ] = useState([]);
+	const [ included_products, set_included_products ] = useState([]);
+	const [ exclude, set_exclude ] = useState(false);
+	const [ include, set_include ] = useState(false);
 	const [ percentage_off, set_percentage_off ] = useState(0);
 	const [ amount_off, set_amount_off ] = useState(0);
 	const [ minimum_total, set_minimum_total ] = useState(0);
@@ -95,6 +97,7 @@ const EditPromoPage = (props) => {
 	}, 500);
 
 	const set_state = () => {
+		console.log({ promo });
 		set_id(promo._id);
 		set_affiliate(promo.affiliate && promo.affiliate._id);
 		set_user(promo.user && promo.user._id);
@@ -105,6 +108,10 @@ const EditPromoPage = (props) => {
 		set_used_once(promo.used_once);
 		set_excluded_categories(promo.excluded_categories);
 		set_excluded_products(promo.excluded_products);
+		set_included_categories(promo.included_categories);
+		set_included_products(promo.included_products);
+		set_include(promo.include);
+		set_exclude(promo.exclude);
 		set_percentage_off(promo.percentage_off);
 		set_amount_off(promo.amount_off);
 		set_minimum_total(promo.minimum_total);
@@ -129,6 +136,10 @@ const EditPromoPage = (props) => {
 		set_used_once('');
 		set_excluded_categories('');
 		set_excluded_products('');
+		set_included_categories('');
+		set_included_products('');
+		set_include('');
+		set_exclude('');
 		set_percentage_off('');
 		set_amount_off('');
 		set_minimum_total('');
@@ -151,8 +162,12 @@ const EditPromoPage = (props) => {
 				affiliate_only,
 				single_use,
 				used_once,
+				exclude,
 				excluded_categories,
 				excluded_products,
+				include,
+				included_categories,
+				included_products,
 				percentage_off,
 				amount_off,
 				minimum_total,
@@ -166,80 +181,6 @@ const EditPromoPage = (props) => {
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/promos');
-	};
-
-	const exclude_category = (e) => {
-		e.preventDefault();
-		console.log(excluded_category);
-		if (excluded_category.indexOf(' ') >= 0) {
-			console.log('indexOf');
-			excluded_category.split(' ').forEach((excluded_category) => {
-				set_excluded_categories((excluded_categories) => [ ...excluded_categories, excluded_category ]);
-			});
-		} else if (excluded_categories) {
-			console.log('excluded_categories.length > 0');
-			set_excluded_categories((excluded_categories) => [ ...excluded_categories, excluded_category ]);
-		} else {
-			console.log('excluded_categories.length === 0');
-			set_excluded_categories([ excluded_category ]);
-		}
-
-		set_excluded_category('');
-	};
-	const exclude_product = (e) => {
-		e.preventDefault();
-		console.log(excluded_product);
-		if (excluded_product.indexOf(' ') >= 0) {
-			console.log('indexOf');
-			excluded_product.split(' ').forEach((excluded_product) => {
-				set_excluded_products((excluded_products) => [ ...excluded_products, excluded_product ]);
-			});
-		} else if (excluded_products) {
-			console.log('excluded_products.length > 0');
-			set_excluded_products((excluded_products) => [ ...excluded_products, excluded_product ]);
-		} else {
-			console.log('excluded_products.length === 0');
-			set_excluded_products([ excluded_product ]);
-		}
-
-		set_excluded_product('');
-	};
-
-	const remove_item = (item_index, e, type) => {
-		e.preventDefault();
-		if (type === 'categories') {
-			set_excluded_categories((excluded_categories) =>
-				excluded_categories.filter((category, index) => {
-					return item_index !== index;
-				})
-			);
-		} else {
-			set_excluded_products((excluded_products) =>
-				excluded_products.filter((product, index) => {
-					return item_index !== index;
-				})
-			);
-		}
-	};
-
-	const excluded_list = (items, type) => {
-		return (
-			<div>
-				{items &&
-					items.map((item, index) => {
-						return (
-							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
-								<div>
-									<button className="btn icon" onClick={(e) => remove_item(index, e, type)}>
-										<i className="fas fa-times mr-5px" />
-									</button>
-									{item}
-								</div>
-							</div>
-						);
-					})}
-			</div>
-		);
 	};
 
 	return (
@@ -441,111 +382,90 @@ const EditPromoPage = (props) => {
 													</div>
 												</li>
 											)}
-
-											<li>
-												{/* <label htmlFor="excluded_category">Excluded Category</label>
-												<input
-													type="text"
-													name="excluded_category"
-													value={excluded_category}
-													id="excluded_category"
-													onChange={(e) => set_excluded_category(e.target.value)}
-												/> */}
-												{/* <li>
-													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
-														className="select-label mb-15px"
-													>
-														Exclude Category
-													</label>
-													<div className="ai-c h-25px mb-15px">
-														<div className="custom-select ">
-															<select
-																className="qty_select_dropdown"
-																onChange={(e) => set_excluded_category(e.target.value)}
-															>
-																<option key={1} defaultValue={''}>
-																	---Choose Category---
-																</option>
-																{categories.map((category, index) => (
-																	<option key={index} value={category}>
-																		{category}
-																	</option>
-																))}
-															</select>
-															<span className="custom-arrow" />
-														</div>
-													</div>
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="exclude">Exclude Items</label>
+													<input
+														type="checkbox"
+														name="exclude"
+														defaultChecked={exclude}
+														checked={exclude}
+														id="exclude"
+														onChange={(e) => {
+															set_exclude(e.target.checked);
+														}}
+													/>
 												</li>
-												<button className="btn primary" onClick={(e) => exclude_category(e)}>
-													Exclude Category
-												</button>
-												{excluded_categories &&
-												excluded_categories.length > 0 && (
-													<label className="mt-15px">Excluded Categories</label>
-												)}
-
-												{excluded_list(excluded_categories, 'categories')}
-                        {console.log({
-													excluded_categories
-												})} */}
-												<DropdownDisplay
-													item_list={
-														categories &&
-														categories.map((category) => ({
-															name: category
-														}))
-													}
-													list_items={excluded_categories}
-													set_items={set_excluded_categories}
-													list_name={'Excluded Categorys'}
-												/>
-											</li>
-											<li>
-												{/* <li>
-													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
-														className="select-label mb-15px"
-													>
-														Exclude Product
-													</label>
-													<div className="ai-c h-25px mb-15px">
-														<div className="custom-select">
-															<select
-																// defaultValue={excluded_products}
-																className="qty_select_dropdown"
-																onChange={(e) => set_excluded_product(e.target.value)}
-															>
-																<option key={1} defaultValue={''}>
-																	---Choose Product---
-																</option>
-																{products.map((product, index) => (
-																	<option key={index} value={product.pathname}>
-																		{product.name}
-																	</option>
-																))}
-															</select>
-															<span className="custom-arrow" />
-														</div>
-													</div>
+											)}
+											{exclude && (
+												<li>
+													<DropdownDisplay
+														item_list={
+															categories &&
+															categories.map((category) => ({
+																name: category
+															}))
+														}
+														list_items={excluded_categories}
+														set_items={set_excluded_categories}
+														list_name={'Excluded Categorys'}
+													/>
 												</li>
-												<button className="btn primary" onClick={(e) => exclude_product(e)}>
-													Exclude Product
-												</button>
-												{excluded_categories &&
-												excluded_products.length > 0 && (
-													<label className="mt-15px">Excluded Products</label>
-												)}
-												{excluded_list(excluded_products, 'products')} */}
-												<DropdownDisplay
-													item_list={products}
-													list_items={excluded_products}
-													set_items={set_excluded_products}
-													list_name={'Excluded Products'}
-												/>
-											</li>
+											)}
+											{exclude && (
+												<li>
+													<DropdownDisplay
+														item_list={products}
+														list_items={excluded_products}
+														set_items={set_excluded_products}
+														list_name={'Excluded Products'}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="include">Include Items</label>
+													<input
+														type="checkbox"
+														name="include"
+														defaultChecked={include}
+														checked={include}
+														id="include"
+														onChange={(e) => {
+															set_include(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{include && (
+												<li>
+													<DropdownDisplay
+														item_list={
+															categories &&
+															categories.map((category) => ({
+																name: category
+															}))
+														}
+														list_items={included_categories}
+														set_items={set_included_categories}
+														list_name={'Included Categorys'}
+													/>
+												</li>
+											)}
+											{include && (
+												<li>
+													<DropdownDisplay
+														item_list={products}
+														list_items={included_products}
+														set_items={set_included_products}
+														list_name={'Included Products'}
+													/>
+												</li>
+											)}
 
 											<li>
 												<label htmlFor="percentage_off">Percentage Off</label>

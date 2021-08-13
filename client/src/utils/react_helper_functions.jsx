@@ -72,10 +72,10 @@ export const mobile_check = () => {
 export const browser_check = () => {
 	var userAgent = navigator.userAgent.toLowerCase();
 	if (userAgent.includes('chrome')) {
-		console.log('chrome');
+		// console.log('chrome');
 		return 'chrome';
 	} else if (userAgent.includes('safari')) {
-		console.log('safari');
+		// console.log('safari');
 		return 'safari';
 	}
 };

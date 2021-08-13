@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../../actions/productActions';
-import { Rating, Reviews, Slideshow, RelatedProducts, ReadMore, Swipe } from '../../components/SpecialtyComponents';
+import {
+	Rating,
+	Reviews,
+	Slideshow,
+	RelatedProducts,
+	ReadMore,
+	Swipe,
+	StyledDropdown
+} from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import Cookie from 'js-cookie';
 import { Helmet } from 'react-helmet';
@@ -682,6 +690,7 @@ const ProductPage = (props) => {
 									</div>
 
 									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
+
 									{product.secondary_product_group &&
 									product.secondary_products &&
 									product.secondary_products.length > 0 && (
@@ -749,6 +758,21 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
+									{/* {product.color_product_group &&
+									product.color_products &&
+									product.color_products.length > 0 && (
+										<StyledDropdown
+											onChange={update_color}
+											items={product.color_products}
+											label={
+												product.color_product_group_name ? (
+													product.color_product_group_name
+												) : (
+													'Color'
+												)
+											}
+										/>
+									)} */}
 									{size !== '1 Skin' &&
 									product.secondary_color_product_group &&
 									product.secondary_color_products &&
