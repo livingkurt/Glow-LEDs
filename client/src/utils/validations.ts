@@ -40,9 +40,22 @@ export const validate_promo_code = (data: any) => {
 			errors.promo_code = 'Promo Code Not Active';
 		}
 	}
-	if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
-		errors.promo_code = 'Minimum Order Total Not Met';
+	let included_deductions = 0;
+	if (promo && promo.minimum_total) {
+		if (promo.include) {
+			included_deductions = promo.included_products.reduce((a: any, item: any) => a + item.price, 0);
+			if (promo.minimum_total > data.items_price - included_deductions) {
+				errors.promo_code = 'Minimum Order Total Not Met';
+			}
+		} else {
+			if (promo.minimum_total > data.items_price) {
+				errors.promo_code = 'Minimum Order Total Not Met';
+			}
+		}
 	}
+	// if (promo && promo.minimum_total && promo.minimum_total > data.items_price) {
+	// 	errors.promo_code = 'Minimum Order Total Not Met';
+	// }
 	// errors.promo_code = 'Promo Code Not Active Start';
 	if (promo && !promo.active) {
 		errors.promo_code = 'Promo Code Not Active';
