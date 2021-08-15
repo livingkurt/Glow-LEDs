@@ -21,9 +21,9 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
-			// const item_exists: any = state.cartItems.find((x: any) => JSON.stringify(x) === JSON.stringify(item));
+			const item_exists: any = state.cartItems.find((x: any) => JSON.stringify(x) === JSON.stringify(item));
 			// const item_exists: any = state.cartItems.find((x: any) => x === item);
-			const item_exists: any = state.cartItems.find((x: any) => x.product === item.product);
+			// const item_exists: any = state.cartItems.find((x: any) => x.product === item.product);
 			if (item_exists) {
 				return {
 					...state,
