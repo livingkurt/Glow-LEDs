@@ -124,6 +124,17 @@ const cartItems = Cookie.getJSON('cartItems') || [];
 // 	},
 // 	userLogin: { userInfo: {} }
 // };
+// const initialState : any = {
+// 	userLogin: {
+// 		userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
+// 	},
+// 	cart: {
+// 		cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+// 		shipping: localStorage.getItem('shippingAddress') ? JSON.parse(localStorage.getItem('shippingAddress')) : {},
+// 		payment: 'PayPal'
+// 	}
+// };
+
 const initialState: object = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo: {} } };
 const reducer = combineReducers({
 	productList: productListReducer,

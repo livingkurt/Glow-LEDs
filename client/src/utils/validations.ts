@@ -15,7 +15,6 @@ export const validate_promo_code = (data: any) => {
 	// console.log({ promo_codes });
 	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
 
-	// console.log({ data });
 	// console.log({ promo });
 	// console.log({ user: data.userInfo });
 	// console.log({ cartItems: data.cartItems });

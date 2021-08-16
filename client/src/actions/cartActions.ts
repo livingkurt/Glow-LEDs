@@ -85,6 +85,7 @@ export const addToCart = (cart_item_1: any) => async (
 		});
 
 		Cookie.set('cartItems', JSON.stringify(cartItems));
+		// localStorage.setItem('cartItems', JSON.stringify(cartItems));
 		console.log({ cartItems });
 	} catch (error) {
 		console.log({ error });

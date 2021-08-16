@@ -21,57 +21,23 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
-			const item_exists: any = state.cartItems.find((x: any) => JSON.stringify(x) === JSON.stringify(item));
-			// const item_exists: any = state.cartItems.find((x: any) => x === item);
-			// const item_exists: any = state.cartItems.find((x: any) => x.product === item.product);
+			const item_exists: any = state.cartItems.find(
+				(x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null })
+			);
 			if (item_exists) {
 				return {
 					...state,
 					cartItems: state.cartItems.map(
-						(x: any) => (JSON.stringify(x) === JSON.stringify(item_exists) ? item : x)
+						(x: any) =>
+							JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null })
+								? item
+								: x
 					)
 				};
 			} else {
 				return { ...state, cartItems: [ ...state.cartItems, item ] };
 			}
-		// case CART_ADD_ITEM:
-		// 	const item = action.payload;
-		// 	// const item_exists: any = state.cartItems.find((x: any) => x.pathname === item.pathname);
-		// 	const item_exists: any = state.cartItems.find((x: any) => JSON.stringify(x) === JSON.stringify(item));
-		// 	const exact_item_exists: any = state.cartItems.find(
-		// 		(x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null })
-		// 	);
-		// 	console.log({ exact_item_exists });
-		// 	// const color_item_exists: any = state.cartItems.find((x: any) => x.color_product === item.color_product);
-		// 	// const secondary_color_item_exists: any = state.cartItems.find(
-		// 	// 	(x: any) => x.secondary_color_product === item.secondary_color_product
-		// 	// );
-		// 	// const option_item_exists: any = state.cartItems.find((x: any) => x.option_product === item.option_product);
-		// 	// const secondary_item_exists: any = state.cartItems.find(
-		// 	// 	(x: any) => x.secondary_product === item.secondary_product
-		// 	// );
-		// 	// if (color_item_exists) {
-		// 	// 	console.log({ color_item_exists });
-		// 	// }
-		// 	// if (secondary_color_item_exists) {
-		// 	// 	console.log({ secondary_color_item_exists });
-		// 	// }
-		// 	// if (option_item_exists) {
-		// 	// 	console.log({ option_item_exists });
-		// 	// }
-		// 	// if (secondary_item_exists) {
-		// 	// 	console.log({ secondary_item_exists });
-		// 	// }
 
-		// 	if (exact_item_exists) {
-		// 		return {
-		// 			...state,
-		// 			error: '',
-		// 			cartItems: state.cartItems.map((x: any) => (x.pathname === item_exists.pathname ? item : x))
-		// 		};
-		// 	} else {
-		// 		return { ...state, error: '', cartItems: [ ...state.cartItems, item ] };
-		// 	}
 		case CART_REMOVE_ITEM:
 			// console.log({ cartItems: state.cartItems });
 			// console.log({ payload: action.payload });
