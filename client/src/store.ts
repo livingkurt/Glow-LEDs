@@ -109,7 +109,17 @@ import {
 	surveySaveReducer
 } from './reducers/surveyReducers';
 
-const cartItems = Cookie.getJSON('cartItems') || [];
+// const cartItems = Cookie.getJSON('cartItems') || [];
+let cartItems: any;
+const cart_string: any = localStorage.getItem('cartItems');
+console.log({ cart_string });
+if (cart_string) {
+	cartItems = JSON.parse(cart_string);
+} else {
+	cartItems = [];
+}
+
+console.log({ store: cartItems });
 // const userInfo = Cookie.getJSON('userInfo') || null;
 // console.log({ userInfo });
 

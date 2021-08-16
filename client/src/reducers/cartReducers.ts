@@ -16,6 +16,32 @@ import {
 	CART_DELETE_SUCCESS,
 	CART_DELETE_FAIL
 } from '../constants/cartConstants';
+import Cookie from 'js-cookie';
+function roughSizeOfObject(object: any) {
+	var objectList = [];
+	var stack = object;
+	var bytes = 0;
+
+	while (stack.length) {
+		var value = stack.pop();
+
+		if (typeof value === 'boolean') {
+			bytes += 4;
+		} else if (typeof value === 'string') {
+			bytes += value.length * 2;
+		} else if (typeof value === 'number') {
+			bytes += 8;
+		} else if (typeof value === 'object' && objectList.indexOf(value) === -1) {
+			objectList.push(value);
+
+			for (var i in value) {
+				stack.push(value[i]);
+			}
+		}
+	}
+	console.log({ bytes });
+	return bytes;
+}
 
 export const cartReducer = (state = { cartItems: [] }, action: any) => {
 	switch (action.type) {
@@ -24,7 +50,30 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 			const item_exists: any = state.cartItems.find(
 				(x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null })
 			);
+
 			if (item_exists) {
+				console.log('Added Existing Item');
+				localStorage.setItem(
+					'cartItems',
+					JSON.stringify([
+						...state.cartItems,
+						state.cartItems.map(
+							(x: any) =>
+								JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null })
+									? item
+									: x
+						)
+					])
+				);
+				roughSizeOfObject([
+					...state.cartItems,
+					state.cartItems.map(
+						(x: any) =>
+							JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null })
+								? item
+								: x
+					)
+				]);
 				return {
 					...state,
 					cartItems: state.cartItems.map(
@@ -35,6 +84,9 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 					)
 				};
 			} else {
+				console.log('Added Not Existing Item');
+				roughSizeOfObject([ ...state.cartItems, item ]);
+				localStorage.setItem('cartItems', JSON.stringify([ ...state.cartItems, item ]));
 				return { ...state, cartItems: [ ...state.cartItems, item ] };
 			}
 

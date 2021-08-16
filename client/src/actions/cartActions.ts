@@ -84,7 +84,7 @@ export const addToCart = (cart_item_1: any) => async (
 			payload: cartItem
 		});
 
-		Cookie.set('cartItems', JSON.stringify(cartItems));
+		// Cookie.set('cartItems', JSON.stringify(cartItems));
 		// localStorage.setItem('cartItems', JSON.stringify(cartItems));
 		console.log({ cartItems });
 	} catch (error) {

@@ -173,7 +173,7 @@ const Cart = (props) => {
 							</div>
 						</div>
 					</li>
-					{cartItems.length === 0 ? (
+					{cartItems && cartItems.length === 0 ? (
 						<div className="p-1rem ta-c w-100per">
 							<div className="ta-c w-100per">Cart is Empty</div>
 						</div>
@@ -186,50 +186,56 @@ const Cart = (props) => {
 						>
 							{/* <div className={mobile_check() ? 'h-40vh max-h-65vh' : ''} > */}
 							{/* <h4>{no_adapters_warning()}</h4> */}
-							{cartItems.map((item, index) => (
-								<li key={index} className="ph-1rem">
-									{/* <div className="p-1rem"> */}
-									<div className="cart_sidebar-image br-5px ai-c">
-										<Link to={'/collections/all/products/' + item.pathname}>
-											<img
-												src={item.display_image}
-												height="50px"
-												width="50px"
-												alt={item.name}
-												title="Product Image"
-											/>
-										</Link>
-									</div>
-									<div className="cart_sidebar-name">
-										<div className="mb-10px">
+							{cartItems &&
+								cartItems.map((item, index) => (
+									<li key={index} className="ph-1rem">
+										{/* <div className="p-1rem"> */}
+										<div className="cart_sidebar-image br-5px ai-c">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												{determine_product_name(item, true)}
+												<img
+													src={item.display_image}
+													height="50px"
+													width="50px"
+													alt={item.name}
+													title="Product Image"
+												/>
 											</Link>
 										</div>
-										<div>
-											<div className="ai-c h-25px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													Qty: {item.qty}
-												</label>
+										<div className="cart_sidebar-name">
+											<div className="mb-10px">
+												<Link to={'/collections/all/products/' + item.pathname}>
+													{determine_product_name(item, true)}
+												</Link>
+											</div>
+											<div>
+												<div className="ai-c h-25px">
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label mr-1rem"
+													>
+														Qty: {item.qty}
+													</label>
+												</div>
 											</div>
 										</div>
-									</div>
 
-									<div className="">
-										<div className="cart_sidebar-price fs-16px">{cart_sale_price_switch(item)}</div>
-										<div style={{ textAlign: 'right', width: '100%' }}>
-											<button className="btn icon" onClick={() => removeFromCartHandler(item)}>
-												<i className="fas fa-trash-alt" />
-											</button>
+										<div className="">
+											<div className="cart_sidebar-price fs-16px">
+												{cart_sale_price_switch(item)}
+											</div>
+											<div style={{ textAlign: 'right', width: '100%' }}>
+												<button
+													className="btn icon"
+													onClick={() => removeFromCartHandler(item)}
+												>
+													<i className="fas fa-trash-alt" />
+												</button>
+											</div>
+											{/* </div> */}
 										</div>
-										{/* </div> */}
-									</div>
-								</li>
-							))}
+									</li>
+								))}
 							{mobile_check() && <li className="h-175px" />}
 						</div>
 					)}
@@ -242,11 +248,11 @@ const Cart = (props) => {
 				style={{ bottom: cartItems.length === 0 ? '-10px' : '0px' }}
 			>
 				<h3 className="subtotal_h3">
-					Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-					{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-						cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
+					Subtotal ( {cartItems && cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
+					{cartItems && cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
+						cartItems && cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
 					) : (
-						cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
+						cartItems && cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
 					)}
 				</h3>
 				<Link to="/checkout/cart" className="w-100per">
