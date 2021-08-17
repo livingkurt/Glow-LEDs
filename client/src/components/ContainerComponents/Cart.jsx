@@ -150,7 +150,7 @@ const Cart = (props) => {
 		return (
 			<div className="p-1rem ta-c w-100per">
 				<div>
-					<h3 className="">Top Categories</h3>
+					<h2 className="">Top Categories</h2>
 				</div>
 				<div className="jc-c">
 					<div className="jc-c wrap">
