@@ -36,3 +36,4 @@ export { default as Survey } from './Survey';
 export { default as CartItem } from './CartItem';
 export { default as Swipe } from './Swipe';
 export { default as StyledDropdown } from './StyledDropdown';
+export { default as Particles } from './Particles';

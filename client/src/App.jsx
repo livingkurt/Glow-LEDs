@@ -118,6 +118,9 @@ import setAuthToken from './utils/setAuthToken';
 import store from './store';
 import EditChipPage from './pages/AdminPages/EditChipPage';
 import useWindowDimensions from './components/Hooks/windowDimensions';
+// import { Particles } from './components/SpecialtyComponents';
+import Particles from 'react-particles-js';
+import particlesjs_config from './particlesjs_config.json';
 
 const App = (props) => {
 	const theme_colors = {
@@ -257,9 +260,11 @@ const App = (props) => {
 					/>
 					<meta name="twitter:creator" content="@glow_leds" />
 				</Helmet>
+				<Particles params={particlesjs_config} style={{ zIndex: -5, position: 'fixed' }} />
 				<Header visible={visible} />
 				<Sidebar visible={visible} height={height} width={width} />
 				<Cart visible={visible} height={height} width={width} />
+
 				<Content>
 					{process.env.NODE_ENV === 'production' && (
 						<MessengerCustomerChat
