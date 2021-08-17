@@ -518,6 +518,9 @@ function ProductPage(props) {
 				<button className="btn primary" onClick={add_item_group_id}>
 					Add Item Group ID
 				</button>
+				{/* <button className="btn primary" onClick={generate_sitemap}>
+					Add Item Group ID
+				</button> */}
 			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>

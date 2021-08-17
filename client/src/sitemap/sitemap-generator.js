@@ -10,9 +10,9 @@ const API = 'http://localhost:5000';
 async function generateSitemap() {
 	let products_res = await fetch(API + '/api/products/');
 	let products = await products_res.json();
-	let categories_res = await fetch(API + '/api/products/categories');
+	let categories_res = await fetch(API + '/api/products/get_all_categories');
 	let categories = await categories_res.json();
-	let subcategories_res = await fetch(API + '/api/products/subcategories');
+	let subcategories_res = await fetch(API + '/api/products/get_all_subcategories');
 	let subcategories = await subcategories_res.json();
 
 	let productMap = products.filter((product) => product.hidden === false).map((product) => {
@@ -35,7 +35,7 @@ async function generateSitemap() {
 		{ reason: 'product_suggestions' },
 		{ reason: 'submit_content_to_be_featured' }
 	];
-	const menu_types = [ { pathname: 'gloving' }, { pathname: 'community' }, { pathname: 'support' } ];
+	const menu_types = [ { pathname: 'gloving' }, { pathname: 'featured' }, { pathname: 'support' } ];
 
 	console.log({ productMap });
 	console.log({ categoryMap });
@@ -43,11 +43,13 @@ async function generateSitemap() {
 
 	const paramsConfig = {
 		'/collections/all/products/category/accessories/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/glowskins/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/exo_diffusers/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/glow_casings/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/diffuser_caps/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/diffusers/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/glow_strings/subcategory/:subcategory': subcategoryMap,
-		// '/collections/all/products/category/infinity_mirrors/subcategory/:subcategory': subcategoryMap,
-		'/collections/all/products/category/mega_diffuser_caps/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/options/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/:category': categoryMap,
 		'/collections/all/products/:pathname': productMap,
 		'/pages/contact/:reason': contact_reason,
