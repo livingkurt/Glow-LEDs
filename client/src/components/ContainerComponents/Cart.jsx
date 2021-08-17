@@ -191,6 +191,54 @@ const Cart = (props) => {
 			</div>
 		);
 	};
+	const recently_viewed_grid = () => {
+		const recently_viewed_products = JSON.parse(localStorage.getItem('recently_viewed'))
+			? JSON.parse(localStorage.getItem('recently_viewed')).slice(0, 2)
+			: [];
+		// const new_array = recently_viewed_products.filter((val) => !cartItems.includes(val));
+		if (recently_viewed_products.length > 0) {
+			return (
+				<div className="p-1rem ta-c w-100per" style={{ border: '0px !important' }}>
+					<div>
+						<h2 className="">Recenlty Viewed Products</h2>
+					</div>
+					<div className="jc-c">
+						<div className="jc-c wrap">
+							{recently_viewed_products.map((item, index) => {
+								return (
+									<Link
+										to={'/collections/all/products/' + item.pathname}
+										className="w-100per mb-1rem"
+									>
+										<li key={index} className="ph-1rem">
+											<div className=" br-5px ai-c">
+												<img
+													src={item.images && item.images[0]}
+													height="50px"
+													width="50px"
+													alt={item.name}
+													title="Product Image"
+												/>
+											</div>
+											<div className=" ta-l w-100per">
+												<div className="mb-10px">{item.name}</div>
+											</div>
+
+											{/* <div className="">
+											<div className="cart_sidebar-price fs-16px">
+												{cart_sale_price_switch(item)}
+											</div>
+										</div> */}
+										</li>
+									</Link>
+								);
+							})}
+						</div>
+					</div>
+				</div>
+			);
+		}
+	};
 
 	return (
 		<aside
@@ -200,7 +248,7 @@ const Cart = (props) => {
 				top: '-10px',
 				zIndex: 4,
 				borderRadius: '0px 0px 20px 20px',
-				height: mobile_check() ? '100%' : cartItems.length === 0 ? '800px' : 'unset'
+				height: mobile_check() ? '100%' : cartItems.length === 0 ? '1000px' : 'unset'
 			}}
 		>
 			<Loading loading={loading_products} />
@@ -248,6 +296,7 @@ const Cart = (props) => {
 					{cartItems && cartItems.length === 0 ? (
 						<div className="p-1rem ta-c w-100per">
 							<div className="ta-c w-100per">Cart is Empty</div>
+							{recently_viewed_grid()}
 							{top_categories_grid()}
 						</div>
 					) : (
@@ -262,7 +311,6 @@ const Cart = (props) => {
 							{cartItems &&
 								cartItems.map((item, index) => (
 									<li key={index} className="ph-1rem">
-										{/* <div className="p-1rem"> */}
 										<div className="cart_sidebar-image br-5px ai-c">
 											<Link to={'/collections/all/products/' + item.pathname}>
 												<img
@@ -305,11 +353,10 @@ const Cart = (props) => {
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>
-											{/* </div> */}
 										</div>
 									</li>
 								))}
-							{/* {top_categories_grid()} */}
+							{recently_viewed_grid()}
 							{mobile_check() && <li className="h-175px" />}
 						</div>
 					)}

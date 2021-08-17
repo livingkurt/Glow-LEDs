@@ -215,6 +215,15 @@ const ProductPage = (props) => {
 		},
 		[ error ]
 	);
+	useEffect(() => {
+		const recently_viewed = localStorage.getItem('recently_viewed');
+		const products = JSON.parse(recently_viewed);
+		if (recently_viewed) {
+			localStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
+		} else {
+			localStorage.setItem('recently_viewed', JSON.stringify([ product ]));
+		}
+	}, []);
 
 	const handleAddToCart = () => {
 		// console.log({ product_option });
