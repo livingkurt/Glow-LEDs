@@ -218,10 +218,15 @@ const ProductPage = (props) => {
 	useEffect(() => {
 		const recently_viewed = localStorage.getItem('recently_viewed');
 		const products = JSON.parse(recently_viewed);
+		console.log({ product });
 		if (recently_viewed) {
-			localStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
+			if (product && product.hasOwnProperty('name')) {
+				localStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
+			}
 		} else {
-			localStorage.setItem('recently_viewed', JSON.stringify([ product ]));
+			if (product && product.hasOwnProperty('name')) {
+				localStorage.setItem('recently_viewed', JSON.stringify([ product ]));
+			}
 		}
 	}, []);
 

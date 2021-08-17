@@ -134,13 +134,13 @@ const Cart = (props) => {
 
 	const determine_picture_size = () => {
 		if (width > 550) {
-			return '150px';
+			return '140px';
 		} else if (width < 550 && width > 375) {
 			return '130px';
 		} else if (width < 375 && width > 350) {
-			return '120px';
+			return '115px';
 		} else if (width < 350 && width > 325) {
-			return '110px';
+			return '100px';
 		} else if (width < 325) {
 			return '100px';
 		}
@@ -191,26 +191,30 @@ const Cart = (props) => {
 			</div>
 		);
 	};
+	const recently_viewed_products = JSON.parse(localStorage.getItem('recently_viewed'))
+		? JSON.parse(localStorage.getItem('recently_viewed')).slice(0, 2)
+		: [];
+
 	const recently_viewed_grid = () => {
-		const recently_viewed_products = JSON.parse(localStorage.getItem('recently_viewed'))
-			? JSON.parse(localStorage.getItem('recently_viewed')).slice(0, 2)
-			: [];
-		// const new_array = recently_viewed_products.filter((val) => !cartItems.includes(val));
-		if (recently_viewed_products.length > 0) {
+		if (
+			recently_viewed_products &&
+			Array.isArray(recently_viewed_products) &&
+			recently_viewed_products.length !== 0
+		) {
 			return (
 				<div className="p-1rem ta-c w-100per" style={{ border: '0px !important' }}>
 					<div>
-						<h2 className="">Recenlty Viewed Products</h2>
+						<h2 className="">Recently Viewed Products</h2>
 					</div>
 					<div className="jc-c">
-						<div className="jc-c wrap">
+						<div className="jc-c wrap w-100per">
 							{recently_viewed_products.map((item, index) => {
 								return (
 									<Link
 										to={'/collections/all/products/' + item.pathname}
 										className="w-100per mb-1rem"
 									>
-										<li key={index} className="ph-1rem">
+										<li key={index} className="ph-1rem w-100per">
 											<div className=" br-5px ai-c">
 												<img
 													src={item.images && item.images[0]}
