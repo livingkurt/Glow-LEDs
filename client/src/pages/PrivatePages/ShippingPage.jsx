@@ -5,10 +5,13 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import { API_Shipping } from '../../utils';
 
 const ShippingPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 	const { shipping } = cart;
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
@@ -21,6 +24,7 @@ const ShippingPage = (props) => {
 	const [ country, setCountry ] = useState('United States');
 	const [ international, setInternational ] = useState(false);
 	const [ loading, set_loading ] = useState(true);
+	const [ all_shipping, set_all_shipping ] = useState([]);
 
 	useEffect(
 		() => {
@@ -42,6 +46,20 @@ const ShippingPage = (props) => {
 		},
 		[ shipping ]
 	);
+
+	useEffect(() => {
+		if (userInfo.isAdmin) {
+			get_all_shipping();
+		}
+
+		return () => {};
+	}, []);
+
+	const get_all_shipping = async () => {
+		const { data } = await API_Shipping.get_all_shipping();
+		set_all_shipping(data);
+		console.log({ data });
+	};
 
 	const [ email_validations, set_email_validations ] = useState('');
 	const [ first_name_validations, set_first_name_validations ] = useState('');
@@ -106,6 +124,21 @@ const ShippingPage = (props) => {
 		set_loading(false);
 	}, 500);
 
+	const update_shipping = (shipping) => {
+		shipping = JSON.parse(shipping);
+		console.log({ shipping });
+		set_email(shipping.email);
+		set_first_name(shipping.first_name);
+		set_last_name(shipping.last_name);
+		set_address_1(shipping.address_1);
+		set_address_2(shipping.address_2);
+		setCity(shipping.city);
+		setState(shipping.state);
+		setPostalCode(shipping.postalCode);
+		setCountry(shipping.country);
+		setInternational(shipping.international);
+	};
+
 	return (
 		<div>
 			<Helmet>
@@ -123,6 +156,30 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
+						{userInfo &&
+						userInfo.isAdmin && (
+							<li>
+								<div className="ai-c h-25px mv-10px mb-30px jc-c">
+									<div className="custom-select w-100per">
+										<select
+											className="qty_select_dropdown w-100per"
+											onChange={(e) => update_shipping(e.target.value)}
+										>
+											<option key={1} defaultValue="">
+												---Choose Shipping for Order---
+											</option>
+											{all_shipping &&
+												all_shipping.map((shipping, index) => (
+													<option key={index} value={JSON.stringify(shipping)}>
+														{shipping.first_name} {shipping.last_name}
+													</option>
+												))}
+										</select>
+										<span className="custom-arrow" />
+									</div>
+								</div>
+							</li>
+						)}
 						<li>
 							<label htmlFor="email">Email</label>
 							<input
