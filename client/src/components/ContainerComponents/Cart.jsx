@@ -200,7 +200,7 @@ const Cart = (props) => {
 				top: '-10px',
 				zIndex: 4,
 				borderRadius: '0px 0px 20px 20px',
-				height: mobile_check() ? '100%' : cartItems.length === 0 ? '400px' : 'unset'
+				height: mobile_check() ? '100%' : cartItems.length === 0 ? '800px' : 'unset'
 			}}
 		>
 			<Loading loading={loading_products} />
@@ -309,7 +309,7 @@ const Cart = (props) => {
 										</div>
 									</li>
 								))}
-							{top_categories_grid()}
+							{/* {top_categories_grid()} */}
 							{mobile_check() && <li className="h-175px" />}
 						</div>
 					)}
