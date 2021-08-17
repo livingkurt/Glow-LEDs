@@ -6,7 +6,7 @@ import { CartItem, GuestCheckoutSteps, Stripe } from '../../components/Specialty
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
-import Cookie from 'js-cookie';
+import localStorage from 'js-cookie';
 
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
@@ -90,7 +90,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	useEffect(
 		() => {
-			const shipping_cookie = Cookie.getJSON('shipping');
+			const shipping_cookie = localStorage.getItem('shipping');
 			if (shipping_cookie) {
 				stableDispatch(saveShipping(shipping_cookie));
 			}

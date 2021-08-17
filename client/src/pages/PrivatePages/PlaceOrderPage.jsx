@@ -4,14 +4,13 @@ import { Link } from 'react-router-dom';
 import { createPayOrder, createOrder, createOrderGuest } from '../../actions/orderActions';
 import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
+import { removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
-import Cookie from 'js-cookie';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
-import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
+import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -98,9 +97,10 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			const shipping_cookie = Cookie.getJSON('shipping');
+			const shipping_cookie = localStorage.getItem('shippingAddress');
+			console.log({ shipping_cookie });
 			if (shipping_cookie) {
-				stableDispatch(saveShipping(shipping_cookie));
+				stableDispatch(saveShipping(JSON.parse(shipping_cookie)));
 			}
 			stableDispatch(savePayment({ paymentMethod }));
 			stable_setItemsPrice(

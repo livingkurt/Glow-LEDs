@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import Cookie from 'js-cookie';
 import {
 	productListReducer,
 	productDetailsReducer,
@@ -109,7 +108,6 @@ import {
 	surveySaveReducer
 } from './reducers/surveyReducers';
 
-// const cartItems = Cookie.getJSON('cartItems') || [];
 let cartItems: any;
 const cart_string: any = localStorage.getItem('cartItems');
 console.log({ cart_string });
@@ -119,9 +117,14 @@ if (cart_string) {
 	cartItems = [];
 }
 
-console.log({ store: cartItems });
-// const userInfo = Cookie.getJSON('userInfo') || null;
-// console.log({ userInfo });
+let shippingAddress: any;
+const shipping_string: any = localStorage.getItem('shippingAddress');
+console.log({ shipping_string });
+if (shipping_string) {
+	shippingAddress = JSON.parse(shipping_string);
+} else {
+	shippingAddress = {};
+}
 
 // const initialState: object = {
 // 	cart: {
@@ -145,7 +148,10 @@ console.log({ store: cartItems });
 // 	}
 // };
 
-const initialState: object = { cart: { cartItems, shipping: {}, payment: {} }, userLogin: { userInfo: {} } };
+const initialState: object = {
+	cart: { cartItems, shipping: shippingAddress, payment: {} },
+	userLogin: { userInfo: {} }
+};
 const reducer = combineReducers({
 	productList: productListReducer,
 	productDetails: productDetailsReducer,

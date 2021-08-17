@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import Cookie from 'js-cookie';
 import {
 	CART_ADD_ITEM,
 	CART_REMOVE_ITEM,
@@ -83,12 +82,8 @@ export const addToCart = (cart_item_1: any) => async (
 			type: CART_ADD_ITEM,
 			payload: cartItem
 		});
-
-		// Cookie.set('cartItems', JSON.stringify(cartItems));
-		// localStorage.setItem('cartItems', JSON.stringify(cartItems));
 		console.log({ cartItems });
 	} catch (error) {
-		console.log({ error });
 		console.log({ error });
 	}
 };
@@ -149,7 +144,7 @@ export const addToCart = (cart_item_1: any) => async (
 // 			type: CART_ADD_ITEM,
 // 			payload: cart.cartItems
 // 		});
-// 		Cookie.set('cartItems', JSON.stringify(cart.cartItems));
+
 // 		console.log({ cartItems: cart.cartItems });
 // 		// const item = action.payload;
 // 		// let cartItems = [];
@@ -190,11 +185,7 @@ export const removeFromCart = (product: string) => (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { cart: { cartItems: object } }
 ) => {
-	console.log({ product });
 	dispatch({ type: CART_REMOVE_ITEM, payload: product });
-
-	const { cart: { cartItems } } = getState();
-	Cookie.set('cartItems', JSON.stringify(cartItems));
 };
 
 export const saveShipping = (data: {
@@ -210,7 +201,6 @@ export const saveShipping = (data: {
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ shipping_actions: data });
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
-	Cookie.set('shipping', JSON.stringify(data));
 };
 
 export const savePayment = (data: { paymentMethod: any }) => (

@@ -32,7 +32,6 @@ import {
 	ORDER_DETAILS_PUBLIC_SUCCESS,
 	ORDER_DETAILS_PUBLIC_FAIL
 } from '../constants/orderConstants';
-import Cookie from 'js-cookie';
 import {
 	USER_REGISTER_REQUEST,
 	USER_REGISTER_SUCCESS,
@@ -64,8 +63,6 @@ export const createPayOrder = (
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
-		console.log({ user_data });
-		console.log({ createPayOrder: order });
 		const { data: { data: newOrder } } = await axios.post('/api/orders/secure', order, {
 			headers: {
 				Authorization: ' Bearer ' + user_data.token
@@ -82,17 +79,10 @@ export const createPayOrder = (
 			}
 		);
 		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-
-		// axios.post('/api/emails/order', { ...newOrder, token });
-		// axios.post('/api/emails/sale', { ...newOrder, token });
-		Cookie.remove('shipping');
-		Cookie.remove('diffuser_cap');
+		localStorage.removeItem('shippingAddress');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
 		console.log({ error });
-		console.log({ error_message: error.response.data.message });
-		console.log({ error: error });
-		console.log({ error_response: error.response });
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
 	}
 };
@@ -151,8 +141,7 @@ export const createPayOrderGuest = (
 			const paid = await axios.put('/api/payments/guest/pay/' + newOrder._id, { paymentMethod });
 			console.log({ paid });
 			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
-			Cookie.remove('shipping');
-			Cookie.remove('diffuser_cap');
+			localStorage.removeItem('shippingAddress');
 			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 		} else {
 			// console.log({ REACT_APP_TEMP_PASS: process.env.REACT_APP_TEMP_PASS });
@@ -181,8 +170,7 @@ export const createPayOrderGuest = (
 					});
 					console.log({ paid });
 					dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
-					Cookie.remove('shipping');
-					Cookie.remove('diffuser_cap');
+					localStorage.removeItem('shippingAddress');
 					dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 				}
 			} catch (error) {
@@ -218,8 +206,7 @@ export const createPayOrderGuest = (
 				const paid = await axios.put('/api/payments/guest/pay/' + newOrder._id, { paymentMethod });
 				console.log({ paid });
 				dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
-				Cookie.remove('shipping');
-				Cookie.remove('diffuser_cap');
+				localStorage.removeItem('shippingAddress');
 				dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 			}
 		}
@@ -251,8 +238,7 @@ export const createOrderGuest = (order: {
 		const { data: { newOrder } } = await axios.post('/api/orders/guest', order);
 		console.log({ newOrder });
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-		Cookie.remove('shipping');
-		Cookie.remove('diffuser_cap');
+		localStorage.removeItem('shippingAddress');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
 		console.log({ error });
@@ -288,8 +274,7 @@ export const createOrder = (order: {
 		});
 
 		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-		Cookie.remove('shipping');
-		Cookie.remove('diffuser_cap');
+		localStorage.removeItem('shippingAddress');
 		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 	} catch (error) {
 		console.log({ error });

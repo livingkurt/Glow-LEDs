@@ -29,73 +29,17 @@ const CartPage = (props) => {
 	const { cart, loading, error } = cartDetails;
 
 	const handleAddToCart = (pathname, qty) => {
-		// console.log({ pathname: props.match.params.pathname });
-		// console.log({ qty });
-		// console.log({ color });
-		// console.log({ diffuser_cap });
-		// if (diffuser_cap) {
-		// 	Cookie.set('diffuser_cap', diffuser_cap);
-		// }
-		// if (color) {
-		// 	Cookie.set('color', color);
-		// }
 		dispatch(addToCart(pathname, qty));
-		// props.history.push('/checkout/cart/' + props.match.params.pathname + '?qty=' + qty);
-		// props.history.push('/checkout/cart');
 	};
-
-	// const diffuser_cap_cookie = Cookie.getJSON('diffuser_cap');
-	// const color_cookie = Cookie.getJSON('color');
-
-	// const [ diffuser_cap, set_diffuser_cap ] = useState({});
-	// const [ color, set_color ] = useState('Black');
 
 	useEffect(
 		() => {
 			dispatch(detailsCart(userInfo.cart));
-			// if (pathname) {
-			// console.log(cart.cartItems.find((item) => item.pathname === pathname));
-			// const same_product = cart.cartItems.find((item) => item.pathname === pathname);
-			// if (same_product) {
-			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
-			// } else {
-			// dispatch(addToCart(pathname, qty));
-			// if (diffuser_cap_cookie) {
-			// 	set_diffuser_cap(diffuser_cap_cookie);
-			// 	console.log({ diffuser_cap_cookie });
-			// }
-			// if (color_cookie) {
-			// 	set_color(color_cookie);
-			// 	console.log({ color_cookie });
-			// }
-			// }
-			// }
 		},
 		[ cart.cartItems ]
 	);
 
-	useEffect(
-		() => {
-			// if (pathname) {
-			// console.log(cart.cartItems.find((item) => item.pathname === pathname));
-			// const same_product = cart.cartItems.find((item) => item.pathname === pathname);
-			// if (same_product) {
-			// 	dispatch(addToCart(same_product.product, qty + same_product.qty));
-			// } else {
-			// dispatch(addToCart(pathname, qty));
-			// if (diffuser_cap_cookie) {
-			// 	set_diffuser_cap(diffuser_cap_cookie);
-			// 	// console.log({ diffuser_cap_cookie });
-			// }
-			// if (color_cookie) {
-			// 	set_color(color_cookie);
-			// 	// console.log({ color_cookie });
-			// }
-			// }
-			// }
-		},
-		[ props.match.params.pathname ]
-	);
+	useEffect(() => {}, [ props.match.params.pathname ]);
 
 	const checkoutHandler = () => {
 		if (cart.cartItems.length === 0) {

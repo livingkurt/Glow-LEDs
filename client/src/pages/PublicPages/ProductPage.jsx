@@ -12,18 +12,10 @@ import {
 	StyledDropdown
 } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
-import Cookie from 'js-cookie';
 import { Helmet } from 'react-helmet';
-import { API_Products } from '../../utils';
 import { addToCart } from '../../actions/cartActions';
-import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-import {
-	determine_product_name,
-	determine_product_name_title,
-	sale_price_product_option_switch,
-	sale_price_product_option_switch_product
-} from '../../utils/react_helper_functions';
+import { sale_price_product_option_switch_product } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';

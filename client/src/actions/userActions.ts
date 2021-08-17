@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Cookie from 'js-cookie';
 import {
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
@@ -67,7 +66,6 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 		axios.post('/api/emails/verified', data);
 		// axios.post('/api/emails/verify', data);
-		// Cookie.set('userInfo', JSON.stringify(data));
 		dispatch({ type: USER_REGISTER_EMPTY, payload: {} });
 		setAuthToken(false);
 		// Set current user to empty object {} which will set isAuthenticated to false
@@ -82,36 +80,6 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 	}
 };
 
-// // Login - get user token
-// export const login = (userData: any) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
-// 	console.log(userData);
-// 	axios
-// 		.post('/api/users/login', userData)
-// 		.then((res) => {
-// 			// Save to localStorage
-
-// 			// Set token to localStorage
-// 			const { token } = res.data;
-// 			console.log(res.data);
-// 			localStorage.setItem('jwtToken', token);
-// 			// Set token to Auth header
-// 			setAuthToken(token);
-// 			// Decode token to get user data
-// 			const decoded = jwt_decode(token);
-// 			console.log({ decoded });
-// 			// Set current user
-// 			dispatch(setCurrentUser(decoded));
-// 		})
-// 		.catch(
-// 			(err) =>
-// 				// dispatch({
-// 				// 	type: GET_ERRORS,
-// 				// 	payload: err.response.data.message
-// 				// })
-// 			// console.log({ login: error });
-// 			// dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message })
-// 		);
-// };
 export const login = (userData: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: USER_LOGIN_REQUEST, payload: userData });
 	try {
@@ -185,42 +153,6 @@ export const logout = () => (dispatch: (arg0: { type: string; payload: any }) =>
 // 		console.log({ login: error.response.data.message });
 // 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
 // 	}
-// };
-
-// export const register = (first_name: string, last_name: string, email: string, password: string) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void
-// ) => {
-// 	dispatch({ type: USER_REGISTER_REQUEST, payload: { first_name, last_name, email, password } });
-// 	try {
-// 		const { data } = await axios.post('/api/users/register', { first_name, last_name, email, password });
-// 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-// 		axios.post('/api/emails/verified', data);
-// 		// axios.post('/api/emails/verify', data);
-// 		// Cookie.set('userInfo', JSON.stringify(data));
-// 	} catch (error) {
-
-// 		dispatch({ type: USER_REGISTER_FAIL, payload: error.response.data.message });
-// 	}
-// };
-// export const login = (email: string, password: string) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void
-// ) => {
-// 	dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } });
-// 	try {
-// 		const { data } = await axios.post('/api/users/login', { email, password });
-// 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
-// 		Cookie.set('userInfo', JSON.stringify(data));
-// 	} catch (error) {
-
-// 		console.log({ login: error });
-// 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
-// 	}
-// };
-
-// export const logout = () => (dispatch: (arg0: { type: string }) => void) => {
-// 	Cookie.remove('userInfo');
-// 	Cookie.remove('userInfo');
-// 	dispatch({ type: USER_LOGOUT });
 // };
 
 export const update = (userdata: any) => async (
@@ -341,7 +273,6 @@ export const updateUser = (userdata: any) => async (
 			}
 		);
 		dispatch({ type: USER_UPDATE_USER_SUCCESS, payload: data });
-		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
 		console.log({ error });
 		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.response.data.message });
@@ -370,7 +301,6 @@ export const password_reset = (user_id: string, password: string, repassword: st
 		const { data } = await axios.put('/api/users/password_reset', { user_id, password, repassword });
 		console.log({ password_reset: data });
 		dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
-		// axios.post("/api/emails/passwordreset", { email });
 		axios.post('/api/emails/password_reset', data);
 	} catch (error) {
 		console.log({ error });
@@ -404,7 +334,6 @@ export const verify = (user_id: string) => async (dispatch: (arg0: { type: strin
 		dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
 		console.log({ verify: data });
 		axios.post('/api/emails/verified', data);
-		Cookie.set('userInfo', JSON.stringify(data));
 	} catch (error) {
 		console.log({ error });
 		dispatch({ type: USER_VERIFY_FAIL, payload: error.response.data.message });
