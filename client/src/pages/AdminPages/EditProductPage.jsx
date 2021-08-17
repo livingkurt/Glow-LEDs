@@ -634,37 +634,7 @@ const EditProductPage = (props) => {
 		} else {
 			history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
 		}
-
-		// if (save_success) {
-		// history.push('/secure/glow/editproduct/' + filtered_products[right_product_index].pathname);
-		// }
 	};
-
-	// const create_product_option = (e) => {
-	//   e.preventDefault()
-
-	// }
-
-	// const add_item_group_id = (e) => {
-	// 	e.preventDefault();
-	// 	const products = [ ...color_products, ...secondary_color_products, ...secondary_products, ...option_products ];
-	// 	console.log({ products });
-	// 	products.forEach(async (product) => {
-	// 		// console.log({ product_id: product._id, item_group_id: id });
-	// 		const { data } = await API_Products.save_item_group_id(product._id, id);
-	// 		console.log({ data });
-	// 	});
-	// };
-
-	// const options = {
-	// 	product,
-	// 	set_color_products,
-	// 	color_products,
-	// 	set_secondary_color_products,
-	// 	secondary_color_products,
-	// 	set_option_products,
-	// 	option_products
-	// };
 
 	return (
 		<div className="main_container p-20px">

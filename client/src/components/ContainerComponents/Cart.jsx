@@ -6,9 +6,18 @@ import { HashLink } from 'react-router-hash-link';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 import { mobile_check } from '../../utils/react_helper_functions';
+import { API_Products } from '../../utils';
+import { MenuItemD } from '../DesktopComponents';
+import { MenuItemM } from '../MobileComponents';
+import { LazyImage, Loading } from '../UtilityComponents';
+import { humanize } from '../../utils/helper_functions';
+import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Cart = (props) => {
 	const history = useHistory();
+	const [ loading_products, set_loading_products ] = useState(false);
+	const [ loading_pictures, set_loading_pictures ] = useState(false);
+	const [ category_items, set_category_items ] = useState(false);
 
 	function useOutsideAlerter(ref) {
 		useEffect(
@@ -78,47 +87,110 @@ const Cart = (props) => {
 			checkoutHandler();
 		}
 	};
-	const no_adapters_warning = () => {
-		const categories = cartItems.map((cartItem) => {
-			return cartItem.category;
-		});
-		// const names = cartItems.map((cartItem) => {
-		// 	return cartItem.name;
-		// });
-		if (
-			!categories.includes('Custom Diffuser Caps Final Payment') ||
-			!categories.includes('Custom Diffuser Caps Deposit')
-		) {
-			if (categories.includes('diffuser_caps')) {
-				// console.log('Caps');
-				if (!categories.includes('diffuser_adapters')) {
-					return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
-				}
-			}
-		}
-	};
-	const navbarStyles = {
-		transition: 'top 0.2s'
-	};
-
-	const determine_top = () => {
-		if (props.width >= 1177) {
-			return '179px';
-		} else if (props.width < 1140 && props.width > 704) {
-			return '130px';
-		} else if (props.width < 704 && props.width > 528) {
-			return '116px';
-		} else if (props.width < 528) {
-			return '110px';
-		} else {
-			return '110px';
-		}
-	};
 
 	useEffect(() => {
-		console.log({ isMobile: mobile_check() });
+		// console.log({ isMobile: mobile_check() });
+		get_category_occurrences();
 		return () => {};
 	}, []);
+
+	const get_category_occurrences = async () => {
+		set_loading_products(true);
+		const { data } = await API_Products.get_category_occurrences();
+		console.log({ data });
+		set_loading_products(false);
+		const top_4_categories = data.slice(0, 5);
+		console.log({ top_4_categories });
+		set_loading_pictures(true);
+		const top_4 = await Promise.all(
+			top_4_categories
+				.filter((category) => category.category !== 'frosted_diffusers')
+				.map(async (category) => await API_Products.get_product_pictures(category.category))
+		);
+		set_loading_pictures(false);
+		console.log({ top_4 });
+		const top_4_products = top_4.map((item) => item.data[item.data.length - 1]);
+
+		console.log({ top_4_products });
+		set_category_items(top_4_products);
+	};
+	const decide_url = (item) => {
+		if (item.category === 'gloving' || item.category === 'decor') {
+			if (item.subcategory) {
+				return `/collections/all/products/category/${item && item.category}/subcategory/${item &&
+					item.subcategory}`;
+			} else {
+				return `/collections/all/products/category/${item.category}`;
+			}
+		} else if (item.category === 'featured') {
+			return `/collections/all/features/category/${item.category}`;
+		} else if (item.category === 'sponsored_artists') {
+			return `/collections/all/${item.category}`;
+		} else {
+			return `/pages/${item.category}`;
+		}
+	};
+	const { width, height } = useWindowDimensions();
+
+	const determine_picture_size = () => {
+		if (width > 550) {
+			return '150px';
+		} else if (width < 550 && width > 375) {
+			return '130px';
+		} else if (width < 375 && width > 350) {
+			return '120px';
+		} else if (width < 350 && width > 325) {
+			return '110px';
+		} else if (width < 325) {
+			return '100px';
+		}
+	};
+
+	const top_categories_grid = () => {
+		return (
+			<div className="p-1rem ta-c w-100per">
+				<div>
+					<h3 className="">Top Categories</h3>
+				</div>
+				<div className="jc-c">
+					<div className="jc-c wrap">
+						{category_items &&
+							category_items.map((item, index) => {
+								return (
+									<div className="product m-5px jc-c" style={{ height: 'unset' }} key={index}>
+										<Link
+											to={`/collections/all/products/category/${item.category}`}
+											onClick={closeMenu}
+										>
+											<h3 className="mt-0px"> {humanize(item.category)}</h3>
+											<div
+												className={`w-${determine_picture_size()} h-${determine_picture_size()}`}
+											>
+												{item &&
+												item.images && (
+													<LazyImage
+														look=" h-auto br-20px"
+														alt={item.category}
+														title="Product Image"
+														size={{
+															height: `${determine_picture_size()}`,
+															width: `${determine_picture_size()}`,
+															objectFit: 'cover'
+														}}
+														effect="blur"
+														src={item.images[0]} // use normal <img> attributes as props
+													/>
+												)}
+											</div>
+										</Link>
+									</div>
+								);
+							})}
+					</div>
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<aside
@@ -128,16 +200,16 @@ const Cart = (props) => {
 				top: '-10px',
 				zIndex: 4,
 				borderRadius: '0px 0px 20px 20px',
-				height: mobile_check()
-					? cartItems.length === 0 ? '300px' : '100%'
-					: cartItems.length === 0 ? '300px' : 'unset'
+				height: mobile_check() ? '100%' : cartItems.length === 0 ? '400px' : 'unset'
 			}}
 		>
+			<Loading loading={loading_products} />
+			<Loading loading={loading_pictures} />
 			<ul
 				className={`cart_sidebar-list-container w-100per column jc-b ${mobile_check()
 					? `h-100per`
 					: `h-unset`}`}
-				style={{ height: cartItems.length === 0 ? '300px' : 'unset' }}
+				style={{ height: cartItems.length === 0 ? '400px' : 'unset' }}
 				// className={`cart_sidebar-list-container column jc-b w-100per mr-1rem ${mobile_check()
 				// 	? `h-90vh`
 				// 	: `h-100per`}`}
@@ -176,6 +248,7 @@ const Cart = (props) => {
 					{cartItems && cartItems.length === 0 ? (
 						<div className="p-1rem ta-c w-100per">
 							<div className="ta-c w-100per">Cart is Empty</div>
+							{top_categories_grid()}
 						</div>
 					) : (
 						<div
@@ -236,6 +309,7 @@ const Cart = (props) => {
 										</div>
 									</li>
 								))}
+							{top_categories_grid()}
 							{mobile_check() && <li className="h-175px" />}
 						</div>
 					)}
@@ -243,6 +317,7 @@ const Cart = (props) => {
 					{/* {no_items_in_cart && <h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>} */}
 				</div>
 			</ul>
+
 			<div
 				className="column w-100per pos-fix add_to_cart ph-1rem br-20px"
 				style={{ bottom: cartItems.length === 0 ? '-10px' : '0px' }}

@@ -458,6 +458,40 @@ export default {
 		final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
 		res.send(final_result);
 	},
+	category_occurrences: async (req: any, res: any) => {
+		const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
+		const products: any = [];
+		const ids: any = [];
+		orders.forEach((order: any) => {
+			order.orderItems.map((item: any) => {
+				products.push(item.category);
+				ids.push(item._id);
+				if (item.secondary_product) {
+					products.push(item.secondary_product.category);
+					ids.push(item.secondary_product._id);
+				}
+			});
+		});
+		// console.log({ ids });
+		const result: any = {};
+		const ids_result: any = {};
+		for (let i = 0; i < products.length; ++i) {
+			if (!result[products[i]]) {
+				result[products[i]] = 0;
+				ids_result[ids[i]] = 0;
+			}
+			++result[products[i]];
+			++ids_result[ids[i]];
+		}
+		// console.log({ ids_result });
+		const final_result = [];
+		for (const i in result) {
+			const entry = { category: i, occurrence: result[i], id: ids_result[i] };
+			final_result.push(entry);
+		}
+		final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
+		res.send(final_result);
+	},
 	code_usage: async (req: any, res: any) => {
 		const orders = await Order.find({ deleted: false, isPaid: true })
 			.populate('user')

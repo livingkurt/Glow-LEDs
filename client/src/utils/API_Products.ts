@@ -70,6 +70,10 @@ const product_routes = {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/orders/occurrences');
 	},
+	get_category_occurrences: () => {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/orders/category_occurrences');
+	},
 	get_all_products: () => {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/get_all_products');
