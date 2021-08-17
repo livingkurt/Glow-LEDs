@@ -6,6 +6,7 @@ import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Shipping } from '../../utils';
+import { update } from '../../actions/userActions';
 
 const ShippingPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -25,6 +26,7 @@ const ShippingPage = (props) => {
 	const [ international, setInternational ] = useState(false);
 	const [ loading, set_loading ] = useState(true);
 	const [ all_shipping, set_all_shipping ] = useState([]);
+	const [ save_shipping, set_save_shipping ] = useState(false);
 
 	useEffect(
 		() => {
@@ -117,6 +119,7 @@ const ShippingPage = (props) => {
 			);
 			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
+			save_shipping_to_user();
 			props.history.push('placeorder');
 		}
 	};
@@ -124,8 +127,44 @@ const ShippingPage = (props) => {
 		set_loading(false);
 	}, 500);
 
+	const save_shipping_to_user = () => {
+		if (save_shipping) {
+			dispatch(
+				update({
+					...userInfo,
+					shipping: {
+						first_name,
+						last_name,
+						email,
+						address_1,
+						address_2,
+						city,
+						state,
+						postalCode,
+						country: international ? country : 'United States',
+						international
+					}
+				})
+			);
+		}
+	};
+
 	const update_shipping = (shipping) => {
 		shipping = JSON.parse(shipping);
+		console.log({ shipping });
+		set_email(shipping.email);
+		set_first_name(shipping.first_name);
+		set_last_name(shipping.last_name);
+		set_address_1(shipping.address_1);
+		set_address_2(shipping.address_2);
+		setCity(shipping.city);
+		setState(shipping.state);
+		setPostalCode(shipping.postalCode);
+		setCountry(shipping.country);
+		setInternational(shipping.international);
+	};
+	const use_saved_shipping = (e, shipping) => {
+		e.preventDefault();
 		console.log({ shipping });
 		set_email(shipping.email);
 		set_first_name(shipping.first_name);
@@ -156,6 +195,16 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
+						{userInfo.shipping.hasOwnProperty('first_name') && (
+							<li>
+								<button
+									onClick={(e) => use_saved_shipping(e, userInfo.shipping)}
+									className="btn primary"
+								>
+									Use Saved Shipping
+								</button>
+							</li>
+						)}
 						{userInfo &&
 						userInfo.isAdmin && (
 							<li>
@@ -350,6 +399,27 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
+						{userInfo && loading ? (
+							<div>Loading...</div>
+						) : (
+							<div>
+								<li>
+									<label htmlFor="save_shipping">Save Shipping</label>
+									<input
+										type="checkbox"
+										name="save_shipping"
+										// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
+										defaultValue={save_shipping}
+										defaultChecked={save_shipping}
+										// value={save_shipping}
+										id="save_shipping"
+										onChange={(e) => {
+											set_save_shipping(e.target.checked);
+										}}
+									/>
+								</li>
+							</div>
+						)}
 					</ul>
 				</form>
 			</div>

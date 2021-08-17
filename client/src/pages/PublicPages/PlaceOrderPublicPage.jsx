@@ -90,7 +90,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	useEffect(
 		() => {
-			const shipping_cookie = localStorage.getItem('shipping');
+			const shipping_cookie = localStorage.getItem('shippingAddress');
 			if (shipping_cookie) {
 				stableDispatch(saveShipping(shipping_cookie));
 			}
@@ -299,6 +299,7 @@ const PlaceOrderPublicPage = (props) => {
 				await API_Promos.promo_code_used(promo_code.toLowerCase());
 			}
 		}
+		localStorage.removeItem('shippingAddress');
 	};
 
 	const empty_cart = () => {

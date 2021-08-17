@@ -350,19 +350,8 @@ export default {
 					success: true,
 					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 				});
-				user.first_name = req.body.first_name || user.first_name;
-				user.last_name = req.body.last_name || user.last_name;
-				user.email = req.body.email || user.email;
-				// user.password = req.body.password || user.password;
-				user.cart = req.body.cart || user.cart;
-				user.isAdmin = req.body.isAdmin || user.isAdmin;
-				user.isVerified = req.body.isVerified || user.isVerified;
-				user.affiliate = req.body.affiliate || user.affiliate;
-				user.email_subscription = req.body.email_subscription;
-				user.shipping = req.body.shipping;
-				user.is_affiliated = req.body.is_affiliated || user.is_affiliated;
-				user.deleted = req.body.deleted || false;
-				const updatedUser = await user.save();
+
+				const updatedUser = await User.updateOne({ _id: userId }, req.body);
 				console.log({ updatedUser });
 				if (updatedUser) {
 					log_request({

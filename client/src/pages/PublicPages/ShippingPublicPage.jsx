@@ -100,6 +100,7 @@ const ShippingPublicPage = (props) => {
 			dispatch(savePayment({ paymentMethod }));
 			props.history.push('placeorder');
 		}
+		localStorage.removeItem('shippingAddress');
 	};
 	setTimeout(() => {
 		set_loading(false);

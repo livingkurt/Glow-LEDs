@@ -298,6 +298,7 @@ const PlaceOrderPage = (props) => {
 				await API_Promos.promo_code_used(promo_code.toLowerCase());
 			}
 		}
+		localStorage.removeItem('shippingAddress');
 	};
 	// 	const save_shipment_id = (shipment_id) => {
 	// 	dispatch(
@@ -365,6 +366,7 @@ const PlaceOrderPage = (props) => {
 				await API_Promos.promo_code_used(promo_code.toLowerCase());
 			}
 		}
+		localStorage.removeItem('shippingAddress');
 	};
 
 	const create_order_without_user = async () => {
@@ -407,6 +409,7 @@ const PlaceOrderPage = (props) => {
 				await API_Promos.promo_code_used(promo_code.toLowerCase());
 			}
 		}
+		localStorage.removeItem('shippingAddress');
 	};
 
 	const empty_cart = () => {
