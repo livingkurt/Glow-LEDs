@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, update_order, update_payment } from '../../actions/orderActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
+import { JSONToCSV, Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
 import Pagination from 'react-js-pagination';
 import { API_Orders } from '../../utils';
+import { format_date } from '../../utils/helper_functions';
+// import CsvDownload from 'react-json-to-csv';
 
 const OrdersPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
@@ -14,6 +16,8 @@ const OrdersPage = (props) => {
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ block_list_view, set_block_list_view ] = useState(false);
 	const [ loading_mark_as_shipped, set_loading_mark_as_shipped ] = useState(false);
+	const [ total_orders, set_total_orders ] = useState([]);
+	const [ total_expenses, set_total_expenses ] = useState([]);
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const page = props.match.params.page ? props.match.params.page : 1;
@@ -114,6 +118,48 @@ const OrdersPage = (props) => {
 		}
 	};
 
+	useEffect(() => {
+		get_total_orders();
+		get_total_expenses();
+		return () => {};
+	}, []);
+
+	const get_total_orders = async () => {
+		const { data } = await API_Orders.total_orders();
+		console.log({ data: data.length });
+		set_total_orders(
+			data.filter((order) => order.deleted === false).filter((order) => order.isPaid === true).map((order) => ({
+				_id: order._id,
+				createdAt: format_date(order.createdAt),
+				email: order.shipping.email,
+				first_name: order.shipping.first_name,
+				last_name: order.shipping.last_name,
+				shippingPrice: '$' + order.shippingPrice,
+				itemsPrice: '$' + order.itemsPrice,
+				taxPrice: '$' + order.taxPrice,
+				totalPrice: '$' + order.totalPrice
+			}))
+		);
+	};
+	const get_total_expenses = async () => {
+		const { data } = await API_Orders.total_expenses();
+		console.log({ data: data.length });
+		set_total_expenses(
+			data.filter((expense) => expense.deleted === false).map((expense) => ({
+				_id: expense._id,
+				createdAt: format_date(expense.createdAt),
+				expense_name: expense.expense_name,
+				application: expense.application,
+				url: expense.url,
+				place_of_purchase: expense.place_of_purchase,
+				date_of_purchase: format_date(expense.date_of_purchase),
+				category: expense.category,
+				card: expense.card,
+				amount: '$' + expense.amount
+			}))
+		);
+	};
+
 	const history = useHistory();
 
 	const update_page = (e) => {
@@ -167,6 +213,19 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/editorder">
 					<button className="btn primary">Create Order</button>
 				</Link>
+				{total_orders &&
+				total_orders.length > 0 && (
+					<JSONToCSV data={total_orders} filename="orders.csv" className="btn primary">
+						Export Orders CSV
+					</JSONToCSV>
+				)}
+				{total_expenses &&
+				total_expenses.length > 0 && (
+					<JSONToCSV data={total_expenses} filename="expenses.csv" className="btn primary">
+						Export Expenses CSV
+					</JSONToCSV>
+				)}
+				{/* {total_expenses && total_expenses.length > 0 && <CsvDownload data={total_expenses} />} */}
 			</div>
 			<div className="wrap jc-b">
 				{colors.map((color, index) => {

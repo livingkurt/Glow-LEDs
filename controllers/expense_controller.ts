@@ -231,6 +231,7 @@ export default {
 					return '';
 				}
 			};
+
 			const expense = {
 				date_of_purchase: req.body.expense.date,
 				expense_name: req.body.expense.place,
@@ -363,5 +364,9 @@ export default {
 			});
 			res.status(500).send({ error, message: 'Error Deleting Expense' });
 		}
+	},
+	total_expenses: async (req: any, res: any) => {
+		const expenses = await Expense.find({ deleted: false }).sort({ date: -1 });
+		res.json(expenses);
 	}
 };
