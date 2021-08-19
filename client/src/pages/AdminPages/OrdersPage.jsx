@@ -129,15 +129,14 @@ const OrdersPage = (props) => {
 		console.log({ data: data.length });
 		set_total_orders(
 			data.filter((order) => order.deleted === false).filter((order) => order.isPaid === true).map((order) => ({
-				_id: order._id,
-				createdAt: format_date(order.createdAt),
-				email: order.shipping.email,
-				first_name: order.shipping.first_name,
-				last_name: order.shipping.last_name,
-				shippingPrice: '$' + order.shippingPrice,
-				itemsPrice: '$' + order.itemsPrice,
-				taxPrice: '$' + order.taxPrice,
-				totalPrice: '$' + order.totalPrice
+				Date: format_date(order.createdAt),
+				ID: order._id,
+				Name: order.shipping.first_name + ' ' + order.shipping.last_name,
+				Email: order.shipping.email,
+				Subtotal: '$' + order.itemsPrice,
+				Shipping: '$' + order.shippingPrice,
+				Tax: '$' + order.taxPrice,
+				Total: '$' + order.totalPrice
 			}))
 		);
 	};
@@ -146,16 +145,14 @@ const OrdersPage = (props) => {
 		console.log({ data: data.length });
 		set_total_expenses(
 			data.filter((expense) => expense.deleted === false).map((expense) => ({
-				_id: expense._id,
-				createdAt: format_date(expense.createdAt),
-				expense_name: expense.expense_name,
-				application: expense.application,
-				url: expense.url,
-				place_of_purchase: expense.place_of_purchase,
-				date_of_purchase: format_date(expense.date_of_purchase),
-				category: expense.category,
-				card: expense.card,
-				amount: '$' + expense.amount
+				'Date of Purchase': format_date(expense.date_of_purchase),
+				ID: expense._id,
+				Expense: expense.expense_name,
+				Category: expense.category,
+				'Place of Purchase': expense.place_of_purchase,
+				Application: expense.application,
+				Card: expense.card,
+				Amount: '$' + expense.amount
 			}))
 		);
 	};

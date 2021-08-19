@@ -7,6 +7,26 @@ const order_routes = {
 	total_orders: () => {
 		return axios.get('/api/orders/total_orders');
 	},
+	// monthly_income: (dates: any) => {
+	// 	console.log({ dates });
+	// 	return axios.get('/api/orders/monthly_income', {dates});
+	// },
+	monthly_income: (date_1: string, date_2: string) => {
+		// console.log({ update_pathname: { date_1, date_2 } });
+		return axios.put('/api/orders/monthly_income', { date_1, date_2 });
+	},
+	monthly_expenses: (date_1: string, date_2: string) => {
+		// console.log({ update_pathname: { date_1, date_2 } });
+		return axios.put('/api/expenses/monthly_expenses', { date_1, date_2 });
+	},
+	yearly_income: (date_1: string, date_2: string) => {
+		// console.log({ update_pathname: { date_1, date_2 } });
+		return axios.put('/api/orders/yearly_income', { date_1, date_2 });
+	},
+	yearly_expenses: (date_1: string, date_2: string) => {
+		// console.log({ update_pathname: { date_1, date_2 } });
+		return axios.put('/api/expenses/yearly_expenses', { date_1, date_2 });
+	},
 	total_expenses: () => {
 		return axios.get('/api/expenses/total_expenses');
 	},

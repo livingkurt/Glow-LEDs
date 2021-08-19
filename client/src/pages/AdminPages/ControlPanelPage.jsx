@@ -1,29 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../../actions/productActions';
 import { Link } from 'react-router-dom';
-import { listOrders } from '../../actions/orderActions';
 import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
-import { Chart } from 'chart.js';
-import { hslToHex, unformat_date } from '../../utils/helper_functions';
+import { hslToHex } from '../../utils/helper_functions';
 import { API_Revenue, API_Products, API_Orders } from '../../utils';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { listPromos } from '../../actions/promoActions';
 import { Helmet } from 'react-helmet';
+import { Bar } from 'react-chartjs-2';
 
 const ControlPanelPage = (props) => {
 	const dispatch = useDispatch();
 
-	const occurrence_chart_ref = useRef();
-	const monthly_income_chart_ref = useRef();
-
 	const expenseList = useSelector((state) => state.expenseList);
 	const { expenses } = expenseList;
-
-	// const orderList = useSelector((state) => state.orderList);
-	// const { orders: order_data } = orderList;
-	// console.log({ order_data });
 
 	const productList = useSelector((state) => state.productList);
 	const { products } = productList;
@@ -37,18 +29,32 @@ const ControlPanelPage = (props) => {
 	const promoList = useSelector((state) => state.promoList);
 	const { promos } = promoList;
 
-	// const [ product_occurrences, set_product_occurrences ] = useState([]);
+	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ daily_orders, set_daily_orders ] = useState([]);
 	const [ orders, set_orders ] = useState([]);
 	const [ weekly_orders, set_weekly_orders ] = useState([]);
 	const [ monthly_orders, set_monthly_orders ] = useState([]);
-	const [ daily_income, set_daily_income ] = useState([]);
+	const [ yesterday_income, set_yesterday_income ] = useState([]);
 	const [ monthly_income, set_monthly_income ] = useState([]);
 	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState([]);
 	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
+	const [ yearly_income, set_yearly_income ] = useState([]);
+
+	const [ year_2020, set_year_2020 ] = useState({});
+	const [ year_2021, set_year_2021 ] = useState({});
+	const [ year_2022, set_year_2022 ] = useState({});
+	const [ year_2023, set_year_2023 ] = useState({});
+	const [ year_2024, set_year_2024 ] = useState({});
+	const [ year_2025, set_year_2025 ] = useState({});
+	const [ year_2026, set_year_2026 ] = useState({});
+	const [ year_2027, set_year_2027 ] = useState({});
+	const [ year_2028, set_year_2028 ] = useState({});
+	const [ year_2029, set_year_2029 ] = useState({});
+	const [ year_2030, set_year_2030 ] = useState({});
+	const [ year_2031, set_year_2031 ] = useState({});
 
 	const get_orders = async () => {
-		const { data } = await API_Orders.get_total_orders();
+		const { data } = await API_Orders.total_orders();
 		console.log({ data });
 		set_orders(data);
 	};
@@ -62,9 +68,6 @@ const ControlPanelPage = (props) => {
 		dispatch(listAffiliates());
 		dispatch(listPromos());
 		get_income();
-
-		// get_daily_income();
-		// get_monthly_income();
 	}, []);
 
 	useEffect(
@@ -88,15 +91,6 @@ const ControlPanelPage = (props) => {
 			return () => {};
 		},
 		[ affiliates, orders ]
-	);
-	useEffect(
-		() => {
-			setTimeout(() => {
-				initialize_monthly_income_chart(monthly_income);
-			}, 3000);
-			return () => {};
-		},
-		[ monthly_income ]
 	);
 
 	const get_total = () => {
@@ -134,421 +128,116 @@ const ControlPanelPage = (props) => {
 
 	const get_occurrences = async () => {
 		const { data: occurrences } = await API_Products.get_occurrences();
-		// set_product_occurrences(occurrences);
-		initialize_occurrence_chart(occurrences);
-	};
-	const initialize_occurrence_chart = (occurrences) => {
-		const occurrence_occurrence_chart_ref = occurrence_chart_ref.current.getContext('2d');
-		const multiplier = 360 / occurrences.filter((product) => product.occurrence > 1).length;
-
-		let num = -multiplier;
-		// console.log(
-		// 	occurrences.map((item) => {
-		// 		num += multiplier;
-		// 		// return `hsl(${num}, 100%, 50%)`;
-		// 		let color = hslToHex(num, 100, 50);
-		// 		return color;
-		// 	})
-		// );
-		new Chart(occurrence_occurrence_chart_ref, {
-			type: 'bar',
-			data: {
-				//Bring in data
-				labels: occurrences.filter((product) => product.occurrence > 1).map((product) => product.name),
-				datasets: [
-					{
-						label: 'Product',
-						data: occurrences
-							.filter((product) => product.occurrence > 1)
-							.map((product) => product.occurrence),
-						fill: true,
-						borderColor: '#3e4c6d',
-						// backgroundColor: '#333333',
-						// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
-						backgroundColor: occurrences.map((item) => {
-							num += multiplier;
-							let color = hslToHex(num, 100, 50);
-							// return `hsl(${num}, 50%, 100%)`;
-							return color;
-						}),
-						color: 'white'
-					}
-				]
-			},
-			options: {
-				// Responsive Design
-				responsive: true,
-				maintainAspectRatio: true,
-				// Customize the Layout
-				layout: {
-					padding: {
-						top: 5,
-						left: 15,
-						right: 15,
-						bottom: 15
-					}
-				},
-				legend: {
-					labels: {
-						display: true,
-						fontColor: 'white'
-					}
-				},
-				title: {
-					display: false,
-					fontColor: 'white',
-					text: 'Occurrences'
-				},
-				scales: {
-					xAxes: [
-						{
-							ticks: {
-								display: true,
-								fontColor: 'white'
-							},
-							gridLines: {
-								display: true,
-								// drawBorder: false,
-								fontColor: 'white'
-							}
-						}
-					],
-					yAxes: [
-						{
-							ticks: {
-								display: true,
-								fontColor: 'white'
-							},
-							gridLines: {
-								display: true,
-								// drawBorder: false,
-								fontColor: 'white'
-							}
-						}
-					]
-				}
-			}
-			// // Removing Data Ticks, Graph Lines, and Borders
-		});
-		// const expense_doughnut_chart = expense_doughnut_ref.current.getContext('2d');
-		// new Chart(expense_doughnut_chart, {
-		// 	type: 'doughnut',
-		// 	data: [
-		// 		expenses.filter((expense) => expense === 'Supplies').map((expense) => expense.amount),
-		// 		expenses.filter((expense) => expense === 'Business').map((expense) => expense.amount),
-		// 		expenses.filter((expense) => expense === 'Website').map((expense) => expense.amount)
-		// 	],
-		// 	labels: [ 'Supplies', 'Business', 'Website' ],
-		// 	options: {}
-		// });
+		set_product_occurrences(occurrences);
+		// initialize_occurrence_chart(occurrences);
 	};
 
 	const get_income = async () => {
-		const { data: daily } = await API_Revenue.get_daily_income();
-		// console.log({ daily });
+		const { data: daily } = await API_Revenue.get_yesterday_income();
 		set_daily_orders(daily);
-		const { data: weekly } = await API_Revenue.get_weekly_income();
-		// console.log({ weekly });
+		const { data: weekly } = await API_Revenue.get_last_week_income();
 		set_weekly_orders(weekly);
-		const { data: monthly } = await API_Revenue.get_monthly_income();
-		// console.log({ monthly });
+		const { data: monthly } = await API_Revenue.get_last_month_income();
 		set_monthly_orders(monthly);
 	};
-	const get_each_day_income = async (date) => {
-		// console.log({ date });
-		const data = await API_Revenue.get_each_day_income(date);
-		return data;
-		// console.log({ data });
-		// return daily;
-	};
-	const get_each_month_income = async (date) => {
-		// console.log({ date });
-		const data = await API_Revenue.get_each_month_income(date);
-		return data;
-		// console.log({ data });
-		// return daily;
-	};
 
-	// const month= ["January","February","March","April","May","June","July",
-	//           "August","September","October","November","December"];
-	const months = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+	const multiplier = 360 / product_occurrences.filter((product) => product.occurrence > 10).length;
 
-	const get_daily_income = async () => {
-		const income_each_day = [];
-		dates_in_year.forEach(async (month, month_number) => {
-			[ ...Array(month.number_of_days).keys() ].map(async (day, index) => {
-				const formatted_date =
-					(month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1) + '/' + (day + 1) + '/' + 2020;
-				const unformatted_date = unformat_date(
-					`${month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1}/${day + 1}/2020`
-				);
-				const { data } = await get_each_day_income(unformatted_date);
-				// console.log({ data });
-				let income = 0;
-				if (data.length > 1) {
-					income = data.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
-					// console.log({ income });
-				}
-				income_each_day.push({ date: formatted_date, income });
-			});
-		});
-		// console.log({ income_each_day });
-		set_daily_income(income_each_day);
-	};
-	const get_monthly_income = async () => {
-		const income_each_month = [];
-		dates_in_year.map(async (month, month_number) => {
-			const formatted_date = (month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1) + '/01/' + 2020;
-			const unformatted_date = unformat_date(
-				(month_number + 1 < 10 ? `0${month_number + 1}` : month_number + 1) + '/01/' + 2020
-			);
-			const { data } = await get_each_month_income(unformatted_date);
-			console.log({ data });
-			let income = 0;
-			if (data.length > 1) {
-				income = data.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
-				console.log({ month: dates_in_year[month_number].month, income });
+	let num = -multiplier;
+	const data = {
+		labels: product_occurrences.filter((product) => product.occurrence > 10).map((product) => product.name),
+		datasets: [
+			{
+				label: 'Product',
+				data: product_occurrences
+					.filter((product) => product.occurrence > 1)
+					.map((product) => product.occurrence),
+				fill: true,
+				borderColor: '#3e4c6d',
+				// backgroundColor: '#333333',
+				// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
+				backgroundColor: product_occurrences.map((item) => {
+					num += multiplier;
+					let color = hslToHex(num, 100, 50);
+					// return `hsl(${num}, 50%, 100%)`;
+					return color;
+				}),
+				color: 'white'
 			}
-			income_each_month.push({ month: dates_in_year[month_number].month, income });
-			// return unformatted_date;
-		});
-		console.log({ income_each_month });
-		set_monthly_income(income_each_month);
-		// initialize_monthly_income_chart(income_each_month);
-	};
-	console.log({ monthly_income });
-
-	const initialize_monthly_income_chart = () => {
-		const monthly_income_monthly_income_chart_ref = monthly_income_chart_ref.current.getContext('2d');
-		const multiplier = 360 / monthly_income.length;
-		console.log({ month: monthly_income.map((month) => month.month) });
-		console.log({ monthly_income });
-
-		let num = -multiplier;
-		new Chart(monthly_income_monthly_income_chart_ref, {
-			type: 'bar',
-			data: {
-				//Bring in data
-				labels: monthly_income.map((month) => month.month),
-				datasets: [
-					{
-						label: 'Income',
-						data: monthly_income.map((month) => month.income),
-						fill: true,
-						borderColor: '#3e4c6d',
-						backgroundColor: monthly_income.map((item) => {
-							num += multiplier;
-							let color = hslToHex(num, 100, 50);
-							return color;
-						}),
-						color: 'white'
-					}
-				]
-			},
-			options: {
-				// Responsive Design
-				responsive: true,
-				maintainAspectRatio: true,
-				// Customize the Layout
-				layout: {
-					padding: {
-						top: 5,
-						left: 15,
-						right: 15,
-						bottom: 15
-					}
-				},
-				legend: {
-					labels: {
-						display: true,
-						fontColor: 'white'
-					}
-				},
-				title: {
-					display: false,
-					fontColor: 'white',
-					text: 'Occurrences'
-				},
-				scales: {
-					xAxes: [
-						{
-							ticks: {
-								display: true,
-								fontColor: 'white'
-							},
-							gridLines: {
-								display: true,
-								// drawBorder: false,
-								fontColor: 'white'
-							}
-						}
-					],
-					yAxes: [
-						{
-							ticks: {
-								display: true,
-								fontColor: 'white'
-							},
-							gridLines: {
-								display: true,
-								// drawBorder: false,
-								fontColor: 'white'
-							}
-						}
-					]
-				}
-			}
-			// // Removing Data Ticks, Graph Lines, and Borders
-		});
-		// const expense_doughnut_chart = expense_doughnut_ref.current.getContext('2d');
-		// new Chart(expense_doughnut_chart, {
-		// 	type: 'doughnut',
-		// 	data: [
-		// 		expenses.filter((expense) => expense === 'Supplies').map((expense) => expense.amount),
-		// 		expenses.filter((expense) => expense === 'Business').map((expense) => expense.amount),
-		// 		expenses.filter((expense) => expense === 'Website').map((expense) => expense.amount)
-		// 	],
-		// 	labels: [ 'Supplies', 'Business', 'Website' ],
-		// 	options: {}
-		// });
+		]
 	};
 
-	const dates_in_year = [
-		{ month: 'January', number_of_days: 31 },
-		{ month: 'February', number_of_days: 28 },
-		{ month: 'March', number_of_days: 31 },
-		{ month: 'April', number_of_days: 30 },
-		{ month: 'May', number_of_days: 31 },
-		{ month: 'June', number_of_days: 30 },
-		{ month: 'July', number_of_days: 31 },
-		{ month: 'August', number_of_days: 31 },
-		{ month: 'September', number_of_days: 30 },
-		{ month: 'October', number_of_days: 31 },
-		{ month: 'November', number_of_days: 30 },
-		{ month: 'December', number_of_days: 31 }
-	];
+	const options = {
+		responsive: true,
+		maintainAspectRatio: true,
+		fontColor: '#000000'
+	};
 
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Control Panel | Glow LEDs</title>8
 			</Helmet>
+
+			<div className="jc-b">
+				<Link to="/secure/glow/controlpanel/monthly_expenes/2020">
+					<button className="btn primary">2020 Monthly Expenses</button>
+				</Link>
+				<Link to="/secure/glow/controlpanel/monthly_expenes/2021">
+					<button className="btn primary">2021 Monthly Expenses</button>
+				</Link>
+			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
 			</div>
 			<div className="jc-b">
-				<Link to="/secure/glow/orders">
-					<button className="btn primary">Orders</button>
-				</Link>
-				<Link to="/secure/glow/products">
-					<button className="btn primary"> Products</button>
-				</Link>
-				<Link to="/secure/glow/users">
-					<button className="btn primary"> Users</button>
-				</Link>
-				<Link to="/secure/glow/expenses">
-					<button className="btn primary"> Expenses</button>
-				</Link>
-				<Link to="/secure/glow/features">
-					<button className="btn primary"> Features</button>
-				</Link>
-				<Link to="/secure/glow/affiliates">
-					<button className="btn primary"> Affiliates</button>
-				</Link>
-				<Link to="/secure/glow/promos">
-					<button className="btn primary">Promos</button>
-				</Link>
-				<Link to="/secure/glow/carts">
-					<button className="btn primary">Carts</button>
-				</Link>
-				<Link to="/secure/glow/contents">
-					<button className="btn primary">Contents</button>
-				</Link>
-				<Link to="/secure/glow/emails">
-					<button className="btn primary">Emails</button>
-				</Link>
+				<div>
+					<h2>Total Income</h2>
+					<div className="fs-30px">
+						${orders && orders.length > 0 ? (
+							orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0).toFixed(2)
+						) : (
+							'0.00'
+						)}
+					</div>
+				</div>
+				<div>
+					<h2>Total Expenses</h2>
+					<div className="fs-30px">
+						${expenses && expenses.length > 0 ? (
+							expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)
+						) : (
+							'0.00'
+						)}
+					</div>
+				</div>
+				<div>
+					<h2>Total Profit</h2>
+					<div className="fs-30px">
+						${orders && orders.length > 0 && expenses && expenses.length > 0 ? (
+							(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) +
+								expenses.reduce((a, expense) => a + expense.amount, 0)).toFixed(2)
+						) : (
+							'0.00'
+						)}
+					</div>
+				</div>
+				<div>
+					<h2>Total Taxes</h2>
+					<div className="fs-30px">
+						${orders && orders.length > 0 && expenses && expenses.length > 0 ? (
+							orders.reduce((a, order) => a + order.taxPrice, 0).toFixed(2)
+						) : (
+							'0.00'
+						)}
+					</div>
+				</div>
+				<div>
+					<h2>Total Days Open</h2>
+					<div className="fs-30px">{duration_of_opening().toFixed(0)}</div>
+				</div>
 			</div>
 			<div className="jc-b">
-				{expenses &&
-				orders && (
-					<div className="order-list responsive_table">
-						<h2 className="ta-c w-100per jc-c">Expenses</h2>
-						<table className="table">
-							<thead>
-								<tr>
-									<th>Category</th>
-									<th>Expense</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-									className=""
-								>
-									<th style={{ padding: '15px' }}>Total Expenses</th>
-									<th style={{ padding: '15px' }}>
-										${expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)}
-									</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Income</th>
-									<th style={{ padding: '15px' }}>
-										${orders
-											.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-											.toFixed(2)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Taxes Collected</th>
-									<th style={{ padding: '15px' }}>
-										${orders.reduce((a, order) => a + order.taxPrice, 0).toFixed(2)}
-									</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Profit</th>
-									<th style={{ padding: '15px' }}>
-										${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) +
-											expenses.reduce((a, order) => a + order.amount, 0)).toFixed(2)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Days Open</th>
-									<th style={{ padding: '15px' }}>{duration_of_opening().toFixed(0)}</th>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				)}
 				{expenses &&
 				orders &&
 				weekly_orders &&
@@ -556,7 +245,7 @@ const ControlPanelPage = (props) => {
 				monthly_orders && (
 					<div className="order-list responsive_table">
 						<h2 className="ta-c w-100per jc-c">Income</h2>
-						<table className="table">
+						<table className="styled-table">
 							<thead>
 								<tr>
 									<th>Category</th>
@@ -571,7 +260,7 @@ const ControlPanelPage = (props) => {
 										height: '50px'
 									}}
 								>
-									<th style={{ padding: '15px' }}>Daily Income</th>
+									<th style={{ padding: '15px' }}>Yesterdays Income</th>
 									<th style={{ padding: '15px' }}>
 										${daily_orders &&
 											daily_orders
@@ -586,7 +275,7 @@ const ControlPanelPage = (props) => {
 										height: '50px'
 									}}
 								>
-									<th style={{ padding: '15px' }}>Weekly Income</th>
+									<th style={{ padding: '15px' }}>Last Weeks Income</th>
 									<th style={{ padding: '15px' }}>
 										${weekly_orders &&
 											weekly_orders
@@ -601,7 +290,7 @@ const ControlPanelPage = (props) => {
 										height: '50px'
 									}}
 								>
-									<th style={{ padding: '15px' }}>Monthly Income</th>
+									<th style={{ padding: '15px' }}>Last Month Income</th>
 									<th style={{ padding: '15px' }}>
 										${monthly_orders &&
 											monthly_orders
@@ -658,7 +347,7 @@ const ControlPanelPage = (props) => {
 				users && (
 					<div className="order-list responsive_table">
 						<h2 className="ta-c w-100per jc-c">Metrics</h2>
-						<table className="table">
+						<table className="styled-table">
 							<thead>
 								<tr>
 									<th>Category</th>
@@ -719,7 +408,7 @@ const ControlPanelPage = (props) => {
 				affiliates && (
 					<div className="order-list responsive_table">
 						<h2 className="ta-c w-100per jc-c">Affiliate Revenue</h2>
-						<table className="table">
+						<table className="styled-table">
 							<thead>
 								<tr>
 									<th>Affiliate</th>
@@ -801,11 +490,14 @@ const ControlPanelPage = (props) => {
 					</div>
 				)}
 			</div>
-			<h2 className="ta-c w-100per jc-c">Occurrences</h2>
-			<canvas id="occurrence_chart" ref={occurrence_chart_ref} />
+			<h2 className="ta-c w-100per jc-c">Product Occurences</h2>
+			<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px">
+				<Bar data={data} options={options} />
+			</div>
+			{/* <canvas id="occurrence_chart" ref={occurrence_chart_ref} /> */}
 			{/* {product_occurrences && (
 				<div className="order-list responsive_table">
-					<table className="table">
+					<table className="styled-table">
 						<thead>
 							<tr>
 								<th>Category</th>
@@ -834,10 +526,10 @@ const ControlPanelPage = (props) => {
 				</div>
 			)} */}
 			<h2 className="ta-c w-100per jc-c">Monthly Income</h2>
-			<canvas id="monthly_income_chart" ref={monthly_income_chart_ref} />
+			{/* <canvas id="monthly_income_chart" ref={monthly_income_chart_ref} /> */}
 			{monthly_income.length > 1 && (
 				<div className="order-list responsive_table">
-					<table className="table">
+					<table className="styled-table">
 						<thead>
 							<tr>
 								<th>Date</th>
@@ -858,37 +550,6 @@ const ControlPanelPage = (props) => {
 									>
 										<th style={{ padding: '15px' }}>{month.month}</th>
 										<th style={{ padding: '15px' }}>${month.income.toFixed(2)}</th>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				</div>
-			)}
-			<h2 className="ta-c w-100per jc-c">Daily Income</h2>
-			{daily_income && (
-				<div className="order-list responsive_table">
-					<table className="table">
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Daily Income</th>
-							</tr>
-						</thead>
-						<tbody>
-							{daily_income.map((day, index) => {
-								return (
-									<tr
-										key={index}
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-										className=""
-									>
-										<th style={{ padding: '15px' }}>{day.date}</th>
-										<th style={{ padding: '15px' }}>${day.income.toFixed(2)}</th>
 									</tr>
 								);
 							})}

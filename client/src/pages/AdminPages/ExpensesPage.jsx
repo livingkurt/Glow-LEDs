@@ -111,9 +111,17 @@ const ExpensesPage = (props) => {
 			}
 			expenses.push(object);
 		}
+		console.log({ expenses });
 		expenses.forEach(async (expense) => {
-			expense = { ...expense, date: unformat_date(expense.date) };
-			const post_expense = await API_Revenue.post_expense(expense, userInfo, card);
+			if (expense.place !== 'AUTOPAY PAYMENT - THANK YOU') {
+				if (expense.place !== 'CUSTOMER SERVICE PAYMENT - THANK YOU') {
+					if (expense.place !== 'RETURNED AUTOPAY (DEORY)') {
+						console.log({ place: expense.place });
+						expense = { ...expense, date: unformat_date(expense.date) };
+						const post_expense = await API_Revenue.post_expense(expense, userInfo, card);
+					}
+				}
+			}
 		});
 		dispatch(listExpenses(category, searchKeyword, sortOrder));
 	};
@@ -132,8 +140,8 @@ const ExpensesPage = (props) => {
 			case 'AMZNK':
 				properties = [ 'date', 'post_date', 'place', 'category', 'type', 'amount' ];
 				return handle_csv_expenses(data, fileInfo, properties, 'AMZNK');
-      default:
-        return
+			default:
+				return;
 		}
 	};
 

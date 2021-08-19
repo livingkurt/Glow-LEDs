@@ -315,39 +315,6 @@ const MenuPage = (props) => {
 			<div className="product_big_screen">
 				<div className="jc-c">
 					<div className="jc-c wrap">
-						{/* {features &&
-						glovers &&
-						artists &&
-						producers &&
-						vfx &&
-						determine_menu_items().map((item) => {
-							return (
-								<div className="home_page_divs m-10px ">
-									<Link to={decide_url(item)}>
-										<h2 className="">{humanize(item.category)}</h2>
-										<div className="w-300px h-300px mb-1rem">
-											<img
-												className="w-100per h-auto br-20px"
-												width="300px"
-												height="300px"
-												style={{ objectFit: 'cover' }}
-												src={item.image}
-												alt={item.category}
-												title="Menu Item Images"
-											/>
-										</div>
-									</Link>
-									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.6rem' }}>
-										{item.artist_name && item.artist_name}
-									</div>
-									<div className="feature_text w-100per ta-c" style={{ fontSize: '1.3rem' }}>
-										{item.product && item.product}
-										{item.link && item.link}
-									</div>
-								</div>
-							);
-						})} */}
-
 						{!loading_pictures &&
 							features &&
 							glovers &&

@@ -3,7 +3,8 @@ import { expense_controller } from '../../controllers';
 const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
-
+router.route('/monthly_expenses').put(expense_controller.monthly_expenses);
+router.route('/yearly_expenses').put(expense_controller.yearly_expenses);
 router.route('/').get(isAuth, isAdmin, expense_controller.findAll).post(isAuth, isAdmin, expense_controller.create);
 
 router.route('/post_expense').post(expense_controller.create_all);

@@ -663,7 +663,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
-	daily_income: async (req: any, res: any) => {
+	yesterday_income: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({
 				deleted: false,
@@ -695,7 +695,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
-	weekly_income: async (req: any, res: any) => {
+	last_week_income: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({
 				deleted: false,
@@ -727,7 +727,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
-	monthly_income: async (req: any, res: any) => {
+	last_month_income: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({
 				deleted: false,
@@ -759,6 +759,104 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
+	monthly_income: async (req: any, res: any) => {
+		try {
+			const orders = await Order.find({
+				deleted: false,
+				createdAt: {
+					$gte: new Date(req.body.date_1),
+					$lt: new Date(req.body.date_2)
+				}
+			});
+			// console.log({ orders });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: orders,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.json(orders);
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Orders' });
+		}
+	},
+	yearly_income: async (req: any, res: any) => {
+		try {
+			const orders = await Order.find({
+				deleted: false,
+				createdAt: {
+					$gte: new Date(req.body.date_1),
+					$lt: new Date(req.body.date_2)
+				}
+			});
+			// console.log({ orders });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: orders,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.json(orders);
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Orders' });
+		}
+	},
+	// monthly_income: async (req: any, res: any) => {
+	// 	try {
+	// 		const orders = await Order.find({
+	// 			deleted: false,
+	// 			createdAt: {
+	// 				$gte: new Date(<any>new Date() - 30 * 60 * 60 * 24 * 1000)
+	// 			}
+	// 		});
+
+	// 		log_request({
+	// 			method: 'GET',
+	// 			path: req.originalUrl,
+	// 			collection: 'Product',
+	// 			data: orders,
+	// 			status: 200,
+	// 			success: true,
+	// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+	// 		});
+	// 		res.json(orders);
+	// 	} catch (error) {
+	// 		console.log({ error });
+	// 		log_error({
+	// 			method: 'GET',
+	// 			path: req.originalUrl,
+	// 			collection: 'Product',
+	// 			error,
+	// 			status: 500,
+	// 			success: false
+	// 		});
+	// 		res.status(500).send({ error, message: 'Error Getting Orders' });
+	// 	}
+	// },
 	mark_as_shipped: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({

@@ -165,6 +165,29 @@ export default {
 					return 'Equipment';
 				} else if (place_of_purchase.includes('DIGI KEY') || place_of_purchase.includes('Digi key')) {
 					return 'Supplies';
+				} else if (place_of_purchase.includes('EASYPOST') || place_of_purchase.includes('Easypost')) {
+					return 'Shipping';
+				} else if (place_of_purchase.includes('PAYPAL') || place_of_purchase.includes('PayPal')) {
+					return 'Supplies';
+				} else if (place_of_purchase.includes('HEROKU') || place_of_purchase.includes('Heroku')) {
+					return 'Website';
+				} else if (place_of_purchase.includes('ALIBABA') || place_of_purchase.includes('Alibaba')) {
+					return 'Supplies';
+				} else if (place_of_purchase.includes('PAK') || place_of_purchase.includes('Pak')) {
+					return 'Shipping';
+				} else if (
+					place_of_purchase.includes('KANDEKREATIONS') ||
+					place_of_purchase.includes('Kandekreations')
+				) {
+					return 'Supplies';
+				} else if (place_of_purchase.includes('FUTURISTIC') || place_of_purchase.includes('Futuristic')) {
+					return 'Supplies';
+				} else if (place_of_purchase.includes('LEDGLOVES') || place_of_purchase.includes('LEDGloves')) {
+					return 'Supplies';
+				} else if (place_of_purchase.includes('EMAZING') || place_of_purchase.includes('Emazing')) {
+					return 'Supplies';
+				} else if (place_of_purchase.includes('SPEC') || place_of_purchase.includes('Spec')) {
+					return 'Entertainment';
 				} else {
 					return 'Not Categorized';
 				}
@@ -196,6 +219,29 @@ export default {
 					return 'Hobby Lobby';
 				} else if (place_of_purchase.includes('DIGI KEY') || place_of_purchase.includes('Digi key')) {
 					return 'Digi Key';
+				} else if (place_of_purchase.includes('EASYPOST') || place_of_purchase.includes('Easypost')) {
+					return 'EasyPost';
+				} else if (place_of_purchase.includes('PAYPAL') || place_of_purchase.includes('PayPal')) {
+					return 'PayPal';
+				} else if (place_of_purchase.includes('HEROKU') || place_of_purchase.includes('Heroku')) {
+					return 'Heroku';
+				} else if (place_of_purchase.includes('ALIBABA') || place_of_purchase.includes('Alibaba')) {
+					return 'Alibaba';
+				} else if (place_of_purchase.includes('PAK') || place_of_purchase.includes('Pak')) {
+					return 'PAK Mail';
+				} else if (
+					place_of_purchase.includes('KANDEKREATIONS') ||
+					place_of_purchase.includes('Kandekreations')
+				) {
+					return 'Kandekreations';
+				} else if (place_of_purchase.includes('FUTURISTIC') || place_of_purchase.includes('Futuristic')) {
+					return 'Futuristic';
+				} else if (place_of_purchase.includes('LEDGLOVES') || place_of_purchase.includes('LEDGloves')) {
+					return 'LEDGloves';
+				} else if (place_of_purchase.includes('EMAZING') || place_of_purchase.includes('Emazing')) {
+					return 'EmazingLights';
+				} else if (place_of_purchase.includes('SPEC') || place_of_purchase.includes('Spec')) {
+					return "Spec's";
 				} else {
 					return '';
 				}
@@ -227,6 +273,29 @@ export default {
 					return 'Tools';
 				} else if (place_of_purchase.includes('DIGI KEY') || place_of_purchase.includes('Digi key')) {
 					return 'Products';
+				} else if (place_of_purchase.includes('EASYPOST') || place_of_purchase.includes('Easypost')) {
+					return 'Shipping';
+				} else if (place_of_purchase.includes('PAYPAL') || place_of_purchase.includes('PayPal')) {
+					return 'Products';
+				} else if (place_of_purchase.includes('HEROKU') || place_of_purchase.includes('Heroku')) {
+					return 'Website';
+				} else if (place_of_purchase.includes('ALIBABA') || place_of_purchase.includes('Alibaba')) {
+					return 'Products';
+				} else if (place_of_purchase.includes('PAK') || place_of_purchase.includes('Pak')) {
+					return 'Shipping';
+				} else if (
+					place_of_purchase.includes('KANDEKREATIONS') ||
+					place_of_purchase.includes('Kandekreations')
+				) {
+					return 'Tools';
+				} else if (place_of_purchase.includes('FUTURISTIC') || place_of_purchase.includes('Futuristic')) {
+					return 'Tools';
+				} else if (place_of_purchase.includes('LEDGLOVES') || place_of_purchase.includes('LEDGloves')) {
+					return 'Tools';
+				} else if (place_of_purchase.includes('EMAZING') || place_of_purchase.includes('Emazing')) {
+					return 'Tools';
+				} else if (place_of_purchase.includes('SPEC') || place_of_purchase.includes('Spec')) {
+					return 'Entertainment';
 				} else {
 					return '';
 				}
@@ -239,7 +308,10 @@ export default {
 				card: req.body.card,
 				application: determine_application(req.body.expense.place),
 				category: determine_category(req.body.expense.place),
-				amount: parseFloat(req.body.expense.amount)
+				amount:
+					req.body.card === 'GL AMEX'
+						? Math.abs(parseFloat(req.body.expense.amount)) * -1
+						: parseFloat(req.body.expense.amount)
 			};
 
 			console.log({ expense });
@@ -279,6 +351,72 @@ export default {
 			// 	success: false
 			// });
 			res.status(500).send({ error, message: 'Error Creating Expense' });
+		}
+	},
+	monthly_expenses: async (req: any, res: any) => {
+		try {
+			const expenses = await Expense.find({
+				deleted: false,
+				date_of_purchase: {
+					$gte: new Date(req.body.date_1),
+					$lt: new Date(req.body.date_2)
+				}
+			});
+			// console.log({ expenses });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: expenses,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.json(expenses);
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Orders' });
+		}
+	},
+	yearly_expenses: async (req: any, res: any) => {
+		try {
+			const expenses = await Expense.find({
+				deleted: false,
+				date_of_purchase: {
+					$gte: new Date(req.body.date_1),
+					$lt: new Date(req.body.date_2)
+				}
+			});
+			// console.log({ expenses });
+			log_request({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				data: expenses,
+				status: 200,
+				success: true,
+				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
+			});
+			res.json(expenses);
+		} catch (error) {
+			console.log({ error });
+			log_error({
+				method: 'GET',
+				path: req.originalUrl,
+				collection: 'Product',
+				error,
+				status: 500,
+				success: false
+			});
+			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
 	update: async (req: any, res: any) => {
@@ -366,7 +504,7 @@ export default {
 		}
 	},
 	total_expenses: async (req: any, res: any) => {
-		const expenses = await Expense.find({ deleted: false }).sort({ date: -1 });
+		const expenses = await Expense.find({ deleted: false }).sort({ date_of_purchase: 1 });
 		res.json(expenses);
 	}
 };
