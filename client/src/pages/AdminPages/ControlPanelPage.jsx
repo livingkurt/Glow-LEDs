@@ -4,12 +4,13 @@ import { listProducts } from '../../actions/productActions';
 import { Link } from 'react-router-dom';
 import { listExpenses } from '../../actions/expenseActions';
 import { listUsers } from '../../actions/userActions';
-import { hslToHex } from '../../utils/helper_functions';
+import { hslToHex, toCapitalize } from '../../utils/helper_functions';
 import { API_Revenue, API_Products, API_Orders } from '../../utils';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { listPromos } from '../../actions/promoActions';
 import { Helmet } from 'react-helmet';
 import { Bar } from 'react-chartjs-2';
+import { Loading } from '../../components/UtilityComponents';
 
 const ControlPanelPage = (props) => {
 	const dispatch = useDispatch();
@@ -39,6 +40,8 @@ const ControlPanelPage = (props) => {
 	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState([]);
 	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
 	const [ yearly_income, set_yearly_income ] = useState([]);
+	const [ year, set_year ] = useState(2021);
+	const [ month, set_month ] = useState('january');
 
 	const [ year_2020, set_year_2020 ] = useState({});
 	const [ year_2021, set_year_2021 ] = useState({});
@@ -61,26 +64,15 @@ const ControlPanelPage = (props) => {
 
 	useEffect(() => {
 		// dispatch(listOrders('', '', '', 1, 10));
-		get_orders();
 		dispatch(listExpenses());
 		dispatch(listProducts());
 		dispatch(listUsers());
 		dispatch(listAffiliates());
 		dispatch(listPromos());
 		get_income();
+		get_occurrences();
+		get_orders();
 	}, []);
-
-	useEffect(
-		() => {
-			get_occurrences();
-			// if (order_data) {
-			// 	set_orders(order_data.orders);
-			// }
-
-			return () => {};
-		},
-		[ orders ]
-	);
 
 	useEffect(
 		() => {
@@ -141,10 +133,10 @@ const ControlPanelPage = (props) => {
 		set_monthly_orders(monthly);
 	};
 
-	const multiplier = 360 / product_occurrences.filter((product) => product.occurrence > 10).length;
+	const occurence_multiplier = 360 / product_occurrences.filter((product) => product.occurrence > 10).length;
 
-	let num = -multiplier;
-	const data = {
+	let occurence_num = -occurence_multiplier;
+	const occurences_bar_data = {
 		labels: product_occurrences.filter((product) => product.occurrence > 10).map((product) => product.name),
 		datasets: [
 			{
@@ -157,9 +149,9 @@ const ControlPanelPage = (props) => {
 				// backgroundColor: '#333333',
 				// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
 				backgroundColor: product_occurrences.map((item) => {
-					num += multiplier;
-					let color = hslToHex(num, 100, 50);
-					// return `hsl(${num}, 50%, 100%)`;
+					occurence_num += occurence_multiplier;
+					let color = hslToHex(occurence_num, 100, 50);
+					// return `hsl(${occurence_num}, 50%, 100%)`;
 					return color;
 				}),
 				color: 'white'
@@ -167,26 +159,63 @@ const ControlPanelPage = (props) => {
 		]
 	};
 
-	const options = {
+	const occurences_bar_options = {
 		responsive: true,
 		maintainAspectRatio: true,
 		fontColor: '#000000'
 	};
 
+	// const yearly_income_multiplier = 360 / [ 2020, 2021 ].length;
+
+	// let yearly_income_num = -yearly_income_multiplier;
+	// const yearly_income_bar_data = {
+	// 	labels: [ 2020, 2021 ],
+	// 	datasets: [
+	// 		{
+	// 			label: 'Year',
+	// 			data: [
+	// 				orders
+	// 					.filter(
+	// 						(order) =>
+	// 							new Date(order.createdAt) > new Date('2020-01-01') &&
+	// 							new Date(order.createdAt) < new Date('2020-12-31')
+	// 					)
+	// 					.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0),
+	// 				orders
+	// 					.filter(
+	// 						(order) =>
+	// 							new Date(order.createdAt) > new Date('2021-01-01') &&
+	// 							new Date(order.createdAt) < new Date('2021-12-31')
+	// 					)
+	// 					.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+	// 			],
+	// 			fill: false,
+	// 			borderColor: '#3e4c6d',
+	// 			// backgroundColor: '#333333',
+	// 			// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
+	// 			backgroundColor: orders.map((item) => {
+	// 				yearly_income_num += yearly_income_multiplier;
+	// 				let color = hslToHex(yearly_income_num, 100, 50);
+	// 				// return `hsl(${yearly_income_num}, 50%, 100%)`;
+	// 				return color;
+	// 			}),
+	// 			color: 'white'
+	// 		}
+	// 	]
+	// };
+
+	// const yearly_income_bar_options = {
+	// 	responsive: true,
+	// 	maintainAspectRatio: true,
+	// 	fontColor: '#000000'
+	// };
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
-				<title>Admin Control Panel | Glow LEDs</title>8
+				<title>Admin Control Panel | Glow LEDs</title>
 			</Helmet>
 
-			<div className="jc-b">
-				<Link to="/secure/glow/controlpanel/monthly_expenes/2020">
-					<button className="btn primary">2020 Monthly Expenses</button>
-				</Link>
-				<Link to="/secure/glow/controlpanel/monthly_expenes/2021">
-					<button className="btn primary">2021 Monthly Expenses</button>
-				</Link>
-			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>
 			</div>
@@ -237,6 +266,93 @@ const ControlPanelPage = (props) => {
 					<div className="fs-30px">{duration_of_opening().toFixed(0)}</div>
 				</div>
 			</div>
+			{/* <div className="mv-2rem">
+				<h2 className="mr-1rem">Monthly Expenses</h2>
+				<div className="row">
+					<div className="custom-select ">
+						<select
+							defaultValue={year}
+							className="qty_select_dropdown"
+							onChange={(e) => {
+								set_year(e.target.value);
+							}}
+						>
+							<option value="">---Choose Year---</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+						</select>
+						<span className="custom-arrow" />
+					</div>
+					<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year}>
+						<button className="btn primary">Go</button>
+					</Link>
+				</div>
+			</div> */}
+			<div className="row">
+				<div className="mv-2rem mr-2rem">
+					<h2 className="mr-1rem">Choose Year</h2>
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={year}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_year(e.target.value);
+								}}
+							>
+								<option value="">---Choose Year---</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+							</select>
+							<span className="custom-arrow" />
+						</div>
+						<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
+							<button className="btn primary">Go</button>
+						</Link>
+					</div>
+				</div>
+				<div className="mv-2rem">
+					<h2 className="mr-1rem">Choose Month</h2>
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={toCapitalize(month)}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_month(e.target.value);
+								}}
+							>
+								<option value="">---Choose Month---</option>
+								<option value="january">{toCapitalize('january')}</option>
+								<option value="february">{toCapitalize('february')}</option>
+								<option value="march">{toCapitalize('march')}</option>
+								<option value="april">{toCapitalize('april')}</option>
+								<option value="may">{toCapitalize('may')}</option>
+								<option value="june">{toCapitalize('june')}</option>
+								<option value="july">{toCapitalize('july')}</option>
+								<option value="august">{toCapitalize('august')}</option>
+								<option value="september">{toCapitalize('september')}</option>
+								<option value="october">{toCapitalize('october')}</option>
+								<option value="november">{toCapitalize('november')}</option>
+								<option value="december">{toCapitalize('december')}</option>
+							</select>
+							<span className="custom-arrow" />
+						</div>
+						<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
+							<button className="btn primary">Go</button>
+						</Link>
+					</div>
+				</div>
+			</div>
+			<Loading loading={orders && orders.length === 0} />
+			{/* {orders &&
+			orders.length > 0 && (
+				<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px">
+					<Bar data={yearly_income_bar_data} options={yearly_income_bar_options} />
+				</div>
+			)} */}
+			<Loading loading={expenses && expenses.length === 0} />
+			<Loading loading={orders && orders.length === 0} />
 			<div className="jc-b">
 				{expenses &&
 				orders &&
@@ -341,6 +457,8 @@ const ControlPanelPage = (props) => {
 						</table>
 					</div>
 				)}
+				<Loading loading={products && products.length === 0} />
+				<Loading loading={users && users.length === 0} />
 				{expenses &&
 				orders &&
 				products &&
@@ -364,7 +482,43 @@ const ControlPanelPage = (props) => {
 									className=""
 								>
 									<th style={{ padding: '15px' }}>Total Products</th>
-									<th style={{ padding: '15px' }}>{products.length}</th>
+									<th style={{ padding: '15px' }}>
+										{products.filter((product) => !product.hidden).length}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total Macro Products</th>
+									<th style={{ padding: '15px' }}>
+										{
+											products
+												.filter((product) => !product.hidden)
+												.filter((product) => !product.option).length
+										}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total Product Options</th>
+									<th style={{ padding: '15px' }}>
+										{
+											products
+												.filter((product) => !product.hidden)
+												.filter((product) => product.option).length
+										}
+									</th>
 								</tr>
 
 								<tr
@@ -374,8 +528,8 @@ const ControlPanelPage = (props) => {
 										height: '50px'
 									}}
 								>
-									<th style={{ padding: '15px' }}>Total Orders</th>
-									<th style={{ padding: '15px' }}>{orders.length}</th>
+									<th style={{ padding: '15px' }}>Total Orders Paid</th>
+									<th style={{ padding: '15px' }}>{orders.filter((order) => order.isPaid).length}</th>
 								</tr>
 
 								<tr
@@ -402,7 +556,8 @@ const ControlPanelPage = (props) => {
 						</table>
 					</div>
 				)}
-				{console.log({ orders })}
+				<Loading loading={affiliates && affiliates.length === 0} />
+				<Loading loading={promos && promos.length === 0} />
 				{orders &&
 				promos &&
 				affiliates && (
@@ -490,71 +645,13 @@ const ControlPanelPage = (props) => {
 					</div>
 				)}
 			</div>
-			<h2 className="ta-c w-100per jc-c">Product Occurences</h2>
-			<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px">
-				<Bar data={data} options={options} />
-			</div>
-			{/* <canvas id="occurrence_chart" ref={occurrence_chart_ref} /> */}
-			{/* {product_occurrences && (
-				<div className="order-list responsive_table">
-					<table className="styled-table">
-						<thead>
-							<tr>
-								<th>Category</th>
-								<th>Number of Occurrences</th>
-							</tr>
-						</thead>
-						<tbody>
-							{product_occurrences.map((item, index) => {
-								return (
-									<tr
-										key={index}
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-										className=""
-									>
-										<th style={{ padding: '15px' }}>{item.name}</th>
-										<th style={{ padding: '15px' }}>{item.occurrence}</th>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				</div>
-			)} */}
-			<h2 className="ta-c w-100per jc-c">Monthly Income</h2>
-			{/* <canvas id="monthly_income_chart" ref={monthly_income_chart_ref} /> */}
-			{monthly_income.length > 1 && (
-				<div className="order-list responsive_table">
-					<table className="styled-table">
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Daily Income</th>
-							</tr>
-						</thead>
-						<tbody>
-							{monthly_income.map((month, index) => {
-								return (
-									<tr
-										key={index}
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-										className=""
-									>
-										<th style={{ padding: '15px' }}>{month.month}</th>
-										<th style={{ padding: '15px' }}>${month.income.toFixed(2)}</th>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
+			{product_occurrences &&
+			product_occurrences.length > 0 && (
+				<div>
+					<h2 className="ta-c w-100per jc-c">Product Occurences</h2>
+					<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px">
+						<Bar data={occurences_bar_data} options={occurences_bar_options} />
+					</div>
 				</div>
 			)}
 		</div>

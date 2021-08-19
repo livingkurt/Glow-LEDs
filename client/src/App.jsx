@@ -90,7 +90,8 @@ import {
 	SettingsPage,
 	LabelCreatorPage,
 	AdminChangePasswordPage,
-	MonthlyExpensesPage
+	MonthlyExpensesPage,
+	MonthExpensesPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -331,6 +332,11 @@ const App = (props) => {
 								path="/secure/glow/controlpanel/monthly_expenes/:year"
 								exact={true}
 								component={MonthlyExpensesPage}
+							/>
+							<AdminRoute
+								path="/secure/glow/controlpanel/monthly_expenes/:year/:month"
+								exact={true}
+								component={MonthExpensesPage}
 							/>
 							<AdminRoute path="/secure/glow/controlpanel" component={ControlPanelPage} />
 							<AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />

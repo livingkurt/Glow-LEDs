@@ -91,7 +91,10 @@ const OrderPage = (props) => {
 		[ product_object ]
 	);
 	useEffect(() => {
-		get_total_orders();
+		// if (1 === 0) {
+		// 	get_total_orders();
+		// }
+
 		return () => {};
 	}, []);
 
@@ -109,17 +112,19 @@ const OrderPage = (props) => {
 				dispatch(detailsOrder(props.match.params.id));
 			}
 			set_payment_loading(false);
-			get_total_orders();
+			// if (1 === 0) {
+			// 	get_total_orders();
+			// }
 		},
 		[ successPay ]
 	);
 
-	const get_total_orders = async () => {
-		set_loading_label(true);
-		const { data } = await API_Orders.total_orders();
-		set_all_orders(data);
-		set_loading_label(false);
-	};
+	// const get_total_orders = async () => {
+	// 	set_loading_label(true);
+	// 	const { data } = await API_Orders.total_orders();
+	// 	set_all_orders(data);
+	// 	set_loading_label(false);
+	// };
 
 	// useEffect(() => {
 	// 	empty_cart();

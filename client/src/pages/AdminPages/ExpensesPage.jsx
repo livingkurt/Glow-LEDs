@@ -145,6 +145,51 @@ const ExpensesPage = (props) => {
 		}
 	};
 
+	// const expenses_breakdown_multiplier = 360 / [ 2020, 2021 ].length;
+
+	// let expenses_breakdown_num = -expenses_breakdown_multiplier;
+	// const expenses_breakdown_bar_data = {
+	// 	labels: [ 2020, 2021 ],
+	// 	datasets: [
+	// 		{
+	// 			label: 'Year',
+	// 			data: [
+	// 				expenses
+	// 					.filter(
+	// 						(order) =>
+	// 							new Date(order.createdAt) > new Date('2020-01-01') &&
+	// 							new Date(order.createdAt) < new Date('2020-12-31')
+	// 					)
+	// 					.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0),
+	// 				expenses
+	// 					.filter(
+	// 						(order) =>
+	// 							new Date(order.createdAt) > new Date('2021-01-01') &&
+	// 							new Date(order.createdAt) < new Date('2021-12-31')
+	// 					)
+	// 					.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+	// 			],
+	// 			fill: false,
+	// 			borderColor: '#3e4c6d',
+	// 			// backgroundColor: '#333333',
+	// 			// backgroundColor: [ 'red', 'blue', 'green', 'blue', 'red', 'blue' ],
+	// 			backgroundColor: product_occurrences.map((item) => {
+	// 				expenses_breakdown_num += expenses_breakdown_multiplier;
+	// 				let color = hslToHex(expenses_breakdown_num, 100, 50);
+	// 				// return `hsl(${expenses_breakdown_num}, 50%, 100%)`;
+	// 				return color;
+	// 			}),
+	// 			color: 'white'
+	// 		}
+	// 	]
+	// };
+
+	// const expenses_breakdown_bar_options = {
+	// 	responsive: true,
+	// 	maintainAspectRatio: true,
+	// 	fontColor: '#000000'
+	// };
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>

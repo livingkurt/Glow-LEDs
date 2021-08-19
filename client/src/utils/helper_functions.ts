@@ -45,7 +45,7 @@ export const removeDuplicates = (originalArray: any, prop: any) => {
 // 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
 // };
 
-export const toCapitlize = (string: string) => {
+export const toCapitalize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
@@ -235,7 +235,7 @@ export const calculate_affiliate_usage = (affiliates: any, orders: any) => {
 			);
 		}).length;
 		return {
-			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+			'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 			Uses: code_usage,
 			Revenue: ` $${orders
 				.filter(
@@ -269,7 +269,7 @@ export const calculate_sponsor_usage = (affiliates: any, orders: any) => {
 			);
 		}).length;
 		return {
-			'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+			'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 			Uses: code_usage,
 			Revenue: ` $${orders
 				.filter(

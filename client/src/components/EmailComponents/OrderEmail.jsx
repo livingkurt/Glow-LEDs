@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
-import { format_date, toCapitlize } from '../../utils/helper_functions';
+import { format_date, toCapitalize } from '../../utils/helper_functions';
 import { detailsOrderPublic } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
@@ -34,7 +34,7 @@ const OrderEmail = (props) => {
 	// const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(() => {
-		dispatch(listEmails(toCapitlize(props.match.params.status)));
+		dispatch(listEmails(toCapitalize(props.match.params.status)));
 		dispatch(detailsOrderPublic(props.match.params.id));
 		// dispatch(detailsOrderPublic(props.match.params.id));
 		dispatch(listPromos());

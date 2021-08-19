@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { detailsFeature } from '../../actions/featureActions';
 import { API_Emails } from '../../utils';
-import { toCapitlize } from '../../utils/helper_functions';
+import { toCapitalize } from '../../utils/helper_functions';
 
 const FeatureEmail = (props) => {
 	const history = useHistory();
@@ -298,7 +298,7 @@ const FeatureEmail = (props) => {
 															Category:{' '}
 															{feature &&
 																feature.category &&
-																toCapitlize(feature.category)}
+																toCapitalize(feature.category)}
 														</td>
 													</tr>
 													{feature.instagram_handle && (

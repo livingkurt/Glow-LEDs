@@ -52,13 +52,13 @@ export const top_code_usage_upload = async (affiliates: any, orders: any, last_m
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
-		const toCapitlize = (string: string) => {
+		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
 		const last_months_rows = affiliates.filter((affiliate: any) => affiliate.active).map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 				Uses: last_months_orders.filter((order: any) => {
 					return (
 						order.promo_code &&
@@ -69,7 +69,7 @@ export const top_code_usage_upload = async (affiliates: any, orders: any, last_m
 		});
 		const total_rows = affiliates.filter((affiliate: any) => affiliate.active).map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
 					return (
 						order.promo_code &&
@@ -157,13 +157,13 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
-		const toCapitlize = (string: string) => {
+		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
 		const last_months_rows = affiliates.filter((affiliate: any) => affiliate.active).map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 				Uses: last_months_orders.filter((order: any) => {
 					return (
 						order.promo_code &&
@@ -199,7 +199,7 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 		});
 		const total_rows = affiliates.filter((affiliate: any) => affiliate.active).map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
 					return (
 						order.promo_code &&
@@ -314,7 +314,7 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
-		const toCapitlize = (string: string) => {
+		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
@@ -505,13 +505,13 @@ export const team_revenue_upload = async (teams: any, orders: any, last_months_o
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
-		const toCapitlize = (string: string) => {
+		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
 		const last_months_rows = teams.map((team: any) => {
 			return {
-				'Promo Code': toCapitlize(team.public_code.promo_code),
+				'Promo Code': toCapitalize(team.public_code.promo_code),
 				Uses: last_months_orders.filter((order: any) => {
 					return (
 						order.promo_code && order.promo_code.toLowerCase() === team.public_code.promo_code.toLowerCase()
@@ -545,7 +545,7 @@ export const team_revenue_upload = async (teams: any, orders: any, last_months_o
 		});
 		const total_rows = teams.map((team: any) => {
 			return {
-				'Promo Code': toCapitlize(team.public_code.promo_code),
+				'Promo Code': toCapitalize(team.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
 					return (
 						order.promo_code && order.promo_code.toLowerCase() === team.public_code.promo_code.toLowerCase()

@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { detailsAffiliate } from '../../actions/affiliateActions';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
-import { toCapitlize } from '../../utils/helper_functions';
+import { toCapitalize } from '../../utils/helper_functions';
 
 const AffiliateEmail = (props) => {
 	const history = useHistory();
@@ -339,7 +339,7 @@ const AffiliateEmail = (props) => {
 														Category:{' '}
 														{affiliate &&
 															affiliate.category &&
-															toCapitlize(affiliate.category)}
+															toCapitalize(affiliate.category)}
 													</td>
 												</tr>
 												{affiliate.instagram_handle && (

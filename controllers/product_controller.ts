@@ -785,6 +785,7 @@ export default {
 		const products = await Product.find({ deleted: false }).sort({ category: 1 });
 		const categories = products.map((product: any) => product.category);
 		const no_dups_categories = categories.filter((value: any, index: any) => categories.indexOf(value) === index);
+		console.log({ no_dups_categories });
 		res.send(no_dups_categories);
 	},
 	get_all_subcategories: async (req: any, res: any) => {

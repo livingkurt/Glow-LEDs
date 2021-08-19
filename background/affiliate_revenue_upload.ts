@@ -73,13 +73,13 @@ const affiliate_revenue_upload = async () => {
 		// 	total_affiliate_revenue = revenue.reduce((a: string, c: string) => parseFloat(a) + parseFloat(c), 0);
 		// 	console.log({ revenue });
 		// };
-		const toCapitlize = (string: string) => {
+		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
 
 		const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 				Uses: last_month_orders.filter((order: any) => {
 					return (
 						order.promo_code &&
@@ -115,7 +115,7 @@ const affiliate_revenue_upload = async () => {
 		});
 		const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
 			return {
-				'Promo Code': toCapitlize(affiliate.public_code.promo_code),
+				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 				Uses: orders.filter((order: any) => {
 					return (
 						order.promo_code &&

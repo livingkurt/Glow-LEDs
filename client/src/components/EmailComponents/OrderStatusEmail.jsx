@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails, API_Orders } from '../../utils';
-import { format_date, toCapitlize } from '../../utils/helper_functions';
+import { format_date, toCapitalize } from '../../utils/helper_functions';
 import { detailsOrder, detailsOrderPublic, update_order } from '../../actions/orderActions';
 import {
 	determine_product_name,
@@ -35,7 +35,7 @@ const OrderStatusEmail = (props) => {
 	const [ message_to_user, set_message_to_user ] = useState('');
 
 	useEffect(() => {
-		stableDispatch(listEmails(toCapitlize(props.match.params.status)));
+		stableDispatch(listEmails(toCapitalize(props.match.params.status)));
 		// stableDispatch(detailsOrder(props.match.params.id));
 		return () => {};
 	}, []);
