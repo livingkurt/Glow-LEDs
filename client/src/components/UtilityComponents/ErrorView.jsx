@@ -4,16 +4,12 @@ require('dotenv').config();
 // Components
 
 const ErrorView = (props) => {
-	const loading_message = () => {
-		setTimeout(() => {
-			return <h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
-		}, 3000);
-	};
+	console.log({ props });
 
 	return (
 		<div>
 			<div className="error_message jc-c column">
-				<p className="ta-c  fs-14px">Bugsnag Error</p>
+				<p className="ta-c  fs-14px">Error</p>
 			</div>
 		</div>
 	);

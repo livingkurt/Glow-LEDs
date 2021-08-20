@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 // import { Chart, CategoryScale } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import { hslToHex, toCapitalize } from '../../utils/helper_functions';
+import { hslToHex, humanize, toCapitalize } from '../../utils/helper_functions';
 import { API_Orders, API_Products } from '../../utils';
 import { Helmet } from 'react-helmet';
 import { Loading } from '../../components/UtilityComponents';
@@ -132,40 +132,39 @@ const MonthExpensesPage = (props) => {
 		fontColor: '#000000'
 	};
 
-	// const income_pie_multiplier = 360 / 5;
-	// let income_pie_num = -income_pie_multiplier;
+	const income_pie_multiplier = 360 / categories.length;
+	let income_pie_num = -income_pie_multiplier;
 
-	// const income_pie_data = {
-	// 	labels: categories && categories,
-	// 	datasets: [
-	// 		{
-	// 			label: 'Income',
-	// 			data:
-	// 				categories &&
-	// 				categories.map((category) =>
-	// 					orders.forEach((order) =>
-	// 						order.orderItems
-	// 							.map((item) => item.category === category)
-	// 							.reduce((a, c) => parseFloat(a) + parseFloat(c.totalPrice) - parseFloat(c.taxPrice), 0)
-	// 					)
-	// 				),
-	// 			borderWidth: 1,
-	// 			fill: true,
-	// 			borderColor: '#3e4c6d',
-	// 			backgroundColor: [ 'Supplies', 'Entertainment', 'Website', 'Shipping', 'Equipment' ].map((item) => {
-	// 				income_pie_num += income_pie_multiplier;
-	// 				let color = hslToHex(income_pie_num, 100, 50);
-	// 				return color;
-	// 			}),
-	// 			color: 'white'
-	// 		}
-	// 	]
-	// };
-	// const income_pie_options = {
-	// 	responsive: true,
-	// 	maintainAspectRatio: true,
-	// 	fontColor: '#000000'
-	// };
+	const income_pie_data = {
+		labels: categories.map((category) => toCapitalize(category)),
+		datasets: [
+			{
+				label: 'Income',
+				data: categories.map((category) =>
+					orders
+						.map((order) => order.orderItems)
+						.flat(1)
+						.filter((item) => item.category === category)
+						.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0)
+						.toFixed(2)
+				),
+				borderWidth: 1,
+				fill: true,
+				borderColor: '#3e4c6d',
+				backgroundColor: categories.map((item) => {
+					income_pie_num += income_pie_multiplier;
+					let color = hslToHex(income_pie_num, 100, 50);
+					return color;
+				}),
+				color: 'white'
+			}
+		]
+	};
+	const income_pie_options = {
+		responsive: true,
+		maintainAspectRatio: true,
+		fontColor: '#000000'
+	};
 	const history = useHistory();
 	const switch_month = (e) => {
 		e.preventDefault();
@@ -223,6 +222,7 @@ const MonthExpensesPage = (props) => {
 						</Link> */}
 					</div>
 				</div>
+
 				<div className="mv-2rem">
 					<h2 className="mr-1rem">Choose Month</h2>
 					<div className="row">
@@ -256,12 +256,118 @@ const MonthExpensesPage = (props) => {
 					</div>
 				</div>
 			</div>
+			{orders &&
+			orders.length > 0 && (
+				<div className="jc-b">
+					<div>
+						<h2>{year} Income</h2>
+						<div className="fs-30px">
+							${orders && orders.length > 0 ? (
+								orders
+									.filter((order) => order.isPaid)
+									.reduce(
+										(a, c) => parseFloat(a) + parseFloat(c.totalPrice) - parseFloat(c.taxPrice),
+										0
+									)
+									.toFixed(2)
+							) : (
+								'0.00'
+							)}
+						</div>
+					</div>
+					<div>
+						<h2>{year} Expenses</h2>
+						<div className="fs-30px">
+							${expenses && expenses.length > 0 ? (
+								expenses.reduce((a, c) => parseFloat(a) + parseFloat(c.amount), 0).toFixed(2)
+							) : (
+								'0.00'
+							)}
+						</div>
+					</div>
+					<div>
+						<h2>{year} Profit</h2>
+						<div className="fs-30px">
+							${monthly_income && monthly_income.length > 0 ? (
+								(orders
+									.filter((order) => order.isPaid)
+									.reduce(
+										(a, c) => parseFloat(a) + parseFloat(c.totalPrice) - parseFloat(c.taxPrice),
+										0
+									) - expenses.reduce((a, c) => parseFloat(a) + parseFloat(c.amount), 0)).toFixed(2)
+							) : (
+								'0.00'
+							)}
+						</div>
+					</div>
+				</div>
+			)}
+			<Loading loading={orders.length === 0} />
+			{orders &&
+			orders.length > 0 && (
+				<div>
+					<h2 className="ta-c w-100per jc-c">
+						{this_month} {this_year} Income
+					</h2>
+					<div className="row ">
+						<div className="w-50per">
+							<div className="order-list responsive_table">
+								<table className="styled-table">
+									<thead>
+										<tr>
+											<th>Category</th>
+											<th>Expense</th>
+										</tr>
+									</thead>
+									<tbody>
+										{categories.map((category, index) => (
+											<tr
+												key={index}
+												style={{
+													backgroundColor: '#626262',
+													fontSize: '1.4rem',
+													height: '50px'
+												}}
+											>
+												<th style={{ padding: '15px' }}>{toCapitalize(humanize(category))}</th>
+												<th style={{ padding: '15px' }}>
+													{console.log({
+														orderItems: orders
+															.map((order) => order.orderItems)
+															.flat(1)
+															.filter((item) => item.category === category)
+													})}
+													${orders && orders.length > 0 ? (
+														orders
+															.map((order) => order.orderItems)
+															.flat(1)
+															.filter((item) => item.category === category)
+															.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0)
+															.toFixed(2)
+													) : (
+														'0.00'
+													)}
+												</th>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div className="order-list responsive_table w-50per">
+							<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px jc-b ">
+								<Pie data={income_pie_data} options={income_pie_options} />
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 			<Loading loading={expenses.length === 0} />
 			{expenses &&
 			expenses.length > 0 && (
 				<div>
 					<h2 className="ta-c w-100per jc-c">
-						{this_month} {this_year} Income
+						{this_month} {this_year} Expenses
 					</h2>
 					<div className="row ">
 						<div className="w-50per">
@@ -315,36 +421,22 @@ const MonthExpensesPage = (props) => {
 			)}
 
 			{/* <Loading loading={orders.length === 0} /> */}
-			{/* {orders &&
-			orders.length > 0 && (
+			{/* {orders.length > 0 && (
 				<div className="">
 					<div className="jc-b">
 						{categories &&
 							categories.map((category) => (
 								<div>
-									<h2>
-										{this_month} {this_year} {toCapitalize(category)}
-									</h2>
+									<h2>{toCapitalize(humanize(category))}</h2>
 									<div className="fs-30px">
-									${orders && orders.length > 0 ? (
-										orders
-											.filter((expense) => expense.category === category)
+										${orders
+											.map((order) => order.orderItems)
+											.filter((item) => item.category === category)
 											.reduce((a, c) => parseFloat(a) + parseFloat(c.amount), 0)
-											.toFixed(2)
-									) : (
-										'0.00'
-									)}
-								</div>
+											.toFixed(2) || '0.00'}
+									</div>
 								</div>
 							))}
-					</div>
-					<h2 className="ta-c w-100per jc-c">
-						{this_month} {this_year} Monthly Income
-					</h2>
-
-						<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px jc-b">
-							<Pie data={income_pie_data} options={income_pie_options} />
-						</div>
 					</div>
 				</div>
 			)} */}

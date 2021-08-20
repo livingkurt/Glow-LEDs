@@ -41,7 +41,7 @@ const ControlPanelPage = (props) => {
 	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
 	const [ yearly_income, set_yearly_income ] = useState([]);
 	const [ year, set_year ] = useState(2021);
-	const [ month, set_month ] = useState('january');
+	const [ month, set_month ] = useState();
 
 	const [ year_2020, set_year_2020 ] = useState({});
 	const [ year_2021, set_year_2021 ] = useState({});
@@ -306,7 +306,7 @@ const ControlPanelPage = (props) => {
 							</select>
 							<span className="custom-arrow" />
 						</div>
-						<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
+						<Link to={`/secure/glow/controlpanel/monthly_expenes/${year}${month ? `/${month}` : ''}`}>
 							<button className="btn primary">Go</button>
 						</Link>
 					</div>
@@ -316,7 +316,7 @@ const ControlPanelPage = (props) => {
 					<div className="row">
 						<div className="custom-select ">
 							<select
-								defaultValue={toCapitalize(month)}
+								defaultValue={'January'}
 								className="qty_select_dropdown"
 								onChange={(e) => {
 									set_month(e.target.value);

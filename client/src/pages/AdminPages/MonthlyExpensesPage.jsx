@@ -264,63 +264,66 @@ const MonthlyExpensesPage = (props) => {
 					<button className="btn primary">Back to Control Panel</button>
 				</Link>
 			</div>
-			<div className="mv-2rem">
-				<h2 className="mr-1rem">Year</h2>
-				<div className="row">
-					<div className="custom-select ">
-						<select
-							defaultValue={year}
-							className="qty_select_dropdown"
-							onChange={(e) => {
-								switch_year(e);
-							}}
-						>
-							<option value="">---Choose Year---</option>
-							<option value="2020">2020</option>
-							<option value="2021">2021</option>
-						</select>
-						<span className="custom-arrow" />
-					</div>
-					{/* <Link to={'/secure/glow/controlpanel/monthly_expenes/' + year}>
+			<div className="row">
+				<div className="mv-2rem mr-2rem">
+					<h2 className="mr-1rem">Choose Year</h2>
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={year}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									switch_year(e);
+								}}
+							>
+								<option value="">---Choose Year---</option>
+								<option value="2020">2020</option>
+								<option value="2021">2021</option>
+							</select>
+							<span className="custom-arrow" />
+						</div>
+						{/* <Link to={'/secure/glow/controlpanel/monthly_expenes/' + year}>
 						<button className="btn primary">
 							Go
 						</button>
 					</Link> */}
+					</div>
+				</div>
+
+				<div className="mv-2rem">
+					<h2 className="mr-1rem">Choose Month</h2>
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={month}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_month(e.target.value);
+								}}
+							>
+								<option value="">---Choose Month---</option>
+								<option value="january">{toCapitalize('january')}</option>
+								<option value="february">{toCapitalize('february')}</option>
+								<option value="march">{toCapitalize('march')}</option>
+								<option value="april">{toCapitalize('april')}</option>
+								<option value="may">{toCapitalize('may')}</option>
+								<option value="june">{toCapitalize('june')}</option>
+								<option value="july">{toCapitalize('july')}</option>
+								<option value="august">{toCapitalize('august')}</option>
+								<option value="september">{toCapitalize('september')}</option>
+								<option value="october">{toCapitalize('october')}</option>
+								<option value="november">{toCapitalize('november')}</option>
+								<option value="december">{toCapitalize('december')}</option>
+							</select>
+							<span className="custom-arrow" />
+						</div>
+						<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
+							<button className="btn primary">Go</button>
+						</Link>
+					</div>
 				</div>
 			</div>
 			<h2 className="ta-c w-100per jc-c">{year} Monthly Breakdown</h2>
-			<div className="mv-2rem">
-				<h2 className="mr-1rem">Individual Month Breakdown</h2>
-				<div className="row">
-					<div className="custom-select ">
-						<select
-							defaultValue={month}
-							className="qty_select_dropdown"
-							onChange={(e) => {
-								set_month(e.target.value);
-							}}
-						>
-							<option value="">---Choose Month---</option>
-							<option value="january">{toCapitalize('january')}</option>
-							<option value="february">{toCapitalize('february')}</option>
-							<option value="march">{toCapitalize('march')}</option>
-							<option value="april">{toCapitalize('april')}</option>
-							<option value="may">{toCapitalize('may')}</option>
-							<option value="june">{toCapitalize('june')}</option>
-							<option value="july">{toCapitalize('july')}</option>
-							<option value="august">{toCapitalize('august')}</option>
-							<option value="september">{toCapitalize('september')}</option>
-							<option value="october">{toCapitalize('october')}</option>
-							<option value="november">{toCapitalize('november')}</option>
-							<option value="december">{toCapitalize('december')}</option>
-						</select>
-						<span className="custom-arrow" />
-					</div>
-					<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
-						<button className="btn primary">Go</button>
-					</Link>
-				</div>
-			</div>
 			<Loading loading={monthly_income.length === 0} />
 			{monthly_income &&
 			monthly_income.length > 0 && (

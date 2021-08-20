@@ -550,10 +550,12 @@ export default {
 	},
 	total_orders: async (req: any, res: any) => {
 		const orders = await Order.find({ deleted: false })
+			.lean()
 			.sort({ date: -1 })
 			.populate('user')
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product');
+
 		res.json(orders);
 	},
 	tax_rates: async (req: any, res: any) => {
