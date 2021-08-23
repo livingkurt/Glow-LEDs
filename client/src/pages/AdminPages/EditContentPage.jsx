@@ -457,8 +457,6 @@ const EditContentPage = (props) => {
 																name="label"
 																value={link.label}
 																id="label"
-																// onChange={(e) =>
-																// 	set_links({ ...links, label: e.target.value })}
 																onChange={(e) =>
 																	update_link_item_property(e, e.target.name, index)}
 															/>
@@ -470,8 +468,6 @@ const EditContentPage = (props) => {
 																name="link"
 																value={link.link}
 																id="link"
-																// onChange={(e) =>
-																// 	set_links({ ...links, link: e })}
 																onChange={(e) =>
 																	update_link_item_property(e, e.target.name, index)}
 															/>
@@ -483,8 +479,6 @@ const EditContentPage = (props) => {
 																name="icon"
 																value={link.icon}
 																id="icon"
-																// onChange={(e) =>
-																// 	set_links({ ...links, button: e })}
 																onChange={(e) =>
 																	update_link_item_property(e, e.target.name, index)}
 															/>

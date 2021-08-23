@@ -4,8 +4,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import useWindowDimensions from './components/Hooks/windowDimensions';
+import { detailsContent, listContents } from './actions/contentActions';
 
 const Links = (props) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(listContents());
+		return () => {};
+	}, []);
+
+	const contentDetails = useSelector((state) => state.contentDetails);
+	const { content } = contentDetails;
+
+	const contentList = useSelector((state) => state.contentList);
+	const { contents } = contentList;
+
+	useEffect(
+		() => {
+			if (contents) {
+				const active_content = contents.find((content) => content.active === true);
+				if (active_content) {
+					dispatch(detailsContent(active_content._id));
+				}
+			}
+
+			return () => {};
+		},
+		[ contents, dispatch ]
+	);
 	const { width, height } = useWindowDimensions();
 	const transition = (element) => {
 		const link = element;
@@ -145,34 +171,13 @@ const Links = (props) => {
 				</div>
 			</div>
 			<div id="links">
-				<a className="link special_font" rel="noreferrer" href="https://github.com/minimarvin" target="_blank">
-					<i className="fa fa-github" /> Github
-				</a>
-				<a
-					className="link special_font"
-					rel="noreferrer"
-					href="https://www.linkedin.com/in/caiogomes001/"
-					target="_blank"
-				>
-					<i className="fa fa-linkedin" aria-hidden="true" /> LinkedIn
-				</a>
-				<a className="link special_font" rel="noreferrer" href="http://caiogomes.dev" target="_blank">
-					<i className="fa fa-globe" aria-hidden="true" />
-					Website
-				</a>
-				<a className="link special_font" rel="noreferrer" href="mailto:contato@caiogomes.dev" target="_blank">
-					<i className="fa fa-envelope" aria-hidden="true" />
-					E-mail
-				</a>
-				<a
-					className="link special_font"
-					rel="noreferrer"
-					href="https://web.whatsapp.com/send?phone=558192558512"
-					target="_blank"
-				>
-					<i className="fa fa-whatsapp" aria-hidden="true" />
-					WhatsApp
-				</a>
+				{content &&
+					content.links &&
+					content.links.map((link) => (
+						<a className="link special_font" rel="noreferrer" href={link.link}>
+							{link.icon && <i className={link.icon} />} {link.label}
+						</a>
+					))}
 			</div>
 		</div>
 	);

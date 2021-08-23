@@ -44,7 +44,20 @@ const ContentsPage = (props) => {
 			<Helmet>
 				<title>Admin Contents | Glow LEDs</title>
 			</Helmet>
-			<div className="wrap jc-fe">
+			<div className="wrap jc-b">
+				<a
+					href={
+						process.env.NODE_ENV === 'production' ? (
+							'https://www.glow-leds.com/links'
+						) : (
+							'http://localhost:3000/links'
+						)
+					}
+				>
+					<button className="btn primary" style={{ width: '160px' }}>
+						Visit Links Page
+					</button>
+				</a>
 				<Link to="/secure/glow/editcontent">
 					<button className="btn primary" style={{ width: '160px' }}>
 						Create Content
