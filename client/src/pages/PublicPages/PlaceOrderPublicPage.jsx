@@ -983,7 +983,7 @@ const PlaceOrderPublicPage = (props) => {
 									{promo_code_validations}
 								</label>
 								{show_message && (
-									<div className="promo_code mv-1rem">
+									<div className="promo_code mv-2rem">
 										<button className="btn icon" onClick={() => remove_promo()}>
 											<i className="fas fa-times mr-5px" />
 										</button>
@@ -992,7 +992,7 @@ const PlaceOrderPublicPage = (props) => {
 								)}
 							</div>
 						)}
-						<div className="w-100per">
+						<div className="w-100per mb-1rem">
 							<div htmlFor="order_note">Add a note</div>
 							<input
 								type="text"

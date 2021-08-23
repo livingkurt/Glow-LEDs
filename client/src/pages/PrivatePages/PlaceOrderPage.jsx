@@ -1105,7 +1105,7 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						)}
-						<div className="w-100per">
+						<div className="w-100per ">
 							<div htmlFor="order_note">Add a note</div>
 							<input
 								type="text"
