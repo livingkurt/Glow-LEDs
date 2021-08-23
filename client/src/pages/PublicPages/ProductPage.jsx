@@ -536,9 +536,8 @@ const ProductPage = (props) => {
 									</div>
 									{/* </div> */}
 								</div>
-								{/* <div
-								>
-									<Swiper
+								<div>
+									{/* <Swiper
 										style={{
 											'--swiper-navigation-color': '#fff',
 											'--swiper-pagination-color': '#fff'
@@ -552,13 +551,7 @@ const ProductPage = (props) => {
 									>
 										{images &&
 											images.map((image, index) => (
-												<SwiperSlide
-													key={index}
-													// style={{
-													// 	height: 'auto',
-													// 	width: '100%'
-													// }}
-												>
+												<SwiperSlide key={index}>
 													<img
 														id="expandedImg"
 														alt={name}
@@ -574,8 +567,8 @@ const ProductPage = (props) => {
 													/>
 												</SwiperSlide>
 											))}
-									</Swiper>
-								</div> */}
+									</Swiper> */}
+								</div>
 								{/* <div className="w-100per max-h-400px">
 									<Swipe images={images} />
 								</div> */}
@@ -764,21 +757,34 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-									{/* {product.color_product_group &&
+									{/* {size !== '1 Sled' &&
+									product.color_product_group &&
 									product.color_products &&
 									product.color_products.length > 0 && (
-										<StyledDropdown
-											onChange={update_color}
-											items={product.color_products}
-											label={
-												product.color_product_group_name ? (
-													product.color_product_group_name
-												) : (
-													'Color'
-												)
-											}
-										/>
+										<li>
+											<div className="ai-c h-25px mb-25px">
+												<label
+													aria-label="sortOrder"
+													htmlFor="sortOrder"
+													className="select-label mr-1rem"
+												>
+													{product.color_group_name ? product.color_group_name : 'Color'}:
+												</label>
+												<StyledDropdown
+													onChange={update_color}
+													items={product.color_products}
+													label={
+														product.color_product_group_name ? (
+															product.color_product_group_name
+														) : (
+															'Color'
+														)
+													}
+												/>
+											</div>
+										</li>
 									)} */}
+
 									{size !== '1 Skin' &&
 									product.secondary_color_product_group &&
 									product.secondary_color_products &&

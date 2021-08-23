@@ -48,7 +48,7 @@ const Banner = (props) => {
 						<div className="ml-10px mt-5px fs-12px">
 							<label>{content.banner.label}</label>
 						</div>
-						{width > 400 &&
+						{width > 450 &&
 						content.banner.button &&
 						content.banner.link && (
 							<Link to={content.banner.link && content.banner.link} className="ml-10px">
@@ -58,41 +58,47 @@ const Banner = (props) => {
 					</div>
 				)}
 				{/* </div> */}
-				<div className="row mt-3px social_media_banner">
-					<div className="ml-10px">
-						<a
-							href="https://www.facebook.com/Glow-LEDscom-100365571740684"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<i className="fab fa-facebook zoom" />
-						</a>
+				{width > 400 && (
+					<div className="row mt-3px social_media_banner">
+						<div className="ml-10px">
+							<a
+								href="https://www.facebook.com/Glow-LEDscom-100365571740684"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<i className="fab fa-facebook zoom" />
+							</a>
+						</div>
+						<div className="ml-10px">
+							<a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer">
+								<i className="fab fa-instagram zoom" />
+							</a>
+						</div>
+						<div className="ml-10px">
+							<a
+								href="https://www.tiktok.com/@glow_leds?lang=en"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<i className="fab fa-tiktok zoom" />
+							</a>
+						</div>
+						<div className="mh-10px">
+							<a
+								href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<i className="fab fa-youtube zoom" />
+							</a>
+						</div>
+						<div className="mr-10px">
+							<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
+								<i className="fab fa-soundcloud" />
+							</a>
+						</div>
 					</div>
-					<div className="ml-10px">
-						<a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer">
-							<i className="fab fa-instagram zoom" />
-						</a>
-					</div>
-					<div className="ml-10px">
-						<a href="https://www.tiktok.com/@glow_leds?lang=en" target="_blank" rel="noopener noreferrer">
-							<i className="fab fa-tiktok zoom" />
-						</a>
-					</div>
-					<div className="mh-10px">
-						<a
-							href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<i className="fab fa-youtube zoom" />
-						</a>
-					</div>
-					<div className="mr-10px">
-						<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
-							<i className="fab fa-soundcloud" />
-						</a>
-					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);

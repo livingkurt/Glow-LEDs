@@ -466,6 +466,9 @@
 	.cart-price {
 		font-size: 16px;
 	}
+	// .social_media_banner {
+	// 	display: none !important;
+	// }
 }
 
 @media only screen and (max-width: 412px) {
@@ -473,9 +476,7 @@
 		height: 125px !important;
 		width: 125px !important;
 	}
-	.social_media_banner {
-		display: none !important;
-	}
+
 	.product_title_top {
 		font-size: 3rem !important;
 	}

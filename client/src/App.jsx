@@ -420,6 +420,11 @@ const App = (props) => {
 							<Route path="/checkout/cart/:pathname?" component={CartPage} />
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
+								path="/collections/all/products/code/:promo_code?"
+								exact={true}
+								component={AllProductsPage}
+							/>
+							<Route
 								path="/collections/all/products/category/:category/subcategory/:subcategory?"
 								component={AllProductsPage}
 							/>

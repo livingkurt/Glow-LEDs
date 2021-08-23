@@ -29,6 +29,7 @@ const AllProductsPage = (props) => {
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 	const collection = props.match.params.collection ? props.match.params.collection : '';
+	const promo_code = props.match.params.promo_code ? props.match.params.promo_code : '';
 
 	// console.log({ subcategory });
 	// console.log(props.match.params);
@@ -48,6 +49,14 @@ const AllProductsPage = (props) => {
 			dispatch(listChips());
 		},
 		[ searchKeyword ]
+	);
+	useEffect(
+		() => {
+			if (promo_code) {
+				sessionStorage.setItem('promo_code', promo_code);
+			}
+		},
+		[ promo_code ]
 	);
 	// useEffect(
 	// 	() => {

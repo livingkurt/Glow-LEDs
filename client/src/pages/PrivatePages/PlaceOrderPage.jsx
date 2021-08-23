@@ -58,6 +58,8 @@ const PlaceOrderPage = (props) => {
 	const [ user, set_user ] = useState(userInfo);
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
+	const [ show_promo_code, set_show_promo_code ] = useState(false);
+	const [ show_promo_code_input_box, set_show_promo_code_input_box ] = useState(true);
 
 	const [ no_user, set_no_user ] = useState(false);
 	const [ paid, set_paid ] = useState(false);
@@ -97,11 +99,12 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			const shipping_cookie = localStorage.getItem('shippingAddress');
-			console.log({ shipping_cookie });
-			if (shipping_cookie) {
-				stableDispatch(saveShipping(JSON.parse(shipping_cookie)));
+			const shipping_storage = localStorage.getItem('shippingAddress');
+			console.log({ shipping_storage });
+			if (shipping_storage) {
+				stableDispatch(saveShipping(JSON.parse(shipping_storage)));
 			}
+
 			stableDispatch(savePayment({ paymentMethod }));
 			stable_setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
@@ -123,6 +126,7 @@ const PlaceOrderPage = (props) => {
 		},
 		[ error, stable_set_payment_loading ]
 	);
+
 	useEffect(
 		() => {
 			if (shipping) {
@@ -199,6 +203,8 @@ const PlaceOrderPage = (props) => {
 		set_hide_pay_button(false);
 		set_shipping_rate(rate);
 		set_current_shipping_speed({ rate, speed });
+		get_promo_code();
+		set_show_promo_code(true);
 	};
 
 	const re_choose_shipping_rate = () => {
@@ -226,6 +232,15 @@ const PlaceOrderPage = (props) => {
 			setTaxPrice(tax_rate * itemsPrice);
 		}
 		set_loading_tax_rate(false);
+	};
+
+	const get_promo_code = () => {
+		const promo_code_storage = sessionStorage.getItem('promo_code');
+		if (promo_code_storage && promo_code_storage.length > 0) {
+			console.log({ promo_code_storage });
+			set_promo_code(promo_code_storage.toLowerCase());
+			activate_promo_code(promo_code_storage);
+		}
 	};
 
 	useEffect(
@@ -482,10 +497,72 @@ const PlaceOrderPage = (props) => {
 		console.log({ promo_code });
 
 		if (request.isValid) {
-			const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
-			console.log({ isValid: promo, promo_code: promo_code });
-			let promo_excluded = 0;
-			let promo_included = 0;
+			activate_promo_code(promo_code.toLowerCase());
+			// const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
+			// console.log({ isValid: promo, promo_code: promo_code });
+			// let promo_excluded = 0;
+			// let promo_included = 0;
+			// if (promo.exclude) {
+			// 	const category_cart_items = cartItems
+			// 		.filter((item) => promo.excluded_categories.includes(item.category))
+			// 		.reduce((a, item) => a + item.price, 0);
+			// 	const product_cart_items = cartItems
+			// 		.filter((item) => promo.excluded_products.includes(item.pathname))
+			// 		.reduce((a, item) => a + item.price, 0);
+			// 	promo_excluded = category_cart_items + product_cart_items;
+			// }
+			// // if (promo.include) {
+			// // 	const category_cart_items = cartItems.filter((item) =>
+			// // 		promo.included_categories.includes(item.category)
+			// // 	);
+			// // 	console.log({ category_cart_items });
+			// // 	const product_cart_items = cartItems.filter((item) => promo.included_products.includes(item.pathname));
+			// // 	console.log({ product_cart_items });
+			// // 	// promo_included = category_cart_items + product_cart_items;
+			// // }
+
+			// console.log({ promo_excluded });
+			// console.log({ promo_included });
+			// if (show_message) {
+			// 	set_promo_code_validations('Can only use one promo code at a time');
+			// } else {
+			// 	if (promo.percentage_off) {
+			// 		if (items_price === promo_excluded) {
+			// 			set_promo_code_validations('All Items Excluded from Promo');
+			// 			return;
+			// 		}
+			// 		setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
+			// 		setTaxPrice(
+			// 			tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100))
+			// 		);
+			// 	} else if (promo.amount_off) {
+			// 		setItemsPrice(items_price - promo.amount_off);
+			// 		setTaxPrice(tax_rate * (items_price - promo.amount_off));
+			// 		// setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
+			// 		// setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
+			// 	}
+			// 	if (promo.free_shipping) {
+			// 		setPreviousShippingPrice(shippingPrice);
+			// 		setShippingPrice(0);
+			// 		set_free_shipping_message('Free');
+			// 	}
+			// 	set_show_message(
+			// 		`${promo.promo_code} ${promo.percentage_off
+			// 			? `${promo.percentage_off}% Off`
+			// 			: `$${promo.amount_off} Off`}`
+			// 	);
+			// }
+		} else {
+			set_promo_code('');
+		}
+	};
+
+	const activate_promo_code = (code) => {
+		const promo = promos.find((promo) => promo.promo_code === code.toLowerCase());
+		console.log({ isValid: promo, promo_code: code.toLowerCase() });
+		let promo_excluded = 0;
+		let promo_included = 0;
+		if (promo) {
 			if (promo.exclude) {
 				const category_cart_items = cartItems
 					.filter((item) => promo.excluded_categories.includes(item.category))
@@ -536,9 +613,8 @@ const PlaceOrderPage = (props) => {
 						: `$${promo.amount_off} Off`}`
 				);
 			}
-		} else {
-			set_promo_code('');
 		}
+		set_show_promo_code_input_box(false);
 	};
 
 	const remove_promo = () => {
@@ -558,6 +634,7 @@ const PlaceOrderPage = (props) => {
 			// get_shipping_rates();
 			setShippingPrice(previousShippingPrice);
 		}
+		set_show_promo_code_input_box(true);
 	};
 	const handleChangeFor = (type) => ({ error }) => {
 		/* handle error */
@@ -986,42 +1063,46 @@ const PlaceOrderPage = (props) => {
 								</div>
 							)}
 						</li>
-
-						<div className="mv-10px">
-							<label htmlFor="promo_code">Promo Code</label>
-
-							<form onSubmit={(e) => check_code(e)} className="row">
-								<input
-									type="text"
-									// value={promo_code}
-									name="promo_code"
-									id="promo_code"
-									className="w-100per"
-									style={{ textTransform: 'uppercase' }}
-									// ref={promo_code_ref}
-									onChange={(e) => {
-										set_promo_code(e.target.value.toUpperCase());
-									}}
-								/>
-								<button
-									className="btn primary"
-									// onTouchStart={() => (e)()}
-									// onClick={() => check_code()}
-									style={{ curser: 'pointer' }}
-								>
-									Apply
-								</button>
-							</form>
-						</div>
-						<label className="validation_text" style={{ textAlign: 'center' }}>
-							{promo_code_validations}
-						</label>
-						{show_message && (
-							<div className="promo_code mv-1rem">
-								<button className="btn icon" onClick={() => remove_promo()}>
-									<i className="fas fa-times mr-5px" />
-								</button>
-								{show_message}
+						{show_promo_code && (
+							<div>
+								{show_promo_code_input_box && (
+									<div className="mv-10px">
+										<label htmlFor="promo_code">Promo Code</label>
+										<form onSubmit={(e) => check_code(e)} className="row">
+											<input
+												type="text"
+												// value={promo_code}
+												name="promo_code"
+												id="promo_code"
+												className="w-100per"
+												style={{ textTransform: 'uppercase' }}
+												// ref={promo_code_ref}
+												onChange={(e) => {
+													set_promo_code(e.target.value.toUpperCase());
+												}}
+											/>
+											<button
+												className="btn primary"
+												// onTouchStart={() => (e)()}
+												// onClick={() => check_code()}
+												style={{ curser: 'pointer' }}
+											>
+												Apply
+											</button>
+										</form>
+									</div>
+								)}
+								<label className="validation_text" style={{ textAlign: 'center' }}>
+									{promo_code_validations}
+								</label>
+								{show_message && (
+									<div className="promo_code mv-1rem">
+										<button className="btn icon" onClick={() => remove_promo()}>
+											<i className="fas fa-times mr-5px" />
+										</button>
+										{show_message}
+									</div>
+								)}
 							</div>
 						)}
 						<div className="w-100per">

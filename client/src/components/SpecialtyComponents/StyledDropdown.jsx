@@ -27,13 +27,15 @@ const StyledDropdown = ({ onChange, items, label }) => {
 
 		return () => {};
 	}, []);
-
+	console.log({ items });
 	return (
 		<div className="custom-select-wrapper">
 			<div className="custom-select">
 				<div className="custom-select__trigger">
 					<span>Tesla</span>
-					<div className="arrow" />
+					<div className="arrow-button">
+						<div className="arrow" />
+					</div>
 				</div>
 				<div className="custom-options">
 					{/* {items.map((secondary, index) => (

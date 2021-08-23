@@ -111,7 +111,7 @@ const EmailsPage = (props) => {
 				<Link to="/secure/glow/emails/invoice">
 					<button className="btn primary">Invoice</button>
 				</Link>
-				<Link to="/secure/glow/emails/feature/hello_producers_53/feature/false">
+				<Link to="/secure/glow/emails/feature/cosmo_gloving_502/feature/false">
 					<button className="btn primary">Feature</button>
 				</Link>
 				<Link to="/secure/glow/emails/affiliate/po/affiliate/false">
