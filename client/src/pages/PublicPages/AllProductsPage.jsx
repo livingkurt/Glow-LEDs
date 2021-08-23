@@ -41,15 +41,15 @@ const AllProductsPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	useEffect(
-		() => {
-			// dispatch(listProducts(''));
-			// console.log({ search: search.substring(8) });
-			dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
-			dispatch(listChips());
-		},
-		[ searchKeyword ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		// dispatch(listProducts(''));
+	// 		// console.log({ search: search.substring(8) });
+	// 		dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+	// 		dispatch(listChips());
+	// 	},
+	// 	[ searchKeyword ]
+	// );
 	useEffect(
 		() => {
 			if (promo_code) {
@@ -101,7 +101,7 @@ const AllProductsPage = (props) => {
 			set_imperfect(data);
 			set_alternative_products(data);
 		} else {
-			dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+			// dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			set_best_sellers(false);
 		}
 		set_loading_products(false);
@@ -109,76 +109,73 @@ const AllProductsPage = (props) => {
 	// console.log({ best_sellers });
 	// console.log({ products });
 
-	useEffect(
-		() => {
-			// dispatch(listProducts(''));
-			console.log(props.location);
-			// let params = new URLSearchParams(props.location);
-			// params.delete('search');
+	// useEffect(
+	// 	() => {
+	// 		// dispatch(listProducts(''));
+	// 		console.log(props.location);
+	// 		// let params = new URLSearchParams(props.location);
+	// 		// params.delete('search');
 
-			// let params = new URLSearchParams(props.location.pathmame + props.location.search);
+	// 		// let params = new URLSearchParams(props.location.pathmame + props.location.search);
 
-			// params.delete('searcj'); //Query string is now: 'bar=2'
-			setSearchKeyword('');
-			dispatch(listProducts(category, subcategory, '', '', '', '', collection));
-			dispatch(listChips());
-		},
-		[ props.location.pathname ]
-	);
+	// 		// params.delete('searcj'); //Query string is now: 'bar=2'
+	// 		setSearchKeyword('');
+	// 		dispatch(listProducts(category, subcategory, '', '', '', '', collection));
+	// 		dispatch(listChips());
+	// 	},
+	// 	[ props.location.pathname ]
+	// );
 
-	useEffect(
-		() => {
-			// console.log({ category });
-			// console.log({ subcategory });
-			// console.log({ searchKeyword });
-			// console.log({ search });
-			// if (
-			// 	[
-			// 		'diffuser_caps',
-			// 		'infinity_mirrors',
-			// 		'accessories',
-			// 		'diffusers',
-			// 		'diffuser_adapters',
-			// 		'glow_strings',
-			// 		'mega_diffuser_caps',
-			// 		'mini_diffuser_adapters'
-			// 	].includes(category)
-			// ) {
-			if (searchKeyword) {
-				history.push({
-					search: '?search=' + searchKeyword
-				});
-			}
-			// else if (search) {
-			// 	history.push({
-			// 		search: '?search=' + search
-			// 	});
-			// }
+	// useEffect(
+	// 	() => {
+	// 		// console.log({ category });
+	// 		// console.log({ subcategory });
+	// 		// console.log({ searchKeyword });
+	// 		// console.log({ search });
+	// 		// if (
+	// 		// 	[
+	// 		// 		'diffuser_caps',
+	// 		// 		'infinity_mirrors',
+	// 		// 		'accessories',
+	// 		// 		'diffusers',
+	// 		// 		'diffuser_adapters',
+	// 		// 		'glow_strings',
+	// 		// 		'mega_diffuser_caps',
+	// 		// 		'mini_diffuser_adapters'
+	// 		// 	].includes(category)
+	// 		// ) {
+	// 		if (searchKeyword) {
+	// 			history.push({
+	// 				search: '?search=' + searchKeyword
+	// 			});
+	// 		}
+	// 		// else if (search) {
+	// 		// 	history.push({
+	// 		// 		search: '?search=' + search
+	// 		// 	});
+	// 		// }
 
-			dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
-			dispatch(listChips());
-			// } else {
+	// 		dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+	// 		dispatch(listChips());
+	// 		// } else {
 
-			// 	dispatch(listProducts(''));
-			// }
-		},
-		[ category, subcategory, searchKeyword ]
-	);
+	// 		// 	dispatch(listProducts(''));
+	// 		// }
+	// 	},
+	// 	[ searchKeyword, sortOrder ]
+	// );
 
-	useEffect(
-		() => {
-			dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, '', '', collection));
-			dispatch(listChips());
-		},
-		[ sortOrder ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, '', '', collection));
+	// 		dispatch(listChips());
+	// 	},
+	// 	[ sortOrder ]
+	// );
 
 	const submitHandler = (e) => {
 		console.log({ searchKeyword });
 		e.preventDefault();
-		// history.push(
-		// 	'/collections/all/products/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
-		// );
 		history.push({
 			search: '?search=' + searchKeyword
 		});
