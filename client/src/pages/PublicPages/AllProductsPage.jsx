@@ -20,6 +20,7 @@ const AllProductsPage = (props) => {
 	const [ imperfect, set_imperfect ] = useState([]);
 	const [ loading_products, set_loading_products ] = useState(false);
 	const [ alternative_products, set_alternative_products ] = useState([]);
+	const [ products, set_products ] = useState([]);
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
@@ -34,7 +35,7 @@ const AllProductsPage = (props) => {
 	// console.log({ subcategory });
 	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
-	const { products, loading, error } = productList;
+	const { products: main_products, loading, error } = productList;
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
@@ -57,6 +58,23 @@ const AllProductsPage = (props) => {
 			}
 		},
 		[ promo_code ]
+	);
+	useEffect(
+		() => {
+			if (main_products) {
+				if (category === 'discounted') {
+					// get_occurrences();
+				} else if (category === 'best_sellers') {
+					// get_occurrences();
+				} else if (category === 'essentials') {
+					// get_occurrences();
+				} else {
+					set_products(main_products);
+					set_loading_products(false);
+				}
+			}
+		},
+		[ main_products ]
 	);
 	// useEffect(
 	// 	() => {
@@ -90,88 +108,25 @@ const AllProductsPage = (props) => {
 			console.log({ data });
 			set_best_sellers(data);
 			set_alternative_products(data);
+			set_products(data);
 		} else if (occurrences && category === 'essentials') {
 			const { data } = await API_Products.get_essentials();
 			console.log({ data });
 			set_essentials(data);
 			set_alternative_products(data);
+			set_products(data);
 		} else if (category === 'discounted') {
 			const { data } = await API_Products.get_imperfect();
 			console.log({ data });
 			set_imperfect(data);
 			set_alternative_products(data);
+			set_products(data);
 		} else {
 			// dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			set_best_sellers(false);
 		}
 		set_loading_products(false);
 	};
-	// console.log({ best_sellers });
-	// console.log({ products });
-
-	// useEffect(
-	// 	() => {
-	// 		// dispatch(listProducts(''));
-	// 		console.log(props.location);
-	// 		// let params = new URLSearchParams(props.location);
-	// 		// params.delete('search');
-
-	// 		// let params = new URLSearchParams(props.location.pathmame + props.location.search);
-
-	// 		// params.delete('searcj'); //Query string is now: 'bar=2'
-	// 		setSearchKeyword('');
-	// 		dispatch(listProducts(category, subcategory, '', '', '', '', collection));
-	// 		dispatch(listChips());
-	// 	},
-	// 	[ props.location.pathname ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		// console.log({ category });
-	// 		// console.log({ subcategory });
-	// 		// console.log({ searchKeyword });
-	// 		// console.log({ search });
-	// 		// if (
-	// 		// 	[
-	// 		// 		'diffuser_caps',
-	// 		// 		'infinity_mirrors',
-	// 		// 		'accessories',
-	// 		// 		'diffusers',
-	// 		// 		'diffuser_adapters',
-	// 		// 		'glow_strings',
-	// 		// 		'mega_diffuser_caps',
-	// 		// 		'mini_diffuser_adapters'
-	// 		// 	].includes(category)
-	// 		// ) {
-	// 		if (searchKeyword) {
-	// 			history.push({
-	// 				search: '?search=' + searchKeyword
-	// 			});
-	// 		}
-	// 		// else if (search) {
-	// 		// 	history.push({
-	// 		// 		search: '?search=' + search
-	// 		// 	});
-	// 		// }
-
-	// 		dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
-	// 		dispatch(listChips());
-	// 		// } else {
-
-	// 		// 	dispatch(listProducts(''));
-	// 		// }
-	// 	},
-	// 	[ searchKeyword, sortOrder ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, '', '', collection));
-	// 		dispatch(listChips());
-	// 	},
-	// 	[ sortOrder ]
-	// );
 
 	const submitHandler = (e) => {
 		console.log({ searchKeyword });
@@ -204,8 +159,6 @@ const AllProductsPage = (props) => {
 			'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
 		glowskins:
 			'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
-		// infinity_mirrors:
-		// 	'Decorate your home and festival with these stunning Glowskins at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Glowskins. Click to Shop.'
 	};
 
 	const description_determination = () => {
@@ -218,9 +171,6 @@ const AllProductsPage = (props) => {
 		if (category.toLowerCase() === 'diffuser_caps') {
 			return descriptions.diffuser_caps;
 		}
-		// if (category === 'infinity_mirrors') {
-		// 	return descriptions.infinity_mirrors;
-		// }
 		if (category === 'glowskins') {
 			return descriptions.glowskins;
 		}
@@ -230,22 +180,8 @@ const AllProductsPage = (props) => {
 			return descriptions.all_products;
 		}
 	};
-	// console.log({ category });
 
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
-	// const filter_options = [
-	// 	'spectra EVOs',
-	// 	'chroma EVOs',
-	// 	'Uber Nanos',
-	// 	'Aurora Nanos',
-	// 	'QtLite 6 Mode',
-	// 	'Atoms',
-	// 	'Ions',
-	// 	'Apollos',
-	// 	'Aethers',
-	// 	'OSM 2s',
-	// 	'Micromax'
-	// ];
 
 	return (
 		<div>
@@ -289,8 +225,9 @@ const AllProductsPage = (props) => {
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
+			<Loading loading={loading_products} />
 			<Loading loading={loading} error={error}>
-				{!imperfect &&
+				{/* {!imperfect &&
 				best_sellers && (
 					<div>
 						<div className="product_big_screen">
@@ -377,47 +314,6 @@ const AllProductsPage = (props) => {
 													/>
 												)
 										)}
-								</ul>
-							)}
-						</div>
-					</div>
-				)}
-				{/* {essentials && !best_sellers(
-					<div>
-						<div className="product_big_screen">
-							{essentials && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{products.length === 0 &&
-										essentials.map(
-											(product, index) =>
-												!product.hidden && (
-													<ProductItemD
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
-								</ul>
-							)}
-						</div>
-
-						<div className="product_small_screen none">
-							{products.length === 0 &&
-							essentials && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{essentials.map(
-										(product, index) =>
-											!product.hidden && (
-												<ProductItemM
-													size="300px"
-													key={index}
-													product={product}
-													product_occurrences={product_occurrences}
-												/>
-											)
-									)}
 								</ul>
 							)}
 						</div>

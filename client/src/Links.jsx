@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import useWindowDimensions from './components/Hooks/windowDimensions';
 import { detailsContent, listContents } from './actions/contentActions';
+import { hslToHex } from './utils/helper_functions';
 
 const Links = (props) => {
+	// const multiplier = 360 / content.links.length;
+
+	const [ multiplier, set_multiplier ] = useState(0);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(listContents());
@@ -30,52 +34,63 @@ const Links = (props) => {
 
 			return () => {};
 		},
-		[ contents, dispatch ]
+		[ contents ]
 	);
-	const { width, height } = useWindowDimensions();
-	const transition = (element) => {
-		const link = element;
-		const time = (Math.random() + 0.5) * 5;
-		const color = `rgba(
-        ${Math.floor(Math.random() * 255)},
-        ${Math.floor(Math.random() * 255)},
-        ${Math.floor(Math.random() * 255)},
-        1
-      );`;
-
-		// link.style.setProperty('--transition-time', time + 's');
-		if (link && link.hasOwnProperty('style') && link.style) {
-			link.style.setProperty('--transition-time', time + 's');
-		}
-		setTimeout(transition, time * 1000);
-	};
-
-	const setTransitions = () => {
-		const links = document.getElementsByClassName('link');
-		for (let link of links) {
-			const time = Math.random() * 4 + 0.5;
-			const color = `rgba(
-        ${Math.floor(Math.random() * 255)},
-        ${Math.floor(Math.random() * 255)},
-        ${Math.floor(Math.random() * 255)},
-        1
-      );`;
-			console.log({ style: link.style });
-			if (link && link.hasOwnProperty('style') && link.style) {
-				link.style.setProperty('--transition-time', time + 's');
+	useEffect(
+		() => {
+			if (content && content.links && content.links.length) {
+				set_multiplier(360 / content.links.length);
 			}
 
-			setTimeout(transition, time * 1000);
-		}
-	};
-	// setInterval(setTransitions, 1000);
-	useEffect(() => {
-		setTimeout(() => {
-			setTransitions();
-		}, 200);
-		return () => {};
-	}, []);
+			return () => {};
+		},
+		[ content ]
+	);
+	const { width, height } = useWindowDimensions();
 
+	// const transition = (element) => {
+	// 	const link = element;
+	// 	const time = (Math.random() + 0.5) * 5;
+	// 	const color = `rgba(
+	//       ${Math.floor(Math.random() * 255)},
+	//       ${Math.floor(Math.random() * 255)},
+	//       ${Math.floor(Math.random() * 255)},
+	//       1
+	//     );`;
+
+	// 	// link.style.setProperty('--transition-time', time + 's');
+	// 	if (link && link.hasOwnProperty('style') && link.style) {
+	// 		link.style.setProperty('--transition-time', time + 's');
+	// 	}
+	// 	setTimeout(transition, time * 1000);
+	// };
+
+	// const setTransitions = () => {
+	// 	const links = document.getElementsByClassName('link');
+	// 	for (let link of links) {
+	// 		const time = Math.random() * 4 + 0.5;
+	// 		const color = `rgba(
+	//       ${Math.floor(Math.random() * 255)},
+	//       ${Math.floor(Math.random() * 255)},
+	//       ${Math.floor(Math.random() * 255)},
+	//       1
+	//     );`;
+	// 		console.log({ style: link.style });
+	// 		if (link && link.hasOwnProperty('style') && link.style) {
+	// 			link.style.setProperty('--transition-time', time + 's');
+	// 		}
+
+	// 		setTimeout(transition, time * 1000);
+	// 	}
+	// };
+	// setInterval(setTransitions, 1000);
+	// useEffect(() => {
+	// 	// setTimeout(() => {
+	// 	setTransitions();
+	// 	// }, 200);
+	// 	return () => {};
+	// }, []);
+	let num = -multiplier;
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -173,11 +188,25 @@ const Links = (props) => {
 			<div id="links">
 				{content &&
 					content.links &&
-					content.links.map((link) => (
-						<a className="link special_font" rel="noreferrer" href={link.link}>
-							{link.icon && <i className={link.icon} />} {link.label}
-						</a>
-					))}
+					content.links.map((link, index) => {
+						num += multiplier;
+						return (
+							<a
+								className="link special_font"
+								rel="noreferrer"
+								key={index}
+								style={{
+									borderColor: hslToHex(num, 100, 100),
+									webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
+									mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
+									boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
+								}}
+								href={link.link}
+							>
+								{link.icon && <i className={link.icon} />} {link.label}
+							</a>
+						);
+					})}
 			</div>
 		</div>
 	);

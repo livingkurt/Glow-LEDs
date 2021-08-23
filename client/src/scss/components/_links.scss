@@ -69,7 +69,11 @@ i.fa {
 
 	background-color: #aaa;
 	border: 1px solid transparent;
-	-webkit-animation: glow var(--transition-time) infinite alternate;
+	border-color: #b33434;
+	-webkit-box-shadow: 0 0 10px #b33434;
+	-moz-box-shadow: 0 0 10px #b33434;
+	box-shadow: 0 0 10px #b33434;
+	// -webkit-animation: glow var(--transition-time) infinite alternate;
 	-webkit-transition: border var(--transition-time) linear, box-shadow var(--transition-time) linear;
 	-moz-transition: border var(--transition-time) linear, box-shadow var(--transition-time) linear;
 	transition: border var(--transition-time) linear, box-shadow var(--transition-time) linear;
