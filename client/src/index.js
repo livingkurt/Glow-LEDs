@@ -10,21 +10,23 @@ import reportWebVitals from './reportWebVitals';
 import Bugsnag from '@bugsnag/js';
 import BugsnagPluginReact from '@bugsnag/plugin-react';
 import { ErrorView } from './components/UtilityComponents';
+import Links from './Links';
 require('dotenv').config();
 
 Bugsnag.start({
 	apiKey: process.env.REACT_APP_BUGSNAG_KEY,
 	plugins: [ new BugsnagPluginReact() ]
 });
+const path = new URL(window.location.href);
+console.log({ path });
+console.log({ href: window.location.href });
 
 const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 
 ReactDOM.render(
 	<Provider store={store}>
 		<ErrorBoundary FallbackComponent={ErrorView}>
-			<React.StrictMode>
-				<App />
-			</React.StrictMode>
+			<React.StrictMode>{path.pathname === '/links' ? <Links /> : <App />}</React.StrictMode>
 		</ErrorBoundary>
 	</Provider>,
 	document.getElementById('root')

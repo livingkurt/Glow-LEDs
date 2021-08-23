@@ -20,16 +20,17 @@ const banner_schema = {
 	link: { type: String }
 };
 
-// const about_schema = {
-// 	kurt_p: { type: String },
-// 	destanye_p: { type: String }
-// };
+const links_schema = {
+	label: { type: String },
+	link: { type: String },
+	icon: { type: String }
+};
 
 const contentSchema = new mongoose.Schema(
 	{
 		home_page: home_page_schema,
 		banner: banner_schema,
-		// about_page: about_schema,
+		links: [ links_schema ],
 		active: { type: Boolean, default: true },
 		deleted: { type: Boolean, default: false }
 	},

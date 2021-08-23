@@ -10,7 +10,7 @@ import { API_Emails } from '../../utils';
 const EditContentPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ home_page, set_home_page ] = useState({});
-	// const [ about_page, set_about_page ] = useState({});
+	const [ links, set_links ] = useState([ {} ]);
 	const [ banner, set_banner ] = useState({});
 	const [ images, set_images ] = useState([]);
 	const [ image, set_image ] = useState('');
@@ -46,7 +46,8 @@ const EditContentPage = (props) => {
 		}
 
 		set_banner(content.banner);
-		// set_about_page(content.about_page);
+		set_links(content.links);
+		console.log({ links: content.links });
 		set_active(content.active);
 	};
 
@@ -63,7 +64,7 @@ const EditContentPage = (props) => {
 		set_home_page('');
 		set_images([]);
 		set_banner('');
-		// set_about_page('');
+		set_links('');
 		set_active(true);
 	};
 
@@ -144,13 +145,53 @@ const EditContentPage = (props) => {
 				_id: using_template ? null : id,
 				home_page: { ...home_page, images },
 				banner,
-				// about_page,
+				links,
 				active
 			})
 		);
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/contents');
+	};
+
+	const update_link_item_property = (e, field_name, index) => {
+		console.log({ value: e.target.value, field_name, index });
+		e.preventDefault();
+		let new_link_items = [ ...links ];
+		new_link_items[index] = {
+			...new_link_items[index],
+			[field_name]: e.target.value
+		};
+		set_links(new_link_items);
+		console.log({ links });
+	};
+
+	const add_link = (e, index, location) => {
+		e.preventDefault();
+		if (Number.isInteger(index)) {
+			let new_array = [ ...links ];
+			if (location === 'above') {
+				if (index === 0) {
+					set_links((links) => [ { label: '', link: '', icon: '' }, ...links ]);
+				}
+				new_array.splice(index, 0, { label: '', link: '', icon: '' });
+			} else if (location === 'below') {
+				new_array.splice(index + 1, 0, { label: '', link: '', icon: '' });
+			}
+
+			console.log({ new_array });
+			set_links(new_array);
+		} else {
+			set_links((links) => [ ...links, { label: '', link: '', icon: '' } ]);
+		}
+	};
+	const remove_link = async (link_index, e) => {
+		e.preventDefault();
+		set_links((link) =>
+			link.filter((link, index) => {
+				return link_index !== index;
+			})
+		);
 	};
 
 	return (
@@ -171,7 +212,7 @@ const EditContentPage = (props) => {
 
 								<ul
 									className="edit-form-container jc-b"
-									style={{ maxWidth: '60rem', marginBottom: '20px' }}
+									style={{ maxWidth: '90rem', marginBottom: '20px' }}
 								>
 									<div className="ai-c h-25px mb-15px jc-c">
 										<div className="custom-select">
@@ -386,29 +427,109 @@ const EditContentPage = (props) => {
 												</li>
 											)}
 										</div>
+										<div className="w-228px m-10px">
+											<h2>Links</h2>
+											{links &&
+												links.map((link, index) => (
+													<div>
+														<div className="jc-b">
+															<h3>Button {index + 1}</h3>
+															<button
+																className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+																onClick={(e) => remove_link(index, e)}
+															>
+																<i className="fas fa-times mr-5px" />
+															</button>
+														</div>
+
+														<li>
+															<button
+																className="btn primary"
+																onClick={(e) => add_link(e, index, 'above')}
+															>
+																Add Link Above
+															</button>
+														</li>
+														<li>
+															<label htmlFor="label">Label</label>
+															<input
+																type="text"
+																name="label"
+																value={link.label}
+																id="label"
+																// onChange={(e) =>
+																// 	set_links({ ...links, label: e.target.value })}
+																onChange={(e) =>
+																	update_link_item_property(e, e.target.name, index)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="link">Link</label>
+															<input
+																type="text"
+																name="link"
+																value={link.link}
+																id="link"
+																// onChange={(e) =>
+																// 	set_links({ ...links, link: e })}
+																onChange={(e) =>
+																	update_link_item_property(e, e.target.name, index)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="icon">Icon</label>
+															<input
+																type="text"
+																name="icon"
+																value={link.icon}
+																id="icon"
+																// onChange={(e) =>
+																// 	set_links({ ...links, button: e })}
+																onChange={(e) =>
+																	update_link_item_property(e, e.target.name, index)}
+															/>
+														</li>
+														{index !== links.length - 1 && (
+															<li>
+																<button
+																	className="btn primary"
+																	onClick={(e) => add_link(e, index, 'below')}
+																>
+																	Add Link Below
+																</button>
+															</li>
+														)}
+													</div>
+												))}
+											<li>
+												<button className="btn primary" onClick={(e) => add_link(e)}>
+													Add Link
+												</button>
+											</li>
+										</div>
 
 										{/* <div className="w-228px m-10px">
 											<h2>About Page</h2>
 											<li>
-												<label htmlFor="about_page_kurt_p">About Page Kurt P</label>
+												<label htmlFor="links_kurt_p">About Page Kurt P</label>
 												<textarea
 													className="edit_product_textarea"
-													name="about_page_kurt_p"
-													value={about_page && about_page.kurt_p}
-													id="about_page_kurt_p"
+													name="links_kurt_p"
+													value={links && links.kurt_p}
+													id="links_kurt_p"
 													onChange={(e) =>
-														set_about_page({ ...about_page, kurt_p: e.target.value })}
+														set_links({ ...links, kurt_p: e.target.value })}
 												/>
 											</li>
 											<li>
-												<label htmlFor="about_page_destanye_p">About Page Kurt P</label>
+												<label htmlFor="links_destanye_p">About Page Kurt P</label>
 												<textarea
 													className="edit_product_textarea"
-													name="about_page_destanye_p"
-													value={about_page && about_page.destanye_p}
-													id="about_page_destanye_p"
+													name="links_destanye_p"
+													value={links && links.destanye_p}
+													id="links_destanye_p"
 													onChange={(e) =>
-														set_about_page({ ...about_page, destanye_p: e.target.value })}
+														set_links({ ...links, destanye_p: e.target.value })}
 												/>
 											</li>
 										</div> */}
