@@ -9,6 +9,7 @@ import { snake_case } from '../../utils/helper_functions';
 import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
 import { option_list } from '../../utils/react_helper_functions';
+import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 const EditUserAffiliatePage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -41,6 +42,8 @@ const EditUserAffiliatePage = (props) => {
 	const [ active, set_active ] = useState('');
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+
+	const { height, width } = useWindowDimensions();
 
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
@@ -333,9 +336,12 @@ const EditUserAffiliatePage = (props) => {
 									<title>Edit Affiliate| Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '55rem', marginBottom: '20px' }}>
+								<ul
+									className={`edit-form-container ${width > 617 ? 'max-w-55rem' : 'max-w-40rem'}`}
+									style={{ maxWidth: '55rem', marginBottom: '20px' }}
+								>
 									<div className="wrap jc-b">
-										<div className="w-228px m-10px">
+										<div className={`${width > 617 ? 'w-228px' : 'max-w-500px w-100per'}`}>
 											{/* <li>
 												<label htmlFor="user">User</label>
 												<input
@@ -441,7 +447,7 @@ const EditUserAffiliatePage = (props) => {
 												/>
 											</li>
 										</div>
-										<div className="w-228px m-10px">
+										<div className={`${width > 617 ? 'w-228px' : 'max-w-500px w-100per'}`}>
 											<li>
 												<label htmlFor="location">Location</label>
 												<input

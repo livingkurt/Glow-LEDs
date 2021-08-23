@@ -407,6 +407,14 @@ const AffiliateEmail = (props) => {
 												</tr>
 												<tr>
 													<td style={{ fontSize: '16px', height: '30px' }}>
+														{affiliate.public_code && (
+															<div
+															>{`Auto Input Code Link: https://www.glow-leds.com/collections/all/products/code/${affiliate.public_code.promo_code.toUpperCase()}`}</div>
+														)}
+													</td>
+												</tr>
+												<tr>
+													<td style={{ fontSize: '16px', height: '30px' }}>
 														{' '}
 														{affiliate.private_code && (
 															<div
