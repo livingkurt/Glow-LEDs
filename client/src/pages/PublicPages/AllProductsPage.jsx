@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
 import { Filter, Search, Sort } from '../../components/SpecialtyComponents/index';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
@@ -55,6 +55,7 @@ const AllProductsPage = (props) => {
 		() => {
 			if (promo_code) {
 				sessionStorage.setItem('promo_code', promo_code);
+				props.set_message(`${promo_code} Added to Checkout`);
 			}
 		},
 		[ promo_code ]
@@ -195,6 +196,7 @@ const AllProductsPage = (props) => {
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
 			</Helmet>
+
 			<div className="jc-c">
 				<div className="row">
 					<h1>
@@ -219,6 +221,7 @@ const AllProductsPage = (props) => {
 					</label>
 				</div>
 			</div>
+
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />

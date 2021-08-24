@@ -97,7 +97,7 @@ import { Header, Container, Content, Footer, Sidebar, Cart } from './components/
 import { useSelector } from 'react-redux';
 
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
-import { ScrollToTop } from './components/UtilityComponents';
+import { Notification, ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import {
@@ -132,6 +132,8 @@ const App = (props) => {
 		container: '#272727'
 	};
 	const { height, width } = useWindowDimensions();
+
+	const [ message, set_message ] = useState('');
 	// const userLogin = useSelector((state) => state.userLogin);
 
 	// let { userInfo } = userLogin;
@@ -262,6 +264,7 @@ const App = (props) => {
 					/>
 					<meta name="twitter:creator" content="@glow_leds" />
 				</Helmet>
+				<Notification message={message} />
 				<Particles params={particlesjs_config} style={{ zIndex: -5, position: 'fixed' }} />
 				<Header visible={visible} />
 				<Sidebar visible={visible} height={height} width={width} />
@@ -418,12 +421,18 @@ const App = (props) => {
 							<Route path="/checkout/shipping" component={ShippingPublicPage} />
 
 							<Route path="/checkout/cart/:pathname?" component={CartPage} />
-							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
 								path="/collections/all/products/code/:promo_code?"
 								exact={true}
-								component={AllProductsPage}
+								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
 							/>
+							{/* <Route
+								path="/collections/all/products/code/:promo_code?"
+								exact={true}
+								component={AllProductsPage} 
+							/> */}
+							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
+
 							<Route
 								path="/collections/all/products/category/:category/subcategory/:subcategory?"
 								component={AllProductsPage}

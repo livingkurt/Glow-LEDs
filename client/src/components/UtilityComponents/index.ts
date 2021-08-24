@@ -9,3 +9,4 @@ export { default as LazyImage } from './LazyImage';
 export { default as ErrorView } from './ErrorView';
 export { default as DropdownDisplay } from './DropdownDisplay';
 export { default as ImageDisplay } from './ImageDisplay';
+export { default as Notification } from './Notification';
