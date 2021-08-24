@@ -169,16 +169,16 @@ const MonthExpensesPage = (props) => {
 	const switch_month = (e) => {
 		e.preventDefault();
 		set_month(e.target.value);
+		history.push('/secure/glow/controlpanel/monthly_expenes/' + year + '/' + e.target.value);
 		calculate_expenses(e.target.value.toLowerCase());
 		get_all_categories();
-		history.push('/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month);
 	};
 	const switch_year = (e) => {
 		e.preventDefault();
 		set_year(e.target.value);
+		history.push('/secure/glow/controlpanel/monthly_expenes/' + e.target.value + '/' + month);
 		calculate_expenses(month);
 		get_all_categories();
-		history.push('/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month);
 	};
 
 	return (

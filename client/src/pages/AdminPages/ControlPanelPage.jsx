@@ -102,18 +102,6 @@ const ControlPanelPage = (props) => {
 		});
 		set_orders(data);
 	};
-	// const get_by_category = async () => {
-	// 	const { data } = await API_Orders.get_by_category();
-	// 	console.log({ data });
-	// 	const batteries = orders
-	// 		.map((order) => order.orderItems)
-	// 		.flat(1)
-	// 		.filter((item) => item.category === 'batteries');
-	//     console.log({batteries})
-
-	// 	set_orders(data);
-	// 	// set_batteries();
-	// };
 
 	useEffect(() => {
 		// dispatch(listOrders('', '', '', 1, 10));
