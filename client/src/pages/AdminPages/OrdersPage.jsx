@@ -32,12 +32,22 @@ const OrdersPage = (props) => {
 
 	const [ order_state, set_order_state ] = useState({});
 
-	useEffect(
-		() => {
-			dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
-		},
-		[ successDelete, order_state, sortOrder, page, props.match.params.page ]
-	);
+	useEffect(() => {
+		// if (history.action === 'PUSH') {
+		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		// } else if (history.action === 'POP') {
+		// if (window.performance) {
+		// 	console.log({ performance: window.performance });
+		// 	if (window.performance.navigation.type === 1) {
+		// 		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		// 		console.log('This page is reloaded');
+		// 	} else {
+		// 		console.log('This page is not reloaded');
+		// 		// dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		// 	}
+		// }
+		// }
+	}, []);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -119,8 +129,10 @@ const OrdersPage = (props) => {
 	};
 
 	useEffect(() => {
+		// if (history.action !== 'POP') {
 		get_total_orders();
 		get_total_expenses();
+		// }
 		return () => {};
 	}, []);
 
@@ -158,6 +170,7 @@ const OrdersPage = (props) => {
 	};
 
 	const history = useHistory();
+	console.log({ history });
 
 	const update_page = (e) => {
 		e.preventDefault();
@@ -181,6 +194,30 @@ const OrdersPage = (props) => {
 
 		set_loading_mark_as_shipped(false);
 	};
+
+	// const [ finishStatus, setfinishStatus ] = useState(false);
+
+	// const onBackButtonEvent = (e) => {
+	// 	e.preventDefault();
+	// 	if (!finishStatus) {
+	// 		if (window.confirm('Do you want to go back ?')) {
+	// 			setfinishStatus(true);
+	// 			// your logic
+	// 			props.history.push('/');
+	// 		} else {
+	// 			window.history.pushState(null, null, window.location.pathname);
+	// 			setfinishStatus(false);
+	// 		}
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	window.history.pushState(null, null, window.location.pathname);
+	// 	window.addEventListener('popstate', onBackButtonEvent);
+	// 	return () => {
+	// 		window.removeEventListener('popstate', onBackButtonEvent);
+	// 	};
+	// }, []);
 
 	return (
 		<div className="profile_container wrap column p-20px">

@@ -163,10 +163,10 @@ const ShippingPage = (props) => {
 		setCountry(shipping.country);
 		setInternational(shipping.international);
 	};
-	const use_saved_shipping = (e, shipping) => {
+	const use_saved_shipping = (e, shipping, user) => {
 		e.preventDefault();
 		console.log({ shipping });
-		set_email(shipping.email);
+		set_email(user.email);
 		set_first_name(shipping.first_name);
 		set_last_name(shipping.last_name);
 		set_address_1(shipping.address_1);
@@ -198,7 +198,7 @@ const ShippingPage = (props) => {
 						{userInfo.shipping.hasOwnProperty('first_name') && (
 							<li>
 								<button
-									onClick={(e) => use_saved_shipping(e, userInfo.shipping)}
+									onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
 									className="btn primary"
 								>
 									Use Saved Shipping

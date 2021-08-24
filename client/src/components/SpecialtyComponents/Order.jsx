@@ -63,7 +63,7 @@ const Order = (props) => {
 
 	const today = new Date();
 	return (
-		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }}>
+		<div className="home_page_divs" style={{ backgroundColor: props.determine_color(props.order) }} key={props.key}>
 			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-50per jc-b ">
 					<div className="fs-16px">

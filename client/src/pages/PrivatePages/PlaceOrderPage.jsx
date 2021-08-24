@@ -1174,7 +1174,8 @@ const PlaceOrderPage = (props) => {
 															'venmo',
 															'cashapp',
 															'paypal',
-															'cash'
+															'cash',
+															'no payment'
 														].map((method, index) => (
 															<option key={index} value={method}>
 																{method}
