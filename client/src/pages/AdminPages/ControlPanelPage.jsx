@@ -42,6 +42,7 @@ const ControlPanelPage = (props) => {
 	const [ yearly_income, set_yearly_income ] = useState([]);
 	const [ year, set_year ] = useState(2021);
 	const [ month, set_month ] = useState();
+	const [ batteries, set_batteries ] = useState({});
 
 	const [ year_2020, set_year_2020 ] = useState({});
 	const [ year_2021, set_year_2021 ] = useState({});
@@ -59,8 +60,50 @@ const ControlPanelPage = (props) => {
 	const get_orders = async () => {
 		const { data } = await API_Orders.total_orders();
 		console.log({ data });
+		const batt_1620 = data
+			.map((order) => order.orderItems)
+			.flat(1)
+			.filter((item) => item.name === 'Bulk CR1620 Batteries');
+		const batt_1225 = data
+			.map((order) => order.orderItems)
+			.flat(1)
+			.filter((item) => item.name === 'Bulk CR1225 Batteries');
+
+		const batt_1620_options = batt_1620
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.size, 0);
+		const batt_1225_options = batt_1225
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.size, 0);
+		const batt_1620_size = batt_1620
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+		const batt_1225_size = batt_1225
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+		console.log({ batt_1620_options });
+		console.log({ batt_1225_options });
+		console.log({ batt_1620_size });
+		console.log({ batt_1225_size });
+
 		set_orders(data);
+		set_batteries({
+			batteries_1620: batt_1620_options + batt_1620_size,
+			batteries_1225: batt_1225_options + batt_1225_size
+		});
 	};
+	// const get_by_category = async () => {
+	// 	const { data } = await API_Orders.get_by_category();
+	// 	console.log({ data });
+	// 	const batteries = orders
+	// 		.map((order) => order.orderItems)
+	// 		.flat(1)
+	// 		.filter((item) => item.category === 'batteries');
+	//     console.log({batteries})
+
+	// 	set_orders(data);
+	// 	// set_batteries();
+	// };
 
 	useEffect(() => {
 		// dispatch(listOrders('', '', '', 1, 10));
@@ -72,6 +115,7 @@ const ControlPanelPage = (props) => {
 		get_income();
 		get_occurrences();
 		get_orders();
+		// get_by_category();
 	}, []);
 
 	useEffect(
@@ -552,6 +596,55 @@ const ControlPanelPage = (props) => {
 									<th style={{ padding: '15px' }}>Total Expenses</th>
 									<th style={{ padding: '15px' }}>{expenses.length}</th>
 								</tr>
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1620 Batteries Sold</th>
+										<th style={{ padding: '15px' }}>{batteries.batteries_1620}</th>
+									</tr>
+								)}
+
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1620 Batteries Left</th>
+										<th style={{ padding: '15px' }}>{10000 - batteries.batteries_1620}</th>
+									</tr>
+								)}
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1225 Batteries Sold</th>
+										<th style={{ padding: '15px' }}>{batteries.batteries_1225}</th>
+									</tr>
+								)}
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1225 Batteries Left</th>
+										<th style={{ padding: '15px' }}>{10000 - batteries.batteries_1225}</th>
+									</tr>
+								)}
 							</tbody>
 						</table>
 					</div>
