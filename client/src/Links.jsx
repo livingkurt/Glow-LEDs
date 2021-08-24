@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
@@ -143,29 +144,48 @@ const Links = (props) => {
 					</a>
 				</div>
 			</div>
-			<div id="links">
-				{content &&
-					content.links &&
-					content.links.map((link, index) => {
-						num += multiplier;
-						return (
-							<a
-								className="link special_font"
-								rel="noreferrer"
-								key={index}
-								style={{
-									borderColor: hslToHex(num, 100, 100),
-									webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
-									mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
-									boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
-								}}
-								href={link.link}
-							>
-								{link.icon && <i className={link.icon} />} {link.label}
-							</a>
-						);
-					})}
-			</div>
+			<Router>
+				<div id="links">
+					{content &&
+						content.links &&
+						content.links.map((link, index) => {
+							num += multiplier;
+							return link.link && link.link.substring(0, 1) === '/' ? (
+								<a
+									className="link special_font"
+									rel="noreferrer"
+									key={index}
+									style={{
+										borderColor: hslToHex(num, 100, 100),
+										webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
+										mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
+										boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
+									}}
+									href={`${process.env.NODE_ENV === 'production'
+										? 'https://www.glow-leds.com'
+										: 'http://localhost:3000'}${link.link}`}
+								>
+									{link.icon && <i className={link.icon} />} {link.label}
+								</a>
+							) : (
+								<a
+									className="link special_font"
+									rel="noreferrer"
+									key={index}
+									style={{
+										borderColor: hslToHex(num, 100, 100),
+										webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
+										mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
+										boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
+									}}
+									href={link.link}
+								>
+									{link.icon && <i className={link.icon} />} {link.label}
+								</a>
+							);
+						})}
+				</div>
+			</Router>
 		</div>
 	);
 };
