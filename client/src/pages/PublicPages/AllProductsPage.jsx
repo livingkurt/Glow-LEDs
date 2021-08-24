@@ -42,15 +42,18 @@ const AllProductsPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	// useEffect(
-	// 	() => {
-	// 		// dispatch(listProducts(''));
-	// 		// console.log({ search: search.substring(8) });
-	// 		dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
-	// 		dispatch(listChips());
-	// 	},
-	// 	[ searchKeyword ]
-	// );
+	useEffect(
+		() => {
+			// dispatch(listProducts(''));
+			// console.log({ search: search.substring(8) });
+			history.push({
+				search: '?search=' + searchKeyword
+			});
+			dispatch(listProducts('', '', searchKeyword, '', '', '', collection));
+			dispatch(listChips());
+		},
+		[ searchKeyword ]
+	);
 	useEffect(
 		() => {
 			if (promo_code) {
@@ -139,7 +142,7 @@ const AllProductsPage = (props) => {
 		history.push({
 			search: '?search=' + searchKeyword
 		});
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, '', '', collection));
+		dispatch(listProducts('', '', searchKeyword, sortOrder, '', '', collection));
 	};
 
 	const sortHandler = (e) => {
@@ -204,12 +207,8 @@ const AllProductsPage = (props) => {
 			<div className="jc-c">
 				<div className="row">
 					<h1>
-						{/* {category === 'diffuser_caps' ? (
-							humanize('diffuser_caps')
-						) : ( */}
 						{`${humanize(category)} ${subcategory && humanize(subcategory)} ${collection &&
 							humanize(collection)}` || 'Products'}
-						{/* )} */}
 					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
