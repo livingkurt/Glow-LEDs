@@ -17,6 +17,7 @@ const ControlPanelPage = (props) => {
 
 	const expenseList = useSelector((state) => state.expenseList);
 	const { expenses } = expenseList;
+	console.log({ expenses });
 
 	const productList = useSelector((state) => state.productList);
 	const { products } = productList;
@@ -81,16 +82,25 @@ const ControlPanelPage = (props) => {
 		const batt_1225_size = batt_1225
 			.filter((item) => item.size > 0)
 			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
-		console.log({ batt_1620_options });
-		console.log({ batt_1225_options });
-		console.log({ batt_1620_size });
-		console.log({ batt_1225_size });
-
-		set_orders(data);
+		const batt_1620_options_total = batt_1620
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.price, 0);
+		const batt_1225_options_total = batt_1225
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.price, 0);
+		const batt_1620_size_total = batt_1620
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
+		const batt_1225_size_total = batt_1225
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
 		set_batteries({
 			batteries_1620: batt_1620_options + batt_1620_size,
-			batteries_1225: batt_1225_options + batt_1225_size
+			batteries_1225: batt_1225_options + batt_1225_size,
+			batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
+			batteries_1225_total: batt_1225_options_total + batt_1225_size_total
 		});
+		set_orders(data);
 	};
 	// const get_by_category = async () => {
 	// 	const { data } = await API_Orders.get_by_category();

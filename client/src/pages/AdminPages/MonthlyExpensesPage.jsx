@@ -15,6 +15,7 @@ const MonthlyExpensesPage = (props) => {
 	const monthly_income_chart_ref = useRef();
 
 	const [ monthly_income, set_monthly_income ] = useState([]);
+	const [ batteries, set_batteries ] = useState({});
 
 	const [ year, set_year ] = useState(this_year);
 
@@ -60,42 +61,162 @@ const MonthlyExpensesPage = (props) => {
 	const [ december, set_december ] = useState({});
 	const [ month, set_month ] = useState();
 
-	const update_income = (month, income, expenses) => {
+	const update_income = (month, income, expenses, batteries) => {
 		if (month === 'january') {
-			set_january({ month: 'january', income, expenses, profit: income + expenses, color: '#b33434' });
+			set_january({
+				month: 'january',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#b33434',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'february') {
-			set_february({ month: 'february', income, expenses, profit: income + expenses, color: '#b9742f' });
+			set_february({
+				month: 'february',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#b9742f',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'march') {
-			set_march({ month: 'march', income, expenses, profit: income + expenses, color: '#bfbf26' });
+			set_march({
+				month: 'march',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#bfbf26',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'april') {
-			set_april({ month: 'april', income, expenses, profit: income + expenses, color: '#7ccd2a' });
+			set_april({
+				month: 'april',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#7ccd2a',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'may') {
-			set_may({ month: 'may', income, expenses, profit: income + expenses, color: '#2bc92b' });
+			set_may({
+				month: 'may',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#2bc92b',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'june') {
-			set_june({ month: 'june', income, expenses, profit: income + expenses, color: '#29c779' });
+			set_june({
+				month: 'june',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#29c779',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'july') {
-			set_july({ month: 'july', income, expenses, profit: income + expenses, color: '#27bfbf' });
+			set_july({
+				month: 'july',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#27bfbf',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'august') {
-			set_august({ month: 'august', income, expenses, profit: income + expenses, color: '#2873bd' });
+			set_august({
+				month: 'august',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#2873bd',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'september') {
-			set_september({ month: 'september', income, expenses, profit: income + expenses, color: '#2a2ab5' });
+			set_september({
+				month: 'september',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#2a2ab5',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'october') {
-			set_october({ month: 'october', income, expenses, profit: income + expenses, color: '#742bbd' });
+			set_october({
+				month: 'october',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#742bbd',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'november') {
-			set_november({ month: 'november', income, expenses, profit: income + expenses, color: '#bd28bd' });
+			set_november({
+				month: 'november',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#bd28bd',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 		if (month === 'december') {
-			set_december({ month: 'december', income, expenses, profit: income + expenses, color: '#c12573' });
+			set_december({
+				month: 'december',
+				income,
+				expenses,
+				profit: income + expenses,
+				color: '#c12573',
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1225: batteries.batteries_1225,
+				batteries_1225_total: batteries.batteries_1225_total
+			});
 		}
 	};
 	const empty_income = () => {
@@ -120,24 +241,71 @@ const MonthlyExpensesPage = (props) => {
 			dates_in_year.map(async (month, month_number) => {
 				const { data: orders } = await API_Orders.monthly_income(month.start_date, month.end_date);
 				const { data: expenses } = await API_Orders.monthly_expenses(month.start_date, month.end_date);
+				let batteries = get_batteries(orders);
 				let income = 0;
 				let total_expenses = 0;
 				if (orders.length > 1) {
 					income = orders.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
 					total_expenses = expenses.reduce((a, c) => a + c.amount, 0);
 				}
-				update_income(dates_in_year[month_number].month, income, total_expenses);
+				update_income(dates_in_year[month_number].month, income, total_expenses, batteries);
 				return {
 					month: dates_in_year[month_number].month,
 					income,
 					expenses: total_expenses,
-					profit: income + total_expenses
+					profit: income + total_expenses,
+					batteries_1620: batteries.batteries_1620,
+					batteries_1225: batteries.batteries_1225,
+					batteries_1620_total: batteries.batteries_1620_total,
+					batteries_1225_total: batteries.batteries_1225_total
 				};
 			})
 		);
 		console.log({ income_each_month });
 		set_monthly_income(income_each_month);
 		// initialize_monthly_income_chart(income_each_month);
+	};
+
+	const get_batteries = (data) => {
+		const batt_1620 = data
+			.map((order) => order.orderItems)
+			.flat(1)
+			.filter((item) => item.name === 'Bulk CR1620 Batteries');
+		const batt_1225 = data
+			.map((order) => order.orderItems)
+			.flat(1)
+			.filter((item) => item.name === 'Bulk CR1225 Batteries');
+
+		const batt_1620_options = batt_1620
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.size, 0);
+		const batt_1225_options = batt_1225
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.size, 0);
+		const batt_1620_size = batt_1620
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+		const batt_1225_size = batt_1225
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+		const batt_1620_options_total = batt_1620
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.price, 0);
+		const batt_1225_options_total = batt_1225
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.price, 0);
+		const batt_1620_size_total = batt_1620
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
+		const batt_1225_size_total = batt_1225
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
+		return {
+			batteries_1620: batt_1620_options + batt_1620_size,
+			batteries_1225: batt_1225_options + batt_1225_size,
+			batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
+			batteries_1225_total: batt_1225_options_total + batt_1225_size_total
+		};
 	};
 
 	const multiplier = 360 / monthly_income.length;
@@ -517,6 +685,7 @@ const MonthlyExpensesPage = (props) => {
 								<th>${december.profit ? december.profit.toFixed(2) : '0.00'}</th>
 							</tr>
 						</tbody>
+
 						<tfoot>
 							<tr>
 								<th>Total</th>
@@ -553,7 +722,387 @@ const MonthlyExpensesPage = (props) => {
 							</tr>
 						</tfoot>
 					</table>
+					<h2 className="ta-c w-100per jc-c">{year} Batteries Sold</h2>
+					<table className="styled-table">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Bulk CR1620 Batteries</th>
+								<th>Bulk CR1620 Batteries Total</th>
+								<th>Bulk CR1225 Batteries</th>
+								<th>Bulk CR1225 Batteries Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								style={{
+									backgroundColor: january.color
+								}}
+								className=""
+							>
+								<th>January</th>
+								<th>{january.batteries_1620 ? january.batteries_1620 : '0'}</th>
+								<th>
+									${january.batteries_1620_total ? january.batteries_1620_total.toFixed(2) : '0.00'}
+								</th>
+								<th>{january.batteries_1225 ? january.batteries_1225 : '0'}</th>
+								<th>
+									${january.batteries_1225_total ? january.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+							</tr>
 
+							<tr
+								style={{
+									backgroundColor: february.color
+								}}
+								className=""
+							>
+								<th>Feburary</th>
+								<th>{february.batteries_1620 ? february.batteries_1620 : '0'}</th>
+								<th>
+									${february.batteries_1620_total ? february.batteries_1620_total.toFixed(2) : '0.00'}
+								</th>
+								<th>{february.batteries_1225 ? february.batteries_1225 : '0'}</th>
+								<th>
+									${february.batteries_1225_total ? february.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: march.color
+								}}
+								className=""
+							>
+								<th>March</th>
+								<th>{march.batteries_1620 ? march.batteries_1620 : '0'}</th>
+								<th>${march.batteries_1620_total ? march.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{march.batteries_1225 ? march.batteries_1225 : '0'}</th>
+								<th>${march.batteries_1225_total ? march.batteries_1225_total.toFixed(2) : '0.00'}</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: april.color
+								}}
+								className=""
+							>
+								<th>April</th>
+								<th>{april.batteries_1620 ? april.batteries_1620 : '0'}</th>
+								<th>${april.batteries_1620_total ? april.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{april.batteries_1225 ? april.batteries_1225 : '0'}</th>
+								<th>${april.batteries_1225_total ? april.batteries_1225_total.toFixed(2) : '0.00'}</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: may.color
+								}}
+								className=""
+							>
+								<th>May</th>
+								<th>{may.batteries_1620 ? may.batteries_1620 : '0'}</th>
+								<th>{may.batteries_1620_total ? may.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{may.batteries_1225 ? may.batteries_1225 : '0'}</th>
+								<th>{may.batteries_1225_total ? may.batteries_1225_total.toFixed(2) : '0.00'}</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: june.color
+								}}
+								className=""
+							>
+								<th>June</th>
+								<th>{june.batteries_1620 ? june.batteries_1620 : '0'}</th>
+								<th>${june.batteries_1620_total ? june.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{june.batteries_1225 ? june.batteries_1225 : '0'}</th>
+								<th>${june.batteries_1225_total ? june.batteries_1225_total.toFixed(2) : '0.00'}</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: july.color
+								}}
+								className=""
+							>
+								<th>July</th>
+								<th>{july.batteries_1620 ? july.batteries_1620 : '0'}</th>
+								<th>${july.batteries_1620_total ? july.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{july.batteries_1225 ? july.batteries_1225 : '0'}</th>
+								<th>${july.batteries_1225_total ? july.batteries_1225_total.toFixed(2) : '0.00'}</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: august.color
+								}}
+								className=""
+							>
+								<th>August</th>
+								<th>{august.batteries_1620 ? august.batteries_1620 : '0'}</th>
+								<th>
+									${august.batteries_1620_total ? august.batteries_1620_total.toFixed(2) : '0.00'}
+								</th>
+								<th>{august.batteries_1225 ? august.batteries_1225 : '0'}</th>
+								<th>
+									${august.batteries_1225_total ? august.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: september.color
+								}}
+								className=""
+							>
+								<th>September</th>
+								<th>{september.batteries_1620 ? september.batteries_1620 : '0'}</th>
+								<th>
+									${september.batteries_1620_total ? (
+										september.batteries_1620_total.toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
+								<th>{september.batteries_1225 ? september.batteries_1225 : '0'}</th>
+								<th>
+									${september.batteries_1225_total ? (
+										september.batteries_1225_total.toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: october.color
+								}}
+								className=""
+							>
+								<th>October</th>
+								<th>{october.batteries_1620 ? october.batteries_1620 : '0'}</th>
+								<th>
+									${october.batteries_1620_total ? october.batteries_1620_total.toFixed(2) : '0.00'}
+								</th>
+								<th>{october.batteries_1225 ? october.batteries_1225 : '0'}</th>
+								<th>
+									${october.batteries_1225_total ? october.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: november.color
+								}}
+								className=""
+							>
+								<th>November</th>
+								<th>{november.batteries_1620 ? november.batteries_1620 : '0'}</th>
+								<th>
+									${november.batteries_1620_total ? november.batteries_1620_total.toFixed(2) : '0.00'}
+								</th>
+								<th>{november.batteries_1225 ? november.batteries_1225 : '0'}</th>
+								<th>
+									${november.batteries_1225_total ? november.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+							</tr>
+							<tr
+								style={{
+									backgroundColor: december.color
+								}}
+								className=""
+							>
+								<th>December</th>
+								<th>{december.batteries_1620 ? december.batteries_1620 : '0'}</th>
+								<th>
+									${december.batteries_1620_total ? december.batteries_1620_total.toFixed(2) : '0.00'}
+								</th>
+								<th>{december.batteries_1225 ? december.batteries_1225 : '0'}</th>
+								<th>
+									${december.batteries_1225_total ? december.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>Total</th>
+								<th>
+									{monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1620, 0)
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1620_total, 0)
+											.toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
+									{monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1225, 0)
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1225_total, 0)
+											.toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+							</tr>
+						</tfoot>
+					</table>
+
+					<div className="order-list responsive_table">
+						<h2 className="ta-c w-100per jc-c">Metrics</h2>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Category</th>
+									<th>Count</th>
+								</tr>
+							</thead>
+							<tbody>
+								{/* <tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total Products</th>
+									<th style={{ padding: '15px' }}>
+										{products.filter((product) => !product.hidden).length}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total Macro Products</th>
+									<th style={{ padding: '15px' }}>
+										{
+											products
+												.filter((product) => !product.hidden)
+												.filter((product) => !product.option).length
+										}
+									</th>
+								</tr>
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+									className=""
+								>
+									<th style={{ padding: '15px' }}>Total Product Options</th>
+									<th style={{ padding: '15px' }}>
+										{
+											products
+												.filter((product) => !product.hidden)
+												.filter((product) => product.option).length
+										}
+									</th>
+								</tr>
+
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Orders Paid</th>
+									<th style={{ padding: '15px' }}>{orders.filter((order) => order.isPaid).length}</th>
+								</tr>
+
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Users</th>
+									<th style={{ padding: '15px' }}>{users.length}</th>
+								</tr> 
+								<tr
+									style={{
+										backgroundColor: '#626262',
+										fontSize: '1.4rem',
+										height: '50px'
+									}}
+								>
+									<th style={{ padding: '15px' }}>Total Expenses</th>
+									<th style={{ padding: '15px' }}>{expenses.length}</th>
+								</tr>*/}
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1620 Batteries Sold</th>
+										<th style={{ padding: '15px' }}>{batteries.batteries_1620}</th>
+									</tr>
+								)}
+
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1620 Batteries Left</th>
+										<th style={{ padding: '15px' }}>{10000 - batteries.batteries_1620}</th>
+									</tr>
+								)}
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1225 Batteries Sold</th>
+										<th style={{ padding: '15px' }}>{batteries.batteries_1225}</th>
+									</tr>
+								)}
+								{batteries && (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '1.4rem',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>Total 1225 Batteries Left</th>
+										<th style={{ padding: '15px' }}>{10000 - batteries.batteries_1225}</th>
+									</tr>
+								)}
+							</tbody>
+						</table>
+					</div>
+					{/* )} */}
 					{/* <canvas id="monthly_income_chart" ref={monthly_income_chart_ref} /> */}
 					{/* <Pie data={data} /> */}
 					{/* <h2 className="ta-c w-100per jc-c">{year} Monthly Breakdown</h2> */}
