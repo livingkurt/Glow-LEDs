@@ -5,18 +5,32 @@
 .loading_gif {
 	height: 100px;
 	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin: -50px 0px 0px -50px;
+	// top: 50%;
+	// left: 50%;
+	// margin: -50px 0px 0px -50px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	margin: auto;
 }
 
 .loading_png {
 	height: 100px;
 	z-index: 1;
+	// position: absolute;
+	// top: 50%;
+	// left: 49%;
+	// margin: -50px 0px 0px -50px;
 	position: absolute;
-	top: 50%;
-	left: 49.7%;
-	margin: -50px 0px 0px -50px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	margin: auto;
 }
 .error_message_payment {
 	z-index: 2;
