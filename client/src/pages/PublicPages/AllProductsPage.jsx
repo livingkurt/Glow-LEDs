@@ -13,7 +13,9 @@ import { ProductItemD } from '../../components/DesktopComponents';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
-	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	// const search = props.location.filter.substring(8) ? props.location.filter.substring(8) : '';
+	console.log({ location: props.location });
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ best_sellers, set_best_sellers ] = useState([]);
 	const [ essentials, set_essentials ] = useState([]);
@@ -21,12 +23,22 @@ const AllProductsPage = (props) => {
 	const [ loading_products, set_loading_products ] = useState(false);
 	const [ alternative_products, set_alternative_products ] = useState([]);
 	const [ products, set_products ] = useState([]);
+	const [ chip, set_chip ] = useState('');
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ filter, set_filter ] = useState('');
+	const [ filter, set_filter ] = useState(
+		props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : ''
+	);
+	console.log({ hasOwnProperty: props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : '' });
+	// const [ searchKeyword, setSearchKeyword ] = useState(
+	// 	props.location.search.substring(8) ? props.location.search.substring(8) : ''
+	// );
+	// console.log({
+	// 	location: props.location.filter && props.location.filter.length > 0 && props.location.filter.substring(8)
+	// });
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 	const collection = props.match.params.collection ? props.match.params.collection : '';
@@ -46,14 +58,37 @@ const AllProductsPage = (props) => {
 		() => {
 			// dispatch(listProducts(''));
 			// console.log({ search: search.substring(8) });
-			history.push({
-				search: '?search=' + searchKeyword
-			});
-			dispatch(listProducts('', '', searchKeyword, '', '', '', collection));
-			dispatch(listChips());
+			if (searchKeyword) {
+				history.push({
+					search: '?search=' + searchKeyword
+				});
+				dispatch(listProducts('', '', searchKeyword, '', '', '', collection));
+				dispatch(listChips());
+			}
 		},
 		[ searchKeyword ]
 	);
+	// useEffect(
+	// 	() => {
+	// 		// dispatch(listProducts(''));
+	// 		// console.log({ search: search.substring(8) });
+	// 		if (filter) {
+	// 			history.push({
+	// 				filter: '?filter=' + filter
+	// 			});
+	// 			dispatch(listProducts('', '', searchKeyword, '', filter, '', collection));
+	// 			dispatch(listChips());
+	// 		}
+	// 	},
+	// 	[ filter ]
+	// );
+
+	useEffect(() => {
+		if (!category) {
+			dispatch(listProducts(''));
+		}
+	}, []);
+
 	useEffect(
 		() => {
 			if (promo_code) {
@@ -114,21 +149,21 @@ const AllProductsPage = (props) => {
 		console.log({ occurrences });
 		if (occurrences && category === 'best_sellers') {
 			const { data } = await API_Products.get_best_sellers(occurrences);
-			console.log({ data });
-			set_best_sellers(data);
-			set_alternative_products(data);
+			// console.log({ data });
+			// set_best_sellers(data);
+			// set_alternative_products(data);
 			set_products(data);
 		} else if (occurrences && category === 'essentials') {
 			const { data } = await API_Products.get_essentials();
-			console.log({ data });
-			set_essentials(data);
-			set_alternative_products(data);
+			// console.log({ data });
+			// set_essentials(data);
+			// set_alternative_products(data);
 			set_products(data);
 		} else if (category === 'discounted') {
 			const { data } = await API_Products.get_imperfect();
-			console.log({ data });
-			set_imperfect(data);
-			set_alternative_products(data);
+			// console.log({ data });
+			// set_imperfect(data);
+			// set_alternative_products(data);
 			set_products(data);
 		} else {
 			set_best_sellers(false);
@@ -142,6 +177,9 @@ const AllProductsPage = (props) => {
 		history.push({
 			search: '?search=' + searchKeyword
 		});
+		// history.push({
+		// 	search: '?search=' + searchKeyword + chip && '?filter=' + chip
+		// });
 		dispatch(listProducts('', '', searchKeyword, sortOrder, '', '', collection));
 	};
 
@@ -150,8 +188,14 @@ const AllProductsPage = (props) => {
 		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value, '', '', collection));
 	};
 	const filterHandler = (e) => {
-		set_filter(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, e.target.value, '', collection));
+		const chip_selected = JSON.parse(e.target.value);
+		set_chip(chip_selected._id);
+		set_filter(chip_selected._id);
+		console.log({ chip });
+		history.push({
+			search: '?search=' + searchKeyword + '?filter=' + chip_selected.name
+		});
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, chip_selected._id, '', collection));
 	};
 
 	const descriptions = {
