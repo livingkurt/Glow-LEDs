@@ -47,10 +47,10 @@ const EditProductPage = (props) => {
 	const [ product_height, set_product_height ] = useState(0);
 	const [ weight_pounds, set_weight_pounds ] = useState(0);
 	const [ weight_ounces, set_weight_ounces ] = useState(0);
-	const [ material_cost, set_material_cost ] = useState(0);
-	const [ filament_used, set_filament_used ] = useState(0);
-	const [ printing_time, set_printing_time ] = useState(0);
-	const [ assembly_time, set_assembly_time ] = useState(0);
+	const [ material_cost, set_material_cost ] = useState();
+	const [ filament_used, set_filament_used ] = useState();
+	const [ printing_time, set_printing_time ] = useState();
+	const [ assembly_time, set_assembly_time ] = useState();
 
 	const [ default_option, set_default_option ] = useState(false);
 	const [ option, set_option ] = useState();
@@ -363,10 +363,10 @@ const EditProductPage = (props) => {
 		set_product_options([ {} ]);
 		set_product_options_images([ [] ]);
 		set_group_product([]);
-		set_material_cost(0);
-		set_filament_used(0);
-		set_printing_time(0);
-		set_assembly_time(0);
+		set_material_cost();
+		set_filament_used();
+		set_printing_time();
+		set_assembly_time();
 		set_group_name('');
 		set_color_product_group();
 		set_color_group_name();
