@@ -29,11 +29,11 @@ const Header = (props) => {
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 
-	useEffect(() => {
-		// dispatch(listProducts(''));
-		// console.log({ search: search.substring(8) });
-		dispatch(listProducts());
-	}, []);
+	// useEffect(() => {
+	// 	// dispatch(listProducts(''));
+	// 	// console.log({ search: search.substring(8) });
+	// 	dispatch(listProducts());
+	// }, []);
 
 	const { cartItems } = cart;
 

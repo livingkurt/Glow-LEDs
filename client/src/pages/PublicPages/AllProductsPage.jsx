@@ -77,23 +77,28 @@ const AllProductsPage = (props) => {
 		},
 		[ main_products ]
 	);
-	// useEffect(
-	// 	() => {
-	// 		get_occurrences();
-	// 	},
-	// 	[ searchKeyword ]
-	// );
 	useEffect(
 		() => {
-			if (category === 'discounted') {
-				get_occurrences();
-			} else if (category === 'best_sellers') {
-				get_occurrences();
-			} else if (category === 'essentials') {
-				get_occurrences();
-			} else {
-				dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+			get_occurrences();
+		},
+		[ searchKeyword ]
+	);
+	useEffect(
+		() => {
+			if (category) {
+				if (category === 'discounted') {
+					get_occurrences();
+				} else if (category === 'best_sellers') {
+					get_occurrences();
+				} else if (category === 'essentials') {
+					get_occurrences();
+				}
+				if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
+					console.log('All Products');
+					dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+				}
 			}
+
 			dispatch(listChips());
 		},
 		[ category ]
@@ -123,7 +128,6 @@ const AllProductsPage = (props) => {
 			set_alternative_products(data);
 			set_products(data);
 		} else {
-			// dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 			set_best_sellers(false);
 		}
 		set_loading_products(false);
@@ -230,98 +234,6 @@ const AllProductsPage = (props) => {
 			</div>
 			<Loading loading={loading_products} />
 			<Loading loading={loading} error={error}>
-				{/* {!imperfect &&
-				best_sellers && (
-					<div>
-						<div className="product_big_screen">
-							{alternative_products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{products.length === 0 &&
-										alternative_products
-											.filter((product) => !product.option)
-											.map(
-												(product, index) =>
-													!product.hidden && (
-														<ProductItemD
-															size="300px"
-															key={index}
-															product={product}
-															product_occurrences={product_occurrences}
-														/>
-													)
-											)}
-								</ul>
-							)}
-						</div>
-
-						<div className="product_small_screen none">
-							{products.length === 0 &&
-							alternative_products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{alternative_products
-										.filter((product) => !product.option)
-										.map(
-											(product, index) =>
-												!product.hidden && (
-													<ProductItemM
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
-								</ul>
-							)}
-						</div>
-					</div>
-				)}
-				<Loading loading={loading_products} />
-				{imperfect && (
-					<div>
-						<div className="product_big_screen">
-							{alternative_products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{products.length === 0 &&
-										alternative_products
-											.filter((product) => !product.option)
-											.map(
-												(product, index) =>
-													!product.hidden && (
-														<ProductItemD
-															size="300px"
-															key={index}
-															product={product}
-															product_occurrences={product_occurrences}
-														/>
-													)
-											)}
-								</ul>
-							)}
-						</div>
-
-						<div className="product_small_screen none">
-							{products.length === 0 &&
-							alternative_products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{alternative_products
-										.filter((product) => !product.option)
-										.map(
-											(product, index) =>
-												!product.hidden && (
-													<ProductItemM
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
-								</ul>
-							)}
-						</div>
-					</div>
-				)} */}
 				{products && (
 					<div>
 						<div className="product_big_screen">
