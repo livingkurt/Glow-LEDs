@@ -44,7 +44,7 @@ const MenuPage = (props) => {
 			dispatch(listFeatures());
 			get_features();
 		}
-		if (pathname === 'gloving' || pathname === 'manuals') {
+		if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
 			get_products_by_category();
 		}
 		// if (pathname === 'diffuser_caps') {
@@ -230,8 +230,11 @@ const MenuPage = (props) => {
 			];
 		} else if (pathname === 'support') {
 			return [
+				{ category: 'track_your_order', image: 'https://images2.imgbox.com/6d/ca/gy6td2iV_o.png' },
 				{ category: 'about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
 				{ category: 'faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },
+				{ category: 'manuals', image: 'https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png' },
+				{ category: 'announcements', image: 'https://images2.imgbox.com/8b/52/SfnnCLNz_o.png' },
 				{ category: 'contact', image: 'https://images2.imgbox.com/30/76/xP16FSiH_o.png' },
 				{ category: 'terms', image: 'https://images2.imgbox.com/0b/55/LAI7uhOb_o.png' }
 			];
@@ -304,6 +307,12 @@ const MenuPage = (props) => {
 			return `/collections/all/${item.category}`;
 		} else if (pathname === 'manuals') {
 			return `/pages/manual/${item.category}`;
+		} else if (pathname === 'support') {
+			if (item.category === 'manuals') {
+				return `/pages/menu/${item.category}`;
+			} else {
+				return `/pages/${item.category}`;
+			}
 		} else {
 			return `/pages/${item.category}`;
 		}
