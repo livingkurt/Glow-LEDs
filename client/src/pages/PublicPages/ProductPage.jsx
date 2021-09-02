@@ -1286,7 +1286,7 @@ const ProductPage = (props) => {
 						/> */}
 						<div className="p-1rem">
 							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
-							<ReadMore width={1000} className="paragraph_font" length={100}>
+							<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 								{description}
 							</ReadMore>
 							{product.category === 'glow_strings' && (
