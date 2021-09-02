@@ -731,6 +731,7 @@ const MonthlyExpensesPage = (props) => {
 								<th>Bulk CR1620 Batteries Total</th>
 								<th>Bulk CR1225 Batteries</th>
 								<th>Bulk CR1225 Batteries Total</th>
+								<th>Bulk Batteries Total</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -749,6 +750,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${january.batteries_1225_total ? january.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
+								<th>
+									${january.batteries_1225_total ? (
+										(january.batteries_1225_total + january.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 
 							<tr
@@ -766,6 +774,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${february.batteries_1225_total ? february.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
+								<th>
+									${february.batteries_1225_total ? (
+										(february.batteries_1225_total + february.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -778,6 +793,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>${march.batteries_1620_total ? march.batteries_1620_total.toFixed(2) : '0.00'}</th>
 								<th>{march.batteries_1225 ? march.batteries_1225 : '0'}</th>
 								<th>${march.batteries_1225_total ? march.batteries_1225_total.toFixed(2) : '0.00'}</th>
+								<th>
+									${march.batteries_1225_total ? (
+										(march.batteries_1225_total + march.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -790,7 +812,15 @@ const MonthlyExpensesPage = (props) => {
 								<th>${april.batteries_1620_total ? april.batteries_1620_total.toFixed(2) : '0.00'}</th>
 								<th>{april.batteries_1225 ? april.batteries_1225 : '0'}</th>
 								<th>${april.batteries_1225_total ? april.batteries_1225_total.toFixed(2) : '0.00'}</th>
+								<th>
+									${april.batteries_1225_total ? (
+										(april.batteries_1225_total + april.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
+
 							<tr
 								style={{
 									backgroundColor: may.color
@@ -802,6 +832,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>{may.batteries_1620_total ? may.batteries_1620_total.toFixed(2) : '0.00'}</th>
 								<th>{may.batteries_1225 ? may.batteries_1225 : '0'}</th>
 								<th>{may.batteries_1225_total ? may.batteries_1225_total.toFixed(2) : '0.00'}</th>
+								<th>
+									${may.batteries_1225_total ? (
+										(may.batteries_1225_total + may.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -814,6 +851,14 @@ const MonthlyExpensesPage = (props) => {
 								<th>${june.batteries_1620_total ? june.batteries_1620_total.toFixed(2) : '0.00'}</th>
 								<th>{june.batteries_1225 ? june.batteries_1225 : '0'}</th>
 								<th>${june.batteries_1225_total ? june.batteries_1225_total.toFixed(2) : '0.00'}</th>
+
+								<th>
+									${june.batteries_1225_total ? (
+										(june.batteries_1225_total + june.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -826,6 +871,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>${july.batteries_1620_total ? july.batteries_1620_total.toFixed(2) : '0.00'}</th>
 								<th>{july.batteries_1225 ? july.batteries_1225 : '0'}</th>
 								<th>${july.batteries_1225_total ? july.batteries_1225_total.toFixed(2) : '0.00'}</th>
+								<th>
+									${july.batteries_1225_total ? (
+										(july.batteries_1225_total + july.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -841,6 +893,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>{august.batteries_1225 ? august.batteries_1225 : '0'}</th>
 								<th>
 									${august.batteries_1225_total ? august.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+								<th>
+									${august.batteries_1225_total ? (
+										(august.batteries_1225_total + august.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
 								</th>
 							</tr>
 							<tr
@@ -866,6 +925,13 @@ const MonthlyExpensesPage = (props) => {
 										'0.00'
 									)}
 								</th>
+								<th>
+									${september.batteries_1225_total ? (
+										(september.batteries_1225_total + september.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -881,6 +947,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>{october.batteries_1225 ? october.batteries_1225 : '0'}</th>
 								<th>
 									${october.batteries_1225_total ? october.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+								<th>
+									${october.batteries_1225_total ? (
+										(october.batteries_1225_total + october.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
 								</th>
 							</tr>
 							<tr
@@ -898,6 +971,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${november.batteries_1225_total ? november.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
+								<th>
+									${november.batteries_1225_total ? (
+										(november.batteries_1225_total + november.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 							</tr>
 							<tr
 								style={{
@@ -913,6 +993,13 @@ const MonthlyExpensesPage = (props) => {
 								<th>{december.batteries_1225 ? december.batteries_1225 : '0'}</th>
 								<th>
 									${december.batteries_1225_total ? december.batteries_1225_total.toFixed(2) : '0.00'}
+								</th>
+								<th>
+									${december.batteries_1225_total ? (
+										(december.batteries_1225_total + december.batteries_1620_total).toFixed(2)
+									) : (
+										'0.00'
+									)}
 								</th>
 							</tr>
 						</tbody>
@@ -957,155 +1044,19 @@ const MonthlyExpensesPage = (props) => {
 										'0'
 									)}
 								</th>
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1225_total + c.batteries_1620_total, 0)
+											.toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
 							</tr>
 						</tfoot>
 					</table>
-
-					<div className="order-list responsive_table">
-						<h2 className="ta-c w-100per jc-c">Metrics</h2>
-						<table className="styled-table">
-							<thead>
-								<tr>
-									<th>Category</th>
-									<th>Count</th>
-								</tr>
-							</thead>
-							<tbody>
-								{/* <tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-									className=""
-								>
-									<th style={{ padding: '15px' }}>Total Products</th>
-									<th style={{ padding: '15px' }}>
-										{products.filter((product) => !product.hidden).length}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-									className=""
-								>
-									<th style={{ padding: '15px' }}>Total Macro Products</th>
-									<th style={{ padding: '15px' }}>
-										{
-											products
-												.filter((product) => !product.hidden)
-												.filter((product) => !product.option).length
-										}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-									className=""
-								>
-									<th style={{ padding: '15px' }}>Total Product Options</th>
-									<th style={{ padding: '15px' }}>
-										{
-											products
-												.filter((product) => !product.hidden)
-												.filter((product) => product.option).length
-										}
-									</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Orders Paid</th>
-									<th style={{ padding: '15px' }}>{orders.filter((order) => order.isPaid).length}</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Users</th>
-									<th style={{ padding: '15px' }}>{users.length}</th>
-								</tr> 
-								<tr
-									style={{
-										backgroundColor: '#626262',
-										fontSize: '1.4rem',
-										height: '50px'
-									}}
-								>
-									<th style={{ padding: '15px' }}>Total Expenses</th>
-									<th style={{ padding: '15px' }}>{expenses.length}</th>
-								</tr>*/}
-								{batteries && (
-									<tr
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-									>
-										<th style={{ padding: '15px' }}>Total 1620 Batteries Sold</th>
-										<th style={{ padding: '15px' }}>{batteries.batteries_1620}</th>
-									</tr>
-								)}
-
-								{batteries && (
-									<tr
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-									>
-										<th style={{ padding: '15px' }}>Total 1620 Batteries Left</th>
-										<th style={{ padding: '15px' }}>{10000 - batteries.batteries_1620}</th>
-									</tr>
-								)}
-								{batteries && (
-									<tr
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-									>
-										<th style={{ padding: '15px' }}>Total 1225 Batteries Sold</th>
-										<th style={{ padding: '15px' }}>{batteries.batteries_1225}</th>
-									</tr>
-								)}
-								{batteries && (
-									<tr
-										style={{
-											backgroundColor: '#626262',
-											fontSize: '1.4rem',
-											height: '50px'
-										}}
-									>
-										<th style={{ padding: '15px' }}>Total 1225 Batteries Left</th>
-										<th style={{ padding: '15px' }}>{10000 - batteries.batteries_1225}</th>
-									</tr>
-								)}
-							</tbody>
-						</table>
-					</div>
-					{/* )} */}
-					{/* <canvas id="monthly_income_chart" ref={monthly_income_chart_ref} /> */}
-					{/* <Pie data={data} /> */}
-					{/* <h2 className="ta-c w-100per jc-c">{year} Monthly Breakdown</h2> */}
 					<div style={{ backgroundColor: 'white' }} className="p-1rem br-10px">
 						<Bar data={bar_data} options={bar_options} />
 					</div>

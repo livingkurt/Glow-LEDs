@@ -623,6 +623,11 @@ const Header = (props) => {
 														About
 													</button>
 												</Link>
+												<Link to="/pages/menu/manuals">
+													<button className="btn nav w-100per ta-l title_font jc-b">
+														Manuals
+													</button>
+												</Link>
 												<Link to="/pages/announcements">
 													<button className="btn nav w-100per ta-l title_font">
 														Announcements

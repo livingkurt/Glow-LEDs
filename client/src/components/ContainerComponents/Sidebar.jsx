@@ -612,6 +612,11 @@ const Sidebar = (props) => {
 								About
 							</button>
 						</Link>
+						<Link to="/pages/menu/manuals">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Manuals
+							</button>
+						</Link>
 						<div className="sidebar_dropdown_secondary">
 							{/* <button className="sidebar-btn secondary">
 								<Link to="/pages/faq">FAQ</Link>

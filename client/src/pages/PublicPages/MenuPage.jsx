@@ -27,6 +27,7 @@ const MenuPage = (props) => {
 	const [ novaskins, set_novaskins ] = useState([]);
 	const [ alt_novaskins, set_alt_novaskins ] = useState([]);
 	const [ battery_storage, set_battery_storage ] = useState([]);
+	const [ exo_diffusers, set_exo_diffusers ] = useState([]);
 
 	const [ geometric, set_geometric ] = useState([]);
 	const [ shapes, set_shapes ] = useState([]);
@@ -43,7 +44,7 @@ const MenuPage = (props) => {
 			dispatch(listFeatures());
 			get_features();
 		}
-		if (pathname === 'gloving') {
+		if (pathname === 'gloving' || pathname === 'manuals') {
 			get_products_by_category();
 		}
 		// if (pathname === 'diffuser_caps') {
@@ -80,6 +81,7 @@ const MenuPage = (props) => {
 		const { data: accessories } = await API_Products.get_product_pictures('accessories');
 		const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
 		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
+		const { data: exo_diffusers } = await API_Products.get_product_pictures('exo_diffusers');
 		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
 		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
 		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
@@ -98,6 +100,7 @@ const MenuPage = (props) => {
 		set_novaskins(novaskins);
 		set_alt_novaskins(alt_novaskins);
 		set_battery_storage(battery_storage);
+		set_exo_diffusers(exo_diffusers);
 		set_loading_pictures(false);
 	};
 
@@ -196,6 +199,30 @@ const MenuPage = (props) => {
 				{ category: 'abstract', image: '' },
 				{ category: 'patterns', image: '' }
 			];
+		} else if (pathname === 'manuals') {
+			return [
+				{
+					category: 'glow_strings_v2',
+					image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
+				},
+				{
+					category: 'diffuser_caps',
+					image: diffuser_caps[diffuser_caps.length - 1] && diffuser_caps[diffuser_caps.length - 1].images[0]
+				}
+				// { category: 'glowskins', image: glowskins[glowskins.length - 1] && glowskins[0].images[0] },
+				// {
+				// 	category: 'glow_casings',
+				// 	image: glow_casings[glow_casings.length - 1] && glow_casings[glow_casings.length - 1].images[0]
+				// },
+				// {
+				// 	category: 'diffusers',
+				// 	image: diffusers[diffusers.length - 1] && diffusers[diffusers.length - 1].images[0]
+				// },
+				// {
+				// 	category: 'exo_diffusers',
+				// 	image: exo_diffusers[exo_diffusers.length - 1] && exo_diffusers[exo_diffusers.length - 1].images[0]
+				// }
+			];
 		} else if (pathname === 'decor') {
 			return [
 				{ category: 'glow_strings', image: 'https://thumbs2.imgbox.com/68/f6/GBGPpTs0_t.jpg' }
@@ -275,6 +302,8 @@ const MenuPage = (props) => {
 			return `/collections/all/features/category/${item.category}`;
 		} else if (pathname === 'sponsored_artists') {
 			return `/collections/all/${item.category}`;
+		} else if (pathname === 'manuals') {
+			return `/pages/manual/${item.category}`;
 		} else {
 			return `/pages/${item.category}`;
 		}
