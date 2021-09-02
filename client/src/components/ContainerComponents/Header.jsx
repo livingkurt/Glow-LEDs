@@ -221,6 +221,11 @@ const Header = (props) => {
 													<button className="btn nav w-100per ta-l fs-20px">Gloving</button>
 												</Link>
 												{/* <hr className="w-100per" /> */}
+												<Link to="/collections/all/products/category/decals">
+													<button className="btn nav w-100per ta-l title_font">
+														Decals (New!)
+													</button>
+												</Link>
 												<Link to="/collections/all/products/category/exo_diffusers">
 													<button className="btn nav w-100per ta-l title_font">
 														EXO Diffusers

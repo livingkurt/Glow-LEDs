@@ -28,6 +28,7 @@ const MenuPage = (props) => {
 	const [ alt_novaskins, set_alt_novaskins ] = useState([]);
 	const [ battery_storage, set_battery_storage ] = useState([]);
 	const [ exo_diffusers, set_exo_diffusers ] = useState([]);
+	const [ decals, set_decals ] = useState([]);
 
 	const [ geometric, set_geometric ] = useState([]);
 	const [ shapes, set_shapes ] = useState([]);
@@ -82,6 +83,7 @@ const MenuPage = (props) => {
 		const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
 		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
 		const { data: exo_diffusers } = await API_Products.get_product_pictures('exo_diffusers');
+		const { data: decals } = await API_Products.get_product_pictures('decals');
 		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
 		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
 		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
@@ -101,6 +103,7 @@ const MenuPage = (props) => {
 		set_alt_novaskins(alt_novaskins);
 		set_battery_storage(battery_storage);
 		set_exo_diffusers(exo_diffusers);
+		set_decals(decals);
 		set_loading_pictures(false);
 	};
 
@@ -165,6 +168,14 @@ const MenuPage = (props) => {
 				{
 					category: 'diffuser_caps',
 					image: diffuser_caps[diffuser_caps.length - 1] && diffuser_caps[diffuser_caps.length - 1].images[0]
+				},
+				{
+					category: 'exo_diffusers',
+					image: exo_diffusers[exo_diffusers.length - 1] && exo_diffusers[exo_diffusers.length - 1].images[0]
+				},
+				{
+					category: 'decals',
+					image: decals[decals.length - 1] && decals[decals.length - 1].images[0]
 				},
 				{
 					category: 'accessories',
