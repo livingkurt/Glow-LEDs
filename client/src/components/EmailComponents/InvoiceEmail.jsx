@@ -635,7 +635,7 @@ const InvoiceEmail = (props) => {
 							</div>
 							<img
 								alt="QR Code"
-								src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png"
+								src="https://thumbs2.imgbox.com/3d/d5/H6vg7spK_t.png"
 								style={{ width: '250px', textAlign: 'center' }}
 							/>
 							<div style={{ textAlign: 'center', width: '200px' }}>
