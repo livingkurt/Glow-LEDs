@@ -15,11 +15,9 @@ router.route('/user').get(isAuth, order_controller.get_my_orders);
 
 router.route('/guest').post(order_controller.create_guest_order);
 router.route('/guest/:id').get(order_controller.get_guest_order);
-
+// router.route('/glow').post(isAuth, isAdmin, order_controller.create_user_order);
 router.route('/secure').post(isAuth, order_controller.create_user_order);
 router.route('/secure/:id').get(isAuth, order_controller.get_one_order);
-
-router.route('/glow').post(isAuth, isAdmin, order_controller.create_user_order);
 
 router
 	.route('/glow/:id')

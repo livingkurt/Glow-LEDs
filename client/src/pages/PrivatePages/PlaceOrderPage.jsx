@@ -356,7 +356,7 @@ const PlaceOrderPage = (props) => {
 				user,
 				order_note,
 				promo_code,
-				parcel,
+				parcel: parcel ? parcel : null,
 				isPaid: paid ? paid : false
 				// paidAt: paid && date.toISOString()
 			})
