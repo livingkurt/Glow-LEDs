@@ -448,7 +448,7 @@ export const determine_product_name = (item, show_qty, date) => {
 					{item.size !== 0 && ' - ' + item.size}{' '}
 				</div>
 			);
-		} else if (item.category === 'glow_strings') {
+		} else {
 			return (
 				<div>
 					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
