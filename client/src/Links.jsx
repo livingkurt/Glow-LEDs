@@ -100,7 +100,7 @@ const Links = (props) => {
 				)} */}
 				<div className=" jc-c mh-auto ai-c">
 					{/* {width < 600 && ( */}
-					<a href="https://www.glow_leds.com">
+					<a href="https://www.glow-leds.com">
 						<div
 							className={`${width >= 500 ? 'h-125px w-125px' : ''} ${width < 500 && width > 400
 								? 'h-100px w-100px'
@@ -115,7 +115,7 @@ const Links = (props) => {
 						</div>
 					</a>
 					{/* )} */}
-					<a href="https://www.glow_leds.com">
+					<a href="https://www.glow-leds.com">
 						{/* <div className="pos-rel"> */}
 						<div className="row pos-rel">
 							<label

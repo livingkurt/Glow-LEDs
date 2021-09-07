@@ -388,6 +388,10 @@ const ProductPage = (props) => {
 		set_secondary_product_name(option.name);
 	};
 
+	const determine_secondary_product_name = (secondary) => {
+		return product.category === 'diffuser_caps' ? secondary.slice(0, -14) : secondary.split('-')[1].substring(1);
+	};
+
 	return (
 		<div className="">
 			<div className="p-1rem">
@@ -594,7 +598,8 @@ const ProductPage = (props) => {
 													'Cap Design'
 												)}: {' '}
 											</h3>
-											<label>{secondary_product_name}</label>
+											<label>{determine_secondary_product_name(secondary_product_name)}</label>
+											{/* {console.log({ secondary_product_name })} */}
 										</div>
 									)}
 									{size !== '1 Sled' &&
@@ -718,7 +723,7 @@ const ProductPage = (props) => {
 														</option>
 														{product.secondary_products.map((secondary, index) => (
 															<option key={index} value={JSON.stringify(secondary)}>
-																{secondary.name.slice(0, -14)}
+																{determine_secondary_product_name(secondary.name)}
 															</option>
 														))}
 													</select>
