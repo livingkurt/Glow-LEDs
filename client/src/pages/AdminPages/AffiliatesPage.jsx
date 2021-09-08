@@ -36,6 +36,18 @@ const AffiliatesPage = (props) => {
 			//
 		};
 	}, []);
+	useEffect(
+		() => {
+			stableDispatch(listAffiliates());
+			stableDispatch(listOrders());
+			get_last_months_orders();
+			get_total_orders();
+			return () => {
+				//
+			};
+		},
+		[ successDelete ]
+	);
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listAffiliates(category, searchKeyword, sortOrder));
@@ -49,8 +61,9 @@ const AffiliatesPage = (props) => {
 	useEffect(() => {
 		stableDispatch(listAffiliates(category, searchKeyword, sortOrder));
 	}, []);
-	const deleteHandler = (affiliate) => {
-		dispatch(deleteAffiliate(affiliate._id));
+	const deleteHandler = (pathname) => {
+		console.log({ pathname });
+		dispatch(deleteAffiliate(pathname));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
@@ -260,7 +273,10 @@ const AffiliatesPage = (props) => {
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(affiliate)}>
+												<button
+													className="btn icon"
+													onClick={() => deleteHandler(affiliate.pathname)}
+												>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>
