@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, createElement } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -669,40 +669,28 @@ const InvoiceEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	const print_invoice = async () => {
-		// openOther();
-		const prtContent = document.getElementById('invoice');
-		const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
-		WinPrint.document.write(prtContent.innerHTML);
-		WinPrint.document.close();
-		WinPrint.focus();
-		setTimeout(() => {
-			WinPrint.print();
+	const print_invoice = (id) => {
+		const contents = document.getElementById(id).innerHTML;
+		const frame1 = document.createElement('iframe');
+		frame1.name = 'frame1';
+		frame1.style.position = 'absolute';
+		frame1.style.top = '-1000000px';
+		document.body.appendChild(frame1);
+		const frameDoc = frame1.contentWindow
+			? frame1.contentWindow
+			: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+		frameDoc.document.open();
+		frameDoc.document.write('</head><body>');
+		frameDoc.document.write(contents);
+		frameDoc.document.write('</body></html>');
+		frameDoc.document.close();
+		setTimeout(function() {
+			window.frames['frame1'].focus();
+			window.frames['frame1'].print();
+			document.body.removeChild(frame1);
 		}, 500);
-		window.close();
+		return false;
 	};
-
-	// setTimeout(() => {
-	// 	// print_invoice();
-	// 	document.getElementById('print_invoice').click(); // Click on the checkbox
-	// }, 2000);
-
-	// function print() {
-	// 	const prtContent = document.getElementById('invoice');
-	// 	const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
-	// 	WinPrint.document.write(prtContent.innerHTML);
-	// 	WinPrint.document.close();
-	// 	WinPrint.focus();
-	// 	setTimeout(() => {
-	// 		WinPrint.print();
-	// 	}, 500);
-	// }
-	// function openOther() {
-	// 	//I called Api using service
-	// 	setTimeout(function() {
-	// 		print();
-	// 	}, 3000);
-	// }
 
 	return (
 		<div>
@@ -724,7 +712,7 @@ const InvoiceEmail = (props) => {
 					<button className="btn primary mh-10px">Your Orders</button>
 				</Link>
 
-				<button className="btn primary mh-10px" id="print_invoice" onClick={() => print_invoice()}>
+				<button className="btn primary mh-10px" id="print_invoice" onClick={() => print_invoice('invoice')}>
 					Print Invoice
 				</button>
 			</div>

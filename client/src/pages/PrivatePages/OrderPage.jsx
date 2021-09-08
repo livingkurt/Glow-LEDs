@@ -238,7 +238,8 @@ const OrderPage = (props) => {
 	const create_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
-		show_label(data.postage_label.label_url);
+		// show_label(data.postage_label.label_url);
+		print_invoice(data.postage_label.label_url);
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -253,7 +254,8 @@ const OrderPage = (props) => {
 	const create_return_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
-		show_label(data.postage_label.label_url);
+		// show_label(data.postage_label.label_url);
+		print_invoice(data.postage_label.label_url);
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -268,7 +270,8 @@ const OrderPage = (props) => {
 	const buy_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.buy_label(order, order.shipping.shipping_rate);
-		show_label(data.postage_label.label_url);
+		// show_label(data.postage_label.label_url);
+		print_invoice(data.postage_label.label_url);
 		if (data) {
 			set_loading_label(false);
 		}
@@ -280,30 +283,40 @@ const OrderPage = (props) => {
 	};
 
 	const view_label = async () => {
-		show_label(order.shipping.shipping_label.postage_label.label_url);
+		// show_label(order.shipping.shipping_label.postage_label.label_url);
+		print_invoice(order.shipping.shipping_label.postage_label.label_url);
 	};
 
 	const view_return_label = async () => {
 		window.open(order.shipping.return_shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
 	};
 
-	const show_label = (label) => {
-		const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
-		WinPrint.document.write(
-			`<div style="width: 100%;
-      display: flex;
-      height: 100%;
-      align-items: center;;">
-          <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
-      </div>`
-		);
-		WinPrint.document.close();
-		WinPrint.focus();
-		WinPrint.print();
-
-		setTimeout(() => {
-			WinPrint.print();
+	const print_invoice = (content) => {
+		// const content = document.getElementById(id).innerHTML;
+		const frame1 = document.createElement('iframe');
+		frame1.name = 'frame1';
+		frame1.style.position = 'absolute';
+		frame1.style.top = '-1000000px';
+		document.body.appendChild(frame1);
+		const frameDoc = frame1.contentWindow
+			? frame1.contentWindow
+			: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+		frameDoc.document.open();
+		frameDoc.document.write('</head><body>');
+		frameDoc.document.write(`<div style="width: 100%;
+    display: flex;
+    height: 100%;
+    align-items: center;;">
+        <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
+    </div>`);
+		frameDoc.document.write('</body></html>');
+		frameDoc.document.close();
+		setTimeout(function() {
+			window.frames['frame1'].focus();
+			window.frames['frame1'].print();
+			document.body.removeChild(frame1);
 		}, 500);
+		return false;
 	};
 
 	const create_duplicate_order = () => {
