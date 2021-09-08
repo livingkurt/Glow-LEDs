@@ -926,24 +926,44 @@ const FeatureEmail = (props) => {
 		console.log('Success');
 	};
 
+	// useEffect(
+	// 	() => {
+	// 		if (props.match.params.send === 'true' && feature) {
+	// 			console.log({ 'props.match.params.send === true && feature': feature });
+	// 			// if (feature.orderItems.length > 0) {
+	// 			// 	console.log({ 'feature.orderItems.length > 0': feature });
+	// 			if (feature && feature.first_name && email_template.length > 1000) {
+	// 				// setTimeout(() => {
+	// 				send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
+	// 				// }, 3000);
+	// 			}
+
+	// 			// }
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ feature ]
+	// );
+	const [ num, set_num ] = useState(0);
 	useEffect(
 		() => {
-			if (props.match.params.send === 'true' && feature) {
-				console.log({ 'props.match.params.send === true && feature': feature });
-				// if (feature.orderItems.length > 0) {
-				// 	console.log({ 'feature.orderItems.length > 0': feature });
-				if (feature && feature.first_name && email_template.length > 1000) {
-					// setTimeout(() => {
-					send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
-					// }, 3000);
+			if (num === 0) {
+				if (feature) {
+					if (email) {
+						if (props.match.params.send === 'true') {
+							if (props.match.params.id) {
+								send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
+								set_num(1);
+							}
+						}
+					}
 				}
-
-				// }
 			}
 
 			return () => {};
 		},
-		[ feature ]
+		[ email ]
 	);
 
 	console.log({ email_template });
