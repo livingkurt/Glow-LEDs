@@ -291,7 +291,7 @@ const EditProductPage = (props) => {
 		set_subcategory(product.subcategory);
 		setCountInStock(product.countInStock);
 		set_finite_stock(product.finite_stock);
-		props.match.params.pathname && props.match.params.template === 'false' && setPathname(product.pathname);
+		props.match.params.pathname && !props.match.params.template === 'true' && setPathname(product.pathname);
 		setOrder(product.order);
 		set_product_options(product.product_options);
 		set_product_options_images(product.product_options && product.product_options.map((option) => option.images));
@@ -399,7 +399,7 @@ const EditProductPage = (props) => {
 	const save_product = () => {
 		dispatch(
 			saveProduct({
-				_id: props.match.params.pathname && props.match.params.template === 'false' ? id : null,
+				_id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
 				name,
 				price,
 				// display_image,

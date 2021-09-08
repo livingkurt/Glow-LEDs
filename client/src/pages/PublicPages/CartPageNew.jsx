@@ -203,7 +203,7 @@ const CartPage = (props) => {
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
 			{/* {cart.cartItems.length === 0 && <SuggestedProducts />} */}
 			{/* <SuggestedProducts /> */}
-			<Carousel />
+			<Carousel title="Suggested Products" />
 		</div>
 	);
 };

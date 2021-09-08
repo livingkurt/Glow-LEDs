@@ -19,7 +19,8 @@ const CarouselItem = (props) => {
 
 	return (
 		<div>
-			{!loading && (
+			{product &&
+			!loading && (
 				<li key={props.product && product.pathname} style={props.styles}>
 					<Link to={product && '/collections/all/products/' + product.pathname}>
 						<div className="product">

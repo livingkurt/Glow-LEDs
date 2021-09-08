@@ -5,32 +5,51 @@ import { listProducts } from '../../actions/productActions';
 import CarouselItem from './CarouselItem';
 import { Loading } from '../UtilityComponents';
 import useWindowDimensions from '../Hooks/windowDimensions';
+import { API_Products } from '../../utils';
 
 const Carousel = (props) => {
 	const dispatch = useDispatch();
 
-	const productList = useSelector((state) => state.productList);
-	const { products, loading, error } = productList;
+	// const productList = useSelector((state) => state.productList);
+	// const { products, loading, error } = productList;
 	const { height, width } = useWindowDimensions();
 
-	useEffect(() => {
-		dispatch(listProducts(''));
+	const [ products, set_products ] = useState([]);
+	const [ loading, set_loading ] = useState(false);
+	// const productList = useSelector((state) => state.productList);
+	// const { products, loading, error } = productList;
+	// console.log({ products });
 
-		// }
-	}, []);
+	useEffect(
+		() => {
+			if (props.category) {
+				// dispatch(listProducts(props.category));
+				get_products(props.category);
+			}
+		},
+		[ props.category ]
+	);
+
+	const get_products = async (category) => {
+		set_loading(true);
+		const { data } = await API_Products.get_products_by_category(category);
+		console.log({ get_products: data });
+		set_products(data.filter((product) => product.pathname !== props.product_pathname));
+		set_loading(false);
+	};
 
 	const [ product_number, set_product_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);
 
 	const move_left = () => {
-		if (product_number != 0) {
+		if (product_number !== 0) {
 			set_product_number((product_number) => {
 				return product_number - 1;
 			});
 		}
 	};
 	const move_right = () => {
-		if (product_number != products.filter((product) => product.hidden === false).length - 5) {
+		if (product_number !== products.filter((product) => product.hidden === false).length - 5) {
 			set_product_number((product_number) => {
 				return product_number + 1;
 			});
@@ -59,45 +78,11 @@ const Carousel = (props) => {
 		[ width ]
 	);
 
-	// const getWidth = () => window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-	// function useCurrentWidth() {
-	// 	// save current window width in the state object
-	// 	let [ width, setWidth ] = useState(getWidth());
-	// 	// in this case useEffect will execute only once because
-	// 	// it does not have any dependencies.
-	// 	useEffect(() => {
-	// 		// timeoutId for debounce mechanism
-	// 		let timeoutId = null;
-	// 		let numberId = null;
-	// 		const resizeListener = () => {
-	// 			// prevent execution of previous setTimeout
-	// 			clearTimeout(timeoutId);
-	// 			clearTimeout(numberId);
-	// 			// change width from the state object after 150 milliseconds
-	// 			timeoutId = setTimeout(() => setWidth(getWidth()), 150);
-	// 			numberId = setTimeout(() => handleWindowResize(getWidth()), 150);
-	// 		};
-	// 		// handleWindowResize(width);
-
-	// 		// set resize listener
-	// 		window.addEventListener('resize', resizeListener);
-	// 		// clean up function
-	// 		return () => {
-	// 			// remove resize listener
-	// 			window.removeEventListener('resize', resizeListener);
-	// 		};
-	// 	}, []);
-	// 	return width;
-	// }
-
-	// let width = useCurrentWidth();
-
 	return (
 		<div className="mh-10px">
-			<h2 className="jc-c w-100per ta-c">Suggested Products</h2>
+			<h2 className="jc-c w-100per ta-c">{props.title}</h2>
 
-			<Loading loading={loading} error={error}>
+			<Loading loading={loading}>
 				{products && (
 					<div className="row p-10px" style={{ overflowX: 'scroll' }}>
 						<div className="row jc-b w-100per">
@@ -118,6 +103,7 @@ const Carousel = (props) => {
 										key={product_number + x}
 										size="175px"
 										product={
+											products &&
 											products
 												.filter((product) => !product.option)
 												.filter((product) => product.hidden === false)[product_number + x]

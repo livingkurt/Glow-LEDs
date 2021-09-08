@@ -9,7 +9,8 @@ import {
 	RelatedProducts,
 	ReadMore,
 	Swipe,
-	StyledDropdown
+	StyledDropdown,
+	Carousel
 } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -27,6 +28,8 @@ import 'swiper/components/pagination/pagination.min.css';
 import 'swiper/swiper.min.css';
 import 'swiper/components/zoom/zoom.min.css';
 import 'swiper/components/navigation/navigation.min.css';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
 // install Swiper modules
 SwiperCore.use([ Pagination ]);
@@ -1377,65 +1380,29 @@ const ProductPage = (props) => {
 							show_hide="alt_pictures_shown"
 							set_image={set_image}
 						/> */}
-						<div className="p-1rem">
-							<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
-							<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
-								{description}
-							</ReadMore>
-							{product.category === 'glow_strings' && (
-								<Link to="/pages/manual/glow_strings_v2_manual">
-									<button className="btn primary w-100per fs-20px mb-2rem">
-										View Glow Strings V2 Manual
-									</button>
-								</Link>
-							)}
-							{/* {product.category === 'glow_strings' && (
-								<button className="btn primary w-100per fs-20px mb-2rem" onClick={open_pdf}>
-									Download Glow Strings V2 Manual
-								</button>
-                
-							)} */}
-							{/* {product.category === 'glow_strings' && (
-								<button className="btn primary w-100per fs-20px mb-2rem" onClick={() => open_pdf()}>
-									<a href="/Glow_Strings_V2_Manual.png" target="_blank">
-									Download Glow Strings V2 Manual
-									</a>
-								</button>
-							)} */}
-							{/* {product.category === 'glow_strings' && (
-								<p>
-									<span style="font-size: 130%;">
-										<a
-											href="https://ledgloves.com/wp-content/uploads/2017/10/UberNanoInfographic.pdf"
-											target="_blank"
-										>
-											Download Test Here
-										</a>
-									</span>
-								</p>
-							)} */}
-							{/* {product.category === 'glow_strings' && (
-								// <button className="btn primary w-100per fs-20px mb-2rem">
-								<object
-									data="/Glow_Strings_V2_Manual.pdf"
-									type="application/pdf"
-									// width="100%"
-									// height="100%"
-								>
-									<p>
-										Your web browser doesn't have a PDF plugin. Instead you can{' '}
-										<a href="/Glow_Strings_V2_Manual.pdf">click here to download the PDF file.</a>
-									</p>
-								</object>
-								// </button>
-							)} */}
-							{/* {!product.product_length && (
-								<div className="">
+						<Tabs>
+							<TabList>
+								<Tab>Description</Tab>
+								<Tab>Included Items</Tab>
+								<Tab>Product Dimensions</Tab>
+								<Tab>Compatible Chips</Tab>
+								<Tab>Reviews</Tab>
+								<Tab>Media</Tab>
+							</TabList>
+
+							<TabPanel>
+								<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
+								<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
+									{description}
+								</ReadMore>
+							</TabPanel>
+							<TabPanel>
+								<div className="mt-2rem">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 									<div className="h-100per paragraph_font">
-										<ul style={{ marginLeft: '10px' }}>
-											{product.included_items ? (
-												product.included_items.split('\n').map((line, index) => {
+										<ul className="pl-2rem">
+											{included_items ? (
+												included_items.split('\n').map((line, index) => {
 													return (
 														<li
 															key={index}
@@ -1447,15 +1414,212 @@ const ProductPage = (props) => {
 													);
 												})
 											) : (
-												product.included_items
+												included_items
 											)}
 										</ul>
 									</div>
 								</div>
-							)} */}
-							{/* {product.product_length && ( */}
+							</TabPanel>
+							<TabPanel>
+								{product.product_length && (
+									<div className="mt-2rem">
+										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
+										<div className="h-100per paragraph_font">
+											{product.name === 'Coin Battery Storage' ? (
+												`${product.product_length} cm x ${product.product_width} cm x
+											${product.product_height} cm`
+											) : product.name === 'Glow Strings V2 50 LED / 3.5m' ? (
+												`${product.product_length} m x ${product.product_width} m x
+											${product.product_height} m`
+											) : (
+												`${product.product_length} mm x ${product.product_width} mm x
+											${product.product_height} mm`
+											)}
+										</div>
+									</div>
+								)}
+							</TabPanel>
+							<TabPanel>
+								{product.chips &&
+								product.chips.length > 0 && (
+									<div className="mt-2rem">
+										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
+										<div className="h-100per paragraph_font ">
+											<ul className="pl-2rem">
+												{product.chips ? (
+													product.chips.map((chip, index) => {
+														return (
+															<li
+																key={index}
+																className="paragraph_font"
+																style={{ listStyleType: 'disc' }}
+															>
+																{chip.name}
+															</li>
+														);
+													})
+												) : (
+													product.chips
+												)}
+											</ul>
+										</div>
+									</div>
+								)}
+							</TabPanel>
+							<TabPanel>
+								<div className="content-margined">
+									{/* <h2
+										style={{
+											textAlign: 'center',
+											width: '100%',
+											justifyContent: 'center'
+										}}
+									>
+										Reviews
+									</h2> */}
+									{!product.reviews.length && (
+										<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
+									)}
+									<Reviews product={product} pathname={props.match.params.pathname} />
+								</div>
+							</TabPanel>
+							<TabPanel>
+								{!product.video ? (
+									<h2
+										style={{
+											textAlign: 'center',
+											width: '100%',
+											justifyContent: 'center'
+										}}
+									>
+										Video Coming Soon!
+									</h2>
+								) : (
+									<div className="jc-c column m-0px">
+										<h2
+											style={{
+												textAlign: 'center',
+												width: '100%',
+												justifyContent: 'center'
+											}}
+										>
+											Watch the Video Below to Learn More
+										</h2>
+										<div className="iframe-container">
+											<iframe
+												width="996"
+												height="560"
+												title={product.name}
+												style={{ borderRadius: '20px' }}
+												src={`https://www.youtube.com/embed/${product.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+												frameborder="0"
+												allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+												allowfullscreen="1"
+											/>
+										</div>
+									</div>
+								)}
+								<div className="p-1rem">
+									{product.category === 'glowskins' && (
+										// <Zoom>
+										<img
+											className="colored_caps_images"
+											src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
+											alt="Glowskins Chip Compatibility"
+											title="Glowskins Chip Compatibility"
+										/>
+										// </Zoom>
+									)}
+
+									{(product.category === 'diffuser_caps' ||
+										product.category === 'mega_diffuser_caps') && (
+										<div>
+											<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
+											<div className="colored_caps">
+												<div className="colored_caps_item m-1rem">
+													<h3 className="colored_caps_images">Colored Caps</h3>
+													{/* <Zoom> */}
+													<img
+														className="colored_caps_images"
+														src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
+														alt="Colored Caps"
+														title="Colored Caps"
+													/>
+													{/* </Zoom> */}
+												</div>
+												<div className="colored_caps_item m-1rem">
+													<h3 className="colored_caps_images">
+														Colored Caps Under Blacklight
+													</h3>
+													{/* <Zoom> */}
+													<img
+														className="colored_caps_images"
+														src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
+														alt="Colored Caps Under Blacklight"
+														title="Colored Caps Under Blacklight"
+													/>
+													{/* </Zoom> */}
+												</div>
+											</div>
+										</div>
+									)}
+									{product.category === 'diffusers' && (
+										<div>
+											<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
+											<div className="colored_caps">
+												<div className="colored_caps_item m-1rem">
+													<h3 className="colored_caps_images">Colored Diffusers</h3>
+													{/* <Zoom> */}
+													<img
+														className="colored_caps_images"
+														src="https://thumbs2.imgbox.com/78/e1/DfIDjh1r_t.jpeg"
+														alt="Colored Caps"
+														title="Colored Caps"
+													/>
+													{/* </Zoom> */}
+												</div>
+												<div className="colored_caps_item m-1rem">
+													<h3 className="colored_caps_images">Colored Diffusers No Light</h3>
+													{/* <Zoom> */}
+													<img
+														className="colored_caps_images"
+														src="https://thumbs2.imgbox.com/b9/5c/9jcxAh23_t.jpeg"
+														alt="Colored Caps Under Blacklight"
+														title="Colored Caps Under Blacklight"
+													/>
+													{/* </Zoom> */}
+												</div>
+											</div>
+										</div>
+									)}
+									{(product.category === 'diffuser_caps' ||
+										product.category === 'mega_diffuser_caps') && (
+										<div className=" m-2rem  h-auto m-auto jc-c">
+											<img
+												className="max-w-819px w-100per h-auto "
+												src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
+												alt="Graphic Timeline"
+												title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"
+											/>
+										</div>
+									)}
+								</div>
+							</TabPanel>
+						</Tabs>
+						<div className="p-1rem">
+							{/* <h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
+							<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
+								{description}
+							</ReadMore> */}
+							{product.category === 'glow_strings' && (
+								<Link to="/pages/manual/glow_strings_v2_manual">
+									<button className="btn primary w-100per fs-20px mb-2rem">
+										View Glow Strings V2 Manual
+									</button>
+								</Link>
+							)}
 							<div className="jc-b wrap m-2rem">
-								<div className="mt-2rem">
+								{/* <div className="mt-2rem">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul style={{}}>
@@ -1476,8 +1640,8 @@ const ProductPage = (props) => {
 											)}
 										</ul>
 									</div>
-								</div>
-								{product.product_length && (
+								</div> */}
+								{/* {product.product_length && (
 									<div className="mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
 										<div className="h-100per paragraph_font">
@@ -1493,8 +1657,8 @@ const ProductPage = (props) => {
 											)}
 										</div>
 									</div>
-								)}
-								{product.chips &&
+								)} */}
+								{/* {product.chips &&
 								product.chips.length > 0 && (
 									<div className="mt-2rem">
 										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
@@ -1518,164 +1682,32 @@ const ProductPage = (props) => {
 											</ul>
 										</div>
 									</div>
-								)}
+								)} */}
 							</div>
 							{/* )} */}
 						</div>
-						{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
+						{/* {(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
 							<div className=" m-2rem  h-auto m-auto jc-c">
-								{/* <Zoom className="m-auto"> */}
 								<img
 									className="max-w-819px w-100per h-auto "
 									src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
 									alt="Graphic Timeline"
 									title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"
 								/>
-								{/* </Zoom> */}
 							</div>
-						)}
-
-						<div className="p-1rem">
-							{/* {product.category === 'glowskins' && (
-								<a href="/pages/faq#glowskins_chip_brand_compatibility" className="mb-3rem">
-									<div className="jc-c">
-										<button className="btn primary" style={{ margin: 'auto' }}>
-											Glowskins Microlight Compatibility
-										</button>
-									</div>
-								</a>
-							)} */}
-							{product.category === 'glowskins' && (
-								// <Zoom>
-								<img
-									className="colored_caps_images"
-									src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
-									alt="Glowskins Chip Compatibility"
-									title="Glowskins Chip Compatibility"
-								/>
-								// </Zoom>
-							)}
-
-							{(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
-								<div>
-									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
-									<div className="colored_caps">
-										<div className="colored_caps_item m-1rem">
-											<h3 className="colored_caps_images">Colored Caps</h3>
-											{/* <Zoom> */}
-											<img
-												className="colored_caps_images"
-												src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
-												alt="Colored Caps"
-												title="Colored Caps"
-											/>
-											{/* </Zoom> */}
-										</div>
-										<div className="colored_caps_item m-1rem">
-											<h3 className="colored_caps_images">Colored Caps Under Blacklight</h3>
-											{/* <Zoom> */}
-											<img
-												className="colored_caps_images"
-												src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
-												alt="Colored Caps Under Blacklight"
-												title="Colored Caps Under Blacklight"
-											/>
-											{/* </Zoom> */}
-										</div>
-									</div>
-								</div>
-							)}
-							{product.category === 'diffusers' && (
-								<div>
-									<h2 className="ta-c">Get your favorite caps in all of these new colors</h2>
-									<div className="colored_caps">
-										<div className="colored_caps_item m-1rem">
-											<h3 className="colored_caps_images">Colored Diffusers</h3>
-											{/* <Zoom> */}
-											<img
-												className="colored_caps_images"
-												src="https://thumbs2.imgbox.com/78/e1/DfIDjh1r_t.jpeg"
-												alt="Colored Caps"
-												title="Colored Caps"
-											/>
-											{/* </Zoom> */}
-										</div>
-										<div className="colored_caps_item m-1rem">
-											<h3 className="colored_caps_images">Colored Diffusers No Light</h3>
-											{/* <Zoom> */}
-											<img
-												className="colored_caps_images"
-												src="https://thumbs2.imgbox.com/b9/5c/9jcxAh23_t.jpeg"
-												alt="Colored Caps Under Blacklight"
-												title="Colored Caps Under Blacklight"
-											/>
-											{/* </Zoom> */}
-										</div>
-									</div>
-								</div>
-							)}
-							{!product.video ? (
-								<h2
-									style={{
-										textAlign: 'center',
-										width: '100%',
-										justifyContent: 'center'
-									}}
-								>
-									Video Coming Soon!
-								</h2>
-							) : (
-								<div className="jc-c column m-0px">
-									<h2
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											justifyContent: 'center'
-										}}
-									>
-										Watch the Video Below to Learn More
-									</h2>
-									{/* <video
-										className="product_video"
-										style={{ height: 'auto', maxWidth: '100%', borderRadius: '20px' }}
-										controls
-										poster={product.display_image}
-									>
-										<source src={product.video} type="video/mp4" />
-									</video> */}
-									<div className="iframe-container">
-										<iframe
-											width="996"
-											height="560"
-											style={{ borderRadius: '20px' }}
-											src={`https://www.youtube.com/embed/${product.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-											frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen="1"
-										/>
-									</div>
-								</div>
-							)}
-						</div>
-						<div className="content-margined">
-							<h2
-								style={{
-									textAlign: 'center',
-									width: '100%',
-									justifyContent: 'center'
-								}}
-							>
-								Reviews
-							</h2>
-							{!product.reviews.length && (
-								<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
-							)}
-							<Reviews product={product} pathname={props.match.params.pathname} />
-						</div>
+						)} */}
 					</div>
 				)}
 			</Loading>
-			<RelatedProducts product={product} product_pathname={props.match.params.pathname} />
+			{/* <RelatedProducts
+				product_pathname={props.match.params.pathname}
+				category={product && product.category}
+			/> */}
+			<Carousel
+				product_pathname={props.match.params.pathname}
+				category={product && product.category}
+				title="Related Products"
+			/>
 			{/* <RelatedCarousel
 				product={product}
 				product_category={product && product.category}

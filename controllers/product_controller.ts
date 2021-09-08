@@ -479,7 +479,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
-	get_categories: async (req: any, res: any) => {
+	get_products_by_category: async (req: any, res: any) => {
 		try {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
@@ -504,7 +504,7 @@ export default {
 				.populate('option_products')
 				.populate('categorys')
 				.populate('subcategorys');
-			// console.log({ products });
+			console.log({ products });
 			log_request({
 				method: 'GET',
 				path: req.originalUrl,

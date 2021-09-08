@@ -30,7 +30,7 @@ router.route('/create_product_option').post(product_controller.create_product_op
 
 router.route('/reviews/:pathname').post(product_controller.reviews);
 
-router.route('/get_categories').get(product_controller.get_categories);
+router.route('/get_products_by_category').get(product_controller.get_products_by_category);
 
 // CRUD Actions
 

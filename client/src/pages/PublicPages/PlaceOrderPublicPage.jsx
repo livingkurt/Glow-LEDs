@@ -1016,7 +1016,7 @@ const PlaceOrderPublicPage = (props) => {
 					</ul>
 				</div>
 			</div>
-			<Carousel />
+			<Carousel title="Suggested Products" />
 		</div>
 	);
 };
