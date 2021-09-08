@@ -39,7 +39,7 @@ const CartItem = (props) => {
 				</div>
 				{cart_item_name(props.item)}
 
-				<div className="ai-c h-25px max-w-300px w-100per jc-b mb-10px">
+				<div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
 					<label aria-label="sortOrder" htmlFor="sortOrder" className="select-label mr-1rem">
 						Qty:
 					</label>

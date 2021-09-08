@@ -263,7 +263,7 @@ export const cart_sale_price_switch = (product) => {
 
 export const cart_item_name = (item) => {
 	return (
-		<div className="max-w-300px">
+		<div className="max-w-500px">
 			{item.secondary_product && (
 				<div className="ai-c mv-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
