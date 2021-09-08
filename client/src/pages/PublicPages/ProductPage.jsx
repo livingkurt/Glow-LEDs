@@ -495,40 +495,127 @@ const ProductPage = (props) => {
 									{name}
 								</label>
 								{/* <div className="w-400px"> */}
+
 								<div className="details-image">
-									{!secondary_image && (
-										<img
-											id="expandedImg"
-											alt={name}
-											title={name}
-											className="details-image-img"
-											src={image}
-											style={{
-												maxWidth: '400px',
-												maxHeight: '400px',
-												height: '100%',
-												width: '100%'
-											}}
-										/>
-									)}
-									{secondary_image && (
-										<div className="double-image">
+									{console.log({ name: name && name.split('-')[1] })}
+									<div>
+										{console.log(true)}
+										{!secondary_image && (
 											<img
 												id="expandedImg"
 												alt={name}
 												title={name}
-												className="details-image-img-left"
+												className="details-image-img"
 												src={image}
+												style={{
+													maxWidth: '400px',
+													maxHeight: '400px',
+													height: '100%',
+													width: '100%'
+												}}
 											/>
-											<img
-												id="expandedSecondaryImg"
-												alt={name}
-												title={name}
-												className="details-image-img-right"
-												src={secondary_image}
-											/>
+										)}
+										{secondary_image && (
+											<div
+												className={`double-image-${name && name.split('-')[1]
+													? 'vertical'
+													: ''}`}
+											>
+												<img
+													id="expandedImg"
+													alt={name}
+													title={name}
+													className={`details-image-img-${name && name.split('-')[1]
+														? 'top'
+														: 'left'}`}
+													src={image}
+												/>
+												<img
+													id="expandedSecondaryImg"
+													alt={name}
+													title={name}
+													className={`details-image-img-${name && name.split('-')[1]
+														? 'bottom'
+														: 'right'}`}
+													src={secondary_image}
+												/>
+											</div>
+										)}
+									</div>
+									{/* {name && !name.split('-')[1] === '2 Tone' ? (
+										<div>
+											{console.log(true)}
+											{!secondary_image && (
+												<img
+													id="expandedImg"
+													alt={name}
+													title={name}
+													className="details-image-img"
+													src={image}
+													style={{
+														maxWidth: '400px',
+														maxHeight: '400px',
+														height: '100%',
+														width: '100%'
+													}}
+												/>
+											)}
+											{secondary_image && (
+												<div className="double-image">
+													<img
+														id="expandedImg"
+														alt={name}
+														title={name}
+														className="details-image-img-left"
+														src={image}
+													/>
+													<img
+														id="expandedSecondaryImg"
+														alt={name}
+														title={name}
+														className="details-image-img-right"
+														src={secondary_image}
+													/>
+												</div>
+											)}
 										</div>
-									)}
+									) : (
+										<div>
+											{!secondary_image && (
+												<img
+													id="expandedImg"
+													alt={name}
+													title={name}
+													className="details-image-img"
+													src={image}
+													style={{
+														maxWidth: '400px',
+														maxHeight: '400px',
+														height: '100%',
+														width: '100%'
+													}}
+												/>
+											)}
+											{secondary_image && (
+												<div className="double-image-vertical">
+													<img
+														id="expandedImg"
+														alt={name}
+														title={name}
+														className="details-image-img-top"
+														src={image}
+													/>
+													<img
+														id="expandedSecondaryImg"
+														alt={name}
+														title={name}
+														className="details-image-img-bottom"
+														src={secondary_image}
+													/>
+												</div>
+											)}
+										</div>
+									)} */}
 									<div style={{ display: width < 819 ? 'none' : 'block' }}>
 										<Slideshow
 											product={product}
@@ -540,6 +627,7 @@ const ProductPage = (props) => {
 									</div>
 									{/* </div> */}
 								</div>
+
 								<div>
 									{/* <Swiper
 										style={{
