@@ -308,7 +308,10 @@ const App = (props) => {
 								component={OrderEmail}
 							/>
 							{/* Admin Routes */}
-							<AdminRoute path="/secure/glow/editproduct/:pathname?" component={EditProductPage} />
+							<AdminRoute
+								path="/secure/glow/editproduct/:pathname?/:template?"
+								component={EditProductPage}
+							/>
 							<AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
 							<AdminRoute path="/secure/glow/create_label" component={LabelCreatorPage} />

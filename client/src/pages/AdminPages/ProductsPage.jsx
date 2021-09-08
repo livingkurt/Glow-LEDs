@@ -536,7 +536,7 @@ function ProductPage(props) {
 				<div className="w-200px">Category</div>
 				<div className="w-120px">Order</div>
 				<div className="w-500px">Price</div>
-				<div className="w-300px">Product Options</div>
+				<div className="w-300px">Use as Template</div>
 				<div className="w-100px">Actions</div>
 			</div>
 			{!show_hidden && (

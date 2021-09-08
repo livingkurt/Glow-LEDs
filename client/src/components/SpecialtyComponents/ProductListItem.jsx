@@ -179,7 +179,10 @@ const ProductListItem = (props) => {
 				<label className="product-price w-500px">
 					{sale_price_product_option_switch(product, product.product_options)}
 				</label>
-				<label className="product-price w-250px">{product.product_options.length} Options</label>
+				<Link className="w-500px" to={'/secure/glow/editproduct/' + product.pathname + '/' + true}>
+					<button className="btn primary">Use as Template</button>
+				</Link>
+				{/* <label className="product-price w-250px">{product.product_options.length} Options</label> */}
 				<div>
 					<div>
 						<div className="jc-b">

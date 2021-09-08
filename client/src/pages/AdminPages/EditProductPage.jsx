@@ -125,8 +125,11 @@ const EditProductPage = (props) => {
 		() => {
 			if (props.match.params.pathname) {
 				console.log('Is ID');
+				// if (props.match.params.template) {
+				console.log({ template: props.match.params.template });
 				stableDispatch(detailsProduct(props.match.params.pathname));
 				stableDispatch(detailsProduct(props.match.params.pathname));
+				// }
 			} else {
 				stableDispatch(detailsProduct(''));
 			}
@@ -288,7 +291,7 @@ const EditProductPage = (props) => {
 		set_subcategory(product.subcategory);
 		setCountInStock(product.countInStock);
 		set_finite_stock(product.finite_stock);
-		props.match.params.pathname && setPathname(product.pathname);
+		props.match.params.pathname && props.match.params.template === 'false' && setPathname(product.pathname);
 		setOrder(product.order);
 		set_product_options(product.product_options);
 		set_product_options_images(product.product_options && product.product_options.map((option) => option.images));
@@ -396,7 +399,7 @@ const EditProductPage = (props) => {
 	const save_product = () => {
 		dispatch(
 			saveProduct({
-				_id: props.match.params.pathname && id,
+				_id: props.match.params.pathname && props.match.params.template === 'false' ? id : null,
 				name,
 				price,
 				// display_image,
