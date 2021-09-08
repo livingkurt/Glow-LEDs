@@ -31,6 +31,7 @@ import 'swiper/components/navigation/navigation.min.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { humanize, manuals, toCapitalize } from '../../utils/helper_functions';
+import Overflow from 'react-overflow-indicator';
 
 // install Swiper modules
 SwiperCore.use([ Pagination ]);
@@ -220,16 +221,16 @@ const ProductPage = (props) => {
 		[ error ]
 	);
 	useEffect(() => {
-		const recently_viewed = localStorage.getItem('recently_viewed');
+		const recently_viewed = sessionStorage.getItem('recently_viewed');
 		const products = JSON.parse(recently_viewed);
 		console.log({ product });
 		if (recently_viewed) {
 			if (product && product.hasOwnProperty('name')) {
-				localStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
+				sessionStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
 			}
 		} else {
 			if (product && product.hasOwnProperty('name')) {
-				localStorage.setItem('recently_viewed', JSON.stringify([ product ]));
+				sessionStorage.setItem('recently_viewed', JSON.stringify([ product ]));
 			}
 		}
 	}, []);
@@ -395,6 +396,56 @@ const ProductPage = (props) => {
 	const determine_secondary_product_name = (secondary) => {
 		return product.category === 'diffuser_caps' ? secondary.slice(0, -14) : secondary.split('-')[1].substring(1);
 	};
+
+	const [ canScroll, setCanScroll ] = useState(false);
+
+	function Shadow({
+		direction,
+		isVisible,
+		size = 30,
+		startColor = 'rgba(68, 49, 38, 0.3)',
+		endColor = 'rgba(56, 44, 36, 0)'
+	}) {
+		const style = {
+			position: 'absolute',
+			zIndex: 1,
+			pointerEvents: 'none',
+			opacity: isVisible ? 1 : 0,
+			transition: 'opacity 250ms ease-out'
+		};
+		switch (direction) {
+			case 'up':
+				style.top = 0;
+				style.left = 0;
+				style.right = 0;
+				style.height = size;
+				style.background = `linear-gradient(to bottom, ${startColor}, ${endColor})`;
+				break;
+			case 'left':
+				style.top = 0;
+				style.left = 0;
+				style.bottom = 0;
+				style.width = size;
+				style.background = `linear-gradient(to right, ${startColor}, ${endColor})`;
+				break;
+			case 'right':
+				style.top = 0;
+				style.right = 0;
+				style.bottom = 0;
+				style.width = size;
+				style.background = `linear-gradient(to left, ${startColor}, ${endColor})`;
+				break;
+			case 'down':
+				style.left = 0;
+				style.right = 0;
+				style.bottom = 0;
+				style.height = size;
+				style.background = `linear-gradient(to top, ${startColor}, ${endColor})`;
+				break;
+			default:
+		}
+		return <div style={style} />;
+	}
 
 	return (
 		<div className="">
@@ -1382,25 +1433,41 @@ const ProductPage = (props) => {
 							set_image={set_image}
 						/> */}
 						<Tabs>
-							<TabList>
-								<Tab>Description</Tab>
-								<Tab>Included Items</Tab>
-								<Tab>Product Dimensions</Tab>
-								<Tab>Compatible Chips</Tab>
-								<Tab>Reviews</Tab>
-								{manuals[product.category] && <Tab>Manual</Tab>}
-								<Tab>Media</Tab>
-							</TabList>
+							<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
+								<Overflow.Content>
+									<TabList>
+										<Tab>Description</Tab>
+										<Tab>Included Items</Tab>
+										<Tab>Product Dimensions</Tab>
+										{product.chips && product.chips.length > 0 && <Tab>Compatible Chips</Tab>}
+										<Tab>Reviews</Tab>
+										{manuals[product.category] && <Tab>Manual</Tab>}
+										<Tab>Media</Tab>
+									</TabList>
+								</Overflow.Content>
+								{/* <Overflow.Indicator direction="up">
+									{(canScroll) => <Shadow direction="up" isVisible={canScroll} />}
+								</Overflow.Indicator> */}
+								{/* <Overflow.Indicator direction="right">👇</Overflow.Indicator> */}
+								{/* {canScroll && <button className="btn secondary"></button>} */}
+								{canScroll && (
+									<div className="tab_indicator bob br-5px ta-c primary h-30px w-30px p-5px box-s-d b-1px">
+										{'>'}
+									</div>
+								)}
+
+								{/* {(canScroll) => <Overflow.Shadow direction="up" isVisible={canScroll} />} */}
+							</Overflow>
 
 							<TabPanel>
-								<h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
+								<h2 className="m-0px mr-5px"> Description: </h2>
 								<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 									{description}
 								</ReadMore>
 							</TabPanel>
 							<TabPanel>
 								<div className="mt-2rem">
-									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
+									<h2 className="m-0px mr-5px"> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul className="pl-2rem">
 											{included_items ? (
@@ -1423,9 +1490,10 @@ const ProductPage = (props) => {
 								</div>
 							</TabPanel>
 							<TabPanel>
-								{product.product_length && (
+								{product.product_length &&
+								product.product_length && (
 									<div className="mt-2rem">
-										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
+										<h2 className="m-0px mr-5px"> Product Dimensions: </h2>
 										<div className="h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
 												`${product.product_length} cm x ${product.product_width} cm x
@@ -1441,33 +1509,36 @@ const ProductPage = (props) => {
 									</div>
 								)}
 							</TabPanel>
-							<TabPanel>
-								{product.chips &&
-								product.chips.length > 0 && (
-									<div className="mt-2rem">
-										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
-										<div className="h-100per paragraph_font ">
-											<ul className="pl-2rem">
-												{product.chips ? (
-													product.chips.map((chip, index) => {
-														return (
-															<li
-																key={index}
-																className="paragraph_font"
-																style={{ listStyleType: 'disc' }}
-															>
-																{chip.name}
-															</li>
-														);
-													})
-												) : (
-													product.chips
-												)}
-											</ul>
+							{product.chips &&
+							product.chips.length > 0 && (
+								<TabPanel>
+									{product.chips &&
+									product.chips.length > 0 && (
+										<div className="mt-2rem">
+											<h2 className="m-0px mr-5px"> Compatible Chips: </h2>
+											<div className="h-100per paragraph_font ">
+												<ul className="pl-2rem">
+													{product.chips ? (
+														product.chips.map((chip, index) => {
+															return (
+																<li
+																	key={index}
+																	className="paragraph_font"
+																	style={{ listStyleType: 'disc' }}
+																>
+																	{chip.name}
+																</li>
+															);
+														})
+													) : (
+														product.chips
+													)}
+												</ul>
+											</div>
 										</div>
-									</div>
-								)}
-							</TabPanel>
+									)}
+								</TabPanel>
+							)}
 							<TabPanel>
 								<div className="content-margined">
 									{/* <h2
@@ -1494,12 +1565,7 @@ const ProductPage = (props) => {
 											</Link>
 										</div>
 										<div className="mb-10px">
-											<Link
-												to={`/collections/all/products/category/${product.category ===
-												'glow_strings_v2'
-													? 'glow_strings'
-													: product.category}`}
-											>
+											<Link to={`/collections/all/products/category/${product.category}`}>
 												<button class="btn secondary">
 													View Available {toCapitalize(humanize(product.category))}
 												</button>
@@ -1682,14 +1748,14 @@ const ProductPage = (props) => {
 							</TabPanel>
 						</Tabs>
 						<div className="p-1rem">
-							{/* <h2 style={{ margin: '0px', marginRight: 5 }}> Description: </h2>
+							{/* <h2 className="m-0px mr-5px"> Description: </h2>
 							<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 								{description}
 							</ReadMore> */}
 
 							<div className="jc-b wrap m-2rem">
 								{/* <div className="mt-2rem">
-									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
+									<h2 className="m-0px mr-5px"> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul style={{}}>
 											{included_items ? (
@@ -1712,7 +1778,7 @@ const ProductPage = (props) => {
 								</div> */}
 								{/* {product.product_length && (
 									<div className="mt-2rem">
-										<h2 style={{ margin: '0px', marginRight: 5 }}> Product Dimensions: </h2>
+										<h2 className="m-0px mr-5px"> Product Dimensions: </h2>
 										<div className="h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
 												`${product.product_length} cm x ${product.product_width} cm x
@@ -1730,7 +1796,7 @@ const ProductPage = (props) => {
 								{/* {product.chips &&
 								product.chips.length > 0 && (
 									<div className="mt-2rem">
-										<h2 style={{ margin: '0px', marginRight: 5 }}> Compatible Chips: </h2>
+										<h2 className="m-0px mr-5px"> Compatible Chips: </h2>
 										<div className="h-100per paragraph_font ">
 											<ul style={{}}>
 												{product.chips ? (

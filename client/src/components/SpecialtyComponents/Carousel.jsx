@@ -80,56 +80,62 @@ const Carousel = (props) => {
 
 	return (
 		<div className="mh-10px">
-			<h2 className="jc-c w-100per ta-c">{props.title}</h2>
+			{products.length > 0 && (
+				<div>
+					<h2 className="jc-c w-100per ta-c">{props.title}</h2>
 
-			<Loading loading={loading}>
-				{products && (
-					<div className="row p-10px" style={{ overflowX: 'scroll' }}>
-						<div className="row jc-b w-100per">
-							{/* {product_number != 0 && ( */}
-							<div className="ai-c">
-								<button
-									style={{ borderRadius: '50%' }}
-									className="btn icon h-59px"
-									onClick={() => move_left()}
-								>
-									<i className="fas fa-arrow-circle-left fs-40px" />
-								</button>
-							</div>
-							{/* )} */}
-							{[ ...Array(number_of_items).keys() ].map((x) => (
-								<div className="w-259px">
-									<CarouselItem
-										key={product_number + x}
-										size="175px"
-										product={
-											products &&
-											products
-												.filter((product) => !product.option)
-												.filter((product) => product.hidden === false)[product_number + x]
-										}
-										styles={{ listStyleType: 'none' }}
-									/>
+					<Loading loading={loading}>
+						{products && (
+							<div className="row p-10px" style={{ overflowX: 'scroll' }}>
+								<div className="row jc-b w-100per">
+									{/* {product_number != 0 && ( */}
+									<div className="ai-c">
+										<button
+											style={{ borderRadius: '50%' }}
+											className="btn icon h-59px"
+											onClick={() => move_left()}
+										>
+											<i className="fas fa-arrow-circle-left fs-40px" />
+										</button>
+									</div>
+									{/* )} */}
+									{[ ...Array(number_of_items).keys() ].map((x) => (
+										<div className="w-259px">
+											<CarouselItem
+												key={product_number + x}
+												size="175px"
+												product={
+													products &&
+													products
+														.filter((product) => !product.option)
+														.filter((product) => product.hidden === false)[
+														product_number + x
+													]
+												}
+												styles={{ listStyleType: 'none' }}
+											/>
+										</div>
+									))}
+									{/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
+									<div className="ai-c">
+										<button
+											style={{ borderRadius: '50%' }}
+											className="btn icon h-59px"
+											onClick={() => move_right()}
+										>
+											<i className="fas fa-arrow-circle-right fs-40px" />
+										</button>
+									</div>
+									{/* )} */}
 								</div>
-							))}
-							{/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
-							<div className="ai-c">
-								<button
-									style={{ borderRadius: '50%' }}
-									className="btn icon h-59px"
-									onClick={() => move_right()}
-								>
-									<i className="fas fa-arrow-circle-right fs-40px" />
-								</button>
-							</div>
-							{/* )} */}
-						</div>
 
-						{/* )
+								{/* )
 						)} */}
-					</div>
-				)}
-			</Loading>
+							</div>
+						)}
+					</Loading>
+				</div>
+			)}
 		</div>
 	);
 };

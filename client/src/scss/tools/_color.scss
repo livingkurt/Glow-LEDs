@@ -1,0 +1,8 @@
+@use '../abstracts' as *;
+
+.primary {
+	background-color: $theme_color_primary;
+}
+.secondary {
+	background-color: $theme_color_secondary;
+}

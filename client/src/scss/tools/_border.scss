@@ -1,0 +1,7 @@
+@use '../abstracts' as *;
+
+@for $i from 0 to 20 {
+	.b-#{$i}px {
+		border: $i + px solid white !important;
+	}
+}

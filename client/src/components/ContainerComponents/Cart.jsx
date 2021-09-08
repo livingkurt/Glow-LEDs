@@ -191,8 +191,8 @@ const Cart = (props) => {
 			</div>
 		);
 	};
-	const recently_viewed_products = JSON.parse(localStorage.getItem('recently_viewed'))
-		? JSON.parse(localStorage.getItem('recently_viewed')).slice(0, 2)
+	const recently_viewed_products = JSON.parse(sessionStorage.getItem('recently_viewed'))
+		? JSON.parse(sessionStorage.getItem('recently_viewed')).slice(0, 2)
 		: [];
 
 	const recently_viewed_grid = () => {
