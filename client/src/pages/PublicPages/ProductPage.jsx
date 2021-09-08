@@ -1387,6 +1387,7 @@ const ProductPage = (props) => {
 								<Tab>Product Dimensions</Tab>
 								<Tab>Compatible Chips</Tab>
 								<Tab>Reviews</Tab>
+								<Tab>Manual</Tab>
 								<Tab>Media</Tab>
 							</TabList>
 
@@ -1482,6 +1483,15 @@ const ProductPage = (props) => {
 									)}
 									<Reviews product={product} pathname={props.match.params.pathname} />
 								</div>
+							</TabPanel>
+							<TabPanel>
+								{product.category === 'glow_strings' && (
+									<Link to="/pages/manuals/glow_strings_v2_manual">
+										<button className="btn primary w-100per fs-20px mb-2rem">
+											View Glow Strings V2 Manual
+										</button>
+									</Link>
+								)}
 							</TabPanel>
 							<TabPanel>
 								{!product.video ? (
@@ -1611,13 +1621,7 @@ const ProductPage = (props) => {
 							<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 								{description}
 							</ReadMore> */}
-							{product.category === 'glow_strings' && (
-								<Link to="/pages/manual/glow_strings_v2_manual">
-									<button className="btn primary w-100per fs-20px mb-2rem">
-										View Glow Strings V2 Manual
-									</button>
-								</Link>
-							)}
+
 							<div className="jc-b wrap m-2rem">
 								{/* <div className="mt-2rem">
 									<h2 style={{ margin: '0px', marginRight: 5 }}> Included Items: </h2>
