@@ -44,6 +44,8 @@ const OrderPage = (props) => {
 	const [ refund_reason, set_refund_reason ] = useState('');
 	const [ all_orders, set_all_orders ] = useState('');
 
+	const [ message_to_user, set_message_to_user ] = useState('');
+
 	const orderRefund = useSelector((state) => state.orderRefund);
 	const { order: refund } = orderRefund;
 
@@ -511,7 +513,7 @@ const OrderPage = (props) => {
 											</div>
 											<div>{order.shipping.country}</div>
 											<div>{order.shipping.international && 'International'}</div>
-											<div>{order.shipping.email.toLowerCase()}</div>
+											<div>{order.shipping.email}</div>
 										</div>
 									</div>
 									<div>
@@ -794,7 +796,16 @@ ${order.shipping.email}`)}
 									</div>
 								</div>
 							</div>
-
+							<div className="column">
+								<label htmlFor="message_to_user">Message to User</label>
+								<input
+									type="text"
+									// value={message_to_user}
+									name="message_to_user"
+									id="message_to_user"
+									onChange={(e) => localStorage.setItem('message_to_user', e.target.value)}
+								/>
+							</div>
 							<button className="btn secondary w-100per mv-5px ">
 								<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
 							</button>
@@ -816,7 +827,9 @@ ${order.shipping.email}`)}
 												>
 													{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 												</button>
-												<Link to={`/secure/glow/emails/order/${order._id}/order/false`}>
+												<Link
+													to={`/secure/glow/emails/order/${order._id}/order/false/${message_to_user}`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>
@@ -836,7 +849,7 @@ ${order.shipping.email}`)}
 													{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
 												</button>
 												<Link
-													to={`/secure/glow/emails/order_status/${order._id}/reassured/false`}
+													to={`/secure/glow/emails/order_status/${order._id}/reassured/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
@@ -861,7 +874,7 @@ ${order.shipping.email}`)}
 													)}
 												</button>
 												<Link
-													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false`}
+													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
@@ -882,7 +895,7 @@ ${order.shipping.email}`)}
 													{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 												</button>
 												<Link
-													to={`/secure/glow/emails/order_status/${order._id}/packaged/false`}
+													to={`/secure/glow/emails/order_status/${order._id}/packaged/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
@@ -903,7 +916,7 @@ ${order.shipping.email}`)}
 													{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 												</button>
 												<Link
-													to={`/secure/glow/emails/order_status/${order._id}/shipped/false`}
+													to={`/secure/glow/emails/order_status/${order._id}/shipped/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
@@ -924,7 +937,7 @@ ${order.shipping.email}`)}
 													{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 												</button>
 												<Link
-													to={`/secure/glow/emails/order_status/${order._id}/delivered/false`}
+													to={`/secure/glow/emails/order_status/${order._id}/delivered/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
@@ -944,7 +957,9 @@ ${order.shipping.email}`)}
 												>
 													{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
 												</button>
-												<Link to={`/secure/glow/emails/order/${order._id}/refunded/false`}>
+												<Link
+													to={`/secure/glow/emails/order/${order._id}/refunded/false/${message_to_user}`}
+												>
 													<button className="btn secondary">
 														<i class="fas fa-paper-plane" />
 													</button>

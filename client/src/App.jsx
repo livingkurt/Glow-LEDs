@@ -367,7 +367,7 @@ const App = (props) => {
 								component={OrderEmail}
 							/>
 							<AdminRoute
-								path="/secure/glow/emails/order_status/:id?/:status?/:send?/:batch?"
+								path="/secure/glow/emails/order_status/:id?/:status?/:send?/:batch?/:message_to_user?"
 								exact={true}
 								component={OrderStatusEmail}
 							/>

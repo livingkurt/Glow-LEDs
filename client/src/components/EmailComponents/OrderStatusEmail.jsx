@@ -33,10 +33,20 @@ const OrderStatusEmail = (props) => {
 	const stableDispatch = useCallback(dispatch, []);
 
 	const [ message_to_user, set_message_to_user ] = useState('');
+	// const message = props.match.params.message ? props.match.params.message : '';
 
 	useEffect(() => {
 		stableDispatch(listEmails(toCapitalize(props.match.params.status)));
 		// stableDispatch(detailsOrder(props.match.params.id));
+		return () => {};
+	}, []);
+
+	useEffect(() => {
+		const message = localStorage.getItem('message_to_user');
+		console.log({ message });
+		if (message) {
+			set_message_to_user(message);
+		}
 		return () => {};
 	}, []);
 
@@ -473,6 +483,33 @@ const OrderStatusEmail = (props) => {
 															</table>
 														</td>
 													</tr>
+													{order.order_note && (
+														<tr>
+															<td
+																style={{
+																	verticalAlign: 'top',
+																	color: 'white',
+																	fontSize: '16px',
+																	lineHeight: '40px'
+																}}
+																valign="top"
+																align="left"
+															>
+																<div>
+																	<strong>Order Note:</strong> {order.order_note}
+																</div>
+																{console.log({ message_to_user })}
+																{message_to_user && (
+																	<div>
+																		<strong>Message To User:</strong>{' '}
+																		{message_to_user}
+																	</div>
+																)}
+																<br />
+																<br />
+															</td>
+														</tr>
+													)}
 													<tr>
 														<td
 															style={{
@@ -949,6 +986,7 @@ const OrderStatusEmail = (props) => {
 			}
 
 			set_loading(false);
+			localStorage.removeItem('message_to_user');
 		}
 	};
 	const [ num, set_num ] = useState(0);
@@ -992,7 +1030,7 @@ const OrderStatusEmail = (props) => {
 							<button className="btn primary">Back to Order</button>
 						</Link>
 					)}
-					<div>
+					{/* <div>
 						<label htmlFor="message_to_user">Message to User</label>
 						<input
 							type="text"
@@ -1001,7 +1039,7 @@ const OrderStatusEmail = (props) => {
 							id="message_to_user"
 							onChange={(e) => set_message_to_user(e.target.value)}
 						/>
-					</div>
+					</div> */}
 					<button
 						className="btn primary mb-1rem"
 						onClick={() => send_order_email('lavacquek@icloud.com', 'Kurt', email.h1)}
