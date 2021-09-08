@@ -360,188 +360,119 @@ export const state_names = [
 	'Wyoming'
 ];
 
-export const print_invoice = (order: any) => {
-	const mywindow: any = window.open('', 'PRINT', 'height=600,width=800');
-
-	mywindow.document.write(` <!doctype html>
-  <html>
-  
-  <head>
-    <meta charset="utf-8">
-  
-  </head>
-  
-  <body>
-    <div class="invoice-box"
-      style="display: flex; flex-direction: column; max-width: 300px; margin: auto;  font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; color: #black;">
-      <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left;" width="100%"
-        align="left">
-        <tr class="top">
-          <td colspan="2" style=" vertical-align: top;" valign="top">
-            <table style="width: 100%; line-height: inherit; text-align: left;" width="100%" align="left">
-              <tr>
-                <td class="title"
-                  style="vertical-align: top;   line-height: 45px; color: #333; "
-                  valign="top">
-                  <img src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png"
-                    style="width:100px; margin-left: -5px;">
-                </td>
-  
-                <td style=" vertical-align: top; text-align: right; " valign="top"
-                  align="right">
-                  Invoice #: ${order._id}<br>
-                  Created: ${format_date(order.createdAt)}<br>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-  
-        <tr class="information">
-          <td colspan="2" style="vertical-align: top;" valign="top">
-            <table style="width: 100%; line-height: inherit; text-align: left;" width="100%" align="left">
-              <tr>
-                <td style="vertical-align: top;" valign="top">
-                  Glow LEDs<br>
-                  404 Kenniston Dr<br>
-                  Austin, TX 78752<br>
-                  info.glowleds@gmail.com
-                </td>
-  
-                <td style=" vertical-align: top; text-align: right;" valign="top"
-                  align="right">
-                  ${order.shipping.first_name} ${order.shipping.last_name}<br>
-                  ${order.shipping.address_1} ${order.shipping.address_2}<br>
-                  ${order.shipping.city}, ${order.shipping.state} ${order.shipping.postalCode}<br>
-                  ${order.shipping.email}
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-  
-        <tr class="heading">
-          <td
-            style="padding: 5px; vertical-align: top; background: #eee; border-bottom: 1px solid #ddd; font-weight: bold;"
-            valign="top">
-            Payment Method
-          </td>
-  
-          <td
-            style="padding: 5px; vertical-align: top; text-align: right; background: #eee; border-bottom: 1px solid #ddd; font-weight: bold;"
-            valign="top" align="right">
-            Last 4
-          </td>
-        </tr>
-
-        <tr class="details">
-        <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
-        ${order.payment.charge ? order.payment.charge.source.brand : ''} 
-        </td>
-
-        <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
-          align="right">
-          ${order.payment.charge ? order.payment.charge.source.last4 : ''}
-        </td>
-      </tr>
-  
-     
-  
-        <tr class="heading">
-          <td
-            style="padding: 5px; vertical-align: top; background: #eee; border-bottom: 1px solid #ddd; font-weight: bold;"
-            valign="top">
-            Item
-          </td>
-  
-          <td
-            style="padding: 5px; vertical-align: top; text-align: right; background: #eee; border-bottom: 1px solid #ddd; font-weight: bold;"
-            valign="top" align="right">
-            Price
-          </td>
-        </tr>
-        ${order.orderItems
-			.map((item: any) => {
-				let item_item = `<tr class="item">
-          <td style="padding: 5px; vertical-align: top; border-bottom: 1px solid #eee;" valign="top">
-          ${item.qty}x - ${item.category === 'diffuser_caps' ||
-				item.category === 'mega_diffuser_caps' ||
-				item.category === 'diffusers'
-					? `${item.color} -`
-					: ''}
-        ${item.name}
-        ${item.secondary_product ? ` w (${item.secondary_product.name})` : ''}
-          </td>
-  
-          <td style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid #eee;" valign="top"
-            align="right">
-            $${item.price.toFixed(2)}
-          </td>
-        </tr>`;
-				return item_item;
-			})
-			.join('')}
-  
-     
-      </table>
-      <div class="total" style=" width: 100%;">
-        <div style="vertical-align: top;" valign="top"></div>
-        <div style="display: flex; flex-direction: column; justify-content: flex-end; padding-right: 9px;">
-        
-
-        <div style="padding: 5px; vertical-align: top; text-align: right;      width: 100%;"
-        valign="top" align="right">
-        Tax: $${order.taxPrice.toFixed(2)}
-      </div>
-        <div style="padding: 5px; vertical-align: top; text-align: right;     width: 100%; "
-          valign="top" align="right">
-          Shipping: $${order.shippingPrice.toFixed(2)}
-        </div>
-
-       
-        <div style=" vertical-align: top; width: 25%;margin-left: auto;border-top: 1px solid #eee;" valign="top"></div>
-        <div style="padding: 5px; vertical-align: top; text-align: right;     width: 100%; font-weight: bold;"
-          valign="top" align="right">
-          Total: $${order.totalPrice.toFixed(2)}
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 style="text-align: center;">Welcome to the Glow LEDs family!</h3>
-      <div style="text-align: center; ">We are so happy to share our art with you.</div>
-      <div style="text-align: center; ">The code below will take you to our <strong>FAQ page</strong> for all kinds of helpful information.</div>
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div style="text-align: center; width: 125px;">
-        <div style="text-align: center; "><strong>Facebook</strong></div> 
-        <div style="text-align: center; ">@GlowLEDsOfficial</div>
-        </div> 
-        <img src="/images/optimized_images/logo_images/Glow_LEDs_Frequently_Asked_Questions_Page.png" style="width:75px; text-align:center;">
-        <div style="text-align: center; width: 125px;">
-        <div style="text-align: center; "><strong>Instagram</strong></div> 
-        <div style="text-align: center; ">@glow_leds</div>
-        </div> 
-      </div>
-      <div style="text-align: center; "><strong>Tag us in your videos and pictures!</strong></div>
-      
-      
-      <div style="text-align: center; ">We want to feature you!</div>
-      <div style="text-align: center; ">We are figuring this out as we go so any feedback is welcome.</div>
-      <div style="text-align: center; ">We appreciate you more than you know.</div>
-      <div style="text-align: center; "><strong>Questions or concerns?:</strong> info.glowleds@gmail.com</div>
-    </div>
-    </div>
-    
-  </body>
-  
-  </html>`);
-
-	mywindow.document.close(); // necessary for IE >= 10
-	mywindow.focus(); // necessary for IE >= 10*/
-
-	mywindow.print();
-	// mywindow.close();
-
-	return true;
+export const manuals = {
+	glow_strings: {
+		name: 'Glow Strings V2 Manual',
+		manual: '/Glow_Strings_V2_Manual.png',
+		videos: [
+			{
+				title: 'One Button Functionality',
+				video: 'oHNFMaUepLs'
+			},
+			{
+				title: 'One Button Functionality',
+				video: 'dCjgyMdiKhY'
+			},
+			{
+				title: 'One Button Functionality',
+				video: 'LxtZ1noaxlk'
+			},
+			{
+				title: 'One Button Functionality',
+				video: '6RCxB4waLAI'
+			}
+		]
+	},
+	diffuser_caps: {
+		name: 'Diffuser Caps Manual',
+		manual: '',
+		videos: [
+			{
+				title: 'Diffuser Caps 101',
+				video: 'FJbKd0ClkFM'
+			},
+			{
+				title: 'Orienting Diffuser Caps 101',
+				video: 'vG4qgtrotkw'
+			}
+		]
+	},
+	glowskins: {
+		name: 'Glowskins Manual',
+		manual: '',
+		videos: [
+			{
+				title: 'Glowskins 101',
+				video: 's49fiZPC5G0'
+			}
+		]
+	}
+	// glow_casings: {
+	// 	name: 'Diffuser Caps Manual',
+	// 	manual: '/Diffuser_Caps_Manual.png',
+	// 	videos: [
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'oHNFMaUepLs'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'dCjgyMdiKhY'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'LxtZ1noaxlk'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: '6RCxB4waLAI'
+	// 		}
+	// 	]
+	// },
+	// diffusers: {
+	// 	name: 'Diffuser Caps Manual',
+	// 	manual: '/Diffuser_Caps_Manual.png',
+	// 	videos: [
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'oHNFMaUepLs'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'dCjgyMdiKhY'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'LxtZ1noaxlk'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: '6RCxB4waLAI'
+	// 		}
+	// 	]
+	// },
+	// exo_diffusers: {
+	// 	name: 'Diffuser Caps Manual',
+	// 	manual: '/Diffuser_Caps_Manual.png',
+	// 	videos: [
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'oHNFMaUepLs'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'dCjgyMdiKhY'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: 'LxtZ1noaxlk'
+	// 		},
+	// 		{
+	// 			title: 'One Button Functionality',
+	// 			video: '6RCxB4waLAI'
+	// 		}
+	// 	]
+	// }
 };
 
 export const mutliDragAwareReorder = (args: any) => {

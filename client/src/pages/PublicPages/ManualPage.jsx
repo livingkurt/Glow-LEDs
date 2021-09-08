@@ -4,137 +4,10 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
-import { humanize, toCapitalize } from '../../utils/helper_functions';
+import { humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 
 const ManualPage = (props) => {
 	const pathname = props.match.params.pathname;
-
-	const manuals = {
-		glow_strings_v2: {
-			name: 'Glow Strings V2 Manual',
-			manual: '/Glow_Strings_V2_Manual.png',
-			videos: [
-				{
-					title: 'One Button Functionality',
-					video: 'oHNFMaUepLs'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'dCjgyMdiKhY'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'LxtZ1noaxlk'
-				},
-				{
-					title: 'One Button Functionality',
-					video: '6RCxB4waLAI'
-				}
-			]
-		},
-		diffuser_caps: {
-			name: 'Diffuser Caps Manual',
-			manual: '',
-			videos: [
-				{
-					title: 'Diffuser Caps 101',
-					video: 'FJbKd0ClkFM'
-				},
-				{
-					title: 'Orienting Diffuser Caps 101',
-					video: 'vG4qgtrotkw'
-				}
-			]
-		},
-		glowskins: {
-			name: 'Diffuser Caps Manual',
-			manual: '/Diffuser_Caps_Manual.png',
-			videos: [
-				{
-					title: 'One Button Functionality',
-					video: 'oHNFMaUepLs'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'dCjgyMdiKhY'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'LxtZ1noaxlk'
-				},
-				{
-					title: 'One Button Functionality',
-					video: '6RCxB4waLAI'
-				}
-			]
-		},
-		glow_casings: {
-			name: 'Diffuser Caps Manual',
-			manual: '/Diffuser_Caps_Manual.png',
-			videos: [
-				{
-					title: 'One Button Functionality',
-					video: 'oHNFMaUepLs'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'dCjgyMdiKhY'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'LxtZ1noaxlk'
-				},
-				{
-					title: 'One Button Functionality',
-					video: '6RCxB4waLAI'
-				}
-			]
-		},
-		diffusers: {
-			name: 'Diffuser Caps Manual',
-			manual: '/Diffuser_Caps_Manual.png',
-			videos: [
-				{
-					title: 'One Button Functionality',
-					video: 'oHNFMaUepLs'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'dCjgyMdiKhY'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'LxtZ1noaxlk'
-				},
-				{
-					title: 'One Button Functionality',
-					video: '6RCxB4waLAI'
-				}
-			]
-		},
-		exo_diffusers: {
-			name: 'Diffuser Caps Manual',
-			manual: '/Diffuser_Caps_Manual.png',
-			videos: [
-				{
-					title: 'One Button Functionality',
-					video: 'oHNFMaUepLs'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'dCjgyMdiKhY'
-				},
-				{
-					title: 'One Button Functionality',
-					video: 'LxtZ1noaxlk'
-				},
-				{
-					title: 'One Button Functionality',
-					video: '6RCxB4waLAI'
-				}
-			]
-		}
-	};
 
 	return (
 		<div className="main_container">
@@ -153,17 +26,13 @@ const ManualPage = (props) => {
 			</Helmet>
 			<div className="jc-b">
 				<div className="mb-10px">
-					<Link
-						to={`/collections/all/products/category/${pathname === 'glow_strings_v2'
-							? 'glow_strings'
-							: pathname}`}
-					>
-						<button class="btn secondary">View Available {toCapitalize(humanize(pathname))}</button>
+					<Link to={`/pages/menu/manuals`}>
+						<button class="btn secondary">Back to Manuals</button>
 					</Link>
 				</div>
 				<div className="mb-10px">
-					<Link to={`/pages/menu/manuals`}>
-						<button class="btn secondary">Back to Manuals</button>
+					<Link to={`/collections/all/products/category/${pathname}`}>
+						<button class="btn secondary">View Available {toCapitalize(humanize(pathname))}</button>
 					</Link>
 				</div>
 			</div>

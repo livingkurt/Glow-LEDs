@@ -30,6 +30,7 @@ import 'swiper/components/zoom/zoom.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 
 // install Swiper modules
 SwiperCore.use([ Pagination ]);
@@ -1387,7 +1388,7 @@ const ProductPage = (props) => {
 								<Tab>Product Dimensions</Tab>
 								<Tab>Compatible Chips</Tab>
 								<Tab>Reviews</Tab>
-								<Tab>Manual</Tab>
+								{manuals[product.category] && <Tab>Manual</Tab>}
 								<Tab>Media</Tab>
 							</TabList>
 
@@ -1484,15 +1485,79 @@ const ProductPage = (props) => {
 									<Reviews product={product} pathname={props.match.params.pathname} />
 								</div>
 							</TabPanel>
-							<TabPanel>
-								{product.category === 'glow_strings' && (
-									<Link to="/pages/manuals/glow_strings_v2_manual">
-										<button className="btn primary w-100per fs-20px mb-2rem">
-											View Glow Strings V2 Manual
-										</button>
-									</Link>
-								)}
-							</TabPanel>
+							{manuals[product.category] && (
+								<TabPanel>
+									<div className="jc-b">
+										<div className="mb-10px">
+											<Link to={`/pages/menu/manuals`}>
+												<button class="btn secondary">View All Manuals</button>
+											</Link>
+										</div>
+										<div className="mb-10px">
+											<Link
+												to={`/collections/all/products/category/${product.category ===
+												'glow_strings_v2'
+													? 'glow_strings'
+													: product.category}`}
+											>
+												<button class="btn secondary">
+													View Available {toCapitalize(humanize(product.category))}
+												</button>
+											</Link>
+										</div>
+									</div>
+									<h2
+										style={{
+											textAlign: 'center',
+											width: '100%',
+											justifyContent: 'center'
+										}}
+									>
+										{manuals[product.category].name}
+									</h2>
+									{manuals[product.category].manual && (
+										<img src={manuals[product.category].manual} alt="manual" className="w-100per" />
+									)}
+									{manuals[product.category].manual && (
+										<h2
+											style={{
+												textAlign: 'center',
+												width: '100%',
+												justifyContent: 'center'
+											}}
+										>
+											Watch the Videos below to Learn More
+										</h2>
+									)}
+									<div className="jc-c column m-0px">
+										{manuals[product.category].videos.map((video) => (
+											<div>
+												<h2
+													style={{
+														textAlign: 'center',
+														width: '100%',
+														justifyContent: 'center'
+													}}
+												>
+													{video.title}
+												</h2>
+												<div className="iframe-container">
+													<iframe
+														width="996"
+														height="560"
+														title={video.title}
+														style={{ borderRadius: '20px' }}
+														src={`https://www.youtube.com/embed/${video.video}?mute=1&showinfo=0&rel=0&autoplay=0&loop=1`}
+														frameborder="0"
+														allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+														allowfullscreen="1"
+													/>
+												</div>
+											</div>
+										))}
+									</div>
+								</TabPanel>
+							)}
 							<TabPanel>
 								{!product.video ? (
 									<h2

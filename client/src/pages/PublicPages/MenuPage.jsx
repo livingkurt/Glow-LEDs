@@ -213,12 +213,16 @@ const MenuPage = (props) => {
 		} else if (pathname === 'manuals') {
 			return [
 				{
-					category: 'glow_strings_v2',
+					category: 'glow_strings',
 					image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
 				},
 				{
 					category: 'diffuser_caps',
 					image: diffuser_caps[diffuser_caps.length - 1] && diffuser_caps[diffuser_caps.length - 1].images[0]
+				},
+				{
+					category: 'glowskins',
+					image: glowskins[glowskins.length - 1] && glowskins[glowskins.length - 1].images[0]
 				}
 				// { category: 'glowskins', image: glowskins[glowskins.length - 1] && glowskins[0].images[0] },
 				// {
