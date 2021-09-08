@@ -1011,6 +1011,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 1`,
+				pathname: snake_case(`${product.name} - 1`),
 				size: 1,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1025,6 +1026,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 8`,
+				pathname: snake_case(`${product.name} - 8`),
 				size: 8,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1039,6 +1041,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 10`,
+				pathname: snake_case(`${product.name} - 10`),
 				size: 10,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1176,6 +1179,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 1`,
+				pathname: snake_case(`${product.name} - 1`),
 				size: 1,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1190,6 +1194,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 8`,
+				pathname: snake_case(`${product.name} - 8`),
 				size: 8,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1204,6 +1209,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 10`,
+				pathname: snake_case(`${product.name} - 10`),
 				size: 10,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1326,6 +1332,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 15 mm (Classic)`,
+				pathname: snake_case(`${product.name} - 15 mm (Classic)`),
 				size: 1,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1339,6 +1346,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 20 mm (Mega)`,
+				pathname: snake_case(`${product.name} - 20 mm (Mega)`),
 				size: 8,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1856,6 +1864,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 1`,
+				pathname: snake_case(`${product.name} - 1`),
 				size: 1,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1870,6 +1879,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 2`,
+				pathname: snake_case(`${product.name} - 2`),
 				size: 2,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1884,6 +1894,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 4`,
+				pathname: snake_case(`${product.name} - 4`),
 				size: 4,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1898,6 +1909,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 10`,
+				pathname: snake_case(`${product.name} - 10`),
 				size: 10,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1912,6 +1924,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 1 Skin`,
+				pathname: snake_case(`${product.name} - 1 Skin`),
 				size: 4,
 				category: 'options',
 				subcategory: 'sizes',
@@ -1926,6 +1939,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `${product.name} - 1 Sled`,
+				pathname: snake_case(`${product.name} - 1 Sled`),
 				size: 10,
 				category: 'options',
 				subcategory: 'sizes',

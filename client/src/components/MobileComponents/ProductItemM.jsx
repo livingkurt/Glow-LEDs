@@ -11,7 +11,7 @@ const ProductSmallScreen = (props) => {
 			{props.product_occurrences && (
 				<Link to={'/collections/all/products/' + props.product.pathname}>
 					<div className="small_screen_product row">
-						<div className="row mt-15px">
+						<div className="row">
 							<div className="column ai-c pos-rel">
 								{/* <LazyLoadImage
 									className="product-image w-200px h-200px "
@@ -90,7 +90,7 @@ const ProductSmallScreen = (props) => {
 								)}
 							</div>
 						</div>
-						<div className="p-10px">
+						<div className="ph-10px">
 							<div className="product_text" style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</div>
