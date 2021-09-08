@@ -83,7 +83,7 @@ const TeamPage = (props) => {
 								maxHeight: 'unset'
 							}}
 							effect="blur"
-							src={team.picture} // use normal <img> attributes as props
+							src={team.picture}
 						/>
 					</div>
 					{team.video && (
@@ -92,7 +92,7 @@ const TeamPage = (props) => {
 								<iframe
 									width="996"
 									height="560"
-                  title="Team Video"
+									title="Team Video"
 									style={{ borderRadius: '20px' }}
 									src={`https://www.youtube.com/embed/${team.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
 									frameborder="0"
@@ -113,7 +113,7 @@ const TeamPage = (props) => {
 							title="Sponsor Image"
 							size={{ height: 'auto', width: '100%' }}
 							effect="blur"
-							src={team.picture} // use normal <img> attributes as props
+							src={team.picture} 
 						/>
 					</div> */}
 					<div className="jc-b ">
@@ -124,25 +124,26 @@ const TeamPage = (props) => {
 							<div className="mt-2rem wrap  ">
 								<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
 									<div className="fs-40px">
-                    {team.facebook_name && 
-										<a
-											href={'https://www.facebook.com/' + team.facebook_name}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<i className="fab fa-facebook zoom" />
-										</a>
-                    }
+										{team.facebook_name && (
+											<a
+												href={'https://www.facebook.com/' + team.facebook_name}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<i className="fab fa-facebook zoom" />
+											</a>
+										)}
 									</div>
 									<div className="ml-10px fs-40px">
-                  {team.instagram_handle && 
-										<a
-											href={'https://www.instagram.com/' + team.instagram_handle}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											<i className="fab fa-instagram zoom" />
-										</a>}
+										{team.instagram_handle && (
+											<a
+												href={'https://www.instagram.com/' + team.instagram_handle}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<i className="fab fa-instagram zoom" />
+											</a>
+										)}
 									</div>
 								</div>
 							</div>
@@ -154,7 +155,7 @@ const TeamPage = (props) => {
 								title="Sponsor Image"
 								size={{ height: 'auto', width: '100%' }}
 								effect="blur"
-								src={team.picture} // use normal <img> attributes as props
+								src={team.picture}
 							/>
 						</div>
 					</div>
@@ -163,10 +164,14 @@ const TeamPage = (props) => {
 						{team.affiliates &&
 							team.affiliates.map((affiliate, index) => {
 								return (
-									<Link to={'/collections/all/sponsors/' + affiliate.pathname} className="pos-rel" key={index}>
+									<Link
+										to={'/collections/all/sponsors/' + affiliate.pathname}
+										className="pos-rel"
+										key={index}
+									>
 										<img
 											className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-                      alt="Team Mate"
+											alt="Team Mate"
 											src={affiliate.picture}
 										/>
 										<h3

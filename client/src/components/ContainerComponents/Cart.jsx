@@ -178,7 +178,7 @@ const Cart = (props) => {
 															objectFit: 'cover'
 														}}
 														effect="blur"
-														src={item.images[0]} // use normal <img> attributes as props
+														src={item.images[0]}
 													/>
 												)}
 											</div>

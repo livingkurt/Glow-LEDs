@@ -56,14 +56,14 @@ const OrderSmallScreen = (props) => {
 											alt={item.name}
 											title="Product Image"
 											effect="blur"
-											src={item.display_image && item.display_image} // use normal <img> attributes as props
+											src={item.display_image && item.display_image}
 										/>
 										{/* <LazyLoadImage
 											className="order-image w-100px h-100px br-10px mr-15px"
 											alt={item.name}
 											title="Product Image"
 											effect="blur"
-											src={item.display_image && item.display_image} // use normal <img> attributes as props
+											src={item.display_image && item.display_image} 
 										/> */}
 									</Link>
 									{item.qty > 1 && (

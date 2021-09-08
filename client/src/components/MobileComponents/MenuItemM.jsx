@@ -17,9 +17,9 @@ const MenuItemM = ({ item, index, decide_url }) => {
 						title="Affiliate Image"
 						effect="blur"
 						size={{ height: 'auto', width: '100%' }}
-						src={item.image} // use normal <img> attributes as props
+						src={item.image}
 					/>
-					<div className="column jc-b w-20rem pl-2rem">
+					<div className="column jc-b  pl-2rem">
 						<h2 className="w-100per ">
 							{item.subcategory ? humanize(item.subcategory) : humanize(item.category)}
 						</h2>

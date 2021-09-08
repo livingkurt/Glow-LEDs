@@ -47,7 +47,7 @@ const MenuItemD = ({ item, index, decide_url }) => {
 							title="Product Image"
 							size={{ height: '300px', width: '300px', objectFit: 'cover' }}
 							effect="blur"
-							src={item.image} // use normal <img> attributes as props
+							src={item.image}
 						/>
 					)}
 				</div>

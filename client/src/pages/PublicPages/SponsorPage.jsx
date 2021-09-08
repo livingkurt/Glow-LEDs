@@ -111,7 +111,7 @@ const SponsorPage = (props) => {
 								maxHeight: 'unset'
 							}}
 							effect="blur"
-							src={affiliate.picture} // use normal <img> attributes as props
+							src={affiliate.picture}
 						/>
 					</div>
 					<div className="jc-b">
@@ -153,7 +153,7 @@ const SponsorPage = (props) => {
 												title="Sponsor Image"
 												size={{ height: 'auto', width: '100%' }}
 												effect="blur"
-												src={team.picture} // use normal <img> attributes as props
+												src={team.picture} 
 											/>
 											<h3
 												className="pos-abs fs-30px"
@@ -237,7 +237,7 @@ const SponsorPage = (props) => {
 								title="Sponsor Image"
 								size={{ height: 'auto', width: '100%' }}
 								effect="blur"
-								src={affiliate.picture} // use normal <img> attributes as props
+								src={affiliate.picture}
 							/>
 						</div>
 					</div>

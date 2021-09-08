@@ -10,14 +10,14 @@ const ProductSmallScreen = (props) => {
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
 			<Link to={'/collections/all/products/' + props.product.pathname}>
 				<div className="small_screen_product row">
-					<div className="row mt-15px">
+					<div className="row">
 						<div className="column ai-c pos-rel">
 							{/* <LazyLoadImage
 									className="product-image w-200px h-200px "
 									alt={props.product.name}
 									title="Product Image"
 									effect="blur"
-									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+									src={props.product.images && props.product.images[0]} 
 								/> */}
 							<LazyImage
 								look="product-image w-200px h-200px "
@@ -25,7 +25,7 @@ const ProductSmallScreen = (props) => {
 								title="Product Image"
 								size={{ height: props.size, width: props.size }}
 								effect="blur"
-								src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+								src={props.product.images && props.product.images[0]}
 							/>
 						</div>
 					</div>

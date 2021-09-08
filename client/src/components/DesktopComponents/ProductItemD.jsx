@@ -50,7 +50,7 @@ const ProductItemD = (props) => {
 												title="Product Image"
 												size={{ height: props.size, width: props.size }}
 												effect="blur"
-												src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+												src={props.product.images && props.product.images[0]}
 											/>
 										)}
 										{images.length > 1 && (
@@ -76,7 +76,7 @@ const ProductItemD = (props) => {
 															title="Product Image"
 															size={{ height: props.size, width: props.size }}
 															effect="blur"
-															src={images[image_number + x]} // use normal <img> attributes as props
+															src={images[image_number + x]}
 														/>
 													))}
 													{images.length > 1 && (

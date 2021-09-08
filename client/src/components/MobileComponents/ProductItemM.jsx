@@ -18,7 +18,7 @@ const ProductSmallScreen = (props) => {
 									alt={props.product.name}
 									title="Product Image"
 									effect="blur"
-									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+									src={props.product.images && props.product.images[0]} 
 								/> */}
 								<LazyImage
 									look="product-image w-200px h-200px "
@@ -26,7 +26,7 @@ const ProductSmallScreen = (props) => {
 									title="Product Image"
 									size={{ height: props.size, width: props.size }}
 									effect="blur"
-									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+									src={props.product.images && props.product.images[0]}
 								/>
 								{props.product_occurrences &&
 								props.product_occurrences[0] &&

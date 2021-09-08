@@ -25,7 +25,7 @@ const Feature = (props) => {
 									) : (
 										props.feature.logo
 									)
-								} // use normal <img> attributes as props
+								}
 							/>
 							{/* <LazyImage
 									look="product-image w-200px h-200px "
@@ -33,7 +33,7 @@ const Feature = (props) => {
 									title="Product Image"
 									size={{ height: props.size, width: props.size }}
 									effect="blur"
-									src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+									src={props.product.images && props.product.images[0]} 
 								/> */}
 
 							<label style={{ fontSize: '1.6rem' }}>{props.feature.artist_name}</label>

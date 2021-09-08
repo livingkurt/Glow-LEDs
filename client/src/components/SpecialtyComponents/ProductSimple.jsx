@@ -21,7 +21,7 @@ const Product = (props) => {
 										title="Product Image"
 										size={{ height: props.size, width: props.size }}
 										effect="blur"
-										src={props.product.images && props.product.images[0]} // use normal <img> attributes as props
+										src={props.product.images && props.product.images[0]}
 									/>
 								</div>
 							</div>

@@ -15,7 +15,7 @@ const AffiliateSmallScreen = (props) => {
 							title="Affiliate Image"
 							effect="blur"
 							size={{ height: 'auto', width: '100%' }}
-							src={props.affiliate.picture} // use normal <img> attributes as props
+							src={props.affiliate.picture}
 						/>
 					</div>
 					<div className="column jc-b w-200px">

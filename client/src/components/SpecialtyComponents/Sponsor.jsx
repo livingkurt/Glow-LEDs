@@ -18,7 +18,7 @@ const Sponsor = (props) => {
 								title="Sponsor Image"
 								size={{ height: props.size, width: 'auto' }}
 								effect="blur"
-								src={props.affiliate.picture} // use normal <img> attributes as props
+								src={props.affiliate.picture}
 							/>
 
 							<label style={{ fontSize: '2rem', WebkitTextStroke: '1.5px white' }} className="pv-1rem">
