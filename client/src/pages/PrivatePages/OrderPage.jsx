@@ -494,39 +494,59 @@ const OrderPage = (props) => {
 								<div className="wrap jc-b">
 									<div className="w-100per ">
 										<h2>Shipping</h2>
-										{order.shipping.shipping_rate && (
-											<div
-												className=" jc-b ai-c w-100per"
-												style={{ borderTop: '.1rem white solid', width: '100%' }}
-											>
-												<div className="mv-1rem btn primary">
-													<div>
-														{order.shipping.shipping_rate.carrier}{' '}
-														{order.shipping.shipping_rate.est_delivery_days}{' '}
-														{order.shipping.shipping_rate.est_delivery_days === 1 ? (
-															'Day'
-														) : (
-															'Days'
-														)}{' '}
-														{order.shipping.shipping_rate.service} ${order.shipping.shipping_rate.retail_rate}{' '}
+										<div
+											className="jc-b w-100per mb-1rem"
+											style={{ borderTop: '.1rem white solid' }}
+										/>
+										<div className="jc-b wrap w-100per">
+											<div className="paragraph_font lh-25px mb-1rem">
+												<div>
+													{order.shipping.first_name} {order.shipping.last_name}
+												</div>
+												<div>
+													{order.shipping.address_1} {order.shipping.address_2}
+												</div>
+												<div>
+													{order.shipping.city}, {order.shipping.state}{' '}
+													{order.shipping.postalCode}
+												</div>
+												<div>{order.shipping.country}</div>
+												<div>{order.shipping.international && 'International'}</div>
+												<div>{order.shipping.email}</div>
+											</div>
+											{order.shipping.shipping_rate && (
+												<div className="max-w-300px w-100per lh-25px">
+													<div className="ai-c jc-b w-100per">
+														<label className="mv-0px mr-5px">Carrier: </label>
+														<label className=" mv-0px">
+															{order.shipping.shipping_rate.carrier}{' '}
+														</label>
+													</div>
+													<div className="ai-c jc-b w-100per">
+														<label className="mv-0px mr-5px">Speed: </label>
+														<label className=" mv-0px">
+															{order.shipping.shipping_rate.service}{' '}
+														</label>
+													</div>
+													<div className="ai-c jc-b w-100per">
+														<label className="mv-0px mr-5px">Delivery Time: </label>
+														<label className=" mv-0px">
+															{order.shipping.shipping_rate.est_delivery_days}{' '}
+															{order.shipping.shipping_rate.est_delivery_days === 1 ? (
+																'Day'
+															) : (
+																'Days'
+															)}{' '}
+														</label>
+													</div>
+													<div className="ai-c jc-b w-100per">
+														<label className="mv-0px mr-5px">Rate: </label>
+														<label className=" mv-0px">
+															${order.shipping.shipping_rate.retail_rate}
+														</label>
 													</div>
 												</div>
-											</div>
-										)}
-										<div className="paragraph_font lh-25px">
-											<div>
-												{order.shipping.first_name} {order.shipping.last_name}
-											</div>
-											<div>
-												{order.shipping.address_1} {order.shipping.address_2}
-											</div>
-											<div>
-												{order.shipping.city}, {order.shipping.state}{' '}
-												{order.shipping.postalCode}
-											</div>
-											<div>{order.shipping.country}</div>
-											<div>{order.shipping.international && 'International'}</div>
-											<div>{order.shipping.email}</div>
+											)}
 										</div>
 									</div>
 									<div>

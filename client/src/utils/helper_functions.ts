@@ -816,6 +816,7 @@ export const create_color_products = async (
 		list = [
 			{
 				name: `Clear ${product.name}`,
+				pathname: snake_case(`Clear ${product.name}`),
 				color: 'Clear',
 				color_code: '#4b4b4b',
 				category: 'options',
@@ -830,6 +831,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Frosted ${product.name}`,
+				pathname: snake_case(`Frosted ${product.name}`),
 				color: 'Frosted',
 				color_code: 'white',
 				category: 'options',
@@ -844,6 +846,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -858,6 +861,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Emerald ${product.name}`,
+				pathname: snake_case(`Emerald ${product.name}`),
 				color: 'Emerald',
 				color_code: '#15715a',
 				category: 'options',
@@ -872,6 +876,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Teal ${product.name}`,
+				pathname: snake_case(`Teal ${product.name}`),
 				color: 'Teal',
 				color_code: '#1da5b3',
 				category: 'options',
@@ -886,6 +891,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -900,6 +906,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -914,6 +921,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Frosted ${product.name}`,
+				pathname: snake_case(`Frosted ${product.name}`),
 				color: 'Frosted',
 				color_code: '#abaeb5',
 				category: 'options',
@@ -928,6 +936,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -942,6 +951,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
 				color: 'Green',
 				color_code: '#00c700',
 				category: 'options',
@@ -956,6 +966,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -970,6 +981,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
 				color: 'Purple',
 				color_code: 'purple',
 				category: 'options',
@@ -984,6 +996,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1043,6 +1056,7 @@ export const create_color_products = async (
 		list = [
 			{
 				name: `Clear ${product.name}`,
+				pathname: snake_case(`Clear ${product.name}`),
 				color: 'Clear',
 				color_code: '#4b4b4b',
 				category: 'options',
@@ -1057,6 +1071,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Frosted ${product.name}`,
+				pathname: snake_case(`Frosted ${product.name}`),
 				color: 'Frosted',
 				color_code: 'white',
 				category: 'options',
@@ -1071,6 +1086,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1085,6 +1101,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Emerald ${product.name}`,
+				pathname: snake_case(`Emerald ${product.name}`),
 				color: 'Emerald',
 				color_code: '#15715a',
 				category: 'options',
@@ -1099,6 +1116,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Teal ${product.name}`,
+				pathname: snake_case(`Teal ${product.name}`),
 				color: 'Teal',
 				color_code: '#1da5b3',
 				category: 'options',
@@ -1113,6 +1131,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1127,6 +1146,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1141,6 +1161,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Black  ${product.name}`,
+				pathname: snake_case(`Black  ${product.name}`),
 				color: 'Black',
 				color_code: 'black',
 				category: 'options',
@@ -1200,6 +1221,7 @@ export const create_color_products = async (
 		list = [
 			{
 				name: `Black ${product.name}`,
+				pathname: snake_case(`Black ${product.name}`),
 				color: 'Black',
 				color_code: 'black',
 				category: 'options',
@@ -1214,6 +1236,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `White ${product.name}`,
+				pathname: snake_case(`White ${product.name}`),
 				color: 'White',
 				color_code: 'white',
 				category: 'options',
@@ -1228,6 +1251,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1242,6 +1266,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
 				color: 'Green',
 				color_code: '#00c700',
 				category: 'options',
@@ -1256,6 +1281,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1270,6 +1296,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
 				color: 'Purple',
 				color_code: 'purple',
 				category: 'options',
@@ -1284,6 +1311,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1327,6 +1355,7 @@ export const create_color_products = async (
 		list = [
 			{
 				name: `Frosted ${product.name}`,
+				pathname: snake_case(`Frosted ${product.name}`),
 				color: 'Frosted',
 				color_code: '#abaeb5',
 				category: 'options',
@@ -1341,6 +1370,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1355,6 +1385,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
 				color: 'Green',
 				color_code: '#00c700',
 				category: 'options',
@@ -1369,6 +1400,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1383,6 +1415,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
 				color: 'Purple',
 				color_code: 'purple',
 				category: 'options',
@@ -1397,6 +1430,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1414,6 +1448,7 @@ export const create_color_products = async (
 		list = [
 			{
 				name: `Black ${product.name}`,
+				pathname: snake_case(`Black ${product.name}`),
 				color: 'Black',
 				color_code: 'black',
 				category: 'options',
@@ -1428,6 +1463,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `White ${product.name}`,
+				pathname: snake_case(`White ${product.name}`),
 				color: 'White',
 				color_code: 'white',
 				category: 'options',
@@ -1442,6 +1478,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1456,6 +1493,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
 				color: 'Green',
 				color_code: '#00c700',
 				category: 'options',
@@ -1470,6 +1508,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1484,6 +1523,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
 				color: 'Purple',
 				color_code: 'purple',
 				category: 'options',
@@ -1498,6 +1538,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1512,6 +1553,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Frosted ${product.name}`,
+				pathname: snake_case(`Frosted ${product.name}`),
 				color: 'Frosted',
 				color_code: '#abaeb5',
 				category: 'options',
@@ -1526,6 +1568,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1540,6 +1583,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
 				color: 'Green',
 				color_code: '#00c700',
 				category: 'options',
@@ -1554,6 +1598,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1568,6 +1613,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
 				color: 'Purple',
 				color_code: 'purple',
 				category: 'options',
@@ -1582,6 +1628,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1599,6 +1646,7 @@ export const create_color_products = async (
 		list = [
 			{
 				name: `Clear ${product.name}`,
+				pathname: snake_case(`Clear ${product.name}`),
 				color: 'Clear',
 				color_code: '#4b4b4b',
 				category: 'options',
@@ -1613,6 +1661,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1627,6 +1676,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Emerald ${product.name}`,
+				pathname: snake_case(`Emerald ${product.name}`),
 				color: 'Emerald',
 				color_code: '#15715a',
 				category: 'options',
@@ -1641,6 +1691,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Teal ${product.name}`,
+				pathname: snake_case(`Teal ${product.name}`),
 				color: 'Teal',
 				color_code: '#1da5b3',
 				category: 'options',
@@ -1655,6 +1706,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1669,6 +1721,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1683,6 +1736,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Clear ${product.name}`,
+				pathname: snake_case(`Clear ${product.name}`),
 				color: 'Clear',
 				color_code: '#4b4b4b',
 				category: 'options',
@@ -1697,6 +1751,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Frosted ${product.name}`,
+				pathname: snake_case(`Frosted ${product.name}`),
 				color: 'Frosted',
 				color_code: '#abaeb5',
 				category: 'options',
@@ -1711,6 +1766,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
 				color: 'Red',
 				color_code: '#c11c22',
 				category: 'options',
@@ -1725,6 +1781,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
 				color: 'Green',
 				color_code: '#00c700',
 				category: 'options',
@@ -1739,6 +1796,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
 				color: 'Blue',
 				color_code: '#0014ff',
 				category: 'options',
@@ -1753,6 +1811,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
 				color: 'Purple',
 				color_code: 'purple',
 				category: 'options',
@@ -1767,6 +1826,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
 				color: 'Violet',
 				color_code: '#543abb',
 				category: 'options',
@@ -1781,6 +1841,7 @@ export const create_color_products = async (
 			},
 			{
 				name: `Black ${product.name}`,
+				pathname: snake_case(`Black ${product.name}`),
 				color: 'Black',
 				color_code: 'black',
 				category: 'options',
