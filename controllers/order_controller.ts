@@ -246,25 +246,6 @@ export default {
 	create_user_order: async (req: any, res: any) => {
 		try {
 			console.log({ create_user_order: req.body });
-			// console.log({ isPaid: req.body.isPaid });
-			// console.log({ paidAt: today });
-			// const newOrder = new Order({
-			// 	orderItems: req.body.orderItems,
-			// 	user: req.body.user ? req.body.user._id : req.user._id,
-			// 	shipping: req.body.shipping,
-			// 	payment: req.body.payment,
-			// 	itemsPrice: req.body.itemsPrice,
-			// 	taxPrice: req.body.taxPrice,
-			// 	shippingPrice: req.body.shippingPrice,
-			// 	totalPrice: req.body.totalPrice,
-			// 	order_note: req.body.order_note,
-			// 	promo_code: req.body.promo_code,
-			// 	parcel: req.body.parcel,
-			// 	isPaid: req.body.isPaid,
-			// 	paidAt: req.body.isPaid ? today : null,
-			// 	deleted: false
-			// });
-			// const newOrderCreated = await newOrder.save();
 			const newOrderCreated = await Order.create({
 				orderItems: req.body.orderItems,
 				user: req.body.user ? req.body.user._id : req.user._id,

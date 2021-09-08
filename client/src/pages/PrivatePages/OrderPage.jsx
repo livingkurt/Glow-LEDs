@@ -479,6 +479,25 @@ const OrderPage = (props) => {
 								<div className="wrap jc-b">
 									<div className="w-100per ">
 										<h2>Shipping</h2>
+										{order.shipping.shipping_rate && (
+											<div
+												className=" jc-b ai-c w-100per"
+												style={{ borderTop: '.1rem white solid', width: '100%' }}
+											>
+												<div className="mv-1rem btn primary">
+													<div>
+														{order.shipping.shipping_rate.carrier}{' '}
+														{order.shipping.shipping_rate.est_delivery_days}{' '}
+														{order.shipping.shipping_rate.est_delivery_days === 1 ? (
+															'Day'
+														) : (
+															'Days'
+														)}{' '}
+														{order.shipping.shipping_rate.service} ${order.shipping.shipping_rate.retail_rate}{' '}
+													</div>
+												</div>
+											</div>
+										)}
 										<div className="paragraph_font lh-25px">
 											<div>
 												{order.shipping.first_name} {order.shipping.last_name}
@@ -492,24 +511,32 @@ const OrderPage = (props) => {
 											</div>
 											<div>{order.shipping.country}</div>
 											<div>{order.shipping.international && 'International'}</div>
-											<div>{order.shipping.email}</div>
+											<div>{order.shipping.email.toLowerCase()}</div>
 										</div>
 									</div>
-									{userInfo &&
-									userInfo.isAdmin && (
-										<button
-											className="btn secondary w-200px mv-10px"
-											onClick={() =>
-												copyToClipboard(`
+									<div>
+										{userInfo &&
+										userInfo.isAdmin && (
+											<button
+												className="btn secondary w-200px mv-10px mr-1rem"
+												onClick={() =>
+													copyToClipboard(`
 ${order.shipping.first_name} ${order.shipping.last_name}
 ${order.shipping.address_1} ${order.shipping.address_2}
 ${order.shipping.city}, ${order.shipping.state}
 ${order.shipping.postalCode} ${order.shipping.country}
 ${order.shipping.email}`)}
-										>
-											Copy to clipboard
-										</button>
-									)}
+											>
+												Copy to clipboard
+											</button>
+										)}
+										{userInfo &&
+										userInfo.isAdmin && (
+											<Link to={`/secure/glow/userprofile/${order.user && order.user._id}`}>
+												<button className="btn secondary">View User</button>
+											</Link>
+										)}
+									</div>
 								</div>
 							</div>
 
