@@ -104,6 +104,12 @@ const ProductPage = (props) => {
 		video.muted = true;
 		video.autoplay = true;
 	}, []);
+	useEffect(
+		() => {
+			dispatch(detailsProduct(props.match.params.pathname));
+		},
+		[ props.match.params.pathname ]
+	);
 
 	useEffect(
 		() => {

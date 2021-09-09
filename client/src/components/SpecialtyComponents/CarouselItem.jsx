@@ -2,12 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
+import { useHistory } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
+import { detailsProduct } from '../../actions/productActions';
 
 const CarouselItem = (props) => {
 	const [ product, set_product ] = useState(props.product);
 	const [ loading, set_loading ] = useState(true);
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	useEffect(
 		() => {
@@ -22,7 +27,10 @@ const CarouselItem = (props) => {
 			{product &&
 			!loading && (
 				<li key={props.product && product.pathname} style={props.styles}>
-					<Link to={product && '/collections/all/products/' + product.pathname}>
+					<Link
+						to={product && '/collections/all/products/' + product.pathname}
+						onClick={() => dispatch(detailsProduct(product.pathname))}
+					>
 						<div className="product">
 							<LazyImage
 								look="product-image"
