@@ -398,77 +398,7 @@ const ProductPage = (props) => {
 	};
 
 	const [ canScroll, setCanScroll ] = useState(false);
-	const [ border_radius, set_border_radius ] = useState('all');
 
-	// const determine_border_radius = () => {
-	// 	// var element = document.getElementById('react-tabs-10');
-
-	// 	// var element = document.getElementsByClassName('react-tabs__tab-panel')[0];
-	// 	// var element = document.getElementsByClassName('react-tabs__tab-panel')[document.getElementsByClassName('react-tabs__tab-panel').length - 1];
-	// 	var panel = document.getElementsByClassName('react-tabs__tab-panel');
-	// 	var first_element = document.getElementsByClassName('react-tabs__tab')[0];
-	// 	var last_element = document.getElementsByClassName('react-tabs__tab')[
-	// 		document.getElementsByClassName('react-tabs__tab').length - 1
-	// 	];
-	// 	console.log({ first_element });
-	// 	console.log({ last_element });
-	// 	var first_text = first_element.innerText;
-	// 	var last_text = last_element.innerText;
-	// 	// element.innerHTML = text;
-	// 	console.log({ first_text });
-	// 	console.log({ panel: panel[0] });
-	// 	// panel.forEach(p => p.style.borderRadius = '10px')
-	// 	if (first_element.classList[1] === 'react-tabs__tab--selected') {
-	// 		console.log('no_left');
-	// 		panel[0].style.borderRadius = '0px 10px 10px 10px';
-	// 		set_border_radius('no_left');
-	// 	}
-	// 	if (last_element.classList[1] === 'react-tabs__tab--selected') {
-	// 		console.log('no_right');
-	// 		panel[panel.length - 1].style.borderRadius = '10px 0px 10px 10px';
-	// 		set_border_radius('no_right');
-	// 	}
-	// 	// var first_tab = document.querySelectorAll('[role="tablist"]');
-	// 	// var last_tab = document.querySelectorAll('[role="tablist"]');
-	// 	// let first_element = first_tab.firstChild;
-	// 	// let last_element = last_tab.lastChild;
-	// 	// console.log({ first_element, last_element });
-	// 	// if (text === 'Description') {
-	// 	// 	set_border_radius('no_left');
-	// 	// } else if (text === 'Media') {
-	// 	// 	set_border_radius('no_right');
-	// 	// }
-	// };
-	// useEffect(() => {
-	// 	window.addEventListener('load', function() {
-	// 		setTimeout(() => {
-	// 			determine_border_radius();
-	// 		}, 2000);
-	// 	});
-	// 	return () => {
-	// 		window.removeEventListener('load', function() {});
-	// 	};
-	// }, []);
-
-	// // var first_element = document.getElementById('react-tabs-10');
-	// // var last_element_3 = document.getElementById('react-tabs-18');
-	// // var last_element_2 = document.getElementById('react-tabs-20');
-	// // var last_element_1 = document.getElementById('react-tabs-22');
-	// // let true_last_element
-	// // if (last_element_3) {
-	// //   true_last_element = last_element_3
-	// // } else if (last_element_2) {
-	// //   true_last_element = last_element_2
-	// // } else if (last_element_1) {
-	// //   true_last_element = last_element_1
-	// // }
-	// // console.log({ first_element });
-	// // console.log({ true_last_element });
-	// // var first_text = first_element.innerText;
-	// // var last_text = true_last_element.innerText;
-	// // // element.innerHTML = text;
-	// // console.log({ first_text });
-	// // console.log({ last_text });
 	return (
 		<div className="">
 			<div className="p-1rem">
