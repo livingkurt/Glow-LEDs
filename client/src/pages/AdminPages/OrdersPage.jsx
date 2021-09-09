@@ -101,7 +101,7 @@ const OrdersPage = (props) => {
 		'Manufactured',
 		'Packaged',
 		'Shipped',
-		'Delievered',
+		'Delivered',
 		'Newest',
 		'Lowest',
 		'Highest'

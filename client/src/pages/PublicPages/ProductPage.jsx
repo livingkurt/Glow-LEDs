@@ -1415,7 +1415,7 @@ const ProductPage = (props) => {
 									</TabList>
 								</Overflow.Content>
 								{canScroll && (
-									<div className="tab_indicator bob br-5px ta-c primary h-30px w-30px p-4px box-s-d b-1px">
+									<div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
 										{'>'}
 									</div>
 								)}

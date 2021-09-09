@@ -90,6 +90,7 @@ export default {
 			// const searchKeyword = { _id: req.query.searchKeyword };
 			console.log({ searchKeyword });
 			let sortOrder = {};
+			let filter = {};
 			if (req.query.sortOrder === 'lowest') {
 				sortOrder = { totalPrice: 1 };
 			} else if (req.query.sortOrder === 'highest') {
@@ -97,18 +98,30 @@ export default {
 			} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
 				sortOrder = { createdAt: -1 };
 			} else if (req.query.sortOrder === 'paid') {
-				sortOrder = { isPaid: -1, createdAt: -1 };
+				filter = {
+					isPaid: true,
+					isManufactured: false,
+					isPackaged: false,
+					isShipped: false,
+					isDelivered: false
+				};
 			} else if (req.query.sortOrder === 'manufactured') {
-				sortOrder = { isManufactured: -1, createdAt: -1 };
+				filter = {
+					isPaid: true,
+					isManufactured: true,
+					isPackaged: false,
+					isShipped: false,
+					isDelivered: false
+				};
 			} else if (req.query.sortOrder === 'packaged') {
-				sortOrder = { isPackaged: -1, createdAt: -1 };
+				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: false, isDelivered: false };
 			} else if (req.query.sortOrder === 'shipped') {
-				sortOrder = { isShipped: -1, createdAt: -1 };
+				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: false };
 			} else if (req.query.sortOrder === 'delivered') {
-				sortOrder = { isDelivered: -1, createdAt: -1 };
+				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: true };
 			}
 			// execute query with page and limit values
-			const orders = await Order.find({ deleted: false, ...category, ...searchKeyword })
+			const orders = await Order.find({ deleted: false, ...category, ...searchKeyword, ...filter })
 				.populate('user')
 				.populate('orderItems.product')
 				.populate('orderItems.secondary_product')
