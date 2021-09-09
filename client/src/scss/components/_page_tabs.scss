@@ -6,6 +6,21 @@
 	border: unset;
 	border-radius: 10px;
 }
+// .react-tabs__tab-panel.react-tabs__tab-panel--selected:first-of-type {
+// 	border-radius: 0px 10px 10px 10px;
+// }
+// // .react-tabs__tab-panel:first-of-type {
+// // 	border-radius: 0px 10px 10px 10px;
+// // }
+// // .react-tabs__tab-panel:last-of-type {
+// // 	border-radius: 10px 0px 10px 10px;
+// // }
+// .react-tabs:first-child {
+// 	border-radius: 0px 10px 10px 10px;
+// }
+// .react-tabs:last-child {
+// 	border-radius: 10px 0px 10px 10px;
+// }
 .react-tabs__tab-list {
 	margin: 0px !important;
 	border: unset !important;
@@ -34,15 +49,15 @@
 	right: 0px;
 }
 
-.table-responsive {
-	background-image: linear-gradient(to right, white, white), linear-gradient(to right, white, white),
-		linear-gradient(to right, rgba(0, 0, 20, .50), rgba(255, 255, 255, 0)),
-		linear-gradient(to left, rgba(0, 0, 20, .50), rgba(255, 255, 255, 0));
-	/* Shadows */
-	/* Shadow covers */
-	background-position: left center, right center, left center, right center;
-	background-repeat: no-repeat;
-	background-color: white;
-	background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
-	background-attachment: local, local, scroll, scroll;
-}
+// .table-responsive {
+// 	background-image: linear-gradient(to right, white, white), linear-gradient(to right, white, white),
+// 		linear-gradient(to right, rgba(0, 0, 20, .50), rgba(255, 255, 255, 0)),
+// 		linear-gradient(to left, rgba(0, 0, 20, .50), rgba(255, 255, 255, 0));
+// 	/* Shadows */
+// 	/* Shadow covers */
+// 	background-position: left center, right center, left center, right center;
+// 	background-repeat: no-repeat;
+// 	background-color: white;
+// 	background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+// 	background-attachment: local, local, scroll, scroll;
+// }

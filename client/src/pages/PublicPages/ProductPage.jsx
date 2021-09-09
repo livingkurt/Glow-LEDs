@@ -398,55 +398,77 @@ const ProductPage = (props) => {
 	};
 
 	const [ canScroll, setCanScroll ] = useState(false);
+	const [ border_radius, set_border_radius ] = useState('all');
 
-	function Shadow({
-		direction,
-		isVisible,
-		size = 30,
-		startColor = 'rgba(68, 49, 38, 0.3)',
-		endColor = 'rgba(56, 44, 36, 0)'
-	}) {
-		const style = {
-			position: 'absolute',
-			zIndex: 1,
-			pointerEvents: 'none',
-			opacity: isVisible ? 1 : 0,
-			transition: 'opacity 250ms ease-out'
-		};
-		switch (direction) {
-			case 'up':
-				style.top = 0;
-				style.left = 0;
-				style.right = 0;
-				style.height = size;
-				style.background = `linear-gradient(to bottom, ${startColor}, ${endColor})`;
-				break;
-			case 'left':
-				style.top = 0;
-				style.left = 0;
-				style.bottom = 0;
-				style.width = size;
-				style.background = `linear-gradient(to right, ${startColor}, ${endColor})`;
-				break;
-			case 'right':
-				style.top = 0;
-				style.right = 0;
-				style.bottom = 0;
-				style.width = size;
-				style.background = `linear-gradient(to left, ${startColor}, ${endColor})`;
-				break;
-			case 'down':
-				style.left = 0;
-				style.right = 0;
-				style.bottom = 0;
-				style.height = size;
-				style.background = `linear-gradient(to top, ${startColor}, ${endColor})`;
-				break;
-			default:
-		}
-		return <div style={style} />;
-	}
+	// const determine_border_radius = () => {
+	// 	// var element = document.getElementById('react-tabs-10');
 
+	// 	// var element = document.getElementsByClassName('react-tabs__tab-panel')[0];
+	// 	// var element = document.getElementsByClassName('react-tabs__tab-panel')[document.getElementsByClassName('react-tabs__tab-panel').length - 1];
+	// 	var panel = document.getElementsByClassName('react-tabs__tab-panel');
+	// 	var first_element = document.getElementsByClassName('react-tabs__tab')[0];
+	// 	var last_element = document.getElementsByClassName('react-tabs__tab')[
+	// 		document.getElementsByClassName('react-tabs__tab').length - 1
+	// 	];
+	// 	console.log({ first_element });
+	// 	console.log({ last_element });
+	// 	var first_text = first_element.innerText;
+	// 	var last_text = last_element.innerText;
+	// 	// element.innerHTML = text;
+	// 	console.log({ first_text });
+	// 	console.log({ panel: panel[0] });
+	// 	// panel.forEach(p => p.style.borderRadius = '10px')
+	// 	if (first_element.classList[1] === 'react-tabs__tab--selected') {
+	// 		console.log('no_left');
+	// 		panel[0].style.borderRadius = '0px 10px 10px 10px';
+	// 		set_border_radius('no_left');
+	// 	}
+	// 	if (last_element.classList[1] === 'react-tabs__tab--selected') {
+	// 		console.log('no_right');
+	// 		panel[panel.length - 1].style.borderRadius = '10px 0px 10px 10px';
+	// 		set_border_radius('no_right');
+	// 	}
+	// 	// var first_tab = document.querySelectorAll('[role="tablist"]');
+	// 	// var last_tab = document.querySelectorAll('[role="tablist"]');
+	// 	// let first_element = first_tab.firstChild;
+	// 	// let last_element = last_tab.lastChild;
+	// 	// console.log({ first_element, last_element });
+	// 	// if (text === 'Description') {
+	// 	// 	set_border_radius('no_left');
+	// 	// } else if (text === 'Media') {
+	// 	// 	set_border_radius('no_right');
+	// 	// }
+	// };
+	// useEffect(() => {
+	// 	window.addEventListener('load', function() {
+	// 		setTimeout(() => {
+	// 			determine_border_radius();
+	// 		}, 2000);
+	// 	});
+	// 	return () => {
+	// 		window.removeEventListener('load', function() {});
+	// 	};
+	// }, []);
+
+	// // var first_element = document.getElementById('react-tabs-10');
+	// // var last_element_3 = document.getElementById('react-tabs-18');
+	// // var last_element_2 = document.getElementById('react-tabs-20');
+	// // var last_element_1 = document.getElementById('react-tabs-22');
+	// // let true_last_element
+	// // if (last_element_3) {
+	// //   true_last_element = last_element_3
+	// // } else if (last_element_2) {
+	// //   true_last_element = last_element_2
+	// // } else if (last_element_1) {
+	// //   true_last_element = last_element_1
+	// // }
+	// // console.log({ first_element });
+	// // console.log({ true_last_element });
+	// // var first_text = first_element.innerText;
+	// // var last_text = true_last_element.innerText;
+	// // // element.innerHTML = text;
+	// // console.log({ first_text });
+	// // console.log({ last_text });
 	return (
 		<div className="">
 			<div className="p-1rem">
@@ -1436,30 +1458,39 @@ const ProductPage = (props) => {
 							<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
 								<Overflow.Content>
 									<TabList>
-										<Tab>Description</Tab>
-										<Tab>Included Items</Tab>
-										<Tab>Product Dimensions</Tab>
-										{product.chips && product.chips.length > 0 && <Tab>Compatible Chips</Tab>}
-										<Tab>Reviews</Tab>
-										{manuals[product.category] && <Tab>Manual</Tab>}
-										<Tab>Media</Tab>
+										<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+											Description
+										</Tab>
+										<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+											Included Items
+										</Tab>
+										<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+											Product Dimensions
+										</Tab>
+										{product.chips &&
+										product.chips.length > 0 && (
+											<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+												Compatible Chips
+											</Tab>
+										)}
+										<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+											Reviews
+										</Tab>
+										{manuals[product.category] && (
+											<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+												Manual
+											</Tab>
+										)}
+										<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Media</Tab>
 									</TabList>
 								</Overflow.Content>
-								{/* <Overflow.Indicator direction="up">
-									{(canScroll) => <Shadow direction="up" isVisible={canScroll} />}
-								</Overflow.Indicator> */}
-								{/* <Overflow.Indicator direction="right">👇</Overflow.Indicator> */}
-								{/* {canScroll && <button className="btn secondary"></button>} */}
 								{canScroll && (
 									<div className="tab_indicator bob br-5px ta-c primary h-30px w-30px p-4px box-s-d b-1px">
 										{'>'}
 									</div>
 								)}
-
-								{/* {(canScroll) => <Overflow.Shadow direction="up" isVisible={canScroll} />} */}
 							</Overflow>
-
-							<TabPanel>
+							<TabPanel style={{ borderRadius: '0px 10px 10px 10px' }}>
 								<h2 className="m-0px mr-5px mt-1rem"> Description: </h2>
 								<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 									{description}
@@ -1624,7 +1655,7 @@ const ProductPage = (props) => {
 									</div>
 								</TabPanel>
 							)}
-							<TabPanel>
+							<TabPanel style={{ borderRadius: '10px 0px 10px 10px' }}>
 								{!product.video ? (
 									<h2
 										style={{
@@ -1747,107 +1778,14 @@ const ProductPage = (props) => {
 								</div>
 							</TabPanel>
 						</Tabs>
-						<div className="p-1rem">
-							{/* <h2 className="m-0px mr-5px"> Description: </h2>
-							<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
-								{description}
-							</ReadMore> */}
-
-							<div className="jc-b wrap m-2rem">
-								{/* <div className="mt-1rem">
-									<h2 className="m-0px mr-5px"> Included Items: </h2>
-									<div className="h-100per paragraph_font">
-										<ul style={{}}>
-											{included_items ? (
-												included_items.split('\n').map((line, index) => {
-													return (
-														<li
-															key={index}
-															className="paragraph_font"
-															style={{ listStyleType: 'disc' }}
-														>
-															{line}
-														</li>
-													);
-												})
-											) : (
-												included_items
-											)}
-										</ul>
-									</div>
-								</div> */}
-								{/* {product.product_length && (
-									<div className="mt-1rem">
-										<h2 className="m-0px mr-5px"> Product Dimensions: </h2>
-										<div className="h-100per paragraph_font">
-											{product.name === 'Coin Battery Storage' ? (
-												`${product.product_length} cm x ${product.product_width} cm x
-											${product.product_height} cm`
-											) : product.name === 'Glow Strings V2 50 LED / 3.5m' ? (
-												`${product.product_length} m x ${product.product_width} m x
-											${product.product_height} m`
-											) : (
-												`${product.product_length} mm x ${product.product_width} mm x
-											${product.product_height} mm`
-											)}
-										</div>
-									</div>
-								)} */}
-								{/* {product.chips &&
-								product.chips.length > 0 && (
-									<div className="mt-1rem">
-										<h2 className="m-0px mr-5px"> Compatible Chips: </h2>
-										<div className="h-100per paragraph_font ">
-											<ul style={{}}>
-												{product.chips ? (
-													product.chips.map((chip, index) => {
-														return (
-															<li
-																key={index}
-																className="paragraph_font"
-																style={{ listStyleType: 'disc' }}
-															>
-																{chip.name}
-															</li>
-														);
-													})
-												) : (
-													product.chips
-												)}
-											</ul>
-										</div>
-									</div>
-								)} */}
-							</div>
-							{/* )} */}
-						</div>
-						{/* {(product.category === 'diffuser_caps' || product.category === 'mega_diffuser_caps') && (
-							<div className=" m-2rem  h-auto m-auto jc-c">
-								<img
-									className="max-w-819px w-100per h-auto "
-									src="https://images2.imgbox.com/af/ba/QWR9I16I_o.png"
-									alt="Graphic Timeline"
-									title="Diffuser Cap and Mega Diffuser Cap Name Change Timeline"
-								/>
-							</div>
-						)} */}
 					</div>
 				)}
 			</Loading>
-			{/* <RelatedProducts
-				product_pathname={props.match.params.pathname}
-				category={product && product.category}
-			/> */}
 			<Carousel
 				product_pathname={props.match.params.pathname}
 				category={product && product.category}
 				title="Related Products"
 			/>
-			{/* <RelatedCarousel
-				product={product}
-				product_category={product && product.category}
-				product_pathname={props.match.params.pathname}
-			/> */}
 		</div>
 	);
 };
