@@ -1451,7 +1451,7 @@ const ProductPage = (props) => {
 								{/* <Overflow.Indicator direction="right">👇</Overflow.Indicator> */}
 								{/* {canScroll && <button className="btn secondary"></button>} */}
 								{canScroll && (
-									<div className="tab_indicator bob br-5px ta-c primary h-30px w-30px p-5px box-s-d b-1px">
+									<div className="tab_indicator bob br-5px ta-c primary h-30px w-30px p-4px box-s-d b-1px">
 										{'>'}
 									</div>
 								)}
@@ -1460,13 +1460,13 @@ const ProductPage = (props) => {
 							</Overflow>
 
 							<TabPanel>
-								<h2 className="m-0px mr-5px"> Description: </h2>
+								<h2 className="m-0px mr-5px mt-1rem"> Description: </h2>
 								<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 									{description}
 								</ReadMore>
 							</TabPanel>
 							<TabPanel>
-								<div className="mt-2rem">
+								<div className="mt-1rem">
 									<h2 className="m-0px mr-5px"> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul className="pl-2rem">
@@ -1492,7 +1492,7 @@ const ProductPage = (props) => {
 							<TabPanel>
 								{product.product_length &&
 								product.product_length && (
-									<div className="mt-2rem">
+									<div className="mt-1rem">
 										<h2 className="m-0px mr-5px"> Product Dimensions: </h2>
 										<div className="h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
@@ -1514,7 +1514,7 @@ const ProductPage = (props) => {
 								<TabPanel>
 									{product.chips &&
 									product.chips.length > 0 && (
-										<div className="mt-2rem">
+										<div className="mt-1rem">
 											<h2 className="m-0px mr-5px"> Compatible Chips: </h2>
 											<div className="h-100per paragraph_font ">
 												<ul className="pl-2rem">
@@ -1754,7 +1754,7 @@ const ProductPage = (props) => {
 							</ReadMore> */}
 
 							<div className="jc-b wrap m-2rem">
-								{/* <div className="mt-2rem">
+								{/* <div className="mt-1rem">
 									<h2 className="m-0px mr-5px"> Included Items: </h2>
 									<div className="h-100per paragraph_font">
 										<ul style={{}}>
@@ -1777,7 +1777,7 @@ const ProductPage = (props) => {
 									</div>
 								</div> */}
 								{/* {product.product_length && (
-									<div className="mt-2rem">
+									<div className="mt-1rem">
 										<h2 className="m-0px mr-5px"> Product Dimensions: </h2>
 										<div className="h-100per paragraph_font">
 											{product.name === 'Coin Battery Storage' ? (
@@ -1795,7 +1795,7 @@ const ProductPage = (props) => {
 								)} */}
 								{/* {product.chips &&
 								product.chips.length > 0 && (
-									<div className="mt-2rem">
+									<div className="mt-1rem">
 										<h2 className="m-0px mr-5px"> Compatible Chips: </h2>
 										<div className="h-100per paragraph_font ">
 											<ul style={{}}>
