@@ -481,7 +481,7 @@ export default {
 	},
 	get_products_by_category: async (req: any, res: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
+			const category = req.query.category && req.query.category !== 'all' ? { category: req.query.category } : {};
 			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
 			console.log({ category, subcategory });
 			// const products = await Product.find({

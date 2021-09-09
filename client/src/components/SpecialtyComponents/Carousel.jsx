@@ -25,6 +25,8 @@ const Carousel = (props) => {
 			if (props.category) {
 				// dispatch(listProducts(props.category));
 				get_products(props.category);
+			} else {
+				get_products('all');
 			}
 		},
 		[ props.category ]
@@ -34,7 +36,7 @@ const Carousel = (props) => {
 		set_loading(true);
 		const { data } = await API_Products.get_products_by_category(category);
 		console.log({ get_products: data });
-		set_products(data.filter((product) => product.pathname !== props.product_pathname));
+		set_products(typeof data === 'object' && data.filter((product) => product.pathname !== props.product_pathname));
 		set_loading(false);
 	};
 

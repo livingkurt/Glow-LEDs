@@ -6,6 +6,7 @@ const product_routes = {
 		return axios.get('/api/products/get_images/' + category);
 	},
 	get_products_by_category: (category: string) => {
+		console.log({ get_products_by_category: category });
 		return axios.get('/api/products/get_products_by_category/?category=' + category);
 	},
 	get_all_categories: () => {
