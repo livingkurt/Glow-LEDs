@@ -69,6 +69,7 @@ export const mobile_check = () => {
 	})(navigator.userAgent || navigator.vendor || window.opera);
 	return check;
 };
+
 export const browser_check = () => {
 	var userAgent = navigator.userAgent.toLowerCase();
 	if (userAgent.includes('chrome')) {

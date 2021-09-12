@@ -7,6 +7,8 @@ import { Loading } from '../UtilityComponents';
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { API_Products } from '../../utils';
 import { shuffle } from '../../utils/helper_functions';
+import { ProductItemD } from '../DesktopComponents';
+import { browser_check, mobile_check } from '../../utils/react_helper_functions';
 
 const Carousel = (props) => {
 	const dispatch = useDispatch();
@@ -95,55 +97,60 @@ const Carousel = (props) => {
 					<h2 className="jc-c w-100per ta-c">{props.title}</h2>
 
 					<Loading loading={loading}>
-						{products && (
-							<div className="row p-10px" style={{ overflowX: 'scroll' }}>
-								<div className="row jc-b w-100per">
-									{/* {product_number != 0 && ( */}
-									<div className="ai-c">
-										<button
-											style={{ borderRadius: '50%' }}
-											className="btn icon h-59px"
-											onClick={() => move_left()}
-										>
-											<i className="fas fa-arrow-circle-left fs-40px" />
-										</button>
-									</div>
-									{/* )} */}
-									{[ ...Array(number_of_items).keys() ].map((x) => (
-										<div className="w-259px">
-											<CarouselItem
-												key={product_number + x}
-												size="175px"
-												add_to_cart={props.add_to_cart}
-												product={
-													products &&
-													products
-														.filter((product) => !product.option)
-														.filter((product) => product.hidden === false)[
-														product_number + x
-													]
-												}
-												styles={{ listStyleType: 'none' }}
-											/>
+						{products &&
+							(browser_check() !== 'safari' ? (
+								<div className="row p-10px" style={{ overflowX: 'scroll' }}>
+									<div className="row jc-b w-100per">
+										<div className="ai-c">
+											<button
+												style={{ borderRadius: '50%' }}
+												className="btn icon h-59px"
+												onClick={() => move_left()}
+											>
+												<i className="fas fa-arrow-circle-left fs-40px" />
+											</button>
 										</div>
-									))}
-									{/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
-									<div className="ai-c">
-										<button
-											style={{ borderRadius: '50%' }}
-											className="btn icon h-59px"
-											onClick={() => move_right()}
-										>
-											<i className="fas fa-arrow-circle-right fs-40px" />
-										</button>
+										{[ ...Array(number_of_items).keys() ].map((x) => (
+											<div className="w-259px">
+												<CarouselItem
+													key={product_number + x}
+													size="175px"
+													add_to_cart={props.add_to_cart}
+													product={
+														products &&
+														products
+															.filter((product) => !product.option)
+															.filter((product) => product.hidden === false)[
+															product_number + x
+														]
+													}
+													styles={{ listStyleType: 'none' }}
+												/>
+											</div>
+										))}
+										<div className="ai-c">
+											<button
+												style={{ borderRadius: '50%' }}
+												className="btn icon h-59px"
+												onClick={() => move_right()}
+											>
+												<i className="fas fa-arrow-circle-right fs-40px" />
+											</button>
+										</div>
 									</div>
-									{/* )} */}
 								</div>
-
-								{/* )
-						)} */}
-							</div>
-						)}
+							) : (
+								<div className="row p-10px overflow-s">
+									{products.map((item, index) => (
+										<ProductItemD
+											key={index}
+											size="175px"
+											product={item}
+											styles={{ marginRight: 20, listStyleType: 'none' }}
+										/>
+									))}
+								</div>
+							))}
 					</Loading>
 				</div>
 			)}

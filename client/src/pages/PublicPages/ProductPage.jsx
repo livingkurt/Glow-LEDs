@@ -1866,12 +1866,7 @@ const ProductPage = (props) => {
 					title="Accessories You May Need"
 				/>
 			)}
-			<Carousel
-				product_pathname={props.match.params.pathname}
-				// category={product && product.category}
-				random={true}
-				title="Suggested Products"
-			/>
+			<Carousel product_pathname={props.match.params.pathname} random={true} title="Suggested Products" />
 		</div>
 	);
 };
