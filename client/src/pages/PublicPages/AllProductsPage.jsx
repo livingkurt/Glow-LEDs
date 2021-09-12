@@ -251,14 +251,15 @@ const AllProductsPage = (props) => {
 			<div className="jc-c">
 				<div className="row">
 					<h1>
-						{`${humanize(category)} ${subcategory && humanize(subcategory)} ${collection &&
+						{`${humanize(category) === 'Exo Diffusers'
+							? 'EXO Diffusers'
+							: humanize(category)} ${subcategory && humanize(subcategory)} ${collection &&
 							humanize(collection)}` || 'Products'}
 					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
-						category === 'mega_diffuser_caps' ||
-						category === 'mini_diffuser_adapters' ||
+						category === 'exo_diffusers' ||
 						category === 'glowskins' ||
 						category === 'glow_strings' ? (
 							'™'
