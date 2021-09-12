@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listEmails, deleteEmail } from '../../actions/emailActions';
+import { listEmails, deleteEmail, saveEmail } from '../../actions/emailActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -62,6 +62,17 @@ const EmailsPage = (props) => {
 		}
 		console.log(result);
 		return result;
+	};
+
+	const change_email_status = (email) => {
+		dispatch(
+			saveEmail({
+				...email,
+				active: email.active ? false : true
+			})
+		);
+		dispatch(listEmails(''));
+		dispatch(listEmails(''));
 	};
 
 	const sort_options = [ 'Email Type' ];
@@ -190,11 +201,13 @@ const EmailsPage = (props) => {
 										<td className="p-10px">{email.h2}</td>
 										<td className="p-10px">{email.button}</td>
 										<td className="p-10px">
-											{email.active ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
+											<button className="btn icon" onClick={() => change_email_status(email)}>
+												{email.active ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</button>
 										</td>
 										<td className="p-10px">
 											<div className="jc-b">

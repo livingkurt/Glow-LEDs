@@ -44,7 +44,6 @@ const EditContentPage = (props) => {
 		if (content.home_page && content.home_page.images) {
 			set_images(content.home_page.images);
 		}
-
 		set_banner(content.banner);
 		set_links(content.links);
 		console.log({ links: content.links });
@@ -53,6 +52,7 @@ const EditContentPage = (props) => {
 
 	const set_email_state = (data) => {
 		console.log({ data });
+
 		set_home_page(data);
 		// if (content.home_page && content.home_page.images) {
 		set_images(data.images);
@@ -100,7 +100,8 @@ const EditContentPage = (props) => {
 		// dispatch(detailsContent(e.target.value));
 		const { data } = await API_Emails.get_email(e.target.value);
 		set_email(data);
-		set_email_state(data);
+		const formatted_link = data.link && data.link.replace('https://www.glow-leds.com', '');
+		set_email_state({ ...data, link: formatted_link });
 		set_using_template(true);
 	};
 

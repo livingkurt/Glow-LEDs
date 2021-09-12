@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listContents, deleteContent } from '../../actions/contentActions';
+import { listContents, deleteContent, saveContent } from '../../actions/contentActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -37,6 +37,17 @@ const ContentsPage = (props) => {
 
 	const deleteHandler = (content) => {
 		dispatch(deleteContent(content._id));
+	};
+
+	const change_content_status = (content) => {
+		dispatch(
+			saveContent({
+				...content,
+				active: content.active ? false : true
+			})
+		);
+		dispatch(listContents(''));
+		dispatch(listContents(''));
 	};
 
 	return (
@@ -93,11 +104,13 @@ const ContentsPage = (props) => {
 										}}
 									>
 										<td className="p-10px">
-											{content.active ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
+											<button className="btn icon" onClick={() => change_content_status(content)}>
+												{content.active ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</button>
 										</td>
 										<td className="p-10px" style={{ minWidth: '5rem' }}>
 											{content.home_page && content.home_page.h1}

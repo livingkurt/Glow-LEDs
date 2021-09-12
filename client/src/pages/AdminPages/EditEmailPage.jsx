@@ -116,7 +116,12 @@ const EditEmailPage = (props) => {
 		const { data } = await API_Emails.get_content(e.target.value);
 		// set_content(data);
 		console.log({ data });
-		set_content_state(data.home_page);
+		set_content_state({
+			...data.home_page,
+			home_page_link: `${process.env.NODE_ENV === 'production'
+				? 'https://www.glow-leds.com'
+				: 'http://localhost:3000'}${data.link}`
+		});
 	};
 
 	useEffect(

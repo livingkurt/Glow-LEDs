@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listPromos, deletePromo } from '../../actions/promoActions';
+import { listPromos, deletePromo, savePromo } from '../../actions/promoActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -91,6 +91,17 @@ const PromosPage = (props) => {
 	};
 	const sort_options = [ 'Newest', 'Admin Only', 'Affiliate Only', 'Active' ];
 
+	const change_promo_status = (promo) => {
+		dispatch(
+			savePromo({
+				...promo,
+				active: promo.active ? false : true
+			})
+		);
+		dispatch(listPromos(''));
+		dispatch(listPromos(''));
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -162,11 +173,13 @@ const PromosPage = (props) => {
 										}}
 									>
 										<td className="p-10px">
-											{promo.active ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
+											<button className="btn icon" onClick={() => change_promo_status(promo)}>
+												{promo.active ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</button>
 										</td>
 										{/* <td className="p-10px">{promo.user}</td> */}
 										{/* <td className="p-10px">{promo.affiliate}</td> */}
