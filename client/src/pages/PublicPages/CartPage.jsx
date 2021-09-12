@@ -115,8 +115,9 @@ const CartPage = (props) => {
 				product_pathname={props.match.params.pathname}
 				category={'accessories'}
 				title="Accessories You May Need"
+				add_to_cart={true}
 			/>
-			<Carousel title="Suggested Products" />
+			<Carousel title="Suggested Products" add_to_cart={true} random={true} />
 		</div>
 	);
 };

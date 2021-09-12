@@ -114,6 +114,7 @@ const Carousel = (props) => {
 											<CarouselItem
 												key={product_number + x}
 												size="175px"
+												add_to_cart={props.add_to_cart}
 												product={
 													products &&
 													products
