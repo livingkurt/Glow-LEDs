@@ -6,6 +6,7 @@ import CarouselItem from './CarouselItem';
 import { Loading } from '../UtilityComponents';
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { API_Products } from '../../utils';
+import { shuffle } from '../../utils/helper_functions';
 
 const Carousel = (props) => {
 	const dispatch = useDispatch();
@@ -36,7 +37,14 @@ const Carousel = (props) => {
 		set_loading(true);
 		const { data } = await API_Products.get_products_by_category(category);
 		console.log({ get_products: data });
+
 		set_products(typeof data === 'object' && data.filter((product) => product.pathname !== props.product_pathname));
+		if (props.random) {
+			set_products(
+				typeof data === 'object' &&
+					shuffle(data.filter((product) => product.pathname !== props.product_pathname))
+			);
+		}
 		set_loading(false);
 	};
 

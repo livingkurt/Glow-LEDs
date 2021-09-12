@@ -111,6 +111,11 @@ const CartPage = (props) => {
 				</div>
 			</div>
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
+			<Carousel
+				product_pathname={props.match.params.pathname}
+				category={'accessories'}
+				title="Accessories You May Need"
+			/>
 			<Carousel title="Suggested Products" />
 		</div>
 	);

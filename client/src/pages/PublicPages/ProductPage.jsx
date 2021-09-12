@@ -1856,6 +1856,21 @@ const ProductPage = (props) => {
 				product_pathname={props.match.params.pathname}
 				category={product && product.category}
 				title="Related Products"
+				random={false}
+			/>
+			{product &&
+			product.category !== 'accessories' && (
+				<Carousel
+					product_pathname={props.match.params.pathname}
+					category={'accessories'}
+					title="Accessories You May Need"
+				/>
+			)}
+			<Carousel
+				product_pathname={props.match.params.pathname}
+				// category={product && product.category}
+				random={true}
+				title="Suggested Products"
 			/>
 		</div>
 	);
