@@ -186,7 +186,9 @@ export default {
 	remove: async (req: any, res: any) => {
 		try {
 			const message: any = { message: 'Category Deleted' };
+
 			const deleted_category = await Category.updateOne({ _id: req.params.id }, { deleted: true });
+			console.log({ deleted_category });
 			if (deleted_category) {
 				log_request({
 					method: 'DELETE',

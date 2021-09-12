@@ -65,6 +65,7 @@ const CategorysPage = (props) => {
 	);
 	const deleteHandler = (category) => {
 		dispatch(deleteCategory(category._id));
+		stableDispatch(listCategorys(category, searchKeyword, sortOrder));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
@@ -99,8 +100,9 @@ const CategorysPage = (props) => {
 	};
 
 	const create_categories = async () => {
-		const { data } = await API_Products.categories();
-		data.filter((category) => !category === null || !category === '').forEach((category) => {
+		const { data } = await API_Products.get_all_categories();
+		console.log({ data });
+		data.filter((category) => category !== null).forEach((category) => {
 			dispatch(
 				saveCategory({
 					name: category,
@@ -111,12 +113,13 @@ const CategorysPage = (props) => {
 				})
 			);
 		});
+		stableDispatch(listCategorys());
 	};
 
 	const create_subcategories = async () => {
-		const { data } = await API_Products.subcategories();
+		const { data } = await API_Products.get_all_subcategories();
 		console.log({ data });
-		data.filter((category) => !category === null).forEach((category) => {
+		data.filter((category) => category !== null).forEach((category) => {
 			dispatch(
 				saveCategory({
 					name: category,
@@ -127,6 +130,7 @@ const CategorysPage = (props) => {
 				})
 			);
 		});
+		stableDispatch(listCategorys());
 	};
 
 	return (

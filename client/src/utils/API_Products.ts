@@ -12,8 +12,8 @@ const product_routes = {
 	get_all_categories: () => {
 		return axios.get('/api/products/get_all_categories');
 	},
-	subcategories: () => {
-		return axios.get('/api/products/subcategories');
+	get_all_subcategories: () => {
+		return axios.get('/api/products/get_all_subcategories');
 	},
 	get_all_options: () => {
 		return axios.get('/api/products/get_all_options');
