@@ -947,6 +947,50 @@ const OrderEmail = (props) => {
 																						</strong>
 																					</td>
 																				</tr>
+																				{order.tip > 0 && (
+																					<tr>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0'
+																							}}
+																						>
+																							<p
+																								style={{
+																									color: 'white',
+																									lineHeight: '1.2em',
+																									fontSize: '16px',
+																									margin: '0'
+																								}}
+																							>
+																								<span
+																									style={{
+																										fontSize: '16px'
+																									}}
+																								>
+																									Tip
+																								</span>
+																							</p>
+																						</td>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0',
+																								textAlign: 'right'
+																							}}
+																							align="righ=t"
+																						>
+																							<strong
+																								style={{
+																									fontSize: '16px',
+																									color: 'white'
+																								}}
+																							>
+																								${order.tip && order.tip.toFixed(2)}
+																							</strong>
+																						</td>
+																					</tr>
+																				)}
 																			</tbody>
 																		</table>
 																		<table

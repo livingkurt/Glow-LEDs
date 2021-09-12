@@ -222,14 +222,6 @@ const PlaceOrderPublicPage = (props) => {
 		set_loading_tax_rate(false);
 	};
 
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
-			return () => {};
-		},
-		[ shippingPrice ]
-	);
-
 	const get_promo_code = () => {
 		const promo_code_storage = sessionStorage.getItem('promo_code');
 		if (promo_code_storage && promo_code_storage.length > 0) {
@@ -366,24 +358,52 @@ const PlaceOrderPublicPage = (props) => {
 		props.history.push('/account/login?redirect=shipping');
 	};
 
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
-		},
-		[ itemsPrice, taxPrice ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
+	// 		);
+	// 		return () => {};
+	// 	},
+	// 	[ shippingPrice ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
+	// 		);
+	// 	},
+	// 	[ itemsPrice, taxPrice ]
+	// );
+
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
+	// 		);
+	// 	},
+	// 	[ itemsPrice ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
+	// 		);
+	// 	},
+	// 	[ tip ]
+	// );
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
+			console.log({ tip });
+
+			setTotalPrice(
+				tip === 0 || tip === '' || isNaN(tip)
+					? itemsPrice + shippingPrice + taxPrice
+					: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+			);
 		},
-		[ itemsPrice ]
-	);
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
-		},
-		[ tip ]
+		[ itemsPrice, taxPrice, tip, shippingPrice ]
 	);
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');

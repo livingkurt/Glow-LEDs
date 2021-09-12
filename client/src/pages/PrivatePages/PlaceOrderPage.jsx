@@ -176,6 +176,7 @@ const PlaceOrderPage = (props) => {
 				taxPrice,
 				totalPrice,
 				userInfo,
+				tip,
 				order_note,
 				promo_code: show_message && promo_code
 			});
@@ -245,14 +246,6 @@ const PlaceOrderPage = (props) => {
 		}
 	};
 
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
-			return () => {};
-		},
-		[ shippingPrice ]
-	);
-
 	const placeOrderHandler = async (paymentMethod) => {
 		// create an order
 		console.log({ userInfo });
@@ -275,6 +268,7 @@ const PlaceOrderPage = (props) => {
 					totalPrice,
 					userInfo,
 					order_note,
+					tip,
 					promo_code: show_message && promo_code,
 					parcel
 				},
@@ -357,6 +351,7 @@ const PlaceOrderPage = (props) => {
 				totalPrice,
 				user,
 				order_note,
+				tip,
 				promo_code,
 				parcel: parcel ? parcel : null,
 				isPaid: paid ? paid : false
@@ -403,6 +398,7 @@ const PlaceOrderPage = (props) => {
 				taxPrice,
 				totalPrice,
 				order_note,
+				tip,
 				promo_code,
 				parcel
 			})
@@ -471,23 +467,46 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
-		},
-		[ itemsPrice, taxPrice ]
-	);
+			console.log({ tip });
 
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
+			setTotalPrice(
+				tip === 0 || tip === '' || isNaN(tip)
+					? itemsPrice + shippingPrice + taxPrice
+					: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+			);
 		},
-		[ itemsPrice ]
+		[ itemsPrice, taxPrice, tip, shippingPrice ]
 	);
-	useEffect(
-		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
-		},
-		[ tip ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 || tip === ''
+	// 				? itemsPrice + shippingPrice + taxPrice
+	// 				: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+	// 		);
+	// 	},
+	// 	[ itemsPrice ]
+	// );
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 || tip === ''
+	// 				? itemsPrice + shippingPrice + taxPrice
+	// 				: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+	// 		);
+	// 	},
+	// 	[ tip ]
+	// );
+
+	// useEffect(
+	// 	() => {
+	// 		setTotalPrice(
+	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
+	// 		);
+	// 		return () => {};
+	// 	},
+	// 	[ shippingPrice ]
+	// );
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
