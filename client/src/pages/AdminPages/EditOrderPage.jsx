@@ -320,6 +320,47 @@ const EditOrderPage = (props) => {
 		console.log({ orderItems });
 	};
 
+	const update_order_item_property_by_template = (value, field_name, index) => {
+		const option = JSON.parse(value);
+		console.log({ value, field_name, index });
+		let new_order_items = [ ...orderItems ];
+		if (field_name === 'color_product') {
+			new_order_items[index] = {
+				...new_order_items[index],
+				color: option.color,
+				color_code: option.color_code,
+				color_product_name: option.name,
+				color_product: option._id
+			};
+		}
+		if (field_name === 'secondary_color_product') {
+			new_order_items[index] = {
+				...new_order_items[index],
+				secondary_color: option.color,
+				secondary_color_code: option.color_code,
+				secondary_color_product_name: option.name,
+				secondary_color_product: option._id
+			};
+		}
+		if (field_name === 'option_product') {
+			new_order_items[index] = {
+				...new_order_items[index],
+				option_product_name: option.name,
+				option_product: option._id
+			};
+		}
+		if (field_name === 'secondary_product') {
+			new_order_items[index] = {
+				...new_order_items[index],
+				secondary_product_name: option.name,
+				secondary_product: option._id
+			};
+		}
+
+		set_orderItems(new_order_items);
+		console.log({ orderItems });
+	};
+
 	const update_product_option_property = (value, field_name, index) => {
 		console.log({ value, field_name, index });
 		let new_order_items = [ ...orderItems ];
@@ -1208,8 +1249,9 @@ const EditOrderPage = (props) => {
 																		defaultValue={item.color_product}
 																		value={item.color_product}
 																		className="qty_select_dropdown"
+																		name="color_product"
 																		onChange={(e) =>
-																			update_order_item_property(
+																			update_order_item_property_by_template(
 																				e.target.value,
 																				e.target.name,
 																				index
@@ -1221,7 +1263,7 @@ const EditOrderPage = (props) => {
 																		{products.map((product, index) => (
 																			<option
 																				key={index}
-																				defaultValue={product._id}
+																				value={JSON.stringify(product)}
 																			>
 																				{product.name}
 																			</option>
@@ -1233,6 +1275,24 @@ const EditOrderPage = (props) => {
 														</li>
 														<li>
 															<h3>Secondary Color</h3>
+														</li>
+														<li>
+															<label htmlFor="secondary_color_group_name">
+																Secondary Color Group Name
+															</label>
+															<input
+																type="text"
+																name="secondary_color_group_name"
+																defaultValue={item.secondary_color_group_name}
+																value={item.secondary_color_group_name}
+																id="secondary_color_group_name"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
 														</li>
 														<li>
 															<label htmlFor="secondary_color">Secondary Color</label>
@@ -1270,24 +1330,6 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 
-														<li>
-															<label htmlFor="secondary_color_group_name">
-																Secondary Color Group Name
-															</label>
-															<input
-																type="text"
-																name="secondary_color_group_name"
-																defaultValue={item.secondary_color_group_name}
-																value={item.secondary_color_group_name}
-																id="secondary_color_group_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
 														<li>
 															<label htmlFor="secondary_color_product_name">
 																Secondary Color Product Name
@@ -1344,8 +1386,9 @@ const EditOrderPage = (props) => {
 																		defaultValue={item.secondary_color_product}
 																		value={item.secondary_color_product}
 																		className="qty_select_dropdown"
+																		name="secondary_color_product"
 																		onChange={(e) =>
-																			update_order_item_property(
+																			update_order_item_property_by_template(
 																				e.target.value,
 																				e.target.name,
 																				index
@@ -1357,7 +1400,7 @@ const EditOrderPage = (props) => {
 																		{products.map((product, index) => (
 																			<option
 																				key={index}
-																				defaultValue={product._id}
+																				value={JSON.stringify(product)}
 																			>
 																				{product.name}
 																			</option>
@@ -1436,8 +1479,9 @@ const EditOrderPage = (props) => {
 																		defaultValue={item.option_product}
 																		value={item.option_product}
 																		className="qty_select_dropdown"
+																		name="option_product"
 																		onChange={(e) =>
-																			update_order_item_property(
+																			update_order_item_property_by_template(
 																				e.target.value,
 																				e.target.name,
 																				index
@@ -1449,7 +1493,7 @@ const EditOrderPage = (props) => {
 																		{products.map((product, index) => (
 																			<option
 																				key={index}
-																				defaultValue={product._id}
+																				value={JSON.stringify(product)}
 																			>
 																				{product.name}
 																			</option>
@@ -1532,8 +1576,9 @@ const EditOrderPage = (props) => {
 																		defaultValue={item.secondary_product}
 																		value={item.secondary_product}
 																		className="qty_select_dropdown"
+																		name="secondary_product"
 																		onChange={(e) =>
-																			update_order_item_property(
+																			update_order_item_property_by_template(
 																				e.target.value,
 																				e.target.name,
 																				index
@@ -1545,7 +1590,7 @@ const EditOrderPage = (props) => {
 																		{products.map((product, index) => (
 																			<option
 																				key={index}
-																				defaultValue={product._id}
+																				value={JSON.stringify(product)}
 																			>
 																				{product.name}
 																			</option>
