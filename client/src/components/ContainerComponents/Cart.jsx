@@ -387,7 +387,7 @@ const Cart = (props) => {
 					</button>
 				</Link>
 
-				<button onClick={decide_warning} className="btn primary w-100per mb-1rem ">
+				<button onClick={decide_warning} className="btn primary w-100per mb-1rem bob">
 					Proceed to Checkout
 				</button>
 			</div>

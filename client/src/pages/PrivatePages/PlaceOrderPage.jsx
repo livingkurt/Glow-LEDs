@@ -684,7 +684,11 @@ const PlaceOrderPage = (props) => {
 							)}
 							<div style={{ marginTop: '5px' }}>
 								<Link to="/secure/checkout/shipping">
-									<button className="btn primary">
+									<button
+										className={`btn primary ${shipping && !shipping.hasOwnProperty('first_name')
+											? 'bob'
+											: ''}`}
+									>
 										{shipping && shipping.hasOwnProperty('first_name') ? (
 											'Edit Shipping'
 										) : (

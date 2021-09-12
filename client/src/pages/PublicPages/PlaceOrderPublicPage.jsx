@@ -565,8 +565,12 @@ const PlaceOrderPublicPage = (props) => {
 								</div>
 							)}
 							<div style={{ marginTop: '5px' }}>
-								<Link to="/checkout/shipping">
-									<button className="btn primary">
+								<Link to="/secure/checkout/shipping">
+									<button
+										className={`btn primary ${shipping && !shipping.hasOwnProperty('first_name')
+											? 'bob'
+											: ''}`}
+									>
 										{shipping && shipping.hasOwnProperty('first_name') ? (
 											'Edit Shipping'
 										) : (
@@ -880,24 +884,6 @@ const PlaceOrderPublicPage = (props) => {
 							)}
 						</li>
 
-						{/* {!loading_tax_rate &&
-						!hide_pay_button &&
-						shipping &&
-						shipping.hasOwnProperty('first_name') &&
-						!create_account && (
-							<div>
-								<StripeCheckout
-									name="Glow LEDs"
-									description={`Complete Order`}
-									amount={totalPrice.toFixed(2) * 100}
-									token={(token) => placeOrderHandler(token, false)}
-									stripeKey={process.env.REACT_APP_STRIPE_KEY}
-									onChange={handleChangeFor('cardNumber')}
-								>
-									<button className="btn secondary w-100per mb-12px">Complete Order</button>
-								</StripeCheckout>
-							</div>
-						)} */}
 						{loading_checkboxes ? (
 							<div>Loading...</div>
 						) : (

@@ -192,7 +192,7 @@ const HomePage = (props) => {
 					</div>
 					<div className="jc-c">
 						<Link to={content.home_page.link}>
-							<button className="btn primary">{content.home_page.button}</button>
+							<button className="btn primary bob">{content.home_page.button}</button>
 						</Link>
 					</div>
 				</div>
