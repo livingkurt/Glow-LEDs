@@ -7,7 +7,7 @@ import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
-import { API_External } from '../../utils';
+import { API_External, API_Products } from '../../utils';
 import { isError } from 'util';
 
 const EditOrderPage = (props) => {
@@ -40,6 +40,7 @@ const EditOrderPage = (props) => {
 	const [ tracking_number, set_tracking_number ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
+	const [ order_products, set_order_products ] = useState(false);
 	// const [ product_option, set_product_option ] = useState({});
 	// const [ product_option_images, set_product_option_images ] = useState([] ]);
 
@@ -159,6 +160,7 @@ const EditOrderPage = (props) => {
 			if (order) {
 				console.log('Set');
 				set_state();
+				get_products(order.orderItems);
 			} else {
 				console.log('UnSet');
 				unset_state();
@@ -406,6 +408,17 @@ const EditOrderPage = (props) => {
 		};
 		// console.log(order_item._id);
 		set_orderItems(new_product_option);
+	};
+
+	const get_products = async (orderItems) => {
+		const products = await Promise.all(
+			orderItems.map(async (item) => {
+				const { data } = await API_Products.get_product(item.pathname);
+				return data;
+			})
+		);
+		console.log({ products });
+		set_order_products(products);
 	};
 
 	return (
@@ -1260,14 +1273,17 @@ const EditOrderPage = (props) => {
 																		<option key={1} defaultValue="">
 																			---Choose Product---
 																		</option>
-																		{products.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
+																		{order_products &&
+																			order_products[
+																				index
+																			].color_products.map((product, index) => (
+																				<option
+																					key={index}
+																					value={JSON.stringify(product)}
+																				>
+																					{product.name}
+																				</option>
+																			))}
 																	</select>
 																	<span className="custom-arrow" />
 																</div>
@@ -1397,14 +1413,19 @@ const EditOrderPage = (props) => {
 																		<option key={1} defaultValue="">
 																			---Choose Product---
 																		</option>
-																		{products.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
+																		{order_products &&
+																			order_products[
+																				index
+																			].secondary_color_products.map(
+																				(product, index) => (
+																					<option
+																						key={index}
+																						value={JSON.stringify(product)}
+																					>
+																						{product.name}
+																					</option>
+																				)
+																			)}
 																	</select>
 																	<span className="custom-arrow" />
 																</div>
@@ -1490,14 +1511,17 @@ const EditOrderPage = (props) => {
 																		<option key={1} defaultValue="">
 																			---Choose Product---
 																		</option>
-																		{products.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
+																		{order_products &&
+																			order_products[
+																				index
+																			].option_products.map((product, index) => (
+																				<option
+																					key={index}
+																					value={JSON.stringify(product)}
+																				>
+																					{product.name}
+																				</option>
+																			))}
 																	</select>
 																	<span className="custom-arrow" />
 																</div>
@@ -1587,14 +1611,19 @@ const EditOrderPage = (props) => {
 																		<option key={1} defaultValue="">
 																			---Choose Product---
 																		</option>
-																		{products.map((product, index) => (
-																			<option
-																				key={index}
-																				value={JSON.stringify(product)}
-																			>
-																				{product.name}
-																			</option>
-																		))}
+																		{order_products &&
+																			order_products[
+																				index
+																			].secondary_products.map(
+																				(product, index) => (
+																					<option
+																						key={index}
+																						value={JSON.stringify(product)}
+																					>
+																						{product.name}
+																					</option>
+																				)
+																			)}
 																	</select>
 																	<span className="custom-arrow" />
 																</div>
