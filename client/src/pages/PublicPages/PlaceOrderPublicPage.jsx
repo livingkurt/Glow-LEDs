@@ -73,6 +73,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ free_shipping_message, set_free_shipping_message ] = useState('------');
 	const [ show_promo_code, set_show_promo_code ] = useState(false);
 	const [ show_promo_code_input_box, set_show_promo_code_input_box ] = useState(true);
+	const [ tip, set_tip ] = useState(0);
 
 	useEffect(() => {
 		dispatch(listPromos());
@@ -167,6 +168,7 @@ const PlaceOrderPublicPage = (props) => {
 				totalPrice,
 				userInfo,
 				order_note,
+				tip,
 				promo_code: show_message && promo_code
 			});
 			if (data) {
@@ -222,7 +224,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
 			return () => {};
 		},
 		[ shippingPrice ]
@@ -279,6 +281,7 @@ const PlaceOrderPublicPage = (props) => {
 					totalPrice,
 					userInfo,
 					order_note,
+					tip,
 					promo_code: show_message && promo_code,
 					parcel
 				},
@@ -365,16 +368,22 @@ const PlaceOrderPublicPage = (props) => {
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
 		},
 		[ itemsPrice, taxPrice ]
 	);
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
 		},
 		[ itemsPrice ]
+	);
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
+		},
+		[ tip ]
 	);
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
@@ -393,48 +402,6 @@ const PlaceOrderPublicPage = (props) => {
 
 		if (request.isValid) {
 			activate_promo_code(promo_code.toLowerCase());
-			// const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
-			// console.log({ isValid: promo, promo_code: promo_code });
-			// const category_cart_items = cartItems
-			// 	.filter((item) => promo.excluded_categories.includes(item.category))
-			// 	.reduce((a, item) => a + item.price, 0);
-			// const product_cart_items = cartItems
-			// 	.filter((item) => promo.excluded_products.includes(item.pathname))
-			// 	.reduce((a, item) => a + item.price, 0);
-			// const total_excluded_price = category_cart_items + product_cart_items;
-			// console.log({ total_excluded_price });
-			// if (show_message) {
-			// 	set_promo_code_validations('Can only use one promo code at a time');
-			// } else {
-			// 	if (promo.percentage_off) {
-			// 		if (items_price === total_excluded_price) {
-			// 			set_promo_code_validations('All Items Excluded from Promo');
-			// 			return;
-			// 		}
-			// 		setItemsPrice(items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100));
-			// 		setTaxPrice(
-			// 			tax_rate * (items_price - (items_price - total_excluded_price) * (promo.percentage_off / 100))
-			// 		);
-			// 	} else if (promo.amount_off) {
-			// 		setItemsPrice(items_price - promo.amount_off);
-			// 		setTaxPrice(tax_rate * (items_price - promo.amount_off));
-			// 	}
-			// 	if (promo.free_shipping) {
-			// 		setPreviousShippingPrice(shippingPrice);
-			// 		setShippingPrice(0);
-			// 		set_free_shipping_message('Free');
-			// 	}
-			// 	// if, === 'freeshipping') {
-			// 	// 	setPreviousShippingPrice(shippingPrice);
-			// 	// 	setShippingPrice(0);
-			// 	// 	set_free_shipping_message('Free');
-			// 	// }
-			// 	set_show_message(
-			// 		`${promo.promo_code} ${promo.percentage_off
-			// 			? `${promo.percentage_off}% Off`
-			// 			: `$${promo.amount_off} Off`}`
-			// 	);
-			// }
 		} else {
 			set_promo_code('');
 		}
@@ -566,7 +533,7 @@ const PlaceOrderPublicPage = (props) => {
 								</div>
 							)}
 							<div style={{ marginTop: '5px' }}>
-								<Link to="/secure/checkout/shipping">
+								<Link to="/checkout/shipping">
 									<button
 										className={`btn primary ${shipping && !shipping.hasOwnProperty('first_name')
 											? 'bob'
@@ -665,6 +632,12 @@ const PlaceOrderPublicPage = (props) => {
 								)}
 							</div>
 						</li>
+						{tip > 0 && (
+							<li className="pos-rel">
+								<div>Tip</div>
+								<div>${tip.toFixed(2)}</div>
+							</li>
+						)}
 						<li>
 							<div>Order Total</div>
 							<div>
@@ -790,6 +763,27 @@ const PlaceOrderPublicPage = (props) => {
 								onChange={(e) => set_order_note(e.target.value)}
 							/>
 						</div>
+						<li>
+							<div className="w-100per ">
+								<label htmlFor="tip" className="fs-16px">
+									Leave a Tip 💙
+								</label>
+								<input
+									type="number"
+									min="0.01"
+									step="1"
+									name="tip"
+									id="tip"
+									placeholder="$0.00"
+									onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '$0.00'"
+									defaultValue={`$${tip && parseInt(tip).toFixed(2)}`}
+									// defaultValue={tip}
+									className="w-100per"
+									onChange={(e) => set_tip(parseInt(e.target.value))}
+								/>
+							</div>
+						</li>
 						{!loading_tax_rate &&
 						!hide_pay_button &&
 						shipping &&

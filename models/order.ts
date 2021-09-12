@@ -132,6 +132,7 @@ const orderSchema = new mongoose.Schema(
 		},
 		refundedAt: { type: Date },
 		order_note: { type: String },
+		tip: { type: Number },
 		promo_code: { type: String },
 		tracking_number: { type: String },
 		return_tracking_number: { type: String },

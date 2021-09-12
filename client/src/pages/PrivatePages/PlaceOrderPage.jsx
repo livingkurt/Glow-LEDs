@@ -61,6 +61,7 @@ const PlaceOrderPage = (props) => {
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 	const [ show_promo_code, set_show_promo_code ] = useState(false);
 	const [ show_promo_code_input_box, set_show_promo_code_input_box ] = useState(true);
+	const [ tip, set_tip ] = useState(0);
 
 	const [ no_user, set_no_user ] = useState(false);
 	const [ paid, set_paid ] = useState(false);
@@ -246,7 +247,7 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
 			return () => {};
 		},
 		[ shippingPrice ]
@@ -470,23 +471,28 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
 		},
 		[ itemsPrice, taxPrice ]
 	);
 
 	useEffect(
 		() => {
-			setTotalPrice(itemsPrice + shippingPrice + taxPrice);
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
 		},
 		[ itemsPrice ]
+	);
+	useEffect(
+		() => {
+			setTotalPrice(itemsPrice + shippingPrice + taxPrice + tip);
+		},
+		[ tip ]
 	);
 
 	const [ promo_code_validations, set_promo_code_validations ] = useState('');
 
 	const check_code = (e) => {
 		e.preventDefault();
-		// console.log({ promo_code: promo_code_ref.current.value });
 		console.log({ userInfo });
 		console.log({ cartItems });
 		const data = { promo_code: promo_code, promos, userInfo, items_price, cartItems };
@@ -499,60 +505,6 @@ const PlaceOrderPage = (props) => {
 
 		if (request.isValid) {
 			activate_promo_code(promo_code.toLowerCase());
-			// const promo = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
-			// console.log({ isValid: promo, promo_code: promo_code });
-			// let promo_excluded = 0;
-			// let promo_included = 0;
-			// if (promo.exclude) {
-			// 	const category_cart_items = cartItems
-			// 		.filter((item) => promo.excluded_categories.includes(item.category))
-			// 		.reduce((a, item) => a + item.price, 0);
-			// 	const product_cart_items = cartItems
-			// 		.filter((item) => promo.excluded_products.includes(item.pathname))
-			// 		.reduce((a, item) => a + item.price, 0);
-			// 	promo_excluded = category_cart_items + product_cart_items;
-			// }
-			// // if (promo.include) {
-			// // 	const category_cart_items = cartItems.filter((item) =>
-			// // 		promo.included_categories.includes(item.category)
-			// // 	);
-			// // 	console.log({ category_cart_items });
-			// // 	const product_cart_items = cartItems.filter((item) => promo.included_products.includes(item.pathname));
-			// // 	console.log({ product_cart_items });
-			// // 	// promo_included = category_cart_items + product_cart_items;
-			// // }
-
-			// console.log({ promo_excluded });
-			// console.log({ promo_included });
-			// if (show_message) {
-			// 	set_promo_code_validations('Can only use one promo code at a time');
-			// } else {
-			// 	if (promo.percentage_off) {
-			// 		if (items_price === promo_excluded) {
-			// 			set_promo_code_validations('All Items Excluded from Promo');
-			// 			return;
-			// 		}
-			// 		setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
-			// 		setTaxPrice(
-			// 			tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100))
-			// 		);
-			// 	} else if (promo.amount_off) {
-			// 		setItemsPrice(items_price - promo.amount_off);
-			// 		setTaxPrice(tax_rate * (items_price - promo.amount_off));
-			// 		// setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
-			// 		// setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
-			// 	}
-			// 	if (promo.free_shipping) {
-			// 		setPreviousShippingPrice(shippingPrice);
-			// 		setShippingPrice(0);
-			// 		set_free_shipping_message('Free');
-			// 	}
-			// 	set_show_message(
-			// 		`${promo.promo_code} ${promo.percentage_off
-			// 			? `${promo.percentage_off}% Off`
-			// 			: `$${promo.amount_off} Off`}`
-			// 	);
-			// }
 		} else {
 			set_promo_code('');
 		}
@@ -784,6 +736,12 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						</li>
+						{tip > 0 && (
+							<li className="pos-rel">
+								<div>Tip</div>
+								<div>${tip.toFixed(2)}</div>
+							</li>
+						)}
 						<li>
 							<div>Order Total</div>
 							<div>
@@ -847,19 +805,40 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						)}
-						<div className="w-100per ">
-							<div htmlFor="order_note">Add a note</div>
-							<input
-								type="text"
-								name="order_note"
-								// value={order_note}
-								id="order_note"
-								className="w-100per"
-								// ref={order_note_ref}
-								onChange={(e) => set_order_note(e.target.value)}
-							/>
-							<h4>{no_note_warning()}</h4>
-						</div>
+						<li>
+							<div className="w-100per ">
+								<div htmlFor="order_note">Add a note</div>
+								<input
+									type="text"
+									name="order_note"
+									// value={order_note}
+									id="order_note"
+									className="w-100per"
+									// ref={order_note_ref}
+									onChange={(e) => set_order_note(e.target.value)}
+								/>
+								{/* <h4>{no_note_warning()}</h4> */}
+							</div>
+						</li>
+						<li>
+							<div className="w-100per ">
+								<div htmlFor="tip">Leave a Tip 💙</div>
+								<input
+									type="number"
+									min="0.01"
+									step="1"
+									name="tip"
+									id="tip"
+									placeholder="$0.00"
+									onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '$0.00'"
+									defaultValue={`$${tip && parseInt(tip).toFixed(2)}`}
+									// defaultValue={tip}
+									className="w-100per"
+									onChange={(e) => set_tip(parseInt(e.target.value))}
+								/>
+							</div>
+						</li>
 						{!loading_tax_rate &&
 						!hide_pay_button &&
 						shipping &&
