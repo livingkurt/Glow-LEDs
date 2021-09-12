@@ -9,6 +9,7 @@ import { API_Products } from '../../utils';
 import { shuffle } from '../../utils/helper_functions';
 import { ProductItemD } from '../DesktopComponents';
 import { browser_check, mobile_check } from '../../utils/react_helper_functions';
+import Overflow from 'react-overflow-indicator';
 
 const Carousel = (props) => {
 	const dispatch = useDispatch();
@@ -90,6 +91,8 @@ const Carousel = (props) => {
 		[ width ]
 	);
 
+	const [ canScroll, setCanScroll ] = useState(false);
+
 	return (
 		<div className="mh-10px">
 			{products.length > 0 && (
@@ -140,15 +143,29 @@ const Carousel = (props) => {
 									</div>
 								</div>
 							) : (
-								<div className="row p-10px overflow-s">
-									{products.map((item, index) => (
-										<ProductItemD
-											key={index}
-											size="175px"
-											product={item}
-											styles={{ marginRight: 20, listStyleType: 'none' }}
-										/>
-									))}
+								<div className="pos-rel">
+									<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
+										<Overflow.Content>
+											<div className="row p-10px overflow-s">
+												{products.map((item, index) => (
+													<ProductItemD
+														key={index}
+														size="175px"
+														product={item}
+														styles={{ marginRight: 20, listStyleType: 'none' }}
+													/>
+												))}
+											</div>
+										</Overflow.Content>
+									</Overflow>
+									{canScroll && (
+										<div className="pos-abs right-0px top-35px bob br-5px ta-c ai-c bg-primary h-50per w-40px box-s-d b-1px">
+											<i
+												className="fas fa-sort-up fs-40px"
+												style={{ WebkitTransform: 'rotate(90deg)' }}
+											/>
+										</div>
+									)}
 								</div>
 							))}
 					</Loading>
