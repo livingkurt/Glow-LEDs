@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../../actions/productActions';
 import {
@@ -68,6 +68,8 @@ const ProductPage = (props) => {
 	const [ secondary_color_code, set_secondary_color_code ] = useState('');
 
 	const [ color_product, set_color_product ] = useState(null);
+	const [ color_product_object, set_color_product_object ] = useState({});
+	const [ secondary_color_product_object, set_secondary_color_product_object ] = useState({});
 	const [ secondary_color_product, set_secondary_color_product ] = useState(null);
 	const [ option_product, set_option_product ] = useState(null);
 	const [ secondary_product, set_secondary_product ] = useState(null);
@@ -110,6 +112,7 @@ const ProductPage = (props) => {
 		},
 		[ props.match.params.pathname ]
 	);
+	// let query = useQuery();
 
 	useEffect(
 		() => {
@@ -143,80 +146,135 @@ const ProductPage = (props) => {
 					package_volume: product.package_volume
 				});
 				set_product_option({});
-
-				// set_color_group_name(product.color_group_name);
-				// set_secondary_color_group_name(product.secondary_color_group_name);
-				// set_option_group_name(product.option_group_name);
-				// set_secondary_group_name(product.secondary_group_name);
-
+				const query = getUrlParameter();
+				console.log({ query });
 				set_size(product.size);
-				if (product.option_products) {
-					const option = product.option_products.find((option) => option.default_option === true);
-					console.log({ option });
-					if (option) {
-						if (option.size) {
-							set_size(option.size);
-						} else {
-							set_size(option.name);
-						}
-						if (option.color) {
-							set_color(option.color);
-						}
-						if (option.secondary_color) {
-							set_secondary_color(option.secondary_color);
-						}
-						if (product.price > 0) {
-							set_price(product.price);
-						}
-						if (product.sale_price > 0) {
-							set_sale_price(product.sale_price);
-						}
-						if (option.countInStock) {
-							set_count_in_stock(option.countInStock);
-						}
+				if (!query) {
+					// set_color_group_name(product.color_group_name);
+					// set_secondary_color_group_name(product.secondary_color_group_name);
+					// set_option_group_name(product.option_group_name);
+					// set_secondary_group_name(product.secondary_group_name);
 
-						set_product_option(option);
-						console.log({ images: option.images });
-						if (option.images > 0) {
-							set_images(option.images);
-							set_image(option.images && option.images[0]);
+					if (product.option_products) {
+						const option = product.option_products.find((option) => option.default_option === true);
+						console.log({ option });
+						if (option) {
+							if (option.size) {
+								set_size(option.size);
+							} else {
+								set_size(option.name);
+							}
+							if (option.color) {
+								set_color(option.color);
+							}
+							if (option.secondary_color) {
+								set_secondary_color(option.secondary_color);
+							}
+							if (product.price > 0) {
+								set_price(product.price);
+							}
+							if (product.sale_price > 0) {
+								set_sale_price(product.sale_price);
+							}
+							if (option.countInStock) {
+								set_count_in_stock(option.countInStock);
+							}
+
+							set_product_option(option);
+							if (option.images > 0) {
+								set_images(option.images);
+								set_image(option.images && option.images[0]);
+							}
+							set_dimensions({
+								weight_pounds: option.weight_pounds,
+								weight_ounces: option.weight_ounces,
+								package_length: option.package_length,
+								package_width: option.package_width,
+								package_height: option.package_height,
+								package_volume: option.package_volume
+							});
+							set_option_product(option._id);
+							set_option_product_name(option.name);
 						}
-						set_dimensions({
-							weight_pounds: option.weight_pounds,
-							weight_ounces: option.weight_ounces,
-							package_length: option.package_length,
-							package_width: option.package_width,
-							package_height: option.package_height,
-							package_volume: option.package_volume
-						});
-						set_option_product(option._id);
-						set_option_product_name(option.name);
 					}
-				}
-				if (product.color_products) {
-					const color = product.color_products.find((color) => color.default_option === true);
-					console.log({ color });
-					if (color) {
-						set_color_product(color._id);
-						set_color(color.color);
-						set_color_code(color.color_code);
+
+					let first_color = '';
+					if (product.color_products) {
+						const color = product.color_products.find((color) => color.default_option === true);
+						if (color) {
+							set_color_product(color._id);
+							set_color(color.color);
+							set_color_code(color.color_code);
+							set_color_product_object(color);
+							first_color = color.color;
+
+							history.push({
+								search:
+									'?color=' + first_color + '?secondary_color=' + secondary_color.name.split(' ')[0]
+							});
+						}
 					}
-				}
-				if (product.secondary_color_products) {
-					const secondary_color = product.secondary_color_products.find(
-						(secondary_color) => secondary_color.default_option === true
-					);
-					console.log({ secondary_color });
-					if (secondary_color) {
-						set_secondary_color_product(secondary_color._id);
-						set_secondary_color(secondary_color.color);
-						set_secondary_color_code(secondary_color.color_code);
+					if (product.secondary_color_products) {
+						const secondary_color = product.secondary_color_products.find(
+							(secondary_color) => secondary_color.default_option === true
+						);
+						console.log({ secondary_color });
+						if (secondary_color) {
+							set_secondary_color_product(secondary_color._id);
+							set_secondary_color(secondary_color.color);
+							set_secondary_color_code(secondary_color.color_code);
+							set_secondary_color_product_object(secondary_color);
+							history.push({
+								search: '?color=' + first_color + '?secondary_color=' + secondary_color
+							});
+						}
+					}
+				} else if (query) {
+					if (product.color_products) {
+						const color = product.color_products.find((color) => color.color === query.color);
+						if (color) {
+							if (color.images.length > 0) {
+								set_image(color.images && color.images[0]);
+								set_images(color.images);
+							}
+
+							set_color_product(color._id);
+							set_color(color.color);
+							set_color_code(color.color_code);
+							set_color_product_object(color);
+						}
+					}
+					if (product.secondary_color_products) {
+						const secondary_color = product.secondary_color_products.find(
+							(secondary_color) => secondary_color.color === query.secondary_color
+						);
+						console.log({ secondary_color });
+						if (secondary_color) {
+							if (secondary_color.images.length > 0) {
+								set_secondary_image(secondary_color.images && secondary_color.images[0]);
+								set_images(secondary_color.images);
+							}
+
+							set_secondary_color_product(secondary_color._id);
+							set_secondary_color(secondary_color.color);
+							set_secondary_color_code(secondary_color.color_code);
+							set_secondary_color_product_object(secondary_color);
+						}
 					}
 				}
 			}
 		},
 		[ product ]
 	);
+	function getUrlParameter(name) {
+		const search = props.location.search.split('?');
+		console.log({ search });
+		const search_object = {};
+		search.filter((item) => item !== '').forEach((item) => {
+			search_object[item.split('=')[0]] = item.split('=')[1];
+		});
+		return search_object;
+	}
 
 	useEffect(
 		() => {
@@ -286,10 +344,11 @@ const ProductPage = (props) => {
 		open_cart();
 		set_product_option({});
 	};
+	const history = useHistory();
 
 	const update_color = (e) => {
 		const option = JSON.parse(e.target.value);
-		console.log({ option });
+
 		// set_name(option.name);
 
 		// if (option.description) {
@@ -305,17 +364,26 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		set_color(option.color);
+		console.log({ option_color: option.color });
+		history.push({
+			// pathname: product.pathname,
+			search: '?color=' + option.color + '?secondary_color=' + secondary_color
+		});
 		set_color_code(option.color_code);
 		if (option.images && option.images[0]) {
 			set_images(option.images);
 			set_image(option.images[0]);
 		}
 		set_color_product(option._id);
+		set_color_product_object(option);
 	};
 
 	const update_secondary_color = (e) => {
 		const option = JSON.parse(e.target.value);
-		console.log({ option });
+		history.push({
+			// pathname: product.pathname,
+			search: '?color=' + color + '?secondary_color=' + option.color
+		});
 		// set_name(option.name);
 
 		// if (option.description) {
@@ -339,6 +407,7 @@ const ProductPage = (props) => {
 			set_secondary_images(option.images);
 		}
 		set_secondary_color_product(option._id);
+		set_secondary_color_product_object(option);
 	};
 
 	const update_option = (e) => {
@@ -849,6 +918,8 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
+														value={JSON.stringify(color_product_object)}
+														defaultValue={JSON.stringify(color_product_object)}
 														className="qty_select_dropdown"
 														onChange={(e) => update_color(e)}
 													>
@@ -910,6 +981,8 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
+														value={JSON.stringify(secondary_color_product_object)}
+														defaultValue={JSON.stringify(secondary_color_product_object)}
 														className="qty_select_dropdown"
 														onChange={(e) => update_secondary_color(e)}
 													>
@@ -1109,6 +1182,8 @@ const ProductPage = (props) => {
 														)}
 														<div className="custom-select">
 															<select
+																value={JSON.stringify(color_product_object)}
+																defaultValue={JSON.stringify(color_product_object)}
 																className="qty_select_dropdown"
 																onChange={(e) => update_color(e)}
 															>
@@ -1146,6 +1221,10 @@ const ProductPage = (props) => {
 														)}
 														<div className="custom-select">
 															<select
+																value={JSON.stringify(secondary_color_product_object)}
+																defaultValue={JSON.stringify(
+																	secondary_color_product_object
+																)}
 																className="qty_select_dropdown"
 																onChange={(e) => update_secondary_color(e)}
 															>
