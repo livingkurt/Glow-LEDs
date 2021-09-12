@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listAffiliates, deleteAffiliate } from '../../actions/affiliateActions';
+import { listAffiliates, deleteAffiliate, saveAffiliate } from '../../actions/affiliateActions';
 import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -156,6 +156,17 @@ const AffiliatesPage = (props) => {
 		// set_revenue(revenue);
 	};
 
+	const change_affiliate_status = (affiliate) => {
+		dispatch(
+			saveAffiliate({
+				...affiliate,
+				active: affiliate.active ? false : true
+			})
+		);
+		dispatch(listAffiliates(''));
+		dispatch(listAffiliates(''));
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
@@ -217,7 +228,8 @@ const AffiliatesPage = (props) => {
 									<th>Private Code</th>
 									<th>Sponsor</th>
 									<th>Promotor</th>
-									<th>active</th>
+									<th>Active</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -260,12 +272,18 @@ const AffiliatesPage = (props) => {
 											)}
 										</td>
 										<td className="p-10px">
-											{affiliate.active ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
+											<button
+												className="btn icon"
+												onClick={() => change_affiliate_status(affiliate)}
+											>
+												{affiliate.active ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</button>
 										</td>
+
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editaffiliate/' + affiliate.pathname}>
