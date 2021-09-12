@@ -735,7 +735,9 @@ const Header = (props) => {
 						<div className="nav_bar w-233px jc-fe">
 							{/* <Link to="/checkout/cart"> */}
 							<button
-								className={`btn nav cart_text w-105px row ${cartItems.length > 0 ? 'bob' : ''}`}
+								className={`btn nav cart_text w-105px row ${cartItems.length > 0
+									? 'bob box-s-d bg-primary'
+									: ''}`}
 								onClick={open_cart}
 							>
 								Cart <i className="fas fa-shopping-cart ml-5px" />
@@ -746,7 +748,9 @@ const Header = (props) => {
 							{/* </Link> */}
 							{/* <Link to="/checkout/cart"> */}
 							<button
-								className={`btn mobile nav cart_icon none ${cartItems.length > 0 ? 'bob' : ''}`}
+								className={`btn mobile nav cart_icon none ${cartItems.length > 0
+									? 'bob box-s-d bg-primary'
+									: ''}`}
 								onClick={open_cart}
 							>
 								<i className="fas fa-shopping-cart" />{' '}

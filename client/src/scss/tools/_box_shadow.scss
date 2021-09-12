@@ -1,8 +1,8 @@
 @use '../abstracts' as *;
 
 .box-s-s {
-	box-shadow: $bs_shallow;
+	box-shadow: $bs_shallow !important;
 }
 .box-s-d {
-	box-shadow: $bs_deep;
+	box-shadow: $bs_deep !important;
 }
