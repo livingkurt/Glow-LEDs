@@ -642,6 +642,37 @@ const PlaceOrderPage = (props) => {
 		console.log({ error });
 	};
 
+	const determine_shipping_speed = (rates, service, name, time) => {
+		return rates.map((rate, index) => {
+			return (
+				rate.service === service && (
+					<div className=" mv-1rem jc-b  ai-c" key={index}>
+						<div className="shipping_rates jc-b w-100per wrap ">
+							<div className="service">{name}</div>
+							<div> ${(parseFloat(rate.retail_rate) + packaging_cost).toFixed(2)} </div>
+							<div>
+								{time ? (
+									time
+								) : (
+									<div>
+										{' '}
+										{rate.est_delivery_days} {rate.est_delivery_days === 1 ? 'Day' : 'Days'}
+									</div>
+								)}
+							</div>
+						</div>
+						<button
+							className="custom-select-shipping_rates"
+							onClick={() => choose_shipping_rate(rate, service)}
+						>
+							Select
+						</button>
+					</div>
+				)
+			);
+		});
+	};
+
 	return (
 		<div>
 			<Helmet>
@@ -801,7 +832,7 @@ const PlaceOrderPage = (props) => {
 								{shipping &&
 								shipping.international && (
 									<div>
-										{shipping_rates.rates.map((rate, index) => {
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'FirstClassPackageInternationalService' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -827,8 +858,14 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
-										{shipping_rates.rates.map((rate, index) => {
+										})} */}
+										{determine_shipping_speed(
+											shipping_rates.rates,
+											'FirstClassPackageInternationalService',
+											'Standard',
+											'1-3+ Weeks'
+										)}
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'PriorityMailInternational' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -851,8 +888,14 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
-										{shipping_rates.rates.map((rate, index) => {
+										})} */}
+										{determine_shipping_speed(
+											shipping_rates.rates,
+											'PriorityMailInternational',
+											'Prority',
+											'6-10 Days'
+										)}
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'ExpressMailInternational' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -875,8 +918,14 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
-										{shipping_rates.rates.map((rate, index) => {
+										})} */}
+										{determine_shipping_speed(
+											shipping_rates.rates,
+											'ExpressMailInternational',
+											'Express',
+											'3-5 Days'
+										)}
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'INTERNATIONAL_ECONOMY' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -903,8 +952,13 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
-										{shipping_rates.rates.map((rate, index) => {
+										})} */}
+										{determine_shipping_speed(
+											shipping_rates.rates,
+											'INTERNATIONAL_ECONOMY',
+											'Fedex Economy'
+										)}
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'INTERNATIONAL_PRIORITY' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -931,14 +985,18 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
+										})} */}
 									</div>
 								)}
-
+								{determine_shipping_speed(
+									shipping_rates.rates,
+									'INTERNATIONAL_PRIORITY',
+									'Fedex Prioirty'
+								)}
 								{shipping &&
 								!shipping.international && (
 									<div>
-										{shipping_rates.rates.map((rate, index) => {
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'First' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -964,8 +1022,9 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
-										{shipping_rates.rates.map((rate, index) => {
+										})} */}
+										{determine_shipping_speed(shipping_rates.rates, 'First', 'Standard')}
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Priority' && (
 													<div className=" mv-1rem jc-b  ai-c" key={index}>
@@ -991,7 +1050,8 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
+										})} */}
+										{determine_shipping_speed(shipping_rates.rates, 'Priority', 'Priority')}
 										{/* {shipping_rates.rates.find((rate, index) => rate.service) === 'First' < shipping_rates.rates.find((rate, index) => rate.service === 'Ground')} */}
 										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
@@ -1016,7 +1076,7 @@ const PlaceOrderPage = (props) => {
 												)
 											);
 										})} */}
-										{shipping_rates.rates.map((rate, index) => {
+										{/* {shipping_rates.rates.map((rate, index) => {
 											return (
 												rate.service === 'Express' && (
 													<div className=" mv-1rem jc-b ai-c" key={index}>
@@ -1038,7 +1098,8 @@ const PlaceOrderPage = (props) => {
 													</div>
 												)
 											);
-										})}
+										})} */}
+										{determine_shipping_speed(shipping_rates.rates, 'Express', 'Express')}
 									</div>
 								)}
 							</div>
