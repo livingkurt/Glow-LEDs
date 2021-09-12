@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useClipboard from 'react-hook-clipboard';
 import { LazyImage, Loading } from '../UtilityComponents';
 import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
-import { deleteProduct } from '../../actions/productActions';
+import { deleteProduct, listProducts, saveProduct } from '../../actions/productActions';
 import styled from 'styled-components';
 
 const grid = 8;
@@ -154,6 +154,16 @@ const ProductListItem = (props) => {
 	}
 	// console.log("Product - Draggable Rendering");
 
+	const show_hide_product = (product) => {
+		dispatch(
+			saveProduct({
+				...product,
+				hidden: product.hidden ? false : true
+			})
+		);
+		dispatch(listProducts(''));
+	};
+
 	return (
 		<Container
 			className="product_list_item noselect"
@@ -171,9 +181,12 @@ const ProductListItem = (props) => {
 					</label>
 					{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 				</Link>
-				<label className="w-100px">
+				{/* <label className="w-100px">
 					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
-				</label>
+				</label> */}
+				<button className="btn icon" onClick={() => show_hide_product(product)}>
+					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
+				</button>
 				<label className="w-200px">{product.category}</label>
 				<label className="w-100px">{product.order}</label>
 				<label className="product-price w-500px">
