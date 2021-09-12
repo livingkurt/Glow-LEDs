@@ -305,7 +305,7 @@ const OrderPublicPage = (props) => {
 				</div>
 			</div>
 			<LoadingPayments loading={payment_loading} error={errorPay} />
-			<div className="placeorder br-20px" style={{ backgroundColor: width > 407 && determine_color(order) }}>
+			<div className="placeorder br-20px">
 				<div className="placeorder-info">
 					<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 						{order.isRefunded && (
@@ -432,6 +432,10 @@ const OrderPublicPage = (props) => {
 						<li>
 							<div>Shipping</div>
 							<div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
+						</li>
+						<li>
+							<div>Tip</div>
+							<div>${order.tip ? order.tip.toFixed(2) : order.tip}</div>
 						</li>
 
 						{!order.isRefunded && (

@@ -883,7 +883,7 @@ const OrderEmail = (props) => {
 																									fontSize: '16px'
 																								}}
 																							>
-																								Shipping
+																								Taxes
 																							</span>
 																						</p>
 																					</td>
@@ -901,7 +901,7 @@ const OrderEmail = (props) => {
 																								color: 'white'
 																							}}
 																						>
-																							${order.shippingPrice && order.shippingPrice.toFixed(2)}
+																							${order.taxPrice && order.taxPrice.toFixed(2)}
 																						</strong>
 																					</td>
 																				</tr>
@@ -925,7 +925,7 @@ const OrderEmail = (props) => {
 																									fontSize: '16px'
 																								}}
 																							>
-																								Taxes
+																								Shipping
 																							</span>
 																						</p>
 																					</td>
@@ -943,10 +943,11 @@ const OrderEmail = (props) => {
 																								color: 'white'
 																							}}
 																						>
-																							${order.taxPrice && order.taxPrice.toFixed(2)}
+																							${order.shippingPrice && order.shippingPrice.toFixed(2)}
 																						</strong>
 																					</td>
 																				</tr>
+
 																				{order.tip > 0 && (
 																					<tr>
 																						<td
@@ -1827,7 +1828,7 @@ const OrderEmail = (props) => {
 	return (
 		<div>
 			<Loading loading={loading} />
-			{userInfo ? (
+			{userInfo && userInfo.hasOwnProperty('first_name') ? (
 				<div className="jc-c m-auto wrap">
 					<Link to={'/secure/account/order/' + props.match.params.id}>
 						<button className="btn primary mh-10px">View Order</button>
