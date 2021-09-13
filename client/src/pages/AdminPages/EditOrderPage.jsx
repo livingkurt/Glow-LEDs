@@ -1476,6 +1476,22 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
+															<label htmlFor="size">Size</label>
+															<input
+																type="text"
+																name="size"
+																defaultValue={item.size}
+																value={item.size}
+																id="size"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
 															<label htmlFor="option_product">Option Product</label>
 															<input
 																type="text"
@@ -1638,7 +1654,7 @@ const EditOrderPage = (props) => {
 																</div>
 															</div>
 														</li>
-														{item.product_option && (
+														{/* {item.product_option && (
 															<div key={index} className="">
 																<div className="jc-b">
 																	<h2>Product Option {index + 1}</h2>
@@ -1777,7 +1793,7 @@ const EditOrderPage = (props) => {
 																	/>
 																</li>
 															</div>
-														)}
+														)} */}
 													</div>
 												);
 											})}
