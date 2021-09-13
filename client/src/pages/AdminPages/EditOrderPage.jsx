@@ -16,6 +16,7 @@ const EditOrderPage = (props) => {
 	const [ order_items, set_order_items ] = useState([ {} ]);
 	const [ shipping, set_shipping ] = useState({});
 	const [ user, set_user ] = useState('');
+	const [ display_image, set_display_image ] = useState('');
 	const [ payment, set_payment ] = useState({});
 	const [ itemsPrice, set_itemsPrice ] = useState(0);
 	const [ taxPrice, set_taxPrice ] = useState(0);
@@ -332,7 +333,8 @@ const EditOrderPage = (props) => {
 				color: option.color,
 				color_code: option.color_code,
 				color_product_name: option.name,
-				color_product: option._id
+				color_product: option._id,
+				display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
 			};
 		}
 		if (field_name === 'secondary_color_product') {
@@ -341,25 +343,28 @@ const EditOrderPage = (props) => {
 				secondary_color: option.color,
 				secondary_color_code: option.color_code,
 				secondary_color_product_name: option.name,
-				secondary_color_product: option._id
+				secondary_color_product: option._id,
+				display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
 			};
 		}
 		if (field_name === 'option_product') {
 			new_order_items[index] = {
 				...new_order_items[index],
 				option_product_name: option.name,
-				option_product: option._id
+				option_product: option._id,
+				display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
 			};
 		}
 		if (field_name === 'secondary_product') {
 			new_order_items[index] = {
 				...new_order_items[index],
 				secondary_product_name: option.name,
-				secondary_product: option._id
+				secondary_product: option._id,
+				display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
 			};
 		}
-
 		set_orderItems(new_order_items);
+
 		console.log({ orderItems });
 	};
 
@@ -1274,6 +1279,7 @@ const EditOrderPage = (props) => {
 																			---Choose Product---
 																		</option>
 																		{order_products &&
+																			order_products[index] &&
 																			order_products[
 																				index
 																			].color_products.map((product, index) => (
@@ -1414,6 +1420,7 @@ const EditOrderPage = (props) => {
 																			---Choose Product---
 																		</option>
 																		{order_products &&
+																			order_products[index] &&
 																			order_products[
 																				index
 																			].secondary_color_products.map(
@@ -1512,6 +1519,7 @@ const EditOrderPage = (props) => {
 																			---Choose Product---
 																		</option>
 																		{order_products &&
+																			order_products[index] &&
 																			order_products[
 																				index
 																			].option_products.map((product, index) => (
@@ -1612,6 +1620,7 @@ const EditOrderPage = (props) => {
 																			---Choose Product---
 																		</option>
 																		{order_products &&
+																			order_products[index] &&
 																			order_products[
 																				index
 																			].secondary_products.map(
