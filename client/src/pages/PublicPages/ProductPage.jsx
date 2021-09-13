@@ -591,7 +591,6 @@ const ProductPage = (props) => {
 								</label>
 
 								<div className="details-image">
-									{console.log({ name: name && name.split('-')[1] })}
 									<div>
 										{console.log(true)}
 										{!secondary_image && (

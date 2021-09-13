@@ -20,8 +20,6 @@ const CarouselItem = (props) => {
 	useEffect(
 		() => {
 			set_loading(false);
-			console.log({ option: product.option_products.find((option) => option.default_option === true) });
-			// set_size(product.option_products.find((option) => option.default_option === true).size);
 			return () => {};
 		},
 		[ props.product ]
@@ -31,14 +29,13 @@ const CarouselItem = (props) => {
 		e.preventDefault();
 		// const value = JSON.parse(e.target.value);
 		// console.log({ handleAddToCart: value });
-		const color = product.color_products.find((color) => color.default_option === true);
-		const secondary_color = product.secondary_color_products.find(
-			(secondary_color) => secondary_color.default_option === true
-		);
-		const option = product.option_products.find((option) => option.default_option === true);
-		console.log({
-			qty
-		});
+
+		const color = product.color_products && product.color_products.find((color) => color.default_option === true);
+		const secondary_color =
+			product.secondary_color_products &&
+			product.secondary_color_products.find((secondary_color) => secondary_color.default_option === true);
+		const option =
+			product.option_products && product.option_products.find((option) => option.default_option === true);
 		dispatch(
 			addToCart({
 				product: product._id,
