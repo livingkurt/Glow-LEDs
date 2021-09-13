@@ -199,7 +199,7 @@ const ProductListItem = (props) => {
 				<div>
 					<div>
 						<div className="jc-b">
-							<Link to={'/secure/glow/editproduct/' + product.pathname}>
+							<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
 								<button className="btn icon">
 									<i className="fas fa-edit" />
 								</button>
@@ -271,7 +271,7 @@ const ProductListItem = (props) => {
 								<div>
 									<div>
 										<div className="jc-b">
-											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
 												<button className="btn icon">
 													<i className="fas fa-edit" />
 												</button>
@@ -316,7 +316,7 @@ const ProductListItem = (props) => {
 								<div>
 									<div>
 										<div className="jc-b">
-											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
 												<button className="btn icon">
 													<i className="fas fa-edit" />
 												</button>
@@ -361,7 +361,7 @@ const ProductListItem = (props) => {
 								<div>
 									<div>
 										<div className="jc-b">
-											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
 												<button className="btn icon">
 													<i className="fas fa-edit" />
 												</button>
@@ -406,7 +406,7 @@ const ProductListItem = (props) => {
 								<div>
 									<div>
 										<div className="jc-b">
-											<Link to={'/secure/glow/editproduct/' + product.pathname}>
+											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
 												<button className="btn icon">
 													<i className="fas fa-edit" />
 												</button>

@@ -110,12 +110,6 @@ const ProductPage = (props) => {
 		video.muted = true;
 		video.autoplay = true;
 		const query = getUrlParameter();
-		// if (!query.color || !query.secondary_color || !query.option || !query.secondary) {
-		// 	history.replace();
-		// }
-		// if (query.color || query.secondary_color || query.option || query.secondary) {
-		// 	history.replace();
-		// }
 	}, []);
 
 	useEffect(
@@ -164,34 +158,6 @@ const ProductPage = (props) => {
 			if (product) {
 				update_universal_state(product);
 				const query = getUrlParameter();
-				// if (query.color === product.color_products.find((color) => color.default_option === true).color) {
-				// 	// history.replace();
-				// }
-				// if (
-				// 	query.secondary_color ===
-				// 	product.secondary_color_products.find((secondary_) => secondary_.default_option === true).color
-				// ) {
-				// 	// history.replace();
-				// }
-				// if (
-				// 	query.option ===
-				// 	(product.option_products.find((option) => option.default_option === true).size ||
-				// 		product.secondary_color_products.find((color) => color.default_option === true).name)
-				// ) {
-				// 	// history.replace();
-				// }
-				// if (
-				// 	query.secondary !==
-				// 	product.secondary_products.find((secondary) => secondary.name === query.secondary).name
-				// ) {
-				// 	history.replace();
-				// }
-				console.log({ query });
-
-				let temp_color = '';
-				let temp_secondary_color = '';
-				let temp_option = '';
-				let temp_secondary = '';
 				if (props.location.search.length === 0) {
 					console.log({ message: 'Query Does Not Exist' });
 					if (product.color_products) {
@@ -199,8 +165,6 @@ const ProductPage = (props) => {
 						console.log({ color });
 						if (color) {
 							update_color_product_state(color);
-							// temp_color = color.color;
-							// update_url(temp_color);
 						}
 					}
 					if (product.secondary_color_products) {
@@ -210,23 +174,17 @@ const ProductPage = (props) => {
 						console.log({ secondary_color });
 						if (secondary_color) {
 							update_secondary_color_product_state(secondary_color);
-							// temp_secondary_color = secondary_color.color;
-							// update_url(temp_color, temp_secondary_color);
 						}
 					}
 					if (product.option_products) {
 						const option = product.option_products.find((option) => option.default_option === true);
 						if (option) {
 							update_option_product_state(option);
-							// temp_option = option.size || option.name;
-							// update_url(temp_color, temp_secondary_color, temp_option);
 						}
 					}
 					if (product.secondary_products) {
 						update_secondary_product_state(product);
-						// update_url(temp_color, temp_secondary_color, temp_option);
 					}
-					// update_url(temp_color, temp_secondary_color, temp_option, temp_secondary);
 				} else if (props.location.search.length > 0) {
 					console.log({ message: 'Query Does Exist' });
 					if (product.color_products) {
@@ -376,8 +334,6 @@ const ProductPage = (props) => {
 	}, []);
 
 	const handleAddToCart = () => {
-		// console.log({ product_option });
-		console.log({ handleAddToCart: product.subcategory });
 		dispatch(
 			addToCart({
 				product: product._id,
@@ -413,8 +369,6 @@ const ProductPage = (props) => {
 				product_option,
 				qty,
 				finite_stock: product.category
-				// // determine_default_color(color),
-				// diffuser_cap: diffuser_cap,
 			})
 		);
 		open_cart();
@@ -437,7 +391,6 @@ const ProductPage = (props) => {
 			set_image(option.images[0]);
 		}
 		set_color_product(option._id);
-		// update_url(option.color);
 		set_color_product_object(option);
 		update_url(option.color, secondary_color, size || option_product_name, secondary_product_name);
 	};
@@ -454,14 +407,11 @@ const ProductPage = (props) => {
 		set_secondary_color(option.color);
 		set_secondary_color_code(option.color_code);
 		if (option.images && option.images[0]) {
-			// set_images(option.images);
-			// set_images((images) => [ ...images, option.images[0] ]);
 			set_secondary_image(option.images[0]);
 			set_secondary_images(option.images);
 		}
 		set_secondary_color_product(option._id);
 		set_secondary_color_product_object(option);
-		// update_url(color, option.color);
 		update_url(color, option.color, size || option_product_name, secondary_product_name);
 	};
 
@@ -512,7 +462,6 @@ const ProductPage = (props) => {
 		set_option_product_object(option);
 		set_option_product(option._id);
 		set_option_product_name(option.name);
-		// update_url(color, secondary_color, option.size || option.name);
 		update_url(color, secondary_color, option.size || option.name, secondary_product_name);
 	};
 
@@ -532,12 +481,6 @@ const ProductPage = (props) => {
 		if (secondary) {
 			if (product.category === 'diffuser_caps') {
 				return secondary.slice(0, -14);
-			} else {
-				const array = secondary.split('-');
-				console.log({ array });
-				// if (array.length > 0) {
-				// 	array.substring(1);
-				// }
 			}
 		}
 	};
@@ -646,7 +589,6 @@ const ProductPage = (props) => {
 								>
 									{name}
 								</label>
-								{/* <div className="w-400px"> */}
 
 								<div className="details-image">
 									{console.log({ name: name && name.split('-')[1] })}
@@ -694,80 +636,7 @@ const ProductPage = (props) => {
 											</div>
 										)}
 									</div>
-									{/* {name && !name.split('-')[1] === '2 Tone' ? (
-										<div>
-											{console.log(true)}
-											{!secondary_image && (
-												<img
-													id="expandedImg"
-													alt={name}
-													title={name}
-													className="details-image-img"
-													src={image}
-													style={{
-														maxWidth: '400px',
-														maxHeight: '400px',
-														height: '100%',
-														width: '100%'
-													}}
-												/>
-											)}
-											{secondary_image && (
-												<div className="double-image">
-													<img
-														id="expandedImg"
-														alt={name}
-														title={name}
-														className="details-image-img-left"
-														src={image}
-													/>
-													<img
-														id="expandedSecondaryImg"
-														alt={name}
-														title={name}
-														className="details-image-img-right"
-														src={secondary_image}
-													/>
-												</div>
-											)}
-										</div>
-									) : (
-										<div>
-											{!secondary_image && (
-												<img
-													id="expandedImg"
-													alt={name}
-													title={name}
-													className="details-image-img"
-													src={image}
-													style={{
-														maxWidth: '400px',
-														maxHeight: '400px',
-														height: '100%',
-														width: '100%'
-													}}
-												/>
-											)}
-											{secondary_image && (
-												<div className="double-image-vertical">
-													<img
-														id="expandedImg"
-														alt={name}
-														title={name}
-														className="details-image-img-top"
-														src={image}
-													/>
-													<img
-														id="expandedSecondaryImg"
-														alt={name}
-														title={name}
-														className="details-image-img-bottom"
-														src={secondary_image}
-													/>
-												</div>
-											)}
-										</div>
-									)} */}
+
 									<div style={{ display: width < 819 ? 'none' : 'block' }}>
 										<Slideshow
 											product={product}
