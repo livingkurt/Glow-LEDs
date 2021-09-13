@@ -41,6 +41,8 @@ export { default as LabelCreatorPage } from './AdminPages/LabelCreatorPage';
 export { default as AdminChangePasswordPage } from './AdminPages/AdminChangePasswordPage';
 export { default as MonthlyExpensesPage } from './AdminPages/MonthlyExpensesPage';
 export { default as MonthExpensesPage } from './AdminPages/MonthExpensesPage';
+export { default as PalettesPage } from './AdminPages/PalettesPage';
+export { default as EditPalettePage } from './AdminPages/EditPalettePage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';
@@ -94,3 +96,4 @@ export { default as AllTeamsPage } from './PublicPages/AllTeamsPage';
 export { default as TeamPage } from './PublicPages/TeamPage';
 export { default as ManualPage } from './PublicPages/ManualPage';
 export { default as SubmitFeaturePage } from './PublicPages/SubmitFeaturePage';
+export { default as ColorPalettePage } from './PublicPages/ColorPalettePage';

@@ -808,6 +808,11 @@ const Sidebar = (props) => {
 									Settings
 								</button>
 							</Link>
+							<Link to="/secure/glow/palettes">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Palettes
+								</button>
+							</Link>
 							<Link to="/secure/glow/edit_all_data">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Edit All Data

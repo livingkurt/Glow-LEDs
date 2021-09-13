@@ -91,7 +91,10 @@ import {
 	LabelCreatorPage,
 	AdminChangePasswordPage,
 	MonthlyExpensesPage,
-	MonthExpensesPage
+	MonthExpensesPage,
+	ColorPalettePage,
+	EditPalettePage,
+	PalettesPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -323,6 +326,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/categorys" component={CategorysPage} />
 							<AdminRoute path="/secure/glow/surveys" component={SurveysPage} />
 							<AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
+							<AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
 							<AdminRoute path="/secure/glow/userorders/:id" component={UserOrdersPage} />
 							<AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
@@ -332,6 +336,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/editcategory/:id?" component={EditCategoryPage} />
 							<AdminRoute path="/secure/glow/editsurvey/:id?" component={EditSurveyPage} />
 							<AdminRoute path="/secure/glow/editparcel/:id?" component={EditParcelPage} />
+							<AdminRoute path="/secure/glow/editpalette/:id?" component={EditPalettePage} />
 
 							<AdminRoute path="/secure/glow/change_password/:id" component={AdminChangePasswordPage} />
 							<AdminRoute
@@ -494,6 +499,7 @@ const App = (props) => {
 							<Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
 							<Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
 							<Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
+							<Route path="/pages/color_palettes" exact={true} component={ColorPalettePage} />
 
 							<Route component={Four04Page} />
 						</Switch>

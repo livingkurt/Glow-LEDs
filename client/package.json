@@ -30,6 +30,7 @@
     "react-awesome-slider": "^4.1.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-chartjs-2": "^3.0.4",
+    "react-color-palette": "^6.1.0",
     "react-csv-reader": "^3.3.0",
     "react-dom": "^17.0.2",
     "react-headroom": "^3.1.1",

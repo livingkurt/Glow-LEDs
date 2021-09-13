@@ -20,3 +20,4 @@ export { default as survey_controller } from './survey_controller';
 export { default as parcel_controller } from './parcel_controller';
 export { default as category_controller } from './category_controller';
 export { default as setting_controller } from './setting_controller';
+export { default as palette_controller } from './palette_controller';

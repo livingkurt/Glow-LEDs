@@ -102,6 +102,12 @@ import {
 	parcelSaveReducer
 } from './reducers/parcelReducers';
 import {
+	paletteDeleteReducer,
+	paletteDetailsReducer,
+	paletteListReducer,
+	paletteSaveReducer
+} from './reducers/paletteReducers';
+import {
 	surveyDeleteReducer,
 	surveyDetailsReducer,
 	surveyListReducer,
@@ -246,7 +252,11 @@ const reducer = combineReducers({
 	parcelList: parcelListReducer,
 	parcelDetails: parcelDetailsReducer,
 	parcelSave: parcelSaveReducer,
-	parcelDelete: parcelDeleteReducer
+	parcelDelete: parcelDeleteReducer,
+	paletteList: paletteListReducer,
+	paletteDetails: paletteDetailsReducer,
+	paletteSave: paletteSaveReducer,
+	paletteDelete: paletteDeleteReducer
 });
 
 declare global {

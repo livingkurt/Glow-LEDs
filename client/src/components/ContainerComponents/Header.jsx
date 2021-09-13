@@ -623,6 +623,11 @@ const Header = (props) => {
 														Track Your Order
 													</button>
 												</Link>
+												{/* <Link to="/pages/color_palettes">
+													<button className="btn nav w-100per ta-l title_font jc-b">
+														Color Palettes
+													</button>
+												</Link> */}
 												<Link to="/pages/about">
 													<button className="btn nav w-100per ta-l title_font jc-b">
 														About
@@ -841,6 +846,9 @@ const Header = (props) => {
 										</Link>
 										<Link to="/secure/glow/settings">
 											<button className="btn nav">Settings</button>
+										</Link>
+										<Link to="/secure/glow/palettes">
+											<button className="btn nav">Palettes</button>
 										</Link>
 										<Link to="/secure/glow/edit_all_data">
 											<button className="btn nav">Edit All Data</button>
