@@ -139,19 +139,20 @@ const CarouselItem = (props) => {
 															)}:
 														</label>
 														<div className="ai-c wrap jc-c">
-															{product.option_products.map((option, index) => (
-																<button
-																	key={index}
-																	id={option.name}
-																	value={JSON.stringify(option)}
-																	onClick={(e) => update_option(e)}
-																	className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
-																		? 'secondary'
-																		: 'primary'}`}
-																>
-																	{option.size || option.name}
-																</button>
-															))}
+															{product.option_products &&
+																product.option_products.map((option, index) => (
+																	<button
+																		key={index}
+																		id={option.name}
+																		value={JSON.stringify(option)}
+																		onClick={(e) => update_option(e)}
+																		className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
+																			? 'secondary'
+																			: 'primary'}`}
+																	>
+																		{option.size || option.name}
+																	</button>
+																))}
 														</div>
 
 														<div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
