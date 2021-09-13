@@ -465,7 +465,7 @@ const ProductPage = (props) => {
 					</div>
 					{userInfo &&
 					userInfo.isAdmin && (
-						<Link to={'/secure/glow/editproduct/' + props.match.params.pathname}>
+						<Link to={'/secure/glow/editproduct/' + props.match.params.pathname + '/false'}>
 							<button className="btn secondary" style={{ width: '156px' }}>
 								Edit Product
 							</button>
