@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../../actions/productActions';
 import {
@@ -68,6 +68,9 @@ const ProductPage = (props) => {
 	const [ secondary_color_code, set_secondary_color_code ] = useState('');
 
 	const [ color_product, set_color_product ] = useState(null);
+	const [ color_product_object, set_color_product_object ] = useState({});
+	const [ secondary_color_product_object, set_secondary_color_product_object ] = useState({});
+	const [ option_product_object, set_option_product_object ] = useState({});
 	const [ secondary_color_product, set_secondary_color_product ] = useState(null);
 	const [ option_product, set_option_product ] = useState(null);
 	const [ secondary_product, set_secondary_product ] = useState(null);
@@ -75,10 +78,6 @@ const ProductPage = (props) => {
 	const [ secondary_product_name, set_secondary_product_name ] = useState('');
 	const [ option_product_name, set_option_product_name ] = useState('');
 
-	const [ color_product_object, set_color_product_object ] = useState({});
-	const [ secondary_color_product_object, set_secondary_color_product_object ] = useState({});
-	const [ option_product_object, set_option_product_object ] = useState({});
-	const [ secondary_product_object, set_secondary_product_object ] = useState({});
 	// const [ color_group_name, set_color_group_name ] = useState('');
 	// const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
 	// const [ option_group_name, set_option_group_name ] = useState('');
@@ -89,8 +88,6 @@ const ProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 
 	const { width, height } = useWindowDimensions();
-
-	const history = useHistory();
 
 	const dispatch = useDispatch();
 
@@ -116,39 +113,83 @@ const ProductPage = (props) => {
 		},
 		[ props.match.params.pathname ]
 	);
+	// let query = useQuery();
 
 	const update_universal_state = (item) => {
-		console.log({ item });
-		if (item) {
-			set_image(item.images && item.images[0]);
-			set_images(item.images);
-
-			if (item.price > 0) {
-				set_price(item.price);
-			}
-			if (item.previous_price > 0) {
-				set_previous_price(item.previous_price);
-			}
-			if (item.sale_price > 0) {
-				set_sale_price(item.sale_price);
-			}
-			set_count_in_stock(item.countInStock);
-			set_name(item.name);
-			set_description(item.description);
-			set_facts(item.facts);
-			set_color(item.color);
-			set_secondary_color(item.secondary_color);
-			set_included_items(item.included_items);
-			set_dimensions({
-				weight_pounds: item.weight_pounds,
-				weight_ounces: item.weight_ounces,
-				package_length: item.package_length,
-				package_width: item.package_width,
-				package_height: item.package_height,
-				package_volume: item.package_volume
-			});
-			set_size(item.size);
+		set_image(item.images && item.images[0]);
+		set_images(item.images);
+		if (item.previous_price > 0) {
+			set_previous_price(item.previous_price);
 		}
+		update_price_state(item);
+		set_count_in_stock(item.countInStock);
+		set_name(item.name);
+		set_size(item.size);
+		set_description(item.description);
+		set_facts(item.facts);
+		set_color(item.color);
+		set_secondary_color(item.secondary_color);
+		set_included_items(item.included_items);
+		update_dimensions(item);
+	};
+
+	const update_dimensions = (item) => {
+		set_dimensions({
+			weight_pounds: item.weight_pounds,
+			weight_ounces: item.weight_ounces,
+			package_length: item.package_length,
+			package_width: item.package_width,
+			package_height: item.package_height,
+			package_volume: item.package_volume
+		});
+	};
+
+	const update_color_product_state = (color) => {
+		set_color_product(color._id);
+		set_color(color.color);
+		set_color_code(color.color_code);
+		set_color_product_object(color);
+	};
+
+	const update_secondary_color_product_state = (secondary_color) => {
+		set_secondary_color_product(secondary_color._id);
+		set_secondary_color(secondary_color.color);
+		set_secondary_color_code(secondary_color.color_code);
+		set_secondary_color_product_object(secondary_color);
+	};
+
+	const update_option_product_state = (option) => {
+		// set_product_state(option);
+		set_option_product(option._id);
+		set_option_product_name(option.name);
+		set_option_product_object(option);
+	};
+
+	const update_secondary_product_state = (option) => {
+		set_secondary_product(option._id);
+		set_secondary_product_name(option.name);
+	};
+
+	const update_images_state = (images) => {
+		if (images.length > 0) {
+			set_image(images && images[0]);
+			set_images(images);
+		}
+	};
+	const update_price_state = (item) => {
+		if (item.price !== 0 || item.price === null || item.price === undefined) {
+			set_price(item.price);
+		}
+		if (item.sale_price !== 0 || item.sale_price === null || item.sale_price === undefined) {
+			set_sale_price(item.sale_price);
+		}
+		// if (
+		// 	(item.previous_price && item.previous_price !== 0) ||
+		// 	item.previous_price === null ||
+		// 	item.previous_price === undefined
+		// ) {
+		// 	set_previous_price(item.previous_price);
+		// }
 	};
 
 	useEffect(
@@ -156,53 +197,60 @@ const ProductPage = (props) => {
 			if (product) {
 				update_universal_state(product);
 				const query = getUrlParameter();
-				console.log({ query });
 
-				let temp_color = '';
-				let temp_secondary_color = '';
-				let temp_option = '';
-				let temp_secondary = '';
-				if (props.location.search.length === 0) {
-					console.log({ message: 'Query Does Not Exist' });
+				if (!query) {
+					let first_color = '';
 					if (product.color_products) {
 						const color = product.color_products.find((color) => color.default_option === true);
-						console.log({ color });
 						if (color) {
 							update_color_product_state(color);
-							temp_color = color.color;
-							// update_url(temp_color);
+							first_color = color.color;
+							history.push({
+								search: '?color=' + first_color
+							});
 						}
 					}
 					if (product.secondary_color_products) {
 						const secondary_color = product.secondary_color_products.find(
 							(secondary_color) => secondary_color.default_option === true
 						);
-						console.log({ secondary_color });
 						if (secondary_color) {
 							update_secondary_color_product_state(secondary_color);
-							temp_secondary_color = secondary_color.color;
-							// update_url(temp_color, temp_secondary_color);
+							history.push({
+								search: '?color=' + first_color + '?secondary_color=' + secondary_color
+							});
 						}
 					}
 					if (product.option_products) {
 						const option = product.option_products.find((option) => option.default_option === true);
 						if (option) {
+							// update_universal_state(option);
 							update_option_product_state(option);
-							temp_option = option.size || option.name;
-							// update_url(temp_color, temp_secondary_color, temp_option);
+							history.push({
+								search:
+									'?color=' +
+									first_color +
+									'?secondary_color=' +
+									secondary_color +
+									'?option=' +
+									option.name
+							});
 						}
 					}
-					if (product.secondary_products) {
-						update_secondary_product_state(product);
-						// update_url(temp_color, temp_secondary_color, temp_option);
+				} else if (query) {
+					if (product.option_products) {
+						const option = product.option_products.find(
+							(option) => option.size === parseInt(query.option) || option.name === query.option
+						);
+						if (option) {
+							update_universal_state(option);
+							update_option_product_state(option);
+						}
 					}
-					update_url(temp_color, temp_secondary_color, temp_option, temp_secondary);
-				} else if (props.location.search.length > 0) {
-					console.log({ message: 'Query Does Exist' });
 					if (product.color_products) {
 						const color = product.color_products.find((color) => color.color === query.color);
-						console.log({ query_color: color });
 						if (color) {
+							update_images_state(color.images);
 							update_color_product_state(color);
 						}
 					}
@@ -211,35 +259,52 @@ const ProductPage = (props) => {
 							(secondary_color) => secondary_color.color === query.secondary_color
 						);
 						if (secondary_color) {
+							update_images_state(secondary_color.images);
 							update_secondary_color_product_state(secondary_color);
-						}
-					}
-					if (product.option_products) {
-						const option = product.option_products.find(
-							(option) =>
-								option.size === parseInt(query.option) ||
-								option.name === query.option.split('%20').join(' ')
-						);
-						if (option) {
-							update_option_product_state(option);
-						}
-					}
-					if (product.secondary_products) {
-						console.log({ query_secondary: query.secondary });
-						const secondary = product.secondary_products.find(
-							(secondary) => secondary.name === query.secondary.split('%20').join(' ')
-						);
-						if (secondary) {
-							update_secondary_product_state(secondary);
 						}
 					}
 				}
 			}
-			return () => {};
 		},
 		[ product ]
 	);
 
+	// const set_product_state = (product) => {
+	// 	if (product.size) {
+	// 		set_size(product.size);
+	// 	} else {
+	// 		set_size(product.name);
+	// 	}
+	// 	if (product.color) {
+	// 		set_color(product.color);
+	// 	}
+	// 	if (product.secondary_color) {
+	// 		set_secondary_color(product.secondary_color);
+	// 	}
+	// 	if (product.price > 0) {
+	// 		set_price(product.price);
+	// 	}
+	// 	if (product.sale_price > 0) {
+	// 		set_sale_price(product.sale_price);
+	// 	}
+	// 	if (product.countInStock) {
+	// 		set_count_in_stock(product.countInStock);
+	// 	}
+
+	// 	set_product_option(product);
+	// 	if (product.images > 0) {
+	// 		set_images(product.images);
+	// 		set_image(product.images && product.images[0]);
+	// 	}
+	// 	set_dimensions({
+	// 		weight_pounds: product.weight_pounds,
+	// 		weight_ounces: product.weight_ounces,
+	// 		package_length: product.package_length,
+	// 		package_width: product.package_width,
+	// 		package_height: product.package_height,
+	// 		package_volume: product.package_volume
+	// 	});
+	// };
 	function getUrlParameter(name) {
 		const search = props.location.search.split('?');
 		console.log({ search });
@@ -250,92 +315,6 @@ const ProductPage = (props) => {
 		return search_object;
 	}
 
-	const update_color_product_state = (color) => {
-		console.log({ color });
-		set_color_product(color._id);
-		set_color(color.color);
-		set_color_code(color.color_code);
-		set_color_product_object(color);
-		// update_url(color.color);
-	};
-
-	const update_secondary_color_product_state = (secondary_color) => {
-		set_secondary_color_product(secondary_color._id);
-		set_secondary_color(secondary_color.color);
-		set_secondary_color_code(secondary_color.color_code);
-		set_secondary_color_product_object(secondary_color);
-		// update_url(color, secondary_color.color);
-	};
-
-	const update_option_product_state = (option) => {
-		// set_product_state(option);
-		if (option.size) {
-			set_size(option.size);
-		} else {
-			set_size(option.name);
-		}
-		// if (option.color) {
-		// 	set_color(option.color);
-		// }
-		if (option.secondary_color) {
-			set_secondary_color(option.secondary_color);
-		}
-		if (product.price > 0) {
-			set_price(product.price);
-		}
-		if (product.sale_price > 0) {
-			set_sale_price(product.sale_price);
-		}
-		if (option.countInStock) {
-			set_count_in_stock(option.countInStock);
-		}
-
-		set_product_option(option);
-		console.log({ images: option.images });
-		if (option.images > 0) {
-			set_images(option.images);
-			set_image(option.images && option.images[0]);
-		}
-		set_dimensions({
-			weight_pounds: option.weight_pounds,
-			weight_ounces: option.weight_ounces,
-			package_length: option.package_length,
-			package_width: option.package_width,
-			package_height: option.package_height,
-			package_volume: option.package_volume
-		});
-		set_option_product(option._id);
-		set_option_product_name(option.name);
-		set_option_product(option._id);
-		set_option_product_name(option.name);
-		set_option_product_object(option);
-		// update_url(color, secondary_color, option.size || option.name);
-	};
-
-	const update_secondary_product_state = (secondary) => {
-		set_secondary_product(secondary._id);
-		set_secondary_product_name(secondary.name);
-		set_secondary_product_object(secondary);
-		if (secondary.images > 0) {
-			set_images(secondary.images);
-			set_image(secondary.images && secondary.images[0]);
-		}
-		// update_url(color, secondary_color.color, option_product.size || option_product.name, secondary);
-	};
-	const update_url = (color = '', secondary_color = '', option = '', secondary_product = '') => {
-		history.push({
-			search:
-				'?color=' +
-				color +
-				'?secondary_color=' +
-				secondary_color +
-				'?option=' +
-				option +
-				'?secondary=' +
-				secondary_product
-		});
-	};
-
 	useEffect(
 		() => {
 			if (error) {
@@ -344,6 +323,7 @@ const ProductPage = (props) => {
 		},
 		[ error ]
 	);
+
 	useEffect(() => {
 		const recently_viewed = sessionStorage.getItem('recently_viewed');
 		const products = JSON.parse(recently_viewed);
@@ -404,47 +384,30 @@ const ProductPage = (props) => {
 		open_cart();
 		set_product_option({});
 	};
+	const history = useHistory();
 
 	const update_color = (e) => {
 		const option = JSON.parse(e.target.value);
-		console.log({ option });
-		if (option.price !== 0 || option.price === null || option.price === undefined) {
-			set_price(option.price);
-		}
-		if (option.sale_price !== 0 || option.sale_price === null || option.sale_price === undefined) {
-			set_sale_price(option.sale_price);
-		}
-		set_color(option.color);
-		set_color_code(option.color_code);
-		if (option.images && option.images[0]) {
-			set_images(option.images);
-			set_image(option.images[0]);
-		}
-		set_color_product(option._id);
-		// update_url(option.color);
-		update_url(option.color, secondary_color, size || option_product_name, secondary_product_name);
+		update_price_state(option);
+		update_images_state(option.images);
+		update_color_product_state(color);
+		history.push({
+			search: '?color=' + option.color
+		});
 	};
 
 	const update_secondary_color = (e) => {
 		const option = JSON.parse(e.target.value);
-		console.log({ option });
-		if (option.price !== 0 || option.price === null || option.price === undefined) {
-			set_price(option.price);
-		}
-		if (option.sale_price !== 0 || option.sale_price === null || option.sale_price === undefined) {
-			set_sale_price(option.sale_price);
-		}
+
+		update_price_state(option);
 		set_secondary_color(option.color);
 		set_secondary_color_code(option.color_code);
-		if (option.images && option.images[0]) {
-			// set_images(option.images);
-			// set_images((images) => [ ...images, option.images[0] ]);
-			set_secondary_image(option.images[0]);
-			set_secondary_images(option.images);
-		}
+		update_images_state(option.images);
 		set_secondary_color_product(option._id);
-		// update_url(color, option.color);
-		update_url(color, option.color, size || option_product_name, secondary_product_name);
+		set_secondary_color_product_object(option);
+		history.push({
+			search: '?color=' + color + '?secondary_color=' + option.color
+		});
 	};
 
 	const update_option = (e) => {
@@ -464,50 +427,25 @@ const ProductPage = (props) => {
 		} else {
 			set_size(option.name);
 		}
-		if (option.price > 0) {
-			set_price(option.price);
-		}
-		if (option.sale_price > 0) {
-			set_sale_price(option.sale_price);
-		}
-		if (option.description) {
-			set_description(option.description);
-		}
-		if (option.facts) {
-			set_facts(option.facts);
-		}
+
 		if (option.included_items) {
 			set_included_items(option.included_items);
 		}
-		if (option.images && option.images[0]) {
-			set_images(option.images);
-			set_image(option.images[0]);
-		}
-		set_dimensions({
-			weight_pounds: option.weight_pounds,
-			weight_ounces: option.weight_ounces,
-			package_length: option.package_length,
-			package_width: option.package_width,
-			package_height: option.package_height,
-			package_volume: option.package_volume
+		update_price_state(option);
+
+		update_images_state(option.images);
+		update_option_product_state(option);
+		update_dimensions(option);
+
+		history.push({
+			search: '?color=' + color + '?secondary_color=' + secondary_color + '?option=' + option.size || option.name
 		});
-		set_option_product_object(option);
-		set_option_product(option._id);
-		set_option_product_name(option.name);
-		// update_url(color, secondary_color, option.size || option.name);
-		update_url(color, secondary_color, option.size || option.name, secondary_product_name);
 	};
 
 	const update_secondary = (e) => {
-		const secondary = JSON.parse(e.target.value);
-		if (secondary.images && secondary.images[0]) {
-			set_images(secondary.images);
-			set_image(secondary.images[0]);
-		}
-		set_secondary_product(secondary._id);
-		set_secondary_product_name(secondary.name);
-		set_secondary_product_object(secondary);
-		update_url(color, secondary_color, size || option_product_name, secondary.name);
+		const option = JSON.parse(e.target.value);
+		update_images_state(option.images);
+		update_secondary_product_state(option);
 	};
 
 	const determine_secondary_product_name = (secondary) => {
@@ -814,7 +752,6 @@ const ProductPage = (props) => {
 											{/* {console.log({ secondary_product_name })} */}
 										</div>
 									)}
-									{console.log({ color, color_code })}
 									{size !== '1 Sled' &&
 									color && (
 										<div className="ai-c mv-20px jc-b w-100per">
@@ -928,13 +865,12 @@ const ProductPage = (props) => {
 													<select
 														className="qty_select_dropdown"
 														onChange={(e) => update_secondary(e)}
-														value={JSON.stringify(secondary_product_object)}
 													>
-														{/* <option key={1} defaultValue="">
+														<option key={1} defaultValue="">
 															---Choose{' '}
 															{product.secondary_group_name &&
 																product.secondary_group_name}---
-														</option> */}
+														</option>
 														{product.secondary_products.map((secondary, index) => (
 															<option key={index} value={JSON.stringify(secondary)}>
 																{determine_secondary_product_name(secondary.name)}
@@ -962,10 +898,10 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														className="qty_select_dropdown"
-														onChange={(e) => update_color(e)}
 														value={JSON.stringify(color_product_object)}
 														defaultValue={JSON.stringify(color_product_object)}
+														className="qty_select_dropdown"
+														onChange={(e) => update_color(e)}
 													>
 														{product.color_products.map((color, index) => (
 															<option key={index} value={JSON.stringify(color)}>
@@ -1025,10 +961,10 @@ const ProductPage = (props) => {
 												</label>
 												<div className="custom-select">
 													<select
-														className="qty_select_dropdown"
-														onChange={(e) => update_secondary_color(e)}
 														value={JSON.stringify(secondary_color_product_object)}
 														defaultValue={JSON.stringify(secondary_color_product_object)}
+														className="qty_select_dropdown"
+														onChange={(e) => update_secondary_color(e)}
 													>
 														{product.secondary_color_products.map(
 															(secondary_color, index) => (
@@ -1141,7 +1077,7 @@ const ProductPage = (props) => {
 									) : (
 										<li>
 											{count_in_stock > 0 ? (
-												<button className="btn primary" onClick={handleAddToCart}>
+												<button className="btn primary bob" onClick={handleAddToCart}>
 													Add to Cart
 												</button>
 											) : (
@@ -1235,6 +1171,8 @@ const ProductPage = (props) => {
 														)}
 														<div className="custom-select">
 															<select
+																value={JSON.stringify(color_product_object)}
+																defaultValue={JSON.stringify(color_product_object)}
 																className="qty_select_dropdown"
 																onChange={(e) => update_color(e)}
 															>
@@ -1272,6 +1210,10 @@ const ProductPage = (props) => {
 														)}
 														<div className="custom-select">
 															<select
+																value={JSON.stringify(secondary_color_product_object)}
+																defaultValue={JSON.stringify(
+																	secondary_color_product_object
+																)}
 																className="qty_select_dropdown"
 																onChange={(e) => update_secondary_color(e)}
 															>
@@ -1292,7 +1234,7 @@ const ProductPage = (props) => {
 												</div>
 											</li>
 										)}
-										{/* {product.option_product_group &&
+										{product.option_product_group &&
 										product.option_products &&
 										product.option_products.length > 0 && (
 											<li>
@@ -1311,58 +1253,17 @@ const ProductPage = (props) => {
 															.map((option, index) => (
 																<button
 																	key={index}
-																	selected={option.default_option}
-																	id={option.name}
-																	value={JSON.stringify(option)}
-																	onClick={(e) => update_option(e)}
-																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
-																		? 'secondary'
-																		: 'primary'}`}
-																>
-																	{option.size || option.name}
-																</button>
-															))}
-													</div>
-												</div>
-											</li>
-										)} */}
-										{product.option_product_group &&
-										product.option_products &&
-										product.option_products.length > 0 && (
-											<li>
-												<div className="row">
-													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
-														className="select-label mr-1rem mt-1rem"
-													>
-														{product.option_group_name ? (
-															product.option_group_name
-														) : (
-															'Size'
-														)}:
-													</label>
-													<div className="ai-c wrap">
-														{product.option_products
-															// .filter((option) => !option.dropdown)
-															// .filter((option) => option.count_in_stock)
-															.map((option, index) => (
-																<button
-																	key={index}
-																	// selected={option.default_option}
-																	id={option.name}
-																	value={JSON.stringify(option)}
-																	onClick={(e) => update_option(e)}
 																	// selected={
 																	// 	JSON.stringify(option) ===
 																	// 		JSON.stringify(option_product_object) ||
 																	// 	option.default_option
 																	// }
+																	id={option.name}
+																	onClick={(e) => update_option(e)}
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
 																		'size'
 																	)
-																		? option_product_object.size === option.size ||
-																			option_product_object.name === option.name
+																		? option_product_object.size === option.size
 																			? 'secondary'
 																			: 'primary'
 																		: option.default_option
@@ -1385,18 +1286,28 @@ const ProductPage = (props) => {
 												<div className="ai-c">
 													<h3 className="mv-0px mr-5px w-7rem">Parts: </h3>
 													<div className="ai-c wrap">
+														{console.log({ option_product_object })}
 														{product.option_products
 															.filter((option) => option.price === 2.99)
 															.map((option, index) => (
 																<button
 																	key={index}
-																	selected={option.default_option}
+																	// selected={
+																	// 	JSON.stringify(option) ===
+																	// 		JSON.stringify(option_product_object) ||
+																	// 	option.default_option
+																	// }
 																	id={option.name}
-																	value={JSON.stringify(option)}
 																	onClick={(e) => update_option(e)}
-																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
-																		? 'secondary'
-																		: 'primary'}`}
+																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
+																		'size'
+																	)
+																		? option_product_object.size === option.size
+																			? 'secondary'
+																			: 'primary'
+																		: option.default_option
+																			? 'secondary'
+																			: 'primary'}`}
 																>
 																	{option.size || option.name}
 																</button>

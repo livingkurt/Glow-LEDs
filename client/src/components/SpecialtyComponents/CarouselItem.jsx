@@ -85,7 +85,7 @@ const CarouselItem = (props) => {
 					<div class="tooltip">
 						<span class="tooltiptext">
 							<li>
-								{props.product.countInStock > 0 && props.add_to_cart ? (
+								{product.countInStock > 0 && props.add_to_cart ? (
 									<button onClick={handleAddToCart} className="btn primary">
 										Quick Add to Cart
 									</button>
@@ -124,7 +124,7 @@ const CarouselItem = (props) => {
 									</label>
 								) : (
 									<label className="product-price">
-										{sale_price_product_option_switch(props.product, props.product.product_options)}
+										{sale_price_product_option_switch(props.product)}
 									</label>
 								)}
 
