@@ -15,7 +15,7 @@ const CartItem = (props) => {
 	const removeFromCartHandler = (product) => {
 		dispatch(removeFromCart(product));
 	};
-
+	console.log({ props_item: props.item.qty });
 	const dispatch = useDispatch();
 	return (
 		<li key={props.index} className="">
@@ -47,6 +47,7 @@ const CartItem = (props) => {
 						<div className="custom-select">
 							<select
 								defaultValue={props.item.qty}
+								value={props.item.qty}
 								className="qty_select_dropdown"
 								onChange={(e) => {
 									dispatch(

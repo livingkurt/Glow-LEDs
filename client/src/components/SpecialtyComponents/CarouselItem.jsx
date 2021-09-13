@@ -12,28 +12,32 @@ import { addToCart } from '../../actions/cartActions';
 const CarouselItem = (props) => {
 	const [ product, set_product ] = useState(props.product);
 	const [ loading, set_loading ] = useState(true);
+	const [ qty, set_qty ] = useState(1);
+	const [ size, set_size ] = useState();
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	useEffect(
 		() => {
 			set_loading(false);
+			console.log({ option: product.option_products.find((option) => option.default_option === true) });
+			// set_size(product.option_products.find((option) => option.default_option === true).size);
 			return () => {};
 		},
 		[ props.product ]
 	);
 
-	const handleAddToCart = () => {
-		console.log({ handleAddToCart: product });
+	const handleAddToCart = (e) => {
+		e.preventDefault();
+		// const value = JSON.parse(e.target.value);
+		// console.log({ handleAddToCart: value });
 		const color = product.color_products.find((color) => color.default_option === true);
 		const secondary_color = product.secondary_color_products.find(
 			(secondary_color) => secondary_color.default_option === true
 		);
 		const option = product.option_products.find((option) => option.default_option === true);
 		console.log({
-			color,
-			secondary_color,
-			option
+			qty
 		});
 		dispatch(
 			addToCart({
@@ -51,13 +55,13 @@ const CarouselItem = (props) => {
 				// secondary_product,
 				// secondary_product_name,
 				name: product.name,
-				size: option ? option.size || option.name : null,
+				size: size ? size : option ? option.size || option.name : null,
 				color: color && color.color,
 				secondary_color: secondary_color && secondary_color.secondary_color,
 				display_image: product.images[0],
 				price: product.price,
 				sale_price: product.sale_price,
-				countInStock: product.count_in_stock,
+				countInStock: product.countInStock,
 				weight_pounds: product.weight_pounds,
 				weight_ounces: product.weight_ounces,
 				package_length: product.package_length,
@@ -67,7 +71,7 @@ const CarouselItem = (props) => {
 				pathname: product.pathname,
 				category: product.category,
 				subcategory: product.subcategory,
-				qty: 1,
+				qty,
 				finite_stock: product.category
 				// // determine_default_color(color),
 				// diffuser_cap: diffuser_cap,
@@ -75,6 +79,23 @@ const CarouselItem = (props) => {
 		);
 		// open_cart();
 		// set_product_option({});
+	};
+
+	const [ show_options, set_show_options ] = useState(false);
+
+	const update_option = (e) => {
+		const option = JSON.parse(e.target.value);
+		let button = document.getElementById(e.target.id);
+		let buttons = document.querySelectorAll('.packs');
+		buttons.forEach((node) => {
+			node.classList.remove('active');
+			node.classList.remove('secondary');
+			node.classList.add('primary');
+		});
+		button.classList.add('secondary');
+		button.classList.add('active');
+
+		set_size(option.size);
 	};
 
 	return (
@@ -86,9 +107,92 @@ const CarouselItem = (props) => {
 						<span class="tooltiptext">
 							<li>
 								{product.countInStock > 0 && props.add_to_cart ? (
-									<button onClick={handleAddToCart} className="btn primary">
-										Quick Add to Cart
-									</button>
+									<div>
+										{product.subcategory !== 'batteries' ? (
+											<button onClick={handleAddToCart} className="btn primary">
+												Quick Add to Cart
+											</button>
+										) : (
+											<li>
+												{!show_options && (
+													<button
+														onClick={() => set_show_options(true)}
+														className="btn primary"
+													>
+														Quick Add to Cart
+													</button>
+												)}
+												{show_options && (
+													<div
+														className="w-250px br-20px m-auto br-20px p-10px"
+														style={{ backgroundColor: '#27272780', color: 'white' }}
+													>
+														<label
+															aria-label="sortOrder"
+															htmlFor="sortOrder"
+															className="select-label mr-1rem mt-1rem"
+														>
+															{product.option_group_name ? (
+																product.option_group_name
+															) : (
+																'Size'
+															)}:
+														</label>
+														<div className="ai-c wrap jc-c">
+															{product.option_products.map((option, index) => (
+																<button
+																	key={index}
+																	id={option.name}
+																	value={JSON.stringify(option)}
+																	onClick={(e) => update_option(e)}
+																	className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
+																		? 'secondary'
+																		: 'primary'}`}
+																>
+																	{option.size || option.name}
+																</button>
+															))}
+														</div>
+
+														<div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
+															<label
+																aria-label="sortOrder"
+																htmlFor="sortOrder"
+																className="select-label mr-1rem"
+															>
+																Qty:
+															</label>
+															<div className="custom-select">
+																<select
+																	defaultValue={qty}
+																	className="qty_select_dropdown"
+																	onChange={(e) => {
+																		set_qty(e.target.value);
+																	}}
+																>
+																	{[ ...Array(10).keys() ].map((x, index) => (
+																		<option
+																			key={index}
+																			defaultValue={parseInt(x + 1)}
+																		>
+																			{parseInt(x + 1)}
+																		</option>
+																	))}
+																</select>
+																<span className="custom-arrow" />
+															</div>
+														</div>
+														<button
+															onClick={handleAddToCart}
+															className="btn primary w-100per"
+														>
+															Add to Cart
+														</button>
+													</div>
+												)}
+											</li>
+										)}
+									</div>
 								) : (
 									<button className="button inactive">Out of Stock</button>
 								)}
