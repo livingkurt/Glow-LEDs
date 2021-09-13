@@ -109,7 +109,15 @@ const ProductPage = (props) => {
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
+		const query = getUrlParameter();
+		// if (!query.color || !query.secondary_color || !query.option || !query.secondary) {
+		// 	history.replace();
+		// }
+		// if (query.color || query.secondary_color || query.option || query.secondary) {
+		// 	history.replace();
+		// }
 	}, []);
+
 	useEffect(
 		() => {
 			dispatch(detailsProduct(props.match.params.pathname));
@@ -156,6 +164,28 @@ const ProductPage = (props) => {
 			if (product) {
 				update_universal_state(product);
 				const query = getUrlParameter();
+				// if (query.color === product.color_products.find((color) => color.default_option === true).color) {
+				// 	// history.replace();
+				// }
+				// if (
+				// 	query.secondary_color ===
+				// 	product.secondary_color_products.find((secondary_) => secondary_.default_option === true).color
+				// ) {
+				// 	// history.replace();
+				// }
+				// if (
+				// 	query.option ===
+				// 	(product.option_products.find((option) => option.default_option === true).size ||
+				// 		product.secondary_color_products.find((color) => color.default_option === true).name)
+				// ) {
+				// 	// history.replace();
+				// }
+				// if (
+				// 	query.secondary !==
+				// 	product.secondary_products.find((secondary) => secondary.name === query.secondary).name
+				// ) {
+				// 	history.replace();
+				// }
 				console.log({ query });
 
 				let temp_color = '';
@@ -169,7 +199,7 @@ const ProductPage = (props) => {
 						console.log({ color });
 						if (color) {
 							update_color_product_state(color);
-							temp_color = color.color;
+							// temp_color = color.color;
 							// update_url(temp_color);
 						}
 					}
@@ -180,7 +210,7 @@ const ProductPage = (props) => {
 						console.log({ secondary_color });
 						if (secondary_color) {
 							update_secondary_color_product_state(secondary_color);
-							temp_secondary_color = secondary_color.color;
+							// temp_secondary_color = secondary_color.color;
 							// update_url(temp_color, temp_secondary_color);
 						}
 					}
@@ -188,7 +218,7 @@ const ProductPage = (props) => {
 						const option = product.option_products.find((option) => option.default_option === true);
 						if (option) {
 							update_option_product_state(option);
-							temp_option = option.size || option.name;
+							// temp_option = option.size || option.name;
 							// update_url(temp_color, temp_secondary_color, temp_option);
 						}
 					}
@@ -196,7 +226,7 @@ const ProductPage = (props) => {
 						update_secondary_product_state(product);
 						// update_url(temp_color, temp_secondary_color, temp_option);
 					}
-					update_url(temp_color, temp_secondary_color, temp_option, temp_secondary);
+					// update_url(temp_color, temp_secondary_color, temp_option, temp_secondary);
 				} else if (props.location.search.length > 0) {
 					console.log({ message: 'Query Does Exist' });
 					if (product.color_products) {
@@ -240,7 +270,7 @@ const ProductPage = (props) => {
 		[ product ]
 	);
 
-	function getUrlParameter(name) {
+	function getUrlParameter() {
 		const search = props.location.search.split('?');
 		console.log({ search });
 		const search_object = {};
@@ -268,34 +298,26 @@ const ProductPage = (props) => {
 	};
 
 	const update_option_product_state = (option) => {
-		// set_product_state(option);
 		if (option.size) {
 			set_size(option.size);
 		} else {
 			set_size(option.name);
 		}
-		// if (option.color) {
-		// 	set_color(option.color);
-		// }
+
 		if (option.secondary_color) {
 			set_secondary_color(option.secondary_color);
 		}
-		if (product.price > 0) {
-			set_price(product.price);
+		if (option.price > 0) {
+			set_price(option.price);
 		}
-		if (product.sale_price > 0) {
-			set_sale_price(product.sale_price);
+		if (option.sale_price > 0) {
+			set_sale_price(option.sale_price);
 		}
 		if (option.countInStock) {
 			set_count_in_stock(option.countInStock);
 		}
 
 		set_product_option(option);
-		console.log({ images: option.images });
-		if (option.images > 0) {
-			set_images(option.images);
-			set_image(option.images && option.images[0]);
-		}
 		set_dimensions({
 			weight_pounds: option.weight_pounds,
 			weight_ounces: option.weight_ounces,
@@ -309,30 +331,24 @@ const ProductPage = (props) => {
 		set_option_product(option._id);
 		set_option_product_name(option.name);
 		set_option_product_object(option);
-		// update_url(color, secondary_color, option.size || option.name);
 	};
 
 	const update_secondary_product_state = (secondary) => {
+		console.log({ secondary });
 		set_secondary_product(secondary._id);
 		set_secondary_product_name(secondary.name);
 		set_secondary_product_object(secondary);
-		if (secondary.images > 0) {
+
+		if (secondary.images.length > 0) {
 			set_images(secondary.images);
 			set_image(secondary.images && secondary.images[0]);
 		}
-		// update_url(color, secondary_color.color, option_product.size || option_product.name, secondary);
 	};
 	const update_url = (color = '', secondary_color = '', option = '', secondary_product = '') => {
 		history.push({
-			search:
-				'?color=' +
-				color +
-				'?secondary_color=' +
-				secondary_color +
-				'?option=' +
-				option +
-				'?secondary=' +
-				secondary_product
+			search: `${color ? '?color=' + color : ''}${secondary_color
+				? '?secondary_color=' + secondary_color
+				: ''}${option ? '?option=' + option : ''}${secondary_product ? '?secondary=' + secondary_product : ''} `
 		});
 	};
 
@@ -422,6 +438,7 @@ const ProductPage = (props) => {
 		}
 		set_color_product(option._id);
 		// update_url(option.color);
+		set_color_product_object(option);
 		update_url(option.color, secondary_color, size || option_product_name, secondary_product_name);
 	};
 
@@ -443,6 +460,7 @@ const ProductPage = (props) => {
 			set_secondary_images(option.images);
 		}
 		set_secondary_color_product(option._id);
+		set_secondary_color_product_object(option);
 		// update_url(color, option.color);
 		update_url(color, option.color, size || option_product_name, secondary_product_name);
 	};
@@ -511,7 +529,17 @@ const ProductPage = (props) => {
 	};
 
 	const determine_secondary_product_name = (secondary) => {
-		return product.category === 'diffuser_caps' ? secondary.slice(0, -14) : secondary.split('-')[1].substring(1);
+		if (secondary) {
+			if (product.category === 'diffuser_caps') {
+				return secondary.slice(0, -14);
+			} else {
+				const array = secondary.split('-');
+				console.log({ array });
+				// if (array.length > 0) {
+				// 	array.substring(1);
+				// }
+			}
+		}
 	};
 
 	const [ canScroll, setCanScroll ] = useState(false);
@@ -905,9 +933,7 @@ const ProductPage = (props) => {
 
 										{sale_price_product_option_switch_product(price, sale_price, previous_price)}
 									</div>
-
 									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
-
 									{product.secondary_product_group &&
 									product.secondary_products &&
 									product.secondary_products.length > 0 && (
@@ -929,6 +955,7 @@ const ProductPage = (props) => {
 														className="qty_select_dropdown"
 														onChange={(e) => update_secondary(e)}
 														value={JSON.stringify(secondary_product_object)}
+														defaultValue={JSON.stringify(secondary_product_object)}
 													>
 														{/* <option key={1} defaultValue="">
 															---Choose{' '}
@@ -946,7 +973,6 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-
 									{size !== '1 Sled' &&
 									product.color_product_group &&
 									product.color_products &&
@@ -1005,7 +1031,6 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)} */}
-
 									{size !== '1 Skin' &&
 									product.secondary_color_product_group &&
 									product.secondary_color_products &&
@@ -1049,45 +1074,85 @@ const ProductPage = (props) => {
 									{product.option_product_group &&
 									product.option_products &&
 									product.option_products.length > 0 && (
-										<li>
-											<div className="row">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem mt-1rem"
-												>
-													{product.option_group_name ? product.option_group_name : 'Size'}:
-												</label>
-												<div className="ai-c wrap">
-													{product.option_products
-														// .filter((option) => !option.dropdown)
-														// .filter((option) => option.count_in_stock)
-														.map((option, index) => (
-															<button
-																key={index}
-																// selected={option.default_option}
-																id={option.name}
-																value={JSON.stringify(option)}
-																onClick={(e) => update_option(e)}
-																// selected={
-																// 	JSON.stringify(option) ===
-																// 		JSON.stringify(option_product_object) ||
-																// 	option.default_option
-																// }
-																className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-																	'size'
-																)
-																	? option_product_object.size === option.size
-																		? 'secondary'
-																		: 'primary'
-																	: option.default_option ? 'secondary' : 'primary'}`}
-															>
-																{option.size || option.name}
-															</button>
-														))}
-												</div>
-											</div>
-										</li>
+										<div>
+											{option_product_object.hasOwnProperty('size') ? (
+												<li>
+													<div className="row">
+														<label
+															aria-label="sortOrder"
+															htmlFor="sortOrder"
+															className="select-label mr-1rem mt-1rem"
+														>
+															{product.option_group_name ? (
+																product.option_group_name
+															) : (
+																'Size'
+															)}:
+														</label>
+														<div className="ai-c wrap">
+															{product.option_products.map((option, index) => (
+																<button
+																	key={index}
+																	id={option.name}
+																	value={JSON.stringify(option)}
+																	onClick={(e) => update_option(e)}
+																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
+																		'name'
+																	) || option_product_object.hasOwnProperty('name')
+																		? option_product_object.name === option.name
+																			? 'secondary'
+																			: 'primary'
+																		: option.default_option
+																			? 'secondary'
+																			: 'primary'}`}
+																>
+																	{console.log({ option })}
+																	{option.size || option.name}
+																</button>
+															))}
+														</div>
+													</div>
+												</li>
+											) : (
+												<li>
+													<div className="row">
+														<label
+															aria-label="sortOrder"
+															htmlFor="sortOrder"
+															className="select-label mr-1rem mt-1rem"
+														>
+															{product.option_group_name ? (
+																product.option_group_name
+															) : (
+																'Size'
+															)}:
+														</label>
+														<div className="ai-c wrap">
+															{product.option_products.map((option, index) => (
+																<button
+																	key={index}
+																	id={option.name}
+																	value={JSON.stringify(option)}
+																	onClick={(e) => update_option(e)}
+																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
+																		'size'
+																	)
+																		? option_product_object.size === option.size
+																			? 'secondary'
+																			: 'primary'
+																		: option.default_option
+																			? 'secondary'
+																			: 'primary'}`}
+																>
+																	{console.log({ option })}
+																	{option.size || option.name}
+																</button>
+															))}
+														</div>
+													</div>
+												</li>
+											)}
+										</div>
 									)}
 									<li>
 										<div className="ai-c h-25px mb-20px">
@@ -1201,6 +1266,8 @@ const ProductPage = (props) => {
 														<select
 															className="qty_select_dropdown"
 															onChange={(e) => update_secondary(e)}
+															value={JSON.stringify(secondary_product_object)}
+															defaultValue={JSON.stringify(secondary_product_object)}
 														>
 															<option key={1} defaultValue="">
 																Choose{' '}
@@ -1237,6 +1304,8 @@ const ProductPage = (props) => {
 															<select
 																className="qty_select_dropdown"
 																onChange={(e) => update_color(e)}
+																value={JSON.stringify(color_product_object)}
+																defaultValue={JSON.stringify(color_product_object)}
 															>
 																{product.color_products.map((color, index) => (
 																	<option key={index} value={JSON.stringify(color)}>
@@ -1274,6 +1343,10 @@ const ProductPage = (props) => {
 															<select
 																className="qty_select_dropdown"
 																onChange={(e) => update_secondary_color(e)}
+																value={JSON.stringify(secondary_color_product_object)}
+																defaultValue={JSON.stringify(
+																	secondary_color_product_object
+																)}
 															>
 																{product.secondary_color_products.map(
 																	(secondary_color, index) => (
@@ -1361,8 +1434,7 @@ const ProductPage = (props) => {
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
 																		'size'
 																	)
-																		? option_product_object.size === option.size ||
-																			option_product_object.name === option.name
+																		? option_product_object.size === option.size
 																			? 'secondary'
 																			: 'primary'
 																		: option.default_option
