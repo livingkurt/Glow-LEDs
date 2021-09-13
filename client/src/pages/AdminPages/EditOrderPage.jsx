@@ -352,6 +352,7 @@ const EditOrderPage = (props) => {
 				...new_order_items[index],
 				option_product_name: option.name,
 				option_product: option._id,
+				size: option.size,
 				display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
 			};
 		}
