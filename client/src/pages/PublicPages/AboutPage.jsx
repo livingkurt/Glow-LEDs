@@ -134,7 +134,7 @@ const AboutPage = () => {
 						light with each finger individually is so fascinating and a lot to wrap your head around. So of
 						course, my best friend and I began to learn to glove not too long after that first lightshow. We
 						spent all day every day learning, finger rolls, liquid, whips, wave tuts, flails, all in order,
-						we practiced each concept until they were perfect then moved the next concept and so on. Over
+						we practiced each concept until they were perfect then moved to the next concept and so on. Over
 						the years gloving has changed a lot, first it was finger rolls and whips, then wave tuts, and
 						now its clusters! What new thing will come next? What makes gloving so amazing is the fact that
 						you can do it anywhere, and I mean literally anywhere. Sitting on the bus, waiting at the bank,
