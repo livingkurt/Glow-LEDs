@@ -212,15 +212,15 @@ const AboutPage = () => {
 						</div>
 						<ReadMore width={700} length={200} pre={true} className="paragraph_font ">
 							Something needed to be done. Products just keep going out of stock without any new products
-							to replace them. But gloving is dying, it’s growing more than ever. So I thought to myself,
-							I need to try and do something about this. So then that next summer I bought a 3D printer,
-							and you know what the first thing I made was? Frosted Dome Diffusers! It took a little bit
-							to get right but once I got it right, the sky was the limit to what I could make, and the
-							rest is history. Glow LEDs was born the moment I needed something that didn’t exist, not
-							only me but the entire gloving community. We all needed something we just didn’t know what.
-							It really felt at the time that no one was going to give it to us. I want to the be the one.
-							I want to be the one that makes the gloving gear with the glover in mind. I want to make
-							gloving gear that people aren’t worried will sell out. Nothing sells out at Glow LEDs,
+							to replace them. But gloving is not dying, it’s growing more than ever. So I thought to
+							myself, I need to try and do something about this. So then that next summer I bought a 3D
+							printer, and you know what the first thing I made was? Frosted Dome Diffusers! It took a
+							little bit to get right but once I got it right, the sky was the limit to what I could make,
+							and the rest is history. Glow LEDs was born the moment I needed something that didn’t exist,
+							not only me but the entire gloving community. We all needed something we just didn’t know
+							what. It really felt at the time that no one was going to give it to us. I want to the be
+							the one. I want to be the one that makes the gloving gear with the glover in mind. I want to
+							make gloving gear that people aren’t worried will sell out. Nothing sells out at Glow LEDs,
 							everything is always available!
 						</ReadMore>
 					</div>
