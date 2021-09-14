@@ -3,53 +3,55 @@ import React from 'react';
 export const sale_price_product_option_switch = (product) => {
 	// console.log({ product_options });
 	const today = new Date();
-	if (product.hasOwnProperty('previous_price') && product.previous_price) {
-		return (
-			<label className="">
-				<del style={{ color: '#a03131' }}>
-					<label className="" style={{ color: 'white' }}>
-						${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
-					</label>
-				</del>{' '}
-				<i className="fas fa-arrow-right" /> ${product.price ? product.price.toFixed(2) : product.price}{' '}
-				Discounted!
-			</label>
-		);
-	} else {
-		if (
-			today >= new Date(product.sale_start_date) &&
-			today <= new Date(product.sale_end_date) &&
-			product.sale_price !== 0
-		) {
+	if (product) {
+		if (product.hasOwnProperty('previous_price') && product.previous_price) {
 			return (
 				<label className="">
 					<del style={{ color: '#a03131' }}>
 						<label className="" style={{ color: 'white' }}>
-							${product.price ? product.price.toFixed(2) : product.price}
+							${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
 						</label>
 					</del>{' '}
-					<i className="fas fa-arrow-right" /> ${product.sale_price ? (
-						product.sale_price.toFixed(2)
-					) : (
-						product.sale_price
-					)}{' '}
-					On Sale!
-				</label>
-			);
-		} else if (!product.countInStock) {
-			return (
-				<label>
-					<del style={{ color: '#a03131' }}>
-						<label style={{ color: 'white' }} className="ml-7px">
-							${product.price ? product.price.toFixed(2) : product.price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" />
-					<label className="ml-7px">Sold Out</label>
+					<i className="fas fa-arrow-right" /> ${product.price ? product.price.toFixed(2) : product.price}{' '}
+					Discounted!
 				</label>
 			);
 		} else {
-			return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+			if (
+				today >= new Date(product.sale_start_date) &&
+				today <= new Date(product.sale_end_date) &&
+				product.sale_price !== 0
+			) {
+				return (
+					<label className="">
+						<del style={{ color: '#a03131' }}>
+							<label className="" style={{ color: 'white' }}>
+								${product.price ? product.price.toFixed(2) : product.price}
+							</label>
+						</del>{' '}
+						<i className="fas fa-arrow-right" /> ${product.sale_price ? (
+							product.sale_price.toFixed(2)
+						) : (
+							product.sale_price
+						)}{' '}
+						On Sale!
+					</label>
+				);
+			} else if (!product.countInStock) {
+				return (
+					<label>
+						<del style={{ color: '#a03131' }}>
+							<label style={{ color: 'white' }} className="ml-7px">
+								${product.price ? product.price.toFixed(2) : product.price}
+							</label>
+						</del>{' '}
+						<i className="fas fa-arrow-right" />
+						<label className="ml-7px">Sold Out</label>
+					</label>
+				);
+			} else {
+				return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+			}
 		}
 	}
 };
