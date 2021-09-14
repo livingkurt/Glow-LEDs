@@ -451,6 +451,22 @@ export const determine_product_name = (item, show_qty, date) => {
 					{item.size !== 0 && ' - ' + item.size}{' '}
 				</div>
 			);
+		} else if (item.name === 'Outline + Batman Decals' || 'Batman Decals') {
+			return (
+				<div>
+					{console.log({ item: item.secondary_product_name })}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
+					{item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - ${determine_secondary_product_name(item.secondary_product_name, item.category)}`}
+				</div>
+			);
+		} else if (item.category === 'decals') {
+			return (
+				<div>
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
+				</div>
+			);
 		} else {
 			return (
 				<div>
@@ -474,6 +490,18 @@ export const determine_product_name = (item, show_qty, date) => {
 						(item.diffuser_cap && item.diffuser_cap.name)})`}{' '}
 			</div>
 		);
+	}
+};
+
+export const determine_secondary_product_name = (name, category) => {
+	// console.log({ name: name.split(' ')[0] });
+	if (name) {
+		if (category === 'diffuser_caps') {
+			return name.slice(0, -14);
+		}
+		if (category === 'decals') {
+			return name.split(' ')[0];
+		}
 	}
 };
 

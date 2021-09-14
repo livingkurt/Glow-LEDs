@@ -16,7 +16,10 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart } from '../../actions/cartActions';
 import 'react-medium-image-zoom/dist/styles.css';
-import { sale_price_product_option_switch_product } from '../../utils/react_helper_functions';
+import {
+	determine_secondary_product_name,
+	sale_price_product_option_switch_product
+} from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
@@ -477,14 +480,6 @@ const ProductPage = (props) => {
 		update_url(color, secondary_color, size || option_product_name, secondary.name);
 	};
 
-	const determine_secondary_product_name = (secondary) => {
-		if (secondary) {
-			if (product.category === 'diffuser_caps') {
-				return secondary.slice(0, -14);
-			}
-		}
-	};
-
 	const [ canScroll, setCanScroll ] = useState(false);
 
 	return (
@@ -706,7 +701,12 @@ const ProductPage = (props) => {
 													'Cap Design'
 												)}: {' '}
 											</h3>
-											<label>{determine_secondary_product_name(secondary_product_name)}</label>
+											<label>
+												{determine_secondary_product_name(
+													secondary_product_name,
+													product.category
+												)}
+											</label>
 											{/* {console.log({ secondary_product_name })} */}
 										</div>
 									)}
@@ -834,7 +834,10 @@ const ProductPage = (props) => {
 														</option> */}
 														{product.secondary_products.map((secondary, index) => (
 															<option key={index} value={JSON.stringify(secondary)}>
-																{determine_secondary_product_name(secondary.name)}
+																{determine_secondary_product_name(
+																	secondary.name,
+																	product.category
+																)}
 															</option>
 														))}
 													</select>
@@ -1100,7 +1103,6 @@ const ProductPage = (props) => {
 									style={{ display: width <= 819 ? 'block' : 'none' }}
 								>
 									<ul>
-										{/* <li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li> */}
 										<div className="row ai-c mb-1rem">
 											<h3 className="mv-0px mr-5px">Price: </h3>
 											{sale_price_product_option_switch_product(
@@ -1114,18 +1116,7 @@ const ProductPage = (props) => {
 										product.secondary_products.length > 0 && (
 											<li>
 												<div className="ai-c h-25px mb-25px">
-													{/* <label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													{product.secondary_group_name ? (
-														product.secondary_group_name
-													) : (
-														'Cap Design'
-													)}
-												</label> */}
-													<h3 className="mv-0px mr-5px">
+													<h3 className="mv-0px mr-5px w-100per">
 														{product.secondary_group_name ? (
 															product.secondary_group_name
 														) : (
@@ -1145,7 +1136,10 @@ const ProductPage = (props) => {
 															</option>
 															{product.secondary_products.map((secondary, index) => (
 																<option key={index} value={JSON.stringify(secondary)}>
-																	{secondary.name.slice(0, -14)}
+																	{determine_secondary_product_name(
+																		secondary.name,
+																		product.category
+																	)}
 																</option>
 															))}
 														</select>

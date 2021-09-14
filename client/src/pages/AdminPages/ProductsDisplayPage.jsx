@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
 import { Filter, Search, Sort } from '../../components/SpecialtyComponents/index';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { humanize } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
@@ -11,27 +11,43 @@ import { listChips } from '../../actions/chipActions';
 import { ProductItemM } from '../../components/MobileComponents';
 import { ProductItemD } from '../../components/DesktopComponents';
 
-const ProductsDisplayPage = (props) => {
+const AllProductsPage = (props) => {
 	const history = useHistory();
-	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	// const search = props.location.filter.substring(8) ? props.location.filter.substring(8) : '';
+	console.log({ location: props.location });
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ best_sellers, set_best_sellers ] = useState([]);
 	const [ essentials, set_essentials ] = useState([]);
-	const [ show_hidden, set_show_hidden ] = useState(true);
+	const [ imperfect, set_imperfect ] = useState([]);
+	const [ loading_products, set_loading_products ] = useState(false);
 	const [ alternative_products, set_alternative_products ] = useState([]);
+	const [ products, set_products ] = useState([]);
+	const [ chip, set_chip ] = useState('');
 	// console.log({ search_outside: search });
 	const [ searchKeyword, setSearchKeyword ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ filter, set_filter ] = useState('');
+	const [ filter, set_filter ] = useState(
+		props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : ''
+	);
+	console.log({ hasOwnProperty: props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : '' });
+	// const [ searchKeyword, setSearchKeyword ] = useState(
+	// 	props.location.search.substring(8) ? props.location.search.substring(8) : ''
+	// );
+	// console.log({
+	// 	location: props.location.filter && props.location.filter.length > 0 && props.location.filter.substring(8)
+	// });
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+	const collection = props.match.params.collection ? props.match.params.collection : '';
+	const promo_code = props.match.params.promo_code ? props.match.params.promo_code : '';
 
 	// console.log({ subcategory });
 	// console.log(props.match.params);
 	const productList = useSelector((state) => state.productList);
-	const { products, loading, error } = productList;
+	const { products: main_products, loading, error } = productList;
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
@@ -42,137 +58,144 @@ const ProductsDisplayPage = (props) => {
 		() => {
 			// dispatch(listProducts(''));
 			// console.log({ search: search.substring(8) });
-			dispatch(listProducts(category, subcategory, searchKeyword));
-			dispatch(listChips());
+			if (searchKeyword) {
+				history.push({
+					search: '?search=' + searchKeyword
+				});
+				dispatch(listProducts('', '', searchKeyword, '', '', '', collection));
+				dispatch(listChips());
+			}
 		},
 		[ searchKeyword ]
 	);
 	// useEffect(
 	// 	() => {
-	// 		get_occurrences();
+	// 		// dispatch(listProducts(''));
+	// 		// console.log({ search: search.substring(8) });
+	// 		if (filter) {
+	// 			history.push({
+	// 				filter: '?filter=' + filter
+	// 			});
+	// 			dispatch(listProducts('', '', searchKeyword, '', filter, '', collection));
+	// 			dispatch(listChips());
+	// 		}
 	// 	},
-	// 	[ searchKeyword ]
+	// 	[ filter ]
 	// );
+
+	useEffect(() => {
+		if (!category) {
+			dispatch(listProducts(''));
+		}
+	}, []);
+
 	useEffect(
 		() => {
-			if (category === 'best_sellers') {
-				get_occurrences();
+			if (promo_code) {
+				sessionStorage.setItem('promo_code', promo_code);
+				props.set_message(`${promo_code} Added to Checkout`);
 			}
-			if (category === 'essentials') {
-				get_occurrences();
-			} else {
-				dispatch(listProducts(category, subcategory, searchKeyword));
+		},
+		[ promo_code ]
+	);
+	useEffect(
+		() => {
+			if (main_products) {
+				if (category === 'discounted') {
+					// get_occurrences();
+				} else if (category === 'best_sellers') {
+					// get_occurrences();
+				} else if (category === 'essentials') {
+					// get_occurrences();
+				} else {
+					set_products(main_products);
+					set_loading_products(false);
+				}
 			}
+		},
+		[ main_products ]
+	);
+	useEffect(
+		() => {
+			get_occurrences();
+		},
+		[ searchKeyword ]
+	);
+	useEffect(
+		() => {
+			if (category) {
+				if (category === 'discounted') {
+					get_occurrences();
+				} else if (category === 'best_sellers') {
+					get_occurrences();
+				} else if (category === 'essentials') {
+					get_occurrences();
+				}
+				if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
+					console.log('All Products');
+					dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+				}
+			}
+
 			dispatch(listChips());
 		},
 		[ category ]
 	);
 
 	const get_occurrences = async () => {
+		set_loading_products(true);
 		const { data: occurrences } = await API_Products.get_occurrences();
 		set_product_occurrences(occurrences);
 		console.log({ occurrences });
 		if (occurrences && category === 'best_sellers') {
 			const { data } = await API_Products.get_best_sellers(occurrences);
-			console.log({ data });
-			set_best_sellers(data);
-			set_alternative_products(data);
+			// console.log({ data });
+			// set_best_sellers(data);
+			// set_alternative_products(data);
+			set_products(data);
 		} else if (occurrences && category === 'essentials') {
 			const { data } = await API_Products.get_essentials();
-			console.log({ data });
-			set_essentials(data);
-			set_alternative_products(data);
+			// console.log({ data });
+			// set_essentials(data);
+			// set_alternative_products(data);
+			set_products(data);
+		} else if (category === 'discounted') {
+			const { data } = await API_Products.get_imperfect();
+			// console.log({ data });
+			// set_imperfect(data);
+			// set_alternative_products(data);
+			set_products(data);
 		} else {
-			dispatch(listProducts(category, subcategory, searchKeyword));
 			set_best_sellers(false);
 		}
+		set_loading_products(false);
 	};
-	// console.log({ best_sellers });
-	// console.log({ products });
-
-	useEffect(
-		() => {
-			// dispatch(listProducts(''));
-			console.log(props.location);
-			// let params = new URLSearchParams(props.location);
-			// params.delete('search');
-
-			// let params = new URLSearchParams(props.location.pathmame + props.location.search);
-
-			// params.delete('searcj'); //Query string is now: 'bar=2'
-			setSearchKeyword('');
-			dispatch(listProducts(category, subcategory));
-			dispatch(listChips());
-		},
-		[ props.location.pathname ]
-	);
-
-	useEffect(
-		() => {
-			// console.log({ category });
-			// console.log({ subcategory });
-			// console.log({ searchKeyword });
-			// console.log({ search });
-			// if (
-			// 	[
-			// 		'diffuser_caps',
-			// 		'infinity_mirrors',
-			// 		'accessories',
-			// 		'diffusers',
-			// 		'diffuser_adapters',
-			// 		'glow_strings',
-			// 		'mega_diffuser_caps',
-			// 		'mini_diffuser_adapters'
-			// 	].includes(category)
-			// ) {
-			if (searchKeyword) {
-				history.push({
-					search: '?search=' + searchKeyword
-				});
-			}
-			// else if (search) {
-			// 	history.push({
-			// 		search: '?search=' + search
-			// 	});
-			// }
-
-			dispatch(listProducts(category, subcategory, searchKeyword));
-			dispatch(listChips());
-			// } else {
-
-			// 	dispatch(listProducts(''));
-			// }
-		},
-		[ category, subcategory, searchKeyword ]
-	);
-
-	useEffect(
-		() => {
-			dispatch(listProducts(category, subcategory, searchKeyword, '', sortOrder));
-			dispatch(listChips());
-		},
-		[ sortOrder ]
-	);
 
 	const submitHandler = (e) => {
 		console.log({ searchKeyword });
 		e.preventDefault();
-		// history.push(
-		// 	'/collections/all/products/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
-		// );
 		history.push({
 			search: '?search=' + searchKeyword
 		});
-		dispatch(listProducts(category, subcategory, searchKeyword, '', sortOrder));
+		// history.push({
+		// 	search: '?search=' + searchKeyword + chip && '?filter=' + chip
+		// });
+		dispatch(listProducts('', '', searchKeyword, sortOrder, '', '', collection));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, '', e.target.value));
+		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value, '', '', collection));
 	};
 	const filterHandler = (e) => {
-		set_filter(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, e.target.value));
+		const chip_selected = JSON.parse(e.target.value);
+		set_chip(chip_selected._id);
+		set_filter(chip_selected._id);
+		console.log({ chip });
+		history.push({
+			search: '?search=' + searchKeyword + '?filter=' + chip_selected.name
+		});
+		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, chip_selected._id, '', collection));
 	};
 
 	const descriptions = {
@@ -188,8 +211,6 @@ const ProductsDisplayPage = (props) => {
 			'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
 		glowskins:
 			'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
-		// infinity_mirrors:
-		// 	'Decorate your home and festival with these stunning Glowskins at Glow LEDs. Shop Addressable LED Mirrors, LED Mirrors, and Custom Glowskins. Click to Shop.'
 	};
 
 	const description_determination = () => {
@@ -202,9 +223,6 @@ const ProductsDisplayPage = (props) => {
 		if (category.toLowerCase() === 'diffuser_caps') {
 			return descriptions.diffuser_caps;
 		}
-		// if (category === 'infinity_mirrors') {
-		// 	return descriptions.infinity_mirrors;
-		// }
 		if (category === 'glowskins') {
 			return descriptions.glowskins;
 		}
@@ -214,22 +232,8 @@ const ProductsDisplayPage = (props) => {
 			return descriptions.all_products;
 		}
 	};
-	// console.log({ category });
 
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
-	// const filter_options = [
-	// 	'spectra EVOs',
-	// 	'chroma EVOs',
-	// 	'Uber Nanos',
-	// 	'Aurora Nanos',
-	// 	'QtLite 6 Mode',
-	// 	'Atoms',
-	// 	'Ions',
-	// 	'Apollos',
-	// 	'Aethers',
-	// 	'OSM 2s',
-	// 	'Micromax'
-	// ];
 
 	return (
 		<div>
@@ -243,16 +247,19 @@ const ProductsDisplayPage = (props) => {
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />
 			</Helmet>
+
 			<div className="jc-c">
 				<div className="row">
 					<h1>
-						{category === 'diffuser_caps' ? humanize('diffuser_caps') : humanize(category) || 'Products'}
+						{`${humanize(category) === 'Exo Diffusers'
+							? 'EXO Diffusers'
+							: humanize(category)} ${subcategory && humanize(subcategory)} ${collection &&
+							humanize(collection)}` || 'Products'}
 					</h1>
 					<label style={{ color: '#d2cfcf', marginTop: '10px' }}>
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
-						category === 'mega_diffuser_caps' ||
-						category === 'mini_diffuser_adapters' ||
+						category === 'exo_diffusers' ||
 						category === 'glowskins' ||
 						category === 'glow_strings' ? (
 							'™'
@@ -262,20 +269,23 @@ const ProductsDisplayPage = (props) => {
 					</label>
 				</div>
 			</div>
+
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
+			<Loading loading={loading_products} />
 			<Loading loading={loading} error={error}>
-				{best_sellers && (
+				{products && (
 					<div>
 						<div className="product_big_screen">
-							{alternative_products && (
+							{products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{products.length === 0 &&
-										alternative_products.map((product, index) => (
+									{products
+										.filter((product) => !product.option)
+										.map((product, index) => (
 											<ProductItemD
 												size="300px"
 												key={index}
@@ -288,50 +298,18 @@ const ProductsDisplayPage = (props) => {
 						</div>
 
 						<div className="product_small_screen none">
-							{products.length === 0 &&
-							alternative_products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{alternative_products.map((product, index) => (
-										<ProductItemM
-											size="300px"
-											key={index}
-											product={product}
-											product_occurrences={product_occurrences}
-										/>
-									))}
-								</ul>
-							)}
-						</div>
-					</div>
-				)}
-				{products && (
-					<div>
-						<div className="product_big_screen">
 							{products && (
 								<ul className="products" style={{ marginTop: 0 }}>
-									{products.map((product, index) => (
-										<ProductItemD
-											size="300px"
-											key={index}
-											product={product}
-											product_occurrences={product_occurrences}
-										/>
-									))}
-								</ul>
-							)}
-						</div>
-
-						<div className="product_small_screen none">
-							{products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{products.map((product, index) => (
-										<ProductItemM
-											size="300px"
-											key={index}
-											product={product}
-											product_occurrences={product_occurrences}
-										/>
-									))}
+									{products
+										.filter((product) => !product.option)
+										.map((product, index) => (
+											<ProductItemM
+												size="300px"
+												key={index}
+												product={product}
+												product_occurrences={product_occurrences}
+											/>
+										))}
 								</ul>
 							)}
 						</div>
@@ -343,4 +321,4 @@ const ProductsDisplayPage = (props) => {
 		</div>
 	);
 };
-export default ProductsDisplayPage;
+export default AllProductsPage;
