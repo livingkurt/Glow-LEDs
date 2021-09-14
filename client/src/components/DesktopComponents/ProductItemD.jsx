@@ -161,8 +161,10 @@ const ProductItemD = (props) => {
 							</div>
 						</Link>
 
-						<label style={{ fontSize: '1.3rem' }}>{props.product.brand}</label>
-						<Link to={'/collections/all/products/' + props.product.pathname}>
+						<label className="mt-5px title_font" style={{ fontSize: '1.4rem' }}>
+							{props.product.brand}
+						</label>
+						<Link to={'/collections/all/products/' + props.product.pathname} className="mv-5px">
 							<label style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</label>

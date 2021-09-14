@@ -1,11 +1,29 @@
 @font-face {
 	font-family: "phrase_font";
-	src: url("../fonts/Neou-Bold.otf");
+	src: url("../fonts/Comfortaa-Regular.ttf");
 }
+// @font-face {
+// 	font-family: "phrase_font";
+// 	src: url("../fonts/Quicksand_Book.otf");
+// }
+// @font-face {
+// 	font-family: "phrase_font";
+// 	src: url("../fonts/Neou-Bold.otf");
+// }
+
 @font-face {
 	font-family: "paragraph_font";
-	src: url("../fonts/UniNeue-Light.otf");
+	src: url("../fonts/Comfortaa-Light.ttf");
 }
+
+@font-face {
+	font-family: "title_font";
+	src: url("../fonts/Geometos-Rounded.ttf");
+}
+// @font-face {
+// 	font-family: "paragraph_font";
+// 	src: url("../fonts/UniNeue-Light.otf");
+// }
 
 @font-face {
 	font-family: "heading_font";
@@ -21,4 +39,5 @@ $phrase_font: phrase_font;
 $paragraph_font: paragraph_font;
 $heading_font: heading_font;
 $special_font: special_font;
+$title_font: title_font;
 $font_size: 1.6rem;

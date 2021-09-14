@@ -38,7 +38,7 @@
 }
 .paragraph_font {
 	font-family: $paragraph_font;
-	-webkit-text-stroke: 1px white;
+	// -webkit-text-stroke: 1px white;
 	font-size: 1.7rem;
 	line-height: 3.4rem;
 	li {
@@ -47,8 +47,9 @@
 }
 
 .title_font {
-	font-family: $paragraph_font;
-	-webkit-text-stroke: 1px white;
+	font-family: $title_font;
+	// font-size: 22px;
+	// -webkit-text-stroke: 1px white;
 }
 
 .heading_font {

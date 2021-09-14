@@ -28,18 +28,21 @@ const FAQPage = () => {
 			</Helmet>
 			<div className="inner_content">
 				<div>
-					<h1 style={{ clear: 'both', textAlign: 'center' }}>Frequently Asked Questions</h1>
+					<h1 style={{ clear: 'both', textAlign: 'center' }} className="title_font">
+						Frequently Asked Questions
+					</h1>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 className="ta-c" id="glowskins">
+						<h2 className="ta-c title_font" id="glowskins">
 							Glowskins
 						</h2>
-						<h2 className="ta-c">How do Glowskins Work?</h2>
+						<h3 className="ta-c title_font">How do Glowskins Work?</h3>
 
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
 									width="996"
 									height="560"
+									title="glowskins"
 									style={{ borderRadius: '20px' }}
 									src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 									frameborder="0"
@@ -130,7 +133,12 @@ const FAQPage = () => {
 						</ul> */}
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 style={{ clear: 'both', textAlign: 'center' }} id="using_diffuser_caps_and_adapters">
+						<h2
+							style={{ clear: 'both', textAlign: 'center' }}
+							className="title_font"
+							className="title_font"
+							id="using_diffuser_caps_and_adapters"
+						>
 							Using Diffuser Caps and Adapters
 						</h2>
 						<div className="jc-c pos-rel">
@@ -138,6 +146,7 @@ const FAQPage = () => {
 								<iframe
 									width="996"
 									height="560"
+									title="Using Diffuser Caps and Adapters"
 									style={{ borderRadius: '20px' }}
 									src="https://www.youtube.com/embed/FJbKd0ClkFM?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 									frameborder="0"
@@ -193,7 +202,11 @@ const FAQPage = () => {
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 style={{ clear: 'both', textAlign: 'center' }} id="orienting_your_diffuser_caps">
+						<h2
+							style={{ clear: 'both', textAlign: 'center' }}
+							className="title_font"
+							id="orienting_your_diffuser_caps"
+						>
 							Orienting Your Diffuser Caps
 						</h2>
 						<div className="jc-c pos-rel">
@@ -201,6 +214,7 @@ const FAQPage = () => {
 								<iframe
 									width="996"
 									height="560"
+									title="	Orienting Your Diffuser Caps"
 									style={{ borderRadius: '20px' }}
 									src="https://www.youtube.com/embed/vG4qgtrotkw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 									frameborder="0"
@@ -248,12 +262,20 @@ const FAQPage = () => {
 						</ul>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 style={{ textAlign: 'center', marginBottom: '30px' }} id="ordering_custom_products">
+						<h2
+							className="title_font"
+							style={{ textAlign: 'center', marginBottom: '30px' }}
+							id="ordering_custom_products"
+						>
 							Ordering Custom Products
 						</h2>
-						<h2 style={{ textAlign: 'center', marginBottom: 0 }} id="custom_diffuser_caps">
+						<h3
+							className="title_font"
+							style={{ textAlign: 'center', marginBottom: 0 }}
+							id="custom_diffuser_caps"
+						>
 							Custom Diffuser Caps
-						</h2>
+						</h3>
 						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
 							<li>
 								A single 100% refundable deposit of $9.99{' '}
@@ -379,7 +401,7 @@ const FAQPage = () => {
 								</span>️!
 							</li>
 						</ul>
-						{/* <h2 style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
+						{/* <h2 className="title_font"style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
 							Custom Infinity Mirrors
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
@@ -423,7 +445,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 className="ta-c" id="featured_content">
+						<h2 className="ta-c title_font" id="featured_content">
 							Featured Content
 						</h2>
 						<p className="paragraph_font">
@@ -458,7 +480,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 className="ta-c" id="diffuser_too_tight_too_loose">
+						<h2 className="ta-c title_font" id="diffuser_too_tight_too_loose">
 							Diffuser too tight or too loose?
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
@@ -493,7 +515,7 @@ const FAQPage = () => {
 					</div>
 
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 className="ta-c" id="processing_shipping">
+						<h2 className="ta-c title_font" id="processing_shipping">
 							Processing/Shipping
 						</h2>
 
@@ -577,7 +599,7 @@ const FAQPage = () => {
 								</button>
 							</div>
 						</Link>
-						<h2 className="ta-c" id="international_shipping">
+						<h2 className="ta-c title_font" id="international_shipping">
 							International Shipping
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
@@ -628,7 +650,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 					<div className="home_page_divs" style={{ margin: '10px 0' }}>
-						<h2 className="ta-c" id="returns_cancellations">
+						<h2 className="ta-c title_font" id="returns_cancellations">
 							Returns/Cancellations
 						</h2>
 						<ul className="paragraph_font" style={{ padding: '18px' }}>

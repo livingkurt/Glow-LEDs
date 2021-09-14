@@ -379,7 +379,7 @@ const Sidebar = (props) => {
 								<div className="sidebar_dropdown_nested">
 									{/* <button className="sidebar-btn secondary">Collections</button> */}
 									<div className="sidebar-btn-container">
-										<Link to="/pages/menu/collections">
+										<Link to="/pages/menu/collections" className="w-100per">
 											<button className="sidebar-btn nested" onClick={closeMenu}>
 												Collections
 											</button>

@@ -133,7 +133,7 @@ const HomePage = (props) => {
 			inactive &&
 			content.home_page && (
 				<div className="home_page_divs">
-					<h4 className="fs-25px mt-8px ta-c">{content.home_page.h1}</h4>
+					<h4 className="fs-25px mt-8px ta-c title_font">{content.home_page.h1}</h4>
 					{content.home_page.show_image &&
 					content.home_page.images && (
 						<div className="m-auto jc-c max-w-600px">
@@ -183,7 +183,7 @@ const HomePage = (props) => {
 					)}
 
 					<div className="jc-c">
-						<h4 className="fs-18px mb-0px ta-c">{content.home_page.h2}</h4>
+						<h4 className="fs-18px mb-0px ta-c title_font">{content.home_page.h2}</h4>
 					</div>
 					<div className="max-w-800px jc-c w-100per m-auto">
 						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
@@ -217,7 +217,7 @@ const HomePage = (props) => {
 					return (
 						<div className="home_page_divs max-h-66rem" style={{ backgroundColor: card.color }} key={index}>
 							<div className="jc-c">
-								<h2 className="ta-c">{card.name}</h2>
+								<h4 className="ta-c fs-25px title_font mt-0px">{card.name}</h4>
 							</div>
 							<div className="row">
 								<div className="iframe-container-big">

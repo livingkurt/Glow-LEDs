@@ -218,8 +218,12 @@ const CarouselItem = (props) => {
 								src={product.images && product.images[0]} 
 							/> */}
 
-								<label style={{ fontSize: '1.3rem' }}>{product.brand}</label>
-								<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
+								<label style={{ fontSize: '1.3rem' }} className="title_font mt-5px ">
+									{product.brand}
+								</label>
+								<label style={{ fontSize: '1.6rem' }} className="mv-5px">
+									{product.name}
+								</label>
 								{product.name === 'Custom Infinity Mirror' ? (
 									<label className="product-price">
 										$549.99 - $<i className="fas fa-arrow-up" />

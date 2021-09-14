@@ -182,8 +182,8 @@ const ProductPage = (props) => {
 							update_option_product_state(option);
 						}
 					}
-					if (product.secondary_products) {
-						update_secondary_product_state(product);
+					if (product.secondary_products && product.secondary_products.length > 0) {
+						update_secondary_product_state(product.secondary_products[0]);
 					}
 				} else if (props.location.search.length > 0) {
 					console.log({ message: 'Query Does Exist' });
@@ -801,7 +801,9 @@ const ProductPage = (props) => {
 
 										{sale_price_product_option_switch_product(price, sale_price, previous_price)}
 									</div>
-									<li>Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</li>
+									<li className="mt-1rem">
+										Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}
+									</li>
 									{product.secondary_product_group &&
 									product.secondary_products &&
 									product.secondary_products.length > 0 && (
@@ -1074,7 +1076,7 @@ const ProductPage = (props) => {
 									) : (
 										<li>
 											{count_in_stock > 0 ? (
-												<button className="btn primary" onClick={handleAddToCart}>
+												<button className="btn primary bob" onClick={handleAddToCart}>
 													Add to Cart
 												</button>
 											) : (
