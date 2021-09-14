@@ -741,7 +741,7 @@ const Header = (props) => {
 							) : (
 								<div>
 									<Link to="/account/login">
-										<button className="btn nav">Login</button>
+										<button className="btn nav title_font">Login</button>
 									</Link>
 								</div>
 							)}
