@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const sale_price_product_option_switch = (product, product_options) => {
+export const sale_price_product_option_switch = (product) => {
 	// console.log({ product_options });
 	const today = new Date();
-	if (product.previous_price) {
+	if (product.hasOwnProperty('previous_price') && product.previous_price) {
 		return (
 			<label className="">
 				<del style={{ color: '#a03131' }}>

@@ -128,7 +128,7 @@ const ProductPage = (props) => {
 			if (item.price > 0) {
 				set_price(item.price);
 			}
-			if (item.previous_price > 0) {
+			if (item.hasOwnProperty('previous_price') && item.previous_price > 0) {
 				set_previous_price(item.previous_price);
 			}
 			if (item.sale_price > 0) {
