@@ -700,7 +700,7 @@ const Header = (props) => {
 						<div className="nav_bar w-233px jc-fe">
 							{/* <Link to="/checkout/cart"> */}
 							<button
-								className={`btn nav cart_text w-105px title_font ai-c ${cartItems.length > 0
+								className={`btn nav cart_text w-110px title_font ai-c ${cartItems.length > 0
 									? 'bob box-s-d bg-primary'
 									: ''}`}
 								onClick={open_cart}

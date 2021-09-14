@@ -215,7 +215,7 @@ const HomePage = (props) => {
 			<div className="big_home_page_cards">
 				{homepage_videos.map((card, index) => {
 					return (
-						<div className="home_page_divs max-h-66rem" style={{ backgroundColor: card.color }} key={index}>
+						<div className="home_page_divs max-h-69rem" style={{ backgroundColor: card.color }} key={index}>
 							<div className="jc-c">
 								<h4 className="ta-c fs-25px title_font mt-0px">{card.name}</h4>
 							</div>
