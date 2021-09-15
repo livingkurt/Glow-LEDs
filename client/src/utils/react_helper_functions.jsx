@@ -500,7 +500,11 @@ export const determine_secondary_product_name = (name, category) => {
 			return name.slice(0, -14);
 		}
 		if (category === 'decals') {
-			return name.split(' ')[0];
+			if (name.split(' ')[1] === 'V2') {
+				return name.split(' ')[0] + ' V2';
+			} else {
+				return name.split(' ')[0];
+			}
 		}
 	}
 };
