@@ -213,7 +213,7 @@ const MenuPage = (props) => {
 		} else if (pathname === 'manuals') {
 			return [
 				{
-					category: 'glow_strings',
+					category: 'glow_strings_v2',
 					image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
 				},
 				{
