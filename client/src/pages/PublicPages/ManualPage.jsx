@@ -31,7 +31,11 @@ const ManualPage = (props) => {
 					</Link>
 				</div>
 				<div className="mb-10px">
-					<Link to={`/collections/all/products/category/${pathname}`}>
+					<Link
+						to={`/collections/all/products/category/${pathname === 'glow_strings_v2'
+							? 'glow_strings'
+							: 'pathname'}`}
+					>
 						<button class="btn secondary">View Available {toCapitalize(humanize(pathname))}</button>
 					</Link>
 				</div>
