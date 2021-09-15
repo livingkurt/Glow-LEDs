@@ -32,7 +32,8 @@ const ManualPage = (props) => {
 				</div>
 				<div className="mb-10px">
 					<Link
-						to={`/collections/all/products/category/${pathname === 'glow_strings_v2'
+						to={`/collections/all/products/category/${pathname === 'glow_strings_v2' ||
+						pathname === 'glow_strings_v2_manual'
 							? 'glow_strings'
 							: 'pathname'}`}
 					>
@@ -47,16 +48,32 @@ const ManualPage = (props) => {
 					justifyContent: 'center'
 				}}
 			>
-				{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].name}
+				{
+					manuals[
+						pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2'
+							? 'glow_strings'
+							: pathname
+					].name
+				}
 			</h2>
-			{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].manual && (
+			{manuals[
+				pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2' ? 'glow_strings' : pathname
+			].manual && (
 				<img
-					src={manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].manual}
+					src={
+						manuals[
+							pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2'
+								? 'glow_strings'
+								: pathname
+						].manual
+					}
 					alt="manual"
 					className="w-100per"
 				/>
 			)}
-			{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].manual && (
+			{manuals[
+				pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2' ? 'glow_strings' : pathname
+			].manual && (
 				<h2
 					style={{
 						textAlign: 'center',
@@ -68,7 +85,9 @@ const ManualPage = (props) => {
 				</h2>
 			)}
 			<div className="jc-c column m-0px">
-				{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].videos.map((video) => (
+				{manuals[
+					pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2' ? 'glow_strings' : pathname
+				].videos.map((video) => (
 					<div>
 						<h2
 							style={{

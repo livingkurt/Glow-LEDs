@@ -378,7 +378,7 @@ export const state_names = [
 ];
 
 export const manuals = {
-	glow_strings_v2: {
+	glow_strings: {
 		name: 'Glow Strings V2 Manual',
 		manual: '/Glow_Strings_V2_Manual.png',
 		videos: [
