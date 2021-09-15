@@ -47,10 +47,16 @@ const ManualPage = (props) => {
 					justifyContent: 'center'
 				}}
 			>
-				{manuals[pathname].name}
+				{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].name}
 			</h2>
-			{manuals[pathname].manual && <img src={manuals[pathname].manual} alt="manual" className="w-100per" />}
-			{manuals[pathname].manual && (
+			{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].manual && (
+				<img
+					src={manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].manual}
+					alt="manual"
+					className="w-100per"
+				/>
+			)}
+			{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].manual && (
 				<h2
 					style={{
 						textAlign: 'center',
@@ -62,7 +68,7 @@ const ManualPage = (props) => {
 				</h2>
 			)}
 			<div className="jc-c column m-0px">
-				{manuals[pathname].videos.map((video) => (
+				{manuals[pathname === 'glow_strings_v2_manual' ? 'glow_strings_v2' : pathname].videos.map((video) => (
 					<div>
 						<h2
 							style={{
