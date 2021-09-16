@@ -66,57 +66,6 @@ export const isAdmin = (
 	return res.status(401).send({ msg: 'Admin Token is not valid.' });
 };
 
-export const log_request = async (logs: any) => {
-	await Log.create({
-		method: logs.method,
-		path: logs.path,
-		file: `${logs.collection.toLowerCase()}_routes`,
-		status: logs.status,
-		success: logs.success,
-		ip: logs.ip,
-		outcome: `${logs.success
-			? `Successfully Completed ${logs.method} Request for`
-			: `Unsuccessfully Completed ${logs.method} Request for`} ${logs.data.length} ${logs.collection}s`
-	});
-};
-const transporter = nodemailer.createTransport({
-	service: 'gmail',
-	pool: true,
-	auth: {
-		user: process.env.EMAIL,
-		pass: process.env.PASSWORD
-	}
-});
-
-export const log_error = async (logs: any) => {
-	const data = {
-		method: logs.method,
-		path: logs.path,
-		error: logs.error,
-		status: logs.status,
-		success: logs.success,
-		file: `${logs.collection.toLowerCase()}_routes`,
-		outcome: `Error Completing ${logs.method} Request for ${logs.collection}s`
-	};
-
-	await Log.create(data);
-
-	const mailOptions = {
-		from: process.env.DISPLAY_EMAIL,
-		to: 'info.glowleds@gmail.com',
-		subject: data.outcome,
-		html: App({ body: error(data), title: `Log Error: ${data.outcome}` })
-	};
-
-	transporter.sendMail(mailOptions, (err, data) => {
-		if (err) {
-			console.log('Error Occurs', err);
-		} else {
-			console.log('Error Email Sent');
-		}
-	});
-};
-
 export const make_private_code = (length: any) => {
 	const result = [];
 	const characters = 'abcdefghijklmnopqrstuvwxyz';

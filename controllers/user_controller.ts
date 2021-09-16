@@ -1,5 +1,5 @@
 import { User } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin, getToken } from '../util';
+import { getToken } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
@@ -15,44 +15,18 @@ require('dotenv');
 // const validateLoginInput = require('../validation/login');
 // const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	email: async (req: any, res: any) => {
 		try {
 			const user = await User.findOne({ email: req.params.email }).populate('affiliate');
 			if (user) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(user);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting User' });
 		}
 	},
@@ -78,15 +52,7 @@ export default {
 							console.log({ err });
 							res.status(500).json({ message: 'Error Registering User' });
 						});
-						log_request({
-							method: 'PUT',
-							path: req.originalUrl,
-							collection: 'User',
-							data: [ user ],
-							status: 202,
-							success: true,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
+
 						// res.status(202).send({ message: 'Password Saved', data: user });
 					});
 				});
@@ -202,26 +168,11 @@ export default {
 			const users = await User.find({ deleted: false, ...category, ...searchKeyword })
 				.populate('affiliate')
 				.sort(sortOrder);
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'User',
-				data: users,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(users);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Users' });
 		}
 	},
@@ -233,38 +184,13 @@ export default {
 			// .populate('affiliate.chips')
 			// .populate('affiliate.products');
 			if (user) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(user);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting User' });
 		}
 	},
@@ -280,40 +206,15 @@ export default {
 					user = { ...req.body, password: hashed_password };
 					const newUser = await User.create(user);
 					if (newUser) {
-						log_request({
-							method: 'POST',
-							path: req.originalUrl,
-							collection: 'User',
-							data: [ newUser ],
-							status: 200,
-							success: true,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
 						return res.status(201).send({ message: 'New User Created', data: newUser });
 					} else {
-						log_request({
-							method: 'POST',
-							path: req.originalUrl,
-							collection: 'User',
-							data: [ newUser ],
-							status: 500,
-							success: false,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
 						return res.status(500).send({ message: ' Error in Creating User.' });
 					}
 				});
 			});
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
 	},
@@ -341,28 +242,9 @@ export default {
 			// .populate('affiliate.products');
 			// console.log({ user });
 			if (user) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
-
 				const updatedUser = await User.updateOne({ _id: userId }, req.body);
 				console.log({ updatedUser });
 				if (updatedUser) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'User',
-						data: [ updatedUser ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					// const updatedUser = await User.updateOne({ _id: userId }, user);
 					// console.log({ updatedUser });
 					const payload = {
@@ -394,15 +276,6 @@ export default {
 						}
 					);
 				} else {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedUser ],
-						status: 500,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(500).send({ message: ' Error in Updating User.' });
 				}
 			} else {
@@ -410,14 +283,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
 	},
@@ -427,100 +293,33 @@ export default {
 			const userId = req.params.id;
 			const user: any = await User.findById(userId);
 			if (user) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const updatedUser = await User.updateOne({ _id: userId }, req.body);
 				if (updatedUser) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'User',
-						data: [ updatedUser ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'User Updated', data: updatedUser });
 				}
 			} else {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
 	},
 	remove: async (req: any, res: any) => {
 		try {
 			const user = await User.findById(req.params.id);
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'User',
-				data: [ user ],
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			const message: any = { message: 'User Deleted' };
 			const deleted_user = await User.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_user) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ deleted_user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ deleted_user ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting User' });
 		}
 	},
@@ -528,15 +327,6 @@ export default {
 		try {
 			const user: any = await User.findOne({ _id: req.body.user_id });
 			if (!user) {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(404).send({ message: 'User Does Not Exist' });
 			} else {
 				bcrypt.genSalt(10, (err: any, salt: any) => {
@@ -548,29 +338,14 @@ export default {
 							{ ...req.body, password: hash }
 						);
 						console.log({ user_after_password_change: updated_user });
-						log_request({
-							method: 'PUT',
-							path: req.originalUrl,
-							collection: 'User',
-							data: [ user ],
-							status: 202,
-							success: true,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
+
 						res.status(202).send({ message: 'Password Saved', data: user });
 					});
 				});
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Resetting User Password' });
 		}
 	},
@@ -580,38 +355,13 @@ export default {
 			const user = await User.findOne({ email });
 			console.log({ user });
 			if (user) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(user);
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
 	},
@@ -621,15 +371,6 @@ export default {
 			console.log({ verify: userId });
 			const user: any = await User.findById(userId).populate('affiliate');
 			if (user) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				user.first_name = req.body.first_name || user.first_name;
 				user.last_name = req.body.last_name || user.last_name;
 				user.email = req.body.email || user.email;
@@ -642,15 +383,6 @@ export default {
 				user.deleted = req.body.deleted || false;
 				const updatedUser = await user.save();
 				if (updatedUser) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'User',
-						data: [ updatedUser ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					// const updatedUser = await User.updateOne({ _id: userId }, user);
 					console.log({ updatedUser });
 					res.send({
@@ -666,40 +398,15 @@ export default {
 						// token: getToken(updatedUser)
 					});
 				} else {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedUser ],
-						status: 500,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(500).send({ message: ' Error in Updating User.' });
 				}
 				// res.status(202).send({ message: 'Verified Account' });
 			} else {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ user ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Verifying User' });
 		}
 	},
@@ -707,30 +414,13 @@ export default {
 		try {
 			const user: any = await User.findOne({ _id: req.params.id }).populate('affiliate');
 			if (!user) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ user ],
-					status: 400,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(400).send({ message: "User Doesn't Exist" });
 			}
 			// Check password
 			const isMatch = await bcrypt.compare(req.body.current_password, user.password);
 			if (isMatch) {
 				// console.log({ user })
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'User',
-					data: [ isMatch ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
+
 				res.send({
 					_id: user.id,
 					first_name: user.first_name,
@@ -747,27 +437,11 @@ export default {
 					token: getToken(user)
 				});
 			} else {
-				log_error({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'User',
-					status: 500,
-					data: [ isMatch ],
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: 'Error Getting User' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'User',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting User' });
 		}
 	},

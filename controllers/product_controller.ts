@@ -1,8 +1,5 @@
 import { Product } from '../models';
-import { log_error, log_request } from '../util';
-// const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -50,26 +47,10 @@ export default {
 				.populate('categorys')
 				.populate('subcategorys');
 			// console.log({ products });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
@@ -119,26 +100,11 @@ export default {
 				.populate('categorys')
 				.populate('subcategorys');
 			// console.log({ products });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
@@ -188,26 +154,11 @@ export default {
 				.populate('categorys')
 				.populate('subcategorys');
 			// console.log({ products });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
@@ -224,38 +175,13 @@ export default {
 				.populate('subcategorys');
 
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(product);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
@@ -264,38 +190,13 @@ export default {
 			console.log({ body: req.body });
 			const newProduct = await Product.create(req.body);
 			if (newProduct) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ newProduct ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Product Created', data: newProduct });
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ newProduct ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Product' });
 		}
 	},
@@ -304,38 +205,12 @@ export default {
 			console.log({ body: req.body });
 			const newProduct = await Product.create(req.body);
 			if (newProduct) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ newProduct ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Product Created', data: newProduct });
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ newProduct ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Creating Product' });
 		}
 	},
@@ -349,52 +224,18 @@ export default {
 			const product = await Product.findById(productId);
 			console.log({ product });
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const updatedProduct = await Product.updateOne({ _id: productId }, req.body);
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 200,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log('Error in Updating Product.');
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -403,38 +244,13 @@ export default {
 			const message: any = { message: 'Product Deleted' };
 			const deleted_product = await Product.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_product) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ deleted_product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ deleted_product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Product' });
 		}
 	},
@@ -444,38 +260,13 @@ export default {
 			const products = await Product.find({ deleted: false, subcategory: 'imperfect' }).sort({ order: -1 });
 			console.log({ products });
 			if (products) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ products ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(products);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ products ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
@@ -487,8 +278,7 @@ export default {
 			// const products = await Product.find({
 			// 	deleted: false,
 			// 	...category,
-			// 	...subcategory
-			// }).sort({ _id: -1 });
+			// 	...subcategory			// }).sort({ _id: -1 });
 
 			const products = await Product.find({
 				deleted: false,
@@ -505,130 +295,51 @@ export default {
 				.populate('categorys')
 				.populate('subcategorys');
 			console.log({ products });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
 	get_all_products: async (req: any, res: any) => {
 		try {
 			const products = await Product.find({ deleted: false, hidden: false });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
 	get_shown: async (req: any, res: any) => {
 		try {
 			const products = await Product.find({ deleted: false, hidden: false });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
 	get_caps: async (req: any, res: any) => {
 		try {
 			const products = await Product.find({ deleted: false, hidden: false, category: 'diffuser_caps' });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Getting Original Caps' });
 		}
 	},
 	get_mega_caps: async (req: any, res: any) => {
 		try {
 			const products = await Product.find({ deleted: false, hidden: false, category: 'mega_diffuser_caps' });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: products,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(products);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Getting Mega Caps' });
 		}
 	},
@@ -656,38 +367,13 @@ export default {
 			const products = await Product.find({ name: { $in: names } });
 			console.log({ products });
 			if (products) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ products ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(products);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ products ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
@@ -706,38 +392,13 @@ export default {
 			const products = await Product.find({ name: { $in: names } });
 			console.log({ products });
 			if (products) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ products ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(products);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ products ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
@@ -746,38 +407,13 @@ export default {
 			const product = await Product.findOne({ pathname: req.params.pathname }).populate('chips');
 
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(product);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
@@ -818,55 +454,20 @@ export default {
 			const product = await Product.findById(productId);
 			console.log({ product });
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const updatedProduct = await Product.updateOne(
 					{ _id: productId },
 					{ ...req.body, countInStock: req.body.count_in_stock }
 				);
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 200,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log('Error in Updating Product.');
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -878,55 +479,21 @@ export default {
 			const product = await Product.findById(option._id);
 			console.log({ option: option._id, price: item_group.price });
 			if (product && option._id && item_group.price) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const updatedProduct = await Product.updateOne(
 					{ _id: option._id },
 					{ ...req.body, price: item_group.price }
 				);
 				// console.log({ updatedProduct });
 				if (updatedProduct) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 200,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log('Error in Updating Product.');
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -938,55 +505,21 @@ export default {
 			const product = await Product.findById(product_id);
 			console.log({ product });
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const updatedProduct = await Product.updateOne(
 					{ _id: product_id },
 					{ ...req.body.product, order: order }
 				);
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 200,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log('Error in Updating Product.');
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -1003,15 +536,6 @@ export default {
 			const product = await Product.findById(product_id);
 			// console.log({ product });
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log({ product });
 				// const option = product.product_options.find((option: any) => option.name === product_option.name);
 				// console.log({ option });
@@ -1026,40 +550,14 @@ export default {
 				const updatedProduct = await Product.updateOne({ _id: product_id }, { ...req.body, product_options });
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 200,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log('Error in Updating Product.');
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -1074,52 +572,18 @@ export default {
 			const product = await Product.findById(product_id);
 			console.log({ product });
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const updatedProduct = await Product.updateOne({ _id: product_id }, { ...body, pathname: pathname });
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 200,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				console.log('Error in Updating Product.');
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -1129,15 +593,6 @@ export default {
 			console.log({ pathname: req.params.pathname });
 			const product = await Product.findOne({ pathname: req.params.pathname });
 			if (product) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				product.reviews = [
 					...product.reviews,
 					{
@@ -1155,42 +610,17 @@ export default {
 				console.log({ product });
 				const updatedProduct = await product.save();
 				if (updatedProduct) {
-					log_request({
-						method: 'POST',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updatedProduct ],
-						status: 201,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					res.status(201).send({
 						data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
 						message: 'Review saved successfully.'
 					});
 				}
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ product ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Product Not Found' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Product Review' });
 		}
 	}

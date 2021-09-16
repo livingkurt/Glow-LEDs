@@ -1,7 +1,5 @@
 export {};
-import { order } from '../email_templates/pages';
-import { Affiliate, Order, User } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
+import { Order } from '../models';
 
 const scraper = require('table-scraper');
 
@@ -20,7 +18,7 @@ const dates_in_year = [
 	{ month: 12, number_of_days: 31 }
 ];
 const today = new Date();
-// Defining methods for the booksController
+
 export default {
 	get_guest_order: async (req: any, res: any) => {
 		try {
@@ -31,38 +29,13 @@ export default {
 				.populate('user');
 			console.log({ order });
 			if (order) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: order,
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(order);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: order,
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
 	},
@@ -134,15 +107,7 @@ export default {
 			const count = await Order.countDocuments();
 
 			// return response with posts, total pages, and current page
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			console.log({ orders });
 			res.json({
 				orders,
@@ -151,66 +116,29 @@ export default {
 			});
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
 	get_my_orders: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
 	},
 	get_user_orders: async (req: any, res: any) => {
 		try {
 			const orders = await Order.find({ deleted: false, user: req.params.id }).sort({ _id: -1 });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
 	},
@@ -221,38 +149,13 @@ export default {
 				.populate('orderItems.secondary_product')
 				.populate('user');
 			if (order) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: order,
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(order);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: order,
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
 	},
@@ -276,39 +179,14 @@ export default {
 				deleted: false
 			});
 			if (newOrderCreated) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ newOrderCreated ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ newOrderCreated ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Order.' });
 			}
 		} catch (error) {
 			console.log({ error });
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
 	},
@@ -319,38 +197,13 @@ export default {
 			console.log({ newOrderCreated });
 
 			if (newOrderCreated) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ newOrderCreated ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ newOrderCreated ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Order.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
 	},
@@ -359,38 +212,13 @@ export default {
 			const updated_order = req.body;
 			const updated = await Order.updateOne({ _id: req.params.id }, updated_order);
 			if (updated) {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ updated ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(updated_order);
 			} else {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Product',
-					data: [ updated ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Order not Updated.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Updating Order' });
 		}
 	},
@@ -399,38 +227,13 @@ export default {
 			const message: any = { message: 'Order Deleted' };
 			const deleted_order = await Order.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_order) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ deleted_order ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ deleted_order ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
 	},
@@ -592,14 +395,7 @@ export default {
 			res.send(orders);
 		} catch (error) {
 			console.log({ error });
-			// log_error({
-			// 	method: 'GET',
-			// 	path: req.originalUrl,
-			// 	collection: 'Product',
-			// 	error,
-			// 	status: 500,
-			// 	success: false
-			// });
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -613,26 +409,11 @@ export default {
 					$lt: new Date(<any>new Date(date).setHours(23, 59, 59))
 				}
 			});
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -652,26 +433,10 @@ export default {
 				}
 			});
 
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -684,26 +449,10 @@ export default {
 				}
 			});
 
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -716,26 +465,10 @@ export default {
 				}
 			});
 
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -748,26 +481,10 @@ export default {
 				}
 			});
 
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -781,26 +498,11 @@ export default {
 				}
 			});
 			// console.log({ orders });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -814,26 +516,11 @@ export default {
 				}
 			});
 			// console.log({ orders });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -846,26 +533,11 @@ export default {
 	// 			}
 	// 		});
 
-	// 		log_request({
-	// 			method: 'GET',
-	// 			path: req.originalUrl,
-	// 			collection: 'Product',
-	// 			data: orders,
-	// 			status: 200,
-	// 			success: true,
-	// 			ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
 	// 		});
 	// 		res.json(orders);
 	// 	} catch (error) {
 	// 		console.log({ error });
-	// 		log_error({
-	// 			method: 'GET',
-	// 			path: req.originalUrl,
-	// 			collection: 'Product',
-	// 			error,
-	// 			status: 500,
-	// 			success: false
-	// 		});
+
 	// 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	// 	}
 	// },
@@ -880,26 +552,10 @@ export default {
 			});
 			console.log({ orders });
 
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: orders,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.json(orders);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	}

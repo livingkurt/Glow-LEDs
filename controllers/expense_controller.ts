@@ -1,8 +1,5 @@
 import { Expense } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
-// const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -32,26 +29,11 @@ export default {
 			}
 
 			const expenses = await Expense.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Expense',
-				data: expenses,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(expenses);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Expense',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Expenses' });
 		}
 	},
@@ -61,38 +43,13 @@ export default {
 			console.log({ expense });
 			console.log(req.params.id);
 			if (expense) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ expense ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(expense);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ expense ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Expense Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Expense',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Expense' });
 		}
 	},
@@ -100,38 +57,13 @@ export default {
 		try {
 			const newExpense = await Expense.create(req.body);
 			if (newExpense) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ newExpense ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Expense Created', data: newExpense });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ newExpense ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Expense.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Expense',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Expense' });
 		}
 	},
@@ -318,38 +250,13 @@ export default {
 			const newExpense = await Expense.create(expense);
 			console.log({ newExpense });
 			if (newExpense) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ newExpense ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Expense Created', data: newExpense });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ newExpense ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Expense.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			// log_error({
-			// 	method: 'POST',
-			// 	path: req.originalUrl,
-			// 	collection: 'Expense',
-			// 	error,
-			// 	status: 500,
-			// 	success: false
-			// });
+
 			res.status(500).send({ error, message: 'Error Creating Expense' });
 		}
 	},
@@ -363,26 +270,11 @@ export default {
 				}
 			});
 			// console.log({ expenses });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: expenses,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.json(expenses);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -396,26 +288,11 @@ export default {
 				}
 			});
 			// console.log({ expenses });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				data: expenses,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.json(expenses);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Product',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
 	},
@@ -427,39 +304,14 @@ export default {
 			if (expense) {
 				const updatedExpense = await Expense.updateOne({ _id: expense_id }, req.body);
 				if (updatedExpense) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Expense',
-						data: [ expense ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Expense Updated', data: updatedExpense });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ expense ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Expense.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Expense',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Expense' });
 		}
 	},
@@ -468,38 +320,13 @@ export default {
 			const message: any = { message: 'Expense Deleted' };
 			const deleted_expense = await Expense.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_expense) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ deleted_expense ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Expense',
-					data: [ deleted_expense ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Expense',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Expense' });
 		}
 	},

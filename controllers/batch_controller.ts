@@ -1,9 +1,5 @@
 import { User, Expense, Product, Feature, Order, Email, Affiliate, Content, Paycheck, Parcel, Chip } from '../models';
-import { Log, Promo } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
-// const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	find_all_users: async (req: any, res: any) => {
 		try {

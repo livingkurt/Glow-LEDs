@@ -1,9 +1,7 @@
 import Affiliate from '../models/affiliate';
-import { Log, Promo } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
-// const { isAuth, isAdmin } = require('../util');
+import { Promo } from '../models';
+import { make_private_code } from '../util';
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -56,28 +54,10 @@ export default {
 				.populate('public_code')
 				.populate('private_code')
 				.populate('chips');
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				data: affiliates,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
-			// console.log({ affiliates });
+
 			res.send(affiliates);
 		} catch (error) {
 			console.log({ error });
-			console.log({ error });
-			// log_error({
-			// 	method: 'GET',
-			// 	path: req.originalUrl,
-			// 	collection: 'Affiliate',
-			// 	error,
-			// 	status: 500,
-			// 	success: false
-			// });
 			res.status(500).send({ error, message: 'Error Getting Affiliates' });
 		}
 	},
@@ -94,38 +74,13 @@ export default {
 			console.log({ affiliate });
 			console.log(req.params.pathname);
 			if (affiliate) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Affiliate',
-					data: [ affiliate ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(affiliate);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Affiliate',
-					data: [ affiliate ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Affiliate Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Affiliate' });
 		}
 	},
@@ -172,40 +127,15 @@ export default {
 					});
 					console.log({ newAffiliate });
 					if (newAffiliate) {
-						log_request({
-							method: 'POST',
-							path: req.originalUrl,
-							collection: 'Affiliate',
-							data: [ newAffiliate ],
-							status: 201,
-							success: true,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
 						return res.status(201).send({ message: 'New Affiliate Created', data: newAffiliate });
 					} else {
-						log_request({
-							method: 'POST',
-							path: req.originalUrl,
-							collection: 'Affiliate',
-							data: [ newAffiliate ],
-							status: 500,
-							success: false,
-							ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-						});
 						return res.status(500).send({ message: ' Error in Creating Affiliate.' });
 					}
 				}
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Affiliate' });
 		}
 	},
@@ -217,39 +147,14 @@ export default {
 			if (affiliate) {
 				const updatedAffiliate = await Affiliate.updateOne({ pathname: pathname }, req.body);
 				if (updatedAffiliate) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Affiliate',
-						data: [ affiliate ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Affiliate Updated', data: updatedAffiliate });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Affiliate',
-					data: [ affiliate ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Affiliate.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Affiliate' });
 		}
 	},
@@ -258,38 +163,12 @@ export default {
 			const message: any = { message: 'Affiliate Deleted' };
 			const deleted_affiliate = await Affiliate.updateOne({ pathname: req.params.pathname }, { deleted: true });
 			if (deleted_affiliate) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Affiliate',
-					data: [ deleted_affiliate ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Affiliate',
-					data: [ deleted_affiliate ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Affiliate',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Deleting Affiliate' });
 		}
 	}

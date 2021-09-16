@@ -1,8 +1,5 @@
 import { Feature } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
-// const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -34,54 +31,22 @@ export default {
 			}
 
 			const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Feature',
-				data: features,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
 			res.send(features);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Feature',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Features' });
 		}
 	},
 	get_features_by_category: async (req: any, res: any) => {
 		try {
 			const category = req.query.category ? { category: req.query.category } : {};
-
 			const features = await Feature.find({ deleted: false, ...category }).sort({ _id: -1 });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Feature',
-				data: features,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(features);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Feature',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Features' });
 		}
 	},
@@ -93,38 +58,12 @@ export default {
 			const feature = await Feature.findOne({ pathname: req.params.id });
 			console.log({ feature });
 			if (feature) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ feature ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(feature);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ feature ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Feature Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Feature',
-				error,
-				status: 500,
-				success: false
-			});
 			res.status(500).send({ error, message: 'Error Getting Feature' });
 		}
 	},
@@ -132,38 +71,13 @@ export default {
 		try {
 			const newFeature = await Feature.create(req.body);
 			if (newFeature) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ newFeature ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Feature Created', data: newFeature });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ newFeature ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Feature.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Feature',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Feature' });
 		}
 	},
@@ -175,39 +89,14 @@ export default {
 			if (feature) {
 				const updatedFeature = await Feature.updateOne({ _id: feature_id }, req.body);
 				if (updatedFeature) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Feature',
-						data: [ feature ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Feature Updated', data: updatedFeature });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ feature ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Feature.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Feature',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Feature' });
 		}
 	},
@@ -216,38 +105,13 @@ export default {
 			const message: any = { message: 'Feature Deleted' };
 			const deleted_feature = await Feature.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_feature) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ deleted_feature ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Feature',
-					data: [ deleted_feature ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Feature',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Feature' });
 		}
 	}

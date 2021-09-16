@@ -1,5 +1,5 @@
 import { Order, Parcel } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin, determine_parcel } from '../util';
+import { determine_parcel } from '../util';
 
 const easy_post_api = require('@easypost/api');
 
@@ -7,7 +7,6 @@ require('dotenv').config();
 
 // const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	all_shipping: async (req: any, res: any) => {
 		const orders = await Order.find({ deleted: false });
@@ -471,15 +470,6 @@ export default {
 			const EasyPost = new easy_post_api(process.env.EASY_POST);
 			const order = await Order.findById(req.body.order._id);
 			if (order) {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ order ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				// console.log({ tracker: req.body.label.tracker.id });
 				const tracker = await EasyPost.Tracker.retrieve(req.body.label.tracker.id);
 				// const tracker = new EasyPost.Tracker.retrieve(req.body.label.tracker.id);
@@ -492,39 +482,14 @@ export default {
 				order.shipping.shipping_label = req.body.label;
 				const updated = await Order.updateOne({ _id: req.body.order._id }, order);
 				if (updated) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Order',
-						data: [ updated ],
-						status: 201,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					res.send(updated);
 				} else {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updated ],
-						status: 404,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					res.status(404).send({ message: 'Order not Updated.' });
 				}
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Refunding Order' });
 		}
 	},
@@ -533,15 +498,6 @@ export default {
 			const EasyPost = new easy_post_api(process.env.EASY_POST);
 			const order = await Order.findById(req.body.order._id);
 			if (order) {
-				log_request({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Order',
-					data: [ order ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				const tracker = await EasyPost.Tracker.retrieve(req.body.label.tracker.id);
 				// const tracker = new EasyPost.Tracker.retrieve(req.body.label.tracker.id);
 				console.log({ tracker });
@@ -556,39 +512,14 @@ export default {
 				const updated = await Order.updateOne({ _id: req.body.order._id }, order);
 
 				if (updated) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Order',
-						data: [ updated ],
-						status: 201,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					res.send(updated);
 				} else {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Product',
-						data: [ updated ],
-						status: 404,
-						success: false,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					res.status(404).send({ message: 'Order not Updated.' });
 				}
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Order',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Return Shipment' });
 		}
 	}

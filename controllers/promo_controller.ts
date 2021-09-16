@@ -1,8 +1,5 @@
 import { Promo } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
-// const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -28,26 +25,11 @@ export default {
 			}
 
 			const promos = await Promo.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Promo',
-				data: promos,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(promos);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Promos' });
 		}
 	},
@@ -57,38 +39,13 @@ export default {
 			// console.log({ promo });
 			// console.log(req.params.id);
 			if (promo) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(promo);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Promo Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	},
@@ -101,38 +58,13 @@ export default {
 			// console.log({ promo });
 			// console.log(req.params.promo_code);
 			if (promo) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(promo);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Promo Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	},
@@ -140,38 +72,13 @@ export default {
 		try {
 			const newPromo = await Promo.create(req.body);
 			if (newPromo) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ newPromo ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Promo Created', data: newPromo });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ newPromo ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Promo.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Promo' });
 		}
 	},
@@ -183,39 +90,14 @@ export default {
 			if (promo) {
 				const updatedPromo = await Promo.updateOne({ _id: promo_id }, req.body);
 				if (updatedPromo) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Promo',
-						data: [ promo ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Promo.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	},
@@ -224,38 +106,13 @@ export default {
 			const message: any = { message: 'Promo Deleted' };
 			const deleted_promo = await Promo.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_promo) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ deleted_promo ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ deleted_promo ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Promo' });
 		}
 	},
@@ -271,39 +128,14 @@ export default {
 				const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
 
 				if (updatedPromo) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Promo',
-						data: [ promo ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Promo.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	},
@@ -318,39 +150,14 @@ export default {
 				const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
 				console.log({ updatedPromo });
 				if (updatedPromo) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Promo',
-						data: [ promo ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Promo',
-					data: [ promo ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Promo.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Promo',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	}

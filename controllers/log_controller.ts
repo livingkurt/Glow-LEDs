@@ -1,9 +1,8 @@
 export {};
 import { Log } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
+
 // const { isAuth, isAdmin } = require('../util');
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		const category = req.query.category ? { category: req.query.category } : {};

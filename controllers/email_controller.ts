@@ -1,6 +1,5 @@
 import { Email, User } from '../models';
-import { log_error, log_request, make_private_code, isAuth, isAdmin } from '../util';
-// const { isAuth, isAdmin } = require('../util');
+
 export {};
 import express from 'express';
 
@@ -26,7 +25,6 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -49,26 +47,11 @@ export default {
 			}
 
 			const emails = await Email.find({ deleted: false, ...email_type, ...searchKeyword }).sort(sortOrder);
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Email',
-				data: emails,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(emails);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Email',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Emails' });
 		}
 	},
@@ -78,38 +61,13 @@ export default {
 			console.log({ email });
 			console.log(req.params.id);
 			if (email) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ email ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(email);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ email ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Email Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Email',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Email' });
 		}
 	},
@@ -119,39 +77,14 @@ export default {
 			const newEmail = await Email.create(req.body);
 			console.log({ newEmail });
 			if (newEmail) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ newEmail ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Email Created', data: newEmail });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ newEmail ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Email.' });
 			}
 		} catch (error) {
 			console.log({ error });
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Email',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Email' });
 		}
 	},
@@ -163,39 +96,14 @@ export default {
 			if (email) {
 				const updatedEmail = await Email.updateOne({ _id: email_id }, req.body);
 				if (updatedEmail) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Email',
-						data: [ email ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Email Updated', data: updatedEmail });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ email ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Email.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Email',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Email' });
 		}
 	},
@@ -204,38 +112,13 @@ export default {
 			const message: any = { message: 'Email Deleted' };
 			const deleted_email = await Email.updateOne({ _id: req.params.id }, { deleted: true });
 			if (deleted_email) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ deleted_email ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Email',
-					data: [ deleted_email ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Email',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Email' });
 		}
 	},

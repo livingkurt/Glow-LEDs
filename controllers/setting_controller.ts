@@ -1,7 +1,5 @@
 import { Setting } from '../models';
-import { log_error, log_request } from '../util';
 
-// Defining methods for the booksController
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
@@ -29,26 +27,11 @@ export default {
 				.populate('user')
 				.populate('affiliate')
 				.populate('team');
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Setting',
-				data: settings,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(settings);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Setting',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Settings' });
 		}
 	},
@@ -60,26 +43,11 @@ export default {
 				.sort({ _id: -1 })
 				.populate('affiliate');
 			console.log({ settings });
-			log_request({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Setting',
-				data: settings,
-				status: 200,
-				success: true,
-				ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-			});
+
 			res.send(settings);
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Setting',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Your Settings' });
 		}
 	},
@@ -89,38 +57,13 @@ export default {
 			console.log({ setting });
 			console.log(req.params.id);
 			if (setting) {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ setting ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(setting);
 			} else {
-				log_request({
-					method: 'GET',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ setting ],
-					status: 404,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.status(404).send({ message: 'Setting Not Found.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'GET',
-				path: req.originalUrl,
-				collection: 'Setting',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Setting' });
 		}
 	},
@@ -129,38 +72,13 @@ export default {
 			console.log({ setting: req.body });
 			const newSetting = await Setting.create(req.body);
 			if (newSetting) {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ newSetting ],
-					status: 201,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(201).send({ message: 'New Setting Created', data: newSetting });
 			} else {
-				log_request({
-					method: 'POST',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ newSetting ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Creating Setting.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'POST',
-				path: req.originalUrl,
-				collection: 'Setting',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Creating Setting' });
 		}
 	},
@@ -172,39 +90,14 @@ export default {
 			if (setting) {
 				const updatedSetting = await Setting.updateOne({ _id: setting_id }, req.body);
 				if (updatedSetting) {
-					log_request({
-						method: 'PUT',
-						path: req.originalUrl,
-						collection: 'Setting',
-						data: [ setting ],
-						status: 200,
-						success: true,
-						ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-					});
 					return res.status(200).send({ message: 'Setting Updated', data: updatedSetting });
 				}
 			} else {
-				log_error({
-					method: 'PUT',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ setting ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				return res.status(500).send({ message: ' Error in Updating Setting.' });
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'PUT',
-				path: req.originalUrl,
-				collection: 'Setting',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Getting Setting' });
 		}
 	},
@@ -214,38 +107,13 @@ export default {
 			const deleted_setting = await Setting.updateOne({ _id: req.params.id }, { deleted: true });
 			// const deleted_setting = await Setting.deleteOne({ _id: req.params.id });
 			if (deleted_setting) {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ deleted_setting ],
-					status: 200,
-					success: true,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send(message);
 			} else {
-				log_request({
-					method: 'DELETE',
-					path: req.originalUrl,
-					collection: 'Setting',
-					data: [ deleted_setting ],
-					status: 500,
-					success: false,
-					ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress
-				});
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
 			console.log({ error });
-			log_error({
-				method: 'DELETE',
-				path: req.originalUrl,
-				collection: 'Setting',
-				error,
-				status: 500,
-				success: false
-			});
+
 			res.status(500).send({ error, message: 'Error Deleting Setting' });
 		}
 	}
