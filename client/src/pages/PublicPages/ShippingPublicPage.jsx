@@ -100,7 +100,21 @@ const ShippingPublicPage = (props) => {
 			dispatch(savePayment({ paymentMethod }));
 			props.history.push('placeorder');
 		}
-		localStorage.removeItem('shippingAddress');
+		sessionStorage.setItem(
+			'shippingAddress',
+			JSON.stringify({
+				first_name,
+				last_name,
+				email,
+				address_1,
+				address_2,
+				city,
+				state,
+				postalCode,
+				country: international ? country : 'United States',
+				international
+			})
+		);
 	};
 	setTimeout(() => {
 		set_loading(false);

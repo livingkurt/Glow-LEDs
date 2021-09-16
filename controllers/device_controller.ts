@@ -1,7 +1,6 @@
 import { Device } from '../models';
 
 const fetch = require('node-fetch');
-// const { isAuth, isAdmin } = require('../util');
 
 export default {
 	findAll: async (req: any, res: any) => {

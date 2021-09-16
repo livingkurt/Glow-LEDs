@@ -5,8 +5,6 @@ const easy_post_api = require('@easypost/api');
 
 require('dotenv').config();
 
-// const { isAuth, isAdmin } = require('../util');
-
 export default {
 	all_shipping: async (req: any, res: any) => {
 		const orders = await Order.find({ deleted: false });
@@ -41,22 +39,6 @@ export default {
 				phone: '906-284-2208',
 				email: 'info.glowleds@gmail.com'
 			});
-			const package_length = order.orderItems.reduce(
-				(a: any, c: { package_length: any }) => a + c.package_length,
-				0
-			);
-			const package_width = order.orderItems.reduce(
-				(a: any, c: { package_width: any }) => a + c.package_width,
-				0
-			);
-			const package_height = order.orderItems.reduce(
-				(a: any, c: { package_height: any }) => a + c.package_height,
-				0
-			);
-
-			const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
-
-			// const parcel_size = determine_parcel(order.orderItems);
 
 			let weight = 0;
 			order.orderItems.forEach((item: any, index: number) => {
@@ -66,13 +48,6 @@ export default {
 					weight += item.weight_ounces;
 				}
 			});
-
-			// const parcel = new EasyPost.Parcel({
-			// 	length: cube_root_volume,
-			// 	width: cube_root_volume,
-			// 	height: cube_root_volume,
-			// 	weight
-			// });
 			const parcels = await Parcel.find({ deleted: false });
 			const parcel_size = determine_parcel(order.orderItems, parcels);
 			const parcel = new EasyPost.Parcel({
@@ -185,7 +160,6 @@ export default {
 			const to_shipping = req.body.data.to_shipping;
 			const from_shipping = req.body.data.from_shipping;
 			const package_dimensions = req.body.data.package_dimensions;
-			// console.log({ data: req.body.data });
 			const toAddress = new EasyPost.Address({
 				name: to_shipping.company ? '' : to_shipping.first_name + ' ' + to_shipping.last_name,
 				street1: to_shipping.address_1,
@@ -217,7 +191,6 @@ export default {
 			} else {
 				weight += parseInt(package_dimensions.weight_ounces);
 			}
-			console.log({ weight });
 
 			const parcel = new EasyPost.Parcel({
 				length: package_dimensions.package_length,
@@ -265,27 +238,6 @@ export default {
 				country: order.shipping.country
 			});
 
-			// const cube_root_volume = Math.cbrt(
-			// 	order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
-			// 		order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
-			// 		order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
-			// );
-			const package_length = order.orderItems.reduce(
-				(a: any, c: { package_length: any }) => a + c.package_length,
-				0
-			);
-			const package_width = order.orderItems.reduce(
-				(a: any, c: { package_width: any }) => a + c.package_width,
-				0
-			);
-			const package_height = order.orderItems.reduce(
-				(a: any, c: { package_height: any }) => a + c.package_height,
-				0
-			);
-
-			const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
-
-			// const parcel_size = determine_parcel(order.orderItems);
 			let weight = 0;
 			order.orderItems.forEach((item: any, index: number) => {
 				if (item.weight_pounds) {
@@ -294,12 +246,6 @@ export default {
 					weight += item.weight_ounces;
 				}
 			});
-			// const parcel = new EasyPost.Parcel({
-			// 	length: cube_root_volume,
-			// 	width: cube_root_volume,
-			// 	height: cube_root_volume,
-			// 	weight
-			// });
 			const parcels = await Parcel.find({ deleted: false });
 			const parcel_size = determine_parcel(order.orderItems, parcels);
 			const parcel = new EasyPost.Parcel({
@@ -339,10 +285,8 @@ export default {
 				customsInfo: order.shipping.international ? customsInfo : {}
 			});
 			const saved_shipment = await shipment.save();
-			// console.log({ saved_shipment });
 			const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
 			const label = await created_shipment.buy(created_shipment.lowestRate(), 0);
-			// console.log({ label });
 			res.send(label);
 		} catch (err) {
 			console.log(err);
@@ -373,11 +317,6 @@ export default {
 				phone: '906-284-2208',
 				email: 'info.glowleds@gmail.com'
 			});
-			// const cube_root_volume = Math.cbrt(
-			// 	order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0) *
-			// 		order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0) *
-			// 		order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0)
-			// );
 			const package_length = order.orderItems.reduce(
 				(a: any, c: { package_length: any }) => a + c.package_length,
 				0
@@ -448,7 +387,14 @@ export default {
 				customsInfo: order.shipping.international ? customsInfo : {}
 			});
 			const saved_shipment = await shipment.save();
-			res.send({ shipment: saved_shipment, parcel: parcel_size });
+			if (saved_shipment.rates.length > 0) {
+				res.send({ shipment: saved_shipment, parcel: parcel_size });
+			} else {
+				res.send({
+					message: 'Shipping Failed',
+					solution: 'Please double check your shipping address for incorrect formatting'
+				});
+			}
 		} catch (err) {
 			console.log(err);
 			res.send({ shipment: {}, parcel: {}, error: err });

@@ -241,15 +241,15 @@ export const validate_shipping = (data: {
 	if (isEmpty2(data.state)) {
 		errors.state = 'State field is required';
 	}
-	// Postal Code checks
-	if (isEmpty2(data.postalCode)) {
-		errors.postalCode = 'Postal Code field is required';
-	}
-	if (!data.international) {
-		if (data.postalCode.toString().length < 5 || data.postalCode.toString().length > 5) {
-			errors.postalCode = 'Postal Code must a valid Postal Code';
-		}
-	}
+	// // Postal Code checks
+	// if (isEmpty2(data.postalCode)) {
+	// 	errors.postalCode = 'Postal Code field is required';
+	// }
+	// if (!data.international) {
+	// 	if (data.postalCode.toString().length < 5 || data.postalCode.toString().length > 5) {
+	// 		errors.postalCode = 'Postal Code must a valid Postal Code';
+	// 	}
+	// }
 
 	// // International checks
 	// if (isEmpty2(data.international)) {

@@ -52,10 +52,8 @@ export const createPayOrder = (
 		user_data: object;
 		order_note: string;
 		promo_code: string;
-		// product: string;
 	},
 	paymentMethod: any
-	// token: any
 ) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
@@ -63,27 +61,35 @@ export const createPayOrder = (
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
-		const { data: { data: newOrder } } = await axios.post('/api/orders/secure', order, {
+		const order_create_res = await axios.post('/api/orders/secure', order, {
 			headers: {
 				Authorization: ' Bearer ' + user_data.token
 			}
 		});
-
-		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-
-		const { data } = await axios.put(
-			'/api/payments/secure/pay/' + newOrder._id,
-			{ paymentMethod },
-			{
-				headers: { Authorization: 'Bearer ' + user_data.token }
+		console.log({ order_create_res });
+		if (order_create_res.data.data) {
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_create_res.data.data });
+			const payment_res = await axios.put(
+				'/api/payments/secure/pay/' + order_create_res.data.data._id,
+				{ paymentMethod },
+				{
+					headers: { Authorization: 'Bearer ' + user_data.token }
+				}
+			);
+			console.log({ payment_res });
+			if (payment_res.data) {
+				dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_res.data });
+				sessionStorage.removeItem('shippingAddress');
+				dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+			} else {
+				dispatch({ type: ORDER_CREATE_FAIL, payload: payment_res });
 			}
-		);
-		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-		localStorage.removeItem('shippingAddress');
-		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		} else {
+			dispatch({ type: ORDER_CREATE_FAIL, payload: order_create_res });
+		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
 	}
 };
 
@@ -107,9 +113,7 @@ export const createPayOrderGuest = (
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		console.log({ 'Create Account': create_account });
 		if (create_account) {
-			console.log('Create Account');
 			dispatch({
 				type: USER_REGISTER_REQUEST,
 				payload: {
@@ -119,65 +123,69 @@ export const createPayOrderGuest = (
 					password: password
 				}
 			});
-			const { data } = await axios.post('/api/users/register', {
+			const create_account_res = await axios.post('/api/users/register', {
 				first_name: order.shipping.first_name,
 				last_name: order.shipping.last_name,
 				email: order.shipping.email,
 				password: password
 			});
-			console.log(data);
-			// console.log(data.data);
-			dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-			axios.post('/api/emails/verified', data);
-			dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-			const { data: { newOrder } } = await axios.post('/api/orders/guest', {
-				...order,
-				user: data._id
-			});
-			console.log({ newOrder });
-
-			dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-
-			const paid = await axios.put('/api/payments/guest/pay/' + newOrder._id, { paymentMethod });
-			console.log({ paid });
-			dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
-			localStorage.removeItem('shippingAddress');
-			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
-		} else {
-			// console.log({ REACT_APP_TEMP_PASS: process.env.REACT_APP_TEMP_PASS });
-			// dispatch({ type: USER_SAVE_REQUEST, payload: user });
-			// const { userLogin: { userInfo } } = getState();
-			// console.log('hello');
-			try {
-				const { data: user_data } = await axios.get('/api/users/email/' + order.shipping.email);
-				console.log({ user_data });
-				if (user_data) {
-					// dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-					dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-					// const { data: { newOrder } } = await axios.post('/api/orders/guest', order);
-					// console.log({ user: data.data._id });
-					// console.log({ data: data._id });
-					const { data: { newOrder } } = await axios.post('/api/orders/guest', {
-						...order,
-						user: user_data._id
-					});
-					console.log({ newOrder });
-
-					dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-
-					const paid = await axios.put('/api/payments/guest/pay/' + newOrder._id, {
-						paymentMethod
-					});
-					console.log({ paid });
-					dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
-					localStorage.removeItem('shippingAddress');
-					dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+			if (create_account_res.data) {
+				dispatch({ type: USER_REGISTER_SUCCESS, payload: create_account_res.data });
+				axios.post('/api/emails/verified', create_account_res.data);
+				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+				const create_guest_order_res = await axios.post('/api/orders/guest', {
+					...order,
+					user: create_account_res.data._id
+				});
+				if (create_guest_order_res.data) {
+					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
+					const guest_payment_res = await axios.put(
+						'/api/payments/guest/pay/' + create_guest_order_res.data._id,
+						{
+							paymentMethod
+						}
+					);
+					if (guest_payment_res.data) {
+						dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+						sessionStorage.removeItem('shippingAddress');
+						dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+					}
+					dispatch({ type: ORDER_CREATE_FAIL, payload: guest_payment_res });
 				}
-			} catch (error) {
-				console.log({ error });
+				dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+			} else {
+				dispatch({ type: ORDER_CREATE_FAIL, payload: create_account_res });
+			}
+		} else {
+			const user_email_res = await axios.get('/api/users/email/' + order.shipping.email);
+			if (user_email_res.data) {
+				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+				const create_guest_order_res = await axios.post('/api/orders/guest', {
+					...order,
+					user: user_email_res.data._id
+				});
+				if (create_guest_order_res.data) {
+					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data.data });
+
+					const guest_payment_res = await axios.put(
+						'/api/payments/guest/pay/' + create_guest_order_res.data.data._id,
+						{
+							paymentMethod
+						}
+					);
+					if (guest_payment_res.data) {
+						dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+						sessionStorage.removeItem('shippingAddress');
+						dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+					} else {
+						dispatch({ type: ORDER_CREATE_FAIL, payload: guest_payment_res });
+					}
+				} else {
+					dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+				}
+			} else {
 				dispatch({ type: USER_SAVE_REQUEST, payload: {} });
-				// if (!user_data && !user_data._id) {
-				// console.log({ user_data });
+
 				const { data } = await axios.post('/api/users/', {
 					first_name: order.shipping.first_name,
 					last_name: order.shipping.last_name,
@@ -187,35 +195,34 @@ export const createPayOrderGuest = (
 					guest: true,
 					password: process.env.REACT_APP_TEMP_PASS
 				});
-				console.log('hello');
-				console.log({ data });
+
 				dispatch({ type: USER_SAVE_SUCCESS, payload: data });
-				// dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-				// const { data: { newOrder } } = await axios.post('/api/orders/guestcheckout', order);
-				console.log({ user: data.data._id });
-				// console.log({ data: data._id });
-				const { data: { newOrder } } = await axios.post('/api/orders/guest', {
+				const create_guest_order_res = await axios.post('/api/orders/guest', {
 					...order,
 					user: data.data._id
 				});
-				console.log({ newOrder });
+				if (create_guest_order_res.data) {
+					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data.data });
 
-				dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-
-				const paid = await axios.put('/api/payments/guest/pay/' + newOrder._id, { paymentMethod });
-				console.log({ paid });
-				dispatch({ type: ORDER_PAY_SUCCESS, payload: paid.data });
-				localStorage.removeItem('shippingAddress');
-				dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+					const guest_payment_res = await axios.put(
+						'/api/payments/guest/pay/' + create_guest_order_res.data.data._id,
+						{ paymentMethod }
+					);
+					if (guest_payment_res.data) {
+						dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+						sessionStorage.removeItem('shippingAddress');
+						dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+					} else {
+						dispatch({ type: ORDER_CREATE_FAIL, payload: guest_payment_res });
+					}
+				} else {
+					dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+				}
 			}
 		}
 	} catch (error) {
-		console.log({ error });
-		console.log({ error_message: error.response.data.message });
-		console.log({ error: error });
-		console.log({ error_response: error.response });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
 	}
 };
 
@@ -229,23 +236,19 @@ export const createOrderGuest = (order: {
 	totalPrice: number;
 	order_note: string;
 	promo_code: string;
-}) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
+}) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-		const { data: { newOrder } } = await axios.post('/api/orders/guest', order);
-		console.log({ newOrder });
-		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-		localStorage.removeItem('shippingAddress');
-		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		const create_guest_order_res = await axios.post('/api/orders/guest', order);
+		if (create_guest_order_res.data) {
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data.data });
+			sessionStorage.removeItem('shippingAddress');
+			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		} else {
+			dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+		}
 	} catch (error) {
-		console.log({ error });
-		console.log({ error_message: error.response.data.message });
-		console.log({ error: error });
-		console.log({ error_response: error.response });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
 	}
 };
 
@@ -267,18 +270,21 @@ export const createOrder = (order: {
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo: user_data } } = getState();
-		const { data: { data: newOrder } } = await axios.post('/api/orders/secure', order, {
+		const create_order_res = await axios.post('/api/orders/secure', order, {
 			headers: {
 				Authorization: ' Bearer ' + user_data.token
 			}
 		});
-
-		dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
-		localStorage.removeItem('shippingAddress');
-		dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		if (create_order_res.data) {
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_order_res.data.data });
+			sessionStorage.removeItem('shippingAddress');
+			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+		} else {
+			dispatch({ type: ORDER_CREATE_FAIL, payload: create_order_res });
+		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
 	}
 };
 
@@ -289,24 +295,21 @@ export const payOrder = (order: any, paymentMethod: any) => async (
 	try {
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
 		const { userLogin: { userInfo: user_data } } = getState();
-		const { data } = await axios.put(
+		const payment_res = await axios.put(
 			'/api/payments/secure/pay/' + order._id,
 			{ paymentMethod },
 			{
 				headers: { Authorization: 'Bearer ' + user_data.token }
 			}
 		);
-		// const res = await axios.post('api/stripe', user_data.token);
-		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-		console.log({ order: data.order });
-		// axios.post('/api/emails/paid', { ...data.order, user_data, token });
-		// axios.post('/api/emails/orderpaid', { ...data.order, user_data, token });
+		if (payment_res.data) {
+			dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_res.data });
+		} else {
+			dispatch({ type: ORDER_PAY_FAIL, payload: payment_res });
+		}
 	} catch (error) {
 		console.log({ error });
-		console.log({ error_message: error.response.data.message });
-		console.log({ error: error });
-		console.log({ error_response: error.response });
-		dispatch({ type: ORDER_PAY_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_PAY_FAIL, payload: error.response });
 	}
 };
 export const payOrderGuest = (order: any, paymentMethod: any) => async (
@@ -314,15 +317,14 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (
 ) => {
 	try {
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
-		const { data } = await axios.put('/api/payments/guest/pay/' + order._id, { paymentMethod });
-		dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-		console.log({ order: data.order });
+		const guest_payment_res = await axios.put('/api/payments/guest/pay/' + order._id, { paymentMethod });
+		if (guest_payment_res.data) {
+			dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+		} else {
+			dispatch({ type: ORDER_PAY_FAIL, payload: guest_payment_res });
+		}
 	} catch (error) {
-		console.log({ error });
-		console.log({ error_message: error.response.data.message });
-		console.log({ error: error });
-		console.log({ error_response: error.response });
-		dispatch({ type: ORDER_PAY_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_PAY_FAIL, payload: error.response });
 	}
 };
 
@@ -340,7 +342,7 @@ export const listMyOrders = () => async (
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response });
 	}
 };
 export const listUserOrders = (user_id: string) => async (
@@ -357,7 +359,7 @@ export const listUserOrders = (user_id: string) => async (
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response });
 	}
 };
 
@@ -368,9 +370,7 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '', pa
 	try {
 		dispatch({ type: ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		// const { data } = await axios.get('/api/orders', {
-		// 	headers: { Authorization: 'Bearer ' + userInfo.token }
-		// });
+
 		const { data } = await axios.get(
 			'/api/orders/?category=' +
 				category +
@@ -390,7 +390,7 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '', pa
 		dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_LIST_FAIL, payload: error.response });
 	}
 };
 
@@ -407,7 +407,7 @@ export const detailsOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_DETAILS_FAIL, payload: error.response });
 	}
 };
 export const detailsOrderPublic = (orderId: string) => async (
@@ -422,10 +422,9 @@ export const detailsOrderPublic = (orderId: string) => async (
 		if (data) {
 			dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
 		}
-		// dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response });
 	}
 };
 
@@ -442,7 +441,7 @@ export const deleteOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_DELETE_FAIL, payload: error.response });
 	}
 };
 
@@ -477,7 +476,7 @@ export const refundOrder = (
 		axios.post('/api/emails/refund', data);
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_REFUND_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_REFUND_FAIL, payload: error.response });
 	}
 };
 
@@ -504,7 +503,7 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response });
 	}
 };
 export const update_payment = (order: { _id: string }, result: boolean, payment_method: string) => async (
@@ -532,7 +531,7 @@ export const update_payment = (order: { _id: string }, result: boolean, payment_
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response });
 	}
 };
 
@@ -562,6 +561,6 @@ export const saveOrder = (order: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: ORDER_SAVE_FAIL, payload: error.response });
 	}
 };

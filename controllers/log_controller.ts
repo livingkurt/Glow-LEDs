@@ -1,8 +1,6 @@
 export {};
 import { Log } from '../models';
 
-// const { isAuth, isAdmin } = require('../util');
-
 export default {
 	findAll: async (req: any, res: any) => {
 		const category = req.query.category ? { category: req.query.category } : {};

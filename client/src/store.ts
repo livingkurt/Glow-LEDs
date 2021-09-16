@@ -124,7 +124,7 @@ if (cart_string) {
 }
 
 let shippingAddress: any;
-const shipping_string: any = localStorage.getItem('shippingAddress');
+const shipping_string: any = sessionStorage.getItem('shippingAddress');
 console.log({ shipping_string });
 if (shipping_string) {
 	shippingAddress = JSON.parse(shipping_string);
@@ -149,7 +149,7 @@ if (shipping_string) {
 // 	},
 // 	cart: {
 // 		cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
-// 		shipping: localStorage.getItem('shippingAddress') ? JSON.parse(localStorage.getItem('shippingAddress')) : {},
+// 		shipping: sessionStorage.getItem('shippingAddress') ? JSON.parse(sessionStorage.getItem('shippingAddress')) : {},
 // 		payment: 'PayPal'
 // 	}
 // };

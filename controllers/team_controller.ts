@@ -53,8 +53,6 @@ export default {
 				.populate('affiliates')
 				.populate('public_code')
 				.populate('private_code');
-			console.log({ team });
-			console.log(req.params.id);
 			if (team) {
 				res.send(team);
 			} else {

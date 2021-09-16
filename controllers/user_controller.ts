@@ -13,7 +13,6 @@ require('dotenv');
 
 // const validateRegisterInput = require('../validation/register');
 // const validateLoginInput = require('../validation/login');
-// const { isAuth, isAdmin } = require('../util');
 
 export default {
 	email: async (req: any, res: any) => {

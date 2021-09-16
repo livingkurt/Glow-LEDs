@@ -6,7 +6,6 @@ import { CartItem, GuestCheckoutSteps, Stripe } from '../../components/Specialty
 import { Helmet } from 'react-helmet';
 import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
-// import localStorage from 'js-cookie';
 
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
@@ -24,11 +23,11 @@ const PlaceOrderPublicPage = (props) => {
 	const cart = useSelector((state) => state.cart);
 	const { cartItems, shipping, payment } = cart;
 	const orderCreate = useSelector((state) => state.orderCreate);
-	const { order, error } = orderCreate;
+	const { order, error: error_order } = orderCreate;
 	// console.log({ orderCreate });
 
 	const orderPay = useSelector((state) => state.orderPay);
-	const { success: successPay, error: errorPay } = orderPay;
+	const { success: successPay, error: error_pay } = orderPay;
 
 	const promoList = useSelector((state) => state.promoList);
 	const { promos } = promoList;
@@ -40,7 +39,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	const [ shipping_rates, set_shipping_rates ] = useState({});
 	const [ current_shipping_speed, set_current_shipping_speed ] = useState('');
-	const [ loading_shipping, set_loading_shipping ] = useState(false);
+	const [ loading, set_loading ] = useState(false);
 	const [ handling_costs, set_handling_costs ] = useState(5 / 60 * 20);
 	const [ packaging_cost, set_packaging_cost ] = useState(0.5);
 	const [ shipment_id, set_shipment_id ] = useState('');
@@ -51,7 +50,7 @@ const PlaceOrderPublicPage = (props) => {
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
 	const [ promo_code, set_promo_code ] = useState('');
-	const [ payment_loading, set_payment_loading ] = useState(false);
+	const [ loading_payment, set_loading_payment ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
 	const [ taxPrice, setTaxPrice ] = useState(0.0875 * items_price);
 	const [ totalPrice, setTotalPrice ] = useState(0);
@@ -64,7 +63,6 @@ const PlaceOrderPublicPage = (props) => {
 	const [ create_account, set_create_account ] = useState(false);
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
-	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 
 	const [ password_validations, setPasswordValidations ] = useState('');
 	const [ re_password_validations, setRePasswordValidations ] = useState('');
@@ -74,11 +72,12 @@ const PlaceOrderPublicPage = (props) => {
 	const [ show_promo_code, set_show_promo_code ] = useState(false);
 	const [ show_promo_code_input_box, set_show_promo_code_input_box ] = useState(true);
 	const [ tip, set_tip ] = useState(0);
+	const [ error, set_error ] = useState();
 
 	useEffect(() => {
 		dispatch(listPromos());
 		// dispatch(listUsers(''));
-		// set_loading_shipping(false);
+		// set_loading(false);
 		return () => {};
 	}, []);
 
@@ -86,21 +85,15 @@ const PlaceOrderPublicPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const stableDispatch = useCallback(dispatch, []);
-	const stable_setItemsPrice = useCallback(setItemsPrice, []);
-	const stable_set_payment_loading = useCallback(set_payment_loading, []);
-	// const stable_calculate_international = useCallback(calculate_international, []);
-	// const stable_calculate_shipping = useCallback(calculate_shipping, []);
-
 	useEffect(
 		() => {
-			const shipping_storage = localStorage.getItem('shippingAddress');
+			const shipping_storage = sessionStorage.getItem('shippingAddress');
 			console.log({ shipping_storage });
 			if (shipping_storage) {
-				stableDispatch(saveShipping(JSON.parse(shipping_storage)));
+				dispatch(saveShipping(JSON.parse(shipping_storage)));
 			}
-			stableDispatch(savePayment({ paymentMethod: 'stripe' }));
-			stable_setItemsPrice(
+			dispatch(savePayment({ paymentMethod: 'stripe' }));
+			setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
 					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
@@ -108,22 +101,23 @@ const PlaceOrderPublicPage = (props) => {
 
 			return () => {};
 		},
-		[ cartItems, stableDispatch, stable_setItemsPrice ]
+		[ cartItems, dispatch, setItemsPrice ]
 	);
 
 	useEffect(
 		() => {
-			if (error) {
-				stable_set_payment_loading(false);
+			if (error_order) {
+				set_loading_payment(false);
+				set_error(error_order);
 			}
 			return () => {};
 		},
-		[ error, stable_set_payment_loading ]
+		[ error_order, set_loading_payment ]
 	);
 	useEffect(
 		() => {
 			if (shipping) {
-				set_loading_shipping(true);
+				set_loading(true);
 				// if (shipping.international) {
 				// 	calculate_international();
 				// } else {
@@ -131,7 +125,7 @@ const PlaceOrderPublicPage = (props) => {
 				const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
 				console.log({ package_volume });
 				if (!package_volume) {
-					set_loading_shipping(false);
+					set_loading(false);
 					set_hide_pay_button(false);
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
@@ -158,7 +152,7 @@ const PlaceOrderPublicPage = (props) => {
 			setShippingPrice(0);
 			set_free_shipping_message('Free');
 		} else {
-			const { data } = await API_Shipping.get_shipping_rates({
+			const get_shipping_rates_res = await API_Shipping.get_shipping_rates({
 				orderItems: cartItems,
 				shipping,
 				payment,
@@ -167,23 +161,20 @@ const PlaceOrderPublicPage = (props) => {
 				taxPrice,
 				totalPrice,
 				userInfo,
-				order_note,
 				tip,
+				order_note,
 				promo_code: show_message && promo_code
 			});
-			if (data) {
-				set_shipping_rates(data.shipment);
-				set_shipment_id(data.shipment.id);
-				set_loading_shipping(false);
-				set_parcel(data.parcel._id);
-				// set_loading_shipping(false);
+			console.log(get_shipping_rates_res);
+			if (get_shipping_rates_res.data.message) {
+				set_error(get_shipping_rates_res);
+			} else {
+				console.log('Shipment Ran');
+				set_shipping_rates(get_shipping_rates_res.data.shipment);
+				set_shipment_id(get_shipping_rates_res.data.shipment.id);
+				set_loading(false);
+				set_parcel(get_shipping_rates_res.data.parcel._id);
 			}
-
-			// if (sorted_rates[0]) {
-			// 	// setShippingPrice(parseFloat(sorted_rates[0].rate) + packaging_cost + handling_costs);
-			// 	setShippingPrice(parseFloat(sorted_rates[0].retail_rate) + packaging_cost);
-			// 	// set_shipment_id(data.id);
-			// }
 		}
 	};
 	const choose_shipping_rate = (rate, speed) => {
@@ -204,7 +195,7 @@ const PlaceOrderPublicPage = (props) => {
 	};
 	const get_tax_rates = async () => {
 		setTaxPrice(0);
-		set_loading_tax_rate(true);
+		set_loading(true);
 		const { data } = await API_External.get_tax_rates();
 		const tax_rate = parseFloat(data[shipping.state]) / 100;
 
@@ -219,7 +210,7 @@ const PlaceOrderPublicPage = (props) => {
 			}
 			setTaxPrice(tax_rate * itemsPrice);
 		}
-		set_loading_tax_rate(false);
+		set_loading(false);
 	};
 
 	const get_promo_code = () => {
@@ -283,7 +274,7 @@ const PlaceOrderPublicPage = (props) => {
 			)
 		);
 
-		set_payment_loading(true);
+		set_loading_payment(true);
 		console.log({ cartItems });
 		cartItems.forEach(async (item) => {
 			// console.log({ item });
@@ -316,7 +307,7 @@ const PlaceOrderPublicPage = (props) => {
 				await API_Promos.promo_code_used(promo_code.toLowerCase());
 			}
 		}
-		localStorage.removeItem('shippingAddress');
+		sessionStorage.removeItem('shippingAddress');
 	};
 
 	const empty_cart = () => {
@@ -338,60 +329,26 @@ const PlaceOrderPublicPage = (props) => {
 					// props.history.push('/checkout/paymentcomplete/' + order._id);
 					props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
 				}
-				set_payment_loading(false);
+				set_loading_payment(false);
 				empty_cart();
-			} else if (errorPay) {
+			} else if (error_pay) {
 			}
 		},
 		[ successPay ]
 	);
 	useEffect(
 		() => {
-			if (errorPay) {
-				set_payment_loading(false);
+			if (error_pay) {
+				set_loading_payment(false);
+				set_error(error_pay);
 			}
 		},
-		[ errorPay ]
+		[ error_pay ]
 	);
 
 	const checkoutHandler = () => {
 		props.history.push('/account/login?redirect=shipping');
 	};
-
-	// useEffect(
-	// 	() => {
-	// 		setTotalPrice(
-	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
-	// 		);
-	// 		return () => {};
-	// 	},
-	// 	[ shippingPrice ]
-	// );
-	// useEffect(
-	// 	() => {
-	// 		setTotalPrice(
-	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
-	// 		);
-	// 	},
-	// 	[ itemsPrice, taxPrice ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		setTotalPrice(
-	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
-	// 		);
-	// 	},
-	// 	[ itemsPrice ]
-	// );
-	// useEffect(
-	// 	() => {
-	// 		setTotalPrice(
-	// 			tip === 0 ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + tip
-	// 		);
-	// 	},
-	// 	[ tip ]
-	// );
 
 	useEffect(
 		() => {
@@ -500,12 +457,13 @@ const PlaceOrderPublicPage = (props) => {
 			// 	calculate_shipping();
 			// 	calculate_shipping();
 			// }
-			// set_loading_shipping(true);
+			// set_loading(true);
 			// get_shipping_rates();
 			setShippingPrice(previousShippingPrice);
 		}
 		set_show_promo_code_input_box(true);
 	};
+
 	const handleChangeFor = (type) => ({ error }) => {
 		/* handle error */
 		console.log({ type });
@@ -528,7 +486,12 @@ const PlaceOrderPublicPage = (props) => {
 			) : (
 				<GuestCheckoutSteps step1 />
 			)}
-			<LoadingPayments loading={payment_loading} error={error} />
+			<LoadingPayments
+				loading={loading_payment}
+				error={error}
+				set_error={set_error}
+				set_loading_payment={set_loading_payment}
+			/>
 			<div className="placeorder">
 				<div className="placeorder-info">
 					<div className="placeorder-info-container">
@@ -632,7 +595,7 @@ const PlaceOrderPublicPage = (props) => {
 						<li>
 							<div>Tax</div>
 							<div>
-								{!loading_tax_rate ? shipping && shipping.hasOwnProperty('first_name') ? (
+								{!loading ? shipping && shipping.hasOwnProperty('first_name') ? (
 									`$${taxPrice.toFixed(2)}`
 								) : (
 									'------'
@@ -643,7 +606,7 @@ const PlaceOrderPublicPage = (props) => {
 						</li>
 						<li className="pos-rel">
 							<div>Shipping</div>
-							<Loading loading={loading_shipping} />
+							<Loading loading={loading} />
 							<div>
 								{shipping && shipping.hasOwnProperty('first_name') && shippingPrice > 0 ? (
 									'$' + shippingPrice.toFixed(2)
@@ -661,7 +624,7 @@ const PlaceOrderPublicPage = (props) => {
 						<li>
 							<div>Order Total</div>
 							<div>
-								{!loading_tax_rate ? shipping && shipping.hasOwnProperty('first_name') ? (
+								{!loading ? shipping && shipping.hasOwnProperty('first_name') ? (
 									'$' + totalPrice.toFixed(2)
 								) : (
 									'------'
@@ -804,7 +767,7 @@ const PlaceOrderPublicPage = (props) => {
 								/>
 							</div>
 						</li>
-						{!loading_tax_rate &&
+						{!loading &&
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&

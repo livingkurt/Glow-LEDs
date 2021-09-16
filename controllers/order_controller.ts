@@ -31,7 +31,7 @@ export default {
 			if (order) {
 				res.send(order);
 			} else {
-				res.status(404).send('Order Not Found.');
+				res.status(404).send('Order Not Found');
 			}
 		} catch (error) {
 			console.log({ error });
@@ -151,7 +151,7 @@ export default {
 			if (order) {
 				res.send(order);
 			} else {
-				res.status(404).send('Order Not Found.');
+				res.status(404).send('Order Not Found');
 			}
 		} catch (error) {
 			console.log({ error });
@@ -181,10 +181,9 @@ export default {
 			if (newOrderCreated) {
 				res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
 			} else {
-				return res.status(500).send({ message: ' Error in Creating Order.' });
+				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
 		} catch (error) {
-			console.log({ error });
 			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Creating Order' });
@@ -197,9 +196,9 @@ export default {
 			console.log({ newOrderCreated });
 
 			if (newOrderCreated) {
-				res.status(201).send({ message: 'New Order Created', newOrder: newOrderCreated });
+				res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
 			} else {
-				return res.status(500).send({ message: ' Error in Creating Order.' });
+				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
 		} catch (error) {
 			console.log({ error });
@@ -214,7 +213,7 @@ export default {
 			if (updated) {
 				res.send(updated_order);
 			} else {
-				res.status(404).send({ message: 'Order not Updated.' });
+				res.status(404).send({ message: 'Order not Updated' });
 			}
 		} catch (error) {
 			console.log({ error });
@@ -229,7 +228,7 @@ export default {
 			if (deleted_order) {
 				res.send(message);
 			} else {
-				res.send('Error in Deletion.');
+				res.send('Error in Deletion');
 			}
 		} catch (error) {
 			console.log({ error });

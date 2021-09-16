@@ -3,16 +3,22 @@ import React from 'react';
 require('dotenv').config();
 // Components
 
-const LoadingPayment = (props) => {
+const LoadingPayment = ({ loading, error, children, set_error, set_loading_payment }) => {
 	const loading_message = () => {
 		setTimeout(() => {
 			return <h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
 		}, 3000);
 	};
+	console.log({ LoadingPayment: error });
+
+	const close_error = () => {
+		// set_loading_payment(false);
+		set_error();
+	};
 
 	return (
 		<div>
-			{props.loading ? (
+			{loading ? (
 				<div className="jc-c column">
 					<img
 						src={process.env.PUBLIC_URL + '/loading.gif'}
@@ -32,15 +38,18 @@ const LoadingPayment = (props) => {
 					</div>
 					{loading_message()}
 				</div>
-			) : props.error ? (
+			) : error ? (
 				<div className="error_message_payment jc-c column">
-					<h2 className="ta-c mv-5px">Error: {props.error}</h2>
-					<p className="ta-c mv-5px fs">
-						Please Try a Different Card if Error Persists and Contact Glow LEDs for Support
-					</p>
+					<div>
+						<h2 className="ta-c mv-5px">Error: {error.data.message}</h2>
+						<p className="ta-c mv-5px fs">{error.data.solution && error.data.solution}</p>
+					</div>
+					<button className="sidebar_close_button" aria-label="close" onClick={() => close_error()}>
+						<i className="fas fa-times" />
+					</button>
 				</div>
 			) : (
-				props.children
+				children
 			)}
 		</div>
 	);

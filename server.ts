@@ -50,7 +50,7 @@ const app = express();
 // 	// app.use(express.static(path.join(application_root, "public")));
 // 	// app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 // });
-let middleware = Bugsnag.getPlugin('express');
+const middleware = Bugsnag.getPlugin('express');
 
 // This must be the first piece of middleware in the stack.
 // It can only capture errors in downstream middleware

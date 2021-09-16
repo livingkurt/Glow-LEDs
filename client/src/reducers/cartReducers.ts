@@ -63,7 +63,7 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 				cartItems: state.cartItems.filter((x: any) => JSON.stringify(x) !== JSON.stringify(action.payload))
 			};
 		case CART_SAVE_SHIPPING:
-			localStorage.setItem('shippingAddress', JSON.stringify(action.payload));
+			sessionStorage.setItem('shippingAddress', JSON.stringify(action.payload));
 			return { ...state, shipping: action.payload };
 		case CART_SAVE_PAYMENT:
 			return { ...state, payment: action.payload };

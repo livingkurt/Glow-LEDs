@@ -1,7 +1,5 @@
 import { Content } from '../models';
 
-// const { isAuth, isAdmin } = require('../util');
-
 export default {
 	findAll: async (req: any, res: any) => {},
 	findById: async (req: any, res: any) => {},

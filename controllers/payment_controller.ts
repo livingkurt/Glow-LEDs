@@ -6,8 +6,7 @@ export default {
 	secure_pay: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id).populate('user');
-			// console.log({ order });
-			const intent = await stripe.paymentIntents.create(
+			await stripe.paymentIntents.create(
 				{
 					amount: (order.totalPrice * 100).toFixed(0),
 					currency: 'usd',
@@ -16,10 +15,12 @@ export default {
 				async (err: any, result: any) => {
 					if (err) {
 						console.log({ err });
-
-						return res.status(500).send({ error: err, message: err.raw.message });
+						return res.status(500).send({
+							error: err,
+							message: err.raw.message,
+							solution: 'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+						});
 					} else {
-						console.log({ payment_method: req.body.paymentMethod.id });
 						await stripe.paymentIntents.confirm(
 							result.id,
 							{
@@ -30,9 +31,12 @@ export default {
 							},
 							async (err: any, result: any) => {
 								if (err) {
-									console.log({ err });
-
-									return res.status(404).send({ error: err, message: err.raw.message });
+									return res.status(500).send({
+										error: err,
+										message: err.raw.message,
+										solution:
+											'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+									});
 								} else {
 									order.isPaid = true;
 									order.paidAt = Date.now();
@@ -45,8 +49,14 @@ export default {
 									const updatedOrder = await order.save();
 									if (updatedOrder) {
 										res.send({ message: 'Order Paid.', order: updatedOrder });
+									} else {
+										return res.status(500).send({
+											error: err,
+											message: 'Error Saving Payment',
+											solution:
+												'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+										});
 									}
-									// }
 								}
 							}
 						);
@@ -55,9 +65,11 @@ export default {
 			);
 		} catch (error) {
 			console.log({ error });
-
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Paying for Order' });
+			res.status(500).send({
+				error,
+				message: 'Error Paying for Order',
+				solution: 'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+			});
 		}
 	},
 	guest_pay: async (req: any, res: any) => {
@@ -72,8 +84,11 @@ export default {
 				async (err: any, result: any) => {
 					if (err) {
 						console.log({ err });
-
-						return res.status(500).send({ error: err, message: err.raw.message });
+						return res.status(500).send({
+							error: err,
+							message: err.raw.message,
+							solution: 'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+						});
 					} else {
 						await stripe.paymentIntents.confirm(
 							result.id,
@@ -85,7 +100,12 @@ export default {
 							},
 							async (err: any, result: any) => {
 								if (err) {
-									return res.status(500).send({ error: err, message: err.raw.message });
+									return res.status(500).send({
+										error: err,
+										message: err.raw.message,
+										solution:
+											'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+									});
 								} else {
 									order.isPaid = true;
 									order.paidAt = Date.now();
@@ -97,6 +117,13 @@ export default {
 									const updatedOrder = await order.save();
 									if (updatedOrder) {
 										res.send({ message: 'Order Paid.', order: updatedOrder });
+									} else {
+										return res.status(500).send({
+											error: err,
+											message: 'Error Saving Payment',
+											solution:
+												'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+										});
 									}
 								}
 							}
@@ -106,20 +133,20 @@ export default {
 			);
 		} catch (error) {
 			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Paying for Order' });
+			res.status(500).send({
+				error,
+				message: 'Error Paying for Order',
+				solution: 'Please Try a Different Card if Error Persists and Contact Glow LEDs for Support'
+			});
 		}
 	},
 	secure_refund: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id);
-			console.log({ order });
-			console.log({ body: req.body });
 			const refund = await stripe.refunds.create({
 				payment_intent: order.payment.charge.id,
 				amount: req.body.refund_amount.toFixed(2) * 100
 			});
-			console.log({ refund });
 			if (refund) {
 				order.isRefunded = true;
 				order.refundedAt = Date.now();
@@ -138,10 +165,7 @@ export default {
 			}
 		} catch (error) {
 			console.log({ error });
-
 			res.status(500).send({ error, message: 'Error Refunding Order' });
 		}
-	},
-	update: async (req: any, res: any) => {},
-	remove: async (req: any, res: any) => {}
+	}
 };
