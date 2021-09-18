@@ -142,7 +142,9 @@ const PlaceOrderPage = (props) => {
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				} else {
-					get_shipping_rates();
+					if (shipping.hasOwnProperty('first_name')) {
+						get_shipping_rates();
+					}
 				}
 				get_tax_rates();
 			}
@@ -808,10 +810,10 @@ const PlaceOrderPage = (props) => {
 									placeholder="$0.00"
 									onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '$0.00'"
-									defaultValue={`$${tip && parseInt(tip).toFixed(2)}`}
+									defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
 									// defaultValue={tip}
 									className="w-100per"
-									onChange={(e) => set_tip(parseInt(e.target.value))}
+									onChange={(e) => set_tip(parseFloat(e.target.value))}
 								/>
 							</div>
 						</li>
