@@ -46,14 +46,10 @@ const LabelCreatorPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	const create_custom_label = async (e) => {
+	const buy_label = async (e) => {
 		e.preventDefault();
 		set_loading_label(true);
-		const { data } = await API_Shipping.create_custom_label({
-			shipment_id,
-			userInfo,
-			shipping_rate
-		});
+		const { data } = await API_Shipping.buy_label(shipment_id, shipping_rate);
 		console.log({ data });
 		console.log({ label: data.postage_label.label_url });
 		show_label(data.postage_label.label_url, e);
@@ -63,10 +59,10 @@ const LabelCreatorPage = (props) => {
 			set_loading_label(false);
 		}
 	};
-	// const create_custom_label = async (e) => {
+	// const buy_label = async (e) => {
 	// 	e.preventDefault();
 	// 	set_loading_label(true);
-	// 	const { data } = await API_Shipping.create_custom_label({
+	// 	const { data } = await API_Shipping.buy_label({
 	// 		to_shipping,
 	// 		from_shipping,
 	// 		package_dimensions,
@@ -260,7 +256,7 @@ const LabelCreatorPage = (props) => {
 			<Loading loading={loading_shipping_rates} />
 			<Loading loading={loading_label} />
 			<div className="form">
-				<form onSubmit={create_custom_label} style={{ width: '100%' }}>
+				<form onSubmit={buy_label} style={{ width: '100%' }}>
 					<ul className="edit-form-container max-w-80rem">
 						<div className="wrap jc-b">
 							<div className="w-35rem m-10px">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { createOrder, detailsOrder, payOrder } from '../../actions/orderActions';
+import { createOrder, detailsOrder, payOrder, saveOrder } from '../../actions/orderActions';
 import { format_date } from '../../utils/helper_functions';
 import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
@@ -43,8 +43,18 @@ const OrderPage = (props) => {
 	const [ refund_amount, set_refund_amount ] = useState();
 	const [ refund_reason, set_refund_reason ] = useState('');
 	const [ all_orders, set_all_orders ] = useState('');
+	const [ loading_shipping_rates, set_loading_shipping_rates ] = useState('');
+	const [ shipping_rate, set_shipping_rate ] = useState({});
+	const [ shipment_id, set_shipment_id ] = useState('');
+	const [ shipping_rates, set_shipping_rates ] = useState([]);
+	const [ package_dimensions, set_package_dimensions ] = useState({});
+	const [ hide_label_button, set_hide_label_button ] = useState(true);
+	const [ rate, set_rate ] = useState('');
 
 	const [ message_to_user, set_message_to_user ] = useState('');
+
+	const parcelList = useSelector((state) => state.parcelList);
+	const { parcels } = parcelList;
 
 	const orderRefund = useSelector((state) => state.orderRefund);
 	const { order: refund } = orderRefund;
@@ -269,7 +279,7 @@ const OrderPage = (props) => {
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Shipping.buy_label(order, order.shipping.shipping_rate);
+		const { data } = await API_Shipping.buy_label(order.shipping.shipping_id, order.shipping.shipping_rate);
 		// show_label(data.postage_label.label_url);
 		print_invoice(data.postage_label.label_url);
 		if (data) {
@@ -367,6 +377,86 @@ const OrderPage = (props) => {
 		}
 	};
 
+	const get_shipping_rates = async (e) => {
+		e.preventDefault();
+		set_loading_shipping_rates(true);
+		const { data } = await API_Shipping.get_different_shipping_rates({
+			shipment_id: order.shipping.shipment_id,
+			userInfo
+		});
+		console.log({ data });
+		// console.log({ rates: data.shipment.rates });
+		set_shipping_rates(data.rates);
+		set_shipment_id(data.id);
+		set_loading_shipping_rates(false);
+	};
+
+	const buy_new_speed_label = async () => {
+		set_loading_label(true);
+		console.log({ shipment_id, shipping_rate });
+		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, shipping_rate);
+		// show_label(data.postage_label.label_url);
+		print_invoice(data.postage_label.label_url);
+		if (data) {
+			set_loading_label(false);
+		}
+		dispatch(
+			saveOrder({
+				...order,
+				shipping: { ...order.shipping, shipment_id, shipping_rate }
+			})
+		);
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+		console.log(request);
+		dispatch(detailsOrder(props.match.params.id));
+		history.push('/secure/glow/emails/invoice/' + order._id);
+	};
+
+	const address = {
+		first_name: 'Kurt',
+		last_name: 'LaVacque',
+		address_1: '404 Kenniston Dr',
+		address_2: 'Apt D',
+		city: 'Austin',
+		state: 'Texas',
+		postalCode: '78752',
+		country: 'United States',
+		phone: '906-284-2208',
+		email: 'info.glowleds@gmail.com',
+		company: 'Glow LEDs'
+	};
+
+	const update_parcel = (e, parcel) => {
+		e.preventDefault();
+		parcel = JSON.parse(parcel);
+		console.log({ parcel });
+		set_package_dimensions({
+			...package_dimensions,
+			package_length: parcel.length || 0,
+			package_width: parcel.width || 0,
+			package_height: parcel.height || 0
+		});
+	};
+
+	const choose_shipping_rate = (e, rate, speed) => {
+		e.preventDefault();
+		// setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
+		// setPreviousShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
+		console.log({ rate, speed });
+		set_hide_label_button(false);
+		set_shipping_rate(rate);
+		set_rate({ rate, speed });
+	};
+
+	const re_choose_shipping_rate = (e) => {
+		e.preventDefault();
+		// setShippingPrice(0);
+		// setPreviousShippingPrice(0);
+		set_hide_label_button(true);
+		set_shipping_rate({});
+	};
+
 	return (
 		<Loading loading={loading} error={error}>
 			{order && (
@@ -384,6 +474,7 @@ const OrderPage = (props) => {
 							content={'https://www.glow-leds.com/secure/account/order/' + props.match.params.id}
 						/>
 					</Helmet>
+					<Loading loading={loading_shipping_rates} />
 					{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
 					<div className="mb-10px ml-20px">
 						{userInfo &&
@@ -998,20 +1089,84 @@ ${order.shipping.email}`)}
 													</button>
 												</Link>
 											</div>
-
-											<button className="btn secondary mv-5px" onClick={() => create_label()}>
-												{!order.shipping.shipping_label ? 'Create Label' : 'Create New Label'}
-											</button>
-											{/* {order.shipping.shipping_label && (
-												<button className="btn secondary mv-5px" onClick={() => create_label()}>
-													Create New Label
-												</button>
-											)} */}
-											{!order.shipping.shipping_label && (
-												<button className="btn secondary mv-5px" onClick={() => buy_label()}>
+											{hide_label_button &&
+											!order.shipping.shipping_label && (
+												<button className="btn primary mv-5px" onClick={() => buy_label()}>
 													Buy Label
 												</button>
 											)}
+											<button className="btn secondary mv-5px">
+												<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
+											</button>
+											<button
+												className="btn secondary mv-5px"
+												onClick={() => dispatch(deleteOrder(order._id))}
+											>
+												Delete Order
+											</button>
+											{hide_label_button && (
+												<button
+													className="btn secondary mv-5px"
+													onClick={(e) => get_shipping_rates(e)}
+												>
+													Change Shipping Speed
+												</button>
+											)}
+											{hide_label_button &&
+												shipping_rates &&
+												shipping_rates.map((rate, index) => {
+													return (
+														<div className=" mv-1rem jc-b  ai-c" key={index}>
+															<div className="shipping_rates jc-b w-100per wrap ">
+																<div className="service">{rate.carrier}</div>
+																<div className="service">{rate.service}</div>
+
+																<div>${parseFloat(rate.rate).toFixed(2)}</div>
+																<div>
+																	{rate.delivery_days}{' '}
+																	{rate.delivery_days === 1 ? 'Day' : 'Days'}
+																</div>
+															</div>
+															<button
+																className="custom-select-shipping_rates"
+																onClick={(e) =>
+																	choose_shipping_rate(e, rate, rate.service)}
+															>
+																Select
+															</button>
+														</div>
+													);
+												})}
+											{!hide_label_button &&
+											rate && (
+												<div className=" mv-1rem jc-b ai-c w-100per">
+													<div className="shipping_rates jc-b w-100per ">
+														<div>
+															{rate.speed} ${parseFloat(rate.rate.rate)}
+															{rate.rate.delivery_days}{' '}
+															{rate.rate.delivery_days === 1 ? 'Day' : 'Days'}
+														</div>
+													</div>
+													<button
+														className="custom-select-shipping_rates w-10rem"
+														onClick={(e) => re_choose_shipping_rate(e)}
+													>
+														Change
+													</button>
+												</div>
+											)}
+											{!hide_label_button && (
+												<button
+													className="btn primary mv-5px"
+													onClick={() => buy_new_speed_label()}
+												>
+													Buy New Speed Label
+												</button>
+											)}
+											<button className="btn secondary mv-5px" onClick={() => create_label()}>
+												{!order.shipping.shipping_label ? 'Create Label' : 'Create New Label'}
+											</button>
+
 											{order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => view_label()}>
 													View Label
@@ -1039,16 +1194,6 @@ ${order.shipping.email}`)}
 											>
 												Create Duplicate Order
 											</button>
-											<button className="btn secondary mv-5px">
-												<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
-											</button>
-											<button
-												className="btn secondary mv-5px"
-												onClick={() => dispatch(deleteOrder(order._id))}
-											>
-												Delete Order
-											</button>
-
 											{/* <button
 										className="btn primary mv-5px "
 										onClick={() =>

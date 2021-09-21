@@ -101,7 +101,10 @@ const OrderListItem = (props) => {
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Orders.buy_label(props.order, props.order.shipping.shipping_rate);
+		const { data } = await API_Orders.buy_label(
+			props.order.shipping.shipment_id,
+			props.order.shipping.shipping_rate
+		);
 		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
 		if (data) {
 			set_loading_label(false);
