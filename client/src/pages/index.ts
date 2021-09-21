@@ -43,6 +43,7 @@ export { default as MonthlyExpensesPage } from './AdminPages/MonthlyExpensesPage
 export { default as MonthExpensesPage } from './AdminPages/MonthExpensesPage';
 export { default as PalettesPage } from './AdminPages/PalettesPage';
 export { default as EditPalettePage } from './AdminPages/EditPalettePage';
+export { default as OrderCombinerPage } from './AdminPages/OrderCombinerPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as EditDevicePage } from './PrivatePages/EditDevicePage';

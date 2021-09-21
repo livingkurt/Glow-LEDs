@@ -94,7 +94,8 @@ import {
 	MonthExpensesPage,
 	ColorPalettePage,
 	EditPalettePage,
-	PalettesPage
+	PalettesPage,
+	OrderCombinerPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -358,6 +359,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/carts" component={CartsPage} />
 							<AdminRoute path="/secure/glow/contents" component={ContentsPage} />
 							<AdminRoute path="/secure/glow/display_products" component={ProductsDisplayPage} />
+							<AdminRoute path="/secure/glow/combine_orders" component={OrderCombinerPage} />
 							<AdminRoute
 								path="/secure/glow/emails/announcement"
 								exact={true}

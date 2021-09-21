@@ -241,6 +241,9 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/create_label">
 					<button className="btn primary">Create Label</button>
 				</Link>
+				<Link to="/secure/glow/combine_orders">
+					<button className="btn primary">Combine Orders</button>
+				</Link>
 				<button className="btn primary" onClick={(e) => mark_as_shipped(e)}>
 					Mark as Shipped
 				</button>
