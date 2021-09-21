@@ -94,61 +94,78 @@ export default {
 			console.log(err);
 		}
 	},
+	// create_custom_label: async (req: any, res: any) => {
+	// 	try {
+	// 		const EasyPost = new easy_post_api(process.env.EASY_POST);
+	// 		const to_shipping = req.body.data.to_shipping;
+	// 		const from_shipping = req.body.data.from_shipping;
+	// 		const package_dimensions = req.body.data.package_dimensions;
+	// 		const shipping_rate = req.body.data.shipping_rate;
+	// 		// console.log({ data: req.body.data });
+	// 		// console.log({ shipping_rate });
+
+	// 		const toAddress = new EasyPost.Address({
+	// 			name: to_shipping.company ? '' : to_shipping.first_name + ' ' + to_shipping.last_name,
+	// 			street1: to_shipping.address_1,
+	// 			street2: to_shipping.address_2,
+	// 			city: to_shipping.city,
+	// 			state: to_shipping.state,
+	// 			zip: to_shipping.postalCode,
+	// 			country: to_shipping.country,
+	// 			company: to_shipping.company,
+	// 			phone: to_shipping.phone,
+	// 			email: to_shipping.email
+	// 		});
+	// 		const fromAddress = new EasyPost.Address({
+	// 			name: from_shipping.company ? '' : from_shipping.first_name + ' ' + from_shipping.last_name,
+	// 			street1: from_shipping.address_1,
+	// 			street2: from_shipping.address_2,
+	// 			city: from_shipping.city,
+	// 			state: from_shipping.state,
+	// 			zip: from_shipping.postalCode,
+	// 			country: from_shipping.country,
+	// 			company: from_shipping.company,
+	// 			phone: from_shipping.phone,
+	// 			email: from_shipping.email
+	// 		});
+
+	// 		let weight = 0;
+	// 		if (parseInt(package_dimensions.weight_pounds)) {
+	// 			weight += parseInt(package_dimensions.weight_pounds) * 16 + parseInt(package_dimensions.weight_ounces);
+	// 		} else {
+	// 			weight += parseInt(package_dimensions.weight_ounces);
+	// 		}
+
+	// 		const parcel = new EasyPost.Parcel({
+	// 			length: package_dimensions.package_length,
+	// 			width: package_dimensions.package_width,
+	// 			height: package_dimensions.package_height,
+	// 			weight
+	// 		});
+
+	// 		const shipment = new EasyPost.Shipment({
+	// 			to_address: toAddress,
+	// 			from_address: fromAddress,
+	// 			parcel: parcel
+	// 		});
+	// 		const saved_shipment = await shipment.save();
+	// 		const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
+	// 		console.log({ rates: created_shipment.rates });
+	// 		console.log({ shipping_rate });
+	// 		const label = await created_shipment.buy(shipping_rate, 0);
+	// 		res.send(label);
+	// 	} catch (err) {
+	// 		console.log({ error: err.error.error.errors });
+	// 	}
+	// },
 	create_custom_label: async (req: any, res: any) => {
 		try {
 			const EasyPost = new easy_post_api(process.env.EASY_POST);
-			const to_shipping = req.body.data.to_shipping;
-			const from_shipping = req.body.data.from_shipping;
-			const package_dimensions = req.body.data.package_dimensions;
-			console.log({ data: req.body.data });
-
-			const toAddress = new EasyPost.Address({
-				name: to_shipping.company ? '' : to_shipping.first_name + ' ' + to_shipping.last_name,
-				street1: to_shipping.address_1,
-				street2: to_shipping.address_2,
-				city: to_shipping.city,
-				state: to_shipping.state,
-				zip: to_shipping.postalCode,
-				country: to_shipping.country,
-				company: to_shipping.company,
-				phone: to_shipping.phone,
-				email: to_shipping.email
-			});
-			const fromAddress = new EasyPost.Address({
-				name: from_shipping.company ? '' : from_shipping.first_name + ' ' + from_shipping.last_name,
-				street1: from_shipping.address_1,
-				street2: from_shipping.address_2,
-				city: from_shipping.city,
-				state: from_shipping.state,
-				zip: from_shipping.postalCode,
-				country: from_shipping.country,
-				company: from_shipping.company,
-				phone: from_shipping.phone,
-				email: from_shipping.email
-			});
-
-			let weight = 0;
-			if (parseInt(package_dimensions.weight_pounds)) {
-				weight += parseInt(package_dimensions.weight_pounds) * 16 + parseInt(package_dimensions.weight_ounces);
-			} else {
-				weight += parseInt(package_dimensions.weight_ounces);
-			}
-
-			const parcel = new EasyPost.Parcel({
-				length: package_dimensions.package_length,
-				width: package_dimensions.package_width,
-				height: package_dimensions.package_height,
-				weight
-			});
-
-			const shipment = new EasyPost.Shipment({
-				to_address: toAddress,
-				from_address: fromAddress,
-				parcel: parcel
-			});
-			const saved_shipment = await shipment.save();
-			const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
-			const label = await created_shipment.buy(created_shipment.lowestRate(), 0);
+			const shipping_rate = req.body.data.shipping_rate;
+			const shipment_id = req.body.data.shipment_id;
+			console.log({ shipping_rate, shipment_id });
+			const created_shipment = await EasyPost.Shipment.retrieve(shipment_id);
+			const label = await created_shipment.buy(shipping_rate, 0);
 			res.send(label);
 		} catch (err) {
 			console.log(err);

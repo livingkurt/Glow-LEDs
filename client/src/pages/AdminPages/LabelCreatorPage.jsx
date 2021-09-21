@@ -23,7 +23,8 @@ const LabelCreatorPage = (props) => {
 	const [ shipping_rates, set_shipping_rates ] = useState([]);
 	const [ shipping_rate, set_shipping_rate ] = useState({});
 	const [ rate, set_rate ] = useState('');
-	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
+	const [ shipment_id, set_shipment_id ] = useState('');
+	const [ hide_label_button, set_hide_label_button ] = useState(true);
 	const [ loading_shipping_rates, set_loading_shipping_rates ] = useState(false);
 	const [ loading_label, set_loading_label ] = useState(false);
 	const [ label, set_label ] = useState(false);
@@ -49,38 +50,57 @@ const LabelCreatorPage = (props) => {
 		e.preventDefault();
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_custom_label({
-			to_shipping,
-			from_shipping,
-			package_dimensions,
+			shipment_id,
 			userInfo,
 			shipping_rate
 		});
 		console.log({ data });
-		// show_label(data.postage_label.label_url);
+		console.log({ label: data.postage_label.label_url });
+		show_label(data.postage_label.label_url, e);
 		set_label(data.postage_label.label_url);
-		print_invoice(data.postage_label.label_url);
+		// print_invoice(data.postage_label.label_url);
 		if (data) {
 			set_loading_label(false);
 		}
 	};
+	// const create_custom_label = async (e) => {
+	// 	e.preventDefault();
+	// 	set_loading_label(true);
+	// 	const { data } = await API_Shipping.create_custom_label({
+	// 		to_shipping,
+	// 		from_shipping,
+	// 		package_dimensions,
+	// 		userInfo,
+	// 		shipping_rate
+	// 	});
+	// 	console.log({ data });
+	// 	console.log({ label: data.postage_label.label_url });
+	// 	show_label(data.postage_label.label_url);
+	// 	set_label(data.postage_label.label_url);
+	// 	// print_invoice(data.postage_label.label_url);
+	// 	if (data) {
+	// 		set_loading_label(false);
+	// 	}
+	// };
 
-	const show_label = (label) => {
+	const show_label = (label, e) => {
+		e.preventDefault();
 		const WinPrint = window.open('', 'PRINT', 'height=600,width=800');
 		WinPrint.document.write(
 			`<div style="width: 100%;
-      display: flex;
-      height: 100%;
-      align-items: center;;">
-          <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
-      </div>`
+	    display: flex;
+	    height: 100%;
+	    align-items: center;;">
+	        <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
+	    </div>`
 		);
 		WinPrint.document.close();
 		WinPrint.focus();
 		WinPrint.print();
 
-		setTimeout(() => {
-			WinPrint.print();
-		}, 500);
+		// setTimeout(() => {
+		// 	WinPrint.print();
+		// }, 500);
 	};
 
 	const print_invoice = (content) => {
@@ -111,9 +131,9 @@ const LabelCreatorPage = (props) => {
 		return false;
 	};
 
-	const view_label = async () => {
-		show_label(label);
-	};
+	// const view_label = async () => {
+	// 	show_label(label);
+	// };
 
 	const get_shipping_rates = async (e) => {
 		e.preventDefault();
@@ -127,6 +147,7 @@ const LabelCreatorPage = (props) => {
 		console.log({ data });
 		console.log({ rates: data.shipment.rates });
 		set_shipping_rates(data.shipment.rates);
+		set_shipment_id(data.shipment.id);
 		set_loading_shipping_rates(false);
 	};
 
@@ -203,7 +224,7 @@ const LabelCreatorPage = (props) => {
 		e.preventDefault();
 		// setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
 		// setPreviousShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
-		set_hide_pay_button(false);
+		set_hide_label_button(false);
 		set_shipping_rate(rate);
 		set_rate({ rate, speed });
 	};
@@ -212,8 +233,18 @@ const LabelCreatorPage = (props) => {
 		e.preventDefault();
 		// setShippingPrice(0);
 		// setPreviousShippingPrice(0);
-		set_hide_pay_button(true);
+		set_hide_label_button(true);
 		set_shipping_rate({});
+	};
+
+	const compare = (a, b) => {
+		if (a.rate > b.rate) {
+			return -1;
+		}
+		if (a.rate < b.rate) {
+			return 1;
+		}
+		return 0;
 	};
 
 	return (
@@ -785,9 +816,9 @@ const LabelCreatorPage = (props) => {
 								/>
 							</li>
 						</div>
-						{hide_pay_button &&
+						{hide_label_button &&
 							shipping_rates &&
-							shipping_rates.map((rate, index) => {
+							shipping_rates.sort(compare).map((rate, index) => {
 								return (
 									<div className=" mv-1rem jc-b  ai-c" key={index}>
 										<div className="shipping_rates jc-b w-100per wrap ">
@@ -796,8 +827,7 @@ const LabelCreatorPage = (props) => {
 
 											<div>${parseFloat(rate.rate).toFixed(2)}</div>
 											<div>
-												{rate.rate.delivery_days}{' '}
-												{rate.rate.delivery_days === 1 ? 'Day' : 'Days'}
+												{rate.delivery_days} {rate.delivery_days === 1 ? 'Day' : 'Days'}
 											</div>
 										</div>
 										<button
@@ -810,7 +840,7 @@ const LabelCreatorPage = (props) => {
 								);
 							})}
 						<li>
-							{!hide_pay_button &&
+							{!hide_label_button &&
 							rate && (
 								<div className=" mv-1rem jc-b ai-c w-100per">
 									<div className="shipping_rates jc-b w-100per ">
@@ -828,17 +858,24 @@ const LabelCreatorPage = (props) => {
 								</div>
 							)}
 						</li>
-						{hide_pay_button && (
+						{hide_label_button && (
 							<li>
 								<button className="btn primary" onClick={(e) => get_shipping_rates(e)}>
 									Get Shipping Rates
 								</button>
 							</li>
 						)}
-						{!hide_pay_button && (
+						{!hide_label_button && (
 							<li>
 								<button type="submit" className="btn primary">
 									Create Label
+								</button>
+							</li>
+						)}
+						{label && (
+							<li>
+								<button onClick={(e) => show_label(label, e)} className="btn primary">
+									View Label
 								</button>
 							</li>
 						)}

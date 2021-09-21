@@ -21,6 +21,17 @@ const shipping_routes = {
 			}
 		);
 	},
+	// buy_custom_label: (data: any) => {
+	// 	return axios.put(
+	// 		'/api/shipping/create_custom_label',
+	// 		{ data },
+	// 		{
+	// 			headers: {
+	// 				Authorization: 'Bearer ' + data.userInfo.token
+	// 			}
+	// 		}
+	// 	);
+	// },
 	get_custom_shipping_rates: (data: any) => {
 		return axios.put(
 			'/api/shipping/get_custom_shipping_rates',
