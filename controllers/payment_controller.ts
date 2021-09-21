@@ -145,7 +145,7 @@ export default {
 			const order = await Order.findById(req.params.id);
 			const refund = await stripe.refunds.create({
 				payment_intent: order.payment.charge.id,
-				amount: req.body.refund_amount.toFixed(2) * 100
+				amount: req.body.refund_amount * 100
 			});
 			if (refund) {
 				order.isRefunded = true;

@@ -63,8 +63,10 @@ const OrderPage = (props) => {
 	const { orders } = orderList;
 
 	const update_refund_state = (amount) => {
-		dispatch(refundOrder(order, true, amount, refund_reason));
+		set_loading_label(true);
+		dispatch(refundOrder(order, true, parseFloat(amount).toFixed(2), refund_reason));
 		set_refund_state(true);
+		set_loading_label(false);
 	};
 
 	useEffect(
