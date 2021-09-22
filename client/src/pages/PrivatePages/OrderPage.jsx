@@ -112,12 +112,6 @@ const OrderPage = (props) => {
 		return () => {};
 	}, []);
 
-	// const save_secondary_product = async () => {
-	// 	const request = await API_Products.save_secondary_product(order, userInfo, secondary_product);
-	// 	console.log(request);
-	// 	dispatch(detailsOrder(props.match.params.id));
-	// };
-
 	useEffect(
 		() => {
 			if (successPay) {
@@ -132,17 +126,6 @@ const OrderPage = (props) => {
 		},
 		[ successPay ]
 	);
-
-	// const get_total_orders = async () => {
-	// 	set_loading_label(true);
-	// 	const { data } = await API_Orders.total_orders();
-	// 	set_all_orders(data);
-	// 	set_loading_label(false);
-	// };
-
-	// useEffect(() => {
-	// 	empty_cart();
-	// }, []);
 
 	const empty_cart = () => {
 		for (let item of cartItems) {
@@ -177,12 +160,6 @@ const OrderPage = (props) => {
 		},
 		[ errorPay ]
 	);
-
-	// const handleChangeFor = (type) => ({ error }) => {
-	// 	/* handle error */
-	// 	console.log({ type });
-	// 	console.log({ error });
-	// };
 
 	const colors = [
 		{ name: 'Not Paid', color: '#6d3e3e' },
@@ -281,7 +258,8 @@ const OrderPage = (props) => {
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Shipping.buy_label(order.shipping.shipping_id, order.shipping.shipping_rate);
+		console.log({ shipment_id: order.shipping.shipment_id, shipping_rate: order.shipping.shipping_rate });
+		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
 		// show_label(data.postage_label.label_url);
 		print_invoice(data.postage_label.label_url);
 		if (data) {

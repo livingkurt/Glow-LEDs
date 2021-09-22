@@ -496,7 +496,11 @@ const Sidebar = (props) => {
 								1620 Batteries
 							</button>
 						</Link>
-
+						<Link to="/collections/all/products/1616_batteries">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								1616 Batteries
+							</button>
+						</Link>
 						<Link to="/collections/all/products/1225_batteries">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								1225 Batteries

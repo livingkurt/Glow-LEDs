@@ -489,6 +489,13 @@ const Header = (props) => {
 														</button>
 													</div>
 												</Link>
+												<Link to="/collections/all/products/1616_batteries">
+													<div className="row">
+														<button className="btn nav w-100per ta-l">
+															1616 Batteries
+														</button>
+													</div>
+												</Link>
 												<Link to="/collections/all/products/1225_batteries">
 													<div className="row">
 														<button className="btn nav w-100per ta-l">
