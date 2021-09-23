@@ -250,6 +250,12 @@ const EditOrderPage = (props) => {
 		console.log({ order_item });
 		console.log({ product_options: order_item.product_options.find((option) => option.default === true) });
 		// const product_option = order_item.product_options.find((option) => option.default === true);
+		console.log({
+			color_products: order_item.color_products,
+			secondary_color_products: order_item.secondary_color_products,
+			option_products: order_item.option_products,
+			secondary_products: order_item.secondary_products
+		});
 		let new_order_items = [ ...orderItems ];
 		new_order_items[index] = {
 			...new_order_items[index],
@@ -268,7 +274,15 @@ const EditOrderPage = (props) => {
 			package_height: order_item.package_height,
 			product_option: order_item.product_options.find((option) => option.default === true),
 			reviewed: order_item.reviewed,
-			product: { _id: order_item._id }
+			product: { _id: order_item._id },
+			color_products: order_item.color_products,
+			secondary_color_products: order_item.secondary_color_products,
+			option_products: order_item.option_products,
+			secondary_products: order_item.secondary_products,
+			color_group_name: order_item.color_group_name,
+			secondary_color_group_name: order_item.secondary_color_group_name,
+			option_group_name: order_item.option_group_name,
+			secondary_group_name: order_item.secondary_group_name
 
 			// secondary_product: orderItems[index].secondary_product
 		};
@@ -367,53 +381,6 @@ const EditOrderPage = (props) => {
 		set_orderItems(new_order_items);
 
 		console.log({ orderItems });
-	};
-
-	const update_product_option_property = (value, field_name, index) => {
-		console.log({ value, field_name, index });
-		let new_order_items = [ ...orderItems ];
-		new_order_items[index] = {
-			...new_order_items[index],
-			product_option: { ...new_order_items[index].product_option, [field_name]: value }
-		};
-		set_orderItems(new_order_items);
-		console.log({ orderItems });
-		// let new_product_options = [ ...product_options ];
-		// new_product_options[index] = {
-		// 	...new_product_options[index],
-		// 	[field_name]: value
-		// };
-		// set_product_option(new_product_options);
-		// console.log({ product_options });
-	};
-
-	// const update_product_option = (e, index) => {
-
-	// };
-
-	const update_product_option = async (e, index) => {
-		const product_option = JSON.parse(e.target.value);
-		console.log({ product_option });
-		// console.log({ product_options: product_option.product_options.find((option) => option.default === true) });
-		let new_product_option = [ ...orderItems ];
-		new_product_option[index].product_option = {
-			...new_product_option[index].product_option,
-			name: product_option.name,
-			size: product_option.size,
-			price: product_option.price,
-			sale_price: product_option.sale_price,
-			color: product_option.color,
-			count_in_stock: product_option.count_in_stock
-
-			// secondary_product: orderItems[index].secondary_product
-		};
-		// new_product_option = [ ...orderItems ];
-		new_product_option[index] = {
-			...new_product_option[index],
-			color: product_option.color
-		};
-		// console.log(order_item._id);
-		set_orderItems(new_product_option);
 	};
 
 	const get_products = async (orderItems) => {
@@ -943,7 +910,7 @@ const EditOrderPage = (props) => {
 																			---Choose Product---
 																		</option>
 																		{products
-																			// .filter((product) => !product.hidden)
+																			.filter((product) => !product.option)
 																			.map((product, index) => (
 																				<option
 																					key={index}

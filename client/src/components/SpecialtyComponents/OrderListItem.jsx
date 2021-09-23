@@ -283,13 +283,6 @@ const OrderListItem = (props) => {
 												effect="blur"
 												src={item.display_image && item.display_image}
 											/>
-											{/* <LazyLoadImage
-												className="order-image w-100px h-100px br-10px mr-15px"
-												alt={item.name}
-												title="Product Image"
-												effect="blur"
-												src={item.display_image && item.display_image} 
-											/> */}
 										</Link>
 										{item.qty > 1 && (
 											<div
@@ -312,17 +305,7 @@ const OrderListItem = (props) => {
 				<div className="small_screen_order jc-b">
 					<div className="mv-auto">
 						{props.order.orderItems.map((item, index) => {
-							return (
-								<div key={index}>
-									{determine_product_name(item, true, props.order.createdAt)}
-									{/* {item.category === 'glowskins' && item.color} {item.name}{' '}
-									{item.product_option &&
-										item.product_option.hasOwnProperty('name') &&
-										`- ${item.product_option.name} `}
-									{item.qty > 1 && item.qty + 'x'}
-									{item.secondary_product ? ` w (${item.secondary_product.name})` : ''} */}
-								</div>
-							);
+							return <div key={index}>{determine_product_name(item, true, props.order.createdAt)}</div>;
 						})}
 					</div>
 				</div>
@@ -344,110 +327,114 @@ const OrderListItem = (props) => {
 			{props.admin && (
 				<div id={props.order._id} className="expanded-row-content hide-row">
 					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
-						<div className="jc-b mr-1rem">
+						<div className=" ">
+							<h2>Shipping</h2>
+							<div className="paragraph_font lh-25px">
+								<div>
+									{props.order.shipping.first_name} {props.order.shipping.last_name}
+								</div>
+								<div>
+									{props.order.shipping.address_1} {props.order.shipping.address_2}
+								</div>
+								<div>
+									{props.order.shipping.city}, {props.order.shipping.state}{' '}
+									{props.order.shipping.postalCode}
+								</div>
+								<div>{props.order.shipping.country}</div>
+								<div>{props.order.shipping.international && 'International'}</div>
+								<div>{props.order.shipping.email}</div>
+							</div>
+						</div>
+						<div className="column jc-b h-10rem w-20rem ml-1rem">
+							<h2>Order Status</h2>
 							<div>
-								<div className="mv-10px">
-									{/* <label htmlFor="payment_method">Payment Method</label>
-									<li className="row mv-10px">
-										<input
-											type="text"
-											defaultValue={props.order.payment.paymentMethod}
-											name="payment_method"
-											className=""
-											onChange={(e) => props.set_payment_method(e.target.value)}
-										/>
-									</li> */}
-									<label htmlFor="refund_amount">Refund Amount</label>
-									<div className="row">
-										<input
-											type="text"
-											value={refund_amount}
-											name="refund_amount"
-											// id="refund_amount"
-											className="w-100per"
-											onChange={(e) => set_refund_amount(e.target.value)}
-										/>
+								<div className="row ai-c">
+									<div className="mv-5px">
+										{props.order.isPaid ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
 									</div>
-									<div className="mv-10px">
-										<label htmlFor="refund_reason">Refund Reason</label>
-										<div className="row">
-											<input
-												type="text"
-												value={refund_reason}
-												name="refund_reason"
-												// id="refund_reason"
-												className="w-100per"
-												onChange={(e) => set_refund_reason(e.target.value)}
-											/>
-										</div>
+									<div className="mh-10px">Paid</div>
+									<div>{!props.order.paidAt ? '' : format_date(props.order.paidAt)}</div>
+								</div>
+							</div>
+							<div>
+								<div className="row ai-c">
+									<div className="mv-5px">
+										{props.order.isManufactured ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
 									</div>
-									<div className="">
-										<button className="btn primary mv-5px w-100per" onClick={update_refund_state}>
-											Refund Customer
-										</button>
+									<div className="mh-10px">Manufactured</div>
 
-										<button className="btn primary mv-5px w-100per">
-											<Link to={'/secure/glow/emails/order/' + props.order._id + '/order/false'}>
-												View Email
-											</Link>
-										</button>
+									<div>
+										{!props.order.manufacturedAt ? '' : format_date(props.order.manufacturedAt)}
 									</div>
 								</div>
 							</div>
-						</div>
-						<ul className="">
-							<li className=" ">
-								<h2>Shipping</h2>
-								<div className="paragraph_font lh-25px">
-									<div>
-										{props.order.shipping.first_name} {props.order.shipping.last_name}
+							<div>
+								<div className="row ai-c">
+									<div className="mv-5px">
+										{props.order.isPackaged ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
 									</div>
-									<div>
-										{props.order.shipping.address_1} {props.order.shipping.address_2}
-									</div>
-									<div>
-										{props.order.shipping.city}, {props.order.shipping.state}{' '}
-										{props.order.shipping.postalCode}
-									</div>
-									<div>{props.order.shipping.country}</div>
-									<div>{props.order.shipping.international && 'International'}</div>
-									<div>{props.order.shipping.email}</div>
+									<div className="mh-10px">Packaged</div>
+
+									<div>{!props.order.packagedAt ? '' : format_date(props.order.packagedAt)}</div>
 								</div>
+							</div>
+							<div>
+								<div className="row ai-c">
+									<div className="mv-5px">
+										{props.order.isShipped ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
+									</div>
+									<div className="mh-10px">Shipped</div>
 
-								{/* <button
-									className="btn secondary w-200px mv-10px"
-									onClick={() =>
-										copyToClipboard(`
-${props.order.shipping.first_name} ${props.order.shipping.last_name}
-${props.order.shipping.address_1} ${props.order.shipping.address_2}
-${props.order.shipping.city}, ${props.order.shipping.state}
-${props.order.shipping.postalCode} ${props.order.shipping.country}
-${props.order.shipping.email}`)}
-								>
-									Copy to clipboard
-								</button> */}
+									<div>{!props.order.shippedAt ? '' : format_date(props.order.shippedAt)}</div>
+								</div>
+							</div>
+							<div>
+								<div className="row ai-c">
+									<div className="mv-5px row">
+										{props.order.isDelivered ? (
+											<i className="fas fa-check-circle" />
+										) : (
+											<i className="fas fa-times-circle" />
+										)}
+									</div>
+									<div className="mh-10px">Delivered</div>
 
-								<button className="btn secondary w-200px mv-10px" onClick={() => sendEmail('Hello')}>
-									Send User a Message
-								</button>
-								{/* <a href="mailto:demo@demo.com">
-									<button className="btn secondary w-200px mv-10px">Send User a Message</button>
-								</a> */}
+									<div>{!props.order.deliveredAt ? '' : format_date(props.order.deliveredAt)}</div>
+								</div>
+							</div>
+						</div>
+						<ul className="m-0px">
+							<h2>Meta Data</h2>
+							<li className="row mv-2rem">
+								<label className="phrase_font">Payment Method </label>
+								<label className="ml-1rem">{props.order.payment.paymentMethod}</label>
+							</li>
+							<li className="row mv-2rem">
+								<label className="phrase_font">Order Note: </label>
+								<label className="ml-1rem">{props.order.order_note}</label>
+							</li>
+							<li className="row mv-2rem">
+								<label className="phrase_font">Promo Code: </label>
+								<label className="ml-1rem">{props.order.promo_code}</label>
 							</li>
 							<li className="row">
-								<h3 className="">Payment Method </h3>
-								<label className="mv-2rem ml-1rem">{props.order.payment.paymentMethod}</label>
-							</li>
-							<li className="row">
-								<h3 className="">Order Note: </h3>
-								<label className="mv-2rem ml-1rem">{props.order.order_note}</label>
-							</li>
-							<li className="row">
-								<h3 className="">Promo Code: </h3>
-								<label className="mv-2rem ml-1rem">{props.order.promo_code}</label>
-							</li>
-							<li className="row">
-								<h3 className="">Tracking Number: </h3>
+								<label className="phrase_font">Tracking Number: </label>
 
 								<a
 									href={
@@ -495,171 +482,10 @@ ${props.order.shipping.email}`)}
 						</ul>
 
 						<div className="jc-b">
-							<div className="column jc-b w-25rem">
-								{/* <button
-									className="btn primary mv-5px"
-									onClick={() =>
-										props.update_order_payment_state(
-											props.order,
-											props.order.isPaid,
-											'isPaid',
-											'paidAt'
-										)}
-								>
-									{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-								</button> */}
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isPaid,
-												'isPaid',
-												'paidAt'
-											)}
-									>
-										{props.order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-									</button>
-									<Link to={`/secure/glow/emails/order/${props.order._id}/order/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isReassured,
-												'isReassured',
-												'reassuredAt'
-											)}
-									>
-										{props.order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
-									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/reassured/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isManufactured,
-												'isManufactured',
-												'manufacturedAt'
-											)}
-									>
-										{props.order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
-									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/manufactured/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isPackaged,
-												'isPackaged',
-												'packagedAt'
-											)}
-									>
-										{props.order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/packaged/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isShipped,
-												'isShipped',
-												'shippedAt'
-											)}
-									>
-										{props.order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/shipped/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isDelivered,
-												'isDelivered',
-												'deliveredAt'
-											)}
-									>
-										{props.order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-									</button>
-									<Link to={`/secure/glow/emails/order_status/${props.order._id}/delivered/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-								<div className="row ai-c">
-									<button
-										className="btn primary mv-5px w-100per"
-										onClick={() =>
-											props.update_order_state(
-												props.order,
-												props.order.isRefunded,
-												'isRefunded',
-												'refundedAt'
-											)}
-									>
-										{props.order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
-									</button>
-									<Link to={`/secure/glow/emails/order/${props.order._id}/refunded/false`}>
-										<button className="btn secondary">
-											<i class="fas fa-paper-plane" />
-										</button>
-									</Link>
-								</div>
-
-								{!props.order.shipping.shipping_label && (
-									<button className="btn secondary mv-5px" onClick={() => create_label()}>
-										Create Label
-									</button>
-								)}
-								{!props.order.shipping.shipping_label && (
-									<button className="btn secondary mv-5px" onClick={() => buy_label()}>
-										Buy Label
-									</button>
-								)}
+							<div className="column w-25rem">
 								{props.order.shipping.shipping_label && (
 									<button className="btn secondary mv-5px" onClick={() => view_label()}>
 										View Label
-									</button>
-								)}
-								{!props.order.shipping.return_shipping_label && (
-									<button className="btn secondary mv-5px" onClick={() => create_return_label()}>
-										Create Return Label
 									</button>
 								)}
 								{props.order.shipping.return_shipping_label && (
@@ -667,6 +493,9 @@ ${props.order.shipping.email}`)}
 										View Return Label
 									</button>
 								)}
+								<button className="btn secondary w-100per mv-10px" onClick={() => sendEmail('Hello')}>
+									Send User a Message
+								</button>
 								<button
 									className="btn secondary mv-5px"
 									onClick={() => create_duplicate_order(props.order._id)}
@@ -683,82 +512,6 @@ ${props.order.shipping.email}`)}
 								>
 									Delete Order
 								</button>
-							</div>
-							<div className="column jc-b h-10rem w-20rem ml-1rem">
-								<h2>Order Status</h2>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{props.order.isPaid ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Paid</div>
-										<div>{!props.order.paidAt ? '' : format_date(props.order.paidAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{props.order.isManufactured ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Manufactured</div>
-
-										<div>
-											{!props.order.manufacturedAt ? '' : format_date(props.order.manufacturedAt)}
-										</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{props.order.isPackaged ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Packaged</div>
-
-										<div>{!props.order.packagedAt ? '' : format_date(props.order.packagedAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{props.order.isShipped ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Shipped</div>
-
-										<div>{!props.order.shippedAt ? '' : format_date(props.order.shippedAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px row">
-											{props.order.isDelivered ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Delivered</div>
-
-										<div>
-											{!props.order.deliveredAt ? '' : format_date(props.order.deliveredAt)}
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
