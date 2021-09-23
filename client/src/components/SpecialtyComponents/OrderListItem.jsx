@@ -454,7 +454,7 @@ const OrderListItem = (props) => {
 							</li>
 							{props.order.return_tracking_number && (
 								<li className="row">
-									<h3 className="">Return Tracking Number: </h3>
+									<label className="phrase_font">Return Tracking Number: </label>
 
 									<a
 										href={
@@ -476,7 +476,9 @@ const OrderListItem = (props) => {
 
 							{props.order.guest && (
 								<li className="row">
-									<h3 className="">Guest Order </h3>
+									<label className="phrase_font">
+										Guest Order: {props.order.guest ? 'True' : 'False'}{' '}
+									</label>
 								</li>
 							)}
 						</ul>
