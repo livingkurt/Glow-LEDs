@@ -42,6 +42,7 @@ const EditOrderPage = (props) => {
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
 	const [ order_products, set_order_products ] = useState(false);
+	const [ update_total_prices, set_update_total_prices ] = useState(true);
 	// const [ product_option, set_product_option ] = useState({});
 	// const [ product_option_images, set_product_option_images ] = useState([] ]);
 
@@ -283,25 +284,17 @@ const EditOrderPage = (props) => {
 			secondary_color_group_name: order_item.secondary_color_group_name,
 			option_group_name: order_item.option_group_name,
 			secondary_group_name: order_item.secondary_group_name
-
-			// secondary_product: orderItems[index].secondary_product
 		};
-		// console.log(order_item._id);
 		set_orderItems(new_order_items);
 		set_orderItems(new_order_items);
-		console.log({ orderItems: [ ...new_order_items ] });
-		const price_items = [ ...new_order_items ].reduce((a, c) => a + c.price * c.qty, 0);
-		// [ ...new_order_items ].forEach((item) => console.log(item.price));
-
-		set_itemsPrice(price_items);
-		const rate_tax = await get_tax_rates();
-		console.log({ rate_tax });
-		const tax = rate_tax * price_items;
-		console.log({ price_items });
-		console.log({ tax });
-		console.log({ shippingPrice });
-		set_taxPrice(tax);
-		set_totalPrice(price_items + shippingPrice + tax);
+		if (update_total_prices) {
+			const price_items = [ ...new_order_items ].reduce((a, c) => a + c.price * c.qty, 0);
+			set_itemsPrice(price_items);
+			const rate_tax = await get_tax_rates();
+			const tax = rate_tax * price_items;
+			set_taxPrice(tax);
+			set_totalPrice(price_items + shippingPrice + tax);
+		}
 	};
 
 	const get_tax_rates = async () => {
@@ -320,8 +313,6 @@ const EditOrderPage = (props) => {
 				return;
 			}
 			return tax_rate;
-			// set_taxPrice(tax_rate * items_price);
-			// set_totalPrice(items_price + shippingPrice + tax_rate);
 		}
 		set_loading_tax_rate(false);
 	};
@@ -392,6 +383,11 @@ const EditOrderPage = (props) => {
 		);
 		console.log({ products });
 		set_order_products(products);
+	};
+
+	const update_shipping_price = (e) => {
+		set_shippingPrice(e.target.value);
+		set_totalPrice(itemsPrice + parseFloat(e.target.value) + taxPrice);
 	};
 
 	return (
@@ -622,7 +618,9 @@ const EditOrderPage = (props) => {
 													name="shippingPrice"
 													value={shippingPrice}
 													id="shippingPrice"
-													onChange={(e) => set_shippingPrice(e.target.value)}
+													onChange={(e) => {
+														update_shipping_price(e);
+													}}
 												/>
 											</li>
 											<li>
@@ -862,6 +860,21 @@ const EditOrderPage = (props) => {
 											Add Another Order Item
 										</button>
 									</li>
+									{loading_checkboxes ? (
+										<div>Loading...</div>
+									) : (
+										<li>
+											<label htmlFor="update_total_prices">Update Total</label>
+											<input
+												type="checkbox"
+												name="update_total_prices"
+												defaultValue={update_total_prices}
+												defaultChecked={update_total_prices}
+												id="update_total_prices"
+												onChange={(e) => set_update_total_prices(e.target.checked)}
+											/>
+										</li>
+									)}
 									<div className="row wrap jc-b">
 										{orderItems &&
 											orderItems.map((item, index) => {
