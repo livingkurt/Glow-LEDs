@@ -52,7 +52,7 @@ const OrderSmallScreen = (props) => {
 								<div className="column ai-c pos-rel">
 									<Link to={'/collections/all/products/' + item.pathname}>
 										<LazyImage
-											look="order-image w-100px h-100px br-10px mr-15px"
+											className="order-image w-100px h-100px br-10px mr-15px"
 											alt={item.name}
 											title="Product Image"
 											effect="blur"

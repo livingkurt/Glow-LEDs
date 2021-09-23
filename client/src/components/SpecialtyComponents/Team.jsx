@@ -13,7 +13,7 @@ const Team = (props) => {
 					<div className="tooltipoverlay">
 						<div className="product">
 							<LazyImage
-								look="product-image"
+								className="product-image"
 								alt={props.team.name}
 								title="Team Image"
 								size={{ height: props.size, width: 'auto' }}

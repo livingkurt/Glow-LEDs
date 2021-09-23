@@ -44,7 +44,7 @@ const ProductItemD = (props) => {
 									{/* <Link to={'/collections/all/products/' + item.pathname}> */}
 									{images.length === 1 && (
 										<LazyImage
-											look="product-image"
+											className="product-image"
 											alt={props.product.name}
 											title="Product Image"
 											size={{ height: props.size, width: props.size }}
@@ -70,7 +70,7 @@ const ProductItemD = (props) => {
 												{[ ...Array(1).keys() ].map((x) => (
 													<LazyImage
 														key={image_number + x}
-														look="product-image"
+														className="product-image"
 														alt={image}
 														title="Product Image"
 														size={{ height: props.size, width: props.size }}

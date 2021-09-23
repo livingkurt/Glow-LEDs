@@ -159,7 +159,7 @@ const Order = (props) => {
 									<div className="column ai-c pos-rel">
 										<Link to={'/collections/all/products/' + item.pathname}>
 											<LazyImage
-												look="order-image w-200px h-200px br-10px mr-15px"
+												className="order-image w-200px h-200px br-10px mr-15px"
 												alt={item.name}
 												title="Product Image"
 												effect="blur"

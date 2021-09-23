@@ -14,7 +14,7 @@ const Feature = (props) => {
 					<div className="tooltipoverlay">
 						<div className="product">
 							<LazyImage
-								look="product-image"
+								className="product-image"
 								alt={props.feature.name}
 								title="Feature Image"
 								size={{ height: props.size, width: 'auto' }}
@@ -28,7 +28,7 @@ const Feature = (props) => {
 								}
 							/>
 							{/* <LazyImage
-									look="product-image w-200px h-200px "
+									className="product-image w-200px h-200px "
 									alt={props.product.name}
 									title="Product Image"
 									size={{ height: props.size, width: props.size }}

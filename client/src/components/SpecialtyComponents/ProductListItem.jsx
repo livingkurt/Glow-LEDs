@@ -230,7 +230,7 @@ const ProductListItem = (props) => {
 						<ul className="ai-c jc-a w-100per">
 							<li className="">
 								<LazyImage
-									look="product-image w-100px h-100px br-10px mr-15px"
+									className="product-image w-100px h-100px br-10px mr-15px"
 									alt={product.name}
 									title="Product Image"
 									effect="blur"

@@ -42,7 +42,7 @@ const MenuItemD = ({ item, index, decide_url }) => {
 					{item &&
 					item.image && (
 						<LazyImage
-							look="w-100per h-auto br-20px"
+							className="w-100per h-auto br-20px"
 							alt={item.category}
 							title="Product Image"
 							size={{ height: '300px', width: '300px', objectFit: 'cover' }}

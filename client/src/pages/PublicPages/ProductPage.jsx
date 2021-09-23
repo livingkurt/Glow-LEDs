@@ -356,7 +356,8 @@ const ProductPage = (props) => {
 				size,
 				color: size !== '1 Skin' && color,
 				secondary_color: size !== '1 Sled' && secondary_color,
-				display_image: images[0],
+				display_image: image ? image : images[0],
+				secondary_image: secondary_image ? secondary_image : '',
 				price,
 				sale_price,
 				countInStock: count_in_stock,
@@ -587,7 +588,6 @@ const ProductPage = (props) => {
 
 								<div className="details-image">
 									<div>
-										{console.log(true)}
 										{!secondary_image && (
 											<img
 												id="expandedImg"
@@ -640,7 +640,6 @@ const ProductPage = (props) => {
 											set_image={set_image}
 										/>
 									</div>
-									{/* </div> */}
 								</div>
 
 								<div>

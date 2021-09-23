@@ -13,7 +13,7 @@ const Sponsor = (props) => {
 					<div className="tooltipoverlay">
 						<div className="sponsor">
 							<LazyImage
-								look="product-image"
+								className="product-image"
 								alt={props.affiliate.name}
 								title="Sponsor Image"
 								size={{ height: props.size, width: 'auto' }}

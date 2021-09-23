@@ -276,13 +276,46 @@ const OrderListItem = (props) => {
 								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
 										<Link to={'/collections/all/products/' + item.pathname}>
-											<LazyImage
-												look="order-image w-100px h-100px br-10px mr-15px"
-												alt={item.name}
-												title="Product Image"
-												effect="blur"
-												src={item.display_image && item.display_image}
-											/>
+											<div className="">
+												{!item.secondary_image && (
+													<LazyImage
+														className="order-image br-10px mr-15px w-70px h-70px"
+														alt={item.name}
+														title="Product Image"
+														effect="blur"
+														src={item.display_image && item.display_image}
+													/>
+												)}
+												{item.secondary_image && (
+													<div
+														className={`double-image-cart-${item.name &&
+														item.name.split('-')[1]
+															? 'vertical'
+															: ''} row`}
+													>
+														<LazyImage
+															id="expandedImg"
+															alt={item.name}
+															title={item.name}
+															className={`details-image-cart-${item.name &&
+															item.name.split('-')[1]
+																? 'top'
+																: 'left'} m-0px`}
+															src={item.display_image}
+														/>
+														<LazyImage
+															id="expandedSecondaryImg"
+															alt={item.name}
+															title={item.name}
+															className={`details-image-cart-${item.name &&
+															item.name.split('-')[1]
+																? 'bottom'
+																: 'right'} `}
+															src={item.secondary_image}
+														/>
+													</div>
+												)}
+											</div>
 										</Link>
 										{item.qty > 1 && (
 											<div

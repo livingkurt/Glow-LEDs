@@ -22,7 +22,46 @@ const CartItem = (props) => {
 			{/* {console.log({ item })} */}
 			<div className="cart-image m-auto ai-c">
 				<Link to={'/collections/all/products/' + props.item.pathname}>
-					<img src={props.item.display_image} alt={props.item.name} title="Product Image" />
+					{/* <img src={props.item.display_image} alt={props.item.name} title="Product Image" /> */}
+					<div className="">
+						{!props.item.secondary_image && (
+							<LazyImage
+								className="order-image br-10px mr-15px w-100px h-100px"
+								alt={props.item.name}
+								title="Product Image"
+								effect="blur"
+								src={props.item.display_image && props.item.display_image}
+							/>
+						)}
+						{props.item.secondary_image && (
+							<div
+								className={`double-image-cart-page-${props.item.name && props.item.name.split('-')[1]
+									? 'vertical'
+									: ''} row`}
+							>
+								<LazyImage
+									id="expandedImg"
+									alt={props.item.name}
+									title={props.item.name}
+									className={`details-image-cart-page-${props.item.name &&
+									props.item.name.split('-')[1]
+										? 'top'
+										: 'left'} m-0px`}
+									src={props.item.display_image}
+								/>
+								<LazyImage
+									id="expandedSecondaryImg"
+									alt={props.item.name}
+									title={props.item.name}
+									className={`details-image-cart-page-${props.item.name &&
+									props.item.name.split('-')[1]
+										? 'bottom'
+										: 'right'} `}
+									src={props.item.secondary_image}
+								/>
+							</div>
+						)}
+					</div>
 				</Link>
 			</div>
 			<div className="cart-name">

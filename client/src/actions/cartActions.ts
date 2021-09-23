@@ -61,6 +61,7 @@ export const addToCart = (cart_item_1: any) => async (
 			secondary_color_code: cart_data.secondary_color_code,
 
 			display_image: cart_data.display_image,
+			secondary_image: cart_data.secondary_image,
 			price: cart_data.price,
 			sale_price: cart_data.sale_price,
 			countInStock: cart_data.countInStock,

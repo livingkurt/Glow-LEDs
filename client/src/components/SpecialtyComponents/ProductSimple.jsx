@@ -16,7 +16,7 @@ const Product = (props) => {
 								<div className="column ai-c pos-rel">
 									{/* <Link to={'/collections/all/products/' + item.pathname}> */}
 									<LazyImage
-										look="product-image"
+										className="product-image"
 										alt={props.product.name}
 										title="Product Image"
 										size={{ height: props.size, width: props.size }}

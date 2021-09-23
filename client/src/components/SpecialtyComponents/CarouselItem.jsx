@@ -202,7 +202,7 @@ const CarouselItem = (props) => {
 						>
 							<div className="product">
 								<LazyImage
-									look="product-image"
+									className="product-image"
 									alt={product.name}
 									title="Product Image"
 									size={{ height: props.size, width: props.size }}

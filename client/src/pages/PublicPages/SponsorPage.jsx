@@ -100,7 +100,7 @@ const SponsorPage = (props) => {
 					</div>
 					<div className="">
 						<LazyImage
-							look="sponsor-image sponsor_image_small"
+							className="sponsor-image sponsor_image_small"
 							alt={affiliate.artist_name}
 							title="Sponsor Image"
 							size={{
@@ -148,7 +148,7 @@ const SponsorPage = (props) => {
 									return (
 										<Link to={'/collections/all/teams/' + teams.pathname} className=" pos-rel">
 											<LazyImage
-												look="sponsor-image w-200px"
+												className="sponsor-image w-200px"
 												alt={team.name}
 												title="Sponsor Image"
 												size={{ height: 'auto', width: '100%' }}
@@ -232,7 +232,7 @@ const SponsorPage = (props) => {
 						</div>
 						<div className="">
 							<LazyImage
-								look="sponsor-image sponsor_image_big"
+								className="sponsor-image sponsor_image_big"
 								alt={affiliate.name}
 								title="Sponsor Image"
 								size={{ height: 'auto', width: '100%' }}

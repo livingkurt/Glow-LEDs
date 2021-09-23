@@ -579,7 +579,7 @@ const OrderEmail = (props) => {
 																													'helvetica'
 																											}}
 																										>
-																											<img
+																											{/* <img
 																												src={
 																													item.display_image
 																												}
@@ -592,10 +592,149 @@ const OrderEmail = (props) => {
 																														'15px',
 																													borderRadius:
 																														'8px'
-																													// border:
-																													// 	'1px solid #e5e5e5'
 																												}}
-																											/>
+																											/> */}
+																											<div
+																												style={{
+																													marginBottom:
+																														'10px',
+
+																													marginRight:
+																														'10px'
+																												}}
+																											>
+																												{!item.secondary_image ? (
+																													<img
+																														src={
+																															item.display_image
+																														}
+																														alt={
+																															item.name
+																														}
+																														width="60"
+																														height="60"
+																														style={{
+																															borderRadius:
+																																'8px'
+																														}}
+																														title="Product Image"
+																													/>
+																												) : (
+																													<div
+																													/>
+																												)}
+																												{item.secondary_image ? (
+																													<div
+																														style={{
+																															width:
+																																'100%',
+																															display:
+																																'flex',
+																															flexDirection:
+																																item.name &&
+																																item.name.split(
+																																	'-'
+																																)[1]
+																																	? 'column'
+																																	: 'row'
+																														}}
+																													>
+																														<img
+																															id="expandedImg"
+																															alt={
+																																item.name
+																															}
+																															title={
+																																item.name
+																															}
+																															style={{
+																																borderRadius:
+																																	item.name &&
+																																	item.name.split(
+																																		'-'
+																																	)[1]
+																																		? '0rem 1rem 1rem 0rem'
+																																		: '1rem 0rem 0rem 1rem',
+																																objectFit:
+																																	'cover',
+																																objectPosition:
+																																	'50% 50%',
+																																width:
+																																	item.name &&
+																																	item.name.split(
+																																		'-'
+																																	)[1]
+																																		? '70px'
+																																		: '35px',
+																																height:
+																																	item.name &&
+																																	item.name.split(
+																																		'-'
+																																	)[1]
+																																		? '35px'
+																																		: '70px',
+																																maxWidth:
+																																	'70px',
+																																maxHeight:
+																																	'70px',
+																																margin:
+																																	'0px'
+																															}}
+																															src={
+																																item.display_image
+																															}
+																														/>
+																														<img
+																															id="expandedSecondaryImg"
+																															alt={
+																																item.name
+																															}
+																															title={
+																																item.name
+																															}
+																															style={{
+																																borderRadius:
+																																	item.name &&
+																																	item.name.split(
+																																		'-'
+																																	)[1]
+																																		? '1rem 0rem 0rem 1rem'
+																																		: '0rem 1rem 1rem 0rem',
+																																objectFit:
+																																	'cover',
+																																objectPosition:
+																																	'50% 50%',
+																																width:
+																																	item.name &&
+																																	item.name.split(
+																																		'-'
+																																	)[1]
+																																		? '70px'
+																																		: '35px',
+																																height:
+																																	item.name &&
+																																	item.name.split(
+																																		'-'
+																																	)[1]
+																																		? '35px'
+																																		: '70px',
+																																maxWidth:
+																																	'70px',
+																																maxHeight:
+																																	'70px',
+																																margin:
+																																	'0px'
+																															}}
+																															src={
+																																item.secondary_image
+																															}
+																														/>
+																													</div>
+																												) : (
+																													<div
+																													/>
+																												)}
+																											</div>
 																										</td>
 																										<td
 																											style={{

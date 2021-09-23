@@ -12,7 +12,7 @@ const MenuItemM = ({ item, index, decide_url }) => {
 			<Link to={decide_url(item)}>
 				<div className="small_screen_product row">
 					<LazyImage
-						look="product-image w-200px h-200px "
+						className="product-image w-200px h-200px "
 						alt={item.category}
 						title="Affiliate Image"
 						effect="blur"

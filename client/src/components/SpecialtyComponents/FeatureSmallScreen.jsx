@@ -11,7 +11,7 @@ const FeatureSmallScreen = (props) => {
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage
-							look="feature-image  w-100per h-auto br-10px"
+							className="feature-image  w-100per h-auto br-10px"
 							alt={props.feature.artist_name}
 							title="Feature Image"
 							effect="blur"

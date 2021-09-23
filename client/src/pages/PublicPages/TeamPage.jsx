@@ -72,7 +72,7 @@ const TeamPage = (props) => {
 					</div>
 					<div className="">
 						<LazyImage
-							look="sponsor-image sponsor_image_small"
+							className="sponsor-image sponsor_image_small"
 							alt={team.team_name}
 							title="Sponsor Image"
 							size={{
@@ -108,7 +108,7 @@ const TeamPage = (props) => {
 					</p> */}
 					{/* <div className="mt-2rem">
 						<LazyImage
-							look="sponsor-image"
+							className="sponsor-image"
 							alt={team.name}
 							title="Sponsor Image"
 							size={{ height: 'auto', width: '100%' }}
@@ -150,7 +150,7 @@ const TeamPage = (props) => {
 						</div>
 						<div className="mt-2rem">
 							<LazyImage
-								look="sponsor-image sponsor_image_big"
+								className="sponsor-image sponsor_image_big"
 								alt={team.name}
 								title="Sponsor Image"
 								size={{ height: 'auto', width: '100%' }}

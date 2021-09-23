@@ -6,8 +6,6 @@ const placeHolder =
 
 const Image = styled.img`
 	display: block;
-	height: 100px;
-	width: 100px;
 	// Add a smooth animation on loading
 	@keyframes loaded {
 		0% {
@@ -27,7 +25,7 @@ const Image = styled.img`
 	}
 `;
 
-const LazyImage = ({ src, alt, size, look }) => {
+const LazyImage = ({ src, alt, size, className }) => {
 	const [ imageSrc, setImageSrc ] = useState(placeHolder);
 	const [ imageRef, setImageRef ] = useState();
 
@@ -82,7 +80,7 @@ const LazyImage = ({ src, alt, size, look }) => {
 			src={imageSrc}
 			alt={alt}
 			style={size}
-			className={look}
+			className={className}
 			onLoad={onLoad}
 			onError={onError}
 		/>

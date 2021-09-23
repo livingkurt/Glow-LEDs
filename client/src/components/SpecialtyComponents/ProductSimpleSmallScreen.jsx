@@ -20,7 +20,7 @@ const ProductSmallScreen = (props) => {
 									src={props.product.images && props.product.images[0]} 
 								/> */}
 							<LazyImage
-								look="product-image w-200px h-200px "
+								className="product-image w-200px h-200px "
 								alt={props.product.name}
 								title="Product Image"
 								size={{ height: props.size, width: props.size }}

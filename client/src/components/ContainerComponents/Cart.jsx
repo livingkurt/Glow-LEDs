@@ -169,7 +169,7 @@ const Cart = (props) => {
 												{item &&
 												item.images && (
 													<LazyImage
-														look=" h-auto br-20px"
+														className=" h-auto br-20px"
 														alt={item.category}
 														title="Product Image"
 														size={{
@@ -315,15 +315,47 @@ const Cart = (props) => {
 							{cartItems &&
 								cartItems.map((item, index) => (
 									<li key={index} className="ph-1rem">
-										<div className="cart_sidebar-image br-5px ai-c">
+										<div className="ai-c">
 											<Link to={'/collections/all/products/' + item.pathname}>
-												<img
-													src={item.display_image}
-													height="50px"
-													width="50px"
-													alt={item.name}
-													title="Product Image"
-												/>
+												<div className="mb-10px">
+													{!item.secondary_image && (
+														<LazyImage
+															src={item.display_image}
+															alt={item.name}
+															className="br-10px w-70px h-70px"
+															title="Product Image"
+														/>
+													)}
+													{item.secondary_image && (
+														<div
+															className={`double-image-cart-${item.name &&
+															item.name.split('-')[1]
+																? 'vertical'
+																: ''} row`}
+														>
+															<LazyImage
+																id="expandedImg"
+																alt={item.name}
+																title={item.name}
+																className={`details-image-cart-${item.name &&
+																item.name.split('-')[1]
+																	? 'top'
+																	: 'left'} m-0px`}
+																src={item.display_image}
+															/>
+															<LazyImage
+																id="expandedSecondaryImg"
+																alt={item.name}
+																title={item.name}
+																className={`details-image-cart-${item.name &&
+																item.name.split('-')[1]
+																	? 'bottom'
+																	: 'right'} `}
+																src={item.secondary_image}
+															/>
+														</div>
+													)}
+												</div>
 											</Link>
 										</div>
 										<div className="cart_sidebar-name">

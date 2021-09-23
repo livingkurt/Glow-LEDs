@@ -10,7 +10,7 @@ const TeamSmallScreen = (props) => {
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage
-							look="sponsor-image max-w-400px max-h-400px w-100per h-auto br-10px pr-1rem"
+							className="sponsor-image max-w-400px max-h-400px w-100per h-auto br-10px pr-1rem"
 							alt={props.team.team_name}
 							title="Affiliate Image"
 							effect="blur"
@@ -66,7 +66,7 @@ export default TeamSmallScreen;
 // 				<div className="small_screen_product row">
 // 					<div className="">
 // 						<LazyImage
-// 							look="team-image w-200px h-auto br-10px"
+// 							className="team-image w-200px h-auto br-10px"
 // 							alt={props.team.team_name}
 // 							title="Team Image"
 // 							effect="blur"
