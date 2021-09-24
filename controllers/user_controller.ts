@@ -24,7 +24,7 @@ export default {
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ email__usererror: error });
 
 			res.status(500).send({ error, message: 'Error Getting User' });
 		}
@@ -170,7 +170,7 @@ export default {
 
 			res.send(users);
 		} catch (error) {
-			console.log({ error });
+			console.log({ findAll_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Users' });
 		}
@@ -188,7 +188,7 @@ export default {
 				res.status(404).send('Order Not Found.');
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ findById_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting User' });
 		}
@@ -212,7 +212,7 @@ export default {
 				});
 			});
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
@@ -281,7 +281,7 @@ export default {
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_profile_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
@@ -300,7 +300,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating User.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
@@ -317,7 +317,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Deleting User' });
 		}
@@ -343,7 +343,7 @@ export default {
 				});
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ password_reset_users_error: error });
 
 			res.status(500).send({ error, message: 'Error Resetting User Password' });
 		}
@@ -359,7 +359,7 @@ export default {
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ reset_password_user_error: error });
 
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
@@ -404,7 +404,7 @@ export default {
 				res.status(404).send({ message: 'User Not Found' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ verify_user_error: error });
 
 			res.status(500).send({ error, message: 'Error Verifying User' });
 		}
@@ -439,7 +439,7 @@ export default {
 				return res.status(500).send({ message: 'Error Getting User' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_user_user_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting User' });
 		}
@@ -455,8 +455,7 @@ export default {
 			// res.json({ message: "User Already Exists" })
 			res.status(200).send({ message: 'No User Found' });
 		} catch (error) {
-			console.log({ error });
-			console.log(error);
+			console.log({ checkemail_user_error: error });
 			res.send(error);
 		}
 	},
@@ -497,8 +496,7 @@ export default {
 				});
 			}
 		} catch (error) {
-			console.log({ error });
-			console.log(error);
+			console.log({ createadmin_user_error: error });
 			res.send(error);
 		}
 	}

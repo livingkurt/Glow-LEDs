@@ -47,9 +47,33 @@ export default {
 				.populate('categorys')
 				.populate('subcategorys');
 			// console.log({ products });
-			res.send(products);
+
+			if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {
+				console.log('No Chip');
+				res.send(products);
+			} else {
+				console.log('Yes Chip');
+				const accessories = products.filter((product: any) => product.category === 'accessories');
+				const diffusers = products.filter((product: any) => product.category === 'diffusers');
+				const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
+				const decals = products.filter((product: any) => product.category === 'decals');
+				const exo_diffusers = products.filter((product: any) => product.category === 'exo_diffusers');
+				const glow_strings = products.filter((product: any) => product.category === 'glow_strings');
+				const glow_casings = products.filter((product: any) => product.category === 'glow_casings');
+				const glowskins = products.filter((product: any) => product.category === 'glowskins');
+				res.send([
+					...glowskins,
+					...glow_casings,
+					...accessories,
+					...exo_diffusers,
+					...decals,
+					...glow_strings,
+					...diffuser_caps,
+					...diffusers
+				]);
+			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ findAll_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
@@ -103,7 +127,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_all_options_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
@@ -157,7 +181,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_all_diffuser_caps_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
@@ -180,7 +204,7 @@ export default {
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ findById_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
@@ -195,7 +219,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Creating Product' });
 		}
@@ -210,7 +234,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_product_option_products_error: error });
 			res.status(500).send({ error, message: 'Error Creating Product' });
 		}
 	},
@@ -234,7 +258,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
@@ -249,7 +273,7 @@ export default {
 				res.send('Error in Deletion.');
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Deleting Product' });
 		}
@@ -265,7 +289,7 @@ export default {
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_all_imperfect_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
@@ -298,7 +322,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_products_by_category_products_error: error });
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
@@ -308,7 +332,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_all_products_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
@@ -319,7 +343,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_shown_products_error: error });
 			res.status(500).send({ error, message: 'Error Getting Products' });
 		}
 	},
@@ -329,7 +353,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_caps_products_error: error });
 			res.status(500).send({ error, message: 'Error Getting Original Caps' });
 		}
 	},
@@ -339,7 +363,7 @@ export default {
 
 			res.send(products);
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_mega_caps_products_error: error });
 			res.status(500).send({ error, message: 'Error Getting Mega Caps' });
 		}
 	},
@@ -372,7 +396,7 @@ export default {
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_essentials_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
@@ -397,7 +421,7 @@ export default {
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_best_sellers_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
@@ -412,38 +436,54 @@ export default {
 				res.status(404).send({ message: 'Product Not Found.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ get_options_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Getting Product' });
 		}
 	},
 	get_all_categories: async (req: any, res: any) => {
-		const products = await Product.find({ deleted: false }).sort({ category: 1 });
-		const categories = products.map((product: any) => product.category);
-		const no_dups_categories = categories.filter((value: any, index: any) => categories.indexOf(value) === index);
-		console.log({ no_dups_categories });
-		res.send(no_dups_categories);
+		try {
+			const products = await Product.find({ deleted: false }).sort({ category: 1 });
+			const categories = products.map((product: any) => product.category);
+			const no_dups_categories = categories.filter(
+				(value: any, index: any) => categories.indexOf(value) === index
+			);
+			console.log({ no_dups_categories });
+			res.send(no_dups_categories);
+		} catch (error) {
+			console.log({ get_all_categories_products_error: error });
+		}
 	},
 	get_all_subcategories: async (req: any, res: any) => {
-		const products = await Product.find({ deleted: false }).sort({ category: 1 });
-		const subcategories = products.map((product: any) => product.subcategory);
-		const no_dups_subcategories = subcategories.filter(
-			(value: any, index: any) => subcategories.indexOf(value) === index
-		);
-		res.send(no_dups_subcategories);
+		try {
+			const products = await Product.find({ deleted: false }).sort({ category: 1 });
+			const subcategories = products.map((product: any) => product.subcategory);
+			const no_dups_subcategories = subcategories.filter(
+				(value: any, index: any) => subcategories.indexOf(value) === index
+			);
+			res.send(no_dups_subcategories);
+		} catch (error) {
+			console.log({ products_error: error });
+		}
 	},
 	get_images: async (req: any, res: any) => {
 		// try {
-		console.log(req.params.category);
-		// const product = await Product.findOne({category: req.params.category});
-		const product = await Product.findOne({ category: 'diffuser_caps' }, {}, { sort: { createdAt: -1 } }, function(
-			err: any,
-			product: any
-		) {
-			console.log(product);
-			console.log(product.images[0]);
-			res.json(product.images[0]);
-		});
+		try {
+			console.log(req.params.category);
+			// const product = await Product.findOne({category: req.params.category});
+			const product = await Product.findOne(
+				{ category: 'diffuser_caps' },
+				{},
+				{ sort: { createdAt: -1 } },
+				function(err: any, product: any) {
+					console.log(product);
+					console.log(product.images[0]);
+					res.json(product.images[0]);
+				}
+			);
+		} catch (error) {
+			console.log({ get_images_products_error: error });
+		}
 	},
 	update_stock: async (req: any, res: any) => {
 		try {
@@ -467,7 +507,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_stock_products_error: error });
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -492,7 +532,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ save_item_group_id_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
@@ -518,7 +558,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_product_order_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
@@ -541,7 +581,7 @@ export default {
 				// console.log({ option });
 				const index = product.product_options.findIndex((option: any) => option.name === product_option.name);
 				console.log({ index });
-				let product_options = [ ...product.product_options ];
+				const product_options = [ ...product.product_options ];
 				product_options[index] = {
 					...product_option,
 					count_in_stock: count_in_stock
@@ -557,7 +597,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_product_option_stock_products_error: error });
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
@@ -582,7 +622,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Updating Product.' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_pathname_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
@@ -619,7 +659,7 @@ export default {
 				res.status(404).send({ message: 'Product Not Found' });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ reviews_products_error: error });
 
 			res.status(500).send({ error, message: 'Error Creating Product Review' });
 		}

@@ -158,31 +158,33 @@ const Cart = (props) => {
 							category_items.map((item, index) => {
 								return (
 									<div className="product m-5px jc-c" style={{ height: 'unset' }} key={index}>
-										<Link
-											to={`/collections/all/products/category/${item.category}`}
-											onClick={closeMenu}
-										>
-											<h3 className="mt-0px"> {humanize(item.category)}</h3>
-											<div
-												className={`w-${determine_picture_size()} h-${determine_picture_size()}`}
+										{item.category && (
+											<Link
+												to={`/collections/all/products/category/${item.category}`}
+												onClick={closeMenu}
 											>
-												{item &&
-												item.images && (
-													<LazyImage
-														className=" h-auto br-20px"
-														alt={item.category}
-														title="Product Image"
-														size={{
-															height: `${determine_picture_size()}`,
-															width: `${determine_picture_size()}`,
-															objectFit: 'cover'
-														}}
-														effect="blur"
-														src={item.images[0]}
-													/>
-												)}
-											</div>
-										</Link>
+												<h3 className="mt-0px"> {humanize(item.category)}</h3>
+												<div
+													className={`w-${determine_picture_size()} h-${determine_picture_size()}`}
+												>
+													{item &&
+													item.images && (
+														<LazyImage
+															className=" h-auto br-20px"
+															alt={item.category}
+															title="Product Image"
+															size={{
+																height: `${determine_picture_size()}`,
+																width: `${determine_picture_size()}`,
+																objectFit: 'cover'
+															}}
+															effect="blur"
+															src={item.images[0]}
+														/>
+													)}
+												</div>
+											</Link>
+										)}
 									</div>
 								);
 							})}

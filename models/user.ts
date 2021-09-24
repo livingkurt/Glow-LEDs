@@ -73,6 +73,7 @@ const userSchema = new mongoose.Schema(
 		isVerified: { type: Boolean, required: true, default: false },
 		is_affiliated: { type: Boolean, required: true, default: false },
 		devices: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Device' } ],
+		palettes: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Palette' } ],
 		cart: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
 		affiliate: { type: mongoose.Schema.Types.ObjectId, ref: 'Affiliate' },
 		email_subscription: { type: Boolean, default: true },

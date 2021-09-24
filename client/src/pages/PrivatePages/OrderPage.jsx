@@ -1069,6 +1069,11 @@ ${order.shipping.email}`)}
 													</button>
 												</Link>
 											</div>
+											{order.shipping.shipping_label && (
+												<button className="btn secondary mv-5px" onClick={() => view_label()}>
+													View Label
+												</button>
+											)}
 											{hide_label_button &&
 											!order.shipping.shipping_label && (
 												<button className="btn primary mv-5px" onClick={() => buy_label()}>
@@ -1147,11 +1152,6 @@ ${order.shipping.email}`)}
 												{!order.shipping.shipping_label ? 'Create Label' : 'Create New Label'}
 											</button>
 
-											{order.shipping.shipping_label && (
-												<button className="btn secondary mv-5px" onClick={() => view_label()}>
-													View Label
-												</button>
-											)}
 											{!order.shipping.return_shipping_label && (
 												<button
 													className="btn secondary mv-5px"

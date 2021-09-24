@@ -248,15 +248,6 @@ const EditOrderPage = (props) => {
 
 	const update_order_item = async (e, index) => {
 		const order_item = JSON.parse(e.target.value);
-		console.log({ order_item });
-		console.log({ product_options: order_item.product_options.find((option) => option.default === true) });
-		// const product_option = order_item.product_options.find((option) => option.default === true);
-		console.log({
-			color_products: order_item.color_products,
-			secondary_color_products: order_item.secondary_color_products,
-			option_products: order_item.option_products,
-			secondary_products: order_item.secondary_products
-		});
 		let new_order_items = [ ...orderItems ];
 		new_order_items[index] = {
 			...new_order_items[index],
