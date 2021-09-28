@@ -13,7 +13,6 @@ const StripeForm = (props) => {
 			card: elements.getElement(CardElement)
 		});
 
-		// console.log({ error });
 		if (error) {
 			console.log({ error });
 			return;
@@ -45,9 +44,11 @@ const StripeForm = (props) => {
 					}
 				}}
 			/>
-			<button type="submit" className="btn primary w-100per mb-12px bob" disabled={!stripe}>
-				Complete Order
-			</button>
+			{!props.loading_payment && 
+				<button type="submit" className="btn primary w-100per mb-12px bob" disabled={!stripe}>
+					Complete Order
+				</button>
+			}
 		</form>
 	);
 };

@@ -49,7 +49,7 @@ const PlaceOrderPage = (props) => {
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
 	const [ promo_code, set_promo_code ] = useState('');
-	const [ payment_loading, set_payment_loading ] = useState(false);
+	const [ loading_payment, set_loading_payment ] = useState(false);
 	const [ itemsPrice, setItemsPrice ] = useState(items_price);
 	const [ tax_rate, set_tax_rate ] = useState(0);
 	const [ taxPrice, setTaxPrice ] = useState(0);
@@ -76,7 +76,7 @@ const PlaceOrderPage = (props) => {
 
 	const stableDispatch = useCallback(dispatch, []);
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
-	const stable_set_payment_loading = useCallback(set_payment_loading, []);
+	const stable_set_loading_payment = useCallback(set_loading_payment, []);
 	// const stable_calculate_international = useCallback(calculate_international, []);
 	// const stable_calculate_shipping = useCallback(calculate_shipping, []);
 
@@ -122,12 +122,12 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (error_order) {
-				stable_set_payment_loading(false);
+				stable_set_loading_payment(false);
 				set_error(error_order);
 			}
 			return () => {};
 		},
-		[ error_order, stable_set_payment_loading ]
+		[ error_order, stable_set_loading_payment ]
 	);
 
 	useEffect(
@@ -264,7 +264,7 @@ const PlaceOrderPage = (props) => {
 			)
 		);
 
-		set_payment_loading(true);
+		set_loading_payment(true);
 		console.log({ cartItems });
 		cartItems.forEach(async (item) => {
 			// console.log({ item });
@@ -347,7 +347,7 @@ const PlaceOrderPage = (props) => {
 			})
 		);
 
-		set_payment_loading(false);
+		set_loading_payment(false);
 		props.history.push('/secure/glow/orders');
 		empty_cart();
 		// if (promo_code) {
@@ -425,7 +425,7 @@ const PlaceOrderPage = (props) => {
 			if (successPay && order) {
 				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
 				props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
-				set_payment_loading(false);
+				set_loading_payment(false);
 				empty_cart();
 			} else if (error_pay) {
 			}
@@ -435,7 +435,7 @@ const PlaceOrderPage = (props) => {
 	useEffect(
 		() => {
 			if (error_pay) {
-				set_payment_loading(false);
+				set_loading_payment(false);
 				set_error(error_pay);
 			}
 		},
@@ -589,7 +589,7 @@ const PlaceOrderPage = (props) => {
 			) : (
 				<CheckoutSteps step1 />
 			)}
-			<LoadingPayments loading={payment_loading} error={error} set_error={set_error} />
+			<LoadingPayments loading={loading_payment} error={error} set_error={set_error} />
 
 			<div className="placeorder">
 				<div className="placeorder-info">
@@ -820,7 +820,7 @@ const PlaceOrderPage = (props) => {
 						{!loading &&
 						!hide_pay_button &&
 						shipping &&
-						shipping.hasOwnProperty('first_name') && <Stripe pay_order={placeOrderHandler} />}
+						shipping.hasOwnProperty('first_name') && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />}
 
 						{userInfo &&
 						userInfo.isAdmin && (
@@ -874,6 +874,8 @@ const PlaceOrderPage = (props) => {
 															'cashapp',
 															'paypal',
 															'cash',
+															'zelle',
+															'facebook',
 															'no payment'
 														].map((method, index) => (
 															<option key={index} value={method}>

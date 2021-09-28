@@ -1,19 +1,16 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createPayOrderGuest } from '../../actions/orderActions';
 import { CartItem, GuestCheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import { addToCart, removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
+import { removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { validate_promo_code, validate_passwords } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
-import { API_External, API_Orders, API_Products, API_Promos, API_Shipping } from '../../utils';
-import { loadStripe } from '@stripe/stripe-js';
-import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
-import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice } from '../../components/SpecialtyComponents/ShippingComponents';
 
 const PlaceOrderPublicPage = (props) => {
@@ -771,12 +768,13 @@ const PlaceOrderPublicPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						!create_account && <Stripe pay_order={placeOrderHandler} />}
+						!create_account && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment}/>}
+						
 						{!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
 						create_account &&
-						passwords_check && <Stripe pay_order={placeOrderHandler} />}
+						passwords_check && <Stripe pay_order={placeOrderHandler}loading_payment={loading_payment} />}
 					</ul>
 				</div>
 			</div>

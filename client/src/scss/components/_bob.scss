@@ -20,42 +20,42 @@
 
 @-webkit-keyframes bob-on-hover {
 	0% {
-		-webkit-transform: translateY(-4px);
-		transform: translateY(-4px);
+		-webkit-transform: translateY(-2px);
+		transform: translateY(-2px);
 	}
 	50% {
-		-webkit-transform: translateY(0px);
-		transform: translateY(0px);
+		-webkit-transform: translateY(2px);
+		transform: translateY(2px);
 	}
 	100% {
-		-webkit-transform: translateY(-4px);
-		transform: translateY(-4px);
+		-webkit-transform: translateY(-2px);
+		transform: translateY(-2px);
 	}
 }
 @keyframes bob-on-hover {
 	0% {
-		-webkit-transform: translateY(-4px);
-		transform: translateY(-4px);
+		-webkit-transform: translateY(-2px);
+		transform: translateY(-2px);
 	}
 	50% {
-		-webkit-transform: translateY(0px);
-		transform: translateY(0px);
+		-webkit-transform: translateY(2px);
+		transform: translateY(2px);
 	}
 	100% {
-		-webkit-transform: translateY(-4px);
-		transform: translateY(-4px);
+		-webkit-transform: translateY(-2px);
+		transform: translateY(-2px);
 	}
 }
 @-webkit-keyframes bob-on-hover-float {
 	100% {
-		-webkit-transform: translateY(-4px);
-		transform: translateY(-4px);
+		-webkit-transform: translateY(-2px);
+		transform: translateY(-2px);
 	}
 }
 @keyframes bob-on-hover-float {
 	100% {
-		-webkit-transform: translateY(-4px);
-		transform: translateY(-4px);
+		-webkit-transform: translateY(-2px);
+		transform: translateY(-2px);
 	}
 }
 .bob {
