@@ -369,6 +369,7 @@
 		height: 60px !important;
 		width: 60px !important;
 	}
+	
 	// .sidebar,
 	// .cart_sidebar {
 	// 	top: 110px !important;
@@ -380,7 +381,13 @@
 		font-size: 1.4rem !important;
 		// width: 100px;
 	}
-	.btn.primary {
+	.btn {
+		font-size: 1.4rem !important;
+	}
+	label {
+		font-size: 1.4rem !important;
+	}
+	select {
 		font-size: 1.4rem !important;
 	}
 	.sort_select {
