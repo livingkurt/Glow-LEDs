@@ -154,6 +154,7 @@ const PromosPage = (props) => {
 									<th>Amount Off</th>
 									<th>Free Shipping</th>
 									<th>Affiliate Only</th>
+									<th>Sponsor Only</th>
 									<th>Admin Only</th>
 									<th>Single Use</th>
 									<th>Used Once</th>
@@ -196,6 +197,13 @@ const PromosPage = (props) => {
 										</td>
 										<td className="p-10px">
 											{promo.affiliate_only ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">
+											{promo.sponsor_only ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />

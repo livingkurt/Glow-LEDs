@@ -8,6 +8,7 @@ const promoSchema = new mongoose.Schema(
 		promo_code: { type: String },
 		admin_only: { type: Boolean, default: true },
 		affiliate_only: { type: Boolean, default: false },
+		sponsor_only: { type: Boolean, default: false },
 		excluded_categories: { type: Array },
 		excluded_products: { type: Array },
 		included_categories: { type: Array },

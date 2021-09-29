@@ -17,6 +17,7 @@ const EditPromoPage = (props) => {
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ admin_only, set_admin_only ] = useState('');
 	const [ affiliate_only, set_affiliate_only ] = useState('');
+	const [ sponsor_only, set_sponsor_only ] = useState('');
 	const [ single_use, set_single_use ] = useState('');
 	const [ used_once, set_used_once ] = useState('');
 	const [ excluded_categories, set_excluded_categories ] = useState([]);
@@ -103,6 +104,7 @@ const EditPromoPage = (props) => {
 		set_user(promo.user && promo.user._id);
 		set_promo_code(promo.promo_code);
 		set_affiliate_only(promo.affiliate_only);
+		set_sponsor_only(promo.sponsor_only);
 		set_admin_only(promo.admin_only);
 		set_single_use(promo.single_use);
 		set_used_once(promo.used_once);
@@ -131,6 +133,7 @@ const EditPromoPage = (props) => {
 		set_user('');
 		set_promo_code('');
 		set_affiliate_only('');
+		set_sponsor_only('');
 		set_admin_only('');
 		set_single_use('');
 		set_used_once('');
@@ -160,6 +163,7 @@ const EditPromoPage = (props) => {
 				promo_code,
 				admin_only,
 				affiliate_only,
+				sponsor_only,
 				single_use,
 				used_once,
 				exclude,
@@ -282,6 +286,22 @@ const EditPromoPage = (props) => {
 														id="affiliate_only"
 														onChange={(e) => {
 															set_affiliate_only(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="sponsor_only">Sponsor Only</label>
+													<input
+														type="checkbox"
+														name="sponsor_only"
+														defaultChecked={sponsor_only}
+														id="sponsor_only"
+														onChange={(e) => {
+															set_sponsor_only(e.target.checked);
 														}}
 													/>
 												</li>
