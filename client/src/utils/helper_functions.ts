@@ -746,6 +746,22 @@ const reorder = (list: any, startIndex: any, endIndex: any) => {
 	return result;
 };
 
+const no_state = {
+	option: true,
+	option_products: [],
+	color_products: [],
+	secondary_color_products: [],
+	product_options: [],
+	option_products_name: '',
+	color_products_name: '',
+	secondary_color_products_name: '',
+	secondary_products_name: '',
+	option_product_group: false,
+	color_product_group: false,
+	secondary_color_product_group: false,
+	secondary_product_group: false
+};
+
 export const create_color_products = async (
 	e: any,
 	type: any,
@@ -769,13 +785,9 @@ export const create_color_products = async (
 				color_code: '#4b4b4b',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			},
 			{
 				name: `Frosted ${product.name}`,
@@ -784,13 +796,9 @@ export const create_color_products = async (
 				color_code: 'white',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -799,13 +807,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Emerald ${product.name}`,
@@ -814,13 +818,9 @@ export const create_color_products = async (
 				color_code: '#15715a',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Teal ${product.name}`,
@@ -829,13 +829,9 @@ export const create_color_products = async (
 				color_code: '#1da5b3',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -844,13 +840,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -859,13 +851,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Frosted ${product.name}`,
@@ -874,13 +862,9 @@ export const create_color_products = async (
 				color_code: '#abaeb5',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -889,13 +873,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Green ${product.name}`,
@@ -904,13 +884,9 @@ export const create_color_products = async (
 				color_code: '#00c700',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -919,13 +895,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Purple ${product.name}`,
@@ -934,13 +906,9 @@ export const create_color_products = async (
 				color_code: 'purple',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -949,13 +917,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 1`,
@@ -964,13 +928,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 2.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 8`,
@@ -979,13 +939,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 17.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 10`,
@@ -994,13 +950,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 19.99,
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			}
 		];
 	} else if (product.category === 'glow_casings') {
@@ -1012,13 +964,9 @@ export const create_color_products = async (
 				color_code: '#4b4b4b',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			},
 			{
 				name: `Frosted ${product.name}`,
@@ -1027,13 +975,10 @@ export const create_color_products = async (
 				color_code: 'white',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				secondary_products: [],
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1042,13 +987,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Emerald ${product.name}`,
@@ -1057,13 +998,9 @@ export const create_color_products = async (
 				color_code: '#15715a',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Teal ${product.name}`,
@@ -1072,13 +1009,9 @@ export const create_color_products = async (
 				color_code: '#1da5b3',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1087,13 +1020,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1102,13 +1031,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Black  ${product.name}`,
@@ -1117,13 +1042,9 @@ export const create_color_products = async (
 				color_code: 'black',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 1`,
@@ -1132,13 +1053,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 2.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 8`,
@@ -1147,13 +1064,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 17.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 10`,
@@ -1162,13 +1075,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 19.99,
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			}
 		];
 	} else if (product.category === 'diffuser_caps') {
@@ -1180,13 +1089,9 @@ export const create_color_products = async (
 				color_code: 'black',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			},
 			{
 				name: `White ${product.name}`,
@@ -1195,13 +1100,9 @@ export const create_color_products = async (
 				color_code: 'white',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1210,13 +1111,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Green ${product.name}`,
@@ -1225,13 +1122,9 @@ export const create_color_products = async (
 				color_code: '#00c700',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1240,13 +1133,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Purple ${product.name}`,
@@ -1255,13 +1144,9 @@ export const create_color_products = async (
 				color_code: 'purple',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1270,13 +1155,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 15 mm (Classic)`,
@@ -1284,13 +1165,9 @@ export const create_color_products = async (
 				size: 1,
 				category: 'options',
 				subcategory: 'sizes',
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			},
 			{
 				name: `${product.name} - 20 mm (Mega)`,
@@ -1298,13 +1175,9 @@ export const create_color_products = async (
 				size: 8,
 				category: 'options',
 				subcategory: 'sizes',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			}
 		];
 	} else if (product.category === 'diffusers') {
@@ -1316,13 +1189,9 @@ export const create_color_products = async (
 				color_code: '#abaeb5',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1331,13 +1200,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Green ${product.name}`,
@@ -1346,13 +1211,9 @@ export const create_color_products = async (
 				color_code: '#00c700',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1361,13 +1222,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Purple ${product.name}`,
@@ -1376,13 +1233,9 @@ export const create_color_products = async (
 				color_code: 'purple',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1391,13 +1244,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			}
 		];
 	} else if (product.category === 'exo_diffusers') {
@@ -1409,13 +1258,9 @@ export const create_color_products = async (
 				color_code: 'black',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `White ${product.name}`,
@@ -1424,13 +1269,9 @@ export const create_color_products = async (
 				color_code: 'white',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1439,13 +1280,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Green ${product.name}`,
@@ -1454,13 +1291,9 @@ export const create_color_products = async (
 				color_code: '#00c700',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1469,13 +1302,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Purple ${product.name}`,
@@ -1484,13 +1313,9 @@ export const create_color_products = async (
 				color_code: 'purple',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1499,13 +1324,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Frosted ${product.name}`,
@@ -1514,13 +1335,9 @@ export const create_color_products = async (
 				color_code: '#abaeb5',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1529,13 +1346,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Green ${product.name}`,
@@ -1544,13 +1357,9 @@ export const create_color_products = async (
 				color_code: '#00c700',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1559,13 +1368,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Purple ${product.name}`,
@@ -1574,13 +1379,9 @@ export const create_color_products = async (
 				color_code: 'purple',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1589,13 +1390,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			}
 		];
 	} else if (product.subcategory === 'novaskins' || product.subcategory === 'alt_novaskins') {
@@ -1607,13 +1404,9 @@ export const create_color_products = async (
 				color_code: '#4b4b4b',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1622,13 +1415,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Emerald ${product.name}`,
@@ -1637,13 +1426,9 @@ export const create_color_products = async (
 				color_code: '#15715a',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Teal ${product.name}`,
@@ -1652,13 +1437,9 @@ export const create_color_products = async (
 				color_code: '#1da5b3',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1667,13 +1448,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1682,13 +1459,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Clear ${product.name}`,
@@ -1697,13 +1470,9 @@ export const create_color_products = async (
 				color_code: '#4b4b4b',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Frosted ${product.name}`,
@@ -1712,13 +1481,9 @@ export const create_color_products = async (
 				color_code: '#abaeb5',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Red ${product.name}`,
@@ -1727,13 +1492,9 @@ export const create_color_products = async (
 				color_code: '#c11c22',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Green ${product.name}`,
@@ -1742,13 +1503,9 @@ export const create_color_products = async (
 				color_code: '#00c700',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Blue ${product.name}`,
@@ -1757,13 +1514,9 @@ export const create_color_products = async (
 				color_code: '#0014ff',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Purple ${product.name}`,
@@ -1772,13 +1525,9 @@ export const create_color_products = async (
 				color_code: 'purple',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Violet ${product.name}`,
@@ -1787,13 +1536,9 @@ export const create_color_products = async (
 				color_code: '#543abb',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `Black ${product.name}`,
@@ -1802,13 +1547,9 @@ export const create_color_products = async (
 				color_code: 'black',
 				category: 'options',
 				subcategory: 'secondary_colors',
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 1`,
@@ -1817,13 +1558,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 5.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 2`,
@@ -1832,13 +1569,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 12.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 4`,
@@ -1847,13 +1580,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 22.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 10`,
@@ -1862,13 +1591,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 59.99,
-				option: true,
-				default_option: true,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: true,
+				...no_state
 			},
 			{
 				name: `${product.name} - 1 Skin`,
@@ -1877,13 +1602,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 2.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			},
 			{
 				name: `${product.name} - 1 Sled`,
@@ -1892,13 +1613,9 @@ export const create_color_products = async (
 				category: 'options',
 				subcategory: 'sizes',
 				price: 2.99,
-				option: true,
-				default_option: false,
 				item_group_id: product._id,
-				option_products: [],
-				color_products: [],
-				secondary_color_products: [],
-				product_options: []
+				default_option: false,
+				...no_state
 			}
 		];
 	}

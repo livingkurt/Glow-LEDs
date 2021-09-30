@@ -92,9 +92,18 @@ const Banner = (props) => {
 								<i className="fab fa-youtube zoom" />
 							</a>
 						</div>
-						<div className="mr-10px">
+						<div className="">
 							<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
 								<i className="fab fa-soundcloud" />
+							</a>
+						</div>
+						<div className="mh-10px mr-10px">
+							<a
+								href="https://twitter.com/glow_leds"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<i className="fab fa-twitter zoom" />
 							</a>
 						</div>
 					</div>
