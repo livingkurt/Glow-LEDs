@@ -835,7 +835,8 @@ const ProductPage = (props) => {
 															<option key={index} value={JSON.stringify(secondary)}>
 																{determine_secondary_product_name(
 																	secondary.name,
-																	product.category
+																	product.category,
+																	product.subcategory
 																)}
 															</option>
 														))}

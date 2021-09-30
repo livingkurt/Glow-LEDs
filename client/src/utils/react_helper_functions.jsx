@@ -493,7 +493,7 @@ export const determine_product_name = (item, show_qty, date) => {
 	}
 };
 
-export const determine_secondary_product_name = (name, category) => {
+export const determine_secondary_product_name = (name, category, subcategory) => {
 	// console.log({ name: name.split(' ')[0] });
 	if (name) {
 		if (category === 'diffuser_caps') {
@@ -505,6 +505,9 @@ export const determine_secondary_product_name = (name, category) => {
 			} else {
 				return name.split(' ')[0];
 			}
+		}
+		if (category === 'accessories' && subcategory === 'clips') {
+			return name.split(' ')[3] + " " + name.split(' ')[4];
 		}
 	}
 };

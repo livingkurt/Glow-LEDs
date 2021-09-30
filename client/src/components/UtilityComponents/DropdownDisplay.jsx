@@ -57,7 +57,7 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name }) => {
 												>
 													<i className="fas fa-times mr-5px" />
 												</button>
-												<Link to={'/secure/glow/editproduct/' + item.pathname}>
+												<Link to={'/secure/glow/editproduct/' + item.pathname + '/false'}>
 													{item.name}
 												</Link>
 											</div>
