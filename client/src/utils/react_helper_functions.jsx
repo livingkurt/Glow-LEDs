@@ -525,10 +525,11 @@ export const determine_product_name_title = (item, show_qty) => {
 	);
 };
 
-export const determine_product_name_display = (product, show_qty) => {
-	// console.log({ product });
+export const determine_product_name_display = (product) => {
+	console.log({ product });
 	// console.log({ secondary_product: product.secondary_product });
-	const option = product.product_options.find((option) => option.default === true);
+	const option = product.option_products.find((option) => option.default_option === true);
+	console.log({option})
 	return (
 		<div>
 			{product.name}{' '}
