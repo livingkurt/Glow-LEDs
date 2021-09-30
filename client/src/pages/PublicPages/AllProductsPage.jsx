@@ -141,6 +141,22 @@ const AllProductsPage = (props) => {
 		},
 		[ category ]
 	);
+	useEffect(
+		() => {
+			if (collection) {
+
+				if (collection !== 'essentials' || collection === 'discounted' || collection === 'best_sellers') {
+					if (collection && !category) {
+						dispatch(listProducts('', '', '', '', '', '', collection));
+					}
+					
+				}
+			}
+
+			dispatch(listChips());
+		},
+		[ collection ]
+	);
 
 	const get_occurrences = async () => {
 		set_loading_products(true);

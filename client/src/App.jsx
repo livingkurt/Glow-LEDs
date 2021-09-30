@@ -442,7 +442,10 @@ const App = (props) => {
 								component={AllProductsPage} 
 							/> */}
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
-
+							<Route
+								path="/collections/all/products/collection/:collection?"
+								component={AllProductsPage}
+							/>
 							<Route
 								path="/collections/all/products/category/:category/subcategory/:subcategory?"
 								component={AllProductsPage}
@@ -451,6 +454,7 @@ const App = (props) => {
 								path="/collections/all/products/category/:category/collection/:collection?"
 								component={AllProductsPage}
 							/>
+						
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
 
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />

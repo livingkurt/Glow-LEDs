@@ -137,6 +137,7 @@ const Header = (props) => {
 								className="btn mobile nav none fs-30px h-50px w-50px p-10px"
 								onClick={open_sidebar}
 								aria-label="sidebar"
+								style={{fontSize: '30px !important'}}
 							>
 								<i className="fas fa-bars" />
 							</button>
@@ -220,6 +221,9 @@ const Header = (props) => {
 													</button>
 												</Link>
 												<hr className="w-95per m-0px" />
+												<Link to="/collections/all/products/collection/nova_glow_casings">
+													<button className="btn nav w-100per ta-l">Nova Glow Casings (New!)</button>
+												</Link>
 												<Link to="/collections/all/products/category/decals">
 													<button className="btn nav w-100per ta-l">Decals (New!)</button>
 												</Link>

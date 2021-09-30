@@ -506,7 +506,7 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 				return name.split(' ')[0];
 			}
 		}
-		if (category === 'accessories' && subcategory === 'clips') {
+		if (category === 'glow_casings' && subcategory === 'nova') {
 			return name.split(' ')[3] + " " + name.split(' ')[4];
 		}
 	}

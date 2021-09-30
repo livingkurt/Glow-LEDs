@@ -328,7 +328,7 @@ export default {
 	},
 	get_all_products: async (req: any, res: any) => {
 		try {
-			const products = await Product.find({ deleted: false, hidden: false });
+			const products = await Product.find({ deleted: false });
 
 			res.send(products);
 		} catch (error) {

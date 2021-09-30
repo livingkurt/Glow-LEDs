@@ -1652,10 +1652,11 @@ const EditProductPage = (props) => {
 															'Option Products'
 														)} */}
 														<DropdownDisplay
-															item_list={[
-																...macro_products_list,
-																...option_products_list
-															]}
+															item_list={all_products}
+															// item_list={[
+															// 	...macro_products_list,
+															// 	...option_products_list
+															// ]}
 															list_items={secondary_products}
 															set_items={set_secondary_products}
 															list_name={'Secondary Products'}
