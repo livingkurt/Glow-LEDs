@@ -133,7 +133,13 @@ const AllProductsPage = (props) => {
 				}
 				if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
 					console.log('All Products');
-					dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+					if (collection && !category){
+						
+					}
+					else {
+						dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+					}
+					
 				}
 			}
 
