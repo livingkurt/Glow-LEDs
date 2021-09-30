@@ -234,6 +234,12 @@ const Sidebar = (props) => {
 						</button>
 					</div>
 					<ul className="sidebar_dropdown_container" id="gloving_dropdown">
+
+						<Link to="/collections/all/products/collection/nova_glow_casings">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Nova Glow Casings
+							</button>
+						</Link>
 						<Link to="/collections/all/products/category/decals">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Decals
