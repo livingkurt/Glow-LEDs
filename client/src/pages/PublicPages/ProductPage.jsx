@@ -703,7 +703,8 @@ const ProductPage = (props) => {
 											<label>
 												{determine_secondary_product_name(
 													secondary_product_name,
-													product.category
+													product.category,
+													product.subcategory
 												)}
 											</label>
 											{/* {console.log({ secondary_product_name })} */}
@@ -756,6 +757,18 @@ const ProductPage = (props) => {
 											{size}
 										</div>
 									)}
+										{/* {product.category === 'accessories' && product.subcategory === 'clips' &&
+										<div className="ai-c  mv-20px">
+											<h3 className="mv-0px mr-5px">
+												{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
+											</h3>
+											{determine_secondary_product_name(
+													secondary_product_name,
+													product.category,
+													product.subcategory
+												)}
+										</div>
+									} */}
 								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
@@ -1138,7 +1151,8 @@ const ProductPage = (props) => {
 																<option key={index} value={JSON.stringify(secondary)}>
 																	{determine_secondary_product_name(
 																		secondary.name,
-																		product.category
+																		product.category,
+																		product.subcategory
 																	)}
 																</option>
 															))}
