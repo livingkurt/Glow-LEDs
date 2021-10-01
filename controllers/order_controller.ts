@@ -44,7 +44,7 @@ export default {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 10;
-			console.log({ page });
+			// console.log({ page });
 			// let user: any;
 			// let searchKeyword: any;
 			// if (req.query.searchKeyword) {
@@ -61,7 +61,7 @@ export default {
 			// }
 			const searchKeyword = req.query.searchKeyword ? { _id: req.query.searchKeyword } : {};
 			// const searchKeyword = { _id: req.query.searchKeyword };
-			console.log({ searchKeyword });
+			// console.log({ searchKeyword });
 			let sortOrder = {};
 			let filter = {};
 			if (req.query.sortOrder === 'lowest') {
@@ -108,7 +108,7 @@ export default {
 
 			// return response with posts, total pages, and current page
 
-			console.log({ orders });
+			// console.log({ orders });
 			res.json({
 				orders,
 				totalPages: Math.ceil(count / limit),

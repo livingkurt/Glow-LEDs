@@ -4,12 +4,12 @@ import { affiliate_controller } from '../../controllers';
 const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
-router.route('/').get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create);
+router.route('/').get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
 
 router
 	.route('/:pathname')
-	.get(affiliate_controller.findById)
-	.put(isAuth, affiliate_controller.update)
-	.delete(isAuth, isAdmin, affiliate_controller.remove);
+	.get(affiliate_controller.findById_affiliates_c)
+	.put(isAuth, affiliate_controller.update_affiliates_c)
+	.delete(isAuth, isAdmin, affiliate_controller.remove_affiliates_c);
 
 export default router;

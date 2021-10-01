@@ -37,7 +37,6 @@ export default {
 	},
 	get_my_paychecks: async (req: any, res: any) => {
 		console.log('get_my_paychecks');
-		console.log({ affiliate: req.user.affiliate });
 		try {
 			const paychecks = await Paycheck.find({ deleted: false, affiliate: req.user.affiliate._id })
 				.sort({ _id: -1 })

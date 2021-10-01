@@ -49,10 +49,10 @@ export default {
 			// console.log({ products });
 
 			if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {
-				console.log('No Chip');
+				// console.log('No Chip');
 				res.send(products);
 			} else {
-				console.log('Yes Chip');
+				// console.log('Yes Chip');
 				const accessories = products.filter((product: any) => product.category === 'accessories');
 				const diffusers = products.filter((product: any) => product.category === 'diffusers');
 				const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
@@ -211,7 +211,7 @@ export default {
 	},
 	create: async (req: any, res: any) => {
 		try {
-			console.log({ body: req.body });
+			// console.log({ body: req.body });
 			const newProduct = await Product.create(req.body);
 			if (newProduct) {
 				return res.status(201).send({ message: 'New Product Created', data: newProduct });
@@ -226,7 +226,7 @@ export default {
 	},
 	create_product_option: async (req: any, res: any) => {
 		try {
-			console.log({ body: req.body });
+			// console.log({ body: req.body });
 			const newProduct = await Product.create(req.body);
 			if (newProduct) {
 				return res.status(201).send({ message: 'New Product Created', data: newProduct });
@@ -241,15 +241,15 @@ export default {
 
 	update: async (req: any, res: any) => {
 		try {
-			console.log({ product_routes_put: req.body });
-			console.log({ product_options: req.body.product_options });
+			// console.log({ product_routes_put: req.body });
+			// console.log({ product_options: req.body.product_options });
 			const productId = req.params.pathname;
-			console.log({ productId });
+			// console.log({ productId });
 			const product = await Product.findById(productId);
-			console.log({ product });
+			// console.log({ product });
 			if (product) {
 				const updatedProduct = await Product.updateOne({ _id: productId }, req.body);
-				console.log({ updatedProduct });
+				// console.log({ updatedProduct });
 				if (updatedProduct) {
 					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
 				}
@@ -282,7 +282,7 @@ export default {
 		try {
 			console.log('Imperfect');
 			const products = await Product.find({ deleted: false, subcategory: 'imperfect' }).sort({ order: -1 });
-			console.log({ products });
+			// console.log({ products });
 			if (products) {
 				res.send(products);
 			} else {
@@ -318,7 +318,7 @@ export default {
 				.populate('option_products')
 				.populate('categorys')
 				.populate('subcategorys');
-			console.log({ products });
+			// console.log({ products });
 
 			res.send(products);
 		} catch (error) {
@@ -389,7 +389,7 @@ export default {
 			];
 			console.log({ names });
 			const products = await Product.find({ name: { $in: names } });
-			console.log({ products });
+			// console.log({ products });
 			if (products) {
 				res.send(products);
 			} else {
@@ -414,7 +414,7 @@ export default {
 			];
 			console.log({ names });
 			const products = await Product.find({ name: { $in: names } });
-			console.log({ products });
+			// console.log({ products });
 			if (products) {
 				res.send(products);
 			} else {

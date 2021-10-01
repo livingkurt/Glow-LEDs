@@ -48,7 +48,6 @@ export const top_code_usage_upload = async (affiliates: any, orders: any, last_m
 		// const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/total_orders');
 		// const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
 		// console.log({ orders });
-		console.log({ affiliates });
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
@@ -153,7 +152,6 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 		// const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/total_orders');
 		// const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
 		// console.log({ orders });
-		console.log({ affiliates });
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
@@ -310,7 +308,6 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 		// const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/total_orders');
 		// const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
 		// console.log({ orders });
-		console.log({ affiliates });
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
@@ -407,7 +404,6 @@ export const sponsor_revenue_upload = async (affiliates: any, orders: any, last_
 		// const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders/total_orders');
 		// const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
 		// console.log({ orders });
-		console.log({ affiliates });
 
 		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 

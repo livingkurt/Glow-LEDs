@@ -50,7 +50,7 @@ const EditAffiliatePage = (props) => {
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate, loading, error } = affiliateDetails;
-	console.log({ affiliate });
+	// console.log({ affiliate });
 
 	const productList = useSelector((state) => state.productList);
 	const { products: products_list } = productList;
@@ -89,7 +89,7 @@ const EditAffiliatePage = (props) => {
 		set_pathname(affiliate.pathname);
 		set_public_code(affiliate.public_code);
 		set_private_code(affiliate.private_code);
-		console.log({ affiliate });
+		// console.log({ affiliate });
 	};
 	const unset_state = () => {
 		set_id('');
@@ -128,8 +128,8 @@ const EditAffiliatePage = (props) => {
 	useEffect(
 		() => {
 			if (props.match.params.pathname) {
-				console.log('Is ID');
-				console.log(props.match.params.pathname);
+				// console.log('Is ID');
+				// console.log(props.match.params.pathname);
 				stableDispatch(detailsAffiliate(props.match.params.pathname));
 				stableDispatch(detailsAffiliate(props.match.params.pathname));
 			} else {
@@ -191,7 +191,7 @@ const EditAffiliatePage = (props) => {
 				private_code: private_code && private_code._id,
 				pathname: pathname ? pathname : snake_case(artist_name),
 				products,
-				chips: chips.map((chip) => chip._id)
+				chips: chips && chips.map((chip) => chip._id)
 			})
 		);
 		e.target.reset();

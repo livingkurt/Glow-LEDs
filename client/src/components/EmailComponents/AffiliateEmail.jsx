@@ -19,7 +19,7 @@ const AffiliateEmail = (props) => {
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate } = affiliateDetails;
 
-	console.log({ affiliate });
+	// console.log({ affiliate });
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;

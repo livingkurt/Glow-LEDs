@@ -22,103 +22,55 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_affiliates_db: async (pathname: string) => {
 		try {
-			const affiliate = await Affiliate.findOne({ pathname: req.params.pathname })
+			return await Affiliate.findOne({ pathname: pathname })
 				.populate('user')
 				.populate('chips')
 				.populate('products')
 				.populate('public_code')
 				.populate('private_code');
-			if (affiliate) {
-				res.send(affiliate);
-			} else {
-				res.status(404).send({ message: 'Affiliate Not Found' });
-			}
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Finding Affiliate' });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	create_affiliates_db: async (body: any, public_code: any, private_code: any) => {
 		try {
-			const public_code = await Promo.create({
-				promo_code: req.body.artist_name.toLowerCase(),
-				admin_only: false,
-				affiliate_only: false,
-				single_use: false,
-				used_once: false,
-				excluded_categories: [],
-				excluded_products: [],
-				percentage_off: 10,
-				free_shipping: false,
-				time_limit: false,
-				start_date: '2021-01-01',
-				end_date: '2021-01-01',
-				active: true
-			});
-			if (public_code) {
-				const private_code = await Promo.create({
-					promo_code: make_private_code(6),
-					admin_only: false,
-					affiliate_only: true,
-					single_use: false,
-					used_once: false,
-					excluded_categories: [],
-					excluded_products: [],
-					percentage_off: 20,
-					free_shipping: false,
-					time_limit: false,
-					start_date: '2021-01-01',
-					end_date: '2021-01-01',
-					active: true
+			const pub_code = await Promo.create(public_code);
+			const priv_code = await Promo.create(private_code);
+			if (pub_code && priv_code) {
+				return await Affiliate.create({
+					...body,
+					public_code: pub_code._id,
+					private_code: priv_code._id
 				});
-				if (private_code) {
-					const newAffiliate: any = await Affiliate.create({
-						...req.body,
-						public_code: public_code._id,
-						private_code: private_code._id
-					});
-					if (newAffiliate) {
-						return res.status(201).send({ message: 'New Affiliate Created', data: newAffiliate });
-					} else {
-						return res.status(500).send({ message: 'Error Creating Affiliate' });
-					}
-				}
 			}
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Creating Affiliate' });
+			throw new Error(error.message);
 		}
 	},
-	update: async (req: any, res: any) => {
+	update_affiliates_db: async (params: any, body: any) => {
 		try {
-			const affiliate: any = await Affiliate.findOne({ pathname: req.params.pathname });
+			const affiliate: any = await Affiliate.findOne({ pathname: params.pathname });
 			if (affiliate) {
-				const updatedAffiliate = await Affiliate.updateOne({ pathname: req.params.pathname }, req.body);
-				if (updatedAffiliate) {
-					return res.status(200).send({ message: 'Affiliate Updated', data: updatedAffiliate });
-				}
-			} else {
-				return res.status(500).send({ message: 'Error Updating Affiliate' });
+				return await Affiliate.updateOne({ pathname: params.pathname }, body);
 			}
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Updating Affiliate' });
+			throw new Error(error.message);
 		}
 	},
-	remove: async (req: any, res: any) => {
+	remove_affiliates_db: async (params: any) => {
 		try {
-			const deleted_affiliate = await Affiliate.updateOne({ pathname: req.params.pathname }, { deleted: true });
-			if (deleted_affiliate) {
-				return res.status(200).send({ message: 'Affiliate Deleted' });
-			} else {
-				res.send('Error Deletion');
-				return res.status(500).send({ message: 'Error Deleting Affiliate' });
+			const affiliate: any = await Affiliate.findOne({ pathname: params.pathname });
+			if (affiliate) {
+				return await Affiliate.updateOne({ pathname: params.pathname }, { deleted: true });
 			}
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Deleting Affiliate' });
+			throw new Error(error.message);
 		}
 	}
 };
