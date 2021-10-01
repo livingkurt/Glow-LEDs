@@ -502,7 +502,7 @@ function ProductPage(props) {
 				<Link to="/secure/glow/product_display">
 					<button className="btn primary">Display Products</button>
 				</Link>
-				<button className="btn primary" onClick={update_product_catelog}>
+				<button className="btn primary" onClick={() => update_product_catelog()}>
 					Update Product Catalog
 				</button>
 
