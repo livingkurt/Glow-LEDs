@@ -539,7 +539,7 @@ const PlaceOrderPage = (props) => {
 					set_free_shipping_message('Free');
 				}
 				set_show_message(
-					`${promo.promo_code} ${promo.percentage_off
+					`${promo.promo_code.toUpperCase()} ${promo.percentage_off
 						? `${promo.percentage_off}% Off`
 						: `$${promo.amount_off} Off`}`
 				);
@@ -761,8 +761,6 @@ const PlaceOrderPage = (props) => {
 											/>
 											<button
 												className="btn primary"
-												// onTouchStart={() => (e)()}
-												// onClick={() => check_code()}
 												style={{ curser: 'pointer' }}
 											>
 												Apply
