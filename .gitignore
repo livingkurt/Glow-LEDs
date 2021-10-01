@@ -126,6 +126,8 @@ models/*.js
 background/*.js
 controllers/*.js
 routes/api/*.js
+services/*.js
+db/*.js
 
 email_templates/pages/error.js
 email_templates/pages/account_created.js

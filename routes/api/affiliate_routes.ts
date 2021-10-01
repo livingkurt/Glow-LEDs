@@ -4,7 +4,7 @@ import { affiliate_controller } from '../../controllers';
 const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
-router.route('/').get(affiliate_controller.findAll).post(isAuth, affiliate_controller.create);
+router.route('/').get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create);
 
 router
 	.route('/:pathname')

@@ -1,6 +1,7 @@
 // React
 import React from 'react';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
+import { PromosPage } from '../../pages';
 
 const StripeForm = (props) => {
 	const stripe = useStripe();
@@ -18,7 +19,13 @@ const StripeForm = (props) => {
 			return;
 		}
 		console.log({ paymentMethod });
-		props.pay_order(paymentMethod);
+		// if (props.guest){
+		// 	props.pay_order(paymentMethod);
+		// }
+		// else {
+
+			props.pay_order(paymentMethod);
+		// }
 	};
 
 	return (

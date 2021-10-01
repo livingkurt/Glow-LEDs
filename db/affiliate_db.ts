@@ -1,17 +1,25 @@
 import Affiliate from '../models/affiliate';
-// import { findAll_affiliates_s } from '../services/affiliate_services';
-import { affiliate_services } from '../services';
 import { Promo } from '../models';
 import { make_private_code } from '../util';
 
 export default {
-	findAll_affiliates_c: async (req: any, res: any) => {
-		const { query } = req;
+	findAll_affiliates_db: async (searchKeyword: any, sponsor: any, promoter: any, sortOrder: any) => {
 		try {
-			res.send(await affiliate_services.findAll_affiliates_s(query));
+			return await Affiliate.find({
+				deleted: false,
+				...searchKeyword,
+				...sponsor,
+				...promoter
+			})
+				.sort(sortOrder)
+				.populate('user')
+				.populate('products')
+				.populate('public_code')
+				.populate('private_code')
+				.populate('chips');
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Finding Affiliates' });
+			throw new Error(error.message);
 		}
 	},
 	findById: async (req: any, res: any) => {

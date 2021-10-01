@@ -84,7 +84,7 @@ const OrderPublicPage = (props) => {
 
 	const pay_order = (paymentMethod) => {
 		set_payment_loading(true);
-		dispatch(payOrder(order, paymentMethod));
+		dispatch(payOrderGuest(order, paymentMethod));
 	};
 
 	useEffect(
@@ -474,7 +474,7 @@ const OrderPublicPage = (props) => {
 							className="placeorder-actions-payment"
 							style={{ display: 'flex', justifyContent: 'center' }}
 						/>
-						{!order.isPaid && <Stripe pay_order={pay_order} />}
+						{!order.isPaid && <Stripe pay_order={pay_order} guest={true} />}
 
 						{order.promo_code && (
 							<div className="">

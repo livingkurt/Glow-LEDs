@@ -1,17 +1,46 @@
 import Affiliate from '../models/affiliate';
-// import { findAll_affiliates_s } from '../services/affiliate_services';
-import { affiliate_services } from '../services';
 import { Promo } from '../models';
 import { make_private_code } from '../util';
+import { affiliate_db } from '../db';
 
 export default {
-	findAll_affiliates_c: async (req: any, res: any) => {
-		const { query } = req;
+	findAll_affiliates_s: async (query: any) => {
 		try {
-			res.send(await affiliate_services.findAll_affiliates_s(query));
+			let sponsor = {};
+			let promoter = {};
+			if (query.category === 'sponsored_glovers') {
+				sponsor = { sponsor: true };
+			} else if (query.category === 'affiliated_glovers') {
+				promoter = { promoter: true };
+			}
+
+			const searchKeyword = query.searchKeyword
+				? {
+						facebook_name: {
+							$regex: query.searchKeyword,
+							$options: 'i'
+						}
+					}
+				: {};
+
+			let sortOrder = {};
+			if (query.sortOrder === 'glover name') {
+				sortOrder = { artist_name: 1 };
+			} else if (query.sortOrder === 'facebook name') {
+				sortOrder = { facebook_name: 1 };
+			} else if (query.sortOrder === 'sponsor') {
+				sortOrder = { sponsor: -1 };
+			} else if (query.sortOrder === 'promoter') {
+				sortOrder = { promoter: -1 };
+			} else if (query.sortOrder === 'active') {
+				sortOrder = { active: -1 };
+			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
+				sortOrder = { _id: -1 };
+			}
+			return await affiliate_db.findAll_affiliates_db(searchKeyword, sponsor, promoter, sortOrder);
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Finding Affiliates' });
+			throw new Error(error.message);
 		}
 	},
 	findById: async (req: any, res: any) => {
