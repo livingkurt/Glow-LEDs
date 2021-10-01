@@ -142,11 +142,13 @@ export default {
 	},
 	secure_refund: async (req: any, res: any) => {
 		try {
+			// console.log({ refund_amount: req.body.refund_amount });
 			const order = await Order.findById(req.params.id);
 			const refund = await stripe.refunds.create({
 				payment_intent: order.payment.charge.id,
-				amount: req.body.refund_amount * 100
+				amount: (parseFloat(req.body.refund_amount) * 100).toFixed(0)
 			});
+			console.log({ refund });
 			if (refund) {
 				order.isRefunded = true;
 				order.refundedAt = Date.now();
@@ -157,11 +159,14 @@ export default {
 					refund_reason: [ ...order.payment.refund_reason, req.body.refund_reason ]
 				};
 				const updated = await Order.updateOne({ _id: req.params.id }, order);
+				console.log({ updated });
 				if (updated) {
 					res.send(updated);
 				} else {
 					res.status(404).send({ message: 'Order not Updated.' });
 				}
+			} else {
+				res.status(500).send({ message: 'Refund not Created' });
 			}
 		} catch (error) {
 			console.log({ error });
