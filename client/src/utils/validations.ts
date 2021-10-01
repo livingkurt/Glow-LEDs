@@ -15,9 +15,9 @@ export const validate_promo_code = (data: any) => {
 	// console.log({ promo_codes });
 	const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
 
-	console.log({ sponsor_only: promo.sponsor_only });
-	console.log({ user: data.userInfo });
-	console.log({ sponsor: data.userInfo.affiliate.sponsor });
+	// console.log({ sponsor_only: promo.sponsor_only });
+	// console.log({ user: data.userInfo });
+	// console.log({ sponsor: data.userInfo.affiliate.sponsor });
 	// console.log({ cartItems: data.cartItems });
 
 	// Convert empty fields to an empty string so we can use validator functions
