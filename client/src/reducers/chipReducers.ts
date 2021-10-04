@@ -18,9 +18,9 @@ export const chipListReducer = (state = { chips: [] }, action: { type: any; payl
 		case CHIP_LIST_REQUEST:
 			return { loading: true, chips: [] };
 		case CHIP_LIST_SUCCESS:
-			return { loading: false, chips: action.payload };
+			return { loading: false, chips: action.payload.data, message: action.payload.message };
 		case CHIP_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const chipDetailsReducer = (state = { chip: {} }, action: { type: any; pa
 		case CHIP_DETAILS_REQUEST:
 			return { loading: true };
 		case CHIP_DETAILS_SUCCESS:
-			return { loading: false, chip: action.payload };
+			return { loading: false, chip: action.payload.data, message: action.payload.message };
 		case CHIP_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const chipDeleteReducer = (state = { chip: {} }, action: { type: any; pay
 		case CHIP_DELETE_REQUEST:
 			return { loading: true };
 		case CHIP_DELETE_SUCCESS:
-			return { loading: false, chip: action.payload, success: true };
+			return { loading: false, chip: action.payload.data, message: action.payload.message, success: true };
 		case CHIP_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const chipSaveReducer = (state = { chip: {} }, action: { type: any; paylo
 		case CHIP_SAVE_REQUEST:
 			return { loading: true };
 		case CHIP_SAVE_SUCCESS:
-			return { loading: false, success: true, chip: action.payload };
+			return { loading: false, success: true, chip: action.payload.data, message: action.payload.message };
 		case CHIP_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}

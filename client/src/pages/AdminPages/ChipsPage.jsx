@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listChips, deleteChip } from '../../actions/chipActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
@@ -11,7 +11,7 @@ const ChipsPage = (props) => {
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const chipList = useSelector((state) => state.chipList);
-	const { loading, chips, error } = chipList;
+	const { loading, chips, message, error } = chipList;
 
 	const chipSave = useSelector((state) => state.chipSave);
 	const { success: successSave } = chipSave;
@@ -136,6 +136,7 @@ const ChipsPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
+			<Notification message={message}/>
 			<Loading loading={loading} error={error}>
 				{chips && (
 					<div className="chip-list responsive_table">

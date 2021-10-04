@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveAffiliate, detailsAffiliate } from '../../actions/affiliateActions';
 import { useHistory } from 'react-router-dom';
-import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
+import { DropdownDisplay, Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
@@ -49,8 +49,8 @@ const EditAffiliatePage = (props) => {
 	const history = useHistory();
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
-	const { affiliate, loading, error } = affiliateDetails;
-	// console.log({ affiliate });
+	const { loading, affiliate, message, error } = affiliateDetails;
+	console.log({ affiliate });
 
 	const productList = useSelector((state) => state.productList);
 	const { products: products_list } = productList;
@@ -358,6 +358,7 @@ const EditAffiliatePage = (props) => {
 					{/* {loading_data ? (
 						<div>Loading...</div>
 					) : ( */}
+					<Notification message={message} />
 					<Loading loading={loading} error={error}>
 						{affiliate && (
 							<div>

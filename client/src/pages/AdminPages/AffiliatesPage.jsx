@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listAffiliates, deleteAffiliate, saveAffiliate } from '../../actions/affiliateActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { listOrders } from '../../actions/orderActions';
@@ -17,7 +17,7 @@ const AffiliatesPage = (props) => {
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
 	const [ loading_promo_update, set_loading_promo_update ] = useState(false);
 	const [ total_orders, set_total_orders ] = useState([]);
-	const { loading, affiliates, error } = affiliateList;
+	const { loading, affiliates, message, error } = affiliateList;
 
 	const affiliateSave = useSelector((state) => state.affiliateSave);
 	const { success: successSave } = affiliateSave;
@@ -209,6 +209,7 @@ const AffiliatesPage = (props) => {
 				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
+			<Notification message={message} />
 			<Loading loading={loading_promo_update} />
 			<Loading loading={loading} error={error}>
 				{affiliates && (

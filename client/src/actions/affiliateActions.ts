@@ -113,6 +113,7 @@ export const detailsAffiliate = (pathname: string) => async (
 	try {
 		dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: pathname });
 		const { data } = await axios.get('/api/affiliates/' + pathname);
+		console.log({ data });
 		dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

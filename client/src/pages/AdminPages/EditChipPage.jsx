@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveChip, detailsChip } from '../../actions/chipActions';
 import { useHistory, Link } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { snake_case } from '../../utils/helper_functions';
@@ -28,7 +28,7 @@ const EditChipPage = (props) => {
 	const history = useHistory();
 
 	const chipDetails = useSelector((state) => state.chipDetails);
-	const { chip, loading, error } = chipDetails;
+	const { chip, message, loading, error } = chipDetails;
 
 	const set_state = () => {
 		set_id(chip._id);
@@ -184,11 +184,8 @@ const EditChipPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					{/* {loading_data ? (
-						<div>Loading...</div>
-					) : ( */}
+					<Notification message={message} />
 					<Loading loading={loading} error={error}>
-						{/* {chip && ( */}
 						<div>
 							<Helmet>
 								<title>Edit Chip| Glow LEDs</title>

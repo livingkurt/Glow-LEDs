@@ -1,98 +1,62 @@
-import { Chip } from '../models';
+import { chip_db } from '../db';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_chips_s: async (query: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const searchKeyword = req.query.searchKeyword
+			const category = query.category ? { category: query.category } : {};
+			const searchKeyword = query.searchKeyword
 				? {
 						facebook_name: {
-							$regex: req.query.searchKeyword,
+							$regex: query.searchKeyword,
 							$options: 'i'
 						}
 					}
 				: {};
 
 			let sortOrder = {};
-			if (req.query.sortOrder === 'glover name') {
+			if (query.sortOrder === 'glover name') {
 				sortOrder = { artist_name: 1 };
-			} else if (req.query.sortOrder === 'facebook name') {
+			} else if (query.sortOrder === 'facebook name') {
 				sortOrder = { facebook_name: 1 };
-			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
+			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { name: 1 };
 			}
-
-			const chips = await Chip.find({ deleted: false, ...category, ...searchKeyword })
-				.sort(sortOrder)
-				.populate('user');
-			res.send(chips);
+			return await chip_db.findAll_chips_db(searchKeyword, sortOrder);
 		} catch (error) {
 			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Chips' });
+			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_chips_s: async (params: any) => {
 		try {
-			const chip = await Chip.findOne({ _id: req.params.id }).populate('user');
-			console.log({ chip });
-			console.log(req.params.id);
-			if (chip) {
-				res.send(chip);
-			} else {
-				res.status(404).send({ message: 'Chip Not Found.' });
-			}
+			return await chip_db.findById_chips_db(params.id);
 		} catch (error) {
 			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Chip' });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	create_chips_s: async (body: any) => {
 		try {
-			const newChip = await Chip.create(req.body);
-			if (newChip) {
-				return res.status(201).send({ message: 'New Chip Created', data: newChip });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Chip.' });
-			}
+			return await chip_db.create_chips_db(body);
 		} catch (error) {
 			console.log({ error });
-			res.status(500).send({ error, message: 'Error Creating Chip' });
+			throw new Error(error.message);
 		}
 	},
-	update: async (req: any, res: any) => {
+	update_chips_s: async (params: any, body: any) => {
 		try {
-			console.log({ chip_routes_put: req.body });
-			const chip_id = req.params.id;
-			const chip: any = await Chip.findById(chip_id);
-			if (chip) {
-				const updatedChip = await Chip.updateOne({ _id: chip_id }, req.body);
-				if (updatedChip) {
-					return res.status(200).send({ message: 'Chip Updated', data: updatedChip });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Chip.' });
-			}
+			return await chip_db.update_chips_db(params.id, body);
 		} catch (error) {
 			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Chip' });
+			throw new Error(error.message);
 		}
 	},
-	remove: async (req: any, res: any) => {
+	remove_chips_s: async (params: any) => {
 		try {
-			const message: any = { message: 'Chip Deleted' };
-			const deleted_chip = await Chip.updateOne({ _id: req.params.id }, { deleted: true });
-			if (deleted_chip) {
-				res.send(message);
-			} else {
-				res.send('Error in Deletion.');
-			}
+			return await chip_db.remove_chips_db(params.id);
 		} catch (error) {
 			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Deleting Chip' });
+			throw new Error(error.message);
 		}
 	}
 };

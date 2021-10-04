@@ -6,10 +6,9 @@ export default {
 		try {
 			const affiliates = await affiliate_services.findAll_affiliates_s(query);
 			if (affiliates) {
-				return res.status(201).send({ message: 'Affiliates Found', data: affiliates });
-			} else {
-				return res.status(404).send({ message: 'Affiliates Not Found' });
+				return res.status(200).send({ message: 'Affiliates Found', data: affiliates });
 			}
+			return res.status(404).send({ message: 'Affiliates Not Found' });
 		} catch (error) {
 			console.log({ findAll_affiliates_c_error: error });
 			res.status(500).send({ error, message: 'Error Finding Affiliates' });
@@ -20,10 +19,9 @@ export default {
 		try {
 			const affiliate = await affiliate_services.findById_affiliates_s(params);
 			if (affiliate) {
-				return res.status(201).send({ message: 'Affiliate Found', data: affiliate });
-			} else {
-				return res.status(404).send({ message: 'Affiliate Not Found' });
+				return res.status(200).send({ message: 'Affiliate Found', data: affiliate });
 			}
+			return res.status(404).send({ message: 'Affiliate Not Found' });
 		} catch (error) {
 			console.log({ findById_affiliates_c_error: error });
 			res.status(500).send({ error, message: 'Error Finding Affiliate' });
@@ -35,9 +33,8 @@ export default {
 			const affiliate = await affiliate_services.create_affiliates_s(body);
 			if (affiliate) {
 				return res.status(201).send({ message: 'New Affiliate Created', data: affiliate });
-			} else {
-				return res.status(500).send({ message: 'Error Creating Affiliate' });
 			}
+			return res.status(500).send({ message: 'Error Creating Affiliate' });
 		} catch (error) {
 			console.log({ create_affiliates_c_error: error });
 			res.status(500).send({ error, message: 'Error Creating Affiliate' });
@@ -49,9 +46,8 @@ export default {
 			const affiliate = await affiliate_services.update_affiliates_s(params, body);
 			if (affiliate) {
 				return res.status(200).send({ message: 'Affiliate Updated', data: affiliate });
-			} else {
-				return res.status(500).send({ message: 'Error Updating Affiliate' });
 			}
+			return res.status(500).send({ message: 'Error Updating Affiliate' });
 		} catch (error) {
 			console.log({ update_affiliates_c_error: error });
 			res.status(500).send({ error, message: 'Error Updating Affiliate' });
@@ -62,10 +58,9 @@ export default {
 		try {
 			const affiliate = await affiliate_services.remove_affiliates_s(params);
 			if (affiliate) {
-				return res.status(200).send({ message: 'Affiliate Deleted', data: affiliate });
-			} else {
-				return res.status(500).send({ message: 'Error Deleting Affiliate' });
+				return res.status(204).send({ message: 'Affiliate Deleted' });
 			}
+			return res.status(500).send({ message: 'Error Deleting Affiliate' });
 		} catch (error) {
 			console.log({ remove_affiliates_c_error: error });
 			res.status(500).send({ error, message: 'Error Deleting Affiliate' });

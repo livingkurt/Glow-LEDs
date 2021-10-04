@@ -19,9 +19,9 @@ export const affiliateListReducer = (state = { affiliates: [] }, action: { type:
 		case AFFILIATE_LIST_REQUEST:
 			return { loading: true, affiliates: [] };
 		case AFFILIATE_LIST_SUCCESS:
-			return { loading: false, affiliates: action.payload };
+			return { loading: false, affiliates: action.payload.data, message: action.payload.message };
 		case AFFILIATE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -32,9 +32,9 @@ export const affiliateDetailsReducer = (state = { affiliate: {} }, action: { typ
 		case AFFILIATE_DETAILS_REQUEST:
 			return { loading: true };
 		case AFFILIATE_DETAILS_SUCCESS:
-			return { loading: false, affiliate: action.payload };
+			return { loading: false, affiliate: action.payload.data, message: action.payload.message };
 		case AFFILIATE_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -45,9 +45,9 @@ export const affiliateDeleteReducer = (state = { affiliate: {} }, action: { type
 		case AFFILIATE_DELETE_REQUEST:
 			return { loading: true };
 		case AFFILIATE_DELETE_SUCCESS:
-			return { loading: false, affiliate: action.payload, success: true };
+			return { loading: false, affiliates: action.payload.data, message: action.payload.message, success: true };
 		case AFFILIATE_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -58,9 +58,9 @@ export const affiliateSaveReducer = (state = { affiliate: {} }, action: { type: 
 		case AFFILIATE_SAVE_REQUEST:
 			return { loading: true };
 		case AFFILIATE_SAVE_SUCCESS:
-			return { loading: false, success: true, affiliate: action.payload };
+			return { loading: false, success: true, affiliates: action.payload.data, message: action.payload.message };
 		case AFFILIATE_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		case AFFILIATE_REMOVE_STATE:
 			return { loading: false, success: false };
 		default:
