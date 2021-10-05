@@ -65,14 +65,14 @@ export const saveSurvey = (survey: any) => async (
 	}
 };
 
-export const detailsSurvey = (pathname: string) => async (
+export const detailsSurvey = (id: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
-		dispatch({ type: SURVEY_DETAILS_REQUEST, payload: pathname });
+		dispatch({ type: SURVEY_DETAILS_REQUEST, payload: id });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/surveys/' + pathname, {
+		const { data } = await axios.get('/api/surveys/' + id, {
 			headers: {
 				Authorization: 'Bearer ' + userInfo.token
 			}

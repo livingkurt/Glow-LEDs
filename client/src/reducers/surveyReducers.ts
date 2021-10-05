@@ -19,7 +19,7 @@ export const surveyListReducer = (state = { surveys: [] }, action: { type: any; 
 		case SURVEY_LIST_REQUEST:
 			return { loading: true, surveys: [] };
 		case SURVEY_LIST_SUCCESS:
-			return { loading: false, surveys: action.payload };
+			return { loading: false, surveys: action.payload.data, message: action.payload.message };
 		case SURVEY_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -32,7 +32,7 @@ export const surveyDetailsReducer = (state = { survey: {} }, action: { type: any
 		case SURVEY_DETAILS_REQUEST:
 			return { loading: true };
 		case SURVEY_DETAILS_SUCCESS:
-			return { loading: false, survey: action.payload };
+			return { loading: false, survey: action.payload.data, message: action.payload.message };
 		case SURVEY_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -45,7 +45,7 @@ export const surveyDeleteReducer = (state = { survey: {} }, action: { type: any;
 		case SURVEY_DELETE_REQUEST:
 			return { loading: true };
 		case SURVEY_DELETE_SUCCESS:
-			return { loading: false, survey: action.payload, success: true };
+			return { loading: false, survey: action.payload.data, message: action.payload.message, success: true };
 		case SURVEY_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -58,7 +58,7 @@ export const surveySaveReducer = (state = { survey: {} }, action: { type: any; p
 		case SURVEY_SAVE_REQUEST:
 			return { loading: true };
 		case SURVEY_SAVE_SUCCESS:
-			return { loading: false, success: true, survey: action.payload };
+			return { loading: false, success: true, survey: action.payload.data, message: action.payload.message };
 		case SURVEY_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		case SURVEY_REMOVE_STATE:
