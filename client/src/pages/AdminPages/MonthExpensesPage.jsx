@@ -79,28 +79,10 @@ const MonthExpensesPage = (props) => {
 		const { data: orders } = await API_Orders.monthly_income(start_date, end_date);
 		const { data: expenses } = await API_Orders.monthly_expenses(start_date, end_date);
 
-		set_expenses(expenses);
+		set_expenses(expenses.data);
 		set_orders(orders);
-		// console.log({ orders });
-		// let calc = [];
-		// categories &&
-		// 	categories.forEach((category) =>
-		// 		orders.forEach(
-		// 			(order) => (calc = [ ...calc, order.orderItems.filter((item) => item.category === category) ])
-		// 		)
-		// 	);
-		// // if (orders) {
-		// // 	const calc = orders.map((order) => order.orderItems.map());
-		// // }
-		// console.log({ calc });
-		// // const calc = categories.map((category) =>
-		// // 	orders.forEach((order) =>
-		// // 		order.orderItems
-		// // 			.map((item) => item.category === category)
-		// // 			.reduce((a, c) => parseFloat(a) + parseFloat(c.totalPrice) - parseFloat(c.taxPrice), 0)
-		// // 	)
-		// // );
 	};
+	
 	const expenses_pie_multiplier = 360 / 5;
 	let num_1 = -expenses_pie_multiplier;
 

@@ -18,7 +18,7 @@ export const expenseListReducer = (state = { expenses: [] }, action: { type: any
 		case EXPENSE_LIST_REQUEST:
 			return { loading: true, expenses: [] };
 		case EXPENSE_LIST_SUCCESS:
-			return { loading: false, expenses: action.payload };
+			return { loading: false, expenses: action.payload.data, message: action.payload.message };
 		case EXPENSE_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -31,7 +31,7 @@ export const expenseDetailsReducer = (state = { expense: { reviews: [] } }, acti
 		case EXPENSE_DETAILS_REQUEST:
 			return { loading: true };
 		case EXPENSE_DETAILS_SUCCESS:
-			return { loading: false, expense: action.payload };
+			return { loading: false, expense: action.payload.data, message: action.payload.message };
 		case EXPENSE_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -44,7 +44,7 @@ export const expenseDeleteReducer = (state = { expense: {} }, action: { type: an
 		case EXPENSE_DELETE_REQUEST:
 			return { loading: true };
 		case EXPENSE_DELETE_SUCCESS:
-			return { loading: false, expense: action.payload, success: true };
+			return { loading: false, expense: action.payload.data, message: action.payload.message, success: true };
 		case EXPENSE_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -57,7 +57,7 @@ export const expenseSaveReducer = (state = { expense: {} }, action: { type: any;
 		case EXPENSE_SAVE_REQUEST:
 			return { loading: true };
 		case EXPENSE_SAVE_SUCCESS:
-			return { loading: false, success: true, expense: action.payload };
+			return { loading: false, success: true, expense: action.payload.data, message: action.payload.message };
 		case EXPENSE_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:

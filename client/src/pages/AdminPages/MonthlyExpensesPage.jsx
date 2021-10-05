@@ -246,7 +246,7 @@ const MonthlyExpensesPage = (props) => {
 				let total_expenses = 0;
 				if (orders.length > 1) {
 					income = orders.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
-					total_expenses = expenses.reduce((a, c) => a + c.amount, 0);
+					total_expenses = expenses.data.reduce((a, c) => a + c.amount, 0);
 				}
 				update_income(dates_in_year[month_number].month, income, total_expenses, batteries);
 				return {
