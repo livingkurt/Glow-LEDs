@@ -35,6 +35,19 @@ export default {
 			res.status(500).send({ error, message: 'Error Finding User' });
 		}
 	},
+	findByEmail_users_c: async (req: any, res: any) => {
+		const { params } = req;
+		try {
+			const user = await user_services.findByEmail_users_s(params);
+			if (user) {
+				return res.status(200).send({ message: 'User Found', data: user });
+			}
+			return res.status(404).send({ message: 'User Not Found' });
+		} catch (error) {
+			console.log({ findByEmail_users_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding User' });
+		}
+	},
 	create_users_c: async (req: any, res: any) => {
 		const { body } = req;
 		try {
@@ -87,19 +100,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Finding User' });
 		}
 	},
-	email_users_c: async (req: any, res: any) => {
-		const { params } = req;
-		try {
-			const user = await user_services.email_users_s(params);
-			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
-			}
-			return res.status(404).send({ message: 'User Not Found' });
-		} catch (error) {
-			console.log({ email_users_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding User' });
-		}
-	},
+
 	register_users_c: async (req: any, res: any) => {
 		const { body } = req;
 		try {
@@ -194,19 +195,19 @@ export default {
 			res.status(500).send({ error, message: 'Error Finding User' });
 		}
 	},
-	verify_users_c: async (req: any, res: any) => {
-		const { params } = req;
-		try {
-			const user = await user_services.verify_users_s(params);
-			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
-			}
-			return res.status(404).send({ message: 'User Not Found' });
-		} catch (error) {
-			console.log({ verify_users_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding User' });
-		}
-	},
+	// verify_users_c: async (req: any, res: any) => {
+	// 	const { params } = req;
+	// 	try {
+	// 		const user = await user_services.verify_users_s(params);
+	// 		if (user) {
+	// 			return res.status(200).send({ message: 'User Found', data: user });
+	// 		}
+	// 		return res.status(404).send({ message: 'User Not Found' });
+	// 	} catch (error) {
+	// 		console.log({ verify_users_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Finding User' });
+	// 	}
+	// },
 	check_password_c: async (req: any, res: any) => {
 		const { params, body } = req;
 		console.log({ params, body });
@@ -221,31 +222,31 @@ export default {
 			console.log({ check_password_c_error: error });
 			res.status(500).send({ error, message: 'Error Finding User' });
 		}
-	},
-	checkemail_users_c: async (req: any, res: any) => {
-		const { params } = req;
-		try {
-			const user = await user_services.checkemail_users_s(params);
-			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
-			}
-			return res.status(404).send({ message: 'User Not Found' });
-		} catch (error) {
-			console.log({ checkemail_users_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding User' });
-		}
-	},
-	createadmin_users_c: async (req: any, res: any) => {
-		const { params } = req;
-		try {
-			const user = await user_services.createadmin_users_s(params);
-			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
-			}
-			return res.status(404).send({ message: 'User Not Found' });
-		} catch (error) {
-			console.log({ createadmin_users_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding User' });
-		}
 	}
+	// checkemail_users_c: async (req: any, res: any) => {
+	// 	const { params } = req;
+	// 	try {
+	// 		const user = await user_services.checkemail_users_s(params);
+	// 		if (user) {
+	// 			return res.status(200).send({ message: 'User Found', data: user });
+	// 		}
+	// 		return res.status(404).send({ message: 'User Not Found' });
+	// 	} catch (error) {
+	// 		console.log({ checkemail_users_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Finding User' });
+	// 	}
+	// },
+	// createadmin_users_c: async (req: any, res: any) => {
+	// 	const { params } = req;
+	// 	try {
+	// 		const user = await user_services.createadmin_users_s(params);
+	// 		if (user) {
+	// 			return res.status(200).send({ message: 'User Found', data: user });
+	// 		}
+	// 		return res.status(404).send({ message: 'User Not Found' });
+	// 	} catch (error) {
+	// 		console.log({ createadmin_users_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Finding User' });
+	// 	}
+	// }
 };
