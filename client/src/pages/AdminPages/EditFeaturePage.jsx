@@ -402,7 +402,7 @@ const EditFeaturePage = (props) => {
 															<option key={1} defaultValue="">
 																---Choose Product---
 															</option>
-															{products.map((product, index) => (
+															{products.filter(product => !product.option).filter(product => !product.hidden).map((product, index) => (
 																<option key={index} value={product.pathname}>
 																	{product.name}
 																</option>
