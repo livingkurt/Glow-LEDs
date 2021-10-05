@@ -18,7 +18,7 @@ export const emailListReducer = (state = { emails: [] }, action: { type: any; pa
 		case EMAIL_LIST_REQUEST:
 			return { loading: true, emails: [] };
 		case EMAIL_LIST_SUCCESS:
-			return { loading: false, emails: action.payload };
+			return { loading: false, emails: action.payload.data, message: action.payload.message };
 		case EMAIL_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -31,7 +31,7 @@ export const emailDetailsReducer = (state = { email: { reviews: [] } }, action: 
 		case EMAIL_DETAILS_REQUEST:
 			return { loading: true };
 		case EMAIL_DETAILS_SUCCESS:
-			return { loading: false, email: action.payload };
+			return { loading: false, email: action.payload.data, message: action.payload.message };
 		case EMAIL_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -44,7 +44,7 @@ export const emailDeleteReducer = (state = { email: {} }, action: { type: any; p
 		case EMAIL_DELETE_REQUEST:
 			return { loading: true };
 		case EMAIL_DELETE_SUCCESS:
-			return { loading: false, email: action.payload, success: true };
+			return { loading: false, email: action.payload.data, message: action.payload.message, success: true };
 		case EMAIL_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -57,7 +57,7 @@ export const emailSaveReducer = (state = { email: {} }, action: { type: any; pay
 		case EMAIL_SAVE_REQUEST:
 			return { loading: true };
 		case EMAIL_SAVE_SUCCESS:
-			return { loading: false, success: true, email: action.payload };
+			return { loading: false, success: true, email: action.payload.data, message: action.payload.message };
 		case EMAIL_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:

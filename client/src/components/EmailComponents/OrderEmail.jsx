@@ -1844,14 +1844,17 @@ const OrderEmail = (props) => {
 	const send_order_email = async (email, first_name, subject, refunded) => {
 		set_loading(true);
 		console.log({ email_template });
-		const response_1 = await API_Emails.send_user_email(email_template, subject, email);
-		const response_2 = await API_Emails.send_admin_email(
-			email_template,
-			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
-		);
-		console.log({ response_1 });
-		console.log({ response_2 });
-		if (response_1 && response_2) {
+		// const response_1 = await API_Emails.send_user_email(email_template, subject, email);
+		// const response_2 = await API_Emails.send_admin_email(
+		// 	email_template,
+		// 	refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
+		// );
+		const { data:user_email } = await API_Emails.send_email(email_template, subject, email);
+		const { data: admin_email } = await API_Emails.send_email(email_template,
+			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name);
+		console.log({ user_email });
+		console.log({ admin_email });
+		if (user_email && admin_email) {
 			// history.push('/pages/survey/' + order._id);
 			// modal.style.display = 'block';
 			show_hide_survey();

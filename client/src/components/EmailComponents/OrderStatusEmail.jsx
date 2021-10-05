@@ -965,15 +965,19 @@ const OrderStatusEmail = (props) => {
 	const send_order_email = async (email, first_name, subject) => {
 		set_loading(true);
 		console.log({ email_template });
-		const { data } = await API_Emails.send_user_email(email_template, subject, email);
-		const { data: request } = await API_Emails.send_admin_email(
-			email_template,
-			'Order Status Updated for ' + first_name
-		);
-		console.log({ data });
-		console.log({ request });
-
-		if (data && request) {
+		// const { data } = await API_Emails.send_user_email(email_template, subject, email);
+		// const { data: request } = await API_Emails.send_admin_email(
+		// 	email_template,
+		// 	'Order Status Updated for ' + first_name
+		// );
+		// console.log({ data });
+		// console.log({ request });
+		const { data:user_email } = await API_Emails.send_email(email_template, subject, email);
+		const { data: admin_email } = await API_Emails.send_email(email_template,
+			'Order Status Updated for ' + first_name);
+		console.log({ user_email });
+		console.log({ admin_email });
+		if (user_email && admin_email) {
 			if (props.match.params.batch === 'true') {
 				console.log({ send_order_email: 'mark_as_shipped' });
 				const { data: orders } = await API_Orders.mark_as_shipped();

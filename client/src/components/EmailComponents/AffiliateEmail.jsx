@@ -867,13 +867,11 @@ const AffiliateEmail = (props) => {
 	// };
 	const send_affiliate_email = async (email, first_name, subject) => {
 		console.log({ email_template });
-		const { data } = await API_Emails.send_user_email(email_template, subject, email);
-		const { data: request } = await API_Emails.send_admin_email(
-			email_template,
-			'New Affiliate Created by ' + first_name
-		);
-		console.log({ data });
-		console.log({ request });
+		const { data:user_email } = await API_Emails.send_email(email_template, subject, email);
+		const { data: admin_email } = await API_Emails.send_email(email_template,
+			'New Affiliate Created by ' + first_name);
+		console.log({ user_email });
+		console.log({ admin_email });
 	};
 
 	const save_html = async () => {
