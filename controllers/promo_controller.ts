@@ -1,164 +1,108 @@
-import { Promo } from '../models';
+import { promo_services } from '../services';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_promos_c: async (req: any, res: any) => {
+		const { query } = req;
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const searchKeyword = req.query.searchKeyword
-				? {
-						facebook_name: {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-
-			let sortOrder = {};
-			if (req.query.sortOrder === 'admin only') {
-				sortOrder = { admin_only: -1 };
-			} else if (req.query.sortOrder === 'affiliate only') {
-				sortOrder = { affiliate_only: -1 };
-			} else if (req.query.sortOrder === 'active') {
-				sortOrder = { active: -1 };
-			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			const promos = await promo_services.findAll_promos_s(query);
+			if (promos) {
+				return res.status(200).send({ message: 'Promos Found', data: promos });
 			}
-
-			const promos = await Promo.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-
-			res.send(promos);
+			return res.status(404).send({ message: 'Promos Not Found' });
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Promos' });
+			console.log({ findAll_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Promos' });
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_promos_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const promo = await Promo.findOne({ _id: req.params.id }).populate('sponsor').populate('user');
-			// console.log({ promo });
-			// console.log(req.params.id);
+			const promo = await promo_services.findById_promos_s(params);
 			if (promo) {
-				res.send(promo);
-			} else {
-				res.status(404).send({ message: 'Promo Not Found.' });
+				return res.status(200).send({ message: 'Promo Found', data: promo });
 			}
+			return res.status(404).send({ message: 'Promo Not Found' });
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Promo' });
+			console.log({ findById_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Promo' });
 		}
 	},
-	find_by_code: async (req: any, res: any) => {
+	findByCode_promos_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const promo = await Promo.findOne({ promo_code: req.params.promo_code })
-				.populate('sponsor')
-				.populate('user');
-			// console.log({ promo });
-			// console.log({ promo });
-			// console.log(req.params.promo_code);
+			const promo = await promo_services.findByCode_promos_s(params);
 			if (promo) {
-				res.send(promo);
-			} else {
-				res.status(404).send({ message: 'Promo Not Found.' });
+				return res.status(200).send({ message: 'Promo Found', data: promo });
 			}
+			return res.status(404).send({ message: 'Promo Not Found' });
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Promo' });
+			console.log({ findById_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Promo' });
 		}
 	},
-	create: async (req: any, res: any) => {
+	create_promos_c: async (req: any, res: any) => {
+		const { body } = req;
 		try {
-			const newPromo = await Promo.create(req.body);
-			if (newPromo) {
-				return res.status(201).send({ message: 'New Promo Created', data: newPromo });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Promo.' });
+			const promo = await promo_services.create_promos_s(body);
+			if (promo) {
+				return res.status(201).send({ message: 'New Promo Created', data: promo });
 			}
+			return res.status(500).send({ message: 'Error Creating Promo' });
 		} catch (error) {
-			console.log({ error });
-
+			console.log({ create_promos_c_error: error });
 			res.status(500).send({ error, message: 'Error Creating Promo' });
 		}
 	},
-	update: async (req: any, res: any) => {
+	update_promos_c: async (req: any, res: any) => {
+		const { params, body } = req;
 		try {
-			console.log({ promo_routes_put: req.body });
-			const promo_id = req.params.id;
-			const promo: any = await Promo.findById(promo_id);
+			const promo = await promo_services.update_promos_s(params, body);
 			if (promo) {
-				const updatedPromo = await Promo.updateOne({ _id: promo_id }, req.body);
-				if (updatedPromo) {
-					return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Promo.' });
+				return res.status(200).send({ message: 'Promo Updated', data: promo });
 			}
+			return res.status(500).send({ message: 'Error Updating Promo' });
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Promo' });
+			console.log({ update_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Promo' });
 		}
 	},
-	remove: async (req: any, res: any) => {
+	update_code_used_promos_c: async (req: any, res: any) => {
+		const { params, body } = req;
 		try {
-			const message: any = { message: 'Promo Deleted' };
-			const deleted_promo = await Promo.updateOne({ _id: req.params.id }, { deleted: true });
-			if (deleted_promo) {
-				res.send(message);
-			} else {
-				res.send('Error in Deletion.');
+			const promo = await promo_services.update_code_used_promos_s(params, body);
+			if (promo) {
+				return res.status(200).send({ message: 'Promo Updated', data: promo });
 			}
+			return res.status(500).send({ message: 'Error Updating Promo' });
 		} catch (error) {
-			console.log({ error });
-
+			console.log({ update_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Promo' });
+		}
+	},
+	update_affiliate_codes_promos_c: async (req: any, res: any) => {
+		const { params, body } = req;
+		try {
+			const promo = await promo_services.update_affiliate_codes_promos_s(params, body);
+			if (promo) {
+				return res.status(200).send({ message: 'Promo Updated', data: promo });
+			}
+			return res.status(500).send({ message: 'Error Updating Promo' });
+		} catch (error) {
+			console.log({ update_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Promo' });
+		}
+	},
+	remove_promos_c: async (req: any, res: any) => {
+		const { params } = req;
+		try {
+			const promo = await promo_services.remove_promos_s(params);
+			if (promo) {
+				return res.status(204).send({ message: 'Promo Deleted' });
+			}
+			return res.status(500).send({ message: 'Error Deleting Promo' });
+		} catch (error) {
+			console.log({ remove_promos_c_error: error });
 			res.status(500).send({ error, message: 'Error Deleting Promo' });
-		}
-	},
-	update_discount: async (req: any, res: any) => {
-		try {
-			console.log({ percentage_off: req.body.percentage_off });
-			console.log({ private_code_id: req.body.private_code_id });
-			console.log('update_discount');
-			const promo: any = await Promo.findOne({ _id: req.body.private_code_id });
-			promo.percentage_off = req.body.percentage_off;
-			// console.log({ promo });
-			if (promo) {
-				const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
-
-				if (updatedPromo) {
-					return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Promo.' });
-			}
-		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Promo' });
-		}
-	},
-	mark_code_used: async (req: any, res: any) => {
-		try {
-			console.log({ used: req.params.promo_code });
-			console.log('Promo_Routes');
-			const promo: any = await Promo.findOne({ promo_code: req.params.promo_code.toLowerCase() });
-			promo.used_once = true;
-			console.log({ mark_code_used: promo });
-			if (promo) {
-				const updatedPromo = await Promo.updateOne({ _id: promo._id }, promo);
-				console.log({ updatedPromo });
-				if (updatedPromo) {
-					return res.status(200).send({ message: 'Promo Updated', data: updatedPromo });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Promo.' });
-			}
-		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Promo' });
 		}
 	}
 };

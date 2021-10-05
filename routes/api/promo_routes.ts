@@ -4,15 +4,18 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-router.route('/code/:promo_code').get(promo_controller.find_by_code).put(promo_controller.mark_code_used);
-router.route('/update_discount').put(isAuth, isAdmin, promo_controller.update_discount);
+router
+	.route('/code/:promo_code')
+	.get(promo_controller.findByCode_promos_c)
+	.put(promo_controller.update_code_used_promos_c);
+router.route('/update_discount').put(isAuth, isAdmin, promo_controller.update_affiliate_codes_promos_c);
 
-router.route('/').get(promo_controller.findAll).post(isAuth, isAdmin, promo_controller.create);
+router.route('/').get(promo_controller.findAll_promos_c).post(isAuth, isAdmin, promo_controller.create_promos_c);
 
 router
 	.route('/:id')
-	.get(promo_controller.findById)
-	.put(isAuth, isAdmin, promo_controller.update)
-	.delete(isAuth, isAdmin, promo_controller.remove);
+	.get(promo_controller.findById_promos_c)
+	.put(isAuth, isAdmin, promo_controller.update_promos_c)
+	.delete(isAuth, isAdmin, promo_controller.remove_promos_c);
 
 export default router;
