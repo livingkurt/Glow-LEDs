@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { format_date } from '../../utils/helper_functions';
+import { determnine_link, format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
@@ -12,29 +12,7 @@ import { determine_product_name } from '../../utils/react_helper_functions';
 
 const OrderListItem = (props) => {
 	const dispatch = useDispatch();
-	const [ clipboard, copyToClipboard ] = useClipboard();
-
-	const [ refund_state, set_refund_state ] = useState({});
-	const [ refund_amount, set_refund_amount ] = useState(0);
-	const [ refund_reason, set_refund_reason ] = useState('');
 	const [ loading_label, set_loading_label ] = useState(false);
-
-	const orderRefund = useSelector((state) => state.orderRefund);
-	const { order: refund } = orderRefund;
-
-	const update_refund_state = () => {
-		set_refund_state(true);
-		dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
-		// }
-	};
-	useEffect(
-		() => {
-			if (refund) {
-				set_refund_state(refund.isRefunded);
-			}
-		},
-		[ refund ]
-	);
 
 	const show_hide = (id) => {
 		const row = document.getElementById(id);
@@ -42,96 +20,18 @@ const OrderListItem = (props) => {
 		row.classList.toggle('hide-row');
 	};
 	const daysBetween = (date1, date2) => {
-		// console.log({ date1: date1.toISOString() });
-		// console.log({ date1 });
-		// console.log({ date2: new Date(date2).getDay() });
-
 		const diffTime = Math.abs(new Date(date2) - date1);
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-		// console.log(diffTime + ' milliseconds');
-		// console.log(diffDays + ' days');
-		return diffDays;
-	};
-
-	// function dates(current) {
-	// 	const week = new Array();
-	// 	// Starting Monday not Sunday
-	// 	current.setDate(current.getDate() - current.getDay() + 1);
-	// 	for (let i = 0; i < 7; i++) {
-	// 		week.push(new Date(current));
-	// 		current.setDate(current.getDate() + 1);
-	// 	}
-	// 	return week;
-	// }
-	// console.log(dates(new Date(2020, 1, 27)));
-
-	const deleteHandler = (order) => {
-		dispatch(deleteOrder(order._id));
+		return diffDays - 1;
 	};
 
 	const today = new Date();
 
-	const create_label = async () => {
-		set_loading_label(true);
-		const { data } = await API_Orders.create_label(props.order, props.order.shipping.shipping_rate);
-		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
-		console.log({ data });
-		if (data) {
-			set_loading_label(false);
-		}
-		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code, data);
-		console.log(request);
-		dispatch(listOrders('', '', '', 1, 10));
-	};
-
-	const create_return_label = async () => {
-		set_loading_label(true);
-		const { data } = await API_Orders.create_return_label(props.order, props.order.shipping.shipping_rate);
-		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
-		console.log({ data });
-		if (data) {
-			set_loading_label(false);
-		}
-		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_return_tracking_number(props.order, data.tracking_code, data);
-		console.log(request);
-		dispatch(listOrders('', '', '', 1, 10));
-	};
-
-	const buy_label = async () => {
-		set_loading_label(true);
-		const { data } = await API_Orders.buy_label(
-			props.order.shipping.shipment_id,
-			props.order.shipping.shipping_rate
-		);
-		window.open(data.postage_label.label_url, '_blank', 'width=600,height=400');
-		if (data) {
-			set_loading_label(false);
-		}
-		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Orders.add_tracking_number(props.order, data.tracking_code, data);
-		console.log(request);
-		dispatch(listOrders('', '', '', 1, 10));
-	};
-	const view_label = async () => {
-		window.open(props.order.shipping.shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
-	};
-	const view_return_label = async () => {
-		window.open(
-			props.order.shipping.return_shipping_label.postage_label.label_url,
-			'_blank',
-			'width=600,height=400'
-		);
-	};
-	// const open_email = async () => {
-	// 	window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here";
-	// };
 
 	const sendEmail = (message) => {
 		const email = props.order.shipping.email;
 		const subject = 'Your Glow LEDs Order';
-		const emailBody = 'Hi ' + props.order.user.first_name;
+		const emailBody = 'Hi ' + props.order.user.first_name + ',';
 		document.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;
 	};
 
@@ -275,7 +175,8 @@ const OrderListItem = (props) => {
 							return (
 								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
-										<Link to={'/collections/all/products/' + item.pathname}>
+										{console.log({orderItems: item})}
+										<Link to={determnine_link(item)}>
 											<div className="">
 												{!item.secondary_image && (
 													<LazyImage
@@ -518,7 +419,7 @@ const OrderListItem = (props) => {
 
 						<div className="jc-b">
 							<div className="column w-25rem">
-								{props.order.shipping.shipping_label && (
+								{/* {props.order.shipping.shipping_label && (
 									<button className="btn secondary mv-5px" onClick={() => view_label()}>
 										View Label
 									</button>
@@ -527,7 +428,7 @@ const OrderListItem = (props) => {
 									<button className="btn secondary mv-5px" onClick={() => view_return_label()}>
 										View Return Label
 									</button>
-								)}
+								)} */}
 								<button className="btn secondary w-100per mv-10px" onClick={() => sendEmail('Hello')}>
 									Send User a Message
 								</button>

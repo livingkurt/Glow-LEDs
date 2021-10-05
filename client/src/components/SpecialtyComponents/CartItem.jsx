@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { format_date } from '../../utils/helper_functions';
+import { determnine_link, format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
@@ -21,7 +21,7 @@ const CartItem = (props) => {
 		<li key={props.index} className="">
 			{/* {console.log({ item })} */}
 			<div className="cart-image m-auto ai-c">
-				<Link to={'/collections/all/products/' + props.item.pathname}>
+				<Link to={determnine_link(props.item)}>
 					{/* <img src={props.item.display_image} alt={props.item.name} title="Product Image" /> */}
 					<div className="">
 						{!props.item.secondary_image && (

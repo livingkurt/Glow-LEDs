@@ -58,6 +58,14 @@ export const shuffle = (array: any) => {
 	return array;
 };
 
+export const determnine_link = (item: any) => {
+	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
+		? '?secondary_color=' + item.secondary_color
+		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
+		? '?secondary=' + item.size ? item.size : item.option_product_name
+		: ''}`;
+};
+
 // export const snake_case = (str: string) => {
 // 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
 // };

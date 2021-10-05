@@ -309,7 +309,7 @@ const ProductPage = (props) => {
 		history.push({
 			search: `${color ? '?color=' + color : ''}${secondary_color
 				? '?secondary_color=' + secondary_color
-				: ''}${option ? '?option=' + option : ''}${secondary_product ? '?secondary=' + secondary_product : ''} `
+				: ''}${option ? '?option=' + option : ''}${secondary_product ? '?secondary=' + secondary_product : ''}`
 		});
 	};
 
