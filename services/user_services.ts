@@ -124,66 +124,43 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	register_users_s: async (params: any, body: any) => {
-		const user: any = await user_db.findByEmail_users_db(params.email);
+	register_users_s: async (body: any) => {
+		const user: any = await user_db.findByEmail_users_db(body.email);
 		if (user) {
 			const isMatch = await bcrypt.compare(process.env.TEMP_PASS, user.password);
 			if (isMatch) {
-				return bcrypt.genSalt(10, (err: any, salt: any) => {
-					return bcrypt.hash(body.password, salt, async (err: any, hash: any) => {
-						if (err) throw err;
-						user.password = hash;
-						user.first_name = body.first_name;
-						user.last_name = body.last_name;
-						user.email = body.email;
-						try {
-							return await user_db.create_users_db(user);
-						} catch (error) {
-							console.log({ register_users_s_error: error });
-							throw new Error('Error Registering User');
-						}
-					});
-				});
+				return { user: user, matched: true };
 			} else {
 				throw new Error('User Already Exists');
 			}
 		} else {
-			const newUser: any = new User({
-				first_name: body.first_name,
-				last_name: body.last_name,
-				email: body.email,
-				password: body.password,
-				affiliate: body.affiliate,
-				cart: body.cart,
-				is_affiliated: body.is_affiliated,
-				email_subscription: body.email_subscription,
-				isAdmin: false,
-				isVerified: true
-			});
-
-			return bcrypt.genSalt(10, (err: any, salt: any) => {
-				return bcrypt.hash(newUser.password, salt, async (err: any, hash: any) => {
-					if (err) throw err;
-					newUser.password = hash;
-					try {
-						return await user_db.create_users_db(newUser);
-					} catch (error) {
-						console.log({ register_users_s_error: error });
-						throw new Error('Error Registering User');
-					}
-				});
-			});
+			return {
+				user: {
+					first_name: body.first_name,
+					last_name: body.last_name,
+					email: body.email,
+					password: body.password,
+					affiliate: body.affiliate,
+					cart: body.cart,
+					is_affiliated: body.is_affiliated,
+					email_subscription: body.email_subscription,
+					isAdmin: false,
+					isVerified: true
+				},
+				matched: false
+			};
 		}
 	},
+
 	login_users_s: async (email: string, password: string) => {
 		const user: any = await user_db.findByEmail_users_db(email);
 		if (!user) {
 			throw new Error('Email Not Found');
 		}
 		const isMatch = await bcrypt.compare(password, user.password);
+
 		if (isMatch) {
-			let response = {};
-			const payload = {
+			return {
 				_id: user.id,
 				first_name: user.first_name,
 				last_name: user.last_name,
@@ -197,65 +174,31 @@ export default {
 				shipping: user.shipping,
 				token: getToken(user)
 			};
-			jwt.sign(
-				payload,
-				config.JWT_SECRET,
-				{
-					expiresIn: '48hr' // 1 year in seconds
-				},
-				(err: any, token: string) => {
-					response = {
-						success: true,
-						token: 'Bearer ' + token
-					};
-				}
-			);
-			return response;
 		} else {
 			throw new Error('Password Incorrect');
 		}
 	},
 
-	password_reset_users_s: async (req: any, res: any) => {
+	password_reset_users_s: async (body: any) => {
 		try {
-			const user: any = await User.findOne({ _id: req.body.user_id });
+			const user: any = await user_db.findById_users_db(body.user_id);
+			console.log({ user });
 			if (!user) {
-				return res.status(404).send({ message: 'User Does Not Exist' });
+				throw new Error('User Does Not Exist');
 			} else {
-				bcrypt.genSalt(10, (err: any, salt: any) => {
-					bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
-						if (err) throw err;
-						console.log({ new_password: req.body.password, hash: hash });
-						const updated_user = await User.updateOne(
-							{ _id: req.body.user_id },
-							{ ...req.body, password: hash }
-						);
-						console.log({ user_after_password_change: updated_user });
-
-						res.status(202).send({ message: 'Password Saved', data: user });
-					});
-				});
+				return user;
 			}
 		} catch (error) {
 			console.log({ password_reset_users_error: error });
-
-			res.status(500).send({ error, message: 'Error Resetting User Password' });
+			throw new Error(error.message);
 		}
 	},
-	reset_password_users_s: async (req: any, res: any) => {
+	reset_password_users_s: async (params: any) => {
 		try {
-			const email = req.body.email;
-			const user = await User.findOne({ email });
-			console.log({ user });
-			if (user) {
-				res.send(user);
-			} else {
-				res.status(404).send({ message: 'User Not Found' });
-			}
+			return await user_db.findById_users_db(params.id);
 		} catch (error) {
-			console.log({ reset_password_user_error: error });
-
-			res.status(500).send({ error, message: 'Error Creating User' });
+			console.log({ findById_users_s_error: error });
+			throw new Error(error.message);
 		}
 	},
 	verify_users_s: async (req: any, res: any) => {
@@ -303,18 +246,17 @@ export default {
 			res.status(500).send({ error, message: 'Error Verifying User' });
 		}
 	},
-	get_user_users_s: async (req: any, res: any) => {
+	check_password_s: async (params: any, body: any) => {
 		try {
-			const user: any = await User.findOne({ _id: req.params.id }).populate('affiliate');
+			const user = await user_db.findById_users_db(params.id);
+			console.log({ user });
 			if (!user) {
-				return res.status(400).send({ message: "User Doesn't Exist" });
+				throw new Error("User Doesn't Exist");
 			}
-			// Check password
-			const isMatch = await bcrypt.compare(req.body.current_password, user.password);
+			const isMatch = await bcrypt.compare(body.current_password, user.password);
+			console.log({ isMatch });
 			if (isMatch) {
-				// console.log({ user })
-
-				res.send({
+				return {
 					_id: user.id,
 					first_name: user.first_name,
 					last_name: user.last_name,
@@ -328,14 +270,11 @@ export default {
 					email_subscription: user.email_subscription,
 					shipping: user.shipping,
 					token: getToken(user)
-				});
-			} else {
-				return res.status(500).send({ message: 'Error Getting User' });
+				};
 			}
 		} catch (error) {
-			console.log({ get_user_user_error: error });
-
-			res.status(500).send({ error, message: 'Error Getting User' });
+			console.log({ check_password_s_error: error });
+			throw new Error(error.message);
 		}
 	},
 	checkemail_users_s: async (req: any, res: any) => {

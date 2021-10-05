@@ -63,8 +63,9 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 	dispatch({ type: USER_REGISTER_REQUEST, payload: userData });
 	try {
 		const { data } = await axios.post('/api/users/register', userData);
-		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-		axios.post('/api/emails/verified', data);
+		console.log({ data });
+		dispatch({ type: USER_REGISTER_SUCCESS, payload: data.data });
+		// axios.post('/api/emails/verified', data);
 		// axios.post('/api/emails/verify', data);
 		dispatch({ type: USER_REGISTER_EMPTY, payload: {} });
 		setAuthToken(false);
@@ -84,16 +85,19 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 	dispatch({ type: USER_LOGIN_REQUEST, payload: userData });
 	try {
 		const { data } = await axios.post('/api/users/login', userData);
-		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+		dispatch({ type: USER_LOGIN_SUCCESS, payload: data.data });
+		console.log({ data });
+		// console.log({ user: data.token });
+		// console.log({ message: data.message });
 		// Set token to localStorage
-		const { token } = data;
-		// console.log(data);
+		const { token } = data.data;
+		console.log({ token });
 		localStorage.setItem('jwtToken', token);
 		// Set token to Auth header
 		setAuthToken(token);
 		// Decode token to get user data
 		const decoded = jwt_decode(token);
-		// console.log({ decoded });
+		console.log({ decoded });
 		// Set current user
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
@@ -279,6 +283,24 @@ export const updateUser = (userdata: any) => async (
 	}
 };
 
+export const password_reset = (user_id: string, password: string, repassword: string) => async (
+	dispatch: (arg0: { type: string; payload: any }) => void,
+	getState: () => { userLogin: { userInfo: any } }
+) => {
+	dispatch({ type: USER_RESET_PASSWORD_REQUEST, payload: { user_id, password, repassword } });
+	try {
+		const { data } = await axios.put('/api/users/password_reset', { user_id, password, repassword });
+		console.log({ password_reset: data });
+		if (data.data && data.data.hasOwnProperty('first_name')) {
+			dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
+			axios.post('/api/emails/password_reset', data);
+		}
+	} catch (error) {
+		console.log({ error });
+		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
+	}
+};
+
 export const reset_password = (email: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	dispatch({ type: USER_PASSWORD_RESET_REQUEST, payload: { email } });
 	try {
@@ -290,41 +312,6 @@ export const reset_password = (email: string) => async (dispatch: (arg0: { type:
 		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error.response.data.message });
 	}
 };
-
-export const password_reset = (user_id: string, password: string, repassword: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
-	dispatch({ type: USER_RESET_PASSWORD_REQUEST, payload: { user_id, password, repassword } });
-	try {
-		console.log({ password_reset: { user_id, password, repassword } });
-		const { data } = await axios.put('/api/users/password_reset', { user_id, password, repassword });
-		console.log({ password_reset: data });
-		dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
-		axios.post('/api/emails/password_reset', data);
-	} catch (error) {
-		console.log({ error });
-		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
-	}
-};
-
-// export const password_reset = (user: string, password: string, repassword: string) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void,
-// 	getState: () => { userLogin: { userInfo: any } }
-// ) => {
-// 	console.log({ user, password, repassword });
-// 	const { userLogin: { userInfo } } = getState();
-// 	dispatch({ type: USER_RESET_PASSWORD_REQUEST, payload: { userInfo, password, repassword } });
-// 	try {
-// 		const { data } = await axios.put('/api/users/password_reset', { userInfo, password, repassword });
-// 		dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
-// 		// axios.post("/api/emails/passwordreset", { email });
-// 		axios.post('/api/emails/password_reset', data);
-// 	} catch (error) {
-
-// 		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
-// 	}
-// };
 
 export const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	console.log({ user_id });

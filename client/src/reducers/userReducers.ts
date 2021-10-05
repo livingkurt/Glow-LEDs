@@ -58,13 +58,11 @@ export const userLoginReducer = (state = {}, action: { type: any; payload: any }
 		case SET_CURRENT_USER:
 			return {
 				...state,
-				// isAuthenticated: !isEmpty(action.payload.data, message: action.payload.message),
-				userInfo: action.payload.data,
-				message: action.payload.message
+				// isAuthenticated: !isEmpty(action.payload),
+				userInfo: action.payload
 			};
 		case USER_LOGIN_FAIL:
-			console.log({ payload: action.payload.data, message: action.payload.message });
-			return { loading: false, error: action.payload.data, message: action.payload.message };
+			return { loading: false, error: action.payload };
 		// case USER_LOGOUT:
 		// 	return {};
 		default:
@@ -86,6 +84,7 @@ export const userPasswordResetReducer = (state = {}, action: { type: any; payloa
 };
 
 export const userResetPasswordReducer = (state = {}, action: { type: any; payload: any }) => {
+	console.log({ payload_userResetPasswordReducer: action.payload });
 	switch (action.type) {
 		case USER_RESET_PASSWORD_REQUEST:
 			return { loading: true };
@@ -155,9 +154,9 @@ export const userRegisterReducer = (state = {}, action: { type: any; payload: an
 		case USER_REGISTER_REQUEST:
 			return { loading: true };
 		case USER_REGISTER_SUCCESS:
-			return { loading: false, userInfo: action.payload.data, message: action.payload.message };
+			return { loading: false, userInfo: action.payload };
 		case USER_REGISTER_FAIL:
-			return { loading: false, error: action.payload.data, message: action.payload.message };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}

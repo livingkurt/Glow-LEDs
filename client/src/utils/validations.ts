@@ -386,10 +386,13 @@ export const validate_password_change = async (data: {
 	let errors: any = {};
 	let request: AxiosResponse<any>;
 	if (data.current_password) {
-		request = await axios.post('/api/users/getuser/' + data.id, { current_password: data.current_password });
-		console.log({ request: request.data });
-		// Password checks
-		if (!request.data) {
+		try {
+			request = await axios.post('/api/users/check_password/' + data.id, {
+				current_password: data.current_password
+			});
+			console.log({ request: request });
+			// Password checks
+		} catch (error) {
 			errors.current_password = 'Current Password is Incorrect';
 		}
 	}

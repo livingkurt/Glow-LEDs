@@ -47,6 +47,7 @@ const RegisterPage = (props) => {
 
 	useEffect(
 		() => {
+			console.log({userInfo})
 			if (userInfo && userInfo.hasOwnProperty('first_name')) {
 				props.history.push('/account/login');
 			}

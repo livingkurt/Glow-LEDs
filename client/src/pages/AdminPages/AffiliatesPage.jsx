@@ -24,6 +24,7 @@ const AffiliatesPage = (props) => {
 
 	const affiliateDelete = useSelector((state) => state.affiliateDelete);
 	const { success: successDelete } = affiliateDelete;
+	
 	const dispatch = useDispatch();
 
 	const stableDispatch = useCallback(dispatch, []);
