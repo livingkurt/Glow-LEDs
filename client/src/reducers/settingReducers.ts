@@ -18,7 +18,7 @@ export const settingListReducer = (state = { settings: [] }, action: { type: any
 		case SETTING_LIST_REQUEST:
 			return { loading: true, settings: [] };
 		case SETTING_LIST_SUCCESS:
-			return { loading: false, settings: action.payload };
+			return { loading: false, settings: action.payload.data, message: action.payload.message };
 		case SETTING_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -31,7 +31,7 @@ export const settingDetailsReducer = (state = { setting: {} }, action: { type: a
 		case SETTING_DETAILS_REQUEST:
 			return { loading: true };
 		case SETTING_DETAILS_SUCCESS:
-			return { loading: false, setting: action.payload };
+			return { loading: false, setting: action.payload.data, message: action.payload.message };
 		case SETTING_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -44,7 +44,7 @@ export const settingDeleteReducer = (state = { setting: {} }, action: { type: an
 		case SETTING_DELETE_REQUEST:
 			return { loading: true };
 		case SETTING_DELETE_SUCCESS:
-			return { loading: false, setting: action.payload, success: true };
+			return { loading: false, setting: action.payload.data, message: action.payload.message, success: true };
 		case SETTING_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -57,7 +57,7 @@ export const settingSaveReducer = (state = { setting: {} }, action: { type: any;
 		case SETTING_SAVE_REQUEST:
 			return { loading: true };
 		case SETTING_SAVE_SUCCESS:
-			return { loading: false, success: true, setting: action.payload };
+			return { loading: false, success: true, setting: action.payload.data, message: action.payload.message };
 		case SETTING_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:

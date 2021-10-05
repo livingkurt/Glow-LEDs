@@ -1,9 +1,4 @@
 import { User } from '../models';
-import { getToken } from '../util';
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('../config');
-const passport = require('passport');
 require('dotenv');
 
 export default {
@@ -17,7 +12,7 @@ export default {
 				.sort(sortOrder)
 				.populate('affiliate');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findAll_users_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -25,7 +20,7 @@ export default {
 		try {
 			return await User.findOne({ _id: id }).populate('affiliate');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findById_users_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -33,7 +28,7 @@ export default {
 		try {
 			return await User.findOne({ email }).populate('affiliate');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findByEmail_users_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -41,7 +36,7 @@ export default {
 		try {
 			return await User.create(user);
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_users_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -53,7 +48,7 @@ export default {
 				return await User.updateOne({ _id: id }, body);
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_users_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -64,7 +59,7 @@ export default {
 				return await User.updateOne({ _id: id }, { deleted: true });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_users_db_error: error });
 			throw new Error(error.message);
 		}
 	}

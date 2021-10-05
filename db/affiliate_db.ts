@@ -18,7 +18,7 @@ export default {
 				.populate('private_code')
 				.populate('chips');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findAll_affiliates_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -31,7 +31,7 @@ export default {
 				.populate('public_code')
 				.populate('private_code');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findById_affiliates_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -47,7 +47,7 @@ export default {
 				});
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_affiliates_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -58,7 +58,7 @@ export default {
 				return await Affiliate.updateOne({ pathname: params.pathname }, body);
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_affiliates_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -69,7 +69,7 @@ export default {
 				return await Affiliate.updateOne({ pathname: params.pathname }, { deleted: true });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_affiliates_db_error: error });
 			throw new Error(error.message);
 		}
 	}

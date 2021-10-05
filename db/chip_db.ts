@@ -12,7 +12,7 @@ export default {
 				.sort(sortOrder)
 				.populate('user');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findAll_chips_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -20,7 +20,7 @@ export default {
 		try {
 			return await Chip.findOne({ _id: id }).populate('user');
 		} catch (error) {
-			console.log({ error });
+			console.log({ findById_chips_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -28,7 +28,7 @@ export default {
 		try {
 			return await Chip.create(body);
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_chips_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -39,7 +39,7 @@ export default {
 				return await Chip.updateOne({ _id: id }, body);
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_chips_db_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -50,7 +50,7 @@ export default {
 				return await Chip.updateOne({ _id: id }, { deleted: true });
 			}
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_chips_db_error: error });
 			throw new Error(error.message);
 		}
 	}
