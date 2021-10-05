@@ -23,7 +23,7 @@ export default {
 			}
 			return await chip_db.findAll_chips_db(searchKeyword, sortOrder);
 		} catch (error) {
-			console.log({ error });
+			console.log({ findAll_chips_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -31,7 +31,7 @@ export default {
 		try {
 			return await chip_db.findById_chips_db(params.id);
 		} catch (error) {
-			console.log({ error });
+			console.log({ findById_chips_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -39,7 +39,7 @@ export default {
 		try {
 			return await chip_db.create_chips_db(body);
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_chips_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -47,7 +47,7 @@ export default {
 		try {
 			return await chip_db.update_chips_db(params.id, body);
 		} catch (error) {
-			console.log({ error });
+			console.log({ update_chips_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -55,7 +55,7 @@ export default {
 		try {
 			return await chip_db.remove_chips_db(params.id);
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_chips_s_error: error });
 			throw new Error(error.message);
 		}
 	}
