@@ -21,7 +21,7 @@ export const paycheckListReducer = (state = { paychecks: [] }, action: { type: a
 		case PAYCHECK_LIST_REQUEST:
 			return { loading: true, paychecks: [] };
 		case PAYCHECK_LIST_SUCCESS:
-			return { loading: false, paychecks: action.payload };
+			return { loading: false, paychecks: action.payload.data, message: action.payload.message };
 		case PAYCHECK_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -39,7 +39,7 @@ export const myPaycheckListReducer = (
 		case MY_PAYCHECK_LIST_REQUEST:
 			return { loading: true };
 		case MY_PAYCHECK_LIST_SUCCESS:
-			return { loading: false, paychecks: action.payload };
+			return { loading: false, paychecks: action.payload.data, message: action.payload.message };
 		case MY_PAYCHECK_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -52,7 +52,7 @@ export const paycheckDetailsReducer = (state = { paycheck: {} }, action: { type:
 		case PAYCHECK_DETAILS_REQUEST:
 			return { loading: true };
 		case PAYCHECK_DETAILS_SUCCESS:
-			return { loading: false, paycheck: action.payload };
+			return { loading: false, paycheck: action.payload.data, message: action.payload.message };
 		case PAYCHECK_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -65,7 +65,7 @@ export const paycheckDeleteReducer = (state = { paycheck: {} }, action: { type: 
 		case PAYCHECK_DELETE_REQUEST:
 			return { loading: true };
 		case PAYCHECK_DELETE_SUCCESS:
-			return { loading: false, paycheck: action.payload, success: true };
+			return { loading: false, paycheck: action.payload.data, message: action.payload.message, success: true };
 		case PAYCHECK_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -78,7 +78,7 @@ export const paycheckSaveReducer = (state = { paycheck: {} }, action: { type: an
 		case PAYCHECK_SAVE_REQUEST:
 			return { loading: true };
 		case PAYCHECK_SAVE_SUCCESS:
-			return { loading: false, success: true, paycheck: action.payload };
+			return { loading: false, success: true, paycheck: action.payload.data, message: action.payload.message };
 		case PAYCHECK_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
