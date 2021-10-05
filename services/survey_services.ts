@@ -21,8 +21,8 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { name: 1 };
 			}
-
-			return await survey_db.findAll_surveys_db(category, searchKeyword, sortOrder);
+			const filter = { deleted: false, ...category, ...searchKeyword };
+			return await survey_db.findAll_surveys_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_surveys_s_error: error });
 			throw new Error(error.message);

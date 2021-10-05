@@ -18,7 +18,6 @@ export default {
 		const { params } = req;
 		try {
 			const survey = await survey_services.findById_surveys_s(params);
-			console.log({ survey });
 			if (survey) {
 				return res.status(200).send({ message: 'Survey Found', data: survey });
 			}

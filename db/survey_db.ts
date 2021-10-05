@@ -1,16 +1,9 @@
 import Survey from '../models/survey';
 
 export default {
-	findAll_surveys_db: async (category: any, searchKeyword: any, sortOrder: any) => {
+	findAll_surveys_db: async (filter: any, sortOrder: any) => {
 		try {
-			return await Survey.find({
-				deleted: false,
-				...category,
-				...searchKeyword
-			})
-				.sort(sortOrder)
-				.populate('user')
-				.populate('affiliate');
+			return await Survey.find(filter).sort(sortOrder).populate('user').populate('affiliate');
 		} catch (error) {
 			console.log({ findAll_surveys_db_error: error });
 			throw new Error(error.message);
