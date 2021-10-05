@@ -1,5 +1,4 @@
 import { user_db } from '../db';
-import { User } from '../models';
 import { getToken } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');

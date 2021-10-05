@@ -1,11 +1,8 @@
 import { user_db } from '../db';
-import { User } from '../models';
 import { user_services } from '../services';
-import { getToken } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const passport = require('passport');
 require('dotenv');
 
 export default {

@@ -84,7 +84,6 @@ export const userPasswordResetReducer = (state = {}, action: { type: any; payloa
 };
 
 export const userResetPasswordReducer = (state = {}, action: { type: any; payload: any }) => {
-	console.log({ payload_userResetPasswordReducer: action.payload });
 	switch (action.type) {
 		case USER_RESET_PASSWORD_REQUEST:
 			return { loading: true };

@@ -266,9 +266,7 @@ const EditTeamPage = (props) => {
 
 			<div className="form">
 				<form onSubmit={submitHandler} style={{ width: '100%' }}>
-					{/* {loading_data ? (
-						<div>Loading...</div>
-					) : ( */}
+					{console.log({team})}
 					<Loading loading={loading} error={error}>
 						{team && (
 							<div>

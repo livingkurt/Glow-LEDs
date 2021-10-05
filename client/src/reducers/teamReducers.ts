@@ -18,7 +18,7 @@ export const teamListReducer = (state = { teams: [] }, action: { type: any; payl
 		case TEAM_LIST_REQUEST:
 			return { loading: true, teams: [] };
 		case TEAM_LIST_SUCCESS:
-			return { loading: false, teams: action.payload };
+			return { loading: false, teams: action.payload.data, message: action.payload.message };
 		case TEAM_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -31,7 +31,7 @@ export const teamDetailsReducer = (state = { team: { reviews: [] } }, action: { 
 		case TEAM_DETAILS_REQUEST:
 			return { loading: true };
 		case TEAM_DETAILS_SUCCESS:
-			return { loading: false, team: action.payload };
+			return { loading: false, team: action.payload.data, message: action.payload.message };
 		case TEAM_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -44,7 +44,7 @@ export const teamDeleteReducer = (state = { team: {} }, action: { type: any; pay
 		case TEAM_DELETE_REQUEST:
 			return { loading: true };
 		case TEAM_DELETE_SUCCESS:
-			return { loading: false, team: action.payload, success: true };
+			return { loading: false, team: action.payload.data, message: action.payload.message, success: true };
 		case TEAM_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -57,7 +57,7 @@ export const teamSaveReducer = (state = { team: {} }, action: { type: any; paylo
 		case TEAM_SAVE_REQUEST:
 			return { loading: true };
 		case TEAM_SAVE_SUCCESS:
-			return { loading: false, success: true, team: action.payload };
+			return { loading: false, success: true, team: action.payload.data, message: action.payload.message };
 		case TEAM_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
