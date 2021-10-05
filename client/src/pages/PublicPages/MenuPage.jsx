@@ -67,10 +67,10 @@ const MenuPage = (props) => {
 		console.log({ artists });
 		console.log({ producers });
 		console.log({ vfx });
-		set_glovers(glovers);
-		set_artists(artists);
-		set_producers(producers);
-		set_vfx(vfx);
+		set_glovers(glovers.data);
+		set_artists(artists.data);
+		set_producers(producers.data);
+		set_vfx(vfx.data);
 	};
 
 	const get_products_by_category = async () => {

@@ -1,118 +1,73 @@
-import { Feature } from '../models';
+import { feature_db } from '../db';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_features_s: async (query: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const searchKeyword = req.query.searchKeyword
+			const category = query.category ? { category: query.category } : {};
+			const searchKeyword = query.searchKeyword
 				? {
 						facebook_name: {
-							$regex: req.query.searchKeyword,
+							$regex: query.searchKeyword,
 							$options: 'i'
 						}
 					}
 				: {};
 
 			let sortOrder = {};
-			if (req.query.sortOrder === 'glover name') {
+			if (query.sortOrder === 'glover name') {
 				sortOrder = { artist_name: 1 };
-			} else if (req.query.sortOrder === 'facebook name') {
+			} else if (query.sortOrder === 'facebook name') {
 				sortOrder = { facebook_name: 1 };
-			} else if (req.query.sortOrder === 'song id') {
-				sortOrder = { song_id: 1 };
-			} else if (req.query.sortOrder === 'product') {
-				sortOrder = { product: 1 };
-			} else if (req.query.sortOrder === 'instagram handle') {
-				sortOrder = { instagram_handle: 1 };
-			} else if (req.query.sortOrder === 'release_date') {
-				sortOrder = { release_date: -1 };
-			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-				sortOrder = { release_date: -1 };
+			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
+				sortOrder = { name: 1 };
 			}
 
-			const features = await Feature.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-			res.send(features);
+			return await feature_db.findAll_features_db(category, searchKeyword, sortOrder);
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Features' });
+			console.log({ findAll_features_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	get_features_by_category: async (req: any, res: any) => {
+	findByPathname_features_s: async (params: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const features = await Feature.find({ deleted: false, ...category }).sort({ _id: -1 });
-
-			res.send(features);
+			return await feature_db.findByPathname_features_db(params.id);
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Features' });
+			console.log({ findById_features_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findByCategory_features_s: async (query: any) => {
+		const category = query.category ? { category: query.category } : {};
+		const sortOrder = { _id: -1 };
 		try {
-			// console.log({ feature });
-			console.log(req.params.id);
-			console.log('hello');
-			const feature = await Feature.findOne({ pathname: req.params.id });
-			console.log({ feature });
-			if (feature) {
-				res.send(feature);
-			} else {
-				res.status(404).send({ message: 'Feature Not Found.' });
-			}
+			return await feature_db.findAll_features_db(category, '', sortOrder);
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Feature' });
+			console.log({ findById_features_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	create_features_s: async (body: any) => {
 		try {
-			const newFeature = await Feature.create(req.body);
-			if (newFeature) {
-				return res.status(201).send({ message: 'New Feature Created', data: newFeature });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Feature.' });
-			}
+			return await feature_db.create_features_db(body);
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Creating Feature' });
+			console.log({ create_features_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	update: async (req: any, res: any) => {
+	update_features_s: async (params: any, body: any) => {
 		try {
-			console.log({ feature_routes_put: req.body });
-			const feature_id = req.params.id;
-			const feature: any = await Feature.findById(feature_id);
-			if (feature) {
-				const updatedFeature = await Feature.updateOne({ _id: feature_id }, req.body);
-				if (updatedFeature) {
-					return res.status(200).send({ message: 'Feature Updated', data: updatedFeature });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Feature.' });
-			}
+			return await feature_db.update_features_db(params.id, body);
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Feature' });
+			console.log({ update_features_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	remove: async (req: any, res: any) => {
+	remove_features_s: async (params: any) => {
 		try {
-			const message: any = { message: 'Feature Deleted' };
-			const deleted_feature = await Feature.updateOne({ _id: req.params.id }, { deleted: true });
-			if (deleted_feature) {
-				res.send(message);
-			} else {
-				res.send('Error in Deletion.');
-			}
+			return await feature_db.remove_features_db(params.id);
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Deleting Feature' });
+			console.log({ remove_features_s_error: error });
+			throw new Error(error.message);
 		}
 	}
 };

@@ -18,7 +18,7 @@ export const featureListReducer = (state = { features: [] }, action: { type: any
 		case FEATURE_LIST_REQUEST:
 			return { loading: true, features: [] };
 		case FEATURE_LIST_SUCCESS:
-			return { loading: false, features: action.payload };
+			return { loading: false, features: action.payload.data, message: action.payload.message };
 		case FEATURE_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -31,7 +31,7 @@ export const featureDetailsReducer = (state = { feature: {} }, action: { type: a
 		case FEATURE_DETAILS_REQUEST:
 			return { loading: true };
 		case FEATURE_DETAILS_SUCCESS:
-			return { loading: false, feature: action.payload };
+			return { loading: false, feature: action.payload.data, message: action.payload.message };
 		case FEATURE_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -44,7 +44,7 @@ export const featureDeleteReducer = (state = { feature: {} }, action: { type: an
 		case FEATURE_DELETE_REQUEST:
 			return { loading: true };
 		case FEATURE_DELETE_SUCCESS:
-			return { loading: false, feature: action.payload, success: true };
+			return { loading: false, feature: action.payload.data, message: action.payload.message, success: true };
 		case FEATURE_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -57,7 +57,7 @@ export const featureSaveReducer = (state = { feature: {} }, action: { type: any;
 		case FEATURE_SAVE_REQUEST:
 			return { loading: true };
 		case FEATURE_SAVE_SUCCESS:
-			return { loading: false, success: true, feature: action.payload };
+			return { loading: false, success: true, feature: action.payload.data, message: action.payload.message };
 		case FEATURE_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
