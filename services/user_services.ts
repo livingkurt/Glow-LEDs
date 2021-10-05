@@ -44,7 +44,7 @@ export default {
 	},
 	findByEmail_users_s: async (params: any) => {
 		try {
-			return await user_db.findByEmail_users_db(params.id);
+			return await user_db.findByEmail_users_db(params.email);
 		} catch (error) {
 			console.log({ email_users_s_error: error });
 			throw new Error(error.message);
@@ -194,14 +194,14 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	reset_password_users_s: async (params: any) => {
-		try {
-			return await user_db.findById_users_db(params.id);
-		} catch (error) {
-			console.log({ findById_users_s_error: error });
-			throw new Error(error.message);
-		}
-	},
+	// reset_password_users_s: async (params: any) => {
+	// 	try {
+	// 		return await user_db.findById_users_db(params.id);
+	// 	} catch (error) {
+	// 		console.log({ findById_users_s_error: error });
+	// 		throw new Error(error.message);
+	// 	}
+	// },
 	// verify_users_s: async (req: any, res: any) => {
 	// 	try {
 	// 		const userId = req.params.id;

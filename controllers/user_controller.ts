@@ -183,9 +183,11 @@ export default {
 		}
 	},
 	reset_password_users_c: async (req: any, res: any) => {
-		const { params } = req;
+		const { body } = req;
+		console.log({ body });
 		try {
-			const user = await user_services.reset_password_users_s(params);
+			const user = await user_services.findByEmail_users_s(body);
+			console.log({ user });
 			if (user) {
 				return res.status(200).send({ message: 'User Found', data: user });
 			}
@@ -210,10 +212,8 @@ export default {
 	// },
 	check_password_c: async (req: any, res: any) => {
 		const { params, body } = req;
-		console.log({ params, body });
 		try {
 			const user = await user_services.check_password_s(params, body);
-			console.log({ check_password_c: user });
 			if (user !== undefined) {
 				return res.status(200).send({ message: 'User Found', data: user });
 			}
