@@ -1,70 +1,68 @@
-import { Category } from '../models';
+import { category_services } from '../services';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_categorys_c: async (req: any, res: any) => {
+		const { query } = req;
 		try {
-			const categorys = await Category.find({}).populate('subcategorys');
-			res.send(categorys);
+			const categorys = await category_services.findAll_categorys_s(query);
+			if (categorys) {
+				return res.status(200).send({ message: 'Categorys Found', data: categorys });
+			}
+			return res.status(404).send({ message: 'Categorys Not Found' });
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Categorys' });
+			console.log({ findAll_categorys_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Categorys' });
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_categorys_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const category = await Category.findOne({ _id: req.params.id }).populate('subcategorys');
-
+			const category = await category_services.findById_categorys_s(params);
 			if (category) {
-				res.send(category);
-			} else {
-				res.status(404).send({ message: 'Category Not Found.' });
+				return res.status(200).send({ message: 'Category Found', data: category });
 			}
+			return res.status(404).send({ message: 'Category Not Found' });
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Category' });
+			console.log({ findById_categorys_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Category' });
 		}
 	},
-	create: async (req: any, res: any) => {
+	create_categorys_c: async (req: any, res: any) => {
+		const { body } = req;
 		try {
-			const newCategory = await Category.create(req.body);
-			if (newCategory) {
-				return res.status(201).send({ message: 'New Category Created', data: newCategory });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Category.' });
+			const category = await category_services.create_categorys_s(body);
+			if (category) {
+				return res.status(201).send({ message: 'New Category Created', data: category });
 			}
+			return res.status(500).send({ message: 'Error Creating Category' });
 		} catch (error) {
-			console.log({ error });
+			console.log({ create_categorys_c_error: error });
 			res.status(500).send({ error, message: 'Error Creating Category' });
 		}
 	},
-
-	update: async (req: any, res: any) => {
+	update_categorys_c: async (req: any, res: any) => {
+		const { params, body } = req;
 		try {
-			const category: any = await Category.findById(req.params.id);
+			const category = await category_services.update_categorys_s(params, body);
 			if (category) {
-				const updatedCategory = await Category.updateOne({ _id: req.params.id }, req.body);
-				if (updatedCategory) {
-					return res.status(200).send({ message: 'Category Updated', data: updatedCategory });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Category.' });
+				return res.status(200).send({ message: 'Category Updated', data: category });
 			}
+			return res.status(500).send({ message: 'Error Updating Category' });
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Category' });
+			console.log({ update_categorys_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Category' });
 		}
 	},
-	remove: async (req: any, res: any) => {
+	remove_categorys_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const deleted_category = await Category.updateOne({ _id: req.params.id }, { deleted: true });
-			console.log({ deleted_category });
-			if (deleted_category) {
-				res.send({ message: 'Category Deleted' });
-			} else {
-				res.send({ message: 'Error Deleting Category' });
+			const category = await category_services.remove_categorys_s(params);
+			if (category) {
+				return res.status(204).send({ message: 'Category Deleted' });
 			}
+			return res.status(500).send({ message: 'Error Deleting Category' });
 		} catch (error) {
-			console.log({ error });
+			console.log({ remove_categorys_c_error: error });
 			res.status(500).send({ error, message: 'Error Deleting Category' });
 		}
 	}

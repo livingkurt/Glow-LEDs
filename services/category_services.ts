@@ -1,71 +1,46 @@
-import { Category } from '../models';
+import { category_db } from '../db';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_categorys_s: async (query: any) => {
 		try {
-			const categorys = await Category.find({}).populate('subcategorys');
-			res.send(categorys);
+			const filter = {};
+			const sortOrder = {};
+			return await category_db.findAll_categorys_db(filter, sortOrder);
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Categorys' });
+			console.log({ findAll_categorys_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_categorys_s: async (params: any) => {
 		try {
-			const category = await Category.findOne({ _id: req.params.id }).populate('subcategorys');
-
-			if (category) {
-				res.send(category);
-			} else {
-				res.status(404).send({ message: 'Category Not Found.' });
-			}
+			return await category_db.findById_categorys_db(params.id);
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Category' });
+			console.log({ findById_categorys_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	create_categorys_s: async (body: any) => {
 		try {
-			const newCategory = await Category.create(req.body);
-			if (newCategory) {
-				return res.status(201).send({ message: 'New Category Created', data: newCategory });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Category.' });
-			}
+			return await category_db.create_categorys_db(body);
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Creating Category' });
+			console.log({ create_categorys_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-
-	update: async (req: any, res: any) => {
+	update_categorys_s: async (params: any, body: any) => {
 		try {
-			const category: any = await Category.findById(req.params.id);
-			if (category) {
-				const updatedCategory = await Category.updateOne({ _id: req.params.id }, req.body);
-				if (updatedCategory) {
-					return res.status(200).send({ message: 'Category Updated', data: updatedCategory });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Category.' });
-			}
+			return await category_db.update_categorys_db(params.id, body);
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Category' });
+			console.log({ update_categorys_s_error: error });
+			throw new Error(error.message);
 		}
 	},
-	remove: async (req: any, res: any) => {
+	remove_categorys_s: async (params: any) => {
 		try {
-			const deleted_category = await Category.updateOne({ _id: req.params.id }, { deleted: true });
-			console.log({ deleted_category });
-			if (deleted_category) {
-				res.send({ message: 'Category Deleted' });
-			} else {
-				res.send({ message: 'Error Deleting Category' });
-			}
+			return await category_db.remove_categorys_db(params.id);
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Deleting Category' });
+			console.log({ remove_categorys_s_error: error });
+			throw new Error(error.message);
 		}
 	}
 };

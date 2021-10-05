@@ -1,71 +1,50 @@
-import { Category } from '../models';
+import Category from '../models/category';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_categorys_db: async (filter: any, sortOrder: any) => {
 		try {
-			const categorys = await Category.find({}).populate('subcategorys');
-			res.send(categorys);
+			return await Category.find(filter).sort(sortOrder).populate('subcategorys');
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Categorys' });
+			console.log({ findAll_categorys_db_error: error });
+			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_categorys_db: async (id: string) => {
 		try {
-			const category = await Category.findOne({ _id: req.params.id }).populate('subcategorys');
-
+			return await Category.findOne({ _id: id }).populate('subcategorys');
+		} catch (error) {
+			console.log({ findById_categorys_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	create_categorys_db: async (body: any) => {
+		try {
+			return await Category.create(body);
+		} catch (error) {
+			console.log({ create_categorys_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	update_categorys_db: async (id: string, body: any) => {
+		try {
+			const category: any = await Category.findOne({ _id: id });
 			if (category) {
-				res.send(category);
-			} else {
-				res.status(404).send({ message: 'Category Not Found.' });
+				return await Category.updateOne({ _id: id }, body);
 			}
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Category' });
+			console.log({ update_categorys_db_error: error });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	remove_categorys_db: async (id: string) => {
 		try {
-			const newCategory = await Category.create(req.body);
-			if (newCategory) {
-				return res.status(201).send({ message: 'New Category Created', data: newCategory });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Category.' });
-			}
-		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Creating Category' });
-		}
-	},
-
-	update: async (req: any, res: any) => {
-		try {
-			const category: any = await Category.findById(req.params.id);
+			const category: any = await Category.findOne({ _id: id });
 			if (category) {
-				const updatedCategory = await Category.updateOne({ _id: req.params.id }, req.body);
-				if (updatedCategory) {
-					return res.status(200).send({ message: 'Category Updated', data: updatedCategory });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Category.' });
+				return await Category.updateOne({ _id: id }, { deleted: true });
 			}
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Category' });
-		}
-	},
-	remove: async (req: any, res: any) => {
-		try {
-			const deleted_category = await Category.updateOne({ _id: req.params.id }, { deleted: true });
-			console.log({ deleted_category });
-			if (deleted_category) {
-				res.send({ message: 'Category Deleted' });
-			} else {
-				res.send({ message: 'Error Deleting Category' });
-			}
-		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Deleting Category' });
+			console.log({ remove_categorys_db_error: error });
+			throw new Error(error.message);
 		}
 	}
 };

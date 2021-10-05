@@ -10,10 +10,7 @@ import {
 	CATEGORY_SAVE_FAIL,
 	CATEGORY_DELETE_REQUEST,
 	CATEGORY_DELETE_SUCCESS,
-	CATEGORY_DELETE_FAIL,
-	MY_CATEGORY_LIST_REQUEST,
-	MY_CATEGORY_LIST_SUCCESS,
-	MY_CATEGORY_LIST_FAIL
+	CATEGORY_DELETE_FAIL
 } from '../constants/categoryConstants';
 
 export const categoryListReducer = (state = { categorys: [] }, action: { type: any; payload: any }) => {
@@ -21,26 +18,8 @@ export const categoryListReducer = (state = { categorys: [] }, action: { type: a
 		case CATEGORY_LIST_REQUEST:
 			return { loading: true, categorys: [] };
 		case CATEGORY_LIST_SUCCESS:
-			return { loading: false, categorys: action.payload };
+			return { loading: false, categorys: action.payload.data, message: action.payload.message };
 		case CATEGORY_LIST_FAIL:
-			return { loading: false, error: action.payload };
-		default:
-			return state;
-	}
-};
-
-export const myCategoryListReducer = (
-	state = {
-		categorys: []
-	},
-	action: { type: any; payload: any }
-) => {
-	switch (action.type) {
-		case MY_CATEGORY_LIST_REQUEST:
-			return { loading: true };
-		case MY_CATEGORY_LIST_SUCCESS:
-			return { loading: false, categorys: action.payload };
-		case MY_CATEGORY_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;
@@ -52,7 +31,7 @@ export const categoryDetailsReducer = (state = { category: {} }, action: { type:
 		case CATEGORY_DETAILS_REQUEST:
 			return { loading: true };
 		case CATEGORY_DETAILS_SUCCESS:
-			return { loading: false, category: action.payload };
+			return { loading: false, category: action.payload.data, message: action.payload.message };
 		case CATEGORY_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -65,7 +44,7 @@ export const categoryDeleteReducer = (state = { category: {} }, action: { type: 
 		case CATEGORY_DELETE_REQUEST:
 			return { loading: true };
 		case CATEGORY_DELETE_SUCCESS:
-			return { loading: false, category: action.payload, success: true };
+			return { loading: false, category: action.payload.data, message: action.payload.message, success: true };
 		case CATEGORY_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -78,7 +57,7 @@ export const categorySaveReducer = (state = { category: {} }, action: { type: an
 		case CATEGORY_SAVE_REQUEST:
 			return { loading: true };
 		case CATEGORY_SAVE_SUCCESS:
-			return { loading: false, success: true, category: action.payload };
+			return { loading: false, success: true, category: action.payload.data, message: action.payload.message };
 		case CATEGORY_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
