@@ -1,100 +1,64 @@
-import { Palette } from '../models';
+import Palette from '../models/palette';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_palettes_db: async (category: any, searchKeyword: any, sortOrder: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const searchKeyword = req.query.searchKeyword
-				? {
-						facebook_name: {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-
-			let sortOrder = {};
-			if (req.query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (req.query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-				sortOrder = { name: 1 };
-			}
-
-			const palettes = await Palette.find({ deleted: false });
-
-			res.send(palettes);
+			return await Palette.find({
+				deleted: false,
+				...category,
+				...searchKeyword
+			})
+				.sort(sortOrder)
+				.populate('user');
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Palettes' });
+			console.log({ findAll_palettes_db_error: error });
+			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_palettes_db: async (id: string) => {
 		try {
-			const palette = await Palette.findOne({ _id: req.params.id });
-			console.log({ palette });
-			console.log(req.params.id);
+			return await Palette.findOne({ _id: id });
+		} catch (error) {
+			console.log({ findById_palettes_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	findMy_palettes_db: async (user_id: string) => {
+		try {
+			return await Palette.find({ deleted: false, user: user_id }).sort({ _id: -1 }).populate('user');
+		} catch (error) {
+			console.log({ findById_palettes_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	create_palettes_db: async (body: any) => {
+		try {
+			return await Palette.create(body);
+		} catch (error) {
+			console.log({ create_palettes_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	update_palettes_db: async (id: string, body: any) => {
+		try {
+			const palette: any = await Palette.findOne({ _id: id });
 			if (palette) {
-				res.send(palette);
-			} else {
-				res.status(404).send({ message: 'Palette Not Found.' });
+				return await Palette.updateOne({ _id: id }, body);
 			}
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Palette' });
+			console.log({ update_palettes_db_error: error });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	remove_palettes_db: async (id: string) => {
 		try {
-			console.log({ palette: req.body });
-			const newPalette = await Palette.create(req.body);
-			if (newPalette) {
-				return res.status(201).send({ message: 'New Palette Created', data: newPalette });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Palette.' });
-			}
-		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Creating Palette' });
-		}
-	},
-	update: async (req: any, res: any) => {
-		try {
-			console.log({ palette_routes_put: req.body });
-			const palette_id = req.params.id;
-			const palette: any = await Palette.findById(palette_id);
+			const palette: any = await Palette.findOne({ _id: id });
 			if (palette) {
-				const updatedPalette = await Palette.updateOne({ _id: palette_id }, req.body);
-				if (updatedPalette) {
-					return res.status(200).send({ message: 'Palette Updated', data: updatedPalette });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Palette.' });
+				return await Palette.updateOne({ _id: id }, { deleted: true });
 			}
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Palette' });
-		}
-	},
-	remove: async (req: any, res: any) => {
-		try {
-			const message: any = { message: 'Palette Deleted' };
-			const deleted_palette = await Palette.updateOne({ _id: req.params.id }, { deleted: true });
-			// const deleted_palette = await Palette.deleteOne({ _id: req.params.id });
-			if (deleted_palette) {
-				res.send(message);
-			} else {
-				res.send('Error in Deletion.');
-			}
-		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Deleting Palette' });
+			console.log({ remove_palettes_db_error: error });
+			throw new Error(error.message);
 		}
 	}
 };

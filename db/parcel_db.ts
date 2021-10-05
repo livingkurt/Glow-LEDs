@@ -1,100 +1,57 @@
-import { Parcel } from '../models';
+import Parcel from '../models/parcel';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_parcels_db: async (category: any, searchKeyword: any, sortOrder: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const searchKeyword = req.query.searchKeyword
-				? {
-						facebook_name: {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-
-			let sortOrder = {};
-			if (req.query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (req.query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-				sortOrder = { name: 1 };
-			}
-
-			const parcels = await Parcel.find({ deleted: false });
-
-			res.send(parcels);
+			return await Parcel.find({
+				deleted: false,
+				...category,
+				...searchKeyword
+			})
+				.sort(sortOrder)
+				.populate('user')
+				.populate('affiliate');
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Parcels' });
+			console.log({ findAll_parcels_db_error: error });
+			throw new Error(error.message);
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_parcels_db: async (id: string) => {
 		try {
-			const parcel = await Parcel.findOne({ _id: req.params.id });
-			console.log({ parcel });
-			console.log(req.params.id);
+			return await Parcel.findOne({ _id: id }).populate('user').populate('affiliate');
+		} catch (error) {
+			console.log({ findById_parcels_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	create_parcels_db: async (body: any) => {
+		try {
+			return await Parcel.create(body);
+		} catch (error) {
+			console.log({ create_parcels_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	update_parcels_db: async (id: string, body: any) => {
+		try {
+			const parcel: any = await Parcel.findOne({ _id: id });
 			if (parcel) {
-				res.send(parcel);
-			} else {
-				res.status(404).send({ message: 'Parcel Not Found.' });
+				return await Parcel.updateOne({ _id: id }, body);
 			}
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Parcel' });
+			console.log({ update_parcels_db_error: error });
+			throw new Error(error.message);
 		}
 	},
-	create: async (req: any, res: any) => {
+	remove_parcels_db: async (id: string) => {
 		try {
-			console.log({ parcel: req.body });
-			const newParcel = await Parcel.create(req.body);
-			if (newParcel) {
-				return res.status(201).send({ message: 'New Parcel Created', data: newParcel });
-			} else {
-				return res.status(500).send({ message: ' Error in Creating Parcel.' });
-			}
-		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Creating Parcel' });
-		}
-	},
-	update: async (req: any, res: any) => {
-		try {
-			console.log({ parcel_routes_put: req.body });
-			const parcel_id = req.params.id;
-			const parcel: any = await Parcel.findById(parcel_id);
+			const parcel: any = await Parcel.findOne({ _id: id });
 			if (parcel) {
-				const updatedParcel = await Parcel.updateOne({ _id: parcel_id }, req.body);
-				if (updatedParcel) {
-					return res.status(200).send({ message: 'Parcel Updated', data: updatedParcel });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Parcel.' });
+				return await Parcel.updateOne({ _id: id }, { deleted: true });
 			}
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Parcel' });
-		}
-	},
-	remove: async (req: any, res: any) => {
-		try {
-			const message: any = { message: 'Parcel Deleted' };
-			const deleted_parcel = await Parcel.updateOne({ _id: req.params.id }, { deleted: true });
-			// const deleted_parcel = await Parcel.deleteOne({ _id: req.params.id });
-			if (deleted_parcel) {
-				res.send(message);
-			} else {
-				res.send('Error in Deletion.');
-			}
-		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Deleting Parcel' });
+			console.log({ remove_parcels_db_error: error });
+			throw new Error(error.message);
 		}
 	}
 };

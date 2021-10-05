@@ -6,25 +6,11 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
-import { listAffiliates } from '../../actions/affiliateActions';
-import { API_Promos, API_Revenue } from '../../utils';
-import {
-	promoter_revenue_upload,
-	sponsor_revenue_upload,
-	team_revenue_upload,
-	top_earner_upload
-} from '../../utils/google_sheets_upload';
-import { listTeams } from '../../actions/teamActions';
-import { listOrders } from '../../actions/orderActions';
 
 const ParcelsPage = (props) => {
 	const [ searchKeyword, setSearchKeyword ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
-	const [ last_months_orders, set_last_months_orders ] = useState([]);
-	const [ total_orders, set_total_orders ] = useState([]);
 	const [ loading_parcels, set_loading_parcels ] = useState(false);
-	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
-	const [ create_parcels, set_create_parcels ] = useState(true);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const parcelList = useSelector((state) => state.parcelList);
 	const { loading, parcels, error } = parcelList;
@@ -36,25 +22,10 @@ const ParcelsPage = (props) => {
 	const { success: successDelete } = parcelDelete;
 	const dispatch = useDispatch();
 
-	const affiliateList = useSelector((state) => state.affiliateList);
-	const { affiliates } = affiliateList;
-
-	const teamList = useSelector((state) => state.teamList);
-	const { teams } = teamList;
-
-	setTimeout(() => {
-		set_loading_checkboxes(false);
-	}, 500);
-
 	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
 			stableDispatch(listParcels());
-			stableDispatch(listAffiliates(''));
-			stableDispatch(listTeams(''));
-			stableDispatch(listOrders(''));
-			get_last_months_orders();
-			get_total_orders();
 			return () => {
 				//
 			};
@@ -62,16 +33,6 @@ const ParcelsPage = (props) => {
 		[ successSave, successDelete, stableDispatch ]
 	);
 
-	const get_last_months_orders = async () => {
-		const { data } = await API_Revenue.last_months_orders();
-		console.log({ data });
-		set_last_months_orders(data);
-	};
-	const get_total_orders = async () => {
-		const { data } = await API_Revenue.total_orders();
-		console.log({ data });
-		set_total_orders(data);
-	};
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listParcels(category, searchKeyword, sortOrder));
@@ -94,18 +55,6 @@ const ParcelsPage = (props) => {
 
 	const date = new Date();
 
-	const today = date.toISOString();
-
-	const mark_paid = (parcel) => {
-		dispatch(
-			saveParcel({
-				...parcel,
-				paid: true,
-				paid_at: format_date(today)
-			})
-		);
-		stableDispatch(listParcels());
-	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 

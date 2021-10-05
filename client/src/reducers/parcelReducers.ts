@@ -21,26 +21,8 @@ export const parcelListReducer = (state = { parcels: [] }, action: { type: any; 
 		case PARCEL_LIST_REQUEST:
 			return { loading: true, parcels: [] };
 		case PARCEL_LIST_SUCCESS:
-			return { loading: false, parcels: action.payload };
+			return { loading: false, parcels: action.payload.data, message: action.payload.message };
 		case PARCEL_LIST_FAIL:
-			return { loading: false, error: action.payload };
-		default:
-			return state;
-	}
-};
-
-export const myParcelListReducer = (
-	state = {
-		parcels: []
-	},
-	action: { type: any; payload: any }
-) => {
-	switch (action.type) {
-		case MY_PARCEL_LIST_REQUEST:
-			return { loading: true };
-		case MY_PARCEL_LIST_SUCCESS:
-			return { loading: false, parcels: action.payload };
-		case MY_PARCEL_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
 			return state;
@@ -52,7 +34,7 @@ export const parcelDetailsReducer = (state = { parcel: {} }, action: { type: any
 		case PARCEL_DETAILS_REQUEST:
 			return { loading: true };
 		case PARCEL_DETAILS_SUCCESS:
-			return { loading: false, parcel: action.payload };
+			return { loading: false, parcel: action.payload.data, message: action.payload.message };
 		case PARCEL_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -65,7 +47,7 @@ export const parcelDeleteReducer = (state = { parcel: {} }, action: { type: any;
 		case PARCEL_DELETE_REQUEST:
 			return { loading: true };
 		case PARCEL_DELETE_SUCCESS:
-			return { loading: false, parcel: action.payload, success: true };
+			return { loading: false, parcel: action.payload.data, message: action.payload.message, success: true };
 		case PARCEL_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -78,7 +60,7 @@ export const parcelSaveReducer = (state = { parcel: {} }, action: { type: any; p
 		case PARCEL_SAVE_REQUEST:
 			return { loading: true };
 		case PARCEL_SAVE_SUCCESS:
-			return { loading: false, success: true, parcel: action.payload };
+			return { loading: false, success: true, parcel: action.payload.data, message: action.payload.message };
 		case PARCEL_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:

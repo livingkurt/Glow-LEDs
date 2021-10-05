@@ -21,7 +21,7 @@ export const paletteListReducer = (state = { palettes: [] }, action: { type: any
 		case PALETTE_LIST_REQUEST:
 			return { loading: true, palettes: [] };
 		case PALETTE_LIST_SUCCESS:
-			return { loading: false, palettes: action.payload };
+			return { loading: false, palettes: action.payload.data, message: action.payload.message };
 		case PALETTE_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -39,7 +39,7 @@ export const myPaletteListReducer = (
 		case MY_PALETTE_LIST_REQUEST:
 			return { loading: true };
 		case MY_PALETTE_LIST_SUCCESS:
-			return { loading: false, palettes: action.payload };
+			return { loading: false, palettes: action.payload.data, message: action.payload.message };
 		case MY_PALETTE_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -52,7 +52,7 @@ export const paletteDetailsReducer = (state = { palette: {} }, action: { type: a
 		case PALETTE_DETAILS_REQUEST:
 			return { loading: true };
 		case PALETTE_DETAILS_SUCCESS:
-			return { loading: false, palette: action.payload };
+			return { loading: false, palette: action.payload.data, message: action.payload.message };
 		case PALETTE_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -65,7 +65,7 @@ export const paletteDeleteReducer = (state = { palette: {} }, action: { type: an
 		case PALETTE_DELETE_REQUEST:
 			return { loading: true };
 		case PALETTE_DELETE_SUCCESS:
-			return { loading: false, palette: action.payload, success: true };
+			return { loading: false, palette: action.payload.data, message: action.payload.message, success: true };
 		case PALETTE_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -78,7 +78,7 @@ export const paletteSaveReducer = (state = { palette: {} }, action: { type: any;
 		case PALETTE_SAVE_REQUEST:
 			return { loading: true };
 		case PALETTE_SAVE_SUCCESS:
-			return { loading: false, success: true, palette: action.payload };
+			return { loading: false, success: true, palette: action.payload.data, message: action.payload.message };
 		case PALETTE_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
