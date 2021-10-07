@@ -407,6 +407,14 @@ export const determine_product_name = (item, show_qty, date) => {
 						{item.size !== '0' && ' - ' + item.size}{' '}
 					</div>
 				);
+			}
+			if (item.subcategory === 'chips') {
+				return (
+					<div>
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+						{item.size !== '0' && ' - ' + item.size}{' '}
+					</div>
+				);
 			} else {
 				return (
 					<div>
@@ -507,7 +515,7 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			}
 		}
 		if (category === 'accessories' && subcategory === 'clips') {
-			return name.split(' ')[3] + " " + name.split(' ')[4];
+			return name.split(' ')[3] + ' ' + name.split(' ')[4];
 		}
 	}
 };
@@ -529,7 +537,7 @@ export const determine_product_name_display = (product) => {
 	console.log({ product });
 	// console.log({ secondary_product: product.secondary_product });
 	const option = product.option_products.find((option) => option.default_option === true);
-	console.log({option})
+	console.log({ option });
 	return (
 		<div>
 			{product.name}{' '}
