@@ -1,4 +1,6 @@
 import { content_db } from '../db';
+const axios = require('axios');
+import { parse } from 'node-html-parser';
 
 export default {
 	findAll_contents_s: async (query: any) => {
@@ -18,6 +20,42 @@ export default {
 			return await content_db.findAll_contents_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_contents_s_error: error });
+			throw new Error(error.message);
+		}
+	},
+	findAllEvents_contents_s: async (query: any) => {
+		const url = 'https://electronicmidwest.com/edm-event-calendar/us-festivals/';
+		try {
+			const { data } = await axios.get(url);
+			const root = parse(data);
+			const titles_html = root.querySelectorAll('.wideeventTitle');
+			const dates_html = root.querySelectorAll('.wideeventDate');
+			const venues_html = root.querySelectorAll('.wideeventVenue');
+			const titles = titles_html.map((node: any) =>
+				node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText)
+			);
+			const dates = dates_html.map((node: any) => node.childNodes[0]._rawText);
+			const cities = venues_html.map((node: any) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
+			const states = venues_html.map((node: any) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
+			const venues = venues_html.map((node: any) => node.childNodes[2].childNodes[0]._rawText);
+			const ages = venues_html.map((node: any) => node.childNodes[3]._rawText.replace(' &middot; ', ''));
+			let events: Array<any> = [];
+			titles.forEach((event: any, index: number) => {
+				events = [
+					...events,
+					{
+						title: titles[index][0].replace('&#8211; ', '').replace('&#038; ', ''),
+						date: dates[index],
+						venue: venues[index],
+						city: cities[index],
+						state: states[index],
+						age: ages[index]
+					}
+				];
+			});
+			return events;
+		} catch (error) {
+			console.log({ error });
 			throw new Error(error.message);
 		}
 	},

@@ -627,6 +627,11 @@ const Sidebar = (props) => {
 								About
 							</button>
 						</Link>
+						<Link to="/pages/events">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Events
+							</button>
+						</Link>
 						<Link to="/pages/menu/manuals">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Manuals

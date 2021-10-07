@@ -8,6 +8,8 @@ router
 	.get(content_controller.findAll_contents_c)
 	.post(isAuth, isAdmin, content_controller.create_contents_c);
 
+router.route('/events').get(content_controller.findAllEvents_contents_c);
+
 router
 	.route('/:id')
 	.get(content_controller.findById_contents_c)

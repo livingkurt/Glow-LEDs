@@ -98,3 +98,4 @@ export { default as TeamPage } from './PublicPages/TeamPage';
 export { default as ManualPage } from './PublicPages/ManualPage';
 export { default as SubmitFeaturePage } from './PublicPages/SubmitFeaturePage';
 export { default as ColorPalettePage } from './PublicPages/ColorPalettePage';
+export { default as EventsPage } from './PublicPages/EventsPage';

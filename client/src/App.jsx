@@ -95,7 +95,8 @@ import {
 	ColorPalettePage,
 	EditPalettePage,
 	PalettesPage,
-	OrderCombinerPage
+	OrderCombinerPage,
+	EventsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { useSelector } from 'react-redux';
@@ -506,6 +507,7 @@ const App = (props) => {
 							<Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
 							<Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
 							<Route path="/pages/color_palettes" exact={true} component={ColorPalettePage} />
+							<Route path="/pages/events" exact={true} component={EventsPage} />
 
 							<Route component={Four04Page} />
 						</Switch>

@@ -1,6 +1,5 @@
 export {};
 import { Order } from '../models';
-
 const scraper = require('table-scraper');
 
 const dates_in_year = [
