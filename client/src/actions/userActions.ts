@@ -63,9 +63,8 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 	dispatch({ type: USER_REGISTER_REQUEST, payload: userData });
 	try {
 		const { data } = await axios.post('/api/users/register', userData);
-		console.log({ data });
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data.data });
-		// axios.post('/api/emails/verified', data);
+		axios.post('/api/emails/verified', data);
 		// axios.post('/api/emails/verify', data);
 		dispatch({ type: USER_REGISTER_EMPTY, payload: {} });
 		setAuthToken(false);
@@ -86,18 +85,13 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 	try {
 		const { data } = await axios.post('/api/users/login', userData);
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data.data });
-		console.log({ data });
-		// console.log({ user: data.token });
-		// console.log({ message: data.message });
 		// Set token to localStorage
 		const { token } = data.data;
-		console.log({ token });
 		localStorage.setItem('jwtToken', token);
 		// Set token to Auth header
 		setAuthToken(token);
 		// Decode token to get user data
 		const decoded = jwt_decode(token);
-		console.log({ decoded });
 		// Set current user
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
