@@ -7,12 +7,15 @@ import { detailsContent, listContents } from '../../actions/contentActions';
 import { ReadMore } from '../../components/SpecialtyComponents';
 
 const HomePage = (props) => {
-	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content } = contentDetails;
+	const [ content_1, set_content_1 ] = useState({});
+	const [ content_2, set_content_2 ] = useState({});
+	const [ content_3, set_content_3 ] = useState({});
+	// const contentDetails = useSelector((state) => state.contentDetails);
+	// const { content } = contentDetails;
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
-	const [ inactive, set_inactive ] = useState(false);
+	const [ inactive, set_inactive ] = useState(true);
 
 	const dispatch = useDispatch();
 
@@ -23,16 +26,40 @@ const HomePage = (props) => {
 
 	useEffect(
 		() => {
-			const active_content = contents.find((content) => content.active === true);
-			if (active_content) {
-				dispatch(detailsContent(active_content._id));
-			} else {
-				set_inactive(true);
+			// const active_content = contents.find((content) => content.active === true);
+			const active_contents = contents.filter((content) => content.active === true);
+			console.log({ active_contents });
+			if (active_contents && active_contents[0]) {
+				set_content_1(active_contents[0]);
 			}
+			if (active_contents && active_contents[1]) {
+				set_content_2(active_contents[1]);
+			}
+			if (active_contents && active_contents[2]) {
+				set_content_3(active_contents[2]);
+			}
+			// if (active_content) {
+			// 	dispatch(detailsContent(active_content._id));
+			// } else {
+			// 	set_inactive(true);
+			// }
 			return () => {};
 		},
 		[ contents ]
 	);
+	// useEffect(
+	// 	() => {
+	// 		// const active_content = contents.find((content) => content.active === true);
+	// 		const active_contents = contents.filter((content) => content.active === true);
+	// 		// if (active_content) {
+	// 		// 	dispatch(detailsContent(active_content._id));
+	// 		// } else {
+	// 		// 	set_inactive(true);
+	// 		// }
+	// 		return () => {};
+	// 	},
+	// 	[ contents ]
+	// );
 
 	// "These string lights are sure to make your space glow. With many preloaded modes there will never be a dull moment. There are flashing modes, fading modes, strobing modes, and every color of the rainbow. Perfect for the campsite at your next festival or your chill spot in the house. These lights are bright and can easily illuminate a large room turning it into an at home festival.""
 
@@ -129,18 +156,18 @@ const HomePage = (props) => {
 					Welcome to Glow-LEDs
 				</h1>
 			</div>
-			{content &&
+			{content_1 &&
 			inactive &&
-			content.home_page && (
+			content_1.home_page && (
 				<div className="home_page_divs">
-					<h4 className="fs-25px mt-8px ta-c title_font">{content.home_page.h1}</h4>
-					{content.home_page.show_image &&
-					content.home_page.images && (
+					<h4 className="fs-25px mt-8px ta-c title_font">{content_1.home_page.h1}</h4>
+					{content_1.home_page.show_image &&
+					content_1.home_page.images && (
 						<div className="m-auto jc-c max-w-600px">
-							<Link to={content.home_page.link}>
+							<Link to={content_1.home_page.link}>
 								<img
 									style={{ borderRadius: '20px', width: '100%' }}
-									src={content.home_page.images[0]}
+									src={content_1.home_page.images[0]}
 									className="max-w-800px jc-c m-auto"
 									alt="Promo"
 									title="Promo Image"
@@ -150,10 +177,10 @@ const HomePage = (props) => {
 					)}
 
 					<div className="m-auto jc-c max-w-800px">
-						{!content.home_page.show_image &&
-						content.home_page.images && (
-							<Link to={content.home_page.link} className="home_page_pictures">
-								{content.home_page.images.map((image, index) => (
+						{!content_1.home_page.show_image &&
+						content_1.home_page.images && (
+							<Link to={content_1.home_page.link} className="home_page_pictures">
+								{content_1.home_page.images.map((image, index) => (
 									<img
 										src={image}
 										className={'w-100per br-20px m-auto image_' + (index + 1)}
@@ -164,7 +191,7 @@ const HomePage = (props) => {
 							</Link>
 						)}
 					</div>
-					{content.home_page.show_video && (
+					{content_1.home_page.show_video && (
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
@@ -172,7 +199,7 @@ const HomePage = (props) => {
 									width="996"
 									height="560"
 									style={{ borderRadius: '20px' }}
-									src={`https://www.youtube.com/embed/${content.home_page
+									src={`https://www.youtube.com/embed/${content_1.home_page
 										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
 									frameborder="0"
 									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -183,16 +210,152 @@ const HomePage = (props) => {
 					)}
 
 					<div className="jc-c">
-						<h4 className="fs-18px mb-0px ta-c title_font">{content.home_page.h2}</h4>
+						<h4 className="fs-18px mb-0px ta-c title_font">{content_1.home_page.h2}</h4>
 					</div>
 					<div className="max-w-800px jc-c w-100per m-auto">
 						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
-							{content.home_page.p}
+							{content_1.home_page.p}
 						</ReadMore>
 					</div>
 					<div className="jc-c">
-						<Link to={content.home_page.link}>
-							<button className="btn primary bob">{content.home_page.button}</button>
+						<Link to={content_1.home_page.link}>
+							<button className="btn primary bob">{content_1.home_page.button}</button>
+						</Link>
+					</div>
+				</div>
+			)}
+			{content_2 &&
+			inactive &&
+			content_2.home_page && (
+				<div className="home_page_divs">
+					<h4 className="fs-25px mt-8px ta-c title_font">{content_2.home_page.h1}</h4>
+					{content_2.home_page.show_image &&
+					content_2.home_page.images && (
+						<div className="m-auto jc-c max-w-600px">
+							<Link to={content_2.home_page.link}>
+								<img
+									style={{ borderRadius: '20px', width: '100%' }}
+									src={content_2.home_page.images[0]}
+									className="max-w-800px jc-c m-auto"
+									alt="Promo"
+									title="Promo Image"
+								/>
+							</Link>
+						</div>
+					)}
+
+					<div className="m-auto jc-c max-w-800px">
+						{!content_2.home_page.show_image &&
+						content_2.home_page.images && (
+							<Link to={content_2.home_page.link} className="home_page_pictures">
+								{content_2.home_page.images.map((image, index) => (
+									<img
+										src={image}
+										className={'w-100per br-20px m-auto image_' + (index + 1)}
+										alt="Promo"
+										title="Promo Image"
+									/>
+								))}
+							</Link>
+						)}
+					</div>
+					{content_2.home_page.show_video && (
+						<div className="jc-c pos-rel">
+							<div className="iframe-container">
+								<iframe
+									title="Content Video"
+									width="996"
+									height="560"
+									style={{ borderRadius: '20px' }}
+									src={`https://www.youtube.com/embed/${content_2.home_page
+										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+									frameborder="0"
+									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen="1"
+								/>
+							</div>
+						</div>
+					)}
+
+					<div className="jc-c">
+						<h4 className="fs-18px mb-0px ta-c title_font">{content_2.home_page.h2}</h4>
+					</div>
+					<div className="max-w-800px jc-c w-100per m-auto">
+						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
+							{content_2.home_page.p}
+						</ReadMore>
+					</div>
+					<div className="jc-c">
+						<Link to={content_2.home_page.link}>
+							<button className="btn primary bob">{content_2.home_page.button}</button>
+						</Link>
+					</div>
+				</div>
+			)}
+			{content_3 &&
+			inactive &&
+			content_3.home_page && (
+				<div className="home_page_divs">
+					<h4 className="fs-25px mt-8px ta-c title_font">{content_3.home_page.h1}</h4>
+					{content_3.home_page.show_image &&
+					content_3.home_page.images && (
+						<div className="m-auto jc-c max-w-600px">
+							<Link to={content_3.home_page.link}>
+								<img
+									style={{ borderRadius: '20px', width: '100%' }}
+									src={content_3.home_page.images[0]}
+									className="max-w-800px jc-c m-auto"
+									alt="Promo"
+									title="Promo Image"
+								/>
+							</Link>
+						</div>
+					)}
+
+					<div className="m-auto jc-c max-w-800px">
+						{!content_3.home_page.show_image &&
+						content_3.home_page.images && (
+							<Link to={content_3.home_page.link} className="home_page_pictures">
+								{content_3.home_page.images.map((image, index) => (
+									<img
+										src={image}
+										className={'w-100per br-20px m-auto image_' + (index + 1)}
+										alt="Promo"
+										title="Promo Image"
+									/>
+								))}
+							</Link>
+						)}
+					</div>
+					{content_3.home_page.show_video && (
+						<div className="jc-c pos-rel">
+							<div className="iframe-container">
+								<iframe
+									title="Content Video"
+									width="996"
+									height="560"
+									style={{ borderRadius: '20px' }}
+									src={`https://www.youtube.com/embed/${content_3.home_page
+										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+									frameborder="0"
+									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+									allowfullscreen="1"
+								/>
+							</div>
+						</div>
+					)}
+
+					<div className="jc-c">
+						<h4 className="fs-18px mb-0px ta-c title_font">{content_3.home_page.h2}</h4>
+					</div>
+					<div className="max-w-800px jc-c w-100per m-auto">
+						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
+							{content_3.home_page.p}
+						</ReadMore>
+					</div>
+					<div className="jc-c">
+						<Link to={content_3.home_page.link}>
+							<button className="btn primary bob">{content_3.home_page.button}</button>
 						</Link>
 					</div>
 				</div>
