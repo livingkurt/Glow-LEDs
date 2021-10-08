@@ -1,8 +1,5 @@
 import { Order, Parcel } from '../models';
 import { determine_parcel } from '../util';
-const addressValidator = require('address-validator');
-const Address = addressValidator.Address;
-const _ = require('underscore');
 
 const easy_post_api = require('@easypost/api');
 
