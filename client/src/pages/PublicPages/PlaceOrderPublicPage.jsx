@@ -504,10 +504,18 @@ const PlaceOrderPublicPage = (props) => {
 									<div>
 										{shipping.address_1} {shipping.address_2}
 									</div>
-									<div>
-										{shipping.city}, {shipping.state} {shipping.postalCode}
-									</div>
-									<div>{shipping.country}</div>
+									{!shipping.international ? (
+										<div>
+											{shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
+										</div>
+									) : (
+										<div>
+											<div>
+												{shipping.city}, {shipping.state} {shipping.postalCode}
+											</div>
+											<div>{shipping.country}</div>
+										</div>
+									)}
 									<div>{shipping.international && 'International'}</div>
 									<div>{shipping.email}</div>
 								</div>
@@ -768,13 +776,13 @@ const PlaceOrderPublicPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
-						!create_account && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment}/>}
-						
+						!create_account && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />}
+
 						{!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') &&
 						create_account &&
-						passwords_check && <Stripe pay_order={placeOrderHandler}loading_payment={loading_payment} />}
+						passwords_check && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />}
 					</ul>
 				</div>
 			</div>

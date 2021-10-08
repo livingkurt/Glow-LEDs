@@ -5,6 +5,7 @@ import { CheckoutSteps } from '../../components/SpecialtyComponents';
 import { validate_shipping } from '../../utils/validations';
 import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
+import Autocomplete from 'react-google-autocomplete';
 
 const ShippingPublicPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -18,7 +19,7 @@ const ShippingPublicPage = (props) => {
 	const [ city, setCity ] = useState('');
 	const [ state, setState ] = useState('');
 	const [ postalCode, setPostalCode ] = useState('');
-	const [ country, setCountry ] = useState('United States');
+	const [ country, setCountry ] = useState('US');
 	const [ international, setInternational ] = useState(false);
 	const [ loading, set_loading ] = useState(true);
 
@@ -92,7 +93,7 @@ const ShippingPublicPage = (props) => {
 					city,
 					state,
 					postalCode,
-					country: international ? country : 'United States',
+					country: international ? country : 'US',
 					international
 				})
 			);
@@ -111,7 +112,7 @@ const ShippingPublicPage = (props) => {
 				city,
 				state,
 				postalCode,
-				country: international ? country : 'United States',
+				country: international ? country : 'US',
 				international
 			})
 		);
@@ -119,6 +120,37 @@ const ShippingPublicPage = (props) => {
 	setTimeout(() => {
 		set_loading(false);
 	}, 500);
+
+	const update_google_shipping = (shipping) => {
+		console.log({ shipping });
+
+		const street_number = shipping.address_components.filter((comp) => comp.types.includes('street_number'))[0];
+		console.log({ street_number });
+		const address = shipping.address_components.filter((comp) => comp.types.includes('route'))[0];
+		console.log({ address });
+		const address_1 = `${street_number.long_name} ${address.short_name}`;
+		const city = shipping.address_components.filter((comp) => comp.types.includes('locality'))[0];
+		console.log({ city });
+		const state = shipping.address_components.filter((comp) =>
+			comp.types.includes('administrative_area_level_1')
+		)[0];
+		console.log({ state });
+		const country = shipping.address_components.filter((comp) => comp.types.includes('country'))[0];
+		console.log({ country });
+		const postal_code = shipping.address_components.filter((comp) => comp.types.includes('postal_code'))[0];
+		console.log({ postal_code });
+		set_address_1(address_1);
+		setCity(city.long_name);
+		setState(state.short_name);
+		setPostalCode(postal_code.long_name);
+		console.log({ country: country.short_name });
+		setCountry(country.short_name);
+		if (country.short_name !== 'US') {
+			setInternational(true);
+			setState(state.short_name);
+			setCountry(country.long_name);
+		}
+	};
 
 	return (
 		<div>
@@ -177,7 +209,7 @@ const ShippingPublicPage = (props) => {
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{last_name_validations}
 						</label>
-						<li>
+						{/* <li>
 							<label htmlFor="address_1">Address</label>
 							<input
 								type="text"
@@ -189,7 +221,24 @@ const ShippingPublicPage = (props) => {
 						</li>
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{address_validations}
-						</label>
+						</label> */}
+						<li>
+							<label htmlFor="address_autocomplete">Address</label>
+							<Autocomplete
+								apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+								className="fs-16px"
+								placeholder="Start typing Address"
+								// value={auto_address}
+								value={address_1}
+								onChange={(e) => set_address_1(e.target.value)}
+								options={{
+									types: [ 'address' ]
+								}}
+								onPlaceSelected={(place) => {
+									update_google_shipping(place);
+								}}
+							/>
+						</li>
 						<li>
 							<label htmlFor="address_2">Apt/Suite</label>
 							<input
@@ -219,15 +268,15 @@ const ShippingPublicPage = (props) => {
 									State
 								</label>
 								<div className="ai-c h-25px mb-15px jc-c">
-									<div className="custom-select">
+									<div className="custom-select w-100per">
 										<select
-											className="qty_select_dropdown"
+											className="qty_select_dropdown w-100per"
 											onChange={(e) => setState(e.target.value)}
 											value={state && state}
 										>
 											{state_names.map((state, index) => (
-												<option key={index} value={state}>
-													{state}
+												<option key={index} value={state.short_name}>
+													{state.long_name}
 												</option>
 											))}
 										</select>

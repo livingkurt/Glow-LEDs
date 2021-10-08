@@ -26,7 +26,6 @@ const ShippingPage = (props) => {
 	const [ last_name, set_last_name ] = useState('');
 	const [ address_1, set_address_1 ] = useState('');
 	const [ address_2, set_address_2 ] = useState('');
-	const [ auto_address, set_auto_address ] = useState('');
 	const [ city, setCity ] = useState('');
 	const [ state, setState ] = useState('');
 	const [ postalCode, setPostalCode ] = useState('');
@@ -44,7 +43,6 @@ const ShippingPage = (props) => {
 				set_first_name(shipping.first_name);
 				set_last_name(shipping.last_name);
 				set_address_1(shipping.address_1);
-				set_auto_address(shipping.auto_address);
 				set_address_2(shipping.address_2);
 				setCity(shipping.city);
 				setState(shipping.state);
@@ -116,7 +114,7 @@ const ShippingPage = (props) => {
 				saveShipping({
 					first_name,
 					last_name,
-					email,
+					email: userInfo.email,
 					address_1,
 					address_2,
 					city,
@@ -144,7 +142,7 @@ const ShippingPage = (props) => {
 					shipping: {
 						first_name,
 						last_name,
-						email,
+						email: userInfo.email,
 						address_1,
 						address_2,
 						city,
@@ -230,7 +228,6 @@ const ShippingPage = (props) => {
 		const postal_code = shipping.address_components.filter((comp) => comp.types.includes('postal_code'))[0];
 		console.log({ postal_code });
 		set_address_1(address_1);
-		set_auto_address(address_1);
 		setCity(city.long_name);
 		setState(state.short_name);
 		setPostalCode(postal_code.long_name);
@@ -242,6 +239,7 @@ const ShippingPage = (props) => {
 			setCountry(country.long_name);
 		}
 	};
+
 	return (
 		<div>
 			<Helmet>
@@ -338,8 +336,7 @@ const ShippingPage = (props) => {
 							<Autocomplete
 								apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
 								className="fs-16px"
-								placeholder="Start typing Address"
-								// value={auto_address}
+								// placeholder="Start typing Address"
 								value={address_1}
 								onChange={(e) => set_address_1(e.target.value)}
 								options={{
