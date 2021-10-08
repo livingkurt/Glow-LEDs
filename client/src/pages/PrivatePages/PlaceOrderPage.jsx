@@ -12,6 +12,7 @@ import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice, ShippingSpeed } from '../../components/SpecialtyComponents/ShippingComponents';
+import Autocomplete from 'react-google-autocomplete';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -595,7 +596,7 @@ const PlaceOrderPage = (props) => {
 				<div className="placeorder-info">
 					<div>
 						<h2>Shipping</h2>
-						<div className="wrap jc-b">
+						<div className="wrap jc-b w-100per">
 							{shipping &&
 							shipping.hasOwnProperty('first_name') && (
 								<div className="paragraph_font lh-25px">
@@ -606,9 +607,8 @@ const PlaceOrderPage = (props) => {
 										{shipping.address_1} {shipping.address_2}
 									</div>
 									<div>
-										{shipping.city}, {shipping.state} {shipping.postalCode}
+										{shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
 									</div>
-									<div>{shipping.country}</div>
 									<div>{shipping.international && 'International'}</div>
 									<div>{shipping.email}</div>
 								</div>
@@ -628,6 +628,18 @@ const PlaceOrderPage = (props) => {
 									</button>
 								</Link>
 							</div>
+							{/* <Autocomplete
+								apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+								className="w-100per"
+								placeholder="Start typing Address"
+								options={{
+									types: [ 'address' ]
+								}}
+								onPlaceSelected={(place) => {
+									console.log({ place });
+									update_shipping(place);
+								}}
+							/> */}
 						</div>
 					</div>
 
@@ -759,10 +771,7 @@ const PlaceOrderPage = (props) => {
 													set_promo_code(e.target.value.toUpperCase());
 												}}
 											/>
-											<button
-												className="btn primary"
-												style={{ curser: 'pointer' }}
-											>
+											<button className="btn primary" style={{ curser: 'pointer' }}>
 												Apply
 											</button>
 										</form>
@@ -818,7 +827,9 @@ const PlaceOrderPage = (props) => {
 						{!loading &&
 						!hide_pay_button &&
 						shipping &&
-						shipping.hasOwnProperty('first_name') && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />}
+						shipping.hasOwnProperty('first_name') && (
+							<Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />
+						)}
 
 						{userInfo &&
 						userInfo.isAdmin && (

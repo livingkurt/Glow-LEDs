@@ -7,6 +7,10 @@ import { state_names } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 import { API_Shipping } from '../../utils';
 import { update } from '../../actions/userActions';
+import { useAddressPredictions } from '../../components/Hooks';
+import Autocomplete from 'react-google-autocomplete';
+// import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+// import { googleAutocomplete } from '../../utils/helper_functions';
 
 const ShippingPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -14,11 +18,15 @@ const ShippingPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
+	// const AddressPredictions = useAddressPredictions('Aus');
+	// console.log({ AddressPredictions });
+
 	const [ email, set_email ] = useState('');
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ address_1, set_address_1 ] = useState('');
 	const [ address_2, set_address_2 ] = useState('');
+	const [ auto_address, set_auto_address ] = useState('');
 	const [ city, setCity ] = useState('');
 	const [ state, setState ] = useState('');
 	const [ postalCode, setPostalCode ] = useState('');
@@ -36,6 +44,7 @@ const ShippingPage = (props) => {
 				set_first_name(shipping.first_name);
 				set_last_name(shipping.last_name);
 				set_address_1(shipping.address_1);
+				set_auto_address(shipping.auto_address);
 				set_address_2(shipping.address_2);
 				setCity(shipping.city);
 				setState(shipping.state);
@@ -77,7 +86,7 @@ const ShippingPage = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		const data = {
-			email,
+			email: userInfo.email,
 			first_name,
 			last_name,
 			address_1,
@@ -90,7 +99,7 @@ const ShippingPage = (props) => {
 		};
 		console.log({ data });
 		const request = validate_shipping(data);
-		set_email_validations(request.errors.email);
+		// set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
 		set_last_name_validations(request.errors.last_name);
 		set_address_validations(request.errors.address_1);
@@ -113,7 +122,7 @@ const ShippingPage = (props) => {
 					city,
 					state,
 					postalCode,
-					country: international ? country : 'United States',
+					country: international ? country : 'US',
 					international
 				})
 			);
@@ -141,7 +150,7 @@ const ShippingPage = (props) => {
 						city,
 						state,
 						postalCode,
-						country: international ? country : 'United States',
+						country: international ? country : 'US',
 						international
 					}
 				})
@@ -178,6 +187,61 @@ const ShippingPage = (props) => {
 		setInternational(shipping.international);
 	};
 
+	// const [ address, setAddress ] = React.useState('');
+	// const [ coordinates, setCoordinates ] = React.useState({
+	// 	lat: null,
+	// 	lng: null
+	// });
+
+	// const handleSelect = async (value) => {
+	// 	const results = await geocodeByAddress(value);
+	// 	const latLng = await getLatLng(results[0]);
+	// 	setAddress(value);
+	// 	setCoordinates(latLng);
+	// };
+
+	// const [ searchValue, setSearchValue ] = useState('');
+	// const [ predictions, setPredictions ] = useState([]);
+
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	const results = await googleAutocomplete(searchValue);
+	// 	if (results) {
+	// 		setPredictions(results);
+	// 	}
+	// };
+
+	const update_google_shipping = (shipping) => {
+		console.log({ shipping });
+
+		const street_number = shipping.address_components.filter((comp) => comp.types.includes('street_number'))[0];
+		console.log({ street_number });
+		const address = shipping.address_components.filter((comp) => comp.types.includes('route'))[0];
+		console.log({ address });
+		const address_1 = `${street_number.long_name} ${address.short_name}`;
+		const city = shipping.address_components.filter((comp) => comp.types.includes('locality'))[0];
+		console.log({ city });
+		const state = shipping.address_components.filter((comp) =>
+			comp.types.includes('administrative_area_level_1')
+		)[0];
+		console.log({ state });
+		const country = shipping.address_components.filter((comp) => comp.types.includes('country'))[0];
+		console.log({ country });
+		const postal_code = shipping.address_components.filter((comp) => comp.types.includes('postal_code'))[0];
+		console.log({ postal_code });
+		set_address_1(address_1);
+		set_auto_address(address_1);
+		setCity(city.long_name);
+		setState(state.short_name);
+		setPostalCode(postal_code.long_name);
+		console.log({ country: country.short_name });
+		setCountry(country.short_name);
+		if (country.short_name !== 'US') {
+			setInternational(true);
+			setState(state.short_name);
+			setCountry(country.long_name);
+		}
+	};
 	return (
 		<div>
 			<Helmet>
@@ -207,11 +271,12 @@ const ShippingPage = (props) => {
 						)}
 						{userInfo &&
 						userInfo.isAdmin && (
-							<li>
-								<div className="ai-c h-25px mv-10px mb-30px jc-c">
+							<li className="w-100per">
+								<div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
 									<div className="custom-select w-100per">
 										<select
 											className="qty_select_dropdown w-100per"
+											style={{ width: '100%' }}
 											onChange={(e) => update_shipping(e.target.value)}
 										>
 											<option key={1} defaultValue="">
@@ -229,7 +294,7 @@ const ShippingPage = (props) => {
 								</div>
 							</li>
 						)}
-						<li>
+						{/* <li>
 							<label htmlFor="email">Email</label>
 							<input
 								type="text"
@@ -238,8 +303,7 @@ const ShippingPage = (props) => {
 								id="email"
 								onChange={(e) => set_email(e.target.value)}
 							/>
-						</li>
-
+						</li> */}
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{email_validations}
 						</label>
@@ -270,6 +334,23 @@ const ShippingPage = (props) => {
 							{last_name_validations}
 						</label>
 						<li>
+							<label htmlFor="address_autocomplete">Address</label>
+							<Autocomplete
+								apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+								className="fs-16px"
+								placeholder="Start typing Address"
+								// value={auto_address}
+								value={address_1}
+								onChange={(e) => set_address_1(e.target.value)}
+								options={{
+									types: [ 'address' ]
+								}}
+								onPlaceSelected={(place) => {
+									update_google_shipping(place);
+								}}
+							/>
+						</li>
+						{/* <li>
 							<label htmlFor="address_1">Address</label>
 							<input
 								type="text"
@@ -278,7 +359,7 @@ const ShippingPage = (props) => {
 								id="address_1"
 								onChange={(e) => set_address_1(e.target.value)}
 							/>
-						</li>
+						</li> */}
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{address_validations}
 						</label>
@@ -311,15 +392,15 @@ const ShippingPage = (props) => {
 									State
 								</label>
 								<div className="ai-c h-25px mb-15px jc-c">
-									<div className="custom-select">
+									<div className="custom-select w-100per">
 										<select
-											className="qty_select_dropdown"
+											className="qty_select_dropdown w-100per"
 											onChange={(e) => setState(e.target.value)}
 											value={state && state}
 										>
 											{state_names.map((state, index) => (
-												<option key={index} value={state}>
-													{state}
+												<option key={index} value={state.short_name}>
+													{state.long_name}
 												</option>
 											))}
 										</select>
@@ -389,11 +470,9 @@ const ShippingPage = (props) => {
 								)}
 							</div>
 						)}
-
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{country_validations}
 						</label>
-
 						<li>
 							<button type="submit" className="btn primary">
 								Continue

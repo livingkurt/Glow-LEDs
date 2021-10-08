@@ -1,5 +1,8 @@
 import { Order, Parcel } from '../models';
 import { determine_parcel } from '../util';
+const addressValidator = require('address-validator');
+const Address = addressValidator.Address;
+const _ = require('underscore');
 
 const easy_post_api = require('@easypost/api');
 
@@ -13,6 +16,44 @@ export default {
 			all_shipping = [ order.shipping, ...all_shipping ];
 		});
 		res.send(all_shipping);
+	},
+	validate: async (req: any, res: any) => {
+		//any of the props in this object are optional, also spelling does not have to be exact.
+		let address = new Address({
+			street: '100 North Washington St',
+			city: 'Bostont',
+			state: 'Mass',
+			country: 'US'
+		});
+
+		//the passed in address does not need to be an address object it can be a string. (address objects will give you a better likelihood of finding an exact match)
+		address = '100 North Washington St, Boston, MA, US';
+
+		//`addressValidator.match.streetAddress` -> tells the validator that you think the input should be a street address. This data makes the validator more accurate.
+		// But, sometimes you dont know.. in that cause you should use `addressValidator.match.unknown`
+		addressValidator.validate(address, addressValidator.match.streetAddress, function(
+			err: any,
+			exact: any,
+			inexact: any
+		) {
+			console.log('input: ', address.toString());
+			console.log(
+				'match: ',
+				_.map(exact, function(a) {
+					return a.toString();
+				})
+			);
+			console.log(
+				'did you mean: ',
+				_.map(inexact, function(a) {
+					return a.toString();
+				})
+			);
+
+			//access some props on the exact match
+			const first = exact[0];
+			console.log(first.streetNumber + ' ' + first.street);
+		});
 	},
 	create_label: async (req: any, res: any) => {
 		try {

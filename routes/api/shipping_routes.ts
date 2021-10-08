@@ -5,6 +5,7 @@ const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
 router.route('/all_shipping').get(shipping_controller.all_shipping);
+router.route('/validate').put(isAuth, isAdmin, shipping_controller.validate);
 router.route('/create_label').put(isAuth, isAdmin, shipping_controller.create_label);
 router.route('/buy_label').put(isAuth, isAdmin, shipping_controller.buy_label);
 router.route('/get_custom_shipping_rates').put(isAuth, isAdmin, shipping_controller.get_custom_shipping_rates);

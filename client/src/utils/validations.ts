@@ -210,6 +210,7 @@ export const validate_shipping = (data: {
 	data.postalCode = !isEmpty(data.postalCode) ? data.postalCode : '';
 	data.country = !isEmpty(data.country) ? data.country : '';
 	// data.international = !isEmpty2(data.international) ? data.international : '';
+	console.log({ data });
 	// Email Name checks
 	if (data.hasOwnProperty('email')) {
 		if (isEmpty2(data.email)) {
