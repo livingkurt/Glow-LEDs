@@ -3,8 +3,9 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 const google_sheets_json = require('./glow-leds-0e697a43198d.json');
+
 const facebook_catalog_upload = async () => {
-	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
+	google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
@@ -12,6 +13,7 @@ const facebook_catalog_upload = async () => {
 		// spreadsheet key is the long id in the sheets URL
 		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
 		const doc = new GoogleSpreadsheet('1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8');
+		// const doc = new GoogleSpreadsheet('1IS8GkQmPTsBcPM8qv0ifGIjTpeDSjkx4FuYA0ZmEq2o');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -48,51 +50,68 @@ const facebook_catalog_upload = async () => {
 			'google_product_category',
 			'sale_price',
 			'sale_price_effective_date',
-			'product_type'
+			'product_type',
+			'color',
+			'size'
+			// 'shipping_weight',
+			// 'item_group_id'
 		]);
 
-		const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');
+		const { data: products } = await axios.get('https://www.glow-leds.com/api/products/get_all_products');
 
-		const new_rows = data.map((product: any, i: number) => {
-			const id = product._id;
-			const title = product.name;
-			const description = product.description;
-			const availability = 'In Stock';
-			const condition = 'New';
-			const price =
-				product.product_options.length > 0
-					? `${product.product_options.find((option: any) => option.default).price} USD`
-					: `${product.price} USD`;
-			const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
-			const image_link = product.images[0];
-			const additional_image_link = product.images[1];
-			const brand = 'Glow LEDs';
-			const inventory = product.countInStock;
-			const fb_product_category = 'toys & games > electronic toys';
-			const google_product_category = 'Toys & Games > Toys > Visual Toys';
-			const sale_price = product.sale_price;
-			const sale_price_effective_date = product.sale_price_effective_date;
-			const product_type = product.category;
+		const new_rows = products
+			.filter((product: any) => !product.hidden)
+			.filter((product: any) => product.category !== 'options')
+			.map((product: any, i: number) => {
+				const id = product._id;
+				const title = product.name;
+				const description = product.description;
+				const availability = 'In Stock';
+				const condition = 'New';
+				const price =
+					product.product_options.length > 0
+						? `${product.product_options.find((option: any) => option.default).price} USD`
+						: `${product.price} USD`;
+				const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
+				const image_link = product.images[0];
+				const additional_image_link = product.images[1];
+				const brand = 'Glow LEDs';
+				const inventory = product.countInStock;
+				const fb_product_category = 'toys & games > electronic toys';
+				const google_product_category = 'Toys & Games > Toys > Visual Toys';
+				const sale_price = product.sale_price;
+				const sale_price_effective_date = product.sale_price_effective_date;
+				const product_type = product.category;
+				const color = product.color;
+				const size = product.size;
+				// const shipping_weight = `${product.weight_pounds
+				// 	? product.weight_pounds * 16 + product.weight_ounces
+				// 	: product.weight_ounces} oz`;
+				// const item_group_id = product.item_group_id ? product.item_group_id : '';
 
-			return {
-				id,
-				title,
-				description,
-				availability,
-				condition,
-				price,
-				link,
-				image_link,
-				additional_image_link,
-				brand,
-				inventory,
-				fb_product_category,
-				google_product_category,
-				sale_price,
-				sale_price_effective_date,
-				product_type
-			};
-		});
+				return {
+					id,
+					title,
+					description,
+					availability,
+					condition,
+					price,
+					link,
+					image_link,
+					additional_image_link,
+					brand,
+					inventory,
+					fb_product_category,
+					google_product_category,
+					sale_price,
+					sale_price_effective_date,
+					product_type,
+					color,
+					size
+					// shipping_weight,
+					// item_group_id
+				};
+			});
 
 		await sheet.addRows(new_rows);
 		await sheet.saveUpdatedCells();
@@ -100,7 +119,6 @@ const facebook_catalog_upload = async () => {
 		// const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
 		// await newSheet.delete();
 	} catch (error) {
-		console.log({ error });
 		console.log({ error });
 	}
 };

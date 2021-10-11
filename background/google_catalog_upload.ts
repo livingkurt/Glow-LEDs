@@ -5,13 +5,13 @@ dotenv.config();
 const google_sheets_json = require('./glow-leds-0e697a43198d.json');
 
 const google_catalog_upload = async () => {
-	google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
+	google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
 	try {
 		const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 		// spreadsheet key is the long id in the sheets URL
-		// const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
 		const doc = new GoogleSpreadsheet('1V9vSROcN0RA-OFRGOIbvt_raXh3ZG2BYDY9DSOudaqU');
+		// const doc = new GoogleSpreadsheet('1f-SCHyQRz3oWRcYBTk2OKG1--KRXC1ynkY5lbWM-1hk');
 
 		// use service account creds
 		// await doc.useServiceAccountAuth({
@@ -47,9 +47,9 @@ const google_catalog_upload = async () => {
 			'sale_price',
 			'sale_price_effective_date'
 		]);
-		const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');
+		const { data: products } = await axios.get('https://www.glow-leds.com/api/products/get_all_products');
 
-		const new_rows = data.map((product: any, i: number) => {
+		const new_rows = products.filter((product: any) => !product.hidden).map((product: any, i: number) => {
 			const id = product._id;
 			const title = product.name;
 			const description = product.description;
@@ -87,7 +87,6 @@ const google_catalog_upload = async () => {
 		// const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
 		// await newSheet.delete();
 	} catch (error) {
-		console.log({ error });
 		console.log({ error });
 	}
 };
