@@ -3,6 +3,7 @@ import Validator from 'validator';
 import axios, { AxiosResponse } from 'axios';
 import invariant from 'tiny-invariant';
 import { API_Products } from '.';
+import { determine_secondary_product_name } from './react_helper_functions';
 
 interface errors {
 	email: string;
@@ -58,13 +59,39 @@ export const shuffle = (array: any) => {
 	return array;
 };
 
+// export const determnine_link = (item: any) => {
+// 	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
+// 		? '?secondary_color=' + item.secondary_color
+// 		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
+// 		? '?secondary=' + item.size ? item.size : item.option_product_name
+// 		: ''}`;
+// };
 export const determnine_link = (item: any) => {
-	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
-		? '?secondary_color=' + item.secondary_color
-		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
-		? '?secondary=' + item.size ? item.size : item.option_product_name
+	console.log({ [item.name]: item });
+	const link = `/collections/all/products/${item.pathname}${item.color
+		? '?color=' + item.color
+		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.option_product
+		? '?option=' + item.size
+		: ''}${item.secondary_product_name
+		? '?secondary=' + determine_secondary_product_name(item.secondary_product_name, item.category, item.subcategory)
 		: ''}`;
+	console.log({ [item.name]: link });
+	return link;
 };
+
+// item.size ? item.size : item.option_product_name
+// export const determnine_link = (item: any) => {
+// 	console.log({ [item.name]: item });
+// 	const link = `/collections/all/products/${item.pathname}${item.color
+// 		? '?color=' + item.color
+// 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.name === 'Nova Clip'
+// 		? item.option_product ? '?option=' + item.option_product.split('-')[1].trim() : ''
+// 		: item.option_product_name
+// 			? '?option=' + item.option_product_name.split('-')[1].trim()
+// 			: ''}${item.secondary_product_name ? '?secondary=' + item.secondary_product_name.split('-')[1].trim() : ''}`;
+// 	console.log({ [item.name]: link });
+// 	return link;
+// };
 
 // export const snake_case = (str: string) => {
 // 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');

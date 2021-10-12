@@ -128,46 +128,46 @@ const OrdersPage = (props) => {
 		}
 	};
 
-	useEffect(() => {
-		// if (history.action !== 'POP') {
-		get_total_orders();
-		get_total_expenses();
-		// }
-		return () => {};
-	}, []);
+	// useEffect(() => {
+	// 	// if (history.action !== 'POP') {
+	// 	get_total_orders();
+	// 	get_total_expenses();
+	// 	// }
+	// 	return () => {};
+	// }, []);
 
-	const get_total_orders = async () => {
-		const { data } = await API_Orders.total_orders();
-		console.log({ data: data.length });
-		set_total_orders(
-			data.filter((order) => order.deleted === false).filter((order) => order.isPaid === true).map((order) => ({
-				Date: format_date(order.createdAt),
-				ID: order._id,
-				Name: order.shipping.first_name + ' ' + order.shipping.last_name,
-				Email: order.shipping.email,
-				Subtotal: '$' + order.itemsPrice,
-				Shipping: '$' + order.shippingPrice,
-				Tax: '$' + order.taxPrice,
-				Total: '$' + order.totalPrice
-			}))
-		);
-	};
-	const get_total_expenses = async () => {
-		const { data } = await API_Orders.total_expenses();
-		console.log({ data: data.length });
-		set_total_expenses(
-			data.filter((expense) => expense.deleted === false).map((expense) => ({
-				'Date of Purchase': format_date(expense.date_of_purchase),
-				ID: expense._id,
-				Expense: expense.expense_name,
-				Category: expense.category,
-				'Place of Purchase': expense.place_of_purchase,
-				Application: expense.application,
-				Card: expense.card,
-				Amount: '$' + expense.amount
-			}))
-		);
-	};
+	// const get_total_orders = async () => {
+	// 	const { data } = await API_Orders.total_orders();
+	// 	console.log({ data: data.length });
+	// 	set_total_orders(
+	// 		data.filter((order) => order.deleted === false).filter((order) => order.isPaid === true).map((order) => ({
+	// 			Date: format_date(order.createdAt),
+	// 			ID: order._id,
+	// 			Name: order.shipping.first_name + ' ' + order.shipping.last_name,
+	// 			Email: order.shipping.email,
+	// 			Subtotal: '$' + order.itemsPrice,
+	// 			Shipping: '$' + order.shippingPrice,
+	// 			Tax: '$' + order.taxPrice,
+	// 			Total: '$' + order.totalPrice
+	// 		}))
+	// 	);
+	// };
+	// const get_total_expenses = async () => {
+	// 	const { data } = await API_Orders.total_expenses();
+	// 	console.log({ data: data.length });
+	// 	set_total_expenses(
+	// 		data.filter((expense) => expense.deleted === false).map((expense) => ({
+	// 			'Date of Purchase': format_date(expense.date_of_purchase),
+	// 			ID: expense._id,
+	// 			Expense: expense.expense_name,
+	// 			Category: expense.category,
+	// 			'Place of Purchase': expense.place_of_purchase,
+	// 			Application: expense.application,
+	// 			Card: expense.card,
+	// 			Amount: '$' + expense.amount
+	// 		}))
+	// 	);
+	// };
 
 	const history = useHistory();
 	console.log({ history });
@@ -247,10 +247,10 @@ const OrdersPage = (props) => {
 				<button className="btn primary" onClick={(e) => mark_as_shipped(e)}>
 					Mark as Shipped
 				</button>
-				<Link to="/secure/glow/editorder">
+				{/* <Link to="/secure/glow/editorder">
 					<button className="btn primary">Create Order</button>
-				</Link>
-				{total_orders &&
+				</Link> */}
+				{/* {total_orders &&
 				total_orders.length > 0 && (
 					<JSONToCSV data={total_orders} filename="orders.csv" className="btn primary">
 						Export Orders CSV
@@ -261,7 +261,7 @@ const OrdersPage = (props) => {
 					<JSONToCSV data={total_expenses} filename="expenses.csv" className="btn primary">
 						Export Expenses CSV
 					</JSONToCSV>
-				)}
+				)} */}
 				{/* {total_expenses && total_expenses.length > 0 && <CsvDownload data={total_expenses} />} */}
 			</div>
 			<div className="wrap jc-b">

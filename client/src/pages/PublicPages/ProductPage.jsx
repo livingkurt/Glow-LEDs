@@ -215,7 +215,7 @@ const ProductPage = (props) => {
 							update_option_product_state(option);
 						}
 					}
-					if (product.secondary_products) {
+					if (product.secondary_products && product.secondary_products.length > 0) {
 						console.log({ query_secondary: query.secondary });
 						const secondary = product.secondary_products.find(
 							(secondary) => secondary.name === query.secondary.split('%20').join(' ')
@@ -757,7 +757,7 @@ const ProductPage = (props) => {
 											{size}
 										</div>
 									)}
-										{/* {product.category === 'accessories' && product.subcategory === 'clips' &&
+									{/* {product.category === 'accessories' && product.subcategory === 'clips' &&
 										<div className="ai-c  mv-20px">
 											<h3 className="mv-0px mr-5px">
 												{product.option_group_name ? product.option_group_name : 'Size'}:{' '}

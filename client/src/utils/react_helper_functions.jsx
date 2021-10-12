@@ -521,9 +521,11 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			} else {
 				return name.split(' ')[0];
 			}
-		}
-		if (category === 'accessories' && subcategory === 'clips') {
-			return name.split(' ')[3] + ' ' + name.split(' ')[4];
+		} else {
+			// if (category === 'accessories' && subcategory === 'clips') {
+			// 	return name.split(' ')[3] + ' ' + name.split(' ')[4];
+			// }
+			return name;
 		}
 	}
 };
