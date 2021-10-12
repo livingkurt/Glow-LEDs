@@ -116,11 +116,11 @@ const EditEmailPage = (props) => {
 		const { data } = await API_Emails.get_content(e.target.value);
 		// set_content(data);
 		console.log({ data });
-		console.log({ home_page: data.home_page });
-		const new_link = `https://www.glow-leds.com${data.home_page.link}`;
+		console.log({ home_page: data.data.home_page });
+		const new_link = `https://www.glow-leds.com${data.data.home_page.link}`;
 		console.log({ new_link });
 		set_content_state({
-			...data.home_page,
+			...data.data.home_page,
 			link: new_link
 		});
 	};

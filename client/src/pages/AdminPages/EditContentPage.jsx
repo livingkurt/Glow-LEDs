@@ -99,9 +99,9 @@ const EditContentPage = (props) => {
 	const use_email_template = async (e) => {
 		// dispatch(detailsContent(e.target.value));
 		const { data } = await API_Emails.get_email(e.target.value);
-		set_email(data);
-		const formatted_link = data.link && data.link.replace('https://www.glow-leds.com', '');
-		set_email_state({ ...data, link: formatted_link });
+		set_email(data.data);
+		const formatted_link = data.data.link && data.data.link.replace('https://www.glow-leds.com', '');
+		set_email_state({ ...data.data, link: formatted_link });
 		set_using_template(true);
 	};
 
