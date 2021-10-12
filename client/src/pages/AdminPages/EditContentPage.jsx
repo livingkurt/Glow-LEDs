@@ -430,77 +430,92 @@ const EditContentPage = (props) => {
 										</div>
 										<div className="w-228px m-10px">
 											<h2>Links</h2>
-											{links &&
-												links.map((link, index) => (
-													<div>
-														<div className="jc-b">
-															<h3>Button {index + 1}</h3>
-															<button
-																className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
-																onClick={(e) => remove_link(index, e)}
-															>
-																<i className="fas fa-times mr-5px" />
-															</button>
-														</div>
+											<div className="scroll-y h-100per max-h-900px ">
+												{links &&
+													links.map((link, index) => (
+														<div>
+															<div className="jc-b ai-c">
+																<label>Button {index + 1}</label>
+																<button
+																	className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+																	onClick={(e) => remove_link(index, e)}
+																>
+																	<i className="fas fa-times mr-5px" />
+																</button>
+															</div>
 
-														<li>
-															<button
-																className="btn primary"
-																onClick={(e) => add_link(e, index, 'above')}
-															>
-																Add Link Above
-															</button>
-														</li>
-														<li>
-															<label htmlFor="label">Label</label>
-															<input
-																type="text"
-																name="label"
-																value={link.label}
-																id="label"
-																onChange={(e) =>
-																	update_link_item_property(e, e.target.name, index)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="link">Link</label>
-															<input
-																type="text"
-																name="link"
-																value={link.link}
-																id="link"
-																onChange={(e) =>
-																	update_link_item_property(e, e.target.name, index)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="icon">Icon</label>
-															<input
-																type="text"
-																name="icon"
-																value={link.icon}
-																id="icon"
-																onChange={(e) =>
-																	update_link_item_property(e, e.target.name, index)}
-															/>
-														</li>
-														{index !== links.length - 1 && (
 															<li>
 																<button
 																	className="btn primary"
-																	onClick={(e) => add_link(e, index, 'below')}
+																	onClick={(e) => add_link(e, index, 'above')}
 																>
-																	Add Link Below
+																	Add Link Above
 																</button>
 															</li>
-														)}
-													</div>
-												))}
-											<li>
-												<button className="btn primary" onClick={(e) => add_link(e)}>
-													Add Link
-												</button>
-											</li>
+															<li>
+																<label htmlFor="label">Label</label>
+																<input
+																	type="text"
+																	name="label"
+																	value={link.label}
+																	id="label"
+																	onChange={(e) =>
+																		update_link_item_property(
+																			e,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+															<li>
+																<label htmlFor="link">Link</label>
+																<input
+																	type="text"
+																	name="link"
+																	value={link.link}
+																	id="link"
+																	onChange={(e) =>
+																		update_link_item_property(
+																			e,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+															<li>
+																<label htmlFor="icon">Icon</label>
+																<input
+																	type="text"
+																	name="icon"
+																	value={link.icon}
+																	id="icon"
+																	onChange={(e) =>
+																		update_link_item_property(
+																			e,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+															{index !== links.length - 1 && (
+																<li>
+																	<button
+																		className="btn primary"
+																		onClick={(e) => add_link(e, index, 'below')}
+																	>
+																		Add Link Below
+																	</button>
+																</li>
+															)}
+														</div>
+													))}
+
+												<li>
+													<button className="btn primary" onClick={(e) => add_link(e)}>
+														Add Link
+													</button>
+												</li>
+											</div>
 										</div>
 
 										{/* <div className="w-228px m-10px">
