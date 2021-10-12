@@ -415,6 +415,14 @@ export const determine_product_name = (item, show_qty, date) => {
 						{item.size !== '0' && ' - ' + item.size}{' '}
 					</div>
 				);
+			} else if (item.subcategory === 'clips') {
+				return (
+					<div>
+						{console.log({ item })}
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+						{item.secondary_product_name !== '0' && ' - ' + item.secondary_product_name.split('-')[1]}{' '}
+					</div>
+				);
 			} else {
 				return (
 					<div>
