@@ -166,7 +166,7 @@ export const userContactReducer = (state = {}, action: { type: any; payload: any
 		case USER_CONTACT_REQUEST:
 			return { loading: true };
 		case USER_CONTACT_SUCCESS:
-			return { loading: false, completed: action.payload.data, message: action.payload.message };
+			return { loading: false, completed: true, message: action.payload.message };
 		case USER_CONTACT_FAIL:
 			return { loading: false, error: action.payload.data, message: action.payload.message };
 		case USER_CONTACT_REMOVE_SUCCESS:

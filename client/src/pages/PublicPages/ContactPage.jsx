@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { contact } from '../../actions/userActions';
 import { validate_contact } from '../../utils/validations';
-import { Loading } from '../../components/UtilityComponents';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { humanize } from '../../utils/helper_functions';
 import { saveFeature } from '../../actions/featureActions';
@@ -35,7 +35,8 @@ const ContactPage = (props) => {
 	const [ message_validations, set_message_validations ] = useState('');
 
 	const userContact = useSelector((state) => state.userContact);
-	const { loading, completed, error } = userContact;
+	const { loading, completed, message: completed_message, error } = userContact;
+	console.log({ userContact });
 
 	useEffect(
 		() => {
@@ -52,7 +53,7 @@ const ContactPage = (props) => {
 
 			return () => {};
 		},
-		[ completed, props.history ]
+		[ completed ]
 	);
 
 	let request;
@@ -162,6 +163,7 @@ const ContactPage = (props) => {
 			<div className="jc-c">
 				<h1>Contact</h1>
 			</div>
+			<Notification message={completed_message} />
 			<div className="column jc-c">
 				<div className="ta-c">We are avaiable from 9 AM to 8 PM on Weekdays</div>
 				<div className="ta-c mt-1rem">
@@ -309,7 +311,6 @@ const ContactPage = (props) => {
 						<label className="validation_text">{order_number_validations}</label>
 					</div>
 				)}
-			
 
 				{[ 'submit_content_to_be_featured' ].includes(reason_for_contact) && (
 					<div>
