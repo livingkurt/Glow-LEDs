@@ -1133,61 +1133,249 @@ const OrderEmail = (props) => {
 																				)}
 																			</tbody>
 																		</table>
-																		<table
-																			style={{
-																				width: '100%',
-																				borderSpacing: '0',
-																				// borderCollapse: 'collapse',
-																				marginTop: '20px',
-																				borderTopWidth: '2px',
-																				borderTopColor: 'white',
-																				borderTopStyle: 'solid'
-																			}}
-																		>
-																			<tbody>
-																				<tr>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '20px 0 0'
-																						}}
-																					>
-																						<p
+																		{/*  */}
+																		{!order.isRefunded ? (
+																			<table
+																				style={{
+																					width: '100%',
+																					borderSpacing: '0',
+																					// borderCollapse: 'collapse',
+																					marginTop: '20px',
+																					borderTopWidth: '2px',
+																					borderTopColor: 'white',
+																					borderTopStyle: 'solid'
+																				}}
+																			>
+																				<tbody>
+																					<tr>
+																						<td
 																							style={{
-																								color: 'white',
-																								lineHeight: '1.2em',
-																								fontSize: '16px',
-																								margin: '0'
+																								fontFamily: 'helvetica',
+																								padding: '20px 0 0'
 																							}}
 																						>
-																							<span
+																							<p
 																								style={{
-																									fontSize: '16px'
+																									color: 'white',
+																									lineHeight: '1.2em',
+																									fontSize: '16px',
+																									margin: '0'
 																								}}
 																							>
-																								Total
-																							</span>
-																						</p>
-																					</td>
-																					<td
-																						style={{
-																							fontFamily: 'helvetica',
-																							padding: '20px 0 0'
-																						}}
-																						align="right"
-																					>
-																						<strong
+																								<span
+																									style={{
+																										fontSize: '16px'
+																									}}
+																								>
+																									Total
+																								</span>
+																							</p>
+																						</td>
+																						<td
 																							style={{
-																								fontSize: '24px',
-																								color: 'white'
+																								fontFamily: 'helvetica',
+																								padding: '20px 0 0'
+																							}}
+																							align="right"
+																						>
+																							<strong
+																								style={{
+																									fontSize: '24px',
+																									color: 'white'
+																								}}
+																							>
+																								${order.totalPrice && order.totalPrice.toFixed(2)}
+																							</strong>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		) : (
+																			''
+																		)}
+																		{order.isRefunded ? (
+																			<table
+																				style={{
+																					width: '100%',
+																					borderSpacing: '0',
+																					// borderCollapse: 'collapse',
+																					marginTop: '20px',
+																					borderTopWidth: '2px',
+																					borderTopColor: 'white',
+																					borderTopStyle: 'solid'
+																				}}
+																			>
+																				<tbody>
+																					<tr>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '20px 0 0'
 																							}}
 																						>
-																							${order.totalPrice && order.totalPrice.toFixed(2)}
-																						</strong>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
+																							<p
+																								style={{
+																									color: 'white',
+																									lineHeight: '1.2em',
+																									fontSize: '16px',
+																									margin: '0'
+																								}}
+																							>
+																								<span
+																									style={{
+																										fontSize: '16px'
+																									}}
+																								>
+																									Total
+																								</span>
+																							</p>
+																						</td>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '20px 0 0'
+																							}}
+																							align="right"
+																						>
+																							<strong
+																								style={{
+																									fontSize: '24px',
+																									color: 'white'
+																								}}
+																							>
+																								<del
+																									style={{
+																										color: 'red'
+																									}}
+																								>
+																									<label
+																										style={{
+																											color:
+																												'white'
+																										}}
+																									>
+																										<div>
+																											${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}
+																										</div>
+																									</label>
+																								</del>
+																							</strong>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		) : (
+																			''
+																		)}
+																		{order.isRefunded ? (
+																			<table
+																				style={{
+																					width: '100%',
+																					borderSpacing: '0',
+																					// borderCollapse: 'collapse',
+																					marginTop: '20px'
+																				}}
+																			>
+																				<tbody>
+																					<tr>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0'
+																							}}
+																						>
+																							<p
+																								style={{
+																									color: 'white',
+																									lineHeight: '1.2em',
+																									fontSize: '16px',
+																									margin: '0'
+																								}}
+																							>
+																								<span
+																									style={{
+																										fontSize: '16px'
+																									}}
+																								>
+																									Refund Amount
+																								</span>
+																							</p>
+																						</td>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0',
+																								textAlign: 'right'
+																							}}
+																							align="righ=t"
+																						>
+																							<strong
+																								style={{
+																									fontSize: '16px',
+																									color: 'white'
+																								}}
+																							>
+																								-${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+																							</strong>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0'
+																							}}
+																						>
+																							<p
+																								style={{
+																									color: 'white',
+																									lineHeight: '1.2em',
+																									fontSize: '16px',
+																									margin: '0'
+																								}}
+																							>
+																								<span
+																									style={{
+																										fontSize: '16px'
+																									}}
+																								>
+																									New Order Total
+																								</span>
+																							</p>
+																						</td>
+																						<td
+																							style={{
+																								fontFamily: 'helvetica',
+																								padding: '5px 0',
+																								textAlign: 'right'
+																							}}
+																							align="righ=t"
+																						>
+																							<strong
+																								style={{
+																									fontSize: '16px',
+																									color: 'white'
+																								}}
+																							>
+																								${Math.abs(
+																									order.totalPrice -
+																										order.payment.refund.reduce(
+																											(a, c) =>
+																												a +
+																												c.amount,
+																											0
+																										) /
+																											100
+																								).toFixed(2)}
+																							</strong>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		) : (
+																			''
+																		)}
+
 																		{order.promo_code && (
 																			<p
 																				style={{
@@ -1849,9 +2037,11 @@ const OrderEmail = (props) => {
 		// 	email_template,
 		// 	refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
 		// );
-		const { data:user_email } = await API_Emails.send_email(email_template, subject, email);
-		const { data: admin_email } = await API_Emails.send_email(email_template,
-			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name);
+		const { data: user_email } = await API_Emails.send_email(email_template, subject, email);
+		const { data: admin_email } = await API_Emails.send_email(
+			email_template,
+			refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
+		);
 		console.log({ user_email });
 		console.log({ admin_email });
 		if (user_email && admin_email) {
