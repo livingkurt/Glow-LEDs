@@ -55,7 +55,7 @@ const google_catalog_upload = async () => {
 			const description = product.description;
 			const availability = 'In Stock';
 			const condition = 'New';
-			const price = product.price + ' USD';
+			const price = `${product.price} USD`;
 			const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
 			const image_link = product.images[0];
 			const brand = 'Glow LEDs';
