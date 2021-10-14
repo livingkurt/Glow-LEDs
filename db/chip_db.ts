@@ -3,14 +3,9 @@ import { Promo } from '../models';
 import { make_private_code } from '../util';
 
 export default {
-	findAll_chips_db: async (searchKeyword: any, sortOrder: any) => {
+	findAll_chips_db: async (filter: any, sortOrder: any) => {
 		try {
-			return await Chip.find({
-				deleted: false,
-				...searchKeyword
-			})
-				.sort(sortOrder)
-				.populate('user');
+			return await Chip.find(filter).sort(sortOrder).populate('user');
 		} catch (error) {
 			console.log({ findAll_chips_db_error: error });
 			throw new Error(error.message);

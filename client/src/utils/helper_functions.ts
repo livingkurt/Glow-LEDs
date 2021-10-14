@@ -4,6 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import invariant from 'tiny-invariant';
 import { API_Products } from '.';
 import { determine_secondary_product_name } from './react_helper_functions';
+import { getTracking } from 'ts-tracking-number';
 
 interface errors {
 	email: string;
@@ -96,6 +97,29 @@ export const determnine_link = (item: any) => {
 // export const snake_case = (str: string) => {
 // 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
 // };
+
+export const determine_tracking_number = (tracking_number: string) => {
+	const tracking: any = getTracking(tracking_number);
+	if (tracking.name.includes('USPS')) {
+		return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' + tracking_number;
+	}
+	if (tracking.name.includes('UPS')) {
+		return (
+			'https://wwwapps.ups.com/WebTracking/processInputRequest?AgreeToTermsAndConditions=yes&loc=en_US&tracknum=' +
+			tracking_number +
+			'&requester=ST/trackdetails'
+		);
+	}
+	if (tracking.name.includes('FedEx')) {
+		return (
+			'https://www.fedex.com/fedextrack/?trknbr=' +
+			tracking_number +
+			'&trkqual=2459474000~' +
+			tracking_number +
+			'~FX'
+		);
+	}
+};
 
 export const toCapitalize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);

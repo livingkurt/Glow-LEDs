@@ -7,6 +7,7 @@ const cartItemsSchema = new mongoose.Schema(
 		name: { type: String, required: true },
 		qty: { type: Number, required: true },
 		display_image: { type: String, required: true },
+		secondary_image: { type: String },
 		color: { type: String },
 		secondary_color: { type: String },
 		color_group_name: { type: String },
@@ -61,7 +62,13 @@ const cartItemsSchema = new mongoose.Schema(
 const cartSchema = new mongoose.Schema(
 	{
 		cartItems: [ cartItemsSchema ],
-		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		user: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+			unique: true,
+			index: true,
+			dropDups: true
+		},
 		deleted: { type: Boolean, default: false }
 	},
 	{

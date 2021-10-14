@@ -1,107 +1,83 @@
-import { Cart } from '../models';
-import { Log, Promo } from '../models';
+import { cart_services } from '../services';
 
 export default {
-	findAll: async (req: any, res: any) => {
+	findAll_carts_c: async (req: any, res: any) => {
+		const { query } = req;
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const searchKeyword = req.query.searchKeyword
-				? {
-						facebook_name: {
-							$regex: req.query.searchKeyword,
-							$options: 'i'
-						}
-					}
-				: {};
-
-			let sortOrder = {};
-			if (req.query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (req.query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (req.query.sortOrder === 'song id') {
-				sortOrder = { song_id: 1 };
-			} else if (req.query.sortOrder === 'product') {
-				sortOrder = { product: 1 };
-			} else if (req.query.sortOrder === 'instagram handle') {
-				sortOrder = { instagram_handle: 1 };
-			} else if (req.query.sortOrder === 'release_date' || req.query.sortOrder === '') {
-				sortOrder = { release_date: -1 };
-			} else if (req.query.sortOrder === 'newest') {
-				sortOrder = { _id: -1 };
+			const carts = await cart_services.findAll_carts_s(query);
+			if (carts) {
+				return res.status(200).send({ message: 'Carts Found', data: carts });
 			}
-
-			const carts = await Cart.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
-
-			res.send(carts);
+			return res.status(404).send({ message: 'Carts Not Found' });
 		} catch (error) {
-			console.log({ error });
-			res.status(500).send({ error, message: 'Error Getting Carts' });
+			console.log({ findAll_carts_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Carts' });
 		}
 	},
-	findById: async (req: any, res: any) => {
+	findById_carts_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const cart = await Cart.findOne({ _id: req.params.id });
-			console.log({ cart });
-			console.log(req.params.id);
+			const cart = await cart_services.findById_carts_s(params);
 			if (cart) {
-				res.send(cart);
-			} else {
-				res.status(404).send({ message: 'Cart Not Found.' });
+				return res.status(200).send({ message: 'Cart Found', data: cart });
 			}
+			return res.status(404).send({ message: 'Cart Not Found' });
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Cart' });
+			console.log({ findById_carts_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Cart' });
 		}
 	},
-	create: async (req: any, res: any) => {
+	findByUser_carts_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			console.log({ body: req.body }); // const newCart = await Cart.create(req.body);
-			// if (newCart) {
-
-			// 	return res.status(201).send({ message: 'New Cart Created', data: newCart });
-			// } else {
-
-			// 	return res.status(500).send({ message: ' Error in Creating Cart.' });
-			// }
+			const cart = await cart_services.findByUser_carts_s(params);
+			if (cart) {
+				return res.status(200).send({ message: 'Cart Found', data: cart });
+			}
+			return res.status(200).send({ message: 'No Cart Found', data: {} });
+			// return res.status(404).send({ message: 'Cart Not Found' });
 		} catch (error) {
-			console.log({ error });
-
+			console.log({ findById_carts_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding Cart' });
+		}
+	},
+	create_carts_c: async (req: any, res: any) => {
+		const { body } = req;
+		console.log({ create_carts_c: body });
+		try {
+			const cart = await cart_services.create_carts_s(body);
+			if (cart) {
+				return res.status(201).send({ message: 'New Cart Created', data: cart });
+			}
+			return res.status(500).send({ message: 'Error Creating Cart' });
+		} catch (error) {
+			console.log({ create_carts_c_error: error });
 			res.status(500).send({ error, message: 'Error Creating Cart' });
 		}
 	},
-	update: async (req: any, res: any) => {
+	update_carts_c: async (req: any, res: any) => {
+		const { params, body } = req;
 		try {
-			console.log({ cart_routes_put: req.body });
-			const cart_id = req.params.id;
-			const cart: any = await Cart.findById(cart_id);
+			const cart = await cart_services.update_carts_s(params, body);
 			if (cart) {
-				const updatedCart = await Cart.updateOne({ _id: cart_id }, req.body);
-				if (updatedCart) {
-					return res.status(200).send({ message: 'Cart Updated', data: updatedCart });
-				}
-			} else {
-				return res.status(500).send({ message: ' Error in Updating Cart.' });
+				return res.status(200).send({ message: 'Cart Updated', data: cart });
 			}
+			return res.status(500).send({ message: 'Error Updating Cart' });
 		} catch (error) {
-			console.log({ error });
-
-			res.status(500).send({ error, message: 'Error Getting Cart' });
+			console.log({ update_carts_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Cart' });
 		}
 	},
-	remove: async (req: any, res: any) => {
+	remove_carts_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const message: any = { message: 'Cart Deleted' };
-			const deleted_cart = await Cart.updateOne({ _id: req.params.id }, { deleted: true });
-			if (deleted_cart) {
-				res.send(message);
-			} else {
-				res.send('Error in Deletion.');
+			const cart = await cart_services.remove_carts_s(params);
+			if (cart) {
+				return res.status(204).send({ message: 'Cart Deleted' });
 			}
+			return res.status(500).send({ message: 'Error Deleting Cart' });
 		} catch (error) {
-			console.log({ error });
-
+			console.log({ remove_carts_c_error: error });
 			res.status(500).send({ error, message: 'Error Deleting Cart' });
 		}
 	}

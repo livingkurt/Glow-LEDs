@@ -27,7 +27,6 @@ const OrderListItem = (props) => {
 
 	const today = new Date();
 
-
 	const sendEmail = (message) => {
 		const email = props.order.shipping.email;
 		const subject = 'Your Glow LEDs Order';
@@ -52,6 +51,11 @@ const OrderListItem = (props) => {
 			})
 		);
 		dispatch(listOrders());
+	};
+
+	const delete_order = () => {
+		dispatch(deleteOrder(props.order._id));
+		dispatch(listOrders(''));
 	};
 
 	return (
@@ -175,7 +179,7 @@ const OrderListItem = (props) => {
 							return (
 								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
-										{console.log({orderItems: item})}
+										{console.log({ orderItems: item })}
 										<Link to={determnine_link(item)}>
 											<div className="">
 												{!item.secondary_image && (
@@ -442,10 +446,7 @@ const OrderListItem = (props) => {
 									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
 								</button>
 
-								<button
-									className="btn secondary mv-5px"
-									onClick={() => dispatch(deleteOrder(props.order._id))}
-								>
+								<button className="btn secondary mv-5px" onClick={() => delete_order()}>
 									Delete Order
 								</button>
 							</div>

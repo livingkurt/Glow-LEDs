@@ -21,7 +21,8 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { name: 1 };
 			}
-			return await chip_db.findAll_chips_db(searchKeyword, sortOrder);
+			const filter = { deleted: false, ...category, ...searchKeyword };
+			return await chip_db.findAll_chips_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_chips_s_error: error });
 			throw new Error(error.message);

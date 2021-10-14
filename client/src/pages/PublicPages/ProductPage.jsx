@@ -14,7 +14,7 @@ import {
 } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { addToCart } from '../../actions/cartActions';
+import { addToCart, saveCart } from '../../actions/cartActions';
 import 'react-medium-image-zoom/dist/styles.css';
 import {
 	determine_secondary_product_name,
@@ -41,9 +41,11 @@ SwiperCore.use([ Pagination ]);
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
-	const cart = useSelector((state) => state.cart);
-
 	let { userInfo } = userLogin;
+	const cart = useSelector((state) => state.cart);
+	let { cartItems } = cart;
+	console.log({ cartItems });
+
 	const [ name, set_name ] = useState('');
 	const [ description, set_description ] = useState('');
 	const [ facts, set_facts ] = useState('');
@@ -88,8 +90,10 @@ const ProductPage = (props) => {
 	// const [ secondary_group_name, set_secondary_group_name ] = useState('');
 
 	const productDetails = useSelector((state) => state.productDetails);
-
 	const { product, loading, error } = productDetails;
+
+	// const productDetails = useSelector((state) => state.productDetails);
+	// const { product, loading, error } = productDetails;
 
 	const { width, height } = useWindowDimensions();
 
@@ -375,6 +379,51 @@ const ProductPage = (props) => {
 				finite_stock: product.category
 			})
 		);
+		if (userInfo) {
+			dispatch(
+				saveCart({
+					userInfo,
+					cartItems,
+					cartItem: {
+						product: product._id,
+						color_product,
+						color_code,
+						secondary_color_code,
+						secondary_color_product,
+						color_group_name: product.color_group_name,
+						secondary_color_group_name: product.secondary_color_group_name,
+						option_group_name: product.option_group_name,
+						secondary_group_name: product.secondary_group_name,
+						option_product,
+						option_product_name,
+						secondary_product,
+						secondary_product_name,
+						name,
+						size,
+						color: size !== '1 Skin' && color,
+						secondary_color: size !== '1 Sled' && secondary_color,
+						display_image: image ? image : images[0],
+						secondary_image: secondary_image ? secondary_image : '',
+						price,
+						sale_price,
+						countInStock: count_in_stock,
+						weight_pounds: dimensions.weight_pounds,
+						weight_ounces: dimensions.weight_ounces,
+						package_length: dimensions.package_length,
+						package_width: dimensions.package_width,
+						package_height: dimensions.package_height,
+						package_volume: dimensions.package_volume,
+						pathname: props.match.params.pathname,
+						category: product.category,
+						subcategory: product.subcategory,
+						product_option,
+						qty,
+						finite_stock: product.category
+					}
+				})
+			);
+		}
+
 		open_cart();
 		set_product_option({});
 	};

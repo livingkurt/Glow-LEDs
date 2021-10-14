@@ -77,7 +77,7 @@ export const cartListReducer = (state = { carts: [] }, action: { type: any; payl
 		case CART_LIST_REQUEST:
 			return { loading: true, carts: [] };
 		case CART_LIST_SUCCESS:
-			return { loading: false, carts: action.payload };
+			return { loading: false, carts: action.payload.data, message: action.payload.message };
 		case CART_LIST_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -90,7 +90,7 @@ export const cartDetailsReducer = (state = { cart: { reviews: [] } }, action: { 
 		case CART_DETAILS_REQUEST:
 			return { loading: true };
 		case CART_DETAILS_SUCCESS:
-			return { loading: false, cart: action.payload };
+			return { loading: false, cart: action.payload.data, message: action.payload.message };
 		case CART_DETAILS_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -103,7 +103,7 @@ export const cartDeleteReducer = (state = { cart: {} }, action: { type: any; pay
 		case CART_DELETE_REQUEST:
 			return { loading: true };
 		case CART_DELETE_SUCCESS:
-			return { loading: false, cart: action.payload, success: true };
+			return { loading: false, cart: action.payload.data, message: action.payload.message, success: true };
 		case CART_DELETE_FAIL:
 			return { loading: false, error: action.payload };
 		default:
@@ -116,7 +116,7 @@ export const cartSaveReducer = (state = { cart: {} }, action: { type: any; paylo
 		case CART_SAVE_REQUEST:
 			return { loading: true };
 		case CART_SAVE_SUCCESS:
-			return { loading: false, success: true, cart: action.payload };
+			return { loading: false, success: true, cart: action.payload.data, message: action.payload.message };
 		case CART_SAVE_FAIL:
 			return { loading: false, error: action.payload };
 		default:

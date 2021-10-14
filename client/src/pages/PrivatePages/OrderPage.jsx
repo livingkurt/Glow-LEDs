@@ -3,7 +3,7 @@ import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { createOrder, detailsOrder, payOrder, saveOrder } from '../../actions/orderActions';
-import { format_date } from '../../utils/helper_functions';
+import { determine_tracking_number, format_date } from '../../utils/helper_functions';
 import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
@@ -523,10 +523,7 @@ const OrderPage = (props) => {
 										<label>
 											USPS Tracking #:{' '}
 											<a
-												href={
-													'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
-													order.tracking_number
-												}
+												href={determine_tracking_number(order.tracking_number)}
 												target="_blank"
 												rel="noopener noreferrer"
 												className="mv-2rem"
@@ -545,10 +542,7 @@ const OrderPage = (props) => {
 										<label>
 											USPS Return Tracking #:{' '}
 											<a
-												href={
-													'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
-													order.return_tracking_number
-												}
+												href={determine_tracking_number(order.return_tracking_number)}
 												target="_blank"
 												rel="noopener noreferrer"
 												className="mv-2rem"
