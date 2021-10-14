@@ -15,14 +15,11 @@ const CartItem = (props) => {
 	const removeFromCartHandler = (product) => {
 		dispatch(removeFromCart(product));
 	};
-	console.log({ props_item: props.item.qty });
 	const dispatch = useDispatch();
 	return (
 		<li key={props.index} className="">
-			{/* {console.log({ item })} */}
 			<div className="cart-image m-auto ai-c">
 				<Link to={determnine_link(props.item)}>
-					{/* <img src={props.item.display_image} alt={props.item.name} title="Product Image" /> */}
 					<div className="">
 						{!props.item.secondary_image && (
 							<LazyImage

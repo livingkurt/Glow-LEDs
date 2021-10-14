@@ -1,5 +1,5 @@
 import { user_db } from '../db';
-import { getToken } from '../util';
+import { getToken, prnt } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
@@ -52,16 +52,18 @@ export default {
 	create_users_s: async (body: any) => {
 		try {
 			let user: any = {};
+			let response: any = {};
 			let hashed_password = '';
 			const temporary_password = process.env.TEMP_PASS;
-			return bcrypt.genSalt(10, (err: any, salt: any) => {
-				return bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
+			bcrypt.genSalt(10, (err: any, salt: any) => {
+				bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
 					if (err) throw err;
 					hashed_password = hash;
 					user = { ...body, password: hashed_password };
-					return await user_db.create_users_db(user);
+					response = await user_db.create_users_db(user);
 				});
 			});
+			return response;
 		} catch (error) {
 			console.log({ create_users_s_error: error });
 			throw new Error(error.message);

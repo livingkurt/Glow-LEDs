@@ -1,5 +1,6 @@
 import { user_db } from '../db';
 import { user_services } from '../services';
+import { prnt } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
@@ -46,16 +47,48 @@ export default {
 		}
 	},
 	create_users_c: async (req: any, res: any) => {
-		const { body } = req;
+		// const { body } = req;
+		// try {
+		// 	const user = await user_services.create_users_s(body);
+		// 	prnt({ create_users_c: user });
+		// 	if (user) {
+		// 		return res.status(200).send({ message: 'User Found', data: user });
+		// 	}
+		// 	return res.status(404).send({ message: 'User Not Found' });
+		// } catch (error) {
+		// 	console.log({ create_users_c_error: error });
+		// 	res.status(500).send({ error, message: 'Error Finding User' });
+		// }
 		try {
-			const user = await user_services.create_users_s(body);
-			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
-			}
-			return res.status(404).send({ message: 'User Not Found' });
+			let user: any = {};
+			let hashed_password = '';
+			const temporary_password = process.env.TEMP_PASS;
+			bcrypt.genSalt(10, (err: any, salt: any) => {
+				bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
+					if (err) throw err;
+					hashed_password = hash;
+					user = { ...req.body, password: hashed_password };
+					// const newUser = await User.create(user);
+					// if (newUser) {
+					// 		const new_user = await user_db.create_users_db(user);
+					// 	return res.status(201).send({ message: 'New User Created', data: newUser });
+					// } else {
+					// 	return res.status(500).send({ message: ' Error in Creating User.' });
+					// }
+					try {
+						const new_user = await user_db.create_users_db(user);
+						console.log({ new_user });
+						return res.status(200).send({ message: 'New User Created', data: new_user });
+					} catch (error) {
+						console.log({ error });
+						res.status(500).json({ message: 'Error Creating User', error });
+					}
+				});
+			});
 		} catch (error) {
-			console.log({ create_users_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding User' });
+			console.log({ create_users_error: error });
+
+			res.status(500).send({ error, message: 'Error Creating User' });
 		}
 	},
 	update_profile_users_c: async (req: any, res: any) => {

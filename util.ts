@@ -256,3 +256,7 @@ export const deepEqual = (object1: any, object2: any) => {
 function isObject(object: any) {
 	return object != null && typeof object === 'object';
 }
+
+export const prnt = (info: any) => {
+	console.log(info);
+};

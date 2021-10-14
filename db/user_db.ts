@@ -1,4 +1,5 @@
 import { User } from '../models';
+import { prnt } from '../util';
 require('dotenv');
 
 export default {
@@ -33,6 +34,7 @@ export default {
 		}
 	},
 	create_users_db: async (user: any) => {
+		prnt({ create_users_db: user });
 		try {
 			return await User.create(user);
 		} catch (error) {
