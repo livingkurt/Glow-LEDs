@@ -16,7 +16,7 @@ const OrderListItem = (props) => {
 
 	const show_hide = (id) => {
 		const row = document.getElementById(id);
-		console.log(row);
+		// console.log(row);
 		row.classList.toggle('hide-row');
 	};
 	const daysBetween = (date1, date2) => {
@@ -35,8 +35,8 @@ const OrderListItem = (props) => {
 	};
 
 	const create_duplicate_order = () => {
-		console.log({ order: props.order });
-		console.log({ user: props.order.user });
+		// console.log({ order: props.order });
+		// console.log({ user: props.order.user });
 		dispatch(
 			createOrder({
 				orderItems: props.order.orderItems,
@@ -176,7 +176,6 @@ const OrderListItem = (props) => {
 							return (
 								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
-										{console.log({ orderItems: item })}
 										<Link to={determnine_link(item)}>
 											<div className="">
 												{!item.secondary_image && (

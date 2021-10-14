@@ -99,26 +99,29 @@ export const determnine_link = (item: any) => {
 // };
 
 export const determine_tracking_number = (tracking_number: string) => {
-	const tracking: any = getTracking(tracking_number);
-	console.log({ tracking });
-	if (tracking.name.includes('USPS')) {
-		return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' + tracking_number;
-	}
-	if (tracking.name.includes('UPS')) {
-		return (
-			'https://wwwapps.ups.com/WebTracking/processInputRequest?AgreeToTermsAndConditions=yes&loc=en_US&tracknum=' +
-			tracking_number +
-			'&requester=ST/trackdetails'
-		);
-	}
-	if (tracking.name.includes('FedEx')) {
-		return (
-			'https://www.fedex.com/fedextrack/?trknbr=' +
-			tracking_number +
-			'&trkqual=2459474000~' +
-			tracking_number +
-			'~FX'
-		);
+	if (tracking_number) {
+		console.log({ tracking_number });
+		const tracking: any = getTracking(tracking_number);
+		console.log({ tracking });
+		if (tracking.name.includes('USPS')) {
+			return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' + tracking_number;
+		}
+		if (tracking.name.includes('UPS')) {
+			return (
+				'https://wwwapps.ups.com/WebTracking/processInputRequest?AgreeToTermsAndConditions=yes&loc=en_US&tracknum=' +
+				tracking_number +
+				'&requester=ST/trackdetails'
+			);
+		}
+		if (tracking.name.includes('FedEx')) {
+			return (
+				'https://www.fedex.com/fedextrack/?trknbr=' +
+				tracking_number +
+				'&trkqual=2459474000~' +
+				tracking_number +
+				'~FX'
+			);
+		}
 	}
 };
 
