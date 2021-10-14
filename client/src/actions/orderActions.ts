@@ -38,6 +38,7 @@ import {
 	USER_SAVE_REQUEST,
 	USER_SAVE_SUCCESS
 } from '../constants/userConstants';
+import { prnt } from '../utils/helper_functions';
 require('dotenv').config();
 
 export const createPayOrder = (
@@ -158,6 +159,7 @@ export const createPayOrderGuest = (
 			}
 		} else {
 			const user_email_res = await axios.get('/api/users/email/' + order.shipping.email);
+			prnt({ createPayOrderGuest_user_email_res: user_email_res });
 			if (user_email_res.data) {
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {
@@ -195,7 +197,7 @@ export const createPayOrderGuest = (
 					guest: true,
 					password: process.env.REACT_APP_TEMP_PASS
 				});
-
+				prnt({ createPayOrderGuest_user_create: data });
 				dispatch({ type: USER_SAVE_SUCCESS, payload: data });
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {

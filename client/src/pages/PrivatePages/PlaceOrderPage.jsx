@@ -13,6 +13,7 @@ import { listUsers } from '../../actions/userActions';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice, ShippingSpeed } from '../../components/SpecialtyComponents/ShippingComponents';
 import Autocomplete from 'react-google-autocomplete';
+import { state_names } from '../../utils/helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -133,7 +134,7 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (shipping) {
+			if (shipping && Object.keys(shipping).length > 0) {
 				set_loading(true);
 				const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
 				console.log({ package_volume });
@@ -210,12 +211,11 @@ const PlaceOrderPage = (props) => {
 		setTaxPrice(0);
 		set_loading(true);
 		const { data } = await API_External.get_tax_rates();
-		const tax_rate = parseFloat(data[shipping.state]) / 100;
-
-		if (isNaN(tax_rate)) {
-			console.log('Not a Number');
-		} else {
-			console.log({ [shipping.state]: tax_rate });
+		const result = state_names.find((obj) => {
+			return obj.short_name === shipping.state;
+		});
+		const tax_rate = parseFloat(data[result.long_name]) / 100;
+		if (!isNaN(tax_rate)) {
 			set_tax_rate(tax_rate);
 			if (shipping.international) {
 				setTaxPrice(0);
@@ -815,8 +815,8 @@ const PlaceOrderPage = (props) => {
 									name="tip"
 									id="tip"
 									placeholder="$0.00"
-									onfocus="this.placeholder = ''"
-									onblur="this.placeholder = '$0.00'"
+									onFocus={() => this.placeholder('')}
+									onBlur={() => this.placeholder('$0.00')}
 									defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
 									// defaultValue={tip}
 									className="w-100per"

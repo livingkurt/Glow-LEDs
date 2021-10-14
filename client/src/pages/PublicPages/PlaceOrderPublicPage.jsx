@@ -12,6 +12,7 @@ import { validate_promo_code, validate_passwords } from '../../utils/validations
 import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice } from '../../components/SpecialtyComponents/ShippingComponents';
+import { prnt, state_names } from '../../utils/helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -85,7 +86,7 @@ const PlaceOrderPublicPage = (props) => {
 	useEffect(
 		() => {
 			const shipping_storage = sessionStorage.getItem('shippingAddress');
-			console.log({ shipping_storage });
+			// console.log({ shipping_storage });
 			if (shipping_storage) {
 				dispatch(saveShipping(JSON.parse(shipping_storage)));
 			}
@@ -113,14 +114,9 @@ const PlaceOrderPublicPage = (props) => {
 	);
 	useEffect(
 		() => {
-			if (shipping) {
+			if (shipping && Object.keys(shipping).length > 0) {
 				set_loading(true);
-				// if (shipping.international) {
-				// 	calculate_international();
-				// } else {
-				// const weight_ounces = cartItems.reduce((a, c) => a + c.weight_ounces, 0);
 				const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
-				console.log({ package_volume });
 				if (!package_volume) {
 					set_loading(false);
 					set_hide_pay_button(false);
@@ -129,10 +125,6 @@ const PlaceOrderPublicPage = (props) => {
 				} else {
 					get_shipping_rates();
 				}
-
-				// }
-
-				// get_shipping_rates();
 				get_tax_rates();
 			}
 			return () => {};
@@ -142,6 +134,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	const get_shipping_rates = async () => {
 		if (
+			shipping &&
 			cartItems.reduce((a, c) => a + c.package_length, 0) === 0 &&
 			cartItems.reduce((a, c) => a + c.package_width, 0) === 0 &&
 			cartItems.reduce((a, c) => a + c.package_width, 0) === 0
@@ -162,11 +155,11 @@ const PlaceOrderPublicPage = (props) => {
 				order_note,
 				promo_code: show_message && promo_code
 			});
-			console.log(get_shipping_rates_res);
+			// console.log(get_shipping_rates_res);
 			if (get_shipping_rates_res.data.message) {
 				set_error(get_shipping_rates_res);
 			} else {
-				console.log('Shipment Ran');
+				// console.log('Shipment Ran');
 				set_shipping_rates(get_shipping_rates_res.data.shipment);
 				set_shipment_id(get_shipping_rates_res.data.shipment.id);
 				set_loading(false);
@@ -194,12 +187,11 @@ const PlaceOrderPublicPage = (props) => {
 		setTaxPrice(0);
 		set_loading(true);
 		const { data } = await API_External.get_tax_rates();
-		const tax_rate = parseFloat(data[shipping.state]) / 100;
-
-		if (isNaN(tax_rate)) {
-			console.log('Not a Number');
-		} else {
-			console.log({ [shipping.state]: tax_rate });
+		const result = state_names.find((obj) => {
+			return obj.short_name === shipping.state;
+		});
+		const tax_rate = parseFloat(data[result.long_name]) / 100;
+		if (!isNaN(tax_rate)) {
 			set_tax_rate(tax_rate);
 			if (shipping.international) {
 				setTaxPrice(0);
@@ -213,7 +205,7 @@ const PlaceOrderPublicPage = (props) => {
 	const get_promo_code = () => {
 		const promo_code_storage = sessionStorage.getItem('promo_code');
 		if (promo_code_storage && promo_code_storage.length > 0) {
-			console.log({ promo_code_storage });
+			// console.log({ promo_code_storage });
 			set_promo_code(promo_code_storage.toLowerCase());
 			activate_promo_code(promo_code_storage);
 		}
@@ -279,18 +271,18 @@ const PlaceOrderPublicPage = (props) => {
 				// const { data: product } = await API_Products.get_product(item.product);
 				// console.log({ product });
 				const new_count = item.countInStock - item.qty;
-				console.log({ new_count });
+				// console.log({ new_count });
 				const { data: res } = await API_Products.update_stock(item.product, new_count);
-				console.log({ res });
+				// console.log({ res });
 			} else if (item.product_option.finite_stock) {
 				const new_count = item.product_option.count_in_stock - item.qty;
-				console.log({ new_count });
+				// console.log({ new_count });
 				const { data: res } = await API_Products.update_product_option_stock(
 					item.product,
 					item.product_option,
 					new_count
 				);
-				console.log({ res });
+				// console.log({ res });
 			}
 		});
 		if (promo_code) {
@@ -298,8 +290,8 @@ const PlaceOrderPublicPage = (props) => {
 			// const promo_codes = data.promos.map((promo) => promo.promo_code.toLowerCase());
 			// console.log({ promo_codes });
 			const data = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
-			console.log({ data });
-			console.log({ single_use: data.single_use });
+			// console.log({ data });
+			// console.log({ single_use: data.single_use });
 			if (data.single_use) {
 				await API_Promos.promo_code_used(promo_code.toLowerCase());
 			}
@@ -318,11 +310,11 @@ const PlaceOrderPublicPage = (props) => {
 		() => {
 			if (successPay && order) {
 				if (create_account) {
-					console.log('account');
+					// console.log('account');
 					// props.history.push('/checkout/paymentacccountcomplete/' + order._id);
 					props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
 				} else {
-					console.log('order');
+					// console.log('order');
 					// props.history.push('/checkout/paymentcomplete/' + order._id);
 					props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
 				}
@@ -349,7 +341,7 @@ const PlaceOrderPublicPage = (props) => {
 
 	useEffect(
 		() => {
-			console.log({ tip });
+			// console.log({ tip });
 
 			setTotalPrice(
 				tip === 0 || tip === '' || isNaN(tip)
@@ -406,8 +398,8 @@ const PlaceOrderPublicPage = (props) => {
 			// 	// promo_included = category_cart_items + product_cart_items;
 			// }
 
-			console.log({ promo_excluded });
-			console.log({ promo_included });
+			// console.log({ promo_excluded });
+			// console.log({ promo_included });
 			if (show_message) {
 				set_promo_code_validations('Can only use one promo code at a time');
 			} else {
@@ -555,7 +547,9 @@ const PlaceOrderPublicPage = (props) => {
 							{cartItems.length === 0 ? (
 								<div>Cart is empty</div>
 							) : (
-								cartItems.map((item, index) => <CartItem item={item} index={index} show_qty={true} />)
+								cartItems.map((item, index) => (
+									<CartItem item={item} index={index} key={index} show_qty={true} />
+								))
 							)}
 						</ul>
 					</div>
@@ -763,8 +757,9 @@ const PlaceOrderPublicPage = (props) => {
 									name="tip"
 									id="tip"
 									placeholder="$0.00"
-									onfocus="this.placeholder = ''"
-									onblur="this.placeholder = '$0.00'"
+									// onFocus={(this.placeholder = '')}
+									onFocus={() => this.placeholder('')}
+									onBlur={() => this.placeholder('$0.00')}
 									defaultValue={`$${tip && parseInt(tip).toFixed(2)}`}
 									// defaultValue={tip}
 									className="w-100per"

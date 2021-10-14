@@ -9,7 +9,7 @@ const LoadingPayment = ({ loading, error, children, set_error, set_loading_payme
 			return <h3 style={{ textAlign: 'center' }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
 		}, 3000);
 	};
-	console.log({ LoadingPayment: error });
+	// console.log({ LoadingPayment: error });
 
 	const close_error = () => {
 		// set_loading_payment(false);

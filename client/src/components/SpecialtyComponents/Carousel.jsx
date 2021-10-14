@@ -114,7 +114,7 @@ const Carousel = (props) => {
 											</button>
 										</div>
 										{[ ...Array(number_of_items).keys() ].map((x) => (
-											<div className="w-259px">
+											<div className="w-259px" key={product_number + x}>
 												<CarouselItem
 													key={product_number + x}
 													size="175px"

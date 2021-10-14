@@ -100,8 +100,8 @@ const CarouselItem = (props) => {
 			{product &&
 			!loading && (
 				<li key={props.product && product.pathname} style={props.styles}>
-					<div class="tooltip">
-						<span class="tooltiptext">
+					<div className="tooltip">
+						<span className="tooltiptext">
 							<li>
 								{product.countInStock > 0 && props.add_to_cart ? (
 									<div>

@@ -266,8 +266,8 @@ const SubmitFeaturePage = (props) => {
 												name="category"
 												value={category}
 												placeholder="Type Category if Not Listed"
-												onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'Type Category if Not Listed'"
+												onFocus={() => this.placeholder('')}
+												onBlur={() => this.placeholder('Type Category if Not Listed')}
 												id="category"
 												onChange={(e) => set_category(e.target.value)}
 											/>
@@ -278,8 +278,8 @@ const SubmitFeaturePage = (props) => {
 												type="text"
 												name="artist_name"
 												placeholder="Glover Name... DJ Name..."
-												onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'Glover Name... DJ Name...'"
+												onFocus={() => this.placeholder('')}
+												onBlur={() => this.placeholder('Glover Name... DJ Name...')}
 												value={artist_name}
 												id="artist_name"
 												onChange={(e) => set_artist_name(e.target.value)}
@@ -301,8 +301,11 @@ const SubmitFeaturePage = (props) => {
 												className="edit_product_textarea"
 												name="description"
 												placeholder="Write a little something to introduce yourself..."
-												onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'Write a little something to introduce yourself...'"
+												onFocus={() => this.placeholder('')}
+												onBlur={() =>
+													this.placeholder(
+														'Write a little something to introduce yourself...'
+													)}
 												defaultValue={description}
 												id="description"
 												onChange={(e) => set_description(e.target.value)}
@@ -336,8 +339,8 @@ const SubmitFeaturePage = (props) => {
 												name="link"
 												value={link}
 												placeholder="https://www..."
-												onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'https://www...'"
+												onFocus={() => this.placeholder('')}
+												onBlur={() => this.placeholder('https://www...')}
 												id="link"
 												onChange={(e) => set_link(e.target.value)}
 											/>

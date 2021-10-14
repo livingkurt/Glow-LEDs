@@ -215,8 +215,9 @@ const Cart = (props) => {
 									<Link
 										to={'/collections/all/products/' + item.pathname}
 										className="w-100per mb-1rem"
+										key={index}
 									>
-										<li key={index} className="ph-1rem w-100per">
+										<li className="ph-1rem w-100per">
 											<div className=" br-5px ai-c">
 												<img
 													src={item.images && item.images[0]}

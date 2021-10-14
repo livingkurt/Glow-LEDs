@@ -385,8 +385,8 @@ const EditUserAffiliatePage = (props) => {
 													value={artist_name}
 													id="artist_name"
 													placeholder="Glover Name..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Glover Name...'"
+													onFocus={() => this.placeholder('')}
+													onBlur={() => this.placeholder('Glover Name...')}
 													onChange={(e) => set_artist_name(e.target.value)}
 												/>
 											</li>
@@ -427,8 +427,8 @@ const EditUserAffiliatePage = (props) => {
 													name="style"
 													value={style}
 													placeholder="Wave Tuts, Clusters, Whips..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Wave Tuts, Clusters, Whips...'"
+													onFocus={() => this.placeholder('')}
+													onBlur={() => this.placeholder('Wave Tuts, Clusters, Whips...')}
 													id="style"
 													onChange={(e) => set_style(e.target.value)}
 												/>
@@ -440,8 +440,8 @@ const EditUserAffiliatePage = (props) => {
 													name="inspiration"
 													value={inspiration}
 													placeholder="Flow, Megasloth, Jest..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = ''Flow, Megasloth, Jest..."
+													onFocus={() => this.placeholder('')}
+													onBlur={() => this.placeholder('Flow, Megasloth, Jest...')}
 													id="inspiration"
 													onChange={(e) => set_inspiration(e.target.value)}
 												/>
@@ -474,8 +474,11 @@ const EditUserAffiliatePage = (props) => {
 													className="edit_product_textarea"
 													name="bio"
 													placeholder="Write a little something to introduce yourself..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Write a little something to introduce yourself...'"
+													onFocus={() => this.placeholder('')}
+													onBlur={() =>
+														this.placeholder(
+															'Write a little something to introduce yourself...'
+														)}
 													defaultValue={bio}
 													id="bio"
 													onChange={(e) => set_bio(e.target.value)}
@@ -488,8 +491,8 @@ const EditUserAffiliatePage = (props) => {
 													name="link"
 													value={link}
 													placeholder="https://www..."
-													onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'https://www...'"
+													onFocus={() => this.placeholder('')}
+													onBlur={() => this.placeholder('https://www...')}
 													id="link"
 													onChange={(e) => set_link(e.target.value)}
 												/>
@@ -501,8 +504,8 @@ const EditUserAffiliatePage = (props) => {
 													name="venmo"
 													value={venmo}
 													// placeholder="https://www..."
-													// onfocus="this.placeholder = ''"
-													// onblur="this.placeholder = 'https://www...'"
+													// onFocus={() => this.placeholder('')}
+													// onBlur={() => this.placeholder('https://www...')}
 													id="venmo"
 													onChange={(e) => set_venmo(e.target.value)}
 												/>
