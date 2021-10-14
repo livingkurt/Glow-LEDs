@@ -573,9 +573,8 @@ const OrderPage = (props) => {
 												</div>
 												<div>
 													{order.shipping.city}, {order.shipping.state}{' '}
-													{order.shipping.postalCode}
+													{order.shipping.postalCode}, {order.shipping.country}
 												</div>
-												<div>{order.shipping.country}</div>
 												<div>{order.shipping.international && 'International'}</div>
 												<div>{order.shipping.email}</div>
 											</div>

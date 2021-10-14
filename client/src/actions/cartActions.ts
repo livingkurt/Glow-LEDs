@@ -97,20 +97,22 @@ export const removeFromCart = (product: string) => async (
 	const { cart: { cartItems } } = getState();
 	dispatch({ type: CART_REMOVE_ITEM, payload: product });
 	try {
-		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-		const old_cart = data.data;
-		if (data.message === 'Cart Found') {
-			console.log('Cart Found');
-			const { data } = await axios.put(
-				'/api/carts/user/' + userInfo._id,
-				{ old_cart, cartItems, userInfo, cartItem: product },
-				{
-					headers: {
-						Authorization: 'Bearer ' + userInfo.token
+		if (userInfo && Object.keys(userInfo).length > 0) {
+			const { data } = await axios.get('/api/carts/user/' + userInfo._id);
+			const old_cart = data.data;
+			if (data.message === 'Cart Found') {
+				console.log('Cart Found');
+				const { data } = await axios.put(
+					'/api/carts/user/' + userInfo._id,
+					{ old_cart, cartItems, userInfo, cartItem: product },
+					{
+						headers: {
+							Authorization: 'Bearer ' + userInfo.token
+						}
 					}
-				}
-			);
-			// dispatch({ type: CART_REMOVE_SUCCESS, payload: data });
+				);
+				// dispatch({ type: CART_REMOVE_SUCCESS, payload: data });
+			}
 		}
 	} catch (error) {
 		console.log({ error });
@@ -163,36 +165,38 @@ export const saveCart = (cartItem: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
-	// console.log({ cartActions: cartItem });
-
 	try {
 		dispatch({ type: CART_SAVE_REQUEST, payload: cartItem });
 		const { userLogin: { userInfo } } = getState();
 		const { cart: { cartItems } } = getState();
-		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-		const old_cart = data.data;
-		if (data.message === 'Cart Found') {
-			const { data } = await axios.put(
-				'/api/carts/' + old_cart._id,
-				{ cartItems, cartItem, userInfo },
-				{
-					headers: {
-						Authorization: 'Bearer ' + userInfo.token
+		if (userInfo && Object.keys(userInfo).length > 0) {
+			const { data } = await axios.get('/api/carts/user/' + userInfo._id);
+			const old_cart = data.data;
+			if (data.message === 'Cart Found') {
+				const { data } = await axios.put(
+					'/api/carts/' + old_cart._id,
+					{ cartItems, cartItem, userInfo },
+					{
+						headers: {
+							Authorization: 'Bearer ' + userInfo.token
+						}
 					}
-				}
-			);
-			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-		} else if (data.message === 'No Cart Found') {
-			const { data } = await axios.post(
-				'/api/carts',
-				{ cartItem, userInfo, cartItems: [] },
-				{
-					headers: {
-						Authorization: 'Bearer ' + userInfo.token
+				);
+				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+			} else if (data.message === 'No Cart Found') {
+				const { data } = await axios.post(
+					'/api/carts',
+					{ cartItem, userInfo, cartItems: [] },
+					{
+						headers: {
+							Authorization: 'Bearer ' + userInfo.token
+						}
 					}
-				}
-			);
-			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+				);
+				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+			}
+		} else {
+			console.log('User Does Not Exist');
 		}
 	} catch (error) {
 		console.log({ error });

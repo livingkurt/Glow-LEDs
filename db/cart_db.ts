@@ -1,6 +1,4 @@
 import Cart from '../models/cart';
-import { Promo } from '../models';
-import { make_private_code } from '../util';
 
 export default {
 	findAll_carts_db: async (filter: any, sortOrder: any) => {
