@@ -341,87 +341,44 @@ const ProductPage = (props) => {
 	}, []);
 
 	const handleAddToCart = () => {
-		dispatch(
-			addToCart({
-				product: product._id,
-				color_product,
-				color_code,
-				secondary_color_code,
-				secondary_color_product,
-				color_group_name: product.color_group_name,
-				secondary_color_group_name: product.secondary_color_group_name,
-				option_group_name: product.option_group_name,
-				secondary_group_name: product.secondary_group_name,
-				option_product,
-				option_product_name,
-				secondary_product,
-				secondary_product_name,
-				name,
-				size,
-				color: size !== '1 Skin' && color,
-				secondary_color: size !== '1 Sled' && secondary_color,
-				display_image: image ? image : images[0],
-				secondary_image: secondary_image ? secondary_image : '',
-				price,
-				sale_price,
-				countInStock: count_in_stock,
-				weight_pounds: dimensions.weight_pounds,
-				weight_ounces: dimensions.weight_ounces,
-				package_length: dimensions.package_length,
-				package_width: dimensions.package_width,
-				package_height: dimensions.package_height,
-				package_volume: dimensions.package_volume,
-				pathname: props.match.params.pathname,
-				category: product.category,
-				subcategory: product.subcategory,
-				product_option,
-				qty,
-				finite_stock: product.category
-			})
-		);
+		const cart_item = {
+			product: product._id,
+			color_product,
+			color_code,
+			secondary_color_code,
+			secondary_color_product,
+			color_group_name: product.color_group_name,
+			secondary_color_group_name: product.secondary_color_group_name,
+			option_group_name: product.option_group_name,
+			secondary_group_name: product.secondary_group_name,
+			option_product,
+			option_product_name,
+			secondary_product,
+			secondary_product_name,
+			name,
+			size,
+			color: size !== '1 Skin' && color,
+			secondary_color: size !== '1 Sled' && secondary_color,
+			display_image: image ? image : images[0],
+			secondary_image: secondary_image ? secondary_image : '',
+			price,
+			sale_price,
+			countInStock: count_in_stock,
+			weight_pounds: dimensions.weight_pounds,
+			weight_ounces: dimensions.weight_ounces,
+			package_length: dimensions.package_length,
+			package_width: dimensions.package_width,
+			package_height: dimensions.package_height,
+			package_volume: dimensions.package_volume,
+			pathname: props.match.params.pathname,
+			category: product.category,
+			subcategory: product.subcategory,
+			qty,
+			finite_stock: product.category
+		};
+		dispatch(addToCart(cart_item));
 		if (userInfo) {
-			dispatch(
-				saveCart({
-					userInfo,
-					cartItems,
-					cartItem: {
-						product: product._id,
-						color_product,
-						color_code,
-						secondary_color_code,
-						secondary_color_product,
-						color_group_name: product.color_group_name,
-						secondary_color_group_name: product.secondary_color_group_name,
-						option_group_name: product.option_group_name,
-						secondary_group_name: product.secondary_group_name,
-						option_product,
-						option_product_name,
-						secondary_product,
-						secondary_product_name,
-						name,
-						size,
-						color: size !== '1 Skin' && color,
-						secondary_color: size !== '1 Sled' && secondary_color,
-						display_image: image ? image : images[0],
-						secondary_image: secondary_image ? secondary_image : '',
-						price,
-						sale_price,
-						countInStock: count_in_stock,
-						weight_pounds: dimensions.weight_pounds,
-						weight_ounces: dimensions.weight_ounces,
-						package_length: dimensions.package_length,
-						package_width: dimensions.package_width,
-						package_height: dimensions.package_height,
-						package_volume: dimensions.package_volume,
-						pathname: props.match.params.pathname,
-						category: product.category,
-						subcategory: product.subcategory,
-						product_option,
-						qty,
-						finite_stock: product.category
-					}
-				})
-			);
+			dispatch(saveCart(cart_item));
 		}
 
 		open_cart();

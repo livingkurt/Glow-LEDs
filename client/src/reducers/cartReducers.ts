@@ -21,11 +21,16 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 	switch (action.type) {
 		case CART_ADD_ITEM:
 			const item = action.payload;
+
 			const item_exists: any = state.cartItems.find(
 				(x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null })
 			);
 
 			if (item_exists) {
+				// console.log({ old_item: JSON.stringify(state.cartItems[0]) });
+				// console.log({ removed_item: JSON.stringify(item) });
+				console.log({ cartReducer_old_item: state.cartItems[0] });
+				console.log({ cartReducer_removed_item: item });
 				localStorage.setItem(
 					'cartItems',
 					JSON.stringify([

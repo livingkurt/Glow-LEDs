@@ -43,7 +43,6 @@ export default {
 	},
 	create_carts_c: async (req: any, res: any) => {
 		const { body } = req;
-		console.log({ create_carts_c: body });
 		try {
 			const cart = await cart_services.create_carts_s(body);
 			if (cart) {
@@ -83,7 +82,6 @@ export default {
 	},
 	remove_cartitem_carts_c: async (req: any, res: any) => {
 		const { params, body } = req;
-		console.log({ params, body });
 		try {
 			const cart = await cart_services.remove_cartitem_carts_s(params, body);
 			if (cart) {

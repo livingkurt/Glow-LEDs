@@ -1,4 +1,5 @@
 import { cart_db } from '../db';
+import { deepEqual } from '../util';
 
 export default {
 	findAll_carts_s: async (query: any) => {
@@ -40,7 +41,6 @@ export default {
 	create_carts_s: async (body: any) => {
 		const { cartItems, cartItem, userInfo } = body;
 		try {
-			console.log({ create_carts_s: body });
 			const item = cartItem;
 			const item_exists: any = cartItems.find(
 				(x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null })
@@ -65,26 +65,24 @@ export default {
 		}
 	},
 	update_carts_s: async (params: any, body: any) => {
-		const { cartItems, cartItem, user } = body;
+		const { cartItems, cartItem, userInfo } = body;
 		try {
 			const item = cartItem;
-			const item_exists: any = cartItems.find(
-				(x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null })
+			const item_exists: any = cartItems.find((x: any) =>
+				deepEqual({ ...x, qty: null }, { ...cartItem, qty: null })
 			);
+			console.log({ item_exists });
 
 			if (item_exists) {
 				return await cart_db.update_carts_db(params.id, {
-					user: user._id,
+					user: userInfo._id,
 					cartItems: cartItems.map(
-						(x: any) =>
-							JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null })
-								? item
-								: x
+						(x: any) => (deepEqual({ ...x, qty: null }, { ...cartItem, qty: null }) ? item : x)
 					)
 				});
 			} else {
 				return await cart_db.update_carts_db(params.id, {
-					user: user._id,
+					user: userInfo._id,
 					cartItems: [ ...cartItems, item ]
 				});
 			}
@@ -102,16 +100,13 @@ export default {
 		}
 	},
 	remove_cartitem_carts_s: async (params: any, body: any) => {
-		const { cartItems, cartItem, userInfo } = body;
-
+		const { cartItems, cartItem, userInfo, old_cart } = body;
 		try {
-			const new_cartItems = {
-				...cartItems,
-				cartItems: cartItems.filter((x: any) => JSON.stringify(x) !== JSON.stringify(cartItem))
-			};
-			return await cart_db.update_carts_db(params.id, {
+			const new_cart_items = cartItems.filter((x: any) => JSON.stringify(x) !== JSON.stringify(cartItem));
+			// console.log({ new_cart_items });
+			return await cart_db.update_carts_db(old_cart._id, {
 				user: userInfo._id,
-				cartItems: [ ...new_cartItems ]
+				cartItems: [ ...new_cart_items ]
 			});
 		} catch (error) {
 			console.log({ remove_cartitem_carts_s_error: error });

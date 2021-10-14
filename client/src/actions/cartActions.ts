@@ -94,24 +94,27 @@ export const removeFromCart = (product: string) => async (
 	getState: () => { cart: { cartItems: object }; userLogin: { userInfo: any } }
 ) => {
 	const { userLogin: { userInfo } } = getState();
-	const { cart } = getState();
+	const { cart: { cartItems } } = getState();
 	dispatch({ type: CART_REMOVE_ITEM, payload: product });
-	const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-	if (data) {
+	try {
+		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
 		const old_cart = data.data;
-		console.log({ old_cart });
-		if (old_cart._id) {
+		if (data.message === 'Cart Found') {
+			console.log('Cart Found');
 			const { data } = await axios.put(
-				'/api/carts/' + old_cart._id,
-				{ ...old_cart, userInfo, cartItem: product },
+				'/api/carts/user/' + userInfo._id,
+				{ old_cart, cartItems, userInfo, cartItem: product },
 				{
 					headers: {
 						Authorization: 'Bearer ' + userInfo.token
 					}
 				}
 			);
-			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+			// dispatch({ type: CART_REMOVE_SUCCESS, payload: data });
 		}
+	} catch (error) {
+		console.log({ error });
+		// dispatch({ type: CART_REMOVE_FAIL, payload: error.response.data.message });
 	}
 };
 
@@ -156,60 +159,22 @@ export const listCarts = (category = '', searchKeyword = '', sortOrder = '') => 
 	}
 };
 
-// export const saveCart = (cart: any) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void,
-// 	getState: () => { userLogin: { userInfo: any } }
-// ) => {
-// 	console.log({ cartActions: cart });
-// 	try {
-// 		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
-// 		const { userLogin: { userInfo } } = getState();
-// 		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-// 		if (data) {
-// 			const old_cart = data.data;
-// 			console.log({ old_cart });
-// 			if (!old_cart._id) {
-// 				const { data } = await axios.post('/api/carts', cart, {
-// 					headers: {
-// 						Authorization: 'Bearer ' + userInfo.token
-// 					}
-// 				});
-// 				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-// 			} else {
-// 				const { data } = await axios.put(
-// 					'/api/carts/' + old_cart._id,
-// 					{ ...old_cart, cartItem: cart },
-// 					{
-// 						headers: {
-// 							Authorization: 'Bearer ' + userInfo.token
-// 						}
-// 					}
-// 				);
-// 				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-// 			}
-// 		}
-// 	} catch (error) {
-// 		console.log({ error });
-// 		dispatch({ type: CART_SAVE_FAIL, payload: error.response.data.message });
-// 	}
-// };
-export const saveCart = (cart: any) => async (
+export const saveCart = (cartItem: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
+	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
-	console.log({ cartActions: cart });
+	// console.log({ cartActions: cartItem });
 
 	try {
-		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
+		dispatch({ type: CART_SAVE_REQUEST, payload: cartItem });
 		const { userLogin: { userInfo } } = getState();
+		const { cart: { cartItems } } = getState();
 		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-		console.log({ data });
 		const old_cart = data.data;
 		if (data.message === 'Cart Found') {
-			console.log('Cart Found');
 			const { data } = await axios.put(
 				'/api/carts/' + old_cart._id,
-				{ ...old_cart, cartItem: cart },
+				{ cartItems, cartItem, userInfo },
 				{
 					headers: {
 						Authorization: 'Bearer ' + userInfo.token
@@ -218,12 +183,15 @@ export const saveCart = (cart: any) => async (
 			);
 			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
 		} else if (data.message === 'No Cart Found') {
-			console.log('Cart Not Found');
-			const { data } = await axios.post('/api/carts', cart, {
-				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+			const { data } = await axios.post(
+				'/api/carts',
+				{ cartItem, userInfo, cartItems: [] },
+				{
+					headers: {
+						Authorization: 'Bearer ' + userInfo.token
+					}
 				}
-			});
+			);
 			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
