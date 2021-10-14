@@ -52,9 +52,9 @@ const AllFeaturesPage = (props) => {
 
 	useEffect(
 		() => {
-			console.log({ category });
-			console.log({ subcategory });
-			console.log({ searchKeyword });
+			// console.log({ category });
+			// console.log({ subcategory });
+			// console.log({ searchKeyword });
 			// console.log({ search });
 			// if (
 			// 	[

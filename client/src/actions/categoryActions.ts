@@ -40,7 +40,7 @@ export const saveCategory = (category: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ categoryActions: category });
+	// console.log({ categoryActions: category });
 	try {
 		dispatch({ type: CATEGORY_SAVE_REQUEST, payload: category });
 		const { userLogin: { userInfo } } = getState();

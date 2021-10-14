@@ -6,7 +6,7 @@ const product_routes = {
 		return axios.get('/api/products/get_images/' + category);
 	},
 	get_products_by_category: (category: string) => {
-		console.log({ get_products_by_category: category });
+		// console.log({ get_products_by_category: category });
 		return axios.get('/api/products/get_products_by_category/?category=' + category);
 	},
 	get_all_categories: () => {
@@ -36,23 +36,23 @@ const product_routes = {
 	// 	return axios.put('/api/orders/addproduct', { order, user_data, product });
 	// },
 	update_product_order: (product: any, order: any) => {
-		console.log({ update_product_order: { product, order } });
+		// console.log({ update_product_order: { product, order } });
 		return axios.put('/api/products/update_product_order', { product, order });
 	},
 	update_stock: (product_id: string, count_in_stock: number) => {
-		console.log({ update_stock: { product_id, count_in_stock } });
+		// console.log({ update_stock: { product_id, count_in_stock } });
 		return axios.put('/api/products/update_stock', { product_id, count_in_stock });
 	},
 	create_product_option: (product: any) => {
-		console.log({ update_stock: product });
+		// console.log({ update_stock: product });
 		return axios.post('/api/products/create_product_option', product);
 	},
 	update_pathname: (product_id: string, pathname: string, product: any) => {
-		console.log({ update_pathname: { product_id, pathname } });
+		// console.log({ update_pathname: { product_id, pathname } });
 		return axios.put('/api/products/update_pathname', { product_id, pathname, product });
 	},
 	update_product_option_stock: (product_id: string, product_option: any, count_in_stock: number) => {
-		console.log({ update_product_option_stock: { product_id, product_option, count_in_stock } });
+		// console.log({ update_product_option_stock: { product_id, product_option, count_in_stock } });
 		return axios.put('/api/products/update_product_option_stock', { product_id, product_option, count_in_stock });
 	},
 	// save_secondary_product: (order: any, user_data: any, secondary_product: any) => {
@@ -84,7 +84,7 @@ const product_routes = {
 		return axios.post('/api/products/best_sellers', { occurences });
 	},
 	save_item_group_id: (option: any, item_group: any) => {
-		console.log({ option, item_group });
+		// console.log({ option, item_group });
 		return axios.put('/api/products/save_item_group_id', { option, item_group });
 	},
 	get_essentials: () => {
@@ -139,7 +139,7 @@ const product_routes = {
 		);
 	},
 	set_sale_price: (discount_percentage: any, sale_start_date: any, sale_end_date: any) => {
-		console.log({ discount_percentage, sale_start_date, sale_end_date });
+		// console.log({ discount_percentage, sale_start_date, sale_end_date });
 		return axios.put('/api/all/product_sale_price', { discount_percentage, sale_start_date, sale_end_date });
 	},
 	clear_sale: (sale_start_date: any, sale_end_date: any) => {

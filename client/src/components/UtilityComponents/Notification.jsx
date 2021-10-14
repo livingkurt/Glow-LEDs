@@ -4,7 +4,6 @@ require('dotenv').config();
 // Components
 
 const Notification = (props) => {
-	console.log({ props });
 	const { ...others } = props;
 
 	return (

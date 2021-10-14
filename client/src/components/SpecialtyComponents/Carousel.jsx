@@ -39,7 +39,7 @@ const Carousel = (props) => {
 	const get_products = async (category) => {
 		set_loading(true);
 		const { data } = await API_Products.get_products_by_category(category);
-		console.log({ get_products: data });
+		// console.log({ get_products: data });
 
 		set_products(typeof data === 'object' && data.filter((product) => product.pathname !== props.product_pathname));
 		if (props.random) {

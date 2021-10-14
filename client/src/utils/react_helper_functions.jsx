@@ -418,7 +418,7 @@ export const determine_product_name = (item, show_qty, date) => {
 			} else if (item.subcategory === 'clips') {
 				return (
 					<div>
-						{console.log({ item })}
+						{/* {console.log({ item })} */}
 						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
 						{item.secondary_product_name !== '0' && ' - ' + item.secondary_product_name.split('-')[1]}{' '}
 					</div>
@@ -470,7 +470,7 @@ export const determine_product_name = (item, show_qty, date) => {
 		} else if (item.name === 'Outline + Batman Decals' || 'Batman Decals') {
 			return (
 				<div>
-					{console.log({ item: item.secondary_product_name })}
+					{/* {console.log({ item: item.secondary_product_name })} */}
 					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
 					{item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
@@ -544,10 +544,10 @@ export const determine_product_name_title = (item, show_qty) => {
 };
 
 export const determine_product_name_display = (product) => {
-	console.log({ product });
+	// console.log({ product });
 	// console.log({ secondary_product: product.secondary_product });
 	const option = product.option_products.find((option) => option.default_option === true);
-	console.log({ option });
+	// console.log({ option });
 	return (
 		<div>
 			{product.name}{' '}
@@ -627,10 +627,10 @@ export const add_item = (e, set_items, list_items) => {
 	e.preventDefault();
 	const item_object = JSON.parse(e.target.value);
 	if (list_items) {
-		console.log('items.length > 0');
+		// console.log('items.length > 0');
 		set_items((items) => [ ...items, item_object ]);
 	} else {
-		console.log('items.length === 0');
+		// console.log('items.length === 0');
 		set_items([ item_object ]);
 	}
 };

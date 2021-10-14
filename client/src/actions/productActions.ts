@@ -34,7 +34,7 @@ export const listProducts = (
 ) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
-		console.log({ chip });
+		// console.log({ chip });
 		const { data } = await axios.get(
 			'/api/products/?category=' +
 				category +
@@ -62,7 +62,7 @@ export const saveProduct = (product: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ productActions: product });
+	// console.log({ productActions: product });
 	try {
 		dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
 		const { userLogin: { userInfo } } = getState();
@@ -106,7 +106,7 @@ export const deleteProduct = (id: string) => async (
 ) => {
 	try {
 		const { userLogin: { userInfo } } = getState();
-		console.log(id);
+		// console.log(id);
 		dispatch({ type: PRODUCT_DELETE_REQUEST, payload: id });
 		const { data } = await axios.delete('/api/products/' + id, {
 			headers: {

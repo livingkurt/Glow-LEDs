@@ -18,8 +18,8 @@ Bugsnag.start({
 	plugins: [ new BugsnagPluginReact() ]
 });
 const path = new URL(window.location.href);
-console.log({ path });
-console.log({ href: window.location.href });
+// console.log({ path });
+// console.log({ href: window.location.href });
 
 const ErrorBoundary = Bugsnag.getPlugin('react').createErrorBoundary(React);
 

@@ -97,10 +97,10 @@ const Cart = (props) => {
 	const get_category_occurrences = async () => {
 		set_loading_products(true);
 		const { data } = await API_Products.get_category_occurrences();
-		console.log({ data });
+		// console.log({ data });
 		set_loading_products(false);
 		const top_4_categories = data.slice(0, 5);
-		console.log({ top_4_categories });
+		// console.log({ top_4_categories });
 		set_loading_pictures(true);
 		const top_4 = await Promise.all(
 			top_4_categories
@@ -108,10 +108,10 @@ const Cart = (props) => {
 				.map(async (category) => await API_Products.get_product_pictures(category.category))
 		);
 		set_loading_pictures(false);
-		console.log({ top_4 });
+		// console.log({ top_4 });
 		const top_4_products = top_4.map((item) => item.data[item.data.length - 1]);
 
-		console.log({ top_4_products });
+		// console.log({ top_4_products });
 		set_category_items(top_4_products);
 	};
 	const decide_url = (item) => {

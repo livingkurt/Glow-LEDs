@@ -89,11 +89,30 @@ export const addToCart = (cart_item_1: any) => async (
 	}
 };
 
-export const removeFromCart = (product: string) => (
+export const removeFromCart = (product: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { cart: { cartItems: object } }
+	getState: () => { cart: { cartItems: object }; userLogin: { userInfo: any } }
 ) => {
+	const { userLogin: { userInfo } } = getState();
+	const { cart } = getState();
 	dispatch({ type: CART_REMOVE_ITEM, payload: product });
+	const { data } = await axios.get('/api/carts/user/' + userInfo._id);
+	if (data) {
+		const old_cart = data.data;
+		console.log({ old_cart });
+		if (old_cart._id) {
+			const { data } = await axios.put(
+				'/api/carts/' + old_cart._id,
+				{ ...old_cart, userInfo, cartItem: product },
+				{
+					headers: {
+						Authorization: 'Bearer ' + userInfo.token
+					}
+				}
+			);
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		}
+	}
 };
 
 export const saveShipping = (data: {
@@ -107,7 +126,7 @@ export const saveShipping = (data: {
 	international: boolean;
 	country: string;
 }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
-	console.log({ shipping_actions: data });
+	// console.log({ shipping_actions: data });
 	dispatch({ type: CART_SAVE_SHIPPING, payload: data });
 };
 
@@ -137,37 +156,75 @@ export const listCarts = (category = '', searchKeyword = '', sortOrder = '') => 
 	}
 };
 
+// export const saveCart = (cart: any) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	console.log({ cartActions: cart });
+// 	try {
+// 		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
+// 		const { userLogin: { userInfo } } = getState();
+// 		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
+// 		if (data) {
+// 			const old_cart = data.data;
+// 			console.log({ old_cart });
+// 			if (!old_cart._id) {
+// 				const { data } = await axios.post('/api/carts', cart, {
+// 					headers: {
+// 						Authorization: 'Bearer ' + userInfo.token
+// 					}
+// 				});
+// 				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+// 			} else {
+// 				const { data } = await axios.put(
+// 					'/api/carts/' + old_cart._id,
+// 					{ ...old_cart, cartItem: cart },
+// 					{
+// 						headers: {
+// 							Authorization: 'Bearer ' + userInfo.token
+// 						}
+// 					}
+// 				);
+// 				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+// 			}
+// 		}
+// 	} catch (error) {
+// 		console.log({ error });
+// 		dispatch({ type: CART_SAVE_FAIL, payload: error.response.data.message });
+// 	}
+// };
 export const saveCart = (cart: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	console.log({ cartActions: cart });
+
 	try {
 		dispatch({ type: CART_SAVE_REQUEST, payload: cart });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-		if (data) {
-			const old_cart = data.data;
-			console.log({ old_cart });
-			if (!old_cart._id) {
-				const { data } = await axios.post('/api/carts', cart, {
+		console.log({ data });
+		const old_cart = data.data;
+		if (data.message === 'Cart Found') {
+			console.log('Cart Found');
+			const { data } = await axios.put(
+				'/api/carts/' + old_cart._id,
+				{ ...old_cart, cartItem: cart },
+				{
 					headers: {
 						Authorization: 'Bearer ' + userInfo.token
 					}
-				});
-				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-			} else {
-				const { data } = await axios.put(
-					'/api/carts/' + old_cart._id,
-					{ ...old_cart, cartItem: cart },
-					{
-						headers: {
-							Authorization: 'Bearer ' + userInfo.token
-						}
-					}
-				);
-				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-			}
+				}
+			);
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+		} else if (data.message === 'No Cart Found') {
+			console.log('Cart Not Found');
+			const { data } = await axios.post('/api/carts', cart, {
+				headers: {
+					Authorization: 'Bearer ' + userInfo.token
+				}
+			});
+			dispatch({ type: CART_SAVE_SUCCESS, payload: data });
 		}
 	} catch (error) {
 		console.log({ error });

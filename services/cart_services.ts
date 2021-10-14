@@ -65,9 +65,7 @@ export default {
 		}
 	},
 	update_carts_s: async (params: any, body: any) => {
-		const { cartItems, cartItem, userInfo } = body;
-		console.log({ params });
-		console.log({ update_carts_s: body });
+		const { cartItems, cartItem, user } = body;
 		try {
 			const item = cartItem;
 			const item_exists: any = cartItems.find(
@@ -76,7 +74,7 @@ export default {
 
 			if (item_exists) {
 				return await cart_db.update_carts_db(params.id, {
-					user: userInfo._id,
+					user: user._id,
 					cartItems: cartItems.map(
 						(x: any) =>
 							JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null })
@@ -86,7 +84,7 @@ export default {
 				});
 			} else {
 				return await cart_db.update_carts_db(params.id, {
-					user: userInfo._id,
+					user: user._id,
 					cartItems: [ ...cartItems, item ]
 				});
 			}
@@ -100,6 +98,23 @@ export default {
 			return await cart_db.remove_carts_db(params.id);
 		} catch (error) {
 			console.log({ remove_carts_s_error: error });
+			throw new Error(error.message);
+		}
+	},
+	remove_cartitem_carts_s: async (params: any, body: any) => {
+		const { cartItems, cartItem, userInfo } = body;
+
+		try {
+			const new_cartItems = {
+				...cartItems,
+				cartItems: cartItems.filter((x: any) => JSON.stringify(x) !== JSON.stringify(cartItem))
+			};
+			return await cart_db.update_carts_db(params.id, {
+				user: userInfo._id,
+				cartItems: [ ...new_cartItems ]
+			});
+		} catch (error) {
+			console.log({ remove_cartitem_carts_s_error: error });
 			throw new Error(error.message);
 		}
 	}

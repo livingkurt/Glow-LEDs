@@ -44,7 +44,7 @@ const ProductPage = (props) => {
 	let { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
 	let { cartItems } = cart;
-	console.log({ cartItems });
+	// console.log({ cartItems });
 
 	const [ name, set_name ] = useState('');
 	const [ description, set_description ] = useState('');
@@ -127,7 +127,7 @@ const ProductPage = (props) => {
 	);
 
 	const update_universal_state = (item) => {
-		console.log({ item });
+		// console.log({ item });
 		if (item) {
 			set_image(item.images && item.images[0]);
 			set_images(item.images);
@@ -166,10 +166,10 @@ const ProductPage = (props) => {
 				update_universal_state(product);
 				const query = getUrlParameter();
 				if (props.location.search.length === 0) {
-					console.log({ message: 'Query Does Not Exist' });
+					// console.log({ message: 'Query Does Not Exist' });
 					if (product.color_products) {
 						const color = product.color_products.find((color) => color.default_option === true);
-						console.log({ color });
+						// console.log({ color });
 						if (color) {
 							update_color_product_state(color);
 						}
@@ -178,7 +178,7 @@ const ProductPage = (props) => {
 						const secondary_color = product.secondary_color_products.find(
 							(secondary_color) => secondary_color.default_option === true
 						);
-						console.log({ secondary_color });
+						// console.log({ secondary_color });
 						if (secondary_color) {
 							update_secondary_color_product_state(secondary_color);
 						}
@@ -193,10 +193,10 @@ const ProductPage = (props) => {
 						// update_secondary_product_state(product.secondary_products[0]);
 					}
 				} else if (props.location.search.length > 0) {
-					console.log({ message: 'Query Does Exist' });
+					// console.log({ message: 'Query Does Exist' });
 					if (product.color_products) {
 						const color = product.color_products.find((color) => color.color === query.color);
-						console.log({ query_color: color });
+						// console.log({ query_color: color });
 						if (color) {
 							update_color_product_state(color);
 						}
@@ -220,7 +220,7 @@ const ProductPage = (props) => {
 						}
 					}
 					if (product.secondary_products && product.secondary_products.length > 0) {
-						console.log({ query_secondary: query.secondary });
+						// console.log({ query_secondary: query.secondary });
 						const secondary = product.secondary_products.find(
 							(secondary) => secondary.name === query.secondary.split('%20').join(' ')
 						);
@@ -237,7 +237,7 @@ const ProductPage = (props) => {
 
 	function getUrlParameter() {
 		const search = props.location.search.split('?');
-		console.log({ search });
+		// console.log({ search });
 		const search_object = {};
 		search.filter((item) => item !== '').forEach((item) => {
 			search_object[item.split('=')[0]] = item.split('=')[1];
@@ -246,7 +246,7 @@ const ProductPage = (props) => {
 	}
 
 	const update_color_product_state = (color) => {
-		console.log({ color });
+		// console.log({ color });
 		set_color_product(color._id);
 		set_color(color.color);
 		set_color_code(color.color_code);
@@ -299,7 +299,7 @@ const ProductPage = (props) => {
 	};
 
 	const update_secondary_product_state = (secondary) => {
-		console.log({ secondary });
+		// console.log({ secondary });
 		set_secondary_product(secondary._id);
 		set_secondary_product_name(secondary.name);
 		set_secondary_product_object(secondary);
@@ -328,7 +328,7 @@ const ProductPage = (props) => {
 	useEffect(() => {
 		const recently_viewed = sessionStorage.getItem('recently_viewed');
 		const products = JSON.parse(recently_viewed);
-		console.log({ product });
+		// console.log({ product });
 		if (recently_viewed) {
 			if (product && product.hasOwnProperty('name')) {
 				sessionStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
@@ -430,7 +430,7 @@ const ProductPage = (props) => {
 
 	const update_color = (e) => {
 		const option = JSON.parse(e.target.value);
-		console.log({ option });
+		// console.log({ option });
 		if (option.price !== 0 || option.price === null || option.price === undefined) {
 			set_price(option.price);
 		}
@@ -450,7 +450,7 @@ const ProductPage = (props) => {
 
 	const update_secondary_color = (e) => {
 		const option = JSON.parse(e.target.value);
-		console.log({ option });
+		// console.log({ option });
 		if (option.price !== 0 || option.price === null || option.price === undefined) {
 			set_price(option.price);
 		}
@@ -756,10 +756,10 @@ const ProductPage = (props) => {
 													product.subcategory
 												)}
 											</label>
-											{/* {console.log({ secondary_product_name })} */}
+											{console.log({ secondary_product_name })}
 										</div>
 									)}
-									{console.log({ color, color_code })}
+									{/* {console.log({ color, color_code })} */}
 									{size !== '1 Sled' &&
 									color && (
 										<div className="ai-c mv-20px jc-b w-100per">
@@ -853,7 +853,7 @@ const ProductPage = (props) => {
 								<ul>
 									<div className="row">
 										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
-										{console.log({ price })}
+										{/* {console.log({ price })} */}
 										{/* {sale_price_product_option_switch_product(
 											product,
 											product.product_options,
@@ -1041,7 +1041,7 @@ const ProductPage = (props) => {
 																			? 'secondary'
 																			: 'primary'}`}
 																>
-																	{console.log({ option })}
+																	{/* {console.log({ option })} */}
 																	{option.size || option.name}
 																</button>
 															))}
@@ -1079,7 +1079,7 @@ const ProductPage = (props) => {
 																			? 'secondary'
 																			: 'primary'}`}
 																>
-																	{console.log({ option })}
+																	{/* {console.log({ option })} */}
 																	{option.size || option.name}
 																</button>
 															))}

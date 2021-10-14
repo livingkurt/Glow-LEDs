@@ -27,7 +27,7 @@ export const listEmails = (category = '', searchKeyword = '', sortOrder = '') =>
 				'&sortOrder=' +
 				sortOrder.toLowerCase()
 		);
-		console.log({ category });
+		// console.log({ category });
 		dispatch({ type: EMAIL_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

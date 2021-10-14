@@ -116,7 +116,7 @@ import {
 
 let cartItems: any;
 const cart_string: any = localStorage.getItem('cartItems');
-console.log({ cart_string });
+// console.log({ cart_string });
 if (cart_string) {
 	cartItems = JSON.parse(cart_string);
 } else {
@@ -125,7 +125,7 @@ if (cart_string) {
 
 let shippingAddress: any;
 const shipping_string: any = sessionStorage.getItem('shippingAddress');
-console.log({ shipping_string });
+// console.log({ shipping_string });
 if (shipping_string) {
 	shippingAddress = JSON.parse(shipping_string);
 } else {

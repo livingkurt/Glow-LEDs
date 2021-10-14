@@ -298,7 +298,7 @@ export default {
 		try {
 			const category = req.query.category && req.query.category !== 'all' ? { category: req.query.category } : {};
 			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
-			console.log({ category, subcategory });
+			// console.log({ category, subcategory });
 			// const products = await Product.find({
 			// 	deleted: false,
 			// 	...category,

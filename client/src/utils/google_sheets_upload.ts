@@ -11,7 +11,7 @@ const day = unformatted_date.toString().slice(8, 10);
 
 const day_num = parseInt(day);
 
-console.log({ day_num });
+// console.log({ day_num });
 
 export const top_code_usage_upload = async (affiliates: any, orders: any, last_months_orders: any) => {
 	google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;

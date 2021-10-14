@@ -36,7 +36,7 @@ const EditCategoryPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	console.log({ category });
+	// console.log({ category });
 
 	useEffect(() => {
 		if (props.match.params.id) {

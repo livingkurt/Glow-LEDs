@@ -15,7 +15,7 @@ const AllProductsPage = (props) => {
 	const history = useHistory();
 	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
 	// const search = props.location.filter.substring(8) ? props.location.filter.substring(8) : '';
-	console.log({ location: props.location });
+	// console.log({ location: props.location });
 	const [ product_occurrences, set_product_occurrences ] = useState([]);
 	const [ best_sellers, set_best_sellers ] = useState([]);
 	const [ essentials, set_essentials ] = useState([]);
@@ -32,7 +32,7 @@ const AllProductsPage = (props) => {
 	const [ filter, set_filter ] = useState(
 		props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : ''
 	);
-	console.log({ hasOwnProperty: props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : '' });
+	// console.log({ hasOwnProperty: props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : '' });
 	// const [ searchKeyword, setSearchKeyword ] = useState(
 	// 	props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	// );
@@ -132,14 +132,11 @@ const AllProductsPage = (props) => {
 					get_occurrences();
 				}
 				if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
-					console.log('All Products');
-					if (collection && !category){
-						
-					}
-					else {
+					// console.log('All Products');
+					if (collection && !category) {
+					} else {
 						dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
 					}
-					
 				}
 			}
 
@@ -150,12 +147,10 @@ const AllProductsPage = (props) => {
 	useEffect(
 		() => {
 			if (collection) {
-
 				if (collection !== 'essentials' || collection === 'discounted' || collection === 'best_sellers') {
 					if (collection && !category) {
 						dispatch(listProducts('', '', '', '', '', '', collection));
 					}
-					
 				}
 			}
 
@@ -168,7 +163,7 @@ const AllProductsPage = (props) => {
 		set_loading_products(true);
 		const { data: occurrences } = await API_Products.get_occurrences();
 		set_product_occurrences(occurrences);
-		console.log({ occurrences });
+		// console.log({ occurrences });
 		if (occurrences && category === 'best_sellers') {
 			const { data } = await API_Products.get_best_sellers(occurrences);
 			// console.log({ data });
@@ -194,7 +189,7 @@ const AllProductsPage = (props) => {
 	};
 
 	const submitHandler = (e) => {
-		console.log({ searchKeyword });
+		// console.log({ searchKeyword });
 		e.preventDefault();
 		history.push({
 			search: '?search=' + searchKeyword
@@ -213,7 +208,7 @@ const AllProductsPage = (props) => {
 		const chip_selected = JSON.parse(e.target.value);
 		set_chip(chip_selected._id);
 		set_filter(chip_selected._id);
-		console.log({ chip });
+		// console.log({ chip });
 		history.push({
 			search: '?search=' + searchKeyword + '?filter=' + chip_selected.name
 		});

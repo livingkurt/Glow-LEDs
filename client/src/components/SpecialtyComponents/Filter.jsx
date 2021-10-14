@@ -2,7 +2,7 @@
 import React from 'react';
 
 const Filter = (props) => {
-	console.log({ props });
+	// console.log({ props });
 	return (
 		<div className="ai-c ml-1rem mh-1rem">
 			<div className="custom-select">
