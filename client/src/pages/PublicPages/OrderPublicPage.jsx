@@ -318,7 +318,7 @@ const OrderPublicPage = (props) => {
 							<label>Order #: {order._id}</label>
 							{order.tracking_number && (
 								<label>
-									USPS Tracking #:{' '}
+									Tracking #:{' '}
 									<a
 										href={determine_tracking_number(order.tracking_number)}
 										target="_blank"
@@ -335,7 +335,7 @@ const OrderPublicPage = (props) => {
 							)}
 							{order.return_tracking_number && (
 								<label>
-									USPS Return Tracking #:{' '}
+									Return Tracking #:{' '}
 									<a
 										href={determine_tracking_number(order.return_tracking_number)}
 										target="_blank"

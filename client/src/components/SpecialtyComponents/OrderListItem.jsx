@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { determnine_link, format_date } from '../../utils/helper_functions';
+import { determine_tracking_number, determnine_link, format_date } from '../../utils/helper_functions';
 import useClipboard from 'react-hook-clipboard';
 import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
 import { API_Orders } from '../../utils';
@@ -141,10 +141,7 @@ const OrderListItem = (props) => {
 									<div className="mt-0px">
 										{' '}
 										<a
-											href={
-												'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
-												props.order.tracking_number
-											}
+											href={determine_tracking_number(props.order.tracking_number)}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="mv-2rem"
@@ -375,10 +372,7 @@ const OrderListItem = (props) => {
 								<label className="phrase_font">Tracking Number: </label>
 
 								<a
-									href={
-										'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
-										props.order.tracking_number
-									}
+									href={determine_tracking_number(props.order.tracking_number)}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="mv-2rem ml-1rem"
@@ -395,10 +389,7 @@ const OrderListItem = (props) => {
 									<label className="phrase_font">Return Tracking Number: </label>
 
 									<a
-										href={
-											'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
-											props.order.return_tracking_number
-										}
+										href={determine_tracking_number(props.order.return_tracking_number)}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="mv-2rem ml-1rem"

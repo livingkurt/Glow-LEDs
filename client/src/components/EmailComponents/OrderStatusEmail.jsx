@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails, API_Orders } from '../../utils';
-import { format_date, toCapitalize } from '../../utils/helper_functions';
+import { determine_tracking_number, format_date, toCapitalize } from '../../utils/helper_functions';
 import { detailsOrder, detailsOrderPublic, update_order } from '../../actions/orderActions';
 import {
 	determine_product_name,
@@ -461,10 +461,9 @@ const OrderStatusEmail = (props) => {
 																				<div>
 																					<strong>Tracking Number: </strong>{' '}
 																					<a
-																						href={
-																							'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' +
+																						href={determine_tracking_number(
 																							order.tracking_number
-																						}
+																						)}
 																						target="_blank"
 																						rel="noopener noreferrer"
 																						style={{
@@ -972,9 +971,11 @@ const OrderStatusEmail = (props) => {
 		// );
 		// console.log({ data });
 		// console.log({ request });
-		const { data:user_email } = await API_Emails.send_email(email_template, subject, email);
-		const { data: admin_email } = await API_Emails.send_email(email_template,
-			'Order Status Updated for ' + first_name);
+		const { data: user_email } = await API_Emails.send_email(email_template, subject, email);
+		const { data: admin_email } = await API_Emails.send_email(
+			email_template,
+			'Order Status Updated for ' + first_name
+		);
 		console.log({ user_email });
 		console.log({ admin_email });
 		if (user_email && admin_email) {

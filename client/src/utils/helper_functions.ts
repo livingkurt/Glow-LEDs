@@ -68,7 +68,7 @@ export const shuffle = (array: any) => {
 // 		: ''}`;
 // };
 export const determnine_link = (item: any) => {
-	console.log({ [item.name]: item });
+	// console.log({ [item.name]: item });
 	const link = `/collections/all/products/${item.pathname}${item.color
 		? '?color=' + item.color
 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.option_product
@@ -76,7 +76,7 @@ export const determnine_link = (item: any) => {
 		: ''}${item.secondary_product_name
 		? '?secondary=' + determine_secondary_product_name(item.secondary_product_name, item.category, item.subcategory)
 		: ''}`;
-	console.log({ [item.name]: link });
+	// console.log({ [item.name]: link });
 	return link;
 };
 
@@ -100,6 +100,7 @@ export const determnine_link = (item: any) => {
 
 export const determine_tracking_number = (tracking_number: string) => {
 	const tracking: any = getTracking(tracking_number);
+	console.log({ tracking });
 	if (tracking.name.includes('USPS')) {
 		return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' + tracking_number;
 	}
