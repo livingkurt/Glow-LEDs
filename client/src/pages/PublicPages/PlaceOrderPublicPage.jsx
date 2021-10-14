@@ -187,10 +187,11 @@ const PlaceOrderPublicPage = (props) => {
 		setTaxPrice(0);
 		set_loading(true);
 		const { data } = await API_External.get_tax_rates();
+		prnt({ data });
 		const result = state_names.find((obj) => {
-			return obj.short_name === shipping.state;
+			return obj.short_name === shipping.state || obj.long_name === shipping.state;
 		});
-		const tax_rate = parseFloat(data[result.long_name]) / 100;
+		const tax_rate = parseFloat(data[result.long_name || shipping.state]) / 100;
 		if (!isNaN(tax_rate)) {
 			set_tax_rate(tax_rate);
 			if (shipping.international) {

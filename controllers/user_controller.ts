@@ -47,18 +47,7 @@ export default {
 		}
 	},
 	create_users_c: async (req: any, res: any) => {
-		// const { body } = req;
-		// try {
-		// 	const user = await user_services.create_users_s(body);
-		// 	prnt({ create_users_c: user });
-		// 	if (user) {
-		// 		return res.status(200).send({ message: 'User Found', data: user });
-		// 	}
-		// 	return res.status(404).send({ message: 'User Not Found' });
-		// } catch (error) {
-		// 	console.log({ create_users_c_error: error });
-		// 	res.status(500).send({ error, message: 'Error Finding User' });
-		// }
+		const { body } = req;
 		try {
 			let user: any = {};
 			let hashed_password = '';
@@ -67,14 +56,7 @@ export default {
 				bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
 					if (err) throw err;
 					hashed_password = hash;
-					user = { ...req.body, password: hashed_password };
-					// const newUser = await User.create(user);
-					// if (newUser) {
-					// 		const new_user = await user_db.create_users_db(user);
-					// 	return res.status(201).send({ message: 'New User Created', data: newUser });
-					// } else {
-					// 	return res.status(500).send({ message: ' Error in Creating User.' });
-					// }
+					user = { ...body, password: hashed_password };
 					try {
 						const new_user = await user_db.create_users_db(user);
 						console.log({ new_user });

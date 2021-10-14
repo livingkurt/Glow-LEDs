@@ -13,7 +13,7 @@ import { listUsers } from '../../actions/userActions';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice, ShippingSpeed } from '../../components/SpecialtyComponents/ShippingComponents';
 import Autocomplete from 'react-google-autocomplete';
-import { state_names } from '../../utils/helper_functions';
+import { prnt, state_names } from '../../utils/helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -211,10 +211,11 @@ const PlaceOrderPage = (props) => {
 		setTaxPrice(0);
 		set_loading(true);
 		const { data } = await API_External.get_tax_rates();
+		prnt({ data });
 		const result = state_names.find((obj) => {
-			return obj.short_name === shipping.state;
+			return obj.short_name === shipping.state || obj.long_name === shipping.state;
 		});
-		const tax_rate = parseFloat(data[result.long_name]) / 100;
+		const tax_rate = parseFloat(data[result.long_name || shipping.state]) / 100;
 		if (!isNaN(tax_rate)) {
 			set_tax_rate(tax_rate);
 			if (shipping.international) {
