@@ -100,7 +100,7 @@ const AllProductsPage = (props) => {
 			} else if (category === 'essentials') {
 				get_occurrences(category);
 			}
-			if (query.search && !category) {
+			if ((query.search || query.sort || query.filter) && !category && !subcategory) {
 				dispatch(
 					listProducts(
 						category,
@@ -115,7 +115,7 @@ const AllProductsPage = (props) => {
 					)
 				);
 			}
-			if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
+			if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 				// console.log('All Products');
 				if (!collection && category) {
 					console.log('No Category or Collection');
@@ -136,7 +136,10 @@ const AllProductsPage = (props) => {
 					dispatch(listProducts(category, '', '', '', '', '', collection));
 				}
 			}
-		} else {
+		} else if (
+			Object.keys(query).length === 0 &&
+			(category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers')
+		) {
 			dispatch(listProducts());
 		}
 		dispatch(listChips());
