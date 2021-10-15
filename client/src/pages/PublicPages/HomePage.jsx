@@ -1,17 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
-import { ReadMore } from '../../components/SpecialtyComponents';
+import { ReadMore, Search } from '../../components/SpecialtyComponents';
+import { listProducts } from '../../actions/productActions';
+import { homepage_videos } from '../../utils/helper_functions';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import { API_Products } from '../../utils';
 
 const HomePage = (props) => {
 	const [ content_1, set_content_1 ] = useState({});
 	const [ content_2, set_content_2 ] = useState({});
 	const [ content_3, set_content_3 ] = useState({});
-	// const contentDetails = useSelector((state) => state.contentDetails);
-	// const { content } = contentDetails;
+	const [ filtered_products, set_filtered_products ] = useState([]);
+	const history = useHistory();
+
+	const [ display, setDisplay ] = useState(false);
+	const [ options, setOptions ] = useState([]);
+	const [ search, setSearch ] = useState('');
+	const wrapperRef = useRef(null);
+
+	useEffect(() => {
+		window.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			window.removeEventListener('mousedown', handleClickOutside);
+		};
+	});
+
+	const handleClickOutside = (event) => {
+		const { current: wrap } = wrapperRef;
+		if (wrap && !wrap.contains(event.target)) {
+			setDisplay(false);
+		}
+	};
+
+	const updatePokeDex = (poke) => {
+		setSearch(poke);
+		setDisplay(false);
+	};
+
+	const submitHandler = (e) => {
+		e.preventDefault();
+
+		history.push('/collections/all/products?search=' + search);
+	};
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
@@ -21,8 +55,25 @@ const HomePage = (props) => {
 
 	useEffect(() => {
 		dispatch(listContents());
+		get_all_products();
 		return () => {};
 	}, []);
+
+	const get_all_products = async () => {
+		const { data } = await API_Products.get_all_products();
+		console.log({ data });
+		setOptions(data.filter((product) => !product.option).filter((product) => !product.hidden));
+	};
+	// useEffect(
+	// 	() => {
+	// 		if (products && products.length > 0) {
+	// 			set_filtered_products(products.map((product) => product.name));
+	// 			setOptions(products.filter((product) => !product.option));
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ products ]
+	// );
 
 	useEffect(
 		() => {
@@ -38,82 +89,10 @@ const HomePage = (props) => {
 			if (active_contents && active_contents[2]) {
 				set_content_3(active_contents[2]);
 			}
-			// if (active_content) {
-			// 	dispatch(detailsContent(active_content._id));
-			// } else {
-			// 	set_inactive(true);
-			// }
 			return () => {};
 		},
 		[ contents ]
 	);
-	// useEffect(
-	// 	() => {
-	// 		// const active_content = contents.find((content) => content.active === true);
-	// 		const active_contents = contents.filter((content) => content.active === true);
-	// 		// if (active_content) {
-	// 		// 	dispatch(detailsContent(active_content._id));
-	// 		// } else {
-	// 		// 	set_inactive(true);
-	// 		// }
-	// 		return () => {};
-	// 	},
-	// 	[ contents ]
-	// );
-
-	// "These string lights are sure to make your space glow. With many preloaded modes there will never be a dull moment. There are flashing modes, fading modes, strobing modes, and every color of the rainbow. Perfect for the campsite at your next festival or your chill spot in the house. These lights are bright and can easily illuminate a large room turning it into an at home festival.""
-
-	const homepage_videos = [
-		{
-			name: 'EXO Diffusers',
-			category: 'exo_diffusers',
-			video: 'hPxFDj7R5Lg',
-			color: '#8e4a4a',
-			description:
-				'The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! '
-		},
-		{
-			name: 'Glow Strings V2',
-			category: 'glow_strings',
-			video: 'mNBwaZKWi8c',
-			color: '#b1832f',
-			description:
-				'Make your space glow! Our Glow Strings come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. Fill your universe with a swimming pool of light in every color of the rainbow. '
-		},
-		{
-			name: 'Glow Casings',
-			category: 'glow_casings',
-			video: '_aJDfd6vlYU',
-			color: '#b1a72f',
-			description:
-				'What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.'
-		},
-		{
-			name: 'Glowskins',
-			category: 'glowskins',
-			video: '3Yk0QOMBlAo',
-			color: '#427942',
-			description:
-				'What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.'
-		},
-
-		{
-			name: 'Diffuser Caps',
-			category: 'diffuser_caps',
-			video: '0b1cn_3EczE',
-			color: '#416d63',
-			description:
-				'Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we'
-		},
-		{
-			name: 'Frosted Diffusers',
-			category: 'diffusers',
-			video: 'uY2xjrGrZd0',
-			color: '#6d416d',
-			description:
-				'Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.'
-		}
-	];
 
 	return (
 		<div className="main_container p-20px">
@@ -156,6 +135,47 @@ const HomePage = (props) => {
 					Welcome to Glow-LEDs
 				</h1>
 			</div>
+
+			<div className="jc-c ">
+				<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
+					<div className="jc-b ai-c search_container w-100per max-w-600px">
+						<div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
+							<input
+								id="auto"
+								onClick={() => setDisplay(!display)}
+								className="form_input search mv-0px w-100per fs-20px"
+								placeholder="Find Your Glow Here"
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
+							/>
+							{display && (
+								<div className="pos-abs bg-primary br-10px">
+									{options
+										.filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
+										.map((value, i) => {
+											return (
+												<div
+													onClick={() => updatePokeDex(value.name)}
+													className="auto-option ai-c jc-b w-500px p-5px"
+													key={i}
+													tabIndex="0"
+												>
+													<span className="fs-20px" style={{ color: 'white' }}>
+														{value.name}
+													</span>
+												</div>
+											);
+										})}
+								</div>
+							)}
+						</div>
+						<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+							<i className="fas fa-search" />
+						</button>
+					</div>
+				</form>
+			</div>
+
 			{content_1 &&
 			inactive &&
 			content_1.home_page && (

@@ -33,7 +33,7 @@ import 'swiper/components/zoom/zoom.min.css';
 import 'swiper/components/navigation/navigation.min.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { humanize, manuals, toCapitalize } from '../../utils/helper_functions';
+import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 import Overflow from 'react-overflow-indicator';
 
 // install Swiper modules
@@ -116,7 +116,7 @@ const ProductPage = (props) => {
 		const video = document.getElementsByClassName('product_video');
 		video.muted = true;
 		video.autoplay = true;
-		const query = getUrlParameter();
+		const query = getUrlParameter(props.location);
 	}, []);
 
 	useEffect(
@@ -164,7 +164,7 @@ const ProductPage = (props) => {
 		() => {
 			if (product) {
 				update_universal_state(product);
-				const query = getUrlParameter();
+				const query = getUrlParameter(props.location);
 				if (props.location.search.length === 0) {
 					// console.log({ message: 'Query Does Not Exist' });
 					if (product.color_products) {
@@ -234,16 +234,6 @@ const ProductPage = (props) => {
 		},
 		[ product ]
 	);
-
-	function getUrlParameter() {
-		const search = props.location.search.split('?');
-		// console.log({ search });
-		const search_object = {};
-		search.filter((item) => item !== '').forEach((item) => {
-			search_object[item.split('=')[0]] = item.split('=')[1];
-		});
-		return search_object;
-	}
 
 	const update_color_product_state = (color) => {
 		// console.log({ color });

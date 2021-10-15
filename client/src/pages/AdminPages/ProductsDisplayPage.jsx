@@ -83,11 +83,11 @@ const AllProductsPage = (props) => {
 	// 	[ filter ]
 	// );
 
-	useEffect(() => {
-		if (!category) {
-			dispatch(listProducts(''));
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (!category) {
+	// 		dispatch(listProducts(''));
+	// 	}
+	// }, []);
 
 	useEffect(
 		() => {

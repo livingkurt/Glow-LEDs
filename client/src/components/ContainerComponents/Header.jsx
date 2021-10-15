@@ -13,7 +13,6 @@ const Header = (props) => {
 	const [ first_name, set_first_name ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	// console.log({ userInfo });
 
 	useEffect(
 		() => {
@@ -28,12 +27,6 @@ const Header = (props) => {
 
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
-
-	// useEffect(() => {
-	// 	// dispatch(listProducts(''));
-	// 	// console.log({ search: search.substring(8) });
-	// 	dispatch(listProducts());
-	// }, []);
 
 	const { cartItems } = cart;
 
@@ -137,7 +130,7 @@ const Header = (props) => {
 								className="btn mobile nav none fs-30px h-50px w-50px p-10px"
 								onClick={open_sidebar}
 								aria-label="sidebar"
-								style={{fontSize: '30px !important'}}
+								style={{ fontSize: '30px !important' }}
 							>
 								<i className="fas fa-bars" />
 							</button>
@@ -222,7 +215,9 @@ const Header = (props) => {
 												</Link>
 												<hr className="w-95per m-0px" />
 												<Link to="/collections/all/products/collection/nova_glow_casings">
-													<button className="btn nav w-100per ta-l">Nova Glow Casings (New!)</button>
+													<button className="btn nav w-100per ta-l">
+														Nova Glow Casings (New!)
+													</button>
 												</Link>
 												<Link to="/collections/all/products/category/decals">
 													<button className="btn nav w-100per ta-l">Decals (New!)</button>

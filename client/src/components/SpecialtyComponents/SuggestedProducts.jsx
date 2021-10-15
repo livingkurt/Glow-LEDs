@@ -14,11 +14,11 @@ const SuggestedProducts = (props) => {
 
 	// console.log({ products });
 
-	useEffect(() => {
-		// if (props.product) {
-		dispatch(listProducts(''));
-		// }
-	}, []);
+	// useEffect(() => {
+	// 	// if (props.product) {
+	// 	dispatch(listProducts(''));
+	// 	// }
+	// }, []);
 
 	// buttonRight.onclick = function () {
 	//   document.getElementById('container').scrollLeft += 20;

@@ -1,7 +1,5 @@
 // React
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../../actions/productActions';
 import CarouselItem from './CarouselItem';
 import { Loading } from '../UtilityComponents';
 import useWindowDimensions from '../Hooks/windowDimensions';
@@ -12,22 +10,14 @@ import { browser_check, mobile_check } from '../../utils/react_helper_functions'
 import Overflow from 'react-overflow-indicator';
 
 const Carousel = (props) => {
-	const dispatch = useDispatch();
-
-	// const productList = useSelector((state) => state.productList);
-	// const { products, loading, error } = productList;
 	const { height, width } = useWindowDimensions();
 
 	const [ products, set_products ] = useState([]);
 	const [ loading, set_loading ] = useState(false);
-	// const productList = useSelector((state) => state.productList);
-	// const { products, loading, error } = productList;
-	// console.log({ products });
 
 	useEffect(
 		() => {
 			if (props.category) {
-				// dispatch(listProducts(props.category));
 				get_products(props.category);
 			} else {
 				get_products('all');
@@ -39,7 +29,6 @@ const Carousel = (props) => {
 	const get_products = async (category) => {
 		set_loading(true);
 		const { data } = await API_Products.get_products_by_category(category);
-		// console.log({ get_products: data });
 
 		set_products(typeof data === 'object' && data.filter((product) => product.pathname !== props.product_pathname));
 		if (props.random) {

@@ -147,7 +147,7 @@ const ProductPage = (props) => {
 					package_volume: product.package_volume
 				});
 				set_product_option({});
-				const query = getUrlParameter();
+				const query = getUrlParameter(props.location);
 				console.log({ query });
 				set_size(product.size);
 				if (!query) {

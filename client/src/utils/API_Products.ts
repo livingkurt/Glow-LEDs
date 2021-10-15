@@ -27,6 +27,10 @@ const product_routes = {
 	get_product: (pathname: any) => {
 		return axios.get('/api/products/' + pathname);
 	},
+	get_all_products: () => {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/products/get_all_products');
+	},
 	// get_product_names: (array: any) => {
 	// 	console.log({ not_paid_email: array });
 	// 	return axios.post('/api/products/array', array);
@@ -75,10 +79,7 @@ const product_routes = {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/orders/category_occurrences');
 	},
-	get_all_products: () => {
-		// console.log({ not_paid_email: array });
-		return axios.get('/api/products/get_all_products');
-	},
+
 	get_best_sellers: (occurences: any) => {
 		// console.log({ not_paid_email: array });
 		return axios.post('/api/products/best_sellers', { occurences });

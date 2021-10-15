@@ -508,6 +508,58 @@ export const state_names = [
 	{ long_name: 'Wyoming', short_name: 'WY' }
 ];
 
+export const homepage_videos = [
+	{
+		name: 'EXO Diffusers',
+		category: 'exo_diffusers',
+		video: 'hPxFDj7R5Lg',
+		color: '#8e4a4a',
+		description:
+			'The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! '
+	},
+	{
+		name: 'Glow Strings V2',
+		category: 'glow_strings',
+		video: 'mNBwaZKWi8c',
+		color: '#b1832f',
+		description:
+			'Make your space glow! Our Glow Strings come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. Fill your universe with a swimming pool of light in every color of the rainbow. '
+	},
+	{
+		name: 'Glow Casings',
+		category: 'glow_casings',
+		video: '_aJDfd6vlYU',
+		color: '#b1a72f',
+		description:
+			'What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.'
+	},
+	{
+		name: 'Glowskins',
+		category: 'glowskins',
+		video: '3Yk0QOMBlAo',
+		color: '#427942',
+		description:
+			'What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.'
+	},
+
+	{
+		name: 'Diffuser Caps',
+		category: 'diffuser_caps',
+		video: '0b1cn_3EczE',
+		color: '#416d63',
+		description:
+			'Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we'
+	},
+	{
+		name: 'Frosted Diffusers',
+		category: 'diffusers',
+		video: 'uY2xjrGrZd0',
+		color: '#6d416d',
+		description:
+			'Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.'
+	}
+];
+
 export const manuals = {
 	glow_strings: {
 		name: 'Glow Strings V2 Manual',
@@ -622,6 +674,60 @@ export const manuals = {
 	// 	]
 	// }
 };
+
+export const descriptions = {
+	all_products:
+		'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskins, and Glow Strings. Click to Shop.',
+	diffusers:
+		'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
+	diffuser_caps:
+		'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
+	diffuser_adapters:
+		'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
+	glow_strings:
+		'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
+	glowskins:
+		'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
+};
+
+export const description_determination = (category: any) => {
+	if (category === 'diffusers') {
+		return descriptions.diffusers;
+	}
+	if (category === 'diffuser_adapters') {
+		return descriptions.diffuser_adapters;
+	}
+	if (category.toLowerCase() === 'diffuser_caps') {
+		return descriptions.diffuser_caps;
+	}
+	if (category === 'glowskins') {
+		return descriptions.glowskins;
+	}
+	if (category === 'glow_strings') {
+		return descriptions.glow_strings;
+	} else {
+		return descriptions.all_products;
+	}
+};
+
+export const update_products_url = (history: any, search = '', sortOrder = '', filter = '') => {
+	history.push({
+		search: `${search ? '?search=' + search : ''}${sortOrder ? '?sort=' + sortOrder : ''}${filter
+			? '?filter=' + filter
+			: ''}`
+	});
+};
+
+export const getUrlParameter = (location: any) => {
+	const search: any = location.search.split('?');
+	const search_object: any = {};
+	search.filter((item: any) => item !== '').forEach((item: any) => {
+		search_object[item.split('=')[0]] = item.split('=')[1];
+	});
+	return search_object;
+};
+
+export const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest' ];
 
 export const mutliDragAwareReorder = (args: any) => {
 	console.log('hello');

@@ -9,11 +9,10 @@ const Search = (props) => {
 				<input
 					name="searchKeyword"
 					placeholder="Search"
-					onChange={(e) => props.setSearchKeyword(e.target.value)}
+					onChange={(e) => props.set_search(e.target.value)}
 					className="form_input search mv-0px"
 				/>
 				<button type="submit" className="btn primary w-50px mb-0px">
-					{/* Search {props.category && 'Category'} */}
 					<i className="fas fa-search" />
 				</button>
 			</div>

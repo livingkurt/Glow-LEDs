@@ -13,11 +13,11 @@ const ProductThumbCarousel = (props) => {
 	const { products, loading, error } = productList;
 	const { height, width } = useWindowDimensions();
 
-	useEffect(() => {
-		dispatch(listProducts(''));
+	// useEffect(() => {
+	// 	dispatch(listProducts(''));
 
-		// }
-	}, []);
+	// 	// }
+	// }, []);
 
 	const [ product_number, set_product_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);
