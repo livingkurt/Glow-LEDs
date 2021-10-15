@@ -36,9 +36,10 @@ const HomePage = (props) => {
 		}
 	};
 
-	const updatePokeDex = (poke) => {
+	const update_list = (poke) => {
 		setSearch(poke);
 		setDisplay(false);
+		history.push('/collections/all/products?search=' + poke);
 	};
 
 	const submitHandler = (e) => {
@@ -64,16 +65,6 @@ const HomePage = (props) => {
 		console.log({ data });
 		setOptions(data.filter((product) => !product.option).filter((product) => !product.hidden));
 	};
-	// useEffect(
-	// 	() => {
-	// 		if (products && products.length > 0) {
-	// 			set_filtered_products(products.map((product) => product.name));
-	// 			setOptions(products.filter((product) => !product.option));
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ products ]
-	// );
 
 	useEffect(
 		() => {
@@ -142,7 +133,8 @@ const HomePage = (props) => {
 						<div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
 							<input
 								id="auto"
-								onClick={() => setDisplay(!display)}
+								autoComplete="off"
+								onClick={() => setDisplay(true)}
 								className="form_input search mv-0px w-100per fs-20px"
 								placeholder="Find Your Glow Here"
 								value={search}
@@ -152,11 +144,12 @@ const HomePage = (props) => {
 								<div className="pos-abs bg-primary br-10px">
 									{options
 										.filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
+										.slice(0, 20)
 										.map((value, i) => {
 											return (
 												<div
-													onClick={() => updatePokeDex(value.name)}
-													className="auto-option ai-c jc-b w-500px p-5px"
+													onClick={() => update_list(value.name)}
+													className="auto-option ai-c jc-b w-600px p-5px"
 													key={i}
 													tabIndex="0"
 												>
