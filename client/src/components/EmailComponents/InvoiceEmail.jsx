@@ -410,7 +410,7 @@ const InvoiceEmail = (props) => {
 								>
 									Shipping:
 								</div>
-								{order.tip && (
+								{order.tip ? (
 									<div
 										style={{ padding: '5px', verticalAlign: 'top', textAlign: 'left' }}
 										valign="top"
@@ -418,6 +418,8 @@ const InvoiceEmail = (props) => {
 									>
 										Tip:
 									</div>
+								) : (
+									''
 								)}
 							</div>
 						</div>
@@ -533,7 +535,7 @@ const InvoiceEmail = (props) => {
 								>
 									${order.shippingPrice && order.shippingPrice.toFixed(2)}
 								</div>
-								{order.tip && (
+								{order.tip ? (
 									<div
 										style={{
 											padding: '5px',
@@ -543,8 +545,10 @@ const InvoiceEmail = (props) => {
 										valign="top"
 										align="right"
 									>
-										${order.tip && order.tip.toFixed(2)}
+										${order.tip ? order.tip.toFixed(2) : ''}
 									</div>
+								) : (
+									''
 								)}
 							</div>
 						</div>
