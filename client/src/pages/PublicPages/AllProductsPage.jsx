@@ -75,9 +75,9 @@ const AllProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			get_occurrences();
+			get_occurrences(category);
 		},
-		[ search ]
+		[ category ]
 	);
 
 	useEffect(() => {
@@ -94,16 +94,15 @@ const AllProductsPage = (props) => {
 				set_filter(chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id);
 			}
 			if (category === 'discounted') {
-				get_occurrences();
+				get_occurrences(category);
 			} else if (category === 'best_sellers') {
-				get_occurrences();
+				get_occurrences(category);
 			} else if (category === 'essentials') {
-				get_occurrences();
+				get_occurrences(category);
 			}
 			if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
 				// console.log('All Products');
-				if (collection && !category) {
-				} else {
+				if (!collection && category) {
 					console.log('No Category or Collection');
 					dispatch(
 						listProducts(
@@ -118,6 +117,8 @@ const AllProductsPage = (props) => {
 							collection
 						)
 					);
+				} else if (collection && category) {
+					dispatch(listProducts(category, '', '', '', '', '', collection));
 				}
 			}
 		} else {
@@ -130,6 +131,8 @@ const AllProductsPage = (props) => {
 			if (category || subcategory) {
 				if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
 					dispatch(listProducts(category, subcategory, '', '', '', '', ''));
+				} else {
+					get_occurrences(category);
 				}
 			}
 
@@ -153,26 +156,27 @@ const AllProductsPage = (props) => {
 		[ collection ]
 	);
 
-	const get_occurrences = async () => {
+	const get_occurrences = async (category) => {
 		set_loading_products(true);
 		const { data: occurrences } = await API_Products.get_occurrences();
+		console.log({ occurrences });
 		set_product_occurrences(occurrences);
 		// console.log({ occurrences });
 		if (occurrences && category === 'best_sellers') {
 			const { data } = await API_Products.get_best_sellers(occurrences);
-			// console.log({ data });
+			console.log({ data });
 			// set_best_sellers(data);
 			// set_alternative_products(data);
 			set_products(data);
 		} else if (occurrences && category === 'essentials') {
 			const { data } = await API_Products.get_essentials();
-			// console.log({ data });
+			console.log({ data });
 			// set_essentials(data);
 			// set_alternative_products(data);
 			set_products(data);
 		} else if (category === 'discounted') {
 			const { data } = await API_Products.get_imperfect();
-			// console.log({ data });
+			console.log({ data });
 			// set_imperfect(data);
 			// set_alternative_products(data);
 			set_products(data);
