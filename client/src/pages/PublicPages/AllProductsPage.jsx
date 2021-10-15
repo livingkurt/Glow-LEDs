@@ -133,10 +133,11 @@ const AllProductsPage = (props) => {
 						)
 					);
 				} else if (collection && category) {
-					// dispatch(listProducts(category, '', '', '', '', '', collection));
+					dispatch(listProducts(category, '', '', '', '', '', collection));
 				}
 			}
 		} else {
+			dispatch(listProducts());
 		}
 		dispatch(listChips());
 	}, []);
@@ -217,10 +218,11 @@ const AllProductsPage = (props) => {
 	const filterHandler = (e) => {
 		const chip_selected = JSON.parse(e.target.value);
 		set_chip(chip_selected._id);
+		set_search('');
 		set_filter(chip_selected._id);
-		// console.log({ chip });
-		update_products_url(history, search, sort, chip_selected.name);
-		dispatch(listProducts(category, subcategory, search, sort, chip_selected.name, '', collection));
+		console.log({ chip_selected });
+		update_products_url(history, '', sort, chip_selected.name);
+		dispatch(listProducts(category, subcategory, '', sort, chip_selected._id, '', collection));
 	};
 
 	return (
