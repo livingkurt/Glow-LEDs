@@ -100,6 +100,21 @@ const AllProductsPage = (props) => {
 			} else if (category === 'essentials') {
 				get_occurrences(category);
 			}
+			if (query.search && !category) {
+				dispatch(
+					listProducts(
+						category,
+						subcategory,
+						query.search ? query.search.split('%20').join(' ') : '',
+						query.sort,
+						query.filter
+							? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
+							: '',
+						'',
+						collection
+					)
+				);
+			}
 			if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
 				// console.log('All Products');
 				if (!collection && category) {
@@ -118,7 +133,7 @@ const AllProductsPage = (props) => {
 						)
 					);
 				} else if (collection && category) {
-					dispatch(listProducts(category, '', '', '', '', '', collection));
+					// dispatch(listProducts(category, '', '', '', '', '', collection));
 				}
 			}
 		} else {
