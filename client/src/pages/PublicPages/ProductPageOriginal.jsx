@@ -686,7 +686,7 @@ const ProductPage = (props) => {
 
 								<div className="mb-15px mt-n9px">
 									<a href="#reviews">
-										<Rating rating={product.rating} numReviews={product.numReviews + ' reviews'} />
+										<Rating rating={product.rating} numReviews={product.numReviews} />
 									</a>
 								</div>
 								<div className="max-w-492px mr-15px">
@@ -1292,10 +1292,7 @@ const ProductPage = (props) => {
 								>
 									<div className="mb-15px mt-n9px">
 										<a href="#reviews">
-											<Rating
-												rating={product.rating}
-												numReviews={product.numReviews + ' reviews'}
-											/>
+											<Rating rating={product.rating} numReviews={product.numReviews} />
 										</a>
 									</div>
 
