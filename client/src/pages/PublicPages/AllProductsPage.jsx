@@ -73,6 +73,12 @@ const AllProductsPage = (props) => {
 		[ main_products ]
 	);
 
+	// useEffect(
+	// 	() => {
+	// 		get_occurrences(category);
+	// 	},
+	// 	[ category ]
+	// );
 	useEffect(
 		() => {
 			get_occurrences(category);
@@ -80,19 +86,110 @@ const AllProductsPage = (props) => {
 		[ category ]
 	);
 
+	// useEffect(() => {
+	// 	const query = getUrlParameter(props.location);
+	// 	console.log({ query });
+	// 	if (Object.keys(query).length > 0) {
+	// 		if (query.search) {
+	// 			set_search(query.search.split('%20').join(' '));
+	// 		}
+	// 		if (query.sort) {
+	// 			set_sort(query.sort);
+	// 		}
+	// 		if (query.filter) {
+	// 			set_filter(chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id);
+	// 		}
+	// 		if (category === 'discounted') {
+	// 			get_occurrences(category);
+	// 		} else if (category === 'best_sellers') {
+	// 			get_occurrences(category);
+	// 		} else if (category === 'essentials') {
+	// 			get_occurrences(category);
+	// 		}
+	// 		if ((query.search || query.sort || query.filter) && !category && !subcategory) {
+	// 			dispatch(
+	// 				listProducts(
+	// 					category,
+	// 					subcategory,
+	// 					query.search ? query.search.split('%20').join(' ') : '',
+	// 					query.sort,
+	// 					query.filter
+	// 						? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
+	// 						: '',
+	// 					'',
+	// 					collection
+	// 				)
+	// 			);
+	// 		}
+	// 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+	// 			// console.log('All Products');
+	// 			if (!collection && category) {
+	// 				console.log('No Category or Collection');
+	// 				dispatch(
+	// 					listProducts(
+	// 						category,
+	// 						subcategory,
+	// 						query.search ? query.search.split('%20').join(' ') : '',
+	// 						query.sort,
+	// 						query.filter
+	// 							? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
+	// 							: '',
+	// 						'',
+	// 						collection
+	// 					)
+	// 				);
+	// 			}
+	// 			// else if (collection && category) {
+	// 			// 	dispatch(listProducts(category, '', '', '', '', '', collection));
+	// 			// }
+	// 		}
+	// 	} else if (
+	// 		Object.keys(query).length === 0 &&
+	// 		(category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers')
+	// 	) {
+	// 		dispatch(listProducts(category, subcategory, '', '', '', '', collection));
+	// 	}
+	// 	// dispatch(listProducts(category, subcategory, '', '', '', '', collection));
+	// 	dispatch(listChips());
+	// }, []);
+
 	useEffect(() => {
+		determine_products();
+		return () => {};
+	}, []);
+
+	useEffect(
+		() => {
+			determine_products();
+			return () => {};
+		},
+		[ props.match.params.category ]
+	);
+
+	const determine_products = () => {
 		const query = getUrlParameter(props.location);
-		console.log({ query });
+		let category = props.match.params.category ? props.match.params.category : '';
+		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+		let search = '';
+		let sort = '';
+		let filter = '';
+		let show_hidden = '';
+		let collection = props.match.params.collection ? props.match.params.collection : '';
 		if (Object.keys(query).length > 0) {
 			if (query.search) {
 				set_search(query.search.split('%20').join(' '));
+				search = query.search.split('%20').join(' ');
 			}
 			if (query.sort) {
 				set_sort(query.sort);
+				sort = query.sort;
 			}
 			if (query.filter) {
 				set_filter(chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id);
+				filter = chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id;
 			}
+		}
+		if (category) {
 			if (category === 'discounted') {
 				get_occurrences(category);
 			} else if (category === 'best_sellers') {
@@ -100,80 +197,42 @@ const AllProductsPage = (props) => {
 			} else if (category === 'essentials') {
 				get_occurrences(category);
 			}
-			if ((query.search || query.sort || query.filter) && !category && !subcategory) {
-				dispatch(
-					listProducts(
-						category,
-						subcategory,
-						query.search ? query.search.split('%20').join(' ') : '',
-						query.sort,
-						query.filter
-							? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
-							: '',
-						'',
-						collection
-					)
-				);
-			}
-			if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
-				// console.log('All Products');
-				if (!collection && category) {
-					console.log('No Category or Collection');
-					dispatch(
-						listProducts(
-							category,
-							subcategory,
-							query.search ? query.search.split('%20').join(' ') : '',
-							query.sort,
-							query.filter
-								? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
-								: '',
-							'',
-							collection
-						)
-					);
-				} else if (collection && category) {
-					dispatch(listProducts(category, '', '', '', '', '', collection));
-				}
-			}
-		} else if (
-			Object.keys(query).length === 0 &&
-			(category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers')
-		) {
-			dispatch(listProducts());
 		}
-		dispatch(listChips());
-	}, []);
+		console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
+		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+			dispatch(listProducts(category, subcategory, search, sort, filter, show_hidden, collection));
+		}
+	};
 
-	useEffect(
-		() => {
-			if (category || subcategory) {
-				if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
-					dispatch(listProducts(category, subcategory, '', '', '', '', ''));
-				} else {
-					get_occurrences(category);
-				}
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (category || subcategory) {
+	// 			if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
+	// 				dispatch(listProducts(category, subcategory, '', '', '', '', ''));
+	// 			} else {
+	// 				get_occurrences(category);
+	// 			}
+	// 		}
 
-			dispatch(listChips());
-		},
-		[ category, subcategory ]
-	);
+	// 		dispatch(listChips());
+	// 	},
+	// 	[ category, subcategory ]
+	// );
 
-	useEffect(
-		() => {
-			if (collection) {
-				if (collection !== 'essentials' || collection === 'discounted' || collection === 'best_sellers') {
-					if (collection && !category) {
-						dispatch(listProducts('', '', '', '', '', '', collection));
-					}
-				}
-			}
+	// useEffect(
+	// 	() => {
+	// 		if (collection) {
+	// 			if (collection !== 'essentials' || collection === 'discounted' || collection === 'best_sellers') {
+	// 				if (collection && !category) {
+	// 					dispatch(listProducts('', '', '', '', '', '', collection));
+	// 				}
+	// 			}
+	// 		}
 
-			dispatch(listChips());
-		},
-		[ collection ]
-	);
+	// 		dispatch(listChips());
+	// 	},
+	// 	[ collection ]
+	// );
 
 	const get_occurrences = async (category) => {
 		set_loading_products(true);
