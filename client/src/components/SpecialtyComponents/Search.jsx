@@ -9,6 +9,7 @@ const Search = (props) => {
 				<input
 					name="searchKeyword"
 					placeholder="Search"
+					value={props.search}
 					onChange={(e) => props.set_search(e.target.value)}
 					className="form_input search mv-0px"
 				/>

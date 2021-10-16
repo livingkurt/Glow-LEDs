@@ -8,6 +8,7 @@ import {
 	description_determination,
 	getUrlParameter,
 	humanize,
+	prnt,
 	sort_options,
 	update_products_url
 } from '../../utils/helper_functions';
@@ -29,11 +30,17 @@ const AllProductsPage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 
-	const category = props.match.params.category ? props.match.params.category : '';
-	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
-	const collection = props.match.params.collection ? props.match.params.collection : '';
-	const promo_code = props.match.params.promo_code ? props.match.params.promo_code : '';
+	// const category = props.match.params.category ? props.match.params.category : '';
+	// const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+	// const collection = props.match.params.collection ? props.match.params.collection : '';
+	// const promo_code = props.match.params.promo_code ? props.match.params.promo_code : '';
 
+	const [ category, set_category ] = useState(props.match.params.category ? props.match.params.category : '');
+	const [ subcategory, set_subcategory ] = useState(
+		props.match.params.subcategory ? props.match.params.subcategory : ''
+	);
+	const [ collection, set_collection ] = useState(props.match.params.collection ? props.match.params.collection : '');
+	const [ promo_code, set_promo_code ] = useState(props.match.params.promo_code ? props.match.params.promo_code : '');
 	const [ search, set_search ] = useState('');
 	const [ sort, set_sort ] = useState('');
 	const [ filter, set_filter ] = useState('');
@@ -58,13 +65,7 @@ const AllProductsPage = (props) => {
 	useEffect(
 		() => {
 			if (main_products) {
-				if (category === 'discounted') {
-					// get_occurrences();
-				} else if (category === 'best_sellers') {
-					// get_occurrences();
-				} else if (category === 'essentials') {
-					// get_occurrences();
-				} else {
+				if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 					set_products(main_products);
 					set_loading_products(false);
 				}
@@ -72,18 +73,11 @@ const AllProductsPage = (props) => {
 		},
 		[ main_products ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		get_occurrences(category);
-	// 	},
-	// 	[ category ]
-	// );
 	useEffect(
 		() => {
-			get_occurrences(category);
+			get_occurrences(props.match.params.category);
 		},
-		[ category ]
+		[ props.match.params.category ]
 	);
 
 	// useEffect(() => {
@@ -163,10 +157,25 @@ const AllProductsPage = (props) => {
 			determine_products();
 			return () => {};
 		},
-		[ props.match.params.category ]
+		[ props.match.params.category, props.match.params.subcategory ]
 	);
+	// useEffect(
+	// 	() => {
+	// 		// determine_products();
+	// 		if (chips_list.length > 0) {
+	// 			const query = getUrlParameter(props.location);
+	// 			prnt({ chip: query.filter.split('%20').join(' ') });
+	// 			set_filter(chips_list.find((chip) => chip.name === query.filter.split('%20').join(' '))._id);
+	// 			let filter = chips_list.find((chip) => chip.name === query.filter.split('%20').join(' ')._id);
+	// 			prnt({ filter, chips_list });
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ chips_list ]
+	// );
 
 	const determine_products = () => {
+		dispatch(listChips(''));
 		const query = getUrlParameter(props.location);
 		let category = props.match.params.category ? props.match.params.category : '';
 		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -175,88 +184,63 @@ const AllProductsPage = (props) => {
 		let filter = '';
 		let show_hidden = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
-		if (Object.keys(query).length > 0) {
-			if (query.search) {
-				set_search(query.search.split('%20').join(' '));
-				search = query.search.split('%20').join(' ');
-			}
-			if (query.sort) {
-				set_sort(query.sort);
-				sort = query.sort;
-			}
-			if (query.filter) {
-				set_filter(chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id);
-				filter = chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id;
-			}
-		}
-		if (category) {
-			if (category === 'discounted') {
-				get_occurrences(category);
-			} else if (category === 'best_sellers') {
-				get_occurrences(category);
-			} else if (category === 'essentials') {
-				get_occurrences(category);
-			}
-		}
-		console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
+		prnt({ query });
 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+			if (Object.keys(query).length > 0) {
+				if (query.search) {
+					set_search(query.search.split('%20').join(' '));
+					search = query.search.split('%20').join(' ');
+				}
+				if (query.sort) {
+					set_sort(query.sort);
+					sort = query.sort;
+				}
+				if (query.filter) {
+					filter = waitForElement(query.filter, chips_list);
+				}
+			}
+			if (category) {
+				if (category === 'discounted') {
+					get_occurrences(category);
+				} else if (category === 'best_sellers') {
+					get_occurrences(category);
+				} else if (category === 'essentials') {
+					get_occurrences(category);
+				}
+			}
+			// console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
+
 			dispatch(listProducts(category, subcategory, search, sort, filter, show_hidden, collection));
 		}
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (category || subcategory) {
-	// 			if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
-	// 				dispatch(listProducts(category, subcategory, '', '', '', '', ''));
-	// 			} else {
-	// 				get_occurrences(category);
-	// 			}
-	// 		}
-
-	// 		dispatch(listChips());
-	// 	},
-	// 	[ category, subcategory ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		if (collection) {
-	// 			if (collection !== 'essentials' || collection === 'discounted' || collection === 'best_sellers') {
-	// 				if (collection && !category) {
-	// 					dispatch(listProducts('', '', '', '', '', '', collection));
-	// 				}
-	// 			}
-	// 		}
-
-	// 		dispatch(listChips());
-	// 	},
-	// 	[ collection ]
-	// );
+	const waitForElement = (filter, chips_list) => {
+		prnt({ filter, chips_list });
+		if (typeof chips_list && chips_list.length > 0) {
+			prnt({ chip: filter.split('%20').join(' ') });
+			set_filter(chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id);
+			return chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id;
+		} else {
+			setTimeout(waitForElement, 250);
+		}
+	};
 
 	const get_occurrences = async (category) => {
 		set_loading_products(true);
 		const { data: occurrences } = await API_Products.get_occurrences();
 		console.log({ occurrences });
 		set_product_occurrences(occurrences);
-		// console.log({ occurrences });
 		if (occurrences && category === 'best_sellers') {
 			const { data } = await API_Products.get_best_sellers(occurrences);
 			console.log({ data });
-			// set_best_sellers(data);
-			// set_alternative_products(data);
 			set_products(data);
 		} else if (occurrences && category === 'essentials') {
 			const { data } = await API_Products.get_essentials();
 			console.log({ data });
-			// set_essentials(data);
-			// set_alternative_products(data);
 			set_products(data);
 		} else if (category === 'discounted') {
 			const { data } = await API_Products.get_imperfect();
 			console.log({ data });
-			// set_imperfect(data);
-			// set_alternative_products(data);
 			set_products(data);
 		} else {
 			set_best_sellers(false);
@@ -265,7 +249,6 @@ const AllProductsPage = (props) => {
 	};
 
 	const submitHandler = (e) => {
-		// console.log({ search });
 		e.preventDefault();
 		update_products_url(history, search, sort, filter);
 		dispatch(listProducts('', '', search, '', '', ''));
@@ -323,7 +306,7 @@ const AllProductsPage = (props) => {
 			</div>
 
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
-				<Search set_search={set_search} submitHandler={submitHandler} category={category} />
+				<Search set_search={set_search} search={search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
