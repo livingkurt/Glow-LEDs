@@ -9,6 +9,9 @@ import { humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 const ManualPage = (props) => {
 	const pathname = props.match.params.pathname;
 
+	const productList = useSelector((state) => state.productList);
+	const { products, loading, error } = productList;
+
 	return (
 		<div className="main_container">
 			<Helmet>
@@ -32,7 +35,7 @@ const ManualPage = (props) => {
 				</div>
 				<div className="mb-10px">
 					<Link
-						to={`/collections/all/products/category/${pathname === 'glow_strings_v2' ||
+						to={`/collections/products/${pathname === 'glow_strings_v2' ||
 						pathname === 'glow_strings_v2_manual'
 							? 'glow_strings'
 							: 'pathname'}`}

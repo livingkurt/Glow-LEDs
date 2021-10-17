@@ -175,7 +175,7 @@ const ProductListItem = (props) => {
 			isSelected={isSelected}
 		>
 			<div className="ai-c">
-				<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+				<Link className="w-500px" to={'/collections/products/' + product.pathname}>
 					<label style={{ fontSize: '1.6rem' }}>
 						{snapshot.isDragging ? props.product.name + ' - Moving' : props.product.name}
 					</label>
@@ -258,7 +258,7 @@ const ProductListItem = (props) => {
 						product.option_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+								<Link className="w-500px" to={'/collections/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
@@ -303,7 +303,7 @@ const ProductListItem = (props) => {
 						product.color_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+								<Link className="w-500px" to={'/collections/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
@@ -348,7 +348,7 @@ const ProductListItem = (props) => {
 						product.secondary_color_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+								<Link className="w-500px" to={'/collections/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
@@ -393,7 +393,7 @@ const ProductListItem = (props) => {
 						product.secondary_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="" to={'/collections/all/products/' + product.pathname}>
+								<Link className="" to={'/collections/products/' + product.pathname}>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>

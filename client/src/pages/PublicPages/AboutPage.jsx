@@ -389,7 +389,7 @@ const AboutPage = () => {
 										team.affiliates.map((affiliate) => {
 											return (
 												<Link
-													to={'/collections/all/sponsors/' + affiliate.pathname}
+													to={'/collections/sponsors/' + affiliate.pathname}
 													className="pos-rel"
 												>
 													<img

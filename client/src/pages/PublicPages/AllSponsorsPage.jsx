@@ -1,7 +1,7 @@
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Sponsor, SponsorSmallScreen} from '../../components/SpecialtyComponents/index';
+import { Sponsor, SponsorSmallScreen } from '../../components/SpecialtyComponents/index';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listAffiliates } from '../../actions/affiliateActions';
@@ -15,7 +15,7 @@ const AllSponsorsPage = (props) => {
 		() => {
 			dispatch(listAffiliates('sponsored_glovers'));
 		},
-		[dispatch]
+		[ dispatch ]
 	);
 
 	return (
@@ -24,26 +24,24 @@ const AllSponsorsPage = (props) => {
 				<title>Sponsors| Glow LEDs</title>
 				<meta property="og:title" content="Affiliated" />
 				<meta name="twitter:title" content="Affiliated" />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/affiliates" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/affiliates" />
-				<meta name="description" content={"Glow LEDs Sponsored Glovers"} />
-				<meta property="og:description" content={"Glow LEDs Sponsored Glovers"} />
-				<meta name="twitter:description" content={"Glow LEDs Sponsored Glovers"} />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/affiliates" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/affiliates" />
+				<meta name="description" content={'Glow LEDs Sponsored Glovers'} />
+				<meta property="og:description" content={'Glow LEDs Sponsored Glovers'} />
+				<meta name="twitter:description" content={'Glow LEDs Sponsored Glovers'} />
 			</Helmet>
-		
-      	<div className="jc-fe">
-				<Link to="/collections/all/teams">
+
+			<div className="jc-fe">
+				<Link to="/collections/teams">
 					<button className="btn secondary ">Sponsored Teams</button>
 				</Link>
 			</div>
 			<div className="jc-c">
 				<div className="row">
 					<h1>Sponsored Glovers</h1>
-				
 				</div>
 			</div>
 
-			
 			{affiliates && (
 				<Loading loading={loading} error={error}>
 					<div>

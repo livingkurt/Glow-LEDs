@@ -42,16 +42,16 @@ async function generateSitemap() {
 	console.log({ subcategoryMap });
 
 	const paramsConfig = {
-		'/collections/all/products/category/accessories/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/glowskins/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/exo_diffusers/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/glow_casings/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/diffuser_caps/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/diffusers/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/glow_strings/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/options/subcategory/:subcategory?': subcategoryMap,
-		'/collections/all/products/category/:category': categoryMap,
-		'/collections/all/products/:pathname': productMap,
+		'/collections/products/accessories/:subcategory?': subcategoryMap,
+		'/collections/products/glowskins/:subcategory?': subcategoryMap,
+		'/collections/products/exo_diffusers/:subcategory?': subcategoryMap,
+		'/collections/products/glow_casings/:subcategory?': subcategoryMap,
+		'/collections/products/diffuser_caps/:subcategory?': subcategoryMap,
+		'/collections/products/diffusers/:subcategory?': subcategoryMap,
+		'/collections/products/glow_strings/:subcategory?': subcategoryMap,
+		'/collections/products/options/:subcategory?': subcategoryMap,
+		'/collections/products/:category': categoryMap,
+		'/collections/products/:pathname': productMap,
 		'/pages/contact/:reason': contact_reason,
 		'/pages/menu/:pathname': menu_types
 	};

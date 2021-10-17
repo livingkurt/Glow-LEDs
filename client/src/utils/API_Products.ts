@@ -108,7 +108,7 @@ const product_routes = {
 		return axios.get('/api/products/?category=' + category + '&subcategory=' + subcategory);
 	},
 	// get_product_pictures: (category: string = '', subcategory: string = '') => {
-	// 	return axios.get('/api/products/get_categories/' + category + '/subcategory/' + subcategory);
+	// 	return axios.get('/api/products/get_categories/' + category + '/' + subcategory);
 	// },
 
 	batch_request: (

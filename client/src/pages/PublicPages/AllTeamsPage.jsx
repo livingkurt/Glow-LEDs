@@ -1,4 +1,4 @@
-import  {  useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Team, TeamSmallScreen } from '../../components/SpecialtyComponents/index';
@@ -24,27 +24,24 @@ const AllTeamsPage = (props) => {
 				<title>Team | Glow LEDs</title>
 				<meta property="og:title" content="Teamd" />
 				<meta name="twitter:title" content="Teamd" />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/teams" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/teams" />
-				<meta name="description" content={"Glow LEDs Glover Teams"} />
-				<meta property="og:description" content={"Glow LEDs Glover Teams"} />
-				<meta name="twitter:description" content={"Glow LEDs Glover Teams"} />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/teams" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/teams" />
+				<meta name="description" content={'Glow LEDs Glover Teams'} />
+				<meta property="og:description" content={'Glow LEDs Glover Teams'} />
+				<meta name="twitter:description" content={'Glow LEDs Glover Teams'} />
 			</Helmet>
 
 			<div className="jc-fe">
-				<Link to="/collections/all/sponsors">
+				<Link to="/collections/sponsors">
 					<button className="btn secondary ">Sponsored Artists</button>
 				</Link>
 			</div>
 			<div className="jc-c">
 				<div className="row">
 					<h1>Sponsored Teams</h1>
-			
 				</div>
 			</div>
 
-		
-		
 			{teams && (
 				<Loading loading={loading} error={error}>
 					<div>

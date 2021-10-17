@@ -185,7 +185,7 @@ const Survey = (props) => {
 		// e.target.reset();
 		unset_state();
 		set_loading_submit(false);
-		// history.push('/collections/all/surveys/category/' + category.toLowerCase());
+		// history.push('/collections/surveys/category/' + category.toLowerCase());
 		// history.push('/secure/account/submission_complete');
 	};
 
@@ -396,7 +396,7 @@ const Survey = (props) => {
 										<Link to="/secure/account/orders">
 											<button className="btn primary mh-10px">Your Orders</button>
 										</Link>
-										<Link to="/collections/all/products">
+										<Link to="/collections/products">
 											<button className="btn primary mh-10px">Products</button>
 										</Link>
 										<Link to="/pages/featured">
@@ -413,7 +413,7 @@ const Survey = (props) => {
 												<button className="btn primary mh-10px">View Order</button>
 											</Link>
 										)}
-										<Link to="/collections/all/products">
+										<Link to="/collections/products">
 											<button className="btn primary mh-10px">Products</button>
 										</Link>
 										<Link to="/pages/featured">

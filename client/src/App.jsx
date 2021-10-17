@@ -419,6 +419,8 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 
 							{/* Public Routes */}
+							<Route path="/" exact={true} component={HomePage} />
+							{/* Account */}
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
 							<Route path="/account/checkemail" component={CheckEmailPage} />
@@ -427,87 +429,75 @@ const App = (props) => {
 							<Route path="/account/register" component={RegisterPage} />
 							<Route path="/account/passwordreset" component={PasswordResetPage} />
 							<Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
-							<Route path="/checkout/decision" component={GuestDecisionPage} />
-							<Route path="/checkout/placeorder" component={PlaceOrderPublicPage} />
-							<Route path="/checkout/shipping" component={ShippingPublicPage} />
-
-							<Route path="/checkout/cart/:pathname?" component={CartPage} />
-							<Route
-								path="/collections/all/products/code/:promo_code?"
-								exact={true}
-								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
-							/>
-							{/* <Route
-								path="/collections/all/products/code/:promo_code?"
-								exact={true}
-								component={AllProductsPage} 
-							/> */}
-							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
-							<Route
-								path="/collections/all/products/collection/:collection?"
-								component={AllProductsPage}
-							/>
-							<Route
-								path="/collections/all/products/category/:category/subcategory/:subcategory?"
-								component={AllProductsPage}
-							/>
-							<Route
-								path="/collections/all/products/category/:category/collection/:collection?"
-								component={AllProductsPage}
-							/>
-						
-							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
-
-							<Route path="/collections/all/products/:pathname" component={ProductPage} />
-							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
-							<Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />
-							<Route path="/pages/glowcontrol" component={ContactPage} />
-							<Route path="/pages/terms" exact={true} component={TermsPage} />
-							<Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
-
-							<Route path="/pages/about" exact={true} component={AboutPage} />
-							<Route path="/pages/faq" exact={true} component={FAQPage} />
-							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
-							<Route
-								path="/collections/all/features/category/:category?"
-								exact={true}
-								component={AllFeaturesPage}
-							/>
-							<Route
-								path="/collections/all/features/category/:category/:pathname?"
-								exact={true}
-								component={FeaturedPage}
-							/>
-							<Route
-								path="/collections/all/sponsors/category/:category?"
-								exact={true}
-								component={AllSponsorsPage}
-							/>
-							<Route path="/collections/all/sponsors" exact={true} component={AllSponsorsPage} />
-							<Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
-							<Route
-								path="/collections/all/teams/category/:category?"
-								exact={true}
-								component={AllTeamsPage}
-							/>
+							<Route path="/account/submit_feature" component={SubmitFeaturePage} />
 							<Route path="/account/feature/receipt/:pathname/:status/:send?" component={FeatureEmail} />
 							<Route
 								path="/account/affiliate/receipt/:pathname/:status/:send?"
 								component={AffiliateEmail}
 							/>
-							<Route path="/account/submit_feature" component={SubmitFeaturePage} />
-							<Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
-							<Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
-							<Route path="/pages/music" exact={true} component={MusicPage} />
-							<Route path="/" exact={true} component={HomePage} />
-							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
+							{/* Checkout */}
+							<Route path="/checkout/decision" component={GuestDecisionPage} />
+							<Route path="/checkout/placeorder" component={PlaceOrderPublicPage} />
+							<Route path="/checkout/shipping" component={ShippingPublicPage} />
+							<Route path="/checkout/cart/:pathname?" component={CartPage} />
 							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
+							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
+
+							{/* Collections */}
+							{/* Product Collections */}
+							<Route
+								path="/collections/products/:category?/:subcategory?/:collection?/:promo_code?"
+								exact={true}
+								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
+							/>
+							<Route path="/products/:category/:subcategory?/:pathname?" component={ProductPage} />
+							{/* <Route path="/collections/products" exact={true} component={AllProductsPage} /> */}
+							{/* <Route
+								path="/collections/products/:collection?"
+								component={AllProductsPage}
+							/> */}
+							{/* <Route
+								path="/collections/products/:category?/:subcategory?/:collection?/:promo_code?"
+								component={AllProductsPage}
+							/> */}
+							{/* <Route
+								path="/collections/products/:category/:collection?"
+								component={AllProductsPage}
+							/> */}
+							{/* <Route path="/collections/products/:category" component={AllProductsPage} /> */}
+
+							{/* Feature Collections */}
+							<Route path="/collections/features/:category?" exact={true} component={AllFeaturesPage} />
+							<Route
+								path="/collections/features/:category?/:pathname?"
+								exact={true}
+								component={FeaturedPage}
+							/>
+							{/* Sponsors Collections */}
+							<Route path="/collections/sponsors/:category?" exact={true} component={AllSponsorsPage} />
+							<Route path="/collections/sponsors" exact={true} component={AllSponsorsPage} />
+							<Route path="/collections/sponsors/:promo_code?" exact={true} component={SponsorPage} />
+							{/* Team Collections */}
+							<Route path="/collections/teams/:category?" exact={true} component={AllTeamsPage} />
+							{/* <Route path="/collections/teams" exact={true} component={AllTeamsPage} /> */}
+							<Route path="/collections/teams/:pathname?" exact={true} component={TeamPage} />
+
+							{/* Pages */}
 							<Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
 							<Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
 							<Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
 							<Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
 							<Route path="/pages/color_palettes" exact={true} component={ColorPalettePage} />
 							<Route path="/pages/events" exact={true} component={EventsPage} />
+							<Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />
+							<Route path="/pages/glowcontrol" component={ContactPage} />
+							<Route path="/pages/terms" exact={true} component={TermsPage} />
+							<Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
+							<Route path="/pages/about" exact={true} component={AboutPage} />
+							<Route path="/pages/faq" exact={true} component={FAQPage} />
+							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
+							<Route path="/pages/music" exact={true} component={MusicPage} />
+							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
 
 							<Route component={Four04Page} />
 						</Switch>

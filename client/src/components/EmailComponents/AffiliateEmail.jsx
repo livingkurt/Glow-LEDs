@@ -409,7 +409,7 @@ const AffiliateEmail = (props) => {
 													<td style={{ fontSize: '16px', height: '30px' }}>
 														{affiliate.public_code && (
 															<div
-															>{`Auto Input Code Link: https://www.glow-leds.com/collections/all/products/code/${affiliate.public_code.promo_code.toUpperCase()}`}</div>
+															>{`Auto Input Code Link: https://www.glow-leds.com/collections/products/code/${affiliate.public_code.promo_code.toUpperCase()}`}</div>
 														)}
 													</td>
 												</tr>
@@ -867,9 +867,11 @@ const AffiliateEmail = (props) => {
 	// };
 	const send_affiliate_email = async (email, first_name, subject) => {
 		console.log({ email_template });
-		const { data:user_email } = await API_Emails.send_email(email_template, subject, email);
-		const { data: admin_email } = await API_Emails.send_email(email_template,
-			'New Affiliate Created by ' + first_name);
+		const { data: user_email } = await API_Emails.send_email(email_template, subject, email);
+		const { data: admin_email } = await API_Emails.send_email(
+			email_template,
+			'New Affiliate Created by ' + first_name
+		);
 		console.log({ user_email });
 		console.log({ admin_email });
 	};

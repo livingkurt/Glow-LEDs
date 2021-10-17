@@ -6,7 +6,7 @@ import { LazyImage } from '../UtilityComponents';
 const TeamSmallScreen = (props) => {
 	return (
 		<li key={props.team._id} className=" w-100per" style={props.styles}>
-			<Link to={`/collections/all/teams/${props.team && props.team.pathname}`}>
+			<Link to={`/collections/teams/${props.team && props.team.pathname}`}>
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage
@@ -62,7 +62,7 @@ const TeamSmallScreen = (props) => {
 export default TeamSmallScreen;
 
 // <li key={props.team._id} className=" w-100per" style={props.styles}>
-// 			<Link to={`/collections/all/teams/${props.team && props.team.pathname}`}>
+// 			<Link to={`/collections/teams/${props.team && props.team.pathname}`}>
 // 				<div className="small_screen_product row">
 // 					<div className="">
 // 						<LazyImage

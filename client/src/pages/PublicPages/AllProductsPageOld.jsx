@@ -241,8 +241,8 @@ const AllProductsPage = (props) => {
 				<title>{category ? humanize(category) : 'Products'} | Glow LEDs</title>
 				<meta property="og:title" content={category ? humanize(category) : 'Products'} />
 				<meta name="twitter:title" content={category ? humanize(category) : 'Products'} />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/products" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/products" />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/products" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/products" />
 				<meta name="description" content={description_determination()} />
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />

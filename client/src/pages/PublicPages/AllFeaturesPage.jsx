@@ -99,7 +99,7 @@ const AllFeaturesPage = (props) => {
 		console.log({ searchKeyword });
 		e.preventDefault();
 		// history.push(
-		// 	'/collections/all/features/category' + category + '/subcategory/' + subcategory + '?search=' + searchKeyword
+		// 	'/collections/features/category' + category + '/' + subcategory + '?search=' + searchKeyword
 		// );
 		history.push({
 			search: '?search=' + searchKeyword
@@ -165,8 +165,8 @@ const AllFeaturesPage = (props) => {
 				<title>Featured | Glow LEDs</title>
 				<meta property="og:title" content="Featured" />
 				<meta name="twitter:title" content="Featured" />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/features" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/features" />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/features" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/features" />
 				<meta name="description" content={description_determination()} />
 				<meta property="og:description" content={description_determination()} />
 				<meta name="twitter:description" content={description_determination()} />

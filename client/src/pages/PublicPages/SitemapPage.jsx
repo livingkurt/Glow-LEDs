@@ -82,22 +82,22 @@ const SitemapPage = () => {
 						<h2 style={{ textAlign: 'left' }}>Categories</h2>
 						<ul>
 							<li>
-								<Link to="/collections/all/products/category/diffusers">Diffusers</Link>
+								<Link to="/collections/products/diffusers">Diffusers</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+								<Link to="/collections/products/diffuser_caps">Diffuser Caps</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/category/diffuser_adapters">Diffuser Adapters</Link>
+								<Link to="/collections/products/diffuser_adapters">Diffuser Adapters</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/category/accessories">Accessories</Link>
+								<Link to="/collections/products/accessories">Accessories</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/category/glow_strings">Glow Strings</Link>
+								<Link to="/collections/products/glow_strings">Glow Strings</Link>
 							</li>
 							{/* <li>
-								<Link to="/collections/all/products/category/infinity_mirrors">Infinity Mirrors</Link>
+								<Link to="/collections/products/infinity_mirrors">Infinity Mirrors</Link>
 							</li> */}
 						</ul>
 					</div>
@@ -105,24 +105,22 @@ const SitemapPage = () => {
 						<h2 style={{ textAlign: 'left' }}>Products</h2>
 						<ul>
 							<li>
-								<Link to="/collections/all/products">Products</Link>
+								<Link to="/collections/products">Products</Link>
 							</li>
 						</ul>
 						<ul className="products_list">
 							<ul>
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/category/diffuser_adapters">
-										Diffuser Adapters
-									</Link>
+									<Link to="/collections/products/diffuser_adapters">Diffuser Adapters</Link>
 								</li>
 								<ul className="products_list">
 									<li>
-										<Link to="/collections/all/products/large_frosted_dome_diffusers">
+										<Link to="/collections/products/large_frosted_dome_diffusers">
 											Large Frosted Dome Diffuser
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/frosted_dome_diffusers">
+										<Link to="/collections/products/frosted_dome_diffusers">
 											Frosted Dome Diffuser
 										</Link>
 									</li>
@@ -131,36 +129,36 @@ const SitemapPage = () => {
 
 							<ul className="products_list">
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/category/glow_strings">Glow Strings</Link>
+									<Link to="/collections/products/glow_strings">Glow Strings</Link>
 								</li>
 								<ul>
 									<li>
-										<Link to="/collections/all/products/50_led_3_5m_glow_strings">
+										<Link to="/collections/products/50_led_3_5m_glow_strings">
 											50 LED 3.5m Glow Strings
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/150_led_10_5m_glow_strings">
+										<Link to="/collections/products/150_led_10_5m_glow_strings">
 											150 LED 10.5m Glow Strings
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/200_led_14m_glow_strings">
+										<Link to="/collections/products/200_led_14m_glow_strings">
 											200 LED 14m Glow Strings
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/100_led_7m_glow_strings">
+										<Link to="/collections/products/100_led_7m_glow_strings">
 											100 LED 7m Glow Strings
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/glow_strings_controller_power_adapter">
+							<Link to="/collections/products/glow_strings_controller_power_adapter">
 								Home
 							</Link>
 						</li> */}
 									{/* <li>
-							<Link to="/collections/all/products/50_glow_strings_w_o_controller">
+							<Link to="/collections/products/50_glow_strings_w_o_controller">
 								Home
 							</Link>
 						</li> */}
@@ -170,18 +168,16 @@ const SitemapPage = () => {
 							{/* <h3 style={{ textAlign: 'left' }}>Diffuser Adapters</h3> */}
 							<ul className="products_list">
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/category/diffuser_adapters">
-										Diffuser Adapters
-									</Link>
+									<Link to="/collections/products/diffuser_adapters">Diffuser Adapters</Link>
 								</li>
 								<ul>
 									<li>
-										<Link to="/collections/all/products/diffuser_adapters_no_caps">
+										<Link to="/collections/products/diffuser_adapters_no_caps">
 											Diffuser Adapters (No Caps)
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/diffuser_caps_adapters_starter_kit">
+										<Link to="/collections/products/diffuser_caps_adapters_starter_kit">
 											Diffuser Caps + Adapters Starter Kit
 										</Link>
 									</li>
@@ -190,153 +186,147 @@ const SitemapPage = () => {
 
 							<ul className="products_list">
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+									<Link to="/collections/products/diffuser_caps">Diffuser Caps</Link>
 								</li>
 								<ul>
 									<li>
-										<Link to="/collections/all/products/honey_comb_diffuser_caps">
+										<Link to="/collections/products/honey_comb_diffuser_caps">
 											Honey Comb Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/blinking_eyes_diffuser_caps">
+										<Link to="/collections/products/blinking_eyes_diffuser_caps">
 											Blinking Eyes Diffuser Caps
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/x_diffuser_caps">
+							<Link to="/collections/products/x_diffuser_caps">
 								X Diffuser Caps
 							</Link>
 						</li> */}
 									<li>
-										<Link to="/collections/all/products/icosahedron_diffuser_caps">
+										<Link to="/collections/products/icosahedron_diffuser_caps">
 											Icosahedron Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/peace_diffuser_caps">
-											Peace Diffuser Caps
-										</Link>
+										<Link to="/collections/products/peace_diffuser_caps">Peace Diffuser Caps</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/dodecahedron_point_diffuser_caps">
+										<Link to="/collections/products/dodecahedron_point_diffuser_caps">
 											Dodecahedron Point Diffuser Caps
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/owsla_diffuser_caps">
+							<Link to="/collections/products/owsla_diffuser_caps">
 								Owsla Diffuser Caps
 							</Link>
 						</li> */}
 									<li>
-										<Link to="/collections/all/products/mountain_diffuser_caps">
+										<Link to="/collections/products/mountain_diffuser_caps">
 											Mountain Diffuser Caps
 										</Link>
 									</li>
 
 									<li>
-										<Link to="/collections/all/products/moon_phases_diffuser_caps">
+										<Link to="/collections/products/moon_phases_diffuser_caps">
 											Moon Phases Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/vesica_piscis_diffuser_caps">
+										<Link to="/collections/products/vesica_piscis_diffuser_caps">
 											Vesica Piscis Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/heart_diffuser_caps">
-											Heart Diffuser Caps
-										</Link>
+										<Link to="/collections/products/heart_diffuser_caps">Heart Diffuser Caps</Link>
 									</li>
 
 									{/* <li>
-							<Link to="/collections/all/products/tiger_diffuser_caps">
+							<Link to="/collections/products/tiger_diffuser_caps">
 								Tiger Diffuser Caps
 							</Link>
 						</li> */}
 									<li>
-										<Link to="/collections/all/products/cube_diffuser_caps">
-											Cube Diffuser Caps
-										</Link>
+										<Link to="/collections/products/cube_diffuser_caps">Cube Diffuser Caps</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/triforce_diffuser_caps">
+							<Link to="/collections/products/triforce_diffuser_caps">
 								Triforce Diffuser Caps
 							</Link>
 						</li> */}
 									<li>
-										<Link to="/collections/all/products/trinity_diffuser_caps">
+										<Link to="/collections/products/trinity_diffuser_caps">
 											Trinity Diffuser Caps
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/phoenix_diffuser_caps">
+							<Link to="/collections/products/phoenix_diffuser_caps">
 								Phoenix Diffuser Caps
 							</Link>
 						</li> */}
 									<li>
-										<Link to="/collections/all/products/seed_of_life_diffuser_caps">
+										<Link to="/collections/products/seed_of_life_diffuser_caps">
 											Seed of Life Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/flower_diffuser_caps">
+										<Link to="/collections/products/flower_diffuser_caps">
 											Flower Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/dodecahedron_face_diffuser_caps">
+										<Link to="/collections/products/dodecahedron_face_diffuser_caps">
 											Dodecahedron Face Diffuser Caps
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/lion_diffuser_caps">
+							<Link to="/collections/products/lion_diffuser_caps">
 								Lion Diffuser Caps
 							</Link>
 						</li> */}
 									{/* <li>
-							<Link to="/collections/all/products/illuminate￼_diffuser_caps">
+							<Link to="/collections/products/illuminate￼_diffuser_caps">
 								Illuminate Diffuser Caps
 							</Link>
 						</li> */}
 									<li>
-										<Link to="/collections/all/products/dizzy_face_emoji_diffuser_caps">
+										<Link to="/collections/products/dizzy_face_emoji_diffuser_caps">
 											Dizzy Face Emoji Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/gyro_sphere_diffuser_caps">
+										<Link to="/collections/products/gyro_sphere_diffuser_caps">
 											Gyro Sphere Diffuser Caps
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/custom_diffuser_caps">
+										<Link to="/collections/products/custom_diffuser_caps">
 											Custom Diffuser Caps
 										</Link>
 									</li>
 									{/* <li>
-							<Link to="/collections/all/products/large_custom_infinity_mirror">
+							<Link to="/collections/products/large_custom_infinity_mirror">
 								Large Custom Infinity Mirror
 							</Link>
 						</li> */}
 									{/* <li>
-										<Link to="/collections/all/products/serotonin_molecule_infinity_mirror">
+										<Link to="/collections/products/serotonin_molecule_infinity_mirror">
 											Serotonin Molecule Infinity Mirror
 										</Link>
 									</li>
 									<li>
-										<Link to="/collections/all/products/triforce_infinity_mirror">
+										<Link to="/collections/products/triforce_infinity_mirror">
 											Triforce Infinity Mirror
 										</Link>
 									</li> */}
 									{/* <li>
-										<Link to="/collections/all/products/custom_infinity_mirror">
+										<Link to="/collections/products/custom_infinity_mirror">
 											Custom Infinity Mirrors
 										</Link>
 									</li> */}
 									<li>
-										<Link to="/collections/all/products/coin_battery_storage">
+										<Link to="/collections/products/coin_battery_storage">
 											Coin Battery Storage
 										</Link>
 									</li>

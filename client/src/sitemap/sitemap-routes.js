@@ -17,12 +17,7 @@ export default (
 		<Route path="/checkout/shipping" />
 
 		<Route path="/checkout/cart/:pathname?" />
-		<Route path="/collections/all/products" exact={true} />
-		<Route path="/collections/all/products/category/:category/subcategory/:subcategory?" />
-		<Route path="/collections/all/products/category/:category/collection/:collection?" />
-		<Route path="/collections/all/products/category/:category" />
-
-		<Route path="/collections/all/products/:pathname" />
+		<Route path="/collections/products/:category?/:subcategory?/:collection?/:pathname?" />
 		<Route path="/checkout/order/receipt/:id/:status/:send?" />
 		<Route path="/pages/contact/:reason?" exact={true} />
 		<Route path="/pages/glowcontrol" />
@@ -32,16 +27,16 @@ export default (
 		<Route path="/pages/about" exact={true} />
 		<Route path="/pages/faq" exact={true} />
 		<Route path="/pages/sitemap" exact={true} />
-		<Route path="/collections/all/features/category/:category?" exact={true} />
-		<Route path="/collections/all/features/category/:category/:pathname?" exact={true} />
-		<Route path="/collections/all/sponsors" exact={true} />
-		<Route path="/collections/all/sponsors/:promo_code?" exact={true} />
-		<Route path="/collections/all/teams/category/:category?" exact={true} />
+		<Route path="/collections/features/:category?" exact={true} />
+		<Route path="/collections/features/:category/:pathname?" exact={true} />
+		<Route path="/collections/sponsors" exact={true} />
+		<Route path="/collections/sponsors/:promo_code?" exact={true} />
+		<Route path="/collections/teams/category/:category?" exact={true} />
 		<Route path="/account/feature/receipt/:pathname/:status/:send?" />
 		<Route path="/account/affiliate/receipt/:pathname/:status/:send?" />
 		<Route path="/account/submit_feature" />
-		<Route path="/collections/all/teams" exact={true} />
-		<Route path="/collections/all/teams/:pathname?" exact={true} />
+		<Route path="/collections/teams" exact={true} />
+		<Route path="/collections/teams/:pathname?" exact={true} />
 		<Route path="/pages/music" exact={true} />
 		<Route path="/" exact={true} />
 		<Route path="/pages/track_your_order" exact={true} />

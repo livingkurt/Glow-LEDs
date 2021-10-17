@@ -63,7 +63,7 @@ const CartItem = (props) => {
 			</div>
 			<div className="cart-name">
 				<div className="jc-b ai-c">
-					<Link to={'/collections/all/products/' + props.item.pathname} className="m-0px">
+					<Link to={'/collections/products/' + props.item.pathname} className="m-0px">
 						<label className="paragraph_font lh-0px mv-0px fs-18px">{props.item.name}</label>
 					</Link>
 					<div className="ai-c">

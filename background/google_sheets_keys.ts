@@ -58,7 +58,7 @@ const facebook_catalog_upload = async () => {
 			const availability = 'In Stock';
 			const condition = 'New';
 			const price = product.price + ' USD';
-			const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
+			const link = `https://www.glow-leds.com/collections/products/${product.category}/${product.subcategory}/${product.pathname}`;
 			const image_link = product.images[0];
 			const brand = 'Glow LEDs';
 			const inventory = product.countInStock;

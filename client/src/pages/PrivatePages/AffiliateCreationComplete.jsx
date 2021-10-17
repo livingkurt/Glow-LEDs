@@ -18,7 +18,7 @@ const AffiliateComplete = (props) => {
 						Back to Profile
 					</button>
 				</Link>
-				{/* <Link to="/collections/all/products">
+				{/* <Link to="/collections/products">
 					<button style={{ margin: '15px' }} className="btn primary">
 						Products
 					</button>

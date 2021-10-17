@@ -50,7 +50,7 @@ const OrderSmallScreen = (props) => {
 						return (
 							<div className="row mt-15px" key={index}>
 								<div className="column ai-c pos-rel">
-									<Link to={'/collections/all/products/' + item.pathname}>
+									<Link to={'/collections/products/' + item.pathname}>
 										<LazyImage
 											className="order-image w-100px h-100px br-10px mr-15px"
 											alt={item.name}
@@ -83,7 +83,7 @@ const OrderSmallScreen = (props) => {
 									<h2 className="">{item.name}</h2>
 									<div className="ai-c w-100per jc-b">
 										<div className="mv-10px">${item.price}</div>
-										<Link to={'/collections/all/products/category/' + item.category}>
+										<Link to={'/collections/products/' + item.category}>
 											<button className="btn primary">Buy Again</button>
 										</Link>
 									</div>

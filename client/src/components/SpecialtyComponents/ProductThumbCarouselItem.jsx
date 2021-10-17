@@ -21,7 +21,7 @@ const ProductThumbCarouselItem = (props) => {
 		<div>
 			{!loading && (
 				<li key={props.product && product.pathname} style={props.styles}>
-					<Link to={product && '/collections/all/products/' + product.pathname}>
+					<Link to={product && '/collections/products/' + product.pathname}>
 						<div className="product">
 							<LazyImage
 								className="product-image"

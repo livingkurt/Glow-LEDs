@@ -309,27 +309,28 @@ const MenuPage = (props) => {
 	};
 
 	const decide_url = (item) => {
-		if (pathname === 'gloving' || pathname === 'decor') {
-			if (item.subcategory) {
-				return `/collections/all/products/category/${item && item.category}/subcategory/${item &&
-					item.subcategory}`;
-			} else {
-				return `/collections/all/products/category/${item.category}`;
-			}
-		} else if (pathname === 'featured') {
-			return `/collections/all/features/category/${item.category}`;
-		} else if (pathname === 'sponsored_artists') {
-			return `/collections/all/${item.category}`;
-		} else if (pathname === 'manuals') {
-			return `/pages/manual/${item.category}`;
-		} else if (pathname === 'support') {
-			if (item.category === 'manuals') {
-				return `/pages/menu/${item.category}`;
+		if (item) {
+			if (pathname === 'gloving' || pathname === 'decor') {
+				if (item.subcategory) {
+					return `/collections/products/${item.category}/${item.subcategory}/${item.pathname}`;
+				} else {
+					return `/collections/products/${item.category}`;
+				}
+			} else if (pathname === 'featured') {
+				return `/collections/features/${item.category}`;
+			} else if (pathname === 'sponsored_artists') {
+				return `/collections/${item.category}`;
+			} else if (pathname === 'manuals') {
+				return `/pages/manual/${item.category}`;
+			} else if (pathname === 'support') {
+				if (item.category === 'manuals') {
+					return `/pages/menu/${item.category}`;
+				} else {
+					return `/pages/${item.category}`;
+				}
 			} else {
 				return `/pages/${item.category}`;
 			}
-		} else {
-			return `/pages/${item.category}`;
 		}
 	};
 

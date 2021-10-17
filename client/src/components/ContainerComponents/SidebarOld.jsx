@@ -167,21 +167,21 @@ const Sidebar = (props) => {
 				)}
 				<div className="sidebar_dropdown">
 					<button className="sidebar-btn primary" onClick={closeMenu}>
-						<Link to="/collections/all/products">Products</Link>
+						<Link to="/collections/products">Products</Link>
 					</button>
 
 					<ul className="sidebar_dropdown_container" id="products_dropdown">
-						<Link to="/collections/all/products/category/best_sellers">
+						<Link to="/collections/products/best_sellers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Best Sellers
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/essentials">
+						<Link to="/collections/products/essentials">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Glow LEDs Essentials
 							</button>
 						</Link>
-						<Link to="/collections/all/products/category/discounted">
+						<Link to="/collections/products/discounted">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								On Sale
 							</button>
@@ -191,7 +191,7 @@ const Sidebar = (props) => {
 								<Link to="/pages/menu/gloving">Gloving</Link>
 							</button>
 							<ul className="sidebar_dropdown_secondary_container" id="nested_gloving_dropdown">
-								<Link to="/collections/all/products/category/exo_diffusers">
+								<Link to="/collections/products/exo_diffusers">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Exo Diffusers
 									</button>
@@ -199,10 +199,10 @@ const Sidebar = (props) => {
 
 								<div className="sidebar_dropdown_nested w-">
 									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/glow_casings">Glow Casings</Link>
+										<Link to="/collections/products/glow_casings">Glow Casings</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container" id="glow_casings_dropdown">
-										<Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
+										<Link to="/collections/products/glow_casings/imperfect">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Imperfect
 											</button>
@@ -218,25 +218,25 @@ const Sidebar = (props) => {
 
 								<div className="sidebar_dropdown_nested w-">
 									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
+										<Link to="/collections/products/glowskins">Glowskins</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container" id="glowskins_dropdown">
-										<Link to="/collections/all/products/category/glowskins/subcategory/classics">
+										<Link to="/collections/products/glowskins/classics">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Classics
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
+										<Link to="/collections/products/glowskins/novaskins">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Novaskins
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
+										<Link to="/collections/products/glowskins/alt_novaskins">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Alt Novaskins
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
+										<Link to="/collections/products/glowskins/imperfect">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Imperfect
 											</button>
@@ -251,35 +251,35 @@ const Sidebar = (props) => {
 								</div>
 								<div className="sidebar_dropdown_nested w-">
 									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/diffusers">Diffusers</Link>
+										<Link to="/collections/products/diffusers">Diffusers</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container" id="diffusers_dropdown">
-										<Link to="/collections/all/products/category/diffusers/subcategory/abstract">
+										<Link to="/collections/products/diffusers/abstract">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Abstract (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffusers/subcategory/polygons">
+										<Link to="/collections/products/diffusers/polygons">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Polygons (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
+										<Link to="/collections/products/diffusers/cylinders">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Cylinders (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffusers/subcategory/domes">
+										<Link to="/collections/products/diffusers/domes">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Domes (New)
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffusers/subcategory/open_hole">
+										<Link to="/collections/products/diffusers/open_hole">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Open Hole
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffusers/subcategory/closed_hole">
+										<Link to="/collections/products/diffusers/closed_hole">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Closed Hole
 											</button>
@@ -294,30 +294,28 @@ const Sidebar = (props) => {
 								</div>
 								<div className="sidebar_dropdown_nested">
 									<button className="sidebar-btn nested">
-										<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+										<Link to="/collections/products/diffuser_caps">Diffuser Caps</Link>
 									</button>
 									<ul className="sidebar_dropdown_nested_container" id="diffuser_caps_dropdown">
 										<div className="sidebar_dropdown_nested_2">
 											<button className="sidebar-btn nested-2">
-												<Link to="/collections/all/products/category/diffuser_caps">
-													Collections
-												</Link>
+												<Link to="/collections/products/diffuser_caps">Collections</Link>
 											</button>
 											<ul
 												className="sidebar_dropdown_nested_2_container"
 												id="collections_caps_dropdown"
 											>
-												<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+												<Link to="/collections/products/diffuser_caps/collection/space_cadet">
 													<button className="sidebar-btn nested-3" onClick={closeMenu}>
 														Space Cadet
 													</button>
 												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
+												<Link to="/collections/products/diffuser_caps/collection/festy_besty">
 													<button className="sidebar-btn nested-3" onClick={closeMenu}>
 														Festy Besty
 													</button>
 												</Link>
-												<Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
+												<Link to="/collections/products/diffuser_caps/collection/platonic_solids">
 													<button className="sidebar-btn nested-3" onClick={closeMenu}>
 														Platonic Solids
 													</button>
@@ -330,27 +328,27 @@ const Sidebar = (props) => {
 												<i className="fas fa-sort-up" />
 											</button>
 										</div>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
+										<Link to="/collections/products/diffuser_caps/geometric">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Geomotric
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
+										<Link to="/collections/products/diffuser_caps/shapes">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Shapes
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
+										<Link to="/collections/products/diffuser_caps/abstract">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Abstract
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
+										<Link to="/collections/products/diffuser_caps/patterns">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Patterns
 											</button>
 										</Link>
-										<Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
+										<Link to="/collections/products/diffuser_caps/imperfect">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Imperfect
 											</button>
@@ -363,7 +361,7 @@ const Sidebar = (props) => {
 										<i className="fas fa-sort-up" />
 									</button>
 								</div>
-								<Link to="/collections/all/products/category/accessories">
+								<Link to="/collections/products/accessories">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Accessories
 									</button>
@@ -376,7 +374,7 @@ const Sidebar = (props) => {
 								<i className="fas fa-sort-up" />
 							</button>
 						</div>
-						<Link to="/collections/all/products/category/glow_strings">
+						<Link to="/collections/products/glow_strings">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Glow Strings
 							</button>
@@ -398,12 +396,12 @@ const Sidebar = (props) => {
 						<div className="sidebar_dropdown_nested">
 							<button className="sidebar-btn secondary">Sponsored Artists</button>
 							<ul className="sidebar_dropdown_secondary_container" id="nested_sponsor_dropdown">
-								<Link to="/collections/all/sponsors">
+								<Link to="/collections/sponsors">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Sponsored Glovers
 									</button>
 								</Link>
-								<Link to="/collections/all/teams">
+								<Link to="/collections/teams">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Sponsored Teams
 									</button>
@@ -416,23 +414,23 @@ const Sidebar = (props) => {
 								<i className="fas fa-sort-up" />
 							</button>
 						</div>
-						<Link to="/collections/all/features/category/artists">
+						<Link to="/collections/features/artists">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Artists
 							</button>
 						</Link>
-						<Link to="/collections/all/features/category/glovers">
+						<Link to="/collections/features/glovers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Glovers
 							</button>
 						</Link>
 
-						<Link to="/collections/all/features/category/producers">
+						<Link to="/collections/features/producers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Producers
 							</button>
 						</Link>
-						<Link to="/collections/all/features/category/vfx">
+						<Link to="/collections/features/vfx">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								VFX
 							</button>

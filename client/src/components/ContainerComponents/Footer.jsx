@@ -53,11 +53,7 @@ const Footer = () => {
 							</a>
 						</div>
 						<div className="mh-10px fs-40px">
-							<a
-								href="https://twitter.com/glow_leds"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
+							<a href="https://twitter.com/glow_leds" target="_blank" rel="noopener noreferrer">
 								<i className="fab fa-twitter zoom" />
 							</a>
 						</div>
@@ -73,74 +69,68 @@ const Footer = () => {
 					<div className="jc-a w-100per">
 						<div>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Products</Link>
+								<Link to="/collections/products">Products</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/best_sellers">Best Sellers</Link>
+									<Link to="/collections/products/best_sellers">Best Sellers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/essentials">Glow LEDs Essensials</Link>
+									<Link to="/collections/products/essentials">Glow LEDs Essensials</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/discounted">On Sale!</Link>
+									<Link to="/collections/products/discounted">On Sale!</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/accessories/subcategory/stickers">
-										Stickers
-									</Link>
+									<Link to="/collections/products/accessories/stickers">Stickers</Link>
 								</li>
 							</ul>
 						</div>
 						<div>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Gloving</Link>
+								<Link to="/collections/products">Gloving</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/decals">Decals</Link>
+									<Link to="/collections/products/decals">Decals</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/exo_diffusers">EXO Diffusers</Link>
+									<Link to="/collections/products/exo_diffusers">EXO Diffusers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/glow_casings">Glow Casings</Link>
+									<Link to="/collections/products/glow_casings">Glow Casings</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
+									<Link to="/collections/products/glowskins">Glowskins</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/diffusers">Diffusers</Link>
+									<Link to="/collections/products/diffusers">Diffusers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+									<Link to="/collections/products/diffuser_caps">Diffuser Caps</Link>
 								</li>
 
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/accessories">Accessories</Link>
+									<Link to="/collections/products/accessories">Accessories</Link>
 								</li>
 							</ul>
 						</div>
 						<div style={{ display: width < 750 ? 'none' : 'block' }}>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Flow Art Essensials</Link>
+								<Link to="/collections/products">Flow Art Essensials</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
-										Glow Strings V2
-									</Link>
+									<Link to="/collections/products/glow_strings_v2_50_led_3_5m">Glow Strings V2</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/1620_batteries">1620 Batteries</Link>
+									<Link to="/collections/products/1620_batteries">1620 Batteries</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/1225_batteries">1225 Batteries</Link>
+									<Link to="/collections/products/1225_batteries">1225 Batteries</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/accessories/subcategory/battery_storage">
-										Battery Storage
-									</Link>
+									<Link to="/collections/products/accessories/battery_storage">Battery Storage</Link>
 								</li>
 							</ul>
 						</div>
@@ -153,22 +143,22 @@ const Footer = () => {
 									<Link to="/pages/menu/sponsored_artists">Sponsored Artists</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/features/category/artists">Artists</Link>
+									<Link to="/collections/features/artists">Artists</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/features/category/glovers">Glovers</Link>
+									<Link to="/collections/features/glovers">Glovers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/features/category/producers">Producers</Link>
+									<Link to="/collections/features/producers">Producers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/features/category/vfx">VFX</Link>
+									<Link to="/collections/features/vfx">VFX</Link>
 								</li>
 							</ul>
 						</div>
 						<div style={{ display: width < 550 ? 'none' : 'block' }}>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Support</Link>
+								<Link to="/collections/products">Support</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
@@ -200,27 +190,27 @@ const Footer = () => {
 					<div className="jc-a w-100per">
 						<div>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Products</Link>
+								<Link to="/collections/products">Products</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/glowskins">Glowskins</Link>
+									<Link to="/collections/products/glowskins">Glowskins</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/diffusers">
+									<Link to="/collections/products/diffusers">
 										Frosted Diffusers
 									</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/diffuser_caps">Diffuser Caps</Link>
+									<Link to="/collections/products/diffuser_caps">Diffuser Caps</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/mega_diffuser_caps">
+									<Link to="/collections/products/mega_diffuser_caps">
 										Mega Diffusers Caps
 									</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/category/accessories">Accessories</Link>
+									<Link to="/collections/products/accessories">Accessories</Link>
 								</li>
 							</ul>
 						</div>

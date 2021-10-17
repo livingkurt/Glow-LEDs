@@ -147,50 +147,6 @@ const affiliate_revenue_upload = async () => {
 							.toFixed(2)}`
 			};
 		});
-		// console.log({ new_rows });
-
-		// const new_rows = affiliates.map((affiliate: any, i: number) => {
-		// 	return {
-		// 		promo_code: affiliate.public_code.promo_code
-		// 	};
-		// });
-		// const new_rows = data.map((product: any, i: number) => {
-		// 	const id = product._id;
-		// 	const title = product.name;
-		// 	const description = product.description;
-		// 	const availability = 'In Stock';
-		// 	const condition = 'New';
-		// 	const price = product.price + ' USD';
-		// 	const link = 'https://www.glow-leds.com/collections/all/products/' + product.pathname;
-		// 	const image_link = product.images[0];
-		// 	const additional_image_link = product.images[1];
-		// 	const brand = 'Glow LEDs';
-		// 	const inventory = product.countInStock;
-		// 	const fb_product_category = 'toys & games > electronic toys';
-		// 	const google_product_category = 'Toys & Games > Toys > Visual Toys';
-		// 	const sale_price = product.sale_price;
-		// 	const sale_price_effective_date = product.sale_price_effective_date;
-		// 	const product_type = product.category;
-
-		// 	return {
-		// 		id,
-		// 		title,
-		// 		description,
-		// 		availability,
-		// 		condition,
-		// 		price,
-		// 		link,
-		// 		image_link,
-		// 		additional_image_link,
-		// 		brand,
-		// 		inventory,
-		// 		fb_product_category,
-		// 		google_product_category,
-		// 		sale_price,
-		// 		sale_price_effective_date,
-		// 		product_type
-		// 	};
-		// });
 
 		await sheet.addRows(total_rows);
 		await sheet.saveUpdatedCells();

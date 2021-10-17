@@ -159,7 +159,7 @@ const SubmitFeaturePage = (props) => {
 		e.target.reset();
 		unset_state();
 		set_loading_submit(false);
-		// history.push('/collections/all/features/category/' + category.toLowerCase());
+		// history.push('/collections/features/' + category.toLowerCase());
 		// history.push('/secure/account/submission_complete');
 	};
 

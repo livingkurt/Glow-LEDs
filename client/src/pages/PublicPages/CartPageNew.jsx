@@ -95,13 +95,13 @@ const CartPage = (props) => {
 									<li key={index}>
 										{/* {console.log({ item })} */}
 										<div className="cart-image">
-											<Link to={'/collections/all/products/' + item.pathname}>
+											<Link to={'/collections/products/' + item.pathname}>
 												<img src={item.display_image} alt={item.name} title="Product Image" />
 											</Link>
 										</div>
 										<div className="cart-name">
 											<div className="mb-10px">
-												<Link to={'/collections/all/products/' + item.pathname}>
+												<Link to={'/collections/products/' + item.pathname}>
 													{(item.category === 'glowskins' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||

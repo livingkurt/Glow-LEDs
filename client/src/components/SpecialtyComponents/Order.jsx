@@ -157,7 +157,7 @@ const Order = (props) => {
 							return (
 								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
-										<Link to={'/collections/all/products/' + item.pathname}>
+										<Link to={'/collections/products/' + item.pathname}>
 											<LazyImage
 												className="order-image w-200px h-200px br-10px mr-15px"
 												alt={item.name}
@@ -191,7 +191,7 @@ const Order = (props) => {
 											{item.name} {item.qty > 1 && item.qty + 'x'}
 										</h2>
 										<div className="mv-10px">${item.price}</div>
-										<Link to={'/collections/all/products/category/' + item.category}>
+										<Link to={'/collections/products/' + item.category}>
 											<button className="btn primary">Buy Again</button>
 										</Link>
 									</div>
