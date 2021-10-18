@@ -331,7 +331,7 @@ const SponsorPage = (props) => {
 						{affiliate.products &&
 							affiliate.products.map((product) => {
 								return (
-									<Link to={'/collections/products/' + product.pathname} className="pos-rel">
+									<Link to={'/collections/all/products/' + product.pathname} className="pos-rel">
 										<img
 											className="m-1rem br-10px h-auto max-h-300px max-w-300px ta-c responsive_img "
 											src={product.images[0]}

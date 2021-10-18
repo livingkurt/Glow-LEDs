@@ -34,7 +34,7 @@ export default (props: any) => {
               <h4 style="font-family:helvetica;margin:0;font-size:1.2em;text-align:center">View your Order</h4>
             </a></div>
           <div style="margin:0px 10px">or</div>
-          <div style="display:flex;justify-content:center"><a href="https://www.glow-leds.com/collections/products"
+          <div style="display:flex;justify-content:center"><a href="https://www.glow-leds.com/collections/all/products"
               alt="discount image" style="color:white;border:0;font-size:13px;padding:10px">
               <h4 style="font-family:helvetica;margin:0;font-size:1.2em;text-align:center">Visit our Store</h4>
             </a></div>

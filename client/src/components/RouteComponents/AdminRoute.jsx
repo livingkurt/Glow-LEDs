@@ -12,7 +12,8 @@ const AdminRoute = ({ component: Component, ...rest }) => {
 		// Otherwise, redirect the user to /signin page
 		<Route
 			{...rest}
-			render={(props) => (userInfo.isAdmin ? <Component {...props} /> : <Redirect to="/collections/products" />)}
+			render={(props) =>
+				userInfo.isAdmin ? <Component {...props} /> : <Redirect to="/collections/all/products" />}
 		/>
 	);
 };

@@ -160,7 +160,7 @@ const Review = (props) => {
 				) : (
 					<div>
 						Please{' '}
-						<Link to={`/account/login?redirect=/collections/products/${props.pathname}`}>
+						<Link to={`/account/login?redirect=/collections/all/products/${props.pathname}`}>
 							<button className="btn primary">Login</button>
 						</Link>{' '}
 						to Write a Review

@@ -18,7 +18,7 @@ const SubmissionComplete = (props) => {
 						Back to Features
 					</button>
 				</Link>
-				{/* <Link to="/collections/products">
+				{/* <Link to="/collections/all/products">
 					<button style={{ margin: '15px' }} className="btn primary">
 						Products
 					</button>

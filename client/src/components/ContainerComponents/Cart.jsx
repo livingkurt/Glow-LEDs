@@ -117,9 +117,9 @@ const Cart = (props) => {
 	const decide_url = (item) => {
 		if (item.category === 'gloving' || item.category === 'decor') {
 			if (item.subcategory) {
-				return `/collections/products/${item && item.category}/${item && item.subcategory}`;
+				return `/collections/all/products/${item && item.category}/${item && item.subcategory}`;
 			} else {
-				return `/collections/products/${item.category}`;
+				return `/collections/all/products/${item.category}`;
 			}
 		} else if (item.category === 'featured') {
 			return `/collections/features/${item.category}`;
@@ -158,7 +158,7 @@ const Cart = (props) => {
 								return (
 									<div className="product m-5px jc-c" style={{ height: 'unset' }} key={index}>
 										{item.category && (
-											<Link to={`/collections/products/${item.category}`} onClick={closeMenu}>
+											<Link to={`/collections/all/products/${item.category}`} onClick={closeMenu}>
 												<h3 className="mt-0px"> {humanize(item.category)}</h3>
 												<div
 													className={`w-${determine_picture_size()} h-${determine_picture_size()}`}
@@ -209,7 +209,7 @@ const Cart = (props) => {
 							{recently_viewed_products.map((item, index) => {
 								return (
 									<Link
-										to={`/collections/products/${item.category}/${item.subcategory}/${item.pathname}`}
+										to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
 										className="w-100per mb-1rem"
 										key={index}
 									>
@@ -315,7 +315,7 @@ const Cart = (props) => {
 								cartItems.map((item, index) => (
 									<li key={index} className="ph-1rem">
 										<div className="ai-c">
-											<Link to={'/collections/products/' + item.pathname}>
+											<Link to={'/collections/all/products/' + item.pathname}>
 												<div className="mb-10px">
 													{!item.secondary_image && (
 														<LazyImage
@@ -360,7 +360,7 @@ const Cart = (props) => {
 										<div className="cart_sidebar-name">
 											<div className="mb-10px">
 												<Link
-													to={`/collections/products/${item.category}/${item.subcategory}/${item.pathname}`}
+													to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
 												>
 													{determine_product_name(item, true)}
 												</Link>

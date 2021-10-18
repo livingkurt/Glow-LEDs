@@ -11,10 +11,10 @@ const Product = (props) => {
 			<div className="tooltip">
 				<div className="tooltipoverlay">
 					<div className="product">
-						<Link to={'/collections/products/' + props.product.pathname} className="m-auto">
+						<Link to={'/collections/all/products/' + props.product.pathname} className="m-auto">
 							<div className="row mt-15px">
 								<div className="column ai-c pos-rel">
-									{/* <Link to={'/collections/products/' + item.pathname}> */}
+									{/* <Link to={'/collections/all/products/' + item.pathname}> */}
 									<LazyImage
 										className="product-image"
 										alt={props.product.name}
@@ -30,7 +30,7 @@ const Product = (props) => {
 						<label style={{ fontSize: '1.3rem' }} className="title_font">
 							{props.product.brand}
 						</label>
-						<Link to={'/collections/products/' + props.product.pathname}>
+						<Link to={'/collections/all/products/' + props.product.pathname}>
 							<label style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</label>

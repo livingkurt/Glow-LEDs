@@ -310,7 +310,7 @@ const ProductPage = (props) => {
 	useEffect(
 		() => {
 			if (error) {
-				props.history.push('/collections/products');
+				props.history.push('/collections/all/products');
 			}
 		},
 		[ error ]
@@ -507,11 +507,11 @@ const ProductPage = (props) => {
 							<meta name="twitter:title" content={product.meta_title} />
 							<link
 								rel="canonical"
-								href={`https://www.glow-leds.com/collections/products/${product.category}/${product.subcategory}/${product.pathname}`}
+								href={`https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`}
 							/>
 							<meta
 								property="og:url"
-								content={`https://www.glow-leds.com/collections/products/${product.category}/${product.subcategory}/${product.pathname}`}
+								content={`https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`}
 							/>
 							{product.images && (
 								<div>
@@ -1652,7 +1652,7 @@ const ProductPage = (props) => {
 										</div>
 										<div className="mb-10px">
 											<Link
-												to={`https://www.glow-leds.com/collections/products/${product.category}/${product.subcategory}/${product.pathname}`}
+												to={`https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`}
 											>
 												<button class="btn secondary">
 													View Available {toCapitalize(humanize(product.category))}

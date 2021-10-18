@@ -35,7 +35,7 @@ const ManualPage = (props) => {
 				</div>
 				<div className="mb-10px">
 					<Link
-						to={`/collections/products/${pathname === 'glow_strings_v2' ||
+						to={`/collections/all/products/${pathname === 'glow_strings_v2' ||
 						pathname === 'glow_strings_v2_manual'
 							? 'glow_strings'
 							: 'pathname'}`}

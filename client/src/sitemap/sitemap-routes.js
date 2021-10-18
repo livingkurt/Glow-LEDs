@@ -17,7 +17,7 @@ export default (
 		<Route path="/checkout/shipping" />
 
 		<Route path="/checkout/cart/:pathname?" />
-		<Route path="/collections/products/:category?/:subcategory?/:collection?/:pathname?" />
+		<Route path="/collections/all/products/:category?/:subcategory?/:collection?/:pathname?" />
 		<Route path="/checkout/order/receipt/:id/:status/:send?" />
 		<Route path="/pages/contact/:reason?" exact={true} />
 		<Route path="/pages/glowcontrol" />

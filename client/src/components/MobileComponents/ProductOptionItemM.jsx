@@ -9,7 +9,7 @@ const ProductOptionItemM = (props) => {
 	// return (
 	// 	<li key={props.product.pathname} className=" w-100per" style={props.styles}>
 	// 		{props.product_occurrences && (
-	// 			<Link to={'/collections/products/' + props.product.pathname}>
+	// 			<Link to={'/collections/all/products/' + props.product.pathname}>
 	// 				<div className="small_screen_product row">
 	// 					<div className="row mt-15px">
 	// 						<div className="column ai-c pos-rel">

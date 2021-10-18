@@ -221,7 +221,7 @@ const ProductPage = (props) => {
 	useEffect(
 		() => {
 			if (error) {
-				props.history.push('/collections/products');
+				props.history.push('/collections/all/products');
 			}
 		},
 		[ error ]
@@ -433,11 +433,11 @@ const ProductPage = (props) => {
 							<meta name="twitter:title" content={product.meta_title} />
 							<link
 								rel="canonical"
-								href={'https://www.glow-leds.com/collections/products/' + product.pathname}
+								href={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
 							/>
 							<meta
 								property="og:url"
-								content={'https://www.glow-leds.com/collections/products/' + product.pathname}
+								content={'https://www.glow-leds.com/collections/all/products/' + product.pathname}
 							/>
 							{product.images && (
 								<div>
@@ -1529,7 +1529,7 @@ const ProductPage = (props) => {
 											</Link>
 										</div>
 										<div className="mb-10px">
-											<Link to={`/collections/products/${product.category}`}>
+											<Link to={`/collections/all/products/${product.category}`}>
 												<button class="btn secondary">
 													View Available {toCapitalize(humanize(product.category))}
 												</button>

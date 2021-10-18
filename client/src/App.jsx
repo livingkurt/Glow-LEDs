@@ -446,41 +446,52 @@ const App = (props) => {
 							{/* Collections */}
 							{/* Product Collections */}
 							<Route
-								path="/collections/products/:category?/:subcategory?/:collection?/:promo_code?"
+								path="/collections/all/products/code/:promo_code?"
 								exact={true}
 								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
 							/>
-							<Route path="/products/:category/:subcategory?/:pathname?" component={ProductPage} />
-							{/* <Route path="/collections/products" exact={true} component={AllProductsPage} /> */}
-							{/* <Route
-								path="/collections/products/:collection?"
-								component={AllProductsPage}
-							/> */}
-							{/* <Route
-								path="/collections/products/:category?/:subcategory?/:collection?/:promo_code?"
-								component={AllProductsPage}
-							/> */}
-							{/* <Route
-								path="/collections/products/:category/:collection?"
-								component={AllProductsPage}
-							/> */}
-							{/* <Route path="/collections/products/:category" component={AllProductsPage} /> */}
-
-							{/* Feature Collections */}
-							<Route path="/collections/features/:category?" exact={true} component={AllFeaturesPage} />
+							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
-								path="/collections/features/:category?/:pathname?"
+								path="/collections/all/products/collection/:collection?"
+								component={AllProductsPage}
+							/>
+							<Route
+								path="/collections/all/products/category/:category/subcategory/:subcategory?"
+								component={AllProductsPage}
+							/>
+							<Route
+								path="/collections/all/products/category/:category/collection/:collection?"
+								component={AllProductsPage}
+							/>
+							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
+							<Route path="/collections/all/products/:pathname" component={ProductPage} />
+							{/* Feature Collections */}
+							<Route
+								path="/collections/all/features/category/:category?"
+								exact={true}
+								component={AllFeaturesPage}
+							/>
+							<Route
+								path="/collections/all/features/category/:category/:pathname?"
 								exact={true}
 								component={FeaturedPage}
 							/>
 							{/* Sponsors Collections */}
-							<Route path="/collections/sponsors/:category?" exact={true} component={AllSponsorsPage} />
-							<Route path="/collections/sponsors" exact={true} component={AllSponsorsPage} />
-							<Route path="/collections/sponsors/:promo_code?" exact={true} component={SponsorPage} />
+							<Route
+								path="/collections/all/sponsors/category/:category?"
+								exact={true}
+								component={AllSponsorsPage}
+							/>
+							<Route path="/collections/all/sponsors" exact={true} component={AllSponsorsPage} />
+							<Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
 							{/* Team Collections */}
-							<Route path="/collections/teams/:category?" exact={true} component={AllTeamsPage} />
-							{/* <Route path="/collections/teams" exact={true} component={AllTeamsPage} /> */}
-							<Route path="/collections/teams/:pathname?" exact={true} component={TeamPage} />
+							<Route
+								path="/collections/all/teams/category/:category?"
+								exact={true}
+								component={AllTeamsPage}
+							/>
+							<Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
+							<Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
 
 							{/* Pages */}
 							<Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />

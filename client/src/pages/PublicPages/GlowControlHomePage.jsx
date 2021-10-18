@@ -226,7 +226,7 @@ const GlowControlHomePage = (props) => {
 					found in your space.
 				</p>
 				<div className="jc-c">
-					<Link to="/collections/products/infinity_mirrors">
+					<Link to="/collections/all/products/infinity_mirrors">
 						<button className="btn primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glowskins</h2>
 						</button>
@@ -258,7 +258,7 @@ const GlowControlHomePage = (props) => {
 					LED), and 46 ft (200 LED) options so there’s a size for every need.
 				</p>
 				<div className="jc-c">
-					<Link to="/collections/products/glow_strings">
+					<Link to="/collections/all/products/glow_strings">
 						<button className="btn primary" style={{ background: 'transparent' }}>
 							<h2>Shop Glow Strings</h2>
 						</button>

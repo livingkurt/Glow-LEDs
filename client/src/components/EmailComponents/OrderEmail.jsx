@@ -2168,7 +2168,7 @@ const OrderEmail = (props) => {
 					<Link to="/secure/account/orders">
 						<button className="btn primary mh-10px">Your Orders</button>
 					</Link>
-					<Link to="/collections/products">
+					<Link to="/collections/all/products">
 						<button className="btn primary mh-10px">Products</button>
 					</Link>
 				</div>
@@ -2177,7 +2177,7 @@ const OrderEmail = (props) => {
 					<Link to={'/checkout/order/' + props.match.params.id}>
 						<button className="btn primary">View Order</button>
 					</Link>
-					<Link to="/collections/products">
+					<Link to="/collections/all/products">
 						<button className="btn primary mh-10px">Products</button>
 					</Link>
 					<Link to="/pages/featured">

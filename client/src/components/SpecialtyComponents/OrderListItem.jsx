@@ -243,7 +243,7 @@ const OrderListItem = (props) => {
 						})}
 					</div>
 				</div>
-				<Link to={'/collections/products/' + props.order.orderItems[0].category} className="ai-c ml-1rem">
+				<Link to={'/collections/all/products/' + props.order.orderItems[0].category} className="ai-c ml-1rem">
 					<button className="btn primary">Buy Again</button>
 				</Link>
 				{props.admin && (

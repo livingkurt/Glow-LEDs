@@ -39,13 +39,13 @@ const HomePage = (props) => {
 	const update_list = (poke) => {
 		setSearch(poke);
 		setDisplay(false);
-		history.push('/collections/products?search=' + poke);
+		history.push('/collections/all/products?search=' + poke);
 	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();
 
-		history.push('/collections/products?search=' + search);
+		history.push('/collections/all/products?search=' + search);
 	};
 
 	const contentList = useSelector((state) => state.contentList);
@@ -411,7 +411,7 @@ const HomePage = (props) => {
 								<div className="ml-2rem">
 									<p className="p_descriptions paragraph_font w-50rem">{card.description}</p>
 									<div className="jc-c">
-										<Link className="w-100per" to={`/collections/products/${card.category}`}>
+										<Link className="w-100per" to={`/collections/all/products/${card.category}`}>
 											<button className="btn primary w-100per">Shop {card.name}</button>
 										</Link>
 									</div>
@@ -447,7 +447,7 @@ const HomePage = (props) => {
 								{card.description}
 							</ReadMore>
 							<div className="jc-c">
-								<Link className="w-100per" to={`/collections/products/${card.category}`}>
+								<Link className="w-100per" to={`/collections/all/products/${card.category}`}>
 									<button className="btn primary w-100per">Shop {card.name}</button>
 								</Link>
 							</div>

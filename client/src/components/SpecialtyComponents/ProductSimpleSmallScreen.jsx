@@ -8,7 +8,7 @@ import { LazyImage } from '../UtilityComponents';
 const ProductSmallScreen = (props) => {
 	return (
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
-			<Link to={'/collections/products/' + props.product.pathname}>
+			<Link to={'/collections/all/products/' + props.product.pathname}>
 				<div className="small_screen_product row">
 					<div className="row">
 						<div className="column ai-c pos-rel">

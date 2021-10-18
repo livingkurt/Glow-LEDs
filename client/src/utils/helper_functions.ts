@@ -61,7 +61,7 @@ export const shuffle = (array: any) => {
 };
 
 // export const determnine_link = (item: any) => {
-// 	return `/collections/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
+// 	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
 // 		? '?secondary_color=' + item.secondary_color
 // 		: ''}${item.option ? '?option=' + item.option : ''}${item.secondary_product
 // 		? '?secondary=' + item.size ? item.size : item.option_product_name
@@ -69,7 +69,7 @@ export const shuffle = (array: any) => {
 // };
 export const determnine_link = (item: any) => {
 	// console.log({ [item.name]: item });
-	const link = `/collections/products/${item.pathname}${item.color
+	const link = `/collections/all/products/${item.pathname}${item.color
 		? '?color=' + item.color
 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.option_product
 		? '?option=' + item.size
@@ -83,7 +83,7 @@ export const determnine_link = (item: any) => {
 // item.size ? item.size : item.option_product_name
 // export const determnine_link = (item: any) => {
 // 	console.log({ [item.name]: item });
-// 	const link = `/collections/products/${item.pathname}${item.color
+// 	const link = `/collections/all/products/${item.pathname}${item.color
 // 		? '?color=' + item.color
 // 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.name === 'Nova Clip'
 // 		? item.option_product ? '?option=' + item.option_product.split('-')[1].trim() : ''
