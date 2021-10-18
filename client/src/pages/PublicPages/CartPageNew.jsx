@@ -151,7 +151,7 @@ const CartPage = (props) => {
 																${item.price ? item.price.toFixed(2) : item.price}
 															</label>
 														</del>{' '}
-														<i class="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
+														<i className="fas fa-arrow-right" /> ${item.sale_price ? item.sale_price.toFixed(2) : item.sale_price}{' '}
 														On Sale!
 													</label>
 												) : (

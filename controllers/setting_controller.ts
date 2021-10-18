@@ -6,7 +6,7 @@ export default {
 		try {
 			const settings = await setting_services.findAll_settings_s(query);
 			if (settings) {
-				return res.status(200).send({ message: 'Settings Found', data: settings });
+				return res.status(200).send(settings);
 			}
 			return res.status(404).send({ message: 'Settings Not Found' });
 		} catch (error) {
@@ -20,7 +20,7 @@ export default {
 			const setting = await setting_services.findById_settings_s(params);
 			console.log({ setting });
 			if (setting) {
-				return res.status(200).send({ message: 'Setting Found', data: setting });
+				return res.status(200).send(setting);
 			}
 			return res.status(404).send({ message: 'Setting Not Found' });
 		} catch (error) {
@@ -46,7 +46,7 @@ export default {
 		try {
 			const setting = await setting_services.update_settings_s(params, body);
 			if (setting) {
-				return res.status(200).send({ message: 'Setting Updated', data: setting });
+				return res.status(200).send(setting);
 			}
 			return res.status(500).send({ message: 'Error Updating Setting' });
 		} catch (error) {

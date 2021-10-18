@@ -18,9 +18,9 @@ export const promoListReducer = (state = { promos: [] }, action: { type: any; pa
 		case PROMO_LIST_REQUEST:
 			return { loading: true, promos: [] };
 		case PROMO_LIST_SUCCESS:
-			return { loading: false, promos: action.payload.data, message: action.payload.message };
+			return { loading: false, promos: action.payload, message: 'Promos Found' };
 		case PROMO_LIST_FAIL:
-			return { loading: false, error: action.payload, message: action.payload.message };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const promoDetailsReducer = (state = { promo: { reviews: [] } }, action: 
 		case PROMO_DETAILS_REQUEST:
 			return { loading: true };
 		case PROMO_DETAILS_SUCCESS:
-			return { loading: false, promo: action.payload.data, message: action.payload.message };
+			return { loading: false, promo: action.payload, message: 'Promo Found' };
 		case PROMO_DETAILS_FAIL:
-			return { loading: false, error: action.payload, message: action.payload.message };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const promoDeleteReducer = (state = { promo: {} }, action: { type: any; p
 		case PROMO_DELETE_REQUEST:
 			return { loading: true };
 		case PROMO_DELETE_SUCCESS:
-			return { loading: false, promo: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, promo: action.payload, success: true, message: 'Promo Deleted' };
 		case PROMO_DELETE_FAIL:
-			return { loading: false, error: action.payload, message: action.payload.message };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const promoSaveReducer = (state = { promo: {} }, action: { type: any; pay
 		case PROMO_SAVE_REQUEST:
 			return { loading: true };
 		case PROMO_SAVE_SUCCESS:
-			return { loading: false, success: true, promo: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, promo: action.payload, message: 'Promo Saved' };
 		case PROMO_SAVE_FAIL:
-			return { loading: false, error: action.payload, message: action.payload.message };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

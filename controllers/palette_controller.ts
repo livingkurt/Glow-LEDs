@@ -6,7 +6,7 @@ export default {
 		try {
 			const palettes = await palette_services.findAll_palettes_s(query);
 			if (palettes) {
-				return res.status(200).send({ message: 'Palettes Found', data: palettes });
+				return res.status(200).send(palettes);
 			}
 			return res.status(404).send({ message: 'Palettes Not Found' });
 		} catch (error) {
@@ -20,7 +20,7 @@ export default {
 			const palette = await palette_services.findById_palettes_s(params);
 			console.log({ palette });
 			if (palette) {
-				return res.status(200).send({ message: 'Palette Found', data: palette });
+				return res.status(200).send(palette);
 			}
 			return res.status(404).send({ message: 'Palette Not Found' });
 		} catch (error) {
@@ -34,7 +34,7 @@ export default {
 			const palette = await palette_services.findMy_palettes_s(params);
 			console.log({ palette });
 			if (palette) {
-				return res.status(200).send({ message: 'Paycheck Found', data: palette });
+				return res.status(200).send(palette);
 			}
 			return res.status(404).send({ message: 'Paycheck Not Found' });
 		} catch (error) {
@@ -60,7 +60,7 @@ export default {
 		try {
 			const palette = await palette_services.update_palettes_s(params, body);
 			if (palette) {
-				return res.status(200).send({ message: 'Palette Updated', data: palette });
+				return res.status(200).send(palette);
 			}
 			return res.status(500).send({ message: 'Error Updating Palette' });
 		} catch (error) {

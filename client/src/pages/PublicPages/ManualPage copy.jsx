@@ -211,7 +211,7 @@ const AboutPage = (props) => {
 				/>
 			</Helmet>
 			<div className="mb-10px">
-				<button class="btn secondary" onClick={() => props.history.goBack()}>
+				<button className="btn secondary" onClick={() => props.history.goBack()}>
 					Back to Product
 				</button>
 			</div>

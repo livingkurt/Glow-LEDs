@@ -24,7 +24,7 @@ export default {
 		try {
 			const emails = await email_services.findAll_emails_s(query);
 			if (emails) {
-				return res.status(200).send({ message: 'Emails Found', data: emails });
+				return res.status(200).send(emails);
 			}
 			return res.status(404).send({ message: 'Emails Not Found' });
 		} catch (error) {
@@ -38,7 +38,7 @@ export default {
 			const email = await email_services.findById_emails_s(params);
 			console.log({ email });
 			if (email) {
-				return res.status(200).send({ message: 'Email Found', data: email });
+				return res.status(200).send(email);
 			}
 			return res.status(404).send({ message: 'Email Not Found' });
 		} catch (error) {
@@ -64,7 +64,7 @@ export default {
 		try {
 			const email = await email_services.update_emails_s(params, body);
 			if (email) {
-				return res.status(200).send({ message: 'Email Updated', data: email });
+				return res.status(200).send(email);
 			}
 			return res.status(500).send({ message: 'Error Updating Email' });
 		} catch (error) {
@@ -80,7 +80,7 @@ export default {
 				if (error) {
 					return res.status(500).send({ error, message: 'Error Updating Email' });
 				} else {
-					return res.status(200).send({ message: 'Email Updated', data: data });
+					return res.status(200).send(data);
 				}
 			});
 		} catch (error) {
@@ -97,7 +97,7 @@ export default {
 				if (error) {
 					return res.status(500).send({ error, message: 'Error Updating Email' });
 				} else {
-					return res.status(200).send({ message: 'Email Updated', data: data });
+					return res.status(200).send(data);
 				}
 			});
 		} catch (error) {

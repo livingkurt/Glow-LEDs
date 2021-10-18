@@ -334,7 +334,7 @@ const PaychecksPage = (props) => {
 													</button>
 												</Link>
 												<button className="btn icon" onClick={() => mark_paid(paycheck)}>
-													<i class="fas fa-check-circle" />
+													<i className="fas fa-check-circle" />
 												</button>
 												<button className="btn icon" onClick={() => deleteHandler(paycheck)}>
 													<i className="fas fa-trash-alt" />

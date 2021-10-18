@@ -18,9 +18,9 @@ export const contentListReducer = (state = { contents: [] }, action: { type: any
 		case CONTENT_LIST_REQUEST:
 			return { loading: true, contents: [] };
 		case CONTENT_LIST_SUCCESS:
-			return { loading: false, contents: action.payload.data, message: action.payload.message };
+			return { loading: false, contents: action.payload, message: 'Contents Found' };
 		case CONTENT_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const contentDetailsReducer = (state = { content: { reviews: [] } }, acti
 		case CONTENT_DETAILS_REQUEST:
 			return { loading: true };
 		case CONTENT_DETAILS_SUCCESS:
-			return { loading: false, content: action.payload.data, message: action.payload.message };
+			return { loading: false, content: action.payload, message: 'Content Found' };
 		case CONTENT_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const contentDeleteReducer = (state = { content: {} }, action: { type: an
 		case CONTENT_DELETE_REQUEST:
 			return { loading: true };
 		case CONTENT_DELETE_SUCCESS:
-			return { loading: false, content: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, content: action.payload, success: true, message: 'Content Deleted' };
 		case CONTENT_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const contentSaveReducer = (state = { content: {} }, action: { type: any;
 		case CONTENT_SAVE_REQUEST:
 			return { loading: true };
 		case CONTENT_SAVE_SUCCESS:
-			return { loading: false, success: true, content: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, content: action.payload, message: 'Content Saved' };
 		case CONTENT_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

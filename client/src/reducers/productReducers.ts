@@ -29,9 +29,9 @@ export const productListReducer = (state = { products: [] }, action: { type: any
 		case PRODUCT_LIST_REQUEST:
 			return { loading: true, products: [] };
 		case PRODUCT_LIST_SUCCESS:
-			return { loading: false, products: action.payload };
+			return { loading: false, products: action.payload, message: 'Products Found' };
 		case PRODUCT_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -42,9 +42,9 @@ export const productDetailsReducer = (state = { product: { reviews: [] } }, acti
 		case PRODUCT_DETAILS_REQUEST:
 			return { loading: true };
 		case PRODUCT_DETAILS_SUCCESS:
-			return { loading: false, product: action.payload };
+			return { loading: false, product: action.payload, message: 'Product Found' };
 		case PRODUCT_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -55,9 +55,9 @@ export const productDeleteReducer = (state = { product: {} }, action: { type: an
 		case PRODUCT_DELETE_REQUEST:
 			return { loading: true };
 		case PRODUCT_DELETE_SUCCESS:
-			return { loading: false, product: action.payload, success: true };
+			return { loading: false, product: action.payload, success: true, message: 'Product Deleted' };
 		case PRODUCT_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -68,9 +68,9 @@ export const productSaveReducer = (state = { product: {} }, action: { type: any;
 		case PRODUCT_SAVE_REQUEST:
 			return { loading: true };
 		case PRODUCT_SAVE_SUCCESS:
-			return { loading: false, success: true, product: action.payload };
+			return { loading: false, success: true, product: action.payload, message: 'Product Saved' };
 		case PRODUCT_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -81,9 +81,9 @@ export const productImagesReducer = (state = { images: [] }, action: { type: any
 		case PRODUCT_IMAGES_REQUEST:
 			return { loading: true };
 		case PRODUCT_IMAGES_SUCCESS:
-			return { loading: false, images: action.payload };
+			return { loading: false, images: action.payload, message: 'Product Images Found' };
 		case PRODUCT_IMAGES_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -94,9 +94,9 @@ export const productReviewSaveReducer = (state = {}, action: { type: any; payloa
 		case PRODUCT_REVIEW_SAVE_REQUEST:
 			return { loading: true };
 		case PRODUCT_REVIEW_SAVE_SUCCESS:
-			return { loading: false, review: action.payload, success: true };
+			return { loading: false, review: action.payload, success: true, message: 'Product Reviews Saved' };
 		case PRODUCT_REVIEW_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		case PRODUCT_REVIEW_SAVE_RESET:
 			return {};
 		default:
@@ -108,9 +108,9 @@ export const productReviewDeleteReducer = (state = {}, action: { type: any; payl
 		case PRODUCT_REVIEW_DELETE_REQUEST:
 			return { loading: true };
 		case PRODUCT_REVIEW_DELETE_SUCCESS:
-			return { loading: false, review: action.payload, success: true };
+			return { loading: false, review: action.payload, success: true, message: 'Product Reviews Deleted' };
 		case PRODUCT_REVIEW_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		case PRODUCT_REVIEW_DELETE_RESET:
 			return {};
 		default:

@@ -162,7 +162,7 @@ const SettingsPage = (props) => {
 													</button>
 												</Link>
 												{/* <button className="btn icon" onClick={() => mark_paid(setting)}>
-													<i class="fas fa-check-circle" />
+													<i className="fas fa-check-circle" />
 												</button> */}
 												<button className="btn icon" onClick={() => deleteHandler(setting)}>
 													<i className="fas fa-trash-alt" />

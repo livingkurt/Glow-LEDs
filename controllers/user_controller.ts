@@ -12,7 +12,7 @@ export default {
 		try {
 			const user = await user_services.findAll_users_s(query);
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -25,7 +25,7 @@ export default {
 		try {
 			const user = await user_services.findById_users_s(params);
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -38,9 +38,9 @@ export default {
 		try {
 			const user = await user_services.findByEmail_users_s(params);
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
-			return res.status(200).send({ message: 'User Not Found', data: {} });
+			return res.status(200).send({});
 		} catch (error) {
 			console.log({ findByEmail_users_c_error: error });
 			res.status(500).send({ error, message: 'Error Finding User' });
@@ -60,7 +60,7 @@ export default {
 					try {
 						const new_user = await user_db.create_users_db(user);
 						console.log({ new_user });
-						return res.status(200).send({ message: 'New User Created', data: new_user });
+						return res.status(200).send(new_user);
 					} catch (error) {
 						console.log({ error });
 						res.status(500).json({ message: 'Error Creating User', error });
@@ -78,7 +78,7 @@ export default {
 		try {
 			const user = await user_services.update_profile_users_s(params, body);
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -91,7 +91,7 @@ export default {
 		try {
 			const user = await user_services.update_users_s(params, body);
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -104,7 +104,7 @@ export default {
 		try {
 			const user = await user_services.remove_users_s(params);
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -132,7 +132,7 @@ export default {
 					try {
 						const new_user = await user_db.create_users_db(user);
 						console.log({ new_user });
-						return res.status(200).send({ message: 'New User Registered', data: new_user });
+						return res.status(200).send(new_user);
 					} catch (error) {
 						console.log({ error });
 						res.status(500).json({ message: 'Error Registering User', error });
@@ -182,7 +182,7 @@ export default {
 					try {
 						user.password = hash;
 						const new_user = await user_db.update_users_db(user._id, user);
-						return res.status(200).send({ message: 'Password Updated', data: new_user });
+						return res.status(200).send(new_user);
 					} catch (error) {
 						console.log({ error });
 						res.status(500).json({ message: 'Error Registering User', error });
@@ -201,7 +201,7 @@ export default {
 			const user = await user_services.findByEmail_users_s(body);
 			console.log({ user });
 			if (user) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -214,7 +214,7 @@ export default {
 	// 	try {
 	// 		const user = await user_services.verify_users_s(params);
 	// 		if (user) {
-	// 			return res.status(200).send({ message: 'User Found', data: user });
+	// 			return res.status(200).send(user );
 	// 		}
 	// 		return res.status(404).send({ message: 'User Not Found' });
 	// 	} catch (error) {
@@ -227,7 +227,7 @@ export default {
 		try {
 			const user = await user_services.check_password_s(params, body);
 			if (user !== undefined) {
-				return res.status(200).send({ message: 'User Found', data: user });
+				return res.status(200).send(user);
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -240,7 +240,7 @@ export default {
 	// 	try {
 	// 		const user = await user_services.checkemail_users_s(params);
 	// 		if (user) {
-	// 			return res.status(200).send({ message: 'User Found', data: user });
+	// 			return res.status(200).send(user );
 	// 		}
 	// 		return res.status(404).send({ message: 'User Not Found' });
 	// 	} catch (error) {
@@ -253,7 +253,7 @@ export default {
 	// 	try {
 	// 		const user = await user_services.createadmin_users_s(params);
 	// 		if (user) {
-	// 			return res.status(200).send({ message: 'User Found', data: user });
+	// 			return res.status(200).send(user );
 	// 		}
 	// 		return res.status(404).send({ message: 'User Not Found' });
 	// 	} catch (error) {

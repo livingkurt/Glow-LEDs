@@ -18,9 +18,9 @@ export const settingListReducer = (state = { settings: [] }, action: { type: any
 		case SETTING_LIST_REQUEST:
 			return { loading: true, settings: [] };
 		case SETTING_LIST_SUCCESS:
-			return { loading: false, settings: action.payload.data, message: action.payload.message };
+			return { loading: false, settings: action.payload, message: 'Settings Found' };
 		case SETTING_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const settingDetailsReducer = (state = { setting: {} }, action: { type: a
 		case SETTING_DETAILS_REQUEST:
 			return { loading: true };
 		case SETTING_DETAILS_SUCCESS:
-			return { loading: false, setting: action.payload.data, message: action.payload.message };
+			return { loading: false, setting: action.payload, message: 'Setting Found' };
 		case SETTING_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const settingDeleteReducer = (state = { setting: {} }, action: { type: an
 		case SETTING_DELETE_REQUEST:
 			return { loading: true };
 		case SETTING_DELETE_SUCCESS:
-			return { loading: false, setting: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, setting: action.payload, success: true, message: 'Setting Deleted' };
 		case SETTING_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const settingSaveReducer = (state = { setting: {} }, action: { type: any;
 		case SETTING_SAVE_REQUEST:
 			return { loading: true };
 		case SETTING_SAVE_SUCCESS:
-			return { loading: false, success: true, setting: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, setting: action.payload, message: 'Setting Saved' };
 		case SETTING_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

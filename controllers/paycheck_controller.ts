@@ -6,7 +6,7 @@ export default {
 		try {
 			const paychecks = await paycheck_services.findAll_paychecks_s(query);
 			if (paychecks) {
-				return res.status(200).send({ message: 'Paychecks Found', data: paychecks });
+				return res.status(200).send(paychecks);
 			}
 			return res.status(404).send({ message: 'Paychecks Not Found' });
 		} catch (error) {
@@ -20,7 +20,7 @@ export default {
 			const paycheck = await paycheck_services.findById_paychecks_s(params);
 			console.log({ paycheck });
 			if (paycheck) {
-				return res.status(200).send({ message: 'Paycheck Found', data: paycheck });
+				return res.status(200).send(paycheck);
 			}
 			return res.status(404).send({ message: 'Paycheck Not Found' });
 		} catch (error) {
@@ -34,7 +34,7 @@ export default {
 			const paycheck = await paycheck_services.findMy_paychecks_s(params);
 			console.log({ paycheck });
 			if (paycheck) {
-				return res.status(200).send({ message: 'Paycheck Found', data: paycheck });
+				return res.status(200).send(paycheck);
 			}
 			return res.status(404).send({ message: 'Paycheck Not Found' });
 		} catch (error) {
@@ -60,7 +60,7 @@ export default {
 		try {
 			const paycheck = await paycheck_services.update_paychecks_s(params, body);
 			if (paycheck) {
-				return res.status(200).send({ message: 'Paycheck Updated', data: paycheck });
+				return res.status(200).send(paycheck);
 			}
 			return res.status(500).send({ message: 'Error Updating Paycheck' });
 		} catch (error) {

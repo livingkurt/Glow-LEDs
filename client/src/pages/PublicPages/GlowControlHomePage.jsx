@@ -164,7 +164,7 @@ const GlowControlHomePage = (props) => {
 												<td>
 													<Link to={'/secure/account/glowcontrol/' + device._id}>
 														<button className="btn icon">
-															<i class="fas fa-eye" />
+															<i className="fas fa-eye" />
 														</button>
 													</Link>
 												</td>

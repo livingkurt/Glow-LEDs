@@ -167,7 +167,7 @@ const ContactPage = (props) => {
 			<div className="column jc-c">
 				<div className="ta-c">We are avaiable from 9 AM to 8 PM on Weekdays</div>
 				<div className="ta-c mt-1rem">
-					Need a quicker reply? 💬 Use the Facebook Chat <i class="fab fa-facebook zoom" /> at the Bottom
+					Need a quicker reply? 💬 Use the Facebook Chat <i className="fab fa-facebook zoom" /> at the Bottom
 					right of your screen to chat with us instantly! 💨
 				</div>
 			</div>

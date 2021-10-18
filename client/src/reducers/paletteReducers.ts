@@ -21,9 +21,9 @@ export const paletteListReducer = (state = { palettes: [] }, action: { type: any
 		case PALETTE_LIST_REQUEST:
 			return { loading: true, palettes: [] };
 		case PALETTE_LIST_SUCCESS:
-			return { loading: false, palettes: action.payload.data, message: action.payload.message };
+			return { loading: false, palettes: action.payload, message: 'Palettes Found' };
 		case PALETTE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -39,9 +39,9 @@ export const myPaletteListReducer = (
 		case MY_PALETTE_LIST_REQUEST:
 			return { loading: true };
 		case MY_PALETTE_LIST_SUCCESS:
-			return { loading: false, palettes: action.payload.data, message: action.payload.message };
+			return { loading: false, palettes: action.payload, message: 'Palettes Found' };
 		case MY_PALETTE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -52,9 +52,9 @@ export const paletteDetailsReducer = (state = { palette: {} }, action: { type: a
 		case PALETTE_DETAILS_REQUEST:
 			return { loading: true };
 		case PALETTE_DETAILS_SUCCESS:
-			return { loading: false, palette: action.payload.data, message: action.payload.message };
+			return { loading: false, palette: action.payload, message: 'Palette Found' };
 		case PALETTE_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -65,9 +65,9 @@ export const paletteDeleteReducer = (state = { palette: {} }, action: { type: an
 		case PALETTE_DELETE_REQUEST:
 			return { loading: true };
 		case PALETTE_DELETE_SUCCESS:
-			return { loading: false, palette: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, palette: action.payload, success: true, message: 'Palette Deleted' };
 		case PALETTE_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -78,9 +78,9 @@ export const paletteSaveReducer = (state = { palette: {} }, action: { type: any;
 		case PALETTE_SAVE_REQUEST:
 			return { loading: true };
 		case PALETTE_SAVE_SUCCESS:
-			return { loading: false, success: true, palette: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, palette: action.payload, message: 'Palette Saved' };
 		case PALETTE_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

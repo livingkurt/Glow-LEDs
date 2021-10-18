@@ -322,8 +322,8 @@ const FAQPage = () => {
 								</span>️, phone number{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📞
-								</span>️ or social media username <i class="fab fa-facebook" />{' '}
-								<i class="fab fa-instagram" />.
+								</span>️ or social media username <i className="fab fa-facebook" />{' '}
+								<i className="fab fa-instagram" />.
 							</li>
 							<li>
 								A design will be drafted by us{' '}
@@ -449,8 +449,8 @@ const FAQPage = () => {
 							Featured Content
 						</h2>
 						<p className="paragraph_font">
-							Please tag us on Facebook <i class="fab fa-facebook" /> and Instagram{' '}
-							<i class="fab fa-instagram" /> when you recieve your products! We love{' '}
+							Please tag us on Facebook <i className="fab fa-facebook" /> and Instagram{' '}
+							<i className="fab fa-instagram" /> when you recieve your products! We love{' '}
 							<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
 								❤
 							</span>️ to see how you put our products to use. To be featured{' '}
@@ -531,7 +531,7 @@ const FAQPage = () => {
 								be filled as it is received. Some orders may take longer than others to be shipped.
 							</li>
 							<li>
-								Small packages will be sent via USPS <i class="fab fa-usps" /> First Class and large
+								Small packages will be sent via USPS <i className="fab fa-usps" /> First Class and large
 								packages{' '}
 								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 									📦

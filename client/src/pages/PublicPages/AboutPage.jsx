@@ -60,7 +60,7 @@ const AboutPage = () => {
 				appId="379385106779969"
 				htmlRef={window.location.pathname}
 			/>
-			<div class="inner_content">
+			<div className="inner_content">
 				<h1 style={{ fontSize: 40, textAlign: 'center' }}>About Glow-LEDs</h1>
 				<div>
 					{/* <h2

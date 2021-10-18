@@ -6,7 +6,7 @@ export default {
 		try {
 			const affiliates = await affiliate_services.findAll_affiliates_s(query);
 			if (affiliates) {
-				return res.status(200).send({ message: 'Affiliates Found', data: affiliates });
+				return res.status(200).send(affiliates);
 			}
 			return res.status(404).send({ message: 'Affiliates Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const affiliate = await affiliate_services.findById_affiliates_s(params);
 			if (affiliate) {
-				return res.status(200).send({ message: 'Affiliate Found', data: affiliate });
+				return res.status(200).send(affiliate);
 			}
 			return res.status(404).send({ message: 'Affiliate Not Found' });
 		} catch (error) {
@@ -32,7 +32,7 @@ export default {
 		try {
 			const affiliate = await affiliate_services.create_affiliates_s(body);
 			if (affiliate) {
-				return res.status(201).send({ message: 'New Affiliate Created', data: affiliate });
+				return res.status(201).send(affiliate);
 			}
 			return res.status(500).send({ message: 'Error Creating Affiliate' });
 		} catch (error) {
@@ -45,7 +45,7 @@ export default {
 		try {
 			const affiliate = await affiliate_services.update_affiliates_s(params, body);
 			if (affiliate) {
-				return res.status(200).send({ message: 'Affiliate Updated', data: affiliate });
+				return res.status(200).send(affiliate);
 			}
 			return res.status(500).send({ message: 'Error Updating Affiliate' });
 		} catch (error) {

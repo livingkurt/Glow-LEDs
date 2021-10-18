@@ -56,7 +56,7 @@ const MaintenancePage = (props) => {
 						/>
 					</div>
 					<h1
-						class="glow_leds_text"
+						className="glow_leds_text"
 						styles={{
 							fontSize: '67px',
 							margin: 0,

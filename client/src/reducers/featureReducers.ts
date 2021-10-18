@@ -18,9 +18,9 @@ export const featureListReducer = (state = { features: [] }, action: { type: any
 		case FEATURE_LIST_REQUEST:
 			return { loading: true, features: [] };
 		case FEATURE_LIST_SUCCESS:
-			return { loading: false, features: action.payload.data, message: action.payload.message };
+			return { loading: false, features: action.payload, message: 'Features Found' };
 		case FEATURE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const featureDetailsReducer = (state = { feature: {} }, action: { type: a
 		case FEATURE_DETAILS_REQUEST:
 			return { loading: true };
 		case FEATURE_DETAILS_SUCCESS:
-			return { loading: false, feature: action.payload.data, message: action.payload.message };
+			return { loading: false, feature: action.payload, message: 'Feature Found' };
 		case FEATURE_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const featureDeleteReducer = (state = { feature: {} }, action: { type: an
 		case FEATURE_DELETE_REQUEST:
 			return { loading: true };
 		case FEATURE_DELETE_SUCCESS:
-			return { loading: false, feature: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, feature: action.payload, success: true, message: 'Feature Deleted' };
 		case FEATURE_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const featureSaveReducer = (state = { feature: {} }, action: { type: any;
 		case FEATURE_SAVE_REQUEST:
 			return { loading: true };
 		case FEATURE_SAVE_SUCCESS:
-			return { loading: false, success: true, feature: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, feature: action.payload, message: 'Feature Saved' };
 		case FEATURE_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

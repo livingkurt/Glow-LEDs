@@ -55,7 +55,7 @@ export default {
 			const updatedLog = await Log.updateOne({ _id: logId }, req.body);
 			console.log({ log_routes_post: updatedLog });
 			if (updatedLog) {
-				return res.status(200).send({ message: 'Log Updated', data: updatedLog });
+				return res.status(200).send(updatedLog);
 			}
 		}
 		return res.status(500).send({ message: ' Error in Updating Log.' });

@@ -928,7 +928,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order/${order._id}/order/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>
@@ -949,7 +949,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order_status/${order._id}/reassured/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>
@@ -974,7 +974,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>
@@ -995,7 +995,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order_status/${order._id}/packaged/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>
@@ -1016,7 +1016,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order_status/${order._id}/shipped/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>
@@ -1037,7 +1037,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order_status/${order._id}/delivered/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>
@@ -1058,7 +1058,7 @@ ${order.shipping.email}`)}
 													to={`/secure/glow/emails/order/${order._id}/refunded/false/${message_to_user}`}
 												>
 													<button className="btn secondary">
-														<i class="fas fa-paper-plane" />
+														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
 											</div>

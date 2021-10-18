@@ -37,9 +37,9 @@ export const orderCreateReducer = (state = {}, action: { type: any; payload: any
 		case ORDER_CREATE_REQUEST:
 			return { loading: true };
 		case ORDER_CREATE_SUCCESS:
-			return { loading: false, order: action.payload, success: true };
+			return { loading: false, order: action.payload, success: true, message: 'Order Created' };
 		case ORDER_CREATE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		// case ORDER_REMOVE_STATE:
 		// 	return { loading: false, order: action.payload, success: false };
 		default:
@@ -61,9 +61,9 @@ export const orderDetailsReducer = (
 		case ORDER_DETAILS_REQUEST:
 			return { loading: true };
 		case ORDER_DETAILS_SUCCESS:
-			return { loading: false, order: action.payload };
+			return { loading: false, order: action.payload, message: 'Order Found' };
 		case ORDER_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -82,9 +82,9 @@ export const orderDetailsPublicReducer = (
 		case ORDER_DETAILS_PUBLIC_REQUEST:
 			return { loading: true };
 		case ORDER_DETAILS_PUBLIC_SUCCESS:
-			return { loading: false, order: action.payload };
+			return { loading: false, order: action.payload, message: 'Order Found' };
 		case ORDER_DETAILS_PUBLIC_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -100,9 +100,9 @@ export const myOrderListReducer = (
 		case MY_ORDER_LIST_REQUEST:
 			return { loading: true };
 		case MY_ORDER_LIST_SUCCESS:
-			return { loading: false, orders: action.payload };
+			return { loading: false, orders: action.payload, message: 'Orders Found' };
 		case MY_ORDER_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -124,10 +124,11 @@ export const orderListReducer = (
 					orders: action.payload.orders,
 					totalPages: action.payload.totalPages,
 					currentPage: action.payload.currentPage
-				}
+				},
+				message: 'Orders Found'
 			};
 		case ORDER_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -147,9 +148,9 @@ export const orderPayReducer = (
 		case ORDER_PAY_REQUEST:
 			return { loading: true };
 		case ORDER_PAY_SUCCESS:
-			return { loading: false, success: true };
+			return { loading: false, success: true, message: 'Order Paid' };
 		case ORDER_PAY_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		case ORDER_REMOVE_STATE:
 			return { loading: false, success: false };
 		default:
@@ -171,9 +172,9 @@ export const orderDeleteReducer = (
 		case ORDER_DELETE_REQUEST:
 			return { loading: true };
 		case ORDER_DELETE_SUCCESS:
-			return { loading: false, success: true };
+			return { loading: false, success: true, message: 'Order Deleted' };
 		case ORDER_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -184,9 +185,9 @@ export const orderRefundReducer = (state = {}, action: { type: any; payload: any
 		case ORDER_REFUND_REQUEST:
 			return { loading: true };
 		case ORDER_REFUND_SUCCESS:
-			return { loading: false, order: action.payload, success: true };
+			return { loading: false, order: action.payload, success: true, message: 'Order Refunded' };
 		case ORDER_REFUND_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -197,9 +198,9 @@ export const orderUpdateReducer = (state = {}, action: { type: any; payload: any
 		case ORDER_UPDATE_REQUEST:
 			return { loading: true };
 		case ORDER_UPDATE_SUCCESS:
-			return { loading: false, order: action.payload, success: true };
+			return { loading: false, order: action.payload, success: true, message: 'Order Updated' };
 		case ORDER_UPDATE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -210,9 +211,9 @@ export const orderSaveReducer = (state = { order: {} }, action: { type: any; pay
 		case ORDER_SAVE_REQUEST:
 			return { loading: true };
 		case ORDER_SAVE_SUCCESS:
-			return { loading: false, success: true, order: action.payload };
+			return { loading: false, success: true, order: action.payload, message: 'Order Saved' };
 		case ORDER_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

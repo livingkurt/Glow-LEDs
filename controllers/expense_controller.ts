@@ -6,7 +6,7 @@ export default {
 		try {
 			const expenses = await expense_services.findAll_expenses_s(query);
 			if (expenses) {
-				return res.status(200).send({ message: 'Expenses Found', data: expenses });
+				return res.status(200).send(expenses);
 			}
 			return res.status(404).send({ message: 'Expenses Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const expenses = await expense_services.findAllByDate_expenses_s(body);
 			if (expenses) {
-				return res.status(200).send({ message: 'Expenses Found', data: expenses });
+				return res.status(200).send(expenses);
 			}
 			return res.status(404).send({ message: 'Expenses Not Found' });
 		} catch (error) {
@@ -33,7 +33,7 @@ export default {
 			const expense = await expense_services.findById_expenses_s(params);
 			console.log({ expense });
 			if (expense) {
-				return res.status(200).send({ message: 'Expense Found', data: expense });
+				return res.status(200).send(expense);
 			}
 			return res.status(404).send({ message: 'Expense Not Found' });
 		} catch (error) {
@@ -72,7 +72,7 @@ export default {
 		try {
 			const expense = await expense_services.update_expenses_s(params, body);
 			if (expense) {
-				return res.status(200).send({ message: 'Expense Updated', data: expense });
+				return res.status(200).send(expense);
 			}
 			return res.status(500).send({ message: 'Error Updating Expense' });
 		} catch (error) {

@@ -6,7 +6,7 @@ export default {
 		try {
 			const parcels = await parcel_services.findAll_parcels_s(query);
 			if (parcels) {
-				return res.status(200).send({ message: 'Parcels Found', data: parcels });
+				return res.status(200).send(parcels);
 			}
 			return res.status(404).send({ message: 'Parcels Not Found' });
 		} catch (error) {
@@ -20,7 +20,7 @@ export default {
 			const parcel = await parcel_services.findById_parcels_s(params);
 			console.log({ parcel });
 			if (parcel) {
-				return res.status(200).send({ message: 'Parcel Found', data: parcel });
+				return res.status(200).send(parcel);
 			}
 			return res.status(404).send({ message: 'Parcel Not Found' });
 		} catch (error) {
@@ -46,7 +46,7 @@ export default {
 		try {
 			const parcel = await parcel_services.update_parcels_s(params, body);
 			if (parcel) {
-				return res.status(200).send({ message: 'Parcel Updated', data: parcel });
+				return res.status(200).send(parcel);
 			}
 			return res.status(500).send({ message: 'Error Updating Parcel' });
 		} catch (error) {

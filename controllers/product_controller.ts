@@ -251,7 +251,7 @@ export default {
 				const updatedProduct = await Product.updateOne({ _id: productId }, req.body);
 				// console.log({ updatedProduct });
 				if (updatedProduct) {
-					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+					return res.status(200).send(updatedProduct);
 				}
 			} else {
 				console.log('Error in Updating Product.');
@@ -500,7 +500,7 @@ export default {
 				);
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+					return res.status(200).send(updatedProduct);
 				}
 			} else {
 				console.log('Error in Updating Product.');
@@ -525,7 +525,7 @@ export default {
 				);
 				// console.log({ updatedProduct });
 				if (updatedProduct) {
-					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+					return res.status(200).send(updatedProduct);
 				}
 			} else {
 				console.log('Error in Updating Product.');
@@ -551,7 +551,7 @@ export default {
 				);
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+					return res.status(200).send(updatedProduct);
 				}
 			} else {
 				console.log('Error in Updating Product.');
@@ -590,7 +590,7 @@ export default {
 				const updatedProduct = await Product.updateOne({ _id: product_id }, { ...req.body, product_options });
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+					return res.status(200).send(updatedProduct);
 				}
 			} else {
 				console.log('Error in Updating Product.');
@@ -615,7 +615,7 @@ export default {
 				const updatedProduct = await Product.updateOne({ _id: product_id }, { ...body, pathname: pathname });
 				console.log({ updatedProduct });
 				if (updatedProduct) {
-					return res.status(200).send({ message: 'Product Updated', data: updatedProduct });
+					return res.status(200).send(updatedProduct);
 				}
 			} else {
 				console.log('Error in Updating Product.');

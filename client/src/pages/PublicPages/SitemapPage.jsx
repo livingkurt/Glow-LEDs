@@ -24,7 +24,7 @@ const SitemapPage = () => {
 					content="Glow LEDs Sitemap of all the places you can be on our website. Explore and you may find a place you've never been before."
 				/>
 			</Helmet>
-			<div class="inner_content">
+			<div className="inner_content">
 				<h1 style={{ textAlign: 'center' }}>Glow LEDs Sitemap</h1>
 				<div className="wrap jc-b">
 					<div style={{ width: '50%' }}>

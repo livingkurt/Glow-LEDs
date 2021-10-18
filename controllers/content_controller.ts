@@ -6,7 +6,7 @@ export default {
 		try {
 			const contents = await content_services.findAll_contents_s(query);
 			if (contents) {
-				return res.status(200).send({ message: 'Contents Found', data: contents });
+				return res.status(200).send(contents);
 			}
 			return res.status(404).send({ message: 'Contents Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const contents = await content_services.findAllEvents_contents_s(query);
 			if (contents) {
-				return res.status(200).send({ message: 'Contents Found', data: contents });
+				return res.status(200).send(contents);
 			}
 			return res.status(404).send({ message: 'Contents Not Found' });
 		} catch (error) {
@@ -32,7 +32,7 @@ export default {
 		try {
 			const content = await content_services.findById_contents_s(params);
 			if (content) {
-				return res.status(200).send({ message: 'Content Found', data: content });
+				return res.status(200).send(content);
 			}
 			return res.status(404).send({ message: 'Content Not Found' });
 		} catch (error) {
@@ -58,7 +58,7 @@ export default {
 		try {
 			const content = await content_services.update_contents_s(params, body);
 			if (content) {
-				return res.status(200).send({ message: 'Content Updated', data: content });
+				return res.status(200).send(content);
 			}
 			return res.status(500).send({ message: 'Error Updating Content' });
 		} catch (error) {

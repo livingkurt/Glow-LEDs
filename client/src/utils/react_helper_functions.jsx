@@ -329,7 +329,7 @@ export const sale_price_product_option_switch_product = (price, sale_price, prev
 				<del style={{ color: 'red' }}>
 					<label style={{ color: 'white' }}>${price ? price.toFixed(2) : price}</label>
 				</del>{' '}
-				<i class="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price} On Sale!
+				<i className="fas fa-arrow-right" /> ${sale_price ? sale_price.toFixed(2) : sale_price} On Sale!
 			</label>
 		);
 	} else if (previous_price) {
@@ -340,7 +340,7 @@ export const sale_price_product_option_switch_product = (price, sale_price, prev
 						${previous_price ? previous_price.toFixed(2) : previous_price}
 					</label>
 				</del>{' '}
-				<i class="fas fa-arrow-right" /> ${price ? price.toFixed(2) : price} Discounted!
+				<i className="fas fa-arrow-right" /> ${price ? price.toFixed(2) : price} Discounted!
 			</label>
 		);
 	} else {
@@ -669,7 +669,7 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Ordered</div>
-				{/* <i class="fas fa-check-square" /> */}
+				{/* <i className="fas fa-check-square" /> */}
 			</div>
 			<div
 				style={
@@ -693,7 +693,7 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Paid </div>
-				{/* <i class="fas fa-money-bill-wave" /> */}
+				{/* <i className="fas fa-money-bill-wave" /> */}
 			</div>
 			<div
 				style={
@@ -717,7 +717,7 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Manufactured </div>
-				{/* <i class="fas fa-hammer" /> */}
+				{/* <i className="fas fa-hammer" /> */}
 			</div>
 			<div
 				style={
@@ -741,7 +741,7 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Packaged </div>
-				{/* <i class="fas fa-box" /> */}
+				{/* <i className="fas fa-box" /> */}
 			</div>
 			<div
 				style={

@@ -18,9 +18,9 @@ export const expenseListReducer = (state = { expenses: [] }, action: { type: any
 		case EXPENSE_LIST_REQUEST:
 			return { loading: true, expenses: [] };
 		case EXPENSE_LIST_SUCCESS:
-			return { loading: false, expenses: action.payload.data, message: action.payload.message };
+			return { loading: false, expenses: action.payload, message: 'Expenses Found' };
 		case EXPENSE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const expenseDetailsReducer = (state = { expense: { reviews: [] } }, acti
 		case EXPENSE_DETAILS_REQUEST:
 			return { loading: true };
 		case EXPENSE_DETAILS_SUCCESS:
-			return { loading: false, expense: action.payload.data, message: action.payload.message };
+			return { loading: false, expense: action.payload, message: 'Expense Found' };
 		case EXPENSE_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const expenseDeleteReducer = (state = { expense: {} }, action: { type: an
 		case EXPENSE_DELETE_REQUEST:
 			return { loading: true };
 		case EXPENSE_DELETE_SUCCESS:
-			return { loading: false, expense: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, expense: action.payload, success: true, message: 'Expense Deleted' };
 		case EXPENSE_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const expenseSaveReducer = (state = { expense: {} }, action: { type: any;
 		case EXPENSE_SAVE_REQUEST:
 			return { loading: true };
 		case EXPENSE_SAVE_SUCCESS:
-			return { loading: false, success: true, expense: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, expense: action.payload, message: 'Expense Saved' };
 		case EXPENSE_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

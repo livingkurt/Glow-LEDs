@@ -874,18 +874,6 @@ const OrderEmail = (props) => {
 																											'5px'
 																									}}
 																								>
-																									{/* <i
-																										width="18"
-																										height="18"
-																										style={{
-																											verticalAlign:
-																												'middle',
-																											marginRight:
-																												'10px'
-																										}}
-																										class="fas fa-tag"
-																									/> */}
-
 																									<img
 																										src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
 																										style={{
@@ -2221,7 +2209,7 @@ const OrderEmail = (props) => {
 					</button>
 
 					<div id="myModal" style={{ display: show_modal ? 'block' : 'none' }} className="modal">
-						<div class="modal-content">
+						<div className="modal-content">
 							<span className="close" onClick={() => show_hide_survey()}>
 								&times;
 							</span>

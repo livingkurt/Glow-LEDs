@@ -21,9 +21,9 @@ export const deviceListReducer = (state = { devices: [] }, action: { type: any; 
 		case DEVICE_LIST_REQUEST:
 			return { loading: true, devices: [] };
 		case DEVICE_LIST_SUCCESS:
-			return { loading: false, devices: action.payload };
+			return { loading: false, devices: action.payload, message: 'Devices Found' };
 		case DEVICE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -39,9 +39,9 @@ export const myDeviceListReducer = (
 		case MY_DEVICE_LIST_REQUEST:
 			return { loading: true };
 		case MY_DEVICE_LIST_SUCCESS:
-			return { loading: false, devices: action.payload };
+			return { loading: false, devices: action.payload, message: 'Devices Found' };
 		case MY_DEVICE_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -52,9 +52,9 @@ export const deviceDetailsReducer = (state = { device: { reviews: [] } }, action
 		case DEVICE_DETAILS_REQUEST:
 			return { loading: true };
 		case DEVICE_DETAILS_SUCCESS:
-			return { loading: false, device: action.payload };
+			return { loading: false, device: action.payload, message: 'Device Found' };
 		case DEVICE_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -65,9 +65,9 @@ export const deviceDeleteReducer = (state = { device: {} }, action: { type: any;
 		case DEVICE_DELETE_REQUEST:
 			return { loading: true };
 		case DEVICE_DELETE_SUCCESS:
-			return { loading: false, device: action.payload, success: true };
+			return { loading: false, device: action.payload, success: true, message: 'Device Deleted' };
 		case DEVICE_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -78,9 +78,9 @@ export const deviceSaveReducer = (state = { device: {} }, action: { type: any; p
 		case DEVICE_SAVE_REQUEST:
 			return { loading: true };
 		case DEVICE_SAVE_SUCCESS:
-			return { loading: false, success: true, device: action.payload };
+			return { loading: false, success: true, device: action.payload, message: 'Device Saved' };
 		case DEVICE_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

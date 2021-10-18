@@ -6,7 +6,7 @@ export default {
 		try {
 			const chips = await chip_services.findAll_chips_s(query);
 			if (chips) {
-				return res.status(200).send({ message: 'Chips Found', data: chips });
+				return res.status(200).send(chips);
 			}
 			return res.status(404).send({ message: 'Chips Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const chip = await chip_services.findById_chips_s(params);
 			if (chip) {
-				return res.status(200).send({ message: 'Chip Found', data: chip });
+				return res.status(200).send(chip);
 			}
 			return res.status(404).send({ message: 'Chip Not Found' });
 		} catch (error) {
@@ -45,7 +45,7 @@ export default {
 		try {
 			const chip = await chip_services.update_chips_s(params, body);
 			if (chip) {
-				return res.status(200).send({ message: 'Chip Updated', data: chip });
+				return res.status(200).send(chip);
 			}
 			return res.status(500).send({ message: 'Error Updating Chip' });
 		} catch (error) {

@@ -6,7 +6,7 @@ export default {
 		try {
 			const teams = await team_services.findAll_teams_s(query);
 			if (teams) {
-				return res.status(200).send({ message: 'Teams Found', data: teams });
+				return res.status(200).send(teams);
 			}
 			return res.status(404).send({ message: 'Teams Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const team = await team_services.findByPathname_teams_s(params);
 			if (team) {
-				return res.status(200).send({ message: 'Team Found', data: team });
+				return res.status(200).send(team);
 			}
 			return res.status(404).send({ message: 'Team Not Found' });
 		} catch (error) {
@@ -32,7 +32,7 @@ export default {
 		try {
 			const team = await team_services.findByAffiliate_teams_s(params);
 			if (team) {
-				return res.status(200).send({ message: 'Team Found', data: team });
+				return res.status(200).send(team);
 			}
 			return res.status(404).send({ message: 'Team Not Found' });
 		} catch (error) {
@@ -58,7 +58,7 @@ export default {
 		try {
 			const team = await team_services.update_teams_s(params, body);
 			if (team) {
-				return res.status(200).send({ message: 'Team Updated', data: team });
+				return res.status(200).send(team);
 			}
 			return res.status(500).send({ message: 'Error Updating Team' });
 		} catch (error) {
@@ -189,7 +189,7 @@ export default {
 // 			if (team) {
 // 				const updatedTeam = await Team.updateOne({ pathname: team_pathname }, req.body);
 // 				if (updatedTeam) {
-// 					return res.status(200).send({ message: 'Team Updated', data: updatedTeam });
+// 					return res.status(200).send(updatedTeam );
 // 				}
 // 			} else {
 // 				return res.status(500).send({ message: ' Error in Updating Team.' });

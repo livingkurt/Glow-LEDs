@@ -1647,14 +1647,14 @@ const ProductPage = (props) => {
 									<div className="jc-b">
 										<div className="mb-10px">
 											<Link to={`/pages/menu/manuals`}>
-												<button class="btn secondary">View All Manuals</button>
+												<button className="btn secondary">View All Manuals</button>
 											</Link>
 										</div>
 										<div className="mb-10px">
 											<Link
 												to={`https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`}
 											>
-												<button class="btn secondary">
+												<button className="btn secondary">
 													View Available {toCapitalize(humanize(product.category))}
 												</button>
 											</Link>

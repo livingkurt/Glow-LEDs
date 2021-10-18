@@ -6,7 +6,7 @@ export default {
 		try {
 			const surveys = await survey_services.findAll_surveys_s(query);
 			if (surveys) {
-				return res.status(200).send({ message: 'Surveys Found', data: surveys });
+				return res.status(200).send(surveys);
 			}
 			return res.status(404).send({ message: 'Surveys Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const survey = await survey_services.findById_surveys_s(params);
 			if (survey) {
-				return res.status(200).send({ message: 'Survey Found', data: survey });
+				return res.status(200).send(survey);
 			}
 			return res.status(404).send({ message: 'Survey Not Found' });
 		} catch (error) {
@@ -45,7 +45,7 @@ export default {
 		try {
 			const survey = await survey_services.update_surveys_s(params, body);
 			if (survey) {
-				return res.status(200).send({ message: 'Survey Updated', data: survey });
+				return res.status(200).send(survey);
 			}
 			return res.status(500).send({ message: 'Error Updating Survey' });
 		} catch (error) {

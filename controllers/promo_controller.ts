@@ -6,7 +6,7 @@ export default {
 		try {
 			const promos = await promo_services.findAll_promos_s(query);
 			if (promos) {
-				return res.status(200).send({ message: 'Promos Found', data: promos });
+				return res.status(200).send(promos);
 			}
 			return res.status(404).send({ message: 'Promos Not Found' });
 		} catch (error) {
@@ -19,7 +19,7 @@ export default {
 		try {
 			const promo = await promo_services.findById_promos_s(params);
 			if (promo) {
-				return res.status(200).send({ message: 'Promo Found', data: promo });
+				return res.status(200).send(promo);
 			}
 			return res.status(404).send({ message: 'Promo Not Found' });
 		} catch (error) {
@@ -32,7 +32,7 @@ export default {
 		try {
 			const promo = await promo_services.findByCode_promos_s(params);
 			if (promo) {
-				return res.status(200).send({ message: 'Promo Found', data: promo });
+				return res.status(200).send(promo);
 			}
 			return res.status(404).send({ message: 'Promo Not Found' });
 		} catch (error) {
@@ -58,7 +58,7 @@ export default {
 		try {
 			const promo = await promo_services.update_promos_s(params, body);
 			if (promo) {
-				return res.status(200).send({ message: 'Promo Updated', data: promo });
+				return res.status(200).send(promo);
 			}
 			return res.status(500).send({ message: 'Error Updating Promo' });
 		} catch (error) {
@@ -71,7 +71,7 @@ export default {
 		try {
 			const promo = await promo_services.update_code_used_promos_s(params, body);
 			if (promo) {
-				return res.status(200).send({ message: 'Promo Updated', data: promo });
+				return res.status(200).send(promo);
 			}
 			return res.status(500).send({ message: 'Error Updating Promo' });
 		} catch (error) {
@@ -84,7 +84,7 @@ export default {
 		try {
 			const promo = await promo_services.update_affiliate_codes_promos_s(params, body);
 			if (promo) {
-				return res.status(200).send({ message: 'Promo Updated', data: promo });
+				return res.status(200).send(promo);
 			}
 			return res.status(500).send({ message: 'Error Updating Promo' });
 		} catch (error) {

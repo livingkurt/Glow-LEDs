@@ -21,9 +21,9 @@ export const paycheckListReducer = (state = { paychecks: [] }, action: { type: a
 		case PAYCHECK_LIST_REQUEST:
 			return { loading: true, paychecks: [] };
 		case PAYCHECK_LIST_SUCCESS:
-			return { loading: false, paychecks: action.payload.data, message: action.payload.message };
+			return { loading: false, paychecks: action.payload, message: 'Paychecks Found' };
 		case PAYCHECK_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -39,9 +39,9 @@ export const myPaycheckListReducer = (
 		case MY_PAYCHECK_LIST_REQUEST:
 			return { loading: true };
 		case MY_PAYCHECK_LIST_SUCCESS:
-			return { loading: false, paychecks: action.payload.data, message: action.payload.message };
+			return { loading: false, paychecks: action.payload, message: 'Paychecks Found' };
 		case MY_PAYCHECK_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -52,9 +52,9 @@ export const paycheckDetailsReducer = (state = { paycheck: {} }, action: { type:
 		case PAYCHECK_DETAILS_REQUEST:
 			return { loading: true };
 		case PAYCHECK_DETAILS_SUCCESS:
-			return { loading: false, paycheck: action.payload.data, message: action.payload.message };
+			return { loading: false, paycheck: action.payload, message: 'Paycheck Found' };
 		case PAYCHECK_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -65,9 +65,9 @@ export const paycheckDeleteReducer = (state = { paycheck: {} }, action: { type: 
 		case PAYCHECK_DELETE_REQUEST:
 			return { loading: true };
 		case PAYCHECK_DELETE_SUCCESS:
-			return { loading: false, paycheck: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, paycheck: action.payload, success: true, message: 'Paycheck Deleted' };
 		case PAYCHECK_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -78,9 +78,9 @@ export const paycheckSaveReducer = (state = { paycheck: {} }, action: { type: an
 		case PAYCHECK_SAVE_REQUEST:
 			return { loading: true };
 		case PAYCHECK_SAVE_SUCCESS:
-			return { loading: false, success: true, paycheck: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, paycheck: action.payload, message: 'Paycheck Saved' };
 		case PAYCHECK_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

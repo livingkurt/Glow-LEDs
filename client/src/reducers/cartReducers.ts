@@ -69,9 +69,9 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
 			};
 		case CART_SAVE_SHIPPING:
 			sessionStorage.setItem('shippingAddress', JSON.stringify(action.payload));
-			return { ...state, shipping: action.payload };
+			return { ...state, shipping: action.payload, message: 'Cart Found' };
 		case CART_SAVE_PAYMENT:
-			return { ...state, payment: action.payload };
+			return { ...state, payment: action.payload, message: 'Cart Found' };
 		default:
 			return state;
 	}
@@ -82,9 +82,9 @@ export const cartListReducer = (state = { carts: [] }, action: { type: any; payl
 		case CART_LIST_REQUEST:
 			return { loading: true, carts: [] };
 		case CART_LIST_SUCCESS:
-			return { loading: false, carts: action.payload.data, message: action.payload.message };
+			return { loading: false, carts: action.payload, message: 'Carts Found' };
 		case CART_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -95,9 +95,9 @@ export const cartDetailsReducer = (state = { cart: { reviews: [] } }, action: { 
 		case CART_DETAILS_REQUEST:
 			return { loading: true };
 		case CART_DETAILS_SUCCESS:
-			return { loading: false, cart: action.payload.data, message: action.payload.message };
+			return { loading: false, cart: action.payload, message: 'Cart Found' };
 		case CART_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -108,9 +108,9 @@ export const cartDeleteReducer = (state = { cart: {} }, action: { type: any; pay
 		case CART_DELETE_REQUEST:
 			return { loading: true };
 		case CART_DELETE_SUCCESS:
-			return { loading: false, cart: action.payload.data, message: action.payload.message, success: true };
+			return { loading: false, cart: action.payload, success: true, message: 'Cart Deleted' };
 		case CART_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -121,9 +121,9 @@ export const cartSaveReducer = (state = { cart: {} }, action: { type: any; paylo
 		case CART_SAVE_REQUEST:
 			return { loading: true };
 		case CART_SAVE_SUCCESS:
-			return { loading: false, success: true, cart: action.payload.data, message: action.payload.message };
+			return { loading: false, success: true, cart: action.payload, message: 'Cart Saved' };
 		case CART_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

@@ -179,7 +179,7 @@ const UsersPage = (props) => {
 												</Link>
 												{/* <Link to={'/secure/glow/userprofile/' + user._id}>
 													<button className="btn icon">
-														<i class="fas fa-mountain" />
+														<i className="fas fa-mountain" />
 													</button>
 												</Link> */}
 												<button className="btn icon" onClick={() => deleteHandler(user)}>

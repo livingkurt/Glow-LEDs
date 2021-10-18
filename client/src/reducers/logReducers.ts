@@ -18,9 +18,9 @@ export const logListReducer = (state = { logs: [] }, action: { type: any; payloa
 		case LOG_LIST_REQUEST:
 			return { loading: true, logs: [] };
 		case LOG_LIST_SUCCESS:
-			return { loading: false, logs: action.payload };
+			return { loading: false, logs: action.payload, message: 'Logs Found' };
 		case LOG_LIST_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -31,9 +31,9 @@ export const logDetailsReducer = (state = { log: { reviews: [] } }, action: { ty
 		case LOG_DETAILS_REQUEST:
 			return { loading: true };
 		case LOG_DETAILS_SUCCESS:
-			return { loading: false, log: action.payload };
+			return { loading: false, log: action.payload, message: 'Log Found' };
 		case LOG_DETAILS_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -44,9 +44,9 @@ export const logDeleteReducer = (state = { log: {} }, action: { type: any; paylo
 		case LOG_DELETE_REQUEST:
 			return { loading: true };
 		case LOG_DELETE_SUCCESS:
-			return { loading: false, log: action.payload, success: true };
+			return { loading: false, log: action.payload, success: true, message: 'Log Deleted' };
 		case LOG_DELETE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}
@@ -57,9 +57,9 @@ export const logSaveReducer = (state = { log: {} }, action: { type: any; payload
 		case LOG_SAVE_REQUEST:
 			return { loading: true };
 		case LOG_SAVE_SUCCESS:
-			return { loading: false, success: true, log: action.payload };
+			return { loading: false, success: true, log: action.payload, message: 'Log Saved' };
 		case LOG_SAVE_FAIL:
-			return { loading: false, error: action.payload };
+			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
 			return state;
 	}

@@ -30,7 +30,7 @@ const ManualPage = (props) => {
 			<div className="jc-b">
 				<div className="mb-10px">
 					<Link to={`/pages/menu/manuals`}>
-						<button class="btn secondary">Back to Manuals</button>
+						<button className="btn secondary">Back to Manuals</button>
 					</Link>
 				</div>
 				<div className="mb-10px">
@@ -40,7 +40,7 @@ const ManualPage = (props) => {
 							? 'glow_strings'
 							: 'pathname'}`}
 					>
-						<button class="btn secondary">View Available {toCapitalize(humanize(pathname))}</button>
+						<button className="btn secondary">View Available {toCapitalize(humanize(pathname))}</button>
 					</Link>
 				</div>
 			</div>
