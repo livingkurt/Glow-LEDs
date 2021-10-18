@@ -261,7 +261,7 @@ export const prnt = (info: any) => {
 	console.log(info);
 };
 
-export const snake_case = (str: string) => {
+export const snake_case = (str: any) => {
 	const snake_case = str;
 	if (snake_case && snake_case.length > 0) {
 		snake_case.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
