@@ -148,9 +148,9 @@ const Carousel = (props) => {
 										</Overflow.Content>
 									</Overflow>
 									{canScroll && (
-										<div className="pos-abs right-0px top-35px bob br-5px ta-c ai-c bg-primary h-50per w-40px box-s-d b-1px">
+										<div className="pos-abs right-0px top-80px bob br-5px ta-c ai-c bg-primary h-25per w-23px box-s-d b-1px">
 											<i
-												className="fas fa-sort-up fs-40px"
+												className="fas fa-sort-up fs-20px"
 												style={{ WebkitTransform: 'rotate(90deg)' }}
 											/>
 										</div>
