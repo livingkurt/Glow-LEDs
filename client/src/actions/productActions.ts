@@ -26,7 +26,7 @@ import axios from 'axios';
 export const listProducts = (
 	category = '',
 	subcategory = '',
-	searchKeyword = '',
+	search = '',
 	sortOrder = '',
 	chip = '',
 	show_hidden = '',
@@ -42,8 +42,8 @@ export const listProducts = (
 				subcategory +
 				'&chip=' +
 				chip +
-				'&searchKeyword=' +
-				searchKeyword +
+				'&search=' +
+				search +
 				'&sortOrder=' +
 				sortOrder.toLowerCase() +
 				'&showHidden=' +

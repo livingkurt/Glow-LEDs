@@ -17,19 +17,14 @@ import {
 } from '../constants/deviceConstants';
 import axios from 'axios';
 
-export const listDevices = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listDevices = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		console.log({ listDevices: 'listDevices' });
 		dispatch({ type: DEVICE_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/devices?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/devices?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		console.log({ listDevices: data });
 		dispatch({ type: DEVICE_LIST_SUCCESS, payload: data });

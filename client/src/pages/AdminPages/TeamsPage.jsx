@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const TeamsPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const teamList = useSelector((state) => state.teamList);
@@ -32,19 +32,19 @@ const TeamsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listTeams(category, searchKeyword, sortOrder));
+		dispatch(listTeams(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listTeams(category, searchKeyword, e.target.value));
+		dispatch(listTeams(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listTeams(category, searchKeyword, sortOrder));
+			stableDispatch(listTeams(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (team) => {
 		dispatch(deleteTeam(team._id));
@@ -99,7 +99,7 @@ const TeamsPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Teams</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

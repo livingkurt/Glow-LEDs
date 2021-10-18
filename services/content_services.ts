@@ -6,17 +6,17 @@ export default {
 	findAll_contents_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						p: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
 				: {};
 
 			const sortOrder = { _id: -1 };
-			const filter = { deleted: false, ...category, ...searchKeyword };
+			const filter = { deleted: false, ...category, ...search };
 			return await content_db.findAll_contents_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_contents_s_error: error });

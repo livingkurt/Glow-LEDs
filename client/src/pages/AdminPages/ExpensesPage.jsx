@@ -11,7 +11,7 @@ import { API_Revenue } from '../../utils';
 import CSVReader from 'react-csv-reader';
 
 const ExpensesPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ card_type, set_card_type ] = useState('GL AMEX');
 	const history = useHistory();
@@ -33,19 +33,19 @@ const ExpensesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listExpenses(category, searchKeyword, sortOrder));
+			dispatch(listExpenses(category, search, sortOrder));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listExpenses(category, searchKeyword, sortOrder));
+		dispatch(listExpenses(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listExpenses(category, searchKeyword, e.target.value));
+		dispatch(listExpenses(category, search, e.target.value));
 	};
 
 	// useEffect(() => {
@@ -123,7 +123,7 @@ const ExpensesPage = (props) => {
 				}
 			}
 		});
-		dispatch(listExpenses(category, searchKeyword, sortOrder));
+		dispatch(listExpenses(category, search, sortOrder));
 	};
 
 	const card_types = [ 'FID', 'GL AMEX', 'AMZNK' ];
@@ -250,7 +250,7 @@ const ExpensesPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Expenses</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

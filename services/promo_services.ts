@@ -4,10 +4,10 @@ export default {
 	findAll_promos_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -23,7 +23,7 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await promo_db.findAll_promos_db(category, searchKeyword, sortOrder);
+			return await promo_db.findAll_promos_db(category, search, sortOrder);
 		} catch (error) {
 			console.log({ findAll_promos_s_error: error });
 			throw new Error(error.message);
@@ -119,10 +119,10 @@ export default {
 // 	findAll: async (req: any, res: any) => {
 // 		try {
 // const category = req.query.category ? { category: req.query.category } : {};
-// const searchKeyword = req.query.searchKeyword
+// const search = req.query.search
 // 	? {
 // 			facebook_name: {
-// 				$regex: req.query.searchKeyword,
+// 				$regex: req.query.search,
 // 				$options: 'i'
 // 			}
 // 		}
@@ -139,7 +139,7 @@ export default {
 // 	sortOrder = { _id: -1 };
 // }
 
-// 			const promos = await Promo.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder);
+// 			const promos = await Promo.find({ deleted: false, ...category, ...search }).sort(sortOrder);
 
 // 			res.send(promos);
 // 		} catch (error) {

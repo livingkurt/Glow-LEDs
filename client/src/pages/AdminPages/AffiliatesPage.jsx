@@ -10,7 +10,7 @@ import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../..
 import { API_Orders, API_Promos, API_Revenue } from '../../utils';
 
 const AffiliatesPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const affiliateList = useSelector((state) => state.affiliateList);
@@ -24,7 +24,7 @@ const AffiliatesPage = (props) => {
 
 	const affiliateDelete = useSelector((state) => state.affiliateDelete);
 	const { success: successDelete } = affiliateDelete;
-	
+
 	const dispatch = useDispatch();
 
 	const stableDispatch = useCallback(dispatch, []);
@@ -51,16 +51,16 @@ const AffiliatesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listAffiliates(category, searchKeyword, sortOrder));
+		dispatch(listAffiliates(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listAffiliates(category, searchKeyword, e.target.value));
+		dispatch(listAffiliates(category, search, e.target.value));
 	};
 
 	useEffect(() => {
-		stableDispatch(listAffiliates(category, searchKeyword, sortOrder));
+		stableDispatch(listAffiliates(category, search, sortOrder));
 	}, []);
 	const deleteHandler = (pathname) => {
 		console.log({ pathname });
@@ -96,7 +96,7 @@ const AffiliatesPage = (props) => {
 
 	// const update_ = (e) => {
 	// 	setSortOrder(e.target.value);
-	// 	dispatch(listAffiliates(category, searchKeyword, e.target.value));
+	// 	dispatch(listAffiliates(category, search, e.target.value));
 	// };
 
 	const get_last_months_orders = async () => {
@@ -207,7 +207,7 @@ const AffiliatesPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Affiliates</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Notification message={message} />

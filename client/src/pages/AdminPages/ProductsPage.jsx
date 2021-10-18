@@ -14,7 +14,7 @@ import { mutliDragAwareReorder, multiSelectTo as multiSelect } from '../../utils
 import memoizeOne from 'memoize-one';
 
 function ProductPage(props) {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_upload, set_loading_upload ] = useState(false);
 	const [ show_hidden, set_show_hidden ] = useState(false);
@@ -53,19 +53,19 @@ function ProductPage(props) {
 	// );
 	useEffect(
 		() => {
-			dispatch(listProducts(category.subcategory, searchKeyword, sortOrder));
+			dispatch(listProducts(category.subcategory, search, sortOrder));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder));
+		dispatch(listProducts(category, subcategory, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value));
+		dispatch(listProducts(category, subcategory, search, e.target.value));
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
@@ -527,7 +527,7 @@ function ProductPage(props) {
 			</div>
 			<Loading loading={loading_upload} error={error} />
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<div className="ai-c mt-10px">

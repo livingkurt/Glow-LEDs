@@ -8,7 +8,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 
 const UsersPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const userList = useSelector((state) => state.userList);
@@ -35,17 +35,17 @@ const UsersPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listUsers(category, searchKeyword, sortOrder));
+		dispatch(listUsers(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listUsers(category, searchKeyword, e.target.value));
+		dispatch(listUsers(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			dispatch(listUsers(category, searchKeyword, sortOrder));
+			dispatch(listUsers(category, search, sortOrder));
 		},
 		[ sortOrder ]
 	);
@@ -114,7 +114,7 @@ const UsersPage = (props) => {
 			</div>
 
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

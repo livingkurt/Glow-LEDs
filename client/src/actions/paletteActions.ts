@@ -17,18 +17,13 @@ import {
 } from '../constants/paletteConstants';
 import axios from 'axios';
 
-export const listPalettes = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listPalettes = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: PALETTE_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/palettes?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/palettes?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		dispatch({ type: PALETTE_LIST_SUCCESS, payload: data });
 	} catch (error) {

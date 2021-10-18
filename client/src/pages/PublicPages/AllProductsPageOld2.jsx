@@ -25,7 +25,7 @@ const AllProductsPage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 	// console.log({ search_outside: search });
-	const [ searchKeyword, setSearchKeyword ] = useState(
+	const [ search, set_search ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
 	const [ sortOrder, setSortOrder ] = useState('');
@@ -33,7 +33,7 @@ const AllProductsPage = (props) => {
 		props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : ''
 	);
 	// console.log({ hasOwnProperty: props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : '' });
-	// const [ searchKeyword, setSearchKeyword ] = useState(
+	// const [ search, set_search ] = useState(
 	// 	props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	// );
 	// console.log({
@@ -58,15 +58,15 @@ const AllProductsPage = (props) => {
 		() => {
 			// dispatch(listProducts(''));
 			// console.log({ search: search.substring(8) });
-			if (searchKeyword) {
+			if (search) {
 				history.push({
-					search: '?search=' + searchKeyword
+					search: '?search=' + search
 				});
-				dispatch(listProducts('', '', searchKeyword, '', '', '', collection));
+				dispatch(listProducts('', '', search, '', '', '', collection));
 				dispatch(listChips());
 			}
 		},
-		[ searchKeyword ]
+		[ search ]
 	);
 	// useEffect(
 	// 	() => {
@@ -76,7 +76,7 @@ const AllProductsPage = (props) => {
 	// 			history.push({
 	// 				filter: '?filter=' + filter
 	// 			});
-	// 			dispatch(listProducts('', '', searchKeyword, '', filter, '', collection));
+	// 			dispatch(listProducts('', '', search, '', filter, '', collection));
 	// 			dispatch(listChips());
 	// 		}
 	// 	},
@@ -119,7 +119,7 @@ const AllProductsPage = (props) => {
 		() => {
 			get_occurrences();
 		},
-		[ searchKeyword ]
+		[ search ]
 	);
 	useEffect(
 		() => {
@@ -135,7 +135,7 @@ const AllProductsPage = (props) => {
 					// console.log('All Products');
 					if (collection && !category) {
 					} else {
-						dispatch(listProducts(category, subcategory, searchKeyword, '', '', '', collection));
+						dispatch(listProducts(category, subcategory, search, '', '', '', collection));
 					}
 				}
 			}
@@ -189,20 +189,20 @@ const AllProductsPage = (props) => {
 	};
 
 	const submitHandler = (e) => {
-		// console.log({ searchKeyword });
+		// console.log({ search });
 		e.preventDefault();
 		history.push({
-			search: '?search=' + searchKeyword
+			search: '?search=' + search
 		});
 		// history.push({
-		// 	search: '?search=' + searchKeyword + chip && '?filter=' + chip
+		// 	search: '?search=' + search + chip && '?filter=' + chip
 		// });
-		dispatch(listProducts('', '', searchKeyword, sortOrder, '', '', collection));
+		dispatch(listProducts('', '', search, sortOrder, '', '', collection));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, searchKeyword, e.target.value, '', '', collection));
+		dispatch(listProducts(category, subcategory, search, e.target.value, '', '', collection));
 	};
 	const filterHandler = (e) => {
 		const chip_selected = JSON.parse(e.target.value);
@@ -210,9 +210,9 @@ const AllProductsPage = (props) => {
 		set_filter(chip_selected._id);
 		// console.log({ chip });
 		history.push({
-			search: '?search=' + searchKeyword + '?filter=' + chip_selected.name
+			search: '?search=' + search + '?filter=' + chip_selected.name
 		});
-		dispatch(listProducts(category, subcategory, searchKeyword, sortOrder, chip_selected._id, '', collection));
+		dispatch(listProducts(category, subcategory, search, sortOrder, chip_selected._id, '', collection));
 	};
 
 	const descriptions = {
@@ -288,7 +288,7 @@ const AllProductsPage = (props) => {
 			</div>
 
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />

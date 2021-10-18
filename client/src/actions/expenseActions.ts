@@ -14,7 +14,7 @@ import {
 } from '../constants/expenseConstants';
 import axios from 'axios';
 
-export const listExpenses = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listExpenses = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -22,12 +22,7 @@ export const listExpenses = (category = '', searchKeyword = '', sortOrder = '') 
 		dispatch({ type: EXPENSE_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
-			'/api/expenses?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase(),
+			'/api/expenses?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token

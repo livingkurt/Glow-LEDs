@@ -14,19 +14,14 @@ import {
 } from '../constants/categoryConstants';
 import axios from 'axios';
 
-export const listCategorys = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listCategorys = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: CATEGORY_LIST_REQUEST });
 
 		const { data } = await axios.get(
-			'/api/categorys?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/categorys?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		console.log({ listCategorys: data });
 		dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });

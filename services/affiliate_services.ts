@@ -13,10 +13,10 @@ export default {
 			} else if (query.category === 'affiliated_glovers') {
 				promoter = { promoter: true };
 			}
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -35,7 +35,7 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await affiliate_db.findAll_affiliates_db(searchKeyword, sponsor, promoter, sortOrder);
+			return await affiliate_db.findAll_affiliates_db(search, sponsor, promoter, sortOrder);
 		} catch (error) {
 			console.log({ error });
 			throw new Error(error.message);

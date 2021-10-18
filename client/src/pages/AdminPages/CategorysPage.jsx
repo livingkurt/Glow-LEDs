@@ -10,7 +10,7 @@ import { snake_case } from '../../utils/helper_functions';
 const fetch = require('node-fetch');
 
 const CategorysPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
 	const [ loading_categorys, set_loading_categorys ] = useState(false);
@@ -49,23 +49,23 @@ const CategorysPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listCategorys(category, searchKeyword, sortOrder));
+		dispatch(listCategorys(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listCategorys(category, searchKeyword, e.target.value));
+		dispatch(listCategorys(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listCategorys(category, searchKeyword, sortOrder));
+			stableDispatch(listCategorys(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (category) => {
 		dispatch(deleteCategory(category._id));
-		stableDispatch(listCategorys(category, searchKeyword, sortOrder));
+		stableDispatch(listCategorys(category, search, sortOrder));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
@@ -172,7 +172,7 @@ const CategorysPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Categorys</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

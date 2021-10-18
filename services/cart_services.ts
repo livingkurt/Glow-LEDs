@@ -5,17 +5,17 @@ export default {
 	findAll_carts_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
 				: {};
 
 			const sortOrder = {};
-			const filter = { deleted: false, ...category, ...searchKeyword };
+			const filter = { deleted: false, ...category, ...search };
 			return await cart_db.findAll_carts_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_carts_s_error: error });

@@ -366,7 +366,7 @@ export const listUserOrders = (user_id: string) => async (
 	}
 };
 
-export const listOrders = (category = '', searchKeyword = '', sortOrder = '', page = '', limit = '') => async (
+export const listOrders = (category = '', search = '', sortOrder = '', page = '', limit = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -377,8 +377,8 @@ export const listOrders = (category = '', searchKeyword = '', sortOrder = '', pa
 		const { data } = await axios.get(
 			'/api/orders/?category=' +
 				category +
-				'&searchKeyword=' +
-				searchKeyword +
+				'&search=' +
+				search +
 				'&sortOrder=' +
 				sortOrder.toLowerCase() +
 				'&page=' +

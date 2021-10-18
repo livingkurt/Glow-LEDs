@@ -4,10 +4,10 @@ import { Log } from '../models';
 export default {
 	findAll: async (req: any, res: any) => {
 		const category = req.query.category ? { category: req.query.category } : {};
-		const searchKeyword = req.query.searchKeyword
+		const search = req.query.search
 			? {
 					file: {
-						$regex: req.query.searchKeyword,
+						$regex: req.query.search,
 						$options: 'i'
 					}
 				}
@@ -28,7 +28,7 @@ export default {
 			sortOrder = { _id: -1 };
 		}
 
-		const logs = await Log.find({ deleted: false, ...category, ...searchKeyword }).sort(sortOrder).limit(100);
+		const logs = await Log.find({ deleted: false, ...category, ...search }).sort(sortOrder).limit(100);
 		// console.log(logs);
 		res.send(logs);
 	},

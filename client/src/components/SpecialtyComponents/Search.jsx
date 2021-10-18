@@ -5,9 +5,9 @@ const Search = (props) => {
 	return (
 		<form onSubmit={props.submitHandler} className="jc-c w-100per">
 			<div className="jc-b ai-c search_container">
-				<label aria-label="searchKeyword" htmlFor="searchKeyword" />
+				<label aria-label="search" htmlFor="search" />
 				<input
-					name="searchKeyword"
+					name="search"
 					placeholder="Search"
 					value={props.search}
 					onChange={(e) => props.set_search(e.target.value)}

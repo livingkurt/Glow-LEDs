@@ -11,7 +11,7 @@ import { format_date } from '../../utils/helper_functions';
 // import CsvDownload from 'react-json-to-csv';
 
 const OrdersPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ block_list_view, set_block_list_view ] = useState(false);
@@ -34,16 +34,16 @@ const OrdersPage = (props) => {
 
 	useEffect(() => {
 		// if (history.action === 'PUSH') {
-		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		dispatch(listOrders(category, search, sortOrder, page, limit));
 		// } else if (history.action === 'POP') {
 		// if (window.performance) {
 		// 	console.log({ performance: window.performance });
 		// 	if (window.performance.navigation.type === 1) {
-		// 		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		// 		dispatch(listOrders(category, search, sortOrder, page, limit));
 		// 		console.log('This page is reloaded');
 		// 	} else {
 		// 		console.log('This page is not reloaded');
-		// 		// dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		// 		// dispatch(listOrders(category, search, sortOrder, page, limit));
 		// 	}
 		// }
 		// }
@@ -51,12 +51,12 @@ const OrdersPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listOrders(category, searchKeyword, sortOrder, page, limit));
+		dispatch(listOrders(category, search, sortOrder, page, limit));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listOrders(category, searchKeyword, e.target.value, page, limit));
+		dispatch(listOrders(category, search, e.target.value, page, limit));
 	};
 
 	const colors = [
@@ -180,7 +180,7 @@ const OrdersPage = (props) => {
 		});
 
 		console.log(e.target.value);
-		dispatch(listOrders(category, searchKeyword, sortOrder, page));
+		dispatch(listOrders(category, search, sortOrder, page));
 	};
 
 	const mark_as_shipped = async () => {
@@ -284,7 +284,7 @@ const OrdersPage = (props) => {
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Orders</h1>
 				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-					<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+					<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				</div>
 				{console.log({ orders })}

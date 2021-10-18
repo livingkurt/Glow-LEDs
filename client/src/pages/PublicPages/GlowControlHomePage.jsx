@@ -56,17 +56,17 @@ const GlowControlHomePage = (props) => {
 	);
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
-	// 	dispatch(listMyDevices(category, searchKeyword, sortOrder));
+	// 	dispatch(listMyDevices(category, search, sortOrder));
 	// };
 
 	// const sortHandler = (e) => {
 	// 	setSortOrder(e.target.value);
-	// 	dispatch(listMyDevices(category, searchKeyword, e.target.value));
+	// 	dispatch(listMyDevices(category, search, e.target.value));
 	// };
 
 	// useEffect(
 	// 	() => {
-	// 		dispatch(listMyDevices(category, searchKeyword, sortOrder));
+	// 		dispatch(listMyDevices(category, search, sortOrder));
 	// 	},
 	// 	[ sortOrder ]
 	// );

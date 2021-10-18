@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search } from '../../components/SpecialtyComponents';
 
 const DevicesPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 
 	const myDeviceList = useSelector((state) => state.myDeviceList);
@@ -32,7 +32,7 @@ const DevicesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listMyDevices(category, searchKeyword));
+		dispatch(listMyDevices(category, search));
 	};
 
 	const deleteHandler = (device) => {
@@ -74,7 +74,7 @@ const DevicesPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Devices</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
 			</div>
 			<Loading loading={loading} error={error}>

@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const ChipsPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const chipList = useSelector((state) => state.chipList);
@@ -32,19 +32,19 @@ const ChipsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listChips(category, searchKeyword, sortOrder));
+		dispatch(listChips(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listChips(category, searchKeyword, e.target.value));
+		dispatch(listChips(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listChips(category, searchKeyword, sortOrder));
+			stableDispatch(listChips(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (chip) => {
 		dispatch(deleteChip(chip._id));
@@ -133,10 +133,10 @@ const ChipsPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Chips</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
-			<Notification message={message}/>
+			<Notification message={message} />
 			<Loading loading={loading} error={error}>
 				{chips && (
 					<div className="chip-list responsive_table">

@@ -13,7 +13,7 @@ import { listTeams } from '../../actions/teamActions';
 import { listOrders } from '../../actions/orderActions';
 
 const SurveysPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 
 	const [ loading_surveys, set_loading_surveys ] = useState(false);
@@ -44,19 +44,19 @@ const SurveysPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listSurveys(category, searchKeyword, sortOrder));
+		dispatch(listSurveys(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listSurveys(category, searchKeyword, e.target.value));
+		dispatch(listSurveys(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listSurveys(category, searchKeyword, sortOrder));
+			stableDispatch(listSurveys(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (survey) => {
 		dispatch(deleteSurvey(survey._id));
@@ -134,7 +134,7 @@ const SurveysPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Surveys</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

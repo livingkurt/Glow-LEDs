@@ -10,9 +10,9 @@ import { listFeatures } from '../../actions/featureActions';
 
 const AllFeaturesPage = (props) => {
 	const history = useHistory();
-	const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
+	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
 	// console.log({ search_outside: search });
-	const [ searchKeyword, setSearchKeyword ] = useState(
+	const [ search, set_search ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
 	const [ sortOrder, setSortOrder ] = useState('');
@@ -29,9 +29,9 @@ const AllFeaturesPage = (props) => {
 		() => {
 			// dispatch(listFeatures(''));
 			// console.log({ search: search.substring(8) });
-			dispatch(listFeatures(category, subcategory, searchKeyword));
+			dispatch(listFeatures(category, subcategory, search));
 		},
-		[ searchKeyword ]
+		[ search ]
 	);
 
 	// useEffect(
@@ -44,7 +44,7 @@ const AllFeaturesPage = (props) => {
 	// 		// let params = new URLSearchParams(props.location.pathmame + props.location.search);
 
 	// 		// params.delete('searcj'); //Query string is now: 'bar=2'
-	// 		setSearchKeyword('');
+	// 		set_search('');
 	// 		dispatch(listFeatures(category, subcategory));
 	// 	},
 	// 	[ props.location.pathname ]
@@ -54,7 +54,7 @@ const AllFeaturesPage = (props) => {
 		() => {
 			// console.log({ category });
 			// console.log({ subcategory });
-			// console.log({ searchKeyword });
+			// console.log({ search });
 			// console.log({ search });
 			// if (
 			// 	[
@@ -68,9 +68,9 @@ const AllFeaturesPage = (props) => {
 			// 		'mini_diffuser_adapters'
 			// 	].includes(category)
 			// ) {
-			if (searchKeyword) {
+			if (search) {
 				history.push({
-					search: '?search=' + searchKeyword
+					search: '?search=' + search
 				});
 			}
 			// else if (search) {
@@ -79,37 +79,37 @@ const AllFeaturesPage = (props) => {
 			// 	});
 			// }
 
-			dispatch(listFeatures(category, subcategory, searchKeyword));
+			dispatch(listFeatures(category, subcategory, search));
 			// } else {
 
 			// 	dispatch(listFeatures(''));
 			// }
 		},
-		[ category, subcategory, searchKeyword ]
+		[ category, subcategory, search ]
 	);
 
 	useEffect(
 		() => {
-			dispatch(listFeatures(category, subcategory, searchKeyword, sortOrder));
+			dispatch(listFeatures(category, subcategory, search, sortOrder));
 		},
 		[ sortOrder ]
 	);
 
 	const submitHandler = (e) => {
-		console.log({ searchKeyword });
+		console.log({ search });
 		e.preventDefault();
 		// history.push(
-		// 	'/collections/features/category' + category + '/' + subcategory + '?search=' + searchKeyword
+		// 	'/collections/features/category' + category + '/' + subcategory + '?search=' + search
 		// );
 		history.push({
-			search: '?search=' + searchKeyword
+			search: '?search=' + search
 		});
-		dispatch(listFeatures(category, subcategory, searchKeyword, sortOrder));
+		dispatch(listFeatures(category, subcategory, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listFeatures(category, subcategory, searchKeyword, e.target.value));
+		dispatch(listFeatures(category, subcategory, search, e.target.value));
 	};
 
 	const descriptions = {
@@ -198,7 +198,7 @@ const AllFeaturesPage = (props) => {
 			</div>
 
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
 			</div>
 			{/* <div className="jc-c">

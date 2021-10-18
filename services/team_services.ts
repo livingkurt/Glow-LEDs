@@ -4,10 +4,10 @@ export default {
 	findAll_teams_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -27,7 +27,7 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await team_db.findAll_teams_db(category, searchKeyword, sortOrder);
+			return await team_db.findAll_teams_db(category, search, sortOrder);
 		} catch (error) {
 			console.log({ findAll_teams_s_error: error });
 			throw new Error(error.message);
@@ -81,10 +81,10 @@ export default {
 // findAll: async (req: any, res: any) => {
 // 	try {
 // 		const category = req.query.category ? { category: req.query.category } : {};
-// 		const searchKeyword = req.query.searchKeyword
+// 		const search = req.query.search
 // 			? {
 // 					facebook_name: {
-// 						$regex: req.query.searchKeyword,
+// 						$regex: req.query.search,
 // 						$options: 'i'
 // 					}
 // 				}
@@ -108,7 +108,7 @@ export default {
 // 		const teams = await Team.find({
 // 			deleted: false,
 // 			...category,
-// 			...searchKeyword
+// 			...search
 // 		})
 // 			.sort(sortOrder)
 // 			.populate('affiliates')

@@ -79,10 +79,10 @@ export default {
 // 		try {
 // 			const email_type = req.query.category ? { email_type: req.query.category } : {};
 // 			console.log(email_type);
-// 			const searchKeyword = req.query.searchKeyword
+// 			const search = req.query.search
 // 				? {
 // 						email_type: {
-// 							$regex: req.query.searchKeyword,
+// 							$regex: req.query.search,
 // 							$options: 'i'
 // 						}
 // 					}
@@ -95,7 +95,7 @@ export default {
 // 				sortOrder = { _id: -1 };
 // 			}
 
-// 			const emails = await Email.find({ deleted: false, ...email_type, ...searchKeyword }).sort(sortOrder);
+// 			const emails = await Email.find({ deleted: false, ...email_type, ...search }).sort(sortOrder);
 
 // 			res.send(emails);
 // 		} catch (error) {

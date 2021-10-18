@@ -18,7 +18,7 @@ import { listTeams } from '../../actions/teamActions';
 import { listOrders } from '../../actions/orderActions';
 
 const PalettesPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
 	const [ total_orders, set_total_orders ] = useState([]);
@@ -74,19 +74,19 @@ const PalettesPage = (props) => {
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPalettes(category, searchKeyword, sortOrder));
+		dispatch(listPalettes(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listPalettes(category, searchKeyword, e.target.value));
+		dispatch(listPalettes(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listPalettes(category, searchKeyword, sortOrder));
+			stableDispatch(listPalettes(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (palette) => {
 		dispatch(deletePalette(palette._id));
@@ -154,7 +154,7 @@ const PalettesPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Palettes</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

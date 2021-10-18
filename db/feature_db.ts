@@ -1,12 +1,12 @@
 import Feature from '../models/feature';
 
 export default {
-	findAll_features_db: async (category: any, searchKeyword: any, sortOrder: any) => {
+	findAll_features_db: async (category: any, search: any, sortOrder: any) => {
 		try {
 			return await Feature.find({
 				deleted: false,
 				...category,
-				...searchKeyword
+				...search
 			})
 				.sort(sortOrder)
 				.populate('user')

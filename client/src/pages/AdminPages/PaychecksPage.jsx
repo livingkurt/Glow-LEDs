@@ -19,7 +19,7 @@ import { listTeams } from '../../actions/teamActions';
 import { listOrders } from '../../actions/orderActions';
 
 const PaychecksPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
 	const [ total_orders, set_total_orders ] = useState([]);
@@ -75,19 +75,19 @@ const PaychecksPage = (props) => {
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPaychecks(category, searchKeyword, sortOrder));
+		dispatch(listPaychecks(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listPaychecks(category, searchKeyword, e.target.value));
+		dispatch(listPaychecks(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listPaychecks(category, searchKeyword, sortOrder));
+			stableDispatch(listPaychecks(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (paycheck) => {
 		dispatch(deletePaycheck(paycheck._id));
@@ -278,7 +278,7 @@ const PaychecksPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Paychecks</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<div>Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}</div>

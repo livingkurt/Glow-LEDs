@@ -1,12 +1,12 @@
 import Paycheck from '../models/paycheck';
 
 export default {
-	findAll_paychecks_db: async (category: any, searchKeyword: any, sortOrder: any) => {
+	findAll_paychecks_db: async (category: any, search: any, sortOrder: any) => {
 		try {
 			return await Paycheck.find({
 				deleted: false,
 				...category,
-				...searchKeyword
+				...search
 			})
 				.sort(sortOrder)
 				.populate('user')

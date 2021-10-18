@@ -8,7 +8,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
 
 const ParcelsPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_parcels, set_loading_parcels ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
@@ -35,26 +35,25 @@ const ParcelsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listParcels(category, searchKeyword, sortOrder));
+		dispatch(listParcels(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listParcels(category, searchKeyword, e.target.value));
+		dispatch(listParcels(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listParcels(category, searchKeyword, sortOrder));
+			stableDispatch(listParcels(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (parcel) => {
 		dispatch(deleteParcel(parcel._id));
 	};
 
 	const date = new Date();
-
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
 
@@ -103,7 +102,7 @@ const ParcelsPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Parcels</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

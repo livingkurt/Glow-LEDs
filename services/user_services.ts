@@ -10,10 +10,10 @@ export default {
 	findAll_users_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						first_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -27,7 +27,7 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await user_db.findAll_users_db(searchKeyword, category, sortOrder);
+			return await user_db.findAll_users_db(search, category, sortOrder);
 		} catch (error) {
 			console.log({ findAll_users_s_error: error });
 			throw new Error(error.message);

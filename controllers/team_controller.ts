@@ -87,10 +87,10 @@ export default {
 // 	findAll: async (req: any, res: any) => {
 // 		try {
 // 			const category = req.query.category ? { category: req.query.category } : {};
-// 			const searchKeyword = req.query.searchKeyword
+// 			const search = req.query.search
 // 				? {
 // 						facebook_name: {
-// 							$regex: req.query.searchKeyword,
+// 							$regex: req.query.search,
 // 							$options: 'i'
 // 						}
 // 					}
@@ -114,7 +114,7 @@ export default {
 // 			const teams = await Team.find({
 // 				deleted: false,
 // 				...category,
-// 				...searchKeyword
+// 				...search
 // 			})
 // 				.sort(sortOrder)
 // 				.populate('affiliates')

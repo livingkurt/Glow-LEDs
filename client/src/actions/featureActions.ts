@@ -14,18 +14,13 @@ import {
 } from '../constants/featureConstants';
 import axios from 'axios';
 
-export const listFeatures = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listFeatures = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: FEATURE_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/features?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/features?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		dispatch({ type: FEATURE_LIST_SUCCESS, payload: data });
 	} catch (error) {

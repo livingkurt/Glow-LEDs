@@ -8,7 +8,7 @@ import { format_date } from '../../utils/helper_functions';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const FeaturesPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const featureList = useSelector((state) => state.featureList);
@@ -34,19 +34,19 @@ const FeaturesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listFeatures(category, searchKeyword, sortOrder));
+		dispatch(listFeatures(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listFeatures(category, searchKeyword, e.target.value));
+		dispatch(listFeatures(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listFeatures(category, searchKeyword, sortOrder));
+			stableDispatch(listFeatures(category, search, sortOrder));
 		},
-		[ category, searchKeyword, sortOrder, stableDispatch ]
+		[ category, search, sortOrder, stableDispatch ]
 	);
 	const deleteHandler = (feature) => {
 		dispatch(deleteFeature(feature._id));
@@ -124,7 +124,7 @@ const FeaturesPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Features</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

@@ -378,7 +378,7 @@ export const contact = (
 	}
 };
 
-export const listUsers = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listUsers = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -389,12 +389,7 @@ export const listUsers = (category = '', searchKeyword = '', sortOrder = '') => 
 		// 	headers: { Authorization: 'Bearer ' + userInfo.token }
 		// });
 		const { data } = await axios.get(
-			'/api/users?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase(),
+			'/api/users?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: { Authorization: 'Bearer ' + userInfo.token }
 			}

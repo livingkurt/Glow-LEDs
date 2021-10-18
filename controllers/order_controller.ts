@@ -45,22 +45,22 @@ export default {
 			const limit: any = req.query.limit ? req.query.limit : 10;
 			// console.log({ page });
 			// let user: any;
-			// let searchKeyword: any;
-			// if (req.query.searchKeyword) {
-			// 	const userSearchKeyword = req.query.searchKeyword
+			// let search: any;
+			// if (req.query.search) {
+			// 	const userSearchKeyword = req.query.search
 			// 		? {
 			// 				user: {
-			// 					$regex: req.query.searchKeyword,
+			// 					$regex: req.query.search,
 			// 					$options: 'i'
 			// 				}
 			// 			}
 			// 		: {};
 			// 	user = await User.findOne({ ...userSearchKeyword });
-			// 	searchKeyword = { user: user._id };
+			// 	search = { user: user._id };
 			// }
-			const searchKeyword = req.query.searchKeyword ? { _id: req.query.searchKeyword } : {};
-			// const searchKeyword = { _id: req.query.searchKeyword };
-			// console.log({ searchKeyword });
+			const search = req.query.search ? { _id: req.query.search } : {};
+			// const search = { _id: req.query.search };
+			// console.log({ search });
 			let sortOrder = {};
 			let filter = {};
 			if (req.query.sortOrder === 'lowest') {
@@ -93,7 +93,7 @@ export default {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: true };
 			}
 			// execute query with page and limit values
-			const orders = await Order.find({ deleted: false, ...category, ...searchKeyword, ...filter })
+			const orders = await Order.find({ deleted: false, ...category, ...search, ...filter })
 				.populate('user')
 				.populate('orderItems.product')
 				.populate('orderItems.secondary_product')

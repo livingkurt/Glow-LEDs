@@ -19,7 +19,7 @@ import { listTeams } from '../../actions/teamActions';
 import { listOrders } from '../../actions/orderActions';
 
 const SettingsPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_settings, set_loading_settings ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
@@ -55,19 +55,19 @@ const SettingsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listSettings(category, searchKeyword, sortOrder));
+		dispatch(listSettings(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listSettings(category, searchKeyword, e.target.value));
+		dispatch(listSettings(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listSettings(category, searchKeyword, sortOrder));
+			stableDispatch(listSettings(category, search, sortOrder));
 		},
-		[ stableDispatch, category, searchKeyword, sortOrder ]
+		[ stableDispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (setting) => {
 		dispatch(deleteSetting(setting._id));
@@ -121,7 +121,7 @@ const SettingsPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Settings</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 			<Loading loading={loading} error={error}>

@@ -3,11 +3,11 @@ import { Promo } from '../models';
 import { make_private_code } from '../util';
 
 export default {
-	findAll_affiliates_db: async (searchKeyword: any, sponsor: any, promoter: any, sortOrder: any) => {
+	findAll_affiliates_db: async (search: any, sponsor: any, promoter: any, sortOrder: any) => {
 		try {
 			return await Affiliate.find({
 				deleted: false,
-				...searchKeyword,
+				...search,
 				...sponsor,
 				...promoter
 			})

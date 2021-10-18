@@ -3,11 +3,11 @@ import { prnt } from '../util';
 require('dotenv');
 
 export default {
-	findAll_users_db: async (searchKeyword: any, category: any, sortOrder: any) => {
+	findAll_users_db: async (search: any, category: any, sortOrder: any) => {
 		try {
 			return await User.find({
 				deleted: false,
-				...searchKeyword,
+				...search,
 				...category
 			})
 				.sort(sortOrder)

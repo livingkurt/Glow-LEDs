@@ -14,18 +14,13 @@ import {
 } from '../constants/chipConstants';
 import axios from 'axios';
 
-export const listChips = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listChips = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: CHIP_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/chips?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/chips?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		dispatch({ type: CHIP_LIST_SUCCESS, payload: data });
 	} catch (error) {

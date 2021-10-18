@@ -4,10 +4,10 @@ export default {
 	findAll_chips_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -21,7 +21,7 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { name: 1 };
 			}
-			const filter = { deleted: false, ...category, ...searchKeyword };
+			const filter = { deleted: false, ...category, ...search };
 			return await chip_db.findAll_chips_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_chips_s_error: error });

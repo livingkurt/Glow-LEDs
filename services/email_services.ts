@@ -6,10 +6,10 @@ export default {
 		try {
 			const email_type = query.category ? { email_type: query.category } : {};
 			console.log(email_type);
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						email_type: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -22,7 +22,7 @@ export default {
 				sortOrder = { _id: -1 };
 			}
 
-			const filter = { deleted: false, ...email_type, ...searchKeyword };
+			const filter = { deleted: false, ...email_type, ...search };
 			return await email_db.findAll_emails_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_emails_s_error: error });
@@ -129,10 +129,10 @@ export default {
 // 		try {
 // 			const email_type = req.query.category ? { email_type: req.query.category } : {};
 // 			console.log(email_type);
-// 			const searchKeyword = req.query.searchKeyword
+// 			const search = req.query.search
 // 				? {
 // 						email_type: {
-// 							$regex: req.query.searchKeyword,
+// 							$regex: req.query.search,
 // 							$options: 'i'
 // 						}
 // 					}
@@ -145,7 +145,7 @@ export default {
 // 				sortOrder = { _id: -1 };
 // 			}
 
-// 			const emails = await Email.find({ deleted: false, ...email_type, ...searchKeyword }).sort(sortOrder);
+// 			const emails = await Email.find({ deleted: false, ...email_type, ...search }).sort(sortOrder);
 
 // 			res.send(emails);
 // 		} catch (error) {

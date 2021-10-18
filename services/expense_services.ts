@@ -4,10 +4,10 @@ export default {
 	findAll_expenses_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						expense_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -27,7 +27,7 @@ export default {
 			} else if (query.sortOrder === 'application') {
 				sortOrder = { application: 1, createdAt: -1 };
 			}
-			const filter = { deleted: false, ...category, ...searchKeyword };
+			const filter = { deleted: false, ...category, ...search };
 
 			return await expense_db.findAll_expenses_db(filter, sortOrder);
 		} catch (error) {

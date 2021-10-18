@@ -4,10 +4,10 @@ export default {
 	findAll_features_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -22,7 +22,7 @@ export default {
 				sortOrder = { name: 1 };
 			}
 
-			return await feature_db.findAll_features_db(category, searchKeyword, sortOrder);
+			return await feature_db.findAll_features_db(category, search, sortOrder);
 		} catch (error) {
 			console.log({ findAll_features_s_error: error });
 			throw new Error(error.message);

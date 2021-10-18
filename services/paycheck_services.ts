@@ -4,10 +4,10 @@ export default {
 	findAll_paychecks_s: async (query: any) => {
 		try {
 			const category = query.category ? { category: query.category } : {};
-			const searchKeyword = query.searchKeyword
+			const search = query.search
 				? {
 						facebook_name: {
-							$regex: query.searchKeyword,
+							$regex: query.search,
 							$options: 'i'
 						}
 					}
@@ -22,7 +22,7 @@ export default {
 				sortOrder = { name: 1 };
 			}
 
-			return await paycheck_db.findAll_paychecks_db(category, searchKeyword, sortOrder);
+			return await paycheck_db.findAll_paychecks_db(category, search, sortOrder);
 		} catch (error) {
 			console.log({ findAll_paychecks_s_error: error });
 			throw new Error(error.message);

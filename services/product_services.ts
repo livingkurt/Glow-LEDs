@@ -8,10 +8,10 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			// console.log({ category, collection });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
-			const searchKeyword = req.query.searchKeyword
+			const search = req.query.search
 				? {
 						name: {
-							$regex: req.query.searchKeyword,
+							$regex: req.query.search,
 							$options: 'i'
 						}
 					}
@@ -36,7 +36,7 @@ export default {
 				...category,
 				...subcategory,
 				...collection,
-				...searchKeyword,
+				...search,
 				...chips
 			})
 				.sort(sortOrder)
@@ -85,10 +85,10 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			// console.log({ category, collection });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
-			const searchKeyword = req.query.searchKeyword
+			const search = req.query.search
 				? {
 						name: {
-							$regex: req.query.searchKeyword,
+							$regex: req.query.search,
 							$options: 'i'
 						}
 					}
@@ -113,7 +113,7 @@ export default {
 				...category,
 				...subcategory,
 				...collection,
-				...searchKeyword,
+				...search,
 				...chips
 			})
 				.sort(sortOrder)
@@ -139,10 +139,10 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			// console.log({ category, collection });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
-			const searchKeyword = req.query.searchKeyword
+			const search = req.query.search
 				? {
 						name: {
-							$regex: req.query.searchKeyword,
+							$regex: req.query.search,
 							$options: 'i'
 						}
 					}
@@ -167,7 +167,7 @@ export default {
 				...category,
 				...subcategory,
 				...collection,
-				...searchKeyword,
+				...search,
 				...chips
 			})
 				.sort(sortOrder)

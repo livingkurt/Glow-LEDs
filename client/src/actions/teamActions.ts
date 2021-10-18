@@ -14,18 +14,13 @@ import {
 } from '../constants/teamConstants';
 import axios from 'axios';
 
-export const listTeams = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listTeams = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: TEAM_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/teams?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/teams?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		console.log({ data });
 		dispatch({ type: TEAM_LIST_SUCCESS, payload: data });

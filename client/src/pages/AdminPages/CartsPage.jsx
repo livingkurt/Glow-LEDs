@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const CartsPage = (props) => {
-	const [ searchKeyword, setSearchKeyword ] = useState('');
+	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const dispatch = useDispatch();
@@ -34,19 +34,19 @@ const CartsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		stableDispatch(listCarts(category, searchKeyword, sortOrder));
+		stableDispatch(listCarts(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		stableDispatch(listCarts(category, searchKeyword, e.target.value));
+		stableDispatch(listCarts(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listCarts(category, searchKeyword, sortOrder));
+			stableDispatch(listCarts(category, search, sortOrder));
 		},
-		[ sortOrder, stableDispatch, category, searchKeyword ]
+		[ sortOrder, stableDispatch, category, search ]
 	);
 	const colors = [
 		{ name: 'Supplies', color: '#6d3e3e' },
@@ -120,7 +120,7 @@ const CartsPage = (props) => {
 				<h1 style={{ textAlign: 'center' }}>Carts</h1>
 			</div>
 			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-				<Search setSearchKeyword={setSearchKeyword} submitHandler={submitHandler} category={category} />
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
 		</div>

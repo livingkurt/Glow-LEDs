@@ -19,7 +19,7 @@ import { USER_UPDATE_SUCCESS } from '../constants/userConstants';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-export const listAffiliates = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listAffiliates = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -27,12 +27,7 @@ export const listAffiliates = (category = '', searchKeyword = '', sortOrder = ''
 		dispatch({ type: AFFILIATE_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
-			'/api/affiliates?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase(),
+			'/api/affiliates?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: {
 					Authorization: 'Bearer ' + userInfo.token

@@ -3,12 +3,12 @@ import { Promo } from '../models';
 import { make_private_code } from '../util';
 
 export default {
-	findAll_teams_db: async (category: any, searchKeyword: any, sortOrder: any) => {
+	findAll_teams_db: async (category: any, search: any, sortOrder: any) => {
 		try {
 			return await Team.find({
 				deleted: false,
 				...category,
-				...searchKeyword
+				...search
 			})
 				.populate('affiliates')
 				.populate('public_code')

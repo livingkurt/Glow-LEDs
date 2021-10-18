@@ -141,18 +141,13 @@ export const savePayment = (data: { paymentMethod: any }) => (
 	dispatch({ type: CART_SAVE_PAYMENT, payload: data });
 };
 
-export const listCarts = (category = '', searchKeyword = '', sortOrder = '') => async (
+export const listCarts = (category = '', search = '', sortOrder = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: CART_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/carts?category=' +
-				category +
-				'&searchKeyword=' +
-				searchKeyword +
-				'&sortOrder=' +
-				sortOrder.toLowerCase()
+			'/api/carts?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
 		);
 		dispatch({ type: CART_LIST_SUCCESS, payload: data });
 	} catch (error) {
