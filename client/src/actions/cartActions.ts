@@ -99,12 +99,11 @@ export const removeFromCart = (product: string) => async (
 	try {
 		if (userInfo && Object.keys(userInfo).length > 0) {
 			const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-			const old_cart = data.data;
-			if (data.message === 'Cart Found') {
+			if (Object.keys(data).length > 0) {
 				console.log('Cart Found');
-				const { data } = await axios.put(
+				const response = await axios.put(
 					'/api/carts/user/' + userInfo._id,
-					{ old_cart, cartItems, userInfo, cartItem: product },
+					{ data, cartItems, userInfo, cartItem: product },
 					{
 						headers: {
 							Authorization: 'Bearer ' + userInfo.token
@@ -166,10 +165,9 @@ export const saveCart = (cartItem: any) => async (
 		const { cart: { cartItems } } = getState();
 		if (userInfo && Object.keys(userInfo).length > 0) {
 			const { data } = await axios.get('/api/carts/user/' + userInfo._id);
-			const old_cart = data.data;
-			if (data.message === 'Cart Found') {
-				const { data } = await axios.put(
-					'/api/carts/' + old_cart._id,
+			if (Object.keys(data).length > 0) {
+				const { data: updated_cart } = await axios.put(
+					'/api/carts/' + data._id,
 					{ cartItems, cartItem, userInfo },
 					{
 						headers: {
@@ -177,8 +175,8 @@ export const saveCart = (cartItem: any) => async (
 						}
 					}
 				);
-				dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-			} else if (data.message === 'No Cart Found') {
+				dispatch({ type: CART_SAVE_SUCCESS, payload: updated_cart });
+			} else if (Object.keys(data).length === 0) {
 				const { data } = await axios.post(
 					'/api/carts',
 					{ cartItem, userInfo, cartItems: [] },

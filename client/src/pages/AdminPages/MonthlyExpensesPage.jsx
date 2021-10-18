@@ -71,7 +71,9 @@ const MonthlyExpensesPage = (props) => {
 				color: '#b33434',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1225: batteries.batteries_1225,
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_tot16: batteries.batteries_1620_tot16,
+				batter16s_1225: batteries.batter16s_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
 		}
@@ -84,6 +86,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#b9742f',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -97,6 +101,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#bfbf26',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -110,6 +116,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#7ccd2a',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -123,6 +131,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#2bc92b',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -136,6 +146,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#29c779',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -149,6 +161,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#27bfbf',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -162,6 +176,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#2873bd',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -175,6 +191,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#2a2ab5',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -188,6 +206,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#742bbd',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -201,6 +221,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#bd28bd',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -214,6 +236,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#c12573',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
+				batteries_1616: batteries.batteries_1616,
+				batteries_1616_total: batteries.batteries_1616_total,
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total
 			});
@@ -246,7 +270,7 @@ const MonthlyExpensesPage = (props) => {
 				let total_expenses = 0;
 				if (orders.length > 1) {
 					income = orders.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
-					total_expenses = expenses.data.reduce((a, c) => a + c.amount, 0);
+					total_expenses = expenses.reduce((a, c) => a + c.amount, 0);
 				}
 				update_income(dates_in_year[month_number].month, income, total_expenses, batteries);
 				return {
@@ -255,8 +279,10 @@ const MonthlyExpensesPage = (props) => {
 					expenses: total_expenses,
 					profit: income + total_expenses,
 					batteries_1620: batteries.batteries_1620,
+					batteries_1616: batteries.batteries_1616,
 					batteries_1225: batteries.batteries_1225,
 					batteries_1620_total: batteries.batteries_1620_total,
+					batteries_1616_total: batteries.batteries_1616_total,
 					batteries_1225_total: batteries.batteries_1225_total
 				};
 			})
@@ -271,6 +297,10 @@ const MonthlyExpensesPage = (props) => {
 			.map((order) => order.orderItems)
 			.flat(1)
 			.filter((item) => item.name === 'Bulk CR1620 Batteries');
+		const batt_1616 = data
+			.map((order) => order.orderItems)
+			.flat(1)
+			.filter((item) => item.name === 'Bulk CR1616 Batteries');
 		const batt_1225 = data
 			.map((order) => order.orderItems)
 			.flat(1)
@@ -279,10 +309,16 @@ const MonthlyExpensesPage = (props) => {
 		const batt_1620_options = batt_1620
 			.filter((item) => item.product_option)
 			.reduce((a, c) => a + c.product_option.size, 0);
+		const batt_1616_options = batt_1616
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.size, 0);
 		const batt_1225_options = batt_1225
 			.filter((item) => item.product_option)
 			.reduce((a, c) => a + c.product_option.size, 0);
 		const batt_1620_size = batt_1620
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+		const batt_1616_size = batt_1616
 			.filter((item) => item.size > 0)
 			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
 		const batt_1225_size = batt_1225
@@ -291,10 +327,16 @@ const MonthlyExpensesPage = (props) => {
 		const batt_1620_options_total = batt_1620
 			.filter((item) => item.product_option)
 			.reduce((a, c) => a + c.product_option.price, 0);
+		const batt_1616_options_total = batt_1616
+			.filter((item) => item.product_option)
+			.reduce((a, c) => a + c.product_option.price, 0);
 		const batt_1225_options_total = batt_1225
 			.filter((item) => item.product_option)
 			.reduce((a, c) => a + c.product_option.price, 0);
 		const batt_1620_size_total = batt_1620
+			.filter((item) => item.size > 0)
+			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
+		const batt_1616_size_total = batt_1616
 			.filter((item) => item.size > 0)
 			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
 		const batt_1225_size_total = batt_1225
@@ -302,8 +344,10 @@ const MonthlyExpensesPage = (props) => {
 			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
 		return {
 			batteries_1620: batt_1620_options + batt_1620_size,
+			batteries_1616: batt_1616_options + batt_1616_size,
 			batteries_1225: batt_1225_options + batt_1225_size,
 			batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
+			batteries_1616_total: batt_1616_options_total + batt_1616_size_total,
 			batteries_1225_total: batt_1225_options_total + batt_1225_size_total
 		};
 	};
@@ -729,8 +773,11 @@ const MonthlyExpensesPage = (props) => {
 								<th>Date</th>
 								<th>Bulk CR1620 Batteries</th>
 								<th>Bulk CR1620 Batteries Total</th>
+								<th>Bulk CR1616 Batteries</th>
+								<th>Bulk CR1616 Batteries Total</th>
 								<th>Bulk CR1225 Batteries</th>
 								<th>Bulk CR1225 Batteries Total</th>
+								<th>Bulk Batteries Amount</th>
 								<th>Bulk Batteries Total</th>
 							</tr>
 						</thead>
@@ -746,13 +793,26 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${january.batteries_1620_total ? january.batteries_1620_total.toFixed(2) : '0.00'}
 								</th>
+								<th>{january.batteries_1616 ? january.batteries_1616 : '0'}</th>
+								<th>
+									${january.batteries_1616_total ? january.batteries_1616_total.toFixed(2) : '0.00'}
+								</th>
 								<th>{january.batteries_1225 ? january.batteries_1225 : '0'}</th>
 								<th>
 									${january.batteries_1225_total ? january.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
 								<th>
+									{january.batteries_1225 ? (
+										january.batteries_1225 + january.batteries_1620 + january.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${january.batteries_1225_total ? (
-										(january.batteries_1225_total + january.batteries_1620_total).toFixed(2)
+										(january.batteries_1225_total +
+											january.batteries_1620_total +
+											january.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -770,13 +830,26 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${february.batteries_1620_total ? february.batteries_1620_total.toFixed(2) : '0.00'}
 								</th>
+								<th>{february.batteries_1616 ? february.batteries_1616 : '0'}</th>
+								<th>
+									${february.batteries_1616_total ? february.batteries_1616_total.toFixed(2) : '0.00'}
+								</th>
 								<th>{february.batteries_1225 ? february.batteries_1225 : '0'}</th>
 								<th>
 									${february.batteries_1225_total ? february.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
 								<th>
+									{february.batteries_1225 ? (
+										february.batteries_1225 + february.batteries_1620 + february.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${february.batteries_1225_total ? (
-										(february.batteries_1225_total + february.batteries_1620_total).toFixed(2)
+										(february.batteries_1225_total +
+											february.batteries_1620_total +
+											february.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -791,11 +864,22 @@ const MonthlyExpensesPage = (props) => {
 								<th>March</th>
 								<th>{march.batteries_1620 ? march.batteries_1620 : '0'}</th>
 								<th>${march.batteries_1620_total ? march.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{march.batteries_1616 ? march.batteries_1616 : '0'}</th>
+								<th>${march.batteries_1616_total ? march.batteries_1616_total.toFixed(2) : '0.00'}</th>
 								<th>{march.batteries_1225 ? march.batteries_1225 : '0'}</th>
 								<th>${march.batteries_1225_total ? march.batteries_1225_total.toFixed(2) : '0.00'}</th>
 								<th>
+									{march.batteries_1225 ? (
+										march.batteries_1225 + march.batteries_1620 + march.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${march.batteries_1225_total ? (
-										(march.batteries_1225_total + march.batteries_1620_total).toFixed(2)
+										(march.batteries_1225_total +
+											march.batteries_1620_total +
+											march.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -810,11 +894,22 @@ const MonthlyExpensesPage = (props) => {
 								<th>April</th>
 								<th>{april.batteries_1620 ? april.batteries_1620 : '0'}</th>
 								<th>${april.batteries_1620_total ? april.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{april.batteries_1616 ? april.batteries_1616 : '0'}</th>
+								<th>${april.batteries_1616_total ? april.batteries_1616_total.toFixed(2) : '0.00'}</th>
 								<th>{april.batteries_1225 ? april.batteries_1225 : '0'}</th>
 								<th>${april.batteries_1225_total ? april.batteries_1225_total.toFixed(2) : '0.00'}</th>
 								<th>
+									{april.batteries_1225 ? (
+										april.batteries_1225 + april.batteries_1620 + april.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${april.batteries_1225_total ? (
-										(april.batteries_1225_total + april.batteries_1620_total).toFixed(2)
+										(april.batteries_1225_total +
+											april.batteries_1620_total +
+											april.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -830,11 +925,22 @@ const MonthlyExpensesPage = (props) => {
 								<th>May</th>
 								<th>{may.batteries_1620 ? may.batteries_1620 : '0'}</th>
 								<th>{may.batteries_1620_total ? may.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{may.batteries_1616 ? may.batteries_1616 : '0'}</th>
+								<th>{may.batteries_1616_total ? may.batteries_1616_total.toFixed(2) : '0.00'}</th>
 								<th>{may.batteries_1225 ? may.batteries_1225 : '0'}</th>
 								<th>{may.batteries_1225_total ? may.batteries_1225_total.toFixed(2) : '0.00'}</th>
 								<th>
+									{may.batteries_1225 ? (
+										may.batteries_1225 + may.batteries_1620 + may.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${may.batteries_1225_total ? (
-										(may.batteries_1225_total + may.batteries_1620_total).toFixed(2)
+										(may.batteries_1225_total +
+											may.batteries_1620_total +
+											may.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -849,12 +955,23 @@ const MonthlyExpensesPage = (props) => {
 								<th>June</th>
 								<th>{june.batteries_1620 ? june.batteries_1620 : '0'}</th>
 								<th>${june.batteries_1620_total ? june.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{june.batteries_1616 ? june.batteries_1616 : '0'}</th>
+								<th>${june.batteries_1616_total ? june.batteries_1616_total.toFixed(2) : '0.00'}</th>
 								<th>{june.batteries_1225 ? june.batteries_1225 : '0'}</th>
 								<th>${june.batteries_1225_total ? june.batteries_1225_total.toFixed(2) : '0.00'}</th>
 
 								<th>
+									{june.batteries_1225 ? (
+										june.batteries_1225 + june.batteries_1620 + june.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${june.batteries_1225_total ? (
-										(june.batteries_1225_total + june.batteries_1620_total).toFixed(2)
+										(june.batteries_1225_total +
+											june.batteries_1620_total +
+											june.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -869,11 +986,22 @@ const MonthlyExpensesPage = (props) => {
 								<th>July</th>
 								<th>{july.batteries_1620 ? july.batteries_1620 : '0'}</th>
 								<th>${july.batteries_1620_total ? july.batteries_1620_total.toFixed(2) : '0.00'}</th>
+								<th>{july.batteries_1616 ? july.batteries_1616 : '0'}</th>
+								<th>${july.batteries_1616_total ? july.batteries_1616_total.toFixed(2) : '0.00'}</th>
 								<th>{july.batteries_1225 ? july.batteries_1225 : '0'}</th>
 								<th>${july.batteries_1225_total ? july.batteries_1225_total.toFixed(2) : '0.00'}</th>
 								<th>
+									{july.batteries_1225 ? (
+										july.batteries_1225 + july.batteries_1620 + july.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${july.batteries_1225_total ? (
-										(july.batteries_1225_total + july.batteries_1620_total).toFixed(2)
+										(july.batteries_1225_total +
+											july.batteries_1620_total +
+											july.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -890,13 +1018,26 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${august.batteries_1620_total ? august.batteries_1620_total.toFixed(2) : '0.00'}
 								</th>
+								<th>{august.batteries_1616 ? august.batteries_1616 : '0'}</th>
+								<th>
+									${august.batteries_1616_total ? august.batteries_1616_total.toFixed(2) : '0.00'}
+								</th>
 								<th>{august.batteries_1225 ? august.batteries_1225 : '0'}</th>
 								<th>
 									${august.batteries_1225_total ? august.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
 								<th>
+									{august.batteries_1225 ? (
+										august.batteries_1225 + august.batteries_1620 + august.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${august.batteries_1225_total ? (
-										(august.batteries_1225_total + august.batteries_1620_total).toFixed(2)
+										(august.batteries_1225_total +
+											august.batteries_1620_total +
+											august.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -917,6 +1058,14 @@ const MonthlyExpensesPage = (props) => {
 										'0.00'
 									)}
 								</th>
+								<th>{september.batteries_1616 ? september.batteries_1616 : '0'}</th>
+								<th>
+									${september.batteries_1616_total ? (
+										september.batteries_1616_total.toFixed(2)
+									) : (
+										'0.00'
+									)}
+								</th>
 								<th>{september.batteries_1225 ? september.batteries_1225 : '0'}</th>
 								<th>
 									${september.batteries_1225_total ? (
@@ -926,8 +1075,17 @@ const MonthlyExpensesPage = (props) => {
 									)}
 								</th>
 								<th>
+									{september.batteries_1225 ? (
+										september.batteries_1225 + september.batteries_1620 + september.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${september.batteries_1225_total ? (
-										(september.batteries_1225_total + september.batteries_1620_total).toFixed(2)
+										(september.batteries_1225_total +
+											september.batteries_1620_total +
+											september.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -944,13 +1102,26 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${october.batteries_1620_total ? october.batteries_1620_total.toFixed(2) : '0.00'}
 								</th>
+								<th>{october.batteries_1616 ? october.batteries_1616 : '0'}</th>
+								<th>
+									${october.batteries_1616_total ? october.batteries_1616_total.toFixed(2) : '0.00'}
+								</th>
 								<th>{october.batteries_1225 ? october.batteries_1225 : '0'}</th>
 								<th>
 									${october.batteries_1225_total ? october.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
 								<th>
+									{october.batteries_1225 ? (
+										october.batteries_1225 + october.batteries_1620 + october.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${october.batteries_1225_total ? (
-										(october.batteries_1225_total + october.batteries_1620_total).toFixed(2)
+										(october.batteries_1225_total +
+											october.batteries_1620_total +
+											october.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -967,13 +1138,26 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${november.batteries_1620_total ? november.batteries_1620_total.toFixed(2) : '0.00'}
 								</th>
+								<th>{november.batteries_1616 ? november.batteries_1616 : '0'}</th>
+								<th>
+									${november.batteries_1616_total ? november.batteries_1616_total.toFixed(2) : '0.00'}
+								</th>
 								<th>{november.batteries_1225 ? november.batteries_1225 : '0'}</th>
 								<th>
 									${november.batteries_1225_total ? november.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
 								<th>
+									{november.batteries_1225 ? (
+										november.batteries_1225 + november.batteries_1620 + november.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${november.batteries_1225_total ? (
-										(november.batteries_1225_total + november.batteries_1620_total).toFixed(2)
+										(november.batteries_1225_total +
+											november.batteries_1620_total +
+											november.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
@@ -990,19 +1174,105 @@ const MonthlyExpensesPage = (props) => {
 								<th>
 									${december.batteries_1620_total ? december.batteries_1620_total.toFixed(2) : '0.00'}
 								</th>
+								<th>{december.batteries_1616 ? december.batteries_1616 : '0'}</th>
+								<th>
+									${december.batteries_1616_total ? december.batteries_1616_total.toFixed(2) : '0.00'}
+								</th>
 								<th>{december.batteries_1225 ? december.batteries_1225 : '0'}</th>
 								<th>
 									${december.batteries_1225_total ? december.batteries_1225_total.toFixed(2) : '0.00'}
 								</th>
 								<th>
+									{december.batteries_1225 ? (
+										december.batteries_1225 + december.batteries_1620 + december.batteries_1616
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${december.batteries_1225_total ? (
-										(december.batteries_1225_total + december.batteries_1620_total).toFixed(2)
+										(december.batteries_1225_total +
+											december.batteries_1620_total +
+											december.batteries_1616_total).toFixed(2)
 									) : (
 										'0.00'
 									)}
 								</th>
 							</tr>
 						</tbody>
+
+						<tfoot>
+							<tr>
+								<th>Profit</th>
+								<th />
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1620_total, 0) -
+											monthly_income
+												.filter((month) => month !== undefined)
+												.reduce((a, c) => a + c.batteries_1620, 0) *
+												0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th />
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1616_total, 0) -
+											monthly_income
+												.filter((month) => month !== undefined)
+												.reduce((a, c) => a + c.batteries_1616, 0) *
+												0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th />
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1225_total, 0) -
+											monthly_income
+												.filter((month) => month !== undefined)
+												.reduce((a, c) => a + c.batteries_1225, 0) *
+												0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th />
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce(
+												(a, c) =>
+													a +
+													c.batteries_1225_total +
+													c.batteries_1620_total +
+													c.batteries_1616_total,
+												0
+											) -
+											monthly_income
+												.filter((month) => month !== undefined)
+												.reduce(
+													(a, c) =>
+														a + c.batteries_1225 + c.batteries_1620 + c.batteries_1616,
+													0
+												) *
+												0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+							</tr>
+						</tfoot>
 						<tfoot>
 							<tr>
 								<th>Total</th>
@@ -1029,6 +1299,25 @@ const MonthlyExpensesPage = (props) => {
 									{monthly_income && monthly_income.length > 0 ? (
 										monthly_income
 											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1616, 0)
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
+									${monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1616_total, 0)
+											.toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
+									{monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
 											.reduce((a, c) => a + c.batteries_1225, 0)
 									) : (
 										'0'
@@ -1045,11 +1334,78 @@ const MonthlyExpensesPage = (props) => {
 									)}
 								</th>
 								<th>
+									{monthly_income && monthly_income.length > 0 ? (
+										monthly_income
+											.filter((month) => month !== undefined)
+											.reduce(
+												(a, c) => a + c.batteries_1225 + c.batteries_1620 + c.batteries_1616,
+												0
+											)
+									) : (
+										'0'
+									)}
+								</th>
+								<th>
 									${monthly_income && monthly_income.length > 0 ? (
 										monthly_income
 											.filter((month) => month !== undefined)
-											.reduce((a, c) => a + c.batteries_1225_total + c.batteries_1620_total, 0)
+											.reduce(
+												(a, c) =>
+													a +
+													c.batteries_1225_total +
+													c.batteries_1620_total +
+													c.batteries_1616_total,
+												0
+											)
 											.toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+							</tr>
+						</tfoot>
+						<tfoot>
+							<tr>
+								<th>Expense</th>
+								<th />
+								<th>
+									-${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1620, 0) * 0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th />
+								<th>
+									-${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1616, 0) * 0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th />
+								<th>
+									-${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce((a, c) => a + c.batteries_1225, 0) * 0.0685).toFixed(2)
+									) : (
+										'0'
+									)}
+								</th>
+								<th />
+								<th>
+									-${monthly_income && monthly_income.length > 0 ? (
+										(monthly_income
+											.filter((month) => month !== undefined)
+											.reduce(
+												(a, c) => a + c.batteries_1225 + c.batteries_1620 + c.batteries_1616,
+												0
+											) * 0.0685).toFixed(2)
 									) : (
 										'0'
 									)}

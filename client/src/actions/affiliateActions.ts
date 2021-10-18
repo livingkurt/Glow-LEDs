@@ -56,7 +56,6 @@ export const saveAffiliate = (affiliate: any) => async (
 				}
 			});
 			dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
-			console.log({ data: data.data });
 			const { data: user } = await axios.put(
 				'/api/users/update/' + userInfo._id,
 				{
@@ -66,7 +65,7 @@ export const saveAffiliate = (affiliate: any) => async (
 					password: userInfo.password,
 					is_affiliated: true,
 					email_subscription: userInfo.email_subscription,
-					affiliate: data.data._id,
+					affiliate: data._id,
 					shipping: userInfo.shipping,
 					isVerified: userInfo.isVerified,
 					isAdmin: userInfo.isAdmin

@@ -68,10 +68,10 @@ export const createPayOrder = (
 			}
 		});
 		console.log({ order_create_res });
-		if (order_create_res.data.data) {
-			dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_create_res.data.data });
+		if (order_create_res.data) {
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_create_res.data });
 			const payment_res = await axios.put(
-				'/api/payments/secure/pay/' + order_create_res.data.data._id,
+				'/api/payments/secure/pay/' + order_create_res.data._id,
 				{ paymentMethod },
 				{
 					headers: { Authorization: 'Bearer ' + user_data.token }
@@ -160,17 +160,17 @@ export const createPayOrderGuest = (
 		} else {
 			const user_email_res = await axios.get('/api/users/email/' + order.shipping.email);
 			// prnt({ createPayOrderGuest_user_email_res: user_email_res });
-			if (user_email_res.data.data && Object.keys(user_email_res.data.data).length > 0) {
+			if (user_email_res.data && Object.keys(user_email_res.data).length > 0) {
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {
 					...order,
 					user: user_email_res.data._id
 				});
 				if (create_guest_order_res.data) {
-					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data.data });
+					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
 
 					const guest_payment_res = await axios.put(
-						'/api/payments/guest/pay/' + create_guest_order_res.data.data._id,
+						'/api/payments/guest/pay/' + create_guest_order_res.data._id,
 						{
 							paymentMethod
 						}
@@ -202,14 +202,14 @@ export const createPayOrderGuest = (
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {
 					...order,
-					user: data.data._id
+					user: data._id
 				});
 				prnt({ create_guest_order_res });
-				if (create_guest_order_res.data.data && Object.keys(create_guest_order_res.data.data).length > 0) {
-					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data.data });
+				if (create_guest_order_res.data && Object.keys(create_guest_order_res.data).length > 0) {
+					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
 
 					const guest_payment_res = await axios.put(
-						'/api/payments/guest/pay/' + create_guest_order_res.data.data._id,
+						'/api/payments/guest/pay/' + create_guest_order_res.data._id,
 						{ paymentMethod }
 					);
 					if (guest_payment_res.data) {
@@ -244,7 +244,7 @@ export const createOrderGuest = (order: {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const create_guest_order_res = await axios.post('/api/orders/guest', order);
 		if (create_guest_order_res.data) {
-			dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data.data });
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
 			sessionStorage.removeItem('shippingAddress');
 			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 		} else {
@@ -279,7 +279,7 @@ export const createOrder = (order: {
 			}
 		});
 		if (create_order_res.data) {
-			dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_order_res.data.data });
+			dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_order_res.data });
 			sessionStorage.removeItem('shippingAddress');
 			dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 		} else {

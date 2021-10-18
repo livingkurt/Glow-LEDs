@@ -1864,21 +1864,21 @@ export const create_color_products = async (
 		console.log({ data, index });
 		if (item.subcategory === 'colors' && type === 'colors') {
 			if (color_products) {
-				set_color_products((colors_products: any) => [ ...colors_products, data.data ]);
+				set_color_products((colors_products: any) => [ ...colors_products, data ]);
 			} else {
-				set_color_products([ data.data ]);
+				set_color_products([ data ]);
 			}
 		} else if (item.subcategory === 'secondary_colors' && type === 'secondary_colors') {
 			if (secondary_color_products) {
-				set_secondary_color_products((colors_products: any) => [ ...colors_products, data.data ]);
+				set_secondary_color_products((colors_products: any) => [ ...colors_products, data ]);
 			} else {
-				set_secondary_color_products([ data.data ]);
+				set_secondary_color_products([ data ]);
 			}
 		} else if (item.subcategory === 'sizes' && type === 'sizes') {
 			if (option_products) {
-				set_option_products((colors_products: any) => [ ...colors_products, data.data ]);
+				set_option_products((colors_products: any) => [ ...colors_products, data ]);
 			} else {
-				set_option_products([ data.data ]);
+				set_option_products([ data ]);
 			}
 		}
 	});

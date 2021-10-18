@@ -158,7 +158,7 @@ const GlowControl = (props) => {
 			console.log({ res });
 			console.log({ query_url });
 
-			const settings = res.data.data;
+			const settings = res.data;
 			let saved_settings = {};
 			settings.map((setting) => {
 				return (saved_settings[setting.name] = setting);

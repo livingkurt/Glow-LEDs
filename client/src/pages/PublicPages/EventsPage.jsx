@@ -21,8 +21,8 @@ const EventsPage = (props) => {
 	const get_events = async () => {
 		set_loading(true);
 		const { data } = await API_External.get_events();
-		console.log({ events: data.data });
-		set_events(data.data);
+		console.log({ events: data });
+		set_events(data);
 		set_loading(false);
 	};
 

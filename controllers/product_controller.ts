@@ -214,7 +214,7 @@ export default {
 			// console.log({ body: req.body });
 			const newProduct = await Product.create(req.body);
 			if (newProduct) {
-				return res.status(201).send({ message: 'New Product Created', data: newProduct });
+				return res.status(201).send(newProduct);
 			} else {
 				return res.status(500).send({ message: ' Error in Creating Product.' });
 			}

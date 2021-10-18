@@ -63,7 +63,7 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 	dispatch({ type: USER_REGISTER_REQUEST, payload: userData });
 	try {
 		const { data } = await axios.post('/api/users/register', userData);
-		dispatch({ type: USER_REGISTER_SUCCESS, payload: data.data });
+		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 		axios.post('/api/emails/verified', data);
 		// axios.post('/api/emails/verify', data);
 		dispatch({ type: USER_REGISTER_EMPTY, payload: {} });
@@ -84,9 +84,9 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 	dispatch({ type: USER_LOGIN_REQUEST, payload: userData });
 	try {
 		const { data } = await axios.post('/api/users/login', userData);
-		dispatch({ type: USER_LOGIN_SUCCESS, payload: data.data });
+		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 		// Set token to localStorage
-		const { token } = data.data;
+		const { token } = data;
 		localStorage.setItem('jwtToken', token);
 		// Set token to Auth header
 		setAuthToken(token);
@@ -285,7 +285,7 @@ export const password_reset = (user_id: string, password: string, repassword: st
 	try {
 		const { data } = await axios.put('/api/users/password_reset', { user_id, password, repassword });
 		console.log({ password_reset: data });
-		if (data.data && data.data.hasOwnProperty('first_name')) {
+		if (data && data.hasOwnProperty('first_name')) {
 			dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
 			axios.post('/api/emails/password_reset', data);
 		}
@@ -301,7 +301,7 @@ export const reset_password = (email: string) => async (dispatch: (arg0: { type:
 		const { data } = await axios.post('/api/users/reset_password', { email });
 		console.log({ data });
 		dispatch({ type: USER_PASSWORD_RESET_SUCCESS, payload: data });
-		axios.post('/api/emails/reset_password', data.data);
+		axios.post('/api/emails/reset_password', data);
 	} catch (error) {
 		console.log({ error });
 		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error.response.data.message });
