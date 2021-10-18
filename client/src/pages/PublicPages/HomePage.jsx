@@ -210,7 +210,7 @@ const HomePage = (props) => {
 				</h1>
 			</div>
 			<div className="jc-c">
-				<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '3rem' }}>
+				<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '2rem' }}>
 					Innovators of Gloving and Flow Art Technology
 				</h2>
 			</div>
