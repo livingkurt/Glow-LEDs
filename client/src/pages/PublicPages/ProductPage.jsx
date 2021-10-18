@@ -1112,13 +1112,20 @@ const ProductPage = (props) => {
 									style={{ display: width <= 819 ? 'block' : 'none' }}
 								>
 									<ul>
-										<div className="row ai-c mb-1rem">
-											<h3 className="mv-0px mr-5px">Price: </h3>
-											{sale_price_product_option_switch_product(
-												price,
-												sale_price,
-												previous_price
-											)}
+										<div className="jc-b ai-c">
+											<div className="ai-c mb-1rem">
+												<h3 className="mv-0px mr-5px">Price: </h3>
+												{sale_price_product_option_switch_product(
+													price,
+													sale_price,
+													previous_price
+												)}
+											</div>
+											<div className="mb-20px">
+												<a href="#reviews">
+													<Rating rating={product.rating} numReviews={product.numReviews} />
+												</a>
+											</div>
 										</div>
 										{product.secondary_product_group &&
 										product.secondary_products &&
@@ -1412,12 +1419,6 @@ const ProductPage = (props) => {
 									className="details-info mobile_product_view"
 									style={{ display: width <= 819 ? 'block' : 'none' }}
 								>
-									<div className="mb-15px mt-n9px">
-										<a href="#reviews">
-											<Rating rating={product.rating} numReviews={product.numReviews} />
-										</a>
-									</div>
-
 									<div className="mt-1rem">
 										<div className="h-100per paragraph_font">
 											<ul style={{ marginLeft: '10px' }}>

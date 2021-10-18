@@ -27,7 +27,9 @@ const Rating = (props) => {
 				<i className={rating >= 5 ? 'fa fa-star' : rating >= 4.5 ? 'fa fa-star-half' : 'fa fa-star-o'} />
 				<i className="fa fa-star-o pos-rel left-n20px" />
 			</span>
-			<span className="rating">{numReviews && numReviews === 1 ? numReviews + ' review' : numReviews}</span>
+			<span className="rating ml-n17px">
+				{numReviews && numReviews === 1 ? numReviews + ' review' : numReviews}
+			</span>
 		</div>
 	);
 };
