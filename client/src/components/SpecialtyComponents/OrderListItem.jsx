@@ -189,7 +189,7 @@ const OrderListItem = (props) => {
 												)}
 												{item.secondary_image && (
 													<div
-														className={`double-image-cart-${item.name &&
+														className={` double-image-cart-${item.name &&
 														item.name.split('-')[1]
 															? 'vertical'
 															: ''} row`}
@@ -211,7 +211,7 @@ const OrderListItem = (props) => {
 															className={`details-image-cart-${item.name &&
 															item.name.split('-')[1]
 																? 'bottom'
-																: 'right'} `}
+																: 'right'} mr-15px`}
 															src={item.secondary_image}
 														/>
 													</div>
