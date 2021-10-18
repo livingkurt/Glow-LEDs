@@ -157,11 +157,8 @@ export default {
 					},
 					(err: any, token: string) => {
 						return res.status(200).send({
-							message: 'User Found',
-							data: {
-								success: true,
-								token: 'Bearer ' + token
-							}
+							success: true,
+							token: 'Bearer ' + token
 						});
 					}
 				);

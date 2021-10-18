@@ -209,6 +209,11 @@ const HomePage = (props) => {
 					Welcome to Glow-LEDs
 				</h1>
 			</div>
+			<div className="jc-c">
+				<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '3rem' }}>
+					Innovators of Gloving and Flow Art Technology
+				</h2>
+			</div>
 
 			<div className="jc-c ">
 				<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">

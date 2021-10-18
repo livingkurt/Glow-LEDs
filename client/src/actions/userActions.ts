@@ -87,6 +87,7 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 		dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 		// Set token to localStorage
 		const { token } = data;
+		console.log({ data });
 		localStorage.setItem('jwtToken', token);
 		// Set token to Auth header
 		setAuthToken(token);
