@@ -93,69 +93,20 @@ const ProductItemD = (props) => {
 											</div>
 										</div>
 									)}
-									{/* <LazyImage
-											src={props.product.images && props.product.images[0]}
-											alt={props.product.name}
-										/> */}
-									{props.product_occurrences &&
-									props.product_occurrences[0] &&
-									props.product_occurrences[0].name === props.product.name && (
-										<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-											<img
-												className=" mt-3px ml-2px h-100px w-100px"
-												alt={props.product.name}
-												title="Product Image"
-												src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-											/>
-										</div>
-									)}
-									{props.product_occurrences &&
-									props.product_occurrences[1] &&
-									props.product_occurrences[1].name === props.product.name && (
-										<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-											<img
-												className=" mt-3px ml-2px h-100px w-100px"
-												alt={props.product.name}
-												title="Product Image"
-												src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-											/>
-										</div>
-									)}
-									{props.product_occurrences &&
-									props.product_occurrences[2] &&
-									props.product_occurrences[2].name === props.product.name && (
-										<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-											<img
-												className=" mt-3px ml-2px h-100px w-100px"
-												alt={props.product.name}
-												title="Product Image"
-												src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-											/>
-										</div>
-									)}
-									{props.product_occurrences &&
-									props.product_occurrences[3] &&
-									props.product_occurrences[3].name === props.product.name && (
-										<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-											<img
-												className=" mt-3px ml-2px h-100px w-100px"
-												alt={props.product.name}
-												title="Product Image"
-												src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-											/>
-										</div>
-									)}
-									{props.product_occurrences &&
-									props.product_occurrences[4] &&
-									props.product_occurrences[4].name === props.product.name && (
-										<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-											<img
-												className=" mt-3px ml-2px h-100px w-100px"
-												alt={props.product.name}
-												title="Product Image"
-												src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-											/>
-										</div>
+									{[ ...Array(12).keys() ].map(
+										(x, index) =>
+											props.product_occurrences &&
+											props.product_occurrences[index] &&
+											props.product_occurrences[index].name === props.product.name && (
+												<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+													<img
+														className=" mt-3px ml-2px h-100px w-100px"
+														alt={props.product.name}
+														title="Product Image"
+														src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
+													/>
+												</div>
+											)
 									)}
 								</div>
 							</div>

@@ -260,3 +260,16 @@ function isObject(object: any) {
 export const prnt = (info: any) => {
 	console.log(info);
 };
+
+export const snake_case = (str: string) => {
+	const snake_case = str;
+	if (snake_case && snake_case.length > 0) {
+		snake_case.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
+		console.log({ snake_case: snake_case.substr(-1) });
+		if (snake_case.substr(-1) === ')') {
+			return str.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_').slice(0, -1);
+		} else {
+			return str.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
+		}
+	}
+};

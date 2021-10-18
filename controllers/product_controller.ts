@@ -1,4 +1,5 @@
 import { Product } from '../models';
+import { snake_case } from '../util';
 
 export default {
 	findAll: async (req: any, res: any) => {
@@ -8,14 +9,87 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			console.log({ chip: req.query.chip });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
-			const search = req.query.search
-				? {
-						name: {
-							$regex: req.query.search,
-							$options: 'i'
+
+			const categories = [
+				'accessories',
+				'casings',
+				'decals',
+				'diffuser_caps',
+				'diffusers',
+				'exo_diffusers',
+				'gift_card',
+				'glow_casings',
+				'glow_strings',
+				'glowskins',
+				'mega_diffuser_caps',
+				'options'
+			];
+			const subcategories = [
+				'battery_storage',
+				'batteries',
+				'stickers',
+				'clips',
+				'casings',
+				'universal',
+				'batman',
+				'outline',
+				'patterns',
+				'abstract',
+				'shapes',
+				'diffuser_adapters',
+				'geometric',
+				'starter_kit',
+				'sacred_geometry',
+				'imperfect',
+				'domes',
+				'closed_hole',
+				'fisheye',
+				'open_hole',
+				'polygons',
+				'cylinders',
+				'polyhedrons',
+				'gift_card',
+				'nova',
+				'classics',
+				'novaskins',
+				'alt_novaskins',
+				'symbols',
+				'emoji',
+				'mega_diffuser_adapters',
+				'custom',
+				'colors',
+				'sizes',
+				'secondary_colors'
+			];
+			let search = {};
+			if (categories.includes(snake_case(req.query.search))) {
+				search = req.query.search
+					? {
+							category: {
+								$regex: req.query.search,
+								$options: 'i'
+							}
 						}
-					}
-				: {};
+					: {};
+			} else if (subcategories.includes(snake_case(req.query.search))) {
+				search = req.query.search
+					? {
+							subcategory: {
+								$regex: req.query.search,
+								$options: 'i'
+							}
+						}
+					: {};
+			} else {
+				search = req.query.search
+					? {
+							name: {
+								$regex: req.query.search,
+								$options: 'i'
+							}
+						}
+					: {};
+			}
 
 			let sortOrder = {};
 			if (req.query.sortOrder === 'lowest') {
@@ -410,7 +484,13 @@ export default {
 				occurences[1].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[1].name,
 				occurences[2].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[2].name,
 				occurences[3].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[3].name,
-				occurences[4].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[4].name
+				occurences[4].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[4].name,
+				occurences[5].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[5].name,
+				occurences[6].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[6].name,
+				occurences[7].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[7].name,
+				occurences[8].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[8].name,
+				occurences[9].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[9].name,
+				occurences[10].name === 'Frosted Dome Diffusers' ? 'Dome Diffusers' : occurences[10].name
 			];
 			console.log({ names });
 			const products = await Product.find({ name: { $in: names } });

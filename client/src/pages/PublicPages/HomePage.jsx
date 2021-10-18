@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../actions/contentActions';
 import { ReadMore, Search } from '../../components/SpecialtyComponents';
 import { listProducts } from '../../actions/productActions';
-import { homepage_videos } from '../../utils/helper_functions';
+import { homepage_videos, humanize, prnt, toCapitalize } from '../../utils/helper_functions';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { API_Products } from '../../utils';
 
@@ -18,8 +18,8 @@ const HomePage = (props) => {
 	const history = useHistory();
 
 	const [ display, setDisplay ] = useState(false);
-	const [ options, setOptions ] = useState([]);
-	const [ search, setSearch ] = useState('');
+	const [ options, set_options ] = useState([]);
+	const [ search, set_search ] = useState('');
 	const wrapperRef = useRef(null);
 
 	useEffect(() => {
@@ -37,7 +37,7 @@ const HomePage = (props) => {
 	};
 
 	const update_list = (poke) => {
-		setSearch(poke);
+		set_search(poke);
 		setDisplay(false);
 		history.push('/collections/all/products?search=' + poke);
 	};
@@ -57,14 +57,97 @@ const HomePage = (props) => {
 	useEffect(() => {
 		dispatch(listContents());
 		get_all_products();
+		// get_all_categories();
+		// get_all_subcategories();
 		return () => {};
 	}, []);
+
+	const categories = [
+		'accessories',
+		'casings',
+		'decals',
+		'diffuser_caps',
+		'diffusers',
+		'exo_diffusers',
+		'gift_card',
+		'glow_casings',
+		'glow_strings',
+		'glowskins',
+		'mega_diffuser_caps',
+		'options'
+	];
+	const subcategories = [
+		'battery_storage',
+		'batteries',
+		'stickers',
+		'clips',
+		'casings',
+		'universal',
+		'batman',
+		'outline',
+		'patterns',
+		'abstract',
+		'shapes',
+		'diffuser_adapters',
+		'geometric',
+		'starter_kit',
+		'sacred_geometry',
+		'imperfect',
+		'domes',
+		'closed_hole',
+		'fisheye',
+		'open_hole',
+		'polygons',
+		'cylinders',
+		'polyhedrons',
+		'gift_card',
+		'nova',
+		'classics',
+		'novaskins',
+		'alt_novaskins',
+		'symbols',
+		'emoji',
+		'mega_diffuser_adapters',
+		'custom',
+		'colors',
+		'sizes',
+		'secondary_colors'
+	];
 
 	const get_all_products = async () => {
 		const { data } = await API_Products.get_all_products();
 		console.log({ data });
-		setOptions(data.filter((product) => !product.option).filter((product) => !product.hidden));
+		set_options([
+			...categories.map((category) => {
+				return { name: humanize(category) };
+			}),
+			...subcategories.map((category) => {
+				return { name: humanize(category) };
+			}),
+			...data.filter((product) => !product.option).filter((product) => !product.hidden)
+		]);
 	};
+
+	// const get_all_categories = async () => {
+	// 	const { data } = await API_Products.get_all_categories();
+	// 	console.log({ data });
+	// 	set_options((options) => [
+	// 		...options,
+	// 		data.filter((category) => !category).map((category) => {
+	// 			return { name: category };
+	// 		})
+	// 	]);
+	// };
+	// const get_all_subcategories = async () => {
+	// 	const { data } = await API_Products.get_all_subcategories();
+	// 	console.log({ data });
+	// 	set_options((options) => [
+	// 		...options,
+	// 		data.filter((category) => category && category.length > 0).map((category) => {
+	// 			return { name: category };
+	// 		})
+	// 	]);
+	// };
 
 	useEffect(
 		() => {
@@ -138,8 +221,9 @@ const HomePage = (props) => {
 								className="form_input search mv-0px w-100per fs-20px"
 								placeholder="Find Your Glow Here"
 								value={search}
-								onChange={(e) => setSearch(e.target.value)}
+								onChange={(e) => set_search(e.target.value)}
 							/>
+							{prnt({ options })}
 							{display && (
 								<div className="pos-abs bg-primary br-10px">
 									{options
