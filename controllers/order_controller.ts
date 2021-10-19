@@ -178,7 +178,7 @@ export default {
 				deleted: false
 			});
 			if (newOrderCreated) {
-				res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
+				res.status(201).send(newOrderCreated);
 			} else {
 				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
@@ -195,7 +195,7 @@ export default {
 			console.log({ newOrderCreated });
 
 			if (newOrderCreated) {
-				res.status(201).send({ message: 'New Order Created', data: newOrderCreated });
+				res.status(201).send(newOrderCreated);
 			} else {
 				return res.status(500).send({ message: ' Error in Creating Order' });
 			}

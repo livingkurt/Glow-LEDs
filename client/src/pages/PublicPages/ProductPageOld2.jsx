@@ -5,7 +5,7 @@ import { detailsProduct } from '../../actions/productActions';
 import {
 	Rating,
 	Reviews,
-	Slideshow,
+	PictureChooser,
 	RelatedProducts,
 	ReadMore,
 	Swipe,
@@ -727,7 +727,7 @@ const ProductPage = (props) => {
 										</div>
 									)} */}
 									<div style={{ display: width < 819 ? 'none' : 'block' }}>
-										<Slideshow
+										<PictureChooser
 											product={product}
 											images={images}
 											secondary_images={secondary_images}
@@ -1136,7 +1136,7 @@ const ProductPage = (props) => {
 								</ul>
 							</div>
 							<div className="mobile_product_view" style={{ display: width <= 819 ? 'block' : 'none' }}>
-								<Slideshow
+								<PictureChooser
 									product={product}
 									images={images}
 									secondary_images={secondary_images}
@@ -1515,7 +1515,7 @@ const ProductPage = (props) => {
 								</AwesomeSlider> */}
 							</div>
 						</div>
-						{/* <Slideshow
+						{/* <PictureChooser
 							product={product}
 							images={images}
 							secondary_images={secondary_images}

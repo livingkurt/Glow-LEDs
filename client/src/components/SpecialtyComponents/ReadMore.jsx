@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useWindowDimensions from '../Hooks/windowDimensions';
 
 const ReadMore = (props) => {
+	// const { children, filename, ...others } = props;
 	const [ show_text, set_show_text ] = useState(false);
 	const { height, width } = useWindowDimensions();
 
