@@ -149,26 +149,6 @@ const HomePage = (props) => {
 		set_loading(false);
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		// const active_content = contents.find((content) => content.active === true);
-	// 		const active_contents = contents.filter((content) => content.active === true);
-	// 		console.log({ active_contents });
-	// 		set_content(active_contents);
-	// 		if (active_contents && active_contents[0]) {
-	// 			set_content_1(active_contents[0]);
-	// 		}
-	// 		if (active_contents && active_contents[1]) {
-	// 			set_content_2(active_contents[1]);
-	// 		}
-	// 		if (active_contents && active_contents[2]) {
-	// 			set_content_3(active_contents[2]);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ contents ]
-	// );
-
 	return (
 		<div className="main_container">
 			<Helmet>
