@@ -718,6 +718,33 @@ const InvoiceEmail = (props) => {
 		return false;
 	};
 
+	const print_label = (content) => {
+		// const content = document.getElementById(id).innerHTML;
+		const frame1 = document.createElement('iframe');
+		frame1.name = 'frame1';
+		frame1.style.position = 'absolute';
+		frame1.style.top = '-1000000px';
+		document.body.appendChild(frame1);
+		const frameDoc = frame1.contentWindow
+			? frame1.contentWindow
+			: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+		frameDoc.document.open();
+		frameDoc.document.write('</head><body>');
+		frameDoc.document.write(`<div style="width: 100%;
+    display: flex;
+    height: 100%;
+    align-items: center;;">
+        <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
+    </div>`);
+		frameDoc.document.write('</body></html>');
+		frameDoc.document.close();
+		setTimeout(function() {
+			window.frames['frame1'].focus();
+			window.frames['frame1'].print();
+			document.body.removeChild(frame1);
+		}, 500);
+		return false;
+	};
 	return (
 		<div>
 			<div className="jc-b mb-2rem">
@@ -738,6 +765,13 @@ const InvoiceEmail = (props) => {
 					<button className="btn primary mh-10px">Your Orders</button>
 				</Link>
 
+				<button
+					className="btn primary mh-10px"
+					id="print_invoice"
+					onClick={() => print_label(order.shipping.shipping_label.postage_label.label_url)}
+				>
+					View Invoice
+				</button>
 				<button className="btn primary mh-10px" id="print_invoice" onClick={() => print_invoice('invoice')}>
 					Print Invoice
 				</button>

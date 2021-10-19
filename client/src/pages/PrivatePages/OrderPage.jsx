@@ -276,9 +276,9 @@ const OrderPage = (props) => {
 		// show_label(order.shipping.shipping_label.postage_label.label_url);
 		print_invoice(order.shipping.shipping_label.postage_label.label_url);
 	};
-
 	const view_return_label = async () => {
-		window.open(order.shipping.return_shipping_label.postage_label.label_url, '_blank', 'width=600,height=400');
+		// show_label(order.shipping.shipping_label.postage_label.label_url);
+		print_invoice(order.shipping.return_shipping_label.postage_label.label_url);
 	};
 
 	const print_invoice = (content) => {
