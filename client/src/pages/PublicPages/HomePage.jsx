@@ -365,10 +365,11 @@ const HomePage = (props) => {
 				handmade in Austin, TX, with the ideas we got from you and what you need We create thing that seem Here
 				at Glow-LEDs.com we strive */}
 					<div className={`${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
+						{prnt({ contents: contents.filter((content) => content.active === true) })}
 						{contents &&
 							contents
-								.slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1)
 								.filter((content) => content.active === true)
+								.slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1)
 								.map(({ home_page }, index) => {
 									return (
 										<div
