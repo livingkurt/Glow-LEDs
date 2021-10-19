@@ -5,6 +5,7 @@ const home_page_schema = {
 	h1: { type: String },
 	image: { type: String },
 	images: { type: Array },
+	slideshow_images: { type: Array },
 	video: { type: String },
 	show_image: { type: Boolean, default: true },
 	show_video: { type: Boolean, default: false },

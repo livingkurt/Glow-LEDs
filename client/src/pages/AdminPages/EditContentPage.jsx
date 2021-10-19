@@ -13,7 +13,9 @@ const EditContentPage = (props) => {
 	const [ links, set_links ] = useState([ {} ]);
 	const [ banner, set_banner ] = useState({});
 	const [ images, set_images ] = useState([]);
+	const [ slideshow_images, set_slideshow_images ] = useState([]);
 	const [ image, set_image ] = useState('');
+	const [ slideshow_image, set_slideshow_image ] = useState('');
 
 	const [ active, set_active ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -43,6 +45,7 @@ const EditContentPage = (props) => {
 		set_home_page(content.home_page);
 		if (content.home_page && content.home_page.images) {
 			set_images(content.home_page.images);
+			set_slideshow_images(content.home_page.slideshow_images);
 		}
 		set_banner(content.banner);
 		set_links(content.links);
@@ -56,6 +59,7 @@ const EditContentPage = (props) => {
 		set_home_page(data);
 		// if (content.home_page && content.home_page.images) {
 		set_images(data.images);
+		set_slideshow_images(data.slideshow_images);
 		// }
 	};
 
@@ -63,6 +67,7 @@ const EditContentPage = (props) => {
 		set_id('');
 		set_home_page('');
 		set_images([]);
+		set_slideshow_images([]);
 		set_banner('');
 		set_links('');
 		set_active(true);
@@ -369,10 +374,18 @@ const EditContentPage = (props) => {
 												</li>
 											)}
 											<ImageDisplay
+												images={slideshow_images}
+												set_images={set_slideshow_images}
+												image={slideshow_image}
+												set_image={set_slideshow_image}
+												name={'Slideshow Images'}
+											/>
+											<ImageDisplay
 												images={images}
 												set_images={set_images}
 												image={image}
 												set_image={set_image}
+												name={'Images'}
 											/>
 										</div>
 

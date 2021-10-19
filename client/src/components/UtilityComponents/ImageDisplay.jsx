@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ImageDisplay = ({ images, set_images, image, set_image }) => {
+const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
 	const remove_image = (image_index, e) => {
 		e.preventDefault();
 		set_images((images) =>
@@ -25,6 +25,7 @@ const ImageDisplay = ({ images, set_images, image, set_image }) => {
 			console.log('images.length === 0');
 			set_images([ image ]);
 		}
+		set_image('');
 	};
 
 	const move_image_up = (image_index, e) => {
@@ -64,7 +65,7 @@ const ImageDisplay = ({ images, set_images, image, set_image }) => {
 	return (
 		<div>
 			<li>
-				<label htmlFor="image">Image</label>
+				<label htmlFor="image">{name ? name : 'Image'}</label>
 				<input type="text" name="image" value={image} id="image" onChange={(e) => set_image(e.target.value)} />
 				<button className="btn primary" onClick={(e) => add_image(e)}>
 					Add Image
