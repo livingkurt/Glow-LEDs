@@ -87,14 +87,6 @@ const AboutPage = () => {
 							/>
 						</div>
 					</div>
-					{/* {content &&
-					content.banner && (
-						// <ReadMore width={1000} length={100} pre={true} className="paragraph_font">{content.about_page.kurt_p}</p>
-						<ReadMore width={1000} length={100} pre={true} className="paragraph_font" length={100} pre={true}>
-							{content.about_page.kurt_p}
-						</ReadMore>
-					)} */}
-
 					<h2
 						className="about_names"
 						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
@@ -110,7 +102,7 @@ const AboutPage = () => {
 						className="about_pictures"
 					>
 						<img
-							alt="Picture of Kurt"
+							alt="Kurt"
 							title="Founder Picture"
 							style={{
 								borderRadius: '15px',
@@ -157,7 +149,7 @@ const AboutPage = () => {
 							className="about_pictures"
 						>
 							<img
-								alt="Picture of Kurt"
+								alt="Kurt"
 								title="Founder Picture"
 								style={{
 									borderRadius: '15px',
@@ -199,7 +191,7 @@ const AboutPage = () => {
 							className="about_pictures"
 						>
 							<img
-								alt="Picture of Kurt"
+								alt="Kurt"
 								title="Founder Picture"
 								style={{
 									borderRadius: '15px',
@@ -262,7 +254,7 @@ const AboutPage = () => {
 						className="about_pictures"
 					>
 						<img
-							alt="Picture of Kurt"
+							alt="Kurt"
 							title="Founder Picture"
 							style={{
 								borderRadius: '15px',
@@ -368,52 +360,6 @@ const AboutPage = () => {
 							)}
 						</Loading>
 					)}
-
-					{/* {teams.map((team) => {
-						return (
-							<div>
-								<div className="row">
-									<h2
-										className="about_names"
-										style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-									>
-										{team.team_name}
-									</h2>
-									<img
-										className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-										src={team.picture}
-									/>
-								</div>
-								<div className="products">
-									{team.affiliates &&
-										team.affiliates.map((affiliate) => {
-											return (
-												<Link
-													to={'/collections/sponsors/' + affiliate.pathname}
-													className="pos-rel"
-												>
-													<img
-														className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-														src={affiliate.picture}
-													/>
-													<h3
-														className="pos-abs fs-30px"
-														style={{
-															top: '40%',
-															left: '50%',
-															transform: 'translate(-50%, -50%)'
-														}}
-													>
-														{affiliate.artist_name != 'Koztic' && affiliate.artist_name}
-													</h3>
-												</Link>
-											);
-										})}
-								</div>
-
-							</div>
-						);
-					})} */}
 				</div>
 			</div>
 		</div>

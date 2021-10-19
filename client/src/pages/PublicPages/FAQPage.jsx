@@ -31,7 +31,7 @@ const FAQPage = () => {
 					<h1 style={{ clear: 'both', textAlign: 'center' }} className="title_font">
 						Frequently Asked Questions
 					</h1>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2 className="ta-c title_font" id="glowskins">
 							Glowskins
 						</h2>
@@ -132,7 +132,7 @@ const FAQPage = () => {
 							<li >Coffin Style Chips</li>
 						</ul> */}
 					</div>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2
 							style={{ clear: 'both', textAlign: 'center' }}
 							className="title_font"
@@ -201,7 +201,7 @@ const FAQPage = () => {
 							</li>
 						</ul>
 					</div>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2
 							style={{ clear: 'both', textAlign: 'center' }}
 							className="title_font"
@@ -261,7 +261,7 @@ const FAQPage = () => {
 							</li>
 						</ul>
 					</div>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2
 							className="title_font"
 							style={{ textAlign: 'center', marginBottom: '30px' }}
@@ -444,7 +444,7 @@ const FAQPage = () => {
 							</div>
 						</Link>
 					</div>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2 className="ta-c title_font" id="featured_content">
 							Featured Content
 						</h2>
@@ -479,7 +479,7 @@ const FAQPage = () => {
 							</div>
 						</Link>
 					</div>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2 className="ta-c title_font" id="diffuser_too_tight_too_loose">
 							Diffuser too tight or too loose?
 						</h2>
@@ -514,7 +514,7 @@ const FAQPage = () => {
 						</Link>
 					</div>
 
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2 className="ta-c title_font" id="processing_shipping">
 							Processing/Shipping
 						</h2>
@@ -649,7 +649,7 @@ const FAQPage = () => {
 							</div>
 						</Link>
 					</div>
-					<div className="home_page_divs" style={{ margin: '10px 0' }}>
+					<div className="container" style={{ margin: '10px 0' }}>
 						<h2 className="ta-c title_font" id="returns_cancellations">
 							Returns/Cancellations
 						</h2>

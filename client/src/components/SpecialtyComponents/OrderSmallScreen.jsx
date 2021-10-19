@@ -8,7 +8,7 @@ import { LazyImage } from '../UtilityComponents';
 const OrderSmallScreen = (props) => {
 	return (
 		<div
-			className="home_page_divs p-15px "
+			className="container p-15px "
 			style={{ backgroundColor: props.determine_color(props.order) }}
 			key={props.key}
 		>

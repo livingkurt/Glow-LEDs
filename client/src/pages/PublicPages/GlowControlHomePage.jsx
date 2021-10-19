@@ -124,7 +124,7 @@ const GlowControlHomePage = (props) => {
 				Control your Glow LEDs Glowskins and Glow Strings with ease!
 			</p>
 
-			<div className="home_page_divs">
+			<div className="container">
 				<div className="wrap jc-b">
 					<h2 className=" w-500px" />
 					<h2 className="ta-c">Devices</h2>
@@ -201,7 +201,7 @@ const GlowControlHomePage = (props) => {
 					</div>
 				)}
 			</div>
-			{/* <div className="home_page_divs">
+			{/* <div className="container">
 				<div className="jc-c">
 					<h2 style={{ textAlign: 'center' }}>Glowskins</h2>
 				</div>
@@ -233,7 +233,7 @@ const GlowControlHomePage = (props) => {
 					</Link>
 				</div>
 			</div> */}
-			<div className="home_page_divs">
+			<div className="container">
 				<div className="jc-c">
 					<h2>Glow Strings</h2>
 				</div>

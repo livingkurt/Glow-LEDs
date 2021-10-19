@@ -76,7 +76,7 @@ const EventsPage = (props) => {
 				{!going &&
 					events &&
 					events.map((event) => (
-						<li className={`home_page_divs ${determine_color(event)}`}>
+						<li className={`container ${determine_color(event)}`}>
 							<div className="title_font">{event.title}</div>
 							<div className="mt-5px">{event.date}</div>
 							<div className="mt-5px">
@@ -88,7 +88,7 @@ const EventsPage = (props) => {
 				{going &&
 					events &&
 					events.filter((event) => festivals_going.includes(event.title)).map((event) => (
-						<li className={`home_page_divs ${determine_color(event)}`}>
+						<li className={`container ${determine_color(event)}`}>
 							<div className="title_font">{event.title}</div>
 							<div className="mt-5px">{event.date}</div>
 							<div className="mt-5px">

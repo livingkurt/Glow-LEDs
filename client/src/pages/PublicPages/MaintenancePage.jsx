@@ -88,7 +88,7 @@ const MaintenancePage = (props) => {
 					encouraged). The beautiful colors have the ability to turn your home into the next best festival or
 					into a relaxing retreat, you decide.
 				</p>
-				<div className="home_page_divs">
+				<div className="container">
 					<div className="jc-c">
 						<h2>Diffuser Caps</h2>
 					</div>
@@ -114,7 +114,7 @@ const MaintenancePage = (props) => {
 						designs create truly ridiculous light shows. 100% facemelt guarantee.
 					</p>
 				</div>
-				{/* <div className="home_page_divs">
+				{/* <div className="container">
 					<div className="jc-c">
 						<h2>Infinity Mirrors</h2>
 					</div>
@@ -139,7 +139,7 @@ const MaintenancePage = (props) => {
 						will only be found in your space.
 					</p>
 				</div> */}
-				<div className="home_page_divs">
+				<div className="container">
 					<div className="jc-c">
 						<h2>Glow Strings</h2>
 					</div>

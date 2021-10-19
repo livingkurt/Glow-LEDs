@@ -9,18 +9,17 @@ import { listProducts } from '../../actions/productActions';
 import { homepage_videos, humanize, prnt, toCapitalize } from '../../utils/helper_functions';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { API_Products } from '../../utils';
+import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 const HomePage = (props) => {
-	const [ content_1, set_content_1 ] = useState({});
-	const [ content_2, set_content_2 ] = useState({});
-	const [ content_3, set_content_3 ] = useState({});
-	const [ filtered_products, set_filtered_products ] = useState([]);
 	const history = useHistory();
 
 	const [ display, setDisplay ] = useState(false);
 	const [ options, set_options ] = useState([]);
 	const [ search, set_search ] = useState('');
 	const wrapperRef = useRef(null);
+
+	const { height, width } = useWindowDimensions();
 
 	useEffect(() => {
 		window.addEventListener('mousedown', handleClickOutside);
@@ -50,15 +49,12 @@ const HomePage = (props) => {
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
-	const [ inactive, set_inactive ] = useState(true);
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(listContents());
 		get_all_products();
-		// get_all_categories();
-		// get_all_subcategories();
 		return () => {};
 	}, []);
 
@@ -128,45 +124,25 @@ const HomePage = (props) => {
 		]);
 	};
 
-	// const get_all_categories = async () => {
-	// 	const { data } = await API_Products.get_all_categories();
-	// 	console.log({ data });
-	// 	set_options((options) => [
-	// 		...options,
-	// 		data.filter((category) => !category).map((category) => {
-	// 			return { name: category };
-	// 		})
-	// 	]);
-	// };
-	// const get_all_subcategories = async () => {
-	// 	const { data } = await API_Products.get_all_subcategories();
-	// 	console.log({ data });
-	// 	set_options((options) => [
-	// 		...options,
-	// 		data.filter((category) => category && category.length > 0).map((category) => {
-	// 			return { name: category };
-	// 		})
-	// 	]);
-	// };
-
-	useEffect(
-		() => {
-			// const active_content = contents.find((content) => content.active === true);
-			const active_contents = contents.filter((content) => content.active === true);
-			console.log({ active_contents });
-			if (active_contents && active_contents[0]) {
-				set_content_1(active_contents[0]);
-			}
-			if (active_contents && active_contents[1]) {
-				set_content_2(active_contents[1]);
-			}
-			if (active_contents && active_contents[2]) {
-				set_content_3(active_contents[2]);
-			}
-			return () => {};
-		},
-		[ contents ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		// const active_content = contents.find((content) => content.active === true);
+	// 		const active_contents = contents.filter((content) => content.active === true);
+	// 		console.log({ active_contents });
+	// 		set_content(active_contents);
+	// 		if (active_contents && active_contents[0]) {
+	// 			set_content_1(active_contents[0]);
+	// 		}
+	// 		if (active_contents && active_contents[1]) {
+	// 			set_content_2(active_contents[1]);
+	// 		}
+	// 		if (active_contents && active_contents[2]) {
+	// 			set_content_3(active_contents[2]);
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ contents ]
+	// );
 
 	return (
 		<div className="main_container p-20px">
@@ -215,7 +191,7 @@ const HomePage = (props) => {
 				</h2>
 			</div>
 
-			<div className="jc-c ">
+			<div className="jc-c">
 				<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
 					<div className="jc-b ai-c search_container w-100per max-w-600px">
 						<div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
@@ -257,211 +233,111 @@ const HomePage = (props) => {
 					</div>
 				</form>
 			</div>
+			<ReadMore width={1000} className="p_descriptions paragraph_font ta-c " length={100}>
+				Here at Glow LEDs we offer a wide variety of Gloving and Flow Art accessories. Including EXO Diffusers,
+				Glow Casings and our most popular product Glowskins! We are based in Austin, TX ran by a small team of
+				people that are dedicated to creating new and innovated technology for flow artists everywhere. The
+				majority of our products are made by hand to order, so you know you're getting a quality product every
+				time! If you have an idea you want us to try please do not hesitate to reach out via our contact page or
+				at info.glowleds@gmail.com
+			</ReadMore>
+			{/* <ReadMore width={1000} className="p_descriptions paragraph_font ta-c " length={100}>
+				We are here for you and for the love of the art of flowing and creating. 
+			</ReadMore> */}
+			{/* Make it Glow with Glow LEDs! The best place to get all of your flow art needs.
+			If you have an idea that you think we could do. Please you can get EXO Diffuser Diffuser Caps, Glowskins, Frosted Diffusers, and Glow Strings! Innovation Always!
 
-			{content_1 &&
-			inactive &&
-			content_1.home_page && (
-				<div className="home_page_divs">
-					<h4 className="fs-25px mt-8px ta-c title_font">{content_1.home_page.h1}</h4>
-					{content_1.home_page.show_image &&
-					content_1.home_page.images && (
-						<div className="m-auto jc-c max-w-600px">
-							<Link to={content_1.home_page.link}>
-								<img
-									style={{ borderRadius: '20px', width: '100%' }}
-									src={content_1.home_page.images[0]}
-									className="max-w-800px jc-c m-auto"
-									alt="Promo"
-									title="Promo Image"
-								/>
-							</Link>
-						</div>
-					)}
+				
+				Glow LEDs represents what Glovers/Flow Artist truly need Flow Art company. A reliable If you’re going
+				to create, why not try to innovate, or at least make it a little better haha. Most of our products are
+				handmade in Austin, TX, with the ideas we got from you and what you need We create thing that seem Here
+				at Glow-LEDs.com we strive */}
+			<div className={`${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
+				{contents &&
+					contents
+						.slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1)
+						.filter((content) => content.active === true)
+						.map(({ home_page }, index) => {
+							return (
+								<div
+									className={`container ${width > 1473
+										? 'max-w-450px'
+										: width > 1019
+											? `w-49per ${index === 0 ? 'mr-1rem' : ''}`
+											: 'w-100per'}  jc-b column`}
+								>
+									<div>
+										<h4 className="fs-20px mv-8px ta-c jc-c title_font lh-30px">{home_page.h1}</h4>
+										{home_page.show_image &&
+										home_page.images && (
+											<div className="m-auto jc-c max-w-300px">
+												<Link to={home_page.link}>
+													<img
+														style={{ borderRadius: '20px', width: '100%' }}
+														src={home_page.images[0]}
+														className="max-w-300px jc-c m-auto"
+														alt="Promo"
+														title="Promo Image"
+													/>
+												</Link>
+											</div>
+										)}
 
-					<div className="m-auto jc-c max-w-800px">
-						{!content_1.home_page.show_image &&
-						content_1.home_page.images && (
-							<Link to={content_1.home_page.link} className="home_page_pictures">
-								{content_1.home_page.images.map((image, index) => (
-									<img
-										src={image}
-										className={'w-100per br-20px m-auto image_' + (index + 1)}
-										alt="Promo"
-										title="Promo Image"
-									/>
-								))}
-							</Link>
-						)}
-					</div>
-					{content_1.home_page.show_video && (
-						<div className="jc-c pos-rel">
-							<div className="iframe-container">
-								<iframe
-									title="Content Video"
-									width="996"
-									height="560"
-									style={{ borderRadius: '20px' }}
-									src={`https://www.youtube.com/embed/${content_1.home_page
-										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-									frameborder="0"
-									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-									allowfullscreen="1"
-								/>
-							</div>
-						</div>
-					)}
+										<div className="m-auto jc-c max-w-300px">
+											{!home_page.show_image &&
+											home_page.images && (
+												<Link to={home_page.link} className="home_page_pictures">
+													{home_page.images.map((image, index) => (
+														<img
+															src={image}
+															className={'w-100per br-20px m-auto image_' + (index + 1)}
+															alt="Promo"
+															title="Promo Image"
+														/>
+													))}
+												</Link>
+											)}
+										</div>
+										{home_page.show_video && (
+											<div className="jc-c pos-rel">
+												<div className="iframe-container">
+													<iframe
+														title="Content Video"
+														width="996"
+														height="560"
+														style={{ borderRadius: '20px' }}
+														src={`https://www.youtube.com/embed/${home_page.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+														frameborder="0"
+														allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+														allowfullscreen="1"
+													/>
+												</div>
+											</div>
+										)}
 
-					<div className="jc-c">
-						<h4 className="fs-18px mb-0px ta-c title_font">{content_1.home_page.h2}</h4>
-					</div>
-					<div className="max-w-800px jc-c w-100per m-auto">
-						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
-							{content_1.home_page.p}
-						</ReadMore>
-					</div>
-					<div className="jc-c">
-						<Link to={content_1.home_page.link}>
-							<button className="btn primary bob">{content_1.home_page.button}</button>
-						</Link>
-					</div>
-				</div>
-			)}
-			{content_2 &&
-			inactive &&
-			content_2.home_page && (
-				<div className="home_page_divs">
-					<h4 className="fs-25px mt-8px ta-c title_font">{content_2.home_page.h1}</h4>
-					{content_2.home_page.show_image &&
-					content_2.home_page.images && (
-						<div className="m-auto jc-c max-w-600px">
-							<Link to={content_2.home_page.link}>
-								<img
-									style={{ borderRadius: '20px', width: '100%' }}
-									src={content_2.home_page.images[0]}
-									className="max-w-800px jc-c m-auto"
-									alt="Promo"
-									title="Promo Image"
-								/>
-							</Link>
-						</div>
-					)}
-
-					<div className="m-auto jc-c max-w-800px">
-						{!content_2.home_page.show_image &&
-						content_2.home_page.images && (
-							<Link to={content_2.home_page.link} className="home_page_pictures">
-								{content_2.home_page.images.map((image, index) => (
-									<img
-										src={image}
-										className={'w-100per br-20px m-auto image_' + (index + 1)}
-										alt="Promo"
-										title="Promo Image"
-									/>
-								))}
-							</Link>
-						)}
-					</div>
-					{content_2.home_page.show_video && (
-						<div className="jc-c pos-rel">
-							<div className="iframe-container">
-								<iframe
-									title="Content Video"
-									width="996"
-									height="560"
-									style={{ borderRadius: '20px' }}
-									src={`https://www.youtube.com/embed/${content_2.home_page
-										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-									frameborder="0"
-									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-									allowfullscreen="1"
-								/>
-							</div>
-						</div>
-					)}
-
-					<div className="jc-c">
-						<h4 className="fs-18px mb-0px ta-c title_font">{content_2.home_page.h2}</h4>
-					</div>
-					<div className="max-w-800px jc-c w-100per m-auto">
-						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
-							{content_2.home_page.p}
-						</ReadMore>
-					</div>
-					<div className="jc-c">
-						<Link to={content_2.home_page.link}>
-							<button className="btn primary bob">{content_2.home_page.button}</button>
-						</Link>
-					</div>
-				</div>
-			)}
-			{content_3 &&
-			inactive &&
-			content_3.home_page && (
-				<div className="home_page_divs">
-					<h4 className="fs-25px mt-8px ta-c title_font">{content_3.home_page.h1}</h4>
-					{content_3.home_page.show_image &&
-					content_3.home_page.images && (
-						<div className="m-auto jc-c max-w-600px">
-							<Link to={content_3.home_page.link}>
-								<img
-									style={{ borderRadius: '20px', width: '100%' }}
-									src={content_3.home_page.images[0]}
-									className="max-w-800px jc-c m-auto"
-									alt="Promo"
-									title="Promo Image"
-								/>
-							</Link>
-						</div>
-					)}
-
-					<div className="m-auto jc-c max-w-800px">
-						{!content_3.home_page.show_image &&
-						content_3.home_page.images && (
-							<Link to={content_3.home_page.link} className="home_page_pictures">
-								{content_3.home_page.images.map((image, index) => (
-									<img
-										src={image}
-										className={'w-100per br-20px m-auto image_' + (index + 1)}
-										alt="Promo"
-										title="Promo Image"
-									/>
-								))}
-							</Link>
-						)}
-					</div>
-					{content_3.home_page.show_video && (
-						<div className="jc-c pos-rel">
-							<div className="iframe-container">
-								<iframe
-									title="Content Video"
-									width="996"
-									height="560"
-									style={{ borderRadius: '20px' }}
-									src={`https://www.youtube.com/embed/${content_3.home_page
-										.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-									frameborder="0"
-									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-									allowfullscreen="1"
-								/>
-							</div>
-						</div>
-					)}
-
-					<div className="jc-c">
-						<h4 className="fs-18px mb-0px ta-c title_font">{content_3.home_page.h2}</h4>
-					</div>
-					<div className="max-w-800px jc-c w-100per m-auto">
-						<ReadMore width={1000} className="p_descriptions paragraph_font" length={100} pre={true}>
-							{content_3.home_page.p}
-						</ReadMore>
-					</div>
-					<div className="jc-c">
-						<Link to={content_3.home_page.link}>
-							<button className="btn primary bob">{content_3.home_page.button}</button>
-						</Link>
-					</div>
-				</div>
-			)}
+										<div className="jc-c">
+											<h4 className="fs-18px mb-0px ta-c title_font lh-30px">{home_page.h2}</h4>
+										</div>
+										<div className="max-w-300px jc-c w-100per m-auto">
+											<ReadMore
+												width={2000}
+												className="p_descriptions paragraph_font"
+												length={100}
+												pre={true}
+											>
+												{home_page.p}
+											</ReadMore>
+										</div>
+									</div>
+									<div className="jc-c">
+										<Link to={home_page.link}>
+											<button className="btn primary bob">{home_page.button}</button>
+										</Link>
+									</div>
+								</div>
+							);
+						})}
+			</div>
 			<div className="jc-c">
 				{/* <h2 className="ta-c phrase_font">From a Glover that just wants the world to stay lit 🔥 </h2> */}
 				{/* <h2 className="ta-c phrase_font">Lighting up your world one LED at a time </h2> */}
@@ -469,18 +345,11 @@ const HomePage = (props) => {
 			{/* <p className="p_descriptions paragraph_font ta-c home_page_description">
 			
 			</p> */}
-			<ReadMore width={1000} className="p_descriptions paragraph_font ta-c" length={100}>
-				Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items are
-				handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up with
-				the intention of turning your home into a glowing rainbow dreamland with infinite hours of
-				entertainment. You don’t need a party to enjoy our products (although parties are definitely
-				encouraged). The beautiful colors have the ability to turn your home into the next best festival or into
-				a relaxing retreat, you decide.
-			</ReadMore>
-			<div className="big_home_page_cards">
+
+			{/* <div className="big_home_page_cards">
 				{homepage_videos.map((card, index) => {
 					return (
-						<div className="home_page_divs max-h-69rem" style={{ backgroundColor: card.color }} key={index}>
+						<div className="container max-h-69rem" style={{ backgroundColor: card.color }} key={index}>
 							<div className="jc-c">
 								<h4 className="ta-c fs-25px title_font mt-0px">{card.name}</h4>
 							</div>
@@ -509,32 +378,37 @@ const HomePage = (props) => {
 						</div>
 					);
 				})}
-			</div>
-			<div className="small_home_page_cards none">
+			</div> */}
+			<div className={`small_home_page_cards ${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
 				{homepage_videos.map((card, index) => {
 					return (
-						<div className="home_page_divs" style={{ backgroundColor: card.color }} key={index}>
-							<div className="jc-c">
-								<h2 className="ta-c">{card.name}</h2>
-							</div>
-							<div className="jc-c pos-rel mb-2rem">
-								<div className="iframe-container">
-									<iframe
-										title={`${card.name} Promo Video`}
-										style={{ borderRadius: '20px' }}
-										src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-										frameborder="0"
-										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-										allowfullscreen="1"
-									/>
+						<div
+							className={`container ${width > 1473
+								? 'max-w-450px'
+								: width > 1019 ? `w-49per ${index === 0 ? 'mr-1rem' : ''}` : 'w-100per'} jc-b column`}
+							style={{ backgroundColor: card.color }}
+							key={index}
+						>
+							<div className="">
+								<div className="jc-c">
+									<h2 className="ta-c">{card.name}</h2>
 								</div>
-							</div>
-							{/* <p className="p_descriptions paragraph_font home_page_description">
+								<div className="jc-c pos-rel mb-1rem">
+									<div className="iframe-container">
+										<iframe
+											title={`${card.name} Promo Video`}
+											style={{ borderRadius: '20px' }}
+											src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+											frameborder="0"
+											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen="1"
+										/>
+									</div>
+								</div>
+								<ReadMore width={1000} className="p_descriptions paragraph_font" length={100}>
 									{card.description}
-								</p> */}
-							<ReadMore width={1000} className="p_descriptions paragraph_font" length={100}>
-								{card.description}
-							</ReadMore>
+								</ReadMore>
+							</div>
 							<div className="jc-c">
 								<Link className="w-100per" to={`/collections/all/products/${card.category}`}>
 									<button className="btn primary w-100per">Shop {card.name}</button>
