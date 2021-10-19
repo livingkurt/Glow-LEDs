@@ -129,9 +129,37 @@ const HomePage = (props) => {
 	const get_all_products = async () => {
 		set_loading(true);
 		const { data } = await API_Products.get_all_products();
-		console.log({ data });
+		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
+		const { data: diffusers } = await API_Products.get_product_pictures('diffusers');
+		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
+		const { data: batteries } = await API_Products.get_product_pictures('accessories', 'batteries');
+		const { data: accessories } = await API_Products.get_product_pictures('accessories');
+		const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
+		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
+		const { data: exo_diffusers } = await API_Products.get_product_pictures('exo_diffusers');
+		const { data: decals } = await API_Products.get_product_pictures('decals');
+		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
+		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
+
+		prnt({ novaskins, alt_novaskins });
+		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
+		const product_pictures = [
+			glowskins[glowskins.length - 3],
+			exo_diffusers[exo_diffusers.length - 1],
+			decals[2],
+			glow_strings[4],
+			batteries[batteries.length - 1],
+			novaskins[0],
+			diffusers[diffusers.length - 1],
+			battery_storage[battery_storage.length - 1],
+			diffuser_caps[diffuser_caps.length - 1],
+			alt_novaskins[4],
+			accessories[accessories.length - 1],
+			glow_casings[glow_casings.length - 1]
+		];
+
 		set_products(
-			data
+			product_pictures
 				.filter((product) => !product.option)
 				.filter((product) => !product.hidden)
 				.sort((a, c) => a.order > c.order, 0)
@@ -196,7 +224,7 @@ const HomePage = (props) => {
 								className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
 								style={{
 									backgroundColor: '#6a6c8091',
-									top: '10px',
+									top: '100px',
 									left: '50%',
 									transform: 'translate(-50%, 50%)'
 								}}
@@ -343,7 +371,7 @@ const HomePage = (props) => {
 							{start > 0 && <Slideshow products={products} start={start} />}
 						</div>
 					)}
-					<div style={{ marginTop: '-50%' }}>
+					<div style={{ marginTop: '-25%' }}>
 						<ReadMore width={1000} className="p_descriptions paragraph_font ta-c " length={100}>
 							Here at Glow LEDs we offer a wide variety of Gloving and Flow Art accessories. Including EXO
 							Diffusers, Glow Casings and our most popular product Glowskins! We are based in Austin, TX

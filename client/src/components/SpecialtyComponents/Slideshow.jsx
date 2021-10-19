@@ -2,8 +2,37 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link, useHistory } from 'react-router-dom';
+import { humanize, prnt } from '../../utils/helper_functions';
 
 const Slideshow = ({ products, start }) => {
+	prnt({ products });
+	const determine_name = (product) => {
+		let category = '';
+		let subcategory = '';
+		if (product.category === 'accessories') {
+			if (product.subcategory === 'battery_storage') {
+				subcategory = product.subcategory;
+				category = product.category;
+			}
+			if (product.subcategory === 'batteries') {
+				subcategory = product.subcategory;
+				category = product.category;
+			}
+		}
+		if (product.category === 'glowskins') {
+			if (product.subcategory === 'novaskins') {
+				subcategory = product.subcategory;
+				category = product.category;
+			}
+			if (product.subcategory === 'alt_novaskins') {
+				subcategory = product.subcategory;
+				category = product.category;
+			}
+		}
+		category = product.category;
+		prnt({ category, subcategory });
+		return { category, subcategory };
+	};
 	return (
 		<Carousel
 			infiniteLoop={true}
@@ -22,22 +51,17 @@ const Slideshow = ({ products, start }) => {
 			className=""
 		>
 			{products.map((product, index) => (
-				<div className="pos-rel image_wrap br-10px">
-					<Link to={`/collections/all/products/${product.pathname}`}>
-						<h4
-							className="pos-abs title_font"
-							style={{ bottom: '10%', left: '50%', transform: 'translate(-50%, 50%)', zIndex: 1 }}
-						>
-							{product.name}
-						</h4>
-						<img
-							key={index}
-							src={product.images[0]}
-							className="homepage_slide_show_image "
-							alt="Promo"
-							title="Promo Image"
-						/>
+				<div className="slideshow-img-container">
+					<Link
+						to={`/collections/all/products/category/${determine_name(product).subcategory
+							? `${product.category}/${product.subcategory}`
+							: product.category}`}
+					>
+						<button className="btn primary title_font">
+							{humanize(determine_name(product).subcategory ? product.subcategory : product.category)}
+						</button>
 					</Link>
+					<img key={index} src={product.images[0]} alt="carousel" title="carousel item" />
 				</div>
 			))}
 		</Carousel>

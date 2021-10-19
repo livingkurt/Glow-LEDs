@@ -20,7 +20,7 @@ const PictureChooser = (props) => {
 			{props.images &&
 				[ ...props.images, ...props.secondary_images ].map((image, index) => {
 					return (
-						<div className="img_column" key={index}>
+						<div className="picture-chooser-container" key={index}>
 							<img
 								src={image}
 								alt="PictureChooser"
