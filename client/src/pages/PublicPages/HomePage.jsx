@@ -305,7 +305,7 @@ const HomePage = (props) => {
 												/>
 												{prnt({ options })}
 												{display && (
-													<div className="pos-abs bg-primary br-10px">
+													<div className="pos-abs bg-primary br-10px z-pos-2">
 														{options
 															.filter(
 																({ name }) =>
