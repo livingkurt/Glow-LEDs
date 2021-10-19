@@ -770,7 +770,7 @@ const InvoiceEmail = (props) => {
 					id="print_invoice"
 					onClick={() => print_label(order.shipping.shipping_label.postage_label.label_url)}
 				>
-					View Invoice
+					View Label
 				</button>
 				<button className="btn primary mh-10px" id="print_invoice" onClick={() => print_invoice('invoice')}>
 					Print Invoice

@@ -310,11 +310,10 @@ const OrderPage = (props) => {
 	};
 
 	const create_duplicate_order = () => {
-		console.log({ order: order });
 		dispatch(
 			createOrder({
 				orderItems: order.orderItems,
-				shipping: order.shipping,
+				shipping: { ...order.shipping, shipment_id: null, shipping_rate: null, shipping_label: null },
 				itemsPrice: order.itemsPrice,
 				shippingPrice: 0,
 				taxPrice: 0,
@@ -329,30 +328,24 @@ const OrderPage = (props) => {
 
 	const move_left = (e) => {
 		e.preventDefault();
-		// const current_product = all_orders.find(item => item._id ===  product._id)
-		console.log(order._id);
+
 		if (all_orders) {
 			let current_order_index = all_orders.map((item) => item._id).indexOf(order._id);
 			let left_order_index = current_order_index + 1;
 			if (left_order_index >= all_orders.length) {
 				left_order_index = 0;
 			}
-			console.log({ current_order_index, left_order_index, new_order: all_orders[left_order_index] });
-			// stableDispatch(detailsProduct(all_orders[current_order_index - 1]._id));
 			history.push('/secure/account/order/' + all_orders[left_order_index]._id);
 		}
 	};
 	const move_right = (e) => {
 		e.preventDefault();
-		console.log({ all_orders });
 		if (all_orders) {
 			let current_order_index = all_orders.map((item) => item._id).indexOf(order._id);
 			let right_order_index = current_order_index - 1;
 			if (right_order_index === -1) {
 				right_order_index = all_orders.length - 1;
 			}
-			console.log({ current_order_index, right_order_index, new_order: all_orders[right_order_index] });
-			// stableDispatch(detailsProduct(all_orders[current_order_index + 1]._id));
 			history.push('/secure/account/order/' + all_orders[right_order_index]._id);
 		}
 	};
@@ -364,8 +357,6 @@ const OrderPage = (props) => {
 			shipment_id: order.shipping.shipment_id,
 			userInfo
 		});
-		console.log({ data });
-		// console.log({ rates: data.shipment.rates });
 		set_shipping_rates(data.rates);
 		set_shipment_id(data.id);
 		set_loading_shipping_rates(false);
@@ -373,9 +364,7 @@ const OrderPage = (props) => {
 
 	const buy_new_speed_label = async () => {
 		set_loading_label(true);
-		console.log({ shipment_id, shipping_rate });
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, shipping_rate);
-		// show_label(data.postage_label.label_url);
 		print_invoice(data.postage_label.label_url);
 		if (data) {
 			set_loading_label(false);
@@ -386,9 +375,7 @@ const OrderPage = (props) => {
 				shipping: { ...order.shipping, shipment_id, shipping_rate }
 			})
 		);
-		console.log({ tracking_code: data.tracking_code });
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 		history.push('/secure/glow/emails/invoice/' + order._id);
 	};

@@ -40,7 +40,7 @@ const OrderListItem = (props) => {
 		dispatch(
 			createOrder({
 				orderItems: props.order.orderItems,
-				shipping: props.order.shipping,
+				shipping: { ...props.order.shipping, shipment_id: null, shipping_rate: null, shipping_label: null },
 				itemsPrice: props.order.itemsPrice,
 				shippingPrice: 0,
 				taxPrice: 0,
