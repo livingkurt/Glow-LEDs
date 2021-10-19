@@ -204,8 +204,8 @@ const HomePage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</Helmet>
-			<Loading loading={loading} />
-			{products && (
+			<Loading loading={products.length === 0} />
+			{products.length > 0 && (
 				<div>
 					{products &&
 					width > 1019 && (

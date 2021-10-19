@@ -16,7 +16,7 @@ const Slideshow = ({ products, start }) => {
 			interval={5000}
 			swipeable={true}
 			transitionTime={750}
-			selectedItem={start}
+			// selectedItem={start}
 			emulateTouch={true}
 			// selectedItem={Math.floor(Math.random() * products.length)}
 			className=""
