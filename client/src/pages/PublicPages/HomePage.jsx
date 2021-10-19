@@ -438,7 +438,7 @@ const HomePage = (props) => {
 												</div>
 												<div className="jc-c w-100per m-auto">
 													<ReadMore
-														width={2000}
+														width={5000}
 														className="p_descriptions paragraph_font"
 														length={100}
 														pre={true}
@@ -525,7 +525,7 @@ const HomePage = (props) => {
 												/>
 											</div>
 										</div>
-										<ReadMore width={1000} className="p_descriptions paragraph_font " length={100}>
+										<ReadMore width={3000} className="p_descriptions paragraph_font " length={100}>
 											{card.description}
 										</ReadMore>
 									</div>
