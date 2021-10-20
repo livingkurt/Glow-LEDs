@@ -34,7 +34,7 @@ const CartItem = (props) => {
 							<div
 								className={`double-image-cart-page-${props.item.name && props.item.name.split('-')[1]
 									? 'vertical'
-									: ''} row`}
+									: 'row'} `}
 							>
 								<LazyImage
 									id="expandedImg"

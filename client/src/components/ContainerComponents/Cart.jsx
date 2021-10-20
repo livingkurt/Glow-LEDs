@@ -330,7 +330,7 @@ const Cart = (props) => {
 															className={`double-image-cart-${item.name &&
 															item.name.split('-')[1]
 																? 'vertical'
-																: ''} row`}
+																: 'row'}`}
 														>
 															<LazyImage
 																id="expandedImg"

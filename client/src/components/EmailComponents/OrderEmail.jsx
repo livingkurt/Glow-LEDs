@@ -2136,13 +2136,6 @@ const OrderEmail = (props) => {
 
 	const show_hide_survey = () => {
 		set_show_modal((show) => (show ? false : true));
-		// console.log({ modal: modal.style.display });
-		// if (modal.style.display === 'block') {
-		// 	modal.style.display = 'none';
-		//   set_show_modal(true)
-		// } else if (modal.style.display === '' || modal.style.display === 'none') {
-		// 	modal.style.display = 'block';
-		// }
 	};
 
 	return (

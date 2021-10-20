@@ -169,7 +169,7 @@ const OrderListItem = (props) => {
 				</div>
 			</div>
 
-			<div className="row ">
+			<div className="row">
 				<div className="small_screen_order jc-b ">
 					<div className="wrap">
 						{props.order.orderItems.map((item, index) => {
@@ -192,7 +192,7 @@ const OrderListItem = (props) => {
 														className={` double-image-cart-${item.name &&
 														item.name.split('-')[1]
 															? 'vertical'
-															: ''} row`}
+															: 'row'} `}
 													>
 														<LazyImage
 															id="expandedImg"
