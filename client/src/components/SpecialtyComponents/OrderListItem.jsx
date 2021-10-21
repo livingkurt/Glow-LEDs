@@ -189,11 +189,15 @@ const OrderListItem = (props) => {
 												)}
 												{item.secondary_image && (
 													<div
-														className={` double-image-cart-${item.name &&
+														className={` double-image-cart${item.name &&
 														item.name.split('-')[1]
-															? 'vertical'
-															: 'row'} `}
+															? '-vertical'
+															: ' row'}`}
 													>
+														{console.log({
+															split: item.name.split('-')[1],
+															name: item.name
+														})}
 														<LazyImage
 															id="expandedImg"
 															alt={item.name}

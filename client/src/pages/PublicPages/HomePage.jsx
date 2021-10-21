@@ -215,8 +215,7 @@ const HomePage = (props) => {
 			<Loading loading={products.length === 0} />
 			{products.length > 0 && (
 				<div>
-					{products &&
-					width > 1019 && (
+					{width > 1019 && (
 						<div className="carousel-wrapper pos-rel">
 							{start !== 0 && <Slideshow products={products} start={start} />}
 
@@ -295,8 +294,7 @@ const HomePage = (props) => {
 							</div>
 						</div>
 					)}
-					{products &&
-					width < 1019 && (
+					{width < 1019 && (
 						<div className="carousel-wrapper ">
 							<div
 								className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
@@ -485,47 +483,7 @@ const HomePage = (props) => {
 									);
 								})}
 					</div>
-					<div className="jc-c">
-						{/* <h2 className="ta-c phrase_font">From a Glover that just wants the world to stay lit 🔥 </h2> */}
-						{/* <h2 className="ta-c phrase_font">Lighting up your world one LED at a time </h2> */}
-					</div>
-					{/* <p className="p_descriptions paragraph_font ta-c home_page_description">
-			
-			</p> */}
 
-					{/* <div className="big_home_page_cards">
-				{homepage_videos.map((card, index) => {
-					return (
-						<div className="container max-h-69rem" style={{ backgroundColor: card.color }} key={index}>
-							<div className="jc-c">
-								<h4 className="ta-c fs-25px title_font mt-0px">{card.name}</h4>
-							</div>
-							<div className="row">
-								<div className="iframe-container-big">
-									<iframe
-										title={`${card.name} Promo Video`}
-										width="996"
-										height="560"
-										className="br-20px"
-										src={`https://www.youtube.com/embed/${card.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-										frameborder="0"
-										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-										allowfullscreen="1"
-									/>
-								</div>
-								<div className="ml-2rem">
-									<p className="p_descriptions paragraph_font w-50rem">{card.description}</p>
-									<div className="jc-c">
-										<Link className="w-100per" to={`/collections/all/products/${card.category}`}>
-											<button className="btn primary w-100per">Shop {card.name}</button>
-										</Link>
-									</div>
-								</div>
-							</div>
-						</div>
-					);
-				})}
-			</div> */}
 					<div className={`small_home_page_cards ${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
 						{homepage_videos.map((card, index) => {
 							return (
