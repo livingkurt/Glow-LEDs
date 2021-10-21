@@ -224,6 +224,7 @@ const Survey = (props) => {
 
 	return (
 		<div className="main_container p-20px">
+			{console.log({ survey, finished })}
 			{survey &&
 			!finished && <h1 style={{ textAlign: 'center' }}>{props.pathname ? 'Edit Survey' : 'Submit Survey'}</h1>}
 

@@ -2035,7 +2035,8 @@ const OrderEmail = (props) => {
 		if (user_email && admin_email) {
 			// history.push('/pages/survey/' + order._id);
 			// modal.style.display = 'block';
-			show_hide_survey();
+			console.log({ send_order_email: 'Hello' });
+			show_survey();
 			set_show_modal(true);
 			set_loading(false);
 		}
@@ -2134,8 +2135,15 @@ const OrderEmail = (props) => {
 		}
 	};
 
-	const show_hide_survey = () => {
-		set_show_modal((show) => (show ? false : true));
+	const hide_survey = () => {
+		console.log({ show_hide_survey: 'Hello' });
+		set_show_modal(false);
+		console.log({ set_show_modal: show_modal });
+	};
+	const show_survey = () => {
+		console.log({ show_hide_survey: 'Hello' });
+		set_show_modal(true);
+		console.log({ set_show_modal: show_modal });
 	};
 
 	return (
@@ -2179,6 +2187,14 @@ const OrderEmail = (props) => {
 					email please contact support.
 				</p>
 			</div>
+			<div id="myModal" style={{ display: show_modal ? 'block' : 'none' }} className="modal">
+				<div className="modal-content">
+					<span className="close" onClick={() => hide_survey()}>
+						&times;
+					</span>
+					<Survey order_id={props.match.params.id} />
+				</div>
+			</div>
 			{userInfo &&
 			userInfo.isAdmin && (
 				<div className="jc-b mb-1rem">
@@ -2197,18 +2213,10 @@ const OrderEmail = (props) => {
 						Send Test Email
 					</button>
 					{/* <button id="myBtn">Open Modal</button> */}
-					<button className="btn primary mh-10px" id="myBtn" onClick={() => show_hide_survey()}>
+					<button className="btn primary mh-10px" id="myBtn" onClick={() => show_survey()}>
 						Open Modal
 					</button>
 
-					<div id="myModal" style={{ display: show_modal ? 'block' : 'none' }} className="modal">
-						<div className="modal-content">
-							<span className="close" onClick={() => show_hide_survey()}>
-								&times;
-							</span>
-							<Survey order_id={props.match.params.id} show_hide_survey={show_hide_survey} />
-						</div>
-					</div>
 					<button
 						className="btn primary mb-1rem"
 						onClick={() =>
