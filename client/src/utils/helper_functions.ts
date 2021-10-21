@@ -99,9 +99,7 @@ export const determnine_link = (item: any) => {
 
 export const determine_tracking_number = (tracking_number: string) => {
 	if (tracking_number) {
-		console.log({ tracking_number });
 		const tracking: any = getTracking(tracking_number);
-		console.log({ tracking });
 		if (tracking.name.includes('USPS')) {
 			return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' + tracking_number;
 		}

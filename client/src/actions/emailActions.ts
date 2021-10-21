@@ -42,14 +42,14 @@ export const saveEmail = (email: any) => async (
 			console.log({ emailActions: email });
 			const { data } = await axios.post('/api/emails', email, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/emails/' + email._id, email, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
@@ -80,7 +80,7 @@ export const deleteEmail = (emailId: string) => async (
 		dispatch({ type: EMAIL_DELETE_REQUEST, payload: emailId });
 		const { data } = await axios.delete('/api/emails/' + emailId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: EMAIL_DELETE_SUCCESS, payload: data, success: true });

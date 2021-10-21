@@ -41,14 +41,14 @@ export const saveSurvey = (survey: any) => async (
 		if (!survey._id) {
 			const { data } = await axios.post('/api/surveys', survey, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: SURVEY_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/surveys/' + survey._id, survey, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: SURVEY_SAVE_SUCCESS, payload: data });
@@ -69,7 +69,7 @@ export const detailsSurvey = (id: string) => async (
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/surveys/' + id, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: SURVEY_DETAILS_SUCCESS, payload: data });
@@ -88,7 +88,7 @@ export const deleteSurvey = (surveyId: string) => async (
 		dispatch({ type: SURVEY_DELETE_REQUEST, payload: surveyId });
 		const { data } = await axios.delete('/api/surveys/' + surveyId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: SURVEY_DELETE_SUCCESS, payload: data, success: true });

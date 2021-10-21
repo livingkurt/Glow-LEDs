@@ -34,5 +34,3 @@ const chip_schema = new mongoose.Schema(
 const chip_model = mongoose.model('Chip', chip_schema);
 
 export default chip_model;
-
-// module.exports = userModel;

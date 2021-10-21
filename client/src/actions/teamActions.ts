@@ -41,14 +41,14 @@ export const saveTeam = (team: any) => async (
 		if (!team._id) {
 			const { data } = await axios.post('/api/teams', team, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/teams/' + team._id, team, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
@@ -79,7 +79,7 @@ export const deleteTeam = (teamId: string) => async (
 		dispatch({ type: TEAM_DELETE_REQUEST, payload: teamId });
 		const { data } = await axios.delete('/api/teams/' + teamId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: TEAM_DELETE_SUCCESS, payload: data, success: true });

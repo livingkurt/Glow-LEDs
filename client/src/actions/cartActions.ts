@@ -106,7 +106,7 @@ export const removeFromCart = (product: string) => async (
 					{ data, cartItems, userInfo, cartItem: product },
 					{
 						headers: {
-							Authorization: 'Bearer ' + userInfo.token
+							Authorization: 'Bearer ' + userInfo.access_token
 						}
 					}
 				);
@@ -171,7 +171,7 @@ export const saveCart = (cartItem: any) => async (
 					{ cartItems, cartItem, userInfo },
 					{
 						headers: {
-							Authorization: 'Bearer ' + userInfo.token
+							Authorization: 'Bearer ' + userInfo.access_token
 						}
 					}
 				);
@@ -182,7 +182,7 @@ export const saveCart = (cartItem: any) => async (
 					{ cartItem, userInfo, cartItems: [] },
 					{
 						headers: {
-							Authorization: 'Bearer ' + userInfo.token
+							Authorization: 'Bearer ' + userInfo.access_token
 						}
 					}
 				);
@@ -217,7 +217,7 @@ export const deleteCart = (cartId: string) => async (
 		dispatch({ type: CART_DELETE_REQUEST, payload: cartId });
 		const { data } = await axios.delete('/api/carts/' + cartId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: CART_DELETE_SUCCESS, payload: data, success: true });

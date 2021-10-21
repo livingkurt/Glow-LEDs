@@ -1,6 +1,7 @@
 import { user_db } from '../db';
+import { Token } from '../models';
 import { user_services } from '../services';
-import { prnt } from '../util';
+import { getAccessToken, getRefreshToken, prnt } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
@@ -148,20 +149,30 @@ export default {
 		const { body } = req;
 		try {
 			const user = await user_services.login_users_s(body.email, body.password);
+			console.log({ user });
 			if (user) {
 				return jwt.sign(
 					user,
-					config.JWT_SECRET,
+					config.ACCESS_TOKEN_SECRET,
 					{
-						expiresIn: '48hr'
+						expiresIn: '15m'
 					},
-					(err: any, token: string) => {
+					(err: any, access_token: string) => {
 						return res.status(200).send({
 							success: true,
-							token: 'Bearer ' + token
+							access_token: 'Bearer ' + access_token
 						});
 					}
 				);
+				// const access_token = await getAccessToken(user);
+				// const refresh_token = await getRefreshToken(user);
+				// if (access_token && refresh_token) {
+				// 	return res.status(200).send({
+				// 		success: true,
+				// 		access_token: 'Bearer ' + access_token,
+				// 		refresh_token: 'Bearer ' + refresh_token
+				// 	});
+				// }
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {
@@ -169,6 +180,81 @@ export default {
 			res.status(500).send({ error, message: 'Error Finding User' });
 		}
 	},
+	refresh_login_users_c: async (req: any, res: any) => {
+		try {
+			//get refreshToken
+			const { refresh_token } = req.body;
+			console.log({ refresh_token });
+			//send error if no refresh_token is sent
+			if (!refresh_token) {
+				return res.status(403).send({ error: 'Access denied,token missing!' });
+			} else {
+				// //query for the token to check if it is valid:
+				// const tokenDoc = await Token.findOne({ token: refresh_token });
+				// console.log({ tokenDoc });
+				// //send error if no token found:
+				// if (!tokenDoc) {
+				// 	return res.status(401).json({ error: 'Token expired!' });
+				// } else {
+				await Token.findOneAndDelete({ token: refresh_token });
+				//extract payload from refresh token and generate a new access token and send it
+				const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
+				console.log({ payload });
+
+				const user = await user_services.refresh_login_users_s(payload.email, payload.password);
+				console.log({ user });
+				const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
+					expiresIn: '15m'
+				});
+				return res.status(200).send({
+					success: true,
+					access_token: 'Bearer ' + access_token
+				});
+			}
+			// }
+		} catch (error) {
+			console.error({ error });
+			return res.status(500).send({ error: 'Internal Server Error!' });
+		}
+	},
+	logout_users_c: async (req: any, res: any) => {
+		try {
+			//delete the refresh token saved in database:
+			const { refresh_token } = req.body;
+			console.log({ refresh_token });
+			await Token.findOneAndDelete({ token: refresh_token });
+			return res.status(200).json({ success: 'User logged out!' });
+		} catch (error) {
+			console.error(error);
+			return res.status(500).json({ error: 'Internal Server Error!' });
+		}
+	},
+	// refresh_login_users_c: async (req: any, res: any) => {
+	// 	const { body } = req;
+	// 	try {
+	// 		prnt({ body });
+	// 		const user = await user_services.refresh_login_users_s(body.access_token, body.refresh_token);
+	// 		if (user) {
+	// 			return jwt.sign(
+	// 				user,
+	// 				config.ACCESS_TOKEN_SECRET,
+	// 				{
+	// 					expiresIn: '48hr'
+	// 				},
+	// 				(err: any, access_token: string) => {
+	// 					return res.status(200).send({
+	// 						success: true,
+	// 						access_token: 'Bearer ' + access_token
+	// 					});
+	// 				}
+	// 			);
+	// 		}
+	// 		return res.status(404).send({ message: 'User Not Found' });
+	// 	} catch (error) {
+	// 		console.log({ login_users_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Finding User' });
+	// 	}
+	// },
 	password_reset_users_c: async (req: any, res: any) => {
 		const { body } = req;
 		try {

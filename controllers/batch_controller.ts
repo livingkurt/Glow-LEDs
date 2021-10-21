@@ -243,7 +243,7 @@ export default {
 	},
 	find_all_chips: async (req: any, res: any) => {
 		try {
-			console.log({ chips: req.body });
+			// console.log({ chips: req.body });
 			const { method, collection, search_parameter_field, search_parameter, action, property, value } = req.body;
 			let parameter: any = {};
 			if (search_parameter_field && search_parameter) {
@@ -253,11 +253,11 @@ export default {
 				const chips = await Chip.updateMany(parameter, {
 					[action]: { [property]: value }
 				});
-				console.log({ chips });
+				// console.log({ chips });
 				res.send(chips);
 			} else {
 				const chips = await Chip.find(parameter);
-				console.log({ chips_get: chips });
+				// console.log({ chips_get: chips });
 				res.send(chips);
 			}
 		} catch (error) {

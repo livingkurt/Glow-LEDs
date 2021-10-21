@@ -51,8 +51,7 @@ const Header = (props) => {
 	const dispatch = useDispatch();
 
 	const handleLogout = () => {
-		// dispatch(logout());
-		dispatch(logout());
+		dispatch(logout(userInfo.refresh_token));
 		history.push('/account/login');
 	};
 

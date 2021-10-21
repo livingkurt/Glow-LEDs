@@ -7,7 +7,7 @@ export default {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
-			console.log({ chip: req.query.chip });
+			// console.log({ chip: req.query.chip });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 
 			const categories = [

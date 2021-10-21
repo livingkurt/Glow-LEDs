@@ -30,7 +30,7 @@ export const listAffiliates = (category = '', search = '', sortOrder = '') => as
 			'/api/affiliates?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			}
 		);
@@ -52,7 +52,7 @@ export const saveAffiliate = (affiliate: any) => async (
 		if (!affiliate._id) {
 			const { data } = await axios.post('/api/affiliates', affiliate, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
@@ -72,24 +72,25 @@ export const saveAffiliate = (affiliate: any) => async (
 				},
 				{
 					headers: {
-						Authorization: 'Bearer ' + userInfo.token
+						Authorization: 'Bearer ' + userInfo.access_token
 					}
 				}
 			);
 
 			dispatch({ type: USER_UPDATE_SUCCESS, payload: user });
 
-			const { token } = user;
-			setAuthToken(token);
-			const decoded = jwt_decode(token);
+			const { access_token, refresh_token } = user;
+			setAuthToken(access_token);
+			const decoded = jwt_decode(access_token);
 			console.log({ decoded });
 			// Set current user
-			localStorage.setItem('jwtToken', token);
+			localStorage.setItem('accessToken', access_token);
+			localStorage.setItem('refreshToken', refresh_token);
 			dispatch(setCurrentUser(decoded));
 		} else {
 			const { data } = await axios.put('/api/affiliates/' + affiliate.pathname, affiliate, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
@@ -124,7 +125,7 @@ export const deleteAffiliate = (pathname: string) => async (
 		dispatch({ type: AFFILIATE_DELETE_REQUEST, payload: pathname });
 		const { data } = await axios.delete('/api/affiliates/' + pathname, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: AFFILIATE_DELETE_SUCCESS, payload: data, success: true });

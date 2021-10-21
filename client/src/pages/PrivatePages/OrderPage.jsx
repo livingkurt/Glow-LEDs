@@ -759,29 +759,6 @@ ${order.shipping.email}`)}
 									className="placeorder-actions-payment"
 									style={{ display: 'flex', justifyContent: 'center' }}
 								/>
-								{/* {!order.isPaid && (
-									<div>
-										<StripeCheckout
-											name="Glow LEDs"
-											description={`Complete Order`}
-											amount={
-												(order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice) *
-												100
-											}
-											token={(token) => pay_order(token)}
-											stripeKey={process.env.REACT_APP_STRIPE_KEY}
-											onChange={handleChangeFor('cardNumber')}
-										>
-											<button
-												className="btn primary w-100per"
-												style={{ marginBottom: '12px' }}
-											>
-												Complete Order
-											</button>
-										</StripeCheckout>
-									</div>
-								)} */}
-
 								{!order.isPaid && <Stripe pay_order={pay_order} />}
 
 								{order.promo_code && (

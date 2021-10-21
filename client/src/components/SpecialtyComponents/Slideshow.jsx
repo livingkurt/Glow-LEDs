@@ -5,7 +5,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { humanize, prnt } from '../../utils/helper_functions';
 
 const Slideshow = ({ products, start }) => {
-	prnt({ products });
 	const determine_name = (product) => {
 		let category = '';
 		let subcategory = '';
@@ -30,7 +29,6 @@ const Slideshow = ({ products, start }) => {
 			}
 		}
 		category = product.category;
-		prnt({ category, subcategory });
 		return { category, subcategory };
 	};
 	return (

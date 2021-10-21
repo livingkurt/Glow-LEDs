@@ -40,14 +40,14 @@ export const savePromo = (promo: any) => async (
 		if (!promo._id) {
 			const { data } = await axios.post('/api/promos', promo, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/promos/' + promo._id, promo, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
@@ -78,7 +78,7 @@ export const deletePromo = (promoId: string) => async (
 		dispatch({ type: PROMO_DELETE_REQUEST, payload: promoId });
 		const { data } = await axios.delete('/api/promos/' + promoId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: PROMO_DELETE_SUCCESS, payload: data, success: true });

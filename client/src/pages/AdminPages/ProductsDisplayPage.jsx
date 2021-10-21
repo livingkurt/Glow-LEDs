@@ -191,7 +191,7 @@ const AllProductsPage = (props) => {
 		const chip_selected = JSON.parse(e.target.value);
 		set_chip(chip_selected._id);
 		set_filter(chip_selected._id);
-		console.log({ chip });
+		// console.log({ chip });
 		history.push({
 			search: '?search=' + search + '?filter=' + chip_selected.name
 		});

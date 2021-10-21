@@ -184,7 +184,7 @@ const AllProductsPage = (props) => {
 		let filter = '';
 		let show_hidden = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
-		prnt({ query });
+		// prnt({ query });
 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 			if (Object.keys(query).length > 0) {
 				if (query.search) {
@@ -215,9 +215,9 @@ const AllProductsPage = (props) => {
 	};
 
 	const waitForElement = (filter, chips_list) => {
-		prnt({ filter, chips_list });
+		// prnt({ filter, chips_list });
 		if (typeof chips_list && chips_list.length > 0) {
-			prnt({ chip: filter.split('%20').join(' ') });
+			// prnt({ chip: filter.split('%20').join(' ') });
 			set_filter(chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id);
 			return chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id;
 		} else {
@@ -265,7 +265,7 @@ const AllProductsPage = (props) => {
 		set_chip(chip_selected._id);
 		set_search('');
 		set_filter(chip_selected._id);
-		console.log({ chip_selected });
+		// console.log({ chip_selected });
 		update_products_url(history, '', sort, chip_selected.name);
 		dispatch(listProducts(category, subcategory, '', sort, chip_selected._id, '', collection));
 	};

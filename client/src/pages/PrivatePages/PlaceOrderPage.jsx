@@ -211,7 +211,6 @@ const PlaceOrderPage = (props) => {
 		setTaxPrice(0);
 		set_loading(true);
 		const { data } = await API_External.get_tax_rates();
-		prnt({ data });
 		const result = state_names.find((obj) => {
 			return obj.short_name === shipping.state || obj.long_name === shipping.state;
 		});

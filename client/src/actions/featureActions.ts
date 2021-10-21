@@ -50,14 +50,14 @@ export const saveFeature = (feature: {
 		if (!feature._id) {
 			const { data } = await axios.post('/api/features', feature, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: FEATURE_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/features/' + feature._id, feature, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: FEATURE_SAVE_SUCCESS, payload: data });
@@ -91,7 +91,7 @@ export const deleteFeature = (featureId: string) => async (
 		dispatch({ type: FEATURE_DELETE_REQUEST, payload: featureId });
 		const { data } = await axios.delete('/api/features/' + featureId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: FEATURE_DELETE_SUCCESS, payload: data, success: true });

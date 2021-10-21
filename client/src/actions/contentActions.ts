@@ -41,14 +41,14 @@ export const saveContent = (content: any) => async (
 			console.log({ contentActions: content });
 			const { data } = await axios.post('/api/contents', content, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/contents/' + content._id, content, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
@@ -81,7 +81,7 @@ export const deleteContent = (contentId: string) => async (
 		dispatch({ type: CONTENT_DELETE_REQUEST, payload: contentId });
 		const { data } = await axios.delete('/api/contents/' + contentId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: CONTENT_DELETE_SUCCESS, payload: data, success: true });

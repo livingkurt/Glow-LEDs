@@ -33,21 +33,21 @@ export const saveChip = (chip: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ chipActions: chip });
+	// console.log({ chipActions: chip });
 	try {
 		dispatch({ type: CHIP_SAVE_REQUEST, payload: chip });
 		const { userLogin: { userInfo } } = getState();
 		if (!chip._id) {
 			const { data } = await axios.post('/api/chips', chip, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/chips/' + chip._id, chip, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
@@ -78,7 +78,7 @@ export const deleteChip = (chipId: string) => async (
 		dispatch({ type: CHIP_DELETE_REQUEST, payload: chipId });
 		const { data } = await axios.delete('/api/chips/' + chipId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: CHIP_DELETE_SUCCESS, payload: data, success: true });

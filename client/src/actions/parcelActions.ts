@@ -40,7 +40,7 @@ export const listMyParcels = (affiliate_id: string) => async (
 		dispatch({ type: MY_PARCEL_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/parcels/get_mine', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		console.log({ listMyParcels: data });
 		dispatch({ type: MY_PARCEL_LIST_SUCCESS, payload: data });
@@ -61,14 +61,14 @@ export const saveParcel = (parcel: any) => async (
 		if (!parcel._id) {
 			const { data } = await axios.post('/api/parcels', parcel, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PARCEL_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/parcels/' + parcel._id, parcel, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PARCEL_SAVE_SUCCESS, payload: data });
@@ -99,7 +99,7 @@ export const deleteParcel = (parcelId: string) => async (
 		dispatch({ type: PARCEL_DELETE_REQUEST, payload: parcelId });
 		const { data } = await axios.delete('/api/parcels/' + parcelId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: PARCEL_DELETE_SUCCESS, payload: data, success: true });

@@ -40,7 +40,7 @@ export const listMyPalettes = () => async (
 		dispatch({ type: MY_PALETTE_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/palettes/get_mine', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		console.log({ listMyPalettes: data });
 		dispatch({ type: MY_PALETTE_LIST_SUCCESS, payload: data });
@@ -61,14 +61,14 @@ export const savePalette = (palette: any) => async (
 		if (!palette._id) {
 			const { data } = await axios.post('/api/palettes', palette, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PALETTE_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/palettes/' + palette._id, palette, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PALETTE_SAVE_SUCCESS, payload: data });
@@ -101,7 +101,7 @@ export const deletePalette = (paletteId: string) => async (
 		dispatch({ type: PALETTE_DELETE_REQUEST, payload: paletteId });
 		const { data } = await axios.delete('/api/palettes/' + paletteId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: PALETTE_DELETE_SUCCESS, payload: data, success: true });

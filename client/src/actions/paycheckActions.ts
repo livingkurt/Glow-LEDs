@@ -28,7 +28,7 @@ export const listPaychecks = (category = '', search = '', sortOrder = '') => asy
 			'/api/paychecks?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			}
 		);
@@ -47,7 +47,7 @@ export const listMyPaychecks = (affiliate_id: string) => async (
 		dispatch({ type: MY_PAYCHECK_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/paychecks/user', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		console.log({ listMyPaychecks: data });
 		dispatch({ type: MY_PAYCHECK_LIST_SUCCESS, payload: data });
@@ -68,14 +68,14 @@ export const savePaycheck = (paycheck: any) => async (
 		if (!paycheck._id) {
 			const { data } = await axios.post('/api/paychecks', paycheck, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PAYCHECK_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/paychecks/' + paycheck._id, paycheck, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PAYCHECK_SAVE_SUCCESS, payload: data });
@@ -95,7 +95,7 @@ export const detailsPaycheck = (pathname: string) => async (
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/paychecks/' + pathname, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: PAYCHECK_DETAILS_SUCCESS, payload: data });
@@ -114,7 +114,7 @@ export const deletePaycheck = (paycheckId: string) => async (
 		dispatch({ type: PAYCHECK_DELETE_REQUEST, payload: paycheckId });
 		const { data } = await axios.delete('/api/paychecks/' + paycheckId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: PAYCHECK_DELETE_SUCCESS, payload: data, success: true });

@@ -2,15 +2,12 @@ export {};
 import jwt from 'jsonwebtoken';
 const config = require('./config');
 import { Request } from 'express';
-import Log from './models/log';
-import nodemailer from 'nodemailer';
-import App from './email_templates/App';
-import { error } from './email_templates/pages';
+import { Token } from './models';
 export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
 
-export const getToken = (user: any) => {
+export const getAccessToken = (user: any) => {
 	return jwt.sign(
 		{
 			_id: user._id,
@@ -25,12 +22,72 @@ export const getToken = (user: any) => {
 			shipping: user.shipping,
 			is_affiliated: user.is_affiliated
 		},
-		config.JWT_SECRET,
+		config.ACCESS_TOKEN_SECRET,
 		{
-			expiresIn: '48h' // 1 year in seconds
+			expiresIn: '15m' // 1 year in seconds
 		}
 	);
 };
+export const getRefreshToken = (user: any) => {
+	try {
+		const refreshToken = jwt.sign(
+			{
+				_id: user._id,
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email: user.email,
+				password: user.password,
+				isAdmin: user.isAdmin,
+				isVerified: user.isVerified,
+				affiliate: user.affiliate,
+				email_subscription: user.email_subscription,
+				shipping: user.shipping,
+				is_affiliated: user.is_affiliated
+			},
+			config.REFRESH_TOKEN_SECRET,
+			{
+				expiresIn: '200d' // 1 year in seconds
+			}
+		);
+		// const token = await Token.create({ token: refreshToken });
+		// console.log({ token });
+		// if (token) {
+		return refreshToken;
+		// }
+	} catch (error) {
+		console.error(error);
+		return;
+	}
+	return;
+};
+
+// //middleware function to check if the incoming request in authenticated:
+// export const checkAuth = (req: any, res: any, next: any) => {
+// 	// get the token stored in the custom header called 'x-auth-token'
+// 	const token = req.get('x-auth-token');
+// 	//send error message if no token is found:
+// 	if (!token) {
+// 		return res.status(401).json({ error: 'Access denied, token missing!' });
+// 	} else {
+// 		try {
+// 			//if the incoming request has a valid token, we extract the payload from the token and attach it to the request object.
+// 			const payload: any = jwt.verify(token, config.ACCESS_TOKEN_SECRET);
+// 			req.user = payload.user;
+// 			next();
+// 		} catch (error) {
+// 			// token can be expired or invalid. Send appropriate errors in each case:
+// 			if (error.name === 'TokenExpiredError') {
+// 				return res.status(401).json({ error: 'Session timed out,please login again' });
+// 			} else if (error.name === 'JsonWebTokenError') {
+// 				return res.status(401).json({ error: 'Invalid token,please login again!' });
+// 			} else {
+// 				//catch other unprecedented errors
+// 				console.error(error);
+// 				return res.status(400).json({ error });
+// 			}
+// 		}
+// 	}
+// };
 
 export const isAuth = (
 	req: { headers: { authorization: any }; user: any },
@@ -41,7 +98,7 @@ export const isAuth = (
 
 	if (token) {
 		const onlyToken = token.slice(7, token.length);
-		jwt.verify(onlyToken, config.JWT_SECRET, (err: any, decode: any) => {
+		jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET, (err: any, decode: any) => {
 			if (err) {
 				return res.status(401).send({ msg: 'Invalid Token' });
 			}
@@ -54,11 +111,7 @@ export const isAuth = (
 	}
 };
 
-export const isAdmin = (
-	req: { user: { isAdmin: any } },
-	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
-	next: () => any
-) => {
+export const isAdmin = (req: any, res: any, next: () => any) => {
 	// console.log(req.user);
 	if (req.user && req.user.isAdmin) {
 		return next();
@@ -81,7 +134,7 @@ export const make_private_code = (length: any) => {
 // 		const data = await Promise;
 // 		return [ data, null ];
 // 	} catch (error) {
-console.log({ error });
+// console.log({ error });
 // 		console.error(error);
 // 		return [ null, error ];
 // 	}

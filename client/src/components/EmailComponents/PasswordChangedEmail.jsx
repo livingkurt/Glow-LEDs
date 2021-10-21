@@ -277,7 +277,7 @@ const PasswordChangedEmail = () => {
 		console.log('Success');
 	};
 	const save_html = async () => {
-		const data = await API_Emails.save_html(email_template, email, userInfo.token);
+		const data = await API_Emails.save_html(email_template, email, userInfo.access_token);
 		console.log(data);
 		console.log('Success');
 	};

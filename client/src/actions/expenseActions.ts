@@ -25,7 +25,7 @@ export const listExpenses = (category = '', search = '', sortOrder = '') => asyn
 			'/api/expenses?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			}
 		);
@@ -57,14 +57,14 @@ export const saveExpense = (expense: {
 		if (!expense._id) {
 			const { data } = await axios.post('/api/expenses', expense, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: EXPENSE_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/expenses/' + expense._id, expense, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: EXPENSE_SAVE_SUCCESS, payload: data });
@@ -84,7 +84,7 @@ export const detailsExpense = (pathname: string) => async (
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/expenses/' + pathname, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: EXPENSE_DETAILS_SUCCESS, payload: data });
@@ -103,7 +103,7 @@ export const deleteExpense = (expenseId: string) => async (
 		dispatch({ type: EXPENSE_DELETE_REQUEST, payload: expenseId });
 		const { data } = await axios.delete('/api/expenses/' + expenseId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: EXPENSE_DELETE_SUCCESS, payload: data, success: true });

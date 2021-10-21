@@ -32,7 +32,8 @@ const CartItem = (props) => {
 						)}
 						{props.item.secondary_image && (
 							<div
-								className={` double-image-cart${props.item.name && props.item.name.split('-')[1]
+								className={` double-image-cart${props.item.name &&
+								props.item.name.split('-')[1] === '2 Tone'
 									? '-vertical'
 									: ' row'}`}
 							>
@@ -41,7 +42,7 @@ const CartItem = (props) => {
 									alt={props.item.name}
 									title={props.item.name}
 									className={`details-image-cart-page-${props.item.name &&
-									props.item.name.split('-')[1]
+									props.item.name.split('-')[1] === '2 Tone'
 										? 'top'
 										: 'left'} m-0px`}
 									src={props.item.display_image}
@@ -51,7 +52,7 @@ const CartItem = (props) => {
 									alt={props.item.name}
 									title={props.item.name}
 									className={`details-image-cart-page-${props.item.name &&
-									props.item.name.split('-')[1]
+									props.item.name.split('-')[1] === '2 Tone'
 										? 'bottom'
 										: 'right'} `}
 									src={props.item.secondary_image}

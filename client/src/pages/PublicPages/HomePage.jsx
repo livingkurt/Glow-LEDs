@@ -141,7 +141,7 @@ const HomePage = (props) => {
 		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
 		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
 
-		prnt({ novaskins, alt_novaskins });
+		// prnt({ novaskins, alt_novaskins });
 		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
 		const product_pictures = [
 			glowskins[glowskins.length - 3],
@@ -255,7 +255,6 @@ const HomePage = (props) => {
 													value={search}
 													onChange={(e) => set_search(e.target.value)}
 												/>
-												{prnt({ options })}
 												{display && (
 													<div className="pos-abs bg-primary br-10px">
 														{options
@@ -329,7 +328,6 @@ const HomePage = (props) => {
 													value={search}
 													onChange={(e) => set_search(e.target.value)}
 												/>
-												{prnt({ options })}
 												{display && (
 													<div className="pos-abs bg-primary br-10px z-pos-2">
 														{options
@@ -379,19 +377,7 @@ const HomePage = (props) => {
 							please do not hesitate to reach out via our contact page or at info.glowleds@gmail.com
 						</ReadMore>
 					</div>
-					{/* <ReadMore width={1000} className="p_descriptions paragraph_font ta-c " length={100}>
-				We are here for you and for the love of the art of flowing and creating. 
-			</ReadMore> */}
-					{/* Make it Glow with Glow LEDs! The best place to get all of your flow art needs.
-			If you have an idea that you think we could do. Please you can get EXO Diffuser Diffuser Caps, Glowskins, Frosted Diffusers, and Glow Strings! Innovation Always!
-
-				
-				Glow LEDs represents what Glovers/Flow Artist truly need Flow Art company. A reliable If you’re going
-				to create, why not try to innovate, or at least make it a little better haha. Most of our products are
-				handmade in Austin, TX, with the ideas we got from you and what you need We create thing that seem Here
-				at Glow-LEDs.com we strive */}
 					<div className={`${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
-						{prnt({ contents: contents.filter((content) => content.active === true) })}
 						{contents &&
 							contents
 								.filter((content) => content.active === true)

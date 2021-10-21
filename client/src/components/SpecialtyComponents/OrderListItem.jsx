@@ -190,20 +190,16 @@ const OrderListItem = (props) => {
 												{item.secondary_image && (
 													<div
 														className={` double-image-cart${item.name &&
-														item.name.split('-')[1]
+														item.name.split('-')[1] === '2 Tone'
 															? '-vertical'
 															: ' row'}`}
 													>
-														{console.log({
-															split: item.name.split('-')[1],
-															name: item.name
-														})}
 														<LazyImage
 															id="expandedImg"
 															alt={item.name}
 															title={item.name}
 															className={`details-image-cart-${item.name &&
-															item.name.split('-')[1]
+															item.name.split('-')[1] === '2 Tone'
 																? 'top'
 																: 'left'} m-0px`}
 															src={item.display_image}
@@ -213,7 +209,7 @@ const OrderListItem = (props) => {
 															alt={item.name}
 															title={item.name}
 															className={`details-image-cart-${item.name &&
-															item.name.split('-')[1]
+															item.name.split('-')[1] === '2 Tone'
 																? 'bottom'
 																: 'right'} mr-15px`}
 															src={item.secondary_image}

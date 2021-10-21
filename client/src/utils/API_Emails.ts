@@ -16,12 +16,12 @@ const email_routes = {
 	// 	return axios.post('/api/emails/send_emails_c', { template, subject });
 	// },
 
-	save_html: (template: string, email: any, token: any) => {
-		console.log({ template, email, token });
+	save_html: (template: string, email: any, access_token: any) => {
+		console.log({ template, email, access_token });
 		email = { ...email, html: template };
 		return axios.put('/api/emails/' + email._id, email, {
 			headers: {
-				Authorization: 'Bearer ' + token
+				Authorization: 'Bearer ' + access_token
 			}
 		});
 	},

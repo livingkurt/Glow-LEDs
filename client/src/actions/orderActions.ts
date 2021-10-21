@@ -339,7 +339,7 @@ export const listMyOrders = () => async (
 		dispatch({ type: MY_ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/orders/user', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		console.log({ Orders: data });
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
@@ -356,7 +356,7 @@ export const listUserOrders = (user_id: string) => async (
 		dispatch({ type: MY_ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/orders/glow/' + user_id, {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		console.log({ Orders: data });
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
@@ -373,7 +373,7 @@ export const listOrders = (category = '', search = '', sortOrder = '', page = ''
 	try {
 		dispatch({ type: ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-
+		console.log({ userInfo });
 		const { data } = await axios.get(
 			'/api/orders/?category=' +
 				category +
@@ -386,7 +386,7 @@ export const listOrders = (category = '', search = '', sortOrder = '', page = ''
 				'&limit=' +
 				limit,
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.token }
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
 			}
 		);
 		console.log({ data });
@@ -405,7 +405,7 @@ export const detailsOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/orders/secure/' + orderId, {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
@@ -439,7 +439,7 @@ export const deleteOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.delete('/api/orders/glow/' + orderId, {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
@@ -471,7 +471,7 @@ export const refundOrder = (
 				refund_reason: refund_reason
 			},
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.token }
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
 			}
 		);
 		console.log({ data });
@@ -499,7 +499,7 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 				[action_at]: result ? Date.now() : ''
 			},
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.token }
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
 			}
 		);
 		console.log({ data });
@@ -527,7 +527,7 @@ export const update_payment = (order: { _id: string }, result: boolean, payment_
 				}
 			},
 			{
-				headers: { Authorization: 'Bearer ' + userInfo.token }
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
 			}
 		);
 		console.log({ data });
@@ -549,7 +549,7 @@ export const saveOrder = (order: any) => async (
 		if (!order._id) {
 			const { data } = await axios.post('/api/orders/glow', order, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
@@ -557,7 +557,7 @@ export const saveOrder = (order: any) => async (
 			console.log({ order });
 			const { data } = await axios.put('/api/orders/glow/' + order._id, order, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });

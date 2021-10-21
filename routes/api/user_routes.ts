@@ -11,6 +11,8 @@ router.route('/login').post(user_controller.login_users_c);
 router.route('/update/:id').put(user_controller.update_profile_users_c);
 router.route('/password_reset').put(user_controller.password_reset_users_c);
 router.route('/reset_password').post(user_controller.reset_password_users_c);
+router.route('/refresh_login').put(user_controller.refresh_login_users_c);
+router.route('/logout').put(user_controller.logout_users_c);
 // router.route('/verify/:id').post(user_controller.verify_users_c);
 // router.route('/checkemail').post(user_controller.checkemail_users_c);
 // router.route('/createadmin').post(user_controller.createadmin_users_c);

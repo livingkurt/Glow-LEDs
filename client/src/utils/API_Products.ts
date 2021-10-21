@@ -134,7 +134,7 @@ const product_routes = {
 			},
 			{
 				headers: {
-					Authorization: 'Bearer ' + user.token
+					Authorization: 'Bearer ' + user.access_token
 				}
 			}
 		);

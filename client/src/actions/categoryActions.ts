@@ -42,14 +42,14 @@ export const saveCategory = (category: any) => async (
 		if (!category._id) {
 			const { data } = await axios.post('/api/categorys', category, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: CATEGORY_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/categorys/' + category._id, category, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: CATEGORY_SAVE_SUCCESS, payload: data });
@@ -69,7 +69,7 @@ export const detailsCategory = (pathname: string) => async (
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/categorys/' + pathname, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: CATEGORY_DETAILS_SUCCESS, payload: data });
@@ -88,7 +88,7 @@ export const deleteCategory = (categoryId: string) => async (
 		dispatch({ type: CATEGORY_DELETE_REQUEST, payload: categoryId });
 		const { data } = await axios.delete('/api/categorys/' + categoryId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: data, success: true });

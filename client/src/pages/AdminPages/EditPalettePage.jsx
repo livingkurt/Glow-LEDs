@@ -82,9 +82,9 @@ const EditPalettePage = (props) => {
 	useEffect(
 		() => {
 			if (chip && chip.colors) {
-				console.log({ chip });
+				// console.log({ chip });
 				const chip_colors = chip.colors.map((color) => color.color);
-				console.log({ chip_colors });
+				// console.log({ chip_colors });
 				set_preset_colors(chip_colors);
 				set_colors_per_mode(chip.colors_per_mode);
 			}

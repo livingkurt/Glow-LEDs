@@ -43,7 +43,7 @@ export const listMyDevices = () => async (
 		dispatch({ type: MY_DEVICE_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/devices/mine', {
-			headers: { Authorization: 'Bearer ' + userInfo.token }
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		dispatch({ type: MY_DEVICE_LIST_SUCCESS, payload: data });
 	} catch (error) {
@@ -64,14 +64,14 @@ export const saveDevice = (device: any) => async (
 		if (!device._id) {
 			const { data } = await axios.post('/api/devices', device, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: DEVICE_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/devices/' + device._id, device, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: DEVICE_SAVE_SUCCESS, payload: data });
@@ -103,7 +103,7 @@ export const deleteDevice = (deviceId: string) => async (
 		dispatch({ type: DEVICE_DELETE_REQUEST, payload: deviceId });
 		const { data } = await axios.delete('/api/devices/' + deviceId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: DEVICE_DELETE_SUCCESS, payload: data, success: true });

@@ -25,7 +25,7 @@ export const listSettings = (category = '', search = '', sortOrder = '') => asyn
 			'/api/settings?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
 			{
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			}
 		);
@@ -47,14 +47,14 @@ export const saveSetting = (setting: any) => async (
 		if (!setting._id) {
 			const { data } = await axios.post('/api/settings', setting, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: SETTING_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/settings/' + setting._id, setting, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: SETTING_SAVE_SUCCESS, payload: data });
@@ -74,7 +74,7 @@ export const detailsSetting = (pathname: string) => async (
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get('/api/settings/' + pathname, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: SETTING_DETAILS_SUCCESS, payload: data });
@@ -93,7 +93,7 @@ export const deleteSetting = (settingId: string) => async (
 		dispatch({ type: SETTING_DELETE_REQUEST, payload: settingId });
 		const { data } = await axios.delete('/api/settings/' + settingId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: SETTING_DELETE_SUCCESS, payload: data, success: true });

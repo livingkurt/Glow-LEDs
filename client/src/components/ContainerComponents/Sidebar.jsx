@@ -37,7 +37,7 @@ const Sidebar = (props) => {
 	const dispatch = useDispatch();
 
 	const handleLogout = () => {
-		dispatch(logout());
+		dispatch(logout(userInfo.refresh_token));
 		closeMenu();
 		history.push('/account/login');
 	};

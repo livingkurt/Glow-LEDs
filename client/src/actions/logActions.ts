@@ -40,14 +40,14 @@ export const saveLog = (log: any) => async (
 		if (!log._id) {
 			const { data } = await axios.post('/api/logs', log, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: LOG_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/logs/' + log._id, log, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: LOG_SAVE_SUCCESS, payload: data });
@@ -78,7 +78,7 @@ export const deleteLog = (logId: string) => async (
 		dispatch({ type: LOG_DELETE_REQUEST, payload: logId });
 		const { data } = await axios.delete('/api/logs/' + logId, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: LOG_DELETE_SUCCESS, payload: data, success: true });

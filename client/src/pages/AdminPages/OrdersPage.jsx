@@ -170,7 +170,6 @@ const OrdersPage = (props) => {
 	// };
 
 	const history = useHistory();
-	console.log({ history });
 
 	const update_page = (e) => {
 		e.preventDefault();
@@ -287,7 +286,6 @@ const OrdersPage = (props) => {
 					<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				</div>
-				{console.log({ orders })}
 				<div className="wrap jc-c">
 					{orders &&
 						orders.totalPages &&

@@ -1,5 +1,5 @@
 import { user_db } from '../db';
-import { getToken, prnt } from '../util';
+import { getAccessToken, getRefreshToken, prnt } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
@@ -87,18 +87,19 @@ export default {
 						is_affiliated: updatedUser.is_affiliated,
 						isVerified: updatedUser.isVerified,
 						isAdmin: updatedUser.isAdmin,
-						token: getToken(updatedUser)
+						access_token: getAccessToken(updatedUser),
+						refresh_token: getRefreshToken(updatedUser)
 					};
 					return jwt.sign(
 						payload,
-						config.JWT_SECRET,
+						config.ACCESS_TOKEN_SECRET,
 						{
 							expiresIn: '48hr'
 						},
-						(err: any, token: string) => {
+						(err: any, access_token: string) => {
 							return {
 								success: true,
-								token: 'Bearer ' + token
+								access_token: 'Bearer ' + access_token
 							};
 						}
 					);
@@ -159,6 +160,7 @@ export default {
 		if (!user) {
 			throw new Error('Email Not Found');
 		}
+		console.log({ password, old_password: user.password });
 		const isMatch = await bcrypt.compare(password, user.password);
 
 		if (isMatch) {
@@ -174,13 +176,95 @@ export default {
 				isVerified: user.isVerified,
 				isAdmin: user.isAdmin,
 				shipping: user.shipping,
-				token: getToken(user)
+				access_token: getAccessToken(user),
+				refresh_token: await getRefreshToken(user)
 			};
 		} else {
 			throw new Error('Password Incorrect');
 		}
 	},
+	refresh_login_users_s: async (email: string, password: string) => {
+		const user: any = await user_db.findByEmail_users_db(email);
+		if (!user) {
+			throw new Error('Email Not Found');
+		}
+		console.log({ password, old_password: user.password });
+		// const isMatch = await bcrypt.compare(password, user.password);
 
+		if (password === user.password) {
+			return {
+				_id: user.id,
+				first_name: user.first_name,
+				last_name: user.last_name,
+				email: user.email,
+				affiliate: user.affiliate,
+				cart: user.cart,
+				email_subscription: user.email_subscription,
+				is_affiliated: user.is_affiliated,
+				isVerified: user.isVerified,
+				isAdmin: user.isAdmin,
+				shipping: user.shipping,
+				access_token: getAccessToken(user),
+				refresh_token: getRefreshToken(user)
+			};
+		} else {
+			throw new Error('Password Incorrect');
+		}
+	},
+	// refresh_login_users_s: async (access_token: string, refresh_token: string) => {
+	// 	const user: any = await user_db.findByEmail_users_db(email);
+	// 	if (!user) {
+	// 		throw new Error('Email Not Found');
+	// 	}
+	// 	const isMatch = await bcrypt.compare(password, user.password);
+
+	// 	if (isMatch) {
+	// 		return {
+	// 			_id: user.id,
+	// 			first_name: user.first_name,
+	// 			last_name: user.last_name,
+	// 			email: user.email,
+	// 			affiliate: user.affiliate,
+	// 			cart: user.cart,
+	// 			email_subscription: user.email_subscription,
+	// 			is_affiliated: user.is_affiliated,
+	// 			isVerified: user.isVerified,
+	// 			isAdmin: user.isAdmin,
+	// 			shipping: user.shipping,
+	// 			access_token: getAccessToken(user),
+	// 			refresh_token: getRefreshToken(user)
+	// 		};
+	// 	} else {
+	// 		throw new Error('Password Incorrect');
+	// 	}
+	// },
+	// refresh_login_users_s = async (access_token: string, refresh_token: string) => {
+	// 	try {
+	// 		//get refreshToken
+	// 		const { refreshToken } = req.body;
+	// 		//send error if no refreshToken is sent
+	// 		if (!refreshToken) {
+	// 			return res.status(403).json({ error: "Access denied,token missing!" });
+	// 		} else {
+	// 			//query for the token to check if it is valid:
+	// 			const tokenDoc = await Token.findOne({ token: refreshToken });
+	// 			//send error if no token found:
+	// 			if (!tokenDoc) {
+	// 				return res.status(401).json({ error: "Token expired!" });
+	// 			} else {
+	// 				//extract payload from refresh token and generate a new access token and send it
+	// 				const payload = jwt.verify(tokenDoc.token, REFRESH_TOKEN_SECRET);
+	// 				const accessToken = jwt.sign({ user: payload }, ACCESS_TOKEN_SECRET, {
+	// 					expiresIn: "10m",
+	// 				});
+	// 				return res.status(200).json({ accessToken });
+	// 			}
+	// 		}
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 		return res.status(500).json({ error: "Internal Server Error!" });
+	// 	}
+	// };
 	password_reset_users_s: async (body: any) => {
 		try {
 			const user: any = await user_db.findById_users_db(body.user_id);
@@ -233,7 +317,7 @@ export default {
 	// 					is_affiliated: updatedUser.is_affiliated,
 	// 					// isVerified: updatedUser.isVerified,
 	// 					shipping: updatedUser.shipping
-	// 					// token: getToken(updatedUser)
+	// 					// token: getAccessToken(updatedUser)
 	// 				});
 	// 			} else {
 	// 				return res.status(500).send({ message: ' Error in Updating User.' });
@@ -271,7 +355,8 @@ export default {
 					is_affiliated: user.is_affiliated,
 					email_subscription: user.email_subscription,
 					shipping: user.shipping,
-					token: getToken(user)
+					access_token: getAccessToken(user),
+					refresh_token: getRefreshToken(user)
 				};
 			}
 		} catch (error) {
@@ -325,7 +410,7 @@ export default {
 	// 						isAdmin: admin.isAdmin,
 	// 						isVerified: admin.isVerified,
 	// 						shipping: admin.shipping,
-	// 						token: getToken(admin)
+	// 						token: getAccessToken(admin)
 	// 					});
 	// 				});
 	// 			});

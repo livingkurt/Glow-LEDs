@@ -16,7 +16,7 @@ const shipping_routes = {
 			{ data },
 			{
 				headers: {
-					Authorization: 'Bearer ' + data.userInfo.token
+					Authorization: 'Bearer ' + data.userInfo.access_token
 				}
 			}
 		);
@@ -27,7 +27,7 @@ const shipping_routes = {
 			{ data },
 			{
 				headers: {
-					Authorization: 'Bearer ' + data.userInfo.token
+					Authorization: 'Bearer ' + data.userInfo.access_token
 				}
 			}
 		);

@@ -25,7 +25,7 @@ const revenue_routes = {
 			{ expense, card },
 			{
 				headers: {
-					Authorization: 'Bearer ' + user.token
+					Authorization: 'Bearer ' + user.access_token
 				}
 			}
 		);

@@ -55,7 +55,7 @@ Copy .env example and name it .env
 
 Local Mongodb URI
 
-#### JWT_SECRET
+#### ACCESS_TOKEN_SECRET
 
 Create secret key that is unsed to create your jwt tokens
 

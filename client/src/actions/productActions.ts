@@ -34,7 +34,7 @@ export const listProducts = (
 ) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
-		// console.log({ chip });
+		// // console.log({ chip });
 		const { data } = await axios.get(
 			'/api/products/?category=' +
 				category +
@@ -69,14 +69,14 @@ export const saveProduct = (product: any) => async (
 		if (!product._id) {
 			const { data } = await axios.post('/api/products', product, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
 		} else {
 			const { data } = await axios.put('/api/products/' + product._id, product, {
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
 			dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
@@ -110,7 +110,7 @@ export const deleteProduct = (id: string) => async (
 		dispatch({ type: PRODUCT_DELETE_REQUEST, payload: id });
 		const { data } = await axios.delete('/api/products/' + id, {
 			headers: {
-				Authorization: 'Bearer ' + userInfo.token
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
 		});
 		dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
@@ -135,7 +135,7 @@ export const saveProductReview = (
 			{ review, userInfo },
 			{
 				headers: {
-					Authorization: 'Bearer ' + userInfo.token
+					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			}
 		);
@@ -155,7 +155,7 @@ export const saveProductReview = (
 // 		dispatch({ type: PRODUCT_REVIEW_DELETE_REQUEST, payload: { product_pathname, review_id } });
 // 		const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`, {
 // 			headers: {
-// 				Authorization: 'Bearer ' + userInfo.token
+// 				Authorization: 'Bearer ' + userInfo.access_token
 // 			}
 // 		});
 // 		dispatch({ type: PRODUCT_REVIEW_DELETE_SUCCESS, payload: data });

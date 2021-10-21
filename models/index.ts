@@ -24,3 +24,4 @@ export { default as Survey } from './survey';
 export { default as Category } from './category';
 export { default as Setting } from './setting';
 export { default as Palette } from './palette';
+export { default as Token } from './token';

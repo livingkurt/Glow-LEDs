@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { Token, User } from '../models';
 import { prnt } from '../util';
 require('dotenv');
 
@@ -37,6 +37,15 @@ export default {
 		prnt({ create_users_db: user });
 		try {
 			return await User.create(user);
+		} catch (error) {
+			console.log({ create_users_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	create_token_users_db: async (token: any) => {
+		prnt({ create_users_db: token });
+		try {
+			return await Token.create(token);
 		} catch (error) {
 			console.log({ create_users_db_error: error });
 			throw new Error(error.message);
