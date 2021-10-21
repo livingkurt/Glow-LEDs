@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Carousel } from 'react-responsive-carousel';
+
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link, useHistory } from 'react-router-dom';
 import { humanize, prnt } from '../../utils/helper_functions';
@@ -19,6 +20,7 @@ const Slideshow = ({ slideshow }) => {
 			transitionTime={1300}
 			// selectedItem={start}
 			emulateTouch={true}
+			animationHandler="fade"
 			// selectedItem={Math.floor(Math.random() * products.length)}
 			className=""
 		>
