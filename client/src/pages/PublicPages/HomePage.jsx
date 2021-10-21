@@ -21,8 +21,9 @@ const HomePage = (props) => {
 	const [ loading, set_loading ] = useState(false);
 	const [ options, set_options ] = useState([]);
 	const [ products, set_products ] = useState([]);
+	const [ slideshow, set_slideshow ] = useState([]);
 	const [ search, set_search ] = useState('');
-	const [ start, set_start ] = useState(Math.floor(Math.random() * products.length));
+	// const [ start, set_start ] = useState(Math.floor(Math.random() * slideshow.length));
 	// const [ end, set_end ] = useState(1);
 	const wrapperRef = useRef(null);
 
@@ -71,9 +72,24 @@ const HomePage = (props) => {
 		dispatch(listContents());
 		get_all_products();
 
-		// set_start(Math.floor(Math.random() * products.length));
+		// set_start(Math.floor(Math.random() * slideshow.length));
 		return () => {};
 	}, []);
+	useEffect(
+		() => {
+			if (contents) {
+				if (contents[0]) {
+					if (contents[0].home_page && contents[0].home_page.slideshow) {
+						console.log({ slideshow: contents[0].home_page.slideshow });
+						set_slideshow(contents[0].home_page.slideshow);
+					}
+				}
+			}
+
+			return () => {};
+		},
+		[ contents ]
+	);
 
 	const categories = [
 		'accessories',
@@ -130,42 +146,42 @@ const HomePage = (props) => {
 	const get_all_products = async () => {
 		set_loading(true);
 		const { data } = await API_Products.get_all_products();
-		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
-		const { data: diffusers } = await API_Products.get_product_pictures('diffusers');
-		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
-		const { data: batteries } = await API_Products.get_product_pictures('accessories', 'batteries');
-		const { data: accessories } = await API_Products.get_product_pictures('accessories');
-		const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
-		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
-		const { data: exo_diffusers } = await API_Products.get_product_pictures('exo_diffusers');
-		const { data: decals } = await API_Products.get_product_pictures('decals');
-		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
-		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
+		// const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
+		// const { data: diffusers } = await API_Products.get_product_pictures('diffusers');
+		// const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
+		// const { data: batteries } = await API_Products.get_product_pictures('accessories', 'batteries');
+		// const { data: accessories } = await API_Products.get_product_pictures('accessories');
+		// const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
+		// const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
+		// const { data: exo_diffusers } = await API_Products.get_product_pictures('exo_diffusers');
+		// const { data: decals } = await API_Products.get_product_pictures('decals');
+		// const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
+		// const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
 
-		// prnt({ novaskins, alt_novaskins });
-		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
-		const product_pictures = [
-			glowskins[glowskins.length - 3],
-			exo_diffusers[exo_diffusers.length - 1],
-			decals[2],
-			glow_strings[4],
-			batteries[batteries.length - 1],
-			novaskins[0],
-			diffusers[diffusers.length - 1],
-			battery_storage[battery_storage.length - 1],
-			diffuser_caps[diffuser_caps.length - 1],
-			alt_novaskins[4],
-			accessories[accessories.length - 1],
-			glow_casings[glow_casings.length - 1]
-		];
+		// // prnt({ novaskins, alt_novaskins });
+		// const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
+		// const product_pictures = [
+		// 	glowskins[glowskins.length - 3],
+		// 	exo_diffusers[exo_diffusers.length - 1],
+		// 	decals[2],
+		// 	glow_strings[4],
+		// 	batteries[batteries.length - 1],
+		// 	novaskins[0],
+		// 	diffusers[diffusers.length - 1],
+		// 	battery_storage[battery_storage.length - 1],
+		// 	diffuser_caps[diffuser_caps.length - 1],
+		// 	alt_novaskins[4],
+		// 	accessories[accessories.length - 1],
+		// 	glow_casings[glow_casings.length - 1]
+		// ];
 
-		set_products(
-			product_pictures
-				.filter((product) => !product.option)
-				.filter((product) => !product.hidden)
-				.sort((a, c) => a.order > c.order, 0)
-		);
-		set_start(Math.floor(Math.random() * data.length));
+		// set_products(
+		// 	product_pictures
+		// 		.filter((product) => !product.option)
+		// 		.filter((product) => !product.hidden)
+		// 		.sort((a, c) => a.order > c.order, 0)
+		// );
+		// set_start(Math.floor(Math.random() * data.length));
 		set_options([
 			...categories.map((category) => {
 				return { name: humanize(category) };
@@ -213,7 +229,7 @@ const HomePage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</Helmet>
-			<Loading loading={products.length === 0} />
+			{/* <Loading loading={slideshow.length === 0} /> */}
 			{/* <div className="carousel-wrapper pos-rel w-100per"> */}
 			{/* <div className="skeleton-img-container "> */}
 
@@ -222,9 +238,10 @@ const HomePage = (props) => {
 			<div>
 				{width > 1019 && (
 					<div>
-						{products.length > 0 ? (
+						{slideshow.length > 0 ? (
 							<div className="carousel-wrapper pos-rel">
-								{start !== 0 && <Slideshow products={products} start={start} />}
+								{<Slideshow slideshow={slideshow} />}
+								{/* {start !== 0 && <Slideshow products={products} start={start} />} */}
 
 								<div
 									className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
@@ -382,7 +399,7 @@ const HomePage = (props) => {
 				)}
 				{width < 1019 && (
 					<div>
-						{products.length > 0 ? (
+						{slideshow.length > 0 ? (
 							<div className="carousel-wrapper ">
 								<div
 									className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
@@ -454,7 +471,8 @@ const HomePage = (props) => {
 										</form>
 									</div>
 								</div>
-								{start > 0 && <Slideshow products={products} start={start} />}
+								{/* {start > 0 && <Slideshow products={products} start={start} />} */}
+								{<Slideshow slideshow={slideshow} />}
 							</div>
 						) : (
 							<div
@@ -531,7 +549,7 @@ const HomePage = (props) => {
 				)}
 			</div>
 
-			<div style={{ marginTop: products.length === 0 ? 0 : '-25%' }}>
+			<div style={{ marginTop: slideshow.length === 0 ? 0 : '-25%' }}>
 				<ReadMore width={1000} className="p_descriptions paragraph_font ta-c " length={100}>
 					Here at Glow LEDs we offer a wide variety of Gloving and Flow Art accessories. Including EXO
 					Diffusers, Glow Casings and our most popular product Glowskins! We are based in Austin, TX ran by a
