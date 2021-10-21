@@ -13,9 +13,9 @@ const EditContentPage = (props) => {
 	const [ links, set_links ] = useState([ {} ]);
 	const [ banner, set_banner ] = useState({});
 	const [ images, set_images ] = useState([]);
-	const [ slideshow_images, set_slideshow_images ] = useState([]);
+	const [ slideshow, set_slideshow ] = useState([ {} ]);
 	const [ image, set_image ] = useState('');
-	const [ slideshow_image, set_slideshow_image ] = useState('');
+	// const [ slideshow, set_slideshow ] = useState('');
 
 	const [ active, set_active ] = useState(true);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
@@ -45,7 +45,7 @@ const EditContentPage = (props) => {
 		set_home_page(content.home_page);
 		if (content.home_page && content.home_page.images) {
 			set_images(content.home_page.images);
-			set_slideshow_images(content.home_page.slideshow_images);
+			set_slideshow(content.home_page.slideshow);
 		}
 		set_banner(content.banner);
 		set_links(content.links);
@@ -59,7 +59,6 @@ const EditContentPage = (props) => {
 		set_home_page(data);
 		// if (content.home_page && content.home_page.images) {
 		set_images(data.images);
-		set_slideshow_images(data.slideshow_images);
 		// }
 	};
 
@@ -67,7 +66,7 @@ const EditContentPage = (props) => {
 		set_id('');
 		set_home_page('');
 		set_images([]);
-		set_slideshow_images([]);
+		set_slideshow([]);
 		set_banner('');
 		set_links('');
 		set_active(true);
@@ -149,7 +148,7 @@ const EditContentPage = (props) => {
 		dispatch(
 			saveContent({
 				_id: using_template ? null : id,
-				home_page: { ...home_page, images },
+				home_page: { ...home_page, images, slideshow },
 				banner,
 				links,
 				active
@@ -184,7 +183,6 @@ const EditContentPage = (props) => {
 			} else if (location === 'below') {
 				new_array.splice(index + 1, 0, { label: '', link: '', icon: '' });
 			}
-
 			console.log({ new_array });
 			set_links(new_array);
 		} else {
@@ -196,6 +194,45 @@ const EditContentPage = (props) => {
 		set_links((link) =>
 			link.filter((link, index) => {
 				return link_index !== index;
+			})
+		);
+	};
+
+	const update_slideshow_item_property = (e, field_name, index) => {
+		console.log({ value: e.target.value, field_name, index });
+		e.preventDefault();
+		let new_slideshow_items = [ ...slideshow ];
+		new_slideshow_items[index] = {
+			...new_slideshow_items[index],
+			[field_name]: e.target.value
+		};
+		set_slideshow(new_slideshow_items);
+		console.log({ slideshow });
+	};
+
+	const add_slideshow = (e, index, location) => {
+		e.preventDefault();
+		if (Number.isInteger(index)) {
+			let new_array = [ ...slideshow ];
+			if (location === 'above') {
+				if (index === 0) {
+					set_slideshow((slideshow) => [ { label: '', image: '', link: '' }, ...slideshow ]);
+				}
+				new_array.splice(index, 0, { label: '', image: '', link: '' });
+			} else if (location === 'below') {
+				new_array.splice(index + 1, 0, { label: '', image: '', link: '' });
+			}
+			console.log({ new_array });
+			set_slideshow(new_array);
+		} else {
+			set_slideshow((slideshow) => [ ...slideshow, { label: '', image: '', link: '' } ]);
+		}
+	};
+	const remove_slideshow = async (slideshow_index, e) => {
+		e.preventDefault();
+		set_slideshow((slideshow) =>
+			slideshow.filter((slideshow, index) => {
+				return slideshow_index !== index;
 			})
 		);
 	};
@@ -373,13 +410,13 @@ const EditContentPage = (props) => {
 													/>
 												</li>
 											)}
-											<ImageDisplay
-												images={slideshow_images}
-												set_images={set_slideshow_images}
-												image={slideshow_image}
-												set_image={set_slideshow_image}
+											{/* <ImageDisplay
+												images={slideshow}
+												set_images={set_slideshow}
+												image={slideshow}
+												set_image={set_slideshow}
 												name={'Slideshow Images'}
-											/>
+											/> */}
 											<ImageDisplay
 												images={images}
 												set_images={set_images}
@@ -387,6 +424,96 @@ const EditContentPage = (props) => {
 												set_image={set_image}
 												name={'Images'}
 											/>
+											{/* <div className="w-228px m-10px"> */}
+											<h2>Images</h2>
+											<div className="scroll-y h-100per max-h-900px ">
+												{slideshow &&
+													slideshow.map((slideshow, index) => (
+														<div>
+															<div className="jc-b ai-c">
+																<label>Button {index + 1}</label>
+																<button
+																	className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+																	onClick={(e) => remove_slideshow(index, e)}
+																>
+																	<i className="fas fa-times mr-5px" />
+																</button>
+															</div>
+
+															<li>
+																<button
+																	className="btn primary"
+																	onClick={(e) => add_slideshow(e, index, 'above')}
+																>
+																	Add Image Above
+																</button>
+															</li>
+															<li>
+																<label htmlFor="label">Label</label>
+																<input
+																	type="text"
+																	name="label"
+																	value={slideshow.label}
+																	id="label"
+																	onChange={(e) =>
+																		update_slideshow_item_property(
+																			e,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+															<li>
+																<label htmlFor="image">Image</label>
+																<input
+																	type="text"
+																	name="image"
+																	value={slideshow.image}
+																	id="image"
+																	onChange={(e) =>
+																		update_slideshow_item_property(
+																			e,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+															<li>
+																<label htmlFor="link">Link</label>
+																<input
+																	type="text"
+																	name="link"
+																	value={slideshow.link}
+																	id="link"
+																	onChange={(e) =>
+																		update_slideshow_item_property(
+																			e,
+																			e.target.name,
+																			index
+																		)}
+																/>
+															</li>
+															{index !== slideshow.length - 1 && (
+																<li>
+																	<button
+																		className="btn primary"
+																		onClick={(e) =>
+																			add_slideshow(e, index, 'below')}
+																	>
+																		Add Image Below
+																	</button>
+																</li>
+															)}
+														</div>
+													))}
+
+												<li>
+													<button className="btn primary" onClick={(e) => add_slideshow(e)}>
+														Add Image
+													</button>
+												</li>
+											</div>
+											{/* </div> */}
 										</div>
 
 										<div className="w-228px m-10px">
@@ -530,32 +657,6 @@ const EditContentPage = (props) => {
 												</li>
 											</div>
 										</div>
-
-										{/* <div className="w-228px m-10px">
-											<h2>About Page</h2>
-											<li>
-												<label htmlFor="links_kurt_p">About Page Kurt P</label>
-												<textarea
-													className="edit_product_textarea"
-													name="links_kurt_p"
-													value={links && links.kurt_p}
-													id="links_kurt_p"
-													onChange={(e) =>
-														set_links({ ...links, kurt_p: e.target.value })}
-												/>
-											</li>
-											<li>
-												<label htmlFor="links_destanye_p">About Page Kurt P</label>
-												<textarea
-													className="edit_product_textarea"
-													name="links_destanye_p"
-													value={links && links.destanye_p}
-													id="links_destanye_p"
-													onChange={(e) =>
-														set_links({ ...links, destanye_p: e.target.value })}
-												/>
-											</li>
-										</div> */}
 									</div>
 									<li>
 										<button type="submit" className="btn primary">
