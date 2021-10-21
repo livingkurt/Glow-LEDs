@@ -13,13 +13,14 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+	z-index: 5;
 
 	margin: auto;
 }
 
 .loading_png {
 	height: 100px;
-	z-index: 1;
+	z-index: 10;
 	// position: absolute;
 	// top: 50%;
 	// left: 49%;
