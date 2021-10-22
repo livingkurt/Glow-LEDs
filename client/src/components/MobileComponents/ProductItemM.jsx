@@ -33,26 +33,15 @@ const ProductSmallScreen = (props) => {
 									(x, index) =>
 										props.product_occurrences &&
 										props.product_occurrences[index] &&
-										props.product_occurrences[index].name === 'Frosted Dome Diffusers' ? (
+										props.product_occurrences[index].name === props.product.name && (
 											<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
 												<img
 													className=" mt-3px ml-2px h-100px w-100px"
-													alt={'Dome Diffusers'}
+													alt={props.product.name}
 													title="Product Image"
 													src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
 												/>
 											</div>
-										) : (
-											props.product.name && (
-												<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-													<img
-														className=" mt-3px ml-2px h-100px w-100px"
-														alt={props.product.name}
-														title="Product Image"
-														src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-													/>
-												</div>
-											)
 										)
 								)}
 							</div>
