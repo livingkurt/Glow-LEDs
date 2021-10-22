@@ -577,12 +577,6 @@ const ProductPage = (props) => {
 						</div>
 						{width <= 819 && (
 							<div>
-								<label
-									className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
-									style={{ display: width < 819 ? 'block' : 'none' }}
-								>
-									{name}
-								</label>
 								<div className=" w-100per max-w-400px m-auto">
 									<ProductSlideshow
 										product={product}
@@ -596,7 +590,7 @@ const ProductPage = (props) => {
 						)}
 						<div className="details">
 							<div className="">
-								{width >= 819 && (
+								{width > 819 && (
 									<div>
 										<label
 											className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
