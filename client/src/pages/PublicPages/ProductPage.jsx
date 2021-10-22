@@ -575,7 +575,8 @@ const ProductPage = (props) => {
 								</div>
 							)}
 						</div>
-						{width <= 819 && (
+						{!secondary_image &&
+						width <= 819 && (
 							<div>
 								<div className=" w-100per max-w-400px m-auto">
 									<ProductSlideshow
@@ -590,7 +591,7 @@ const ProductPage = (props) => {
 						)}
 						<div className="details">
 							<div className="">
-								{width > 819 && (
+								{(secondary_image || width > 819) && (
 									<div>
 										<label
 											className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
