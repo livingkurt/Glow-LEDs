@@ -10,7 +10,8 @@ import {
 	ReadMore,
 	Swipe,
 	StyledDropdown,
-	Carousel
+	Carousel,
+	ProductSlideshow
 } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
@@ -498,6 +499,7 @@ const ProductPage = (props) => {
 					)}
 				</div>
 			</div>
+
 			<Loading loading={loading} error={error}>
 				{product && (
 					<div className="">
@@ -573,70 +575,94 @@ const ProductPage = (props) => {
 								</div>
 							)}
 						</div>
-						<div className="details">
-							<div className="">
+						{width <= 819 && (
+							<div>
 								<label
 									className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
 									style={{ display: width < 819 ? 'block' : 'none' }}
 								>
 									{name}
 								</label>
-
-								<div className="details-image">
-									<div>
-										{!secondary_image && (
-											<img
-												id="expandedImg"
-												alt={name}
-												title={name}
-												className="details-image-img"
-												src={image}
-												style={{
-													maxWidth: '400px',
-													maxHeight: '400px',
-													height: '100%',
-													width: '100%'
-												}}
-											/>
-										)}
-										{secondary_image && (
-											<div
-												className={`double-image-${name && name.split('-')[1]
-													? 'vertical'
-													: ''}`}
-											>
-												<img
-													id="expandedImg"
-													alt={name}
-													title={name}
-													className={`details-image-img-${name && name.split('-')[1]
-														? 'top'
-														: 'left'}`}
-													src={image}
-												/>
-												<img
-													id="expandedSecondaryImg"
-													alt={name}
-													title={name}
-													className={`details-image-img-${name && name.split('-')[1]
-														? 'bottom'
-														: 'right'}`}
-													src={secondary_image}
-												/>
-											</div>
-										)}
-									</div>
-
-									<div style={{ display: width < 819 ? 'none' : 'block' }}>
-										<PictureChooser
-											product={product}
-											images={images}
-											secondary_images={secondary_images}
-											className="w-100per jc-c max-w-400px m-auto"
-											set_image={set_image}
-										/>
-									</div>
+								<div className=" w-100per max-w-400px m-auto">
+									<ProductSlideshow
+										product={product}
+										images={images}
+										secondary_images={secondary_images}
+										className=""
+										set_image={set_image}
+									/>
 								</div>
+							</div>
+						)}
+						<div className="details">
+							<div className="">
+								{width >= 819 && (
+									<div>
+										<label
+											className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
+											style={{ display: width < 819 ? 'block' : 'none' }}
+										>
+											{name}
+										</label>
+										<div className="details-image">
+											<div>
+												{!secondary_image && (
+													<img
+														id="expandedImg"
+														alt={name}
+														title={name}
+														className="details-image-img"
+														src={image}
+														style={{
+															maxWidth: '400px',
+															maxHeight: '400px',
+															height: '100%',
+															width: '100%'
+														}}
+													/>
+												)}
+												{secondary_image && (
+													<div
+														className={`double-image-${name && name.split('-')[1]
+															? 'vertical'
+															: ''}`}
+													>
+														<img
+															id="expandedImg"
+															alt={name}
+															title={name}
+															className={`details-image-img-${name && name.split('-')[1]
+																? 'top'
+																: 'left'}`}
+															src={image}
+														/>
+														<img
+															id="expandedSecondaryImg"
+															alt={name}
+															title={name}
+															className={`details-image-img-${name && name.split('-')[1]
+																? 'bottom'
+																: 'right'}`}
+															src={secondary_image}
+														/>
+													</div>
+												)}
+											</div>
+
+											{width > 819 && (
+												<div>
+													<PictureChooser
+														product={product}
+														images={images}
+														secondary_images={secondary_images}
+														className="w-100per jc-c max-w-400px m-auto"
+														set_image={set_image}
+													/>
+												</div>
+											)}
+										</div>
+									</div>
+								)}
 
 								<div>
 									{/* <Swiper
@@ -1098,14 +1124,19 @@ const ProductPage = (props) => {
 									)}
 								</ul>
 							</div>
-							<div className="mobile_product_view" style={{ display: width <= 819 ? 'block' : 'none' }}>
-								<PictureChooser
-									product={product}
-									images={images}
-									secondary_images={secondary_images}
-									className="jc-c w-100per"
-								/>
-							</div>
+
+							{/* {width <= 819 && (
+								<div className="">
+									<ProductSlideshow
+										product={product}
+										images={images}
+										secondary_images={secondary_images}
+										className=""
+										set_image={set_image}
+									/>
+								</div>
+							)} */}
+
 							<div className="w-100per">
 								<div
 									className="details-action mobile_product_view"
@@ -1441,75 +1472,8 @@ const ProductPage = (props) => {
 										</div>
 									</div>
 								</div>
-
-								{/* <Swiper
-									// spaceBetween={50}
-									pagination={true}
-									slidesPerView={1}
-									onSlideChange={() => console.log('slide change')}
-									onSwiper={(swiper) => console.log(swiper)}
-								>
-									{images &&
-										images.map((image) => (
-											<SwiperSlide>
-												<img
-													id="expandedImg"
-													alt={name}
-													title={name}
-													className="details-image-img"
-													src={image}
-													style={{
-														maxWidth: '400px',
-														maxHeight: '400px',
-														height: '100%',
-														width: '100%'
-													}}
-												/>
-											</SwiperSlide>
-										))}
-								</Swiper> */}
-
-								{/* <Swiper pagination={true} className="mySwiper">
-									<SwiperSlide>Slide 1</SwiperSlide>
-									<SwiperSlide>Slide 2</SwiperSlide>
-									<SwiperSlide>Slide 3</SwiperSlide>
-									<SwiperSlide>Slide 4</SwiperSlide>
-									<SwiperSlide>Slide 5</SwiperSlide>
-									<SwiperSlide>Slide 6</SwiperSlide>
-									<SwiperSlide>Slide 7</SwiperSlide>
-									<SwiperSlide>Slide 8</SwiperSlide>
-									<SwiperSlide>Slide 9</SwiperSlide>
-								</Swiper> */}
-								{/* <AwesomeSlider media={images && images.map((image) => ({ source: image }))} /> */}
-								{/* <AwesomeSlider>
-									{images &&
-										images.map((image, index) => {
-											return (
-												<img
-													id="expandedImg"
-													alt={name}
-													title={name}
-													className="details-image-img"
-													src={image}
-													style={{
-														maxWidth: '400px',
-														maxHeight: '400px',
-														height: '100%',
-														width: '100%'
-													}}
-												/>
-											);
-										})}
-								</AwesomeSlider> */}
 							</div>
 						</div>
-						{/* <PictureChooser
-							product={product}
-							images={images}
-							secondary_images={secondary_images}
-							show_hide="alt_pictures_shown"
-							set_image={set_image}
-						/> */}
 						<Tabs>
 							<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
 								<Overflow.Content>

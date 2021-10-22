@@ -36,4 +36,5 @@ export { default as Swipe } from './Swipe';
 export { default as StyledDropdown } from './StyledDropdown';
 export { default as Particles } from './Particles';
 export { default as JSONToCSV } from './JSONToCSV';
-export { default as Slideshow } from './Slideshow';
+export { default as HomeSlideshow } from './HomeSlideshow';
+export { default as ProductSlideshow } from './ProductSlideshow';

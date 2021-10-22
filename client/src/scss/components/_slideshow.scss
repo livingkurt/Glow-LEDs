@@ -66,6 +66,28 @@
 	min-width: 99% !important;
 }
 
+.thumb {
+	transition: all .5s ease-in;
+	display: inline-block;
+	margin-right: 6px;
+	white-space: nowrap;
+	border: unset !important;
+	overflow: hidden;
+	padding: 2px;
+}
+// .thumb img {
+// 	box-shadow: $bs_shallow;
+// }
+
+// .carousel-item {
+// 	box-shadow: $bs_shallow;
+// }
+
+// .carousel-item :hover {
+// 	border: unset;
+// 	box-shadow: $bs_deep;
+// }
+
 // .slide {
 // 	height: 75%;
 // }

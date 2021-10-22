@@ -5,11 +5,8 @@
   "dependencies": {
     "@bugsnag/js": "^7.10.5",
     "@bugsnag/plugin-react": "^7.10.0",
-    "@emotion/react": "^11.5.0",
-    "@emotion/styled": "^11.3.0",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@mui/material": "^5.0.4",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.15.0",
     "@testing-library/jest-dom": "^5.12.0",
