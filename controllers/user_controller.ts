@@ -74,17 +74,119 @@ export default {
 			res.status(500).send({ error, message: 'Error Creating User' });
 		}
 	},
+	// update_profile_users_c: async (req: any, res: any) => {
+	// 	const { params, body } = req;
+	// 	console.log({ params, body });
+	// 	try {
+	// 		const user = await user_services.update_profile_users_s(params, body);
+	// 		if (user) {
+	// 			return res.status(200).send(user);
+	// 		}
+	// 		return res.status(404).send({ message: 'User Not Found' });
+	// 	} catch (error) {
+	// 		console.log({ update_profile_users_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Finding User' });
+	// 	}
+	// },
+	// update_profile_users_c: async (req: any, res: any) => {
+	// 	const { params, body } = req;
+	// 	try {
+	// 		const user = await user_services.update_profile_users_s(params, body);
+	// 		console.log({ user });
+	// 		if (user) {
+	// 			return jwt.sign(
+	// 				user,
+	// 				config.ACCESS_TOKEN_SECRET,
+	// 				{
+	// 					expiresIn: '15m'
+	// 				},
+	// 				(err: any, access_token: string) => {
+	// 					return res.status(200).send({
+	// 						success: true,
+	// 						access_token: 'Bearer ' + access_token
+	// 					});
+	// 				}
+	// 			);
+	// 		}
+	// 		return res.status(404).send({ message: 'User Not Found' });
+	// 	} catch (error) {
+	// 		console.log({ login_users_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Finding User' });
+	// 	}
+	// },
 	update_profile_users_c: async (req: any, res: any) => {
-		const { params, body } = req;
+		// console.log({ body: req.body });
+		const { body } = req;
+		//get refreshToken
+		const { refresh_token } = body;
+		console.log({ refresh_token });
 		try {
-			const user = await user_services.update_profile_users_s(params, body);
-			if (user) {
-				return res.status(200).send(user);
+			//send error if no refresh_token is sent
+			if (!refresh_token) {
+				return res.status(403).send({ error: 'Access denied,token missing!' });
+			} else {
+				// //query for the token to check if it is valid:
+				// const tokenDoc = await Token.findOne({ token: refresh_token });
+				// console.log({ tokenDoc });
+				// //send error if no token found:
+				// if (!tokenDoc) {
+				// 	return res.status(401).json({ error: 'Token expired!' });
+				// } else {
+				// await Token.findOneAndDelete({ token: refresh_token });
+				//extract payload from refresh token and generate a new access token and send it
+				const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
+				console.log({ payload });
+
+				const user = await user_services.refresh_login_users_s(payload.email, payload.password);
+				console.log({ user });
+				const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
+					expiresIn: '15m'
+				});
+				// const user: any = await user_db.findById_users_db(params.id);
+				console.log({ update_profile_users_c: user });
+				if (user) {
+					const updatedUser = await user_db.update_users_db(user._id, body);
+					console.log({ updatedUser });
+					if (updatedUser) {
+						const payload = {
+							_id: updatedUser._id,
+							first_name: updatedUser.first_name,
+							last_name: updatedUser.last_name,
+							email: updatedUser.email,
+							affiliate: updatedUser.affiliate,
+							cart: updatedUser.cart,
+							email_subscription: updatedUser.email_subscription,
+							shipping: updatedUser.shipping,
+							is_affiliated: updatedUser.is_affiliated,
+							isVerified: updatedUser.isVerified,
+							isAdmin: updatedUser.isAdmin,
+							access_token: getAccessToken(updatedUser),
+							refresh_token: getRefreshToken(updatedUser)
+						};
+						return jwt.sign(
+							payload,
+							config.ACCESS_TOKEN_SECRET,
+							{
+								expiresIn: '15m'
+							},
+							(err: any, access_token: string) => {
+								return {
+									success: true,
+									access_token: 'Bearer ' + access_token
+								};
+							}
+						);
+					}
+				}
+				return res.status(200).send({
+					success: true,
+					access_token: 'Bearer ' + access_token
+				});
 			}
-			return res.status(404).send({ message: 'User Not Found' });
+			// }
 		} catch (error) {
-			console.log({ update_profile_users_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding User' });
+			console.error({ error });
+			return res.status(500).send({ error: 'Internal Server Error!' });
 		}
 	},
 	update_users_c: async (req: any, res: any) => {
@@ -164,15 +266,6 @@ export default {
 						});
 					}
 				);
-				// const access_token = await getAccessToken(user);
-				// const refresh_token = await getRefreshToken(user);
-				// if (access_token && refresh_token) {
-				// 	return res.status(200).send({
-				// 		success: true,
-				// 		access_token: 'Bearer ' + access_token,
-				// 		refresh_token: 'Bearer ' + refresh_token
-				// 	});
-				// }
 			}
 			return res.status(404).send({ message: 'User Not Found' });
 		} catch (error) {

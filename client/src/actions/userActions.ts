@@ -161,11 +161,11 @@ export const logout = (refresh_token: string) => async (dispatch: (arg0: { type:
 // 	}
 // };
 
-export const update = (userdata: any) => async (
+export const update = (user_data: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ update: userdata });
+	console.log({ update: user_data });
 	const { userLogin: { userInfo } } = getState();
 	dispatch({
 		type: USER_UPDATE_REQUEST,
@@ -173,18 +173,20 @@ export const update = (userdata: any) => async (
 	});
 	try {
 		const { data } = await axios.put(
-			'/api/users/update/' + userdata._id,
+			'/api/users/update/' + user_data._id,
 			{
-				first_name: userdata.first_name,
-				last_name: userdata.last_name,
-				email: userdata.email,
-				password: userdata.password,
-				is_affiliated: userdata.is_affiliated,
-				email_subscription: userdata.email_subscription,
-				affiliate: userdata.affiliate,
-				shipping: userdata.shipping,
-				isVerified: userdata.isVerified,
-				isAdmin: userdata.isAdmin
+				first_name: user_data.first_name,
+				last_name: user_data.last_name,
+				email: user_data.email,
+				password: user_data.password,
+				is_affiliated: user_data.is_affiliated,
+				email_subscription: user_data.email_subscription,
+				affiliate: user_data.affiliate,
+				shipping: user_data.shipping,
+				isVerified: user_data.isVerified,
+				isAdmin: user_data.isAdmin,
+				access_token: userInfo.access_token,
+				refresh_token: userInfo.refresh_token
 			},
 			{
 				headers: {
@@ -238,40 +240,42 @@ export const saveUser = (user: any) => async (
 	}
 };
 
-export const updateUser = (userdata: any) => async (
+export const updateUser = (user_data: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
-	console.log({ updateUser: userdata });
 	const { userLogin: { userInfo } } = getState();
+	console.log({ userInfo });
 	dispatch({
 		type: USER_UPDATE_USER_REQUEST,
 		payload: {
-			userId: userdata.userId,
-			first_name: userdata.first_name,
-			last_name: userdata.last_name,
-			email: userdata.email,
-			password: userdata.password,
-			is_affiliated: userdata.is_affiliated,
-			email_subscription: userdata.email_subscription,
-			affiliate: userdata.affiliate,
-			isVerified: userdata.isVerified,
-			isAdmin: userdata.isAdmin
+			userId: user_data.userId,
+			first_name: user_data.first_name,
+			last_name: user_data.last_name,
+			email: user_data.email,
+			password: user_data.password,
+			is_affiliated: user_data.is_affiliated,
+			email_subscription: user_data.email_subscription,
+			affiliate: user_data.affiliate,
+			isVerified: user_data.isVerified,
+			isAdmin: user_data.isAdmin
 		}
 	});
 	try {
 		const { data } = await axios.put(
-			'/api/users/update/' + userdata.userId,
+			'/api/users/update/' + user_data.userId,
 			{
-				first_name: userdata.first_name,
-				last_name: userdata.last_name,
-				email: userdata.email,
-				password: userdata.password,
-				is_affiliated: userdata.is_affiliated,
-				email_subscription: userdata.email_subscription,
-				affiliate: userdata.affiliate,
-				isVerified: userdata.isVerified,
-				isAdmin: userdata.isAdmin
+				first_name: user_data.first_name,
+				last_name: user_data.last_name,
+				email: user_data.email,
+				password: user_data.password,
+				is_affiliated: user_data.is_affiliated,
+				email_subscription: user_data.email_subscription,
+				affiliate: user_data.affiliate,
+				isVerified: user_data.isVerified,
+				isAdmin: user_data.isAdmin,
+				access_token: userInfo.access_token,
+				refresh_token: userInfo.refresh_token
 			},
 			{
 				headers: {

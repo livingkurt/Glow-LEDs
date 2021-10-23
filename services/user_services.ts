@@ -1,3 +1,4 @@
+import { isConstructorDeclaration } from 'typescript';
 import { user_db } from '../db';
 import { getAccessToken, getRefreshToken, prnt } from '../util';
 const bcrypt = require('bcryptjs');
@@ -69,47 +70,78 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	update_profile_users_s: async (params: any, body: any) => {
-		try {
-			const user: any = await user_db.findById_users_db(params.id);
-			if (user) {
-				const updatedUser = await user_db.update_users_db(params.id, body);
-				if (updatedUser) {
-					const payload = {
-						_id: updatedUser.id,
-						first_name: updatedUser.first_name,
-						last_name: updatedUser.last_name,
-						email: updatedUser.email,
-						affiliate: updatedUser.affiliate,
-						cart: updatedUser.cart,
-						email_subscription: updatedUser.email_subscription,
-						shipping: updatedUser.shipping,
-						is_affiliated: updatedUser.is_affiliated,
-						isVerified: updatedUser.isVerified,
-						isAdmin: updatedUser.isAdmin,
-						access_token: getAccessToken(updatedUser),
-						refresh_token: getRefreshToken(updatedUser)
-					};
-					return jwt.sign(
-						payload,
-						config.ACCESS_TOKEN_SECRET,
-						{
-							expiresIn: '48hr'
-						},
-						(err: any, access_token: string) => {
-							return {
-								success: true,
-								access_token: 'Bearer ' + access_token
-							};
-						}
-					);
-				}
-			}
-		} catch (error) {
-			console.log({ update_chips_s_error: error });
-			throw new Error(error.message);
-		}
-	},
+	// update_profile_users_s: async (params: any, body: any) => {
+	// 	console.log({ params, body });
+	// 	try {
+	// 		const user: any = await user_db.findById_users_db(params.id);
+	// 		console.log({ update_profile_users_s: user });
+	// 		if (user) {
+	// 			const updatedUser = await user_db.update_users_db(params.id, body);
+	// 			if (updatedUser) {
+	// 				const payload = {
+	// 					_id: updatedUser.id,
+	// 					first_name: updatedUser.first_name,
+	// 					last_name: updatedUser.last_name,
+	// 					email: updatedUser.email,
+	// 					affiliate: updatedUser.affiliate._id,
+	// 					cart: updatedUser.cart,
+	// 					email_subscription: updatedUser.email_subscription,
+	// 					shipping: updatedUser.shipping,
+	// 					is_affiliated: updatedUser.is_affiliated,
+	// 					isVerified: updatedUser.isVerified,
+	// 					isAdmin: updatedUser.isAdmin,
+	// 					access_token: getAccessToken(updatedUser),
+	// 					refresh_token: getRefreshToken(updatedUser)
+	// 				};
+	// 				return jwt.sign(
+	// 					payload,
+	// 					config.ACCESS_TOKEN_SECRET,
+	// 					{
+	// 						expiresIn: '15m'
+	// 					},
+	// 					(err: any, access_token: string) => {
+	// 						return {
+	// 							success: true,
+	// 							access_token: 'Bearer ' + access_token
+	// 						};
+	// 					}
+	// 				);
+	// 			}
+	// 		}
+	// 	} catch (error) {
+	// 		console.log({ update_chips_s_error: error });
+	// 		throw new Error(error.message);
+	// 	}
+	// },
+	// update_profile_users_s: async (params: any, body: any) => {
+	// 	const user: any = await user_db.findById_users_db(params.id);
+	// 	console.log({ update_profile_users_s: user });
+	// 	if (!user) {
+	// 		throw new Error('Email Not Found');
+	// 	}
+
+	// 	const updatedUser = await user_db.update_users_db(params.id, body);
+
+	// 	if (updatedUser) {
+	// 		return {
+	// 			_id: updatedUser.id,
+	// 			first_name: updatedUser.first_name,
+	// 			last_name: updatedUser.last_name,
+	// 			email: updatedUser.email,
+	// 			affiliate: updatedUser.affiliate,
+	// 			cart: updatedUser.cart,
+	// 			email_subscription: updatedUser.email_subscription,
+	// 			is_affiliated: updatedUser.is_affiliated,
+	// 			isVerified: updatedUser.isVerified,
+	// 			isAdmin: updatedUser.isAdmin,
+	// 			shipping: updatedUser.shipping,
+	// 			access_token: getAccessToken(updatedUser),
+	// 			refresh_token: await getRefreshToken(updatedUser)
+	// 		};
+	// 	} else {
+	// 		throw new Error('User Update Error');
+	// 	}
+	// },
 	update_users_s: async (params: any, body: any) => {
 		try {
 			return await user_db.update_users_db(params.id, body);
