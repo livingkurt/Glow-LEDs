@@ -476,7 +476,12 @@ const OrderPage = (props) => {
 								}}
 								className="ta-c "
 							>
-								<Link to={'/collections/all/products/' + product.pathname}>
+								<Link
+									to={{
+										pathname: '/collections/all/products/' + product.pathname,
+										previous_path: history.location.pathname
+									}}
+								>
 									{loading ? 'Product' : product.name}
 								</Link>
 							</h2>

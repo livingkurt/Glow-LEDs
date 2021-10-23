@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useClipboard from 'react-hook-clipboard';
 import { LazyImage, Loading } from '../UtilityComponents';
@@ -32,6 +32,7 @@ const Container = styled.div`
 `;
 
 const ProductListItem = (props) => {
+	const history = useHistory();
 	const keyCodes = {
 		enter: 13,
 		escape: 27,
@@ -175,7 +176,13 @@ const ProductListItem = (props) => {
 			isSelected={isSelected}
 		>
 			<div className="ai-c">
-				<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+				<Link
+					className="w-500px"
+					to={{
+						pathname: '/collections/all/products/' + product.pathname,
+						previous_path: history.location.pathname
+					}}
+				>
 					<label style={{ fontSize: '1.6rem' }}>
 						{snapshot.isDragging ? props.product.name + ' - Moving' : props.product.name}
 					</label>
@@ -258,7 +265,13 @@ const ProductListItem = (props) => {
 						product.option_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+								<Link
+									className="w-500px"
+									to={{
+										pathname: '/collections/all/products/' + product.pathname,
+										previous_path: history.location.pathname
+									}}
+								>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
@@ -303,7 +316,13 @@ const ProductListItem = (props) => {
 						product.color_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+								<Link
+									className="w-500px"
+									to={{
+										pathname: '/collections/all/products/' + product.pathname,
+										previous_path: history.location.pathname
+									}}
+								>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
@@ -348,7 +367,13 @@ const ProductListItem = (props) => {
 						product.secondary_color_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="w-500px" to={'/collections/all/products/' + product.pathname}>
+								<Link
+									className="w-500px"
+									to={{
+										pathname: '/collections/all/products/' + product.pathname,
+										previous_path: history.location.pathname
+									}}
+								>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>
@@ -393,7 +418,13 @@ const ProductListItem = (props) => {
 						product.secondary_products.map((product) => (
 							<div className="ai-c jc-b w-100per">
 								{/* {console.log({ product })} */}
-								<Link className="" to={'/collections/all/products/' + product.pathname}>
+								<Link
+									className=""
+									to={{
+										pathname: '/collections/all/products/' + product.pathname,
+										previous_path: history.location.pathname
+									}}
+								>
 									<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 									{/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
 								</Link>

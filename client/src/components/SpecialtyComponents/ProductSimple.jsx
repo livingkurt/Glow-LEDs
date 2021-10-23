@@ -1,17 +1,24 @@
 // React
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Rating from './Rating';
 import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const Product = (props) => {
+	const history = useHistory();
 	return (
 		<li key={props.product.pathname} style={props.styles}>
 			<div className="tooltip">
 				<div className="tooltipoverlay">
 					<div className="product">
-						<Link to={'/collections/all/products/' + props.product.pathname} className="m-auto">
+						<Link
+							to={{
+								pathname: '/collections/all/products/' + props.product.pathname,
+								previous_path: history.location.pathname
+							}}
+							className="m-auto"
+						>
 							<div className="row mt-15px">
 								<div className="column ai-c pos-rel">
 									{/* <Link to={'/collections/all/products/' + item.pathname}> */}
@@ -30,7 +37,12 @@ const Product = (props) => {
 						<label style={{ fontSize: '1.3rem' }} className="title_font">
 							{props.product.brand}
 						</label>
-						<Link to={'/collections/all/products/' + props.product.pathname}>
+						<Link
+							to={{
+								pathname: '/collections/all/products/' + props.product.pathname,
+								previous_path: history.location.pathname
+							}}
+						>
 							<label style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</label>

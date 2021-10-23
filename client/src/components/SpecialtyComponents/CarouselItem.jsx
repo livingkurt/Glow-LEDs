@@ -197,7 +197,10 @@ const CarouselItem = (props) => {
 							</li>
 						</span>
 						<Link
-							to={product && '/collections/all/products/' + product.pathname}
+							to={{
+								pathname: product && '/collections/all/products/' + product.pathname,
+								previous_path: history.location.pathname
+							}}
 							onClick={() => dispatch(detailsProduct(product.pathname))}
 						>
 							<div className="product">

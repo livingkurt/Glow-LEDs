@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Rating from './Rating';
 import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
@@ -8,6 +8,8 @@ import { LazyImage } from '../UtilityComponents';
 const ProductThumbCarouselItem = (props) => {
 	const [ product, set_product ] = useState(props.product);
 	const [ loading, set_loading ] = useState(true);
+
+	const history = useHistory();
 
 	useEffect(
 		() => {
@@ -21,7 +23,12 @@ const ProductThumbCarouselItem = (props) => {
 		<div>
 			{!loading && (
 				<li key={props.product && product.pathname} style={props.styles}>
-					<Link to={product && '/collections/all/products/' + product.pathname}>
+					<Link
+						to={{
+							pathname: product && '/collections/all/products/' + product.pathname,
+							previous_path: history.location.pathname
+						}}
+					>
 						<div className="product">
 							<LazyImage
 								className="product-image"

@@ -1,6 +1,6 @@
 // React
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { Rating } from '../SpecialtyComponents';
 import { LazyImage } from '../UtilityComponents';
@@ -8,6 +8,7 @@ import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';
 
 const ProductItemD = (props) => {
+	const history = useHistory();
 	const [ image_number, set_image_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);
 	const [ image, set_image ] = useState(props.product.name);
@@ -38,7 +39,13 @@ const ProductItemD = (props) => {
 			<div className="tooltip">
 				<div className="tooltipoverlay">
 					<div className="product">
-						<Link to={'/collections/all/products/' + props.product.pathname} className="m-auto">
+						<Link
+							to={{
+								pathname: '/collections/all/products/' + props.product.pathname,
+								previous_path: history.location.pathname
+							}}
+							className="m-auto"
+						>
 							<div className="row mt-15px">
 								<div className="column ai-c pos-rel">
 									{/* <Link to={'/collections/all/products/' + item.pathname}> */}
@@ -115,7 +122,13 @@ const ProductItemD = (props) => {
 						<label className="mt-5px title_font" style={{ fontSize: '1.4rem' }}>
 							{props.product.brand}
 						</label>
-						<Link to={'/collections/all/products/' + props.product.pathname} className="mv-5px">
+						<Link
+							to={{
+								pathname: '/collections/all/products/' + props.product.pathname,
+								previous_path: history.location.pathname
+							}}
+							className="mv-5px"
+						>
 							<label style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</label>

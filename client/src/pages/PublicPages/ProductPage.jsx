@@ -6,10 +6,7 @@ import {
 	Rating,
 	Reviews,
 	PictureChooser,
-	RelatedProducts,
 	ReadMore,
-	Swipe,
-	StyledDropdown,
 	Carousel,
 	ProductSlideshow
 } from '../../components/SpecialtyComponents';
@@ -22,30 +19,19 @@ import {
 	sale_price_product_option_switch_product
 } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
-import AwesomeSlider from 'react-awesome-slider';
 import 'react-awesome-slider/dist/styles.css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Pagination } from 'swiper/core';
-// Import Swiper styles
-import 'swiper/swiper.min.css';
-import 'swiper/components/pagination/pagination.min.css';
-import 'swiper/swiper.min.css';
-import 'swiper/components/zoom/zoom.min.css';
-import 'swiper/components/navigation/navigation.min.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 import Overflow from 'react-overflow-indicator';
 
-// install Swiper modules
-SwiperCore.use([ Pagination ]);
-
 const ProductPage = (props) => {
+	console.log({ props });
 	const userLogin = useSelector((state) => state.userLogin);
 	let { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
 	let { cartItems } = cart;
-	// console.log({ cartItems });
+	console.log({ document: document.referrer });
 
 	const [ name, set_name ] = useState('');
 	const [ description, set_description ] = useState('');
@@ -485,9 +471,9 @@ const ProductPage = (props) => {
 			<div className="p-1rem">
 				<div className="jc-b">
 					<div className="mb-10px">
-						<button className="btn secondary" onClick={() => props.history.goBack()}>
-							Back to Products
-						</button>
+						<Link to={props.location.previous_path} className="m-auto">
+							<button className="btn secondary">Back to Products</button>
+						</Link>
 					</div>
 					{userInfo &&
 					userInfo.isAdmin && (
@@ -644,7 +630,8 @@ const ProductPage = (props) => {
 												)}
 											</div>
 
-											{width > 819 && (
+											{!secondary_image &&
+											width > 819 && (
 												<div>
 													<PictureChooser
 														product={product}
@@ -658,43 +645,6 @@ const ProductPage = (props) => {
 										</div>
 									</div>
 								)}
-
-								<div>
-									{/* <Swiper
-										style={{
-											'--swiper-navigation-color': '#fff',
-											'--swiper-pagination-color': '#fff'
-										}}
-										zoom={true}
-										navigation={true}
-										pagination={{
-											clickable: true
-										}}
-										className="mySwiper"
-									>
-										{images &&
-											images.map((image, index) => (
-												<SwiperSlide key={index}>
-													<img
-														id="expandedImg"
-														alt={name}
-														title={name}
-														className="details-image-img"
-														src={image}
-														style={{
-															maxWidth: '400px',
-															maxHeight: '400px',
-															height: '100%',
-															width: '100%'
-														}}
-													/>
-												</SwiperSlide>
-											))}
-									</Swiper> */}
-								</div>
-								{/* <div className="w-100per max-h-400px">
-									<Swipe images={images} />
-								</div> */}
 							</div>
 							<div
 								className="details-info desktop_product_view"

@@ -1,14 +1,20 @@
 // React
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Rating from './Rating';
 import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const ProductSmallScreen = (props) => {
+	const history = useHistory();
 	return (
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
-			<Link to={'/collections/all/products/' + props.product.pathname}>
+			<Link
+				to={{
+					pathname: '/collections/all/products/' + props.product.pathname,
+					previous_path: history.location.pathname
+				}}
+			>
 				<div className="small_screen_product row">
 					<div className="row">
 						<div className="column ai-c pos-rel">

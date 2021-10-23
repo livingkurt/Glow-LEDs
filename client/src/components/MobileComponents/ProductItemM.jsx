@@ -1,15 +1,21 @@
 // React
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
 import { Rating } from '../SpecialtyComponents';
 import { LazyImage } from '../UtilityComponents';
 
-const ProductSmallScreen = (props) => {
+const ProductItemM = (props) => {
+	const history = useHistory();
 	return (
 		<li key={props.product.pathname} className=" w-100per" style={props.styles}>
 			{props.product_occurrences && (
-				<Link to={'/collections/all/products/' + props.product.pathname}>
+				<Link
+					to={{
+						pathname: '/collections/all/products/' + props.product.pathname,
+						state: { prevPath: history.location.pathname }
+					}}
+				>
 					<div className="small_screen_product row">
 						<div className="row">
 							<div className="column ai-c pos-rel">
@@ -74,4 +80,4 @@ const ProductSmallScreen = (props) => {
 	);
 };
 
-export default ProductSmallScreen;
+export default ProductItemM;
