@@ -61,10 +61,10 @@ export const createPayOrder = (
 ) => {
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-		const { userLogin: { userInfo: user_data } } = getState();
+		const { userLogin: { userInfo } } = getState();
 		const order_create_res = await axios.post('/api/orders/secure', order, {
 			headers: {
-				Authorization: ' Bearer ' + user_data.token
+				Authorization: ' Bearer ' + userInfo.access_token
 			}
 		});
 		console.log({ order_create_res });
@@ -74,7 +74,7 @@ export const createPayOrder = (
 				'/api/payments/secure/pay/' + order_create_res.data._id,
 				{ paymentMethod },
 				{
-					headers: { Authorization: 'Bearer ' + user_data.token }
+					headers: { Authorization: 'Bearer ' + userInfo.access_token }
 				}
 			);
 			console.log({ payment_res });
@@ -272,10 +272,10 @@ export const createOrder = (order: {
 ) => {
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-		const { userLogin: { userInfo: user_data } } = getState();
+		const { userLogin: { userInfo } } = getState();
 		const create_order_res = await axios.post('/api/orders/secure', order, {
 			headers: {
-				Authorization: ' Bearer ' + user_data.token
+				Authorization: ' Bearer ' + userInfo.access_token
 			}
 		});
 		if (create_order_res.data) {
@@ -297,12 +297,12 @@ export const payOrder = (order: any, paymentMethod: any) => async (
 ) => {
 	try {
 		dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
-		const { userLogin: { userInfo: user_data } } = getState();
+		const { userLogin: { userInfo } } = getState();
 		const payment_res = await axios.put(
 			'/api/payments/secure/pay/' + order._id,
 			{ paymentMethod },
 			{
-				headers: { Authorization: 'Bearer ' + user_data.token }
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
 			}
 		);
 		if (payment_res.data) {

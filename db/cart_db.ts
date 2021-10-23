@@ -34,12 +34,14 @@ export default {
 		}
 	},
 	update_carts_db: async (id: string, body: any) => {
+		console.log({ id, body });
 		try {
 			const cart: any = await Cart.findOne({ _id: id });
 			console.log({ cart });
 			if (cart) {
 				return await Cart.updateOne({ _id: id }, body);
 			}
+			return 'No Cart';
 		} catch (error) {
 			console.log({ update_carts_db_error: error });
 			throw new Error(error.message);

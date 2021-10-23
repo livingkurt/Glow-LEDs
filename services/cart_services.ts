@@ -100,11 +100,13 @@ export default {
 		}
 	},
 	remove_cartitem_carts_s: async (params: any, body: any) => {
-		const { cartItems, cartItem, userInfo, old_cart } = body;
+		const { cartItems, cartItem, userInfo } = body;
+		// console.log({ old_cart: old_cart._id, userInfo: userInfo._id });
+		console.log({ remove_cartitem_carts_s: cartItems, cartItem, userInfo });
 		try {
 			const new_cart_items = cartItems.filter((x: any) => JSON.stringify(x) !== JSON.stringify(cartItem));
-			// console.log({ new_cart_items });
-			return await cart_db.update_carts_db(old_cart._id, {
+			console.log({ new_cart_items });
+			return await cart_db.update_carts_db(params.id, {
 				user: userInfo._id,
 				cartItems: [ ...new_cart_items ]
 			});

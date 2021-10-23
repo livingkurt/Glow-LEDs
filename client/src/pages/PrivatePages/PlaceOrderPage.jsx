@@ -14,6 +14,7 @@ import { API_External, API_Products, API_Promos, API_Shipping } from '../../util
 import { ShippingChoice, ShippingSpeed } from '../../components/SpecialtyComponents/ShippingComponents';
 import Autocomplete from 'react-google-autocomplete';
 import { prnt, state_names } from '../../utils/helper_functions';
+import { check_authentication } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -235,6 +236,7 @@ const PlaceOrderPage = (props) => {
 	};
 
 	const placeOrderHandler = async (paymentMethod) => {
+		await check_authentication();
 		// create an order
 		console.log({ userInfo });
 		console.log({ user });

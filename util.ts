@@ -89,12 +89,9 @@ export const getRefreshToken = (user: any) => {
 // 	}
 // };
 
-export const isAuth = (
-	req: { headers: { authorization: any }; user: any },
-	res: { status: (arg0: number) => { (): any; new (): any; send: { (arg0: { msg: string }): any; new (): any } } },
-	next: () => void
-) => {
+export const isAuth = (req: any, res: any, next: () => void) => {
 	const token = req.headers.authorization;
+	console.log({ isAuth: token });
 
 	if (token) {
 		const onlyToken = token.slice(7, token.length);
@@ -113,6 +110,7 @@ export const isAuth = (
 
 export const isAdmin = (req: any, res: any, next: () => any) => {
 	// console.log(req.user);
+	console.log({ isAdmin: req.user });
 	if (req.user && req.user.isAdmin) {
 		return next();
 	}

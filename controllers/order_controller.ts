@@ -21,19 +21,19 @@ const today = new Date();
 export default {
 	get_guest_order: async (req: any, res: any) => {
 		try {
-			console.log(req.params.id);
+			// console.log(req.params.id);
 			const order = await Order.findOne({ _id: req.params.id })
 				.populate('orderItems.product')
 				.populate('orderItems.secondary_product')
 				.populate('user');
-			console.log({ order });
+			// console.log({ order });
 			if (order) {
 				res.send(order);
 			} else {
 				res.status(404).send('Order Not Found');
 			}
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
@@ -43,7 +43,7 @@ export default {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 10;
-			// console.log({ page });
+			// // console.log({ page });
 			// let user: any;
 			// let search: any;
 			// if (req.query.search) {
@@ -60,7 +60,7 @@ export default {
 			// }
 			const search = req.query.search ? { _id: req.query.search } : {};
 			// const search = { _id: req.query.search };
-			// console.log({ search });
+			// // console.log({ search });
 			let sortOrder = {};
 			let filter = {};
 			if (req.query.sortOrder === 'lowest') {
@@ -107,14 +107,14 @@ export default {
 
 			// return response with posts, total pages, and current page
 
-			// console.log({ orders });
+			// // console.log({ orders });
 			res.json({
 				orders,
 				totalPages: Math.ceil(count / limit),
 				currentPage: parseInt(page)
 			});
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -125,7 +125,7 @@ export default {
 
 			res.send(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
@@ -136,7 +136,7 @@ export default {
 
 			res.send(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
@@ -153,14 +153,14 @@ export default {
 				res.status(404).send('Order Not Found');
 			}
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
 	},
 	create_user_order: async (req: any, res: any) => {
 		try {
-			console.log({ create_user_order: req.body });
+			// console.log({ create_user_order: req.body });
 			const newOrderCreated = await Order.create({
 				orderItems: req.body.orderItems,
 				user: req.body.user ? req.body.user._id : req.user._id,
@@ -183,16 +183,16 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
 	},
 	create_guest_order: async (req: any, res: any) => {
 		try {
-			console.log({ body: req.body });
+			// console.log({ body: req.body });
 			const newOrderCreated = await Order.create({ ...req.body, guest: true });
-			console.log({ newOrderCreated });
+			// console.log({ newOrderCreated });
 
 			if (newOrderCreated) {
 				res.status(201).send(newOrderCreated);
@@ -200,7 +200,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
@@ -215,7 +215,7 @@ export default {
 				res.status(404).send({ message: 'Order not Updated' });
 			}
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Updating Order' });
 		}
@@ -230,7 +230,7 @@ export default {
 				res.send('Error in Deletion');
 			}
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
@@ -249,7 +249,7 @@ export default {
 				}
 			});
 		});
-		// console.log({ ids });
+		// // console.log({ ids });
 		const result: any = {};
 		const ids_result: any = {};
 		for (let i = 0; i < products.length; ++i) {
@@ -260,7 +260,7 @@ export default {
 			++result[products[i]];
 			++ids_result[ids[i]];
 		}
-		// console.log({ ids_result });
+		// // console.log({ ids_result });
 		const final_result = [];
 		for (const i in result) {
 			const entry = { name: i, occurrence: result[i], id: ids_result[i] };
@@ -283,7 +283,7 @@ export default {
 				}
 			});
 		});
-		// console.log({ ids });
+		// // console.log({ ids });
 		const result: any = {};
 		const ids_result: any = {};
 		for (let i = 0; i < products.length; ++i) {
@@ -294,7 +294,7 @@ export default {
 			++result[products[i]];
 			++ids_result[ids[i]];
 		}
-		// console.log({ ids_result });
+		// // console.log({ ids_result });
 		const final_result = [];
 		for (const i in result) {
 			const entry = { category: i, occurrence: result[i], id: ids_result[i] };
@@ -309,9 +309,9 @@ export default {
 			.populate('orderItems.product')
 			.populate('orderItems.secondary_product');
 		// // const affiliate = await Affiliate.findOne({ pathname: req.body.promo_code });
-		// // console.log({ promo_code: req.body.promo_code });
-		// console.log({ orders: orders.length });
-		// console.log({ affiliate });
+		// // // console.log({ promo_code: req.body.promo_code });
+		// // console.log({ orders: orders.length });
+		// // console.log({ affiliate });
 		const number_of_uses = orders
 			.filter((order: any) => order.promo_code)
 			.filter((order: any) => order.promo_code.toLowerCase() === req.body.promo_code.toLowerCase()).length;
@@ -324,7 +324,7 @@ export default {
 			.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 			.toFixed(2);
 
-		console.log({ number_of_uses, revenue });
+		// console.log({ number_of_uses, revenue });
 		res.send({ number_of_uses, revenue });
 		// res.send({
 		// 	number_of_uses: orders.filter((order: any) => {
@@ -380,7 +380,7 @@ export default {
 			const percentage = state['State Rate'];
 			result[state['State']] = percentage.slice(0, percentage.indexOf('%') + 1);
 		});
-		// console.log({ result });
+		// // console.log({ result });
 		res.send(result);
 	},
 	promo_code_usage: async (req: any, res: any) => {
@@ -392,7 +392,7 @@ export default {
 				.populate('orderItems.secondary_product');
 			res.send(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -410,7 +410,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -422,7 +422,7 @@ export default {
 			const month = start_date.split('-')[1];
 			const day = dates_in_year[parseInt(start_date.split('-')[1]) - 1].number_of_days;
 			const end_date = year + '-' + month + '-' + day;
-			console.log({ start_date, end_date });
+			// console.log({ start_date, end_date });
 			const orders = await Order.find({
 				deleted: false,
 				createdAt: {
@@ -433,7 +433,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -449,7 +449,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -465,7 +465,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -481,7 +481,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -495,11 +495,11 @@ export default {
 					$lt: new Date(req.body.date_2)
 				}
 			});
-			// console.log({ orders });
+			// // console.log({ orders });
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -513,11 +513,11 @@ export default {
 					$lt: new Date(req.body.date_2)
 				}
 			});
-			// console.log({ orders });
+			// // console.log({ orders });
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -534,7 +534,7 @@ export default {
 	// 		});
 	// 		res.json(orders);
 	// 	} catch (error) {
-	// 		console.log({ error });
+	// 		// console.log({ error });
 
 	// 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	// 	}
@@ -548,11 +548,11 @@ export default {
 				isShipped: false,
 				isDelivered: false
 			});
-			console.log({ orders });
+			// console.log({ orders });
 
 			res.json(orders);
 		} catch (error) {
-			console.log({ error });
+			// console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
