@@ -72,10 +72,10 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 		dispatch(setCurrentUser({}));
 	} catch (error) {
 		console.log({ error });
-		console.log({ error: error.response.data.message });
+		console.log({ error: error });
 		dispatch({
 			type: USER_REGISTER_FAIL,
-			payload: error.response && error.response.data.message ? error.response.data.message : error.message
+			payload: error.response && error ? error : error.message
 		});
 	}
 };
@@ -98,10 +98,10 @@ export const login = (userData: any) => async (dispatch: (arg0: { type: string; 
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
 		console.log({ error });
-		console.log({ login: error.response.data.message });
+		console.log({ login: error });
 		dispatch({
 			type: USER_LOGIN_FAIL,
-			payload: error.response && error.response.data.message ? error.response.data.message : error.message
+			payload: error.response && error ? error : error.message
 		});
 	}
 };
@@ -156,8 +156,8 @@ export const logout = (refresh_token: string) => async (dispatch: (arg0: { type:
 // 		// // Set current user
 // 		// dispatch(setCurrentUser(decoded));
 // 	} catch (error) {
-// 		console.log({ login: error.response.data.message });
-// 		dispatch({ type: USER_LOGIN_FAIL, payload: error.response.data.message });
+// 		console.log({ login: error });
+// 		dispatch({ type: USER_LOGIN_FAIL, payload: error });
 // 	}
 // };
 
@@ -205,7 +205,7 @@ export const update = (userdata: any) => async (
 		dispatch(setCurrentUser(decoded));
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_UPDATE_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_UPDATE_FAIL, payload: error });
 	}
 };
 
@@ -234,7 +234,7 @@ export const saveUser = (user: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -282,7 +282,7 @@ export const updateUser = (userdata: any) => async (
 		dispatch({ type: USER_UPDATE_USER_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_UPDATE_USER_FAIL, payload: error });
 	}
 };
 
@@ -300,7 +300,7 @@ export const password_reset = (user_id: string, password: string, repassword: st
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_RESET_PASSWORD_FAIL, payload: error });
 	}
 };
 
@@ -313,7 +313,7 @@ export const reset_password = (email: string) => async (dispatch: (arg0: { type:
 		axios.post('/api/emails/reset_password', data);
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_PASSWORD_RESET_FAIL, payload: error });
 	}
 };
 
@@ -327,7 +327,7 @@ export const verify = (user_id: string) => async (dispatch: (arg0: { type: strin
 		axios.post('/api/emails/verified', data);
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_VERIFY_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_VERIFY_FAIL, payload: error });
 	}
 };
 
@@ -383,7 +383,7 @@ export const contact = (
 		dispatch({ type: USER_CONTACT_REMOVE_SUCCESS, payload: {} });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_CONTACT_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_CONTACT_FAIL, payload: error });
 	}
 };
 
@@ -406,7 +406,7 @@ export const listUsers = (category = '', search = '', sortOrder = '') => async (
 		dispatch({ type: USER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_LIST_FAIL, payload: error });
 	}
 };
 
@@ -423,7 +423,7 @@ export const deleteUser = (userId: string) => async (
 		dispatch({ type: USER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_DELETE_FAIL, payload: error });
 	}
 };
 
@@ -442,6 +442,6 @@ export const detailsUser = (userId: string) => async (
 		dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: USER_DETAILS_FAIL, payload: error });
 	}
 };

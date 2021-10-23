@@ -21,16 +21,14 @@ const FeaturesPage = (props) => {
 	const { success: successDelete } = featureDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
-			stableDispatch(listFeatures());
+			dispatch(listFeatures());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -44,9 +42,9 @@ const FeaturesPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listFeatures(category, search, sortOrder));
+			dispatch(listFeatures(category, search, sortOrder));
 		},
-		[ category, search, sortOrder, stableDispatch ]
+		[ category, search, sortOrder, dispatch ]
 	);
 	const deleteHandler = (feature) => {
 		dispatch(deleteFeature(feature._id));

@@ -25,16 +25,15 @@ const InvoiceEmail = (props) => {
 	console.log({ emails });
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
-			stableDispatch(listEmails('Invoice'));
-			stableDispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
-			stableDispatch(listPromos());
+			dispatch(listEmails('Invoice'));
+			dispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
+			dispatch(listPromos());
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	useEffect(
@@ -42,13 +41,13 @@ const InvoiceEmail = (props) => {
 			if (emails) {
 				const active_email = emails.find((email) => email.active === true);
 				if (active_email) {
-					stableDispatch(detailsEmail(active_email._id));
+					dispatch(detailsEmail(active_email._id));
 				}
 			}
 
 			return () => {};
 		},
-		[ emails, stableDispatch ]
+		[ emails, dispatch ]
 	);
 
 	// useEffect(

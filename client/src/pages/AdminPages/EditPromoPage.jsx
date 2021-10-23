@@ -53,25 +53,23 @@ const EditPromoPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsPromo(props.match.params.id));
-				stableDispatch(detailsPromo(props.match.params.id));
+				dispatch(detailsPromo(props.match.params.id));
+				dispatch(detailsPromo(props.match.params.id));
 			} else {
-				stableDispatch(detailsPromo(''));
+				dispatch(detailsPromo(''));
 			}
-			stableDispatch(listProducts(''));
+			dispatch(listProducts(''));
 			get_categories();
-			stableDispatch(listUsers(''));
-			stableDispatch(listAffiliates(''));
+			dispatch(listUsers(''));
+			dispatch(listAffiliates(''));
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 	const get_categories = async () => {
 		const { data } = await API_Products.get_all_categories();

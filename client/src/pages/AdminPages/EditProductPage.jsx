@@ -119,22 +119,20 @@ const EditProductPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			if (props.match.params.pathname) {
 				console.log('Is ID');
 				// if (props.match.params.template) {
 				console.log({ template: props.match.params.template });
-				stableDispatch(detailsProduct(props.match.params.pathname));
-				stableDispatch(detailsProduct(props.match.params.pathname));
+				dispatch(detailsProduct(props.match.params.pathname));
+				dispatch(detailsProduct(props.match.params.pathname));
 				// }
 			} else {
-				stableDispatch(detailsProduct(''));
+				dispatch(detailsProduct(''));
 			}
 
-			// stableDispatch(listCategorys());
+			// dispatch(listCategorys());
 			get_all_options();
 			get_all_products();
 			get_all_secondary_products();
@@ -142,13 +140,13 @@ const EditProductPage = (props) => {
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.pathname ]
+		[ dispatch, props.match.params.pathname ]
 	);
 
 	useEffect(() => {
 		dispatch(listCategorys(''));
-		stableDispatch(listProducts(''));
-		stableDispatch(listChips());
+		dispatch(listProducts(''));
+		dispatch(listChips());
 		return () => {};
 	}, []);
 

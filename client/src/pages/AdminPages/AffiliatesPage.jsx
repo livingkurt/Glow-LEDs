@@ -27,10 +27,9 @@ const AffiliatesPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(() => {
-		stableDispatch(listAffiliates());
-		stableDispatch(listOrders());
+		dispatch(listAffiliates());
+		dispatch(listOrders());
 		get_last_months_orders();
 		get_total_orders();
 		return () => {
@@ -39,8 +38,8 @@ const AffiliatesPage = (props) => {
 	}, []);
 	useEffect(
 		() => {
-			stableDispatch(listAffiliates());
-			stableDispatch(listOrders());
+			dispatch(listAffiliates());
+			dispatch(listOrders());
 			get_last_months_orders();
 			get_total_orders();
 			return () => {
@@ -60,7 +59,7 @@ const AffiliatesPage = (props) => {
 	};
 
 	useEffect(() => {
-		stableDispatch(listAffiliates(category, search, sortOrder));
+		dispatch(listAffiliates(category, search, sortOrder));
 	}, []);
 	const deleteHandler = (pathname) => {
 		console.log({ pathname });
@@ -145,7 +144,7 @@ const AffiliatesPage = (props) => {
 			// if
 		});
 		set_loading_promo_update(false);
-		stableDispatch(listAffiliates());
+		dispatch(listAffiliates());
 	};
 
 	const get_code_usage = async (affiliate) => {

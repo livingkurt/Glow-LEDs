@@ -28,18 +28,17 @@ const SurveysPage = (props) => {
 	const { success: successDelete } = surveyDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listSurveys());
-			stableDispatch(listAffiliates(''));
-			stableDispatch(listTeams(''));
-			stableDispatch(listOrders(''));
+			dispatch(listSurveys());
+			dispatch(listAffiliates(''));
+			dispatch(listTeams(''));
+			dispatch(listOrders(''));
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 
 	const submitHandler = (e) => {
@@ -54,9 +53,9 @@ const SurveysPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listSurveys(category, search, sortOrder));
+			dispatch(listSurveys(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (survey) => {
 		dispatch(deleteSurvey(survey._id));

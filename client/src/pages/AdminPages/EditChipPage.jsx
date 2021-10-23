@@ -60,21 +60,20 @@ const EditChipPage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsChip(props.match.params.id));
-				stableDispatch(detailsChip(props.match.params.id));
+				dispatch(detailsChip(props.match.params.id));
+				dispatch(detailsChip(props.match.params.id));
 			} else {
-				stableDispatch(detailsChip(''));
+				dispatch(detailsChip(''));
 			}
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(

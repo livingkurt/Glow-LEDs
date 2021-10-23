@@ -27,7 +27,7 @@ export const listCategorys = (category = '', search = '', sortOrder = '') => asy
 		dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CATEGORY_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: CATEGORY_LIST_FAIL, payload: error });
 	}
 };
 
@@ -56,7 +56,7 @@ export const saveCategory = (category: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CATEGORY_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: CATEGORY_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -75,7 +75,7 @@ export const detailsCategory = (pathname: string) => async (
 		dispatch({ type: CATEGORY_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CATEGORY_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: CATEGORY_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -94,6 +94,6 @@ export const deleteCategory = (categoryId: string) => async (
 		dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CATEGORY_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: CATEGORY_DELETE_FAIL, payload: error });
 	}
 };

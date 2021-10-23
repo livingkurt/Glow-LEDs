@@ -25,7 +25,7 @@ export const listFeatures = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: FEATURE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: FEATURE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: FEATURE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -64,7 +64,7 @@ export const saveFeature = (feature: {
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: FEATURE_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: FEATURE_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -78,7 +78,7 @@ export const detailsFeature = (pathname: string) => async (
 		dispatch({ type: FEATURE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: FEATURE_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: FEATURE_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -97,6 +97,6 @@ export const deleteFeature = (featureId: string) => async (
 		dispatch({ type: FEATURE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: FEATURE_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: FEATURE_DELETE_FAIL, payload: error });
 	}
 };

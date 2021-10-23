@@ -1,5 +1,68 @@
 import React from 'react';
 
+import { setCurrentUser, logout, check_refresh_token } from '../actions/userActions';
+import jwt_decode from 'jwt-decode';
+import setAuthToken from '../utils/setAuthToken';
+import { API_Users } from '.';
+import store from '../store';
+
+const delay = 2000; // anti-rebound for 500ms
+let lastExecution = 0;
+
+const refresh_login = async (access_token, refresh_token) => {
+	const data = await API_Users.refresh_login(access_token, refresh_token);
+	return data;
+};
+
+export const check_authentication = () => {
+	if (localStorage.accessToken) {
+		// Set auth token header auth
+		const access_token = localStorage.accessToken;
+		// const refresh_token = localStorage.refreshToken;
+		setAuthToken(access_token);
+		// Decode access_token and get user info and exp
+		const decoded_access_token = jwt_decode(access_token);
+		console.log({ logged_in: decoded_access_token });
+		// userInfo = decoded_access_token.userInfo;
+		// Set user and isAuthenticated
+		store.dispatch(setCurrentUser(decoded_access_token));
+		// Check for expired access_token
+		const currentTime = Date.now() / 1000; // to get in milliseconds
+		if (decoded_access_token.exp < currentTime) {
+			console.log({ logged_in_expired: decoded_access_token });
+			if (decoded_access_token.refresh_token) {
+				if (lastExecution + delay < Date.now()) {
+					// execute my lines
+					refresh_login(access_token, decoded_access_token.refresh_token)
+						.then((res) => {
+							console.log({ login_with_refresh_token: decoded_access_token });
+							let token = res.data.access_token;
+							console.log({ token });
+							localStorage.setItem('accessToken', token);
+							setAuthToken(token);
+							// Decode token and get user info and exp
+							const decoded = jwt_decode(token);
+							console.log({ decoded });
+							store.dispatch(setCurrentUser(decoded));
+						})
+						.catch((error) => {
+							// Logout user
+							store.dispatch(logout(decoded_access_token.refresh_token));
+							// Redirect to login
+							window.location.href = '/account/login?redirect=' + window.location.pathname;
+						});
+					lastExecution = Date.now();
+				}
+			} else {
+				// Logout user
+				store.dispatch(logout(decoded_access_token.refresh_token));
+				// Redirect to login
+				window.location.href = '/account/login?redirect=' + window.location.pathname;
+			}
+		}
+	}
+};
+
 export const sale_price_product_option_switch = (product) => {
 	// console.log({ product_options });
 	const today = new Date();

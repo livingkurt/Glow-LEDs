@@ -7,6 +7,7 @@ import { detailsAffiliate } from '../../actions/affiliateActions';
 import { listMyPaychecks } from '../../actions/paycheckActions';
 import { Loading } from '../../components/UtilityComponents';
 import { format_date } from '../../utils/helper_functions';
+import { check_authentication } from '../../utils/react_helper_functions';
 
 const ProfilePage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -26,12 +27,12 @@ const ProfilePage = (props) => {
 	// const [ affiliate, set_affiliate ] = useState(0);
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
+
 	useEffect(() => {
 		if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
 			console.log({ affiliate: userInfo.affiliate.pathname });
-			stableDispatch(detailsAffiliate(userInfo.affiliate.pathname));
-			stableDispatch(listMyPaychecks(userInfo.affiliate._id));
+			dispatch(detailsAffiliate(userInfo.affiliate.pathname));
+			dispatch(listMyPaychecks(userInfo.affiliate._id));
 		}
 
 		return () => {};

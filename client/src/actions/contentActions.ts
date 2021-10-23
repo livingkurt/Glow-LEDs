@@ -25,7 +25,7 @@ export const listContents = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: CONTENT_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CONTENT_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: CONTENT_LIST_FAIL, payload: error });
 	}
 };
 
@@ -55,7 +55,7 @@ export const saveContent = (content: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CONTENT_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: CONTENT_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -68,7 +68,7 @@ export const detailsContent = (pathname: string) => async (
 		dispatch({ type: CONTENT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CONTENT_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: CONTENT_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -87,6 +87,6 @@ export const deleteContent = (contentId: string) => async (
 		dispatch({ type: CONTENT_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CONTENT_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: CONTENT_DELETE_FAIL, payload: error });
 	}
 };

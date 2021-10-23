@@ -20,15 +20,14 @@ const ChipsPage = (props) => {
 	const { success: successDelete } = chipDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listChips());
+			dispatch(listChips());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -42,9 +41,9 @@ const ChipsPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listChips(category, search, sortOrder));
+			dispatch(listChips(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (chip) => {
 		dispatch(deleteChip(chip._id));

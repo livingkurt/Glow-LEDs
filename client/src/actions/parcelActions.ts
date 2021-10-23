@@ -28,7 +28,7 @@ export const listParcels = (category = '', search = '', sortOrder = '') => async
 		dispatch({ type: PARCEL_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PARCEL_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: PARCEL_LIST_FAIL, payload: error });
 	}
 };
 
@@ -46,7 +46,7 @@ export const listMyParcels = (affiliate_id: string) => async (
 		dispatch({ type: MY_PARCEL_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_PARCEL_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: MY_PARCEL_LIST_FAIL, payload: error });
 	}
 };
 
@@ -75,7 +75,7 @@ export const saveParcel = (parcel: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PARCEL_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PARCEL_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -86,7 +86,7 @@ export const detailsParcel = (pathname: string) => async (dispatch: (arg0: { typ
 		dispatch({ type: PARCEL_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PARCEL_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: PARCEL_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -105,6 +105,6 @@ export const deleteParcel = (parcelId: string) => async (
 		dispatch({ type: PARCEL_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PARCEL_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PARCEL_DELETE_FAIL, payload: error });
 	}
 };

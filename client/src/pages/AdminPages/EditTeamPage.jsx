@@ -85,24 +85,23 @@ const EditTeamPage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.pathname) {
 				console.log('Is ID');
-				stableDispatch(detailsTeam(props.match.params.pathname));
-				stableDispatch(detailsTeam(props.match.params.pathname));
+				dispatch(detailsTeam(props.match.params.pathname));
+				dispatch(detailsTeam(props.match.params.pathname));
 				set_state();
 			} else {
-				stableDispatch(detailsTeam(''));
+				dispatch(detailsTeam(''));
 			}
-			stableDispatch(listAffiliates(''));
-			stableDispatch(listPromos(''));
+			dispatch(listAffiliates(''));
+			dispatch(listPromos(''));
 
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.pathname ]
+		[ dispatch, props.match.params.pathname ]
 	);
 
 	useEffect(

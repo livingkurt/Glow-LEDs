@@ -90,7 +90,7 @@ export const createPayOrder = (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
 	}
 };
 
@@ -225,7 +225,7 @@ export const createPayOrderGuest = (
 			}
 		}
 	} catch (error) {
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
 	}
 };
 
@@ -251,7 +251,7 @@ export const createOrderGuest = (order: {
 			dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
 		}
 	} catch (error) {
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
 	}
 };
 
@@ -287,7 +287,7 @@ export const createOrder = (order: {
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
 	}
 };
 
@@ -312,7 +312,7 @@ export const payOrder = (order: any, paymentMethod: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_PAY_FAIL, payload: error.response });
+		dispatch({ type: ORDER_PAY_FAIL, payload: error });
 	}
 };
 export const payOrderGuest = (order: any, paymentMethod: any) => async (
@@ -327,7 +327,7 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (
 			dispatch({ type: ORDER_PAY_FAIL, payload: guest_payment_res });
 		}
 	} catch (error) {
-		dispatch({ type: ORDER_PAY_FAIL, payload: error.response });
+		dispatch({ type: ORDER_PAY_FAIL, payload: error });
 	}
 };
 
@@ -345,7 +345,7 @@ export const listMyOrders = () => async (
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response });
+		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error });
 	}
 };
 export const listUserOrders = (user_id: string) => async (
@@ -362,7 +362,7 @@ export const listUserOrders = (user_id: string) => async (
 		dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.response });
+		dispatch({ type: MY_ORDER_LIST_FAIL, payload: error });
 	}
 };
 
@@ -393,7 +393,7 @@ export const listOrders = (category = '', search = '', sortOrder = '', page = ''
 		dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_LIST_FAIL, payload: error.response });
+		dispatch({ type: ORDER_LIST_FAIL, payload: error });
 	}
 };
 
@@ -410,7 +410,7 @@ export const detailsOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_DETAILS_FAIL, payload: error.response });
+		dispatch({ type: ORDER_DETAILS_FAIL, payload: error });
 	}
 };
 export const detailsOrderPublic = (orderId: string) => async (
@@ -427,7 +427,7 @@ export const detailsOrderPublic = (orderId: string) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error.response });
+		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error });
 	}
 };
 
@@ -444,7 +444,7 @@ export const deleteOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_DELETE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_DELETE_FAIL, payload: error });
 	}
 };
 
@@ -479,7 +479,7 @@ export const refundOrder = (
 		axios.post('/api/emails/refund', data);
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_REFUND_FAIL, payload: error.response });
+		dispatch({ type: ORDER_REFUND_FAIL, payload: error });
 	}
 };
 
@@ -506,7 +506,7 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: error });
 	}
 };
 export const update_payment = (order: { _id: string }, result: boolean, payment_method: string) => async (
@@ -534,7 +534,7 @@ export const update_payment = (order: { _id: string }, result: boolean, payment_
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_UPDATE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_UPDATE_FAIL, payload: error });
 	}
 };
 
@@ -564,6 +564,6 @@ export const saveOrder = (order: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_SAVE_FAIL, payload: error.response });
+		dispatch({ type: ORDER_SAVE_FAIL, payload: error });
 	}
 };

@@ -28,7 +28,7 @@ export const listPalettes = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: PALETTE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PALETTE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: PALETTE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -46,7 +46,7 @@ export const listMyPalettes = () => async (
 		dispatch({ type: MY_PALETTE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_PALETTE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: MY_PALETTE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -75,7 +75,7 @@ export const savePalette = (palette: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PALETTE_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PALETTE_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -88,7 +88,7 @@ export const detailsPalette = (pathname: string) => async (
 		dispatch({ type: PALETTE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PALETTE_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: PALETTE_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -107,6 +107,6 @@ export const deletePalette = (paletteId: string) => async (
 		dispatch({ type: PALETTE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PALETTE_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PALETTE_DELETE_FAIL, payload: error });
 	}
 };

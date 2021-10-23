@@ -24,25 +24,24 @@ const AnnouncementEmail = () => {
 	console.log({ emails });
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
-			stableDispatch(listEmails('Announcements'));
+			dispatch(listEmails('Announcements'));
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
 			const active_email = emails.find((email) => email.active === true);
 			if (active_email) {
-				stableDispatch(detailsEmail(active_email._id));
+				dispatch(detailsEmail(active_email._id));
 			}
 			return () => {};
 		},
-		[ emails, stableDispatch ]
+		[ emails, dispatch ]
 	);
 
 	setTimeout(() => {

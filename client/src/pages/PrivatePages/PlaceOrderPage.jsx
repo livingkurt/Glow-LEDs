@@ -76,7 +76,6 @@ const PlaceOrderPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const stableDispatch = useCallback(dispatch, []);
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
 	const stable_set_loading_payment = useCallback(set_loading_payment, []);
 	// const stable_calculate_international = useCallback(calculate_international, []);
@@ -84,17 +83,17 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listPromos());
-			stableDispatch(listUsers(''));
+			dispatch(listPromos());
+			dispatch(listUsers(''));
 
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			stableDispatch(savePayment({ paymentMethod }));
+			dispatch(savePayment({ paymentMethod }));
 
 			return () => {};
 		},
@@ -106,10 +105,10 @@ const PlaceOrderPage = (props) => {
 			const shipping_storage = sessionStorage.getItem('shippingAddress');
 			console.log({ shipping_storage });
 			if (shipping_storage) {
-				stableDispatch(saveShipping(JSON.parse(shipping_storage)));
+				dispatch(saveShipping(JSON.parse(shipping_storage)));
 			}
 
-			stableDispatch(savePayment({ paymentMethod }));
+			dispatch(savePayment({ paymentMethod }));
 			stable_setItemsPrice(
 				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
 					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
@@ -118,7 +117,7 @@ const PlaceOrderPage = (props) => {
 
 			return () => {};
 		},
-		[ cartItems, stableDispatch, stable_setItemsPrice ]
+		[ cartItems, dispatch, stable_setItemsPrice ]
 	);
 
 	useEffect(

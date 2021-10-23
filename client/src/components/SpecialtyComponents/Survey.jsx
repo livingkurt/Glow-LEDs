@@ -69,19 +69,17 @@ const Survey = (props) => {
 
 	console.log({ survey });
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			const active_survey = surveys.find((survey) => survey.is_survey === true && survey.active === true);
 			if (active_survey) {
-				stableDispatch(detailsSurvey(active_survey._id));
+				dispatch(detailsSurvey(active_survey._id));
 				set_survey_questions(active_survey._id);
 			}
 			dispatch(detailsOrderPublic(props.order_id));
 			return () => {};
 		},
-		[ surveys, stableDispatch ]
+		[ surveys, dispatch ]
 	);
 
 	useEffect(
@@ -96,14 +94,14 @@ const Survey = (props) => {
 	useEffect(() => {
 		// if (props.pathname) {
 		// 	console.log('Is ID');
-		// 	stableDispatch(detailsSurvey(props.pathname));
-		// 	stableDispatch(detailsSurvey(props.pathname));
+		// 	dispatch(detailsSurvey(props.pathname));
+		// 	dispatch(detailsSurvey(props.pathname));
 		// } else {
-		// 	stableDispatch(detailsSurvey(''));
+		// 	dispatch(detailsSurvey(''));
 		// }
-		stableDispatch(listProducts(''));
-		stableDispatch(listSurveys(''));
-		stableDispatch(listUsers(''));
+		dispatch(listProducts(''));
+		dispatch(listSurveys(''));
+		dispatch(listUsers(''));
 
 		set_state();
 		return () => {};

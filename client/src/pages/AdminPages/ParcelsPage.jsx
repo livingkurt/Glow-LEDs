@@ -22,15 +22,14 @@ const ParcelsPage = (props) => {
 	const { success: successDelete } = parcelDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listParcels());
+			dispatch(listParcels());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 
 	const submitHandler = (e) => {
@@ -45,9 +44,9 @@ const ParcelsPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listParcels(category, search, sortOrder));
+			dispatch(listParcels(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (parcel) => {
 		dispatch(deleteParcel(parcel._id));

@@ -38,22 +38,21 @@ const EditSettingPage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsSetting(props.match.params.id));
-				stableDispatch(detailsSetting(props.match.params.id));
+				dispatch(detailsSetting(props.match.params.id));
+				dispatch(detailsSetting(props.match.params.id));
 			} else {
-				stableDispatch(detailsSetting(''));
+				dispatch(detailsSetting(''));
 			}
-			stableDispatch(listSettings(''));
+			dispatch(listSettings(''));
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(

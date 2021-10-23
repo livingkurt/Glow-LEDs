@@ -20,16 +20,15 @@ const LogsPage = (props) => {
 	const logDelete = useSelector((state) => state.logDelete);
 	const { success: successDelete } = logDelete;
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
-			stableDispatch(listLogs(''));
+			dispatch(listLogs(''));
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -43,9 +42,9 @@ const LogsPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listLogs(category, search, sortOrder));
+			dispatch(listLogs(category, search, sortOrder));
 		},
-		[ category, search, sortOrder, stableDispatch ]
+		[ category, search, sortOrder, dispatch ]
 	);
 	const deleteHandler = (log) => {
 		dispatch(deleteLog(log._id));

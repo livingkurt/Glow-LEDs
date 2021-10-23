@@ -138,23 +138,21 @@ const EditOrderPage = (props) => {
 		// set_product_option({});
 	};
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsOrder(props.match.params.id));
-				stableDispatch(detailsOrder(props.match.params.id));
-				stableDispatch(listProducts(''));
-				stableDispatch(listUsers(''));
+				dispatch(detailsOrder(props.match.params.id));
+				dispatch(detailsOrder(props.match.params.id));
+				dispatch(listProducts(''));
+				dispatch(listUsers(''));
 			} else {
-				stableDispatch(detailsOrder(''));
+				dispatch(detailsOrder(''));
 			}
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	useEffect(

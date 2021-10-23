@@ -46,18 +46,16 @@ const EditFeaturePage = (props) => {
 
 	console.log({ feature });
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(() => {
 		if (props.match.params.pathname) {
 			console.log('Is ID');
-			stableDispatch(detailsFeature(props.match.params.pathname));
-			stableDispatch(detailsFeature(props.match.params.pathname));
+			dispatch(detailsFeature(props.match.params.pathname));
+			dispatch(detailsFeature(props.match.params.pathname));
 		} else {
-			stableDispatch(detailsFeature(''));
+			dispatch(detailsFeature(''));
 		}
-		stableDispatch(listProducts(''));
-		stableDispatch(listUsers(''));
+		dispatch(listProducts(''));
+		dispatch(listUsers(''));
 
 		set_state();
 		return () => {};
@@ -402,11 +400,14 @@ const EditFeaturePage = (props) => {
 															<option key={1} defaultValue="">
 																---Choose Product---
 															</option>
-															{products.filter(product => !product.option).filter(product => !product.hidden).map((product, index) => (
-																<option key={index} value={product.pathname}>
-																	{product.name}
-																</option>
-															))}
+															{products
+																.filter((product) => !product.option)
+																.filter((product) => !product.hidden)
+																.map((product, index) => (
+																	<option key={index} value={product.pathname}>
+																		{product.name}
+																	</option>
+																))}
 														</select>
 														<span className="custom-arrow" />
 													</div>

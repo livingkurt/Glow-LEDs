@@ -88,24 +88,22 @@ const EditEmailPage = (props) => {
 		// dispatch(detailsContent(''));
 	};
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsEmail(props.match.params.id));
-				stableDispatch(detailsEmail(props.match.params.id));
+				dispatch(detailsEmail(props.match.params.id));
+				dispatch(detailsEmail(props.match.params.id));
 			} else {
-				stableDispatch(detailsEmail(''));
+				dispatch(detailsEmail(''));
 			}
-			stableDispatch(listEmails(''));
-			stableDispatch(listContents(''));
+			dispatch(listEmails(''));
+			dispatch(listContents(''));
 
 			set_email_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 
 	const use_template = (e) => {

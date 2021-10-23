@@ -26,7 +26,7 @@ export const listSurveys = (category = '', search = '', sortOrder = '') => async
 		dispatch({ type: SURVEY_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: SURVEY_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: SURVEY_LIST_FAIL, payload: error });
 	}
 };
 
@@ -56,7 +56,7 @@ export const saveSurvey = (survey: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: SURVEY_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: SURVEY_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -75,7 +75,7 @@ export const detailsSurvey = (id: string) => async (
 		dispatch({ type: SURVEY_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: SURVEY_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: SURVEY_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -94,6 +94,6 @@ export const deleteSurvey = (surveyId: string) => async (
 		dispatch({ type: SURVEY_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: SURVEY_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: SURVEY_DELETE_FAIL, payload: error });
 	}
 };

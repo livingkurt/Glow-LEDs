@@ -25,7 +25,7 @@ export const listLogs = (category = '', search = '', sortOrder = '') => async (
 		dispatch({ type: LOG_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: LOG_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: LOG_LIST_FAIL, payload: error });
 	}
 };
 
@@ -54,7 +54,7 @@ export const saveLog = (log: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: LOG_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: LOG_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -65,7 +65,7 @@ export const detailsLog = (pathname: string) => async (dispatch: (arg0: { type: 
 		dispatch({ type: LOG_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: LOG_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: LOG_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -84,6 +84,6 @@ export const deleteLog = (logId: string) => async (
 		dispatch({ type: LOG_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: LOG_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: LOG_DELETE_FAIL, payload: error });
 	}
 };

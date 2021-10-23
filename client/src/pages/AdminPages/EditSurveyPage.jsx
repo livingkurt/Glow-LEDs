@@ -78,24 +78,24 @@ const EditSurveyPage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
+
 	const stable_set_state = useCallback(set_state, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsSurvey(props.match.params.id));
-				stableDispatch(detailsSurvey(props.match.params.id));
+				dispatch(detailsSurvey(props.match.params.id));
+				dispatch(detailsSurvey(props.match.params.id));
 			} else {
-				stableDispatch(detailsSurvey(''));
+				dispatch(detailsSurvey(''));
 			}
-			stableDispatch(listUsers(''));
-			stableDispatch(listOrders(''));
+			dispatch(listUsers(''));
+			dispatch(listOrders(''));
 			stable_set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id, stable_set_state ]
+		[ dispatch, props.match.params.id, stable_set_state ]
 	);
 
 	useEffect(

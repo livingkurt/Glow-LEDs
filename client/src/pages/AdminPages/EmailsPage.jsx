@@ -20,16 +20,14 @@ const EmailsPage = (props) => {
 	const { success: successDelete } = emailDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
-			stableDispatch(listEmails());
+			dispatch(listEmails());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -43,9 +41,9 @@ const EmailsPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listEmails(category, search, sortOrder));
+			dispatch(listEmails(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (email) => {
 		dispatch(deleteEmail(email._id));

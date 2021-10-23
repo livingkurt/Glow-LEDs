@@ -57,18 +57,16 @@ const SubmitFeaturePage = (props) => {
 
 	console.log({ feature });
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(() => {
 		if (props.match.params.pathname) {
 			console.log('Is ID');
-			stableDispatch(detailsFeature(props.match.params.pathname));
-			stableDispatch(detailsFeature(props.match.params.pathname));
+			dispatch(detailsFeature(props.match.params.pathname));
+			dispatch(detailsFeature(props.match.params.pathname));
 		} else {
-			stableDispatch(detailsFeature(''));
+			dispatch(detailsFeature(''));
 		}
-		stableDispatch(listProducts(''));
-		stableDispatch(listUsers(''));
+		dispatch(listProducts(''));
+		dispatch(listUsers(''));
 
 		set_state();
 		return () => {};

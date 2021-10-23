@@ -25,7 +25,7 @@ export const listChips = (category = '', search = '', sortOrder = '') => async (
 		dispatch({ type: CHIP_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CHIP_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: CHIP_LIST_FAIL, payload: error });
 	}
 };
 
@@ -54,7 +54,7 @@ export const saveChip = (chip: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CHIP_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: CHIP_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -65,7 +65,7 @@ export const detailsChip = (pathname: string) => async (dispatch: (arg0: { type:
 		dispatch({ type: CHIP_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CHIP_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: CHIP_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -84,6 +84,6 @@ export const deleteChip = (chipId: string) => async (
 		dispatch({ type: CHIP_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: CHIP_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: CHIP_DELETE_FAIL, payload: error });
 	}
 };

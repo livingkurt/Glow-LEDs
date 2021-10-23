@@ -25,7 +25,7 @@ export const listPromos = (category = '', search = '', sortOrder = '') => async 
 		dispatch({ type: PROMO_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PROMO_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: PROMO_LIST_FAIL, payload: error });
 	}
 };
 
@@ -54,7 +54,7 @@ export const savePromo = (promo: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PROMO_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PROMO_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -65,7 +65,7 @@ export const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type
 		dispatch({ type: PROMO_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PROMO_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: PROMO_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -84,6 +84,6 @@ export const deletePromo = (promoId: string) => async (
 		dispatch({ type: PROMO_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PROMO_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PROMO_DELETE_FAIL, payload: error });
 	}
 };

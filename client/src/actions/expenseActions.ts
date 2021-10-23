@@ -32,7 +32,7 @@ export const listExpenses = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: EXPENSE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EXPENSE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: EXPENSE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -71,7 +71,7 @@ export const saveExpense = (expense: {
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EXPENSE_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: EXPENSE_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -90,7 +90,7 @@ export const detailsExpense = (pathname: string) => async (
 		dispatch({ type: EXPENSE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -109,6 +109,6 @@ export const deleteExpense = (expenseId: string) => async (
 		dispatch({ type: EXPENSE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EXPENSE_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: EXPENSE_DELETE_FAIL, payload: error });
 	}
 };

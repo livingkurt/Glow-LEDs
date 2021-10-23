@@ -59,22 +59,20 @@ const EditUserPage = (props) => {
 		setInternational('');
 	};
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsUser(props.match.params.id));
-				stableDispatch(detailsUser(props.match.params.id));
+				dispatch(detailsUser(props.match.params.id));
+				dispatch(detailsUser(props.match.params.id));
 			} else {
-				stableDispatch(detailsUser(''));
+				dispatch(detailsUser(''));
 			}
-			stableDispatch(listAffiliates(''));
+			dispatch(listAffiliates(''));
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(

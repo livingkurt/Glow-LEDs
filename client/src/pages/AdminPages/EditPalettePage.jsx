@@ -63,21 +63,20 @@ const EditPalettePage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsPalette(props.match.params.id));
-				stableDispatch(detailsPalette(props.match.params.id));
+				dispatch(detailsPalette(props.match.params.id));
+				dispatch(detailsPalette(props.match.params.id));
 			} else {
-				stableDispatch(listChips(''));
+				dispatch(listChips(''));
 			}
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 	useEffect(
 		() => {

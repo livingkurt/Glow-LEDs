@@ -31,14 +31,14 @@ const OrderEmail = (props) => {
 	const { promos } = promoList;
 
 	const dispatch = useDispatch();
-	// const stableDispatch = useCallback(dispatch, []);
+	//
 
 	useEffect(() => {
 		dispatch(listEmails(toCapitalize(props.match.params.status)));
 		dispatch(detailsOrderPublic(props.match.params.id));
 		// dispatch(detailsOrderPublic(props.match.params.id));
 		dispatch(listPromos());
-		// stableDispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
+		// dispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
 		return () => {};
 	}, []);
 

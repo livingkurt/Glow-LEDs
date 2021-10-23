@@ -114,6 +114,7 @@ export const orderListReducer = (
 	},
 	action: { type: any; payload: any }
 ) => {
+	console.log({ orderListReducer: action.payload });
 	switch (action.type) {
 		case ORDER_LIST_REQUEST:
 			return { loading: true };
@@ -128,7 +129,7 @@ export const orderListReducer = (
 				message: 'Orders Found'
 			};
 		case ORDER_LIST_FAIL:
-			return { loading: false, error: action.payload.error, message: action.payload.message };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		default:
 			return state;
 	}

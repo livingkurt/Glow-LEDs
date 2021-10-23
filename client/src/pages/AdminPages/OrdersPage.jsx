@@ -8,6 +8,7 @@ import { JSONToCSV, Order, OrderListItem, OrderSmallScreen, Search, Sort } from 
 import Pagination from 'react-js-pagination';
 import { API_Orders } from '../../utils';
 import { format_date } from '../../utils/helper_functions';
+import { check_authentication } from '../../utils/react_helper_functions';
 // import CsvDownload from 'react-json-to-csv';
 
 const OrdersPage = (props) => {
@@ -24,6 +25,7 @@ const OrdersPage = (props) => {
 	const limit = props.match.params.limit ? props.match.params.limit : 10;
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, error } = orderList;
+	// console.log({ orderList });
 
 	const orderDelete = useSelector((state) => state.orderDelete);
 	const { success: successDelete } = orderDelete;
@@ -127,6 +129,18 @@ const OrdersPage = (props) => {
 			history.push(`/secure/glow/emails/order/${order._id}/order/false`);
 		}
 	};
+
+	useEffect(
+		() => {
+			if (error) {
+				check_authentication();
+				dispatch(listOrders(category, search, sortOrder, page, limit));
+			}
+
+			return () => {};
+		},
+		[ error ]
+	);
 
 	// useEffect(() => {
 	// 	// if (history.action !== 'POP') {

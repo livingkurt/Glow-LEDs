@@ -56,23 +56,22 @@ const EditPaycheckPage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsPaycheck(props.match.params.id));
-				stableDispatch(detailsPaycheck(props.match.params.id));
+				dispatch(detailsPaycheck(props.match.params.id));
+				dispatch(detailsPaycheck(props.match.params.id));
 			} else {
-				stableDispatch(detailsPaycheck(''));
+				dispatch(detailsPaycheck(''));
 			}
-			stableDispatch(listAffiliates(''));
-			stableDispatch(listTeams(''));
+			dispatch(listAffiliates(''));
+			dispatch(listTeams(''));
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(

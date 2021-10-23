@@ -47,20 +47,19 @@ const PaychecksPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listPaychecks());
-			stableDispatch(listAffiliates(''));
-			stableDispatch(listTeams(''));
-			stableDispatch(listOrders(''));
+			dispatch(listPaychecks());
+			dispatch(listAffiliates(''));
+			dispatch(listTeams(''));
+			dispatch(listOrders(''));
 			get_last_months_orders();
 			get_total_orders();
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 
 	const get_last_months_orders = async () => {
@@ -85,9 +84,9 @@ const PaychecksPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listPaychecks(category, search, sortOrder));
+			dispatch(listPaychecks(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (paycheck) => {
 		dispatch(deletePaycheck(paycheck._id));
@@ -105,7 +104,7 @@ const PaychecksPage = (props) => {
 				paid_at: format_date(today)
 			})
 		);
-		stableDispatch(listPaychecks());
+		dispatch(listPaychecks());
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];

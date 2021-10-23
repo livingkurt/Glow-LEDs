@@ -30,23 +30,21 @@ const CartsPage = (props) => {
 	// 	[ successSave, successDelete ]
 	// );
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	const submitHandler = (e) => {
 		e.preventDefault();
-		stableDispatch(listCarts(category, search, sortOrder));
+		dispatch(listCarts(category, search, sortOrder));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		stableDispatch(listCarts(category, search, e.target.value));
+		dispatch(listCarts(category, search, e.target.value));
 	};
 
 	useEffect(
 		() => {
-			stableDispatch(listCarts(category, search, sortOrder));
+			dispatch(listCarts(category, search, sortOrder));
 		},
-		[ sortOrder, stableDispatch, category, search ]
+		[ sortOrder, dispatch, category, search ]
 	);
 	const colors = [
 		{ name: 'Supplies', color: '#6d3e3e' },

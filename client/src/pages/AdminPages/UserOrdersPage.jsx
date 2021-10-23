@@ -17,12 +17,11 @@ const UserOrderPage = (props) => {
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading, orders, error } = myOrderList;
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listUserOrders(props.match.params.id));
+			dispatch(listUserOrders(props.match.params.id));
 		},
-		[ userInfo, stableDispatch ]
+		[ userInfo, dispatch ]
 	);
 	const change_view = (e) => {
 		if (e.target.value === 'Block View') {
@@ -120,16 +119,22 @@ const UserOrderPage = (props) => {
 					<div className="product_big_screen">
 						{!block_list_view &&
 							orders &&
-							orders.map((order, index) => <OrderListItem key={index} determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => (
+								<OrderListItem key={index} determine_color={determine_color} order={order} />
+							))}
 					</div>
 					<div className="product_big_screen">
 						{block_list_view &&
 							orders &&
-							orders.map((order, index) => <Order key={index} determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => (
+								<Order key={index} determine_color={determine_color} order={order} />
+							))}
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
-							orders.map((order, index) => <OrderSmallScreen key={index} determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => (
+								<OrderSmallScreen key={index} determine_color={determine_color} order={order} />
+							))}
 					</div>
 				</Loading>
 			</div>

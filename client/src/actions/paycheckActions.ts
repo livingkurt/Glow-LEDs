@@ -35,7 +35,7 @@ export const listPaychecks = (category = '', search = '', sortOrder = '') => asy
 		dispatch({ type: PAYCHECK_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PAYCHECK_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: PAYCHECK_LIST_FAIL, payload: error });
 	}
 };
 
@@ -53,7 +53,7 @@ export const listMyPaychecks = (affiliate_id: string) => async (
 		dispatch({ type: MY_PAYCHECK_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_PAYCHECK_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: MY_PAYCHECK_LIST_FAIL, payload: error });
 	}
 };
 
@@ -82,7 +82,7 @@ export const savePaycheck = (paycheck: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PAYCHECK_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PAYCHECK_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -101,7 +101,7 @@ export const detailsPaycheck = (pathname: string) => async (
 		dispatch({ type: PAYCHECK_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PAYCHECK_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: PAYCHECK_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -120,6 +120,6 @@ export const deletePaycheck = (paycheckId: string) => async (
 		dispatch({ type: PAYCHECK_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PAYCHECK_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PAYCHECK_DELETE_FAIL, payload: error });
 	}
 };

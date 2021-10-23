@@ -39,18 +39,17 @@ const SettingsPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listSettings());
-			stableDispatch(listAffiliates(''));
-			stableDispatch(listTeams(''));
-			stableDispatch(listOrders(''));
+			dispatch(listSettings());
+			dispatch(listAffiliates(''));
+			dispatch(listTeams(''));
+			dispatch(listOrders(''));
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 
 	const submitHandler = (e) => {
@@ -65,9 +64,9 @@ const SettingsPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listSettings(category, search, sortOrder));
+			dispatch(listSettings(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (setting) => {
 		dispatch(deleteSetting(setting._id));

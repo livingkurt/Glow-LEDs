@@ -37,7 +37,7 @@ export const listAffiliates = (category = '', search = '', sortOrder = '') => as
 		dispatch({ type: AFFILIATE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: AFFILIATE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: AFFILIATE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -98,7 +98,7 @@ export const saveAffiliate = (affiliate: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: AFFILIATE_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: AFFILIATE_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -112,7 +112,7 @@ export const detailsAffiliate = (pathname: string) => async (
 		dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: AFFILIATE_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: AFFILIATE_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -131,6 +131,6 @@ export const deleteAffiliate = (pathname: string) => async (
 		dispatch({ type: AFFILIATE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: AFFILIATE_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: AFFILIATE_DELETE_FAIL, payload: error });
 	}
 };

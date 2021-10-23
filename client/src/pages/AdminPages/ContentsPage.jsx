@@ -19,16 +19,14 @@ const ContentsPage = (props) => {
 	const { success: successDelete } = contentDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
-			stableDispatch(listContents());
+			dispatch(listContents());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();

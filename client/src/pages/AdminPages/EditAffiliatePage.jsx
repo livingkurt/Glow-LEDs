@@ -123,27 +123,26 @@ const EditAffiliatePage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.pathname) {
 				// console.log('Is ID');
 				// console.log(props.match.params.pathname);
-				stableDispatch(detailsAffiliate(props.match.params.pathname));
-				stableDispatch(detailsAffiliate(props.match.params.pathname));
+				dispatch(detailsAffiliate(props.match.params.pathname));
+				dispatch(detailsAffiliate(props.match.params.pathname));
 			} else {
-				stableDispatch(detailsAffiliate(''));
+				dispatch(detailsAffiliate(''));
 			}
-			stableDispatch(listUsers(''));
-			stableDispatch(listProducts(''));
-			stableDispatch(listPromos(''));
-			stableDispatch(listPromos(''));
-			stableDispatch(listChips());
+			dispatch(listUsers(''));
+			dispatch(listProducts(''));
+			dispatch(listPromos(''));
+			dispatch(listPromos(''));
+			dispatch(listChips());
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.pathname ]
+		[ dispatch, props.match.params.pathname ]
 	);
 
 	useEffect(

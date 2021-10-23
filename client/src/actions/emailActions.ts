@@ -26,7 +26,7 @@ export const listEmails = (category = '', search = '', sortOrder = '') => async 
 		dispatch({ type: EMAIL_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EMAIL_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: EMAIL_LIST_FAIL, payload: error });
 	}
 };
 
@@ -56,7 +56,7 @@ export const saveEmail = (email: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EMAIL_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: EMAIL_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -67,7 +67,7 @@ export const detailsEmail = (id: string) => async (dispatch: (arg0: { type: stri
 		dispatch({ type: EMAIL_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EMAIL_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: EMAIL_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -86,6 +86,6 @@ export const deleteEmail = (emailId: string) => async (
 		dispatch({ type: EMAIL_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: EMAIL_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: EMAIL_DELETE_FAIL, payload: error });
 	}
 };

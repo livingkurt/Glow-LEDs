@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Order, OrderListItem, OrderSmallScreen } from '../../components/SpecialtyComponents';
+import { check_authentication } from '../../utils/react_helper_functions';
 
 const UserOrderPage = (props) => {
 	const history = useHistory();
@@ -18,12 +19,23 @@ const UserOrderPage = (props) => {
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading, orders, error } = myOrderList;
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listMyOrders());
+			if (error) {
+				check_authentication();
+				dispatch(listMyOrders());
+			}
+
+			return () => {};
 		},
-		[ userInfo, stableDispatch ]
+		[ error ]
+	);
+
+	useEffect(
+		() => {
+			dispatch(listMyOrders());
+		},
+		[ userInfo, dispatch ]
 	);
 	const change_view = (e) => {
 		if (e.target.value === 'Block View') {
@@ -121,16 +133,22 @@ const UserOrderPage = (props) => {
 					<div className="product_big_screen">
 						{!block_list_view &&
 							orders &&
-							orders.map((order, index) => <OrderListItem key={index} determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => (
+								<OrderListItem key={index} determine_color={determine_color} order={order} />
+							))}
 					</div>
 					<div className="product_big_screen">
 						{block_list_view &&
 							orders &&
-							orders.map((order, index) => <Order key={index} determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => (
+								<Order key={index} determine_color={determine_color} order={order} />
+							))}
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
-							orders.map((order, index) => <OrderSmallScreen key={index} determine_color={determine_color} order={order} />)}
+							orders.map((order, index) => (
+								<OrderSmallScreen key={index} determine_color={determine_color} order={order} />
+							))}
 					</div>
 				</Loading>
 			</div>

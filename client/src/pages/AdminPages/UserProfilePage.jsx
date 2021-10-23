@@ -21,17 +21,16 @@ const UserProfilePage = (props) => {
 	const [ email_subscription, set_email_subscription ] = useState();
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	// const userUpdateUser = useSelector((state) => state.userUpdateUser);
 	// const { userInfo: userUpdate } = userUpdateUser;
 
 	useEffect(
 		() => {
-			stableDispatch(detailsUser(props.match.params.id));
+			dispatch(detailsUser(props.match.params.id));
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	useEffect(

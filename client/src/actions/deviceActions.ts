@@ -30,7 +30,7 @@ export const listDevices = (category = '', search = '', sortOrder = '') => async
 		dispatch({ type: DEVICE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: DEVICE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: DEVICE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -48,7 +48,7 @@ export const listMyDevices = () => async (
 		dispatch({ type: MY_DEVICE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: MY_DEVICE_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: MY_DEVICE_LIST_FAIL, payload: error });
 	}
 };
 
@@ -78,7 +78,7 @@ export const saveDevice = (device: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: DEVICE_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: DEVICE_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -90,7 +90,7 @@ export const detailsDevice = (id: string) => async (dispatch: (arg0: { type: str
 		dispatch({ type: DEVICE_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: DEVICE_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: DEVICE_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -109,6 +109,6 @@ export const deleteDevice = (deviceId: string) => async (
 		dispatch({ type: DEVICE_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: DEVICE_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: DEVICE_DELETE_FAIL, payload: error });
 	}
 };

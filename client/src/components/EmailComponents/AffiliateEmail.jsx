@@ -30,26 +30,25 @@ const AffiliateEmail = (props) => {
 	console.log({ emails });
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
-			stableDispatch(detailsAffiliate(props.match.params.pathname));
-			stableDispatch(listEmails('Affiliate'));
+			dispatch(detailsAffiliate(props.match.params.pathname));
+			dispatch(listEmails('Affiliate'));
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
 			const active_email = emails.find((email) => email.active === true);
 			if (active_email) {
-				stableDispatch(detailsEmail(active_email._id));
+				dispatch(detailsEmail(active_email._id));
 			}
 			return () => {};
 		},
-		[ emails, stableDispatch ]
+		[ emails, dispatch ]
 	);
 
 	setTimeout(() => {

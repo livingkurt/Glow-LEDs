@@ -20,15 +20,14 @@ const TeamsPage = (props) => {
 	const { success: successDelete } = teamDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
 	useEffect(
 		() => {
-			stableDispatch(listTeams());
+			dispatch(listTeams());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -42,9 +41,9 @@ const TeamsPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listTeams(category, search, sortOrder));
+			dispatch(listTeams(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (team) => {
 		dispatch(deleteTeam(team._id));

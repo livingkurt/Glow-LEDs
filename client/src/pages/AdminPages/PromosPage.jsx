@@ -21,16 +21,14 @@ const PromosPage = (props) => {
 	const { success: successDelete } = promoDelete;
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
-			stableDispatch(listPromos());
+			dispatch(listPromos());
 			return () => {
 				//
 			};
 		},
-		[ successSave, successDelete, stableDispatch ]
+		[ successSave, successDelete, dispatch ]
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -44,9 +42,9 @@ const PromosPage = (props) => {
 
 	useEffect(
 		() => {
-			stableDispatch(listPromos(category, search, sortOrder));
+			dispatch(listPromos(category, search, sortOrder));
 		},
-		[ stableDispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sortOrder ]
 	);
 	const deleteHandler = (promo) => {
 		dispatch(deletePromo(promo._id));

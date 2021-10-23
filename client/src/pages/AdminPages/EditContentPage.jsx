@@ -38,8 +38,6 @@ const EditContentPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	const set_state = () => {
 		set_id(content._id);
 		set_home_page(content.home_page);
@@ -76,18 +74,18 @@ const EditContentPage = (props) => {
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsContent(props.match.params.id));
-				stableDispatch(detailsContent(props.match.params.id));
+				dispatch(detailsContent(props.match.params.id));
+				dispatch(detailsContent(props.match.params.id));
 			} else {
-				stableDispatch(detailsContent(''));
+				dispatch(detailsContent(''));
 			}
-			stableDispatch(listEmails(''));
+			dispatch(listEmails(''));
 
 			// set_loading_data(false);
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch ]
+		[ dispatch ]
 	);
 
 	const use_template = (e) => {

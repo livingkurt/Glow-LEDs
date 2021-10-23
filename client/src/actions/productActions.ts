@@ -54,7 +54,7 @@ export const listProducts = (
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PRODUCT_LIST_FAIL, payload: error.response.data.message });
+		dispatch({ type: PRODUCT_LIST_FAIL, payload: error });
 	}
 };
 
@@ -83,7 +83,7 @@ export const saveProduct = (product: any) => async (
 		}
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PRODUCT_SAVE_FAIL, payload: error });
 	}
 };
 
@@ -96,7 +96,7 @@ export const detailsProduct = (pathname: string) => async (
 		dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.response.data.message });
+		dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error });
 	}
 };
 
@@ -116,7 +116,7 @@ export const deleteProduct = (id: string) => async (
 		dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PRODUCT_DELETE_FAIL, payload: error });
 	}
 };
 
@@ -142,7 +142,7 @@ export const saveProductReview = (
 		dispatch({ type: PRODUCT_REVIEW_SAVE_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error.response.data.message });
+		dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error });
 	}
 };
 // export const deleteProductReview = (product_pathname: string, review_id: string) => async (
@@ -161,6 +161,6 @@ export const saveProductReview = (
 // 		dispatch({ type: PRODUCT_REVIEW_DELETE_SUCCESS, payload: data });
 // 	} catch (error) {
 
-// 		dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: error.response.data.message });
+// 		dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: error });
 // 	}
 // };

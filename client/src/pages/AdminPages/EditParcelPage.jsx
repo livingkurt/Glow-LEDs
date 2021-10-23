@@ -45,21 +45,20 @@ const EditParcelPage = (props) => {
 	};
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	useEffect(
 		() => {
 			if (props.match.params.id) {
 				console.log('Is ID');
-				stableDispatch(detailsParcel(props.match.params.id));
-				stableDispatch(detailsParcel(props.match.params.id));
+				dispatch(detailsParcel(props.match.params.id));
+				dispatch(detailsParcel(props.match.params.id));
 			} else {
-				stableDispatch(detailsParcel(''));
+				dispatch(detailsParcel(''));
 			}
 			set_state();
 			return () => {};
 		},
-		[ stableDispatch, props.match.params.id ]
+		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(

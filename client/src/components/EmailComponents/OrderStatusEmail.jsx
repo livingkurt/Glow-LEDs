@@ -30,14 +30,13 @@ const OrderStatusEmail = (props) => {
 	const { emails } = emailList;
 
 	const dispatch = useDispatch();
-	const stableDispatch = useCallback(dispatch, []);
 
 	const [ message_to_user, set_message_to_user ] = useState('');
 	// const message = props.match.params.message ? props.match.params.message : '';
 
 	useEffect(() => {
-		stableDispatch(listEmails(toCapitalize(props.match.params.status)));
-		// stableDispatch(detailsOrder(props.match.params.id));
+		dispatch(listEmails(toCapitalize(props.match.params.status)));
+		// dispatch(detailsOrder(props.match.params.id));
 		return () => {};
 	}, []);
 
@@ -55,7 +54,7 @@ const OrderStatusEmail = (props) => {
 			if (emails) {
 				const active_email = emails.find((email) => email.active === true);
 				if (active_email) {
-					stableDispatch(detailsEmail(active_email._id));
+					dispatch(detailsEmail(active_email._id));
 				}
 			}
 

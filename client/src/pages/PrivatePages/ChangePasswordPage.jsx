@@ -40,17 +40,15 @@ const ChangePasswordPage = (props) => {
 	// const userUpdate = useSelector((state) => state.userUpdate);
 	// const { loading, success, error } = userUpdate;
 
-	const stableDispatch = useCallback(dispatch, []);
-
 	useEffect(
 		() => {
 			if (userInfo) {
 				setPassword(userInfo.password);
 			}
-			stableDispatch(listMyOrders());
+			dispatch(listMyOrders());
 			return () => {};
 		},
-		[ userInfo, stableDispatch ]
+		[ userInfo, dispatch ]
 	);
 
 	// useEffect(
