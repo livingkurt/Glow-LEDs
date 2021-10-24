@@ -165,9 +165,6 @@ const Header = (props) => {
 								<Link to="/">
 									<button className="btn nav title_font">Home</button>
 								</Link>
-								{/* <Link to="/collections/all/products/category/best_sellers">
-							<button className="btn nav w-100per ta-l">Best Sellers</button>
-						</Link> */}
 								<div className="dropdown-nav">
 									<Link to="/collections/all/products">
 										<button
