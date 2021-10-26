@@ -455,6 +455,16 @@ export const determine_product_name = (item, show_qty, date) => {
 					{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
 				</div>
 			);
+		} else if (item.name === 'Nanoskins') {
+			return (
+				<div>
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}
+					{item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - ${determine_secondary_product_name(item.secondary_product_name, item.category)}`}{' '}
+					{item.size !== 0 && ' - ' + item.size}
+				</div>
+			);
 		} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 			return (
 				<div>
@@ -533,7 +543,6 @@ export const determine_product_name = (item, show_qty, date) => {
 		} else if (item.name === 'Outline + Batman Decals' || 'Batman Decals') {
 			return (
 				<div>
-					{/* {console.log({ item: item.secondary_product_name })} */}
 					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
 					{item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
@@ -573,10 +582,13 @@ export const determine_product_name = (item, show_qty, date) => {
 };
 
 export const determine_secondary_product_name = (name, category, subcategory) => {
-	// console.log({ name: name.split(' ')[0] });
+	// console.log({ name: name.split('-')[0], category, subcategory });
 	if (name) {
 		if (category === 'diffuser_caps') {
 			return name.slice(0, -14);
+		}
+		if (name.split('-')[0].trim() === 'Nanoskins') {
+			return name.split('-')[1].trim();
 		}
 		if (category === 'decals') {
 			if (name.split(' ')[1] === 'V2') {

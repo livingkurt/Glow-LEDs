@@ -26,12 +26,10 @@ import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/he
 import Overflow from 'react-overflow-indicator';
 
 const ProductPage = (props) => {
-	console.log({ props });
 	const userLogin = useSelector((state) => state.userLogin);
 	let { userInfo } = userLogin;
 	const cart = useSelector((state) => state.cart);
 	let { cartItems } = cart;
-	console.log({ document: document.referrer });
 
 	const [ name, set_name ] = useState('');
 	const [ description, set_description ] = useState('');
@@ -60,9 +58,13 @@ const ProductPage = (props) => {
 	const [ secondary_color_code, set_secondary_color_code ] = useState('');
 
 	const [ color_product, set_color_product ] = useState(null);
+	const [ color_products, set_color_products ] = useState([]);
 	const [ secondary_color_product, set_secondary_color_product ] = useState(null);
+	const [ secondary_color_products, set_secondary_color_products ] = useState([]);
 	const [ option_product, set_option_product ] = useState(null);
+	const [ option_products, set_option_products ] = useState([]);
 	const [ secondary_product, set_secondary_product ] = useState(null);
+	const [ secondary_products, set_secondary_products ] = useState([]);
 
 	const [ secondary_product_name, set_secondary_product_name ] = useState('');
 	const [ option_product_name, set_option_product_name ] = useState('');
@@ -135,6 +137,7 @@ const ProductPage = (props) => {
 			set_color(item.color);
 			set_secondary_color(item.secondary_color);
 			set_included_items(item.included_items);
+
 			set_dimensions({
 				weight_pounds: item.weight_pounds,
 				weight_ounces: item.weight_ounces,
@@ -155,6 +158,8 @@ const ProductPage = (props) => {
 				if (props.location.search.length === 0) {
 					// console.log({ message: 'Query Does Not Exist' });
 					if (product.color_products) {
+						set_color_products(product.color_products);
+
 						const color = product.color_products.find((color) => color.default_option === true);
 						// console.log({ color });
 						if (color) {
@@ -162,6 +167,8 @@ const ProductPage = (props) => {
 						}
 					}
 					if (product.secondary_color_products) {
+						set_secondary_color_products(product.secondary_color_products);
+
 						const secondary_color = product.secondary_color_products.find(
 							(secondary_color) => secondary_color.default_option === true
 						);
@@ -171,6 +178,8 @@ const ProductPage = (props) => {
 						}
 					}
 					if (product.option_products) {
+						set_option_products(product.option_products);
+
 						const option = product.option_products.find((option) => option.default_option === true);
 						if (option) {
 							update_option_product_state(option);
@@ -189,6 +198,7 @@ const ProductPage = (props) => {
 						}
 					}
 					if (product.secondary_color_products) {
+						set_secondary_products(product.secondary_products);
 						const secondary_color = product.secondary_color_products.find(
 							(secondary_color) => secondary_color.color === query.secondary_color
 						);
@@ -208,6 +218,7 @@ const ProductPage = (props) => {
 					}
 					if (product.secondary_products && product.secondary_products.length > 0) {
 						// console.log({ query_secondary: query.secondary });
+						set_secondary_products(product.secondary_products);
 						const secondary = product.secondary_products.find(
 							(secondary) => secondary.name === query.secondary.split('%20').join(' ')
 						);
@@ -458,6 +469,11 @@ const ProductPage = (props) => {
 			set_images(secondary.images);
 			set_image(secondary.images[0]);
 		}
+		console.log({ secondary });
+		set_color_products(secondary.color_products);
+		set_secondary_color_products(secondary.secondary_color_products);
+		set_option_products(secondary.option_products);
+		// set_secondary_products(secondary.secondary_products);
 		set_secondary_product(secondary._id);
 		set_secondary_product_name(secondary.name);
 		set_secondary_product_object(secondary);
@@ -674,7 +690,6 @@ const ProductPage = (props) => {
 													product.subcategory
 												)}
 											</label>
-											{console.log({ secondary_product_name })}
 										</div>
 									)}
 									{/* {console.log({ color, color_code })} */}
@@ -828,8 +843,8 @@ const ProductPage = (props) => {
 									)}
 									{size !== '1 Sled' &&
 									product.color_product_group &&
-									product.color_products &&
-									product.color_products.length > 0 && (
+									color_products &&
+									color_products.length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-25px">
 												<label
@@ -846,7 +861,7 @@ const ProductPage = (props) => {
 														value={JSON.stringify(color_product_object)}
 														defaultValue={JSON.stringify(color_product_object)}
 													>
-														{product.color_products.map((color, index) => (
+														{color_products.map((color, index) => (
 															<option key={index} value={JSON.stringify(color)}>
 																{color.name.split(' ')[0]}
 															</option>
@@ -859,8 +874,8 @@ const ProductPage = (props) => {
 									)}
 									{/* {size !== '1 Sled' &&
 									product.color_product_group &&
-									product.color_products &&
-									product.color_products.length > 0 && (
+									color_products &&
+									color_products.length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-25px">
 												<label
@@ -872,7 +887,7 @@ const ProductPage = (props) => {
 												</label>
 												<StyledDropdown
 													onChange={update_color}
-													items={product.color_products}
+													items={color_products}
 													label={
 														product.color_product_group_name ? (
 															product.color_product_group_name
@@ -886,8 +901,8 @@ const ProductPage = (props) => {
 									)} */}
 									{size !== '1 Skin' &&
 									product.secondary_color_product_group &&
-									product.secondary_color_products &&
-									product.secondary_color_products.length > 0 && (
+									secondary_color_products &&
+									secondary_color_products.length > 0 && (
 										<li>
 											<div className="ai-c h-25px mb-20px">
 												<label
@@ -908,16 +923,11 @@ const ProductPage = (props) => {
 														value={JSON.stringify(secondary_color_product_object)}
 														defaultValue={JSON.stringify(secondary_color_product_object)}
 													>
-														{product.secondary_color_products.map(
-															(secondary_color, index) => (
-																<option
-																	key={index}
-																	value={JSON.stringify(secondary_color)}
-																>
-																	{secondary_color.name.split(' ')[0]}
-																</option>
-															)
-														)}
+														{secondary_color_products.map((secondary_color, index) => (
+															<option key={index} value={JSON.stringify(secondary_color)}>
+																{secondary_color.name.split(' ')[0]}
+															</option>
+														))}
 													</select>
 													<span className="custom-arrow" />
 												</div>
@@ -925,8 +935,8 @@ const ProductPage = (props) => {
 										</li>
 									)}
 									{product.option_product_group &&
-									product.option_products &&
-									product.option_products.length > 0 && (
+									option_products &&
+									option_products.length > 0 && (
 										<div>
 											{option_product_object.hasOwnProperty('size') ? (
 												<li>
@@ -943,7 +953,7 @@ const ProductPage = (props) => {
 															)}:
 														</label>
 														<div className="ai-c wrap">
-															{product.option_products.map((option, index) => (
+															{option_products.map((option, index) => (
 																<button
 																	key={index}
 																	id={option.name}
@@ -981,7 +991,7 @@ const ProductPage = (props) => {
 															)}:
 														</label>
 														<div className="ai-c wrap">
-															{product.option_products.map((option, index) => (
+															{option_products.map((option, index) => (
 																<button
 																	key={index}
 																	id={option.name}
@@ -1143,8 +1153,8 @@ const ProductPage = (props) => {
 										)}
 										{size !== '1 Sled' &&
 										product.color_product_group &&
-										product.color_products &&
-										product.color_products.length > 0 && (
+										color_products &&
+										color_products.length > 0 && (
 											<li>
 												<div className="ai-c h-25px mb-25px jc-b">
 													<h3 className="mv-0px ">
@@ -1164,7 +1174,7 @@ const ProductPage = (props) => {
 																value={JSON.stringify(color_product_object)}
 																defaultValue={JSON.stringify(color_product_object)}
 															>
-																{product.color_products.map((color, index) => (
+																{color_products.map((color, index) => (
 																	<option key={index} value={JSON.stringify(color)}>
 																		{color.name.split(' ')[0]}
 																	</option>
@@ -1178,8 +1188,8 @@ const ProductPage = (props) => {
 										)}
 										{size !== '1 Skin' &&
 										product.secondary_color_product_group &&
-										product.secondary_color_products &&
-										product.secondary_color_products.length > 0 && (
+										secondary_color_products &&
+										secondary_color_products.length > 0 && (
 											<li>
 												<div className="ai-c h-25px mb-20px jc-b">
 													<h3 className="mv-0px ">
@@ -1205,7 +1215,7 @@ const ProductPage = (props) => {
 																	secondary_color_product_object
 																)}
 															>
-																{product.secondary_color_products.map(
+																{secondary_color_products.map(
 																	(secondary_color, index) => (
 																		<option
 																			key={index}
@@ -1223,8 +1233,8 @@ const ProductPage = (props) => {
 											</li>
 										)}
 										{/* {product.option_product_group &&
-										product.option_products &&
-										product.option_products.length > 0 && (
+										option_products &&
+										option_products.length > 0 && (
 											<li>
 												<div className="ai-c jc-b">
 													<h3 className="mv-0px mr-5px w-7rem">
@@ -1235,7 +1245,7 @@ const ProductPage = (props) => {
 														)}:{' '}
 													</h3>
 													<div className="ai-c wrap">
-														{product.option_products
+														{option_products
 															.filter((option) => option.name !== '1 Sled')
 															.filter((option) => option.name !== '1 Skin')
 															.map((option, index) => (
@@ -1257,8 +1267,8 @@ const ProductPage = (props) => {
 											</li>
 										)} */}
 										{product.option_product_group &&
-										product.option_products &&
-										product.option_products.length > 0 && (
+										option_products &&
+										option_products.length > 0 && (
 											<li>
 												<div className="row">
 													<label
@@ -1273,7 +1283,7 @@ const ProductPage = (props) => {
 														)}:
 													</label>
 													<div className="ai-c wrap">
-														{product.option_products
+														{option_products
 															// .filter((option) => !option.dropdown)
 															// .filter((option) => option.count_in_stock)
 															.map((option, index) => (

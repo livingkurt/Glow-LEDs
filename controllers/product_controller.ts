@@ -267,7 +267,23 @@ export default {
 				.populate('products')
 				.populate('color_products')
 				.populate('secondary_color_products')
-				.populate('secondary_products')
+				.populate({
+					path: 'secondary_products',
+					populate: [
+						{
+							path: 'color_products'
+						},
+						{
+							path: 'secondary_color_products'
+						},
+						{
+							path: 'option_products'
+						},
+						{
+							path: 'secondary_color_products'
+						}
+					]
+				})
 				.populate('option_products')
 				.populate('categorys')
 				.populate('subcategorys');
