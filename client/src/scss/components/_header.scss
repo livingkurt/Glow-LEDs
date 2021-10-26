@@ -4,6 +4,8 @@ header {
 	background-color: $theme_color_header;
 	color: $theme_color_phrase_font;
 	box-shadow: $bs_deep;
+	padding: 15px;
+	// padding-bottom: 10px;
 	// display: flex;
 	// align-items: center;
 	// justify-content: space-between;
@@ -21,16 +23,11 @@ header {
 }
 
 .header {
-	// background-color: $theme_color_header;
-	// color: $theme_color_phrase_font;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 15px;
-	list-style-type: none;
 
-	// position: fixed;
-	// height: 160px;
+	list-style-type: none;
 	right: 0;
 	left: 0;
 	z-index: 100;

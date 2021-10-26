@@ -951,64 +951,56 @@ const Header = (props) => {
 								)}
 							</div>
 						</div>
-						{width < 1107 && (
-							<div className="carousel-wrapper ">
-								<div className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem" style={{}}>
-									<div className="jc-c">
-										<form onSubmit={submitHandler} className="jc-c w-100per max-w-600px mb-10px">
-											<div className="jc-b ai-c search_container w-100per max-w-600px">
-												<div
-													ref={wrapperRef}
-													className="flex-container flex-column pos-rel w-100per max-w-600px"
-												>
-													<input
-														id="auto"
-														autoComplete="off"
-														onClick={() => setDisplay(true)}
-														className="form_input search mv-0px w-100per fs-16px"
-														placeholder="Find Your Glow Here"
-														value={search}
-														onChange={(e) => set_search(e.target.value)}
-													/>
-													{display && (
-														<div className="pos-abs bg-primary br-10px z-pos-10 w-100per max-w-600px">
-															{options
-																.filter(
-																	({ name }) =>
-																		name
-																			.toLowerCase()
-																			.indexOf(search.toLowerCase()) > -1
-																)
-																.slice(0, 20)
-																.map((value, i) => {
-																	return (
-																		<div
-																			onClick={() => update_list(value.name)}
-																			className="auto-option ai-c jc-b  p-5px z-pos-10"
-																			key={i}
-																			tabIndex="0"
-																		>
-																			<span
-																				className="fs-16px "
-																				style={{ color: 'white' }}
-																			>
-																				{value.name}
-																			</span>
-																		</div>
-																	);
-																})}
+						{/* {width < 1107 && ( */}
+						<form
+							onSubmit={submitHandler}
+							className="max-w-900px m-auto p-10px ph-20px br-10px w-100per  jc-c"
+						>
+							<div className="jc-b ai-c search_container w-100per max-w-600px">
+								<div
+									ref={wrapperRef}
+									className="flex-container flex-column pos-rel w-100per max-w-600px"
+								>
+									<input
+										id="auto"
+										autoComplete="off"
+										onClick={() => setDisplay(true)}
+										className="form_input search mv-0px w-100per fs-16px"
+										placeholder="Find Your Glow Here"
+										value={search}
+										onChange={(e) => set_search(e.target.value)}
+									/>
+									{display && (
+										<div className="pos-abs bg-primary br-10px z-pos-10 w-100per max-w-600px">
+											{options
+												.filter(
+													({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1
+												)
+												.slice(0, 20)
+												.map((value, i) => {
+													return (
+														<div
+															onClick={() => update_list(value.name)}
+															className="auto-option ai-c jc-b  p-5px z-pos-10"
+															key={i}
+															tabIndex="0"
+														>
+															<span className="fs-16px " style={{ color: 'white' }}>
+																{value.name}
+															</span>
 														</div>
-													)}
-												</div>
-												<button type="submit" className="btn primary w-50px fs-16px mb-0px">
-													<i className="fas fa-search" />
-												</button>
-											</div>
-										</form>
-									</div>
+													);
+												})}
+										</div>
+									)}
 								</div>
+								<button type="submit" className="btn primary w-50px fs-16px mb-0px">
+									<i className="fas fa-search" />
+								</button>
 							</div>
-						)}
+						</form>
+
+						{/* )} */}
 					</header>
 				</div>
 			</Headroom>
