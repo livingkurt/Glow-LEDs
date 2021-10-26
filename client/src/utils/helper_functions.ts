@@ -505,6 +505,54 @@ export const state_names = [
 	{ long_name: 'Wyoming', short_name: 'WY' }
 ];
 
+export const categories = [
+	'accessories',
+	'casings',
+	'decals',
+	'diffuser_caps',
+	'diffusers',
+	'exo_diffusers',
+	'glow_casings',
+	'glow_strings',
+	'glowskins'
+];
+export const subcategories = [
+	'battery_storage',
+	'batteries',
+	'stickers',
+	'clips',
+	'casings',
+	'universal',
+	'batman',
+	'outline',
+	'patterns',
+	'abstract',
+	'shapes',
+	'diffuser_adapters',
+	'geometric',
+	'starter_kit',
+	'sacred_geometry',
+	'imperfect',
+	'domes',
+	'closed_hole',
+	'fisheye',
+	'open_hole',
+	'polygons',
+	'cylinders',
+	'polyhedrons',
+	'gift_card',
+	'nova',
+	'classics',
+	'novaskins',
+	'alt_novaskins',
+	'symbols',
+	'emoji',
+	'custom',
+	'colors',
+	'sizes',
+	'secondary_colors'
+];
+
 export const homepage_videos = [
 	{
 		name: 'EXO Diffusers',

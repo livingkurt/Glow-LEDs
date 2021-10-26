@@ -9,7 +9,7 @@ import { HashLink } from 'react-router-hash-link';
 import { browser_check } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { API_Products } from '../../utils';
-import { humanize } from '../../utils/helper_functions';
+import { categories, humanize, subcategories } from '../../utils/helper_functions';
 
 const Header = (props) => {
 	const history = useHistory();
@@ -19,6 +19,7 @@ const Header = (props) => {
 	const [ options, set_options ] = useState([]);
 	const [ products, set_products ] = useState([]);
 	const [ slideshow, set_slideshow ] = useState([]);
+	const [ pathname, set_pathname ] = useState('');
 	const [ search, set_search ] = useState('');
 	const wrapperRef = useRef(null);
 
@@ -142,66 +143,19 @@ const Header = (props) => {
 		history.push('/collections/all/products?search=' + search);
 	};
 
-	const contentList = useSelector((state) => state.contentList);
-	const { contents } = contentList;
-
 	useEffect(() => {
 		// dispatch(listContents());
 		get_all_products();
 		return () => {};
 	}, []);
 
-	const categories = [
-		'accessories',
-		'casings',
-		'decals',
-		'diffuser_caps',
-		'diffusers',
-		'exo_diffusers',
-		'gift_card',
-		'glow_casings',
-		'glow_strings',
-		'glowskins',
-		'mega_diffuser_caps',
-		'options'
-	];
-	const subcategories = [
-		'battery_storage',
-		'batteries',
-		'stickers',
-		'clips',
-		'casings',
-		'universal',
-		'batman',
-		'outline',
-		'patterns',
-		'abstract',
-		'shapes',
-		'diffuser_adapters',
-		'geometric',
-		'starter_kit',
-		'sacred_geometry',
-		'imperfect',
-		'domes',
-		'closed_hole',
-		'fisheye',
-		'open_hole',
-		'polygons',
-		'cylinders',
-		'polyhedrons',
-		'gift_card',
-		'nova',
-		'classics',
-		'novaskins',
-		'alt_novaskins',
-		'symbols',
-		'emoji',
-		'mega_diffuser_adapters',
-		'custom',
-		'colors',
-		'sizes',
-		'secondary_colors'
-	];
+	useEffect(
+		() => {
+			set_pathname(history.location.pathname);
+			return () => {};
+		},
+		[ history.location.pathname ]
+	);
 
 	const get_all_products = async () => {
 		set_loading(true);
@@ -951,12 +905,14 @@ const Header = (props) => {
 								)}
 							</div>
 						</div>
-						{/* {width < 1107 && ( */}
+						{console.log({ location: pathname.length })}
+
 						<form
 							onSubmit={submitHandler}
 							className={`max-w-900px m-auto p-10px ph-20px br-10px w-100per mt-${width < 1107
 								? '15px'
 								: '5px'} jc-c`}
+							style={{ display: pathname === '/' ? 'none' : 'flex' }}
 						>
 							<div className="jc-b ai-c search_container w-100per max-w-600px">
 								<div
@@ -1001,8 +957,6 @@ const Header = (props) => {
 								</button>
 							</div>
 						</form>
-
-						{/* )} */}
 					</header>
 				</div>
 			</Headroom>
