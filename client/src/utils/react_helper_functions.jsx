@@ -460,16 +460,41 @@ export const determine_product_name = (item, show_qty, date) => {
 						{/* {item.size !== 0 && ' - ' + item.size} */}
 					</div>
 				);
+			} else {
+				return (
+					<div>
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
+						{item.color && '(' + item.color + ' Skin'}
+						{item.color && ' & '}
+						{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
+					</div>
+				);
 			}
 		} else if (item.subcategory === 'novaskins') {
-			return (
-				<div>
-					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
-					{item.color && '(' + item.color + ' Skin'}
-					{item.color && ' & '}
-					{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
-				</div>
-			);
+			if (item.name === 'Novaskins') {
+				return (
+					<div>
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
+						{item.size !== 0 && ' - ' + item.size} {item.color && '(' + item.color + ' Skin'}
+						{item.color && ' & '}
+						{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
+						{item.secondary_product_name &&
+							item.secondary_product_name.length > 0 &&
+							` - ${determine_secondary_product_name(item.secondary_product_name, item.category)}`}{' '}
+						{/* {item.size !== 0 && ' - ' + item.size} */}
+					</div>
+				);
+			}
+			// else {
+			// 	return (
+			// 		<div>
+			// 			{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
+			// 			{item.color && '(' + item.color + ' Skin'}
+			// 			{item.color && ' & '}
+			// 			{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
+			// 		</div>
+			// 	);
+			// }
 		} else if (item.name === 'Nanoskins') {
 			return (
 				<div>
@@ -619,6 +644,9 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			return name.split('-')[1].trim();
 		}
 		if (name.split('-')[0].trim() === 'Alt Novaskins w Nano Sleds') {
+			return name.split('-')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Novaskins') {
 			return name.split('-')[1].trim();
 		}
 		if (category === 'decals') {
