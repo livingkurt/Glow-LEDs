@@ -26,7 +26,8 @@ button {
 // 	background-color: #586086;
 // }
 .btn.primary {
-	background-color: $theme_color_primary;
+	// background-color: $theme_color_primary;
+	background: linear-gradient(180deg, $theme_color_primary 50%, $theme_color_secondary 100%);
 }
 
 .btn.primary:hover {

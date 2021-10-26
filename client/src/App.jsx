@@ -128,6 +128,7 @@ import Particles from 'react-particles-js';
 import particlesjs_config from './particlesjs_config.json';
 import { API_Users } from './utils';
 import { check_authentication } from './utils/react_helper_functions';
+import MarkAsShippedEmail from './components/EmailComponents/MarkAsShippedEmail';
 
 const App = (props) => {
 	const theme_colors = {
@@ -363,6 +364,11 @@ const App = (props) => {
 								path="/secure/glow/emails/order_status/:id?/:status?/:send?/:batch?/:message_to_user?"
 								exact={true}
 								component={OrderStatusEmail}
+							/>
+							<AdminRoute
+								path="/secure/glow/mark_as_shipped/:status?/:send?/:batch?/:message_to_user?"
+								exact={true}
+								component={MarkAsShippedEmail}
 							/>
 							<AdminRoute path="/secure/glow/emails/invoice" exact={true} component={InvoiceEmail} />
 							<AdminRoute

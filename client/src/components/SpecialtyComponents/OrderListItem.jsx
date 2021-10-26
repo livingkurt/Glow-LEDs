@@ -59,7 +59,7 @@ const OrderListItem = (props) => {
 	};
 
 	return (
-		<div className="container" style={{ backgroundColor: props.determine_color(props.order) }} key={props.key}>
+		<div className="container" style={{ backgroundColor: props.determine_color(props.order) }}>
 			<Loading loading={loading_label} />
 			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-50per jc-b ">

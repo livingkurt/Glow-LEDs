@@ -114,7 +114,7 @@ export const orderListReducer = (
 	},
 	action: { type: any; payload: any }
 ) => {
-	console.log({ orderListReducer: action.payload });
+	// console.log({ orderListReducer: action.payload });
 	switch (action.type) {
 		case ORDER_LIST_REQUEST:
 			return { loading: true };

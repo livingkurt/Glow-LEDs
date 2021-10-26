@@ -196,18 +196,6 @@ const OrdersPage = (props) => {
 		dispatch(listOrders(category, search, sortOrder, page));
 	};
 
-	const mark_as_shipped = async () => {
-		set_loading_mark_as_shipped(true);
-		const { data: orders } = await API_Orders.mark_as_shipped();
-		// console.log({ data });
-		// data.forEach(async (order) => {
-		await history.push(`/secure/glow/emails/order_status/${orders[0]._id}/shipped/true/true`);
-		// dispatch(update_order(orders[0], false, 'isShipped', 'shippedAt'));
-		// });
-
-		set_loading_mark_as_shipped(false);
-	};
-
 	// const [ finishStatus, setfinishStatus ] = useState(false);
 
 	// const onBackButtonEvent = (e) => {
@@ -231,6 +219,18 @@ const OrdersPage = (props) => {
 	// 		window.removeEventListener('popstate', onBackButtonEvent);
 	// 	};
 	// }, []);
+
+	useEffect(() => {
+		mark_as_shipped();
+		return () => {};
+	}, []);
+
+	const [ not_shipped, set_not_shipped ] = useState([]);
+	const mark_as_shipped = async () => {
+		const { data: orders } = await API_Orders.mark_as_shipped();
+		console.log({ orders });
+		set_not_shipped(orders);
+	};
 
 	return (
 		<div className="profile_container wrap column p-20px">
@@ -257,9 +257,13 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/combine_orders">
 					<button className="btn primary">Combine Orders</button>
 				</Link>
-				<button className="btn primary" onClick={(e) => mark_as_shipped(e)}>
-					Mark as Shipped
-				</button>
+				{not_shipped &&
+				not_shipped.length > 0 && (
+					<Link to="/secure/glow/mark_as_shipped/shipped/true">
+						<button className="btn primary">Mark as Shipped</button>
+					</Link>
+				)}
+
 				{/* <Link to="/secure/glow/editorder">
 					<button className="btn primary">Create Order</button>
 				</Link> */}

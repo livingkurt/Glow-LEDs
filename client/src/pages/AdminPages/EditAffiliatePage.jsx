@@ -4,6 +4,7 @@ import { saveAffiliate, detailsAffiliate } from '../../actions/affiliateActions'
 import { useHistory } from 'react-router-dom';
 import { DropdownDisplay, Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
+import { Prompt } from 'react-router';
 import { listUsers } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import { listChips } from '../../actions/chipActions';
@@ -358,6 +359,10 @@ const EditAffiliatePage = (props) => {
 						<div>Loading...</div>
 					) : ( */}
 					<Notification message={message} />
+					{/* <Prompt
+      when={shouldBlockNavigation}
+      message='You have unsaved changes, are you sure you want to leave?'
+    /> */}
 					<Loading loading={loading} error={error}>
 						{affiliate && (
 							<div>
