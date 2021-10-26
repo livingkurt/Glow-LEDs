@@ -954,7 +954,9 @@ const Header = (props) => {
 						{/* {width < 1107 && ( */}
 						<form
 							onSubmit={submitHandler}
-							className="max-w-900px m-auto p-10px ph-20px br-10px w-100per  jc-c"
+							className={`max-w-900px m-auto p-10px ph-20px br-10px w-100per mt-${width < 1107
+								? '15px'
+								: '5px'} jc-c`}
 						>
 							<div className="jc-b ai-c search_container w-100per max-w-600px">
 								<div
