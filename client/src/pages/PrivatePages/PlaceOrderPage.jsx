@@ -540,11 +540,18 @@ const PlaceOrderPage = (props) => {
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
 				}
-				set_show_message(
-					`${promo.promo_code.toUpperCase()} ${promo.percentage_off
-						? `${promo.percentage_off}% Off`
-						: `$${promo.amount_off} Off`}`
-				);
+				if (promo.percentage_off) {
+					set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
+				} else if (promo.amount_off) {
+					set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
+				} else if (promo.promo_code.toUpperCase() === 'SHIPPING') {
+					set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
+				}
+				// set_show_message(
+				// 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
+				// 		? `${promo.percentage_off}% Off`
+				// 		: `$${promo.amount_off} Off`}`
+				// );
 			}
 		}
 		set_show_promo_code_input_box(false);
