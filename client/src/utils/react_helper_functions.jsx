@@ -465,6 +465,16 @@ export const determine_product_name = (item, show_qty, date) => {
 					{item.size !== 0 && ' - ' + item.size}
 				</div>
 			);
+		} else if (item.name === 'Nano Glow Casings') {
+			return (
+				<div>
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}
+					{item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - ${determine_secondary_product_name(item.secondary_product_name, item.category)}`}{' '}
+					{item.size !== 0 && ' - ' + item.size}
+				</div>
+			);
 		} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 			return (
 				<div>
@@ -588,6 +598,9 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			return name.slice(0, -14);
 		}
 		if (name.split('-')[0].trim() === 'Nanoskins') {
+			return name.split('-')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Nano Glow Casings') {
 			return name.split('-')[1].trim();
 		}
 		if (category === 'decals') {
