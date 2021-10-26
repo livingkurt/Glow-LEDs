@@ -66,7 +66,7 @@ export default {
 				search = req.query.search
 					? {
 							category: {
-								$regex: req.query.search,
+								$regex: snake_case(req.query.search),
 								$options: 'i'
 							}
 						}
@@ -75,7 +75,7 @@ export default {
 				search = req.query.search
 					? {
 							subcategory: {
-								$regex: req.query.search,
+								$regex: snake_case(req.query.search),
 								$options: 'i'
 							}
 						}
@@ -84,12 +84,13 @@ export default {
 				search = req.query.search
 					? {
 							name: {
-								$regex: req.query.search,
+								$regex: req.query.search.toLowerCase(),
 								$options: 'i'
 							}
 						}
 					: {};
 			}
+			console.log({ search });
 
 			let sortOrder = {};
 			if (req.query.sortOrder === 'lowest') {

@@ -157,7 +157,7 @@ const AllProductsPage = (props) => {
 			determine_products();
 			return () => {};
 		},
-		[ props.match.params.category, props.match.params.subcategory ]
+		[ props.match.params.category, props.match.params.subcategory, props.location ]
 	);
 	// useEffect(
 	// 	() => {
@@ -208,7 +208,7 @@ const AllProductsPage = (props) => {
 					get_occurrences(category);
 				}
 			}
-			// console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
+			console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
 
 			dispatch(listProducts(category, subcategory, search, sort, filter, show_hidden, collection));
 		}
@@ -306,13 +306,7 @@ const AllProductsPage = (props) => {
 			</div>
 
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
-				<Search
-					search={search}
-					set_search={set_search}
-					search={search}
-					submitHandler={submitHandler}
-					category={category}
-				/>
+				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
