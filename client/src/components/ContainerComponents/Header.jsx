@@ -6,10 +6,11 @@ import { logout } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import Banner from './Banner';
 import { HashLink } from 'react-router-hash-link';
-import { browser_check } from '../../utils/react_helper_functions';
+import { browser_check, check_authentication } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { API_Products } from '../../utils';
 import { categories, humanize, subcategories } from '../../utils/helper_functions';
+import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 
 const Header = (props) => {
 	const history = useHistory();
@@ -151,7 +152,11 @@ const Header = (props) => {
 
 	useEffect(
 		() => {
+			console.log({ useEffect_pathname: history.location.pathname });
+			check_authentication();
 			set_pathname(history.location.pathname);
+			scroll.scrollTo(1);
+			// scroll.scrollTo(0);
 			return () => {};
 		},
 		[ history.location.pathname ]
@@ -194,14 +199,16 @@ const Header = (props) => {
 										</div>
 									</div>
 								</Link>
-								<button
-									className="btn mobile nav none fs-30px h-50px w-50px p-10px"
-									onClick={open_sidebar}
-									aria-label="sidebar"
-									style={{ fontSize: '30px !important' }}
-								>
-									<i className="fas fa-bars" />
-								</button>
+								{width < 1106 && (
+									<button
+										className="side-bar-open fs-30px h-50px w-50px p-10px"
+										onClick={open_sidebar}
+										aria-label="sidebar"
+										style={{ fontSize: '30px !important' }}
+									>
+										<i className="fas fa-bars" />
+									</button>
+								)}
 							</div>
 
 							<div className="column jc-c mh-auto">
@@ -906,57 +913,59 @@ const Header = (props) => {
 							</div>
 						</div>
 						{console.log({ location: pathname.length })}
-
-						<form
-							onSubmit={submitHandler}
-							className={`max-w-900px m-auto p-10px ph-20px br-10px w-100per mt-${width < 1107
-								? '15px'
-								: '5px'} jc-c`}
-							style={{ display: pathname === '/' ? 'none' : 'flex' }}
-						>
-							<div className="jc-b ai-c search_container w-100per max-w-600px">
-								<div
-									ref={wrapperRef}
-									className="flex-container flex-column pos-rel w-100per max-w-600px"
-								>
-									<input
-										id="auto"
-										autoComplete="off"
-										onClick={() => setDisplay(true)}
-										className="form_input search mv-0px w-100per fs-16px"
-										placeholder="Find Your Glow Here"
-										value={search}
-										onChange={(e) => set_search(e.target.value)}
-									/>
-									{display && (
-										<div className="pos-abs bg-primary br-10px z-pos-10 w-100per max-w-600px">
-											{options
-												.filter(
-													({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1
-												)
-												.slice(0, 20)
-												.map((value, i) => {
-													return (
-														<div
-															onClick={() => update_list(value.name)}
-															className="auto-option ai-c jc-b  p-5px z-pos-10"
-															key={i}
-															tabIndex="0"
-														>
-															<span className="fs-16px " style={{ color: 'white' }}>
-																{value.name}
-															</span>
-														</div>
-													);
-												})}
-										</div>
-									)}
+						{pathname.length > 1 && (
+							<form
+								onSubmit={submitHandler}
+								className={`max-w-900px m-auto p-10px ph-20px br-10px w-100per mt-${width < 1107
+									? '15px'
+									: '5px'} jc-c`}
+								style={{ display: pathname === '/' ? 'none' : 'flex' }}
+							>
+								<div className="jc-b ai-c search_container w-100per max-w-600px">
+									<div
+										ref={wrapperRef}
+										className="flex-container flex-column pos-rel w-100per max-w-600px"
+									>
+										<input
+											id="auto"
+											autoComplete="off"
+											onClick={() => setDisplay(true)}
+											className="form_input search mv-0px w-100per fs-16px"
+											placeholder="Find Your Glow Here"
+											value={search}
+											onChange={(e) => set_search(e.target.value)}
+										/>
+										{display && (
+											<div className="pos-abs bg-primary br-10px z-pos-10 w-100per max-w-600px">
+												{options
+													.filter(
+														({ name }) =>
+															name.toLowerCase().indexOf(search.toLowerCase()) > -1
+													)
+													.slice(0, 20)
+													.map((value, i) => {
+														return (
+															<div
+																onClick={() => update_list(value.name)}
+																className="auto-option ai-c jc-b  p-5px z-pos-10"
+																key={i}
+																tabIndex="0"
+															>
+																<span className="fs-16px " style={{ color: 'white' }}>
+																	{value.name}
+																</span>
+															</div>
+														);
+													})}
+											</div>
+										)}
+									</div>
+									<button type="submit" className="btn primary w-50px fs-16px mb-0px">
+										<i className="fas fa-search" />
+									</button>
 								</div>
-								<button type="submit" className="btn primary w-50px fs-16px mb-0px">
-									<i className="fas fa-search" />
-								</button>
-							</div>
-						</form>
+							</form>
+						)}
 					</header>
 				</div>
 			</Headroom>

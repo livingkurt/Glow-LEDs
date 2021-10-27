@@ -86,6 +86,22 @@ button {
 	box-shadow: $bs_deep;
 	background-color: gray;
 }
+.side-bar-open {
+	font-size: 30px !important;
+
+	background-color: transparent;
+	color: $theme_color_phrase_font;
+	border: 0px;
+	font-family: $phrase_font;
+	border-radius: $br_small_containers;
+	transition: all .5s ease;
+	padding: 10px;
+}
+
+.side-bar-open:hover {
+	box-shadow: $bs_deep;
+	background-color: gray;
+}
 
 // .nav-dropdown:hover {
 // 	box-shadow: $bs_deep;
