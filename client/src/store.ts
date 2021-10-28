@@ -88,7 +88,8 @@ import {
 	settingDeleteReducer,
 	settingDetailsReducer,
 	settingListReducer,
-	settingSaveReducer
+	settingSaveReducer,
+	showHideSearchBarReducer
 } from './reducers/settingReducers';
 import {
 	categoryDeleteReducer,
@@ -243,6 +244,7 @@ const reducer = combineReducers({
 	settingDetails: settingDetailsReducer,
 	settingSave: settingSaveReducer,
 	settingDelete: settingDeleteReducer,
+	showHideSearchBar: showHideSearchBarReducer,
 	categoryList: categoryListReducer,
 	categoryDetails: categoryDetailsReducer,
 	categorySave: categorySaveReducer,

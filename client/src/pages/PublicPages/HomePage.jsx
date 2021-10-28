@@ -8,6 +8,7 @@ import { categories, homepage_videos, humanize, subcategories } from '../../util
 import { API_Products } from '../../utils';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import { Loading } from '../../components/UtilityComponents';
+import { hide_search_bar, show_search_bar } from '../../actions/settingActions';
 
 const HomePage = (props) => {
 	const history = useHistory();
@@ -18,16 +19,24 @@ const HomePage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ slideshow, set_slideshow ] = useState([]);
 	const [ search, set_search ] = useState('');
+
 	const wrapperRef = useRef(null);
 
 	const { height, width } = useWindowDimensions();
 
 	useEffect(() => {
 		window.addEventListener('mousedown', handleClickOutside);
+
 		return () => {
 			window.removeEventListener('mousedown', handleClickOutside);
 		};
 	});
+	useEffect(() => {
+		dispatch(show_search_bar(false));
+		return () => {
+			dispatch(show_search_bar(true));
+		};
+	}, []);
 
 	const handleClickOutside = (event) => {
 		const { current: wrap } = wrapperRef;

@@ -10,7 +10,9 @@ import {
 	SETTING_SAVE_FAIL,
 	SETTING_DELETE_SUCCESS,
 	SETTING_DELETE_FAIL,
-	SETTING_DELETE_REQUEST
+	SETTING_DELETE_REQUEST,
+	SHOW_SEARCH_BAR,
+	HIDE_SEARCH_BAR
 } from '../constants/settingConstants';
 import axios from 'axios';
 
@@ -35,6 +37,28 @@ export const listSettings = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: SETTING_LIST_FAIL, payload: error });
 	}
 };
+export const show_search_bar = (show: boolean) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+	try {
+		if (show) {
+			console.log('show_search_bar');
+			dispatch({ type: SHOW_SEARCH_BAR, payload: show });
+			console.log('hide_search_bar');
+		} else {
+			dispatch({ type: HIDE_SEARCH_BAR, payload: show });
+		}
+	} catch (error) {
+		console.log({ error });
+	}
+};
+
+// export const hide_search_bar = () => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+// 	console.log('hide_search_bar');
+// 	try {
+// 		dispatch({ type: HIDE_SEARCH_BAR });
+// 	} catch (error) {
+// 		console.log({ error });
+// 	}
+// };
 
 export const saveSetting = (setting: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,

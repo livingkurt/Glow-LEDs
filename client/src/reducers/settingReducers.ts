@@ -10,7 +10,9 @@ import {
 	SETTING_SAVE_FAIL,
 	SETTING_DELETE_REQUEST,
 	SETTING_DELETE_SUCCESS,
-	SETTING_DELETE_FAIL
+	SETTING_DELETE_FAIL,
+	SHOW_SEARCH_BAR,
+	HIDE_SEARCH_BAR
 } from '../constants/settingConstants';
 
 export const settingListReducer = (state = { settings: [] }, action: { type: any; payload: any }) => {
@@ -34,6 +36,19 @@ export const settingDetailsReducer = (state = { setting: {} }, action: { type: a
 			return { loading: false, setting: action.payload, message: 'Setting Found' };
 		case SETTING_DETAILS_FAIL:
 			return { loading: false, error: action.payload.error, message: action.payload.message };
+		default:
+			return state;
+	}
+};
+
+export const showHideSearchBarReducer = (state = { setting: {} }, action: { type: any; payload: any }) => {
+	switch (action.type) {
+		case SHOW_SEARCH_BAR:
+			console.log({ SHOW_SEARCH_BAR: action.payload });
+			return { show: action.payload };
+		case HIDE_SEARCH_BAR:
+			console.log({ HIDE_SEARCH_BAR: action.payload });
+			return { show: action.payload };
 		default:
 			return state;
 	}

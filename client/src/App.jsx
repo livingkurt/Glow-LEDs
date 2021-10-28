@@ -99,8 +99,6 @@ import {
 	EventsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
-import { useSelector, useDispatch } from 'react-redux';
-
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { Notification, ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
@@ -140,7 +138,6 @@ const App = (props) => {
 	const { height, width } = useWindowDimensions();
 
 	const [ message, set_message ] = useState('');
-	const dispatch = useDispatch();
 	// const userLogin = useSelector((state) => state.userLogin);
 
 	check_authentication();
@@ -156,17 +153,6 @@ const App = (props) => {
 		document.documentElement.style.setProperty('--vh', `${vh}px`);
 	});
 
-	// const userUpdate = useSelector((state) => state.userUpdate);
-
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			set_first_name(userUpdate.userInfo.first_name);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
 	const debounce = (func, wait, immediate) => {
 		let timeout;
 		return function() {

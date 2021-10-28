@@ -11,6 +11,7 @@ import useWindowDimensions from '../Hooks/windowDimensions';
 import { API_Products } from '../../utils';
 import { categories, humanize, subcategories } from '../../utils/helper_functions';
 import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { hide_search_bar, show_search_bar } from '../../actions/settingActions';
 
 const Header = (props) => {
 	const history = useHistory();
@@ -25,6 +26,40 @@ const Header = (props) => {
 	const wrapperRef = useRef(null);
 
 	const { height, width } = useWindowDimensions();
+
+	const [ show_hide_search_bar, set_show_hide_search_bar ] = useState();
+	const showHideSearchBar = useSelector((state) => state.showHideSearchBar);
+	const { show } = showHideSearchBar;
+
+	// useEffect(
+	// 	() => {
+	// 		if (show) {
+	// 			console.log({ [history.location.pathname]: show });
+	// 			set_show_hide_search_bar(show);
+	// 		}
+
+	// 		return () => {};
+	// 	},
+	// 	[ show ]
+	// );
+
+	// useEffect(
+	// 	() => {
+	// 		console.log({ useEffect_pathname: history.location.pathname });
+	// 		check_authentication();
+	// 		set_pathname(history.location.pathname);
+	// 		scroll.scrollTo(2);
+	// 		// scroll.scrollTo(0);
+	// 		return () => {};
+	// 	},
+	// 	[ history.location.pathname ]
+	// );
+	// useEffect(() => {
+	// 	dispatch(show_search_bar(true));
+	// 	return () => {
+	// 		dispatch(show_search_bar(false));
+	// 	};
+	// }, []);
 
 	useEffect(() => {
 		window.addEventListener('mousedown', handleClickOutside);
@@ -149,18 +184,6 @@ const Header = (props) => {
 		get_all_products();
 		return () => {};
 	}, []);
-
-	useEffect(
-		() => {
-			console.log({ useEffect_pathname: history.location.pathname });
-			check_authentication();
-			set_pathname(history.location.pathname);
-			scroll.scrollTo(1);
-			// scroll.scrollTo(0);
-			return () => {};
-		},
-		[ history.location.pathname ]
-	);
 
 	const get_all_products = async () => {
 		set_loading(true);
@@ -913,7 +936,7 @@ const Header = (props) => {
 							</div>
 						</div>
 						{console.log({ location: pathname.length })}
-						{pathname.length > 1 && (
+						{show && (
 							<form
 								onSubmit={submitHandler}
 								className={`max-w-900px m-auto p-10px ph-20px br-10px w-100per mt-${width < 1107

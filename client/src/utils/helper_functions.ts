@@ -507,7 +507,6 @@ export const state_names = [
 
 export const categories = [
 	'accessories',
-	'casings',
 	'decals',
 	'diffuser_caps',
 	'diffusers',
