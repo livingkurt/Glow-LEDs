@@ -27,39 +27,8 @@ const Header = (props) => {
 
 	const { height, width } = useWindowDimensions();
 
-	const [ show_hide_search_bar, set_show_hide_search_bar ] = useState();
 	const showHideSearchBar = useSelector((state) => state.showHideSearchBar);
 	const { show } = showHideSearchBar;
-
-	// useEffect(
-	// 	() => {
-	// 		if (show) {
-	// 			console.log({ [history.location.pathname]: show });
-	// 			set_show_hide_search_bar(show);
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ show ]
-	// );
-
-	// useEffect(
-	// 	() => {
-	// 		console.log({ useEffect_pathname: history.location.pathname });
-	// 		check_authentication();
-	// 		set_pathname(history.location.pathname);
-	// 		scroll.scrollTo(2);
-	// 		// scroll.scrollTo(0);
-	// 		return () => {};
-	// 	},
-	// 	[ history.location.pathname ]
-	// );
-	// useEffect(() => {
-	// 	dispatch(show_search_bar(true));
-	// 	return () => {
-	// 		dispatch(show_search_bar(false));
-	// 	};
-	// }, []);
 
 	useEffect(() => {
 		window.addEventListener('mousedown', handleClickOutside);
@@ -80,9 +49,6 @@ const Header = (props) => {
 	);
 
 	const cart = useSelector((state) => state.cart);
-
-	// const productList = useSelector((state) => state.productList);
-	// const { products, loading, error } = productList;
 
 	const { cartItems } = cart;
 
@@ -110,13 +76,6 @@ const Header = (props) => {
 		dispatch(logout(userInfo.refresh_token));
 		history.push('/account/login');
 	};
-
-	const navbarStyles = {
-		position: 'fixed',
-		width: '100%',
-		transition: 'top 0.2s'
-	};
-
 	const [ last_id, set_last_id ] = useState('');
 	const [ current_id, set_current_id ] = useState('');
 
@@ -202,10 +161,8 @@ const Header = (props) => {
 
 	return (
 		<div>
-			{/* <header id="overlay" style={{ ...navbarStyles, top: props.visible ? '0' : '-180px', zIndex: 1 }}> */}
 			<Headroom>
 				<div>
-					{/* <Banner visible={props.visible} style={{ zIndex: 1 }} /> */}
 					<Banner />
 					<header>
 						<div className="header">

@@ -44,10 +44,8 @@ export const settingDetailsReducer = (state = { setting: {} }, action: { type: a
 export const showHideSearchBarReducer = (state = { setting: {} }, action: { type: any; payload: any }) => {
 	switch (action.type) {
 		case SHOW_SEARCH_BAR:
-			console.log({ SHOW_SEARCH_BAR: action.payload });
 			return { show: action.payload };
 		case HIDE_SEARCH_BAR:
-			console.log({ HIDE_SEARCH_BAR: action.payload });
 			return { show: action.payload };
 		default:
 			return state;

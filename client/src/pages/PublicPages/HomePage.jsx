@@ -26,11 +26,11 @@ const HomePage = (props) => {
 
 	useEffect(() => {
 		window.addEventListener('mousedown', handleClickOutside);
-
 		return () => {
 			window.removeEventListener('mousedown', handleClickOutside);
 		};
 	});
+
 	useEffect(() => {
 		dispatch(show_search_bar(false));
 		return () => {

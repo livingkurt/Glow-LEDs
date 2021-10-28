@@ -37,28 +37,14 @@ export const listSettings = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: SETTING_LIST_FAIL, payload: error });
 	}
 };
-export const show_search_bar = (show: boolean) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-	try {
-		if (show) {
-			console.log('show_search_bar');
-			dispatch({ type: SHOW_SEARCH_BAR, payload: show });
-			console.log('hide_search_bar');
-		} else {
-			dispatch({ type: HIDE_SEARCH_BAR, payload: show });
-		}
-	} catch (error) {
-		console.log({ error });
+
+export const show_search_bar = (show: boolean) => async (dispatch: any) => {
+	if (show) {
+		dispatch({ type: SHOW_SEARCH_BAR, payload: show });
+	} else {
+		dispatch({ type: HIDE_SEARCH_BAR, payload: show });
 	}
 };
-
-// export const hide_search_bar = () => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-// 	console.log('hide_search_bar');
-// 	try {
-// 		dispatch({ type: HIDE_SEARCH_BAR });
-// 	} catch (error) {
-// 		console.log({ error });
-// 	}
-// };
 
 export const saveSetting = (setting: any) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,

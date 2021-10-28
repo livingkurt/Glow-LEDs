@@ -158,7 +158,8 @@ if (shipping_string) {
 
 const initialState: object = {
 	cart: { cartItems, shipping: shippingAddress, payment: {} },
-	userLogin: { userInfo: {} }
+	userLogin: { userInfo: {} },
+	showHideSearchBar: { show: true }
 };
 const reducer = combineReducers({
 	productList: productListReducer,
