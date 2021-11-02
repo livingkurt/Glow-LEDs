@@ -34,18 +34,3 @@
 		display: none;
 	}
 }
-
-li.active > a {
-	color: white;
-}
-
-li > a:hover {
-	color: white;
-}
-
-/*  Gives a little bit of buffer when header is navigated to */
-h2,
-h3 {
-	padding-top: 16px;
-	margin-top: -16px;
-}
