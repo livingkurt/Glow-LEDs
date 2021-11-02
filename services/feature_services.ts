@@ -19,7 +19,7 @@ export default {
 			} else if (query.sortOrder === 'facebook name') {
 				sortOrder = { facebook_name: 1 };
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { name: 1 };
+				sortOrder = { release_date: -1 };
 			}
 
 			return await feature_db.findAll_features_db(category, search, sortOrder);

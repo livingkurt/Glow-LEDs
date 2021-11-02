@@ -609,14 +609,14 @@ const HomePage = (props) => {
 									</div>
 									<div className="jc-c w-100per m-auto">
 										<p>{feature.song_id}</p>
-										<ReadMore
+										{/* <ReadMore
 											width={5000}
 											className="p_descriptions paragraph_font"
 											length={100}
 											pre={true}
 										>
 											{feature.description}
-										</ReadMore>
+										</ReadMore> */}
 									</div>
 								</div>
 								<div className="jc-c">
