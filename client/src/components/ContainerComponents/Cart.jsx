@@ -124,7 +124,7 @@ const Cart = (props) => {
 		} else if (item.category === 'featured') {
 			return `/collections/features/${item.category}`;
 		} else if (item.category === 'sponsored_artists') {
-			return `/collections/sponsors/${item.category}`;
+			return `/collections/all/sponsors/${item.category}`;
 		} else {
 			return `/pages/${item.category}`;
 		}

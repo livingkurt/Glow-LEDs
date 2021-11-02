@@ -67,11 +67,11 @@ const SponsorPage = (props) => {
 					<meta name="twitter:title" content={affiliate.artist_name + ' | Glow LEDs'} />
 					<link
 						rel="canonical"
-						href={'https://www.glow-leds.com/collections/sponsors/' + affiliate.pathname}
+						href={'https://www.glow-leds.com/collections/all/sponsors/' + affiliate.pathname}
 					/>
 					<meta
 						property="og:url"
-						content={'https://www.glow-leds.com/collections/sponsors/' + affiliate.pathname}
+						content={'https://www.glow-leds.com/collections/all/sponsors/' + affiliate.pathname}
 					/>
 					<meta name="description" content={affiliate.bio} />
 					<meta property="og:description" content={affiliate.bio} />
@@ -146,7 +146,7 @@ const SponsorPage = (props) => {
 								{console.log({ teams })}
 								{teams.map((team) => {
 									return (
-										<Link to={'/collections/teams/' + teams.pathname} className=" pos-rel">
+										<Link to={'/collections/all/teams/' + teams.pathname} className=" pos-rel">
 											<LazyImage
 												className="sponsor-image w-200px"
 												alt={team.name}
@@ -170,7 +170,7 @@ const SponsorPage = (props) => {
 								{teams.map((team, index) => {
 									return (
 										<Link
-											to={'/collections/teams/' + team.pathname}
+											to={'/collections/all/teams/' + team.pathname}
 											className="pos-rel"
 											key={index}
 										>

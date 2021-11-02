@@ -317,9 +317,9 @@ const MenuPage = (props) => {
 					return `/collections/all/products/${item.category}`;
 				}
 			} else if (pathname === 'featured') {
-				return `/collections/features/${item.category}`;
+				return `/collections/all/features/${item.category}`;
 			} else if (pathname === 'sponsored_artists') {
-				return `/collections/${item.category}`;
+				return `/collections/all/${item.category}`;
 			} else if (pathname === 'manuals') {
 				return `/pages/manual/${item.category}`;
 			} else if (pathname === 'support') {

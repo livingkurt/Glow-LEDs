@@ -396,12 +396,12 @@ const Sidebar = (props) => {
 						<div className="sidebar_dropdown_nested">
 							<button className="sidebar-btn secondary">Sponsored Artists</button>
 							<ul className="sidebar_dropdown_secondary_container" id="nested_sponsor_dropdown">
-								<Link to="/collections/sponsors">
+								<Link to="/collections/all/sponsors">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Sponsored Glovers
 									</button>
 								</Link>
-								<Link to="/collections/teams">
+								<Link to="/collections/all/teams">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Sponsored Teams
 									</button>

@@ -24,15 +24,15 @@ const AllTeamsPage = (props) => {
 				<title>Team | Glow LEDs</title>
 				<meta property="og:title" content="Teamd" />
 				<meta name="twitter:title" content="Teamd" />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/teams" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/teams" />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/all/teams" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/all/teams" />
 				<meta name="description" content={'Glow LEDs Glover Teams'} />
 				<meta property="og:description" content={'Glow LEDs Glover Teams'} />
 				<meta name="twitter:description" content={'Glow LEDs Glover Teams'} />
 			</Helmet>
 
 			<div className="jc-fe">
-				<Link to="/collections/sponsors">
+				<Link to="/collections/all/sponsors">
 					<button className="btn secondary ">Sponsored Artists</button>
 				</Link>
 			</div>

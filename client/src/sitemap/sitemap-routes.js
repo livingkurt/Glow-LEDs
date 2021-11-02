@@ -29,14 +29,14 @@ export default (
 		<Route path="/pages/sitemap" exact={true} />
 		<Route path="/collections/features/:category?" exact={true} />
 		<Route path="/collections/features/:category/:pathname?" exact={true} />
-		<Route path="/collections/sponsors" exact={true} />
-		<Route path="/collections/sponsors/:promo_code?" exact={true} />
-		<Route path="/collections/teams/category/:category?" exact={true} />
+		<Route path="/collections/all/sponsors" exact={true} />
+		<Route path="/collections/all/sponsors/:promo_code?" exact={true} />
+		<Route path="/collections/all/teams/category/:category?" exact={true} />
 		<Route path="/account/feature/receipt/:pathname/:status/:send?" />
 		<Route path="/account/affiliate/receipt/:pathname/:status/:send?" />
 		<Route path="/account/submit_feature" />
-		<Route path="/collections/teams" exact={true} />
-		<Route path="/collections/teams/:pathname?" exact={true} />
+		<Route path="/collections/all/teams" exact={true} />
+		<Route path="/collections/all/teams/:pathname?" exact={true} />
 		<Route path="/pages/music" exact={true} />
 		<Route path="/" exact={true} />
 		<Route path="/pages/track_your_order" exact={true} />

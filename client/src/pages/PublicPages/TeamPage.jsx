@@ -55,7 +55,7 @@ const TeamPage = (props) => {
 						<button className="btn secondary" onClick={() => history.goBack()}>
 							Back
 						</button>
-						{/* <Link to="/collections/teams">
+						{/* <Link to="/collections/all/teams">
 							<button className="btn secondary">Back to Teams</button>
 						</Link> */}
 						{userInfo &&
@@ -165,7 +165,7 @@ const TeamPage = (props) => {
 							team.affiliates.map((affiliate, index) => {
 								return (
 									<Link
-										to={'/collections/sponsors/' + affiliate.pathname}
+										to={'/collections/all/sponsors/' + affiliate.pathname}
 										className="pos-rel"
 										key={index}
 									>

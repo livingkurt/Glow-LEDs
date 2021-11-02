@@ -32,7 +32,7 @@ const AllSponsorsPage = (props) => {
 			</Helmet>
 
 			<div className="jc-fe">
-				<Link to="/collections/teams">
+				<Link to="/collections/all/teams">
 					<button className="btn secondary ">Sponsored Teams</button>
 				</Link>
 			</div>
