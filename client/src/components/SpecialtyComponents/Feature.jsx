@@ -36,7 +36,9 @@ const Feature = (props) => {
 									src={props.product.images && props.product.images[0]} 
 								/> */}
 
-							<label style={{ fontSize: '1.6rem' }}>{props.feature.artist_name}</label>
+							<label style={{ fontSize: '1.6rem' }} className="m-5px">
+								{props.feature.artist_name}
+							</label>
 							{/* <label style={{ fontSize: '1.3rem' }}>{props.feature.song_id}</label> */}
 							<label style={{ fontSize: '1.3rem' }}>
 								{props.feature.product && humanize(props.feature.product)}

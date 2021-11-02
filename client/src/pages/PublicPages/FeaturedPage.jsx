@@ -73,7 +73,7 @@ const FeaturedPage = (props) => {
 						<div className="jc-c pos-rel">
 							<div className="iframe-container">
 								<iframe
-                title="feature"
+									title="feature"
 									width="996"
 									height="560"
 									style={{ borderRadius: '20px' }}
@@ -92,7 +92,11 @@ const FeaturedPage = (props) => {
 									// <Zoom className="m-auto">
 									<div className="m-auto">
 										{/* <div className="responsive_container"> */}
-										<img className="m-1rem br-15px  h-auto ta-c responsive_img" alt="Feature" src={image} />
+										<img
+											className="m-1rem br-15px  h-auto ta-c responsive_img"
+											alt="Feature"
+											src={image}
+										/>
 										{/* </div> */}
 									</div>
 									// </Zoom>
@@ -103,10 +107,24 @@ const FeaturedPage = (props) => {
 					{/* <p className="p_descriptions" style={{ textAlign: 'center', marginBottom: 0 }}>
 						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
 					</p> */}
-
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Follow {feature.facebook_name} on Facebook and @{feature.instagram_handle} on Instagram
-					</p>
+					<div className="mt-2rem wrap jc-c ">
+						<div className="ml-10px fs-30px jc-b w-100per max-w-500px">
+							{feature.facebook_name && (
+								<div className="ml-10px fs-40px">
+									<a href={feature.facebook_name} target="_blank" rel="noopener noreferrer">
+										<i className="fab fa-facebook zoom" />
+									</a>
+								</div>
+							)}
+							{feature.instagram_handle && (
+								<div className="ml-10px fs-40px">
+									<a href={feature.instagram_handle} target="_blank" rel="noopener noreferrer">
+										<i className="fab fa-instagram zoom" />
+									</a>
+								</div>
+							)}
+						</div>
+					</div>
 					{feature.song_id && (
 						<p className="p_descriptions" style={{ textAlign: 'center' }}>
 							Song ID: {feature.song_id}
@@ -121,9 +139,11 @@ const FeaturedPage = (props) => {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
-								{feature.product ? humanize(feature.product) : `See More from ${feature.artist_name}`}
-							</button>
+							{feature.product && (
+								<button className="btn primary " style={{ margin: 'auto', marginBottom: '10px' }}>
+									{humanize(feature.product)}
+								</button>
+							)}
 						</a>
 					</div>
 				</div>
