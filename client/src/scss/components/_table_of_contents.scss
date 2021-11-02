@@ -1,34 +1,38 @@
 @use '../abstracts' as *;
-// main {
-// 	max-width: 800px;
-// 	background-color: #161822;
-// 	padding: 16px;
-// 	border-radius: 8px;
-// 	margin-left: 8px;
-// }
 
-.heading-nav {
-	width: 220px;
-	min-width: 220px;
+.faq-container {
+	// max-width: 1050px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.faq-main {
+	// max-width: 800px;
+	// background-color: #161822;
+	padding: 16px;
+	border-radius: 8px;
+	margin-left: 8px;
+}
+
+.faq-nav {
+	width: 380px;
+	min-width: 380px;
 	padding: 16px;
 	margin: 8px;
 	align-self: flex-start;
 	position: -webkit-sticky; /* Safari */
 	position: sticky;
-	top: 48px;
+	top: 223px;
 	max-height: calc(100vh - 70px);
 	overflow: auto;
 }
 
-@media screen and (max-width: 900px) {
-	.heading-nav {
+@media screen and (max-width: 1400px) {
+	.faq-nav {
 		display: none;
 	}
-}
-
-a {
-	color: #a6acc9;
-	text-decoration: none;
 }
 
 li.active > a {

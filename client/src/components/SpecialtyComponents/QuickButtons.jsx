@@ -7,9 +7,10 @@ import { Link } from 'react-router-dom';
 const Headings = ({ headings, activeId }) => (
 	<ul>
 		{headings.map((heading) => (
-			<li key={heading.id} className={heading.id === activeId ? 'active' : ''}>
+			<li key={heading.id} className={heading.id === activeId ? 'mv-10px active' : 'mv-10px'}>
 				<Link
 					to={`#${heading.id}`}
+					className="title_font"
 					onClick={(e) => {
 						e.preventDefault();
 						document.querySelector(`#${heading.id}`).scrollIntoView({
@@ -17,14 +18,18 @@ const Headings = ({ headings, activeId }) => (
 						});
 					}}
 				>
-					{heading.title}
+					• {heading.title}
 				</Link>
 				{heading.items.length > 0 && (
 					<ul>
 						{heading.items.map((child) => (
-							<li key={child.id} className={child.id === activeId ? 'active' : ''}>
+							<li
+								key={child.id}
+								className={child.id === activeId ? 'mv-10px ml-10px active' : 'mv-10px ml-10px'}
+							>
 								<Link
 									to={`#${child.id}`}
+									className="phrase_font"
 									onClick={(e) => {
 										e.preventDefault();
 										document.querySelector(`#${child.id}`).scrollIntoView({
@@ -32,7 +37,7 @@ const Headings = ({ headings, activeId }) => (
 										});
 									}}
 								>
-									{child.title}
+									- {child.title}
 								</Link>
 							</li>
 						))}
@@ -136,7 +141,7 @@ const QuickButtons = () => {
 	useIntersectionObserver(setActiveId);
 
 	return (
-		<nav className="heading-nav" aria-label="Table of contents">
+		<nav className="faq-nav" aria-label="Table of contents">
 			<Headings headings={nestedHeadings} activeId={activeId} />
 		</nav>
 	);
