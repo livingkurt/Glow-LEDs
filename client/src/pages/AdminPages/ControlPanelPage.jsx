@@ -308,6 +308,7 @@ const ControlPanelPage = (props) => {
 					<div className="fs-30px">{duration_of_opening().toFixed(0)}</div>
 				</div>
 			</div>
+			
 			{/* <div className="mv-2rem">
 				<h2 className="mr-1rem">Monthly Expenses</h2>
 				<div className="row">

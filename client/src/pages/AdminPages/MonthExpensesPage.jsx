@@ -42,6 +42,7 @@ const MonthExpensesPage = (props) => {
 	const [ orders, set_orders ] = useState([]);
 	const [ month, set_month ] = useState(props.match.params.month);
 	const [ year, set_year ] = useState(this_year);
+	const [ loading, set_loading ] = useState(false);
 
 	useEffect(
 		() => {
@@ -76,13 +77,15 @@ const MonthExpensesPage = (props) => {
 	};
 
 	const get_month_income = async (start_date, end_date) => {
+		set_loading(true);
 		const { data: orders } = await API_Orders.monthly_income(start_date, end_date);
 		const { data: expenses } = await API_Orders.monthly_expenses(start_date, end_date);
-
-		set_expenses(expenses.data);
+		console.log({ expenses });
+		set_expenses(expenses);
 		set_orders(orders);
+		set_loading(false);
 	};
-	
+
 	const expenses_pie_multiplier = 360 / 5;
 	let num_1 = -expenses_pie_multiplier;
 
@@ -284,7 +287,7 @@ const MonthExpensesPage = (props) => {
 					</div>
 				</div>
 			)}
-			<Loading loading={orders.length === 0} />
+			{/* <Loading loading={loading} /> */}
 			{orders &&
 			orders.length > 0 && (
 				<div>
@@ -313,12 +316,6 @@ const MonthExpensesPage = (props) => {
 											>
 												<th style={{ padding: '15px' }}>{toCapitalize(humanize(category))}</th>
 												<th style={{ padding: '15px' }}>
-													{console.log({
-														orderItems: orders
-															.map((order) => order.orderItems)
-															.flat(1)
-															.filter((item) => item.category === category)
-													})}
 													${orders && orders.length > 0 ? (
 														orders
 															.map((order) => order.orderItems)
@@ -344,7 +341,7 @@ const MonthExpensesPage = (props) => {
 					</div>
 				</div>
 			)}
-			<Loading loading={expenses.length === 0} />
+			{/* <Loading loading={expenses.length === 0} /> */}
 			{expenses &&
 			expenses.length > 0 && (
 				<div>
