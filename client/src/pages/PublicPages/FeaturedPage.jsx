@@ -118,7 +118,11 @@ const FeaturedPage = (props) => {
 							)}
 							{feature.instagram_handle && (
 								<div className="ml-10px fs-40px">
-									<a href={feature.instagram_handle} target="_blank" rel="noopener noreferrer">
+									<a
+										href={'https://www.instagram.com/' + feature.instagram_handle}
+										target="_blank"
+										rel="noopener noreferrer"
+									>
 										<i className="fab fa-instagram zoom" />
 									</a>
 								</div>
