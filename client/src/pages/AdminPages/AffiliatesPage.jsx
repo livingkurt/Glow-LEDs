@@ -239,7 +239,7 @@ const AffiliatesPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(affiliate),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										{/* <td className="p-10px">{affiliate._id}</td> */}

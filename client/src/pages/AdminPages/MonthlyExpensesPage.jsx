@@ -542,7 +542,7 @@ const MonthlyExpensesPage = (props) => {
 			<Loading loading={monthly_income.length === 0} />
 			{monthly_income &&
 			monthly_income.length > 0 && (
-				<div className="jc-b">
+				<div className="jc-b mb-1rem">
 					<div>
 						<h2>{year} Income</h2>
 						<div className="fs-30px">

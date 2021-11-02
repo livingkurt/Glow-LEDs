@@ -271,7 +271,7 @@ const ExpensesPage = (props) => {
 									// key={expense._id}
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem'
+										fontSize: '16px'
 									}}
 								>
 									<td className="p-10px">
@@ -335,7 +335,7 @@ const ExpensesPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(expense),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">{expense._id}</td>

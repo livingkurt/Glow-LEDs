@@ -136,7 +136,7 @@ const LogsPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(log),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">{format_date(log.createdAt)} </td>

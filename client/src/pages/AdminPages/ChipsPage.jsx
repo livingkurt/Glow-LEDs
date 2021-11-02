@@ -156,7 +156,7 @@ const ChipsPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(chip),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">{chip._id}</td>

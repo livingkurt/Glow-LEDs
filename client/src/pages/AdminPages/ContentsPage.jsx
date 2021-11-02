@@ -98,7 +98,7 @@ const ContentsPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: '#3e4c6d',
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">

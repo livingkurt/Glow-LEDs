@@ -308,7 +308,7 @@ const ControlPanelPage = (props) => {
 					<div className="fs-30px">{duration_of_opening().toFixed(0)}</div>
 				</div>
 			</div>
-			
+
 			{/* <div className="mv-2rem">
 				<h2 className="mr-1rem">Monthly Expenses</h2>
 				<div className="row">
@@ -415,7 +415,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -430,7 +430,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -445,7 +445,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -460,7 +460,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -473,7 +473,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -486,7 +486,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -519,7 +519,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 									className=""
@@ -532,7 +532,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 									className=""
@@ -549,7 +549,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 									className=""
@@ -567,7 +567,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -578,7 +578,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -588,7 +588,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 								>
@@ -599,7 +599,7 @@ const ControlPanelPage = (props) => {
 									<tr
 										style={{
 											backgroundColor: '#626262',
-											fontSize: '1.4rem',
+											fontSize: '16px',
 											height: '50px'
 										}}
 									>
@@ -612,7 +612,7 @@ const ControlPanelPage = (props) => {
 									<tr
 										style={{
 											backgroundColor: '#626262',
-											fontSize: '1.4rem',
+											fontSize: '16px',
 											height: '50px'
 										}}
 									>
@@ -624,7 +624,7 @@ const ControlPanelPage = (props) => {
 									<tr
 										style={{
 											backgroundColor: '#626262',
-											fontSize: '1.4rem',
+											fontSize: '16px',
 											height: '50px'
 										}}
 									>
@@ -636,7 +636,7 @@ const ControlPanelPage = (props) => {
 									<tr
 										style={{
 											backgroundColor: '#626262',
-											fontSize: '1.4rem',
+											fontSize: '16px',
 											height: '50px'
 										}}
 									>
@@ -669,7 +669,7 @@ const ControlPanelPage = (props) => {
 										<tr
 											style={{
 												backgroundColor: '#626262',
-												fontSize: '1.4rem',
+												fontSize: '16px',
 												height: '50px'
 											}}
 											className=""
@@ -703,7 +703,7 @@ const ControlPanelPage = (props) => {
 								<tr
 									style={{
 										backgroundColor: '#626262',
-										fontSize: '1.4rem',
+										fontSize: '16px',
 										height: '50px'
 									}}
 									className=""

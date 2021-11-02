@@ -4,6 +4,7 @@
 	width: 100%;
 	border-radius: $br_small_containers;
 	border-collapse: separate !important;
+	font-family: $title_font;
 }
 
 th {
@@ -39,6 +40,7 @@ th {
 
 tr {
 	border: 1px solid #a0a0a0;
+	font-family: $title_font;
 }
 
 .hide-row {

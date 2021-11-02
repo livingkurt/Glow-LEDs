@@ -119,7 +119,7 @@ const ProductItemD = (props) => {
 							</div>
 						</Link>
 
-						<label className="mt-5px title_font" style={{ fontSize: '1.4rem' }}>
+						<label className="mt-5px title_font" style={{ fontSize: '14px' }}>
 							{props.product.brand}
 						</label>
 						<Link

@@ -168,7 +168,7 @@ const PromosPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(promo),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">

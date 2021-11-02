@@ -12,7 +12,6 @@ import { Loading } from '../../components/UtilityComponents';
 import Overflow from 'react-overflow-indicator';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { listAffiliates } from '../../actions/affiliateActions';
-import { listPromos } from '../../actions/promoActions';
 
 const MonthExpensesPage = (props) => {
 	const this_year = props.match.params.year;
@@ -30,9 +29,8 @@ const MonthExpensesPage = (props) => {
 	const [ categories, set_categories ] = useState([]);
 	const [ canScroll, setCanScroll ] = useState(false);
 	const affiliateList = useSelector((state) => state.affiliateList);
-	const { affiliates, loading: loading_affiliates, error_affiliates } = affiliateList;
-	const promoList = useSelector((state) => state.promoList);
-	const { promos, loading: loading_promos, error_promos } = promoList;
+	const { affiliates, loading: loading_affiliates, error } = affiliateList;
+	console.log({ affiliates });
 
 	const dates_in_year = [
 		{ month: 'january', number_of_days: 31, start_date: this_year + '-01-01', end_date: this_year + '-01-31' },
@@ -67,7 +65,6 @@ const MonthExpensesPage = (props) => {
 		calculate_expenses(props.match.params.month);
 		get_all_categories();
 		dispatch(listAffiliates());
-		dispatch(listPromos());
 
 		return () => {};
 	}, []);
@@ -181,33 +178,28 @@ const MonthExpensesPage = (props) => {
 	};
 
 	const [ affiliate_colors, set_affiliate_colors ] = useState([]);
-	const [ promo_colors, set_promo_colors ] = useState([]);
 	const [ affiliate_code_usage, set_affiliate_code_usage ] = useState([]);
 	const affiliate_multiplier = 360 / [ ...affiliates, { promo_code: 'inkybois' } ].length;
 	let affiliate_num = -affiliate_multiplier;
-	const promo_multiplier = 360 / promos.length;
-	let promo_num = -promo_multiplier;
 
 	useEffect(
 		() => {
 			if (affiliates) {
 				determine_affiliate_colors();
-				// determine_affiliate_code_usage();
 			}
 			return () => {};
 		},
 		[ affiliates ]
 	);
-	useEffect(
-		() => {
-			if (promos) {
-				determine_promo_colors();
-				// determine_affiliate_code_usage();
-			}
-			return () => {};
-		},
-		[ promos ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		if (orders.length > 0) {
+	// 			determine_affiliate_code_usage();
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ orders ]
+	// );
 
 	const determine_affiliate_colors = () => {
 		const colors = [ ...affiliates, { promo_code: 'inkybois' } ].map((item) => {
@@ -218,152 +210,52 @@ const MonthExpensesPage = (props) => {
 		set_affiliate_colors(colors);
 	};
 
-	const determine_promo_colors = () => {
-		const colors = [ ...promos, { promo_code: 'inkybois' } ].map((item) => {
-			promo_num += promo_multiplier;
-			let color = hslToHex(promo_num, 25, 50);
-			return color;
+	const determine_affiliate_code_usage = () => {
+		const total_rows = [ ...affiliates, { promo_code: 'inkybois' } ].map((affiliate, index) => {
+			const code_usage = {
+				promo_code: affiliate.public_code && toCapitalize(affiliate.public_code.promo_code),
+				uses:
+					orders &&
+					orders.filter((order) => {
+						return (
+							order.promo_code.toLowerCase() === affiliate.public_code &&
+							affiliate.public_code.promo_code.toLowerCase()
+						);
+					}).length
+				// revenue: ` $${orders
+				// 	.filter(
+				// 		(order) =>
+				// 			order.promo_code &&
+				// 			order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				// 	)
+				// 	.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
+				// 	.toFixed(2)}`,
+				// earned: `$${affiliate.promoter
+				// 	? orders
+				// 			.filter(
+				// 				(order) =>
+				// 					order.promo_code &&
+				// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				// 			)
+				// 			.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+				// 			.toFixed(2)
+				// 	: orders
+				// 			.filter(
+				// 				(order) =>
+				// 					order.promo_code &&
+				// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+				// 			)
+				// 			.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+				// 			.toFixed(2)}`
+			};
+			return code_usage;
 		});
-		set_promo_colors(colors);
+		console.log({ total_rows });
+		// const sorted_total_rows = total_rows.sort(
+		// 	(a, b) => (parseInt(a.revenue.substring(2)) > parseInt(b.revenue.substring(2)) ? -1 : 1)
+		// );
+		// set_affiliate_code_usage(sorted_total_rows);
 	};
-
-	// const determine_affiliate_code_usage = () => {
-	// 	const total_rows = [ ...affiliates, { promo_code: 'inkybois' } ]
-	// 		.filter((affiliate) => affiliate.active)
-	// 		.map((affiliate) => {
-	// 			return {
-	// 				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
-	// 				Uses: orders.filter((order) => {
-	// 					return (
-	// 						order.promo_code &&
-	// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					);
-	// 				}).length,
-	// 				Revenue: ` $${orders
-	// 					.filter(
-	// 						(order) =>
-	// 							order.promo_code &&
-	// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					)
-	// 					.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-	// 					.toFixed(2)}`,
-	// 		Earned: `$${affiliate.promoter
-	// 			? orders
-	// 					.filter(
-	// 						(order) =>
-	// 							order.promo_code &&
-	// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					)
-	// 					.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-	// 					.toFixed(2)
-	// 			: orders
-	// 					.filter(
-	// 						(order) =>
-	// 							order.promo_code &&
-	// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					)
-	// 					.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-	// 					.toFixed(2)}`
-	// 	};
-	// });
-
-	// 	const sorted_total_rows = total_rows.sort(
-	// 		(a, b) => (parseInt(a.Revenue.substring(2)) > parseInt(b.Revenue.substring(2)) ? -1 : 1)
-	// 	);
-	// 	set_affiliate_code_usage(sorted_total_rows);
-	// };
-	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState();
-	const [ total_affiliate_promo_code_usage, set_total_affiliate_promo_code_usage ] = useState();
-	const [ total_affiliate_earned, set_total_affiliate_earned ] = useState();
-
-	const get_total = () => {
-		const uses = affiliates.map((affiliate) => {
-			return orders.filter((order) => {
-				return (
-					order.promo_code &&
-					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-				);
-			}).length;
-		});
-		set_total_affiliate_promo_code_usage(uses.reduce((a, c) => a + c, 0));
-		console.log({ uses });
-		const revenue = affiliates.map((affiliate) => {
-			return orders
-				.filter(
-					(order) =>
-						order.promo_code &&
-						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-				)
-				.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-				.toFixed(2);
-		});
-		set_total_affiliate_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
-		console.log({ revenue });
-		const earned = affiliates.map((affiliate) => {
-			return affiliate.promoter
-				? orders
-						.filter(
-							(order) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-						.toFixed(2)
-				: orders
-						.filter(
-							(order) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-						.toFixed(2);
-		});
-		set_total_affiliate_earned(earned.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
-		console.log({ earned });
-	};
-	useEffect(
-		() => {
-			if (orders && affiliates) {
-				get_total();
-			}
-
-			return () => {};
-		},
-		[ affiliates, orders ]
-	);
-
-	const [ total_promo_revenue, set_total_promo_revenue ] = useState();
-	const [ total_promo_promo_code_usage, set_total_promo_promo_code_usage ] = useState();
-
-	const get_total_promos = () => {
-		const uses = promos.map((promo) => {
-			return orders.filter((order) => {
-				return order.promo_code && order.promo_code.toLowerCase() === promo.promo_code.toLowerCase();
-			}).length;
-		});
-		set_total_promo_promo_code_usage(uses.reduce((a, c) => a + c, 0));
-		console.log({ uses });
-		const revenue = promos.map((promo) => {
-			return orders
-				.filter(
-					(order) => order.promo_code && order.promo_code.toLowerCase() === promo.promo_code.toLowerCase()
-				)
-				.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-				.toFixed(2);
-		});
-		set_total_promo_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
-		console.log({ revenue });
-	};
-	useEffect(
-		() => {
-			if (orders && promos) {
-				get_total_promos();
-			}
-
-			return () => {};
-		},
-		[ promos, orders ]
-	);
 
 	return (
 		<div className="main_container p-20px">
@@ -518,9 +410,6 @@ const MonthExpensesPage = (props) => {
 								{this_month} {year} Expenses
 							</Tab>
 							<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
-								{this_month} {year} Affiliate Code Usage
-							</Tab>
-							<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
 								{this_month} {year} Promo Code Usage
 							</Tab>
 						</TabList>
@@ -555,7 +444,7 @@ const MonthExpensesPage = (props) => {
 														key={index}
 														style={{
 															backgroundColor: '#626262',
-															fontSize: '16px',
+															fontSize: '1.6em',
 															height: '50px'
 														}}
 													>
@@ -621,7 +510,7 @@ const MonthExpensesPage = (props) => {
 													<tr
 														style={{
 															backgroundColor: '#626262',
-															fontSize: '16px',
+															fontSize: '1.6em',
 															height: '50px'
 														}}
 													>
@@ -656,8 +545,8 @@ const MonthExpensesPage = (props) => {
 				</TabPanel>
 				<TabPanel>
 					{/* <Loading loading={expenses.length === 0} /> */}
-					{affiliates &&
-					affiliates.length > 0 && (
+					{affiliate_code_usage &&
+					affiliate_code_usage.length > 0 && (
 						<div>
 							<h2 className="ta-c w-100per jc-c">
 								{this_month} {this_year} Promo Code Usage
@@ -675,6 +564,33 @@ const MonthExpensesPage = (props) => {
 												</tr>
 											</thead>
 											<tbody>
+												{/* {affiliate_code_usage.map(
+													(affiliate, index) =>
+														affiliate.public_code && (
+															<tr
+																style={{
+																	backgroundColor:
+																		affiliate_colors && affiliate_colors[index],
+																	fontSize: '1.6rem',
+																	height: '50px'
+																}}
+																// className="title_font"
+															>
+																<th style={{ padding: '15px' }}>
+																	{affiliate_code_usage.promo_code}
+																</th>
+																<th style={{ padding: '15px' }}>
+																	{affiliate_code_usage.uses}
+																</th>
+																<th style={{ padding: '15px' }}>
+																	{affiliate_code_usage.revenue}
+																</th>
+																<th style={{ padding: '15px' }}>
+																	{affiliate_code_usage.earned}
+																</th>
+															</tr>
+														)
+												)} */}
 												{[ ...affiliates, { promo_code: 'inkybois' } ].map(
 													(affiliate, index) =>
 														affiliate.public_code && (
@@ -757,105 +673,6 @@ const MonthExpensesPage = (props) => {
 														)
 												)}
 											</tbody>
-											<tfoot>
-												<tr>
-													<th>Total</th>
-													<th>{total_affiliate_promo_code_usage}</th>
-													<th>
-														${total_affiliate_revenue > 0 &&
-															total_affiliate_revenue.toFixed(2)}
-													</th>
-
-													<th>
-														${total_affiliate_earned > 0 &&
-															total_affiliate_earned.toFixed(2)}
-													</th>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					)}
-				</TabPanel>
-				<TabPanel>
-					{/* <Loading loading={expenses.length === 0} /> */}
-					{promos &&
-					promos.length > 0 && (
-						<div>
-							<h2 className="ta-c w-100per jc-c">
-								{this_month} {this_year} Promo Code Usage
-							</h2>
-							<div className="">
-								<div className="">
-									<div className="order-list responsive_table">
-										<table className="styled-table">
-											<thead>
-												<tr>
-													<th>Promo Code</th>
-													<th>Uses</th>
-													<th>Revenue</th>
-												</tr>
-											</thead>
-											<tbody>
-												{console.log({ promos })}
-												{promos
-													.filter(
-														(promo) =>
-															!affiliates
-																.map((affiliate) => affiliate.public_code.promo_code)
-																.includes(promo.promo_code.toLowerCase())
-													)
-													.map((promo, index) => (
-														<tr
-															style={{
-																backgroundColor: promo_colors && promo_colors[index],
-																height: '50px'
-															}}
-															// className="title_font"
-														>
-															<th style={{ padding: '15px' }}>
-																{toCapitalize(promo.promo_code)}
-															</th>
-															<th style={{ padding: '15px' }}>
-																{
-																	orders.filter((order) => {
-																		return (
-																			order.promo_code &&
-																			order.promo_code.toLowerCase() ===
-																				promo.promo_code.toLowerCase()
-																		);
-																	}).length
-																}
-															</th>
-															<th style={{ padding: '15px' }}>
-																${orders
-																	.filter(
-																		(order) =>
-																			order.promo_code &&
-																			order.promo_code.toLowerCase() ===
-																				promo.promo_code.toLowerCase()
-																	)
-																	.reduce(
-																		(a, order) =>
-																			a + order.totalPrice - order.taxPrice,
-																		0
-																	)
-																	.toFixed(2)}
-															</th>
-														</tr>
-													))}
-											</tbody>
-											<tfoot>
-												<tr>
-													<th>Total</th>
-													<th>{total_promo_promo_code_usage}</th>
-													<th>
-														${total_promo_revenue > 0 && total_promo_revenue.toFixed(2)}
-													</th>
-												</tr>
-											</tfoot>
 										</table>
 									</div>
 								</div>

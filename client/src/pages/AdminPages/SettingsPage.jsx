@@ -140,7 +140,7 @@ const SettingsPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(setting),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">

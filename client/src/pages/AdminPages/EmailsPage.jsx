@@ -183,7 +183,7 @@ const EmailsPage = (props) => {
 										key={index}
 										style={{
 											backgroundColor: determine_color(email),
-											fontSize: '1.4rem'
+											fontSize: '16px'
 										}}
 									>
 										<td className="p-10px">{email._id}</td>

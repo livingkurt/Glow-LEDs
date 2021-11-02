@@ -155,7 +155,7 @@ const GlowControlHomePage = (props) => {
 												key={index}
 												style={{
 													backgroundColor: '#3e4c6d',
-													fontSize: '1.4rem'
+													fontSize: '16px'
 												}}
 											>
 												<td>{device.device_name}</td>
