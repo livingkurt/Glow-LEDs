@@ -35,7 +35,8 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await affiliate_db.findAll_affiliates_db(search, sponsor, promoter, sortOrder);
+			const filter = { deleted: false, ...search };
+			return await affiliate_db.findAll_affiliates_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ error });
 			throw new Error(error.message);

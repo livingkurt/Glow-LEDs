@@ -3,14 +3,9 @@ import { Promo } from '../models';
 import { make_private_code } from '../util';
 
 export default {
-	findAll_affiliates_db: async (search: any, sponsor: any, promoter: any, sortOrder: any) => {
+	findAll_affiliates_db: async (filter: any, sortOrder: any) => {
 		try {
-			return await Affiliate.find({
-				deleted: false,
-				...search,
-				...sponsor,
-				...promoter
-			})
+			return await Affiliate.find(filter)
 				.sort(sortOrder)
 				.populate('user')
 				.populate('products')

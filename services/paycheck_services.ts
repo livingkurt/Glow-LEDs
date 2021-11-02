@@ -19,10 +19,10 @@ export default {
 			} else if (query.sortOrder === 'facebook name') {
 				sortOrder = { facebook_name: 1 };
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { name: 1 };
+				sortOrder = { _id: -1 };
 			}
-
-			return await paycheck_db.findAll_paychecks_db(category, search, sortOrder);
+			const filter = { deleted: false, ...category, ...search };
+			return await paycheck_db.findAll_paychecks_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_paychecks_s_error: error });
 			throw new Error(error.message);
