@@ -69,7 +69,7 @@ const orderItemSchema = new mongoose.Schema(
 		package_length: { type: Number },
 		package_width: { type: Number },
 		package_height: { type: Number },
-
+		is_manufacturered: { type: Boolean },
 		reviewed: { type: Boolean, default: false },
 		product_option: productOptionsSchema,
 		product: {

@@ -99,7 +99,7 @@ const AllFeaturesPage = (props) => {
 		console.log({ search });
 		e.preventDefault();
 		// history.push(
-		// 	'/collections/features/category' + category + '/' + subcategory + '?search=' + search
+		// 	'/collections/all/features/category' + category + '/' + subcategory + '?search=' + search
 		// );
 		history.push({
 			search: '?search=' + search

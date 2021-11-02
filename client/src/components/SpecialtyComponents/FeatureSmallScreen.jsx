@@ -7,7 +7,7 @@ import { LazyImage } from '../UtilityComponents';
 const FeatureSmallScreen = (props) => {
 	return (
 		<li key={props.feature._id} className=" w-100per" style={props.styles}>
-			<Link to={`/collections/features/${props.category.toLowerCase()}/${props.feature.pathname}`}>
+			<Link to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature.pathname}`}>
 				<div className="small_screen_product row">
 					<div className="">
 						<LazyImage

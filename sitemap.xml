@@ -345,8 +345,8 @@
 <url> <loc>https://glow-leds.com/pages/about</loc> </url>
 <url> <loc>https://glow-leds.com/pages/faq</loc> </url>
 <url> <loc>https://glow-leds.com/pages/sitemap</loc> </url>
-<url> <loc>https://glow-leds.com/collections/features/:category?</loc> </url>
-<url> <loc>https://glow-leds.com/collections/features/:category/:pathname?</loc> </url>
+<url> <loc>https://glow-leds.com/collections/all/features/:category?</loc> </url>
+<url> <loc>https://glow-leds.com/collections/all/features/:category/:pathname?</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/sponsors</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/sponsors/:promo_code?</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/teams/category/:category?</loc> </url>

@@ -27,8 +27,8 @@ export default (
 		<Route path="/pages/about" exact={true} />
 		<Route path="/pages/faq" exact={true} />
 		<Route path="/pages/sitemap" exact={true} />
-		<Route path="/collections/features/:category?" exact={true} />
-		<Route path="/collections/features/:category/:pathname?" exact={true} />
+		<Route path="/collections/all/features/:category?" exact={true} />
+		<Route path="/collections/all/features/:category/:pathname?" exact={true} />
 		<Route path="/collections/all/sponsors" exact={true} />
 		<Route path="/collections/all/sponsors/:promo_code?" exact={true} />
 		<Route path="/collections/all/teams/category/:category?" exact={true} />

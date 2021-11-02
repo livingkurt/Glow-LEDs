@@ -9,7 +9,7 @@ const Feature = (props) => {
 	console.log({ props });
 	return (
 		<li key={props.feature._id} style={{ ...props.styles, textDecoration: 'none' }}>
-			<Link to={`/collections/features/${props.category.toLowerCase()}/${props.feature.pathname}`}>
+			<Link to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature.pathname}`}>
 				<div className="tooltip">
 					<div className="tooltipoverlay">
 						<div className="product">
@@ -42,7 +42,8 @@ const Feature = (props) => {
 								{props.feature.product && humanize(props.feature.product)}
 							</label>
 							<Link
-								to={`/collections/features/${props.category.toLowerCase()}/${props.feature.pathname}`}
+								to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature
+									.pathname}`}
 							>
 								<label style={{ fontSize: '1.6rem' }}>{props.feature.name}</label>
 							</Link>

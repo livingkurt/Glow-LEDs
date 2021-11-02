@@ -122,7 +122,7 @@ const Cart = (props) => {
 				return `/collections/all/products/${item.category}`;
 			}
 		} else if (item.category === 'featured') {
-			return `/collections/features/${item.category}`;
+			return `/collections/all/features/${item.category}`;
 		} else if (item.category === 'sponsored_artists') {
 			return `/collections/all/sponsors/${item.category}`;
 		} else {

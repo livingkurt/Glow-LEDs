@@ -147,16 +147,16 @@ const Footer = () => {
 									<Link to="/pages/menu/sponsored_artists">Sponsored Artists</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/features/artists">Artists</Link>
+									<Link to="/collections/all/features/artists">Artists</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/features/glovers">Glovers</Link>
+									<Link to="/collections/all/features/category/glovers">Glovers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/features/producers">Producers</Link>
+									<Link to="/collections/all/features/producers">Producers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/features/vfx">VFX</Link>
+									<Link to="/collections/all/features/vfx">VFX</Link>
 								</li>
 							</ul>
 						</div>

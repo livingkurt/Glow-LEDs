@@ -414,23 +414,23 @@ const Sidebar = (props) => {
 								<i className="fas fa-sort-up" />
 							</button>
 						</div>
-						<Link to="/collections/features/artists">
+						<Link to="/collections/all/features/artists">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Artists
 							</button>
 						</Link>
-						<Link to="/collections/features/glovers">
+						<Link to="/collections/all/features/category/glovers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Glovers
 							</button>
 						</Link>
 
-						<Link to="/collections/features/producers">
+						<Link to="/collections/all/features/producers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Producers
 							</button>
 						</Link>
-						<Link to="/collections/features/vfx">
+						<Link to="/collections/all/features/vfx">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								VFX
 							</button>

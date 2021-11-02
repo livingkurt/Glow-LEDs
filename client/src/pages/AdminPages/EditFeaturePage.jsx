@@ -340,7 +340,7 @@ const EditFeaturePage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="facebook_name">Facebook Name</label>
+												<label htmlFor="facebook_name">Facebook Link</label>
 												<input
 													type="text"
 													name="facebook_name"

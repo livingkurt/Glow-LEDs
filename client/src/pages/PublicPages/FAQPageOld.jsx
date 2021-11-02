@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-import { QuickButtons } from '../../components/SpecialtyComponents';
 
 const FAQPage = () => {
 	return (
@@ -27,7 +26,6 @@ const FAQPage = () => {
 					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
 				/>
 			</Helmet>
-			<QuickButtons />
 			<div className="inner_content">
 				<div>
 					<h1 style={{ clear: 'both', textAlign: 'center' }} className="title_font">

@@ -573,7 +573,7 @@ const HomePage = (props) => {
 									{feature.show_image &&
 									feature.logo && (
 										<div className="m-auto jc-c max-w-300px">
-											<Link to={`/collections/features/glovers/${feature.pathname}`}>
+											<Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
 												<img
 													style={{ borderRadius: '20px', width: '100%' }}
 													src={feature.logo}
@@ -620,8 +620,10 @@ const HomePage = (props) => {
 									</div>
 								</div>
 								<div className="jc-c">
-									<Link to={`/collections/features/glovers/${feature.pathname}`}>
-										<button className="btn primary bob">Learn More About the Artist</button>
+									<Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
+										<button className="btn primary bob">
+											Learn More About {feature.artist_name}
+										</button>
 									</Link>
 								</div>
 							</div>

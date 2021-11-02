@@ -157,7 +157,7 @@ const SubmitFeaturePage = (props) => {
 		e.target.reset();
 		unset_state();
 		set_loading_submit(false);
-		// history.push('/collections/features/' + category.toLowerCase());
+		// history.push('/collections/all/features/' + category.toLowerCase());
 		// history.push('/secure/account/submission_complete');
 	};
 
@@ -321,12 +321,15 @@ const SubmitFeaturePage = (props) => {
 											/>
 										</li>
 										<li>
-											<label htmlFor="facebook_name">Facebook Name</label>
+											<label htmlFor="facebook_name">Facebook Link</label>
 											<input
 												type="text"
 												name="facebook_name"
 												value={facebook_name}
 												id="facebook_name"
+												placeholder="https://www.facebook.com/..."
+												onFocus={() => this.placeholder('')}
+												onBlur={() => this.placeholder('https://www.facebook.com/...')}
 												onChange={(e) => set_facebook_name(e.target.value)}
 											/>
 										</li>
