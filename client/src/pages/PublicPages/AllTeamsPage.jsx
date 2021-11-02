@@ -9,13 +9,15 @@ import { listTeams } from '../../actions/teamActions';
 const AllTeamsPage = (props) => {
 	const teamList = useSelector((state) => state.teamList);
 	const { teams, loading, error } = teamList;
+	console.log({ teams });
 	const dispatch = useDispatch();
+	const category = props.match.params.category ? props.match.params.category : '';
 
 	useEffect(
 		() => {
-			dispatch(listTeams());
+			dispatch(listTeams(category));
 		},
-		[ dispatch ]
+		[ category ]
 	);
 
 	return (

@@ -91,6 +91,7 @@ const EditAllDataPage = (props) => {
 		'contents',
 		'carts',
 		'affiliates',
+		'teams',
 		'paychecks'
 	];
 	const methods = [ 'get', 'updateMany' ];

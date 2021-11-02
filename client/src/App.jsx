@@ -389,6 +389,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
 							<AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
 							<AdminRoute path="/secure/glow/teams" component={TeamsPage} />
+							<AdminRoute path="/secure/glow/teams/category/:category" component={TeamsPage} />
 							<AdminRoute path="/secure/glow/chips" component={ChipsPage} />
 							<AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 

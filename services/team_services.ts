@@ -3,10 +3,10 @@ import { team_db } from '../db';
 export default {
 	findAll_teams_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
+			const promoter = query.category === 'rave_mob' ? { promoter: true } : {};
 			const search = query.search
 				? {
-						facebook_name: {
+						team_name: {
 							$regex: query.search,
 							$options: 'i'
 						}
@@ -27,7 +27,9 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await team_db.findAll_teams_db(category, search, sortOrder);
+			const filter = { deleted: false, ...promoter, ...search };
+			console.log({ filter });
+			return await team_db.findAll_teams_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_teams_s_error: error });
 			throw new Error(error.message);
