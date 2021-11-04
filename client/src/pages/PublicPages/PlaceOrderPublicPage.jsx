@@ -273,17 +273,17 @@ const PlaceOrderPublicPage = (props) => {
 				const new_count = item.countInStock - item.qty;
 				// console.log({ new_count });
 				const { data: res } = await API_Products.update_stock(item.product, new_count);
-				// console.log({ res });
-			} else if (item.product_option.finite_stock) {
-				const new_count = item.product_option.count_in_stock - item.qty;
-				// console.log({ new_count });
-				const { data: res } = await API_Products.update_product_option_stock(
-					item.product,
-					item.product_option,
-					new_count
-				);
-				// console.log({ res });
 			}
+			//  else if (item.product_option.finite_stock) {
+			// 	const new_count = item.product_option.count_in_stock - item.qty;
+			// 	// console.log({ new_count });
+			// 	const { data: res } = await API_Products.update_product_option_stock(
+			// 		item.product,
+			// 		item.product_option,
+			// 		new_count
+			// 	);
+			// 	// console.log({ res });
+			// }
 		});
 		if (promo_code) {
 			// const { data } = await API_Promos.get_promo(promo_code.toLowerCase());

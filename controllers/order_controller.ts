@@ -33,7 +33,7 @@ export default {
 				res.status(404).send('Order Not Found');
 			}
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
@@ -114,7 +114,7 @@ export default {
 				currentPage: parseInt(page)
 			});
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -125,7 +125,7 @@ export default {
 
 			res.send(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
@@ -136,7 +136,7 @@ export default {
 
 			res.send(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Your Orders' });
 		}
@@ -153,7 +153,7 @@ export default {
 				res.status(404).send('Order Not Found');
 			}
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Order' });
 		}
@@ -172,26 +172,44 @@ export default {
 				totalPrice: req.body.totalPrice,
 				order_note: req.body.order_note,
 				promo_code: req.body.promo_code,
-				parcel: req.body.parcel,
+				parcel: req.body.parcel || null,
 				isPaid: req.body.isPaid,
 				paidAt: req.body.isPaid ? today : null,
 				deleted: false
 			});
+			console.log({ create_user_order: newOrderCreated });
 			if (newOrderCreated) {
 				res.status(201).send(newOrderCreated);
 			} else {
 				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
 	},
 	create_guest_order: async (req: any, res: any) => {
 		try {
-			// console.log({ body: req.body });
-			const newOrderCreated = await Order.create({ ...req.body, guest: true });
+			console.log({ body: req.body });
+			// const newOrderCreated = await Order.create({ ...req.body, guest: true });
+			const newOrderCreated = await Order.create({
+				orderItems: req.body.orderItems,
+				user: req.body.user ? req.body.user._id : req.user._id,
+				shipping: req.body.shipping,
+				payment: req.body.payment,
+				itemsPrice: req.body.itemsPrice,
+				taxPrice: req.body.taxPrice,
+				shippingPrice: req.body.shippingPrice,
+				totalPrice: req.body.totalPrice,
+				order_note: req.body.order_note,
+				promo_code: req.body.promo_code,
+				parcel: req.body.parcel || null,
+				isPaid: req.body.isPaid,
+				paidAt: req.body.isPaid ? today : null,
+				deleted: false,
+				guest: true
+			});
 			// console.log({ newOrderCreated });
 
 			if (newOrderCreated) {
@@ -200,7 +218,7 @@ export default {
 				return res.status(500).send({ message: ' Error in Creating Order' });
 			}
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Creating Order' });
 		}
@@ -215,7 +233,7 @@ export default {
 				res.status(404).send({ message: 'Order not Updated' });
 			}
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Updating Order' });
 		}
@@ -230,7 +248,7 @@ export default {
 				res.send('Error in Deletion');
 			}
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
@@ -392,7 +410,7 @@ export default {
 				.populate('orderItems.secondary_product');
 			res.send(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -410,7 +428,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -433,7 +451,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -449,7 +467,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -465,7 +483,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -481,7 +499,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -499,7 +517,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -517,7 +535,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
@@ -534,7 +552,7 @@ export default {
 	// 		});
 	// 		res.json(orders);
 	// 	} catch (error) {
-	// 		// console.log({ error });
+	// console.log({ error });
 
 	// 		res.status(500).send({ error, message: 'Error Getting Orders' });
 	// 	}
@@ -552,7 +570,7 @@ export default {
 
 			res.json(orders);
 		} catch (error) {
-			// console.log({ error });
+			console.log({ error });
 
 			res.status(500).send({ error, message: 'Error Getting Orders' });
 		}
