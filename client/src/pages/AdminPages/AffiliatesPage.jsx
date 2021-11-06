@@ -72,7 +72,8 @@ const AffiliatesPage = (props) => {
 		{ name: 'Sponsor', color: '#3e4c6d' },
 		{ name: 'Promoter', color: '#7d5555' },
 		{ name: 'Team', color: '#557d6c' },
-		{ name: 'Not Active', color: '#757575' }
+		{ name: 'Not Active', color: '#757575' },
+		{ name: 'Rave Mob', color: '#55797d' }
 	];
 
 	const determine_color = (affiliate) => {
@@ -89,6 +90,9 @@ const AffiliatesPage = (props) => {
 		}
 		if (!affiliate.active) {
 			result = colors[3].color;
+		}
+		if (affiliate.rave_mob) {
+			result = colors[4].color;
 		}
 		return result;
 	};
@@ -229,6 +233,7 @@ const AffiliatesPage = (props) => {
 									<th>Private Code</th>
 									<th>Sponsor</th>
 									<th>Promotor</th>
+									<th>Rave Mob</th>
 									<th>Active</th>
 									<th>Actions</th>
 								</tr>
@@ -267,6 +272,13 @@ const AffiliatesPage = (props) => {
 										</td>
 										<td className="p-10px">
 											{affiliate.promoter ? (
+												<i className="fas fa-check-circle" />
+											) : (
+												<i className="fas fa-times-circle" />
+											)}
+										</td>
+										<td className="p-10px">
+											{affiliate.rave_mob ? (
 												<i className="fas fa-check-circle" />
 											) : (
 												<i className="fas fa-times-circle" />

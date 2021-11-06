@@ -539,6 +539,11 @@ const Sidebar = (props) => {
 					<ul className="sidebar_dropdown_container" id="featured_dropdown">
 						<div className="sidebar_dropdown_nested">
 							{/* <button className="sidebar-btn secondary">Sponsored Artists</button> */}
+							<Link to="/collections/all/teams/category/rave_mob">
+								<button className="sidebar-btn secondary" onClick={closeMenu}>
+									Rave Mob
+								</button>
+							</Link>
 							<div className="sidebar-btn-container">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Sponsored Artists

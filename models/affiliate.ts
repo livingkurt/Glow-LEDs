@@ -27,6 +27,7 @@ const affiliateSchema = new mongoose.Schema(
 		pathname: { type: String },
 		answers: { type: Array },
 		promoter: { type: Boolean, default: true },
+		rave_mob: { type: Boolean },
 		team: { type: Boolean, default: false },
 		sponsor: { type: Boolean, default: false },
 		active: { type: Boolean, default: true },

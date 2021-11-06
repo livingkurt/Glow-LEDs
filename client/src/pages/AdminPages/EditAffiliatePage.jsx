@@ -23,6 +23,7 @@ const EditAffiliatePage = (props) => {
 	const [ funds_generated, set_funds_generated ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ promoter, set_promoter ] = useState('');
+	const [ rave_mob, set_rave_mob ] = useState('');
 	const [ active, set_active ] = useState('');
 	const [ style, set_style ] = useState('');
 	const [ inspiration, set_inspiration ] = useState('');
@@ -73,6 +74,7 @@ const EditAffiliatePage = (props) => {
 
 		set_funds_generated(affiliate.funds_generated);
 		set_promoter(affiliate.promoter);
+		set_rave_mob(affiliate.rave_mob);
 		set_sponsor(affiliate.sponsor);
 		set_active(affiliate.active);
 		set_bio(affiliate.bio);
@@ -102,6 +104,7 @@ const EditAffiliatePage = (props) => {
 
 		set_funds_generated('');
 		set_promoter('');
+		set_rave_mob('');
 		set_sponsor('');
 		set_active('');
 		set_bio('');
@@ -176,6 +179,7 @@ const EditAffiliatePage = (props) => {
 				percentage_off,
 				sponsor,
 				promoter,
+				rave_mob,
 				active,
 				bio,
 				link,
@@ -703,6 +707,25 @@ const EditAffiliatePage = (props) => {
 														id="promoter"
 														onChange={(e) => {
 															set_promoter(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="rave_mob">Rave Mob</label>
+													<input
+														type="checkbox"
+														name="rave_mob"
+														// defaultChecked={rave_mob ? 'checked' : 'unchecked'}
+														// defaultValue={rave_mob}
+														defaultChecked={rave_mob}
+														// value={rave_mob ? '1' : '0'}
+														id="rave_mob"
+														onChange={(e) => {
+															set_rave_mob(e.target.checked);
 														}}
 													/>
 												</li>

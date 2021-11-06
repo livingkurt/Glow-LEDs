@@ -40,7 +40,7 @@ const AllTeamsPage = (props) => {
 			</div>
 			<div className="jc-c">
 				<div className="row">
-					<h1>Sponsored Teams</h1>
+					<h1>{props.match.params.category === 'rave_mob' ? 'Glow LEDs Rave Mobs' : 'Sponsored Teams'}</h1>
 				</div>
 			</div>
 

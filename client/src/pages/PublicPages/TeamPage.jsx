@@ -119,34 +119,38 @@ const TeamPage = (props) => {
 					<div className="jc-b ">
 						<div className="" style={{ flex: '1 1 70%' }}>
 							<h3 className="">Bio</h3>
-							<p className="p_descriptions ">{team.bio}</p>
-							<h3 className="">Follow {team.team_name} </h3>
-							<div className="mt-2rem wrap  ">
-								<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
-									<div className="fs-40px">
-										{team.facebook_name && (
-											<a
-												href={'https://www.facebook.com/' + team.facebook_name}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<i className="fab fa-facebook zoom" />
-											</a>
-										)}
-									</div>
-									<div className="ml-10px fs-40px">
-										{team.instagram_handle && (
-											<a
-												href={'https://www.instagram.com/' + team.instagram_handle}
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												<i className="fab fa-instagram zoom" />
-											</a>
-										)}
+							<pre className="p_descriptions ">{team.bio}</pre>
+							{(team.facebook_name || team.instagram_handle) && (
+								<div>
+									<h3 className="">Follow {team.team_name} </h3>
+									<div className="mt-2rem wrap  ">
+										<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
+											<div className="fs-40px">
+												{team.facebook_name && (
+													<a
+														href={'https://www.facebook.com/' + team.facebook_name}
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														<i className="fab fa-facebook zoom" />
+													</a>
+												)}
+											</div>
+											<div className="ml-10px fs-40px">
+												{team.instagram_handle && (
+													<a
+														href={'https://www.instagram.com/' + team.instagram_handle}
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														<i className="fab fa-instagram zoom" />
+													</a>
+												)}
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
+							)}
 						</div>
 						<div className="mt-2rem">
 							<LazyImage
@@ -164,23 +168,69 @@ const TeamPage = (props) => {
 						{team.affiliates &&
 							team.affiliates.map((affiliate, index) => {
 								return (
-									<Link
-										to={'/collections/all/sponsors/' + affiliate.pathname}
-										className="pos-rel"
-										key={index}
-									>
-										<img
-											className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
-											alt="Team Mate"
-											src={affiliate.picture}
-										/>
-										<h3
-											className="pos-abs fs-30px"
-											style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
-										>
-											{affiliate.artist_name}
-										</h3>
-									</Link>
+									<div className="pos-rel">
+										{affiliate.sponsor && (
+											<Link to={'/collections/all/sponsors/' + affiliate.pathname} key={index}>
+												<img
+													className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
+													alt="Team Mate"
+													src={affiliate.picture}
+												/>
+												<h3
+													className="pos-abs fs-30px"
+													style={{
+														top: '40%',
+														left: '50%',
+														transform: 'translate(-50%, -50%)'
+													}}
+												>
+													{affiliate.artist_name}
+												</h3>
+												<h4
+													className="pos-abs fs-16px title_font"
+													style={{
+														top: '70%',
+														left: '50%',
+														transform: 'translate(-50%, -50%)'
+													}}
+												>
+													Sponsored
+												</h4>
+											</Link>
+										)}
+										{!affiliate.sponsor && (
+											<a
+												href={
+													affiliate.instagram_handle ? (
+														'https://www.instagram.com/' + affiliate.instagram_handle
+													) : affiliate.facebook ? (
+														affiliate.facebook
+													) : (
+														''
+													)
+												}
+												target="_blank"
+												rel="noopener noreferrer"
+												key={index}
+											>
+												<img
+													className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
+													alt="Team Mate"
+													src={affiliate.picture}
+												/>
+												<h3
+													className="pos-abs fs-30px"
+													style={{
+														top: '40%',
+														left: '50%',
+														transform: 'translate(-50%, -50%)'
+													}}
+												>
+													{affiliate.artist_name}
+												</h3>
+											</a>
+										)}
+									</div>
 								);
 							})}
 					</div>

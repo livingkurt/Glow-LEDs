@@ -207,7 +207,7 @@ const SponsorPage = (props) => {
 										<div className="fs-40px">
 											{affiliate.facebook_name && (
 												<a
-													href={'https://www.facebook.com/' + affiliate.facebook_name}
+													href={affiliate.facebook_name}
 													target="_blank"
 													rel="noopener noreferrer"
 												>

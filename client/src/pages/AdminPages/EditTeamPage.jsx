@@ -392,11 +392,11 @@ const EditTeamPage = (props) => {
 													className="edit_product_textarea"
 													name="bio"
 													placeholder="Write a little something to introduce yourself..."
-													onFocus={() => this.placeholder('')}
-													onBlur={() =>
-														this.placeholder(
-															'Write a little something to introduce yourself...'
-														)}
+													// onFocus={() => this.placeholder('')}
+													// onBlur={() =>
+													// 	this.placeholder(
+													// 		'Write a little something to introduce yourself...'
+													// 	)}
 													defaultValue={bio}
 													id="bio"
 													onChange={(e) => set_bio(e.target.value)}
