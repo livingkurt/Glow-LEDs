@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveTeam, detailsTeam } from '../../actions/teamActions';
 import { useHistory } from 'react-router-dom';
-import { Loading } from '../../components/UtilityComponents';
+import { ImageDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import { listAffiliates } from '../../actions/affiliateActions';
@@ -20,10 +20,14 @@ const EditTeamPage = (props) => {
 	const [ promo_code, set_promo_code ] = useState('');
 	const [ sponsor, set_sponsor ] = useState('');
 	const [ promoter, set_promoter ] = useState('');
+	const [ rave_mob, set_rave_mob ] = useState('');
 	const [ active, set_active ] = useState('');
 	const [ bio, set_bio ] = useState('');
+	const [ map, set_map ] = useState('');
 	const [ link, set_link ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
+	const [ images, set_images ] = useState([]);
+	const [ image, set_image ] = useState('');
 	const [ picture, set_picture ] = useState('');
 	const [ video, set_video ] = useState('');
 	const [ public_code, set_public_code ] = useState('');
@@ -51,7 +55,10 @@ const EditTeamPage = (props) => {
 		set_percentage_off(team.percentage_off);
 		set_promo_code(team.promo_code);
 		set_promoter(team.promoter);
+		set_rave_mob(team.rave_mob);
 		set_sponsor(team.sponsor);
+		set_map(team.map);
+		set_images(team.images);
 		set_active(team.active);
 		set_bio(team.bio);
 		set_link(team.link);
@@ -71,7 +78,9 @@ const EditTeamPage = (props) => {
 		set_percentage_off('');
 		set_promo_code('');
 		set_promoter('');
+		set_rave_mob('');
 		set_sponsor('');
+		set_images('');
 		set_active('');
 		set_bio('');
 		set_link('');
@@ -133,9 +142,11 @@ const EditTeamPage = (props) => {
 				instagram_handle,
 				facebook_name,
 				percentage_off,
-				// promo_code,
+				images,
 				sponsor,
+				map,
 				promoter,
+				rave_mob,
 				active,
 				bio,
 				link,
@@ -351,6 +362,16 @@ const EditTeamPage = (props) => {
 												/>
 											</li>
 											<li>
+												<label htmlFor="map">Map</label>
+												<input
+													type="text"
+													name="map"
+													value={map}
+													id="map"
+													onChange={(e) => set_map(e.target.value)}
+												/>
+											</li>
+											<li>
 												<label htmlFor="video">Video</label>
 												<input
 													type="text"
@@ -468,6 +489,13 @@ const EditTeamPage = (props) => {
 													onChange={(e) => set_promo_code(e.target.value)}
 												/>
 											</li> */}
+											<ImageDisplay
+												images={images}
+												set_images={set_images}
+												image={image}
+												set_image={set_image}
+												name={'Images'}
+											/>
 											<li>
 												<label htmlFor="promo">Public Code</label>
 												<div className="ai-c h-25px mv-15px jc-c">
@@ -552,6 +580,25 @@ const EditTeamPage = (props) => {
 														id="sponsor"
 														onChange={(e) => {
 															set_sponsor(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="rave_mob">Rave Mob</label>
+													<input
+														type="checkbox"
+														name="rave_mob"
+														// defaultChecked={rave_mob ? 'checked' : 'unchecked'}
+														// defaultValue={rave_mob}
+														defaultChecked={rave_mob}
+														// value={rave_mob ? '1' : '0'}
+														id="rave_mob"
+														onChange={(e) => {
+															set_rave_mob(e.target.checked);
 														}}
 													/>
 												</li>

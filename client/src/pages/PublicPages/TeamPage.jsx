@@ -234,6 +234,34 @@ const TeamPage = (props) => {
 								);
 							})}
 					</div>
+					{team.rave_mob && (
+						<div>
+							<h3 className="ta-c"> {team.team_name} Meetup Map</h3>
+							<div className="mt-2rem jc-c">
+								<LazyImage
+									className="sponsor-image sponsor_image_big "
+									alt={team.name}
+									title="Sponsor Image"
+									size={{ height: 'auto', width: '100%' }}
+									effect="blur"
+									src={team.map}
+								/>
+							</div>
+							<h3 className="ta-c"> {team.team_name} Moments in Time</h3>
+							<div className="mt-2rem ta-c jc-a wrap">
+								{team.images.map((image) => (
+									<LazyImage
+										className="sponsor-image sponsor_image_big"
+										alt={team.name}
+										title="Sponsor Image"
+										size={{ height: 'auto', width: '100%' }}
+										effect="blur"
+										src={image}
+									/>
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 			)}
 		</div>
