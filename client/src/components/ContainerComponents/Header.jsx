@@ -895,7 +895,6 @@ const Header = (props) => {
 								)}
 							</div>
 						</div>
-						{console.log({ location: pathname.length })}
 						{show && (
 							<form
 								onSubmit={submitHandler}

@@ -1,4 +1,4 @@
-import { Token, User } from '../models';
+import { User } from '../models';
 import { prnt } from '../util';
 require('dotenv');
 
@@ -18,7 +18,6 @@ export default {
 		}
 	},
 	findById_users_db: async (id: string) => {
-		console.log({ id });
 		try {
 			return await User.findOne({ _id: id }).populate('affiliate');
 		} catch (error) {

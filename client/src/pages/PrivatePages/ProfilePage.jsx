@@ -324,7 +324,7 @@ const ProfilePage = (props) => {
 												key={index}
 												style={{
 													backgroundColor: determine_color(paycheck),
-													fontSize: '16px'
+													fontSize: '1.4rem'
 												}}
 											>
 												<td className="p-10px">

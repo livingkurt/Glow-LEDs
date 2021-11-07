@@ -79,6 +79,7 @@ const MonthlyExpensesPage = (props) => {
 				batter16s_1225: batteries.batter16s_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -96,6 +97,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -113,6 +115,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -130,6 +133,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -147,6 +151,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -164,6 +169,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -181,6 +187,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -198,6 +205,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -215,6 +223,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -232,6 +241,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -249,6 +259,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -266,6 +277,7 @@ const MonthlyExpensesPage = (props) => {
 				batteries_1225: batteries.batteries_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
+				decals_sets: decals.sets,
 				decals_total: decals.total
 			});
 		}
@@ -306,6 +318,7 @@ const MonthlyExpensesPage = (props) => {
 					income,
 					decals_amount: decals.amount,
 					decals_total: decals.total,
+					decals_sets: decals.sets,
 					expenses: total_expenses,
 					profit: income + total_expenses,
 					batteries_1620: batteries.batteries_1620,
@@ -388,7 +401,7 @@ const MonthlyExpensesPage = (props) => {
 			.flat(1)
 			.filter((item) => item.category === 'decals')
 			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
-		return { amount: decals.length * 11, total: decals_total };
+		return { amount: decals.length * 11, sets: decals.length, total: decals_total };
 	};
 
 	const multiplier = 360 / monthly_income.length;
@@ -1658,7 +1671,8 @@ const MonthlyExpensesPage = (props) => {
 							<thead>
 								<tr>
 									<th>Date</th>
-									<th>Amount</th>
+									<th>Individual</th>
+									<th>Sets</th>
 									<th>Income</th>
 								</tr>
 							</thead>
@@ -1671,6 +1685,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>January</th>
 									<th>{january.decals_amount ? january.decals_amount : '0'}</th>
+									<th>{january.decals_sets ? january.decals_sets : '0'}</th>
 									<th>${january.decals_total ? january.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 
@@ -1682,6 +1697,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>Feburary</th>
 									<th>{february.decals_amount ? february.decals_amount : '0'}</th>
+									<th>{february.decals_sets ? february.decals_sets : '0'}</th>
 									<th>${february.decals_total ? february.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1692,6 +1708,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>March</th>
 									<th>{march.decals_amount ? march.decals_amount : '0'}</th>
+									<th>{march.decals_sets ? march.decals_sets : '0'}</th>
 									<th>${march.decals_total ? march.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1702,6 +1719,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>April</th>
 									<th>{april.decals_amount ? april.decals_amount : '0'}</th>
+									<th>{april.decals_sets ? april.decals_sets : '0'}</th>
 									<th>${april.decals_total ? april.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 
@@ -1713,6 +1731,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>May</th>
 									<th>{may.decals_amount ? may.decals_amount : '0'}</th>
+									<th>{may.decals_sets ? may.decals_sets : '0'}</th>
 									<th>{may.decals_total ? may.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1723,6 +1742,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>June</th>
 									<th>{june.decals_amount ? june.decals_amount : '0'}</th>
+									<th>{june.decals_sets ? june.decals_sets : '0'}</th>
 									<th>${june.decals_total ? june.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1733,6 +1753,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>July</th>
 									<th>{july.decals_amount ? july.decals_amount : '0'}</th>
+									<th>{july.decals_sets ? july.decals_sets : '0'}</th>
 									<th>${july.decals_total ? july.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1743,6 +1764,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>August</th>
 									<th>{august.decals_amount ? august.decals_amount : '0'}</th>
+									<th>{august.decals_sets ? august.decals_sets : '0'}</th>
 									<th>${august.decals_total ? august.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1753,6 +1775,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>September</th>
 									<th>{september.decals_amount ? september.decals_amount : '0'}</th>
+									<th>{september.decals_sets ? september.decals_sets : '0'}</th>
 									<th>${september.decals_total ? september.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1763,6 +1786,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>October</th>
 									<th>{october.decals_amount ? october.decals_amount : '0'}</th>
+									<th>{october.decals_sets ? october.decals_sets : '0'}</th>
 									<th>${october.decals_total ? october.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1773,6 +1797,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>November</th>
 									<th>{november.decals_amount ? november.decals_amount : '0'}</th>
+									<th>{november.decals_sets ? november.decals_sets : '0'}</th>
 									<th>${november.decals_total ? november.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 								<tr
@@ -1783,6 +1808,7 @@ const MonthlyExpensesPage = (props) => {
 								>
 									<th>December</th>
 									<th>{december.decals_amount ? december.decals_amount : '0'}</th>
+									<th>{december.decals_sets ? december.decals_sets : '0'}</th>
 									<th>${december.decals_total ? december.decals_total.toFixed(2) : '0.00'}</th>
 								</tr>
 							</tbody>
@@ -1801,16 +1827,22 @@ const MonthlyExpensesPage = (props) => {
 										)}
 									</th>
 									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
+										{monthly_income && monthly_income.length > 0 ? (
+											monthly_income
 												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + parseInt(c.decals_total), 0) -
-												monthly_income
-													.filter((month) => month !== undefined)
-													.reduce((a, c) => a + c.decals_amount, 0) *
-													0.7263636364).toFixed(2)
+												.reduce((a, c) => a + c.decals_sets, 0)
 										) : (
 											'0'
+										)}
+									</th>
+									<th>
+										${monthly_income && monthly_income.length > 0 ? (
+											monthly_income
+												.filter((month) => month !== undefined)
+												.reduce((a, c) => a + c.decals_total, 0)
+												.toFixed(2)
+										) : (
+											'0.00'
 										)}
 									</th>
 								</tr>

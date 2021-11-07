@@ -799,7 +799,6 @@ const MonthExpensesPage = (props) => {
 												</tr>
 											</thead>
 											<tbody>
-												{console.log({ promos })}
 												{promos
 													.filter(
 														(promo) =>
